@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import { Bell, Zap, Phone, ArrowLeft, AlertTriangle, CheckCircle2, ShieldAlert, Info } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Bell, Zap, ArrowLeft, AlertTriangle, CheckCircle2, Phone, Info } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
 import { useAdminPhone } from '../../../context/AppContext';
@@ -18,17 +18,15 @@ interface NotificationsCenterProps {
     studentInvoices: Record<string, unknown>[];
 }
 
-type RoomAlertItem = {
+type AlertItem = {
     id: string;
     type: string;
     title: string;
     description: string;
     priority: string;
     icon: LucideIcon;
-    color: string;
+    action: () => void;
     actionLabel: string;
-    action?: () => void;
-    link?: string;
 };
 
 export const NotificationsCenter = ({
@@ -40,23 +38,21 @@ export const NotificationsCenter = ({
 }: NotificationsCenterProps) => {
     const adminPhone = useAdminPhone();
     const navigate = useNavigate();
-    const [, setDismissedIds] = useState<string[]>([]);
     const [activeTab, setActiveTab] = useState<'smart' | 'room'>('smart');
 
     useEffect(() => {
         const fetchDismissed = async () => {
             try {
-                const data = await api.get<string[]>('/system/dismissed-notifications');
-                if (Array.isArray(data)) setDismissedIds(data);
-            } catch (e) {
-                console.error('Failed to fetch dismissed notifications', e);
+                await api.get<string[]>('/system/dismissed-notifications');
+            } catch {
+                // ignore
             }
         };
         fetchDismissed();
     }, []);
 
     const smartAlerts = useMemo(() => {
-        const result: { id: string; type: string; title: string; desc: string; action: () => void; color: string; priority: string }[] = [];
+        const result: { id: string; type: string; title: string; desc: string; action: () => void; priority: string }[] = [];
         lowBalanceStudents.forEach(s => {
             if (s.remainingSessions <= 1) {
                 result.push({
@@ -65,7 +61,6 @@ export const NotificationsCenter = ({
                     title: s.studentName,
                     desc: `${s.subject} : باقي ${s.remainingSessions === 0 ? 'صفر' : '1'}!`,
                     action: () => navigate('/students'),
-                    color: 'red',
                     priority: 'high'
                 });
             }
@@ -82,7 +77,6 @@ export const NotificationsCenter = ({
                     title: s.name as string,
                     desc: `غياب ${Math.round(rate)}%`,
                     action: () => navigate('/attendance'),
-                    color: 'amber',
                     priority: 'medium'
                 });
             }
@@ -99,17 +93,16 @@ export const NotificationsCenter = ({
                 id: 'overdue-invoices',
                 type: 'warning',
                 title: `${overdueInvoices.length} فواتير متأخرة`,
-                desc: `مطلوب تحصيل مالي عاجل`,
+                desc: 'مطلوب تحصيل مالي عاجل',
                 action: () => navigate('/student-invoices'),
-                color: 'indigo',
                 priority: 'medium'
             });
         }
         return result;
     }, [students, sessions, studentInvoices, lowBalanceStudents, navigate]);
 
-    const roomAlerts = useMemo<RoomAlertItem[]>(() => {
-        const notifications: RoomAlertItem[] = [
+    const roomAlerts = useMemo<AlertItem[]>(() => {
+        const notifications: AlertItem[] = [
             ...(Array.isArray(lowBalanceStudents) ? lowBalanceStudents.map(s => ({
                 id: `lb-${s.id}-${s.subject}`,
                 type: 'low_balance',
@@ -119,7 +112,6 @@ export const NotificationsCenter = ({
                 action: () => sendWhatsAppReminder(s, undefined, adminPhone),
                 actionLabel: 'واتساب',
                 icon: Phone,
-                color: 'rose',
             })) : []),
             ...(Array.isArray(tasks) ? tasks.filter(t =>
                 ['high', 'عالية', 'urgent', 'عاجل'].includes(t.priority?.toLowerCase())
@@ -129,156 +121,137 @@ export const NotificationsCenter = ({
                 title: t.title,
                 description: `تاريخ الاستحقاق: ${t.dueDate}`,
                 priority: 'high',
-                link: '/tasks',
+                action: () => navigate('/tasks'),
                 actionLabel: 'عرض',
                 icon: Bell,
-                color: 'amber',
             })) : [])
         ].sort((a) => (a.priority === 'high' ? -1 : 1));
         return notifications;
-    }, [tasks, lowBalanceStudents, adminPhone]);
+    }, [tasks, lowBalanceStudents, adminPhone, navigate]);
+
+    const criticalCount = smartAlerts.filter(a => a.priority === 'high').length;
 
     return (
-        <div className="w-full space-y-3 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
             {/* Header */}
-            <div className="rounded-2xl bg-card border border-border p-4">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
-                            <ShieldAlert size={16} className="text-primary" />
-                        </div>
-                        <div>
-                            <h3 className="text-sm font-bold text-main">مركز العمليات الذكي</h3>
-                            <p className="text-[10px] text-muted">غرفة التحكم الذكية</p>
-                        </div>
+            <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-warning-soft flex items-center justify-center">
+                        <Bell size={16} className="text-warning" />
                     </div>
-                    <div className="flex p-0.5 rounded-xl bg-surface gap-0.5 w-fit">
-                        <button
-                            onClick={() => setActiveTab('smart')}
-                            className={cn(
-                                "px-4 py-1.5 text-[11px] font-bold transition-colors flex items-center gap-1.5 rounded-lg",
-                                activeTab === 'smart' ? "bg-primary text-on-primary" : "text-muted hover:text-main"
-                            )}
-                        >
-                            <Zap size={11} />
-                            إخطارات ذكية
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('room')}
-                            className={cn(
-                                "px-4 py-1.5 text-[11px] font-bold transition-colors flex items-center gap-1.5 rounded-lg",
-                                activeTab === 'room' ? "bg-primary text-on-primary" : "text-muted hover:text-main"
-                            )}
-                        >
-                            <Bell size={11} />
-                            غرفة التنبيهات
-                        </button>
+                    <div>
+                        <h3 className="text-sm font-bold text-main">التنبيهات</h3>
+                        <p className="text-[10px] text-muted">مراقبة الأنظمة</p>
                     </div>
+                </div>
+                <div className="flex p-0.5 rounded-lg bg-surface gap-0.5">
+                    <button
+                        onClick={() => setActiveTab('smart')}
+                        className={cn(
+                            "px-3 py-1.5 text-[10px] font-bold transition-colors flex items-center gap-1 rounded-md",
+                            activeTab === 'smart' ? "bg-primary text-on-primary" : "text-muted hover:text-main"
+                        )}
+                    >
+                        <Zap size={10} />
+                        ذكية
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('room')}
+                        className={cn(
+                            "px-3 py-1.5 text-[10px] font-bold transition-colors flex items-center gap-1 rounded-md",
+                            activeTab === 'room' ? "bg-primary text-on-primary" : "text-muted hover:text-main"
+                        )}
+                    >
+                        <Bell size={10} />
+                        عمليات
+                    </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
-                {/* Smart Alerts */}
-                <div className={cn("lg:col-span-7", activeTab !== 'smart' && "hidden lg:block")}>
-                    <div className="rounded-2xl bg-card border border-border p-5 h-full">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center gap-2">
-                                <h4 className="text-xs font-bold text-main">النظام التحليلي</h4>
-                            </div>
-                            <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-error-soft text-error border-error/20">
-                                {smartAlerts.filter(a => a.priority === 'high').length} تنبيه حرج
-                            </Badge>
-                        </div>
-                        <div className="space-y-2">
-                            {smartAlerts.map((alert) => (
-                                <div key={alert.id} className={cn(
-                                    "p-3 flex items-center justify-between rounded-xl border",
-                                    alert.type === 'critical' ? "bg-error-soft border-error/20" :
-                                    alert.type === 'success' ? "bg-success-soft border-success/20" :
-                                    "bg-warning-soft border-warning/20"
+            {/* Smart Alerts */}
+            {activeTab === 'smart' && (
+                <div className="space-y-2">
+                    {criticalCount > 0 && (
+                        <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-error-soft text-error border-error/20 mb-2">
+                            {criticalCount} تنبيه حرج
+                        </Badge>
+                    )}
+                    {smartAlerts.map((alert) => (
+                        <div
+                            key={alert.id}
+                            className={cn(
+                                "p-3 flex items-center justify-between rounded-xl border",
+                                alert.type === 'critical' ? "bg-error/10 border-error/20" :
+                                "bg-warning/10 border-warning/20"
+                            )}
+                        >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                                <div className={cn(
+                                    "w-7 h-7 rounded-lg flex items-center justify-center shrink-0",
+                                    alert.type === 'critical' ? "bg-error/15 text-error" :
+                                    "bg-warning/15 text-warning"
                                 )}>
-                                    <div className="flex items-center gap-2.5 min-w-0">
-                                        <div className={cn(
-                                            "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
-                                            alert.type === 'critical' ? "bg-error/15 text-error" :
-                                            alert.type === 'success' ? "bg-success/15 text-success" :
-                                            "bg-warning/15 text-warning"
-                                        )}>
-                                            {alert.type === 'success' ? <CheckCircle2 size={14} /> : <AlertTriangle size={14} />}
-                                        </div>
-                                        <div className="min-w-0">
-                                            <h3 className="font-bold text-xs text-main">{alert.title}</h3>
-                                            <p className="text-[10px] text-muted mt-0.5">{alert.desc}</p>
-                                        </div>
-                                    </div>
-                                    {typeof alert.action === 'function' && (
-                                        <Button variant="ghost" size="icon" onClick={alert.action} className="h-7 w-7 rounded-lg text-primary shrink-0" aria-label="تنفيذ إجراء">
-                                            <ArrowLeft size={13} />
-                                        </Button>
-                                    )}
+                                    {alert.type === 'critical' ? <AlertTriangle size={12} /> : <CheckCircle2 size={12} />}
                                 </div>
-                            ))}
-                            {smartAlerts.length === 0 && (
-                                <div className="text-center py-10">
-                                    <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
-                                        <CheckCircle2 size={20} className="text-success/50" />
-                                    </div>
-                                    <p className="text-xs font-bold text-muted">لا توجد تنبيهات ذكية</p>
-                                    <p className="text-[10px] text-muted/60 mt-0.5">جميع الأنظمة تعمل بكفاءة</p>
+                                <div className="min-w-0">
+                                    <h3 className="font-bold text-[11px] text-main">{alert.title}</h3>
+                                    <p className="text-[10px] text-muted mt-0.5">{alert.desc}</p>
                                 </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Alerts Room */}
-                <div className={cn("lg:col-span-5", activeTab !== 'room' && "hidden lg:block")}>
-                    <div className="rounded-2xl bg-card border border-border p-5 h-full">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center gap-2">
-                                <h4 className="text-xs font-bold text-main">غرفة العمليات</h4>
                             </div>
-                            <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-primary-soft text-primary border-primary/20">
-                                {roomAlerts.length} تنبيهات
-                            </Badge>
-                        </div>
-                        <div className="space-y-2 max-h-[400px] overflow-y-auto custom-scrollbar ps-1">
-                            {roomAlerts.length > 0 ? roomAlerts.map((alert) => (
-                                <div key={alert.id} className="flex items-center justify-between p-3 rounded-xl bg-surface hover:bg-hover transition-colors">
-                                    <div className="flex items-center gap-2.5 min-w-0">
-                                        <div className="w-8 h-8 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
-                                            <alert.icon size={14} className="text-primary" />
-                                        </div>
-                                        <div className="min-w-0">
-                                            <h4 className="text-xs font-bold text-main truncate">{alert.title}</h4>
-                                            <p className="text-[10px] text-muted truncate mt-0.5">{alert.description}</p>
-                                        </div>
-                                    </div>
-                                    {alert.actionLabel === 'واتساب' && typeof alert.action === 'function' ? (
-                                        <Button onClick={alert.action} size="sm" className="h-8 px-3 rounded-lg text-[10px] font-bold bg-success text-on-success shrink-0">
-                                            واتساب
-                                        </Button>
-                                    ) : (
-                                        <Link to={alert.link || '#'}>
-                                            <Button variant="default" size="sm" className="h-8 px-3 rounded-lg text-[10px] font-bold shrink-0">
-                                                عرض
-                                            </Button>
-                                        </Link>
-                                    )}
-                                </div>
-                            )) : (
-                                <div className="text-center py-10">
-                                    <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
-                                        <Info size={20} className="text-success/50" />
-                                    </div>
-                                    <p className="text-xs font-bold text-muted">كافة الأنظمة تعمل بشكل طبيعي</p>
-                                    <p className="text-[10px] text-muted/60 mt-0.5">لا توجد تنبيهات حالياً</p>
-                                </div>
+                            {typeof alert.action === 'function' && (
+                                <Button variant="ghost" size="icon" onClick={alert.action} className="h-7 w-7 rounded-lg text-primary shrink-0" aria-label="تنفيذ إجراء">
+                                    <ArrowLeft size={12} />
+                                </Button>
                             )}
                         </div>
-                    </div>
+                    ))}
+                    {smartAlerts.length === 0 && (
+                        <div className="text-center py-8">
+                            <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
+                                <CheckCircle2 size={16} className="text-success/50" />
+                            </div>
+                            <p className="text-xs font-bold text-muted">لا توجد تنبيهات ذكية</p>
+                            <p className="text-[10px] text-muted/60 mt-0.5">جميع الأنظمة تعمل بكفاءة</p>
+                        </div>
+                    )}
                 </div>
-            </div>
+            )}
+
+            {/* Room Alerts */}
+            {activeTab === 'room' && (
+                <div className="space-y-2 max-h-[320px] overflow-y-auto custom-scrollbar">
+                    {roomAlerts.length > 0 ? roomAlerts.map((alert) => (
+                        <div key={alert.id} className="flex items-center justify-between p-3 rounded-xl bg-surface hover:bg-hover transition-colors">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                                <div className="w-7 h-7 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
+                                    <alert.icon size={12} className="text-primary" />
+                                </div>
+                                <div className="min-w-0">
+                                    <h4 className="text-[11px] font-bold text-main truncate">{alert.title}</h4>
+                                    <p className="text-[10px] text-muted truncate mt-0.5">{alert.description}</p>
+                                </div>
+                            </div>
+                            {alert.actionLabel === 'واتساب' ? (
+                                <Button onClick={alert.action} size="sm" className="h-7 px-2.5 rounded-lg text-[10px] font-bold bg-success text-on-success shrink-0">
+                                    واتساب
+                                </Button>
+                            ) : (
+                                <Button onClick={alert.action} variant="outline" size="sm" className="h-7 px-2.5 rounded-lg text-[10px] font-bold shrink-0">
+                                    عرض
+                                </Button>
+                            )}
+                        </div>
+                    )) : (
+                        <div className="text-center py-8">
+                            <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
+                                <Info size={16} className="text-success/50" />
+                            </div>
+                            <p className="text-xs font-bold text-muted">لا توجد تنبيهات</p>
+                            <p className="text-[10px] text-muted/60 mt-0.5">كافة الأنظمة تعمل بشكل طبيعي</p>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

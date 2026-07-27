@@ -1,32 +1,70 @@
-import { Play, BookOpen, Send, UserCheck } from 'lucide-react';
+import { UserPlus, FileText, CalendarDays, Megaphone, ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
-
-interface QuickActionsProps {
-    navigate: (path: string) => void;
-    onStartSession: () => void;
-}
 
 const actions = [
-    { label: 'بدء حصة', icon: Play, color: 'text-success', bg: 'bg-success-soft' },
-    { label: 'إضافة واجب', icon: BookOpen, path: '/tasks', color: 'text-primary', bg: 'bg-primary-soft' },
-    { label: 'إرسال إشعار', icon: Send, path: '/chat', color: 'text-warning-dark', bg: 'bg-warning-soft' },
-    { label: 'تسجيل حضور', icon: UserCheck, path: '/attendance', color: 'text-accent', bg: 'bg-accent-soft' },
+    {
+        title: 'إضافة طالب',
+        icon: UserPlus,
+        href: '/students?action=new',
+        color: 'bg-primary-soft text-primary',
+    },
+    {
+        title: 'إصدار فاتورة',
+        icon: FileText,
+        href: '/student-invoices?action=new',
+        color: 'bg-success-soft text-success',
+    },
+    {
+        title: 'الجدول الأسبوعي',
+        icon: CalendarDays,
+        href: '/schedule',
+        color: 'bg-info-soft text-info',
+    },
+    {
+        title: 'إعلان عام',
+        icon: Megaphone,
+        href: '/announcements',
+        color: 'bg-warning-soft text-warning',
+    },
 ];
 
-export const QuickActions = ({ navigate, onStartSession }: QuickActionsProps) => (
-    <div className="grid grid-cols-4 gap-2 sm:gap-3">
-        {actions.map(action => (
-            <Card key={action.label} className="cursor-pointer" onClick={() => action.path ? navigate(action.path) : onStartSession()}>
-                <CardContent className="p-3 sm:p-4 text-center">
-                    <div className={cn("w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center mx-auto mb-1.5", action.bg)}>
-                        <action.icon size={18} className={action.color} />
-                    </div>
-                    <span className="block text-micro sm:text-micro font-bold text-muted leading-tight">
-                        {action.label}
-                    </span>
-                </CardContent>
-            </Card>
-        ))}
-    </div>
-);
+export const QuickActions = () => {
+    return (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3" dir="rtl">
+            {actions.map((action, i) => {
+                const Icon = action.icon;
+
+                return (
+                    <Link key={`action-${i}`} to={action.href} className="block h-full">
+                        <div className={cn(
+                            "group h-full p-4 rounded-2xl bg-card border border-border",
+                            "hover:border-border/80 transition-all duration-200",
+                            "font-dash"
+                        )}>
+                            <div className="flex items-center gap-3">
+                                <div className={cn(
+                                    "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                                    action.color,
+                                    "group-hover:scale-105 transition-transform duration-200"
+                                )}>
+                                    <Icon size={18} />
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="font-bold text-sm text-main leading-tight truncate">
+                                        {action.title}
+                                    </h3>
+                                    <div className="flex items-center gap-1 text-[11px] font-medium text-muted group-hover:text-primary transition-colors mt-1">
+                                        <span>انتقال</span>
+                                        <ArrowLeft size={10} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                );
+            })}
+        </div>
+    );
+};

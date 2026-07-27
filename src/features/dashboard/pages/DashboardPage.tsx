@@ -2,26 +2,21 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '../../../store/authStore';
 import { useDashboardData } from '../hooks/useDashboardData';
-import { DashboardHeader } from '../components/DashboardHeader';
-import { DashboardStats } from '../components/DashboardStats';
-import { TeacherFocusList } from '../components/TeacherFocusList';
+import { HeroSection } from '../components/HeroSection';
+import { KPICards } from '../components/KPICards';
+import { TodaysFocus } from '../components/TodaysFocus';
+import { QuickActions } from '../components/QuickActions';
+import { LiveSessions } from '../components/LiveSessions';
+import { FinanceOverview } from '../components/FinanceOverview';
 import { NotificationsCenter } from '../components/NotificationsCenter';
-import { DashboardCharts } from '../components/DashboardCharts';
-import { OperationsDashboard } from '../components/OperationsDashboard';
-import { AnalyticsDashboard } from '../components/AnalyticsDashboard';
-import { HonorRoll } from '../components/HonorRoll';
-import { ModernAnnouncements } from '../components/ModernAnnouncements';
-import { QuickActionsHub } from '../components/QuickActionsHub';
-import { RecentActivityFeed } from '../components/RecentActivityFeed';
-import { RecentArticles } from '../components/RecentArticles';
+import { ActivityTimeline } from '../components/ActivityTimeline';
+import { SystemHealth } from '../components/SystemHealth';
+import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { LiveClasses } from '../../../components/dashboard/LiveClasses';
-import { MobileAdminDashboard } from '../components/MobileAdminDashboard';
-import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';
-import { cn } from '@/lib/utils';
 import { LayoutDashboard, TrendingUp, RefreshCw, AlertCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -52,6 +47,7 @@ export const Dashboard = () => {
 
     const {
         stats,
+        todaySessions,
         monthlyData,
         lowBalanceStudents,
         focusStudents,
@@ -88,61 +84,38 @@ export const Dashboard = () => {
                 className="min-h-full pb-24"
                 dir="rtl"
             >
-                <div className="hidden md:block max-w-page mx-auto px-6 space-y-8 relative z-10">
-                    {/* Header skeleton */}
+                <div className="hidden md:block max-w-page mx-auto px-6 space-y-6 relative z-10">
                     <Skeleton className="h-[120px] rounded-2xl" />
-
-                    {/* View toggle skeleton */}
-                    <div className="flex justify-center">
-                        <Skeleton className="h-10 w-64 rounded-full" />
-                    </div>
-
-                    {/* Stats skeleton */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-4 gap-3">
                         {Array.from({ length: 4 }).map((_, i) => (
-                            <Card key={`skel-card-${i}`} className="overflow-hidden">
+                            <Card key={`skel-kpi-${i}`} className="overflow-hidden">
                                 <CardContent className="p-5">
-                                    <div className="flex items-start justify-between mb-4">
-                                        <Skeleton className="h-10 w-10 rounded-xl" />
-                                        <Skeleton className="h-5 w-14 rounded-full" />
-                                    </div>
+                                    <Skeleton className="h-10 w-10 rounded-xl mb-3" />
                                     <Skeleton className="h-8 w-24 mb-1" />
                                     <Skeleton className="h-3 w-20" />
                                 </CardContent>
                             </Card>
                         ))}
                     </div>
-
-                    {/* Quick actions skeleton */}
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                        {Array.from({ length: 4 }).map((_, i) => (
-                            <Card key={`skel-action-${i}`}>
-                                <CardContent className="p-5">
-                                    <Skeleton className="h-10 w-10 rounded-xl mb-3" />
-                                    <Skeleton className="h-4 w-24 mb-1" />
-                                    <Skeleton className="h-3 w-16" />
-                                </CardContent>
-                            </Card>
-                        ))}
+                    <div className="grid grid-cols-2 gap-6">
+                        <Skeleton className="h-[300px] rounded-2xl" />
+                        <Skeleton className="h-[300px] rounded-2xl" />
                     </div>
-
-                    {/* Charts skeleton */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <Skeleton className="h-[320px] rounded-2xl" />
-                        <Skeleton className="h-[320px] rounded-2xl" />
+                    <div className="grid grid-cols-3 gap-6">
+                        <Skeleton className="h-[280px] rounded-2xl" />
+                        <Skeleton className="h-[280px] rounded-2xl" />
+                        <Skeleton className="h-[280px] rounded-2xl" />
                     </div>
-
-                    {/* Activity skeleton */}
-                    <Skeleton className="h-[240px] rounded-2xl" />
                 </div>
 
                 <div className="block md:hidden px-4 pt-4 space-y-4">
                     <Skeleton className="h-[100px] rounded-2xl" />
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="flex gap-3 overflow-hidden">
                         {Array.from({ length: 4 }).map((_, i) => (
-                            <Skeleton key={`skel-mob-${i}`} className="h-24 rounded-2xl" />
+                            <Skeleton key={`skel-mob-${i}`} className="h-24 w-[140px] rounded-2xl shrink-0" />
                         ))}
                     </div>
+                    <Skeleton className="h-[200px] rounded-2xl" />
                 </div>
             </motion.div>
         );
@@ -153,16 +126,14 @@ export const Dashboard = () => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className={cn(
-                "min-h-full pb-24",
-                "bg-background"
-            )}
+            className="min-h-full pb-24 bg-background"
             dir="rtl"
         >
+            {/* Desktop */}
             <div className="hidden md:block max-w-page mx-auto px-6 space-y-6 relative z-10">
-                {/* Header */}
+                {/* Hero */}
                 <Section>
-                    <DashboardHeader isTeacher={false} currentUser={currentUser} />
+                    <HeroSection currentUser={currentUser} isTeacher={false} />
                 </Section>
 
                 {/* View Toggle */}
@@ -207,91 +178,97 @@ export const Dashboard = () => {
                     <ExecutiveDashboard />
                 ) : (
                     <motion.div variants={containerVariants} className="space-y-6">
+                        {/* KPI Cards */}
+                        <Section>
+                            <KPICards stats={stats} />
+                        </Section>
+
                         {/* Quick Actions */}
                         <Section>
-                            <QuickActionsHub />
+                            <QuickActions />
                         </Section>
 
-                        {/* Stats */}
+                        {/* Main Grid: TodaysFocus + LiveSessions + SystemHealth */}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                            {/* TodaysFocus — 4 cols */}
+                            <div className="lg:col-span-4">
+                                <Section>
+                                    <TodaysFocus
+                                        todaySessions={todaySessions}
+                                        tasks={tasks}
+                                        lowBalanceCount={stats.lowBalanceCount}
+                                    />
+                                </Section>
+                            </div>
+
+                            {/* LiveSessions — 5 cols */}
+                            <div className="lg:col-span-5">
+                                <Section>
+                                    <LiveSessions />
+                                </Section>
+                            </div>
+
+                            {/* SystemHealth — 3 cols */}
+                            <div className="lg:col-span-3">
+                                <Section>
+                                    <SystemHealth stats={stats} />
+                                </Section>
+                            </div>
+                        </div>
+
+                        {/* Finance Overview — Full width */}
                         <Section>
-                            <DashboardStats stats={stats} isTeacher={false} />
+                            <FinanceOverview monthlyData={monthlyData} />
                         </Section>
 
-                        {/* Live Classes + Operations Dashboard */}
+                        {/* Notifications + Activity — 2 cols */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <Section>
-                                <LiveClasses />
-                            </Section>
-                            <Section>
-                                <OperationsDashboard
+                                <NotificationsCenter
                                     tasks={tasks}
                                     lowBalanceStudents={lowBalanceStudents}
-                                    stats={stats}
+                                    students={rawStudents}
+                                    sessions={rawSessions}
+                                    studentInvoices={rawStudentInvoices}
                                 />
                             </Section>
-                        </div>
-
-                        {/* Notifications Center */}
-                        <Section>
-                            <NotificationsCenter
-                                tasks={tasks}
-                                lowBalanceStudents={lowBalanceStudents}
-                                students={rawStudents}
-                                sessions={rawSessions}
-                                studentInvoices={rawStudentInvoices}
-                            />
-                        </Section>
-
-                        {/* Focus List */}
-                        {focusStudents && focusStudents.length > 0 && (
                             <Section>
-                                <TeacherFocusList students={focusStudents} />
-                            </Section>
-                        )}
-
-                        {/* Charts */}
-                        <Section>
-                            <DashboardCharts isTeacher={false} monthlyData={monthlyData} />
-                        </Section>
-
-                        {/* Analytics */}
-                        <Section>
-                            <AnalyticsDashboard
-                                students={rawStudents}
-                                sessions={rawSessions}
-                                monthlyData={monthlyData}
-                            />
-                        </Section>
-
-                        {/* Honor Roll */}
-                        <Section>
-                            <HonorRoll students={rawStudents} />
-                        </Section>
-
-                        {/* Activity + Announcements */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <Section>
-                                <RecentActivityFeed sessions={rawSessions} tasks={tasks} />
-                            </Section>
-                            <Section>
-                                <ModernAnnouncements />
+                                <ActivityTimeline sessions={rawSessions} tasks={tasks} />
                             </Section>
                         </div>
-
-                        {/* Recent Articles */}
-                        <Section>
-                            <RecentArticles />
-                        </Section>
                     </motion.div>
                 )}
             </div>
 
-            <div className="block md:hidden">
-                <MobileAdminDashboard
-                    stats={stats}
-                    lowBalanceStudents={lowBalanceStudents}
-                    onRefresh={fetchDashboardData}
+            {/* Mobile */}
+            <div className="block md:hidden px-4 pt-4 space-y-4">
+                <HeroSection currentUser={currentUser} isTeacher={false} />
+
+                <KPICards stats={stats} />
+
+                <QuickActions />
+
+                <TodaysFocus
+                    todaySessions={[]}
+                    tasks={tasks}
+                    lowBalanceCount={stats.lowBalanceCount}
                 />
+
+                <LiveSessions />
+
+                <FinanceOverview monthlyData={monthlyData} />
+
+                <NotificationsCenter
+                    tasks={tasks}
+                    lowBalanceStudents={lowBalanceStudents}
+                    students={rawStudents}
+                    sessions={rawSessions}
+                    studentInvoices={rawStudentInvoices}
+                />
+
+                <ActivityTimeline sessions={rawSessions} tasks={tasks} />
+
+                <SystemHealth stats={stats} />
             </div>
         </motion.div>
     );
