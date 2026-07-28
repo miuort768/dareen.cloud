@@ -70,7 +70,7 @@ export const AdminContacts = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-surface" dir="rtl">
             <div className="relative z-10 max-w-page mx-auto px-2 mb-4">
                 {/* Compact Header */}
-                <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4 mb-4">
+                <div className="bg-surface border border-border rounded-2xl p-3 md:p-4 mb-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-xl bg-info-soft flex items-center justify-center">
@@ -78,7 +78,7 @@ export const AdminContacts = () => {
                             </div>
                             <div>
                                 <h1 className="text-sm font-bold text-main leading-tight">رسائل الاتصال</h1>
-                                <p className="text-[10px] text-dim">{messages.length} رسالة</p>
+                                <p className="text-[10px] text-muted">{messages.length} رسالة</p>
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@ export const AdminContacts = () => {
                             aria-label="ابحث في الرسائل"
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="w-full bg-surface border border-border/50 rounded-xl py-2.5 ps-8 pe-3 text-xs font-bold text-main placeholder:text-muted focus:outline-none focus:border-primary transition-all"
+                            className="w-full bg-surface border border-border rounded-xl py-2.5 ps-8 pe-3 text-xs font-bold text-main placeholder:text-muted focus:outline-none focus:border-primary transition-all"
                         />
                     </div>
                 </div>
@@ -102,14 +102,14 @@ export const AdminContacts = () => {
                 {loading ? (
                     <div className="space-y-3">
                         {[1, 2, 3].map(i => (
-                            <div key={`skel-${i}`} className="bg-surface h-24 animate-pulse border border-border/30 rounded-2xl" />
+                            <div key={`skel-${i}`} className="bg-surface h-24 animate-pulse border border-border rounded-2xl" />
                         ))}
                     </div>
                 ) : error ? (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-surface border border-error/30 shadow-soft rounded-2xl p-6 text-center"
+                        className="bg-surface border border-error/30 rounded-2xl p-6 text-center"
                     >
                         <div className="w-12 h-12 rounded-2xl bg-error-soft flex items-center justify-center mx-auto mb-3">
                             <Trash2 size={20} className="text-error" />
@@ -127,7 +127,7 @@ export const AdminContacts = () => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-surface border border-border/30 shadow-soft rounded-2xl p-6 text-center"
+                        className="bg-surface border border-border/30 rounded-2xl p-6 text-center"
                     >
                         <div className="w-12 h-12 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-3">
                             <Inbox size={20} className="text-primary" />
@@ -146,7 +146,7 @@ export const AdminContacts = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -12, transition: { duration: 0.15 } }}
                                     transition={{ duration: 0.2, delay: index * 0.03 }}
-                                    className="group bg-surface border border-border/30 shadow-sm hover:border-primary/20 transition-all duration-200 overflow-hidden rounded-2xl"
+                                    className="group bg-surface border border-border/30 hover:border-primary/20 transition-all duration-200 overflow-hidden rounded-2xl"
                                 >
                                     <div className="h-0.5 w-full bg-primary/20" />
                                     <div className="p-3 sm:p-4 relative z-10">
@@ -157,7 +157,7 @@ export const AdminContacts = () => {
                                                 </div>
                                                 <div className="min-w-0">
                                                     <h3 className="text-xs font-bold text-main truncate">{msg.name || 'بدون اسم'}</h3>
-                                                    <p className="text-[10px] text-dim truncate">{msg.subject || 'بدون موضوع'}</p>
+                                                    <p className="text-[10px] text-muted truncate">{msg.subject || 'بدون موضوع'}</p>
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-1.5 flex-wrap shrink-0">
@@ -193,7 +193,7 @@ export const AdminContacts = () => {
                                                 <span className="truncate max-w-[100px]">{msg.curriculum || '-'}</span>
                                                 <BookOpen size={10} />
                                             </span>
-                                            <span className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-background text-dim text-[10px] font-bold">
+                                            <span className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-background text-muted text-[10px] font-bold">
                                                 <span>{formatDate(msg.createdAt)}</span>
                                                 <Clock size={10} />
                                             </span>
