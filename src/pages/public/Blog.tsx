@@ -172,8 +172,8 @@ export const Blog = () => {
     const isFoundationStyle = selectedType === 'foundation' || selectedType === 'notes';
     const isCoursesStyle = selectedType === 'more';
     const cardStyle = selectedType === 'foundation'
-        ? { gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]', badge: 'مذكرة تأسيسية', icon: Zap, sourceText: 'text-warning dark:text-warning hover:text-warning dark:hover:text-warning', fileSizeBadge: 'bg-warning-light dark:bg-warning/10 text-warning dark:text-warning border-warning/50 dark:border-warning/20' }
-        : { gradient: 'from-primary to-primary', badge: 'مذكرة', icon: FileText, sourceText: 'text-primary dark:text-primary hover:text-primary dark:hover:text-primary', fileSizeBadge: 'bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary border-primary/50 dark:border-primary/20' };
+        ? { gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]', badge: 'مذكرة تأسيسية', icon: Zap, sourceText: 'text-warning hover:text-warning', fileSizeBadge: 'bg-warning-light text-warning border-warning/50' }
+        : { gradient: 'from-primary to-primary', badge: 'مذكرة', icon: FileText, sourceText: 'text-primary hover:text-primary', fileSizeBadge: 'bg-primary-soft text-primary border-primary/50' };
     if (isFoundationStyle) return <FoundationCard key={post.id} post={post} cardStyle={cardStyle} foundationBtnState={foundationBtnState} handleButtonClick={handleFoundationButtonClick} i={i} />;
     return <RegularCard key={post.id} post={post} isCoursesStyle={isCoursesStyle} i={i} />;
   };
@@ -181,7 +181,7 @@ export const Blog = () => {
   return (
     <>
       {showSplash && createPortal(<PageLoader />, document.body)}
-      <div className="min-h-screen bg-background dark:bg-background font-sans relative flex flex-col">
+      <div className="min-h-screen bg-background font-sans relative flex flex-col">
       <SEO title="المكتبة التعليمية"
         description="مكتبة دارين السابعة التعليمية: نصائح للمذاكرة، شرح المناهج الخليجية، تحضير اختبارات القدرات، وأساليب التعلم عن بعد للطلاب في الكويت والسعودية والخليج."
         keywords="مكتبة دارين, مقالات تعليمية, نصائح المذاكرة, اختبار القدرات, المنهج الكويتي, المنهج السعودي, تعليم عن بعد"
@@ -200,14 +200,14 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* Mobile */}
-      <div className="md:hidden pb-0 px-3 relative bg-surface dark:bg-background">
+      <div className="md:hidden pb-0 px-3 relative bg-surface">
         {isHeroView ? (
           <div className="pb-6">
             <div className="flex items-center justify-between mb-5 mt-2">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-card rounded-card shadow-sm border border-border dark:border-border">
-                    <span className="text-xs font-bold text-main dark:text-main">7SCHOOL.ONLINE/BOOKS</span>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-card border border-border">
+                    <span className="text-xs font-bold text-main">7SCHOOL.ONLINE/BOOKS</span>
                     <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-primary flex items-center justify-center">
                       <Download size={10} className="text-on-primary" />
                     </div>
@@ -217,33 +217,33 @@ export const Blog = () => {
               <div className="flex items-center gap-2">
                 <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
                   target="_blank" rel="noopener noreferrer"
-                   className="w-10 h-10 rounded-card bg-white dark:bg-card shadow-sm flex items-center justify-center hover:bg-success-light dark:hover:bg-success/30 transition-all">
+                   className="w-10 h-10 rounded-card bg-white flex items-center justify-center hover:bg-success-light transition-all">
                   <MessageCircle size={16} className="text-success" />
                 </a>
                 <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
                   target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-card bg-white dark:bg-card shadow-sm flex items-center justify-center hover:bg-info dark:hover:bg-info/30 transition-all">
-                  <Send size={16} className="text-info dark:text-info" />
+                   className="w-10 h-10 rounded-card bg-white flex items-center justify-center hover:bg-info transition-all">
+                    <Send size={16} className="text-info" />
                 </a>
               </div>
             </div>
 
-            <div className="relative bg-gradient-to-br from-primary via-primary to-white dark:from-primary dark:via-primary dark:to-background rounded-card overflow-hidden mb-6 shadow-sm border border-primary/50 dark:border-border">
+            <div className="relative bg-gradient-to-br from-primary via-primary to-white rounded-card overflow-hidden mb-6 border border-primary/50">
               <div className="flex items-center gap-4 p-5">
                 <div className="flex-1">
-                  <p className="text-lg font-black text-on-primary dark:text-on-primary leading-tight mb-1">برعادية دارين<span className="text-inverse"> السابعة</span></p>
-                  <p className="text-xs font-bold text-on-primary dark:text-main/90 mb-2">أفضل الكتب والملخصات</p>
-                  <p className="text-micro text-on-primary/80 dark:text-on-primary/80 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
+                  <p className="text-lg font-black text-on-primary leading-tight mb-1">برعادية دارين<span className="text-inverse"> السابعة</span></p>
+                  <p className="text-xs font-bold text-on-primary/90 mb-2">أفضل الكتب والملخصات</p>
+                  <p className="text-micro text-on-primary/80 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
                   <div className="flex flex-col gap-1.5">
                     <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                       target="_blank" rel="noopener noreferrer"
-                      className="bg-white dark:bg-card text-main dark:text-main text-micro font-bold px-4 py-2 rounded-full border border-border dark:border-border hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary transition-all w-full text-center block">
+                       className="bg-white text-main text-micro font-bold px-4 py-2 rounded-full border border-border hover:border-primary hover:text-primary transition-all w-full text-center block">
                       طلب حصة مجانية
                     </a>
                   </div>
                 </div>
                   <div className="relative shrink-0">
-                    <div className="absolute inset-0 bg-primary-light/50 dark:bg-primary/30 rounded-full blur-xl" />
+                    <div className="absolute inset-0 bg-primary-light/50 rounded-full blur-xl" />
                     <div className="relative w-[117px] md:w-[90px]">
                       <Image src="/bbook.png" alt="طفل يدرس على منصة دارين" className="w-full h-auto" imgClassName="object-contain drop-shadow-lg" />
                     </div>

@@ -25,7 +25,7 @@ export const BlogFormEducationalSection = ({ currentPost, onSet, onSetCurrentPos
             <p className="text-micro font-bold mb-4 text-error">تصنيف تعليمي — سيظهر في صفحة المواد</p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
-                    <label className="text-micro font-bold text-dim block mb-1">نوع المحتوى</label>
+                    <label className="text-micro font-bold text-muted block mb-1">نوع المحتوى</label>
                     <select value={currentPost.contentType}
                         onChange={(e) => { const v = e.target.value; onSetCurrentPost((prev) => ({ ...prev, contentType: v, ...((v === 'foundation' || v === 'more') ? { curriculum: '', level: '', grade: '', term: '', subject: '' } : {}) })); }}
                         aria-label="نوع المحتوى"
@@ -35,7 +35,7 @@ export const BlogFormEducationalSection = ({ currentPost, onSet, onSetCurrentPos
                     </select>
                 </div>
                 <div>
-                    <label className="text-micro font-bold text-dim block mb-1">المنهج</label>
+                    <label className="text-micro font-bold text-muted block mb-1">المنهج</label>
                     <select value={currentPost.curriculum} onChange={(e) => onSet('curriculum', e.target.value)}
                         disabled={isDisabled}
                         aria-label="المنهج الدراسي"
@@ -46,7 +46,7 @@ export const BlogFormEducationalSection = ({ currentPost, onSet, onSetCurrentPos
                     </select>
                 </div>
                 <div>
-                    <label className="text-micro font-bold text-dim block mb-1">المرحلة</label>
+                    <label className="text-micro font-bold text-muted block mb-1">المرحلة</label>
                     <select value={currentPost.level} onChange={(e) => onSet('level', e.target.value)}
                         disabled={isDisabled}
                         aria-label="المرحلة الدراسية"
@@ -58,7 +58,7 @@ export const BlogFormEducationalSection = ({ currentPost, onSet, onSetCurrentPos
                     </select>
                 </div>
                 <div>
-                    <label className="text-micro font-bold text-dim block mb-1">الصف</label>
+                    <label className="text-micro font-bold text-muted block mb-1">الصف</label>
                     <select value={currentPost.grade} onChange={(e) => onSet('grade', e.target.value)}
                         disabled={isDisabled}
                         aria-label="الصف الدراسي"
@@ -68,7 +68,7 @@ export const BlogFormEducationalSection = ({ currentPost, onSet, onSetCurrentPos
                     </select>
                 </div>
                 <div>
-                    <label className="text-micro font-bold text-dim block mb-1">الفصل</label>
+                    <label className="text-micro font-bold text-muted block mb-1">الفصل</label>
                     <select value={currentPost.term} onChange={(e) => onSet('term', e.target.value)}
                         disabled={isDisabled}
                         aria-label="الفصل الدراسي"
@@ -78,7 +78,7 @@ export const BlogFormEducationalSection = ({ currentPost, onSet, onSetCurrentPos
                     </select>
                 </div>
                 <div>
-                    <label className="text-micro font-bold text-dim block mb-1">المادة</label>
+                    <label className="text-micro font-bold text-muted block mb-1">المادة</label>
                     <select value={currentPost.subject} onChange={(e) => onSet('subject', e.target.value)}
                         disabled={isDisabled}
                         aria-label="المادة الدراسية"

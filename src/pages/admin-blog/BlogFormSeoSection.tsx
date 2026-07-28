@@ -11,40 +11,40 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
         <p className="text-micro font-bold mb-4 text-primary">إعدادات SEO — ظهور المقال في محركات البحث</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-                <label className="text-micro font-bold text-dim block mb-1">عنوان SEO</label>
+                <label className="text-micro font-bold text-muted block mb-1">عنوان SEO</label>
                 <input type="text" value={currentPost.seoTitle || ''}
                     onChange={(e) => onSet('seoTitle', e.target.value)}
-                    className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="عنوان SEO مخصص..." />
+                    className="w-full bg-surface border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="عنوان SEO مخصص..." />
             </div>
             <div>
-                <label className="text-micro font-bold text-dim block mb-1">الوصف في SEO</label>
+                <label className="text-micro font-bold text-muted block mb-1">الوصف في SEO</label>
                 <input type="text" value={currentPost.seoDescription || ''}
                     onChange={(e) => onSet('seoDescription', e.target.value)}
-                    className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="وصف مخصص لظهور في Google..." />
+                    className="w-full bg-surface border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="وصف مخصص لظهور في Google..." />
             </div>
             <div>
-                <label className="text-micro font-bold text-dim block mb-1">صورة OG</label>
+                <label className="text-micro font-bold text-muted block mb-1">صورة OG</label>
                 <input type="url" value={currentPost.ogImage || ''}
                     onChange={(e) => onSet('ogImage', e.target.value)}
-                    className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
+                    className="w-full bg-surface border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
             </div>
             <div>
-                <label className="text-micro font-bold text-dim block mb-1">الكلمة المفتاحية الأساسية</label>
+                <label className="text-micro font-bold text-muted block mb-1">الكلمة المفتاحية الأساسية</label>
                 <input type="text" value={currentPost.focusKeyword || ''}
                     onChange={(e) => onSet('focusKeyword', e.target.value)}
-                    className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="مثال: مدرس خصوصي الكويت" />
+                    className="w-full bg-surface border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="مثال: مدرس خصوصي الكويت" />
             </div>
             <div>
-                <label className="text-micro font-bold text-dim block mb-1">الوسوم (Tags)</label>
+                <label className="text-micro font-bold text-muted block mb-1">الوسوم (Tags)</label>
                 <input type="text" value={currentPost.tags || ''}
                     onChange={(e) => onSet('tags', e.target.value)}
-                    className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="رياضيات, قدرات, تأسيس" />
+                    className="w-full bg-surface border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="رياضيات, قدرات, تأسيس" />
             </div>
             <div>
-                <label className="text-micro font-bold text-dim block mb-1">Canonical URL</label>
+                <label className="text-micro font-bold text-muted block mb-1">Canonical URL</label>
                 <input type="url" value={currentPost.canonicalUrl || ''}
                     onChange={(e) => onSet('canonicalUrl', e.target.value)}
-                    className="w-full bg-surface dark:bg-card border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
+                    className="w-full bg-surface border border-border px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-focus font-bold text-sm rounded-xl outline-none" placeholder="https://..." dir="ltr" />
             </div>
         </div>
         <div className="flex items-center gap-6 mt-4">

@@ -19,7 +19,7 @@ export const BlogHeader = ({
     savingSettings, handleSaveSettings, handleCancelSettings
 }: BlogHeaderProps) => (
     <>
-        <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4">
+        <div className="bg-surface border border-border rounded-2xl p-3 md:p-4">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-xl bg-error-soft flex items-center justify-center">
@@ -27,12 +27,12 @@ export const BlogHeader = ({
                     </div>
                     <div>
                         <h1 className="text-sm font-bold text-main leading-tight">المقالات</h1>
-                        <p className="text-[10px] text-dim">إدارة المقالات والدروس</p>
+                        <p className="text-[10px] text-muted">إدارة المقالات والدروس</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-1.5">
                     <button onClick={() => setShowSettings(s => !s)}
-                        className="w-8 h-8 flex items-center justify-center bg-background border border-border rounded-lg text-dim hover:text-main transition-all">
+                        className="w-8 h-8 flex items-center justify-center bg-surface border border-border rounded-lg text-muted hover:text-main transition-all">
                         <Settings size={13} />
                     </button>
                     <button onClick={handleOpenModal}
@@ -44,18 +44,18 @@ export const BlogHeader = ({
         </div>
 
         {showSettings && (
-            <div className="bg-surface border border-border/50 p-4 rounded-2xl space-y-3 mx-2">
+            <div className="bg-surface border border-border p-4 rounded-2xl space-y-3 mx-2">
                 <h3 className="font-bold text-xs text-main">إعدادات المكتبة</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                        <label className="block text-[10px] font-bold text-dim mb-1">رقم واتساب المكتبة</label>
+                        <label className="block text-[10px] font-bold text-muted mb-1">رقم واتساب المكتبة</label>
                         <input type="text" value={libraryWhatsapp}
                             onChange={(e) => setLibraryWhatsapp(e.target.value)}
                             className="w-full bg-background border border-border px-3 py-2 focus:outline-none focus:border-primary font-bold text-xs rounded-lg"
                             placeholder="مثال: 201234567890" dir="ltr" />
                     </div>
                     <div>
-                        <label className="block text-[10px] font-bold text-dim mb-1">معرف تليجرام المكتبة</label>
+                        <label className="block text-[10px] font-bold text-muted mb-1">معرف تليجرام المكتبة</label>
                         <input type="text" value={libraryTelegram}
                             onChange={(e) => setLibraryTelegram(e.target.value)}
                             className="w-full bg-background border border-border px-3 py-2 focus:outline-none focus:border-primary font-bold text-xs rounded-lg"
@@ -64,7 +64,7 @@ export const BlogHeader = ({
                 </div>
                 <div className="flex justify-end gap-2">
                     <button onClick={handleCancelSettings}
-                        className="px-3 py-1.5 font-bold text-dim hover:text-main transition-all rounded-lg text-[10px]">إلغاء</button>
+                        className="px-3 py-1.5 font-bold text-muted hover:text-main transition-all rounded-lg text-[10px]">إلغاء</button>
                     <button onClick={handleSaveSettings} disabled={savingSettings}
                         className="px-4 py-1.5 bg-error text-on-error font-bold hover:bg-error-hover transition-all disabled:opacity-50 rounded-lg text-[10px]">
                         {savingSettings ? 'جاري الحفظ...' : 'حفظ'}

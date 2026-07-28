@@ -14,8 +14,8 @@ interface HeroSelectionProps {
 
 export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="pb-6">
-        <div className="bg-gradient-to-br from-primary/80 via-white to-primary/30 dark:from-primary-active dark:via-primary-active dark:to-primary-active rounded-3xl px-5 pt-4 pb-3 mb-3 shadow-sm border border-primary/50 dark:border-border">
-            <h2 className="text-xl font-black text-primary dark:text-primary leading-tight">
+        <div className="bg-gradient-to-br from-primary/80 via-white to-primary/30 rounded-3xl px-5 pt-4 pb-3 mb-3 border border-primary/50">
+            <h2 className="text-xl font-black text-primary leading-tight">
                 {view === 'types' ? (
                     <>تحميل مجاني بدون اعلانات</>
                 ) : view === 'curriculums' ? (
@@ -24,7 +24,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
                     <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">المرحلة</span></>
                 )}
             </h2>
-            <p className="text-xs text-main dark:text-main font-medium mt-1.5 leading-relaxed">
+            <p className="text-xs text-main font-medium mt-1.5 leading-relaxed">
                 {view === 'types'
                     ? 'اختر ما تريد من كتب او مذكرات مجانا'
                     : view === 'curriculums'
@@ -64,23 +64,23 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
 export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
         <div className="w-full lg:w-[55%] text-center lg:text-start">
-            <div className="inline-flex animate-in fade-in slide-in-from-top-2 duration-500 items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-5">
-                <BookOpen size={13} className="text-primary dark:text-primary" />
-                <span className="text-micro font-black text-primary dark:text-primary">
+            <div className="inline-flex animate-in fade-in slide-in-from-top-2 duration-500 items-center gap-2 px-4 py-1.5 bg-primary-soft/60 backdrop-blur-sm border border-primary rounded-full mb-5">
+                <BookOpen size={13} className="text-primary" />
+                <span className="text-micro font-black text-primary">
                     {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
                 </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-main dark:text-main mb-4 leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-main mb-4 leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700">
                 {view === 'types' ? (
-                    <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary dark:from-primary dark:to-primary">دارين</span> التعليمية</>
+                    <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">دارين</span> التعليمية</>
                 ) : view === 'curriculums' ? (
                     <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">المنهج</span></>
                 ) : (
                     <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">المرحلة</span></>
                 )}
             </h1>
-            <p className="text-sm sm:text-base text-muted dark:text-muted leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
+            <p className="text-sm sm:text-base text-muted leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
                 {view === 'types'
                     ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في مناهج الكويت و قطر والامارات والسعودية'
                     : view === 'curriculums'

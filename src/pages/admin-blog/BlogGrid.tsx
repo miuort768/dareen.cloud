@@ -32,7 +32,7 @@ export const BlogGrid = ({ loading, filteredPosts, handleOpenModal, handleDelete
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredPosts.map((post) => (
-                <div key={post.id} className="bg-card border border-border shadow-sm overflow-hidden rounded-2xl">
+                <div key={post.id} className="bg-card border border-border overflow-hidden rounded-2xl">
                     <div className="relative h-36 overflow-hidden">
                         <Image src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full" />
                         <div className="absolute top-2 start-2">
@@ -50,7 +50,7 @@ export const BlogGrid = ({ loading, filteredPosts, handleOpenModal, handleDelete
                                 <button onClick={() => handleOpenModal(post)} className="p-1.5 rounded-xl text-info" aria-label="تعديل"><Edit2 size={14} /></button>
                                 <button onClick={() => handleDelete(post.id)} className="p-1.5 rounded-xl text-error" aria-label="حذف"><Trash2 size={14} /></button>
                             </div>
-                            <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" aria-label="عرض المقال" className="p-1.5 text-dim"><ExternalLink size={14} /></a>
+                            <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" aria-label="عرض المقال" className="p-1.5 text-muted"><ExternalLink size={14} /></a>
                         </div>
                     </div>
                 </div>

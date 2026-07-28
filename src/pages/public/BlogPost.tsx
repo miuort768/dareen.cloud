@@ -115,7 +115,7 @@ export const BlogPost = () => {
 
 
     return (
-        <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-main relative flex flex-col">
+        <div className="min-h-full bg-white font-sans text-main relative flex flex-col">
             <SEO
                 title={post.seoTitle || post.title}
                 description={post.seoDescription || post.excerpt}
@@ -156,10 +156,10 @@ export const BlogPost = () => {
                 {/* Image + First Content Side by Side */}
                 <div className="container mx-auto px-4 max-w-5xl mb-12">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
-                        <div className="w-full bg-surface dark:bg-card overflow-hidden shadow-xl rounded-card">
+                        <div className="w-full bg-surface overflow-hidden shadow-xl rounded-card">
                             <Image src={post.coverImage || ''} alt={post.title || ''} className="w-full h-auto" />
                         </div>
-                        <div className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none prose-p:text-justify text-main dark:text-main"
+                        <div className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none prose-p:text-justify text-main"
                             dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.first, post.title)) }}
                         />
                     </div>
@@ -173,7 +173,7 @@ export const BlogPost = () => {
                             {post.downloadLink && (
                                 <button onClick={(e) => handleButtonClick('download', post.downloadLink, e)}
                                     disabled={buttonState !== null && buttonState.type !== 'download'}
-                                    className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-xs sm:text-sm rounded-card hover:bg-error hover:text-on-error transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card dark:bg-primary text-on-primary dark:text-on-primary'}`}>
+                                    className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-xs sm:text-sm rounded-card hover:bg-error hover:text-on-error transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card text-on-primary'}`}>
                                     <Download size={16} />
                                     <span>{buttonState?.type === 'download' && buttonState.phase === 'counting' ? `${post.downloadButtonText || post.download_button_text || 'تحميل الملف'} (${buttonState.seconds})` : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل الملف'}</span>
                                 </button>
@@ -191,7 +191,7 @@ export const BlogPost = () => {
                     
                     {contentParts.rest && (
                         <div 
-                            className="prose sm:prose-lg dark:prose-invert prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none mb-4 prose-p:text-justify text-main dark:text-main"
+                            className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl max-w-none mb-4 prose-p:text-justify text-main"
                             dangerouslySetInnerHTML={{ __html: sanitizeHTML(processContent(contentParts.rest, post.title)) }}
                         />
                     )}
