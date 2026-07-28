@@ -16,7 +16,7 @@ export const AVAILABLE_PERMISSIONS = [
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-card border border-border rounded-card shadow-soft p-5',
+        'bg-card border border-border rounded-2xl p-5',
         className
     )}>
         {children}
@@ -30,7 +30,7 @@ export const SectionTitle = ({ icon: Icon, label, sub }: { icon: LucideIcon; lab
         </div>
         <div>
             <p className="text-sm font-bold text-main">{label}</p>
-            {sub && <p className="text-micro font-bold text-dim mt-0.5">{sub}</p>}
+            {sub && <p className="text-micro font-bold text-muted mt-0.5">{sub}</p>}
         </div>
     </div>
 );
@@ -89,7 +89,7 @@ export const PrimaryBtn = ({ onClick, loading, children, className = '' }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-primary',
-            'text-on-primary text-xs font-bold px-4 py-2.5 shadow-soft active:scale-95 transition-all',
+            'text-on-primary text-xs font-bold px-4 py-2.5 active:scale-95 transition-all',
             className
         )}
     >
@@ -105,7 +105,7 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
         className={cn(
             'flex items-center justify-center gap-2 bg-card border border-border',
             'hover:bg-surface text-muted',
-            'text-xs font-bold px-4 py-2.5 shadow-soft active:scale-95 transition-all',
+            'text-xs font-bold px-4 py-2.5 active:scale-95 transition-all',
             className
         )}
     >
@@ -121,7 +121,7 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
         className={cn(
             'flex items-center justify-center gap-2 border border-error',
             'hover:bg-error hover:border-error hover:text-on-error text-error bg-error-soft',
-            'text-xs font-bold px-4 py-2.5 shadow-soft active:scale-95 transition-all',
+            'text-xs font-bold px-4 py-2.5 active:scale-95 transition-all',
             className
         )}
     >
@@ -139,7 +139,7 @@ export const ToggleRow = ({
             </div>
             <div>
                 <p className="text-xs font-bold text-main">{label}</p>
-                {sub && <p className="text-micro font-bold text-dim mt-0.5">{sub}</p>}
+                {sub && <p className="text-micro font-bold text-muted mt-0.5">{sub}</p>}
             </div>
         </div>
         <Toggle checked={checked} onChange={onChange} />

@@ -46,7 +46,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                     <div className="flex gap-3 pt-2">
                         <button
                             onClick={() => setShowMaintenanceModal(false)}
-                            className="flex-1 py-3 border border-border text-muted text-xs font-bold uppercase tracking-widest hover:bg-hover transition-all shadow-soft active:scale-95"
+                            className="flex-1 py-3 border border-border text-muted text-xs font-bold uppercase tracking-widest hover:bg-hover transition-all active:scale-95"
                         >
                             إلغاء الأمر
                         </button>
@@ -57,7 +57,7 @@ export const MaintenanceModal = ({ showMaintenanceModal, setShowMaintenanceModal
                                     showNotify('تم تفعيل وضع الصيانة بنجاح');
                                 });
                             }}
-                            className="flex-1 py-3 bg-warning text-on-warning text-xs font-bold uppercase tracking-widest hover:brightness-90 transition-all shadow-soft active:scale-95"
+                            className="flex-1 py-3 bg-warning text-on-warning text-xs font-bold uppercase tracking-widest hover:brightness-90 transition-all active:scale-95"
                         >
                             تأكيد التجميد
                         </button>

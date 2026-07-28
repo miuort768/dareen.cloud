@@ -47,7 +47,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {users.map(u => (
-                    <div key={u.id} className="bg-card border border-border p-4 shadow-soft group hover:border-primary transition-all">
+                    <div key={u.id} className="bg-card border border-border p-4 group hover:border-primary transition-all">
                         <div className="flex justify-between items-start mb-3">
                             <div className="w-10 h-10 flex items-center justify-center font-bold text-sm bg-primary-soft text-primary">
                                 {u.username[0].toUpperCase()}

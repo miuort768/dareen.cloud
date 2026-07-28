@@ -119,7 +119,7 @@ export const GeneralSettings = ({
                     <div className="p-3 bg-surface border border-border">
                         <FieldLabel>عدد أيام التجميد</FieldLabel>
                         <InputField type="number" value={localAutoFreeze} onChange={e => setLocalAutoFreeze(Number(e.target.value))} />
-                        <p className="text-micro font-bold text-dim mt-1">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
+                        <p className="text-micro font-bold text-muted mt-1">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
                     </div>
                     <div className="p-3 bg-surface border border-border">
                         <ToggleRow
@@ -132,7 +132,7 @@ export const GeneralSettings = ({
                     </div>
                 </div>
 
-                <p className="text-micro text-dim bg-warning-soft px-3 py-2 border-s-2 border-warning">
+                <p className="text-micro text-muted bg-warning-soft px-3 py-2 border-s-2 border-warning">
                     القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
                 </p>
                 <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2">

@@ -57,18 +57,18 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
             <div className="space-y-2">
                 {schedule.map(d => (
                     <div key={d.day} className="flex items-center gap-3 p-3 bg-surface rounded-xl">
-                        <button onClick={() => toggleDay(d.day)} className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${d.enabled ? 'bg-primary-soft text-primary' : 'bg-hover text-dim'}`}>
+                        <button onClick={() => toggleDay(d.day)} className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${d.enabled ? 'bg-primary-soft text-primary' : 'bg-hover text-muted'}`}>
                             {d.day < 5 ? <Sun size={16} /> : <Moon size={16} />}
                         </button>
-                        <span className={`text-sm font-bold w-16 md:w-20 ${d.enabled ? 'text-main' : 'text-dim'}`}>{DAYS[d.day]}</span>
+                        <span className={`text-sm font-bold w-16 md:w-20 ${d.enabled ? 'text-main' : 'text-muted'}`}>{DAYS[d.day]}</span>
                         {d.enabled ? (
                             <>
                                 <InputField type="time" value={d.start} onChange={e => updateTime(d.day, 'start', e.target.value)} className="w-24 md:w-28" />
-                                <span className="text-dim shrink-0">—</span>
+                                <span className="text-muted shrink-0">—</span>
                                 <InputField type="time" value={d.end} onChange={e => updateTime(d.day, 'end', e.target.value)} className="w-24 md:w-28" />
                             </>
                         ) : (
-                            <span className="text-xs text-dim ms-4">إجازة</span>
+                            <span className="text-xs text-muted ms-4">إجازة</span>
                         )}
                     </div>
                 ))}

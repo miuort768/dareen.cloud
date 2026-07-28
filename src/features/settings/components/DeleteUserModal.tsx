@@ -13,14 +13,14 @@ export const DeleteUserModal = ({ showDeleteModal, setShowDeleteModal, deleteUse
 
     return (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4  bg-black/40 animate-in fade-in">
-            <div className="bg-card p-6 max-w-sm w-full shadow-soft border border-border">
+            <div className="bg-card p-6 max-w-sm w-full border border-border">
                 <div className="flex items-center gap-3 mb-4">
                     <div className="w-10 h-10 bg-error-soft flex items-center justify-center">
                         <Trash2 size={18} className="text-error" />
                     </div>
                     <div>
                         <p className="text-sm font-normal text-main">تأكيد حذف المستخدم</p>
-                        <p className="text-micro text-dim mt-0.5">هذا الإجراء نهائي</p>
+                        <p className="text-micro text-muted mt-0.5">هذا الإجراء نهائي</p>
                     </div>
                 </div>
                 <p className="text-xs text-muted mb-4">

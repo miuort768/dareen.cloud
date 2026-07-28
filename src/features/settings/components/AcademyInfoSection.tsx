@@ -75,28 +75,28 @@ export const AcademyInfoSection = ({
                     <div>
                         <FieldLabel>رقم الهاتف</FieldLabel>
                         <div className="relative">
-                            <Phone size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <Phone size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                             <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="ps-9" placeholder="مثال: 201015098836" />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>البريد الإلكتروني</FieldLabel>
                         <div className="relative">
-                            <Send size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <Send size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                             <InputField value={academyEmail} onChange={e => setAcademyEmail(e.target.value)} className="ps-9" placeholder="email@example.com" />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>تيليجرام</FieldLabel>
                         <div className="relative">
-                            <Hash size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <Hash size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                             <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} className="ps-9" placeholder="dareen_app" />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>رابط واتساب</FieldLabel>
                         <div className="relative">
-                            <MapPin size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <MapPin size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                             <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} className="ps-9" placeholder="رقم الواتساب" />
                         </div>
                     </div>
@@ -109,14 +109,14 @@ export const AcademyInfoSection = ({
                     <div>
                         <FieldLabel>رابط Google Play</FieldLabel>
                         <div className="relative">
-                            <Globe size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <Globe size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                             <InputField value={googlePlayUrl} onChange={e => setSetting('googlePlayUrl', e.target.value)} className="ps-9" placeholder="https://play.google.com/store/apps/..." />
                         </div>
                     </div>
                     <div>
                         <FieldLabel>رابط App Store</FieldLabel>
                         <div className="relative">
-                            <Apple size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" />
+                            <Apple size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                             <InputField value={appStoreUrl} onChange={e => setSetting('appStoreUrl', e.target.value)} className="ps-9" placeholder="https://apps.apple.com/app/..." />
                         </div>
                     </div>

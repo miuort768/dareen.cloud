@@ -55,7 +55,7 @@ export const MobileSettings = ({ whatsappNumbers, setWhatsappNumbers, showNotify
         <div className="space-y-4">
             <SectionCard>
                 <SectionTitle icon={MessageSquare} label="واتساب" sub="أزرار التواصل لكل قسم" />
-                <p className="text-xs text-dim mb-4">
+                <p className="text-xs text-muted mb-4">
                     كل مدخل يمثل زر واتساب منفصل برقم مستقل. الرقم بدون الصفر والمفتاح (مثال: 201015098836).
                 </p>
                 <div className="space-y-3">
@@ -90,7 +90,7 @@ export const MobileSettings = ({ whatsappNumbers, setWhatsappNumbers, showNotify
             </SectionCard>
             <SectionCard>
                 <SectionTitle icon={MessageSquare} label="الربط بالأزرار" sub="راجع labels المستخدمة" />
-                <div className="space-y-2 text-xs text-dim">
+                <div className="space-y-2 text-xs text-muted">
                     <p>• الصفحة الرئيسية: <span dir="ltr" className="font-bold">طلب حصة مجانية</span>، <span dir="ltr" className="font-bold">احجز حصتك المجانية الآن</span>، <span dir="ltr" className="font-bold">ابدأ رحلة التميز</span>، <span dir="ltr" className="font-bold">ابدأ الحفظ الآن</span>، <span dir="ltr" className="font-bold">سجل الآن</span></p>
                     <p>• صفحة الدورات: <span dir="ltr" className="font-bold">تواصل عبر واتساب</span></p>
                     <p>• الزر الجانبي: <span dir="ltr" className="font-bold">تواصل معانا</span></p>

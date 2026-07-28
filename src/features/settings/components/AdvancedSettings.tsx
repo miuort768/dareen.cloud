@@ -80,7 +80,7 @@ export const AdvancedSettings = ({
                         onChange={e => setReminderMinutesBefore(Math.max(1, Number(e.target.value)))}
                         placeholder="30"
                     />
-                    <p className="text-micro text-dim mt-1">سيتم إرسال إشعار لولي الأمر قبل الحصة بهذا العدد من الدقائق</p>
+                    <p className="text-micro text-muted mt-1">سيتم إرسال إشعار لولي الأمر قبل الحصة بهذا العدد من الدقائق</p>
                 </div>
             </div>
         </SectionCard>

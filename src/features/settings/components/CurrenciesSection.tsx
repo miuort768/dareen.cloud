@@ -83,15 +83,15 @@ export const CurrenciesSection = ({
         showNotify(`تم تعيين ${code} كعملة افتراضية`);
     };
 
-    if (loading) return <SectionCard><p className="text-sm text-dim">جاري التحميل...</p></SectionCard>;
+    if (loading) return <SectionCard><p className="text-sm text-muted">جاري التحميل...</p></SectionCard>;
 
     return (
         <SectionCard>
             <SectionTitle icon={Coins} label="العملات وأسعار الصرف" sub="إدارة العملات المدعومة وأسعار الصرف" />
 
             <div className="flex gap-1 mb-5 bg-surface p-1 rounded-xl w-fit">
-                <button onClick={() => setActiveTab('currencies')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'currencies' ? 'bg-card shadow-soft text-main' : 'text-muted hover:text-main'}`}>العملات</button>
-                <button onClick={() => setActiveTab('rates')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'rates' ? 'bg-card shadow-soft text-main' : 'text-muted hover:text-main'}`}>أسعار الصرف</button>
+                <button onClick={() => setActiveTab('currencies')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'currencies' ? 'bg-card text-main' : 'text-muted hover:text-main'}`}>العملات</button>
+                <button onClick={() => setActiveTab('rates')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${activeTab === 'rates' ? 'bg-card text-main' : 'text-muted hover:text-main'}`}>أسعار الصرف</button>
             </div>
 
             {activeTab === 'currencies' && (
@@ -121,7 +121,7 @@ export const CurrenciesSection = ({
                                         <td className="py-2.5 px-3 text-muted">{c.name}</td>
                                         <td className="py-2.5 px-3 text-muted">{c.symbol}</td>
                                         <td className="py-2.5 px-3">
-                                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-micro font-bold ${c.isActive ? 'bg-success-soft text-success' : 'bg-hover text-dim'}`}>
+                                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-micro font-bold ${c.isActive ? 'bg-success-soft text-success' : 'bg-hover text-muted'}`}>
                                                 {c.isActive ? 'نشط' : 'غير نشط'}
                                             </span>
                                         </td>
@@ -140,7 +140,7 @@ export const CurrenciesSection = ({
                                     </tr>
                                 ))}
                                 {currencies.length === 0 && (
-                                    <tr><td colSpan={5} className="text-center py-6 text-dim">لا توجد عملات مضافة</td></tr>
+                                    <tr><td colSpan={5} className="text-center py-6 text-muted">لا توجد عملات مضافة</td></tr>
                                 )}
                             </tbody>
                         </table>
@@ -182,14 +182,14 @@ export const CurrenciesSection = ({
                                         <td className="py-2 px-3 font-bold text-main">{r.toCurrency}</td>
                                         <td className="py-2 px-3 text-muted">{r.buyRate}</td>
                                         <td className="py-2 px-3 text-muted">{r.sellRate}</td>
-                                        <td className="py-2 px-3 text-dim">{new Date(r.effectiveDate).toLocaleDateString('ar')}</td>
+                                        <td className="py-2 px-3 text-muted">{new Date(r.effectiveDate).toLocaleDateString('ar')}</td>
                                         <td className="py-2 px-3 text-end">
                                             <button onClick={() => removeRate(r.id)} className="p-1.5 rounded-lg hover:bg-error-soft text-error transition-all"><Trash2 size={13} /></button>
                                         </td>
                                     </tr>
                                 ))}
                                 {rates.length === 0 && (
-                                    <tr><td colSpan={6} className="text-center py-6 text-dim">لا توجد أسعار صرف</td></tr>
+                                    <tr><td colSpan={6} className="text-center py-6 text-muted">لا توجد أسعار صرف</td></tr>
                                 )}
                             </tbody>
                         </table>

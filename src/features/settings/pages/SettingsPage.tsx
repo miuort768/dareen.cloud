@@ -25,7 +25,7 @@ export const Settings = () => {
 
     return (
         <div className="space-y-0 pb-24 min-h-full max-w-page mx-auto overflow-x-hidden" dir="rtl">
-            <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4 mb-2">
+            <div className="bg-surface border border-border rounded-2xl p-3 md:p-4 mb-2">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
@@ -33,17 +33,17 @@ export const Settings = () => {
                         </div>
                         <div>
                             <h1 className="text-sm font-bold text-main leading-tight">الإعدادات</h1>
-                            <p className="text-[10px] text-dim">{TABS.find(t => t.id === h.activeTab)?.label}</p>
+                            <p className="text-[10px] text-muted">{TABS.find(t => t.id === h.activeTab)?.label}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="bg-surface border border-border/50 rounded-2xl p-1 mx-2 mb-3">
+            <div className="bg-surface border border-border rounded-2xl p-1 mx-2 mb-3">
                 <div className="flex overflow-x-auto no-scrollbar gap-1">
                     {TABS.map(tab => (
                         <button key={tab.id} onClick={() => h.setActiveTab(tab.id)}
                             className={cn('flex items-center gap-2 px-4 py-2.5 rounded-xl text-[10px] font-bold whitespace-nowrap transition-all',
-                                h.activeTab === tab.id ? 'bg-primary text-on-primary shadow-sm' : 'text-dim hover:text-main')}>
+                                h.activeTab === tab.id ? 'bg-primary text-on-primary' : 'text-muted hover:text-main')}>
                             <tab.icon size={13} />
                             {tab.label}
                         </button>

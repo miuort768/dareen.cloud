@@ -62,21 +62,21 @@ export const BackupSection = ({
                     <History size={14} /> سجل النسخ الاحتياطي
                 </h4>
                 {loading ? (
-                    <p className="text-xs text-dim">جاري التحميل...</p>
+                    <p className="text-xs text-muted">جاري التحميل...</p>
                 ) : backupHistory.length === 0 ? (
-                    <p className="text-xs text-dim">لا توجد نسخ احتياطية سابقة</p>
+                    <p className="text-xs text-muted">لا توجد نسخ احتياطية سابقة</p>
                 ) : (
                     <div className="space-y-1 max-h-48 overflow-y-auto">
                         {backupHistory.map(b => (
                             <div key={b.id} className="flex items-center justify-between py-2 px-3 bg-surface rounded-lg">
                                 <div className="flex items-center gap-2">
-                                    <Clock size={12} className="text-dim" />
+                                    <Clock size={12} className="text-muted" />
                                     <span className="text-xs text-muted">{new Date(b.createdAt).toLocaleString('ar')}</span>
                                     <span className={`text-micro px-1.5 py-0.5 rounded font-bold ${b.status === 'completed' ? 'bg-success-soft text-success' : 'bg-warning-soft text-warning-dark'}`}>
                                         {b.status}
                                     </span>
                                 </div>
-                                <span className="text-micro text-dim">{formatSize(b.size)}</span>
+                                <span className="text-micro text-muted">{formatSize(b.size)}</span>
                             </div>
                         ))}
                     </div>
@@ -86,7 +86,7 @@ export const BackupSection = ({
             <div className="pt-4 border-t border-border flex items-center justify-between">
                 <div>
                     <p className="text-xs font-bold text-error">منطقة خطرة</p>
-                    <p className="text-micro text-dim">أرشفة الموسم الحالي أو إعادة تعيين النظام</p>
+                    <p className="text-micro text-muted">أرشفة الموسم الحالي أو إعادة تعيين النظام</p>
                 </div>
                 <div className="flex gap-2">
                     <SecondaryBtn onClick={triggerArchive}>أرشفة الموسم</SecondaryBtn>

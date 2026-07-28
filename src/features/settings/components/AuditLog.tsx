@@ -58,7 +58,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                             <td colSpan={3} className="py-16 text-center">
                                 <CheckCircle2 className="mx-auto mb-2 text-success" size={24} />
                                 <p className="text-sm font-normal text-muted">لا توجد سجلات</p>
-                                <p className="text-micro text-dim mt-1">لا يوجد نشاط مسجل</p>
+                                <p className="text-micro text-muted mt-1">لا يوجد نشاط مسجل</p>
                             </td>
                         </tr>
                     )}
@@ -71,7 +71,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
                 <div className="w-1.5 h-1.5 bg-success rounded-full animate-ping" />
                 المراقبة نشطة
             </div>
-            <span className="text-micro text-dim">{auditLogs.length} سجل</span>
+            <span className="text-micro text-muted">{auditLogs.length} سجل</span>
         </div>
     </SectionCard>
 );
