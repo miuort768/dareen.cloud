@@ -1,72 +1,45 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { api } from '../lib/api';
 import { useCurrentUser } from '../context/AppContext';
-import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
-import { useDarkMode } from '../shared/hooks/useDarkMode';
-import { PageLoader } from '../components/ui/PageLoader';
-import {
-    HeroCarousel, ContinueLearning, MobileBottomNav,
-    StudentDashboardHeader, QuickAccessGrid, StatsStrip,
-    ActivityFeed, SupportBanner
-} from './student-dashboard';
+import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ranks';
+import { Skeleton } from '../shared/components/ui';
+import type {
+    StudentDashboardData, Session, PointLog, Enrollment,
+    DashboardStats, NextSession, TodayTask
+} from './student-dashboard/types';
+import { HeroSection } from './student-dashboard/HeroSection';
+import { NextSessionCard } from './student-dashboard/NextSessionCard';
+import { TodayTasks } from './student-dashboard/TodayTasks';
+import { ProgressOverview } from './student-dashboard/ProgressOverview';
+import { SubjectCards } from './student-dashboard/SubjectCards';
+import { ContinueLearning } from './student-dashboard/ContinueLearning';
+import { InvoicesCard } from './student-dashboard/InvoicesCard';
+import { AchievementsSection } from './student-dashboard/AchievementsSection';
+import { RecentActivity } from './student-dashboard/RecentActivity';
+import { StudentDashboardHeader } from './student-dashboard/StudentDashboardHeader';
+import { MobileBottomNav } from './student-dashboard/MobileBottomNav';
 
-interface Enrollment {
-    subject?: string;
-    teacher?: string;
-    sessionsUsed?: number;
-    sessionsTotal?: number;
-    schedule?: { day: string; hour: string; period: string }[];
-    nextSessionNotes?: string;
-    teacherName?: string;
-    progress?: number;
-    image?: string;
-    level?: string;
-}
+const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
-interface StudentDashboardData {
-    id?: string;
-    name?: string;
-    grade?: string;
-    totalPoints?: number;
-    enrollments?: Enrollment[];
-    [key: string]: unknown;
-}
-
-interface Session { status: string; }
-
-interface PointLog { amount: number; action: string; }
+const stagger = (i: number) => ({
+    initial: { opacity: 0, y: 12 },
+    animate: { opacity: 1, y: 0 },
+    transition: { delay: i * 0.04 },
+});
 
 export const StudentDashboard = () => {
     useEffect(() => { document.title = 'لوحة تحكم الطالب | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
-    const navigate = useNavigate();
 
     const [studentData, setStudentData] = useState<StudentDashboardData | null>(null);
     const [sessions, setSessions] = useState<Session[]>([]);
     const [pointLogs, setPointLogs] = useState<PointLog[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-
-    const [theme, setTheme] = useDarkMode();
-    const [currentTime, setCurrentTime] = useState(new Date());
-    const [scrollY, setScrollY] = useState(0);
-
-    useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 1005);
-        return () => clearInterval(timer);
-    }, []);
-
-    useEffect(() => {
-        const handleScroll = () => setScrollY(window.scrollY);
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
     useEffect(() => {
         let cancelled = false;
-        const fetchStudentData = async () => {
+        const fetchAll = async () => {
             try {
                 setIsLoading(true);
                 const [meRes, sessionsRes, logsRes] = await Promise.all([
@@ -84,63 +57,169 @@ export const StudentDashboard = () => {
                 if (!cancelled) setIsLoading(false);
             }
         };
-        if (currentUser?.role === 'student') fetchStudentData();
+        if (currentUser?.role === 'student') fetchAll();
         return () => { cancelled = true; };
     }, [currentUser]);
 
+    const enrollments = useMemo(() => studentData?.enrollments || [], [studentData?.enrollments]);
     const points = studentData?.totalPoints || 0;
     const rank = getRankByPoints(points, STUDENT_RANKS);
-    const enrollments = useMemo(() => studentData?.enrollments || [], [studentData?.enrollments]);
+    const nextRank = getNextRank(points, STUDENT_RANKS);
 
-    const stats = useMemo(() => {
+    const stats = useMemo<DashboardStats>(() => {
         const totalAttendance = sessions.filter(s => s.status === 'completed').length;
         const totalAbsence = sessions.filter(s => s.status === 'cancelled').length;
         const totalRecorded = totalAttendance + totalAbsence;
         let sessionsUsed = 0, sessionsTotal = 0;
-        enrollments.forEach((en) => {
+        enrollments.forEach((en: Enrollment) => {
             sessionsUsed += Number(en.sessionsUsed || 0);
             sessionsTotal += Number(en.sessionsTotal || 0);
         });
         return {
             sessionsUsed, sessionsTotal, totalAttendance, totalAbsence,
             attendanceRate: totalRecorded > 0 ? Math.round((totalAttendance / totalRecorded) * 100) : 0,
+            curriculumProgress: sessionsTotal > 0 ? Math.round((sessionsUsed / sessionsTotal) * 100) : 0,
         };
     }, [sessions, enrollments]);
 
-    const headerScrolled = scrollY > 10;
+    const todayDay = ARABIC_DAYS[new Date().getDay()];
 
-    if (isLoading) return <PageLoader />;
+    const nextSession = useMemo<NextSession | null>(() => {
+        const now = new Date();
+        const nowMinutes = now.getHours() * 60 + now.getMinutes();
+        let closest: NextSession | null = null;
+        let minDiff = Infinity;
+
+        enrollments.forEach((en: Enrollment) => {
+            (en.schedule || []).forEach((slot) => {
+                if (slot.day === todayDay) {
+                    const [h, m] = (slot.hour || '0:0').split(':').map(Number);
+                    const diff = ((h || 0) * 60 + (m || 0)) - nowMinutes;
+                    if (diff > 0 && diff < minDiff) {
+                        minDiff = diff;
+                        closest = {
+                            subject: en.subject || 'دورة',
+                            teacher: en.teacherName || en.teacher || '',
+                            time: slot.hour || '',
+                            hour: slot.hour || '',
+                            day: slot.day,
+                            enrollment: en,
+                        };
+                    }
+                }
+            });
+        });
+        return closest;
+    }, [enrollments, todayDay]);
+
+    const todayTasks = useMemo<TodayTask[]>(() => {
+        const tasks: TodayTask[] = [];
+        enrollments.forEach((en: Enrollment) => {
+            if (en.nextSessionNotes) {
+                tasks.push({
+                    id: `hw-${en.subject}`,
+                    subject: en.subject || '',
+                    teacher: en.teacherName || en.teacher || '',
+                    time: '',
+                    type: 'homework',
+                    completed: false,
+                });
+            }
+            (en.schedule || []).forEach((slot) => {
+                if (slot.day === todayDay) {
+                    tasks.push({
+                        id: `sess-${en.subject}-${slot.hour}`,
+                        subject: en.subject || '',
+                        teacher: en.teacherName || en.teacher || '',
+                        time: slot.hour || '',
+                        type: 'session',
+                        completed: false,
+                    });
+                }
+            });
+        });
+        return tasks.sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+    }, [enrollments, todayDay]);
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-background" dir="rtl">
+                <div className="sticky top-0 z-[100] bg-surface border-b border-border">
+                    <div className="px-5 pt-4 pb-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <Skeleton className="w-10 h-10 rounded-xl" />
+                            <div className="space-y-1.5"><Skeleton className="h-4 w-20" /><Skeleton className="h-3 w-12" /></div>
+                        </div>
+                        <Skeleton className="w-8 h-8 rounded-xl" />
+                    </div>
+                </div>
+                <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
+                    <Skeleton className="h-32 rounded-2xl" />
+                    <Skeleton className="h-40 rounded-2xl" />
+                    <div className="grid grid-cols-2 gap-3">
+                        <Skeleton className="h-24 rounded-2xl" /><Skeleton className="h-24 rounded-2xl" />
+                    </div>
+                    <Skeleton className="h-32 rounded-2xl" />
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="min-h-screen bg-background font-sans overflow-x-hidden" dir="rtl">
-            <StudentDashboardHeader headerScrolled={headerScrolled} theme={theme} setTheme={setTheme}
-                currentTime={currentTime} onBellClick={() => navigate('/parent-announcements')} />
+        <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
+            <StudentDashboardHeader />
 
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="px-4 pt-4 pb-3">
-                <HeroCarousel />
-            </motion.div>
+            <main className="max-w-page mx-auto px-4 pt-3 pb-24 space-y-4">
+                <motion.div {...stagger(0)}>
+                    <HeroSection
+                        name={studentData?.name || 'الطالب'}
+                        grade={studentData?.grade || ''}
+                        curriculum={studentData?.curriculum || ''}
+                        points={points}
+                        rank={rank}
+                        attendanceRate={stats.attendanceRate}
+                    />
+                </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.06 }} className="px-4 py-3">
-                <QuickAccessGrid />
-            </motion.div>
+                <motion.div {...stagger(1)}>
+                    <NextSessionCard nextSession={nextSession} />
+                </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-                <ContinueLearning enrollments={enrollments} />
-            </motion.div>
+                {todayTasks.length > 0 && (
+                    <motion.div {...stagger(2)}>
+                        <TodayTasks tasks={todayTasks} />
+                    </motion.div>
+                )}
 
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }} className="px-4 py-3">
-                <StatsStrip points={points} attendanceRate={stats.attendanceRate} rankName={rank.name} />
-            </motion.div>
+                <motion.div {...stagger(3)}>
+                    <ProgressOverview stats={stats} points={points} rank={rank} nextRank={nextRank} />
+                </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }}>
-                <ActivityFeed pointLogs={pointLogs} />
-            </motion.div>
+                {enrollments.length > 0 && (
+                    <motion.div {...stagger(4)}>
+                        <SubjectCards enrollments={enrollments} />
+                    </motion.div>
+                )}
 
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.22 }}>
-                <SupportBanner />
-            </motion.div>
+                <motion.div {...stagger(5)}>
+                    <ContinueLearning enrollments={enrollments} />
+                </motion.div>
 
-            <div className="h-20 md:hidden" />
+                <motion.div {...stagger(6)}>
+                    <AchievementsSection points={points} rank={rank} nextRank={nextRank} />
+                </motion.div>
+
+                {pointLogs.length > 0 && (
+                    <motion.div {...stagger(7)}>
+                        <RecentActivity pointLogs={pointLogs} />
+                    </motion.div>
+                )}
+
+                <motion.div {...stagger(8)}>
+                    <InvoicesCard />
+                </motion.div>
+            </main>
+
             <div className="block md:hidden">
                 <MobileBottomNav />
             </div>

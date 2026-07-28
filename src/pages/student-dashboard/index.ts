@@ -1,8 +1,11 @@
-export { HeroCarousel } from './HeroCarousel';
+export { HeroSection } from './HeroSection';
+export { NextSessionCard } from './NextSessionCard';
+export { TodayTasks } from './TodayTasks';
+export { ProgressOverview } from './ProgressOverview';
+export { SubjectCards } from './SubjectCards';
 export { ContinueLearning } from './ContinueLearning';
-export { MobileBottomNav } from './MobileBottomNav';
+export { InvoicesCard } from './InvoicesCard';
+export { AchievementsSection } from './AchievementsSection';
+export { RecentActivity } from './RecentActivity';
 export { StudentDashboardHeader } from './StudentDashboardHeader';
-export { QuickAccessGrid } from './QuickAccessGrid';
-export { StatsStrip } from './StatsStrip';
-export { ActivityFeed } from './ActivityFeed';
-export { SupportBanner } from './SupportBanner';
+export { MobileBottomNav } from './MobileBottomNav';

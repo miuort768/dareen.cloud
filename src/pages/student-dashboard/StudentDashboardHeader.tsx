@@ -1,49 +1,41 @@
-import { GraduationCap, Sun, Moon, Bell, Clock } from 'lucide-react';
-import { cn } from '../../lib/utils';
+import { GraduationCap, Sun, Moon, Bell } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useDarkMode } from '../../shared/hooks/useDarkMode';
 
-interface StudentDashboardHeaderProps {
-    headerScrolled: boolean;
-    theme: string;
-    setTheme: (t: string) => void;
-    currentTime: Date;
-    onBellClick: () => void;
-}
+export const StudentDashboardHeader = () => {
+    const navigate = useNavigate();
+    const [theme, setTheme] = useDarkMode();
 
-const glass = "bg-surface/80 backdrop-blur-xl border-b border-border";
-
-export const StudentDashboardHeader = ({ headerScrolled, theme, setTheme, currentTime, onBellClick }: StudentDashboardHeaderProps) => (
-    <div className={cn("sticky top-0 z-[100] transition-all duration-500",
-        headerScrolled ? glass : glass
-    )}>
-        <div className="px-5 pt-4 pb-3">
-            <div className="flex justify-between items-center">
+    return (
+        <header className="sticky top-0 z-[100] bg-surface border-b border-border">
+            <div className="max-w-page mx-auto px-5 pt-4 pb-3 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl bg-primary-soft flex items-center justify-center shadow-lg shadow-primary/20">
-                        <GraduationCap size={18} className="text-white" />
+                    <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
+                        <GraduationCap size={18} className="text-primary" />
                     </div>
                     <div>
                         <h1 className="text-sm font-bold text-main leading-tight">الرئيسية</h1>
-                        <p className="text-[11px] font-medium text-muted">طالب</p>
+                        <p className="text-micro font-medium text-muted">طالب</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    <button
+                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                         aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-                        className="w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center text-muted transition-colors">
+                        className="w-11 h-11 rounded-xl bg-surface border border-border flex items-center justify-center text-muted transition-colors hover:bg-hover"
+                    >
                         {theme === 'dark' ? <Sun size={15} strokeWidth={1.5} /> : <Moon size={15} strokeWidth={1.5} />}
                     </button>
-                    <button onClick={onBellClick}
+                    <button
+                        onClick={() => navigate('/parent-announcements')}
                         aria-label="الإعلانات"
-                        className="relative w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center text-muted transition-colors">
+                        className="relative w-11 h-11 rounded-xl bg-surface border border-border flex items-center justify-center text-muted transition-colors hover:bg-hover"
+                    >
                         <Bell size={15} strokeWidth={1.5} />
-                        <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-white" />
+                        <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface" />
                     </button>
-                    <div className="px-3 py-1.5 rounded-xl bg-surface border border-border text-primary font-bold text-[11px] tabular-nums">
-                        <Clock size={11} className="inline ms-1" />
-                        {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
-                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-);
+        </header>
+    );
+};
