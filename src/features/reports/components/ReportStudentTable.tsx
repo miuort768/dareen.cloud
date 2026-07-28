@@ -32,7 +32,7 @@ export const ReportStudentTable = React.memo(({ students, searchTerm, onSearchCh
     };
 
     return (
-        <div className="bg-card border border-border rounded-card shadow-soft overflow-hidden">
+        <div className="bg-card border border-border rounded-card overflow-hidden">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b border-border bg-surface">
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-xl bg-chart-4/10 flex items-center justify-center">
@@ -44,7 +44,7 @@ export const ReportStudentTable = React.memo(({ students, searchTerm, onSearchCh
                     </div>
                 </div>
                 <div className="relative w-full md:max-w-xs">
-                    <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-dim" size={13} />
+                    <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={13} />
                     <input type="text" aria-label="بحث عن طالب" placeholder="ابحث عن طالب أو صف..." value={searchTerm}
                         onChange={(e) => onSearchChange(e.target.value)}
                         className="w-full ps-9 pe-3 py-2 bg-card border border-border rounded-xl text-xs font-bold outline-none focus:border-chart-4 transition-all text-main placeholder:text-muted" />
@@ -71,7 +71,7 @@ export const ReportStudentTable = React.memo(({ students, searchTerm, onSearchCh
                             const { progBg, progText } = renderProgressBar(prog);
                             return (
                                 <tr key={student.id} className="hover:bg-hover transition-colors">
-                                    <td className="px-5 py-3"><span className="text-micro font-medium text-dim tabular-nums">{String(globalIdx).padStart(2, '0')}</span></td>
+                                    <td className="px-5 py-3"><span className="text-micro font-medium text-muted tabular-nums">{String(globalIdx).padStart(2, '0')}</span></td>
                                     <td className="px-5 py-3">
                                         <div className="flex items-center gap-2.5">
                                             <div className="w-7 h-7 rounded-xl bg-chart-4/10 flex items-center justify-center text-micro font-semibold text-chart-4">{student.name.charAt(0)}</div>
@@ -95,7 +95,7 @@ export const ReportStudentTable = React.memo(({ students, searchTerm, onSearchCh
                         }) : (
                             <tr>
                                 <td colSpan={7} className="px-6 py-16 text-center">
-                                    <div className="w-12 h-12 rounded-xl bg-muted/10 flex items-center justify-center mx-auto mb-2"><Users size={22} className="text-dim" /></div>
+                                    <div className="w-12 h-12 rounded-xl bg-muted/10 flex items-center justify-center mx-auto mb-2"><Users size={22} className="text-muted" /></div>
                                     <p className="text-xs font-bold text-muted">لا توجد نتائج</p>
                                 </td>
                             </tr>
@@ -132,7 +132,7 @@ export const ReportStudentTable = React.memo(({ students, searchTerm, onSearchCh
                     );
                 }) : (
                     <div className="py-12 text-center">
-                        <div className="w-11 h-11 rounded-xl bg-muted/10 flex items-center justify-center mx-auto mb-2"><Users size={20} className="text-dim" /></div>
+                        <div className="w-11 h-11 rounded-xl bg-muted/10 flex items-center justify-center mx-auto mb-2"><Users size={20} className="text-muted" /></div>
                         <p className="text-xs font-bold text-muted">لا توجد نتائج</p>
                     </div>
                 )}
@@ -142,17 +142,17 @@ export const ReportStudentTable = React.memo(({ students, searchTerm, onSearchCh
                 <div className="flex items-center justify-between px-5 py-3 border-t border-border bg-surface">
                     <p className="text-micro font-bold text-muted">{(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, sortedStudents.length)} من {sortedStudents.length}</p>
                     <div className="flex items-center gap-1">
-                        <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="w-8 h-8 flex items-center justify-center rounded-xl border border-border shadow-soft active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-card text-muted">
+                        <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1} className="w-8 h-8 flex items-center justify-center rounded-xl border border-border active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-card text-muted">
                             <ChevronRight size={14} />
                         </button>
                         {[...Array(Math.min(totalPages, 7))].map((_, i) => (
                             <button key={`page-${i}`} onClick={() => setPage(i + 1)}
-                                className={cn('w-8 h-8 text-xs font-bold rounded-xl border shadow-soft active:scale-95 transition-all', page === i + 1 ? 'border-chart-4 bg-chart-4 text-on-primary' : 'border-border bg-card text-muted')}>
+                                className={cn('w-8 h-8 text-xs font-bold rounded-xl border active:scale-95 transition-all', page === i + 1 ? 'border-chart-4 bg-chart-4 text-on-primary' : 'border-border bg-card text-muted')}>
                                 {i + 1}
                             </button>
                         ))}
-                        {totalPages > 7 && <span className="text-dim text-xs font-bold px-1">...</span>}
-                        <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="w-8 h-8 flex items-center justify-center rounded-xl border border-border shadow-soft active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-card text-muted">
+                        {totalPages > 7 && <span className="text-muted text-xs font-bold px-1">...</span>}
+                        <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="w-8 h-8 flex items-center justify-center rounded-xl border border-border active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed transition-all bg-card text-muted">
                             <ChevronLeft size={14} />
                         </button>
                     </div>

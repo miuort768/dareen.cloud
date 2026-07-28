@@ -44,7 +44,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                                 <p className="text-micro font-medium text-primary uppercase">نجمة أكاديمية</p>
                                 <h4 className="text-2xl font-medium text-main uppercase tracking-tight">{student.name}</h4>
                             </div>
-                            <div className="text-end bg-card dark:bg-background px-4 py-2 border-2 border-border rounded-none shadow-soft">
+                            <div className="text-end bg-card px-4 py-2 border-2 border-border rounded-none">
                                 <p className="text-micro font-medium text-muted uppercase mb-0.5">المستوى / المادة</p>
                                 <p className="text-xs font-medium text-primary uppercase">{student.grade} - {student.subject}</p>
                             </div>

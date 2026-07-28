@@ -10,7 +10,7 @@ interface FinancialReportProps {
 }
 
 const FinancialCard = ({ title, value, subValue, icon: Icon, color, textClass, subTextClass, currency }: { title: string; value: number; subValue: number; icon: React.ComponentType<{ size?: number }>; color: string; textClass: string; subTextClass?: string; currency?: string }) => (
-    <div className="bg-card border border-border/50 p-4 rounded-card shadow-soft">
+            <div className="bg-card border border-border p-4 rounded-card">
         <div className="flex items-center gap-2 mb-3">
             <div className="p-1.5 rounded-lg" style={{ backgroundColor: `${color}12` }}>
                 <Icon size={14} className={textClass} />
@@ -68,7 +68,7 @@ export const FinancialReport = ({
                 />
             </div>
 
-            <div className="bg-card border border-border/50 p-4 rounded-card shadow-soft">
+    <div className="bg-card border border-border p-4 rounded-card">
                 <div className="flex items-start gap-3">
                     <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft">
                         <FileText size={16} className="text-primary" />

@@ -16,19 +16,19 @@ interface AttendanceReportProps {
 }
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn('bg-card border border-border/50 rounded-card shadow-soft', className)}>
+    <div className={cn('bg-card border border-border rounded-card', className)}>
         {children}
     </div>
 );
 
 const SectionHeader = ({ icon: Icon, label, sub }: { icon: React.ComponentType<{ size?: number }>; label: string; sub?: string }) => (
-    <div className="flex items-center gap-3 px-5 py-4 border-b border-border/50">
+    <div className="flex items-center gap-3 px-5 py-4 border-b border-border">
         <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-chart-3/10">
             <Icon size={15} className="text-chart-3" />
         </div>
         <div>
             <p className="text-xs font-bold text-main">{label}</p>
-            {sub && <p className="text-micro font-bold text-dim mt-0.5">{sub}</p>}
+            {sub && <p className="text-micro font-bold text-muted mt-0.5">{sub}</p>}
         </div>
     </div>
 );
@@ -75,13 +75,13 @@ export const AttendanceReport = React.memo(({
                     { label: 'حصص ملغية', value: totalCancelled, icon: XCircle, bgClass: 'bg-chart-5/10', textClass: 'text-chart-5', sub: 'غياب/إلغاء' },
                     { label: 'معدل الحضور', value: `${overallRate}%`, icon: TrendingUp, bgClass: 'bg-chart-4/10', textClass: 'text-chart-4', sub: 'نسبة النجاح الكلية' },
                 ].map((item, i) => (
-                    <div key={`report-${i}`} className="bg-card border border-border/50 rounded-card shadow-soft p-4">
+                    <div key={`report-${i}`} className="bg-card border border-border rounded-card p-4">
                         <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-3 ${item.bgClass}`}>
                             <item.icon size={16} className={item.textClass} />
                         </div>
                         <p className={`text-xl font-bold font-mono ${item.textClass}`}>{item.value}</p>
-                        <p className="text-micro font-bold text-dim mt-1">{item.label}</p>
-                        <p className="text-micro font-bold text-dim mt-0.5">{item.sub}</p>
+                        <p className="text-micro font-bold text-muted mt-1">{item.label}</p>
+                        <p className="text-micro font-bold text-muted mt-0.5">{item.sub}</p>
                     </div>
                 ))}
             </div>
@@ -111,8 +111,8 @@ export const AttendanceReport = React.memo(({
                                 </linearGradient>
                             </defs>
                             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-                            <XAxis dataKey="month" tick={{ fill: 'var(--text-dim)', fontSize: 9, fontWeight: 700 }} axisLine={false} tickLine={false} dy={8} />
-                            <YAxis tick={{ fill: 'var(--text-dim)', fontSize: 9, fontWeight: 700 }} axisLine={false} tickLine={false} allowDecimals={false} />
+                            <XAxis dataKey="month" tick={{ fill: 'var(--text-muted)', fontSize: 9, fontWeight: 700 }} axisLine={false} tickLine={false} dy={8} />
+                            <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 9, fontWeight: 700 }} axisLine={false} tickLine={false} allowDecimals={false} />
                             <Tooltip content={<CustomTooltip />} />
                             <Area type="monotone" dataKey="total" name="إجمالي" stroke="var(--chart-6)" strokeWidth={2} fill="url(#arGradTotal)" dot={false} activeDot={{ r: 5 }} />
                             <Area type="monotone" dataKey="completed" name="حضور" stroke="var(--chart-3)" strokeWidth={2.5} fill="url(#arGradCompleted)" dot={false} activeDot={{ r: 5 }} />
@@ -167,7 +167,7 @@ export const AttendanceReport = React.memo(({
                                     return (
                                         <tr key={index} className="hover:bg-hover transition-colors">
                                             <td className="px-5 py-3">
-                                                <span className="text-micro font-medium text-dim font-mono">
+                                                <span className="text-micro font-medium text-muted font-mono">
                                                     {medal || String(index + 1).padStart(2, '0')}
                                                 </span>
                                             </td>
@@ -222,7 +222,7 @@ export const AttendanceReport = React.memo(({
                                         <div className="flex items-center gap-3 mb-1.5">
                                             <span className="text-micro text-success font-normal">{teacher.completed} ✓</span>
                                             <span className="text-micro text-error font-normal">{teacher.cancelled} ✗</span>
-                                            <span className="text-micro text-dim font-normal">{teacher.total} إجمالي</span>
+                                            <span className="text-micro text-muted font-normal">{teacher.total} إجمالي</span>
                                         </div>
                                         <div className="h-1.5 bg-surface rounded-xl overflow-hidden">
                                             <div className={cn("h-full rounded-xl", barColor)} style={{ width: `${rate}%` }} />

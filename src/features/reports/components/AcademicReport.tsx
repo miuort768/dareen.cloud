@@ -21,7 +21,7 @@ interface AcademicReportProps {
 }
 
 const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn('bg-card border border-border rounded-card shadow-soft overflow-hidden', className)}>
+    <div className={cn('bg-card border border-border rounded-card overflow-hidden', className)}>
         {children}
     </div>
 );
@@ -131,7 +131,7 @@ export const AcademicReport = React.memo(({
                     { label: 'إجمالي الاشتراكات', value: totalEnrollments, icon: BookOpen, textClass: 'text-chart-2', bgClass: 'bg-chart-2/10' },
                     { label: 'المواد الأكاديمية', value: uniqueSubjects, icon: BarChart3, textClass: 'text-chart-4', bgClass: 'bg-chart-4/10' },
                 ].map((item, i) => (
-                    <div key={`report-${i}`} className="bg-card border border-border rounded-card shadow-soft p-4">
+                    <div key={`report-${i}`} className="bg-card border border-border rounded-card p-4">
                         <div className={`w-8 h-8 rounded-xl flex items-center justify-center mb-2 ${item.bgClass}`}>
                             <item.icon size={16} className={item.textClass} />
                         </div>

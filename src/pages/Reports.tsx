@@ -55,7 +55,7 @@ export const Reports = () => {
             <ReportsHeader onExport={() => window.print()} />
 
             {/* ── Tab Selection ── */}
-            <div className="no-print bg-surface border border-border/50 rounded-2xl p-1 flex overflow-x-auto no-scrollbar gap-1">
+            <div className="no-print bg-surface border border-border rounded-2xl p-1 flex overflow-x-auto no-scrollbar gap-1">
                 {tabs.map((tab) => {
                     const Icon = tab.icon;
                     const isActive = state.activeReport === tab.id;
@@ -63,7 +63,7 @@ export const Reports = () => {
                         <button
                             key={tab.id}
                             onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-[10px] font-bold transition-all whitespace-nowrap ${isActive ? 'bg-primary text-on-primary shadow-sm' : 'text-dim hover:text-main'}`}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-[10px] font-bold transition-all whitespace-nowrap ${isActive ? 'bg-primary text-on-primary' : 'text-muted hover:text-main'}`}
                         >
                             <Icon size={14} />
                             {tab.label}
@@ -79,7 +79,7 @@ export const Reports = () => {
                 {state.activeReport === 'overview' && (
                     <div className="space-y-4">
                         {/* Hero Card */}
-                        <div className="bg-card rounded-2xl shadow-sm border border-border p-4">
+                        <div className="bg-card rounded-2xl border border-border p-4">
                             <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
                                 <div>
                                     <div className="flex items-center gap-2 mb-2">
@@ -115,7 +115,7 @@ export const Reports = () => {
                                         <button
                                             key={tab.id}
                                             onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                                            className={`border-0 p-4 transition-all group rounded-xl shadow-sm hover:shadow-md active:scale-95 ${v.bg}`}
+                                            className={`border-0 p-4 transition-all group rounded-xl hover:shadow-md active:scale-95 ${v.bg}`}
                                         >
                                         <div className="flex flex-col items-center text-center">
                                             <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2 group-hover:scale-110 transition-transform ${v.iconBg}`}>
@@ -141,7 +141,7 @@ export const Reports = () => {
                                 { label: 'النمو', value: state.attendanceRate + '%', icon: TrendingUp, textClass: 'text-chart-3', bgClass: 'bg-chart-3/10' },
                                 { label: 'النشطة', value: state.totalEnrollments, icon: Target, textClass: 'text-muted', bgClass: 'bg-muted/10' }
                             ].map((stat, i) => (
-                                <div key={`stat-${i}`} className="bg-card border border-border shadow-sm rounded-xl p-3 flex flex-col justify-between aspect-square">
+                                <div key={`stat-${i}`} className="bg-card border border-border rounded-xl p-3 flex flex-col justify-between aspect-square">
                                     <div className={`w-7 h-7 rounded-xl flex items-center justify-center ${stat.bgClass}`}>
                                         <stat.icon size={14} className={stat.textClass} />
                                     </div>
@@ -154,7 +154,7 @@ export const Reports = () => {
                         </div>
 
                         {/* Subject Distribution Cards */}
-                        <div className="bg-card border border-border rounded-2xl shadow-sm p-4">
+                        <div className="bg-card border border-border rounded-2xl p-4">
                              <div className="flex items-center justify-between mb-4">
                                  <div className="flex items-center gap-2">
                                       <div className="w-7 h-7 rounded-xl flex items-center justify-center bg-primary-soft">
