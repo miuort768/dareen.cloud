@@ -36,7 +36,7 @@ const AvatarLetter = ({ name }: { name: string }) => (
 const ActionButton = ({ icon: Icon, onClick, title, hoverClass }: { icon: React.ComponentType<{ size?: number }>; onClick: () => void; title: string; hoverClass: string }) => (
   <button
     onClick={onClick}
-    className={cn("p-1.5 text-dim transition-all active:scale-90", hoverClass)}
+    className={cn("p-1.5 text-muted transition-all active:scale-90", hoverClass)}
     title={title}
   >
     <Icon size={13} />
@@ -67,7 +67,7 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <span className="text-micro font-medium text-dim">{inv.specialization}</span>
+                    <span className="text-micro font-medium text-muted">{inv.specialization}</span>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs font-bold text-muted">
                     {inv.amount.toLocaleString()} ج.م
@@ -99,7 +99,7 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
                   <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-2">
                     <GraduationCap size={18} />
                   </div>
-                  <p className="text-xs font-bold text-dim">لا توجد فواتير</p>
+                  <p className="text-xs font-bold text-muted">لا توجد فواتير</p>
                 </td>
               </tr>
             )}
@@ -109,26 +109,26 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
 
     <div className="md:hidden space-y-3">
       {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => (
-          <div key={inv.id} className="bg-card border border-border shadow-sm rounded-2xl">
+          <div key={inv.id} className="bg-card border border-border rounded-2xl">
             <div className="px-4 pt-4 pb-3">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <AvatarLetter name={inv.teacher} />
                   <div>
                     <p className="text-xs font-bold text-main">{inv.teacher}</p>
-                    <p className="text-micro text-dim">{inv.specialization}</p>
+                    <p className="text-micro text-muted">{inv.specialization}</p>
                   </div>
                 </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div>
-                    <p className="text-micro font-bold text-dim uppercase mb-0.5">المبلغ</p>
+                    <p className="text-micro font-bold text-muted uppercase mb-0.5">المبلغ</p>
                     <span className="font-mono text-sm font-bold text-main">{inv.amount.toLocaleString()} ج.م</span>
                   </div>
                   <div className="w-px h-6 bg-border" />
                   <div>
-                    <p className="text-micro font-bold text-dim uppercase mb-0.5">الصافي</p>
+                    <p className="text-micro font-bold text-muted uppercase mb-0.5">الصافي</p>
                     <span className="text-xs font-bold text-success-dark">{(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م</span>
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
           <div className="w-10 h-10 rounded-none bg-primary-soft text-primary flex items-center justify-center mx-auto mb-2">
             <GraduationCap size={18} />
           </div>
-          <p className="text-xs font-bold text-dim">لا توجد فواتير</p>
+          <p className="text-xs font-bold text-muted">لا توجد فواتير</p>
         </SectionCard>
       )}
     </div>

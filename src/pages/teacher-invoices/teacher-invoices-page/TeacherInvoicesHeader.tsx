@@ -25,7 +25,7 @@ export const TeacherInvoicesHeader = ({
     startDate, onStartDateChange, endDate, onEndDateChange,
     showForm, onToggleForm, onImport, onDeleteAll, onPrint, isTeacher
 }: TeacherInvoicesHeaderProps) => (
-    <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4">
+    <div className="bg-surface border border-border rounded-2xl p-3 md:p-4">
         <div className="flex items-center justify-between gap-3 mb-3">
             <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center shrink-0">
