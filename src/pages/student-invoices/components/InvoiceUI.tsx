@@ -3,7 +3,7 @@ import { RefreshCw } from 'lucide-react';
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-    'bg-card border border-border shadow-sm rounded-2xl',
+    'bg-card border border-border rounded-2xl',
     className
   )}>
     {children}
@@ -17,7 +17,7 @@ export const SectionTitle = ({ icon: Icon, label, sub }: { icon: React.Component
     </div>
     <div>
       <p className="text-sm font-bold text-main">{label}</p>
-      {sub && <p className="text-micro font-bold text-dim mt-0.5">{sub}</p>}
+      {sub && <p className="text-micro font-bold text-muted mt-0.5">{sub}</p>}
     </div>
   </div>
 );
@@ -29,7 +29,7 @@ export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
 );
 
 const baseInput = [
-  'w-full bg-surface dark:bg-card border border-border',
+  'w-full bg-surface border border-border',
   'px-3 py-2 text-xs font-medium text-main',
   'focus:outline-none focus:ring-2 focus:ring-focus',
   'transition-all duration-200 rounded-xl',
@@ -50,7 +50,7 @@ export const PrimaryBtn = ({ onClick, loading, children, className = '', disable
     onClick={onClick}
     className={cn(
       'flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover',
-      'active:scale-[0.97] text-on-primary text-xs font-bold px-4 py-2 transition-all shadow-sm rounded-xl',
+      'active:scale-[0.97] text-on-primary text-xs font-bold px-4 py-2 transition-all rounded-xl',
       'disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100',
       className
     )}
@@ -68,7 +68,7 @@ export const SecondaryBtn = ({ onClick, children, className = '', title }: {
     className={cn(
       'flex items-center justify-center gap-2 bg-card',
       'hover:bg-hover text-muted',
-      'text-xs font-bold px-3 py-2 border border-border transition-all shadow-sm rounded-xl',
+      'text-xs font-bold px-3 py-2 border border-border transition-all rounded-xl',
       'active:scale-[0.97]',
       className
     )}
@@ -86,7 +86,7 @@ export const DangerBtn = ({ onClick, children, className = '', title }: {
     className={cn(
       'flex items-center justify-center gap-2 bg-card border border-error',
       'hover:bg-error hover:border-error hover:text-on-error text-error',
-      'text-xs font-bold px-3 py-2 transition-all shadow-sm rounded-xl',
+      'text-xs font-bold px-3 py-2 transition-all rounded-xl',
       'active:scale-[0.97]',
       className
     )}

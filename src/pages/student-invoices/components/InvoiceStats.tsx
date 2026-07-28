@@ -37,7 +37,7 @@ export const InvoiceStats = (props: InvoiceStatsProps) => (
       <div
         key={`finance-${i}`}
         className={cn(
-          'rounded-2xl p-3 flex items-center gap-3 dark:brightness-[0.65]',
+          'rounded-2xl p-3 flex items-center gap-3',
           s.bgClass
         )}
       >
