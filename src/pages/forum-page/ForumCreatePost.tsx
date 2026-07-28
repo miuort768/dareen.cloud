@@ -7,7 +7,7 @@ interface ForumCreatePostProps {
 }
 
 export const ForumCreatePost = ({ newPostContent, setNewPostContent, handleCreatePost }: ForumCreatePostProps) => (
-    <div className="bg-card rounded-card shadow-soft p-5">
+    <div className="bg-card rounded-card p-5">
         <div className="space-y-3">
             <textarea value={newPostContent}
                 onChange={(e) => setNewPostContent(e.target.value)}
@@ -18,7 +18,7 @@ export const ForumCreatePost = ({ newPostContent, setNewPostContent, handleCreat
                     <ShieldCheck size={11} className="text-primary" /> نشر متوافق مع سياسات المنصة
                 </p>
                 <button onClick={handleCreatePost} disabled={!newPostContent.trim()}
-                    className="bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 text-xs font-bold rounded-card disabled:opacity-30 transition-all flex items-center gap-2 shadow-sm active:scale-95">
+                    className="bg-primary hover:bg-primary-hover text-on-primary px-5 py-2.5 text-xs font-bold rounded-card disabled:opacity-30 transition-all flex items-center gap-2 active:scale-95">
                     <Send size={13} /> نشر
                 </button>
             </div>

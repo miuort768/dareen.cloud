@@ -1,7 +1,7 @@
 import { Sparkles } from 'lucide-react';
 
 export const ForumHeader = () => (
-    <div className="bg-primary rounded-card shadow-soft px-6 py-8 mx-4 mt-4 mb-6">
+    <div className="bg-primary rounded-card px-6 py-8 mx-4 mt-4 mb-6">
         <div className="flex flex-col items-center text-center">
             <div className="w-14 h-14 bg-primary-soft rounded-card flex items-center justify-center mb-4">
                 <Sparkles size={26} className="text-on-primary" />

@@ -139,13 +139,13 @@ export const Forum = () => {
                     <ForumCreatePost newPostContent={newPostContent} setNewPostContent={setNewPostContent} handleCreatePost={handleCreatePost} />
                     {loading ? (
                         <div className="space-y-6">
-                            {[1, 2, 3].map(i => <div key={`skel-${i}`} className="bg-card h-48 animate-pulse rounded-card shadow-soft" />)}
+                            {[1, 2, 3].map(i => <div key={`skel-${i}`} className="bg-card h-48 animate-pulse rounded-card" />)}
                         </div>
                     ) : posts.length === 0 ? (
                         <EmptyState
                             icon={MessageSquare}
                             title="لا توجد منشورات هنا"
-                            className="bg-card rounded-card shadow-soft p-6 md:p-16 border-2 border-dashed border-border"
+                            className="bg-card rounded-card p-6 md:p-16 border-2 border-dashed border-border"
                         />
                     ) : (
                         <div className="space-y-6">
