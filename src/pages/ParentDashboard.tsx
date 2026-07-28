@@ -1,34 +1,54 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-
+import { motion } from 'framer-motion';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { Skeleton } from '../shared/components/ui';
-import { ParentDesktopView } from './parent-dashboard/DesktopView';
-import { ParentMobileView } from './parent-dashboard/MobileView';
-import { ParentBottomNav } from './parent-dashboard/BottomNav';
+import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader';
+import { MobileBottomNav } from './parent-dashboard/MobileBottomNav';
+import { HeroSection } from './parent-dashboard/HeroSection';
+import { ChildrenCards } from './parent-dashboard/ChildrenCards';
+import { TodaySummary } from './parent-dashboard/TodaySummary';
+import { AcademicPerformance } from './parent-dashboard/AcademicPerformance';
+import { NextSessionBanner } from './parent-dashboard/NextSessionBanner';
+import { HomeworkNotes } from './parent-dashboard/HomeworkNotes';
+import { AchievementsSection } from './parent-dashboard/AchievementsSection';
+import { RecentActivity } from './parent-dashboard/RecentActivity';
+import { ActiveTimersBanner } from './parent-dashboard/ActiveTimersBanner';
+import { SupportBanner } from './parent-dashboard/SupportBanner';
 import type { Student } from '../types';
+import type { PointLogEntry } from './parent-dashboard/types';
+
+const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+
+const stagger = (i: number) => ({
+    initial: { opacity: 0, y: 12 },
+    animate: { opacity: 1, y: 0 },
+    transition: { delay: i * 0.04 },
+});
 
 export const ParentDashboard = () => {
     useEffect(() => { document.title = 'لوحة تحكم ولي الأمر | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const adminPhone = useAdminPhone();
     const logout = useLogout();
+
     const [children, setChildren] = useState<Student[]>([]);
     const [sessions, setSessions] = useState<Student[]>([]);
-    const [allPointLogs, setAllPointLogs] = useState<{ id: string; date: string; status: string; points?: number }[]>([]);
+    const [allPointLogs, setAllPointLogs] = useState<PointLogEntry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState('home');
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
     useEffect(() => {
+        let cancelled = false;
         const fetchAllData = async () => {
             try {
                 setIsLoading(true);
                 const students = await api.get<Student[]>('/parents/my-children');
+                if (cancelled) return;
                 setChildren(students);
 
                 const sessionsPromises = students.map(async s => {
@@ -53,6 +73,8 @@ export const ParentDashboard = () => {
                     Promise.all(logsPromises)
                 ]);
 
+                if (cancelled) return;
+
                 setSessions(allSessionsResults.flat());
 
                 const flattenedLogs = allLogsResults.map((logs, idx) =>
@@ -67,14 +89,15 @@ export const ParentDashboard = () => {
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
             } finally {
-                setIsLoading(false);
+                if (!cancelled) setIsLoading(false);
             }
         };
 
         fetchAllData();
+        return () => { cancelled = true; };
     }, []);
 
-    // ── Active timer for parent ──
+    // ── Active timer polling ──
     const [activeTimers, setActiveTimers] = useState<Student[]>([]);
     const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const pollIdRef = useRef(0);
@@ -129,7 +152,7 @@ export const ParentDashboard = () => {
         let sessionsUsed = 0;
         let sessionsTotal = 0;
         children.forEach(c => {
-            (c.enrollments || []).forEach((en: { teacherName: string; sessionsTotal: number; sessionsUsed: number; nextSessionNotes?: string; schedule?: { day: string; time: string }[] }) => {
+            (c.enrollments || []).forEach((en: { sessionsUsed: number; sessionsTotal: number }) => {
                 sessionsUsed += Number(en.sessionsUsed || 0);
                 sessionsTotal += Number(en.sessionsTotal || 0);
             });
@@ -138,7 +161,7 @@ export const ParentDashboard = () => {
         const academicProgress = sessionsTotal > 0 ? Math.round((sessionsUsed / sessionsTotal) * 100) : 0;
         const upcomingSessions = sessions.filter(s => s.status !== 'completed' && s.status !== 'cancelled').length;
 
-        return { childCount: children.length, upcomingSessions, attendanceRate, academicProgress };
+        return { childCount: children.length, upcomingSessions, attendanceRate, academicProgress, totalSessionsUsed: sessionsUsed, totalSessionsTotal: sessionsTotal };
     }, [sessions, children]);
 
     const todayTasks = useMemo(() => {
@@ -166,28 +189,92 @@ export const ParentDashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-background p-4 md:p-8">
-                <div className="space-y-4">
-                    <Skeleton className="h-20 w-full rounded-2xl" />
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                        {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-24 rounded-2xl" />)}
+            <div className="min-h-screen bg-background" dir="rtl">
+                <div className="sticky top-0 z-[100] bg-surface border-b border-border">
+                    <div className="max-w-page mx-auto px-5 pt-4 pb-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <Skeleton className="w-10 h-10 rounded-xl" />
+                            <div className="space-y-1.5"><Skeleton className="h-4 w-24" /><Skeleton className="h-3 w-16" /></div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Skeleton className="w-11 h-11 rounded-xl" />
+                            <Skeleton className="w-11 h-11 rounded-xl" />
+                            <Skeleton className="w-11 h-11 rounded-xl" />
+                        </div>
                     </div>
-                    <Skeleton className="h-64 w-full rounded-2xl" />
+                </div>
+                <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
+                    <Skeleton className="h-32 rounded-2xl" />
+                    <div className="grid grid-cols-2 gap-3">
+                        <Skeleton className="h-24 rounded-2xl" /><Skeleton className="h-24 rounded-2xl" />
+                    </div>
+                    <Skeleton className="h-20 rounded-2xl" />
+                    <Skeleton className="h-32 rounded-2xl" />
                 </div>
             </div>
         );
     }
 
-    const viewProps = {
-        currentUser, adminPhone, children, sessions, allPointLogs,
-        activeTimers, stats, todayTasks, points, rank, logout, formatTime,
-    };
-
     return (
-        <>
-            <ParentDesktopView {...viewProps} />
-            <ParentMobileView {...viewProps} activeTab={activeTab} setActiveTab={setActiveTab} />
-            <ParentBottomNav />
-        </>
+        <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
+            <ParentDashboardHeader logout={logout} />
+
+            <main className="max-w-page mx-auto px-4 pt-3 pb-24 space-y-4">
+                <motion.div {...stagger(0)}>
+                    <HeroSection
+                        name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
+                        children={children}
+                        attendanceRate={stats.attendanceRate}
+                        academicProgress={stats.academicProgress}
+                    />
+                </motion.div>
+
+                <motion.div {...stagger(1)}>
+                    <TodaySummary sessions={sessions} children={children} todayTasks={todayTasks} />
+                </motion.div>
+
+                {activeTimers.length > 0 && (
+                    <motion.div {...stagger(2)}>
+                        <ActiveTimersBanner activeTimers={activeTimers} children={children} formatTime={formatTime} />
+                    </motion.div>
+                )}
+
+                <motion.div {...stagger(3)}>
+                    <NextSessionBanner todayTasks={todayTasks} />
+                </motion.div>
+
+                <motion.div {...stagger(4)}>
+                    <ChildrenCards children={children} />
+                </motion.div>
+
+                <motion.div {...stagger(5)}>
+                    <AcademicPerformance sessions={sessions} children={children} points={points} rank={rank} />
+                </motion.div>
+
+                <motion.div {...stagger(6)}>
+                    <HomeworkNotes children={children} />
+                </motion.div>
+
+                <motion.div {...stagger(7)}>
+                    <AchievementsSection points={points} rank={rank} />
+                </motion.div>
+
+                {allPointLogs.length > 0 && (
+                    <motion.div {...stagger(8)}>
+                        <RecentActivity allPointLogs={allPointLogs} />
+                    </motion.div>
+                )}
+
+                <motion.div {...stagger(9)}>
+                    <SupportBanner adminPhone={adminPhone} />
+                </motion.div>
+            </main>
+
+            <div className="block md:hidden">
+                <MobileBottomNav />
+            </div>
+        </div>
     );
 };
+
+export default ParentDashboard;

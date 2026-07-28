@@ -15,6 +15,23 @@ export interface PointLogEntry {
 
 export type ActiveTimerSession = Student;
 
+export interface DashboardStats {
+    childCount: number;
+    upcomingSessions: number;
+    attendanceRate: number;
+    academicProgress: number;
+    totalSessionsUsed: number;
+    totalSessionsTotal: number;
+}
+
+export interface TodayTask {
+    studentName: string;
+    subject: string;
+    teacher: string;
+    time: string;
+    period: string;
+}
+
 export interface ParentViewProps {
     currentUser: ParentUser;
     adminPhone: string | undefined;
@@ -22,8 +39,8 @@ export interface ParentViewProps {
     sessions: Student[];
     allPointLogs: PointLogEntry[];
     activeTimers: ActiveTimerSession[];
-    stats: { childCount: number; upcomingSessions: number; attendanceRate: number; academicProgress: number };
-    todayTasks: { studentName: string; subject: string; teacher: string; time: string; period: string }[];
+    stats: DashboardStats;
+    todayTasks: TodayTask[];
     points: number;
     rank: { name: string };
     logout: () => void;
