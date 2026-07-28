@@ -30,7 +30,7 @@ export const Finance = () => {
             <div className="relative z-10 max-w-page mx-auto px-2">
 
                 {/* ── Header ── */}
-                <div className="bg-surface border border-border/50 rounded-2xl p-3 md:p-4 mb-4">
+                <div className="bg-surface border border-border rounded-2xl p-3 md:p-4 mb-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
@@ -38,11 +38,11 @@ export const Finance = () => {
                             </div>
                             <div>
                                 <h1 className="text-sm font-bold text-main leading-tight">الإدارة المالية</h1>
-                                <p className="text-[10px] text-dim">هامش الربح: {state.profitMargin}%</p>
+                                <p className="text-[10px] text-muted">هامش الربح: {state.profitMargin}%</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-1.5">
-                            <button onClick={() => navigate('/monthly-closing')} className="flex items-center gap-1 h-8 px-2.5 bg-background border border-border text-dim text-[10px] font-bold rounded-lg active:scale-95 transition-transform">
+                            <button onClick={() => navigate('/monthly-closing')} className="flex items-center gap-1 h-8 px-2.5 bg-surface border border-border text-muted text-[10px] font-bold rounded-lg active:scale-95 transition-transform">
                                 <CalendarCheck size={11} /> <span className="hidden sm:inline">تسوية</span>
                             </button>
                             <button onClick={() => actions.setShowAddModal(true)} className="flex items-center gap-1 h-8 px-2.5 bg-primary text-on-primary text-[10px] font-bold rounded-lg active:scale-95 transition-transform">

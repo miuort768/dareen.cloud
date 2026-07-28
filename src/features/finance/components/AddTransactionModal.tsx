@@ -40,7 +40,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60" dir="rtl">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" dir="rtl">
             <div className="bg-card w-full max-w-lg shadow-xl overflow-hidden border border-border rounded-2xl">
                 {/* Header */}
                 <div className="p-5 bg-primary text-on-primary flex justify-between items-center">
@@ -53,7 +53,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                             <p className="text-micro font-medium text-on-primary opacity-70 tracking-widest mt-0.5">إدخال مباشر إلى سجل الحسابات</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-60 hover:opacity-100 hover:bg-white/10 transition-colors rounded-xl"><X size={18} /></button>
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-60 hover:opacity-100 hover:bg-white/15 transition-colors rounded-xl"><X size={18} /></button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-4 md:p-8 space-y-6">

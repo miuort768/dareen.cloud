@@ -15,7 +15,7 @@ export const AppointmentPullToRefresh = ({ pullDistance, isRefreshing }: Appoint
                 <><Loader2 size={16} className="animate-spin" strokeWidth={1.5} /><span>جاري التحديث...</span></>
             ) : pullDistance > 55 ? (
                 <><Sparkles size={16} className="animate-pulse" strokeWidth={1.5} /><span>أفلت للتحديث</span></>
-            ) : (<span className="text-dim">اسحب للتحديث</span>)}
+            ) : (<span className="text-muted">اسحب للتحديث</span>)}
         </div>
     </motion.div>
 );

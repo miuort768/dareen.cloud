@@ -15,7 +15,7 @@ export const StudentScheduleEditor = ({ schedule, isEditing, onToggleEdit, onDel
     const [editSlotIndex, setEditSlotIndex] = useState<number | null>(null);
 
     return (
-        <div className="space-y-2 pt-2 border-t border-border/50">
+        <div className="space-y-2 pt-2 border-t border-border">
             <div className="flex items-center justify-between">
                 <h5 className="text-micro font-normal text-muted uppercase flex items-center gap-1.5">
                     <Clock size={10} className="text-primary" /> الجدول الإسبوعي
@@ -28,10 +28,10 @@ export const StudentScheduleEditor = ({ schedule, isEditing, onToggleEdit, onDel
 
             <div className="flex flex-wrap gap-1.5">
                 {schedule?.length > 0 ? schedule.map((slot, i) => (
-                    <div key={`slot-${i}`} className="flex items-center gap-1.5 px-2 py-1 bg-card border border-border/50 text-micro font-bold text-muted rounded-xl">
+                    <div key={`slot-${i}`} className="flex items-center gap-1.5 px-2 py-1 bg-card border border-border text-micro font-bold text-muted rounded-xl">
                         <span>{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
                         {isEditing && (
-                            <div className="flex gap-1.5 ms-1.5 ps-1.5 border-s border-border/50">
+                            <div className="flex gap-1.5 ms-1.5 ps-1.5 border-s border-border">
                                 <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} aria-label="تعديل الموعد" className="text-primary"><Edit size={10} /></button>
                                 <button onClick={() => onDeleteSlot(i)} aria-label="حذف الموعد" className="text-error"><Trash2 size={10} /></button>
                             </div>

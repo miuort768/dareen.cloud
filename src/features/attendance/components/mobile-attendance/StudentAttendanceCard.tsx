@@ -21,7 +21,7 @@ export const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory
 
     return (
         <motion.div whileTap={{ scale: 0.98 }}
-            className="bg-card rounded-card p-3.5 shadow-soft border border-border/50 space-y-2.5">
+            className="bg-card rounded-2xl p-3.5 border border-border space-y-2.5">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-semibold shrink-0 bg-primary-soft text-primary">
@@ -57,11 +57,11 @@ export const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory
 
             <div className="flex gap-1.5">
                 <motion.button whileTap={{ scale: 0.93 }} onClick={onAttend}
-                    className="flex-1 py-2.5 bg-success text-on-success text-micro font-bold rounded-xl flex items-center justify-center gap-1 shadow-soft">
+                    className="flex-1 py-2.5 bg-success text-on-success text-micro font-bold rounded-xl flex items-center justify-center gap-1">
                     <CheckCircle2 size={12} strokeWidth={1.5} /> حضور
                 </motion.button>
                 <motion.button whileTap={{ scale: 0.93 }} onClick={onHistory}
-                    className="flex-1 py-2.5 bg-primary text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1 shadow-soft">
+                    className="flex-1 py-2.5 bg-primary text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1">
                     <History size={12} strokeWidth={1.5} /> السجل
                 </motion.button>
             </div>

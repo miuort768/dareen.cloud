@@ -44,39 +44,39 @@ export const MobileScheduleDetailsModal = ({ showDetails, event, onClose, onStar
                             <h3 className="text-sm font-semibold text-main mt-0.5">{event.day}</h3>
                         </div>
                         <div className="space-y-3">
-                            <div className="flex items-center justify-between p-3.5 rounded-card bg-primary-soft border-e-[3px] border-e-primary">
+                            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-primary-soft border-e-[3px] border-e-primary">
                                 <div>
                                     <span className="text-micro font-bold text-muted">الطالب</span>
                                     <p className="text-sm font-bold text-main">{event.studentName}</p>
                                     <span className="text-micro font-bold text-primary">{event.studentGrade} · {event.subject}</span>
                                 </div>
-                                <User size={18} className="text-dim" strokeWidth={1.5} />
+                                <User size={18} className="text-muted" strokeWidth={1.5} />
                             </div>
-                            <div className="flex items-center justify-between p-3.5 rounded-card bg-success-soft border-e-[3px] border-e-success">
+                            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-success-soft border-e-[3px] border-e-success">
                                 <div>
                                     <span className="text-micro font-bold text-muted">المعلمة</span>
                                     <p className="text-sm font-bold text-main">{event.teacherName}</p>
                                 </div>
-                                <BookOpen size={18} className="text-dim" strokeWidth={1.5} />
+                                <BookOpen size={18} className="text-muted" strokeWidth={1.5} />
                             </div>
-                            <div className="flex items-center justify-between p-3.5 rounded-card bg-warning-soft border-e-[3px] border-e-warning">
+                            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-warning-soft border-e-[3px] border-e-warning">
                                 <div>
                                     <span className="text-micro font-bold text-muted">الوقت</span>
                                     <p className="text-sm font-bold text-main">{event.time}</p>
                                 </div>
-                                <Clock size={18} className="text-dim" strokeWidth={1.5} />
+                                <Clock size={18} className="text-muted" strokeWidth={1.5} />
                             </div>
                         </div>
                         <div className="flex gap-2.5">
                             <motion.button whileTap={{ scale: 0.95 }}
                                 onClick={() => { triggerHaptic('medium'); onStartSession(); }}
-                                className="flex-1 py-3 rounded-card bg-primary text-on-primary text-micro font-bold flex items-center justify-center gap-2 shadow-soft shadow-primary/30">
+                                className="flex-1 py-3 rounded-2xl bg-primary text-on-primary text-micro font-bold flex items-center justify-center gap-2">
                                 <Video size={14} strokeWidth={1.5} />
                                 بدء بث مباشر
                             </motion.button>
                             <motion.button whileTap={{ scale: 0.95 }}
                                 onClick={() => { triggerHaptic('light'); onViewStudent(); }}
-                                className="flex-1 py-3 rounded-card bg-surface text-muted text-micro font-bold border border-border/50">
+                                className="flex-1 py-3 rounded-2xl bg-surface text-muted text-micro font-bold border border-border">
                                 عرض الطالب
                             </motion.button>
                         </div>

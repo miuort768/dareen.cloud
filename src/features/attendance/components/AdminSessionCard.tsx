@@ -20,7 +20,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
     const progress = total > 0 ? (used / total) * 100 : 0;
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card overflow-hidden flex flex-col group transition-all hover:shadow-soft h-full">
+        <div className="bg-card border border-border rounded-2xl overflow-hidden flex flex-col group transition-all hover:shadow-elevation-2 h-full">
             <div className={cn(
                 "h-1.5 w-full transition-all",
                 session.status === 'completed' ? 'bg-success' : session.status === 'cancelled' ? 'bg-error' : 'bg-surface'
@@ -51,7 +51,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     )}
                 </div>
 
-                <div className="bg-card p-3 rounded-xl border border-border/50">
+                <div className="bg-surface p-3 rounded-xl border border-border">
                     <div className="flex items-center gap-2 mb-1.5">
                         <Clock size={12} className="text-primary" />
                         <span className="text-micro font-bold text-muted uppercase tracking-wide">موعد الحصة</span>
@@ -81,7 +81,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     onClick={() => onUpdateStatus(session.id, 'completed')}
                     disabled={session.status === 'completed'}
                     className={cn(
-                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-soft active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
+                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
                         session.status === 'completed'
                             ? 'bg-success text-on-success'
                             : 'bg-primary hover:bg-primary-hover text-on-primary'
@@ -93,10 +93,10 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     onClick={() => onUpdateStatus(session.id, 'cancelled')}
                     disabled={session.status === 'cancelled'}
                     className={cn(
-                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 border shadow-soft active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
+                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 border active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
                         session.status === 'cancelled'
                             ? 'bg-error border-error text-on-error'
-                            : 'bg-card border-border/50 text-muted hover:text-error'
+                            : 'bg-card border-border text-muted hover:text-error'
                     )}
                 >
                     <XCircle size={14} /> إلغاء
@@ -106,7 +106,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <div className="px-5 pb-5 pt-0">
                     <button
                         onClick={() => onViewHistory(session.studentId, session.studentName, studentGrade, session.subject)}
-                        className="w-full py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 shadow-soft active:scale-95"
+                        className="w-full py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 active:scale-95"
                     >
                         <History size={14} /> سجل الطالب
                     </button>

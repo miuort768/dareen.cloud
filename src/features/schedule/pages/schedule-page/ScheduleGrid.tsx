@@ -51,13 +51,13 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
     const getColorIndex = (event: ScheduleEvent) => Math.max(0, uniqueTeachers.indexOf(event.teacherName));
 
     return (
-        <div className="bg-surface border border-border/50 shadow-sm overflow-hidden rounded-2xl mt-4">
+        <div className="bg-surface border border-border overflow-hidden rounded-2xl mt-4">
             <div className="overflow-x-auto custom-scrollbar">
                 <div className="min-w-[900px]">
                     <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-border">
-                        <div className="sticky start-0 z-10 p-3 text-micro font-bold text-main border-e border-border bg-primary-active dark:bg-background">الوقت</div>
+                        <div className="sticky start-0 z-10 p-3 text-micro font-bold text-main border-e border-border bg-surface">الوقت</div>
                         {DAYS_OF_WEEK.map((day) => (
-                            <div key={day} className={cn("p-3 text-micro font-bold text-center border-e border-border last:border-e-0 bg-primary-active dark:bg-background", isToday(day) ? "text-main" : "text-main")}>
+                            <div key={day} className={cn("p-3 text-micro font-bold text-center border-e border-border last:border-e-0 bg-surface", isToday(day) ? "text-main" : "text-main")}>
                                 <span>{day}</span>
                                 {isToday(day) && <span className="ms-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse bg-primary" />}
                             </div>
@@ -67,8 +67,8 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                         const currentTimeSlots = filteredEvents.filter(e => e.hour === String(slot.hour) && e.period === slot.period);
                         const isEmpty = currentTimeSlots.length === 0;
                         return (
-                            <div key={`${slot.hour}-${slot.period}`} className={cn("grid grid-cols-[80px_repeat(7,1fr)]", slotIdx % 2 === 0 ? "bg-surface" : "bg-background/30 dark:bg-background/20")}>
-                                <div className="sticky start-0 z-10 p-2 text-micro font-bold text-muted border-e border-b border-border/50 dark:border-border/50 flex items-center justify-center h-full bg-inherit">
+                            <div key={`${slot.hour}-${slot.period}`} className={cn("grid grid-cols-[80px_repeat(7,1fr)]", slotIdx % 2 === 0 ? "bg-surface" : "bg-background/30")}>
+                                <div className="sticky start-0 z-10 p-2 text-micro font-bold text-muted border-e border-b border-border flex items-center justify-center h-full bg-inherit">
                                     <Clock size={10} className="me-1 inline" />{slot.label}
                                 </div>
                                 {DAYS_OF_WEEK.map((day) => {
@@ -80,7 +80,7 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                                         return (
                                             <div key={`${day}-${slot.hour}`}
                                                 onClick={() => onSelectEvent(event)}
-                                                className={`p-1.5 border-e last:border-e-0 border-b border-border/50 dark:border-border/50 cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px] ${accent.bgLight}`}>
+                                                className={`p-1.5 border-e last:border-e-0 border-b border-border cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px] ${accent.bgLight}`}>
                                                 <div className={`absolute top-0 start-0 w-full h-0.5 ${accent.bg}`} />
                                                 <div className="flex items-start gap-1.5 h-full">
                                                     <div className={`w-1 h-full shrink-0 mt-0.5 ${accent.bg}`} />
@@ -95,8 +95,8 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                                     }
                                     return (
                                         <div key={`${day}-${slot.hour}`}
-                                            className="p-2 border-e last:border-e-0 border-b border-border/50 dark:border-border/50 min-h-[72px]">
-                                            {!isEmpty && <div className="text-micro font-bold text-dim text-center">—</div>}
+                                            className="p-2 border-e last:border-e-0 border-b border-border min-h-[72px]">
+                                            {!isEmpty && <div className="text-micro font-bold text-muted text-center">—</div>}
                                         </div>
                                     );
                                 })}
@@ -105,7 +105,7 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                     })}
                 </div>
             </div>
-            <div className="border-t border-border/50 dark:border-border/50 p-4 flex flex-wrap items-center gap-4 bg-background/50 dark:bg-background/20 no-print">
+            <div className="border-t border-border p-4 flex flex-wrap items-center gap-4 bg-background/50 no-print">
                 <span className="text-micro font-bold text-muted">دليل الألوان:</span>
                 {uniqueTeachers.map((teacher, idx) => {
                     const accent = ACCENT_COLORS[idx % ACCENT_COLORS.length];

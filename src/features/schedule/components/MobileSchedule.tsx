@@ -148,14 +148,14 @@ export const MobileSchedule = () => {
 
     return (
         <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
-            dir="rtl" className="min-h-full pb-4 overflow-x-hidden relative bg-background dark:bg-background">
+            dir="rtl" className="min-h-full pb-4 overflow-x-hidden relative bg-background">
             <motion.div initial={{ height: pullDistance }} animate={{ height: isRefreshing ? 50 : pullDistance }}
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                 className="overflow-hidden flex items-center justify-center w-full">
                 <div className="flex items-center gap-2.5 text-primary font-medium text-xs">
                     {isRefreshing ? <><Loader2 size={16} className="animate-spin" strokeWidth={1.5} /><span>جاري التحديث...</span></>
                         : pullDistance > 55 ? <><Sparkles size={16} className="animate-pulse" strokeWidth={1.5} /><span>أفلت للتحديث</span></>
-                            : <span className="text-dim">اسحب للتحديث</span>}
+                            : <span className="text-muted">اسحب للتحديث</span>}
                 </div>
             </motion.div>
             <div className="px-4 pt-3 pb-1">
@@ -163,12 +163,12 @@ export const MobileSchedule = () => {
                     <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                     <input type="text" aria-label="بحث" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
                         placeholder="ابحث عن طالب أو معلمة أو مادة..."
-                        className="w-full ps-8 pe-8 py-2.5 bg-card border border-border/50 text-xs font-bold outline-none focus:border-primary rounded-card transition-all placeholder:text-muted text-main shadow-soft" />
+                        className="w-full ps-8 pe-8 py-2.5 bg-card border border-border text-xs font-bold outline-none focus:border-primary rounded-2xl transition-all placeholder:text-muted text-main" />
                 </div>
             </div>
             <MobileScheduleDayChips selectedDay={selectedDay} onDayChange={(day) => { triggerHaptic('light'); setSelectedDay(day); setSearchTerm(''); }} todayName={todayName} />
             <motion.div {...fadeUp} className="px-4 pb-2">
-                <div className="bg-card rounded-card p-3 shadow-soft border border-border/50 flex items-center justify-between">
+                <div className="bg-card rounded-2xl p-3 border border-border flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <CalendarDays size={14} className="text-primary" strokeWidth={1.5} />
                         <span className="text-micro font-bold text-muted">{selectedDay}</span>
@@ -181,7 +181,7 @@ export const MobileSchedule = () => {
             </motion.div>
             {currentUser?.role === 'admin' && (
                 <div className="px-4 pb-2">
-                    <div className="bg-card rounded-card shadow-soft border border-border/50 overflow-hidden">
+                    <div className="bg-card rounded-2xl border border-border overflow-hidden">
                         <div className="p-3"><LiveClasses /></div>
                     </div>
                 </div>
@@ -209,7 +209,7 @@ export const MobileSchedule = () => {
                                         return (
                                             <motion.div key={event.id} whileTap={{ scale: 0.97 }}
                                                 onClick={() => { triggerHaptic('light'); setSelectedEvent(event); setShowDetails(true); }}
-                                                className={`bg-card rounded-card p-3 shadow-soft border-e-[3px] cursor-pointer active:scale-[0.97] transition-all ${ts.border}`}>
+                                                className={`bg-card rounded-2xl p-3 border-e-[3px] cursor-pointer active:scale-[0.97] transition-all ${ts.border}`}>
                                                 <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
                                                         <div className={`w-7 h-7 rounded-xl flex items-center justify-center text-micro font-semibold text-on-primary ${ts.bg}`}>
@@ -230,10 +230,10 @@ export const MobileSchedule = () => {
                         );
                     })
                 ) : (
-                    <div className="py-16 text-center bg-card rounded-card border border-dashed border-border">
-                        <CalendarDays size={28} className="mx-auto mb-2 text-dim" strokeWidth={1.5} />
+                    <div className="py-16 text-center bg-card rounded-2xl border border-dashed border-border">
+                        <CalendarDays size={28} className="mx-auto mb-2 text-muted" strokeWidth={1.5} />
                         <p className="text-xs font-bold text-muted">لا توجد حصص في هذا اليوم</p>
-                        <p className="text-micro font-medium text-dim mt-1">اختر يوماً آخر من الأيام أعلاه</p>
+                        <p className="text-micro font-medium text-muted mt-1">اختر يوماً آخر من الأيام أعلاه</p>
                     </div>
                 )}
             </div>

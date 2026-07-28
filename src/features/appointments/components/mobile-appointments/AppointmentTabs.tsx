@@ -13,7 +13,7 @@ interface AppointmentTabsProps {
 
 export const AppointmentTabs = ({ activeTab, onTabChange, totalCount, completedCount, setSearchTerm }: AppointmentTabsProps) => (
     <div className="px-4 pb-2">
-        <div className="flex bg-surface rounded-card p-1 gap-1 shadow-soft">
+        <div className="flex bg-surface rounded-2xl p-1 gap-1">
             {[
                 { id: 'upcoming' as const, label: 'المواعيد', badge: totalCount - completedCount },
                 { id: 'completed' as const, label: 'المكتملة', badge: completedCount },
@@ -22,7 +22,7 @@ export const AppointmentTabs = ({ activeTab, onTabChange, totalCount, completedC
                     onClick={() => { triggerHaptic('light'); onTabChange(tab.id); setSearchTerm(''); }}
                     whileTap={{ scale: 0.96 }}
                     className={cn("flex-1 py-2 px-2 flex items-center justify-center gap-1.5 transition-all duration-300 relative rounded-xl",
-                        activeTab === tab.id ? "bg-card shadow-soft text-primary font-bold" : "text-dim font-medium"
+                        activeTab === tab.id ? "bg-card shadow-elevation-1 text-primary font-bold" : "text-muted font-medium"
                     )}>
                     {tab.id === 'upcoming' ? <Calendar size={14} strokeWidth={1.5} /> : <CheckCircle2 size={14} strokeWidth={1.5} />}
                     <span className="text-micro">{tab.label}</span>

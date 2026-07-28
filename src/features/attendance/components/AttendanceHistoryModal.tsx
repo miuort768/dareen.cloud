@@ -105,9 +105,9 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     if (!isOpen) return null;
 
     return (
-        <div ref={containerRef} className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in" role="dialog" aria-modal="true" aria-label={studentName} onKeyDown={handleKeyDown}>
-            <div className="bg-card w-full max-w-2xl rounded-card shadow-soft border border-border/50 animate-in zoom-in-95 max-h-[90vh] flex flex-col overflow-hidden">
-                <div className="p-5 border-b border-border/50 flex justify-between items-center bg-primary text-on-primary">
+        <div ref={containerRef} className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in" role="dialog" aria-modal="true" aria-label={studentName} onKeyDown={handleKeyDown}>
+            <div className="bg-card w-full max-w-2xl rounded-2xl shadow-elevation-2 border border-border animate-in zoom-in-95 max-h-[90vh] flex flex-col overflow-hidden">
+                <div className="p-5 border-b border-border flex justify-between items-center bg-primary text-on-primary rounded-t-2xl">
                     <div>
                         <h3 className="text-sm font-bold flex items-center gap-2">
                             <Clock size={18} />
@@ -117,24 +117,24 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                             <p className="text-base font-bold text-on-primary">{studentName}</p>
                             <div className="flex flex-wrap gap-2 mt-1">
                                 {studentGrade && (
-                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-white/10 text-on-primary">
+                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-white/15 text-on-primary">
                                         الصف {studentGrade}
                                     </span>
                                 )}
                                 {studentCurriculum && (
-                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-white/10 text-on-primary">
+                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-white/15 text-on-primary">
                                         {studentCurriculum}
                                     </span>
                                 )}
                                 {studentSubject && (
-                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-white/10 text-on-primary">
+                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-white/15 text-on-primary">
                                         منهج {studentSubject}
                                     </span>
                                 )}
                             </div>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl" aria-label="إغلاق">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/15 transition-colors rounded-xl" aria-label="إغلاق">
                         <X size={20} />
                     </button>
                 </div>
@@ -152,7 +152,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                 <div
                                     key={session.id}
                                     className={cn(
-                                        "flex items-center justify-between transition-all group bg-card border shadow-soft border-e-[4px]",
+                                        "flex items-center justify-between transition-all group bg-card border border-e-[4px]",
                                         session.status === 'completed'
                                             ? "border-success/20 bg-success-soft/30 border-e-success"
                                             : "border-error/20 bg-error-soft/30 border-e-error"
@@ -164,13 +164,13 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                 type="date" aria-label="تاريخ الجلسة"
                                                 value={editingSession.date}
                                                 onChange={e => setEditingSession({ ...editingSession, date: e.target.value })}
-                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-card outline-none focus:border-primary transition-all"
+                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-surface focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
                                             />
                                             <select
                                                 value={editingSession.status}
                                                 onChange={e => setEditingSession({ ...editingSession, status: e.target.value as 'completed' | 'cancelled' })}
                                                 aria-label="حالة الحضور"
-                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-card outline-none focus:border-primary transition-all"
+                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-surface focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
                                             >
                                                 <option value="completed">حضور</option>
                                                 <option value="cancelled">غياب</option>
@@ -178,7 +178,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                             <div className="flex gap-2 ms-auto">
                                                     <button
                                                         onClick={handleUpdate}
-                                                        className="p-2 rounded-xl transition-all shadow-soft active:scale-95 bg-success-soft text-success"
+                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-success-soft text-success"
                                                         title="حفظ"
                                                     >
                                                         <Save size={16} />
@@ -233,14 +233,14 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                 <div className="flex gap-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <button
                                                         onClick={() => setEditingSession(session)}
-                                                        className="p-2 rounded-xl transition-all shadow-soft active:scale-95 bg-primary-soft text-primary"
+                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-primary-soft text-primary"
                                                         title="تعديل"
                                                     >
                                                         <Edit2 size={14} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(session.id)}
-                                                        className="p-2 rounded-xl transition-all shadow-soft active:scale-95 bg-error-soft text-error"
+                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-error-soft text-error"
                                                         title="حذف"
                                                         disabled={deletingId === session.id}
                                                     >
@@ -254,7 +254,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                             ))}
                         </div>
                     ) : (
-                        <div className="py-12 text-center flex flex-col items-center gap-4 mx-5 mb-5 bg-card border border-dashed border-border/50 rounded-card">
+                        <div className="py-12 text-center flex flex-col items-center gap-4 mx-5 mb-5 bg-card border border-dashed border-border rounded-2xl">
                             <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-surface text-muted">
                                 <AlertCircle size={24} />
                             </div>
@@ -263,10 +263,10 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                     )}
                 </div>
 
-                <div className="p-5 border-t border-border/50">
+                <div className="p-5 border-t border-border">
                     <button
                         onClick={onClose}
-                        className="w-full bg-primary hover:bg-primary-hover text-on-primary font-bold py-3 text-sm rounded-xl shadow-soft transition-all active:scale-95"
+                        className="w-full bg-primary hover:bg-primary-hover text-on-primary font-bold py-3 text-sm rounded-xl transition-all active:scale-95"
                     >
                         إغلاق
                     </button>

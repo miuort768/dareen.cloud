@@ -45,8 +45,8 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
 
     return (
         <div className="px-0 mb-4">
-            <div className="bg-card border border-border/50 shadow-soft rounded-card p-4">
-                <div className="flex items-center justify-between mb-4 pb-3 border-b border-border/50">
+            <div className="bg-card border border-border rounded-2xl p-4">
+                <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft text-primary">
                             <SlidersHorizontal size={14} />
@@ -67,7 +67,7 @@ export const AttendanceFilters: React.FC<AttendanceFiltersProps> = ({
                 </div>
 
                 {periodFilter && onPeriodChange && (
-                    <div className="mb-4 pb-4 border-b border-border/50">
+                    <div className="mb-4 pb-4 border-b border-border">
                         <div className="flex flex-wrap items-center gap-2">
                             {(Object.keys(periodLabels) as PeriodFilter[]).map(key => (
                                 <button

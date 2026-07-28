@@ -11,7 +11,7 @@ interface AttendanceStatsProps {
 }
 
 const StatItem = ({ title, value, icon: Icon, subLabel, color = 'bg-primary' }: { title: string, value: number, icon: LucideIcon, subLabel?: string, color?: string }) => (
-    <div className={`rounded-card p-4 ${color}`}>
+    <div className={`rounded-2xl p-4 ${color}`}>
         <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
                 <Icon size={20} className="text-on-primary" />

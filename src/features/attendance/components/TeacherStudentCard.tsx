@@ -145,7 +145,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
     };
 
     return (
-        <div className="bg-card border border-border/50 shadow-soft rounded-card overflow-hidden flex flex-col group transition-all hover:shadow-soft">
+        <div className="bg-card border border-border shadow-elevation-1 rounded-2xl overflow-hidden flex flex-col group transition-all hover:shadow-elevation-2">
             {/* Header Accent */}
             <div className={cn(
                 "h-1.5 w-full bg-surface transition-all",
@@ -242,7 +242,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 </button>
 
                 {/* Attendance Footer */}
-                <div className="pt-4 border-t border-border/50 space-y-3 mt-auto">
+                <div className="pt-4 border-t border-border space-y-3 mt-auto">
                     <div className="flex items-center justify-between">
                         <h5 className="text-micro font-normal text-muted uppercase flex items-center gap-1.5">
                             <Activity size={12} className="text-success" /> التحضير والمتابعة

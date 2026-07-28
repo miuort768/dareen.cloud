@@ -25,13 +25,13 @@ interface AppointmentScheduleGridProps {
 export const AppointmentScheduleGrid = ({ appointmentsByDay, onSelectAppointment, onCompleteSession }: AppointmentScheduleGridProps) => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {appointmentsByDay.map(({ day, appointments }) => (
-            <motion.div layout key={day} className="bg-card border border-border shadow-sm rounded-2xl flex flex-col">
-                <div className="px-4 py-2.5 border-b border-border flex items-center justify-between bg-background">
+            <motion.div layout key={day} className="bg-card border border-border rounded-2xl flex flex-col">
+                <div className="px-4 py-2.5 border-b border-border flex items-center justify-between bg-surface">
                     <h3 className="font-bold text-sm text-main">{day}</h3>
                     <span className={cn(
                         "text-micro font-bold px-2 py-0.5 tabular-nums rounded-lg",
-                        appointments.length > 0 ? "text-on-primary" : "text-dim"
-                    )} style={appointments.length > 0 ? { backgroundColor: 'var(--bg-primary)' } : { backgroundColor: 'var(--bg-background)' }}>
+                        appointments.length > 0 ? "text-on-primary bg-primary" : "text-muted bg-surface"
+                    )}>
                         {appointments.length} موعد
                     </span>
                 </div>
@@ -60,7 +60,7 @@ export const AppointmentScheduleGrid = ({ appointmentsByDay, onSelectAppointment
                                     </div>
                                 </div>
                                 <button onClick={(e) => onCompleteSession(nextSession.id, e)}
-                                    className="w-full bg-success hover:brightness-90 text-on-success py-2.5 font-bold text-xs rounded-xl shadow-sm active:scale-95 transition-all flex items-center justify-center gap-1.5">
+                                    className="w-full bg-success hover:brightness-90 text-on-success py-2.5 font-bold text-xs rounded-xl active:scale-95 transition-all flex items-center justify-center gap-1.5">
                                     <CheckCircle2 size={14} /> إتمام الحصة
                                 </button>
                             </div>
@@ -82,7 +82,7 @@ export const AppointmentScheduleGrid = ({ appointmentsByDay, onSelectAppointment
                     <Calendar size={28} className="text-primary" />
                 </div>
                 <h3 className="font-bold text-muted text-base mb-1">لا توجد مواعيد</h3>
-                <p className="text-dim text-xs font-bold max-w-xs">لا توجد مواعيد متطابقة مع معايير البحث</p>
+                <p className="text-muted text-xs font-bold max-w-xs">لا توجد مواعيد متطابقة مع معايير البحث</p>
             </div>
         )}
     </div>

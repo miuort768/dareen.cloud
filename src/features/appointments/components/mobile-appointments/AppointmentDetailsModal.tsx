@@ -36,35 +36,35 @@ export const AppointmentDetailsModal = ({ show, appointment, activeTab, onClose,
                         </div>
 
                         <div className="space-y-3">
-                            <div className="flex items-center justify-between p-3.5 rounded-card bg-primary/[0.03] border-e-[3px] border-primary">
+                            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-primary-soft border-e-[3px] border-e-primary">
                                 <div>
                                     <span className="text-micro font-bold text-muted">الطالب</span>
                                     <p className="text-sm font-bold text-main">{appointment.studentName}</p>
                                     <span className="text-micro font-bold text-primary">{appointment.studentGrade}</span>
                                 </div>
-                                <User size={18} className="text-dim" strokeWidth={1.5} />
+                                <User size={18} className="text-muted" strokeWidth={1.5} />
                             </div>
-                            <div className="flex items-center justify-between p-3.5 rounded-card bg-success/[0.03] border-e-[3px] border-success">
+                            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-success-soft border-e-[3px] border-e-success">
                                 <div>
                                     <span className="text-micro font-bold text-muted">المعلمة</span>
                                     <p className="text-sm font-bold text-main">{appointment.teacherName}</p>
                                 </div>
-                                <ShieldCheck size={18} className="text-dim" strokeWidth={1.5} />
+                                <ShieldCheck size={18} className="text-muted" strokeWidth={1.5} />
                             </div>
-                            <div className="flex items-center justify-between p-3.5 rounded-card bg-warning/[0.03] border-e-[3px] border-warning">
+                            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-warning-soft border-e-[3px] border-e-warning">
                                 <div>
                                     <span className="text-micro font-bold text-muted">المادة</span>
                                     <p className="text-sm font-bold text-main">{appointment.subject}</p>
-                                    <span className="text-micro font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg bg-warning/10 text-warning">{appointment.curriculum}</span>
+                                    <span className="text-micro font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg bg-warning-soft text-warning">{appointment.curriculum}</span>
                                 </div>
-                                <BookOpen size={18} className="text-dim" strokeWidth={1.5} />
+                                <BookOpen size={18} className="text-muted" strokeWidth={1.5} />
                             </div>
                         </div>
 
                         {activeTab === 'upcoming' && (
                             <motion.button whileTap={{ scale: 0.95 }}
                                 onClick={(e) => { onComplete(appointment.id, e); onClose(); }}
-                                className="w-full py-3 rounded-card bg-success text-on-success text-micro font-bold flex items-center justify-center gap-2 shadow-soft shadow-success/30">
+                                className="w-full py-3 rounded-2xl bg-success text-on-success text-micro font-bold flex items-center justify-center gap-2">
                                 <CheckCircle2 size={14} strokeWidth={1.5} /> إتمام الحصة
                             </motion.button>
                         )}

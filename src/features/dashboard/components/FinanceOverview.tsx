@@ -101,7 +101,7 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
 
             {/* Summary */}
             {monthlyData.length > 0 && (
-                <div className="flex items-center justify-center gap-4 pt-3 border-t border-border/50">
+                <div className="flex items-center justify-center gap-4 pt-3 border-t border-border">
                     <div className="flex items-center gap-1.5">
                         <div className="w-2.5 h-2.5 rounded-md" style={{ backgroundColor: chartColors.revenue }} />
                         <span className="text-[10px] font-bold text-muted">الإيرادات</span>

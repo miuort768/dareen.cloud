@@ -19,8 +19,8 @@ export const MobileScheduleDayChips = ({ selectedDay, onDayChange, todayName }: 
                 return (
                     <motion.button key={day} whileTap={{ scale: 0.93 }}
                         onClick={() => { triggerHaptic('light'); onDayChange(day); }}
-                        className={cn("px-3.5 py-2 rounded-card text-micro font-bold whitespace-nowrap transition-all border",
-                            isActive ? "bg-primary text-on-primary border-primary shadow-soft shadow-primary/40" : "bg-card text-muted border-border/50")}>
+                        className={cn("px-3.5 py-2 rounded-2xl text-micro font-bold whitespace-nowrap transition-all border",
+                            isActive ? "bg-primary text-on-primary border-primary" : "bg-card text-muted border-border")}>
                         {day}
                         {isToday && <span className={cn("ms-1.5 inline-block w-1.5 h-1.5 rounded-full", isActive ? "bg-white" : "bg-primary")} />}
                     </motion.button>

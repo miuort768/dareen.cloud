@@ -22,13 +22,13 @@ export const AttendanceHistoryView = ({
         exit={{ opacity: 0, y: -12 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
         className="space-y-3">
-        <div className="bg-card rounded-card p-2 shadow-soft border border-border/50">
+        <div className="bg-card rounded-2xl p-2 border border-border">
             <div className="flex items-center gap-1.5">
                 {(['today', 'week', 'month'] as PeriodFilter[]).map(p => (
                     <motion.button key={p} whileTap={{ scale: 0.95 }}
                         onClick={() => { triggerHaptic('light'); setPeriodFilter(p); }}
                         className={cn("flex-1 py-2 rounded-xl text-micro font-bold transition-all",
-                            periodFilter === p ? "bg-primary text-on-primary shadow-soft" : "text-muted"
+                            periodFilter === p ? "bg-primary text-on-primary shadow-elevation-1" : "text-muted"
                         )}>
                         {p === 'today' ? 'اليوم' : p === 'week' ? 'الأسبوع' : 'الشهر'}
                     </motion.button>
@@ -39,7 +39,7 @@ export const AttendanceHistoryView = ({
         <div className="space-y-1.5">
             {filteredSessions.length > 0 ? filteredSessions.map(session => (
                 <motion.div key={session.id} whileTap={{ scale: 0.98 }}
-                    className="bg-card rounded-card p-3.5 shadow-soft border border-border/50 flex items-center justify-between">
+                    className="bg-card rounded-2xl p-3.5 border border-border flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                         <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center",
                             session.status === 'completed' ? 'bg-success-soft' :
@@ -64,10 +64,10 @@ export const AttendanceHistoryView = ({
                     </div>
                 </motion.div>
             )) : (
-                <div className="py-12 text-center bg-card rounded-card border border-dashed border-border/50">
-                    <History className="mx-auto mb-2 text-dim" size={28} strokeWidth={1.5} />
+                <div className="py-12 text-center bg-card rounded-2xl border border-dashed border-border">
+                    <History className="mx-auto mb-2 text-muted" size={28} strokeWidth={1.5} />
                     <p className="text-xs font-bold text-muted">لا توجد جلسات مسجلة</p>
-                    <p className="text-micro font-medium text-dim mt-1">لـ {periodLabel}</p>
+                    <p className="text-micro font-medium text-muted mt-1">لـ {periodLabel}</p>
                 </div>
             )}
         </div>

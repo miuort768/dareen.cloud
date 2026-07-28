@@ -34,8 +34,8 @@ export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, s
     const visibleTeachers = uniqueTeachers.filter(t => filterTeacher === 'all' || t === filterTeacher);
     if (visibleTeachers.length === 0) {
         return (
-            <div className="py-12 text-center bg-card rounded-card border border-dashed border-border/50">
-                <Users className="mx-auto mb-2 text-dim" size={28} strokeWidth={1.5} />
+            <div className="py-12 text-center bg-card rounded-2xl border border-dashed border-border">
+                <Users className="mx-auto mb-2 text-muted" size={28} strokeWidth={1.5} />
                 <p className="text-xs font-bold text-muted">لا يوجد طلاب متاحون</p>
             </div>
         );
@@ -51,8 +51,8 @@ export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, s
                 );
                 if (filtered.length === 0) return null;
                 return (
-                    <div key={teacher} className="bg-card rounded-card shadow-soft border border-border/50 overflow-hidden">
-                        <div className="px-4 py-2.5 border-b border-border/50 flex items-center justify-between">
+                    <div key={teacher} className="bg-card rounded-2xl border border-border overflow-hidden">
+                        <div className="px-4 py-2.5 border-b border-border flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-semibold bg-primary-soft text-primary">{teacher.charAt(0)}</div>
                                 <span className="text-xs font-bold text-main">{teacher}</span>

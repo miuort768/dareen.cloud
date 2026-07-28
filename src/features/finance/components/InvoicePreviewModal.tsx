@@ -31,13 +31,10 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60  transition-all duration-300">
-            {/* Reduced max-width to max-w-lg (roughly 25% smaller than 2xl/xl) */}
-            <div className="bg-card w-full max-w-lg shadow-sm relative overflow-hidden animate-in fade-in zoom-in duration-300 rounded-2xl">
-                {/* Decoration */}
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm transition-all duration-300">
+            <div className="bg-card w-full max-w-lg shadow-elevation-2 relative overflow-hidden animate-in fade-in zoom-in duration-300 rounded-2xl">
                 <div className="absolute top-0 start-0 w-32 h-32 bg-primary opacity-10 -rotate-45 translate-x-16 -translate-y-16 pointer-events-none"></div>
 
-                {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-border no-print">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-primary-soft rounded-xl">
@@ -45,7 +42,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                         </div>
                         <div>
                             <h3 className="font-medium text-xl text-main">معاينة الفاتورة</h3>
-                            <p className="text-xs text-dim font-normal uppercase tracking-widest leading-none mt-1">معاينة الفاتورة</p>
+                            <p className="text-xs text-muted font-normal uppercase tracking-widest leading-none mt-1">معاينة الفاتورة</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -59,12 +56,11 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                             <span className="text-xs font-normal text-muted">إخفاء المبالغ</span>
                         </label>
                         <button onClick={onClose} className="p-2 hover:bg-hover transition-colors rounded-xl" aria-label="إغلاق">
-                            <X size={24} className="text-dim" />
+                            <X size={24} className="text-muted" />
                         </button>
                     </div>
                 </div>
 
-                {/* Invoice Content */}
                 <div id="printable-invoice" className="p-8 bg-card min-h-[500px]">
                     <div className="flex justify-between items-start mb-8">
                         <div className="space-y-4">
@@ -74,7 +70,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                 </div>
                                 <div>
                                     <h2 className="text-xl font-medium text-main tracking-tighter">{academyName || 'أكاديمية الشيخ خوارزمي'}</h2>
-                                    <p className="text-micro text-dim font-normal uppercase tracking-widest">فاتورة الأكاديمية</p>
+                                    <p className="text-micro text-muted font-normal uppercase tracking-widest">فاتورة الأكاديمية</p>
                                 </div>
                             </div>
                             <div className="text-xs font-normal text-muted space-y-1">
@@ -98,18 +94,18 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
 
                     <div className="grid grid-cols-2 gap-4 mb-8 border-y border-border py-6">
                         <div>
-                            <p className="text-micro text-dim font-medium uppercase mb-2 tracking-widest">إلى الطالب:</p>
+                            <p className="text-micro text-muted font-medium uppercase mb-2 tracking-widest">إلى الطالب:</p>
                             <p className="text-base font-medium text-main mb-1">{invoice.studentName}</p>
                             <p className="text-xs text-muted font-normal italic">{invoice.description}</p>
                         </div>
                         <div className="text-end">
                             <div className="space-y-2">
                                 <div>
-                                    <p className="text-micro text-dim font-medium uppercase tracking-widest">تاريخ الإصدار</p>
+                                    <p className="text-micro text-muted font-medium uppercase tracking-widest">تاريخ الإصدار</p>
                                     <p className="text-xs font-normal text-main font-mono">{new Date(invoice.date).toLocaleDateString('ar-EG')}</p>
                                 </div>
                                 <div>
-                                    <p className="text-micro text-dim font-medium uppercase tracking-widest">تاريخ الاستحقاق</p>
+                                    <p className="text-micro text-muted font-medium uppercase tracking-widest">تاريخ الاستحقاق</p>
                                     <p className="text-xs font-normal text-main font-mono">{new Date(invoice.dueDate).toLocaleDateString('ar-EG')}</p>
                                 </div>
                             </div>
@@ -129,7 +125,6 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                             <tbody className="divide-y divide-border">
                                 {invoice.items && invoice.items.length > 0 ? (
                                     invoice.items.map((item, idx) => {
-                                        // item.description format: "Math - TeacherName (Status)"
                                         const parts = item.description.split(' - ');
                                         const subject = parts[0] || '-';
                                         const teacherWithStatus = parts[1] || '';
@@ -186,18 +181,17 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
 
                     {invoice.notes && (
                         <div className="mt-8">
-                            <p className="text-micro text-dim font-medium uppercase mb-2 tracking-widest">ملاحظات:</p>
+                            <p className="text-micro text-muted font-medium uppercase mb-2 tracking-widest">ملاحظات:</p>
                             <p className="text-xs text-muted leading-relaxed font-normal italic">{invoice.notes}</p>
                         </div>
                     )}
 
                     <div className="mt-12 text-center no-print">
-                        <p className="text-micro text-dim font-medium uppercase tracking-label mb-4 opacity-50">شكراً لثقتكم بأكاديميتنا</p>
+                        <p className="text-micro text-muted font-medium uppercase tracking-label mb-4 opacity-50">شكراً لثقتكم بأكاديميتنا</p>
                         <div className="w-24 h-1 bg-primary mx-auto opacity-20"></div>
                     </div>
                 </div>
 
-                {/* Footer Actions */}
                 <div className="p-6 border-t border-border bg-surface flex justify-end gap-3 no-print">
                     <button
                         onClick={onClose}
@@ -207,7 +201,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                     </button>
                     <button
                         onClick={handlePrint}
-                        className="px-6 py-2.5 bg-primary text-on-primary font-medium text-xs uppercase tracking-widest hover:bg-primary-hover transition-all shadow-sm flex items-center gap-2 rounded-xl"
+                        className="px-6 py-2.5 bg-primary text-on-primary font-medium text-xs uppercase tracking-widest hover:bg-primary-hover transition-all flex items-center gap-2 rounded-xl"
                     >
                         <Printer size={16} />
                         طباعة

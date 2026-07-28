@@ -13,7 +13,7 @@ interface AttendanceHeaderProps {
 
 export const AttendanceHeader: React.FC<AttendanceHeaderProps> = ({ date, onDateChange, isTeacher }) => {
     return (
-        <div className="rounded-card px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-primary">
+        <div className="rounded-2xl px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-primary">
             <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/15">
                     <Sparkles size={22} className="text-on-primary" />
