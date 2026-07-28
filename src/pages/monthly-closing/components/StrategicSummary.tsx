@@ -87,15 +87,15 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                             <div className="space-y-10">
                                 <div className="flex gap-6">
                                     <div className="shrink-0 w-8 h-8 bg-card text-main flex items-center justify-center font-semibold text-xs italic rounded-xl">01</div>
-                                    <p className="text-xs font-bold leading-relaxed text-dim italic">
-                                        تمت مراجعة وتدقيق كافة الجلسات التعليمية المنفذة ومطابقتها يدوياً وآلياً مع سجلات الدفع والتحصيل النقدي الفعلي لضمان أعلى درجات الدقة.
-                                    </p>
+                                     <p className="text-xs font-bold leading-relaxed text-muted italic">
+                                         تمت مراجعة وتدقيق كافة الجلسات التعليمية المنفذة ومطابقتها يدوياً وآلياً مع سجلات الدفع والتحصيل النقدي الفعلي لضمان أعلى درجات الدقة.
+                                     </p>
                                 </div>
                                 <div className="flex gap-6">
                                     <div className="shrink-0 w-8 h-8 bg-primary text-on-primary flex items-center justify-center font-semibold text-xs italic rounded-xl">02</div>
-                                    <p className="text-xs font-bold leading-relaxed text-dim italic">
-                                        إجمالي السيولة النقدية المتوفرة حالياً تغطي التزامات رواتب المعلمات بنسبة {(totalActualCollections / totalTeacherPayout * 100).toFixed(0)}% مما يعزز الاستقرار المالي للمؤسسة.
-                                    </p>
+                                     <p className="text-xs font-bold leading-relaxed text-muted italic">
+                                         إجمالي السيولة النقدية المتوفرة حالياً تغطي التزامات رواتب المعلمات بنسبة {(totalActualCollections / totalTeacherPayout * 100).toFixed(0)}% مما يعزز الاستقرار المالي للمؤسسة.
+                                     </p>
                                 </div>
                             </div>
                         </div>

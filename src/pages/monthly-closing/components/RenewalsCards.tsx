@@ -28,19 +28,19 @@ export const RenewalsCards: React.FC<RenewalsCardsProps> = ({ renewalsData }) =>
                             </div>
                             <Badge variant="warning" size="sm">رصيد منخفض</Badge>
                         </div>
-                        <div className="bg-surface dark:bg-card p-3 flex items-center justify-between mb-4 border border-border rounded-xl">
+                        <div className="bg-surface p-3 flex items-center justify-between mb-4 border border-border rounded-xl">
                             <span className="text-micro font-bold text-muted">الحصص المتبقية</span>
                             <span className="text-lg font-bold text-main font-mono">{item.remaining}</span>
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                        <button onClick={() => window.open(item.waLink, '_blank')} className="flex items-center justify-center gap-1.5 py-2.5 bg-success hover:brightness-90 text-on-success text-micro font-bold transition-all shadow-sm active:scale-95 rounded-xl"><MessageCircle size={14} /> واتساب</button>
-                        <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-1.5 py-2.5 bg-primary hover:brightness-90 text-on-primary text-micro font-bold transition-all shadow-sm active:scale-95 rounded-xl"><Phone size={14} /> اتصال</a>
+                        <button onClick={() => window.open(item.waLink, '_blank')} className="flex items-center justify-center gap-1.5 py-2.5 bg-success hover:brightness-90 text-on-success text-micro font-bold transition-all active:scale-95 rounded-xl"><MessageCircle size={14} /> واتساب</button>
+                        <a href={`tel:${item.phone}`} className="flex items-center justify-center gap-1.5 py-2.5 bg-primary hover:brightness-90 text-on-primary text-micro font-bold transition-all active:scale-95 rounded-xl"><Phone size={14} /> اتصال</a>
                     </div>
                 </SectionCard>
             ))}
             {renewalsData.length === 0 && (
-                <div className="col-span-full py-20 text-center bg-card border border-border rounded-xl shadow-sm">
+                <div className="col-span-full py-20 text-center bg-card border border-border rounded-xl">
                     <CheckCircle2 className="mx-auto mb-3 text-primary opacity-20" size={48} />
                     <p className="text-xs font-bold text-muted">لا توجد تجديدات مطلوبة</p>
                 </div>

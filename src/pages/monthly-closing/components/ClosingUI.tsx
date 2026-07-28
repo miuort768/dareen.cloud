@@ -3,7 +3,7 @@ import { cn } from '../../../lib/utils';
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-card border border-border shadow-sm rounded-2xl',
+        'bg-card border border-border rounded-2xl',
         className
     )}>
         {children}
@@ -30,7 +30,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-gradient-to-l from-primary to-primary-hover',
-            'text-on-primary text-xs font-bold px-4 py-2 transition-all shadow-sm active:scale-[0.97] rounded-xl hover:brightness-90',
+            'text-on-primary text-xs font-bold px-4 py-2 transition-all active:scale-[0.97] rounded-xl hover:brightness-90',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
@@ -46,7 +46,7 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
         onClick={onClick}
         className={cn(
             'flex items-center justify-center gap-2 bg-card hover:bg-hover',
-            'text-muted text-xs font-bold px-3 py-2 border border-border transition-all shadow-sm rounded-xl',
+            'text-muted text-xs font-bold px-3 py-2 border border-border transition-all rounded-xl',
             'active:scale-[0.97]',
             className
         )}
@@ -56,7 +56,7 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
 );
 
 export const StatItem = ({ title, value, icon: Icon, color, subValue }: { title: string, value: string | number, icon: React.ComponentType<{ size?: number }>, color: string, subValue?: string }) => (
-    <div className="rounded-2xl p-4 dark:brightness-[0.65]" style={{ backgroundColor: color }}>
+    <div className="rounded-2xl p-4" style={{ backgroundColor: color }}>
         <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-white/15">
                 <Icon size={20} className="text-on-primary" />

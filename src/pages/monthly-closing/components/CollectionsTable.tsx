@@ -25,7 +25,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
 
     return (
         <SectionCard>
-            <div className="p-4 border-b border-border/50 dark:border-border/50">
+            <div className="p-4 border-b border-border">
                 <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" color="var(--bg-success)" />
             </div>
             {/* Desktop table */}
@@ -39,11 +39,11 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                             <th className="px-4 py-3 font-bold text-micro text-on-primary text-center">الحالة</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-border dark:divide-border">
+                    <tbody className="divide-y divide-border">
                         {(studentInvoices || []).filter((inv) => inv.date >= startDate && inv.date <= endDate).map((item) => (
-                            <tr key={item.id} className="hover:bg-surface/50 dark:hover:bg-primary-active/30 transition-colors">
+                            <tr key={item.id} className="hover:bg-surface/50 transition-colors">
                                 <td className="px-4 py-4">
-                                    <span className="block font-bold text-xs text-main dark:text-main mb-0.5">{item.studentName}</span>
+                                    <span className="block font-bold text-xs text-main mb-0.5">{item.studentName}</span>
                                     <span className="text-micro text-muted font-medium line-clamp-1">{item.description}</span>
                                 </td>
                                 <td className="px-4 py-4 text-center font-bold text-xs text-success">
@@ -58,7 +58,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                             queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
                                         }}
                                         className={cn(
-                                            "px-3 py-1 font-bold text-micro uppercase transition-all shadow-sm active:scale-95 rounded-xl",
+                                            "px-3 py-1 font-bold text-micro uppercase transition-all active:scale-95 rounded-xl",
                                             item.status === 'paid' ? "bg-success text-on-success" : "text-error border border-error bg-error-light"
                                         )}
                                     >
@@ -73,7 +73,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
             {/* Mobile cards */}
             <div className="md:hidden space-y-3 p-4">
                 {(studentInvoices || []).filter((inv) => inv.date >= startDate && inv.date <= endDate).map((item) => (
-                    <div key={item.id} className="bg-surface dark:bg-card rounded-xl p-4 space-y-2">
+                    <div key={item.id} className="bg-surface rounded-xl p-4 space-y-2">
                         <div className="flex items-start justify-between">
                             <div className="min-w-0 flex-1">
                                 <span className="block font-bold text-xs text-main leading-tight truncate">{item.studentName}</span>
@@ -90,7 +90,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                     queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
                                 }}
                                 className={cn(
-                                    "px-3 py-1 font-bold text-micro uppercase transition-all shadow-sm active:scale-95 rounded-xl",
+                                    "px-3 py-1 font-bold text-micro uppercase transition-all active:scale-95 rounded-xl",
                                     item.status === 'paid' ? "bg-success text-on-success" : "text-error border border-error bg-error-light"
                                 )}
                             >

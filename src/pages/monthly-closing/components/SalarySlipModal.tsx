@@ -75,7 +75,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                         <SectionTitle icon={ActivityIcon} label="بيان الحصص التفصيلي" />
                         <div className="border border-border overflow-hidden rounded-xl">
                             <table className="w-full text-start text-xs">
-                                <thead className="bg-surface dark:bg-card">
+                                <thead className="bg-surface">
                                     <tr>
                                         <th className="p-2.5 font-bold text-muted">التاريخ</th>
                                         <th className="p-2.5 font-bold text-muted">الطالب</th>
@@ -94,7 +94,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                             </table>
                         </div>
                         {teacher.sessionsList?.length > 10 && (
-                            <p className="text-micro text-center text-dim mt-2 italic">... و {teacher.sessionsList.length - 10} حصص أخرى في السجل</p>
+                            <p className="text-micro text-center text-muted mt-2 italic">... و {teacher.sessionsList.length - 10} حصص أخرى في السجل</p>
                         )}
                     </div>
 

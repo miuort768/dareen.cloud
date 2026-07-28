@@ -19,7 +19,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
 
     return (
         <SectionCard>
-            <div className="p-4 border-b border-border/50 dark:border-border/50">
+            <div className="p-4 border-b border-border">
                 <SectionTitle icon={RefreshCw} label="سجل حصص التعويض المعلقة" sub="الإلغاءات التي تتطلب إعادة جدولة" />
             </div>
             {/* Desktop table */}
@@ -33,11 +33,11 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                             <th className="px-4 py-3 font-bold text-micro text-on-primary text-center">الحالة</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-border dark:divide-border">
+                    <tbody className="divide-y divide-border">
                         {cancelledNeedingComp.map((session, idx) => (
-                            <tr key={idx} className="hover:bg-surface/50 dark:hover:bg-primary-active/30 transition-colors">
-                                <td className="px-4 py-4 text-xs font-bold text-main dark:text-main">{session.studentName}</td>
-                                <td className="px-4 py-4 text-xs font-bold text-muted dark:text-muted">{session.teacherName}</td>
+                            <tr key={idx} className="hover:bg-surface/50 transition-colors">
+                                <td className="px-4 py-4 text-xs font-bold text-main">{session.studentName}</td>
+                                <td className="px-4 py-4 text-xs font-bold text-muted">{session.teacherName}</td>
                                 <td className="px-4 py-4 text-center font-mono text-micro text-error">{session.date}</td>
                                 <td className="px-4 py-4 text-center">
                                     <div className="inline-block px-2 py-0.5 text-micro font-bold rounded-lg bg-error-soft text-error">تعويض معلق</div>
@@ -64,7 +64,7 @@ export const CompensationTable: React.FC<CompensationTableProps> = ({ filteredSe
                     </div>
                 ) : (
                     cancelledNeedingComp.map((session, idx) => (
-                        <div key={idx} className="bg-surface dark:bg-card rounded-xl p-4 space-y-2">
+                        <div key={idx} className="bg-surface rounded-xl p-4 space-y-2">
                             <div className="flex items-center justify-between">
                                 <span className="font-bold text-xs text-main leading-tight">{session.studentName}</span>
                                 <div className="inline-block px-2 py-0.5 text-micro font-bold rounded-lg bg-error-soft text-error">تعويض معلق</div>

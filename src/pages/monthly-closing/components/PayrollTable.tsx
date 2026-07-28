@@ -23,7 +23,7 @@ interface PayrollTableProps {
 export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacherAdjustments, handleTeacherAdjustment, setSelectedTeacherForSlip, startDate, endDate }) => {
     return (
         <SectionCard>
-            <div className="p-4 border-b border-border/50 dark:border-border/50 flex justify-between items-center">
+            <div className="p-4 border-b border-border flex justify-between items-center">
                 <SectionTitle icon={Receipt} label="مسير رواتب المعلمات" sub={`الفترة من ${startDate} إلى ${endDate}`} />
                 <SecondaryBtn className="h-8 text-micro">
                     <Download size={14} /> تصدير PDF
@@ -41,21 +41,21 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                             <th className="px-4 py-3 font-bold text-micro text-on-primary text-center">الصافي</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-border dark:divide-border">
+                    <tbody className="divide-y divide-border">
                         {payrollData.map((item) => (
-                            <tr key={item.id} className="hover:bg-surface/50 dark:hover:bg-primary-active/30 transition-colors">
+                            <tr key={item.id} className="hover:bg-surface/50 transition-colors">
                                 <td className="px-4 py-4">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-micro bg-primary-soft text-primary">
                                             {item.name.charAt(0)}
                                         </div>
                                         <div>
-                                            <span className="block font-bold text-xs text-main dark:text-main leading-tight">{item.name}</span>
+                                            <span className="block font-bold text-xs text-main leading-tight">{item.name}</span>
                                             <span className="text-micro text-muted font-medium">{item.subject}</span>
                                         </div>
                                     </div>
                                 </td>
-                                <td className="px-4 py-4 text-center font-bold text-xs text-main dark:text-dim">{item.sessionsCount}</td>
+                                <td className="px-4 py-4 text-center font-bold text-xs text-muted">{item.sessionsCount}</td>
                                 <td className="px-4 py-4 text-center font-bold text-xs text-muted">{item.baseAmount.toLocaleString()}</td>
                                 <td className="px-4 py-4 text-center">
                                     <input
@@ -63,7 +63,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                                         aria-label="قيمة التعديل"
                                         value={teacherAdjustments[item.id] || ''}
                                         onChange={(e) => handleTeacherAdjustment(item.id, parseFloat(e.target.value) || 0)}
-                                        className="w-16 bg-background dark:bg-surface border border-border dark:border-border p-1 text-center font-bold text-micro outline-none focus:border-primary rounded-xl"
+                                        className="w-16 bg-surface border border-border p-1 text-center font-bold text-micro outline-none focus:border-primary rounded-xl"
                                         placeholder="0"
                                     />
                                 </td>
@@ -83,7 +83,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
             {/* Mobile cards */}
             <div className="md:hidden space-y-3 p-4">
                 {payrollData.map((item) => (
-                    <div key={item.id} className="bg-surface dark:bg-card rounded-xl p-4 space-y-3">
+                    <div key={item.id} className="bg-surface rounded-xl p-4 space-y-3">
                         <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm bg-primary-soft text-primary">
                                 {item.name.charAt(0)}
@@ -95,15 +95,15 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                         </div>
                         <div className="grid grid-cols-3 gap-2">
                             <div className="text-center p-2 bg-card rounded-lg">
-                                <span className="block text-micro text-dim mb-0.5">الحصص</span>
+                                <span className="block text-micro text-muted mb-0.5">الحصص</span>
                                 <span className="text-xs font-bold text-main">{item.sessionsCount}</span>
                             </div>
                             <div className="text-center p-2 bg-card rounded-lg">
-                                <span className="block text-micro text-dim mb-0.5">الأساسي</span>
+                                <span className="block text-micro text-muted mb-0.5">الأساسي</span>
                                 <span className="text-xs font-bold text-muted">{item.baseAmount.toLocaleString()}</span>
                             </div>
                             <div className="text-center p-2 bg-card rounded-lg">
-                                <span className="block text-micro text-dim mb-0.5">الصافي</span>
+                                <span className="block text-micro text-muted mb-0.5">الصافي</span>
                                 <span className="text-xs font-bold text-success">{item.totalAmount.toLocaleString()} ج.م</span>
                             </div>
                         </div>
