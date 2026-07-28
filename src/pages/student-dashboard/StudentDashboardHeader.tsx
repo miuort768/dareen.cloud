@@ -27,7 +27,7 @@ export const StudentDashboardHeader = () => {
                         {theme === 'dark' ? <Sun size={15} strokeWidth={1.5} /> : <Moon size={15} strokeWidth={1.5} />}
                     </button>
                     <button
-                        onClick={() => navigate('/parent-announcements')}
+                        onClick={() => navigate('/announcements')}
                         aria-label="الإعلانات"
                         className="relative w-11 h-11 rounded-xl bg-surface border border-border flex items-center justify-center text-muted transition-colors hover:bg-hover"
                     >

@@ -21,10 +21,10 @@ import { ar } from 'date-fns/locale';
 import { Skeleton } from '../shared/components/ui';
 
 const TYPE_CONFIG: Record<string, { icon: React.ComponentType<{ size?: number }>; label: string; color: string; bg: string; border: string }> = {
-    urgent: { icon: AlertTriangle, label: '����', color: 'var(--text-error)', bg: 'var(--bg-error-soft)', border: 'var(--border-error)' },
-    holiday: { icon: Umbrella, label: '�����', color: 'var(--text-warning)', bg: 'var(--bg-warning-soft)', border: 'var(--border-warning)' },
-    event: { icon: Grid, label: '������', color: 'var(--text-primary)', bg: 'var(--bg-primary-soft)', border: 'var(--border-primary)' },
-    general: { icon: Bell, label: '����', color: 'var(--text-muted)', bg: 'var(--bg-card)', border: 'var(--border)' },
+    urgent: { icon: AlertTriangle, label: 'عاجل', color: 'var(--text-error)', bg: 'var(--bg-error-soft)', border: 'var(--border-error)' },
+    holiday: { icon: Umbrella, label: 'إجازة', color: 'var(--text-warning)', bg: 'var(--bg-warning-soft)', border: 'var(--border-warning)' },
+    event: { icon: Grid, label: 'حدث', color: 'var(--text-primary)', bg: 'var(--bg-primary-soft)', border: 'var(--border-primary)' },
+    general: { icon: Bell, label: 'عام', color: 'var(--text-muted)', bg: 'var(--bg-card)', border: 'var(--border)' },
 };
 
 interface Announcement {
@@ -83,12 +83,12 @@ export const ParentAnnouncements = () => {
                         <Bell size={20} className="text-primary" />
                     </div>
                     <div>
-                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-primary-soft text-primary">���� ������� �������</span>
+                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-primary-soft text-primary">آخر إعلانات المؤسسة</span>
                     </div>
                 </div>
                 <div className="space-y-1">
-                    <h1 className="text-xl md:text-2xl font-bold text-main leading-tight">���� ������� ������</h1>
-                    <p className="text-xs font-bold text-muted">��� ��� ����� ����� ��������� ���������� ���� �������</p>
+                    <h1 className="text-xl md:text-2xl font-bold text-main leading-tight">آخر إعلانات الدارين</h1>
+                    <p className="text-xs font-bold text-muted">تابع كل أخبار المؤسسة والفعاليات والإعلانات هنا</p>
                 </div>
             </div>
 
@@ -107,7 +107,7 @@ export const ParentAnnouncements = () => {
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
                     <FilterButton
-                        label="��� ����"
+                        label="كل شيء"
                         active={filterType === 'all'}
                         onClick={() => setFilterType('all')}
                         icon={Grid}
@@ -115,7 +115,7 @@ export const ParentAnnouncements = () => {
                         activeTextColor="text-on-primary"
                     />
                     <FilterButton
-                        label="����"
+                        label="عاجل"
                         active={filterType === 'urgent'}
                         onClick={() => setFilterType('urgent')}
                         icon={Zap}
@@ -123,7 +123,7 @@ export const ParentAnnouncements = () => {
                         activeTextColor="text-on-error"
                     />
                     <FilterButton
-                        label="�����"
+                        label="إجازة"
                         active={filterType === 'holiday'}
                         onClick={() => setFilterType('holiday')}
                         icon={Umbrella}
@@ -131,7 +131,7 @@ export const ParentAnnouncements = () => {
                         activeTextColor="text-on-warning"
                     />
                     <FilterButton
-                        label="����"
+                        label="عام"
                         active={filterType === 'general'}
                         onClick={() => setFilterType('general')}
                         icon={Calendar}
@@ -141,7 +141,6 @@ export const ParentAnnouncements = () => {
                 </div>
             </div>
 
-            {/* ??????????????? ANNOUNCEMENTS LIST ??????????????? */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <AnimatePresence mode="popLayout">
                     {filteredAnnouncements.map((ann, idx) => {
@@ -181,16 +180,16 @@ export const ParentAnnouncements = () => {
                                         <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-primary-soft">
                                             <ShieldCheck size={14} className="text-primary" />
                                         </div>
-                                        <span className="text-micro font-bold text-muted">����� ����������</span>
+                                        <span className="text-micro font-bold text-muted">إدارة المؤسسة</span>
                                     </div>
                                     
                                     <a 
-                                        href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`������� ����� �����: ${ann.title}`)}`}
+                                        href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`الإبلاغ عن مشكلة: ${ann.title}`)}`}
                                         target="_blank" rel="noopener noreferrer"
                                         className="text-primary border border-primary px-4 py-1.5 rounded-xl text-micro font-bold flex items-center gap-2 transition-all hover:bg-primary-hover hover:text-on-primary active:scale-95"
                                     >
                                         <MessageCircle size={14} />
-                                        �������
+                                        إبلاغ
                                     </a>
                                 </div>
                             </motion.div>
@@ -203,8 +202,8 @@ export const ParentAnnouncements = () => {
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 bg-primary-soft">
                             <Bell size={22} className="text-primary" />
                         </div>
-                        <h3 className="text-sm font-bold text-muted">�� ���� ������� �����</h3>
-                        <p className="text-micro font-bold text-muted mt-1">��� ���� ��������� ������ ���</p>
+                        <h3 className="text-sm font-bold text-muted">لا توجد إعلانات حالياً</h3>
+                        <p className="text-micro font-bold text-muted mt-1">تابع أحدث الإعلانات والأخبار هنا</p>
                     </div>
                 )}
             </div>
