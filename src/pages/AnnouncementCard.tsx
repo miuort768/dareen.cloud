@@ -42,7 +42,7 @@ export const AnnouncementCard = ({ announcement: ann, onEdit, onDelete }: Announ
     const meta = getTypeMeta(ann.type);
     const Icon = meta.icon;
     return (
-        <div className={cn("bg-card border border-border rounded-2xl p-4 md:p-5 transition-all duration-300 hover:shadow-sm relative flex flex-col", !ann.isActive && "opacity-60 grayscale border-dashed")}>
+        <div className={cn("bg-card border border-border rounded-2xl p-4 md:p-5 transition-all duration-300 relative flex flex-col", !ann.isActive && "opacity-60 grayscale border-dashed")}>
             <div className="flex-1 space-y-5">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -55,10 +55,10 @@ export const AnnouncementCard = ({ announcement: ann, onEdit, onDelete }: Announ
                         </div>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <button onClick={() => onEdit(ann)} aria-label="تعديل الإعلان" className="w-7 h-7 bg-surface dark:bg-card text-muted flex items-center justify-center border border-border hover:bg-primary hover:text-on-primary transition-all shadow-sm rounded-xl active:scale-90">
+                        <button onClick={() => onEdit(ann)} aria-label="تعديل الإعلان" className="w-7 h-7 bg-surface text-muted flex items-center justify-center border border-border hover:bg-primary hover:text-on-primary transition-all rounded-xl active:scale-90">
                             <Edit3 size={12} />
                         </button>
-                        <button onClick={() => onDelete(ann.id)} aria-label="حذف الإعلان" className="w-7 h-7 bg-surface dark:bg-card text-error flex items-center justify-center border border-border hover:bg-error hover:text-on-error transition-all shadow-sm rounded-xl active:scale-90">
+                        <button onClick={() => onDelete(ann.id)} aria-label="حذف الإعلان" className="w-7 h-7 bg-surface text-error flex items-center justify-center border border-border hover:bg-error hover:text-on-error transition-all rounded-xl active:scale-90">
                             <Trash2 size={12} />
                         </button>
                     </div>
@@ -70,7 +70,7 @@ export const AnnouncementCard = ({ announcement: ann, onEdit, onDelete }: Announ
             </div>
             {!ann.isActive && (
                 <div className="mt-5 pt-3 border-t border-dashed border-border">
-                    <span className="text-micro font-bold text-warning-dark dark:text-warning flex items-center gap-1.5">
+                    <span className="text-micro font-bold text-warning-dark flex items-center gap-1.5">
                         <Info size={10} /> غير نشط
                     </span>
                 </div>
