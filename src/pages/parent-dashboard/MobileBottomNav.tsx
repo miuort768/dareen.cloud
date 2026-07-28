@@ -5,7 +5,7 @@ import { cn } from '../../lib/utils';
 
 const navItems = [
     { id: 'more', label: 'المزيد', icon: MoreHorizontal, path: '/forum' },
-    { id: 'profile', label: 'حسابي', icon: User, path: '/parent-students' },
+    { id: 'profile', label: 'حسابي', icon: User, path: '/parent-profile' },
     { id: 'home', label: 'الرئيسية', icon: Home, path: '/parent-dashboard', isCenter: true },
     { id: 'children', label: 'الأبناء', icon: Users, path: '/parent-students' },
     { id: 'chat', label: 'المحادثة', icon: MessageSquare, path: '/chat' },

@@ -17,15 +17,19 @@ export const ParentDashboardHeader = ({ logout }: ParentDashboardHeaderProps) =>
     return (
         <header className="sticky top-0 z-[100] bg-surface border-b border-border">
             <div className="max-w-page mx-auto px-5 pt-4 pb-3 flex items-center justify-between">
-                <div className="flex items-center gap-3">
+                <button
+                    onClick={() => navigate('/parent-profile')}
+                    className="flex items-center gap-3 text-start"
+                    aria-label="الملف الشخصي"
+                >
                     <div className="w-10 h-10 rounded-xl bg-info-soft flex items-center justify-center">
-                        <span className="text-sm font-bold text-info">ولي</span>
+                        <span className="text-sm font-bold text-info">{firstName.charAt(0)}</span>
                     </div>
                     <div>
                         <h1 className="text-sm font-bold text-main leading-tight">مرحباً {firstName}</h1>
                         <p className="text-micro font-medium text-muted">لوحة تحكم ولي الأمر</p>
                     </div>
-                </div>
+                </button>
                 <div className="flex items-center gap-2">
                     <button
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

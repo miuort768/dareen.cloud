@@ -53,6 +53,9 @@ export const Header = memo(() => {
             '/trial-sessions': { title: 'جلسات المراجعة', subtitle: 'متابعة جلسات الطلاب.' },
             '/admin-contacts': { title: 'رسائل الاتصال', subtitle: 'إدارة رسائل التواصل.' },
             '/admin-jobs': { title: 'طلبات التوظيف', subtitle: 'إدارة طلبات التوظيف.' },
+            '/student-profile': { title: 'الملف الشخصي', subtitle: 'معلومات حسابك الشخصي.' },
+            '/teacher-profile': { title: 'الملف الشخصي', subtitle: 'معلومات حسابك الشخصي.' },
+            '/parent-profile': { title: 'الملف الشخصي', subtitle: 'معلومات حسابك الشخصي.' },
         };
         if (titles[basePath]) return titles[basePath];
         if (path.includes('/blog')) return { title: 'إدارة المدونة', subtitle: 'إدارة مقالات المدونة والكتب.' };
@@ -61,7 +64,7 @@ export const Header = memo(() => {
 
     const { title, subtitle } = getPageTitle(location.pathname);
 
-    const userLink = currentUser?.role === 'admin' ? '/settings' : currentUser?.role === 'parent' ? '/parent-dashboard' : currentUser?.role === 'student' ? '/student-dashboard' : '/teacher-dashboard';
+    const userLink = currentUser?.role === 'admin' ? '/settings' : currentUser?.role === 'parent' ? '/parent-profile' : currentUser?.role === 'student' ? '/student-profile' : '/teacher-profile';
 
     return (
         <header className={cn(

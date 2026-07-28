@@ -1,23 +1,30 @@
-import { GraduationCap, Sun, Moon, Bell } from 'lucide-react';
+import { GraduationCap, Sun, Moon, Bell, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
+import { useCurrentUser } from '../../context/AppContext';
 
 export const StudentDashboardHeader = () => {
     const navigate = useNavigate();
+    const currentUser = useCurrentUser();
     const [theme, setTheme] = useDarkMode();
+    const firstName = (currentUser?.name || currentUser?.username || 'الطالب').split(' ')[0];
 
     return (
         <header className="sticky top-0 z-[100] bg-surface border-b border-border">
             <div className="max-w-page mx-auto px-5 pt-4 pb-3 flex items-center justify-between">
-                <div className="flex items-center gap-3">
+                <button
+                    onClick={() => navigate('/student-profile')}
+                    className="flex items-center gap-3 text-start"
+                    aria-label="الملف الشخصي"
+                >
                     <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
-                        <GraduationCap size={18} className="text-primary" />
+                        <span className="text-sm font-bold text-primary">{firstName.charAt(0)}</span>
                     </div>
                     <div>
-                        <h1 className="text-sm font-bold text-main leading-tight">الرئيسية</h1>
+                        <h1 className="text-sm font-bold text-main leading-tight">{firstName}</h1>
                         <p className="text-micro font-medium text-muted">طالب</p>
                     </div>
-                </div>
+                </button>
                 <div className="flex items-center gap-2">
                     <button
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

@@ -59,6 +59,9 @@ const AAbdullah = lazy(() => import('./pages/AAbdullah').then(m => ({ default: m
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
 const AdminContacts = lazy(() => import('./pages/AdminContacts').then(m => ({ default: m.AdminContacts })));
 const DesignSystemPage = lazy(() => import('./features/design-system/DesignSystemPage').then(m => ({ default: m.DesignSystemPage })));
+const StudentProfilePage = lazy(() => import('./pages/profile/StudentProfilePage').then(m => ({ default: m.StudentProfilePage })));
+const TeacherProfilePage = lazy(() => import('./pages/profile/TeacherProfilePage').then(m => ({ default: m.TeacherProfilePage })));
+const ParentProfilePage = lazy(() => import('./pages/profile/ParentProfilePage').then(m => ({ default: m.ParentProfilePage })));
 
 
 
@@ -258,6 +261,10 @@ function App() {
             <Route path="roles" element={<ProtectedRoute permission="admin"><RolesPage /></ProtectedRoute>} />
             <Route path="monitoring" element={<ProtectedRoute permission="admin"><MonitoringPage /></ProtectedRoute>} />
             
+            <Route path="student-profile" element={<ProtectedRoute permission="student_dashboard"><StudentProfilePage /></ProtectedRoute>} />
+            <Route path="teacher-profile" element={<ProtectedRoute permission="dashboard"><TeacherProfilePage /></ProtectedRoute>} />
+            <Route path="parent-profile" element={<ProtectedRoute permission="parent_dashboard"><ParentProfilePage /></ProtectedRoute>} />
+
             {/* Admin Blog Management */}
             <Route path="admin/blog" element={<ProtectedRoute permission="admin"><AdminBlog /></ProtectedRoute>} />
           </Route>
