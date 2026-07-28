@@ -96,9 +96,9 @@ export const SessionsModal = ({
                     </div>
                     <div className="relative z-10 flex items-center gap-2 ms-4">
                         <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-2 py-1 rounded-xl border border-white/10">
-                            <input type="date" aria-label="تاريخ البداية" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsStartDate} onChange={(e) => onStartDateChange(e.target.value)} />
-                            <span className="text-micro text-on-primary/60">→</span>
-                            <input type="date" aria-label="تاريخ النهاية" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer [color-scheme:dark]" value={sessionsEndDate} onChange={(e) => onEndDateChange(e.target.value)} />
+                            <input type="date" aria-label="تاريخ البداية" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer dark:[color-scheme:dark]" value={sessionsStartDate} onChange={(e) => onStartDateChange(e.target.value)} />
+                            <span className="text-micro text-on-primary/60">←</span>
+                            <input type="date" aria-label="تاريخ النهاية" className="bg-transparent border-none p-0 text-micro font-normal text-on-primary outline-none cursor-pointer dark:[color-scheme:dark]" value={sessionsEndDate} onChange={(e) => onEndDateChange(e.target.value)} />
                         </div>
                     </div>
                     <button onClick={onClose} className="relative z-10 w-7 h-7 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transition-all" aria-label="إغلاق"><X size={14} /></button>

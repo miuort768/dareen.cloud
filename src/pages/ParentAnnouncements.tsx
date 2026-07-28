@@ -170,7 +170,7 @@ export const ParentAnnouncements = () => {
                                     <h3 className="text-sm md:text-lg font-bold text-main leading-tight">
                                         {ann.title}
                                     </h3>
-                                    <p className="text-xs md:text-xs text-muted font-bold leading-relaxed line-clamp-4">
+                                    <p className="text-xs text-muted font-bold leading-relaxed line-clamp-4">
                                         {ann.content}
                                     </p>
                                 </div>

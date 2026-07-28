@@ -98,7 +98,7 @@ export const ParentStudents = () => {
 
     if (isLoading) return (
         <div className="bg-background min-h-screen pb-24" dir="rtl">
-            <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-7xl mx-auto">
+            <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-page mx-auto">
                 <Skeleton className="h-16 w-full rounded-2xl" />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-80 rounded-2xl" />)}
@@ -115,7 +115,7 @@ export const ParentStudents = () => {
             className="bg-background min-h-screen pb-24"
             dir="rtl"
         >
-            <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-7xl mx-auto">
+            <div className="pt-6 md:pt-10 px-4 md:px-6 space-y-6 max-w-page mx-auto">
                 <ParentsStudentHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredStudents.map((student) => (

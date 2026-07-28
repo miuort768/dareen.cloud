@@ -58,11 +58,11 @@ export const AcademicPerformance = ({ sessions, children: kids, points, rank }: 
         <div className="bg-card border border-border rounded-2xl p-5">
             <h3 className="text-sm font-bold text-main mb-4">التقدم الأكاديمي</h3>
 
-            <div className="grid grid-cols-4 gap-3 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
                 <Ring value={curriculumProgress} color="var(--bg-primary)" label="المنهج" icon={BookOpen} />
                 <Ring value={attendanceRate} color="var(--bg-success)" label="الحضور" icon={CheckCircle} />
                 <Ring value={totalSubjects > 0 ? Math.round((sessionsUsed / Math.max(totalSubjects, 1)) * 100) : 0} color="var(--bg-info)" label="الواجبات" icon={Target} />
-                <Ring value={points > 0 ? 75 : 0} color="var(--bg-warning)" label="XP" icon={Trophy} />
+                <Ring value={points > 0 ? Math.min(Math.round((points / 500) * 100), 100) : 0} color="var(--bg-warning)" label="XP" icon={Trophy} />
             </div>
 
             <div className="flex items-center justify-between p-3 bg-surface rounded-xl">

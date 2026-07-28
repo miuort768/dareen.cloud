@@ -24,7 +24,7 @@ export const ActiveTimersBanner = ({ activeTimers, children: kids, formatTime }:
                                 <div>
                                     <h3 className="font-bold text-xs text-main">حصة جارية الآن</h3>
                                     <p className="text-micro font-medium text-muted">
-                                        {child?.name || session.studentId} — {session.subject}
+                                        {child?.name || 'ابن'} — {session.subject}
                                     </p>
                                 </div>
                             </div>

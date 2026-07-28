@@ -68,7 +68,7 @@ export const ParentStudentCard = ({
                         </div>
                     </div>
                     {totalPoints > 0 && (
-                        <div className="flex flex-col items-center gap-0.5 bg-warning text-main px-1.5 py-1 shrink-0 rounded-xl">
+                        <div className="flex flex-col items-center gap-0.5 bg-warning text-on-warning px-1.5 py-1 shrink-0 rounded-xl">
                             <Star size={12} className="fill-current md:size-[16px]" />
                             <span className="text-micro font-medium">{totalPoints}</span>
                         </div>

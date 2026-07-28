@@ -57,14 +57,14 @@ export const AttendanceModal = ({
                     <div className="absolute bottom-0 start-0 w-16 h-16 bg-white/5 translate-y-8 translate-x-8 blur-lg rounded-full"></div>
                     <div className="relative z-10 flex items-center gap-4">
                         <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/10">
-                            <TrendingUp size={20} className="text-on-primary" />
+                            <TrendingUp size={20} className="text-on-success" />
                         </div>
                         <div className="text-start">
                             <h2 className="text-lg font-medium leading-none">{name}</h2>
                             <p className="text-micro text-success font-normal mt-1 uppercase tracking-widest">تقرير نسب الحضور والانصراف لكل المواد</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="relative z-10 w-8 h-8 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transition-all"><X size={18} /></button>
+                    <button onClick={onClose} className="relative z-10 w-8 h-8 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center transition-all" aria-label="إغلاق"><X size={18} /></button>
                 </div>
 
                 <div className="flex-1 overflow-y-auto no-scrollbar p-5 space-y-4">

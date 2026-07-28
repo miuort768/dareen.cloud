@@ -13,7 +13,7 @@ export const TodaySummary = ({ sessions, children: kids, todayTasks }: TodaySumm
     const cancelled = sessions.filter(s => s.status === 'cancelled').length;
 
     return (
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <div className="bg-card border border-border rounded-2xl p-3 flex flex-col items-center gap-1.5">
                 <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center ring-1 ring-success/20">
                     <CheckCircle size={14} className="text-success" />
