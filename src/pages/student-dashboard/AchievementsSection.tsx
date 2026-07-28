@@ -1,4 +1,4 @@
-import { Award, Trophy, Flame, Star, ArrowLeft } from 'lucide-react';
+import { Award, Flame, Star } from 'lucide-react';
 import type { Rank } from '../../shared/utils/ranks';
 
 interface AchievementsSectionProps {

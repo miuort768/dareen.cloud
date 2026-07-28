@@ -1,199 +1,258 @@
 import { useState, useEffect, useMemo } from 'react';
-
-
-import { useShowNotification } from '../context/AppContext';
-import { ConfirmModal } from '../shared/components/ConfirmModal';
-import { InvoicePreviewModal } from '../features/finance/components/InvoicePreviewModal';
+import { FileText, Receipt, Search, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import { api } from '../lib/api';
-import { PageLoader } from '../components/ui/PageLoader';
-import { InvoiceStats } from './student-invoices/components/InvoiceStats';
-import { InvoiceForm } from './student-invoices/components/InvoiceForm';
-import { InvoiceTable } from './student-invoices/components/InvoiceTable';
-import { useImportStudents } from './student-invoices/components/ImportStudents';
-import { StudentInvoicesHeader } from './student-invoices/student-invoices-page';
+import { useCurrentUser } from '../context/AppContext';
+import { Skeleton } from '../shared/components/ui';
 
 interface StudentInvoice {
-    id: string; studentId: string; studentName: string; amount: number;
-    description: string; date: string; dueDate: string;
+    id: string;
+    studentId: string;
+    studentName: string;
+    amount: number;
+    description: string;
+    date: string;
+    dueDate: string;
     status: 'paid' | 'pending' | 'overdue';
-    paymentMethod?: string; notes?: string;
+    currency?: string;
     items?: { description: string; date?: string; amount: number }[];
 }
 
-interface Student {
-    id: string; name: string; grade: string; parentPhone: string; sessionPrice?: number;
-    enrollments: { teacher: string; subject: string; sessionsTotal: number; sessionsUsed: number; price?: number }[];
-}
-
-interface SessionRecord {
-    id: string;
-    studentId: string;
-    date: string;
-    subject?: string;
-    teacherName?: string;
-    price?: number;
-    status?: string;
-    [key: string]: unknown;
-}
+const statusConfig = {
+    paid: { label: 'مدفوعة', icon: CheckCircle, bg: 'bg-success-soft', text: 'text-success' },
+    pending: { label: 'معلقة', icon: Clock, bg: 'bg-warning-soft', text: 'text-warning' },
+    overdue: { label: 'متأخرة', icon: AlertCircle, bg: 'bg-error-soft', text: 'text-error' },
+} as const;
 
 export const StudentInvoices = () => {
-    useEffect(() => { document.title = 'فواتير الطلاب | دارين السابعة للتعليم والتدريب'; }, []);
+    useEffect(() => { document.title = 'فواتيري | دارين السابعة للتعليم والتدريب'; }, []);
+    const currentUser = useCurrentUser();
     const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
-    const [students, setStudents] = useState<Student[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<'all' | 'paid' | 'pending' | 'overdue'>('all');
-    const [allSessions, setAllSessions] = useState<Session[]>([]);
-    const [showForm, setShowForm] = useState(false);
-    const [editingId, setEditingId] = useState<string | null>(null);
-    const showNotification = useShowNotification();
-    const [previewInvoice, setPreviewInvoice] = useState<StudentInvoice | null>(null);
-    const [deletingId, setDeletingId] = useState<string | null>(null);
-    const [deleteAllModalOpen, setDeleteAllModalOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        studentId: '', amount: '', description: 'رسوم دراسية',
-        date: new Date().toLocaleDateString('en-CA'),
-        dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'),
-        status: 'pending' as 'paid' | 'pending' | 'overdue',
-        paymentMethod: 'نقدي', notes: '', currency: 'KWD',
-        items: [] as { description: string; date?: string; amount: number }[]
-    });
-    const [confirmModal, setConfirmModal] = useState<{ isOpen: boolean; title: string; message: string; onConfirm: () => void }>({ isOpen: false, title: '', message: '', onConfirm: () => { } });
 
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            const [invoicesData, studentsData, sessionsData] = await Promise.all([
-                api.get<StudentInvoice[]>('/studentInvoices'),
-                api.get<Student[]>('/students'),
-                api.get<SessionRecord[]>('/sessions')
-            ]);
-            setInvoices(Array.isArray(invoicesData) ? invoicesData : (invoicesData as { data?: StudentInvoice[] }).data || []);
-            setStudents(Array.isArray(studentsData) ? studentsData : (studentsData as { data?: Student[] }).data || []);
-            setAllSessions(Array.isArray(sessionsData) ? sessionsData : (sessionsData as { data?: SessionRecord[] }).data || []);
-        } catch (error) { console.error("Error fetching data", error); }
-        finally { setLoading(false); }
-    };
-
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => {
+        let cancelled = false;
+        const fetchInvoices = async () => {
+            try {
+                setLoading(true);
+                const data = await api.get<StudentInvoice[]>('/studentInvoices');
+                const all = Array.isArray(data) ? data : [];
+                const mine = all.filter(inv => inv.studentId === currentUser?.id);
+                if (!cancelled) setInvoices(mine);
+            } catch (error) {
+                console.error('Error fetching invoices:', error);
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        };
+        if (currentUser?.id) fetchInvoices();
+        return () => { cancelled = true; };
+    }, [currentUser?.id]);
 
     const filteredInvoices = useMemo(() => invoices.filter(inv => {
-        const sName = inv.studentName || '';
-        const desc = inv.description || '';
-        const matchesSearch = sName.toLowerCase().includes(searchTerm.toLowerCase()) || desc.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesSearch = inv.description.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = filterStatus === 'all' || inv.status === filterStatus;
         return matchesSearch && matchesStatus;
     }), [invoices, searchTerm, filterStatus]);
 
-    const handleEdit = (invoice: StudentInvoice) => {
-        setEditingId(invoice.id);
-        setFormData({
-            studentId: invoice.studentId, amount: invoice.amount.toString(), description: invoice.description,
-            date: invoice.date, dueDate: invoice.dueDate || invoice.date, status: invoice.status,
-            paymentMethod: invoice.paymentMethod || '', notes: invoice.notes || '',
-            currency: (invoice as { currency?: string }).currency || 'KWD', items: invoice.items || []
-        });
-        setShowForm(true); window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    const stats = useMemo(() => ({
+        total: invoices.reduce((sum, i) => sum + i.amount, 0),
+        paid: invoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.amount, 0),
+        pending: invoices.filter(i => i.status === 'pending').reduce((sum, i) => sum + i.amount, 0),
+        overdue: invoices.filter(i => i.status === 'overdue').reduce((sum, i) => sum + i.amount, 0),
+        paidCount: invoices.filter(i => i.status === 'paid').length,
+        pendingCount: invoices.filter(i => i.status === 'pending').length,
+        overdueCount: invoices.filter(i => i.status === 'overdue').length,
+    }), [invoices]);
 
-    const handleCancel = () => {
-        setEditingId(null);
-        setFormData({ studentId: '', amount: '', description: 'رسوم دراسية', date: new Date().toLocaleDateString('en-CA'), dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-CA'), status: 'pending', paymentMethod: 'نقدي', notes: '', currency: 'KWD', items: [] });
-        setShowForm(false);
-    };
-
-    const handleStudentChange = (studentId: string) => {
-        const student = students.find(s => s.id === studentId);
-        if (student) {
-            const subjects = student.enrollments?.map(e => e.subject).join(' + ') || '';
-            const totalAmount = student.enrollments?.reduce((sum, e) => {
-                if (e.price) return sum + e.price;
-                if (student.sessionPrice) return sum + (e.sessionsTotal * student.sessionPrice);
-                return sum;
-            }, 0) || 0;
-            const studentSessions = allSessions.filter(sess =>
-                sess.studentId === studentId && (sess.status === 'completed' || sess.status === 'cancelled'));
-            const items = studentSessions.map(sess => ({
-                description: `${sess.subject} - ${sess.teacherName} (${sess.status === 'completed' ? 'حضور' : 'غياب'})`,
-                amount: sess.price || student.sessionPrice || 0, date: sess.date
-            }));
-            setFormData({ ...formData, studentId, description: subjects ? `دروس: ${subjects}` : 'رسوم دراسية', amount: (items.length > 0 ? items.reduce((s, i) => s + i.amount, 0) : totalAmount).toString(), items });
-        } else setFormData({ ...formData, studentId, items: [] });
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSaving(true);
-        const student = students.find(s => s.id === formData.studentId);
-        if (!student) { showNotification('خطأ: لم يتم العثور على الطالب', 'error'); setIsSaving(false); return; }
-        const invoiceData = { studentId: student.id, studentName: student.name, amount: Number(formData.amount), description: formData.description, date: formData.date, dueDate: formData.dueDate, status: formData.status, paymentMethod: formData.paymentMethod, notes: formData.notes, currency: formData.currency, items: formData.items };
-        try {
-            if (editingId) await api.put(`/studentInvoices/${editingId}`, { ...invoiceData, id: editingId });
-            else await api.post('/studentInvoices', invoiceData);
-            fetchData(); handleCancel();
-            showNotification(editingId ? 'تم تحديث الفاتورة بنجاح' : 'تم إنشاء الفاتورة بنجاح', 'success');
-        } catch (error) {
-            console.error('Error saving invoice:', error);
-            showNotification('فشل في حفظ الفاتورة', 'error');
-        } finally { setIsSaving(false); }
-    };
-
-    const toggleStatus = async (invoice: StudentInvoice) => {
-        const newStatus = invoice.status === 'paid' ? 'pending' : 'paid';
-        try { await api.patch(`/studentInvoices/${invoice.id}`, { status: newStatus }); fetchData(); showNotification('تم تحديث الحالة', 'success'); }
-        catch (error) { console.error(error); showNotification('فشل التحديث', 'error'); }
-    };
-
-    const confirmDelete = async () => {
-        if (!deletingId) return;
-        try { await api.delete(`/studentInvoices/${deletingId}`); fetchData(); showNotification('تم حذف الفاتورة بنجاح', 'success'); }
-        catch (error) { console.error('Error deleting invoice:', error); showNotification('فشل حذف الفاتورة', 'error'); }
-        finally { setDeletingId(null); }
-    };
-
-    const handleDeleteAll = async () => {
-        if (invoices.length === 0) return;
-        try {
-            setLoading(true);
-            await Promise.all(invoices.map(inv => api.delete(`/studentInvoices/${inv.id}`)));
-            fetchData(); showNotification('تم حذف جميع الفواتير بنجاح', 'success');
-        } catch (error) { console.error('Error deleting all invoices:', error); showNotification('فشل حذف جميع الفواتير', 'error'); }
-        finally { setLoading(false); setDeleteAllModalOpen(false); }
-    };
-
-    const { handleImportStudents } = useImportStudents({ setLoading, showNotification, fetchData, setConfirmModal });
-
-    const totalRevenue = useMemo(() => invoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.amount, 0), [invoices]);
-    const pendingRevenue = useMemo(() => invoices.filter(i => i.status === 'pending').reduce((sum, i) => sum + i.amount, 0), [invoices]);
-    const overdueRevenue = useMemo(() => invoices.filter(i => i.status === 'overdue').reduce((sum, i) => sum + i.amount, 0), [invoices]);
-    const paidCount = useMemo(() => invoices.filter(i => i.status === 'paid').length, [invoices]);
-    const pendingCount = useMemo(() => invoices.filter(i => i.status === 'pending').length, [invoices]);
-
-    if (loading) return <PageLoader />;
+    if (loading) {
+        return (
+            <div className="min-h-full pb-24 overflow-x-hidden" dir="rtl">
+                <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
+                    <Skeleton className="h-20 rounded-2xl" />
+                    <div className="grid grid-cols-3 gap-3">
+                        <Skeleton className="h-24 rounded-2xl" />
+                        <Skeleton className="h-24 rounded-2xl" />
+                        <Skeleton className="h-24 rounded-2xl" />
+                    </div>
+                    <Skeleton className="h-12 rounded-xl" />
+                    <Skeleton className="h-64 rounded-2xl" />
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-page mx-auto px-2 space-y-4">
-                <StudentInvoicesHeader totalRevenue={totalRevenue} searchTerm={searchTerm} onSearchChange={setSearchTerm}
-                    filterStatus={filterStatus} onFilterChange={(v) => setFilterStatus(v as 'all' | 'paid' | 'pending' | 'overdue')}
-                    showForm={showForm} onToggleForm={() => setShowForm(!showForm)}
-                    onImport={handleImportStudents} onPrint={() => window.print()} onDeleteAll={() => setDeleteAllModalOpen(true)} />
-                <InvoiceStats totalRevenue={totalRevenue} pendingRevenue={pendingRevenue} overdueRevenue={overdueRevenue}
-                    invoicesLength={invoices.length} paidCount={paidCount} pendingCount={pendingCount} />
-                <InvoiceForm showForm={showForm} editingId={editingId} formData={formData}
-                    setFormData={setFormData} handleSubmit={handleSubmit} handleCancel={handleCancel}
-                    handleStudentChange={handleStudentChange} students={students} isSaving={isSaving} />
-                <InvoiceTable filteredInvoices={filteredInvoices} toggleStatus={toggleStatus}
-                    handleEdit={handleEdit} setPreviewInvoice={setPreviewInvoice} setDeletingId={setDeletingId} />
-                <ConfirmModal isOpen={!!deletingId} onClose={() => setDeletingId(null)} onConfirm={confirmDelete}
-                    title="حذف الفاتورة" message="هل أنت متأكد من أنك تريد حذف هذه الفاتورة؟" isDestructive={true} />
-                <ConfirmModal isOpen={deleteAllModalOpen} onClose={() => setDeleteAllModalOpen(false)}
-                    onConfirm={handleDeleteAll} title="حذف الكل" message="سيتم حذف جميع الفواتير. لا يمكن التراجع." isDestructive={true} />
-                <ConfirmModal isOpen={confirmModal.isOpen} onClose={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
-                    onConfirm={confirmModal.onConfirm} title={confirmModal.title} message={confirmModal.message} />
-                {previewInvoice && <InvoicePreviewModal isOpen={!!previewInvoice} onClose={() => setPreviewInvoice(null)} invoice={previewInvoice} />}
+        <div className="min-h-full pb-24 overflow-x-hidden" dir="rtl">
+            <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
+                {/* Header */}
+                <div className="bg-card border border-border rounded-2xl p-5">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
+                            <Receipt size={18} className="text-primary" />
+                        </div>
+                        <div>
+                            <h1 className="text-base font-bold text-main">فواتيري</h1>
+                            <p className="text-micro text-muted">عرض فواتيرك ومستحقاتك المالية</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-3">
+                    <div className="bg-card border border-border rounded-2xl p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center">
+                                <CheckCircle size={14} className="text-success" />
+                            </div>
+                            <span className="text-micro text-muted font-bold">مدفوعة</span>
+                        </div>
+                        <p className="text-sm font-bold text-main">{stats.paidCount} فاتورة</p>
+                        <p className="text-micro text-success font-bold">{stats.paid.toFixed(3)} د.ك</p>
+                    </div>
+                    <div className="bg-card border border-border rounded-2xl p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="w-8 h-8 rounded-xl bg-warning-soft flex items-center justify-center">
+                                <Clock size={14} className="text-warning" />
+                            </div>
+                            <span className="text-micro text-muted font-bold">معلقة</span>
+                        </div>
+                        <p className="text-sm font-bold text-main">{stats.pendingCount} فاتورة</p>
+                        <p className="text-micro text-warning font-bold">{stats.pending.toFixed(3)} د.ك</p>
+                    </div>
+                    <div className="bg-card border border-border rounded-2xl p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="w-8 h-8 rounded-xl bg-error-soft flex items-center justify-center">
+                                <AlertCircle size={14} className="text-error" />
+                            </div>
+                            <span className="text-micro text-muted font-bold">متأخرة</span>
+                        </div>
+                        <p className="text-sm font-bold text-main">{stats.overdueCount} فاتورة</p>
+                        <p className="text-micro text-error font-bold">{stats.overdue.toFixed(3)} د.ك</p>
+                    </div>
+                </div>
+
+                {/* Search & Filter */}
+                <div className="flex gap-2 items-center">
+                    <div className="relative flex-1">
+                        <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
+                        <input
+                            aria-label="بحث في الفواتير"
+                            placeholder="بحث بالبيان..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full rounded-xl ps-9 pe-3 py-2.5 text-xs font-bold outline-none bg-surface border border-border text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                        />
+                    </div>
+                    <select
+                        value={filterStatus}
+                        onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
+                        aria-label="تصفية حسب الحالة"
+                        className="rounded-xl px-3 py-2.5 text-xs font-bold outline-none bg-surface border border-border text-main focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                    >
+                        <option value="all">جميع الحالات</option>
+                        <option value="paid">مدفوعة</option>
+                        <option value="pending">معلقة</option>
+                        <option value="overdue">متأخرة</option>
+                    </select>
+                </div>
+
+                {/* Desktop Table */}
+                <div className="hidden md:block bg-card border border-border rounded-2xl overflow-hidden">
+                    <table className="w-full text-start text-sm border-collapse">
+                        <thead>
+                            <tr className="bg-surface border-b border-border">
+                                <th className="px-4 py-3 text-micro font-bold text-muted text-start">البيان</th>
+                                <th className="px-4 py-3 text-micro font-bold text-muted text-center">المبلغ</th>
+                                <th className="px-4 py-3 text-micro font-bold text-muted text-center">التاريخ</th>
+                                <th className="px-4 py-3 text-micro font-bold text-muted text-center">الاستحقاق</th>
+                                <th className="px-4 py-3 text-micro font-bold text-muted text-center">الحالة</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-border">
+                            {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => {
+                                const status = statusConfig[inv.status];
+                                return (
+                                    <tr key={inv.id} className="hover:bg-hover transition-colors">
+                                        <td className="px-4 py-3">
+                                            <span className="text-xs font-bold text-main">{inv.description}</span>
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <span className="font-mono text-xs font-bold text-main">{inv.amount.toFixed(3)} د.ك</span>
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <span className="text-micro text-muted">{inv.date}</span>
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <span className="text-micro text-muted">{inv.dueDate}</span>
+                                        </td>
+                                        <td className="px-4 py-3 text-center">
+                                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-micro font-bold ${status.bg} ${status.text}`}>
+                                                <status.icon size={11} />
+                                                {status.label}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                );
+                            }) : (
+                                <tr>
+                                    <td colSpan={5} className="py-16 text-center">
+                                        <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-2">
+                                            <FileText size={18} />
+                                        </div>
+                                        <p className="text-xs font-bold text-muted">
+                                            {searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
+                                        </p>
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+
+                {/* Mobile Cards */}
+                <div className="md:hidden space-y-3">
+                    {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => {
+                        const status = statusConfig[inv.status];
+                        return (
+                            <div key={inv.id} className="bg-card border border-border rounded-2xl p-4">
+                                <div className="flex items-center justify-between mb-3">
+                                    <p className="text-xs font-bold text-main">{inv.description}</p>
+                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-micro font-bold ${status.bg} ${status.text}`}>
+                                        <status.icon size={10} />
+                                        {status.label}
+                                    </span>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div>
+                                            <p className="text-micro text-muted mb-0.5">المبلغ</p>
+                                            <span className="font-mono text-sm font-bold text-main">{inv.amount.toFixed(3)} د.ك</span>
+                                        </div>
+                                        <div className="w-px h-6 bg-border" />
+                                        <div>
+                                            <p className="text-micro text-muted mb-0.5">الاستحقاق</p>
+                                            <span className="text-micro text-muted">{inv.dueDate}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    }) : (
+                        <div className="bg-card border border-border border-dashed rounded-2xl py-16 text-center">
+                            <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-2">
+                                <FileText size={18} />
+                            </div>
+                            <p className="text-xs font-bold text-muted">
+                                {searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
+                            </p>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
 };
+
+export default StudentInvoices;

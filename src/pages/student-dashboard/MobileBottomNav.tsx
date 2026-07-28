@@ -4,11 +4,10 @@ import { Home, User, Library, MoreHorizontal } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 const navItems = [
-                    { id: 'more', label: 'المزيد', icon: MoreHorizontal, path: '/forum' },
+    { id: 'more', label: 'المزيد', icon: MoreHorizontal, path: '/forum' },
     { id: 'profile', label: 'الملف الشخصي', icon: User, path: '/student-profile' },
     { id: 'home', label: 'الرئيسية', icon: Home, path: '/student-dashboard', isCenter: true },
     { id: 'library', label: 'مكتبة الدورات', icon: Library, path: '/schedule' },
-    { id: 'main', label: 'الرئيسية', icon: Home, path: '/' },
 ];
 
 export const MobileBottomNav = () => {

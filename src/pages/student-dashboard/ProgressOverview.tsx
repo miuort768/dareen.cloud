@@ -42,7 +42,7 @@ export const ProgressOverview = ({ stats, points, rank, nextRank }: ProgressOver
         <div className="bg-card border border-border rounded-2xl p-5">
             <h3 className="text-sm font-bold text-main mb-4">مستوى التقدم</h3>
 
-            <div className="grid grid-cols-4 gap-3 mb-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
                 <Ring value={stats.curriculumProgress} color="var(--bg-primary)" label="المنهج" icon={BookOpen} />
                 <Ring value={stats.attendanceRate} color="var(--bg-success)" label="الحضور" icon={CheckCircle} />
                 <Ring value={stats.sessionsTotal > 0 ? Math.round((stats.sessionsUsed / stats.sessionsTotal) * 100) : 0} color="var(--bg-info)" label="الواجبات" icon={Target} />

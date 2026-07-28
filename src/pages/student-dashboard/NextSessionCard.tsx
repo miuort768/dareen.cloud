@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, BookOpen, ArrowRight } from 'lucide-react';
+import { Clock, BookOpen, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { NextSession as NextSessionType } from './types';
 import { EmptyState } from '../../shared/components/ui';
@@ -51,7 +51,7 @@ export const NextSessionCard = ({ nextSession }: NextSessionCardProps) => {
                     className="flex items-center gap-1.5 bg-primary text-on-primary text-xs font-bold px-4 py-2.5 rounded-xl active:scale-95 transition-transform shrink-0"
                     aria-label={`دخول حصة ${nextSession.subject}`}
                 >
-                    دخول <ArrowRight size={12} />
+                    دخول <ArrowLeft size={12} />
                 </button>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { BookOpen, ArrowRight } from 'lucide-react';
+import { BookOpen, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Enrollment } from './types';
 
@@ -56,7 +56,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                                     onClick={() => navigate('/schedule')}
                                     className="text-primary text-micro font-bold flex items-center gap-1"
                                 >
-                                    متابعة <ArrowRight size={10} />
+                                    متابعة <ArrowLeft size={10} />
                                 </button>
                             </div>
                         </div>
