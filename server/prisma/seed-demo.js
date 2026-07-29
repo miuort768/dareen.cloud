@@ -39,18 +39,18 @@ function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 const TEACHER_NAMES = [
-  { name: 'أحمد عبدالله', subject: 'الرياضيات' },
-  { name: 'فاطمة محمد', subject: 'اللغة العربية' },
+  { name: 'فاطمة محمد', subject: 'الرياضيات' },
+  { name: 'نورة سعد', subject: 'اللغة العربية' },
   { name: 'سارة خالد', subject: 'العلوم' },
-  { name: 'محمد علي', subject: 'اللغة الإنجليزية' },
-  { name: 'نورة سعد', subject: 'التربية الإسلامية' },
-  { name: 'عبدالرحمن عمر', subject: 'الرياضيات' },
-  { name: 'هدى إبراهيم', subject: 'اللغة العربية' },
-  { name: 'خالد يوسف', subject: 'الفيزياء' },
-  { name: 'منى حسن', subject: 'الكيمياء' },
-  { name: 'سامي لطفي', subject: 'الأحياء' },
-  { name: 'رنا جمال', subject: 'التاريخ' },
-  { name: 'باسم شكري', subject: 'الجغرافيا' },
+  { name: 'هدى إبراهيم', subject: 'اللغة الإنجليزية' },
+  { name: 'منى حسن', subject: 'التربية الإسلامية' },
+  { name: 'رنا جمال', subject: 'الرياضيات' },
+  { name: 'ليلى عبدالله', subject: 'اللغة العربية' },
+  { name: 'مريم علي', subject: 'الفيزياء' },
+  { name: 'أحمد عبدالله', subject: 'الكيمياء' },
+  { name: 'خالد يوسف', subject: 'الأحياء' },
+  { name: 'محمد علي', subject: 'التاريخ' },
+  { name: 'عبدالرحمن عمر', subject: 'الجغرافيا' },
 ];
 
 const PARENT_NAMES = [
@@ -123,6 +123,78 @@ const ANNOUNCEMENT_TITLES = [
   { t: 'تحديث المنصة', c: 'تم تحديث المنصة بإضافة ميزة التقارير الأسبوعية. يمكنكم الآن متابعة تقدم أبنائكم بشكل أفضل.' },
   { t: 'عاجل: صيانة المنصة', c: 'سيتم إجراء صيانة للمنصة يوم الجمعة من الساعة 2:00 إلى 6:00 صباحاً. قد تتأثر الخدمة خلال هذه الفترة.' },
 ];
+
+const TRIAL_STUDENT_NAMES = [
+  'راشد العنزي', 'مشاري المطيري', 'عبدالله العجمي', 'فواز الشمري', 'تركي الدوسري',
+  'حمد العتيبي', 'بدر الزهراني', 'ناصر الغامدي', 'ماجد القحطاني', 'سعود السلمي',
+  'يوسف الحربي', 'عمر الثبيتي', 'فيصل الشهري', 'بسام القرني', 'طلال المالكي',
+  'عزام الحارثي', 'همام الشهراني', 'مازن البيشي', 'عاصم الأحمري', 'غسان العمري',
+  'كنانة اليامي', 'لؤي السبيعي', 'إياد الزهراني', 'مهند القحطاني', 'وضاح الشمراني',
+  'نوف السبيعي', 'تالا العتيبي', 'جود الرشيدي', 'لورا المطيري', 'سارة الدوسري',
+];
+
+const LEAD_STUDENT_NAMES = [
+  'مشعل الحربي', 'نواف السلمي', 'عبدالرحمن المالكي', 'صقر الشمري', 'صالح القرني',
+  'هزاع القحطاني', 'متعب العتيبي', 'نايف الدوسري', 'سلطان العنزي', 'فيصل المطيري',
+  'غالية الرشيد', 'ديمة السبيعي', 'ميرة اليامي', 'لمى الشهراني', 'تالا الحربي',
+  'بشائر المالكي', 'أثير البيشي', 'رفيدة الأحمري', 'رهف القرني', 'عتاب الغامدي',
+  'خالد الزهراني', 'سامي الشمري', 'عبدالعزيز العجمي', 'معاذ المطيري', 'إبراهيم السلمي',
+  'صهيب الدوسري', 'زياد العنزي', 'حازم الحارثي', 'قسام الثبيتي', 'أكرم الشهري',
+];
+
+const CONTACT_NAMES = [
+  'أم خالد', 'أبو عبدالله', 'أم سعد', 'أبو تركي', 'أم نورة',
+  'أبو يوسف', 'أم محمد', 'أبو عمر', 'أم لينا', 'أو سيف',
+  'أم راشد', 'أبو فيصل', 'أم جاسم', 'أبو حمد', 'أم روان',
+  'أبو ماجد', 'أم فهد', 'أبو باسل', 'أم علي', 'أبو هاني',
+];
+
+const JOB_NAMES = [
+  { name: 'نورة الشمري', qualification: 'بكالوريوس رياضيات', position: 'معلمة رياضيات', subject: 'الرياضيات' },
+  { name: 'مها العتيبي', qualification: 'بكالوريوس لغة عربية', position: 'معلمة لغة عربية', subject: 'اللغة العربية' },
+  { name: 'سارة القحطاني', qualification: 'بكالوريوس فيزياء', position: 'معلمة فيزياء', subject: 'الفيزياء' },
+  { name: 'حصة الدوسري', qualification: 'بكالوريوس كيمياء', position: 'معلمة كيمياء', subject: 'الكيمياء' },
+  { name: 'جواهر السبيعي', qualification: 'بكالوريوس أحياء', position: 'معلمة أحياء', subject: 'الأحياء' },
+  { name: 'منيرة المالكي', qualification: 'بكالوريوس لغة إنجليزية', position: 'معلمة إنجليزية', subject: 'اللغة الإنجليزية' },
+  { name: 'بدور العنزي', qualification: 'بكالوريوس علوم', position: 'معلمة علوم', subject: 'العلوم' },
+  { name: 'نوف المطيري', qualification: 'بكالوريوس تربية إسلامية', position: 'معلمة تربية إسلامية', subject: 'التربية الإسلامية' },
+  { name: 'شعاع الحربي', qualification: 'بكالوريوس تاريخ', position: 'معلمة تاريخ', subject: 'التاريخ' },
+  { name: 'عذوب اليامي', qualification: 'ماجستير جغرافيا', position: 'معلمة جغرافيا', subject: 'الجغرافيا' },
+  { name: 'لطيفة الشهراني', qualification: 'بكالوريوس رياضيات', position: 'معلمة رياضيات', subject: 'الرياضيات' },
+  { name: 'أمل الغامدي', qualification: 'بكالوريوس لغة عربية', position: 'معلمة لغة عربية', subject: 'اللغة العربية' },
+  { name: 'دانة البيشي', qualification: 'بكالوريوس لغة إنجليزية', position: 'معلمة إنجليزية', subject: 'اللغة الإنجليزية' },
+  { name: 'هند الأحمري', qualification: 'بكالوريوس علوم', position: 'معلمة علوم', subject: 'العلوم' },
+  { name: 'ريم الزهراني', qualification: 'بكالوريوس تربية إسلامية', position: 'معلمة تربية إسلامية', subject: 'التربية الإسلامية' },
+];
+
+const TRIAL_NOTES = [
+  'اتصال هاتفي جيد، الطالب بحاجة لدعم في الأساسيات',
+  'الحصة التجريبية ممتازة، الطالب مستواه متوسط',
+  'تم شرح المنهج للطالب وولي الأمر كان حاضراً',
+  'الطالب متحمس للبدء، يفضل معلمة',
+  'الحصة التجريبية عبر زووم، اتصال مستقر',
+  'الطالب يعاني من صعوبات في الفهم السريع',
+  'طلب ولي الأمر معادلة المستوى قبل البدء',
+  'تم تحديد مواعيد مناسبة للطالب',
+  'الحصة التجريبية مقبولة، يحتاج متابعة مستمرة',
+  'تم الاتفاق على البدء الأسبوع القادم',
+];
+
+const LEAD_NOTES = [
+  'اتصل وطلب معلومات عن المنهج الكويتي',
+  'مهتم بالتسجيل بعد العودة من السفر',
+  'طلب مقارنة أسعار بين المعلمين',
+  'بحث عن معلم متخصص في المنهج السعودي',
+  'يرغب في حصتين تجريبيتين قبل الاشتراك',
+  'تم إرسال المنهج الدراسي عبر الواتساب',
+  'طلب التواصل مع معلمين متخصصين',
+  'متابعة بعد أسبوع، لا يزال يفكر',
+  'تم تحويله لحصة تجريبية',
+  'العميل جاد، يبحث عن معلمة قريبة من المنطقة',
+];
+
+const JOB_POSITIONS = ['معلمة رياضيات', 'معلمة لغة عربية', 'معلمة علوم', 'معلمة إنجليزية', 'معلمة فيزياء', 'معلمة كيمياء', 'معلمة أحياء', 'معلمة تربية إسلامية', 'معلمة تاريخ', 'معلمة جغرافيا'];
+const QUALIFICATIONS = ['بكالوريوس', 'ماجستير', 'دكتوراه', 'دبلوم عالي', 'شهادة جامعية'];
 
 const DAY_HOURS = {
   'الأحد': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
@@ -404,7 +476,148 @@ async function main() {
   console.log(`  ✅ ${availCount} وقت`);
 
   // ════════════════════════════════════
-  // 9. ADMIN CHECK
+  // 9. TRIAL SESSIONS — 40 حصة تجريبية
+  // ════════════════════════════════════
+  console.log('\n── 9. الحصص التجريبية ──');
+  let trialCount = 0;
+  for (let i = 0; i < 40; i++) {
+    const tid = `${PREFIX}trial_${i + 1}`;
+    const existing = await prisma.trialSession.findUnique({ where: { id: tid } }).catch(() => null);
+    if (existing) continue;
+
+    const teacher = pick(teachers);
+    const d = new Date();
+    d.setDate(d.getDate() - randomInt(0, 60));
+    const status = d < new Date(Date.now() - 86400000 * 3)
+      ? pick(['completed', 'cancelled'])
+      : pick(['pending', 'confirmed']);
+
+    await prisma.trialSession.create({
+      data: {
+        id: tid,
+        studentName: pick(TRIAL_STUDENT_NAMES),
+        parentPhone: `965${String(50000000 + randomInt(0, 9999999)).padStart(8, '0')}`,
+        subject: pick(SUBJECTS),
+        teacherId: teacher.id,
+        teacherName: teacher.name,
+        date: d.toISOString().split('T')[0],
+        time: pick(DAY_HOURS[dayName(d)] || ['16:00']),
+        status,
+        notes: pick(TRIAL_NOTES),
+      },
+    });
+    trialCount++;
+  }
+  console.log(`  ✅ ${trialCount} حصة تجريبية`);
+
+  // ════════════════════════════════════
+  // 10. LEADS — 60 عميل مهتم
+  // ════════════════════════════════════
+  console.log('\n── 10. العملاء المهتمين ──');
+  let leadCount = 0;
+  for (let i = 0; i < 60; i++) {
+    const lid = `${PREFIX}lead_${i + 1}`;
+    const existing = await prisma.lead.findUnique({ where: { id: lid } }).catch(() => null);
+    if (existing) continue;
+
+    const d = new Date();
+    d.setDate(d.getDate() - randomInt(0, 90));
+    const status = randomInt(1, 10) <= 2 ? pick(['new', 'new', 'new']) : pick(['contacted', 'qualified', 'converted', 'lost']);
+    const priority = randomInt(1, 10) <= 2 ? 'high' : (randomInt(1, 10) <= 5 ? 'medium' : 'low');
+
+    await prisma.lead.create({
+      data: {
+        id: lid,
+        studentName: pick(LEAD_STUDENT_NAMES),
+        phone: `965${String(60000000 + randomInt(0, 9999999)).padStart(8, '0')}`,
+        subject: pick(SUBJECTS),
+        curriculum: pick(CURRICULUMS),
+        status,
+        priority,
+        notes: pick(LEAD_NOTES),
+        createdAt: d,
+      },
+    });
+    leadCount++;
+  }
+  console.log(`  ✅ ${leadCount} عميل مهتم`);
+
+  // ════════════════════════════════════
+  // 11. CONTACT MESSAGES — 20 رسالة
+  // ════════════════════════════════════
+  console.log('\n── 11. رسائل التواصل ──');
+  let contactCount = 0;
+  const contactSubjects = ['استفسار عن التسجيل', 'طلب معلومات المنهج', 'استفسار عن الأسعار', 'طلب حصة تجريبية', 'مقترح', 'شكوى'];
+  const contactMessages = [
+    'السلام عليكم، أرغب في تسجيل ابني في حصص الرياضيات للمنهج الكويتي',
+    'كم تكلفة الحصص للصف الخامس منهج كويت؟',
+    'هل يوجد معلمات متخصصات في المنهج السعودي للصف الرابع؟',
+    'أريد حصة تجريبية في اللغة الإنجليزية لابنتي',
+    'هل توفرون حصص أونلاين للمنهج القطري؟',
+    'اريد معلومات عن الحصص والمدرسين المتاحين',
+    'هل هناك خصم للتسجيل المبكر؟',
+    'ابني يحتاج متابعة في مادة العلوم، هل يوجد معلمة متخصصة؟',
+    'كم عدد الحصص في الأسبوع للغة العربية؟',
+    'ما هي مواعيد الحصص المسائية المتاحة؟',
+  ];
+  for (let i = 0; i < 20; i++) {
+    const cid = `${PREFIX}contact_${i + 1}`;
+    const existing = await prisma.contactMessage.findUnique({ where: { id: cid } }).catch(() => null);
+    if (existing) continue;
+
+    const d = new Date();
+    d.setDate(d.getDate() - randomInt(0, 90));
+    await prisma.contactMessage.create({
+      data: {
+        id: cid,
+        name: pick(CONTACT_NAMES),
+        phone: `965${String(70000000 + randomInt(0, 9999999)).padStart(8, '0')}`,
+        subject: pick(contactSubjects),
+        curriculum: pick(CURRICULUMS),
+        message: pick(contactMessages),
+        createdAt: d,
+      },
+    });
+    contactCount++;
+  }
+  console.log(`  ✅ ${contactCount} رسالة`);
+
+  // ════════════════════════════════════
+  // 12. JOB APPLICATIONS — 15 طلب توظيف
+  // ════════════════════════════════════
+  console.log('\n── 12. طلبات التوظيف ──');
+  let jobCount = 0;
+  const curriculumsList = ['الكويت', 'السعودية', 'قطر', 'الإمارات', 'عمان', 'البحرين'];
+  for (const j of JOB_NAMES) {
+    const jid = `${PREFIX}job_${j.name.replace(/\s/g, '')}`;
+    const existing = await prisma.jobApplication.findUnique({ where: { id: jid } }).catch(() => null);
+    if (existing) continue;
+
+    const d = new Date();
+    d.setDate(d.getDate() - randomInt(0, 60));
+    await prisma.jobApplication.create({
+      data: {
+        id: jid,
+        name: j.name,
+        phone: `965${String(90000000 + randomInt(0, 9999999)).padStart(8, '0')}`,
+        whatsapp: `965${String(90000000 + randomInt(0, 9999999)).padStart(8, '0')}`,
+        position: j.position,
+        qualification: j.qualification,
+        subject: j.subject,
+        grade: pick(GRADES),
+        graduationYear: String(randomInt(2015, 2025)),
+        onlineYears: String(randomInt(1, 10)),
+        curriculums: pick([curriculumsList.slice(0, randomInt(1, 4)).join('، ')]),
+        contacted: Math.random() < 0.3 ? 1 : 0,
+        createdAt: d,
+      },
+    });
+    jobCount++;
+  }
+  console.log(`  ✅ ${jobCount} طلب توظيف`);
+
+  // ════════════════════════════════════
+  // 13. ADMIN CHECK
   // ════════════════════════════════════
   const admin = await prisma.user.findFirst({ where: { role: 'admin' } });
   if (admin) {
@@ -425,13 +638,17 @@ async function main() {
   console.log('  📌 كلمة المرور: 123456');
   console.log("  🗑️ للحذف: DELETE FROM tablename WHERE id LIKE 'demo_%'");
   console.log('───────────────────────────────────────');
-  console.log(`  👥 ${teachers.length} معلم`);
+  console.log(`  👩‍🏫 ${teachers.length} معلم/ة (8 معلمات)`);
   console.log(`  👪 ${parents.length} ولي أمر`);
   console.log(`  🧑 ${students.length} طالب`);
   console.log(`  📋 ${enrollCount} تسجيل`);
   console.log(`  📅 ${sessionCount} حصة`);
   console.log(`  ⭐ ${pointsCount} سجل نقطة`);
   console.log(`  📢 ${annCount} إعلان`);
+  console.log(`  🔬 ${trialCount} حصة تجريبية`);
+  console.log(`  🤝 ${leadCount} عميل مهتم`);
+  console.log(`  ✉️ ${contactCount} رسالة تواصل`);
+  console.log(`  💼 ${jobCount} طلب توظيف`);
   console.log('═══════════════════════════════════════\n');
 }
 
