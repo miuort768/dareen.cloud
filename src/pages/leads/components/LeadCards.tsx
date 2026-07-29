@@ -4,17 +4,18 @@ import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types
 
 interface LeadCardsProps {
     filteredLeads: Lead[];
-    statusConfig: Record<LeadStatus, { label: string, color: string, bg: string }>;
+    statusConfig: Record<string, { label: string, color: string, bg: string }>;
     updateMutation: { mutate: (args: { id: string; updates: Partial<Lead> }) => void };
     handleMarkLost: (id: string) => void;
     onLeadClick: (lead: Lead) => void;
 }
 
-const priorityConfig: Record<LeadPriority, { label: string; color: string; bg: string }> = {
+const priorityConfig: Record<string, { label: string; color: string; bg: string }> = {
     high: { label: 'عالية', color: 'text-error', bg: 'bg-error-soft' },
     medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning-soft' },
     low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface' },
 };
+const getPriority = (p: string) => priorityConfig[p] || priorityConfig.low;
 
 const getLeadAge = (createdAt: string) => {
     const now = new Date();
@@ -31,6 +32,7 @@ const getLeadAge = (createdAt: string) => {
 };
 
 export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleMarkLost, onLeadClick }: LeadCardsProps) => {
+    const getStatus = (s: string) => statusConfig[s as LeadStatus] || statusConfig.new;
     return (
         <div className="lg:hidden space-y-3">
             {filteredLeads.length === 0 ? (
@@ -73,10 +75,10 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                         </div>
                         <span className={cn(
                             "shrink-0 inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded-full",
-                            priorityConfig[lead.priority].bg,
-                            priorityConfig[lead.priority].color
+                            getPriority(lead.priority).bg,
+                            getPriority(lead.priority).color
                         )}>
-                            {priorityConfig[lead.priority].label}
+                            {getPriority(lead.priority).label}
                         </span>
                     </div>
 
@@ -108,8 +110,8 @@ export const LeadCards = ({ filteredLeads, statusConfig, updateMutation, handleM
                             <select
                                 className={cn(
                                     "px-2 py-1 text-xs font-bold border-0 outline-none cursor-pointer rounded-xl",
-                                    statusConfig[lead.status].bg,
-                                    statusConfig[lead.status].color
+                                    getStatus(lead.status).bg,
+                                    getStatus(lead.status).color
                                 )}
                                 value={lead.status}
                                 aria-label="حالة العميل"

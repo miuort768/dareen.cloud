@@ -139,7 +139,7 @@ export const Leads = () => {
         setIsDrawerOpen(true);
     };
 
-    const statusConfig: Record<LeadStatus, { label: string, color: string, bg: string }> = {
+    const statusConfig: Record<string, { label: string, color: string, bg: string }> = {
         new: { label: 'جديد', color: 'text-info', bg: 'bg-info-soft' },
         contacted: { label: 'تم الاتصال', color: 'text-warning', bg: 'bg-warning-soft' },
         interested: { label: 'مهتم', color: 'text-success', bg: 'bg-success-soft' },

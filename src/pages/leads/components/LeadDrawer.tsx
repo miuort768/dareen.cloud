@@ -8,15 +8,17 @@ interface LeadDrawerProps {
     lead: Lead | null;
     isOpen: boolean;
     onClose: () => void;
-    statusConfig: Record<LeadStatus, { label: string; color: string; bg: string }>;
+    statusConfig: Record<string, { label: string; color: string; bg: string }>;
     updateMutation: { mutate: (args: { id: string; updates: Partial<Lead> }) => void };
 }
 
-const priorityConfig: Record<LeadPriority, { label: string; color: string; bg: string }> = {
+const priorityConfig: Record<string, { label: string; color: string; bg: string }> = {
     high: { label: 'عالية', color: 'text-error', bg: 'bg-error-soft' },
     medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning-soft' },
     low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface' },
 };
+const getStatus = (s: string, cfg: Record<string, { label: string; color: string; bg: string }>) => cfg[s] || cfg.new || { label: s, color: 'text-muted', bg: 'bg-surface' };
+const getPriority = (p: string) => priorityConfig[p] || priorityConfig.low;
 
 const getLeadAge = (createdAt: string) => {
     const now = new Date();
@@ -211,8 +213,8 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
                                 <select
                                     className={cn(
                                         "px-2.5 py-1 text-xs font-bold border-0 outline-none cursor-pointer rounded-lg",
-                                        statusConfig[lead.status].bg,
-                                        statusConfig[lead.status].color
+                                        getStatus(lead.status, statusConfig).bg,
+                                        getStatus(lead.status, statusConfig).color
                                     )}
                                     value={lead.status}
                                     aria-label="حالة العميل"
@@ -224,10 +226,10 @@ export const LeadDrawer = ({ lead, isOpen, onClose, statusConfig, updateMutation
                                 </select>
                                 <span className={cn(
                                     "inline-flex items-center px-2.5 py-1 text-xs font-bold rounded-lg",
-                                    priorityConfig[lead.priority].bg,
-                                    priorityConfig[lead.priority].color
+                                    getPriority(lead.priority).bg,
+                                    getPriority(lead.priority).color
                                 )}>
-                                    {priorityConfig[lead.priority].label}
+                                    {getPriority(lead.priority).label}
                                 </span>
                             </div>
                         </div>

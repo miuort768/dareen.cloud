@@ -12,11 +12,12 @@ interface LeadTableProps {
     onLeadClick: (lead: Lead) => void;
 }
 
-const priorityConfig: Record<LeadPriority, { label: string; color: string; bg: string }> = {
+const priorityConfig: Record<string, { label: string; color: string; bg: string }> = {
     high: { label: 'عالية', color: 'text-error', bg: 'bg-error-soft' },
     medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning-soft' },
     low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface' },
 };
+const getPriority = (p: string) => priorityConfig[p] || priorityConfig.low;
 
 const getLeadAge = (createdAt: string) => {
     const now = new Date();
@@ -33,6 +34,7 @@ const getLeadAge = (createdAt: string) => {
 };
 
 export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, handleMarkLost, onLeadClick }: LeadTableProps) => {
+    const getStatus = (s: string) => statusConfig[s as LeadStatus] || statusConfig.new;
     if (filteredLeads.length === 0) {
         return (
             <div className="hidden lg:block bg-card border border-border rounded-2xl">
@@ -104,8 +106,8 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                                 <select
                                     className={cn(
                                         "px-2 py-1 text-xs font-bold border-0 outline-none cursor-pointer rounded-lg",
-                                        statusConfig[lead.status].bg,
-                                        statusConfig[lead.status].color
+                                        getStatus(lead.status).bg,
+                                        getStatus(lead.status).color
                                     )}
                                     value={lead.status}
                                     aria-label="حالة العميل"
@@ -120,10 +122,10 @@ export const LeadTable = memo(({ filteredLeads, statusConfig, updateMutation, ha
                             <div className="w-[10%] text-center">
                                 <span className={cn(
                                     "inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded-full",
-                                    priorityConfig[lead.priority].bg,
-                                    priorityConfig[lead.priority].color
+                                    getPriority(lead.priority).bg,
+                                    getPriority(lead.priority).color
                                 )}>
-                                    {priorityConfig[lead.priority].label}
+                                    {getPriority(lead.priority).label}
                                 </span>
                             </div>
                             <div className="w-[10%]">
