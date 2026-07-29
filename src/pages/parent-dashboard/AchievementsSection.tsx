@@ -1,41 +1,79 @@
-import { Trophy, Star, TrendingUp } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Trophy, Star, Flame, BookOpen, Lock } from 'lucide-react';
 
 interface AchievementsSectionProps {
     points: number;
     rank: { name: string };
 }
 
+const badges = [
+    {
+        icon: Star,
+        label: 'طالب نشيط',
+        unlocked: true,
+        color: 'text-warning',
+        bg: 'bg-warning/10',
+        ring: 'ring-warning/20',
+    },
+    {
+        icon: Flame,
+        label: '7 أيام متتالية',
+        unlocked: true,
+        color: 'text-error',
+        bg: 'bg-error/10',
+        ring: 'ring-error/20',
+    },
+    {
+        icon: BookOpen,
+        label: 'أنهيت أول مادة',
+        unlocked: true,
+        color: 'text-info',
+        bg: 'bg-info/10',
+        ring: 'ring-info/20',
+    },
+    {
+        icon: Lock,
+        label: 'أكمل 10 واجبات',
+        unlocked: false,
+        color: 'text-muted',
+        bg: 'bg-surface',
+        ring: 'ring-border',
+    },
+];
+
 export const AchievementsSection = ({ points, rank }: AchievementsSectionProps) => {
     return (
-        <div className="bg-card border border-border rounded-2xl p-5">
-            <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-xl bg-warning-soft flex items-center justify-center">
-                    <Trophy size={13} className="text-warning" />
+        <div className="rounded-2xl bg-card border border-border p-5 md:p-6">
+            <div className="flex items-center gap-2 mb-5">
+                <div className="w-8 h-8 rounded-xl bg-warning/15 flex items-center justify-center">
+                    <Trophy size={16} className="text-warning" />
                 </div>
-                <h3 className="text-sm font-bold text-main">الإنجازات</h3>
+                <h3 className="text-base md:text-[22px] font-bold text-main">الإنجازات</h3>
             </div>
-            <div className="grid grid-cols-3 gap-3">
-                <div className="flex flex-col items-center gap-2 p-3 bg-surface rounded-xl">
-                    <div className="w-10 h-10 rounded-xl bg-warning-soft flex items-center justify-center ring-1 ring-warning/20">
-                        <Star size={18} className="text-warning" />
-                    </div>
-                    <span className="text-sm font-bold text-main">{points}</span>
-                    <span className="text-micro text-muted font-medium">النقاط</span>
-                </div>
-                <div className="flex flex-col items-center gap-2 p-3 bg-surface rounded-xl">
-                    <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center ring-1 ring-primary/20">
-                        <TrendingUp size={18} className="text-primary" />
-                    </div>
-                    <span className="text-sm font-bold text-main">{rank.name}</span>
-                    <span className="text-micro text-muted font-medium">اللقب</span>
-                </div>
-                <div className="flex flex-col items-center gap-2 p-3 bg-surface rounded-xl">
-                    <div className="w-10 h-10 rounded-xl bg-success-soft flex items-center justify-center ring-1 ring-success/20">
-                        <Trophy size={18} className="text-success" />
-                    </div>
-                    <span className="text-sm font-bold text-main">0</span>
-                    <span className="text-micro text-muted font-medium">الشهادات</span>
-                </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {badges.map((badge, i) => {
+                    const Icon = badge.icon;
+                    return (
+                        <motion.div
+                            key={badge.label}
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 + i * 0.06 }}
+                            className={`relative rounded-2xl p-4 ${badge.bg} ${badge.ring} ring-1 text-center transition-all duration-300 ${badge.unlocked ? 'hover:shadow-elevation-2 hover:-translate-y-0.5' : ''}`}
+                        >
+                            <div className={`w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center ${badge.unlocked ? badge.bg : 'bg-border/30'}`}>
+                                <Icon size={22} className={badge.unlocked ? badge.color : 'text-muted'} />
+                            </div>
+                            <p className={`text-xs font-bold ${badge.unlocked ? 'text-main' : 'text-muted'}`}>
+                                {badge.label}
+                            </p>
+                            {!badge.unlocked && (
+                                <p className="text-[10px] text-muted mt-1">مقفل</p>
+                            )}
+                        </motion.div>
+                    );
+                })}
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import { BookOpen, CheckCircle, Trophy, Target } from 'lucide-react';
+import { motion } from 'framer-motion';
 import type { Student } from '../../types';
 
 interface AcademicPerformanceProps {
@@ -8,31 +8,28 @@ interface AcademicPerformanceProps {
     rank: { name: string };
 }
 
-const Ring = ({ value, size = 56, stroke = 5, color = 'var(--bg-primary)', label, icon: Icon }: {
-    value: number; size?: number; stroke?: number; color?: string; label: string; icon: typeof BookOpen;
-}) => {
-    const radius = (size - stroke) / 2;
-    const circumference = 2 * Math.PI * radius;
-    const offset = circumference - (Math.min(value, 100) / 100) * circumference;
+const ProgressBar = ({ value, color, label, icon: Icon, max }: { value: number; color: string; label: string; icon: React.ElementType; max: number }) => {
+    const percent = max > 0 ? Math.min(Math.round((value / max) * 100), 100) : 0;
 
     return (
-        <div className="flex flex-col items-center gap-2">
-            <div className="relative" style={{ width: size, height: size }}>
-                <svg className="-rotate-90" width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-                    <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--border)" strokeWidth={stroke} />
-                    <circle
-                        cx={size / 2} cy={size / 2} r={radius} fill="none"
-                        stroke={color} strokeWidth={stroke} strokeLinecap="round"
-                        strokeDasharray={circumference} strokeDashoffset={offset}
-                        className="transition-all duration-700"
-                    />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <Icon size={12} className="text-muted mb-0.5" />
-                    <span className="text-micro font-bold text-main">{value}%</span>
+        <div className="space-y-1.5">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <div className={`w-7 h-7 rounded-lg ${color}/10 flex items-center justify-center`}>
+                        <Icon size={13} className={color} />
+                    </div>
+                    <span className="text-xs font-bold text-main">{label}</span>
                 </div>
+                <span className={`text-xs font-bold ${color}`}>{percent}%</span>
             </div>
-            <span className="text-micro text-muted font-bold text-center">{label}</span>
+            <div className="relative h-2.5 rounded-full bg-border overflow-hidden">
+                <motion.div
+                    className={`absolute inset-y-0 start-0 rounded-full ${color}`}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${percent}%` }}
+                    transition={{ duration: 0.8, ease: 'easeOut' }}
+                />
+            </div>
         </div>
     );
 };
@@ -50,30 +47,53 @@ export const AcademicPerformance = ({ sessions, children: kids, points, rank }: 
             sessionsTotal += Number(en.sessionsTotal || 0);
         });
     });
-    const curriculumProgress = sessionsTotal > 0 ? Math.round((sessionsUsed / sessionsTotal) * 100) : 0;
 
     const totalSubjects = kids.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0);
 
     return (
-        <div className="bg-card border border-border rounded-2xl p-5">
-            <h3 className="text-sm font-bold text-main mb-4">التقدم الأكاديمي</h3>
+        <div className="rounded-2xl bg-card border border-border p-5 md:p-6 transition-all duration-300 hover:shadow-elevation-1">
+            <h3 className="text-base md:text-[22px] font-bold text-main mb-5">التقدم الأكاديمي</h3>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                <Ring value={curriculumProgress} color="var(--bg-primary)" label="المنهج" icon={BookOpen} />
-                <Ring value={attendanceRate} color="var(--bg-success)" label="الحضور" icon={CheckCircle} />
-                <Ring value={totalSubjects > 0 ? Math.round((sessionsUsed / Math.max(totalSubjects, 1)) * 100) : 0} color="var(--bg-info)" label="الواجبات" icon={Target} />
-                <Ring value={points > 0 ? Math.min(Math.round((points / 500) * 100), 100) : 0} color="var(--bg-warning)" label="XP" icon={Trophy} />
+            <div className="space-y-4">
+                <ProgressBar
+                    value={attendanceRate}
+                    max={100}
+                    color="text-success"
+                    label="الحضور"
+                    icon={() => <span className="text-success">✓</span>}
+                />
+                <ProgressBar
+                    value={totalSubjects}
+                    max={Math.max(totalSubjects, 1)}
+                    color="text-info"
+                    label="الواجبات"
+                    icon={() => <span className="text-info">📚</span>}
+                />
+                <ProgressBar
+                    value={sessionsUsed}
+                    max={Math.max(sessionsTotal, 1)}
+                    color="text-primary"
+                    label="المنهج"
+                    icon={() => <span className="text-primary">📖</span>}
+                />
+                <ProgressBar
+                    value={Math.min(points, 500)}
+                    max={500}
+                    color="text-warning"
+                    label="XP"
+                    icon={() => <span className="text-warning">⭐</span>}
+                />
             </div>
 
-            <div className="flex items-center justify-between p-3 bg-surface rounded-xl">
-                <div className="flex items-center gap-2">
-                    <span className="text-lg">⭐</span>
+            <div className="mt-5 p-4 rounded-xl bg-gradient-to-l from-warning/10 via-warning/[0.03] to-surface border border-warning/20 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <span className="text-2xl">⭐</span>
                     <div>
-                        <p className="text-xs font-bold text-main">{rank.name}</p>
-                        <p className="text-micro text-muted">{points} نقطة</p>
+                        <p className="text-sm font-bold text-main">{rank.name}</p>
+                        <p className="text-xs text-muted font-medium">{points} نقطة خبرة</p>
                     </div>
                 </div>
-                <span className="text-xs font-bold text-primary bg-primary-soft px-2.5 py-1 rounded-lg">{points} نقطة</span>
+                <span className="text-lg font-bold text-warning bg-warning/10 px-3 py-1.5 rounded-xl">{points}</span>
             </div>
         </div>
     );

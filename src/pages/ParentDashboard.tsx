@@ -23,10 +23,10 @@ import type { PointLogEntry } from './parent-dashboard/types';
 
 const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
-const stagger = (i: number) => ({
-    initial: { opacity: 0, y: 12 },
+const fadeUp = (delay: number) => ({
+    initial: { opacity: 0, y: 16 },
     animate: { opacity: 1, y: 0 },
-    transition: { delay: i * 0.04 },
+    transition: { delay, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] },
 });
 
 export const ParentDashboard = () => {
@@ -203,13 +203,13 @@ export const ParentDashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
-                    <Skeleton className="h-32 rounded-2xl" />
+                <div className="max-w-page mx-auto px-4 pt-4 space-y-3">
+                    <Skeleton className="h-36 rounded-3xl" />
                     <div className="grid grid-cols-2 gap-3">
-                        <Skeleton className="h-24 rounded-2xl" /><Skeleton className="h-24 rounded-2xl" />
+                        <Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" />
                     </div>
-                    <Skeleton className="h-20 rounded-2xl" />
-                    <Skeleton className="h-32 rounded-2xl" />
+                    <Skeleton className="h-24 rounded-2xl" />
+                    <Skeleton className="h-40 rounded-2xl" />
                 </div>
             </div>
         );
@@ -219,8 +219,8 @@ export const ParentDashboard = () => {
         <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
             <ParentDashboardHeader logout={logout} />
 
-            <main className="max-w-page mx-auto px-4 pt-3 pb-24 space-y-4">
-                <motion.div {...stagger(0)}>
+            <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
+                <motion.div {...fadeUp(0)}>
                     <HeroSection
                         name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
                         children={children}
@@ -229,45 +229,51 @@ export const ParentDashboard = () => {
                     />
                 </motion.div>
 
-                <motion.div {...stagger(1)}>
+                <motion.div {...fadeUp(0.06)}>
                     <TodaySummary sessions={sessions} children={children} todayTasks={todayTasks} />
                 </motion.div>
 
-                {activeTimers.length > 0 && (
-                    <motion.div {...stagger(2)}>
-                        <ActiveTimersBanner activeTimers={activeTimers} children={children} formatTime={formatTime} />
-                    </motion.div>
-                )}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4">
+                    <div className="lg:col-span-2 space-y-3 md:space-y-4">
+                        {activeTimers.length > 0 && (
+                            <motion.div {...fadeUp(0.1)}>
+                                <ActiveTimersBanner activeTimers={activeTimers} children={children} formatTime={formatTime} />
+                            </motion.div>
+                        )}
 
-                <motion.div {...stagger(3)}>
-                    <NextSessionBanner todayTasks={todayTasks} />
-                </motion.div>
+                        <motion.div {...fadeUp(0.12)}>
+                            <NextSessionBanner todayTasks={todayTasks} />
+                        </motion.div>
 
-                <motion.div {...stagger(4)}>
-                    <ChildrenCards children={children} />
-                </motion.div>
+                        <motion.div {...fadeUp(0.16)}>
+                            <ChildrenCards children={children} />
+                        </motion.div>
 
-                <motion.div {...stagger(5)}>
-                    <AcademicPerformance sessions={sessions} children={children} points={points} rank={rank} />
-                </motion.div>
+                        <motion.div {...fadeUp(0.2)}>
+                            <HomeworkNotes children={children} />
+                        </motion.div>
 
-                <motion.div {...stagger(6)}>
-                    <HomeworkNotes children={children} />
-                </motion.div>
+                        {allPointLogs.length > 0 && (
+                            <motion.div {...fadeUp(0.24)}>
+                                <RecentActivity allPointLogs={allPointLogs} />
+                            </motion.div>
+                        )}
+                    </div>
 
-                <motion.div {...stagger(7)}>
-                    <AchievementsSection points={points} rank={rank} />
-                </motion.div>
+                    <div className="space-y-3 md:space-y-4">
+                        <motion.div {...fadeUp(0.14)}>
+                            <AcademicPerformance sessions={sessions} children={children} points={points} rank={rank} />
+                        </motion.div>
 
-                {allPointLogs.length > 0 && (
-                    <motion.div {...stagger(8)}>
-                        <RecentActivity allPointLogs={allPointLogs} />
-                    </motion.div>
-                )}
+                        <motion.div {...fadeUp(0.18)}>
+                            <AchievementsSection points={points} rank={rank} />
+                        </motion.div>
 
-                <motion.div {...stagger(9)}>
-                    <SupportBanner adminPhone={adminPhone} />
-                </motion.div>
+                        <motion.div {...fadeUp(0.28)}>
+                            <SupportBanner adminPhone={adminPhone} />
+                        </motion.div>
+                    </div>
+                </div>
             </main>
 
             <div className="block md:hidden">

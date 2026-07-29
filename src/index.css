@@ -336,15 +336,6 @@ html, body {
   background-color: rgba(var(--color-primary), 0.08);
 }
 
-/* ── Dynamic Header Nav ── */
-.header-nav {
-  background-color: rgb(var(--color-primary-deep) / 0.95);
-  border-bottom: 1px solid rgba(var(--color-primary), 0.3);
-}
-.dark .header-nav {
-  background-color: rgb(var(--color-primary-deep) / 0.95);
-}
-
 /* Global focus-visible outline for keyboard accessibility */
 :focus-visible {
   outline: 2px solid rgb(var(--color-primary));
