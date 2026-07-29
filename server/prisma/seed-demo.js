@@ -212,14 +212,18 @@ async function main() {
 
   // ── Clean all previous demo_ records ──
   console.log('── 0. تنظيف البيانات القديمة ──');
-  const models = ['trialSession', 'lead', 'contactMessage', 'jobApplication', 'session', 'pointsLog', 'enrollment', 'teacherAvailability', 'announcement', 'student', 'parent', 'teacher'];
+  // String-id models
+  const strModels = ['trialSession', 'lead', 'contactMessage', 'jobApplication', 'session', 'pointsLog', 'teacherAvailability', 'announcement', 'student', 'parent', 'teacher'];
   let cleaned = 0;
-  for (const m of models) {
+  for (const m of strModels) {
     const model = prisma[m];
     if (!model) continue;
     const r = await model.deleteMany({ where: { id: { startsWith: 'demo_' } } });
     cleaned += r.count;
   }
+  // Int-id models (Enrollment has autoincrement id, filter by studentId)
+  const e = await prisma.enrollment.deleteMany({ where: { studentId: { startsWith: 'demo_' } } });
+  cleaned += e.count;
   console.log(`  🗑️ تم حذف ${cleaned} سجل قديم\n`);
 
   // ════════════════════════════════════
