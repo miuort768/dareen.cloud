@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { ListTodo, ChevronLeft, Clock, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { DashboardTask as Task } from '../types';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
@@ -12,8 +11,7 @@ interface TasksAndRequestsProps {
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
-        <Card>
-            <CardContent className="p-5 flex flex-col h-full">
+        <div className="flex flex-col h-full">
             <div className="flex items-center justify-between mb-3">
                 <h3 className="text-xs font-bold text-muted flex items-center gap-2">
                     <ListTodo size={12} className="text-primary" />
@@ -71,6 +69,6 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                     </Button>
                 </Link>
             </div>
-        </CardContent></Card>
+        </div>
     );
 };

@@ -17,12 +17,12 @@ interface StatCardData {
     formatter?: (val: number) => string;
 }
 
-const colorMap: Record<string, { bg: string; text: string; light: string }> = {
-    primary: { bg: 'bg-primary/10', text: 'text-primary', light: 'bg-primary/[0.04]' },
-    success: { bg: 'bg-success/10', text: 'text-success', light: 'bg-success/[0.04]' },
-    info: { bg: 'bg-info/10', text: 'text-info', light: 'bg-info/[0.04]' },
-    warning: { bg: 'bg-warning/10', text: 'text-warning', light: 'bg-warning/[0.04]' },
-    error: { bg: 'bg-error/10', text: 'text-error', light: 'bg-error/[0.04]' },
+const colorMap: Record<string, { bg: string; text: string; light: string; ring: string }> = {
+    primary: { bg: 'bg-primary/10', text: 'text-primary', light: 'bg-primary/[0.04]', ring: 'ring-primary/20' },
+    success: { bg: 'bg-success/10', text: 'text-success', light: 'bg-success/[0.04]', ring: 'ring-success/20' },
+    info: { bg: 'bg-info/10', text: 'text-info', light: 'bg-info/[0.04]', ring: 'ring-info/20' },
+    warning: { bg: 'bg-warning/10', text: 'text-warning', light: 'bg-warning/[0.04]', ring: 'ring-warning/20' },
+    error: { bg: 'bg-error/10', text: 'text-error', light: 'bg-error/[0.04]', ring: 'ring-error/20' },
 };
 
 const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
@@ -37,7 +37,7 @@ const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
             className="group relative overflow-hidden rounded-2xl bg-card border border-border p-5 transition-all duration-300 hover:shadow-elevation-2 hover:-translate-y-0.5"
         >
             <div className="flex items-start justify-between mb-3">
-                <div className={`w-10 h-10 rounded-xl ${c.bg} flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}>
+                <div className={`w-10 h-10 rounded-xl ring-1 ${c.ring} ${c.bg} flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}>
                     <Icon size={18} className={c.text} />
                 </div>
                 {item.trend && (

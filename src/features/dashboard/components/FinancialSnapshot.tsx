@@ -1,6 +1,5 @@
 import { TrendingUp, DollarSign, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
 
 interface FinancialSnapshotProps {
     monthNetProfit: number;
@@ -16,8 +15,7 @@ export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollec
     ];
 
     return (
-        <Card>
-            <CardContent className="p-5">
+        <div>
             <h3 className="text-xs font-bold text-muted mb-3 flex items-center gap-2">
                 <Wallet size={12} className="text-success" />
                 الملخص المالي
@@ -37,6 +35,6 @@ export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollec
                     </div>
                 ))}
             </div>
-        </CardContent></Card>
+        </div>
     );
 };

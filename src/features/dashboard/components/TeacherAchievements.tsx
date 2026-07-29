@@ -2,7 +2,6 @@ import { Award, AlertCircle, Clock, Star, TrendingUp } from 'lucide-react';
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types';
 import { getRankByPoints, TEACHER_RANKS } from '../../../shared/utils/ranks';
 import { RankBadge } from '../../../shared/components/RankBadge';
-import { Card, CardContent } from '@/components/ui/card';
 
 interface TeacherAchievementsProps {
     stats: Stats;
@@ -16,9 +15,8 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
     const lowCount = lowBalanceStudents.filter(s => s.remainingSessions > 0).length;
 
     return (
-        <Card className="border-border rounded-2xl overflow-hidden">
-            <CardContent className="p-5">
-                <div className="flex items-center justify-between mb-4">
+        <div>
+            <div className="flex items-center justify-between mb-4">
                     <h3 className="text-xs font-bold text-muted flex items-center gap-2">
                         <Star size={12} className="text-warning" />
                         {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
@@ -72,7 +70,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                         </div>
                     </div>
                 </div>
-            </CardContent>
-        </Card>
+            </div>
+        </div>
     );
 };

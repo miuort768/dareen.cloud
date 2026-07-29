@@ -2,7 +2,6 @@ import { AlertCircle, Clock, AlertTriangle, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { ComponentType } from 'react';
 import type { LowBalanceStudent } from '../types';
-import { Card, CardContent } from '@/components/ui/card';
 
 interface FocusStudent {
     id: string;
@@ -71,8 +70,7 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
     }
 
     return (
-        <Card>
-            <CardContent className="p-5">
+        <div>
             <h3 className="text-xs font-bold text-muted mb-3 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-error animate-pulse" />
                 مركز التنبيهات
@@ -88,6 +86,6 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
                     </div>
                 ))}
             </div>
-        </CardContent></Card>
+        </div>
     );
 };
