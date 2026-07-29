@@ -397,7 +397,7 @@ async function main() {
   console.log('\n═══════════════════════════════════════');
   console.log(`  ✅ تمت إضافة البيانات التجريبية (${elapsed} ث)`);
   console.log('  📌 كلمة المرور: 123456');
-  console.log('  🗑️ للحذف: DELETE FROM tablename WHERE id LIKE 'demo_%'');
+  console.log("  🗑️ للحذف: DELETE FROM tablename WHERE id LIKE 'demo_%'");
   console.log('───────────────────────────────────────');
   console.log(`  👥 ${teachers.length} معلم`);
   console.log(`  👪 ${parents.length} ولي أمر`);
