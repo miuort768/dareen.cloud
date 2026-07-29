@@ -125,12 +125,12 @@ const ANNOUNCEMENT_TITLES = [
 ];
 
 const DAY_HOURS = {
-  'الأحد': ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
-  'الإثنين': ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
-  'الثلاثاء': ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
-  'الأربعاء': ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00'],
-  'الخميس': ['15:00', '16:00', '17:00', '18:00', '19:00'],
-  'السبت': ['09:00', '10:00', '11:00', '12:00', '16:00', '17:00', '18:00'],
+  'الأحد': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+  'الإثنين': ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+  'الثلاثاء': ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+  'الأربعاء': ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+  'الخميس': ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
+  'السبت': ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00', '19:00'],
 };
 
 async function main() {
@@ -219,28 +219,43 @@ async function main() {
   console.log(`  ✅ ${students.length} طالب`);
 
   // ════════════════════════════════════
-  // 4. ENROLLMENTS — ~90 enrollments
-  //    Each student gets 2-5 subjects
+  // 4. ENROLLMENTS — ~200 enrollments
+  //    Each student gets 5-10 subjects (dense schedule like real school)
   // ════════════════════════════════════
   console.log('\n── 4. التسجيلات ──');
   let enrollCount = 0;
   const enrollments = [];
 
   for (const student of students) {
-    const numSubjects = randomInt(2, 5);
+    // Each student takes 5–10 subjects
+    const numSubjects = randomInt(5, 10);
     const shuffled = [...SUBJECTS].sort(() => Math.random() - 0.5).slice(0, numSubjects);
 
     for (const subject of shuffled) {
       const teacher = teachers.find((t) => t.subject === subject);
       if (!teacher) continue;
 
-      const totalSessions = subject === 'الرياضيات' || subject === 'اللغة العربية' ? randomInt(20, 32) : randomInt(12, 20);
-      const usedSessions = randomInt(3, totalSessions - 1);
+      // Core subjects have more sessions per month
+      const isCore = ['الرياضيات', 'اللغة العربية', 'اللغة الإنجليزية'].includes(subject);
+      const sessionsPerWeek = isCore ? randomInt(2, 4) : randomInt(1, 2);
+      const totalSessions = sessionsPerWeek * randomInt(8, 16);
+      const startPct = Math.random();
+      // Some students are new (few sessions used), some are deep in
+      const usedSessions = startPct < 0.2
+        ? randomInt(1, Math.max(2, Math.floor(totalSessions * 0.2)))
+        : randomInt(Math.floor(totalSessions * 0.3), Math.floor(totalSessions * 0.85));
 
-      // Generate schedule: 1-3 days per week
-      const numDays = randomInt(1, 3);
-      const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'السبت'].sort(() => Math.random() - 0.5).slice(0, numDays);
-      const schedule = days.map((day) => ({ day, hour: pick(DAY_HOURS[day] || ['16:00']) }));
+      // Generate 2–5 different weekdays with 1–2 slots each
+      const numDays = isCore ? randomInt(3, 5) : randomInt(1, 3);
+      const allDays = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'السبت'];
+      const selectedDays = allDays.sort(() => Math.random() - 0.5).slice(0, numDays);
+
+      const finalSchedule = selectedDays.flatMap((day) => {
+        const hours = DAY_HOURS[day] || ['16:00'];
+        const h1 = pick(hours);
+        const h2 = isCore && Math.random() < 0.3 ? pick(hours.filter((h) => h !== h1)) : null;
+        return h2 ? [{ day, hour: h1 }, { day, hour: h2 }] : [{ day, hour: h1 }];
+      });
 
       await prisma.enrollment.create({
         data: {
@@ -250,73 +265,81 @@ async function main() {
           subject,
           sessionsTotal: totalSessions,
           sessionsUsed: usedSessions,
-          schedule: JSON.stringify(schedule),
+          schedule: JSON.stringify(finalSchedule),
         },
       });
-      enrollments.push({ studentId: student.id, teacherId: teacher.id, teacherName: teacher.name, studentName: student.name, subject, schedule });
+      enrollments.push({ studentId: student.id, teacherId: teacher.id, teacherName: teacher.name, studentName: student.name, subject, schedule: finalSchedule });
       enrollCount++;
     }
   }
   console.log(`  ✅ ${enrollCount} تسجيل`);
 
   // ════════════════════════════════════
-  // 5. SESSIONS — 90 days (past 60 + future 30)
+  // 5. SESSIONS — 150 days (past 120 + future 30)
+  //    Each enrollment generates sessions per its schedule days
   // ════════════════════════════════════
   console.log('\n── 5. الحصص ──');
   let sessionCount = 0;
-  const BATCH_SIZE = 50;
 
-  for (let dayOffset = 60; dayOffset >= -30; dayOffset--) {
+  for (let dayOffset = 120; dayOffset >= -30; dayOffset--) {
     const d = new Date();
     d.setDate(d.getDate() - dayOffset);
     const dayNameStr = dayName(d);
-    if (dayNameStr === 'الجمعة') continue; // skip Friday
+    if (dayNameStr === 'الجمعة') continue;
 
     for (const enr of enrollments) {
-      const schedule = JSON.parse(JSON.stringify(enr.schedule)); // already parsed from string
       const slots = typeof enr.schedule === 'string' ? JSON.parse(enr.schedule) : enr.schedule;
-      const slot = Array.isArray(slots) ? slots.find((s) => s.day === dayNameStr) : null;
-      if (!slot) continue;
+      if (!Array.isArray(slots)) continue;
 
-      const status = d < new Date() ? (Math.random() < 0.12 ? 'cancelled' : 'completed') : 'scheduled';
-      const sid = `${PREFIX}sess_${enr.studentId}_${enr.subject.replace(/\s/g, '')}_${dayOffset}`;
+      // Find all slots for this day (support double-slot days)
+      const daySlots = slots.filter((s) => s.day === dayNameStr);
+      if (daySlots.length === 0) continue;
 
-      await prisma.session.create({
-        data: {
-          id: sid,
-          studentId: enr.studentId,
-          teacherId: enr.teacherId,
-          studentName: enr.studentName,
-          teacherName: enr.teacherName,
-          subject: enr.subject,
-          date: d.toISOString().split('T')[0],
-          day: dayNameStr,
-          time: slot.hour,
-          price: randomInt(0, 20),
-          status,
-        },
-      }).catch(() => {}); // ignore duplicates
+      for (const slot of daySlots) {
+        const status = d < new Date()
+          ? (Math.random() < 0.08 ? 'cancelled' : 'completed')
+          : 'scheduled';
 
-      sessionCount++;
+        const sid = `${PREFIX}sess_${enr.studentId}_${enr.subject.replace(/\s/g, '')}_${dayOffset}_${slot.hour.replace(':', '')}`;
+
+        await prisma.session.create({
+          data: {
+            id: sid,
+            studentId: enr.studentId,
+            teacherId: enr.teacherId,
+            studentName: enr.studentName,
+            teacherName: enr.teacherName,
+            subject: enr.subject,
+            date: d.toISOString().split('T')[0],
+            day: dayNameStr,
+            time: slot.hour,
+            price: randomInt(0, 25),
+            status,
+          },
+        }).catch(() => {});
+
+        sessionCount++;
+      }
     }
   }
   console.log(`  ✅ ${sessionCount} حصة`);
 
   // ════════════════════════════════════
-  // 6. POINTS LOGS — 15 per student = 450
+  // 6. POINTS LOGS — 30 per student = 900
   // ════════════════════════════════════
   console.log('\n── 6. سجل النقاط ──');
   let pointsCount = 0;
   for (const student of students) {
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 30; i++) {
       const d = new Date();
       d.setDate(d.getDate() - randomInt(1, 90));
       const pid = `${PREFIX}pts_${student.id}_${i}`;
+      const amount = randomInt(1, 12) <= 2 ? pick([50, 75, 100]) : pick([3, 5, 10, 15, 20, 25, 30]);
       await prisma.pointsLog.create({
         data: {
           id: pid,
           studentId: student.id,
-          amount: pick([5, 10, 15, 20, 25, 30, 50]),
+          amount,
           action: pick(POINT_ACTIONS),
           timestamp: d,
         },
@@ -352,23 +375,26 @@ async function main() {
   console.log(`  ✅ ${annCount} إعلان`);
 
   // ════════════════════════════════════
-  // 8. TEACHER AVAILABILITY
+  // 8. TEACHER AVAILABILITY — each teacher 4-6 days
   // ════════════════════════════════════
   console.log('\n── 8. أوقات المعلمين ──');
   let availCount = 0;
   for (const teacher of teachers) {
-    const days = teacher.subject === 'الرياضيات' || teacher.subject === 'اللغة العربية'
-      ? [0, 2, 4, 6] : [1, 3, 4];
+    const numDays = pick([4, 5, 6]);
+    const all = [0, 1, 2, 3, 4, 6]; // skip Friday (5)
+    const days = all.sort(() => Math.random() - 0.5).slice(0, numDays);
     for (const dayIdx of days) {
       const avid = `${PREFIX}avail_${teacher.id}_${dayIdx}`;
+      const startH = dayIdx === 6 ? 8 : 14; // Saturday starts at 8am
+      const endH = dayIdx === 6 ? 20 : 21;
       await prisma.teacherAvailability.create({
         data: {
           id: avid,
           teacherId: teacher.id,
           teacherName: teacher.name,
           dayOfWeek: dayIdx,
-          startTime: '15:00',
-          endTime: '21:00',
+          startTime: `${startH}:00`,
+          endTime: `${endH}:00`,
           isAvailable: 1,
         },
       }).catch(() => {});
