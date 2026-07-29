@@ -71,6 +71,5 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     </div>
                 </div>
             </div>
-        </div>
     );
 };
