@@ -522,7 +522,7 @@ async function main() {
 
     const d = new Date();
     d.setDate(d.getDate() - randomInt(0, 90));
-    const status = randomInt(1, 10) <= 2 ? pick(['new', 'new', 'new']) : pick(['contacted', 'qualified', 'converted', 'lost']);
+    const status = randomInt(1, 10) <= 2 ? pick(['new', 'new', 'new']) : pick(['contacted', 'interested', 'trial', 'converted', 'lost']);
     const priority = randomInt(1, 10) <= 2 ? 'high' : (randomInt(1, 10) <= 5 ? 'medium' : 'low');
 
     await prisma.lead.create({
