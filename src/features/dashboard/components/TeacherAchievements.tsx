@@ -1,8 +1,9 @@
-import { Award, AlertCircle, Clock, Star } from 'lucide-react';
+import { Award, AlertCircle, Clock, Star, TrendingUp } from 'lucide-react';
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types';
 import { getRankByPoints, TEACHER_RANKS } from '../../../shared/utils/ranks';
 import { RankBadge } from '../../../shared/components/RankBadge';
 import { Card, CardContent } from '@/components/ui/card';
+
 interface TeacherAchievementsProps {
     stats: Stats;
     lowBalanceStudents: LowBalanceStudent[];
@@ -15,59 +16,63 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
     const lowCount = lowBalanceStudents.filter(s => s.remainingSessions > 0).length;
 
     return (
-        <Card>
+        <Card className="border-border rounded-2xl overflow-hidden">
             <CardContent className="p-5">
-            <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xs font-bold text-muted flex items-center gap-2">
-                    <Star size={12} className="text-warning" />
-                    {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
-                </h3>
-                {isTeacher && (
-                    <RankBadge rank={rank} size="sm" />
-                )}
-            </div>
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xs font-bold text-muted flex items-center gap-2">
+                        <Star size={12} className="text-warning" />
+                        {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
+                    </h3>
+                    {isTeacher && (
+                        <RankBadge rank={rank} size="sm" />
+                    )}
+                </div>
 
-            <div className="bg-primary rounded-xl p-4 mb-3 text-on-primary">
-                <div className="flex items-center gap-1.5 mb-2">
-                    <Award size={12} className="text-primary" />
-                    <span className="text-micro font-bold text-primary">
-                        {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
-                    </span>
-                </div>
-                <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-bold tabular-nums">
-                        {isTeacher ? (stats.monthNetProfit || 0).toLocaleString('ar-EG') : stats.expectedCollection.toLocaleString('ar-EG')}
-                    </span>
-                    <span className="text-micro font-bold text-primary">ج.م</span>
-                </div>
-                {isTeacher && (
-                    <div className="mt-2.5 inline-flex items-center gap-1 px-2.5 py-1 bg-white/15 backdrop-blur-sm rounded-lg text-micro font-bold text-on-primary">
-                        <Award size={10} />
-                        {stats.teacherPoints || 0} XP
+                <div className="rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-soft p-5 mb-4 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.1)_0%,transparent_60%)]" />
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-1.5 mb-2">
+                            <TrendingUp size={12} className="text-white/70" />
+                            <span className="text-micro font-bold text-white/70">
+                                {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
+                            </span>
+                        </div>
+                        <div className="flex items-baseline gap-1.5">
+                            <span className="text-2xl font-bold tabular-nums text-white">
+                                {isTeacher ? (stats.monthNetProfit || 0).toLocaleString('ar-EG') : stats.expectedCollection.toLocaleString('ar-EG')}
+                            </span>
+                            <span className="text-micro font-bold text-white/70">ج.م</span>
+                        </div>
+                        {isTeacher && (
+                            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/15 backdrop-blur-sm rounded-xl text-micro font-bold text-white">
+                                <Award size={10} />
+                                {stats.teacherPoints || 0} XP
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
+                </div>
 
-            <div className="grid grid-cols-2 gap-2.5">
-                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-error-soft border border-error">
-                    <div className="w-8 h-8 rounded-lg bg-error-soft flex items-center justify-center">
-                        <AlertCircle size={13} className="text-error" />
+                <div className="grid grid-cols-2 gap-3">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-error/10 border border-error/20">
+                        <div className="w-9 h-9 rounded-lg bg-error/15 flex items-center justify-center">
+                            <AlertCircle size={14} className="text-error" />
+                        </div>
+                        <div>
+                            <span className="text-lg font-bold text-error tabular-nums">{expiredCount}</span>
+                            <p className="text-micro font-bold text-error/70">منتهي</p>
+                        </div>
                     </div>
-                    <div>
-                        <span className="text-lg font-semibold text-error tabular-nums">{expiredCount}</span>
-                        <p className="text-micro font-bold text-error">منتهي</p>
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-warning/10 border border-warning/20">
+                        <div className="w-9 h-9 rounded-lg bg-warning/15 flex items-center justify-center">
+                            <Clock size={14} className="text-warning" />
+                        </div>
+                        <div>
+                            <span className="text-lg font-bold text-warning tabular-nums">{lowCount}</span>
+                            <p className="text-micro font-bold text-warning/70">مستحق</p>
+                        </div>
                     </div>
                 </div>
-                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-warning-soft border border-warning">
-                    <div className="w-8 h-8 rounded-lg bg-warning-soft flex items-center justify-center">
-                        <Clock size={13} className="text-warning" />
-                    </div>
-                    <div>
-                        <span className="text-lg font-semibold text-warning tabular-nums">{lowCount}</span>
-                        <p className="text-micro font-bold text-warning">مستحق</p>
-                    </div>
-                </div>
-            </div>
-        </CardContent></Card>
+            </CardContent>
+        </Card>
     );
 };

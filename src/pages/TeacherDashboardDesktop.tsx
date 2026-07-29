@@ -30,6 +30,12 @@ interface TeacherDashboardDesktopProps {
     timeline: { id: string; studentName: string; time: string; subject: string; status: string }[];
 }
 
+const fadeUp = (delay: number) => ({
+    initial: { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0 },
+    transition: { delay, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] },
+});
+
 export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline }: TeacherDashboardDesktopProps) => {
     const navigate = useNavigate();
     const [briefingStudent, setBriefingStudent] = useState<{ id?: string; name?: string; grade?: string; notes?: string; totalPoints?: number } | null>(null);
@@ -38,68 +44,66 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
     const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
 
     return (
-        <div className="max-w-page mx-auto px-4 space-y-6 py-6">
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+        <div className="max-w-page mx-auto px-4 space-y-3 md:space-y-4 py-4 md:py-6">
+            <motion.div {...fadeUp(0)}>
                 <DashboardHeader isTeacher={true} currentUser={currentUser} />
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.04 }}>
-                <GlassCard className="p-5">
-                    {nextSession && (
-                        <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
-                    )}
-                    <QuickActions navigate={navigate} onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} />
-                </GlassCard>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-6"
-            >
-                <div className="lg:col-span-8">
-                    <GlassCard className="p-5">
+
+            <motion.div {...fadeUp(0.04)}>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
+                    <div className="rounded-2xl bg-card border border-border p-5 transition-all duration-300 hover:shadow-elevation-1">
+                        {nextSession && (
+                            <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
+                        )}
+                        <QuickActions navigate={navigate} onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} />
+                    </div>
+                    <div className="rounded-2xl bg-card border border-border p-5 transition-all duration-300 hover:shadow-elevation-1">
                         <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
-                    </GlassCard>
-                </div>
-                <div className="lg:col-span-4">
-                    <GlassCard className="p-5">
-                        <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
-                    </GlassCard>
-                </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}>
-                <DashboardStats stats={stats} isTeacher={true} />
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-6"
-            >
-                <div className="lg:col-span-8 space-y-6">
-                    <GlassCard className="p-5">
-                        <LiveClasses />
-                    </GlassCard>
-                    <GlassCard className="p-5">
-                        <ModernAnnouncements />
-                    </GlassCard>
-                    {timeline.length > 0 && (
-                        <GlassCard className="p-5">
-                            <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
-                        </GlassCard>
-                    )}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <GlassCard className="p-5">
-                            <TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} />
-                        </GlassCard>
-                        <GlassCard className="p-5">
-                            <TasksAndRequests tasks={tasks} />
-                        </GlassCard>
                     </div>
                 </div>
-                <div className="lg:col-span-4 space-y-6">
-                    <GlassCard className="p-5">
+            </motion.div>
+
+            <motion.div {...fadeUp(0.08)}>
+                <DashboardStats stats={stats} isTeacher={true} />
+            </motion.div>
+
+            <motion.div {...fadeUp(0.12)}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-3 md:gap-4"
+            >
+                <div className="lg:col-span-8 space-y-3 md:space-y-4">
+                    <div className="rounded-2xl bg-card border border-border p-5">
+                        <LiveClasses />
+                    </div>
+                    <div className="rounded-2xl bg-card border border-border p-5">
+                        <ModernAnnouncements />
+                    </div>
+                    {timeline.length > 0 && (
+                        <div className="rounded-2xl bg-card border border-border p-5">
+                            <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
+                        </div>
+                    )}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                        <div className="rounded-2xl bg-card border border-border p-5">
+                            <TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} />
+                        </div>
+                        <div className="rounded-2xl bg-card border border-border p-5">
+                            <TasksAndRequests tasks={tasks} />
+                        </div>
+                    </div>
+                </div>
+                <div className="lg:col-span-4 space-y-3 md:space-y-4">
+                    <div className="rounded-2xl bg-card border border-border p-5">
                         <AttendanceChart rate={stats.attendanceRate} />
-                    </GlassCard>
-                    <GlassCard className="p-5">
+                    </div>
+                    <div className="rounded-2xl bg-card border border-border p-5">
                         <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
-                    </GlassCard>
+                    </div>
+                    <div className="rounded-2xl bg-card border border-border p-5">
+                        <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
+                    </div>
                 </div>
             </motion.div>
+
             {briefingStudent && (
                 <StudentQuickBrief isOpen={!!briefingStudent} onClose={() => setBriefingStudent(null)}
                     onGenerateReport={(student) => { setSelectedStudentForReport({ id: student.id, name: student.name, grade: student.grade, subject: 'مادة عامة', points: student.totalPoints || 0, attendance: 95, sessionsCompleted: 12, lastNotes: [student.notes || 'تقدم ممتاز في المادة'] }); setBriefingStudent(null); }}

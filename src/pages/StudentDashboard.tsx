@@ -22,10 +22,10 @@ import { MobileBottomNav } from './student-dashboard/MobileBottomNav';
 
 const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
-const stagger = (i: number) => ({
-    initial: { opacity: 0, y: 12 },
+const fadeUp = (delay: number) => ({
+    initial: { opacity: 0, y: 16 },
     animate: { opacity: 1, y: 0 },
-    transition: { delay: i * 0.04 },
+    transition: { delay, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] },
 });
 
 export const StudentDashboard = () => {
@@ -153,13 +153,13 @@ export const StudentDashboard = () => {
                         <Skeleton className="w-8 h-8 rounded-xl" />
                     </div>
                 </div>
-                <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
-                    <Skeleton className="h-32 rounded-2xl" />
-                    <Skeleton className="h-40 rounded-2xl" />
+                <div className="max-w-page mx-auto px-4 pt-4 space-y-3">
+                    <Skeleton className="h-36 rounded-3xl" />
+                    <Skeleton className="h-24 rounded-2xl" />
                     <div className="grid grid-cols-2 gap-3">
-                        <Skeleton className="h-24 rounded-2xl" /><Skeleton className="h-24 rounded-2xl" />
+                        <Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" />
                     </div>
-                    <Skeleton className="h-32 rounded-2xl" />
+                    <Skeleton className="h-40 rounded-2xl" />
                 </div>
             </div>
         );
@@ -169,8 +169,8 @@ export const StudentDashboard = () => {
         <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
             <StudentDashboardHeader />
 
-            <main className="max-w-page mx-auto px-4 pt-3 pb-24 space-y-4">
-                <motion.div {...stagger(0)}>
+            <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
+                <motion.div {...fadeUp(0)}>
                     <HeroSection
                         name={studentData?.name || 'الطالب'}
                         grade={studentData?.grade || ''}
@@ -181,43 +181,49 @@ export const StudentDashboard = () => {
                     />
                 </motion.div>
 
-                <motion.div {...stagger(1)}>
-                    <NextSessionCard nextSession={nextSession} />
-                </motion.div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4">
+                    <div className="lg:col-span-2 space-y-3 md:space-y-4">
+                        <motion.div {...fadeUp(0.04)}>
+                            <NextSessionCard nextSession={nextSession} />
+                        </motion.div>
 
-                {todayTasks.length > 0 && (
-                    <motion.div {...stagger(2)}>
-                        <TodayTasks tasks={todayTasks} />
-                    </motion.div>
-                )}
+                        {todayTasks.length > 0 && (
+                            <motion.div {...fadeUp(0.08)}>
+                                <TodayTasks tasks={todayTasks} />
+                            </motion.div>
+                        )}
 
-                <motion.div {...stagger(3)}>
-                    <ProgressOverview stats={stats} points={points} rank={rank} nextRank={nextRank} />
-                </motion.div>
+                        {enrollments.length > 0 && (
+                            <motion.div {...fadeUp(0.14)}>
+                                <SubjectCards enrollments={enrollments} />
+                            </motion.div>
+                        )}
 
-                {enrollments.length > 0 && (
-                    <motion.div {...stagger(4)}>
-                        <SubjectCards enrollments={enrollments} />
-                    </motion.div>
-                )}
+                        <motion.div {...fadeUp(0.18)}>
+                            <ContinueLearning enrollments={enrollments} />
+                        </motion.div>
 
-                <motion.div {...stagger(5)}>
-                    <ContinueLearning enrollments={enrollments} />
-                </motion.div>
+                        {pointLogs.length > 0 && (
+                            <motion.div {...fadeUp(0.22)}>
+                                <RecentActivity pointLogs={pointLogs} />
+                            </motion.div>
+                        )}
+                    </div>
 
-                <motion.div {...stagger(6)}>
-                    <AchievementsSection points={points} rank={rank} nextRank={nextRank} />
-                </motion.div>
+                    <div className="space-y-3 md:space-y-4">
+                        <motion.div {...fadeUp(0.06)}>
+                            <ProgressOverview stats={stats} points={points} rank={rank} nextRank={nextRank} />
+                        </motion.div>
 
-                {pointLogs.length > 0 && (
-                    <motion.div {...stagger(7)}>
-                        <RecentActivity pointLogs={pointLogs} />
-                    </motion.div>
-                )}
+                        <motion.div {...fadeUp(0.12)}>
+                            <AchievementsSection points={points} rank={rank} nextRank={nextRank} />
+                        </motion.div>
 
-                <motion.div {...stagger(8)}>
-                    <InvoicesCard />
-                </motion.div>
+                        <motion.div {...fadeUp(0.2)}>
+                            <InvoicesCard />
+                        </motion.div>
+                    </div>
+                </div>
             </main>
 
             <div className="block md:hidden">
