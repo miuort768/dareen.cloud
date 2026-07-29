@@ -210,6 +210,18 @@ async function main() {
   const hash = await bcrypt.hash(PASSWORD, 10);
   const hashTime = Date.now();
 
+  // ── Clean all previous demo_ records ──
+  console.log('── 0. تنظيف البيانات القديمة ──');
+  const models = ['trialSession', 'lead', 'contactMessage', 'jobApplication', 'session', 'pointsLog', 'enrollment', 'teacherAvailability', 'announcement', 'student', 'parent', 'teacher'];
+  let cleaned = 0;
+  for (const m of models) {
+    const model = prisma[m];
+    if (!model) continue;
+    const r = await model.deleteMany({ where: { id: { startsWith: 'demo_' } } });
+    cleaned += r.count;
+  }
+  console.log(`  🗑️ تم حذف ${cleaned} سجل قديم\n`);
+
   // ════════════════════════════════════
   // 1. TEACHERS — 12 teachers
   // ════════════════════════════════════
