@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, XCircle, Calendar, TrendingUp, TrendingDown, Info, Users } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import type { AttendanceStats as IStats, TeacherStats as ITeacherStats } from '../types';
 
 interface AttendanceStatsProps {
@@ -27,8 +28,7 @@ const TrendBadge = ({ value, label }: { value: number; label: string }) => {
     if (value === 0) return null;
     const isUp = value > 0;
     return (
-        <div className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[9px] font-bold mt-0.5"
-            style={{ backgroundColor: isUp ? 'rgba(34,197,94,0.15)' : 'rgba(239,68,68,0.15)', color: isUp ? '#22c55e' : '#ef4444' }}>
+        <div className={cn("flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[9px] font-bold mt-0.5", isUp ? 'bg-success/15 text-success' : 'bg-error/15 text-error')}>
             {isUp ? <TrendingUp size={8} /> : <TrendingDown size={8} />}
             <span>{isUp ? '+' : ''}{value}% {label}</span>
         </div>
@@ -44,10 +44,10 @@ const TooltipWrap = ({ text, children }: { text: string; children: React.ReactNo
                 <motion.div
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="absolute -top-1 left-1/2 -translate-x-1/2 -translate-y-full z-20 px-2 py-1 rounded-lg bg-gray-900 text-white text-[9px] font-bold whitespace-nowrap shadow-lg"
+                    className="absolute -top-1 left-1/2 -translate-x-1/2 -translate-y-full z-20 px-2 py-1 rounded-lg bg-main text-inverse text-[9px] font-bold whitespace-nowrap shadow-lg"
                 >
                     {text}
-                    <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900" />
+                    <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-main" />
                 </motion.div>
             )}
         </div>

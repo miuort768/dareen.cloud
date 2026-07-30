@@ -161,15 +161,15 @@ export const ParentsTable = memo<ParentsTableProps>(({
                                                         <div key={child.id} className="relative group/child">
                                                             <div className={cn(
                                                                 "w-7 h-7 flex items-center justify-center text-[8px] font-bold rounded-lg border-2 transition-all",
-                                                                i === 0 ? 'bg-purple-500/10 text-purple-600 border-purple-500/20' :
-                                                                i === 1 ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' :
-                                                                'bg-amber-500/10 text-amber-600 border-amber-500/20'
-                                                            )}>
-                                                                {(child.name || '?').charAt(0)}
-                                                            </div>
-                                                            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-1.5 py-0.5 bg-main text-inverse text-[8px] font-bold rounded whitespace-nowrap opacity-0 group-hover/child:opacity-100 transition-opacity pointer-events-none z-50">
-                                                                {child.name}
-                                                            </div>
+                                                i === 0 ? 'bg-primary/10 text-primary border-primary/20' :
+                                                i === 1 ? 'bg-success/10 text-success border-success/20' :
+                                                'bg-warning/10 text-warning border-warning/20'
+                                            )}>
+                                                {(child.name || '?').charAt(0)}
+                                            </div>
+                                            <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-1.5 py-0.5 bg-main text-inverse text-[8px] font-bold rounded whitespace-nowrap opacity-0 group-hover/child:opacity-100 transition-opacity pointer-events-none z-50">
+                                                {child.name}
+                                            </div>
                                                         </div>
                                                     ))}
                                                     {children.length > 3 && (
@@ -369,9 +369,9 @@ export const ParentsTable = memo<ParentsTableProps>(({
                                         {children.slice(0, 3).map((child, i) => (
                                             <div key={child.id} className={cn(
                                                 "w-6 h-6 flex items-center justify-center text-[7px] font-bold rounded-lg border-2",
-                                                i === 0 ? 'bg-purple-500/10 text-purple-600 border-purple-500/20' :
-                                                i === 1 ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' :
-                                                'bg-amber-500/10 text-amber-600 border-amber-500/20'
+                                            i === 0 ? 'bg-primary/10 text-primary border-primary/20' :
+                                            i === 1 ? 'bg-success/10 text-success border-success/20' :
+                                            'bg-warning/10 text-warning border-warning/20'
                                             )}>
                                                 {(child.name || '?').charAt(0)}
                                             </div>

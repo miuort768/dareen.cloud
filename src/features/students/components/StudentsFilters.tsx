@@ -11,12 +11,12 @@ interface StudentsFiltersProps {
 }
 
 const gradeColors: Record<string, string> = {
-  أول: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 ring-purple-500/20',
-  ثاني: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 ring-emerald-500/20',
-  ثالث: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 ring-blue-500/20',
-  رابع: 'text-orange-600 dark:text-orange-400 bg-orange-500/10 ring-orange-500/20',
-  خامس: 'text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 ring-cyan-500/20',
-  سادس: 'text-rose-600 dark:text-rose-400 bg-rose-500/10 ring-rose-500/20',
+  أول: 'text-primary bg-primary/10 ring-primary/20',
+  ثاني: 'text-success bg-success/10 ring-success/20',
+  ثالث: 'text-info bg-info/10 ring-info/20',
+  رابع: 'text-warning bg-warning/10 ring-warning/20',
+  خامس: 'text-accent bg-accent/10 ring-accent/20',
+  سادس: 'text-error bg-error/10 ring-error/20',
 };
 
 const getGradeStyle = (grade?: string) => {

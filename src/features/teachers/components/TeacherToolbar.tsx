@@ -20,14 +20,14 @@ interface TeacherToolbarProps {
 }
 
 const subjectColorMap: Record<string, string> = {
-  رياضيات: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 ring-purple-500/20',
-  عربي: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 ring-emerald-500/20',
-  علوم: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 ring-blue-500/20',
-  إنجليزي: 'text-orange-600 dark:text-orange-400 bg-orange-500/10 ring-orange-500/20',
-  فيزياء: 'text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 ring-cyan-500/20',
-  كيمياء: 'text-rose-600 dark:text-rose-400 bg-rose-500/10 ring-rose-500/20',
-  لغات: 'text-teal-600 dark:text-teal-400 bg-teal-500/10 ring-teal-500/20',
-  أدبي: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 ring-amber-500/20',
+  رياضيات: 'text-primary bg-primary/10 ring-primary/20',
+  عربي: 'text-success bg-success/10 ring-success/20',
+  علوم: 'text-info bg-info-soft ring-info/20',
+  إنجليزي: 'text-warning bg-warning/10 ring-warning/20',
+  فيزياء: 'text-accent bg-accent/10 ring-accent/20',
+  كيمياء: 'text-error bg-error/10 ring-error/20',
+  لغات: 'text-accent bg-accent/10 ring-accent/20',
+  أدبي: 'text-warning bg-warning/10 ring-warning/20',
 };
 
 const getSubjectStyle = (subject?: string) => {
@@ -129,7 +129,7 @@ export const TeacherToolbar = ({
             {['', 'active', 'inactive'].map(status => {
               const label = status === '' ? 'الكل' : status === 'active' ? 'نشطة' : 'متوقفة';
               const isActive = filterStatus === status;
-              const dot = status === 'active' ? 'bg-emerald-500' : status === 'inactive' ? 'bg-rose-400' : '';
+              const dot = status === 'active' ? 'bg-success' : status === 'inactive' ? 'bg-error' : '';
               return (
                 <button
                   key={status}

@@ -116,7 +116,7 @@ export const TeacherStats = (props: TeacherStatsProps) => {
           </div>
           <div className="flex items-center gap-2">
             <Sparkline data={sparkDataPrimary} color="rgba(255,255,255,0.5)" />
-            <span className={cn("inline-flex items-center gap-0.5 text-[10px] font-bold", isTrendUp ? 'text-green-300' : 'text-rose-300')}>
+            <span className={cn("inline-flex items-center gap-0.5 text-[10px] font-bold", isTrendUp ? 'text-success' : 'text-error')}>
               {isTrendUp ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
               {Math.abs(pTrend).toFixed(0)}%
             </span>

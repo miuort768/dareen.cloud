@@ -27,12 +27,12 @@ const Tooltip = ({ label, children }: { label: string; children: React.ReactNode
 );
 
 const gradeColors: Record<string, { bg: string; text: string; ring: string }> = {
-  أول: { bg: 'bg-purple-500/10', text: 'text-purple-600 dark:text-purple-400', ring: 'ring-purple-500/20' },
-  ثاني: { bg: 'bg-emerald-500/10', text: 'text-emerald-600 dark:text-emerald-400', ring: 'ring-emerald-500/20' },
-  ثالث: { bg: 'bg-blue-500/10', text: 'text-blue-600 dark:text-blue-400', ring: 'ring-blue-500/20' },
-  رابع: { bg: 'bg-orange-500/10', text: 'text-orange-600 dark:text-orange-400', ring: 'ring-orange-500/20' },
-  خامس: { bg: 'bg-cyan-500/10', text: 'text-cyan-600 dark:text-cyan-400', ring: 'ring-cyan-500/20' },
-  سادس: { bg: 'bg-rose-500/10', text: 'text-rose-600 dark:text-rose-400', ring: 'ring-rose-500/20' },
+  أول: { bg: 'bg-primary/10', text: 'text-primary', ring: 'ring-primary/20' },
+  ثاني: { bg: 'bg-success/10', text: 'text-success', ring: 'ring-success/20' },
+  ثالث: { bg: 'bg-info/10', text: 'text-info', ring: 'ring-info/20' },
+  رابع: { bg: 'bg-warning/10', text: 'text-warning', ring: 'ring-warning/20' },
+  خامس: { bg: 'bg-accent/10', text: 'text-accent', ring: 'ring-accent/20' },
+  سادس: { bg: 'bg-error/10', text: 'text-error', ring: 'ring-error/20' },
 };
 
 const getGradeColor = (grade?: string) => {
@@ -156,7 +156,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
       render: (student) => {
         const pts = student.totalPoints || 0;
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 dark:text-amber-400">
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-warning">
             <Star size={10} />
             {pts > 0 ? pts.toLocaleString() : '—'}
           </span>
@@ -213,7 +213,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                   {student.grade || '—'}
                 </span>
                 {pts > 0 && (
-                  <span className="text-[9px] text-amber-600 font-bold flex items-center gap-0.5">
+                  <span className="text-[9px] text-warning font-bold flex items-center gap-0.5">
                     <Star size={8} />{pts}
                   </span>
                 )}

@@ -14,10 +14,10 @@ interface TrialSessionDrawerProps {
 }
 
 const statusConfig: Record<string, { label: string; dot: string; text: string }> = {
-    pending: { label: 'بانتظار', dot: 'bg-amber-500', text: 'text-amber-600 dark:text-amber-400' },
-    completed: { label: 'تمت', dot: 'bg-emerald-500', text: 'text-emerald-600 dark:text-emerald-400' },
-    cancelled: { label: 'ملغية', dot: 'bg-rose-500', text: 'text-rose-600 dark:text-rose-400' },
-    converted: { label: 'تم التحويل', dot: 'bg-blue-500', text: 'text-blue-600 dark:text-blue-400' },
+    pending: { label: 'بانتظار', dot: 'bg-warning', text: 'text-warning' },
+    completed: { label: 'تمت', dot: 'bg-success', text: 'text-success' },
+    cancelled: { label: 'ملغية', dot: 'bg-error', text: 'text-error' },
+    converted: { label: 'تم التحويل', dot: 'bg-info', text: 'text-info' },
 };
 
 const avatarGradients = [
@@ -56,10 +56,10 @@ const generateTimeline = (session: TrialSession) => {
 };
 
 const variantStyles: Record<string, { dot: string; iconBg: string; iconText: string; line: string }> = {
-    success: { dot: 'bg-emerald-500', iconBg: 'bg-emerald-500/10', iconText: 'text-emerald-600', line: 'bg-emerald-200 dark:bg-emerald-800' },
-    info: { dot: 'bg-blue-500', iconBg: 'bg-blue-500/10', iconText: 'text-blue-600', line: 'bg-blue-200 dark:bg-blue-800' },
-    warning: { dot: 'bg-amber-500', iconBg: 'bg-amber-500/10', iconText: 'text-amber-600', line: 'bg-amber-200 dark:bg-amber-800' },
-    muted: { dot: 'bg-gray-400', iconBg: 'bg-surface', iconText: 'text-muted', line: 'bg-border' },
+    success: { dot: 'bg-success', iconBg: 'bg-success/10', iconText: 'text-success', line: 'bg-success/20 dark:bg-success/50' },
+    info: { dot: 'bg-info', iconBg: 'bg-info/10', iconText: 'text-info', line: 'bg-info/20 dark:bg-info/50' },
+    warning: { dot: 'bg-warning', iconBg: 'bg-warning/10', iconText: 'text-warning', line: 'bg-warning/20 dark:bg-warning/50' },
+    muted: { dot: 'bg-muted', iconBg: 'bg-surface', iconText: 'text-muted', line: 'bg-border' },
 };
 
 export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onConvert, onEdit, isConverting }: TrialSessionDrawerProps) => {
@@ -188,9 +188,9 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                     {session.notes && (
                         <div className="p-5 border-b border-border">
                             <h3 className="text-[11px] font-bold text-muted mb-3">الملاحظات</h3>
-                            <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/15">
+                            <div className="p-4 rounded-xl bg-warning/[0.05] border border-warning/[0.15]">
                                 <div className="flex items-start gap-2">
-                                    <MessageCircle size={14} className="text-amber-600 shrink-0 mt-0.5" />
+                                    <MessageCircle size={14} className="text-warning shrink-0 mt-0.5" />
                                     <p className="text-xs text-muted leading-relaxed">{session.notes}</p>
                                 </div>
                             </div>
@@ -207,12 +207,12 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                                 </button>
                             )}
                             {onWhatsApp && (
-                                <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 text-xs font-bold hover:bg-emerald-500/20 transition-all active:scale-[0.98]">
+                                <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 border border-success/20 text-success text-xs font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
                                     <MessageSquare size={14} /> واتساب
                                 </button>
                             )}
                             {session.status === 'pending' && onConvert && (
-                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-600 text-xs font-bold hover:bg-blue-500/20 transition-all active:scale-[0.98] disabled:opacity-50 col-span-2">
+                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-info/10 border border-info/20 text-info text-xs font-bold hover:bg-info/20 transition-all active:scale-[0.98] disabled:opacity-50 col-span-2">
                                     <UserPlus size={14} /> {isConverting ? 'جاري التحويل...' : 'تحويل إلى طالب'}
                                 </button>
                             )}

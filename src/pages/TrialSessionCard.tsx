@@ -16,10 +16,10 @@ interface TrialSessionCardProps {
 }
 
 const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string; border: string }> = {
-    pending: { label: 'بانتظار', dot: 'bg-amber-500', bg: 'bg-amber-500/10', text: 'text-amber-600 dark:text-amber-400', border: 'border-amber-500/20' },
-    completed: { label: 'تمت', dot: 'bg-emerald-500', bg: 'bg-emerald-500/10', text: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-500/20' },
-    cancelled: { label: 'ملغية', dot: 'bg-rose-500', bg: 'bg-rose-500/10', text: 'text-rose-600 dark:text-rose-400', border: 'border-rose-500/20' },
-    converted: { label: 'تم التحويل', dot: 'bg-blue-500', bg: 'bg-blue-500/10', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-500/20' },
+    pending: { label: 'بانتظار', dot: 'bg-warning', bg: 'bg-warning/10', text: 'text-warning', border: 'border-warning/20' },
+    completed: { label: 'تمت', dot: 'bg-success', bg: 'bg-success/10', text: 'text-success', border: 'border-success/20' },
+    cancelled: { label: 'ملغية', dot: 'bg-error', bg: 'bg-error/10', text: 'text-error', border: 'border-error/20' },
+    converted: { label: 'تم التحويل', dot: 'bg-info', bg: 'bg-info/10', text: 'text-info', border: 'border-info/20' },
 };
 
 const avatarGradients = [
@@ -32,12 +32,12 @@ const avatarGradients = [
 ];
 
 const subjectColors: Record<string, string> = {
-    رياضيات: 'text-purple-600 dark:text-purple-400',
-    عربي: 'text-emerald-600 dark:text-emerald-400',
-    علوم: 'text-blue-600 dark:text-blue-400',
-    إنجليزي: 'text-orange-600 dark:text-orange-400',
-    فيزياء: 'text-cyan-600 dark:text-cyan-400',
-    كيمياء: 'text-rose-600 dark:text-rose-400',
+    رياضيات: 'text-primary',
+    عربي: 'text-success',
+    علوم: 'text-info',
+    إنجليزي: 'text-warning',
+    فيزياء: 'text-info',
+    كيمياء: 'text-error',
 };
 
 const getSubjectColor = (subject?: string) => {
@@ -156,19 +156,19 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                     </button>
                 )}
                 {onWhatsApp && (
-                    <button onClick={(e) => { e.stopPropagation(); onWhatsApp(t.parentPhone); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-emerald-600 hover:bg-emerald-500/10 transition-colors active:bg-emerald-500/20" aria-label="واتساب">
+                    <button onClick={(e) => { e.stopPropagation(); onWhatsApp(t.parentPhone); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-success hover:bg-success/10 transition-colors active:bg-success/20" aria-label="واتساب">
                         <MessageSquare size={12} /> واتساب
                     </button>
                 )}
                 {t.status === 'pending' && (
-                    <button onClick={(e) => { e.stopPropagation(); onConvert(t.id); }} disabled={isConverting} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-blue-600 hover:bg-blue-500/10 transition-colors active:bg-blue-500/20 disabled:opacity-40" aria-label="تحويل إلى طالب">
+                    <button onClick={(e) => { e.stopPropagation(); onConvert(t.id); }} disabled={isConverting} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-info hover:bg-info/10 transition-colors active:bg-info/20 disabled:opacity-40" aria-label="تحويل إلى طالب">
                         <CheckCheck size={12} /> تم
                     </button>
                 )}
                 <button onClick={(e) => { e.stopPropagation(); onEdit(t); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-muted hover:bg-surface transition-colors active:bg-hover" aria-label="تعديل">
                     <Pencil size={12} /> تعديل
                 </button>
-                <button onClick={(e) => { e.stopPropagation(); onDelete(t.id); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-rose-600 hover:bg-rose-500/10 transition-colors active:bg-rose-500/20" aria-label="حذف">
+                <button onClick={(e) => { e.stopPropagation(); onDelete(t.id); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-error hover:bg-error/10 transition-colors active:bg-error/20" aria-label="حذف">
                     <Trash2 size={12} /> حذف
                 </button>
             </div>

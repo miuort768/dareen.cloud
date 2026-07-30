@@ -33,16 +33,16 @@ const getAvatarGradient = (name: string) => {
 };
 
 const subjectColorMap: Record<string, string> = {
-  رياضيات: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 ring-purple-500/20',
-  عربي: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 ring-emerald-500/20',
-  علوم: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 ring-blue-500/20',
-  إنجليزي: 'text-orange-600 dark:text-orange-400 bg-orange-500/10 ring-orange-500/20',
-  فيزياء: 'text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 ring-cyan-500/20',
-  كيمياء: 'text-rose-600 dark:text-rose-400 bg-rose-500/10 ring-rose-500/20',
-  لغات: 'text-teal-600 dark:text-teal-400 bg-teal-500/10 ring-teal-500/20',
-  أدبي: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 ring-amber-500/20',
-  دراسات: 'text-green-600 dark:text-green-400 bg-green-500/10 ring-green-500/20',
-  قرآن: 'text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 ring-indigo-500/20',
+  رياضيات: 'text-primary bg-primary/10 ring-primary/20',
+  عربي: 'text-success bg-success/10 ring-success/20',
+  علوم: 'text-info bg-info-soft ring-info/20',
+  إنجليزي: 'text-warning bg-warning/10 ring-warning/20',
+  فيزياء: 'text-accent bg-accent/10 ring-accent/20',
+  كيمياء: 'text-error bg-error/10 ring-error/20',
+  لغات: 'text-accent bg-accent/10 ring-accent/20',
+  أدبي: 'text-warning bg-warning/10 ring-warning/20',
+  دراسات: 'text-success bg-success/10 ring-success/20',
+  قرآن: 'text-primary bg-primary/10 ring-primary/20',
 };
 
 const getSubjectStyle = (subject?: string) => {
@@ -52,9 +52,9 @@ const getSubjectStyle = (subject?: string) => {
 };
 
 const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string }> = {
-  completed: { label: 'تمت', dot: 'bg-emerald-500', bg: 'bg-emerald-500/10', text: 'text-emerald-600 dark:text-emerald-400' },
-  cancelled: { label: 'ملغية', dot: 'bg-rose-500', bg: 'bg-rose-500/10', text: 'text-rose-600 dark:text-rose-400' },
-  scheduled: { label: 'مجدولة', dot: 'bg-amber-500', bg: 'bg-amber-500/10', text: 'text-amber-600 dark:text-amber-400' },
+  completed: { label: 'تمت', dot: 'bg-success', bg: 'bg-success/10', text: 'text-success' },
+  cancelled: { label: 'ملغية', dot: 'bg-error', bg: 'bg-error/10', text: 'text-error' },
+  scheduled: { label: 'مجدولة', dot: 'bg-warning', bg: 'bg-warning/10', text: 'text-warning' },
 };
 
 export const TeacherDrawer = ({ teacher, onClose, onEdit, onDelete, onNotify, onChat, onCall, onWhatsApp, studentCount = 0, totalRevenue = 0, recentSessions = [] }: TeacherDrawerProps) => {
@@ -119,7 +119,7 @@ export const TeacherDrawer = ({ teacher, onClose, onEdit, onDelete, onNotify, on
                     {domain}
                   </span>
                   {avgRating > 0 && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 ring-1 ring-amber-500/20">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold bg-warning/10 text-warning ring-1 ring-warning/20">
                       <Star size={10} />
                       {avgRating.toFixed(1)}
                     </span>
@@ -136,7 +136,7 @@ export const TeacherDrawer = ({ teacher, onClose, onEdit, onDelete, onNotify, on
               {[
                 { icon: Users, value: studentCount, label: 'الطلاب', color: 'text-success bg-success-soft ring-success/20' },
                 { icon: DollarSign, value: `${totalRevenue.toLocaleString()}`, label: 'الإيرادات', color: 'text-warning bg-warning-soft ring-warning/20' },
-                { icon: Star, value: `${avgRating.toFixed(1)}`, label: 'التقييم', color: 'text-amber-600 bg-amber-500/10 ring-amber-500/20' },
+                { icon: Star, value: `${avgRating.toFixed(1)}`, label: 'التقييم', color: 'text-warning bg-warning/10 ring-warning/20' },
               ].map((item, i) => (
                 <div key={i} className={cn("p-3 rounded-xl ring-1 text-center", item.color)}>
                   <item.icon size={14} className="mx-auto mb-1" />
@@ -186,7 +186,7 @@ export const TeacherDrawer = ({ teacher, onClose, onEdit, onDelete, onNotify, on
                 </button>
               )}
               {onWhatsApp && (
-                <button onClick={() => onWhatsApp(teacher.phone1)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 text-xs font-bold hover:bg-emerald-500/20 transition-all active:scale-[0.98]">
+                <button onClick={() => onWhatsApp(teacher.phone1)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 border border-success/20 text-success text-xs font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
                   <MessageSquare size={14} /> واتساب
                 </button>
               )}

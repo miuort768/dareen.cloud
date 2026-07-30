@@ -218,16 +218,16 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                           <Zap size={10} className="text-warning" />
                           <span className="text-[9px] text-muted">{level.next - points} XP للمستوى التالي</span>
                         </div>
-                        <span className="text-[9px] font-bold text-amber-600 tabular-nums">{Math.round(level.progress)}%</span>
+                        <span className="text-[9px] font-bold text-warning tabular-nums">{Math.round(level.progress)}%</span>
                       </div>
                     </div>
                   )}
 
                   {streakDays > 0 && (
                     <div className="mt-3 pt-3 border-t border-border flex items-center gap-2">
-                      <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-orange-500/10">
-                        <Flame size={14} className="text-orange-500" />
-                        <span className="text-[10px] font-bold text-orange-600">{streakDays} يوم</span>
+                      <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-warning/10">
+                        <Flame size={14} className="text-warning" />
+                        <span className="text-[10px] font-bold text-warning">{streakDays} يوم</span>
                       </div>
                       <span className="text-[9px] text-muted">سلسلة متصلة 🔥</span>
                     </div>
@@ -269,9 +269,9 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                     <div className="space-y-2">
                       {todaySessions.slice(0, 3).map((s, i) => (
                         <div key={i} className="flex items-center gap-2.5 p-2 rounded-xl bg-card border border-border">
-                          <div className={cn("w-2 h-2 rounded-full shrink-0", s.status === 'completed' ? 'bg-emerald-500' : 'bg-amber-500')} />
+                          <div className={cn("w-2 h-2 rounded-full shrink-0", s.status === 'completed' ? 'bg-success' : 'bg-warning')} />
                           <span className="text-[10px] font-bold text-main flex-1">{s.subject}</span>
-                          <span className={cn("text-[9px] font-bold", s.status === 'completed' ? 'text-emerald-600' : 'text-amber-600')}>
+                          <span className={cn("text-[9px] font-bold", s.status === 'completed' ? 'text-success' : 'text-warning')}>
                             {s.status === 'completed' ? 'تمت' : 'مجدولة'}
                           </span>
                         </div>
@@ -316,7 +316,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                   <a href={`tel:${student.parentPhone}`} className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-success/10 border border-success/20 text-success text-[10px] font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
                     <Phone size={13} /> اتصال
                   </a>
-                  <a href={`https://wa.me/${student.parentPhone?.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 text-[10px] font-bold hover:bg-emerald-500/20 transition-all active:scale-[0.98]">
+                  <a href={`https://wa.me/${student.parentPhone?.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-success/10 border border-success/20 text-success text-[10px] font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
                     <MessageSquare size={13} /> واتساب
                   </a>
                 </div>
@@ -370,10 +370,10 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                               key={idx}
                               className={cn(
                                 "w-3 h-3 rounded-[3px] transition-all",
-                                idx < used
-                                  ? 'bg-emerald-500'
-                                  : idx === used
-                                    ? 'bg-amber-400 ring-1 ring-amber-400/50'
+                                  idx < used
+                                    ? 'bg-success'
+                                    : idx === used
+                                      ? 'bg-warning ring-1 ring-warning/50'
                                     : 'bg-border/50'
                               )}
                             />
@@ -448,20 +448,20 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                           <div className="flex flex-col items-center">
                             <div className={cn(
                               "w-8 h-8 rounded-xl flex items-center justify-center ring-2 ring-card z-10",
-                              isCompleted ? 'bg-emerald-500/10 text-emerald-600' :
-                              isCancelled ? 'bg-rose-500/10 text-rose-600' :
-                              'bg-amber-500/10 text-amber-600'
+                              isCompleted ? 'bg-success/10 text-success' :
+                              isCancelled ? 'bg-error/10 text-error' :
+                              'bg-warning/10 text-warning'
                             )}>
                               {isCompleted ? <CheckCircle2 size={13} /> : isCancelled ? <X size={13} /> : <Calendar size={13} />}
                             </div>
-                            {!isLast && <div className={cn("w-px flex-1 min-h-[8px]", isCompleted ? 'bg-emerald-200 dark:bg-emerald-800/50' : 'bg-border')} />}
+                            {!isLast && <div className={cn("w-px flex-1 min-h-[8px]", isCompleted ? 'bg-success/20 dark:bg-success/50' : 'bg-border')} />}
                           </div>
                           <div className="flex-1 min-w-0 pt-0.5">
                             <div className="flex items-center gap-2">
                               <p className="text-[11px] font-bold text-main">{s.subject}</p>
                               <span className={cn(
                                 "text-[9px] font-bold",
-                                isCompleted ? 'text-emerald-600' : isCancelled ? 'text-rose-600' : 'text-amber-600'
+                                isCompleted ? 'text-success' : isCancelled ? 'text-error' : 'text-warning'
                               )}>
                                 {isCompleted ? '✔ حضر' : isCancelled ? '✘ غائب' : '🕐 مجدول'}
                               </span>

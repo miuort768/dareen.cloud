@@ -89,7 +89,7 @@ export const SchedulePopover = ({ event, onClose, onStartLiveSession, onViewStud
                             {event.studentPoints != null && event.studentPoints > 0 && (
                                 <div className="relative z-10 mt-2 flex items-center gap-1.5">
                                     <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-white/15">
-                                        <Star size={8} className="text-yellow-300" fill="currentColor" />
+                                        <Star size={8} className="text-warning" fill="currentColor" />
                                         <span className="text-[9px] font-bold text-white">{event.studentPoints} نقطة</span>
                                     </div>
                                 </div>

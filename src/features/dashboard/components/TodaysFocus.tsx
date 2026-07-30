@@ -5,14 +5,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
 const subjectColors: Record<string, { dot: string; bg: string; text: string }> = {
-    رياضيات: { dot: 'bg-purple-500', bg: 'bg-purple-500/10', text: 'text-purple-600 dark:text-purple-400' },
-    عربي: { dot: 'bg-emerald-500', bg: 'bg-emerald-500/10', text: 'text-emerald-600 dark:text-emerald-400' },
-    علوم: { dot: 'bg-blue-500', bg: 'bg-blue-500/10', text: 'text-blue-600 dark:text-blue-400' },
-    إنجليزي: { dot: 'bg-orange-500', bg: 'bg-orange-500/10', text: 'text-orange-600 dark:text-orange-400' },
-    فيزياء: { dot: 'bg-cyan-500', bg: 'bg-cyan-500/10', text: 'text-cyan-600 dark:text-cyan-400' },
-    كيمياء: { dot: 'bg-rose-500', bg: 'bg-rose-500/10', text: 'text-rose-600 dark:text-rose-400' },
-    تاريخ: { dot: 'bg-amber-500', bg: 'bg-amber-500/10', text: 'text-amber-600 dark:text-amber-400' },
-    جغرافيا: { dot: 'bg-teal-500', bg: 'bg-teal-500/10', text: 'text-teal-600 dark:text-teal-400' },
+    رياضيات: { dot: 'bg-primary', bg: 'bg-primary/10', text: 'text-primary' },
+    عربي: { dot: 'bg-success', bg: 'bg-success/10', text: 'text-success' },
+    علوم: { dot: 'bg-info', bg: 'bg-info/10', text: 'text-info' },
+    إنجليزي: { dot: 'bg-warning', bg: 'bg-warning/10', text: 'text-warning' },
+    فيزياء: { dot: 'bg-accent', bg: 'bg-accent/10', text: 'text-accent' },
+    كيمياء: { dot: 'bg-error', bg: 'bg-error/10', text: 'text-error' },
+    تاريخ: { dot: 'bg-warning', bg: 'bg-warning/10', text: 'text-warning' },
+    جغرافيا: { dot: 'bg-success', bg: 'bg-success/10', text: 'text-success' },
 };
 
 const getSubjectColor = (subject?: string) => {
