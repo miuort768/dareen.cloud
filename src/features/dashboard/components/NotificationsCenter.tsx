@@ -207,11 +207,11 @@ export const NotificationsCenter = ({
                     ))}
                     {smartAlerts.length === 0 && (
                         <div className="text-center py-8">
-                            <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
-                                <CheckCircle2 size={16} className="text-success/50" />
+                            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-success-soft flex items-center justify-center">
+                                <CheckCircle2 size={24} className="text-success/40" />
                             </div>
-                            <p className="text-xs font-bold text-muted">لا توجد تنبيهات ذكية</p>
-                            <p className="text-[10px] text-muted/60 mt-0.5">جميع الأنظمة تعمل بكفاءة</p>
+                            <p className="text-sm font-bold text-muted">لا توجد تنبيهات</p>
+                            <p className="text-[11px] text-muted/60 mt-1">كل شيء يعمل بشكل ممتاز ✅</p>
                         </div>
                     )}
                 </div>

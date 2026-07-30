@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { Wallet, ArrowLeft } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
@@ -34,6 +36,7 @@ export const ParentDashboard = () => {
     const currentUser = useCurrentUser();
     const adminPhone = useAdminPhone();
     const logout = useLogout();
+    const navigate = useNavigate();
 
     const [children, setChildren] = useState<Student[]>([]);
     const [sessions, setSessions] = useState<Student[]>([]);
@@ -271,6 +274,21 @@ export const ParentDashboard = () => {
 
                         <motion.div {...fadeUp(0.28)}>
                             <SupportBanner adminPhone={adminPhone} />
+                        </motion.div>
+                        <motion.div {...fadeUp(0.3)}>
+                            <button onClick={() => navigate('/parent-payment-history')}
+                                className="w-full bg-card border border-border rounded-2xl p-4 flex items-center gap-3 hover:bg-hover transition-colors text-start"
+                                aria-label="سجل الدفعات"
+                            >
+                                <div className="w-10 h-10 rounded-xl bg-success-soft flex items-center justify-center shrink-0">
+                                    <Wallet size={18} className="text-success" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-sm font-bold text-main">سجل الدفعات</p>
+                                    <p className="text-[11px] text-muted">عرض فواتير أبنائك ومدفوعاتك</p>
+                                </div>
+                                <ArrowLeft size={16} className="text-muted shrink-0" />
+                            </button>
                         </motion.div>
                     </div>
                 </div>

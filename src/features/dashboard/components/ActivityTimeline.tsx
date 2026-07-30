@@ -67,10 +67,11 @@ export const ActivityTimeline = ({ sessions, tasks }: ActivityTimelineProps) => 
 
             {allItems.length === 0 ? (
                 <div className="text-center py-8">
-                    <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-primary-soft flex items-center justify-center">
-                        <Clock size={16} className="text-primary/50" />
+                    <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-primary-soft flex items-center justify-center">
+                        <Clock size={24} className="text-primary/30" />
                     </div>
-                    <p className="text-xs font-bold text-muted">لا توجد نشاطات مؤخراً</p>
+                    <p className="text-sm font-bold text-muted">لا توجد نشاطات مؤخراً</p>
+                    <p className="text-[11px] text-muted/60 mt-1">ستظهر الأنشطة عند تسجيلها</p>
                 </div>
             ) : (
                 <div className="space-y-2">

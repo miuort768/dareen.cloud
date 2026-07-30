@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles } from 'lucide-react';
+import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles, Wallet, ArrowLeft } from 'lucide-react';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { cn } from '../lib/utils';
 import { Card } from '@/components/ui/card';
@@ -103,6 +103,21 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 </GlassCard>
                                 <GlassCard className="p-4">
                                     <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
+                                </GlassCard>
+                                <GlassCard className="p-4">
+                                    <button onClick={() => navigate('/teacher-payment-history')}
+                                        className="w-full flex items-center gap-3 py-1 text-start"
+                                        aria-label="سجل الدفعات"
+                                    >
+                                        <div className="w-9 h-9 rounded-xl bg-success-soft flex items-center justify-center shrink-0">
+                                            <Wallet size={16} className="text-success" />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <p className="text-xs font-bold text-main">سجل الدفعات</p>
+                                            <p className="text-[10px] text-muted">عرض المدفوعات والمستحقات</p>
+                                        </div>
+                                        <ArrowLeft size={14} className="text-muted shrink-0" />
+                                    </button>
                                 </GlassCard>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">

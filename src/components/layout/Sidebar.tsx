@@ -70,6 +70,8 @@ export const Sidebar = memo(() => {
         { name: 'التقارير', href: '/reports', id: 'reports', icon: FileText },
         { name: 'فواتير الطلاب', href: '/student-invoices', id: 'student_invoices', icon: DollarSign },
         { name: 'فواتير المعلمات', href: '/teacher-invoices', id: 'teacher_invoices', icon: Receipt },
+        { name: 'سجل الدفعات', href: '/teacher-payment-history', id: 'teacher_payment_history', icon: DollarSign },
+        { name: 'سجل الدفعات', href: '/parent-payment-history', id: 'parent_payment_history', icon: DollarSign },
         { name: 'إدارة الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
         { name: 'إدارة المدونة', href: '/admin/blog', id: 'admin-blog', icon: FileText },
         { name: 'المنتدى', href: '/forum', id: 'forum', icon: MessageSquare },
@@ -84,12 +86,12 @@ export const Sidebar = memo(() => {
     const filteredNavigation = navigation.filter(item => {
         if (!currentUser) return false;
         if (currentUser.permissions?.includes('*')) {
-            if (['parent_dashboard', 'parent_students', 'parent_announcements', 'student_dashboard', 'tasks'].includes(item.id)) return false;
+            if (['parent_dashboard', 'parent_students', 'parent_announcements', 'student_dashboard', 'tasks', 'parent_payment_history'].includes(item.id)) return false;
             return true;
         }
         if (currentUser.role === 'parent') {
             if (item.id === 'dashboard') return false;
-            if (['parent_dashboard', 'chat', 'parent_students', 'parent_announcements', 'forum'].includes(item.id)) return true;
+            if (['parent_dashboard', 'chat', 'parent_students', 'parent_announcements', 'parent_payment_history', 'forum'].includes(item.id)) return true;
         }
         if (currentUser.role === 'student') {
             if (item.id === 'dashboard') return false;
@@ -97,6 +99,7 @@ export const Sidebar = memo(() => {
         }
         if (item.id === 'dashboard' && currentUser.role === 'teacher') return true;
         if (item.id === 'forum' && currentUser.role === 'teacher') return true;
+        if (item.id === 'teacher_payment_history' && currentUser.role === 'teacher') return true;
         if (item.id === 'evaluations' && currentUser.role === 'teacher') return false;
         return currentUser.permissions?.includes(item.id);
     });
@@ -108,7 +111,7 @@ export const Sidebar = memo(() => {
             { label: 'الرئيسية', items: pick('dashboard', 'parent_dashboard', 'student_dashboard', 'chat') },
             { label: 'الأشخاص', items: pick('leads', 'trial_sessions', 'teachers', 'students', 'parents') },
             { label: 'التعلّم', items: pick('evaluations', 'attendance', 'schedule', 'appointments', 'tasks') },
-            { label: 'المالية', items: pick('finance', 'monthly_closing', 'student_invoices', 'teacher_invoices') },
+            { label: 'المالية', items: pick('finance', 'monthly_closing', 'student_invoices', 'teacher_invoices', 'teacher_payment_history', 'parent_payment_history') },
             { label: 'المحتوى', items: pick('announcements', 'admin-blog', 'forum', 'reports', 'admin_contacts', 'admin_jobs') },
             { label: 'النظام', items: pick('settings') },
         ].filter(section => section.items.length > 0);

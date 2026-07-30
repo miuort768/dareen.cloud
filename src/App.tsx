@@ -62,8 +62,8 @@ const DesignSystemPage = lazy(() => import('./features/design-system/DesignSyste
 const StudentProfilePage = lazy(() => import('./pages/profile/StudentProfilePage').then(m => ({ default: m.StudentProfilePage })));
 const TeacherProfilePage = lazy(() => import('./pages/profile/TeacherProfilePage').then(m => ({ default: m.TeacherProfilePage })));
 const ParentProfilePage = lazy(() => import('./pages/profile/ParentProfilePage').then(m => ({ default: m.ParentProfilePage })));
-
-
+const TeacherPaymentHistory = lazy(() => import('./pages/TeacherPaymentHistory').then(m => ({ default: m.TeacherPaymentHistory })));
+const ParentPaymentHistory = lazy(() => import('./pages/ParentPaymentHistory').then(m => ({ default: m.ParentPaymentHistory })));
 
 // Protected Route Component
 const ProtectedRoute = ({ children, permission }: { children: React.ReactElement, permission?: string }) => {
@@ -264,6 +264,8 @@ function App() {
             <Route path="student-profile" element={<ProtectedRoute permission="student_dashboard"><StudentProfilePage /></ProtectedRoute>} />
             <Route path="teacher-profile" element={<ProtectedRoute permission="dashboard"><TeacherProfilePage /></ProtectedRoute>} />
             <Route path="parent-profile" element={<ProtectedRoute permission="parent_dashboard"><ParentProfilePage /></ProtectedRoute>} />
+            <Route path="teacher-payment-history" element={<ProtectedRoute permission="dashboard"><TeacherPaymentHistory /></ProtectedRoute>} />
+            <Route path="parent-payment-history" element={<ProtectedRoute permission="parent_dashboard"><ParentPaymentHistory /></ProtectedRoute>} />
 
             {/* Admin Blog Management */}
             <Route path="admin/blog" element={<ProtectedRoute permission="admin"><AdminBlog /></ProtectedRoute>} />

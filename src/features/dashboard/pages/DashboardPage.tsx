@@ -133,7 +133,7 @@ export const Dashboard = () => {
             <div className="hidden md:block max-w-page mx-auto px-6 space-y-6 relative z-10">
                 {/* Hero */}
                 <Section>
-                    <HeroSection currentUser={currentUser} isTeacher={false} />
+                    <HeroSection currentUser={currentUser} stats={stats} />
                 </Section>
 
                 {/* View Toggle */}
@@ -242,7 +242,7 @@ export const Dashboard = () => {
 
             {/* Mobile */}
             <div className="block md:hidden px-4 pt-4 space-y-4">
-                <HeroSection currentUser={currentUser} isTeacher={false} />
+                <HeroSection currentUser={currentUser} stats={stats} />
 
                 <KPICards stats={stats} />
 

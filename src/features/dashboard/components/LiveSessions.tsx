@@ -156,12 +156,15 @@ export const LiveSessions = () => {
                 </div>
             ) : sessions.length === 0 ? (
                 <div className="text-center py-8">
-                    <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-primary-soft flex items-center justify-center">
-                        <Video size={20} className="text-primary/50" />
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-primary-soft flex items-center justify-center">
+                        <Video size={28} className="text-primary/30" />
                     </div>
-                    <p className="text-xs font-bold text-muted">لا توجد حصص مباشرة</p>
+                    <p className="text-sm font-bold text-muted">لا توجد حصص مباشرة حالياً</p>
+                    <p className="text-[11px] text-muted/60 mt-1">ابدأ حصتك بضغطة واحدة</p>
                     {isTeacher && (
-                        <p className="text-[10px] text-muted/60 mt-0.5">ابدأ حصة جديدة للبدء</p>
+                        <Button onClick={() => setShowDialog(true)} size="sm" className="mt-3 h-9 px-5 rounded-xl text-xs font-bold gap-1.5 bg-primary text-on-primary">
+                            <Plus size={14} /> بدء حصة
+                        </Button>
                     )}
                 </div>
             ) : (

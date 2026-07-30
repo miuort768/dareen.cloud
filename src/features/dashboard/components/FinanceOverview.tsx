@@ -1,9 +1,11 @@
 import React, { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import type { TooltipProps } from 'recharts';
-import { DollarSign, TrendingUp, TrendingDown, BarChart3 } from 'lucide-react';
+import { DollarSign, TrendingUp, TrendingDown, BarChart3, Plus } from 'lucide-react';
 import type { DashboardMonthData as MonthData } from '../types';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 interface FinanceOverviewProps {
     monthlyData: MonthData[];
@@ -30,6 +32,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
 };
 
 export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps) => {
+    const navigate = useNavigate();
     const totalRevenue = useMemo(() => monthlyData.reduce((s, m) => s + (m.revenue || 0), 0), [monthlyData]);
     const totalExpenses = useMemo(() => monthlyData.reduce((s, m) => s + (m.expenses || 0), 0), [monthlyData]);
     const totalProfit = totalRevenue - totalExpenses;
@@ -67,12 +70,15 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
 
             {/* Chart */}
             {monthlyData.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center mb-3">
-                        <BarChart3 size={20} className="text-primary/40" />
+                <div className="flex flex-col items-center justify-center py-10 text-center">
+                    <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mb-3">
+                        <BarChart3 size={28} className="text-primary/30" />
                     </div>
-                    <p className="text-xs font-bold text-muted">لا توجد بيانات متاحة</p>
-                    <p className="text-[10px] text-muted/60 mt-0.5">ستظهر عند توفر جلسات ومعاملات</p>
+                    <p className="text-sm font-bold text-muted">لا توجد بيانات مالية بعد</p>
+                    <p className="text-[11px] text-muted/60 mt-1">ابدأ بإضافة أول عملية مالية</p>
+                    <Button onClick={() => navigate('/finance')} size="sm" className="mt-3 h-9 px-5 rounded-xl text-xs font-bold gap-1.5">
+                        <Plus size={14} /> إضافة عملية
+                    </Button>
                 </div>
             ) : (
                 <div className="h-[240px] -mx-2">

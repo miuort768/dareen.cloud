@@ -1,4 +1,4 @@
-import { CalendarCheck, ListTodo, AlertTriangle, Clock, ArrowLeft } from 'lucide-react';
+import { CalendarCheck, ListTodo, AlertTriangle, Clock, ArrowLeft, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
@@ -14,26 +14,25 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
     const hasAnyData = todaySessions.length > 0 || tasks.length > 0 || lowBalanceCount > 0;
 
     return (
-        <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card border border-border p-5" dir="rtl">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-info-soft flex items-center justify-center">
-                        <CalendarCheck size={16} className="text-info" />
+                    <div className="w-9 h-9 rounded-xl bg-warning-soft flex items-center justify-center">
+                        <CalendarCheck size={16} className="text-warning" />
                     </div>
                     <div>
                         <h3 className="text-sm font-bold text-main">تركيز اليوم</h3>
-                        <p className="text-[10px] text-muted">ما تحتاج متابعته اليوم</p>
+                        <p className="text-[10px] text-muted">ما يجب متابعته</p>
                     </div>
                 </div>
                 {hasAnyData && (
                     <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-primary-soft text-primary border-primary/20">
-                        {todaySessions.length + tasks.length + lowBalanceCount} عنصر
+                        {todaySessions.length + tasks.length + lowBalanceCount}
                     </Badge>
                 )}
             </div>
 
             <div className="space-y-2">
-                {/* Today's Sessions */}
                 {todaySessions.length > 0 && (
                     <div className="p-3 rounded-xl bg-info-soft border border-info/20">
                         <div className="flex items-center gap-2 mb-2">
@@ -57,7 +56,6 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                     </div>
                 )}
 
-                {/* Active Tasks */}
                 {tasks.length > 0 && (
                     <div className="p-3 rounded-xl bg-warning-soft border border-warning/20">
                         <div className="flex items-center gap-2 mb-2">
@@ -82,7 +80,6 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                     </div>
                 )}
 
-                {/* Low Balance Alerts */}
                 {lowBalanceCount > 0 && (
                     <div className="p-3 rounded-xl bg-error-soft border border-error/20">
                         <div className="flex items-center gap-2">
@@ -92,18 +89,19 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                     </div>
                 )}
 
-                {/* Empty State */}
                 {!hasAnyData && (
                     <div className="text-center py-8">
-                        <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
-                            <CalendarCheck size={20} className="text-success/50" />
-                        </div>
-                        <p className="text-xs font-bold text-muted">لا توجد مهام اليوم</p>
-                        <p className="text-[10px] text-muted/60 mt-0.5">استمتع بيوم هادئ</p>
+                        <span className="text-3xl block mb-3">📅</span>
+                        <p className="text-sm font-bold text-muted">لا توجد مهام اليوم</p>
+                        <p className="text-[11px] text-muted/60 mt-1">استمتع بيوم هادئ ☀️</p>
+                        <Link to="/tasks">
+                            <Button size="sm" className="mt-3 h-8 px-4 rounded-xl text-[10px] font-bold gap-1.5">
+                                <Plus size={12} /> إنشاء مهمة
+                            </Button>
+                        </Link>
                     </div>
                 )}
 
-                {/* Quick Links */}
                 {hasAnyData && (
                     <div className="flex gap-2 pt-1">
                         <Link to="/schedule" className="flex-1">
