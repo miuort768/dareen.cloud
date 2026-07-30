@@ -85,7 +85,7 @@ export const BackupSection = ({
                                     <span className="text-xs text-muted">{new Date(b.createdAt).toLocaleString('ar')}</span>
                                     <span className={cn(
                                         'text-[11px] px-2 py-0.5 rounded-lg font-bold',
-                                        b.status === 'completed' ? 'bg-success/10 text-success' : 'bg-warning/10 text-warning-dark'
+                                        b.status === 'completed' ? 'bg-success-soft text-success' : 'bg-warning-soft text-warning-dark'
                                     )}>
                                         {b.status}
                                     </span>

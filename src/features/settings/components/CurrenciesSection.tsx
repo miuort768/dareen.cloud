@@ -121,18 +121,18 @@ export const CurrenciesSection = ({
                                         <td className="py-3 px-4 text-muted">{c.name}</td>
                                         <td className="py-3 px-4 text-muted">{c.symbol}</td>
                                         <td className="py-3 px-4">
-                                            <span className={cn('inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold', c.isActive ? 'bg-success/10 text-success' : 'bg-hover text-muted')}>
+                                            <span className={cn('inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold', c.isActive ? 'bg-success-soft text-success' : 'bg-hover text-muted')}>
                                                 {c.isActive ? 'نشط' : 'غير نشط'}
                                             </span>
                                         </td>
                                         <td className="py-3 px-4 text-end">
                                             <div className="flex items-center gap-1 justify-end">
                                                 {localCurrency !== c.code && (
-                                                    <button onClick={() => setAsDefault(c.code)} className="p-2 rounded-lg hover:bg-info/10 text-info transition-all" title="تعيين كافتراضي">
+                                                    <button onClick={() => setAsDefault(c.code)} className="p-2 rounded-lg hover:bg-info-soft text-info transition-all" title="تعيين كافتراضي">
                                                         <RefreshCw size={13} />
                                                     </button>
                                                 )}
-                                                <button onClick={() => removeCurrency(c.code)} className="p-2 rounded-lg hover:bg-error/10 text-error transition-all" title="حذف">
+                                                <button onClick={() => removeCurrency(c.code)} className="p-2 rounded-lg hover:bg-error-soft text-error transition-all" title="حذف">
                                                     <Trash2 size={13} />
                                                 </button>
                                             </div>
@@ -184,7 +184,7 @@ export const CurrenciesSection = ({
                                         <td className="py-3 px-4 text-muted">{r.sellRate}</td>
                                         <td className="py-3 px-4 text-muted">{new Date(r.effectiveDate).toLocaleDateString('ar')}</td>
                                         <td className="py-3 px-4 text-end">
-                                            <button onClick={() => removeRate(r.id)} className="p-2 rounded-lg hover:bg-error/10 text-error transition-all"><Trash2 size={13} /></button>
+                                            <button onClick={() => removeRate(r.id)} className="p-2 rounded-lg hover:bg-error-soft text-error transition-all"><Trash2 size={13} /></button>
                                         </td>
                                     </tr>
                                 ))}

@@ -42,7 +42,7 @@ export const UsersSettings = ({ users, user, newUser, setNewUser, editingUserId,
                                 {u.id !== user?.id && (
                                     <button
                                         onClick={() => setShowDeleteModal(u)}
-                                        className="p-2 bg-error/5 border border-error/20 text-error hover:bg-error/10 rounded-lg transition-all"
+                                        className="p-2 bg-error-soft border border-error/20 text-error hover:bg-error/20 rounded-lg transition-all"
                                     >
                                         <Trash2 size={13} />
                                     </button>
