@@ -24,10 +24,9 @@ import { StrategicSummary } from './monthly-closing/components/StrategicSummary'
 
 type TabType = 'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
 
-const PARTICLES = Array.from({ length: 10 }, (_, i) => ({
+const particles = Array.from({ length: 10 }, (_, i) => ({
     id: i, x: Math.random() * 100, y: Math.random() * 100,
-    size: 6 + Math.random() * 18, delay: Math.random() * 4,
-    duration: 5 + Math.random() * 7,
+    size: Math.random() * 5 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
 }));
 
 const TABS = [
@@ -40,27 +39,18 @@ const TABS = [
     { id: 'summary', label: 'الملخص', icon: TrendingUp },
 ] as const;
 
-const FAB_ACTIONS = [
-    { icon: RefreshCw, label: 'تحديث البيانات', action: 'refresh' as const, gradient: 'from-primary to-purple-400' },
-    { icon: FileText, label: 'تقرير شامل', action: 'summary' as const, gradient: 'from-success to-emerald-400' },
-    { icon: TrendingUp, label: 'تحليل الأداء', action: 'analysis' as const, gradient: 'from-info to-blue-400' },
-];
-
 export const MonthlyClosing = () => {
-    useEffect(() => { document.title = 'الإقفال الشهري | دارين'; }, []);
+    useEffect(() => { document.title = 'الإقفال الشهري | دارين السابعة للتعليم والتدريب'; }, []);
     const semesterName = useSemesterName();
     const queryClient = useQueryClient();
     const [activeTab, setActiveTab] = useState<TabType>('payroll');
     const [fabOpen, setFabOpen] = useState(false);
     const [startDate, setStartDate] = useState(() => {
-        const d = new Date();
-        return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().split('T')[0];
+        const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().split('T')[0];
     });
     const [endDate, setEndDate] = useState(() => {
-        const d = new Date();
-        return new Date(d.getFullYear(), d.getMonth() + 1, 0).toISOString().split('T')[0];
+        const d = new Date(); return new Date(d.getFullYear(), d.getMonth() + 1, 0).toISOString().split('T')[0];
     });
-
     const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<{
         name: string; subject: string; sessionsCount: number; totalAmount: number;
         sessionsList?: { date: string; studentName: string; teacherPrice?: number }[];
@@ -74,11 +64,7 @@ export const MonthlyClosing = () => {
 
     const handleFabAction = (action: string) => {
         setFabOpen(false);
-        switch (action) {
-            case 'refresh': handleRefresh(); break;
-            case 'summary': setActiveTab('summary'); break;
-            case 'analysis': setActiveTab('analysis'); break;
-        }
+        switch (action) { case 'refresh': handleRefresh(); break; case 'summary': setActiveTab('summary'); break; case 'analysis': setActiveTab('analysis'); break; }
     };
 
     const handleRefresh = () => {
@@ -88,15 +74,9 @@ export const MonthlyClosing = () => {
         queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
     };
 
-    const { data: sessions, isLoading: sessionsLoading } = useQuery({
-        queryKey: ['sessions-closing'], queryFn: attendanceService.getSessions
-    });
-    const { data: teachers, isLoading: teachersLoading } = useQuery({
-        queryKey: ['teachers-closing'], queryFn: teacherService.getAll
-    });
-    const { data: students, isLoading: studentsLoading } = useQuery({
-        queryKey: ['students-closing'], queryFn: attendanceService.getStudents
-    });
+    const { data: sessions, isLoading: sessionsLoading } = useQuery({ queryKey: ['sessions-closing'], queryFn: attendanceService.getSessions });
+    const { data: teachers, isLoading: teachersLoading } = useQuery({ queryKey: ['teachers-closing'], queryFn: teacherService.getAll });
+    const { data: students, isLoading: studentsLoading } = useQuery({ queryKey: ['students-closing'], queryFn: attendanceService.getStudents });
     const { data: studentInvoices, isLoading: invoicesLoading } = useQuery({
         queryKey: ['student-invoices-closing'],
         queryFn: async () => {
@@ -109,9 +89,7 @@ export const MonthlyClosing = () => {
     const filteredSessions = sessions?.filter(s => s.date >= startDate && s.date <= endDate) || [];
 
     const payrollData = teachers?.map(teacher => {
-        const teacherSessions = filteredSessions.filter(s =>
-            s.teacherName?.trim() === teacher.name?.trim() && s.status === 'completed'
-        );
+        const teacherSessions = filteredSessions.filter(s => s.teacherName?.trim() === teacher.name?.trim() && s.status === 'completed');
         const baseAmount = teacherSessions.reduce((acc, curr) => acc + (curr.teacherPrice || teacher.price || 0), 0);
         const adjustment = teacherAdjustments[teacher.id] || 0;
         return { ...teacher, sessionsCount: teacherSessions.length, baseAmount, adjustment, totalAmount: baseAmount + adjustment, sessionsList: teacherSessions };
@@ -138,10 +116,7 @@ export const MonthlyClosing = () => {
             const remaining = enroll.sessionsTotal - enroll.sessionsUsed;
             const isLow = remaining <= 2;
             let waLink = '';
-            if (student.parentPhone) {
-                const msg = `تنبيه تجديد الباقة: يتبقى للطالب ${student.name} في مادة ${enroll.subject} ${remaining} جلسات فقط. يرجى التواصل للتجديد.`;
-                waLink = `https://wa.me/${student.parentPhone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`;
-            }
+            if (student.parentPhone) { const msg = `تنبيه تجديد الباقة: يتبقى للطالب ${student.name} في مادة ${enroll.subject} ${remaining} جلسات فقط. يرجى التواصل للتجديد.`; waLink = `https://wa.me/${student.parentPhone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`; }
             return { studentName: student.name, phone: student.parentPhone || '', subject: enroll.subject, remaining, total: enroll.sessionsTotal, isLow, waLink };
         })
     ).filter(item => item.isLow).sort((a, b) => a.remaining - b.remaining) || [];
@@ -157,182 +132,110 @@ export const MonthlyClosing = () => {
     if (isLoading) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-28 overflow-x-hidden relative font-sans bg-surface" dir="rtl">
-            {/* ── Hero ── */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/[6%] to-background border-b border-border/60">
-                <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
-                    {PARTICLES.map(p => (
-                        <motion.div key={p.id}
-                            className="absolute rounded-full bg-primary/30"
-                            style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size }}
-                            animate={{ y: [0, -30, 0], opacity: [0.15, 0.5, 0.15] }}
-                            transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
-                        />
+        <div className="min-h-full pb-28 overflow-x-hidden relative" dir="rtl">
+            <div className="max-w-page mx-auto px-2">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8 mb-4">
+                    {particles.map(p => (
+                        <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
+                            style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
+                            animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }} />
                     ))}
-                </div>
-                <div className="relative z-10 max-w-page mx-auto px-2 pt-4 pb-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-9 h-9 rounded-xl bg-primary text-on-primary flex items-center justify-center shadow-sm">
-                                <CalendarCheck size={16} />
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div>
+                            <div className="flex items-center gap-2 mb-2">
+                                <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><CalendarCheck className="text-white" size={20} /></div>
+                                <span className="text-white/70 text-xs font-medium">{semesterName}</span>
                             </div>
-                            <div>
-                                <h1 className="text-sm font-bold text-main">التقرير الشهري</h1>
-                                <p className="text-[8px] text-muted">{semesterName}</p>
-                            </div>
+                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">الإقفال الشهري</h1>
+                            <p className="text-white/70 text-sm">تقرير مالي وإداري شامل عن الشهر</p>
                         </div>
-                        <div className="flex items-center gap-1.5">
-                            <div className="flex items-center gap-1 bg-card border border-border/60 rounded-xl px-2.5 py-1.5">
-                                <input type="date"
-                                    className="w-[90px] bg-transparent text-[9px] font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
-                                    value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                                <span className="text-[8px] text-muted">–</span>
-                                <input type="date"
-                                    className="w-[90px] bg-transparent text-[9px] font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
-                                    value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                            <div className="text-center">
+                                <p className="text-white/60 text-xs mb-1">صافي الربح</p>
+                                <p className="text-2xl font-bold text-white tabular-nums">{netProjectedProfit.toLocaleString()} <span className="text-sm text-white/60">KWD</span></p>
                             </div>
-                            <button onClick={handleRefresh}
-                                className="w-8 h-8 flex items-center justify-center bg-card border border-border/60 rounded-xl text-muted hover:text-main transition-all" aria-label="تحديث">
-                                <RefreshCw size={13} />
-                            </button>
+                            <div className="w-px h-10 bg-white/10" />
+                            <div className="text-center">
+                                <p className="text-white/60 text-xs mb-1">الجلسات</p>
+                                <p className="text-lg font-bold text-white">{filteredSessions.length}</p>
+                            </div>
                         </div>
                     </div>
-                    {/* Hero total */}
-                    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                        className="text-center py-4">
-                        <p className="text-[9px] font-bold text-muted mb-1">صافي الربح المتوقع</p>
-                        <motion.p
-                            initial={{ scale: 0.9 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: 'spring', stiffness: 200, damping: 12 }}
-                            className="text-3xl font-bold text-main tabular-nums tracking-tight"
-                        >
-                            {netProjectedProfit.toLocaleString()}
-                            <span className="text-sm text-muted font-bold me-1">KWD</span>
-                        </motion.p>
-                        <div className="flex items-center justify-center gap-3 mt-2">
-                            <div className="flex items-center gap-1">
-                                <TrendingUp size={10} className="text-success" />
-                                <span className="text-[8px] font-bold text-muted">الإيرادات: <span className="text-main">{(totalProjectedIncome || 0).toLocaleString()}</span></span>
-                            </div>
-                            <div className="w-px h-3 bg-border/60" />
-                            <div className="flex items-center gap-1">
-                                <TrendingDown size={10} className="text-error/70" />
-                                <span className="text-[8px] font-bold text-muted">الرواتب: <span className="text-main">{(totalTeacherPayout || 0).toLocaleString()}</span></span>
-                            </div>
+                    <div className="relative z-10 flex flex-wrap items-center gap-2 mt-4">
+                        <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-3 py-1.5 border border-white/10">
+                            <input type="date" className="w-[95px] bg-transparent text-xs font-bold text-white outline-none border-none [color-scheme:var(--color-scheme)] placeholder:text-white/40"
+                                value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                            <span className="text-white/50">–</span>
+                            <input type="date" className="w-[95px] bg-transparent text-xs font-bold text-white outline-none border-none [color-scheme:var(--color-scheme)] placeholder:text-white/40"
+                                value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                         </div>
-                    </motion.div>
-                    {/* Quick insight chips */}
-                    <div className="flex flex-wrap items-center justify-center gap-1.5 mt-2">
-                        <div className="flex items-center gap-1 px-2 py-1 bg-card rounded-lg border border-border/40 text-[7px] font-bold">
-                            <Wallet size={9} className="text-success" /> التحصيلات: <span className="text-main">{(totalActualCollections || 0).toLocaleString()}</span>
-                        </div>
-                        <div className="flex items-center gap-1 px-2 py-1 bg-card rounded-lg border border-border/40 text-[7px] font-bold">
-                            <AlertCircle size={9} className="text-warning" /> تجديدات: <span className="text-main">{renewalsData.length}</span>
-                        </div>
-                        <div className="flex items-center gap-1 px-2 py-1 bg-card rounded-lg border border-border/40 text-[7px] font-bold">
-                            <ActivityIcon size={9} className="text-primary" /> الجلسات: <span className="text-main">{filteredSessions.length}</span>
-                        </div>
+                        <button onClick={handleRefresh}
+                            className="flex items-center gap-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl px-3 py-1.5 text-white/80 hover:text-white text-xs font-bold transition-all border border-white/10">
+                            <RefreshCw size={13} /> تحديث
+                        </button>
                     </div>
-                </div>
-            </div>
-
-            {/* ── Main Content ── */}
-            <div className="relative z-10 max-w-page mx-auto px-2 -mt-2 space-y-3 pb-16">
-                {/* KPI Cards */}
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                    className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
-                    <KpiCard title="صافي الربح المتوقع" value={netProjectedProfit.toLocaleString()} icon={TrendingUp}
-                        accent="primary" subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% هامش ربح`} />
-                    <KpiCard title="التحصيلات الفعلية" value={totalActualCollections.toLocaleString()} icon={Wallet}
-                        accent="success" subValue={`صافي التدفق: ${netActualCashFlow.toLocaleString()}`} />
-                    <KpiCard title="رواتب المعلمات" value={totalTeacherPayout.toLocaleString()} icon={TrendingDown}
-                        accent="error" subValue={`${payrollData.length} معلمة مسجلة`} />
-                    <KpiCard title="إجمالي الجلسات" value={filteredSessions.length} icon={ActivityIcon}
-                        accent="warning" subValue="كل الجلسات المكتملة" />
                 </motion.div>
 
-                {/* Tabs */}
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                    <div className="bg-card border border-border/60 rounded-2xl p-1 flex overflow-x-auto no-scrollbar gap-1 shadow-sm">
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+                        <KpiCard title="صافي الربح المتوقع" value={`${netProjectedProfit.toLocaleString()} KWD`} icon={TrendingUp} accent="primary"
+                            subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% هامش ربح`} />
+                        <KpiCard title="التحصيلات الفعلية" value={`${totalActualCollections.toLocaleString()} KWD`} icon={Wallet} accent="success"
+                            subValue={`صافي التدفق: ${netActualCashFlow.toLocaleString()} KWD`} />
+                        <KpiCard title="رواتب المعلمات" value={`${totalTeacherPayout.toLocaleString()} KWD`} icon={TrendingDown} accent="error"
+                            subValue={`${payrollData.length} معلمة مسجلة`} />
+                        <KpiCard title="إجمالي الجلسات" value={filteredSessions.length} icon={ActivityIcon} accent="warning" subValue="كل الجلسات المكتملة" />
+                    </div>
+                </motion.div>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
+                    <div className="bg-card border border-border/30 rounded-2xl p-1 flex overflow-x-auto no-scrollbar gap-1 shadow-sm mb-4">
                         {TABS.map(tab => (
-                            <button key={tab.id}
-                                onClick={() => setActiveTab(tab.id as TabType)}
-                                className={cn(
-                                    "relative flex items-center gap-1.5 px-3 py-2 rounded-xl text-[9px] font-bold transition-all whitespace-nowrap",
-                                    activeTab === tab.id ? "text-on-primary" : "text-muted hover:text-main"
-                                )}
-                            >
+                            <button key={tab.id} onClick={() => setActiveTab(tab.id as TabType)}
+                                className={cn("relative flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap", activeTab === tab.id ? "text-on-primary" : "text-muted hover:text-main")}>
                                 {activeTab === tab.id && (
-                                    <motion.div layoutId="closing-tab-pill"
-                                        className="absolute inset-0 bg-primary rounded-xl shadow-sm"
-                                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                                    />
+                                    <motion.div layoutId="closing-tab-pill" className="absolute inset-0 bg-primary rounded-xl shadow-sm" transition={{ type: 'spring', stiffness: 400, damping: 30 }} />
                                 )}
-                                <span className="relative z-10 flex items-center gap-1.5">
-                                    <tab.icon size={13} />
-                                    {tab.label}
-                                </span>
+                                <span className="relative z-10 flex items-center gap-1.5"><tab.icon size={14} />{tab.label}</span>
                             </button>
                         ))}
                     </div>
                 </motion.div>
 
-                {/* Tab Content */}
-                <motion.div key={activeTab} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
-                    {activeTab === 'payroll' && (
-                        <PayrollTable payrollData={payrollData} teacherAdjustments={teacherAdjustments}
-                            handleTeacherAdjustment={handleTeacherAdjustment}
-                            setSelectedTeacherForSlip={setSelectedTeacherForSlip}
-                            startDate={startDate} endDate={endDate} />
-                    )}
-                    {activeTab === 'collections' && (
-                        <CollectionsTable studentInvoices={studentInvoices} startDate={startDate} endDate={endDate} />
-                    )}
+                <motion.div key={activeTab} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }}>
+                    {activeTab === 'payroll' && <PayrollTable payrollData={payrollData} teacherAdjustments={teacherAdjustments} handleTeacherAdjustment={handleTeacherAdjustment} setSelectedTeacherForSlip={setSelectedTeacherForSlip} startDate={startDate} endDate={endDate} />}
+                    {activeTab === 'collections' && <CollectionsTable studentInvoices={studentInvoices} startDate={startDate} endDate={endDate} />}
                     {activeTab === 'renewals' && <RenewalsCards renewalsData={renewalsData} />}
                     {activeTab === 'analysis' && <SubjectAnalysis subjectAnalysis={subjectAnalysis} reportCurrency="KWD" />}
                     {activeTab === 'teachers' && <TeacherPerformance teacherPerformance={teacherPerformance} />}
                     {activeTab === 'compensation' && <CompensationTable filteredSessions={filteredSessions} />}
-                    {activeTab === 'summary' && (
-                        <StrategicSummary netProjectedProfit={netProjectedProfit} totalProjectedIncome={totalProjectedIncome}
-                            totalActualCollections={totalActualCollections} totalTeacherPayout={totalTeacherPayout} reportCurrency="KWD" />
-                    )}
+                    {activeTab === 'summary' && <StrategicSummary netProjectedProfit={netProjectedProfit} totalProjectedIncome={totalProjectedIncome} totalActualCollections={totalActualCollections} totalTeacherPayout={totalTeacherPayout} reportCurrency="KWD" />}
                 </motion.div>
 
-                {selectedTeacherForSlip && (
-                    <SalarySlipModal teacher={selectedTeacherForSlip} month={`${startDate} / ${endDate}`}
-                        onClose={() => setSelectedTeacherForSlip(null)} />
-                )}
+                {selectedTeacherForSlip && <SalarySlipModal teacher={selectedTeacherForSlip} month={`${startDate} / ${endDate}`} onClose={() => setSelectedTeacherForSlip(null)} />}
             </div>
 
-            {/* ── FAB ── */}
-            <div className="fixed bottom-6 start-6 z-50 flex flex-col items-center gap-2">
+            <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
                 <AnimatePresence>
-                    {fabOpen && FAB_ACTIONS.map((item, i) => (
-                        <motion.button key={item.label}
-                            initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 20, scale: 0.8 }}
-                            transition={{ delay: i * 0.05 }}
-                            onClick={() => handleFabAction(item.action)}
-                            className="flex items-center gap-2 px-3 py-2 bg-card border border-border/60 shadow-elevation-2 rounded-xl hover:shadow-elevation-3 transition-all active:scale-95 group"
-                        >
-                            <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white text-[10px]`}>
-                                <item.icon size={12} />
-                            </div>
-                            <span className="text-[8px] font-bold text-main whitespace-nowrap">{item.label}</span>
-                        </motion.button>
+                    {fabOpen && ([
+                        { icon: RefreshCw, label: 'تحديث البيانات', action: 'refresh' as const },
+                        { icon: FileText, label: 'تقرير شامل', action: 'summary' as const },
+                        { icon: TrendingUp, label: 'تحليل الأداء', action: 'analysis' as const },
+                    ]).map((item, i) => (
+                        <motion.div key={item.label} initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * i }} className="flex items-center gap-2">
+                            <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{item.label}</span>
+                            <button onClick={() => handleFabAction(item.action)}
+                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                <item.icon size={18} />
+                            </button>
+                        </motion.div>
                     ))}
                 </AnimatePresence>
-                <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setFabOpen(!fabOpen)}
-                    className="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary to-purple-400 text-white shadow-elevation-2 hover:shadow-elevation-3 flex items-center justify-center transition-all"
-                >
-                    <motion.div animate={{ rotate: fabOpen ? 45 : 0 }} transition={{ duration: 0.2 }}>
-                        <Plus size={18} />
-                    </motion.div>
+                <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    <CalendarCheck size={22} />
                 </motion.button>
             </div>
         </div>

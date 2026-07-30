@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Plus, RefreshCw, FileText } from 'lucide-react';
+import { GraduationCap, Plus, RefreshCw, FileText, BarChart3, Filter, DollarSign, CheckCircle2, AlertCircle, CreditCard } from 'lucide-react';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
@@ -10,20 +10,15 @@ import { InvoiceStats } from './teacher-invoices/components/InvoiceStats';
 import { InvoiceForm } from './teacher-invoices/components/InvoiceForm';
 import { InvoiceTable } from './teacher-invoices/components/InvoiceTable';
 import { TeacherInvoicesHeader } from './teacher-invoices/teacher-invoices-page';
+import { cn } from '../lib/utils';
 
-const PARTICLES = Array.from({ length: 8 }, (_, i) => ({
+const particles = Array.from({ length: 8 }, (_, i) => ({
     id: i, x: Math.random() * 100, y: Math.random() * 100,
-    size: 6 + Math.random() * 16, delay: Math.random() * 4, duration: 5 + Math.random() * 6,
+    size: Math.random() * 5 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
 }));
 
-const FAB_ACTIONS = [
-    { icon: Plus, label: 'إضافة فاتورة', action: 'add' as const, gradient: 'from-primary to-purple-400' },
-    { icon: RefreshCw, label: 'استيراد معلمات', action: 'import' as const, gradient: 'from-info to-blue-400' },
-    { icon: FileText, label: 'طباعة', action: 'print' as const, gradient: 'from-success to-emerald-400' },
-];
-
 export const TeacherInvoices = () => {
-    useEffect(() => { document.title = 'فواتير المعلمات | دارين'; }, []);
+    useEffect(() => { document.title = 'فواتير المعلمات | دارين السابعة للتعليم والتدريب'; }, []);
     const [invoices, setInvoices] = useState<TeacherInvoice[]>([]);
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
@@ -97,6 +92,13 @@ export const TeacherInvoices = () => {
         const unpaidPercentage = result.totalAmount > 0 ? Math.round((result.unpaidAmount / result.totalAmount) * 100) : 0;
         return { totalTeachers: filteredInvoices.length, ...result, unpaidPercentage };
     }, [filteredInvoices]);
+
+    const kpiCards = useMemo(() => [
+        { label: 'المعلمات', value: filteredInvoices.length, icon: GraduationCap, accent: 'primary' as const },
+        { label: 'الإجمالي', value: `${stats.totalAmount.toLocaleString()} ج.م`, icon: DollarSign, accent: 'success' as const },
+        { label: 'مدفوع', value: `${stats.paidAmount.toLocaleString()} ج.م`, icon: CheckCircle2, accent: 'info' as const },
+        { label: 'معلق', value: `${stats.unpaidAmount.toLocaleString()} ج.م`, icon: AlertCircle, accent: 'error' as const },
+    ], [filteredInvoices.length, stats]);
 
     const handleEdit = useCallback((invoice: TeacherInvoice) => {
         setEditingId(invoice.id);
@@ -197,88 +199,104 @@ export const TeacherInvoices = () => {
         } catch (error) { console.error('Error during import process:', error); showNotification('فشل تحميل بيانات المعلمات', 'error'); setLoading(false); }
     }, [invoices, fetchInvoices, showNotification]);
 
+    const fabActions = useMemo(() => [
+        { icon: Plus, label: 'إضافة فاتورة', onClick: () => handleFabAction('add') },
+        { icon: RefreshCw, label: 'استيراد معلمات', onClick: () => handleFabAction('import') },
+        { icon: FileText, label: 'طباعة', onClick: () => handleFabAction('print') },
+    ], [showForm, isTeacher]);
+
     if (loading && invoices.length === 0) return <PageLoader />;
 
     return (
-        <div className="min-h-full pb-28 overflow-x-hidden relative font-sans bg-surface" dir="rtl">
-            {/* ── Hero ── */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/[6%] to-background border-b border-border/60">
-                <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
-                    {PARTICLES.map(p => (
-                        <motion.div key={p.id}
-                            className="absolute rounded-full bg-primary/30"
-                            style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size }}
-                            animate={{ y: [0, -25, 0], opacity: [0.15, 0.5, 0.15] }}
-                            transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
-                        />
+        <div className="min-h-full pb-28 overflow-x-hidden relative" dir="rtl">
+            <div className="max-w-page mx-auto px-2">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8 mb-4">
+                    {particles.map(p => (
+                        <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
+                            style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
+                            animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }} />
                     ))}
-                </div>
-                <div className="relative z-10 max-w-page mx-auto px-2 pt-4 pb-6">
-                    <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-9 h-9 rounded-xl bg-primary text-on-primary flex items-center justify-center shadow-sm">
-                                <GraduationCap size={16} />
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div>
+                            <div className="flex items-center gap-2 mb-2">
+                                <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><GraduationCap className="text-white" size={20} /></div>
+                                <span className="text-white/70 text-xs font-medium">المالية</span>
                             </div>
-                            <div>
-                                <h1 className="text-sm font-bold text-main">فواتير المعلمات</h1>
-                                <p className="text-[8px] text-muted">إدارة مستحقات المعلمات المالية</p>
-                            </div>
+                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">فواتير المعلمات</h1>
+                            <p className="text-white/70 text-sm">إدارة مستحقات المعلمات المالية</p>
                         </div>
-                        <div className="flex items-center gap-1.5">
-                            <div className="flex items-center gap-1 bg-card border border-border/60 rounded-xl px-2.5 py-1.5">
-                                <input type="date"
-                                    className="w-[95px] bg-transparent text-[8px] font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
-                                    value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-                                <span className="text-[7px] text-muted">–</span>
-                                <input type="date"
-                                    className="w-[95px] bg-transparent text-[8px] font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
-                                    value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                            <div className="text-center">
+                                <p className="text-white/60 text-xs mb-1">الإجمالي</p>
+                                <p className="text-2xl font-bold text-white tabular-nums">{stats.totalAmount.toLocaleString()}</p>
+                            </div>
+                            <div className="w-px h-10 bg-white/10" />
+                            <div className="text-center">
+                                <p className="text-white/60 text-xs mb-1">المعلمات</p>
+                                <p className="text-lg font-bold text-white">{filteredInvoices.length}</p>
                             </div>
                         </div>
                     </div>
-                    {/* Hero total */}
-                    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                        className="text-center py-4">
-                        <p className="text-[9px] font-bold text-muted mb-1">إجمالي المستحقات</p>
-                        <motion.p
-                            initial={{ scale: 0.9 }}
-                            animate={{ scale: 1 }}
-                            transition={{ type: 'spring', stiffness: 200, damping: 12 }}
-                            className="text-3xl font-bold text-main tabular-nums tracking-tight"
-                        >
-                            {stats.totalAmount.toLocaleString()}
-                            <span className="text-sm text-muted font-bold me-1">ج.م</span>
-                        </motion.p>
-                        <div className="flex items-center justify-center gap-3 mt-2">
-                            <div className="flex items-center gap-1">
-                                <GraduationCap size={10} className="text-primary" />
-                                <span className="text-[8px] font-bold text-muted">{stats.totalTeachers} معلمة</span>
-                            </div>
-                            <div className="w-px h-3 bg-border/60" />
-                            <div className="flex items-center gap-1">
-                                <span className="text-[8px] font-bold text-success">مدفوع: {stats.paidAmount.toLocaleString()}</span>
-                            </div>
-                            <div className="w-px h-3 bg-border/60" />
-                            <div className="flex items-center gap-1">
-                                <span className="text-[8px] font-bold text-error">معلق: {stats.unpaidAmount.toLocaleString()}</span>
-                            </div>
-                        </div>
-                    </motion.div>
-                    <div className="flex flex-wrap items-center justify-center gap-1.5 mt-2">
-                        <div className="flex items-center gap-1 px-2 py-1 bg-card rounded-lg border border-border/40 text-[7px] font-bold">
-                            <GraduationCap size={9} className="text-primary" /> الفواتير: <span className="text-main">{filteredInvoices.length}</span>
-                        </div>
-                        <div className="flex items-center gap-1 px-2 py-1 bg-card rounded-lg border border-border/40 text-[7px] font-bold">
-                            النسبة المعلقة: <span className="text-error">{stats.unpaidPercentage}%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </motion.div>
 
-            {/* ── Main Content ── */}
-            <div className="relative z-10 max-w-page mx-auto px-2 -mt-2 space-y-3 pb-16">
-                {/* Header */}
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                        {kpiCards.map((kpi, i) => {
+                            const Icon = kpi.icon;
+                            const gradientMap = {
+                                primary: 'from-primary/20 to-primary/5', success: 'from-success/20 to-success/5',
+                                info: 'from-info/20 to-info/5', error: 'from-error/20 to-error/5',
+                                warning: 'from-warning/20 to-warning/5',
+                            };
+                            const iconBgMap = {
+                                primary: 'bg-primary/10 text-primary', success: 'bg-success/10 text-success',
+                                info: 'bg-info/10 text-info', error: 'bg-error/10 text-error',
+                                warning: 'bg-warning/10 text-warning',
+                            };
+                            return (
+                                <motion.div key={kpi.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
+                                    whileHover={{ scale: 1.02, y: -2 }}
+                                    className={cn("relative overflow-hidden rounded-xl bg-gradient-to-br border border-border/50 p-4", gradientMap[kpi.accent])}>
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div className={cn("p-2 rounded-lg", iconBgMap[kpi.accent])}><Icon size={16} /></div>
+                                        <div className={cn("h-1 w-12 rounded-full", kpi.accent === 'primary' ? 'bg-primary' : kpi.accent === 'success' ? 'bg-success' : kpi.accent === 'info' ? 'bg-info' : 'bg-error')} />
+                                    </div>
+                                    <p className="text-xs text-muted mb-1">{kpi.label}</p>
+                                    <p className="text-lg font-bold text-main tabular-nums">{kpi.value}</p>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                </motion.div>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                    <div className="flex flex-wrap items-center gap-3 mb-4">
+                        <div className="flex items-center gap-2 bg-card border border-border/30 rounded-xl px-3 py-2">
+                            <input type="date" className="w-[120px] bg-transparent text-xs font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
+                                value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                            <span className="text-muted">–</span>
+                            <input type="date" className="w-[120px] bg-transparent text-xs font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
+                                value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                        </div>
+                        <div className="flex-1 flex items-center gap-2">
+                            <input type="text" placeholder="بحث باسم المعلمة..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
+                                className="flex-1 bg-card border border-border/30 rounded-xl px-3.5 py-2 text-xs font-bold text-main placeholder:text-muted/60 focus:outline-none focus:border-primary transition-all" />
+                            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}
+                                className="bg-card border border-border/30 rounded-xl px-3 py-2 text-xs font-bold text-main focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer">
+                                <option value="all">الكل</option>
+                                <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
+                                <option value={INVOICE_STATUS.PROCESSING}>قيد المعالجة</option>
+                                <option value={INVOICE_STATUS.OVERDUE}>متأخرة</option>
+                                <option value={INVOICE_STATUS.UNPAID}>غير مدفوعة</option>
+                            </select>
+                        </div>
+                    </div>
+                </motion.div>
+
+                <InvoiceStats stats={stats} />
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
                     <TeacherInvoicesHeader stats={stats} searchTerm={searchTerm} onSearchChange={setSearchTerm}
                         filterStatus={filterStatus} onFilterChange={setFilterStatus}
                         startDate={startDate} onStartDateChange={setStartDate} endDate={endDate} onEndDateChange={setEndDate}
@@ -286,17 +304,12 @@ export const TeacherInvoices = () => {
                         onImport={handleImportTeachers} onDeleteAll={handleDeleteAll} onPrint={() => window.print()} isTeacher={isTeacher} />
                 </motion.div>
 
-                {/* Stats */}
-                <InvoiceStats stats={stats} />
-
-                {/* Form */}
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
                     <InvoiceForm showForm={showForm} editingId={editingId} formData={formData} setFormData={setFormData}
                         handleSubmit={handleSubmit} handleCancel={handleCancel} teachers={teachers} isSaving={isSaving} INVOICE_STATUS={INVOICE_STATUS} />
                 </motion.div>
 
-                {/* Table */}
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
                     <InvoiceTable filteredInvoices={filteredInvoices} handleEdit={handleEdit} handleDelete={handleDelete} isTeacher={isTeacher} />
                 </motion.div>
 
@@ -304,31 +317,22 @@ export const TeacherInvoices = () => {
                     onConfirm={confirmModal.onConfirm} title={confirmModal.title} message={confirmModal.message} isDestructive={confirmModal.isDestructive} />
             </div>
 
-            {/* ── FAB ── */}
-            <div className="fixed bottom-6 start-6 z-50 flex flex-col items-center gap-2">
+            <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
                 <AnimatePresence>
-                    {fabOpen && FAB_ACTIONS.map((item, i) => (
-                        <motion.button key={item.label}
-                            initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 20, scale: 0.8 }}
-                            transition={{ delay: i * 0.05 }}
-                            onClick={() => handleFabAction(item.action)}
-                            className="flex items-center gap-2 px-3 py-2 bg-card border border-border/60 shadow-elevation-2 rounded-xl hover:shadow-elevation-3 transition-all active:scale-95 group"
-                        >
-                            <div className={`w-7 h-7 rounded-lg bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white text-[10px]`}>
-                                <item.icon size={12} />
-                            </div>
-                            <span className="text-[8px] font-bold text-main whitespace-nowrap">{item.label}</span>
-                        </motion.button>
+                    {fabOpen && fabActions.filter(a => isTeacher ? a.label === 'طباعة' : true).map((action, i) => (
+                        <motion.div key={action.label} initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
+                            <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
+                            <button onClick={() => { action.onClick(); setFabOpen(false); }}
+                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                <action.icon size={18} />
+                            </button>
+                        </motion.div>
                     ))}
                 </AnimatePresence>
-                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }}
-                    onClick={() => setFabOpen(!fabOpen)}
-                    className="w-11 h-11 rounded-2xl bg-gradient-to-br from-primary to-purple-400 text-white shadow-elevation-2 hover:shadow-elevation-3 flex items-center justify-center transition-all">
-                    <motion.div animate={{ rotate: fabOpen ? 45 : 0 }} transition={{ duration: 0.2 }}>
-                        <Plus size={18} />
-                    </motion.div>
+                <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    <GraduationCap size={22} />
                 </motion.button>
             </div>
         </div>
