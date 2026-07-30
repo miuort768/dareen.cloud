@@ -44,21 +44,18 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
             value: `+${Math.max(0, stats?.monthCompletedSessions || 0)}`,
             label: 'نمو هذا الأسبوع',
             trend: 'up',
-            color: 'from-emerald-400 to-emerald-300',
         },
         {
             icon: Users,
             value: stats?.studentsCount || 0,
             label: 'طالب نشط',
             trend: 'up',
-            color: 'from-sky-400 to-sky-300',
         },
         {
             icon: Target,
             value: `${Math.min(100, performanceScore)}%`,
             label: 'مؤشر الأداء',
             trend: performanceScore > 60 ? 'up' : 'down',
-            color: 'from-amber-400 to-amber-300',
         },
     ];
 
@@ -168,7 +165,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
                                                 {item.value}
                                             </span>
                                         </div>
-                                        <div className="flex items-center gap-0.5 text-emerald-300 text-[10px] font-bold">
+                                        <div className="flex items-center gap-0.5 text-on-primary/70 text-[10px] font-bold">
                                             <TrendingUp size={10} />
                                             {item.trend === 'up' ? '+' : ''}
                                         </div>
