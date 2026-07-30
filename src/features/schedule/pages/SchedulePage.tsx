@@ -1,13 +1,14 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Loader2, Sparkles, Clock, BookOpen } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Loader2, Sparkles, Clock, BookOpen, Plus, CalendarDays, GraduationCap, Users, Filter, Printer } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCurrentUser } from '../../../context/AppContext';
 import { api } from '../../../lib/api';
 import { startLiveSession } from '../../../services/liveSessionService';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileSchedule } from '../components/MobileSchedule';
 import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page';
+import { cn } from '../../../lib/utils';
 
 interface Student { id: string; name: string; grade: string; parentPhone: string; enrollments: Enrollment[]; totalPoints?: number; }
 interface Enrollment { teacher: string; subject: string; curr: string; sessionsTotal: number; sessionsUsed: number; schedule: ScheduleSlot[]; }
@@ -19,6 +20,11 @@ interface ScheduleEvent {
 }
 
 const DAYS = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
+
+const particles = Array.from({ length: 8 }, (_, i) => ({
+    id: i, x: Math.random() * 100, y: Math.random() * 100,
+    size: Math.random() * 5 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
+}));
 
 export const Schedule = () => {
     useEffect(() => { document.title = 'الجدول الدراسي | دارين السابعة للتعليم والتدريب'; }, []);
@@ -32,6 +38,7 @@ export const Schedule = () => {
     const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [fabOpen, setFabOpen] = useState(false);
     const printRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
 
@@ -148,6 +155,19 @@ export const Schedule = () => {
         } catch (e) { console.error(e); setShowDetails(false); }
     };
 
+    const kpiCards = useMemo(() => [
+        { label: 'إجمالي الحصص', value: weekStats.sessions, icon: BookOpen, gradient: 'from-primary/20 to-primary/5', iconBg: 'bg-primary/10 text-primary', accent: 'bg-primary' },
+        { label: 'المعلمات', value: weekStats.teachers, icon: GraduationCap, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
+        { label: 'الطلاب', value: weekStats.students, icon: Users, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
+        { label: 'الأيام', value: DAYS.length, icon: CalendarDays, gradient: 'from-info/20 to-info/5', iconBg: 'bg-info/10 text-info', accent: 'bg-info' },
+    ], [weekStats]);
+
+    const fabActions = useMemo(() => [
+        { icon: CalendarDays, label: 'اليوم', onClick: () => setFilterDay(todayDayName) },
+        { icon: Filter, label: 'كل الأيام', onClick: () => setFilterDay('all') },
+        { icon: Printer, label: 'طباعة', onClick: handlePrint },
+    ], [todayDayName]);
+
     if (loading) return (
         <div className="flex flex-col items-center justify-center min-h-full gap-3">
             <div className="w-8 h-8 border-2 border-border border-t-primary rounded-full animate-spin" />
@@ -158,21 +178,41 @@ export const Schedule = () => {
     return (
         <div className="min-h-full pb-24 relative" dir="rtl">
             <div className="hidden md:block max-w-page mx-auto px-2">
-                <ScheduleHeader
-                    searchTerm={searchTerm} onSearchChange={setSearchTerm}
-                    filterDay={filterDay} onDayChange={setFilterDay}
-                    filterTeacher={filterTeacher} onTeacherChange={setFilterTeacher}
-                    filterSubject={filterSubject} onSubjectChange={setFilterSubject}
-                    uniqueTeachers={uniqueTeachers} uniqueSubjects={uniqueSubjects}
-                    todayDayName={todayDayName} weekLabel={weekLabel}
-                    onWeekChange={(d) => setCurrentWeekOffset(v => v + d)}
-                    onPrint={handlePrint}
-                    stats={weekStats}
-                />
+                <div className="relative overflow-hidden rounded-2xl">
+                    {particles.map(p => (
+                        <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none z-10"
+                            style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
+                            animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }} />
+                    ))}
+                    <ScheduleHeader searchTerm={searchTerm} onSearchChange={setSearchTerm}
+                        filterDay={filterDay} onDayChange={setFilterDay} filterTeacher={filterTeacher}
+                        onTeacherChange={setFilterTeacher} filterSubject={filterSubject} onSubjectChange={setFilterSubject}
+                        uniqueTeachers={uniqueTeachers} uniqueSubjects={uniqueSubjects}
+                        todayDayName={todayDayName} weekLabel={weekLabel}
+                        onWeekChange={(d) => setCurrentWeekOffset(v => v + d)} onPrint={handlePrint} stats={weekStats} />
+                </div>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                        {kpiCards.map((kpi, i) => {
+                            const Icon = kpi.icon;
+                            return (
+                                <motion.div key={kpi.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
+                                    whileHover={{ scale: 1.02, y: -2 }} className={cn("relative overflow-hidden rounded-xl bg-gradient-to-br border border-border/50 p-4", kpi.gradient)}>
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div className={cn("p-2 rounded-lg", kpi.iconBg)}><Icon size={16} /></div>
+                                        <div className={cn("h-1 w-12 rounded-full", kpi.accent)} />
+                                    </div>
+                                    <p className="text-xs text-muted mb-1">{kpi.label}</p>
+                                    <p className="text-2xl font-bold text-main">{kpi.value}</p>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                </motion.div>
 
                 {currentUser?.role === 'admin' && <LiveClasses />}
 
-                {/* Next session banner */}
                 {nextSession && (
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-3">
                         <div className="bg-card border border-border/60 rounded-xl p-3 flex items-center justify-between">
@@ -214,12 +254,27 @@ export const Schedule = () => {
                 <MobileSchedule />
             </div>
 
-            <SchedulePopover
-                event={selectedEvent}
-                onClose={() => { setShowDetails(false); setSelectedEvent(null); }}
-                onStartLiveSession={handleStartLiveSession}
-                onViewStudent={() => navigate('/students')}
-            />
+            <SchedulePopover event={selectedEvent} onClose={() => { setShowDetails(false); setSelectedEvent(null); }}
+                onStartLiveSession={handleStartLiveSession} onViewStudent={() => navigate('/students')} />
+
+            <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+                <AnimatePresence>
+                    {fabOpen && fabActions.map((action, i) => (
+                        <motion.div key={action.label} initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
+                            <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
+                            <button onClick={() => { action.onClick(); setFabOpen(false); }}
+                                className="w-10 h-10 rounded-full bg-primary text-white shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                <action.icon size={18} />
+                            </button>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+                <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    className={cn("w-12 h-12 rounded-full shadow-xl text-white flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    <Plus size={24} />
+                </motion.button>
+            </div>
 
             <style>{`
                 @media print {

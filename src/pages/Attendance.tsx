@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from 'react';
-import { Search, Users, Activity } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { Search, Users, Activity, CheckCircle, XCircle, Clock, Plus, List, BarChart3, UserCheck } from 'lucide-react';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal';
@@ -17,6 +17,28 @@ import { MobileAttendance } from '../features/attendance/components/MobileAttend
 import type { Student, Enrollment, Session } from '../features/attendance/types';
 import { generateWhatsAppLink } from '../lib/whatsapp';
 import { SectionCard, SectionTitle, BulkAttendanceButton, AdminTeacherGroupList } from './attendance-page';
+import { Badge } from '../shared/components/ui/badge';
+import { cn } from '../lib/utils';
+
+function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
+    const ref = useRef<HTMLSpanElement>(null);
+    const motionValue = useMotionValue(0);
+    const spring = useSpring(motionValue, { stiffness: 80, damping: 20 });
+    const rounded = useTransform(spring, (v) => Math.round(v));
+    useEffect(() => { motionValue.set(value); }, [value, motionValue]);
+    return <span ref={ref} className="text-3xl font-bold tracking-tight">{useTransform(rounded, (v) => v.toLocaleString('ar-EG'))}{suffix}</span>;
+}
+
+const particles = Array.from({ length: 10 }, (_, i) => ({
+    id: i, x: Math.random() * 100, y: Math.random() * 100,
+    size: Math.random() * 6 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
+}));
+
+const statusConfig = {
+    completed: { icon: CheckCircle, label: 'حضور', class: 'bg-success/10 text-success border-success/20' },
+    cancelled: { icon: XCircle, label: 'غياب', class: 'bg-error/10 text-error border-error/20' },
+    scheduled: { icon: Clock, label: 'مقرر', class: 'bg-warning/10 text-warning border-warning/20' },
+} as const;
 
 export const Attendance = () => {
     useEffect(() => { document.title = 'الحضور والغياب | دارين السابعة للتعليم والتدريب'; }, []);
@@ -31,6 +53,7 @@ export const Attendance = () => {
     const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('today');
     const [customStartDate, setCustomStartDate] = useState('');
     const [customEndDate, setCustomEndDate] = useState('');
+    const [fabOpen, setFabOpen] = useState(false);
 
     const dateRange = useMemo(() => {
         const d = new Date(date);
@@ -131,30 +154,101 @@ export const Attendance = () => {
 
     const isTeacher = currentUser?.role === 'teacher';
 
+    const kpiCards = useMemo(() => [
+        { label: 'إجمالي الحضور', value: periodStats?.completed || stats.totalCompleted, icon: CheckCircle, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
+        { label: 'إجمالي الغياب', value: periodStats?.cancelled || stats.totalCancelled, icon: XCircle, gradient: 'from-error/20 to-error/5', iconBg: 'bg-error/10 text-error', accent: 'bg-error' },
+        { label: 'الجدول الكلي', value: periodStats?.scheduled || stats.todayTotal, icon: Clock, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
+        { label: 'المعلمات', value: uniqueTeachers.length, icon: Users, gradient: 'from-primary/20 to-primary/5', iconBg: 'bg-primary/10 text-primary', accent: 'bg-primary' },
+    ], [periodStats, stats, uniqueTeachers.length]);
+
+    const fabActions = useMemo(() => [
+        { icon: Plus, label: 'تسجيل حضور', onClick: () => document.querySelector<HTMLButtonElement>('[data-attendance-log]')?.click() },
+        { icon: List, label: 'سجل الجلسات', onClick: () => { const first = filteredSessions[0]; if (first) handleViewHistory(first.studentId || '', first.studentName || '', undefined, first.subject); } },
+        { icon: BarChart3, label: 'إحصائيات', onClick: () => document.querySelector('[data-stats-section]')?.scrollIntoView({ behavior: 'smooth' }) },
+    ], [filteredSessions]);
+
     return (
         <div className="min-h-full pb-24 relative font-sans" dir="rtl">
-            <div className="hidden md:block max-w-page mx-auto px-2 space-y-4">
-                <AttendanceHeader date={date} onDateChange={setDate}
-                    stats={{ todayTotal: stats.todayTotal, totalCompleted: stats.totalCompleted }}
-                    isTeacher={isTeacher} teacherCount={uniqueTeachers.length} />
+            <div className="max-w-page mx-auto px-2 space-y-4">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/70 p-6 md:p-8">
+                    {particles.map(p => (
+                        <motion.div key={p.id} className="absolute rounded-full bg-white/10" style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
+                            animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }} />
+                    ))}
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div>
+                            <div className="flex items-center gap-2 mb-2">
+                                <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><UserCheck className="text-white" size={20} /></div>
+                                <span className="text-white/70 text-xs font-medium">نظام الحضور والغياب</span>
+                            </div>
+                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">الحضور والغياب</h1>
+                            <p className="text-white/70 text-sm">متابعة حضور وغياب الطلاب بشكل يومي</p>
+                        </div>
+                        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                            <div className="text-center">
+                                <p className="text-white/60 text-xs mb-1">إجمالي الحضور</p>
+                                <div className="text-2xl font-bold text-white"><AnimatedCounter value={stats.totalCompleted} /></div>
+                            </div>
+                            <div className="w-px h-10 bg-white/10" />
+                            <div className="text-center">
+                                <p className="text-white/60 text-xs mb-1">الغياب</p>
+                                <div className="text-2xl font-bold text-white"><AnimatedCounter value={stats.totalCancelled} /></div>
+                            </div>
+                            <div className="w-px h-10 bg-white/10" />
+                            <div className="text-center">
+                                <p className="text-white/60 text-xs mb-1">المقررة</p>
+                                <div className="text-2xl font-bold text-white"><AnimatedCounter value={stats.todayTotal} /></div>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
 
-                <AttendanceStats
-                    stats={periodStats ? { ...stats, todayCompleted: periodStats.completed, todayCancelled: periodStats.cancelled, todayScheduled: periodStats.scheduled } : stats}
-                    teacherStats={teacherStats} isTeacher={isTeacher} periodLabel={periodLabel}
-                    prevCompleted={periodStats?.prevCompleted} prevCancelled={periodStats?.prevCancelled} />
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} data-stats-section>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        {kpiCards.map((kpi, i) => {
+                            const Icon = kpi.icon;
+                            return (
+                                <motion.div key={kpi.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
+                                    whileHover={{ scale: 1.02, y: -2 }} className={cn("relative overflow-hidden rounded-xl bg-gradient-to-br border border-border/50 p-4", kpi.gradient)}>
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div className={cn("p-2 rounded-lg", kpi.iconBg)}><Icon size={16} /></div>
+                                        <div className={cn("h-1 w-12 rounded-full", kpi.accent)} />
+                                    </div>
+                                    <p className="text-xs text-muted mb-1">{kpi.label}</p>
+                                    <p className="text-2xl font-bold text-main"><AnimatedCounter value={kpi.value} /></p>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                </motion.div>
 
-                {isTeacher && <BulkAttendanceButton matchedEnrollments={matchedEnrollments} allSessions={allSessions}
-                    logDate={logDate} logAttendance={logAttendance} />}
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                    <AttendanceHeader date={date} onDateChange={setDate}
+                        stats={{ todayTotal: stats.todayTotal, totalCompleted: stats.totalCompleted }}
+                        isTeacher={isTeacher} teacherCount={uniqueTeachers.length} />
+                </motion.div>
 
-                {!isTeacher && <AttendanceFilters searchTerm={searchTerm} onSearchChange={setSearchTerm}
-                    filterStatus={filterStatus} onStatusChange={setFilterStatus}
-                    filterTeacher={filterTeacher} onTeacherChange={setFilterTeacher}
-                    uniqueTeachers={uniqueTeachers} periodFilter={periodFilter}
-                    onPeriodChange={setPeriodFilter} customStartDate={customStartDate}
-                    customEndDate={customEndDate} onCustomStartChange={setCustomStartDate}
-                    onCustomEndChange={setCustomEndDate} />}
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+                    <AttendanceStats
+                        stats={periodStats ? { ...stats, todayCompleted: periodStats.completed, todayCancelled: periodStats.cancelled, todayScheduled: periodStats.scheduled } : stats}
+                        teacherStats={teacherStats} isTeacher={isTeacher} periodLabel={periodLabel}
+                        prevCompleted={periodStats?.prevCompleted} prevCancelled={periodStats?.prevCancelled} />
+                </motion.div>
 
-                <div className="px-0 md:animate-in md:fade-in md:slide-in-from-bottom-2 md:duration-400">
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                    {isTeacher && <BulkAttendanceButton matchedEnrollments={matchedEnrollments} allSessions={allSessions}
+                        logDate={logDate} logAttendance={logAttendance} />}
+
+                    {!isTeacher && <AttendanceFilters searchTerm={searchTerm} onSearchChange={setSearchTerm}
+                        filterStatus={filterStatus} onStatusChange={setFilterStatus}
+                        filterTeacher={filterTeacher} onTeacherChange={setFilterTeacher}
+                        uniqueTeachers={uniqueTeachers} periodFilter={periodFilter}
+                        onPeriodChange={setPeriodFilter} customStartDate={customStartDate}
+                        customEndDate={customEndDate} onCustomStartChange={setCustomStartDate}
+                        onCustomEndChange={setCustomEndDate} />}
+                </motion.div>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
                     {isTeacher ? (
                         <div className="space-y-4">
                             <SectionCard className="p-0 overflow-hidden">
@@ -175,17 +269,20 @@ export const Attendance = () => {
                                         (matchedEnrollments || []).filter(me =>
                                             (me.student.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
                                             (me.enrollment.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase())
-                                        ).map(({ student, enrollment }) => (
-                                            <TeacherStudentCard key={`${student.id}-${enrollment.subject}`}
-                                                student={student} enrollment={enrollment}
-                                                actualSessionsUsed={enrollment.sessionsUsed}
-                                                onUpdateSchedule={updateSchedule}
-                                                onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
-                                                onViewHistory={(id, name, grade, subject, curriculum) => setHistoryStudent({ id, name, grade, subject, curriculum })}
-                                                onDeleteSlot={(s, e, i) => setDeletingSlot({ student: s, enrollment: e, slotIndex: i })}
-                                                onUpdateNotes={updateEnrollmentNotes}
-                                                onReschedule={(s, e) => setRescheduleData({ student: s, enrollment: e })}
-                                                logDate={logDate} onDateChange={setLogDate} />
+                                        ).map(({ student, enrollment }, idx) => (
+                                            <motion.div key={`${student.id}-${enrollment.subject}`}
+                                                initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.04 * idx }}>
+                                                <TeacherStudentCard
+                                                    student={student} enrollment={enrollment}
+                                                    actualSessionsUsed={enrollment.sessionsUsed}
+                                                    onUpdateSchedule={updateSchedule}
+                                                    onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
+                                                    onViewHistory={(id, name, grade, subject, curriculum) => setHistoryStudent({ id, name, grade, subject, curriculum })}
+                                                    onDeleteSlot={(s, e, i) => setDeletingSlot({ student: s, enrollment: e, slotIndex: i })}
+                                                    onUpdateNotes={updateEnrollmentNotes}
+                                                    onReschedule={(s, e) => setRescheduleData({ student: s, enrollment: e })}
+                                                    logDate={logDate} onDateChange={setLogDate} />
+                                            </motion.div>
                                         ))
                                     ) : (
                                         <div className="col-span-full py-16 text-center">
@@ -209,7 +306,7 @@ export const Attendance = () => {
                             </motion.div>
                         </>
                     )}
-                </div>
+                </motion.div>
 
                 <SecureAttendanceModal isOpen={!!secureModalData} onClose={() => setSecureModalData(null)}
                     onConfirm={handleConfirmLog} studentName={secureModalData?.student.name || ''} date={logDate} />
@@ -241,6 +338,27 @@ export const Attendance = () => {
             <div className="block md:hidden">
                 <MobileAttendance />
             </div>
+
+            {!isTeacher && (
+                <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+                    <AnimatePresence>
+                        {fabOpen && fabActions.map((action, i) => (
+                            <motion.div key={action.label} initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
+                                <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
+                                <button onClick={() => { action.onClick(); setFabOpen(false); }}
+                                    className="w-10 h-10 rounded-full bg-primary text-white shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                    <action.icon size={18} />
+                                </button>
+                            </motion.div>
+                        ))}
+                    </AnimatePresence>
+                    <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                        className={cn("w-12 h-12 rounded-full shadow-xl text-white flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                        <Plus size={24} />
+                    </motion.button>
+                </div>
+            )}
         </div>
     );
 };

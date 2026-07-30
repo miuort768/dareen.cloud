@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import { FileText, Receipt, Search, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Search, Receipt, CheckCircle, Clock, AlertCircle, FileText, TrendingUp, ArrowDownRight, Plus } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser } from '../context/AppContext';
 import { Skeleton } from '../shared/components/ui';
+import { CURRENCY_SYMBOL } from '../config/constants';
 
 interface StudentInvoice {
     id: string;
@@ -18,13 +20,43 @@ interface StudentInvoice {
 }
 
 const statusConfig = {
-    paid: { label: 'مدفوعة', icon: CheckCircle, bg: 'bg-success-soft', text: 'text-success' },
-    pending: { label: 'معلقة', icon: Clock, bg: 'bg-warning-soft', text: 'text-warning' },
-    overdue: { label: 'متأخرة', icon: AlertCircle, bg: 'bg-error-soft', text: 'text-error' },
+    paid: { label: 'مدفوعة', icon: CheckCircle, cls: 'bg-success/[10%] text-success border-success/30' },
+    pending: { label: 'معلقة', icon: Clock, cls: 'bg-warning/[10%] text-warning border-warning/30' },
+    overdue: { label: 'متأخرة', icon: AlertCircle, cls: 'bg-error/[10%] text-error border-error/30' },
 } as const;
 
+const PARTICLES = Array.from({ length: 8 }, (_, i) => ({
+    id: i, x: Math.random() * 100, y: Math.random() * 100,
+    size: 6 + Math.random() * 16, delay: Math.random() * 4, duration: 5 + Math.random() * 6,
+}));
+
+const KpiStat = ({ title, value, count, icon: Icon, accent }: {
+    title: string; value: number; count: number; icon: React.ComponentType<{ size?: number }>;
+    accent: 'success' | 'warning' | 'error';
+}) => {
+    const gradientMap = { success: 'from-success to-emerald-400', warning: 'from-warning to-amber-400', error: 'from-error to-rose-400' };
+    const bgMap = { success: 'bg-success/[8%] text-success', warning: 'bg-warning/[8%] text-warning', error: 'bg-error/[8%] text-error' };
+    return (
+        <motion.div whileHover={{ scale: 1.01, y: -1 }}
+            className="relative overflow-hidden rounded-2xl bg-card border border-border/60 shadow-sm hover:shadow-md transition-all p-3.5">
+            <div className={`absolute inset-0 opacity-[0.02] bg-gradient-to-br ${gradientMap[accent]}`} />
+            <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${gradientMap[accent]}`} />
+            <div className="relative flex items-start gap-3">
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${bgMap[accent]}`}>
+                    <Icon size={14} />
+                </div>
+                <div className="min-w-0 flex-1">
+                    <p className="text-[9px] font-bold text-muted">{title}</p>
+                    <p className="text-lg font-bold text-main tabular-nums leading-none mt-0.5">{value.toLocaleString()} <span className="text-[9px] text-muted font-bold">{CURRENCY_SYMBOL}</span></p>
+                    <p className="text-[8px] font-bold text-muted mt-1">{count} فاتورة</p>
+                </div>
+            </div>
+        </motion.div>
+    );
+};
+
 export const StudentInvoices = () => {
-    useEffect(() => { document.title = 'فواتيري | دارين السابعة للتعليم والتدريب'; }, []);
+    useEffect(() => { document.title = 'فواتيري | دارين'; }, []);
     const currentUser = useCurrentUser();
     const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
     const [loading, setLoading] = useState(true);
@@ -70,13 +102,11 @@ export const StudentInvoices = () => {
         return (
             <div className="min-h-full pb-24 overflow-x-hidden" dir="rtl">
                 <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
-                    <Skeleton className="h-20 rounded-2xl" />
+                    <Skeleton className="h-28 rounded-2xl" />
                     <div className="grid grid-cols-3 gap-3">
-                        <Skeleton className="h-24 rounded-2xl" />
-                        <Skeleton className="h-24 rounded-2xl" />
-                        <Skeleton className="h-24 rounded-2xl" />
+                        {[...Array(3)].map((_, i) => <Skeleton key={i} className="h-24 rounded-2xl" />)}
                     </div>
-                    <Skeleton className="h-12 rounded-xl" />
+                    <Skeleton className="h-10 rounded-xl" />
                     <Skeleton className="h-64 rounded-2xl" />
                 </div>
             </div>
@@ -84,116 +114,129 @@ export const StudentInvoices = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden" dir="rtl">
-            <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
-                {/* Header */}
-                <div className="bg-card border border-border rounded-2xl p-5">
-                    <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
-                            <Receipt size={18} className="text-primary" />
+        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface" dir="rtl">
+            {/* ── Hero ── */}
+            <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background border-b border-border/60">
+                <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+                    {PARTICLES.map(p => (
+                        <motion.div key={p.id}
+                            className="absolute rounded-full bg-success/30"
+                            style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size }}
+                            animate={{ y: [0, -25, 0], opacity: [0.15, 0.5, 0.15] }}
+                            transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
+                        />
+                    ))}
+                </div>
+                <div className="relative z-10 max-w-page mx-auto px-2 pt-4 pb-6">
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2.5">
+                            <div className="w-9 h-9 rounded-xl bg-success text-on-success flex items-center justify-center shadow-sm">
+                                <Receipt size={16} />
+                            </div>
+                            <div>
+                                <h1 className="text-sm font-bold text-main">فواتيري</h1>
+                                <p className="text-[8px] text-muted">متابعة الرسوم والمدفوعات</p>
+                            </div>
                         </div>
-                        <div>
-                            <h1 className="text-base font-bold text-main">فواتيري</h1>
-                            <p className="text-micro text-muted">عرض فواتيرك ومستحقاتك المالية</p>
+                        <div className="flex items-center gap-1 px-2 py-1 bg-card rounded-lg border border-border/40 text-[8px] font-bold">
+                            <FileText size={10} className="text-primary" />
+                            {invoices.length} فاتورة
                         </div>
                     </div>
+                    {/* Hero total */}
+                    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                        className="text-center py-4">
+                        <p className="text-[9px] font-bold text-muted mb-1">إجمالي الفواتير</p>
+                        <motion.p
+                            initial={{ scale: 0.9 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: 'spring', stiffness: 200, damping: 12 }}
+                            className="text-3xl font-bold text-main tabular-nums tracking-tight"
+                        >
+                            {stats.total.toLocaleString()}
+                            <span className="text-sm text-muted font-bold me-1">{CURRENCY_SYMBOL}</span>
+                        </motion.p>
+                        <div className="flex items-center justify-center gap-3 mt-2">
+                            <div className="flex items-center gap-1">
+                                <CheckCircle size={10} className="text-success" />
+                                <span className="text-[8px] font-bold text-muted">مدفوعة: <span className="text-main">{stats.paidCount}</span></span>
+                            </div>
+                            <div className="w-px h-3 bg-border/60" />
+                            <div className="flex items-center gap-1">
+                                <Clock size={10} className="text-warning" />
+                                <span className="text-[8px] font-bold text-muted">معلقة: <span className="text-main">{stats.pendingCount}</span></span>
+                            </div>
+                            <div className="w-px h-3 bg-border/60" />
+                            <div className="flex items-center gap-1">
+                                <AlertCircle size={10} className="text-error" />
+                                <span className="text-[8px] font-bold text-muted">متأخرة: <span className="text-main">{stats.overdueCount}</span></span>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
+            </div>
 
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-3">
-                    <div className="bg-card border border-border rounded-2xl p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                            <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center">
-                                <CheckCircle size={14} className="text-success" />
-                            </div>
-                            <span className="text-micro text-muted font-bold">مدفوعة</span>
-                        </div>
-                        <p className="text-sm font-bold text-main">{stats.paidCount} فاتورة</p>
-                        <p className="text-micro text-success font-bold">{stats.paid.toFixed(3)} د.ك</p>
-                    </div>
-                    <div className="bg-card border border-border rounded-2xl p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                            <div className="w-8 h-8 rounded-xl bg-warning-soft flex items-center justify-center">
-                                <Clock size={14} className="text-warning" />
-                            </div>
-                            <span className="text-micro text-muted font-bold">معلقة</span>
-                        </div>
-                        <p className="text-sm font-bold text-main">{stats.pendingCount} فاتورة</p>
-                        <p className="text-micro text-warning font-bold">{stats.pending.toFixed(3)} د.ك</p>
-                    </div>
-                    <div className="bg-card border border-border rounded-2xl p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                            <div className="w-8 h-8 rounded-xl bg-error-soft flex items-center justify-center">
-                                <AlertCircle size={14} className="text-error" />
-                            </div>
-                            <span className="text-micro text-muted font-bold">متأخرة</span>
-                        </div>
-                        <p className="text-sm font-bold text-main">{stats.overdueCount} فاتورة</p>
-                        <p className="text-micro text-error font-bold">{stats.overdue.toFixed(3)} د.ك</p>
-                    </div>
-                </div>
+            {/* ── Main Content ── */}
+            <div className="relative z-10 max-w-page mx-auto px-2 -mt-2 space-y-3 pb-16">
+                {/* KPI Stats */}
+                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+                    className="grid grid-cols-3 gap-2.5">
+                    <KpiStat title="مدفوعة" value={stats.paid} count={stats.paidCount} icon={CheckCircle} accent="success" />
+                    <KpiStat title="معلقة" value={stats.pending} count={stats.pendingCount} icon={Clock} accent="warning" />
+                    <KpiStat title="متأخرة" value={stats.overdue} count={stats.overdueCount} icon={AlertCircle} accent="error" />
+                </motion.div>
 
                 {/* Search & Filter */}
-                <div className="flex gap-2 items-center">
+                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                    className="flex gap-2 items-center">
                     <div className="relative flex-1">
-                        <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-                        <input
-                            aria-label="بحث في الفواتير"
-                            placeholder="بحث بالبيان..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full rounded-xl ps-9 pe-3 py-2.5 text-xs font-bold outline-none bg-surface border border-border text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                        />
+                        <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={13} />
+                        <input aria-label="بحث في الفواتير" placeholder="بحث بالبيان..."
+                            value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full rounded-xl ps-8 pe-3 py-2.5 text-[10px] font-bold outline-none bg-card border border-border/60 text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" />
                     </div>
-                    <select
-                        value={filterStatus}
-                        onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
+                    <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
                         aria-label="تصفية حسب الحالة"
-                        className="rounded-xl px-3 py-2.5 text-xs font-bold outline-none bg-surface border border-border text-main focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
-                    >
-                        <option value="all">جميع الحالات</option>
+                        className="rounded-xl px-3 py-2.5 text-[10px] font-bold outline-none bg-card border border-border/60 text-main focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
+                        <option value="all">الكل</option>
                         <option value="paid">مدفوعة</option>
                         <option value="pending">معلقة</option>
                         <option value="overdue">متأخرة</option>
                     </select>
-                </div>
+                </motion.div>
 
                 {/* Desktop Table */}
-                <div className="hidden md:block bg-card border border-border rounded-2xl overflow-hidden">
-                    <table className="w-full text-start text-sm border-collapse">
+                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+                    className="hidden md:block bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm">
+                    <table className="w-full text-start border-collapse">
                         <thead>
-                            <tr className="bg-surface border-b border-border">
-                                <th className="px-4 py-3 text-micro font-bold text-muted text-start">البيان</th>
-                                <th className="px-4 py-3 text-micro font-bold text-muted text-center">المبلغ</th>
-                                <th className="px-4 py-3 text-micro font-bold text-muted text-center">التاريخ</th>
-                                <th className="px-4 py-3 text-micro font-bold text-muted text-center">الاستحقاق</th>
-                                <th className="px-4 py-3 text-micro font-bold text-muted text-center">الحالة</th>
+                            <tr className="bg-surface border-b border-border/40">
+                                {['البيان', 'المبلغ', 'التاريخ', 'الاستحقاق', 'الحالة'].map(h => (
+                                    <th key={h} className={`px-4 py-3 text-[8px] font-bold text-muted ${h === 'البيان' ? 'text-start' : 'text-center'}`}>{h}</th>
+                                ))}
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-border">
+                        <tbody className="divide-y divide-border/40">
                             {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => {
                                 const status = statusConfig[inv.status];
                                 return (
-                                    <tr key={inv.id} className="hover:bg-hover transition-colors">
+                                    <motion.tr key={inv.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                                        className="hover:bg-surface/50 transition-colors">
                                         <td className="px-4 py-3">
-                                            <span className="text-xs font-bold text-main">{inv.description}</span>
+                                            <span className="text-[10px] font-bold text-main">{inv.description}</span>
                                         </td>
                                         <td className="px-4 py-3 text-center">
-                                            <span className="font-mono text-xs font-bold text-main">{inv.amount.toFixed(3)} د.ك</span>
+                                            <span className="font-mono text-[10px] font-bold text-main tabular-nums">{inv.amount.toLocaleString()} <span className="text-[8px] text-muted">{CURRENCY_SYMBOL}</span></span>
                                         </td>
+                                        <td className="px-4 py-3 text-center text-[8px] text-muted">{inv.date}</td>
+                                        <td className="px-4 py-3 text-center text-[8px] text-muted">{inv.dueDate}</td>
                                         <td className="px-4 py-3 text-center">
-                                            <span className="text-micro text-muted">{inv.date}</span>
-                                        </td>
-                                        <td className="px-4 py-3 text-center">
-                                            <span className="text-micro text-muted">{inv.dueDate}</span>
-                                        </td>
-                                        <td className="px-4 py-3 text-center">
-                                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-micro font-bold ${status.bg} ${status.text}`}>
-                                                <status.icon size={11} />
+                                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[8px] font-bold border ${status.cls}`}>
+                                                <status.icon size={10} />
                                                 {status.label}
                                             </span>
                                         </td>
-                                    </tr>
+                                    </motion.tr>
                                 );
                             }) : (
                                 <tr>
@@ -201,7 +244,7 @@ export const StudentInvoices = () => {
                                         <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-2">
                                             <FileText size={18} />
                                         </div>
-                                        <p className="text-xs font-bold text-muted">
+                                        <p className="text-[10px] font-bold text-muted">
                                             {searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
                                         </p>
                                     </td>
@@ -209,42 +252,43 @@ export const StudentInvoices = () => {
                             )}
                         </tbody>
                     </table>
-                </div>
+                </motion.div>
 
                 {/* Mobile Cards */}
-                <div className="md:hidden space-y-3">
-                    {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => {
+                <div className="md:hidden space-y-2.5">
+                    {filteredInvoices.length > 0 ? filteredInvoices.map((inv, i) => {
                         const status = statusConfig[inv.status];
                         return (
-                            <div key={inv.id} className="bg-card border border-border rounded-2xl p-4">
-                                <div className="flex items-center justify-between mb-3">
-                                    <p className="text-xs font-bold text-main">{inv.description}</p>
-                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-micro font-bold ${status.bg} ${status.text}`}>
-                                        <status.icon size={10} />
+                            <motion.div key={inv.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
+                                className="bg-card border border-border/60 rounded-2xl p-3.5 shadow-sm">
+                                <div className="flex items-center justify-between mb-2.5">
+                                    <p className="text-[10px] font-bold text-main">{inv.description}</p>
+                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[8px] font-bold border ${status.cls}`}>
+                                        <status.icon size={9} />
                                         {status.label}
                                     </span>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <div>
-                                            <p className="text-micro text-muted mb-0.5">المبلغ</p>
-                                            <span className="font-mono text-sm font-bold text-main">{inv.amount.toFixed(3)} د.ك</span>
+                                            <p className="text-[7px] font-bold text-muted mb-0.5">المبلغ</p>
+                                            <span className="font-mono text-xs font-bold text-main tabular-nums">{inv.amount.toLocaleString()} <span className="text-[8px] text-muted">{CURRENCY_SYMBOL}</span></span>
                                         </div>
-                                        <div className="w-px h-6 bg-border" />
+                                        <div className="w-px h-5 bg-border/40" />
                                         <div>
-                                            <p className="text-micro text-muted mb-0.5">الاستحقاق</p>
-                                            <span className="text-micro text-muted">{inv.dueDate}</span>
+                                            <p className="text-[7px] font-bold text-muted mb-0.5">الاستحقاق</p>
+                                            <span className="text-[8px] text-muted">{inv.dueDate}</span>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         );
                     }) : (
-                        <div className="bg-card border border-border border-dashed rounded-2xl py-16 text-center">
+                        <div className="bg-card border border-border/60 border-dashed rounded-2xl py-16 text-center">
                             <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-2">
                                 <FileText size={18} />
                             </div>
-                            <p className="text-xs font-bold text-muted">
+                            <p className="text-[10px] font-bold text-muted">
                                 {searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
                             </p>
                         </div>
