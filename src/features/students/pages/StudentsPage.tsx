@@ -15,6 +15,7 @@ import { StudentStats } from '../components/StudentStats';
 import { StudentForm } from '../components/StudentForm';
 import { StudentTable } from '../components/StudentTable';
 import { StudentDetails } from '../components/StudentDetails';
+import { StudentDrawer } from '../components/StudentDrawer';
 import { StudentsPageHeader } from '../components/StudentsPageHeader';
 import { StudentsFilters } from '../components/StudentsFilters';
 import { StudentsToolbar } from '../components/StudentsToolbar';
@@ -70,6 +71,7 @@ export const Students = () => {
     const [showAddForm, setShowAddForm] = useState(false);
     const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
     const [showDetails, setShowDetails] = useState(false);
+    const [drawerStudent, setDrawerStudent] = useState<Student | null>(null);
     const [editId, setEditId] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [isDeletingAll, setIsDeletingAll] = useState(false);
@@ -88,6 +90,12 @@ export const Students = () => {
     const averageSessions = useMemo(() =>
         allStudents.length > 0 ? Math.round(totalExpectedSessions / allStudents.length) : 0,
     [allStudents.length, totalExpectedSessions]);
+    const totalEnrollments = useMemo(() =>
+        allStudents.reduce((acc, s) => acc + (s.enrollments?.length || 0), 0),
+    [allStudents]);
+    const completedSessions = useMemo(() =>
+        allStudents.reduce((acc, s) => acc + (s.enrollments?.reduce((ea, en) => ea + (en.sessionsUsed || 0), 0) || 0), 0),
+    [allStudents]);
 
     const handleAddOrUpdateStudent = (data: Omit<Student, 'id' | 'enrollments'>) => {
         if (editId) {
@@ -198,7 +206,7 @@ export const Students = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative bg-background" dir="rtl">
             <div className="relative z-10 max-w-page mx-auto px-2 space-y-4">
 
-                <StudentsPageHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} totalStudents={allStudents.length} onAdd={() => { setEditId(null); setShowAddForm(true); }} />
+                <StudentsPageHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} totalStudents={allStudents.length} totalEnrollments={totalEnrollments} completedSessions={completedSessions} onAdd={() => { setEditId(null); setShowAddForm(true); }} />
 
                 {showAddForm && (
                     <div className="bg-card border border-border shadow-elevation-1 p-4 md:p-6 rounded-2xl">
@@ -243,33 +251,23 @@ export const Students = () => {
 
                 <StudentsToolbar filteredCount={students.length} totalCount={allStudents.length} onDeleteAll={() => setIsDeletingAll(true)} />
 
-                {!showDetails ? (
-                    <div className="animate-in fade-in duration-300">
-                        <StudentTable
-                            students={students}
-                            onEdit={handleEditStudent}
-                            onDelete={(id) => setDeletingId(id)}
-                            onSelect={(student) => { setSelectedStudent(student); setShowDetails(true); }}
-                            onNotify={(student) => setNotifyingStudent(student)}
-                            selectedId={selectedStudent?.id}
-                            teachers={teachers}
-                        />
-                    </div>
-                ) : (
-                    <div className="animate-in slide-in-from-start-8 duration-500">
-                        {selectedStudent && (
-                            <StudentDetails
-                                student={selectedStudent}
-                                teachers={teachers}
-                                onClose={() => setShowDetails(false)}
-                                onAddEnrollment={handleAddEnrollment}
-                                onAddSessions={handleAddSessions}
-                                isAddingEnrollment={isAddingEnrollment}
-                            />
-                        )}
-                    </div>
-                )}
+                <div className="animate-in fade-in duration-300">
+                    <StudentTable
+                        students={students}
+                        onEdit={handleEditStudent}
+                        onDelete={(id) => setDeletingId(id)}
+                        onSelect={(student) => setDrawerStudent(student)}
+                        onNotify={(student) => setNotifyingStudent(student)}
+                        selectedId={drawerStudent?.id}
+                    />
+                </div>
             </div>
+
+            {/* Student Drawer */}
+            <StudentDrawer
+                student={drawerStudent}
+                onClose={() => setDrawerStudent(null)}
+            />
 
             <SendNotificationModal
                 isOpen={!!notifyingStudent}

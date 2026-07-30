@@ -2,58 +2,151 @@ import { Search, Plus, X, Upload, Trash2, FileSpreadsheet, FileText } from 'luci
 import { cn } from '../../../lib/utils';
 
 interface TeacherToolbarProps {
-    searchTerm: string;
-    onSearchChange: (value: string) => void;
-    showAddForm: boolean;
-    onToggleAddForm: () => void;
-    onImport: () => void;
-    onExportExcel: () => void;
-    onExportPDF: () => void;
-    onDeleteAll: () => void;
+  searchTerm: string;
+  onSearchChange: (value: string) => void;
+  showAddForm: boolean;
+  onToggleAddForm: () => void;
+  onImport: () => void;
+  onExportExcel: () => void;
+  onExportPDF: () => void;
+  onDeleteAll: () => void;
+  subjects: string[];
+  filterSubject: string;
+  onFilterSubjectChange: (value: string) => void;
+  filterStatus: string;
+  onFilterStatusChange: (value: string) => void;
+  totalTeachers: number;
+  filteredCount: number;
 }
 
-export const TeacherToolbar = ({ searchTerm, onSearchChange, showAddForm, onToggleAddForm, onImport, onExportExcel, onExportPDF, onDeleteAll }: TeacherToolbarProps) => {
-    return (
-        <div className="space-y-2">
-            <div className="relative">
-                <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-                <input
-                    type="text"
-                    aria-label="بحث عن معلمة"
-                    placeholder="بحث بالاسم أو التخصص..."
-                    value={searchTerm}
-                    onChange={(e) => onSearchChange(e.target.value)}
-                    className="w-full bg-surface border border-border text-main text-xs font-bold ps-9 pe-3 py-2.5 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 rounded-xl transition-all placeholder:text-muted"
-                />
-            </div>
-            <div className="flex items-center justify-between">
-                <button
-                    onClick={onToggleAddForm}
-                    className={cn(
-                        "h-8 px-3 flex items-center gap-1.5 text-[11px] font-bold rounded-lg transition-all active:scale-95",
-                        showAddForm 
-                        ? "bg-error text-on-error" 
-                        : "bg-primary text-on-primary"
-                    )}
-                >
-                    {showAddForm ? <X size={12} /> : <Plus size={12} />}
-                    {showAddForm ? 'إلغاء' : 'إضافة معلمة'}
-                </button>
-                <div className="flex items-center gap-1">
-                    <button onClick={onImport} className="w-8 h-8 flex items-center justify-center bg-surface border border-border text-muted rounded-lg active:scale-95 transition-transform" aria-label="استيراد">
-                        <Upload size={12} />
-                    </button>
-                    <button onClick={onExportExcel} className="w-8 h-8 flex items-center justify-center bg-success-soft border border-success/20 text-success rounded-lg active:scale-95 transition-transform" aria-label="تصدير Excel">
-                        <FileSpreadsheet size={12} />
-                    </button>
-                    <button onClick={onExportPDF} className="w-8 h-8 flex items-center justify-center bg-error-soft border border-error/20 text-error rounded-lg active:scale-95 transition-transform" aria-label="تصدير PDF">
-                        <FileText size={12} />
-                    </button>
-                    <button onClick={onDeleteAll} className="w-8 h-8 flex items-center justify-center bg-error-soft border border-error/20 text-error rounded-lg active:scale-95 transition-transform" aria-label="حذف الكل">
-                        <Trash2 size={12} />
-                    </button>
-                </div>
-            </div>
+const subjectColorMap: Record<string, string> = {
+  رياضيات: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 ring-purple-500/20',
+  عربي: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 ring-emerald-500/20',
+  علوم: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 ring-blue-500/20',
+  إنجليزي: 'text-orange-600 dark:text-orange-400 bg-orange-500/10 ring-orange-500/20',
+  فيزياء: 'text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 ring-cyan-500/20',
+  كيمياء: 'text-rose-600 dark:text-rose-400 bg-rose-500/10 ring-rose-500/20',
+  لغات: 'text-teal-600 dark:text-teal-400 bg-teal-500/10 ring-teal-500/20',
+  أدبي: 'text-amber-600 dark:text-amber-400 bg-amber-500/10 ring-amber-500/20',
+};
+
+const getSubjectStyle = (subject?: string) => {
+  if (!subject) return 'text-muted bg-surface ring-border';
+  const key = Object.keys(subjectColorMap).find(k => subject.includes(k) || k.includes(subject));
+  return key ? subjectColorMap[key] : 'text-info bg-info-soft ring-info/20';
+};
+
+export const TeacherToolbar = ({
+  searchTerm, onSearchChange, showAddForm, onToggleAddForm, onImport,
+  onExportExcel, onExportPDF, onDeleteAll,
+  subjects, filterSubject, onFilterSubjectChange, filterStatus, onFilterStatusChange,
+  totalTeachers, filteredCount,
+}: TeacherToolbarProps) => {
+  const showFilters = subjects.length > 0 || totalTeachers > 0;
+  return (
+    <div className="bg-card border border-border rounded-2xl p-3 space-y-3 shadow-elevation-1">
+      {/* Search + Actions Row */}
+      <div className="flex items-center gap-2">
+        <div className="relative flex-1">
+          <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
+          <input
+            type="text"
+            aria-label="بحث عن معلمة"
+            placeholder="بحث بالاسم أو التخصص..."
+            value={searchTerm}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full bg-surface border border-border text-main text-xs font-bold ps-9 pe-3 py-2.5 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 rounded-xl transition-all placeholder:text-muted"
+          />
         </div>
-    );
+        <div className="flex items-center gap-1 shrink-0">
+          <button onClick={onImport} className="w-8 h-8 flex items-center justify-center bg-surface border border-border text-muted rounded-lg active:scale-95 transition-transform hover:bg-hover" aria-label="استيراد">
+            <Upload size={12} />
+          </button>
+          <button onClick={onExportExcel} className="w-8 h-8 flex items-center justify-center bg-success-soft border border-success/20 text-success rounded-lg active:scale-95 transition-transform hover:bg-success/20" aria-label="تصدير Excel">
+            <FileSpreadsheet size={12} />
+          </button>
+          <button onClick={onExportPDF} className="w-8 h-8 flex items-center justify-center bg-error-soft border border-error/20 text-error rounded-lg active:scale-95 transition-transform hover:bg-error/20" aria-label="تصدير PDF">
+            <FileText size={12} />
+          </button>
+          <button onClick={onDeleteAll} className="w-8 h-8 flex items-center justify-center bg-error-soft border border-error/20 text-error rounded-lg active:scale-95 transition-transform hover:bg-error/20" aria-label="حذف الكل">
+            <Trash2 size={12} />
+          </button>
+          <button
+            onClick={onToggleAddForm}
+            className={cn(
+              "h-8 px-3 flex items-center gap-1.5 text-[11px] font-bold rounded-lg transition-all active:scale-95",
+              showAddForm ? "bg-error text-on-error" : "bg-primary text-on-primary"
+            )}
+          >
+            {showAddForm ? <X size={12} /> : <Plus size={12} />}
+            {showAddForm ? 'إلغاء' : 'إضافة'}
+          </button>
+        </div>
+      </div>
+
+      {/* Chips Filters */}
+      {showFilters && (
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* نتائج */}
+          <span className="text-[10px] font-bold text-muted bg-surface px-2 py-1 rounded-lg border border-border">
+            {filteredCount} / {totalTeachers}
+          </span>
+
+          {/* تخصص */}
+          {subjects.length > 0 && (
+            <div className="flex items-center gap-1 flex-wrap">
+              <button
+                onClick={() => onFilterSubjectChange('')}
+                className={cn(
+                  "px-2.5 py-1 rounded-lg text-[9px] font-bold ring-1 transition-all",
+                  !filterSubject
+                    ? 'bg-primary text-on-primary ring-primary/30'
+                    : 'text-muted bg-surface ring-border hover:bg-hover'
+                )}
+              >
+                الكل
+              </button>
+              {subjects.map(subj => (
+                <button
+                  key={subj}
+                  onClick={() => onFilterSubjectChange(filterSubject === subj ? '' : subj)}
+                  className={cn(
+                    "px-2.5 py-1 rounded-lg text-[9px] font-bold ring-1 transition-all",
+                    filterSubject === subj
+                      ? getSubjectStyle(subj)
+                      : 'text-muted bg-surface ring-border hover:bg-hover'
+                  )}
+                >
+                  {subj}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* الحالة */}
+          <div className="flex items-center gap-1">
+            <span className="text-[9px] text-muted">|</span>
+            {['', 'active', 'inactive'].map(status => {
+              const label = status === '' ? 'الكل' : status === 'active' ? 'نشطة' : 'متوقفة';
+              const isActive = filterStatus === status;
+              const dot = status === 'active' ? 'bg-emerald-500' : status === 'inactive' ? 'bg-rose-400' : '';
+              return (
+                <button
+                  key={status}
+                  onClick={() => onFilterStatusChange(isActive ? '' : status)}
+                  className={cn(
+                    "px-2 py-1 rounded-lg text-[9px] font-bold ring-1 transition-all inline-flex items-center gap-1",
+                    isActive ? 'bg-primary text-on-primary ring-primary/30' : 'text-muted bg-surface ring-border hover:bg-hover'
+                  )}
+                >
+                  {dot && <span className={cn("w-1.5 h-1.5 rounded-full", dot)} />}
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
