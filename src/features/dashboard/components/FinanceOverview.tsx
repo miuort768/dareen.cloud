@@ -44,7 +44,7 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
     };
 
     return (
-        <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5 font-dash" dir="rtl">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">

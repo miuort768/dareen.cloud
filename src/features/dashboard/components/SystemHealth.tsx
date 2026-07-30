@@ -1,4 +1,6 @@
-import { Activity, Users, BookCheck, CreditCard, Wifi } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CheckCircle2, AlertTriangle, XCircle, RefreshCw, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { DashboardStats } from '../types';
 
@@ -7,67 +9,121 @@ interface SystemHealthProps {
 }
 
 export const SystemHealth = ({ stats }: SystemHealthProps) => {
-    const attendanceStatus = stats.attendanceRate >= 80 ? 'good' : stats.attendanceRate >= 50 ? 'warning' : 'error';
-    const invoiceStatus = stats.pendingInvoices === 0 ? 'good' : stats.pendingInvoices <= 5 ? 'warning' : 'error';
-    const balanceStatus = stats.lowBalanceCount === 0 ? 'good' : stats.lowBalanceCount <= 3 ? 'warning' : 'error';
+    const [lastChecked, setLastChecked] = useState(new Date());
+    useEffect(() => {
+        const timer = setInterval(() => setLastChecked(new Date()), 60000);
+        return () => clearInterval(timer);
+    }, []);
 
-    const pills = [
-        { icon: Activity, label: 'النظام يعمل', value: null, status: 'good' as const },
-        { icon: Users, label: 'اشتراكات', value: `${stats.studentsCount}`, status: null },
-        { icon: CreditCard, label: 'فواتير', value: `${stats.paidInvoices} مدفوعة`, status: invoiceStatus },
-        { icon: BookCheck, label: 'حضور', value: `${stats.attendanceRate}%`, status: attendanceStatus },
-    ];
+    const issues: { label: string; severity: 'error' | 'warning' }[] = [];
+    if (stats.lowBalanceCount > 5) issues.push({ label: `${stats.lowBalanceCount} طالب رصيد منخفض`, severity: 'error' });
+    else if (stats.lowBalanceCount > 0) issues.push({ label: `${stats.lowBalanceCount} طالب رصيد منخفض`, severity: 'warning' });
+    if (stats.pendingInvoices > 10) issues.push({ label: `${stats.pendingInvoices} فاتورة معلقة`, severity: 'error' });
+    else if (stats.pendingInvoices > 0) issues.push({ label: `${stats.pendingInvoices} فاتورة معلقة`, severity: 'warning' });
+    if (stats.attendanceRate < 50) issues.push({ label: `نسبة حضور ${stats.attendanceRate}%`, severity: 'error' });
+    else if (stats.attendanceRate < 75) issues.push({ label: `نسبة حضور ${stats.attendanceRate}%`, severity: 'warning' });
 
-    const statusDot = (s: string | null) => {
-        if (s === 'good') return 'bg-success';
-        if (s === 'warning') return 'bg-warning';
-        if (s === 'error') return 'bg-error';
-        return 'bg-primary';
-    };
+    const hasErrors = issues.some(i => i.severity === 'error');
+    const hasWarnings = issues.some(i => i.severity === 'warning');
+    const allGood = issues.length === 0;
 
-    const statusBg = (s: string | null) => {
-        if (s === 'good') return 'bg-success-soft border-success/20';
-        if (s === 'warning') return 'bg-warning-soft border-warning/20';
-        if (s === 'error') return 'bg-error-soft border-error/20';
-        return 'bg-surface border-border';
-    };
-
-    const statusText = (s: string | null) => {
-        if (s === 'good') return 'text-success';
-        if (s === 'warning') return 'text-warning';
-        if (s === 'error') return 'text-error';
-        return 'text-main';
+    const timeAgo = () => {
+        const seconds = Math.floor((Date.now() - lastChecked.getTime()) / 1000);
+        if (seconds < 60) return 'قبل لحظات';
+        if (seconds < 120) return 'قبل دقيقة';
+        return `قبل ${Math.floor(seconds / 60)} دقائق`;
     };
 
     return (
-        <div className="rounded-2xl bg-card border border-border p-5" dir="rtl">
-            <div className="flex items-center gap-2 mb-4">
-                <div className="w-5 h-5 rounded-lg bg-success-soft flex items-center justify-center">
-                    <Activity size={11} className="text-success" />
+        <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5"
+            dir="rtl"
+        >
+            <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                    <div className={cn(
+                        "w-9 h-9 rounded-xl flex items-center justify-center",
+                        allGood ? "bg-success-soft" : hasErrors ? "bg-error-soft" : "bg-warning-soft"
+                    )}>
+                        {allGood ? (
+                            <CheckCircle2 size={16} className="text-success" />
+                        ) : hasErrors ? (
+                            <XCircle size={16} className="text-error" />
+                        ) : (
+                            <AlertTriangle size={16} className="text-warning" />
+                        )}
+                    </div>
+                    <div>
+                        <h3 className="text-sm font-bold text-main">حالة النظام</h3>
+                        <p className={cn(
+                            "text-[10px] font-medium",
+                            allGood ? "text-success" : hasErrors ? "text-error" : "text-warning"
+                        )}>
+                            {allGood ? 'كل الأنظمة تعمل' : `${issues.length} مشكلة`}
+                        </p>
+                    </div>
                 </div>
-                <h3 className="text-xs font-bold text-main">حالة النظام</h3>
+                <div className="flex items-center gap-1.5 text-[10px] text-muted">
+                    <RefreshCw size={10} />
+                    <span>{timeAgo()}</span>
+                </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-                {pills.map((p) => {
-                    const Icon = p.icon;
-                    return (
-                        <span key={p.label} className={cn("inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border", statusBg(p.status))}>
-                            {p.status ? <span className={cn("w-2 h-2 rounded-full", statusDot(p.status))} /> : <Icon size={12} className="text-primary" />}
-                            <span className={cn("text-[10px] font-bold", statusText(p.status))}>
-                                {p.label}{p.value ? `: ${p.value}` : ''}
-                            </span>
-                        </span>
-                    );
-                })}
-            </div>
-            <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-border/50">
-                <Wifi size={10} className="text-success" />
-                <span className="text-[9px] font-bold text-success">اتصال مستقر</span>
-                <span className="text-[9px] text-muted mx-1">·</span>
-                <span className="text-[9px] font-bold text-muted">
-                    {(stats.attendanceRate + stats.paidInvoices + stats.studentsCount) || '—'}
-                </span>
-            </div>
-        </div>
+
+            <AnimatePresence mode="wait">
+                {allGood ? (
+                    <motion.div
+                        key="all-good"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex flex-col items-center py-4"
+                    >
+                        <div className="w-16 h-16 rounded-full bg-success-soft flex items-center justify-center mb-3">
+                            <CheckCircle2 size={32} className="text-success" />
+                        </div>
+                        <p className="text-sm font-bold text-main">كل الأنظمة تعمل</p>
+                        <p className="text-[11px] text-muted mt-1">لا توجد مشاكل في النظام</p>
+                        <div className="flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-lg bg-surface text-muted text-[10px] font-medium">
+                            <Activity size={10} className="text-success" />
+                            آخر فحص: {timeAgo()}
+                        </div>
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        key="issues"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="space-y-2"
+                    >
+                        {issues.map((issue, i) => (
+                            <div
+                                key={i}
+                                className={cn(
+                                    "flex items-center gap-3 p-3 rounded-xl border",
+                                    issue.severity === 'error' ? "bg-error/10 border-error/20" : "bg-warning/10 border-warning/20"
+                                )}
+                            >
+                                <div className={cn(
+                                    "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
+                                    issue.severity === 'error' ? "bg-error/15 text-error" : "bg-warning/15 text-warning"
+                                )}>
+                                    {issue.severity === 'error' ? <XCircle size={14} /> : <AlertTriangle size={14} />}
+                                </div>
+                                <p className="text-xs font-bold text-main">{issue.label}</p>
+                                <span className={cn(
+                                    "me-auto text-[10px] font-bold px-2 py-0.5 rounded-md",
+                                    issue.severity === 'error' ? "bg-error-soft text-error" : "bg-warning-soft text-warning"
+                                )}>
+                                    {issue.severity === 'error' ? 'حرج' : 'تحذير'}
+                                </span>
+                            </div>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
     );
 };

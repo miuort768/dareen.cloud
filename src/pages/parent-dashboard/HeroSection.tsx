@@ -34,7 +34,7 @@ export const HeroSection = ({ name, children, attendanceRate, academicProgress }
     const offset = circumference - (attendanceRate / 100) * circumference;
 
     return (
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-deep to-primary-soft p-6 md:p-8">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary-light dark:via-primary-deep dark:to-primary-soft p-6 md:p-8">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12)_0%,transparent_70%)]" />
             <div className="absolute -top-10 -end-10 w-40 h-40 rounded-full bg-white/5 blur-3xl" />
             <div className="absolute -bottom-10 -start-10 w-40 h-40 rounded-full bg-white/5 blur-3xl" />

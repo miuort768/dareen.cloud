@@ -82,6 +82,7 @@ module.exports = {
         'on-error': 'var(--text-on-error)',
         'on-info': 'var(--text-on-info)',
         'on-accent': 'var(--text-on-accent)',
+        'primary-deep': 'var(--bg-primary-deep)',
         'primary-hover': 'var(--bg-primary-hover)',
         'primary-active': 'var(--bg-primary-active)',
         'primary-soft': 'var(--bg-primary-soft)',

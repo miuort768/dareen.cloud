@@ -41,6 +41,7 @@
   --bg-hover: #f1f5f9;
 
   --bg-primary: #6366f1;
+  --bg-primary-deep: #1e1b4b;
   --bg-primary-hover: #4f46e5;
   --bg-primary-active: #4338ca;
   --bg-primary-soft: #eef2ff;
@@ -151,6 +152,7 @@
   --bg-hover: #334155;
 
   --bg-primary: #a5b4fc;
+  --bg-primary-deep: #0f172a;
   --bg-primary-hover: #818cf8;
   --bg-primary-active: #c7d2fe;
   --bg-primary-soft: #1e1b4b;

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Search, Plus, AlertTriangle, Clock, X, CheckCircle2, BookOpen } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Search, Plus, AlertTriangle, X, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Users, UserPlus, Phone, MessageSquare, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -9,6 +9,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ErrorBanner } from '../shared/components/ui/ErrorState';
 import { TrialSessionCard } from './TrialSessionCard';
 import { TrialSessionFormModal } from './TrialSessionFormModal';
+import { TrialSessionDrawer } from './TrialSessionDrawer';
 import { useUIStore } from '../store/uiStore';
 import { Skeleton } from '../shared/components/ui/Skeleton';
 
@@ -26,37 +27,55 @@ export interface TrialSession {
   created_at: string;
 }
 
+interface StatsData {
+  total: number;
+  completed: number;
+  pending: number;
+  cancelled: number;
+  converted?: number;
+}
+
+const Counter = ({ value, duration = 800 }: { value: number; duration?: number }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<number | null>(null);
+  useEffect(() => {
+    if (ref.current) cancelAnimationFrame(ref.current);
+    const start = performance.now();
+    const from = count;
+    const animate = (now: number) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(from + (value - from) * eased));
+      if (progress < 1) ref.current = requestAnimationFrame(animate);
+    };
+    ref.current = requestAnimationFrame(animate);
+    return () => { if (ref.current) cancelAnimationFrame(ref.current); };
+  }, [value, duration]);
+  return <>{count}</>;
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.05 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } }
+};
+
 const TrialSessionsSkeleton = () => (
   <div className="bg-background min-h-screen pb-24" dir="rtl">
     <div className="px-3 space-y-3 max-w-page mx-auto">
-      <div className="bg-card border border-border rounded-2xl p-3 md:p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Skeleton className="w-9 h-9 rounded-xl" />
-            <div><Skeleton className="h-4 w-28 mb-1.5" /><Skeleton className="h-3 w-12" /></div>
-          </div>
-          <Skeleton className="h-8 w-24 rounded-lg" />
-        </div>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+      <Skeleton className="h-[140px] rounded-2xl" />
+      <div className="grid grid-cols-4 gap-2">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="flex items-center gap-2.5 p-3 rounded-2xl bg-card border border-border">
-            <Skeleton className="w-8 h-8 rounded-xl shrink-0" />
-            <div><Skeleton className="h-3 w-14 mb-1" /><Skeleton className="h-4 w-8" /></div>
-          </div>
+          <Skeleton key={i} className="h-16 rounded-2xl" />
         ))}
       </div>
-      <div className="bg-card border border-border rounded-2xl p-2">
-        <Skeleton className="h-10 w-full rounded-xl" />
-      </div>
+      <Skeleton className="h-10 rounded-2xl" />
       {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="bg-card border border-border rounded-2xl p-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5"><Skeleton className="w-8 h-8 rounded-xl" /><div><Skeleton className="h-4 w-24 mb-1" /><Skeleton className="h-3 w-16" /></div></div>
-            <div className="flex gap-1"><Skeleton className="w-7 h-7 rounded-xl" /><Skeleton className="w-7 h-7 rounded-xl" /></div>
-          </div>
-          <div className="grid grid-cols-3 gap-2"><Skeleton className="h-3.5 w-24" /><Skeleton className="h-3.5 w-20" /><Skeleton className="h-3.5 w-16" /></div>
-        </div>
+        <Skeleton key={i} className="h-[120px] rounded-2xl" />
       ))}
     </div>
   </div>
@@ -66,9 +85,11 @@ export const TrialSessions = () => {
   useEffect(() => { document.title = 'الجلسات التجريبية | دارين السابعة للتعليم والتدريب'; }, []);
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('');
+  const [filterSubject, setFilterSubject] = useState<string>('');
   const [showModal, setShowModal] = useState(false);
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [drawerSession, setDrawerSession] = useState<TrialSession | null>(null);
   const [form, setForm] = useState({ studentName: '', parentPhone: '', subject: '', teacherId: '', teacherName: '', date: '', time: '', notes: '' });
   const queryClient = useQueryClient();
   const showNotification = useUIStore((s) => s.showNotification);
@@ -83,9 +104,9 @@ export const TrialSessions = () => {
     queryFn: () => api.get<Record<string, unknown>[]>('/teachers')
   });
 
-  const { data: stats } = useQuery({
+  const { data: stats } = useQuery<StatsData>({
     queryKey: ['trial-sessions-stats'],
-    queryFn: () => api.get<{ total: number; completed: number; pending: number; cancelled: number }>('/trial-sessions/stats')
+    queryFn: () => api.get<StatsData>('/trial-sessions/stats')
   });
 
   const addMutation = useMutation({
@@ -124,11 +145,30 @@ export const TrialSessions = () => {
     setEditingId(t.id); setShowModal(true);
   };
 
+  const handleCall = (phone: string) => {
+    window.open(`tel:${phone}`);
+  };
+
+  const handleWhatsApp = (phone: string) => {
+    const cleaned = phone.replace(/[^0-9]/g, '');
+    window.open(`https://wa.me/${cleaned}`, '_blank');
+  };
+
+  const subjects = [...new Set(trials.map((t: TrialSession) => t.subject).filter(Boolean))] as string[];
+
   const filtered = trials.filter((t: TrialSession) => {
     const matchSearch = !search || t.studentName.toLowerCase().includes(search.toLowerCase()) || t.parentPhone.includes(search);
     const matchStatus = !filterStatus || t.status === filterStatus;
-    return matchSearch && matchStatus;
+    const matchSubject = !filterSubject || t.subject === filterSubject;
+    return matchSearch && matchStatus && matchSubject;
   });
+
+  const statsList = stats ? [
+    { title: 'الإجمالي', value: stats.total, icon: BookOpen, color: 'primary', trend: null },
+    { title: 'تمت', value: stats.completed, icon: CheckCircle2, color: 'success', trend: stats.total > 0 ? `${Math.round((stats.completed / stats.total) * 100)}%` : '0%' },
+    { title: 'قيد الانتظار', value: stats.pending, icon: Clock, color: 'warning', trend: null },
+    { title: 'معدل التحويل', value: stats.total > 0 ? `${Math.round(((stats.completed + (stats.converted || 0)) / stats.total) * 100)}%` : '0%', icon: TrendingUp, color: 'info', trend: `${stats.total - stats.cancelled} ناجح` },
+  ] : [];
 
   if (isLoading) return <TrialSessionsSkeleton />;
 
@@ -144,93 +184,184 @@ export const TrialSessions = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
       className="bg-background min-h-screen pb-24"
       dir="rtl"
     >
-      <div className="px-3 space-y-3 max-w-page mx-auto">
-        {/* Header */}
-        <div className="bg-card border border-border rounded-2xl p-3 md:p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center ring-1 ring-primary/20">
-                <BookOpen size={17} className="text-primary" />
+      <div className="px-3 space-y-3 max-w-page mx-auto relative z-10">
+
+        {/* ════════════════════════════════════════
+            Hero
+           ════════════════════════════════════════ */}
+        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary-light dark:via-primary-deep dark:to-primary-soft p-5 md:p-6">
+          <div className="absolute inset-0 opacity-[0.06]">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="ts-hero-grid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+                  <circle cx="2" cy="2" r="1" fill="white" />
+                  <circle cx="16" cy="16" r="0.8" fill="white" opacity="0.4" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#ts-hero-grid)" />
+            </svg>
+          </div>
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center ring-2 ring-white/30">
+                <GraduationCap size={18} className="text-white" />
               </div>
               <div>
-                <h1 className="text-sm font-bold text-main leading-tight">الحصص التجريبية</h1>
-                <p className="text-[10px] text-muted">{filtered.length} حصة</p>
+                <h1 className="text-base md:text-lg font-bold text-white">الحصص التجريبية</h1>
+                <p className="text-[11px] text-white/70">{stats?.total || 0} حصة مسجلة</p>
               </div>
             </div>
-            <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="flex items-center gap-1 h-8 px-2.5 bg-primary text-on-primary text-[10px] font-bold rounded-lg active:scale-95 transition-transform">
-              <Plus size={11} /> حصة جديدة
-            </button>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                { icon: BookOpen, value: stats?.total || 0, label: 'إجمالي الحصص' },
+                { icon: CheckCircle2, value: stats?.completed || 0, label: 'ناجحة' },
+                { icon: TrendingUp, value: stats?.total ? `${Math.round(((stats.completed + (stats.converted || 0)) / stats.total) * 100)}%` : '0%', label: 'معدل التحويل' },
+              ].map((item, i) => (
+                <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <item.icon size={12} className="text-white/70" />
+                    <span className="text-sm font-bold text-white tabular-nums">
+                      {typeof item.value === 'number' ? <Counter value={item.value} /> : item.value}
+                    </span>
+                  </div>
+                  <p className="text-[9px] text-white/60">{item.label}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          {[
-            { title: 'الإجمالي', value: stats?.total || 0, icon: BookOpen, iconBg: 'bg-primary-soft', iconColor: 'text-primary', ring: 'ring-primary/20' },
-            { title: 'تم', value: stats?.completed || 0, icon: CheckCircle2, iconBg: 'bg-success-soft', iconColor: 'text-success', ring: 'ring-success/20' },
-            { title: 'قيد الانتظار', value: stats?.pending || 0, icon: Clock, iconBg: 'bg-warning-soft', iconColor: 'text-warning', ring: 'ring-warning/20' },
-            { title: 'ملغي', value: stats?.cancelled || 0, icon: X, iconBg: 'bg-error-soft', iconColor: 'text-error', ring: 'ring-error/20' },
-          ].map(s => (
-            <div key={s.title} className="flex items-center gap-2.5 p-3 rounded-2xl bg-card border border-border font-dash">
-              <div className={cn('w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ring-1', s.iconBg, s.ring)}>
-                <s.icon size={14} className={s.iconColor} />
-              </div>
-              <div className="min-w-0">
-                <p className="text-[10px] text-muted leading-none">{s.title}</p>
-                <p className="text-sm font-bold text-main tabular-nums mt-0.5">{s.value}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* ════════════════════════════════════════
+            Stats
+           ════════════════════════════════════════ */}
+        {statsList.length > 0 && (
+          <motion.div variants={itemVariants} className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {statsList.map((s, i) => {
+              const colorMap: Record<string, { bg: string; text: string; ring: string }> = {
+                primary: { bg: 'bg-primary-soft', text: 'text-primary', ring: 'ring-primary/20' },
+                success: { bg: 'bg-success-soft', text: 'text-success', ring: 'ring-success/20' },
+                warning: { bg: 'bg-warning-soft', text: 'text-warning', ring: 'ring-warning/20' },
+                info: { bg: 'bg-info-soft', text: 'text-info', ring: 'ring-info/20' },
+              };
+              const c = colorMap[s.color] || colorMap.primary;
+              const Icon = s.icon;
+              return (
+                <motion.div
+                  key={s.title}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 + i * 0.05, duration: 0.35 }}
+                  className="flex items-center gap-3 p-3 rounded-2xl bg-card border border-border shadow-elevation-1 hover:shadow-elevation-2 transition-all duration-300"
+                >
+                  <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ring-1', c.bg, c.ring)}>
+                    <Icon size={15} className={c.text} />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <p className="text-base font-bold text-main tabular-nums">
+                        {typeof s.value === 'number' ? <Counter value={s.value} /> : s.value}
+                      </p>
+                      {s.trend && (
+                        <span className="text-[9px] font-bold text-success flex items-center gap-0.5">
+                          <TrendingUp size={8} />
+                          {s.trend}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[10px] text-muted leading-none">{s.title}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        )}
 
-        {/* Search & Filters */}
-        <div className="bg-card border border-border rounded-2xl p-2">
+        {/* ════════════════════════════════════════
+            Search & Filters
+           ════════════════════════════════════════ */}
+        <motion.div variants={itemVariants} className="bg-card border border-border rounded-2xl p-2 shadow-elevation-1">
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
               <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
               <input value={search} onChange={e => setSearch(e.target.value)} placeholder="بحث باسم الطالب أو رقم الهاتف..." aria-label="بحث عن حصة" className="w-full ps-8 pe-3 py-2.5 bg-surface border border-border rounded-xl text-xs font-bold text-main placeholder:text-muted focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" />
             </div>
-            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} aria-label="تصفية حسب الحالة" className="px-3 py-2.5 bg-surface border border-border rounded-xl text-xs font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
-              <option value="">كل الحالات</option>
-              <option value="pending">قيد الانتظار</option>
-              <option value="completed">تم</option>
-              <option value="cancelled">ملغي</option>
-              <option value="converted">تم التحويل</option>
-            </select>
-          </div>
-        </div>
-
-        {/* List */}
-        {filtered.length === 0 ? (
-          <div className="text-center py-12 bg-card border border-border rounded-2xl">
-            <div className="w-12 h-12 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-3 ring-1 ring-primary/20">
-              <BookOpen size={20} className="text-primary" />
+            <div className="flex gap-2">
+              <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} aria-label="تصفية حسب الحالة" className="px-3 py-2.5 bg-surface border border-border rounded-xl text-xs font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none cursor-pointer">
+                <option value="">كل الحالات</option>
+                <option value="pending">قيد الانتظار</option>
+                <option value="completed">تمت</option>
+                <option value="cancelled">ملغية</option>
+                <option value="converted">تم التحويل</option>
+              </select>
+              {subjects.length > 0 && (
+                <select value={filterSubject} onChange={e => setFilterSubject(e.target.value)} aria-label="تصفية حسب المادة" className="px-3 py-2.5 bg-surface border border-border rounded-xl text-xs font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none cursor-pointer">
+                  <option value="">كل المواد</option>
+                  {subjects.map(subj => (
+                    <option key={subj} value={subj}>{subj}</option>
+                  ))}
+                </select>
+              )}
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد حصص تجريبية</p>
-            <p className="text-[10px] text-muted mt-1">ستظهر هنا الحصص التجريبية المسجلة</p>
           </div>
+        </motion.div>
+
+        {/* ════════════════════════════════════════
+            Add Button
+           ════════════════════════════════════════ */}
+        <motion.div variants={itemVariants}>
+          <button onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }} className="w-full flex items-center justify-center gap-2 py-3 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold rounded-2xl transition-all active:scale-[0.98] shadow-elevation-1">
+            <Plus size={14} /> حصة تجريبية جديدة
+          </button>
+        </motion.div>
+
+        {/* ════════════════════════════════════════
+            Cards List
+           ════════════════════════════════════════ */}
+        {filtered.length === 0 ? (
+          <motion.div variants={itemVariants} className="text-center py-14 bg-card border border-border rounded-2xl shadow-elevation-1">
+            <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-4 ring-1 ring-primary/20">
+              <Users size={28} className="text-primary/40" />
+            </div>
+            <p className="text-sm font-bold text-muted mb-1">
+              {search || filterStatus || filterSubject ? 'لا توجد نتائج للبحث' : 'لا توجد حصص تجريبية'}
+            </p>
+            <p className="text-[11px] text-muted/60 mb-4">
+              {search || filterStatus || filterSubject ? 'حاول تغيير معايير البحث' : 'ابدأ بإضافة أول حصة تجريبية'}
+            </p>
+            {!search && !filterStatus && !filterSubject && (
+              <button onClick={() => { resetForm(); setShowModal(true); }} className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold rounded-xl transition-all active:scale-[0.98]">
+                <Plus size={14} /> إضافة حصة
+              </button>
+            )}
+          </motion.div>
         ) : (
-          <div className="space-y-3">
+          <motion.div variants={containerVariants} className="space-y-3">
             {filtered.map((t: TrialSession) => (
-              <TrialSessionCard
-                key={t.id}
-                session={t}
-                onConvert={(id) => convertMutation.mutate(id)}
-                onEdit={openEdit}
-                onDelete={(id) => setConfirmId(id)}
-                isConverting={convertMutation.isPending}
-              />
+              <motion.div key={t.id} variants={itemVariants}>
+                <TrialSessionCard
+                  session={t}
+                  onConvert={(id) => convertMutation.mutate(id)}
+                  onEdit={openEdit}
+                  onDelete={(id) => setConfirmId(id)}
+                  onCall={handleCall}
+                  onWhatsApp={handleWhatsApp}
+                  onCardClick={() => setDrawerSession(t)}
+                  isConverting={convertMutation.isPending}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
 
-        {/* Add/Edit Modal */}
+        {/* ════════════════════════════════════════
+            Add/Edit Modal
+           ════════════════════════════════════════ */}
         <AnimatePresence>
         {showModal && (
           <TrialSessionFormModal
@@ -245,7 +376,22 @@ export const TrialSessions = () => {
         )}
         </AnimatePresence>
 
-        {/* Confirm Delete */}
+        {/* ════════════════════════════════════════
+            Drawer
+           ════════════════════════════════════════ */}
+        <TrialSessionDrawer
+          session={drawerSession}
+          onClose={() => setDrawerSession(null)}
+          onCall={handleCall}
+          onWhatsApp={handleWhatsApp}
+          onConvert={(id) => { convertMutation.mutate(id); setDrawerSession(null); }}
+          onEdit={(s) => { setDrawerSession(null); openEdit(s); }}
+          isConverting={convertMutation.isPending}
+        />
+
+        {/* ════════════════════════════════════════
+            Confirm Delete
+           ════════════════════════════════════════ */}
         <AnimatePresence>
         {confirmId && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">

@@ -4,6 +4,23 @@ import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
+const subjectColors: Record<string, { dot: string; bg: string; text: string }> = {
+    رياضيات: { dot: 'bg-purple-500', bg: 'bg-purple-500/10', text: 'text-purple-600 dark:text-purple-400' },
+    عربي: { dot: 'bg-emerald-500', bg: 'bg-emerald-500/10', text: 'text-emerald-600 dark:text-emerald-400' },
+    علوم: { dot: 'bg-blue-500', bg: 'bg-blue-500/10', text: 'text-blue-600 dark:text-blue-400' },
+    إنجليزي: { dot: 'bg-orange-500', bg: 'bg-orange-500/10', text: 'text-orange-600 dark:text-orange-400' },
+    فيزياء: { dot: 'bg-cyan-500', bg: 'bg-cyan-500/10', text: 'text-cyan-600 dark:text-cyan-400' },
+    كيمياء: { dot: 'bg-rose-500', bg: 'bg-rose-500/10', text: 'text-rose-600 dark:text-rose-400' },
+    تاريخ: { dot: 'bg-amber-500', bg: 'bg-amber-500/10', text: 'text-amber-600 dark:text-amber-400' },
+    جغرافيا: { dot: 'bg-teal-500', bg: 'bg-teal-500/10', text: 'text-teal-600 dark:text-teal-400' },
+};
+
+const getSubjectColor = (subject?: string) => {
+    if (!subject) return null;
+    const key = Object.keys(subjectColors).find(k => subject.includes(k) || k.includes(subject));
+    return key ? subjectColors[key] : null;
+};
+
 interface TodaysFocusProps {
     todaySessions: { id: string; studentName: string; time: string; subject?: string; status?: string }[];
     tasks: { id: string; title: string; dueDate?: string; status?: string; priority?: string }[];
@@ -14,15 +31,15 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
     const hasAnyData = todaySessions.length > 0 || tasks.length > 0 || lowBalanceCount > 0;
 
     return (
-        <div className="rounded-2xl bg-card border border-border p-5" dir="rtl">
+        <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5" dir="rtl">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-xl bg-warning-soft flex items-center justify-center">
                         <CalendarCheck size={16} className="text-warning" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-main">تركيز اليوم</h3>
-                        <p className="text-[10px] text-muted">ما يجب متابعته</p>
+                        <h3 className="text-sm font-bold text-main">الجلسات القادمة</h3>
+                        <p className="text-[10px] text-muted">جدول اليوم</p>
                     </div>
                 </div>
                 {hasAnyData && (
@@ -40,18 +57,33 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                             <span className="text-[11px] font-bold text-info">{todaySessions.length} حصص اليوم</span>
                         </div>
                         <div className="space-y-1.5">
-                            {todaySessions.slice(0, 4).map((s) => (
-                                <div key={s.id} className="flex items-center justify-between">
-                                    <div className="flex items-center gap-2 min-w-0">
-                                        <span className="text-xs font-bold text-main truncate">{s.studentName}</span>
-                                        {s.subject && <span className="text-[10px] text-muted">— {s.subject}</span>}
+                            {todaySessions.slice(0, 4).map((s) => {
+                                const subjectColor = getSubjectColor(s.subject);
+                                return (
+                                    <div key={s.id} className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2 min-w-0">
+                                            {subjectColor ? (
+                                                <span className={cn("w-2 h-2 rounded-full shrink-0", subjectColor.dot)} />
+                                            ) : (
+                                                <CalendarCheck size={12} className="text-muted shrink-0" />
+                                            )}
+                                            <span className="text-xs font-bold text-main truncate">{s.studentName}</span>
+                                            {s.subject && (
+                                                <span className={cn(
+                                                    "text-[10px] font-medium px-1.5 py-0.5 rounded-md",
+                                                    subjectColor ? `${subjectColor.bg} ${subjectColor.text}` : "text-muted bg-surface"
+                                                )}>
+                                                    {s.subject}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center gap-1.5 shrink-0">
+                                            <Clock size={10} className="text-muted" />
+                                            <span className="text-[10px] font-bold text-muted tabular-nums">{s.time}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-1.5 shrink-0">
-                                        <Clock size={10} className="text-muted" />
-                                        <span className="text-[10px] font-bold text-muted tabular-nums">{s.time}</span>
-                                    </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 )}

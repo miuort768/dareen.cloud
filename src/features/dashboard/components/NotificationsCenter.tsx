@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import { Bell, Zap, ArrowLeft, AlertTriangle, CheckCircle2, Phone, Info } from 'lucide-react';
+import { Bell, Zap, AlertTriangle, CheckCircle2, Phone, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '../../../lib/utils';
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders';
@@ -132,7 +132,7 @@ export const NotificationsCenter = ({
     const criticalCount = smartAlerts.filter(a => a.priority === 'high').length;
 
     return (
-        <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5 font-dash" dir="rtl">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -168,86 +168,101 @@ export const NotificationsCenter = ({
                 </div>
             </div>
 
-            {/* Smart Alerts */}
+            {/* Smart Alerts — Timeline */}
             {activeTab === 'smart' && (
-                <div className="space-y-2">
+                <div className="space-y-1">
                     {criticalCount > 0 && (
-                        <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-error-soft text-error border-error/20 mb-2">
+                        <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-error-soft text-error border-error/20 mb-3">
                             {criticalCount} تنبيه حرج
                         </Badge>
                     )}
-                    {smartAlerts.map((alert) => (
-                        <div
-                            key={alert.id}
-                            className={cn(
-                                "p-3 flex items-center justify-between rounded-xl border",
-                                alert.type === 'critical' ? "bg-error/10 border-error/20" :
-                                "bg-warning/10 border-warning/20"
-                            )}
-                        >
-                            <div className="flex items-center gap-2.5 min-w-0">
-                                <div className={cn(
-                                    "w-7 h-7 rounded-lg flex items-center justify-center shrink-0",
-                                    alert.type === 'critical' ? "bg-error/15 text-error" :
-                                    "bg-warning/15 text-warning"
-                                )}>
-                                    {alert.type === 'critical' ? <AlertTriangle size={12} /> : <CheckCircle2 size={12} />}
+                    {smartAlerts.length > 0 ? (
+                        <div className="relative">
+                            <div className="absolute start-[15px] top-2 bottom-2 w-px bg-border/30" />
+                            {smartAlerts.map((alert, idx) => (
+                                <div key={alert.id} className="flex gap-3 relative pb-3">
+                                    <div className={cn(
+                                        "w-[30px] h-[30px] rounded-lg flex items-center justify-center shrink-0 ring-2 ring-card z-10",
+                                        alert.type === 'critical' ? "bg-error/15 text-error" : "bg-warning/15 text-warning"
+                                    )}>
+                                        {alert.type === 'critical' ? <AlertTriangle size={12} /> : <CheckCircle2 size={12} />}
+                                    </div>
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border bg-card border-border/50 hover:bg-surface transition-colors cursor-pointer"
+                                        onClick={() => typeof alert.action === 'function' && alert.action()}
+                                        role="button"
+                                        tabIndex={0}
+                                        onKeyDown={(e) => { if (e.key === 'Enter' && typeof alert.action === 'function') alert.action(); }}
+                                    >
+                                        <div className="flex items-center justify-between gap-2">
+                                            <h3 className="font-bold text-[11px] text-main">{alert.title}</h3>
+                                            <span className="text-[9px] text-muted shrink-0">{idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}</span>
+                                        </div>
+                                        <p className="text-[10px] text-muted mt-0.5 line-clamp-1">{alert.desc}</p>
+                                    </div>
                                 </div>
-                                <div className="min-w-0">
-                                    <h3 className="font-bold text-[11px] text-main">{alert.title}</h3>
-                                    <p className="text-[10px] text-muted mt-0.5">{alert.desc}</p>
-                                </div>
-                            </div>
-                            {typeof alert.action === 'function' && (
-                                <Button variant="ghost" size="icon" onClick={alert.action} className="h-7 w-7 rounded-lg text-primary shrink-0" aria-label="تنفيذ إجراء">
-                                    <ArrowLeft size={12} />
-                                </Button>
-                            )}
+                            ))}
                         </div>
-                    ))}
-                    {smartAlerts.length === 0 && (
-                        <div className="text-center py-8">
-                            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-success-soft flex items-center justify-center">
-                                <CheckCircle2 size={24} className="text-success/40" />
+                    ) : (
+                        <div className="relative flex gap-3 py-2">
+                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card">
+                                <CheckCircle2 size={14} className="text-success" />
                             </div>
-                            <p className="text-sm font-bold text-muted">لا توجد تنبيهات</p>
-                            <p className="text-[11px] text-muted/60 mt-1">كل شيء يعمل بشكل ممتاز ✅</p>
+                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-success/20 bg-success/[0.03]">
+                                <div className="flex items-center justify-between gap-2">
+                                    <h3 className="font-bold text-[11px] text-success">كل الأنظمة تعمل</h3>
+                                    <span className="text-[9px] text-muted shrink-0">الآن</span>
+                                </div>
+                                <p className="text-[10px] text-muted mt-0.5">لا توجد مشاكل في النظام</p>
+                            </div>
                         </div>
                     )}
                 </div>
             )}
 
-            {/* Room Alerts */}
+            {/* Room Alerts — Timeline */}
             {activeTab === 'room' && (
-                <div className="space-y-2 max-h-[320px] overflow-y-auto custom-scrollbar">
-                    {roomAlerts.length > 0 ? roomAlerts.map((alert) => (
-                        <div key={alert.id} className="flex items-center justify-between p-3 rounded-xl bg-surface hover:bg-hover transition-colors">
-                            <div className="flex items-center gap-2.5 min-w-0">
-                                <div className="w-7 h-7 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
-                                    <alert.icon size={12} className="text-primary" />
+                <div className="space-y-1 max-h-[320px] overflow-y-auto custom-scrollbar">
+                    {roomAlerts.length > 0 ? (
+                        <div className="relative">
+                            <div className="absolute start-[15px] top-2 bottom-2 w-px bg-border/30" />
+                            {roomAlerts.map((alert, idx) => (
+                                <div key={alert.id} className="flex gap-3 relative pb-3">
+                                    <div className="w-[30px] h-[30px] rounded-lg bg-primary-soft flex items-center justify-center shrink-0 ring-2 ring-card z-10">
+                                        <alert.icon size={12} className="text-primary" />
+                                    </div>
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border border-border/50 bg-card hover:bg-surface transition-colors">
+                                        <div className="flex items-center justify-between gap-2 mb-1">
+                                            <h4 className="text-[11px] font-bold text-main truncate">{alert.title}</h4>
+                                            <span className="text-[9px] text-muted shrink-0">{idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}</span>
+                                        </div>
+                                        <p className="text-[10px] text-muted line-clamp-1">{alert.description}</p>
+                                        <div className="flex gap-1.5 mt-2">
+                                            {alert.actionLabel === 'واتساب' ? (
+                                                <Button onClick={alert.action} size="sm" className="h-6 px-2.5 rounded-lg text-[9px] font-bold bg-success text-on-success">
+                                                    واتساب
+                                                </Button>
+                                            ) : (
+                                                <Button onClick={alert.action} variant="outline" size="sm" className="h-6 px-2.5 rounded-lg text-[9px] font-bold">
+                                                    عرض
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="min-w-0">
-                                    <h4 className="text-[11px] font-bold text-main truncate">{alert.title}</h4>
-                                    <p className="text-[10px] text-muted truncate mt-0.5">{alert.description}</p>
-                                </div>
-                            </div>
-                            {alert.actionLabel === 'واتساب' ? (
-                                <Button onClick={alert.action} size="sm" className="h-7 px-2.5 rounded-lg text-[10px] font-bold bg-success text-on-success shrink-0">
-                                    واتساب
-                                </Button>
-                            ) : (
-                                <Button onClick={alert.action} variant="outline" size="sm" className="h-7 px-2.5 rounded-lg text-[10px] font-bold shrink-0">
-                                    عرض
-                                </Button>
-                            )}
+                            ))}
                         </div>
-                    )) : (
-                        <div className="text-center py-8">
-                            <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
-                                <Info size={16} className="text-success/50" />
+                    ) : (
+                        <div className="relative flex gap-3 py-2">
+                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card">
+                                <Info size={14} className="text-success/50" />
                             </div>
-                            <p className="text-xs font-bold text-muted">لا توجد تنبيهات</p>
-                            <p className="text-[10px] text-muted/60 mt-0.5">كافة الأنظمة تعمل بشكل طبيعي</p>
+                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-success/20 bg-success/[0.03]">
+                                <div className="flex items-center justify-between gap-2">
+                                    <h3 className="font-bold text-[11px] text-success">كل الأنظمة تعمل</h3>
+                                    <span className="text-[9px] text-muted shrink-0">الآن</span>
+                                </div>
+                                <p className="text-[10px] text-muted mt-0.5">كافة الأنظمة تعمل بشكل طبيعي</p>
+                            </div>
                         </div>
                     )}
                 </div>

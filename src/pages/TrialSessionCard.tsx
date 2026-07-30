@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, BookOpen, GraduationCap, Calendar, Clock, ArrowLeftRight, X, Trash } from 'lucide-react';
+import { Phone, MessageSquare, CheckCheck, Pencil, Trash2, BookOpen, Calendar, Clock, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { cn } from '../lib/utils';
 import type { TrialSession } from './TrialSessions';
 
@@ -8,89 +9,169 @@ interface TrialSessionCardProps {
     onConvert: (id: string) => void;
     onEdit: (session: TrialSession) => void;
     onDelete: (id: string) => void;
+    onCall?: (phone: string) => void;
+    onWhatsApp?: (phone: string) => void;
+    onCardClick?: () => void;
     isConverting: boolean;
 }
 
-const statusTextColor: Record<string, string> = {
-    pending: 'text-warning',
-    completed: 'text-success',
-    cancelled: 'text-error',
-    converted: 'text-info',
+const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string; border: string }> = {
+    pending: { label: 'بانتظار', dot: 'bg-amber-500', bg: 'bg-amber-500/10', text: 'text-amber-600 dark:text-amber-400', border: 'border-amber-500/20' },
+    completed: { label: 'تمت', dot: 'bg-emerald-500', bg: 'bg-emerald-500/10', text: 'text-emerald-600 dark:text-emerald-400', border: 'border-emerald-500/20' },
+    cancelled: { label: 'ملغية', dot: 'bg-rose-500', bg: 'bg-rose-500/10', text: 'text-rose-600 dark:text-rose-400', border: 'border-rose-500/20' },
+    converted: { label: 'تم التحويل', dot: 'bg-blue-500', bg: 'bg-blue-500/10', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-500/20' },
 };
 
-const statusBg: Record<string, string> = {
-    pending: 'bg-warning-soft',
-    completed: 'bg-success-soft',
-    cancelled: 'bg-error-soft',
-    converted: 'bg-info-soft',
+const avatarGradients = [
+    'from-violet-500 to-purple-600',
+    'from-emerald-500 to-teal-600',
+    'from-sky-500 to-blue-600',
+    'from-amber-500 to-orange-600',
+    'from-rose-500 to-pink-600',
+    'from-cyan-500 to-sky-600',
+];
+
+const subjectColors: Record<string, string> = {
+    رياضيات: 'text-purple-600 dark:text-purple-400',
+    عربي: 'text-emerald-600 dark:text-emerald-400',
+    علوم: 'text-blue-600 dark:text-blue-400',
+    إنجليزي: 'text-orange-600 dark:text-orange-400',
+    فيزياء: 'text-cyan-600 dark:text-cyan-400',
+    كيمياء: 'text-rose-600 dark:text-rose-400',
 };
 
-const statusLabels: Record<string, string> = {
-    pending: 'قيد الانتظار',
-    completed: 'تم',
-    cancelled: 'ملغي',
-    converted: 'تم التحويل'
+const getSubjectColor = (subject?: string) => {
+    if (!subject) return 'text-muted';
+    const key = Object.keys(subjectColors).find(k => subject.includes(k) || k.includes(subject));
+    return key ? subjectColors[key] : 'text-muted';
 };
 
-export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, isConverting }: TrialSessionCardProps) => (
-    <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-card border border-border rounded-2xl overflow-hidden font-dash"
-    >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-            <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-xs shrink-0 bg-primary-soft text-primary ring-1 ring-primary/20">
-                    {t.studentName?.charAt(0) || 'ط'}
+const getAvatarGradient = (name: string) => {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    return avatarGradients[Math.abs(hash) % avatarGradients.length];
+};
+
+const formatPhone = (phone: string) => {
+    if (!phone) return '';
+    if (phone.length > 8) return `${phone.slice(0, 4)}...${phone.slice(-3)}`;
+    return phone;
+};
+
+export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCall, onWhatsApp, onCardClick, isConverting }: TrialSessionCardProps) => {
+    const [showNotes, setShowNotes] = useState(false);
+    const cfg = statusConfig[t.status] || statusConfig.pending;
+    const gradient = getAvatarGradient(t.studentName);
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -2 }}
+            onClick={onCardClick}
+            className={cn("bg-card border border-border rounded-2xl overflow-hidden font-dash hover:shadow-elevation-2 transition-all duration-300 group", onCardClick && "cursor-pointer")}
+        >
+            {/* Clickable body — opens drawer */}
+            <div className="p-4 pb-3 cursor-pointer">
+                {/* Row 1: Avatar + Name + Status */}
+                <div className="flex items-center justify-between mb-2.5">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                        <div className={cn("w-9 h-9 rounded-xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-sm", gradient)}>
+                            <span className="text-sm font-bold text-white">{t.studentName?.charAt(0) || 'ط'}</span>
+                        </div>
+                        <div className="min-w-0">
+                            <h3 className="text-xs font-bold text-main leading-tight truncate">{t.studentName}</h3>
+                            <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-bold border mt-0.5", cfg.bg, cfg.text, cfg.border)}>
+                                <span className={cn("w-1.5 h-1.5 rounded-full", cfg.dot)} />
+                                {cfg.label}
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <h3 className="text-xs font-bold text-main leading-tight">{t.studentName}</h3>
-                    <span className={cn("text-[10px] font-bold px-1.5 py-0.5 rounded-full", statusBg[t.status], statusTextColor[t.status])}>{statusLabels[t.status]}</span>
+
+                {/* Row 2: Subject · Date · Time */}
+                <div className="flex items-center gap-2.5 text-[11px] text-muted mb-1.5">
+                    {t.subject && (
+                        <span className={cn("inline-flex items-center gap-1", getSubjectColor(t.subject))}>
+                            <BookOpen size={11} />{t.subject}
+                        </span>
+                    )}
+                    <span className="inline-flex items-center gap-1">
+                        <Calendar size={11} />{t.date}
+                    </span>
+                    {t.time && (
+                        <span className="inline-flex items-center gap-1">
+                            <Clock size={11} />{t.time}
+                        </span>
+                    )}
                 </div>
-            </div>
-            <div className="flex items-center gap-1">
-                {t.status === 'pending' && (
-                    <button onClick={() => onConvert(t.id)} disabled={isConverting} className="w-8 h-8 flex items-center justify-center bg-info-soft text-info hover:bg-info/10 transition-all rounded-xl disabled:opacity-40 disabled:cursor-not-allowed" title="تحويل إلى طالب" aria-label="تحويل إلى طالب"><ArrowLeftRight size={14} /></button>
-                )}
-                <button onClick={() => onEdit(t)} className="w-8 h-8 flex items-center justify-center bg-surface text-muted hover:bg-hover transition-all rounded-xl" aria-label="تعديل"><X size={14} className="rotate-45" /></button>
-                <button onClick={() => onDelete(t.id)} className="w-8 h-8 flex items-center justify-center bg-error-soft text-error hover:bg-error/10 transition-all rounded-xl" aria-label="حذف"><Trash size={14} /></button>
-            </div>
-        </div>
-        <div className="px-4 py-3">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
-                <div className="flex items-center gap-1.5 text-xs text-muted">
+
+                {/* Row 3: Phone */}
+                <div className="flex items-center gap-1.5 text-[11px] text-muted mb-1.5">
                     <Phone size={11} className="text-success shrink-0" />
-                    <span className="truncate font-mono">{t.parentPhone}</span>
+                    <span dir="ltr" className="font-mono">{formatPhone(t.parentPhone)}</span>
+                    {t.teacherName && (
+                        <>
+                            <span className="text-muted/40 mx-1">·</span>
+                            <span>{t.teacherName}</span>
+                        </>
+                    )}
                 </div>
-                {t.subject && (
-                    <div className="flex items-center gap-1.5 text-xs text-muted">
-                        <BookOpen size={11} className="text-info shrink-0" />
-                        <span className="truncate">{t.subject}</span>
-                    </div>
-                )}
-                {t.teacherName && (
-                    <div className="flex items-center gap-1.5 text-xs text-muted">
-                        <GraduationCap size={11} className="text-warning shrink-0" />
-                        <span className="truncate">{t.teacherName}</span>
-                    </div>
-                )}
-                <div className="flex items-center gap-1.5 text-xs text-muted">
-                    <Calendar size={11} className="text-primary shrink-0" />
-                    <span>{t.date}</span>
-                </div>
-                {t.time && (
-                    <div className="flex items-center gap-1.5 text-xs text-muted">
-                        <Clock size={11} className="text-info shrink-0" />
-                        <span>{t.time}</span>
+
+                {/* Row 4: Notes (collapsible) */}
+                {t.notes && (
+                    <div
+                        className={cn(
+                            "rounded-xl text-[11px] transition-all cursor-pointer",
+                            showNotes ? "bg-surface p-3" : ""
+                        )}
+                        onClick={(e) => { e.stopPropagation(); setShowNotes(!showNotes); }}
+                    >
+                        {showNotes ? (
+                            <div className="flex items-start gap-2">
+                                <MessageCircle size={13} className="text-warning shrink-0 mt-0.5" />
+                                <div className="min-w-0 flex-1">
+                                    <p className="text-muted leading-relaxed">{t.notes}</p>
+                                    <button onClick={(e) => { e.stopPropagation(); setShowNotes(false); }} className="text-[10px] font-bold text-warning mt-1 inline-flex items-center gap-1">
+                                        <ChevronUp size={10} />أقل
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-1.5 text-warning">
+                                <MessageCircle size={12} />
+                                <span className="text-muted line-clamp-1">{t.notes}</span>
+                                <ChevronDown size={10} className="shrink-0" />
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
-            {t.notes && (
-                <div className="mt-3 bg-warning-soft border border-warning/20 px-3 py-2 rounded-xl">
-                    <span className="text-xs font-bold text-warning me-1.5">ملاحظات</span>
-                    <span className="text-xs text-muted">{t.notes}</span>
-                </div>
-            )}
-        </div>
-    </motion.div>
-);
+
+            {/* Action buttons row */}
+            <div className="flex items-center gap-px bg-border/30 border-t border-border/50" role="toolbar" aria-label="إجراءات الحصة">
+                {onCall && (
+                    <button onClick={(e) => { e.stopPropagation(); onCall(t.parentPhone); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-success hover:bg-success/10 transition-colors active:bg-success/20" aria-label="اتصال">
+                        <Phone size={12} /> اتصال
+                    </button>
+                )}
+                {onWhatsApp && (
+                    <button onClick={(e) => { e.stopPropagation(); onWhatsApp(t.parentPhone); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-emerald-600 hover:bg-emerald-500/10 transition-colors active:bg-emerald-500/20" aria-label="واتساب">
+                        <MessageSquare size={12} /> واتساب
+                    </button>
+                )}
+                {t.status === 'pending' && (
+                    <button onClick={(e) => { e.stopPropagation(); onConvert(t.id); }} disabled={isConverting} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-blue-600 hover:bg-blue-500/10 transition-colors active:bg-blue-500/20 disabled:opacity-40" aria-label="تحويل إلى طالب">
+                        <CheckCheck size={12} /> تم
+                    </button>
+                )}
+                <button onClick={(e) => { e.stopPropagation(); onEdit(t); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-muted hover:bg-surface transition-colors active:bg-hover" aria-label="تعديل">
+                    <Pencil size={12} /> تعديل
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); onDelete(t.id); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-rose-600 hover:bg-rose-500/10 transition-colors active:bg-rose-500/20" aria-label="حذف">
+                    <Trash2 size={12} /> حذف
+                </button>
+            </div>
+        </motion.div>
+    );
+};
