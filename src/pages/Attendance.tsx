@@ -17,7 +17,6 @@ import { MobileAttendance } from '../features/attendance/components/MobileAttend
 import type { Student, Enrollment, Session } from '../features/attendance/types';
 import { generateWhatsAppLink } from '../lib/whatsapp';
 import { SectionCard, SectionTitle, BulkAttendanceButton, AdminTeacherGroupList } from './attendance-page';
-import { Badge } from '../shared/components/ui/badge';
 import { cn } from '../lib/utils';
 
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
