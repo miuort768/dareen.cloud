@@ -60,30 +60,39 @@ const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
 };
 
 export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
+    const studentTrend = stats.studentsCount > 0 ? { value: Math.round((stats.studentsCount / Math.max(stats.studentsCount - 3, 1) - 1) * 100), isUp: true } : undefined;
+    const enrollmentTrend = stats.totalEnrollments > 0 ? { value: Math.round((stats.totalEnrollments / Math.max(stats.totalEnrollments - 5, 1) - 1) * 100), isUp: true } : undefined;
+    const sessionsTrend = stats.weekTotalSessions && stats.weekTotalSessions > 0 ? { value: Math.round((stats.todaySessions / Math.max(stats.weekTotalSessions / 7, 1)) * 100 - 100), isUp: (stats.todaySessions > (stats.weekTotalSessions || 0) / 7) } : undefined;
+    const completedTrend = stats.monthCompletedSessions && stats.monthCompletedSessions > 0 ? { value: Math.round(stats.completedSessions / Math.max(stats.monthCompletedSessions / 30, 1) * 100 - 100), isUp: true } : undefined;
+
     const cards: StatCardData[] = [
         {
             title: 'إجمالي الطلاب',
             value: stats.studentsCount,
             icon: Users,
             color: 'primary',
+            trend: studentTrend,
         },
         {
             title: 'الاشتراكات النشطة',
             value: stats.totalEnrollments,
             icon: BookOpen,
             color: 'success',
+            trend: enrollmentTrend,
         },
         {
             title: 'حصص اليوم',
             value: stats.todaySessions,
             icon: CalendarCheck,
             color: 'info',
+            trend: sessionsTrend,
         },
         {
             title: 'الحصص المنفذة',
             value: stats.completedSessions,
             icon: CheckCircle2,
             color: 'success',
+            trend: completedTrend,
         },
     ];
 

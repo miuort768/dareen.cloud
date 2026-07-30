@@ -18,7 +18,7 @@ import { AttendanceChart } from '../features/dashboard/components/AttendanceChar
 import type { DashboardStats as DashboardStatsType, LowBalanceStudent, DashboardTask } from '../features/dashboard/types';
 import type { User } from '../types/auth';
 import { useState } from 'react';
-import { GlassCard } from '@/shared/components/ui';
+
 
 interface TeacherDashboardDesktopProps {
     currentUser: User | null;
@@ -46,18 +46,20 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
     return (
         <div className="max-w-page mx-auto px-4 space-y-3 md:space-y-4 py-4 md:py-6">
             <motion.div {...fadeUp(0)}>
-                <DashboardHeader isTeacher={true} currentUser={currentUser} />
+                <DashboardHeader isTeacher={true} currentUser={currentUser} stats={stats} />
             </motion.div>
 
             <motion.div {...fadeUp(0.04)}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
-                    <div className="rounded-2xl bg-card border border-border p-5 transition-all duration-300 hover:shadow-elevation-1">
+                    <div className="space-y-3 md:space-y-4">
                         {nextSession && (
                             <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
                         )}
-                        <QuickActions navigate={navigate} onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} />
+                        <div className="rounded-2xl bg-card border border-border p-5 transition-all duration-300 shadow-sm hover:shadow-md">
+                            <QuickActions onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} sessionAvailable={!!nextSession} />
+                        </div>
                     </div>
-                    <div className="rounded-2xl bg-card border border-border p-5 transition-all duration-300 hover:shadow-elevation-1">
+                    <div className="rounded-2xl bg-card border border-border p-5 transition-all duration-300 shadow-sm hover:shadow-md">
                         <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
                     </div>
                 </div>
@@ -71,34 +73,34 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
                 className="grid grid-cols-1 lg:grid-cols-12 gap-3 md:gap-4"
             >
                 <div className="lg:col-span-8 space-y-3 md:space-y-4">
-                    <div className="rounded-2xl bg-card border border-border p-5">
+                    <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <LiveClasses />
                     </div>
-                    <div className="rounded-2xl bg-card border border-border p-5">
+                    <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <ModernAnnouncements />
                     </div>
                     {timeline.length > 0 && (
-                        <div className="rounded-2xl bg-card border border-border p-5">
+                        <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                             <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
                         </div>
                     )}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                        <div className="rounded-2xl bg-card border border-border p-5">
+                        <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                             <TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} />
                         </div>
-                        <div className="rounded-2xl bg-card border border-border p-5">
+                        <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                             <TasksAndRequests tasks={tasks} />
                         </div>
                     </div>
                 </div>
                 <div className="lg:col-span-4 space-y-3 md:space-y-4">
-                    <div className="rounded-2xl bg-card border border-border p-5">
+                    <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <AttendanceChart rate={stats.attendanceRate} />
                     </div>
-                    <div className="rounded-2xl bg-card border border-border p-5">
+                    <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
                     </div>
-                    <div className="rounded-2xl bg-card border border-border p-5">
+                    <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
                     </div>
                 </div>
