@@ -12,16 +12,16 @@ interface FixedExpensesManagerProps {
 }
 
 const CATEGORY_CONFIG: Record<string, { icon: React.ComponentType<{ size?: number }>; gradient: string }> = {
-    'كهرباء': { icon: Zap, gradient: 'from-warning to-amber-400' },
-    'انترنت': { icon: Wifi, gradient: 'from-info to-blue-400' },
-    'تسويق': { icon: Megaphone, gradient: 'from-error to-rose-400' },
-    'ايجار': { icon: Building2, gradient: 'from-primary to-purple-400' },
-    'مكتب': { icon: Home, gradient: 'from-success to-emerald-400' },
-    'صيانة': { icon: Wrench, gradient: 'from-accent to-teal-400' },
+    'كهرباء': { icon: Zap, gradient: 'bg-gradient-to-br from-warning/80 to-warning' },
+    'انترنت': { icon: Wifi, gradient: 'bg-gradient-to-br from-info/80 to-info' },
+    'تسويق': { icon: Megaphone, gradient: 'bg-gradient-to-br from-error/80 to-error' },
+    'ايجار': { icon: Building2, gradient: 'bg-gradient-to-br from-primary/80 to-primary' },
+    'مكتب': { icon: Home, gradient: 'bg-gradient-to-br from-success/80 to-success' },
+    'صيانة': { icon: Wrench, gradient: 'bg-gradient-to-br from-accent/80 to-accent' },
 };
 
 const DEFAULT_ICON = MoreHorizontal;
-const DEFAULT_GRADIENT = 'from-primary to-purple-400';
+const DEFAULT_GRADIENT = 'bg-gradient-to-br from-primary/80 to-primary';
 
 const ExpenseCard = ({ expense, onUpdate }: { expense: FixedExpense; onUpdate: (id: number, val: string) => void }) => {
     const [val, setVal] = useState(expense.amount?.toString() || '');
@@ -72,7 +72,7 @@ export const FixedExpensesManager = ({ expenses, onUpdateExpense, onConvertAll, 
         <div className="rounded-2xl bg-card border border-border/60 shadow-sm overflow-hidden">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-3.5 border-b border-border/40">
                 <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-purple-400 flex items-center justify-center text-white shadow-sm">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary/80 to-primary flex items-center justify-center text-on-primary shadow-sm">
                         <Building2 size={13} />
                     </div>
                     <div>

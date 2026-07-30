@@ -79,15 +79,15 @@ export const FinanceStats = ({
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5" dir="rtl">
             <KPICard title="إجمالي الإيرادات" value={totalIncome} icon={TrendingUp}
-                monthValue={monthIncome} gradient="bg-gradient-to-r from-success to-emerald-400"
+                monthValue={monthIncome} gradient="bg-gradient-to-r from-success/80 to-success"
                 trend={Math.round(incomeTrend)} />
             <KPICard title="مستحقات المعلمات" value={totalExpenses} icon={TrendingDown}
-                monthValue={monthExpenses} gradient="bg-gradient-to-r from-error to-rose-400"
+                monthValue={monthExpenses} gradient="bg-gradient-to-r from-error/80 to-error"
                 trend={Math.round(expenseTrend)} />
             <KPICard title="المصروفات التشغيلية" value={totalFixedExpenses} icon={Wallet}
-                monthValue={totalFixedExpenses} gradient="bg-gradient-to-r from-warning to-amber-400" />
+                monthValue={totalFixedExpenses} gradient="bg-gradient-to-r from-warning/80 to-warning" />
             <KPICard title="صافي الربح" value={netProfit} icon={DollarSign}
-                monthValue={monthProfit} gradient="bg-gradient-to-r from-primary to-purple-400"
+                monthValue={monthProfit} gradient="bg-gradient-to-r from-primary/80 to-primary"
                 trend={totalIncome ? Math.round((netProfit / totalIncome) * 100) : 0}
                 profitMargin={profitMargin} />
         </div>

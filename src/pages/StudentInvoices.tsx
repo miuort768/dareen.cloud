@@ -94,7 +94,7 @@ export const StudentInvoices = () => {
         <div className="min-h-full pb-28 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-page mx-auto px-2">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success via-emerald-700 to-success-hover p-6 md:p-8 mb-4">
+                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success to-success-hover p-6 md:p-8 mb-4">
                     {particles.map(p => (
                         <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
                             style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}

@@ -30,8 +30,8 @@ const KpiStat = ({ title, value, count, icon: Icon, accent }: {
     title: string; value: number; count: number; icon: React.ComponentType<{ size?: number }>;
     accent: 'success' | 'warning' | 'error';
 }) => {
-    const gm = { success: 'from-success to-emerald-400', warning: 'from-warning to-amber-400', error: 'from-error to-rose-400' };
-    const bm = { success: 'bg-success/[8%] text-success', warning: 'bg-warning/[8%] text-warning', error: 'bg-error/[8%] text-error' };
+    const gm = { success: 'from-success/20 to-success/5', warning: 'from-warning/20 to-warning/5', error: 'from-error/20 to-error/5' };
+    const bm = { success: 'bg-success/10 text-success', warning: 'bg-warning/10 text-warning', error: 'bg-error/10 text-error' };
     return (
         <motion.div whileHover={{ scale: 1.01, y: -1 }}
             className="relative overflow-hidden rounded-2xl bg-card border border-border/60 shadow-sm hover:shadow-md transition-all p-3.5">

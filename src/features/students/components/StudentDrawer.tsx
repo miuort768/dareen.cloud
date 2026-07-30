@@ -14,12 +14,12 @@ interface StudentDrawerProps {
 type TabKey = 'overview' | 'programs' | 'timeline';
 
 const avatarGradients = [
-  'from-violet-500 to-purple-600',
-  'from-emerald-500 to-teal-600',
-  'from-sky-500 to-blue-600',
-  'from-amber-500 to-orange-600',
-  'from-rose-500 to-pink-600',
-  'from-cyan-500 to-sky-600',
+  'from-primary to-primary-hover',
+  'from-success to-success-hover',
+  'from-info to-info-hover',
+  'from-warning to-warning-hover',
+  'from-error to-error-hover',
+  'from-accent to-accent-hover',
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -29,12 +29,12 @@ const getAvatarGradient = (name: string) => {
 };
 
 const gradeColors: Record<string, string> = {
-  أول: 'text-purple-600 dark:text-purple-400 bg-purple-500/10 ring-purple-500/20',
-  ثاني: 'text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 ring-emerald-500/20',
-  ثالث: 'text-blue-600 dark:text-blue-400 bg-blue-500/10 ring-blue-500/20',
-  رابع: 'text-orange-600 dark:text-orange-400 bg-orange-500/10 ring-orange-500/20',
-  خامس: 'text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 ring-cyan-500/20',
-  سادس: 'text-rose-600 dark:text-rose-400 bg-rose-500/10 ring-rose-500/20',
+  أول: 'text-primary bg-primary/10 ring-primary/20',
+  ثاني: 'text-success bg-success/10 ring-success/20',
+  ثالث: 'text-info bg-info/10 ring-info/20',
+  رابع: 'text-warning bg-warning/10 ring-warning/20',
+  خامس: 'text-accent bg-accent/10 ring-accent/20',
+  سادس: 'text-error bg-error/10 ring-error/20',
 };
 
 const getGradeStyle = (grade?: string) => {
@@ -130,7 +130,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                 <div className="flex items-center gap-2">
                   <h2 className="text-base font-bold text-main truncate">{student.name}</h2>
                   {streakDays >= 3 && (
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[9px] font-bold bg-orange-500/10 text-orange-600 ring-1 ring-orange-500/20">
+                    <span             className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[9px] font-bold bg-warning/10 text-warning ring-1 ring-warning/20">
                       <Flame size={9} /> {streakDays}
                     </span>
                   )}
@@ -140,7 +140,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                     <GraduationCap size={10} />
                     {student.grade}
                   </span>
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-600 ring-1 ring-amber-500/20">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold bg-warning/10 text-warning ring-1 ring-warning/20">
                     <Star size={10} />
                     {points} XP
                   </span>
@@ -189,7 +189,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                 <div className="bg-surface rounded-2xl p-4 border border-border">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-sm">
+                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-warning to-warning-hover flex items-center justify-center shadow-sm">
                         <Trophy size={16} className="text-white" />
                       </div>
                       <div>
@@ -198,7 +198,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                       </div>
                     </div>
                     <div className="text-end">
-                      <p className="text-base font-bold text-amber-600 tabular-nums">{points.toLocaleString()}</p>
+                      <p className="text-base font-bold text-warning tabular-nums">{points.toLocaleString()}</p>
                       <p className="text-[9px] text-muted">إجمالي XP</p>
                     </div>
                   </div>
@@ -210,12 +210,12 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                           initial={{ width: 0 }}
                           animate={{ width: `${level.progress}%` }}
                           transition={{ duration: 0.8, ease: 'easeOut' }}
-                          className="h-full rounded-full bg-gradient-to-l from-amber-400 via-orange-400 to-amber-500"
+                          className="h-full rounded-full bg-gradient-to-l from-warning via-warning-hover to-warning"
                         />
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
-                          <Zap size={10} className="text-amber-500" />
+                          <Zap size={10} className="text-warning" />
                           <span className="text-[9px] text-muted">{level.next - points} XP للمستوى التالي</span>
                         </div>
                         <span className="text-[9px] font-bold text-amber-600 tabular-nums">{Math.round(level.progress)}%</span>
@@ -390,7 +390,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                                 initial={{ width: 0 }}
                                 animate={{ width: `${progress}%` }}
                                 transition={{ duration: 0.6, delay: i * 0.08 }}
-                                className={`h-full rounded-full ${isLow ? 'bg-gradient-to-l from-error to-rose-400' : 'bg-gradient-to-l from-primary to-primary-light'}`}
+                                className={`h-full rounded-full ${isLow ? 'bg-gradient-to-l from-error to-error-hover' : 'bg-gradient-to-l from-primary to-primary-light'}`}
                               />
                             </div>
                           </div>

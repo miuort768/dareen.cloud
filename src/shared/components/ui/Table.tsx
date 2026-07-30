@@ -89,7 +89,7 @@ function TableInner<T>({
   }, [data, activeSortKey, activeSortDir]);
 
   const headerClass = headerVariant === 'gradient'
-    ? 'bg-gradient-to-l from-primary via-primary-500 to-primary-500 text-on-primary'
+    ? 'bg-gradient-to-l from-primary to-primary-deep text-on-primary'
     : headerVariant === 'surface'
     ? 'bg-surface text-muted'
     : 'bg-primary text-on-primary';

@@ -26,12 +26,12 @@ interface ParentDrawerProps {
 type TabKey = 'overview' | 'schedule';
 
 const avatarGradients = [
-    'from-violet-500 to-purple-600',
-    'from-emerald-500 to-teal-600',
-    'from-sky-500 to-blue-600',
-    'from-amber-500 to-orange-600',
-    'from-rose-500 to-pink-600',
-    'from-cyan-500 to-sky-600',
+    'from-primary to-primary-hover',
+    'from-success to-success-hover',
+    'from-info to-info-hover',
+    'from-warning to-warning-hover',
+    'from-error to-error-hover',
+    'from-accent to-accent-hover',
 ];
 
 const getAvatarGradient = (name: string) => {
