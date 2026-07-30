@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Search, Users, Activity, CheckCircle, XCircle, Clock, Plus, List, BarChart3, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../context/AppContext';
@@ -20,12 +20,12 @@ import { SectionCard, SectionTitle, BulkAttendanceButton, AdminTeacherGroupList 
 import { cn } from '../lib/utils';
 
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
-    const ref = useRef<HTMLSpanElement>(null);
     const motionValue = useMotionValue(0);
     const spring = useSpring(motionValue, { stiffness: 80, damping: 20 });
     const rounded = useTransform(spring, (v) => Math.round(v));
+    const displayValue = useTransform(rounded, (v) => `${v.toLocaleString('ar-EG')}${suffix}`);
     useEffect(() => { motionValue.set(value); }, [value, motionValue]);
-    return <span ref={ref} className="text-3xl font-bold tracking-tight">{useTransform(rounded, (v) => v.toLocaleString('ar-EG'))}{suffix}</span>;
+    return <motion.span className="text-3xl font-bold tracking-tight">{displayValue}</motion.span>;
 }
 
 const particles = Array.from({ length: 10 }, (_, i) => ({

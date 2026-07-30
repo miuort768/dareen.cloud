@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useStudents } from '../hooks/useStudents';
 import { useTeachers } from '../../teachers/hooks/useTeachers';
 import { useShowNotification } from '../../../context/AppContext';
@@ -23,12 +23,12 @@ import type { Student, ScheduleSlot } from '../types';
 import { cn } from '../../../lib/utils';
 
 function AnimatedCounter({ value }: { value: number }) {
-    const ref = useRef<HTMLSpanElement>(null);
     const motionValue = useMotionValue(0);
     const spring = useSpring(motionValue, { stiffness: 80, damping: 20 });
     const rounded = useTransform(spring, (v) => Math.round(v));
+    const displayValue = useTransform(rounded, (v) => v.toLocaleString('ar-EG'));
     useEffect(() => { motionValue.set(value); }, [value, motionValue]);
-    return <span ref={ref} className="text-2xl font-bold tabular-nums">{useTransform(rounded, (v) => v.toLocaleString('ar-EG'))}</span>;
+    return <motion.span className="text-2xl font-bold tabular-nums">{displayValue}</motion.span>;
 }
 
 const particles = Array.from({ length: 10 }, (_, i) => ({
