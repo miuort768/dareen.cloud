@@ -152,11 +152,11 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center font-bold text-sm text-on-primary shrink-0 shadow-sm ring-2 ring-primary/20">
-                          {teacher.name.charAt(0)}
+                          {(teacher.name || '?').charAt(0)}
                         </div>
                         <div>
-                          <p className="font-bold text-sm text-main leading-tight">{teacher.name}</p>
-                          <p className="text-[10px] text-muted mt-0.5">ID: {teacher.id.substring(0, 8)}</p>
+                          <p className="font-bold text-sm text-main leading-tight">{teacher.name || '—'}</p>
+                          <p className="text-[10px] text-muted mt-0.5">ID: {(teacher.id || '').substring(0, 8)}</p>
                         </div>
                       </div>
                     </td>
@@ -244,11 +244,11 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2.5 min-w-0 flex-1">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center font-bold text-sm text-on-primary shrink-0 ring-2 ring-primary/20">
-                    {teacher.name.charAt(0)}
+                    {(teacher.name || '?').charAt(0)}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-bold text-main leading-tight truncate">{teacher.name}</h4>
+                      <h4 className="text-sm font-bold text-main leading-tight truncate">{teacher.name || '—'}</h4>
                       <span className={cn("inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold ring-1", status.text)}>
                         <span className={cn("w-1 h-1 rounded-full", status.dot)} />
                       </span>

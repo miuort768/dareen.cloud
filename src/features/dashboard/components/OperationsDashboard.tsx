@@ -39,7 +39,7 @@ export const OperationsDashboard = ({ tasks, lowBalanceStudents, stats }: Operat
                             <div key={idx} className="p-4 rounded-2xl bg-surface border border-border transition-all flex items-center justify-between group hover:shadow-md">
                                 <div className="flex items-center gap-3 min-w-0">
                                     <div className="w-10 h-10 rounded-xl bg-success-soft flex items-center justify-center text-success font-bold text-sm shrink-0">
-                                        {item.studentName.charAt(0)}
+                                        {(item.studentName || '?').charAt(0)}
                                     </div>
                                     <div className="min-w-0">
                                         <h4 className="font-bold text-sm text-main truncate">{item.studentName}</h4>

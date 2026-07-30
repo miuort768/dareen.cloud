@@ -58,7 +58,7 @@ export const StudentDetails = ({
 
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-primary text-on-primary flex items-center justify-center font-bold text-xl shadow-sm shrink-0">
-                        {student.name.charAt(0)}
+                        {(student.name || '?').charAt(0)}
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">

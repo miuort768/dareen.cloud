@@ -74,7 +74,7 @@ export const TeacherDetails = ({
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/15">
-                            <span className="font-bold text-xl text-on-primary">{teacher.name.charAt(0)}</span>
+                            <span className="font-bold text-xl text-on-primary">{(teacher.name || '?').charAt(0)}</span>
                         </div>
                         <div className="min-w-0">
                             <h3 className="text-sm font-bold text-on-primary truncate">{teacher.name}</h3>

@@ -53,17 +53,17 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
         return (
           <div className="flex items-center gap-3">
             <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 ring-2", gc.bg, gc.text, gc.ring)}>
-              {student.name.charAt(0)}
+              {(student.name || '?').charAt(0)}
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <p className="font-bold text-xs text-main leading-tight">{student.name}</p>
+                <p className="font-bold text-xs text-main leading-tight">{student.name || '—'}</p>
                 {hasLowBalance && (
                   <span className="text-[8px] font-bold text-error bg-error-soft px-1.5 py-0.5 rounded animate-pulse">⚠️</span>
                 )}
               </div>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-[9px] text-muted font-mono">ID: {student.id.substring(0, 6)}</span>
+                <span className="text-[9px] text-muted font-mono">ID: {(student.id || '').substring(0, 6)}</span>
                 {student.parentPhone && (
                   <span className="text-[9px] text-muted">{student.parentPhone}</span>
                 )}
@@ -84,7 +84,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
         return (
           <span className={cn("inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold ring-1", gc.bg, gc.text, gc.ring)}>
             <GraduationCap size={10} />
-            {student.grade}
+            {student.grade || '—'}
           </span>
         );
       },
@@ -204,13 +204,13 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 ring-2", gc.bg, gc.text, gc.ring)}>
-              {student.name.charAt(0)}
+              {(student.name || '?').charAt(0)}
             </div>
             <div className="min-w-0 flex-1">
-              <h4 className="text-sm font-bold text-main leading-tight truncate">{student.name}</h4>
+              <h4 className="text-sm font-bold text-main leading-tight truncate">{student.name || '—'}</h4>
               <div className="flex items-center gap-2 mt-0.5">
                 <span className={cn("inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold ring-1", gc.bg, gc.text, gc.ring)}>
-                  {student.grade}
+                  {student.grade || '—'}
                 </span>
                 {pts > 0 && (
                   <span className="text-[9px] text-amber-600 font-bold flex items-center gap-0.5">

@@ -60,7 +60,7 @@ export const HonorRoll: React.FC<HonorRollProps> = ({ students }) => {
 
                             {/* Avatar */}
                             <div className="w-10 h-10 flex items-center justify-center mb-2 rounded-full bg-primary-soft text-sm font-bold text-primary">
-                                {student.name.charAt(0)}
+                                {(student.name || '?').charAt(0)}
                             </div>
 
                             <div className="w-full space-y-1">
