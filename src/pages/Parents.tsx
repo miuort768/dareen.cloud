@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Search, AlertCircle, Users } from 'lucide-react';
+import { useEffect, useState, useMemo } from 'react';
+import { AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { downloadExport } from '../lib/download';
@@ -7,7 +7,7 @@ import { useShowNotification } from '../context/AppContext';
 
 import { ParentsHeader } from '../features/parents/components/ParentsHeader';
 import { ParentsTable } from '../features/parents/components/ParentsTable';
-import { ParentDetails } from '../features/parents/components/ParentDetails';
+import { ParentDrawer } from '../features/parents/components/ParentDrawer';
 import { ParentForm } from '../features/parents/components/ParentForm';
 import { useParents } from '../features/parents/hooks/useParents';
 
@@ -16,28 +16,39 @@ export const Parents = () => {
     const { state, actions } = useParents();
     const showNotification = useShowNotification();
 
+    const [filterStatus, setFilterStatus] = useState('');
+
+    const avgChildren = useMemo(() =>
+        state.totalParents > 0 ? (state.totalLinkedStudents / state.totalParents) : 0,
+    [state.totalParents, state.totalLinkedStudents]);
+
+    const filteredParents = useMemo(() => {
+        let list = state.filteredParents;
+        if (filterStatus === 'active') list = list.filter(p => state.students.some(s => s.parentPhone === p.phone && (s.enrollments?.length || 0) > 0));
+        else if (filterStatus === 'inactive') list = list.filter(p => !state.students.some(s => s.parentPhone === p.phone && (s.enrollments?.length || 0) > 0));
+        else if (filterStatus === 'overdue') list = list.filter(p =>
+            state.students.some(s => s.parentPhone === p.phone && (s.enrollments || []).some(en => (en.sessionsTotal - en.sessionsUsed) <= 2))
+        );
+        return list;
+    }, [state.filteredParents, filterStatus, state.students]);
+
+    const isEdit = !!state.editId;
+
     if (state.loading) {
         return (
-            <div className="space-y-4 p-4 md:p-8 animate-pulse bg-background min-h-full">
-                <div className="h-24 bg-card rounded-2xl" />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => (
-                        <div key={`skel-${i}`} className="h-28 bg-card rounded-2xl" />
-                    ))}
-                </div>
-                <div className="h-96 bg-card rounded-2xl" />
+            <div className="space-y-3 p-3 md:p-4 animate-pulse bg-background min-h-full">
+                <div className="h-44 bg-card rounded-2xl" />
+                <div className="h-64 bg-card rounded-2xl" />
             </div>
         );
     }
-
-    const isEdit = !!state.editId;
 
     return (
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-background"
+            className="min-h-full pb-20 overflow-x-hidden relative font-sans bg-background"
             dir="rtl"
         >
             <div className="relative z-10 max-w-page mx-auto px-2">
@@ -45,7 +56,12 @@ export const Parents = () => {
                 <ParentsHeader
                     totalParents={state.totalParents}
                     totalLinkedStudents={state.totalLinkedStudents}
+                    avgChildren={Math.round(avgChildren * 10) / 10}
                     showAddForm={state.showAddForm}
+                    searchTerm={state.searchTerm}
+                    onSearchChange={actions.setSearchTerm}
+                    filterStatus={filterStatus}
+                    onFilterStatusChange={setFilterStatus}
                     onToggleAddForm={() => {
                         actions.setShowAddForm(!state.showAddForm);
                         if (!state.showAddForm) {
@@ -58,7 +74,7 @@ export const Parents = () => {
                     onExportPDF={() => downloadExport('parents', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error'))}
                 />
 
-                <div className="py-6 space-y-6">
+                <div className="py-3 space-y-3">
 
                     <AnimatePresence>
                         {state.showAddForm && (
@@ -66,7 +82,7 @@ export const Parents = () => {
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.4 }}
+                                transition={{ duration: 0.3 }}
                             >
                                 <ParentForm
                                     isEdit={isEdit}
@@ -78,68 +94,35 @@ export const Parents = () => {
                         )}
                     </AnimatePresence>
 
-                    <div>
-                        {!state.showDetails ? (
-                            <div className="space-y-6">
-                                <div className="p-3 bg-card border border-border flex flex-col md:flex-row items-stretch md:items-center gap-4 rounded-2xl">
-                                    <div className="flex-1 relative group">
-                                        <div className="absolute start-0 top-0 bottom-0 w-12 flex items-center justify-center text-primary opacity-50 z-10">
-                                            <Search size={15} />
-                                        </div>
-                                        <input
-                                            type="text"
-                                            aria-label="بحث عن ولي أمر"
-                                            placeholder="ابحث باسم ولي الأمر..."
-                                            value={state.searchTerm}
-                                            onChange={(e) => actions.setSearchTerm(e.target.value)}
-                                            className="w-full ps-14 pe-4 py-3 bg-surface text-main placeholder:text-muted text-xs font-bold outline-none transition-all rounded-xl border border-border focus:border-primary focus:ring-2 focus:ring-primary/10"
-                                        />
-                                    </div>
-                                    <div className="hidden lg:flex items-center gap-3 px-5 border-s border-border">
-                                        <div className="w-8 h-8 flex items-center justify-center bg-primary-soft rounded-xl">
-                                            <Users size={14} className="text-primary" />
-                                        </div>
-                                        <div>
-                                            <p className="text-micro font-bold text-muted">إجمالي أولياء الأمور</p>
-                                            <p className="text-micro font-bold text-primary">{state.filteredParents.length} / {state.totalParents}</p>
-                                        </div>
-                                    </div>
-                                </div>
+                    <ParentsTable
+                        parents={filteredParents}
+                        students={state.students}
+                        selectedParentId={state.selectedParent?.id || null}
+                        showDetails={state.showDetails}
+                        onSelectParent={(parent) => {
+                            actions.setSelectedParent(parent);
+                            actions.setShowDetails(true);
+                        }}
+                        onEdit={actions.handleEditParent}
+                        onDelete={actions.handleDeleteParent}
+                        onViewParent={(parent) => {
+                            actions.setSelectedParent(parent);
+                            actions.setShowDetails(true);
+                        }}
+                    />
 
-                                <ParentsTable
-                                    parents={state.filteredParents}
-                                    students={state.students}
-                                    selectedParentId={state.selectedParent?.id || null}
-                                    showDetails={false}
-                                    onSelectParent={(parent) => {
-                                        actions.setSelectedParent(parent);
-                                        actions.setShowDetails(true);
-                                    }}
-                                    onEdit={actions.handleEditParent}
-                                    onDelete={actions.handleDeleteParent}
-                                    onViewParent={(parent) => {
-                                        actions.setSelectedParent(parent);
-                                        actions.setShowDetails(true);
-                                    }}
-                                />
-                            </div>
-                        ) : (
-                            <motion.div
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.4 }}
-                            >
-                                {state.selectedParent && state.selectedParentData && (
-                                    <ParentDetails
-                                        parent={state.selectedParent}
-                                        details={state.selectedParentData}
-                                        onClose={() => actions.setShowDetails(false)}
-                                    />
-                                )}
-                            </motion.div>
-                        )}
-                    </div>
                 </div>
+
+                {/* Parent Drawer */}
+                <ParentDrawer
+                    parent={state.selectedParent}
+                    details={state.selectedParentData}
+                    onClose={() => actions.setShowDetails(false)}
+                    onEdit={actions.handleEditParent}
+                    onDelete={actions.handleDeleteParent}
+                    onCall={(phone) => window.open(`tel:${phone}`)}
+                    onWhatsApp={(phone) => window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}`, '_blank')}
+                />
 
                 <AnimatePresence>
                     {state.confirmModal.show && (
