@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { DashboardHeader } from '../features/dashboard/components/DashboardHeader';
+import { TeacherDashboardHeader } from './TeacherDashboardHeader';
 import { DashboardStats } from '../features/dashboard/components/DashboardStats';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
@@ -28,6 +28,7 @@ interface TeacherDashboardDesktopProps {
     lowBalanceStudents: LowBalanceStudent[];
     focusStudents: { id: string; name: string; reason: string; type: string }[];
     timeline: { id: string; studentName: string; time: string; subject: string; status: string }[];
+    logout: () => void;
 }
 
 const fadeUp = (delay: number) => ({
@@ -36,7 +37,7 @@ const fadeUp = (delay: number) => ({
     transition: { delay, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] },
 });
 
-export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline }: TeacherDashboardDesktopProps) => {
+export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline, logout }: TeacherDashboardDesktopProps) => {
     const navigate = useNavigate();
     const [briefingStudent, setBriefingStudent] = useState<{ id?: string; name?: string; grade?: string; notes?: string; totalPoints?: number } | null>(null);
     const [selectedStudentForReport, setSelectedStudentForReport] = useState<{ id: string; name: string; grade: string; subject: string; points: number; attendance: number; sessionsCompleted: number; lastNotes: string[] } | null>(null);
@@ -45,9 +46,7 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
 
     return (
         <div className="max-w-page mx-auto px-4 space-y-3 md:space-y-4 py-4 md:py-6">
-            <motion.div {...fadeUp(0)}>
-                <DashboardHeader isTeacher={true} currentUser={currentUser} stats={stats} />
-            </motion.div>
+            <TeacherDashboardHeader logout={logout} />
 
             <motion.div {...fadeUp(0.04)}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
