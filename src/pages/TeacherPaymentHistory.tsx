@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Search, CheckCircle, Clock, AlertTriangle, FileText, ArrowLeft, Wallet } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, CheckCircle, Clock, AlertTriangle, FileText, Wallet, BarChart3, Filter, Calendar, DollarSign } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { type TeacherInvoice, INVOICE_STATUS } from '../types/invoice';
@@ -9,52 +8,31 @@ import { Skeleton } from '../shared/components/ui';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { CURRENCY_SYMBOL } from '../config/constants';
+import { cn } from '../lib/utils';
 
-const PARTICLES = Array.from({ length: 6 }, (_, i) => ({
+const particles = Array.from({ length: 8 }, (_, i) => ({
     id: i, x: Math.random() * 100, y: Math.random() * 100,
-    size: 6 + Math.random() * 16, delay: Math.random() * 4, duration: 5 + Math.random() * 6,
+    size: Math.random() * 5 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
 }));
 
 const statusConfig = (status: string) => {
     switch (status) {
-        case INVOICE_STATUS.PAID: return { label: 'مدفوعة', icon: CheckCircle, cls: 'bg-success/[10%] text-success border-success/30' };
-        case INVOICE_STATUS.PROCESSING: return { label: 'قيد المعالجة', icon: Clock, cls: 'bg-warning/[10%] text-warning border-warning/30' };
-        case INVOICE_STATUS.OVERDUE: return { label: 'متأخرة', icon: AlertTriangle, cls: 'bg-error/[10%] text-error border-error/30' };
-        default: return { label: 'غير مدفوعة', icon: AlertTriangle, cls: 'bg-error/[10%] text-error border-error/30' };
+        case INVOICE_STATUS.PAID: return { label: 'مدفوعة', icon: CheckCircle, cls: 'bg-success/10 text-success border-success/20' };
+        case INVOICE_STATUS.PROCESSING: return { label: 'قيد المعالجة', icon: Clock, cls: 'bg-warning/10 text-warning border-warning/20' };
+        case INVOICE_STATUS.OVERDUE: return { label: 'متأخرة', icon: AlertTriangle, cls: 'bg-error/10 text-error border-error/20' };
+        default: return { label: 'غير مدفوعة', icon: AlertTriangle, cls: 'bg-error/10 text-error border-error/20' };
     }
 };
 
-const KpiStat = ({ title, value, icon: Icon, accent, unit }: {
-    title: string; value: number; icon: React.ComponentType<{ size?: number }>;
-    accent: 'success' | 'warning' | 'error'; unit?: string;
-}) => {
-    const gm = { success: 'from-success to-emerald-400', warning: 'from-warning to-amber-400', error: 'from-error to-rose-400' };
-    const bm = { success: 'bg-success/[8%] text-success', warning: 'bg-warning/[8%] text-warning', error: 'bg-error/[8%] text-error' };
-    return (
-        <motion.div whileHover={{ scale: 1.01, y: -1 }}
-            className="relative overflow-hidden rounded-2xl bg-card border border-border/60 shadow-sm hover:shadow-md transition-all p-3.5">
-            <div className={`absolute inset-0 opacity-[0.02] bg-gradient-to-br ${gm[accent]}`} />
-            <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${gm[accent]}`} />
-            <div className="relative flex items-start gap-3">
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${bm[accent]}`}><Icon size={14} /></div>
-                <div className="min-w-0 flex-1">
-                    <p className="text-[9px] font-bold text-muted">{title}</p>
-                    <p className="text-sm font-bold text-main tabular-nums leading-none mt-0.5">{value.toFixed(3)} {unit && <span className="text-[8px] text-muted font-bold">{unit}</span>}</p>
-                </div>
-            </div>
-        </motion.div>
-    );
-};
-
 export const TeacherPaymentHistory = () => {
-    useEffect(() => { document.title = 'سجل الدفعات | دارين'; }, []);
-    const navigate = useNavigate();
+    useEffect(() => { document.title = 'سجل الدفعات | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();
     const [invoices, setInvoices] = useState<TeacherInvoice[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<string>('all');
+    const [fabOpen, setFabOpen] = useState(false);
 
     useEffect(() => {
         let cancelled = false;
@@ -97,145 +75,209 @@ export const TeacherPaymentHistory = () => {
         return result;
     }, [invoices]);
 
+    const paidCount = useMemo(() => invoices.filter(i => i.status === INVOICE_STATUS.PAID).length, [invoices]);
+    const pendingCount = useMemo(() => invoices.filter(i => i.status === INVOICE_STATUS.PROCESSING).length, [invoices]);
+    const overdueCount = useMemo(() => invoices.filter(i => i.status === INVOICE_STATUS.OVERDUE || i.status === INVOICE_STATUS.UNPAID).length, [invoices]);
+
+    const kpiCards = useMemo(() => [
+        { label: 'إجمالي الفواتير', value: invoices.length, icon: DollarSign, gradient: 'from-primary/20 to-primary/5', iconBg: 'bg-primary/10 text-primary', accent: 'bg-primary' },
+        { label: 'مدفوعة', value: paidCount, icon: CheckCircle, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
+        { label: 'قيد المعالجة', value: pendingCount, icon: Clock, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
+        { label: 'متأخرة', value: overdueCount, icon: AlertTriangle, gradient: 'from-error/20 to-error/5', iconBg: 'bg-error/10 text-error', accent: 'bg-error' },
+    ], [invoices.length, paidCount, pendingCount, overdueCount]);
+
+    const fabActions = useMemo(() => [
+        { icon: BarChart3, label: 'إحصائيات', onClick: () => document.querySelector('[data-kpi]')?.scrollIntoView({ behavior: 'smooth' }) },
+        { icon: Filter, label: 'تصفية', onClick: () => document.querySelector('[data-search]')?.scrollIntoView({ behavior: 'smooth' }) },
+    ], []);
+
     if (loading) {
         return (
             <div className="min-h-full pb-24 overflow-x-hidden" dir="rtl">
-                <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
-                    <Skeleton className="h-28 rounded-2xl" />
-                    <div className="grid grid-cols-3 gap-3"><Skeleton className="h-24 rounded-2xl" /><Skeleton className="h-24 rounded-2xl" /><Skeleton className="h-24 rounded-2xl" /></div>
-                    <Skeleton className="h-10 rounded-xl" /><Skeleton className="h-64 rounded-2xl" />
+                <div className="max-w-page mx-auto px-2 pt-4 space-y-4">
+                    <Skeleton className="h-36 rounded-2xl" />
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-20 rounded-xl" />)}
+                    </div>
+                    <Skeleton className="h-64 rounded-2xl" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface" dir="rtl">
-            {/* Hero */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-primary/10 via-primary/[6%] to-background border-b border-border/60">
-                <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
-                    {PARTICLES.map(p => (
-                        <motion.div key={p.id} className="absolute rounded-full bg-primary/30"
-                            style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size }}
-                            animate={{ y: [0, -25, 0], opacity: [0.15, 0.5, 0.15] }}
-                            transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }} />
+        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+            <div className="max-w-page mx-auto px-2">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8 mb-4">
+                    {particles.map(p => (
+                        <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
+                            style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
+                            animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }} />
                     ))}
-                </div>
-                <div className="relative z-10 max-w-page mx-auto px-2 pt-4 pb-6">
-                    <div className="flex items-center gap-2.5 mb-4">
-                        <button onClick={() => navigate(-1)}
-                            className="w-8 h-8 rounded-xl bg-card border border-border/60 flex items-center justify-center text-muted hover:text-main hover:bg-surface transition-all" aria-label="رجوع">
-                            <ArrowLeft size={14} />
-                        </button>
-                        <div className="w-9 h-9 rounded-xl bg-primary text-on-primary flex items-center justify-center shadow-sm">
-                            <Wallet size={16} />
-                        </div>
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
-                            <h1 className="text-sm font-bold text-main">سجل الدفعات</h1>
-                            <p className="text-[8px] text-muted">سجل المدفوعات والمستحقات المالية</p>
+                            <div className="flex items-center gap-2 mb-2">
+                                <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><Wallet className="text-white" size={20} /></div>
+                                <span className="text-white/70 text-xs font-medium">المالية</span>
+                            </div>
+                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">سجل الدفعات</h1>
+                            <p className="text-white/70 text-sm">سجل المدفوعات والمستحقات المالية</p>
+                        </div>
+                        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                            <div className="text-center">
+                                <p className="text-white/60 text-xs mb-1">الإجمالي</p>
+                                <p className="text-2xl font-bold text-white tabular-nums">{stats.total.toFixed(3)}</p>
+                                <p className="text-white/50 text-[10px]">{CURRENCY_SYMBOL}</p>
+                            </div>
+                            <div className="w-px h-10 bg-white/10" />
+                            <div className="text-center">
+                                <p className="text-white/60 text-xs mb-1">الفاتورة</p>
+                                <p className="text-lg font-bold text-white">{paidCount}</p>
+                            </div>
                         </div>
                     </div>
-                    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-center py-4">
-                        <p className="text-[9px] font-bold text-muted mb-1">إجمالي المستحقات</p>
-                        <motion.p initial={{ scale: 0.9 }} animate={{ scale: 1 }}
-                            transition={{ type: 'spring', stiffness: 200, damping: 12 }}
-                            className="text-3xl font-bold text-main tabular-nums tracking-tight">
-                            {stats.total.toFixed(3)} <span className="text-sm text-muted font-bold me-1">{CURRENCY_SYMBOL}</span>
-                        </motion.p>
-                    </motion.div>
-                </div>
-            </div>
-            {/* Main */}
-            <div className="relative z-10 max-w-page mx-auto px-2 -mt-2 space-y-3 pb-16">
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="grid grid-cols-3 gap-2.5">
-                    <KpiStat title="مدفوع" value={stats.paid} icon={CheckCircle} accent="success" unit={CURRENCY_SYMBOL} />
-                    <KpiStat title="قيد المعالجة" value={stats.processing} icon={Clock} accent="warning" unit={CURRENCY_SYMBOL} />
-                    <KpiStat title="غير مدفوع" value={stats.overdue + stats.unpaid} icon={AlertTriangle} accent="error" unit={CURRENCY_SYMBOL} />
                 </motion.div>
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex gap-2 items-center">
-                    <div className="relative flex-1">
-                        <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />
-                        <input aria-label="بحث" placeholder="بحث..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full rounded-xl ps-8 pe-3 py-2 text-[10px] font-bold outline-none bg-card border border-border/60 text-main placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all" />
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} data-kpi>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                        {kpiCards.map((kpi, i) => {
+                            const Icon = kpi.icon;
+                            return (
+                                <motion.div key={kpi.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
+                                    whileHover={{ scale: 1.02, y: -2 }} className={cn("relative overflow-hidden rounded-xl bg-gradient-to-br border border-border/50 p-4", kpi.gradient)}>
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div className={cn("p-2 rounded-lg", kpi.iconBg)}><Icon size={16} /></div>
+                                        <div className={cn("h-1 w-12 rounded-full", kpi.accent)} />
+                                    </div>
+                                    <p className="text-xs text-muted mb-1">{kpi.label}</p>
+                                    <p className="text-2xl font-bold text-main tabular-nums">{kpi.value}</p>
+                                </motion.div>
+                            );
+                        })}
                     </div>
-                    <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}
-                        aria-label="تصفية"
-                        className="rounded-xl px-3 py-2 text-[10px] font-bold outline-none bg-card border border-border/60 text-main focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
-                        <option value="all">الكل</option>
-                        <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
-                        <option value={INVOICE_STATUS.PROCESSING}>قيد المعالجة</option>
-                        <option value={INVOICE_STATUS.OVERDUE}>متأخرة</option>
-                        <option value={INVOICE_STATUS.UNPAID}>غير مدفوعة</option>
-                    </select>
                 </motion.div>
-                <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-                    className="hidden md:block bg-card border border-border/60 rounded-2xl overflow-hidden shadow-sm">
-                    <table className="w-full text-start border-collapse">
-                        <thead><tr className="bg-surface border-b border-border/40">
-                            <th className="px-4 py-3 text-[8px] font-bold text-muted text-start">التخصص</th>
-                            <th className="px-4 py-3 text-[8px] font-bold text-muted text-center">المبلغ</th>
-                            <th className="px-4 py-3 text-[8px] font-bold text-muted text-center">طريقة الدفع</th>
-                            <th className="px-4 py-3 text-[8px] font-bold text-muted text-center">التاريخ</th>
-                            <th className="px-4 py-3 text-[8px] font-bold text-muted text-center">الحالة</th>
-                        </tr></thead>
-                        <tbody className="divide-y divide-border/40">
-                            {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => {
-                                const status = statusConfig(inv.status);
-                                const StatusIcon = status.icon;
-                                return (
-                                    <tr key={inv.id} className="hover:bg-surface/50 transition-colors">
-                                        <td className="px-4 py-3"><span className="text-[10px] font-bold text-main">{inv.specialization || '—'}</span></td>
-                                        <td className="px-4 py-3 text-center font-mono text-[10px] font-bold text-main tabular-nums">{inv.amount.toFixed(3)} <span className="text-[8px] text-muted">{CURRENCY_SYMBOL}</span></td>
-                                        <td className="px-4 py-3 text-center text-[8px] text-muted">{inv.paymentMethod || '—'}</td>
-                                        <td className="px-4 py-3 text-center text-[8px] text-muted">{inv.date ? format(new Date(inv.date), 'dd MMM yyyy', { locale: ar }) : '—'}</td>
-                                        <td className="px-4 py-3 text-center">
-                                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[8px] font-bold border ${status.cls}`}>
-                                                <StatusIcon size={9} />{status.label}
-                                            </span>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} data-search>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                        <div className="relative">
+                            <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
+                            <input aria-label="بحث" placeholder="بحث بالتخصص..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full bg-card border border-border rounded-xl py-3 ps-9 pe-3 text-xs font-bold text-main placeholder:text-muted focus:outline-none focus:border-primary transition-all" />
+                        </div>
+                        <div className="relative">
+                            <Filter className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
+                            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}
+                                aria-label="تصفية"
+                                className="w-full bg-card border border-border rounded-xl py-3 ps-9 pe-3 text-xs font-bold text-main focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer">
+                                <option value="all">جميع الحالات</option>
+                                <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
+                                <option value={INVOICE_STATUS.PROCESSING}>قيد المعالجة</option>
+                                <option value={INVOICE_STATUS.OVERDUE}>متأخرة</option>
+                                <option value={INVOICE_STATUS.UNPAID}>غير مدفوعة</option>
+                            </select>
+                        </div>
+                    </div>
+                </motion.div>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+                    <div className="hidden md:block bg-card border border-border/30 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <table className="w-full text-start border-collapse">
+                            <thead>
+                                <tr className="bg-surface/50 border-b border-border/30">
+                                    <th className="px-5 py-3.5 text-[10px] font-bold text-muted text-start">التخصص</th>
+                                    <th className="px-5 py-3.5 text-[10px] font-bold text-muted text-center">المبلغ</th>
+                                    <th className="px-5 py-3.5 text-[10px] font-bold text-muted text-center">طريقة الدفع</th>
+                                    <th className="px-5 py-3.5 text-[10px] font-bold text-muted text-center">التاريخ</th>
+                                    <th className="px-5 py-3.5 text-[10px] font-bold text-muted text-center">الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-border/20">
+                                {filteredInvoices.length > 0 ? filteredInvoices.map((inv) => {
+                                    const status = statusConfig(inv.status);
+                                    const StatusIcon = status.icon;
+                                    return (
+                                        <tr key={inv.id} className="hover:bg-surface/30 transition-colors">
+                                            <td className="px-5 py-3.5"><span className="text-xs font-bold text-main">{inv.specialization || '—'}</span></td>
+                                            <td className="px-5 py-3.5 text-center font-mono text-xs font-bold text-main tabular-nums">{inv.amount.toFixed(3)} <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span></td>
+                                            <td className="px-5 py-3.5 text-center text-[10px] text-muted">{inv.paymentMethod || '—'}</td>
+                                            <td className="px-5 py-3.5 text-center text-[10px] text-muted">{inv.date ? format(new Date(inv.date), 'dd MMM yyyy', { locale: ar }) : '—'}</td>
+                                            <td className="px-5 py-3.5 text-center">
+                                                <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold border ${status.cls}`}>
+                                                    <StatusIcon size={10} />{status.label}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    );
+                                }) : (
+                                    <tr>
+                                        <td colSpan={5} className="py-16 text-center">
+                                            <div className="w-12 h-12 rounded-2xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-3"><FileText size={20} /></div>
+                                            <p className="text-xs font-bold text-muted">{searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد دفعات بعد'}</p>
                                         </td>
                                     </tr>
-                                );
-                            }) : (
-                                <tr><td colSpan={5} className="py-16 text-center">
-                                    <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-2"><FileText size={18} /></div>
-                                    <p className="text-[10px] font-bold text-muted">{searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد دفعات بعد'}</p>
-                                </td></tr>
-                            )}
-                        </tbody>
-                    </table>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="md:hidden space-y-3">
+                        {filteredInvoices.length > 0 ? filteredInvoices.map((inv, i) => {
+                            const status = statusConfig(inv.status);
+                            const StatusIcon = status.icon;
+                            return (
+                                <motion.div key={inv.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
+                                    className="bg-card border border-border/30 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                                                <Wallet size={13} className="text-primary" />
+                                            </div>
+                                            <div>
+                                                <p className="text-xs font-bold text-main">{inv.specialization || 'بدون تخصص'}</p>
+                                                <p className="text-[10px] text-muted">{inv.date ? format(new Date(inv.date), 'dd MMM yyyy', { locale: ar }) : '—'}</p>
+                                            </div>
+                                        </div>
+                                        <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold border ${status.cls}`}>
+                                            <StatusIcon size={10} />{status.label}
+                                        </span>
+                                    </div>
+                                    <div className="flex items-center justify-between pt-3 border-t border-border/20">
+                                        <div className="flex items-center gap-2">
+                                            <DollarSign size={12} className="text-muted" />
+                                            <span className="font-mono text-sm font-bold text-main tabular-nums">{inv.amount.toFixed(3)} <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span></span>
+                                        </div>
+                                        <span className="text-[10px] text-muted">{inv.paymentMethod || '—'}</span>
+                                    </div>
+                                </motion.div>
+                            );
+                        }) : (
+                            <div className="bg-card border border-dashed border-border/30 rounded-2xl py-16 text-center">
+                                <div className="w-12 h-12 rounded-2xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-3"><FileText size={20} /></div>
+                                <p className="text-xs font-bold text-muted">{searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد دفعات بعد'}</p>
+                            </div>
+                        )}
+                    </div>
                 </motion.div>
-                <div className="md:hidden space-y-2.5">
-                    {filteredInvoices.length > 0 ? filteredInvoices.map((inv, i) => {
-                        const status = statusConfig(inv.status);
-                        const StatusIcon = status.icon;
-                        return (
-                            <motion.div key={inv.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
-                                className="bg-card border border-border/60 rounded-2xl p-3.5 shadow-sm">
-                                <div className="flex items-center justify-between mb-2.5">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-7 h-7 rounded-xl bg-primary-soft flex items-center justify-center"><Wallet size={11} className="text-primary" /></div>
-                                        <div><p className="text-[10px] font-bold text-main">{inv.specialization || 'بدون تخصص'}</p></div>
-                                    </div>
-                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[8px] font-bold border ${status.cls}`}>
-                                        <StatusIcon size={8} />{status.label}
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <div><p className="text-[7px] font-bold text-muted mb-0.5">المبلغ</p><span className="font-mono text-xs font-bold text-main tabular-nums">{inv.amount.toFixed(3)} <span className="text-[8px] text-muted">{CURRENCY_SYMBOL}</span></span></div>
-                                        <div className="w-px h-5 bg-border/40" />
-                                        <div><p className="text-[7px] font-bold text-muted mb-0.5">التاريخ</p><span className="text-[8px] text-muted">{inv.date ? format(new Date(inv.date), 'dd MMM', { locale: ar }) : '—'}</span></div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        );
-                    }) : (
-                        <div className="bg-card border border-border/60 border-dashed rounded-2xl py-16 text-center">
-                            <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-2"><FileText size={18} /></div>
-                            <p className="text-[10px] font-bold text-muted">{searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد دفعات بعد'}</p>
-                        </div>
-                    )}
-                </div>
+            </div>
+
+            <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+                <AnimatePresence>
+                    {fabOpen && fabActions.map((action, i) => (
+                        <motion.div key={action.label} initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
+                            <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
+                            <button onClick={() => { action.onClick(); setFabOpen(false); }}
+                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                <action.icon size={18} />
+                            </button>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+                <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    <Wallet size={22} />
+                </motion.button>
             </div>
         </div>
     );
