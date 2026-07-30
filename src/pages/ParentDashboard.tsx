@@ -1,13 +1,14 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Wallet, ArrowLeft } from 'lucide-react';
+import { Wallet, ArrowLeft, Loader2, RefreshCw } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
 import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { Skeleton } from '../shared/components/ui';
+import { triggerHaptic } from '../lib/haptics';
 import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader';
 import { MobileBottomNav } from './parent-dashboard/MobileBottomNav';
 import { HeroSection } from './parent-dashboard/HeroSection';
@@ -42,62 +43,52 @@ export const ParentDashboard = () => {
     const [sessions, setSessions] = useState<Student[]>([]);
     const [allPointLogs, setAllPointLogs] = useState<PointLogEntry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [pullDistance, setPullDistance] = useState(0);
+    const [startY, setStartY] = useState(0);
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
+    const fetchAll = async (silent = false) => {
+        try {
+            if (!silent) setIsLoading(true);
+            const students = await api.get<Student[]>('/parents/my-children');
+            setChildren(students);
+
+            const sessionsPromises = students.map(async s => {
+                try { return await api.get<unknown[]>(`/parents/child-sessions/${s.id}`) || []; }
+                catch (e) { console.error(`Failed to fetch sessions for child ${s.id}:`, e); return []; }
+            });
+            const logsPromises = students.map(async s => {
+                try { return await api.get<unknown[]>(`/student-portal/me/points-log?studentId=${s.id}`) || []; }
+                catch (e) { console.error(`Failed to fetch logs for child ${s.id}:`, e); return []; }
+            });
+
+            const [allSessionsResults, allLogsResults] = await Promise.all([
+                Promise.all(sessionsPromises),
+                Promise.all(logsPromises)
+            ]);
+
+            setSessions(allSessionsResults.flat());
+
+            const flattenedLogs = allLogsResults.map((logs, idx) =>
+                (Array.isArray(logs) ? logs : []).map((l: { id: string; date: string; status: string; timestamp?: string; points?: number }) => ({ ...l, studentName: students[idx].name }))
+            ).flat();
+
+            setAllPointLogs(flattenedLogs.sort((a, b) => {
+                const timeA = a.timestamp ? new Date(a.timestamp).getTime() : 0;
+                const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+                return timeB - timeA;
+            }));
+        } catch (error) {
+            console.error('Error fetching dashboard data:', error);
+        } finally {
+            if (!silent) setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
-        let cancelled = false;
-        const fetchAllData = async () => {
-            try {
-                setIsLoading(true);
-                const students = await api.get<Student[]>('/parents/my-children');
-                if (cancelled) return;
-                setChildren(students);
-
-                const sessionsPromises = students.map(async s => {
-                    try {
-                        return await api.get<unknown[]>(`/parents/child-sessions/${s.id}`) || [];
-                    } catch (e) {
-                        console.error(`Failed to fetch sessions for child ${s.id}:`, e);
-                        return [];
-                    }
-                });
-                const logsPromises = students.map(async s => {
-                    try {
-                        return await api.get<unknown[]>(`/student-portal/me/points-log?studentId=${s.id}`) || [];
-                    } catch (e) {
-                        console.error(`Failed to fetch logs for child ${s.id}:`, e);
-                        return [];
-                    }
-                });
-
-                const [allSessionsResults, allLogsResults] = await Promise.all([
-                    Promise.all(sessionsPromises),
-                    Promise.all(logsPromises)
-                ]);
-
-                if (cancelled) return;
-
-                setSessions(allSessionsResults.flat());
-
-                const flattenedLogs = allLogsResults.map((logs, idx) =>
-                    (Array.isArray(logs) ? logs : []).map((l: { id: string; date: string; status: string; timestamp?: string; points?: number }) => ({ ...l, studentName: students[idx].name }))
-                ).flat();
-
-                setAllPointLogs(flattenedLogs.sort((a, b) => {
-                    const timeA = a.timestamp ? new Date(a.timestamp).getTime() : 0;
-                    const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
-                    return timeB - timeA;
-                }));
-            } catch (error) {
-                console.error('Error fetching dashboard data:', error);
-            } finally {
-                if (!cancelled) setIsLoading(false);
-            }
-        };
-
-        fetchAllData();
-        return () => { cancelled = true; };
+        fetchAll();
     }, []);
 
     // ── Active timer polling ──
@@ -119,10 +110,6 @@ export const ParentDashboard = () => {
                 const data: Student[] = await res.json();
                 setActiveTimers(data);
 
-                const students = await api.get<Student[]>('/parents/my-children');
-                if (id !== pollIdRef.current) return;
-                setChildren(students);
-
                 if (data.length > 0 && !timerTickRef.current) {
                     timerTickRef.current = setInterval(() => setTimerTick(t => t + 1), 1000);
                 } else if (data.length === 0 && timerTickRef.current) {
@@ -138,6 +125,17 @@ export const ParentDashboard = () => {
             if (timerTickRef.current) clearInterval(timerTickRef.current);
         };
     }, []);
+
+    useEffect(() => {
+        if (activeTimers.length === 0 || !children.length) return;
+        const fetchChildren = async () => {
+            try {
+                const students = await api.get<Student[]>('/parents/my-children');
+                setChildren(students);
+            } catch (e) { console.error(e); }
+        };
+        fetchChildren();
+    }, [activeTimers.length > 0]);
 
     const formatTime = (startedAt: string | null | undefined) => {
         if (!startedAt) return '--:--';
@@ -190,6 +188,26 @@ export const ParentDashboard = () => {
     const points = allPointLogs?.reduce((sum, log) => sum + (log.points || 0), 0) || 0;
     const rank = getRankByPoints(points, STUDENT_RANKS);
 
+    const handleRefresh = async () => {
+        triggerHaptic('medium');
+        setIsRefreshing(true);
+        try { await fetchAll(true); } catch (e) { console.error(e); }
+        setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 400);
+    };
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY);
+    };
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (startY === 0 || isRefreshing || window.scrollY > 0) return;
+        const diff = e.touches[0].clientY - startY;
+        if (diff > 0) setPullDistance(Math.min(diff * 0.4, 90));
+    };
+    const handleTouchEnd = async () => {
+        if (pullDistance > 55) { await handleRefresh(); }
+        else { setPullDistance(0); setStartY(0); }
+    };
+
     if (isLoading) {
         return (
             <div className="min-h-screen bg-background" dir="rtl">
@@ -219,7 +237,29 @@ export const ParentDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
+        <div
+            className="min-h-screen bg-background overflow-x-hidden"
+            dir="rtl"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+        >
+            {/* Pull to refresh indicator */}
+            <motion.div
+                animate={{ height: isRefreshing ? 44 : pullDistance }}
+                className="overflow-hidden flex items-center justify-center"
+            >
+                <div className="flex items-center gap-2 text-primary font-bold text-xs">
+                    {isRefreshing ? (
+                        <><Loader2 size={16} className="animate-spin" /><span>جاري التحديث...</span></>
+                    ) : pullDistance > 40 ? (
+                        <><RefreshCw size={16} className="animate-pulse" /><span>أفلت للتحديث</span></>
+                    ) : (
+                        <span className="text-muted">اسحب للتحديث</span>
+                    )}
+                </div>
+            </motion.div>
+
             <ParentDashboardHeader logout={logout} />
 
             <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">

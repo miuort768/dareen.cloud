@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles, Wallet, ArrowLeft } from 'lucide-react';
+import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles, Wallet, ArrowLeft, Loader2 } from 'lucide-react';
+import { triggerHaptic } from '../lib/haptics';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { cn } from '../lib/utils';
 import { Card } from '@/components/ui/card';
@@ -43,6 +44,7 @@ const glass = "bg-surface/80 backdrop-blur-xl border-b border-border";
 export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline }: TeacherDashboardMobileProps) => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<'home' | 'schedule' | 'reports'>('home');
+    const handleTabChange = (tab: 'home' | 'schedule' | 'reports') => { triggerHaptic('light'); setActiveTab(tab); };
     const [briefingStudent, setBriefingStudent] = useState<{ id?: string; name?: string; grade?: string; notes?: string; totalPoints?: number } | null>(null);
     const [selectedStudentForReport, setSelectedStudentForReport] = useState<{ id: string; name: string; grade: string; subject: string; points: number; attendance: number; sessionsCompleted: number; lastNotes: string[] } | null>(null);
 
@@ -71,15 +73,15 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                     </div>
                     {/* Stats row */}
                     <div className="flex items-center gap-2 mt-3">
-                        <div className="flex-1 bg-on-primary/10 rounded-xl py-2 px-3 flex items-center gap-2 border border-on-primary/20">
+                        <div className="flex-1 bg-primary-soft rounded-xl py-2 px-3 flex items-center gap-2 border border-primary/20">
                             <Clock size={12} className="text-primary shrink-0" />
                             <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{stats.todaySessions || 0}</span><span className="text-muted text-micro font-medium">حصص</span></div>
                         </div>
-                        <div className="flex-1 bg-on-primary/10 rounded-xl py-2 px-3 flex items-center gap-2 border border-on-primary/20">
+                        <div className="flex-1 bg-primary-soft rounded-xl py-2 px-3 flex items-center gap-2 border border-primary/20">
                             <Users size={12} className="text-info shrink-0" />
                             <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{stats.studentsCount || 0}</span><span className="text-muted text-micro font-medium">طلاب</span></div>
                         </div>
-                        <div className="flex-1 bg-on-primary/10 rounded-xl py-2 px-3 flex items-center gap-2 border border-on-primary/20">
+                        <div className="flex-1 bg-primary-soft rounded-xl py-2 px-3 flex items-center gap-2 border border-primary/20">
                             <Award size={12} className="text-success shrink-0" />
                             <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{(stats.attendanceRate || 0)}%</span><span className="text-muted text-micro font-medium">حضور</span></div>
                         </div>
@@ -202,9 +204,9 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                         {tabs.map(tab => {
                             const isActive = activeTab === tab.id;
                             return (
-                                <motion.button key={tab.id} whileTap={{ scale: 0.9 }}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    className="relative flex flex-col items-center gap-0.5 py-1 px-4 min-w-[64px]"
+                                                    <motion.button key={tab.id} whileTap={{ scale: 0.9 }}
+                                                    onClick={() => handleTabChange(tab.id)}
+                                                    className="relative flex flex-col items-center gap-0.5 py-1 px-4 min-w-[64px]"
                                 >
                                     <div className={cn(
                                         "rounded-xl p-1.5 transition-all duration-300 relative",

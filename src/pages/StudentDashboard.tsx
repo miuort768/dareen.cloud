@@ -1,9 +1,11 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Loader2, RefreshCw } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser } from '../context/AppContext';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ranks';
 import { Skeleton } from '../shared/components/ui';
+import { triggerHaptic } from '../lib/haptics';
 import type {
     StudentDashboardData, Session, PointLog, Enrollment,
     DashboardStats, NextSession, TodayTask
@@ -36,29 +38,30 @@ export const StudentDashboard = () => {
     const [sessions, setSessions] = useState<Session[]>([]);
     const [pointLogs, setPointLogs] = useState<PointLog[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [pullDistance, setPullDistance] = useState(0);
+    const [startY, setStartY] = useState(0);
+
+    const fetchAll = async (silent = false) => {
+        try {
+            if (!silent) setIsLoading(true);
+            const [meRes, sessionsRes, logsRes] = await Promise.all([
+                api.get<StudentDashboardData>('/student-portal/me'),
+                api.get<Session[]>('/student-portal/me/sessions'),
+                api.get<PointLog[]>('/student-portal/me/points-log'),
+            ]);
+            setStudentData(meRes);
+            setSessions(sessionsRes);
+            setPointLogs(logsRes);
+        } catch (error) {
+            console.error('Error fetching student dashboard:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        let cancelled = false;
-        const fetchAll = async () => {
-            try {
-                setIsLoading(true);
-                const [meRes, sessionsRes, logsRes] = await Promise.all([
-                    api.get<StudentDashboardData>('/student-portal/me'),
-                    api.get<Session[]>('/student-portal/me/sessions'),
-                    api.get<PointLog[]>('/student-portal/me/points-log'),
-                ]);
-                if (cancelled) return;
-                setStudentData(meRes);
-                setSessions(sessionsRes);
-                setPointLogs(logsRes);
-            } catch (error) {
-                console.error('Error fetching student dashboard:', error);
-            } finally {
-                if (!cancelled) setIsLoading(false);
-            }
-        };
         if (currentUser?.role === 'student') fetchAll();
-        return () => { cancelled = true; };
     }, [currentUser]);
 
     const enrollments = useMemo(() => studentData?.enrollments || [], [studentData?.enrollments]);
@@ -141,6 +144,26 @@ export const StudentDashboard = () => {
         return tasks.sort((a, b) => (a.time || '').localeCompare(b.time || ''));
     }, [enrollments, todayDay]);
 
+    const handleRefresh = async () => {
+        triggerHaptic('medium');
+        setIsRefreshing(true);
+        try { await fetchAll(true); } catch (e) { console.error(e); }
+        setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 400);
+    };
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY);
+    };
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (startY === 0 || isRefreshing || window.scrollY > 0) return;
+        const diff = e.touches[0].clientY - startY;
+        if (diff > 0) setPullDistance(Math.min(diff * 0.4, 90));
+    };
+    const handleTouchEnd = async () => {
+        if (pullDistance > 55) { await handleRefresh(); }
+        else { setPullDistance(0); setStartY(0); }
+    };
+
     if (isLoading) {
         return (
             <div className="min-h-screen bg-background" dir="rtl">
@@ -166,7 +189,29 @@ export const StudentDashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
+        <div
+            className="min-h-screen bg-background overflow-x-hidden"
+            dir="rtl"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+        >
+            {/* Pull to refresh indicator */}
+            <motion.div
+                animate={{ height: isRefreshing ? 44 : pullDistance }}
+                className="overflow-hidden flex items-center justify-center"
+            >
+                <div className="flex items-center gap-2 text-primary font-bold text-xs">
+                    {isRefreshing ? (
+                        <><Loader2 size={16} className="animate-spin" /><span>جاري التحديث...</span></>
+                    ) : pullDistance > 40 ? (
+                        <><RefreshCw size={16} className="animate-pulse" /><span>أفلت للتحديث</span></>
+                    ) : (
+                        <span className="text-muted">اسحب للتحديث</span>
+                    )}
+                </div>
+            </motion.div>
+
             <StudentDashboardHeader />
 
             <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">

@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Home, Users, MessageSquare, User, MoreHorizontal } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { triggerHaptic } from '../../lib/haptics';
 
 const navItems = [
     { id: 'more', label: 'المزيد', icon: MoreHorizontal, path: '/parent-announcements' },
@@ -28,7 +29,7 @@ export const MobileBottomNav = () => {
                             <motion.button
                                 key={item.id}
                                 whileTap={{ scale: 0.9 }}
-                                onClick={() => navigate(item.path)}
+                                onClick={() => { triggerHaptic('light'); navigate(item.path); }}
                                 className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 touch-manipulation relative ${isCenter ? 'w-14 h-14 -mt-6' : 'w-full h-full'}`}
                             >
                                 {isCenter ? (
