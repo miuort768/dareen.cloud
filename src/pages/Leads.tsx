@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Search, Plus, EyeOff, Eye, AlertTriangle, X } from 'lucide-react';
+import { Search, Plus, EyeOff, Eye, AlertTriangle, X, Activity, BarChart3, Phone, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { crmService } from '../features/crm/services/crmService';
@@ -7,7 +7,7 @@ import { socketService } from '../lib/socket';
 import { SOCKET_EVENTS } from '../lib/socket-events';
 import type { Lead, LeadStatus } from '../features/crm/types';
 import { ErrorBanner } from '../shared/components/ui/ErrorState';
-import { StatCard, PrimaryBtn, statusColors, statusEmojis } from './leads/components/LeadsUI';
+import { PrimaryBtn, statusColors, statusEmojis } from './leads/components/LeadsUI';
 import { LeadTable } from './leads/components/LeadTable';
 import { LeadCards } from './leads/components/LeadCards';
 import { AddLeadModal } from './leads/components/AddLeadModal';
@@ -111,7 +111,7 @@ export const Leads = () => {
     });
 
     const filteredLeads = useMemo(() =>
-        leads.filter(l => {
+        leads.filter((l: Lead) => {
             if (showLost) return l.status === 'lost';
             const q = searchTerm.toLowerCase();
             const matchesSearch = !searchTerm ||
@@ -126,8 +126,8 @@ export const Leads = () => {
     [leads, showLost, searchTerm, filterStatus]);
 
     const statusCounts = useMemo(() => {
-        const counts: Record<string, number> = { all: leads.filter(l => l.status !== 'lost').length };
-        StatusKeys.forEach(key => { counts[key] = leads.filter(l => l.status === key).length; });
+        const counts: Record<string, number> = { all: leads.filter((l: Lead) => l.status !== 'lost').length };
+        StatusKeys.forEach(key => { counts[key] = leads.filter((l: Lead) => l.status === key).length; });
         return counts;
     }, [leads]);
 
@@ -153,6 +153,8 @@ export const Leads = () => {
         );
     }
 
+    const activeCount = leads.filter((l: Lead) => l.status !== 'lost').length;
+
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -162,133 +164,177 @@ export const Leads = () => {
             dir="rtl"
         >
             <div className="relative z-10 mx-auto px-2 max-w-page">
-                {/* ===== HEADER ===== */}
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-l from-primary/10 via-primary-soft/50 to-primary/5 border border-primary/10 mt-4 mb-4">
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(91,77,255,0.06),transparent_60%)]" />
-                    <div className="relative px-4 md:px-5 py-4">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <span className="text-2xl">👥</span>
-                                <div>
-                                    <h1 className="text-sm font-bold text-main">العملاء المتوقعون</h1>
-                                    <p className="text-[11px] text-muted mt-0.5">
-                                        <span className="font-bold text-main">{leads.filter(l => l.status !== 'lost').length}</span> عميل نشط
-                                        {' · '}
-                                        <span className="font-bold text-success">{stats?.new || 0}</span> جديد هذا الشهر
-                                        {' · '}
-                                        <span className="font-bold text-primary">{stats?.conversionRate?.toFixed(1) || 0}%</span> معدل التحويل
-                                    </p>
-                                </div>
+                {/* ===== HERO SECTION ===== */}
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-dark/80 to-primary-dark mt-4 mb-6">
+                    {/* Decorative elements */}
+                    <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
+                    <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-3xl" />
+
+                    {/* Hero content */}
+                    <div className="relative z-10 px-4 md:px-6 py-6">
+                        {/* Top row: title + actions */}
+                        <div className="flex items-center justify-between mb-6">
+                            <div>
+                                <h1 className="text-xl md:text-2xl font-bold font-outfit text-white mb-1">العملاء المتوقعون</h1>
+                                <p className="text-white/70 text-sm">تابع وأدر جميع العملاء المتوقعين وحوّلهم إلى عقود ناجحة</p>
                             </div>
-                            <div className="flex items-center gap-1.5">
-                                <button onClick={() => setShowLost(!showLost)} className={cn(
-                                    'h-8 px-2.5 flex items-center justify-center gap-1 text-[10px] font-bold transition-all rounded-lg border',
-                                    showLost ? 'bg-error-soft text-error border-error/20' : 'bg-card border-border text-muted hover:bg-hover'
-                                )}>
-                                    {showLost ? <Eye size={11} /> : <EyeOff size={11} />}
-                                    <span>{showLost ? 'عرض النشطاء' : 'المفقودين'}</span>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={() => setShowLost(!showLost)}
+                                    className={cn(
+                                        'h-9 px-3 flex items-center justify-center gap-1.5 text-xs font-bold transition-all rounded-xl border',
+                                        showLost
+                                            ? 'bg-white/20 text-white border-white/25'
+                                            : 'bg-white/10 text-white/80 border-white/15 hover:bg-white/15'
+                                    )}
+                                >
+                                    {showLost ? <Eye size={14} /> : <EyeOff size={14} />}
+                                    <span>{showLost ? 'النشطاء' : 'المفقودين'}</span>
                                 </button>
-                                <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-8 px-3 text-[10px]">
-                                    <Plus size={12} /> عميل جديد
+                                <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 text-xs">
+                                    <Plus size={14} /> عميل جديد
                                 </PrimaryBtn>
+                            </div>
+                        </div>
+
+                        {/* KPI Stats */}
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
+                                    <Users size={14} />
+                                    <span>إجمالي العملاء</span>
+                                </div>
+                                <div className="text-2xl font-bold font-outfit text-white">{stats?.total || 0}</div>
+                                <div className="text-white/50 text-[11px] mt-1">{activeCount} نشط</div>
+                            </div>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
+                                    <Activity size={14} />
+                                    <span>عملاء جدد</span>
+                                </div>
+                                <div className="text-2xl font-bold font-outfit text-white">{stats?.new || 0}</div>
+                                <div className="text-green-300 text-[11px] mt-1">هذا الشهر</div>
+                            </div>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
+                                    <Phone size={14} />
+                                    <span>تم التحويل</span>
+                                </div>
+                                <div className="text-2xl font-bold font-outfit text-white">{stats?.converted || 0}</div>
+                                <div className="text-white/50 text-[11px] mt-1">إلى مشتركين</div>
+                            </div>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+                                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
+                                    <BarChart3 size={14} />
+                                    <span>معدل التحويل</span>
+                                </div>
+                                <div className="text-2xl font-bold font-outfit text-white">{(stats?.conversionRate ?? 0).toFixed(1)}%</div>
+                                <div className="text-green-300 text-[11px] mt-1">معدل النجاح</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* ===== STATS ===== */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mb-5">
-                    <StatCard title="إجمالي العملاء" value={stats?.total || 0} sparklineColor="bg-primary" />
-                    <StatCard title="عملاء جدد" value={stats?.new || 0} sparklineColor="bg-info" />
-                    <StatCard title="تم التحويل" value={stats?.converted || 0} sparklineColor="bg-success" />
-                    <StatCard title="معدل التحويل" value={`${(stats?.conversionRate ?? 0).toFixed(1)}%`} sparklineColor="bg-warning" />
-                </div>
+                {/* ===== MAIN CONTENT CARD ===== */}
+                <div className="bg-main rounded-2xl shadow-elevation-1 border border-border overflow-hidden">
+                    {/* Toolbar: search + filters */}
+                    <div className="p-4 lg:p-5 border-b border-border">
+                        <div className="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
+                            <div className="relative flex-1 max-w-md">
+                                <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted" />
+                                <input
+                                    type="text"
+                                    placeholder="ابحث بالاسم، الهاتف، المادة..."
+                                    aria-label="بحث عن عميل"
+                                    className="w-full bg-surface border border-border rounded-xl pr-10 pl-3 py-2.5 text-xs text-main placeholder:text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                {searchTerm && (
+                                    <button onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted hover:text-main transition-colors">
+                                        <X size={14} />
+                                    </button>
+                                )}
+                            </div>
+                            <div className="text-xs text-muted">
+                                <span className="font-bold text-main">{filteredLeads.length}</span> عميل
+                                {searchTerm && ' نتائج بحث'}
+                            </div>
+                        </div>
 
-                {/* ===== SEARCH + FILTERS ===== */}
-                <div className="mb-5 space-y-3">
-                    {/* Search */}
-                    <div className="bg-card border border-border rounded-xl px-3 py-0 flex items-center gap-2 focus-within:ring-2 focus-within:ring-primary/10 focus-within:border-primary transition-all">
-                        <Search size={15} className="text-muted shrink-0" />
-                        <input
-                            type="text"
-                            placeholder="ابحث بالاسم، الهاتف، المادة، الحالة..."
-                            aria-label="بحث عن عميل"
-                            className="w-full bg-transparent outline-none text-xs text-main placeholder:text-muted py-3"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                        {searchTerm && (
-                            <button onClick={() => setSearchTerm('')} className="text-muted hover:text-main transition-colors p-1">
-                                <X size={14} />
+                        {/* Filter pills (Gmail-style with counts) */}
+                        <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none mt-3">
+                            <button
+                                onClick={() => setFilterStatus('all')}
+                                className={cn(
+                                    'shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full border transition-all',
+                                    filterStatus === 'all'
+                                        ? 'bg-primary text-on-primary border-primary'
+                                        : 'bg-card text-muted border-border hover:border-border hover:text-main'
+                                )}
+                            >
+                                📊 الكل
+                                <span className={cn(
+                                    'text-[10px] px-1.5 py-px rounded-full',
+                                    filterStatus === 'all' ? 'bg-white/15 text-on-primary' : 'bg-surface text-muted'
+                                )}>{statusCounts.all}</span>
                             </button>
-                        )}
+                            {StatusKeys.map((key) => {
+                                const cfg = statusColors[key];
+                                const emoji = statusEmojis[key];
+                                const isActive = filterStatus === key;
+                                return (
+                                    <button
+                                        key={key}
+                                        onClick={() => setFilterStatus(key)}
+                                        className={cn(
+                                            'shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full border transition-all',
+                                            isActive
+                                                ? `${cfg.bg} ${cfg.color} border-current/30`
+                                                : 'bg-card text-muted border-border hover:border-border hover:text-main'
+                                        )}
+                                    >
+                                        {emoji && <span>{emoji}</span>}
+                                        {cfg.label}
+                                        <span className={cn(
+                                            'text-[10px] px-1.5 py-px rounded-full',
+                                            isActive ? `${cfg.bg} border border-current/20` : 'bg-surface text-muted'
+                                        )}>{statusCounts[key]}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
 
-                    {/* Filter pills (Gmail-style with counts) */}
-                    <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none">
-                        <button
-                            onClick={() => setFilterStatus('all')}
-                            className={cn(
-                                'shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full border transition-all',
-                                filterStatus === 'all'
-                                    ? 'bg-primary text-on-primary border-primary'
-                                    : 'bg-card text-muted border-border hover:border-border hover:text-main'
-                            )}
-                        >
-                            📊 الكل
-                            <span className={cn(
-                                'text-[10px] px-1.5 py-px rounded-full',
-                                filterStatus === 'all' ? 'bg-white/15 text-on-primary' : 'bg-surface text-muted'
-                            )}>{statusCounts.all}</span>
-                        </button>
-                        {StatusKeys.map((key) => {
-                            const cfg = statusColors[key];
-                            const emoji = statusEmojis[key];
-                            const isActive = filterStatus === key;
-                            return (
-                                <button
-                                    key={key}
-                                    onClick={() => setFilterStatus(key)}
-                                    className={cn(
-                                        'shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full border transition-all',
-                                        isActive
-                                            ? `${cfg.bg} ${cfg.color} border-current/30`
-                                            : 'bg-card text-muted border-border hover:border-border hover:text-main'
-                                    )}
-                                >
-                                    {emoji && <span>{emoji}</span>}
-                                    {cfg.label}
-                                    <span className={cn(
-                                        'text-[10px] px-1.5 py-px rounded-full',
-                                        isActive ? `${cfg.bg} border border-current/20` : 'bg-surface text-muted'
-                                    )}>{statusCounts[key]}</span>
-                                </button>
-                            );
-                        })}
+                    {/* Content: table or cards */}
+                    <div>
+                        <LeadTable filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
+                        <LeadCards filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
                     </div>
                 </div>
 
-                {/* ===== CONTENT ===== */}
-                <div>
-                    {(searchTerm || filterStatus !== 'all') && (
-                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-muted mb-3 px-1">
-                            تم العثور على <span className="font-bold text-main">{filteredLeads.length}</span> عميل
-                        </motion.p>
-                    )}
+                {/* ===== FAB BUTTON ===== */}
+                <motion.button
+                    onClick={() => setIsAddModalOpen(true)}
+                    className="fixed bottom-8 left-8 z-40 w-14 h-14 bg-primary text-on-primary rounded-full shadow-xl shadow-primary/30 flex items-center justify-center hover:bg-primary-hover active:scale-95 transition-all"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    <Plus size={24} />
+                </motion.button>
 
-                    {isAddModalOpen ? (
-                        <AddLeadModal isAddModalOpen={isAddModalOpen} setIsAddModalOpen={setIsAddModalOpen} addMutation={addMutation} formRef={formRef} />
-                    ) : (
-                        <>
-                            <LeadTable filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
-                            <LeadCards filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
-                        </>
-                    )}
-                </div>
-
+                {/* ===== MODALS ===== */}
                 <AnimatePresence>
                     {confirmLeadId && <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={() => setConfirmLeadId(null)} />}
                 </AnimatePresence>
+
+                <AddLeadModal
+                    isAddModalOpen={isAddModalOpen}
+                    setIsAddModalOpen={setIsAddModalOpen}
+                    addMutation={addMutation}
+                    formRef={formRef}
+                />
 
                 <LeadDrawer
                     lead={selectedLead}
