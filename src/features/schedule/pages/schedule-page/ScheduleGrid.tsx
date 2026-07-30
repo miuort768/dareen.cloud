@@ -1,19 +1,11 @@
-import { Clock } from 'lucide-react';
-import { cn } from '../../../../lib/utils';
+import { useState, useEffect, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import { Clock, Plus } from 'lucide-react';
 
 interface ScheduleEvent {
-    id: string;
-    studentId: string;
-    studentName: string;
-    studentGrade: string;
-    teacherName: string;
-    subject: string;
-    curriculum: string;
-    day: string;
-    hour: string;
-    period: string;
-    time: string;
-    studentPoints?: number;
+    id: string; studentId: string; studentName: string; studentGrade: string;
+    teacherName: string; subject: string; curriculum: string; day: string;
+    hour: string; period: string; time: string; studentPoints?: number;
 }
 
 const DAYS_OF_WEEK = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
@@ -29,15 +21,85 @@ const TIME_SLOTS = [
     { hour: 10, period: 'pm', label: '10 م' },
 ];
 
-const ACCENT_COLORS = [
-    { text: 'text-main', bg: 'bg-primary', bgLight: 'bg-primary/5', label: 'بنفسجي' },
-    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/5', label: 'أخضر' },
-    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/5', label: 'عنبر' },
-    { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error/5', label: 'وردي' },
-    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/5', label: 'زيتي' },
-    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary/5', label: 'بنفسجي فاتح' },
-    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/5', label: 'برتقالي' },
+const SUBJECT_COLORS: Record<string, { bg: string; border: string; text: string; lightBg: string; chip: string }> = {
+    'رياضيات': { bg: 'bg-primary', border: 'border-primary', text: 'text-primary', lightBg: 'bg-primary/[7%]', chip: 'bg-primary/[12%]' },
+    'علوم': { bg: 'bg-success', border: 'border-success', text: 'text-success', lightBg: 'bg-success/[7%]', chip: 'bg-success/[12%]' },
+    'عربي': { bg: 'bg-warning', border: 'border-warning', text: 'text-warning', lightBg: 'bg-warning/[7%]', chip: 'bg-warning/[12%]' },
+    'انجليزي': { bg: 'bg-info', border: 'border-info', text: 'text-info', lightBg: 'bg-info/[7%]', chip: 'bg-info/[12%]' },
+    'دين': { bg: 'bg-accent', border: 'border-accent', text: 'text-accent', lightBg: 'bg-accent/[7%]', chip: 'bg-accent/[12%]' },
+    'تاريخ': { bg: 'bg-error', border: 'border-error', text: 'text-error', lightBg: 'bg-error/[7%]', chip: 'bg-error/[12%]' },
+    'قرآن': { bg: 'bg-accent', border: 'border-accent', text: 'text-accent', lightBg: 'bg-accent/[7%]', chip: 'bg-accent/[12%]' },
+    'قواعد': { bg: 'bg-primary', border: 'border-primary', text: 'text-primary', lightBg: 'bg-primary/[7%]', chip: 'bg-primary/[12%]' },
+    'بلاغة': { bg: 'bg-info', border: 'border-info', text: 'text-info', lightBg: 'bg-info/[7%]', chip: 'bg-info/[12%]' },
+    'فقه': { bg: 'bg-success', border: 'border-success', text: 'text-success', lightBg: 'bg-success/[7%]', chip: 'bg-success/[12%]' },
+    'توحيد': { bg: 'bg-accent', border: 'border-accent', text: 'text-accent', lightBg: 'bg-accent/[7%]', chip: 'bg-accent/[12%]' },
+    'تفسير': { bg: 'bg-warning', border: 'border-warning', text: 'text-warning', lightBg: 'bg-warning/[7%]', chip: 'bg-warning/[12%]' },
+    'نحو': { bg: 'bg-error', border: 'border-error', text: 'text-error', lightBg: 'bg-error/[7%]', chip: 'bg-error/[12%]' },
+};
+
+const FALLBACK_COLORS = [
+    { bg: 'bg-primary', border: 'border-primary', text: 'text-primary', lightBg: 'bg-primary/[7%]', chip: 'bg-primary/[12%]' },
+    { bg: 'bg-success', border: 'border-success', text: 'text-success', lightBg: 'bg-success/[7%]', chip: 'bg-success/[12%]' },
+    { bg: 'bg-warning', border: 'border-warning', text: 'text-warning', lightBg: 'bg-warning/[7%]', chip: 'bg-warning/[12%]' },
+    { bg: 'bg-info', border: 'border-info', text: 'text-info', lightBg: 'bg-info/[7%]', chip: 'bg-info/[12%]' },
+    { bg: 'bg-accent', border: 'border-accent', text: 'text-accent', lightBg: 'bg-accent/[7%]', chip: 'bg-accent/[12%]' },
+    { bg: 'bg-error', border: 'border-error', text: 'text-error', lightBg: 'bg-error/[7%]', chip: 'bg-error/[12%]' },
 ];
+
+const getSubjectColor = (subject: string) => {
+    const normalized = subject?.trim() || '';
+    return SUBJECT_COLORS[normalized] || FALLBACK_COLORS[Math.abs(normalized.length) % FALLBACK_COLORS.length];
+};
+
+const EventCard = ({ event, onSelect }: { event: ScheduleEvent; onSelect: () => void }) => {
+    const c = getSubjectColor(event.subject);
+    return (
+        <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={onSelect}
+            className={`relative rounded-lg cursor-pointer transition-all border ${c.border} ${c.lightBg} hover:shadow-md hover:z-10`}
+        >
+            <div className={`absolute top-0 start-0 w-full h-0.5 ${c.bg} rounded-t-lg`} />
+            <div className="p-1.5 pt-2">
+                <div className="flex items-center gap-1.5 mb-1">
+                    <div className={`flex items-center gap-1 px-1 py-0.5 rounded ${c.chip}`}>
+                        <div className={`w-1 h-1 rounded-full ${c.bg}`} />
+                        <span className={`text-[7px] font-bold ${c.text} leading-none`}>{event.subject}</span>
+                    </div>
+                    <span className="text-[6px] text-muted me-auto">{event.time}</span>
+                </div>
+                <p className="text-[9px] font-bold text-main leading-tight truncate">{event.studentName}</p>
+                <p className="text-[7px] text-muted truncate mt-0.5">{event.teacherName}</p>
+            </div>
+        </motion.div>
+    );
+};
+
+const CurrentTimeLine = () => {
+    const [now, setNow] = useState(new Date());
+    useEffect(() => {
+        const interval = setInterval(() => setNow(new Date()), 60000);
+        return () => clearInterval(interval);
+    }, []);
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const totalMinutes = hours * 60 + minutes;
+    const startMinutes = 8 * 60;
+    const endMinutes = 22 * 60;
+    const pct = Math.min(Math.max((totalMinutes - startMinutes) / (endMinutes - startMinutes), 0), 1);
+    if (pct <= 0 || pct >= 1) return null;
+    const nowLabel = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true });
+    return (
+        <div className="absolute right-0 left-0 z-20 pointer-events-none" style={{ top: `${pct * 100}%` }}>
+            <div className="flex items-center gap-1.5">
+                <div className="h-2 w-2 rounded-full bg-error shadow-[0_0_6px_rgba(239,68,68,0.6)] shrink-0" />
+                <div className="h-px flex-1 bg-error" />
+                <span className="text-[7px] font-bold text-error bg-card px-1 py-0.5 rounded-md shadow-sm ms-auto">{nowLabel}</span>
+            </div>
+        </div>
+    );
+};
 
 interface ScheduleGridProps {
     filteredEvents: ScheduleEvent[];
@@ -45,78 +107,106 @@ interface ScheduleGridProps {
     onSelectEvent: (event: ScheduleEvent) => void;
 }
 
+const areEventsOverlapping = (events: ScheduleEvent[]) => events.length > 1;
+
 export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: ScheduleGridProps) => {
-    const isToday = (day: string) => new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day;
+    const isToday = useCallback((day: string) => new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day, []);
     const getDayEvents = (events: ScheduleEvent[], day: string) => events.filter(e => e.day === day);
-    const getColorIndex = (event: ScheduleEvent) => Math.max(0, uniqueTeachers.indexOf(event.teacherName));
 
     return (
-        <div className="bg-surface border border-border overflow-hidden rounded-2xl mt-4">
+        <div className="bg-surface border border-border/40 overflow-hidden rounded-2xl mt-4 shadow-sm relative">
             <div className="overflow-x-auto custom-scrollbar">
-                <div className="min-w-[900px]">
-                    <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-border">
-                        <div className="sticky start-0 z-10 p-3 text-micro font-bold text-main border-e border-border bg-surface">الوقت</div>
-                        {DAYS_OF_WEEK.map((day) => (
-                            <div key={day} className={cn("p-3 text-micro font-bold text-center border-e border-border last:border-e-0 bg-surface", isToday(day) ? "text-main" : "text-main")}>
-                                <span>{day}</span>
-                                {isToday(day) && <span className="ms-1.5 w-1.5 h-1.5 rounded-full inline-block animate-pulse bg-primary" />}
+                <div className="min-w-[1000px] relative">
+                    {/* Sticky header row */}
+                    <div className="grid grid-cols-[100px_repeat(7,1fr)] border-b border-border/40 sticky top-0 z-30 bg-surface shadow-xs">
+                        <div className="sticky start-0 z-10 p-3 text-[9px] font-bold text-muted border-e border-border/40 bg-surface" />
+                        {DAYS_OF_WEEK.map((day, idx) => (
+                            <div key={day}
+                                className={`p-2.5 text-center border-e border-border/40 last:border-e-0 bg-surface ${isToday(day) ? 'bg-primary/[3%]' : ''}`}>
+                                <div className="text-xs font-bold text-main">{day}</div>
+                                <div className={`mt-1 flex items-center justify-center gap-1 ${isToday(day) ? 'text-primary' : ''}`}>
+                                    {isToday(day) && (
+                                        <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                                    )}
+                                </div>
                             </div>
                         ))}
                     </div>
+
+                    {/* Time slots */}
                     {TIME_SLOTS.map((slot, slotIdx) => {
                         const currentTimeSlots = filteredEvents.filter(e => e.hour === String(slot.hour) && e.period === slot.period);
-                        const isEmpty = currentTimeSlots.length === 0;
                         return (
-                            <div key={`${slot.hour}-${slot.period}`} className={cn("grid grid-cols-[80px_repeat(7,1fr)]", slotIdx % 2 === 0 ? "bg-surface" : "bg-background/30")}>
-                                <div className="sticky start-0 z-10 p-2 text-micro font-bold text-muted border-e border-b border-border flex items-center justify-center h-full bg-inherit">
-                                    <Clock size={10} className="me-1 inline" />{slot.label}
+                            <div key={`${slot.hour}-${slot.period}`}
+                                className={`grid grid-cols-[100px_repeat(7,1fr)] ${slotIdx % 2 === 0 ? 'bg-surface' : 'bg-background/20'}`}>
+                                {/* Time label */}
+                                <div className="sticky start-0 z-10 p-1.5 border-e border-border/40 border-b border-border/40 bg-surface flex flex-col items-center justify-center">
+                                    <Clock size={10} className="text-muted" />
+                                    <span className="text-[10px] font-bold text-muted tabular-nums mt-0.5">{slot.label}</span>
                                 </div>
+
+                                {/* Day cells */}
                                 {DAYS_OF_WEEK.map((day) => {
                                     const dayEvents = getDayEvents(currentTimeSlots, day);
-                                    const event = dayEvents[0];
-                                    if (event) {
-                                        const colorIdx = getColorIndex(event);
-                                        const accent = ACCENT_COLORS[colorIdx % ACCENT_COLORS.length];
-                                        return (
-                                            <div key={`${day}-${slot.hour}`}
-                                                onClick={() => onSelectEvent(event)}
-                                                className={`p-1.5 border-e last:border-e-0 border-b border-border cursor-pointer transition-all hover:z-10 hover:shadow-sm hover:-translate-y-0.5 relative group min-h-[72px] ${accent.bgLight}`}>
-                                                <div className={`absolute top-0 start-0 w-full h-0.5 ${accent.bg}`} />
-                                                <div className="flex items-start gap-1.5 h-full">
-                                                    <div className={`w-1 h-full shrink-0 mt-0.5 ${accent.bg}`} />
-                                                    <div className="min-w-0 flex-1">
-                                                        <p className={`text-micro font-bold leading-tight mb-0.5 truncate ${accent.text}`}>{event.studentName}</p>
-                                                        <p className="text-micro font-bold text-muted truncate">{event.subject}</p>
-                                                        <p className="text-micro font-bold text-muted truncate">{event.teacherName}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    }
+                                    const overlapping = areEventsOverlapping(dayEvents);
+                                    const displayedEvents = overlapping ? dayEvents.slice(0, 2) : dayEvents;
+                                    const extraCount = overlapping ? dayEvents.length - 2 : 0;
+
                                     return (
                                         <div key={`${day}-${slot.hour}`}
-                                            className="p-2 border-e last:border-e-0 border-b border-border min-h-[72px]">
-                                            {!isEmpty && <div className="text-micro font-bold text-muted text-center">—</div>}
+                                            className={`relative border-e border-border/40 last:border-e-0 border-b border-border/40 min-h-[80px] p-0.5 transition-colors
+                                                ${isToday(day) ? 'bg-primary/[2%]' : ''}
+                                                group`}>
+                                            {/* Empty cell with + add button */}
+                                            {dayEvents.length === 0 ? (
+                                                <div className="h-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                                    <div className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center">
+                                                        <Plus size={10} className="text-primary" />
+                                                    </div>
+                                                    <span className="text-[7px] text-muted mt-0.5">إضافة حصة</span>
+                                                </div>
+                                            ) : (
+                                                <div className="space-y-0.5 p-0.5 h-full">
+                                                    {/* Cards */}
+                                                    {displayedEvents.map(event => (
+                                                        <EventCard key={event.id} event={event} onSelect={() => onSelectEvent(event)} />
+                                                    ))}
+                                                    {extraCount > 0 && (
+                                                        <button onClick={() => onSelectEvent(dayEvents[0])}
+                                                            className="w-full py-0.5 text-[7px] font-bold text-primary bg-primary/[6%] hover:bg-primary/[10%] rounded transition-colors">
+                                                            +{extraCount} أخرى
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            )}
                                         </div>
                                     );
                                 })}
                             </div>
                         );
                     })}
+
+                    {/* Current time line */}
+                    <CurrentTimeLine />
                 </div>
             </div>
-            <div className="border-t border-border p-4 flex flex-wrap items-center gap-4 bg-background/50 no-print">
-                <span className="text-micro font-bold text-muted">دليل الألوان:</span>
-                {uniqueTeachers.map((teacher, idx) => {
-                    const accent = ACCENT_COLORS[idx % ACCENT_COLORS.length];
-                    return (
-                            <div key={idx} className="flex items-center gap-1.5">
-                            <div className={`w-2 h-2 ${accent.bg}`} />
-                            <span className="text-micro font-bold text-muted">{teacher}</span>
-                        </div>
-                    );
-                })}
-                <span className="text-micro font-bold text-muted ms-auto">{filteredEvents.length} حصة</span>
+
+            {/* Legend */}
+            <div className="border-t border-border/40 p-3 flex flex-wrap items-center gap-2 bg-background/30 no-print">
+                <span className="text-[9px] font-bold text-muted ms-1">دليل المواد:</span>
+                {Object.entries(SUBJECT_COLORS).slice(0, 8).map(([subject, colors]) => (
+                    <div key={subject} className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-card border border-border/30">
+                        <div className={`w-1.5 h-1.5 rounded-full ${colors.bg}`} />
+                        <span className="text-[7px] font-bold text-muted">{subject}</span>
+                    </div>
+                ))}
+                {uniqueTeachers.length > 0 && (
+                    <>
+                        <span className="text-[9px] font-bold text-muted me-1 ms-2">|</span>
+                        <span className="text-[7px] text-muted">{uniqueTeachers.length} معلمة</span>
+                    </>
+                )}
+                <span className="text-[7px] text-muted me-auto">{filteredEvents.length} حصة</span>
             </div>
         </div>
     );

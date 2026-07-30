@@ -1,11 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Search, Users, Activity } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal';
 import { AttendanceStats } from '../features/attendance/components/AttendanceStats';
 import { AttendanceHeader } from '../features/attendance/components/AttendanceHeader';
 import { AttendanceFilters } from '../features/attendance/components/AttendanceFilters';
+import { AttendanceLiveFeed } from '../features/attendance/components/AttendanceLiveFeed';
 import { TeacherStudentCard } from '../features/attendance/components/TeacherStudentCard';
 import { AttendanceHistoryModal } from '../features/attendance/components/AttendanceHistoryModal';
 import type { PeriodFilter } from '../features/attendance/components/AttendanceFilters';
@@ -134,11 +136,12 @@ export const Attendance = () => {
             <div className="hidden md:block max-w-page mx-auto px-2 space-y-4">
                 <AttendanceHeader date={date} onDateChange={setDate}
                     stats={{ todayTotal: stats.todayTotal, totalCompleted: stats.totalCompleted }}
-                    isTeacher={isTeacher} />
+                    isTeacher={isTeacher} teacherCount={uniqueTeachers.length} />
 
                 <AttendanceStats
                     stats={periodStats ? { ...stats, todayCompleted: periodStats.completed, todayCancelled: periodStats.cancelled, todayScheduled: periodStats.scheduled } : stats}
-                    teacherStats={teacherStats} isTeacher={isTeacher} periodLabel={periodLabel} />
+                    teacherStats={teacherStats} isTeacher={isTeacher} periodLabel={periodLabel}
+                    prevCompleted={periodStats?.prevCompleted} prevCancelled={periodStats?.prevCancelled} />
 
                 {isTeacher && <BulkAttendanceButton matchedEnrollments={matchedEnrollments} allSessions={allSessions}
                     logDate={logDate} logAttendance={logAttendance} />}
@@ -194,12 +197,17 @@ export const Attendance = () => {
                             </SectionCard>
                         </div>
                     ) : (
-                        <AdminTeacherGroupList uniqueTeachers={uniqueTeachers} filterTeacher={filterTeacher}
-                            students={students} searchTerm={searchTerm} filteredSessions={filteredSessions}
-                            date={date} isLogging={isLogging}
-                            onLogAttendance={(s, e) => { setLogDate(date); setSecureModalData({ student: s, enrollment: e }); }}
-                            onViewHistory={handleViewHistory}
-                            onUpdateStatus={handleUpdateStatus} />
+                        <>
+                            <AdminTeacherGroupList uniqueTeachers={uniqueTeachers} filterTeacher={filterTeacher}
+                                students={students} searchTerm={searchTerm} filteredSessions={filteredSessions}
+                                date={date} isLogging={isLogging}
+                                onLogAttendance={(s, e) => { setLogDate(date); setSecureModalData({ student: s, enrollment: e }); }}
+                                onViewHistory={handleViewHistory}
+                                onUpdateStatus={handleUpdateStatus} />
+                            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                                <AttendanceLiveFeed sessions={filteredSessions} />
+                            </motion.div>
+                        </>
                     )}
                 </div>
 
