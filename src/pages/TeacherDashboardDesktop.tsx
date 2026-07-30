@@ -45,8 +45,9 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
     const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
 
     return (
-        <div className="max-w-page mx-auto px-4 space-y-3 md:space-y-4 py-4 md:py-6">
+        <>
             <TeacherDashboardHeader logout={logout} />
+            <div className="max-w-page mx-auto px-4 space-y-3 md:space-y-4 pb-28 pt-4">
 
             <motion.div {...fadeUp(0.04)}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
@@ -113,6 +114,7 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
             {selectedStudentForReport && (
                 <MonthlyReportPreview isOpen={!!selectedStudentForReport} onClose={() => setSelectedStudentForReport(null)} student={selectedStudentForReport} onShare={() => {}} />
             )}
-        </div>
+            </div>
+        </>
     );
 };
