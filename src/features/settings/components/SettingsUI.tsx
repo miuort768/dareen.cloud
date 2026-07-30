@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import type { LucideIcon } from 'lucide-react';
 import { RefreshCw } from 'lucide-react';
 import { cn } from '../../../lib/utils';
@@ -16,7 +15,7 @@ export const AVAILABLE_PERMISSIONS = [
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-card border border-border rounded-2xl p-5',
+        'bg-card border border-border/30 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300',
         className
     )}>
         {children}
@@ -24,19 +23,19 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
 );
 
 export const SectionTitle = ({ icon: Icon, label, sub }: { icon: LucideIcon; label: string; sub?: string }) => (
-    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-border">
-        <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft">
-            <Icon size={16} className="text-primary" />
+    <div className="flex items-center gap-3 mb-5 pb-4 border-b border-border/30">
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-primary/10">
+            <Icon size={17} className="text-primary" />
         </div>
         <div>
             <p className="text-sm font-bold text-main">{label}</p>
-            {sub && <p className="text-micro font-bold text-muted mt-0.5">{sub}</p>}
+            {sub && <p className="text-[11px] font-bold text-muted mt-0.5">{sub}</p>}
         </div>
     </div>
 );
 
 export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className="block text-xs font-bold text-muted mb-1.5 uppercase tracking-wide">
+    <label className="block text-[11px] font-bold text-muted mb-1.5">
         {children}
     </label>
 );
@@ -45,9 +44,10 @@ export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) =
     <input
         {...props}
         className={cn(
-            'w-full bg-surface border border-border',
-            'px-3 py-2.5 text-sm font-bold text-main',
-            'focus:outline-none focus:border-primary focus:ring-2 focus:ring-focus transition-all',
+            'w-full bg-background border border-border/40',
+            'px-3.5 py-2.5 text-sm font-bold text-main',
+            'focus:outline-none focus:border-primary focus:ring-2 focus:ring-focus/50 transition-all',
+            'placeholder:text-muted/60',
             props.className
         )}
     />
@@ -57,9 +57,10 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
     <textarea
         {...props}
         className={cn(
-            'w-full bg-surface border border-border',
-            'px-3 py-2.5 text-sm font-bold text-main resize-none',
-            'focus:outline-none focus:border-primary focus:ring-2 focus:ring-focus transition-all',
+            'w-full bg-background border border-border/40',
+            'px-3.5 py-2.5 text-sm font-bold text-main resize-none',
+            'focus:outline-none focus:border-primary focus:ring-2 focus:ring-focus/50 transition-all',
+            'placeholder:text-muted/60',
             props.className
         )}
     />
@@ -72,11 +73,11 @@ export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () =
         onClick={onChange}
         className={cn(
             'w-11 h-6 rounded-full relative transition-all duration-300 shrink-0',
-            checked ? 'bg-primary' : 'bg-border'
+            checked ? 'bg-primary shadow-sm shadow-primary/30' : 'bg-border/60'
         )}
     >
         <div className={cn(
-            'absolute top-0.5 w-5 h-5 bg-card rounded-full shadow transition-all duration-300',
+            'absolute top-0.5 w-5 h-5 bg-white rounded-full shadow-md transition-all duration-300',
             checked ? 'translate-x-5' : 'translate-x-0.5'
         )} />
     </button>
@@ -88,8 +89,8 @@ export const PrimaryBtn = ({ onClick, loading, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-primary',
-            'text-on-primary text-xs font-bold px-4 py-2.5 active:scale-95 transition-all',
+            'flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover',
+            'text-on-primary text-xs font-bold px-5 py-2.5 rounded-xl active:scale-95 transition-all shadow-sm hover:shadow-md',
             className
         )}
     >
@@ -103,9 +104,8 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-card border border-border',
-            'hover:bg-surface text-muted',
-            'text-xs font-bold px-4 py-2.5 active:scale-95 transition-all',
+            'flex items-center justify-center gap-2 bg-card border border-border/40 hover:bg-surface',
+            'text-muted hover:text-main text-xs font-bold px-5 py-2.5 rounded-xl active:scale-95 transition-all',
             className
         )}
     >
@@ -119,9 +119,8 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 border border-error',
-            'hover:bg-error hover:border-error hover:text-on-error text-error bg-error-soft',
-            'text-xs font-bold px-4 py-2.5 active:scale-95 transition-all',
+            'flex items-center justify-center gap-2 border-2 border-error/30 bg-error/10',
+            'hover:bg-error hover:text-on-error text-error text-xs font-bold px-5 py-2.5 rounded-xl active:scale-95 transition-all shadow-sm hover:shadow-md',
             className
         )}
     >
@@ -132,14 +131,14 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
 export const ToggleRow = ({
     icon: Icon, label, sub, checked, onChange
 }: { icon: LucideIcon; label: string; sub?: string; checked: boolean; onChange: () => void }) => (
-    <div className="flex items-center justify-between py-3 px-4 bg-surface border border-border">
+    <div className="flex items-center justify-between py-3 px-4 bg-background border border-border/30 rounded-xl">
         <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-primary-soft">
-                <Icon size={14} className="text-primary" />
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary/10">
+                <Icon size={15} className="text-primary" />
             </div>
             <div>
                 <p className="text-xs font-bold text-main">{label}</p>
-                {sub && <p className="text-micro font-bold text-muted mt-0.5">{sub}</p>}
+                {sub && <p className="text-[11px] font-bold text-muted mt-0.5">{sub}</p>}
             </div>
         </div>
         <Toggle checked={checked} onChange={onChange} />
