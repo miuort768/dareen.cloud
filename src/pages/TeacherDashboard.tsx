@@ -9,7 +9,7 @@ export const TeacherDashboard = () => {
     useEffect(() => { document.title = 'لوحة تحكم المعلمة | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const logout = useLogout();
-    const { stats, tasks, loading, rawSessions, lowBalanceStudents, focusStudents } = useDashboardData(currentUser);
+    const { stats, tasks, loading, rawSessions, lowBalanceStudents, focusStudents, fetchDashboardData } = useDashboardData(currentUser);
 
     if (!currentUser || currentUser.role !== 'teacher') return <div className="min-h-full bg-surface font-sans" />;
     if (loading) return <PageLoader />;
@@ -22,7 +22,7 @@ export const TeacherDashboard = () => {
                 <TeacherDashboardDesktop currentUser={currentUser} stats={stats} rawSessions={rawSessions} tasks={tasks} lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents} timeline={timeline} logout={logout} />
             </div>
             <div className="block md:hidden">
-                <TeacherDashboardMobile currentUser={currentUser} stats={stats} rawSessions={rawSessions} tasks={tasks} lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents} timeline={timeline} />
+                <TeacherDashboardMobile currentUser={currentUser} stats={stats} rawSessions={rawSessions} tasks={tasks} lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents} timeline={timeline} onRefresh={fetchDashboardData} />
             </div>
         </>
     );

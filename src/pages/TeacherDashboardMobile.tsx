@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles, Wallet, ArrowLeft, Loader2 } from 'lucide-react';
+import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles, Wallet, ArrowLeft, Loader2, RefreshCw } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { cn } from '../lib/utils';
@@ -31,6 +31,7 @@ interface TeacherDashboardMobileProps {
     lowBalanceStudents: LowBalanceStudent[];
     focusStudents: { id: string; name: string; reason: string; type: string }[];
     timeline: { id: string; studentName: string; time: string; subject: string; status: string }[];
+    onRefresh: () => void;
 }
 
 const tabs = [
@@ -41,17 +42,66 @@ const tabs = [
 
 const glass = "bg-surface/80 backdrop-blur-xl border-b border-border";
 
-export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline }: TeacherDashboardMobileProps) => {
+export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline, onRefresh }: TeacherDashboardMobileProps) => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<'home' | 'schedule' | 'reports'>('home');
     const handleTabChange = (tab: 'home' | 'schedule' | 'reports') => { triggerHaptic('light'); setActiveTab(tab); };
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [pullDistance, setPullDistance] = useState(0);
+    const [startY, setStartY] = useState(0);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const handleRefresh = async () => {
+        triggerHaptic('medium');
+        setIsRefreshing(true);
+        try { await onRefresh(); } catch (e) { console.error(e); }
+        setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 400);
+    };
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        const scrollY = containerRef.current?.scrollTop ?? window.scrollY;
+        if (scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY);
+    };
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (startY === 0 || isRefreshing) return;
+        const scrollY = containerRef.current?.scrollTop ?? window.scrollY;
+        if (scrollY > 0) return;
+        const diff = e.touches[0].clientY - startY;
+        if (diff > 0) setPullDistance(Math.min(diff * 0.4, 90));
+    };
+    const handleTouchEnd = async () => {
+        if (pullDistance > 55) { await handleRefresh(); }
+        else { setPullDistance(0); setStartY(0); }
+    };
     const [briefingStudent, setBriefingStudent] = useState<{ id?: string; name?: string; grade?: string; notes?: string; totalPoints?: number } | null>(null);
     const [selectedStudentForReport, setSelectedStudentForReport] = useState<{ id: string; name: string; grade: string; subject: string; points: number; attendance: number; sessionsCompleted: number; lastNotes: string[] } | null>(null);
 
     const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
 
     return (
-        <div className="min-h-full pb-28 relative bg-background font-sans" dir="rtl">
+        <div
+            ref={containerRef}
+            className="min-h-full pb-28 relative bg-background font-sans overflow-x-hidden"
+            dir="rtl"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+        >
+            {/* Pull to refresh indicator */}
+            <motion.div
+                animate={{ height: isRefreshing ? 44 : pullDistance }}
+                className="overflow-hidden flex items-center justify-center"
+            >
+                <div className="flex items-center gap-2 text-primary font-bold text-xs">
+                    {isRefreshing ? (
+                        <><Loader2 size={16} className="animate-spin" /><span>جاري التحديث...</span></>
+                    ) : pullDistance > 40 ? (
+                        <><RefreshCw size={16} className="animate-pulse" /><span>أفلت للتحديث</span></>
+                    ) : (
+                        <span className="text-muted">اسحب للتحديث</span>
+                    )}
+                </div>
+            </motion.div>
 
             {/* Frosted Glass Header */}
             <div className={cn("sticky top-0 z-50 transition-all duration-500", glass)}>
@@ -66,7 +116,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 <p className="text-[11px] font-medium text-muted">معلم</p>
                             </div>
                         </div>
-                        <div className="w-8 h-8 rounded-xl bg-on-primary/10 flex items-center justify-center relative">
+                        <div className="w-8 h-8 rounded-xl bg-primary-soft flex items-center justify-center relative">
                             <Bell size={15} className="text-muted" />
                             <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface" />
                         </div>
