@@ -60,7 +60,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                         <h3 className="text-2xl font-bold text-main mb-1 uppercase tracking-tighter italic">
                             بث إشعار فوري
                         </h3>
-                        <p className="text-muted dark:text-muted font-bold text-micro mb-8 uppercase tracking-widest">
+                        <p className="text-muted font-bold text-micro mb-8 uppercase tracking-widest">
                             إلى: <span className="text-[var(--primary-color,var(--bg-primary))]">{recipientName}</span>
                         </p>
 

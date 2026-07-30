@@ -172,7 +172,7 @@ export const Blog = () => {
     const isFoundationStyle = selectedType === 'foundation' || selectedType === 'notes';
     const isCoursesStyle = selectedType === 'more';
     const cardStyle = selectedType === 'foundation'
-        ? { gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]', badge: 'مذكرة تأسيسية', icon: Zap, sourceText: 'text-warning hover:text-warning', fileSizeBadge: 'bg-warning-light text-warning border-warning/50' }
+        ? { gradient: 'from-warning to-warning', badge: 'مذكرة تأسيسية', icon: Zap, sourceText: 'text-warning hover:text-warning', fileSizeBadge: 'bg-warning-light text-warning border-warning/50' }
         : { gradient: 'from-primary to-primary', badge: 'مذكرة', icon: FileText, sourceText: 'text-primary hover:text-primary', fileSizeBadge: 'bg-primary-soft text-primary border-primary/50' };
     if (isFoundationStyle) return <FoundationCard key={post.id} post={post} cardStyle={cardStyle} foundationBtnState={foundationBtnState} handleButtonClick={handleFoundationButtonClick} i={i} />;
     return <RegularCard key={post.id} post={post} isCoursesStyle={isCoursesStyle} i={i} />;

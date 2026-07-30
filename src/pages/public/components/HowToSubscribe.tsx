@@ -44,7 +44,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
         <section className="relative overflow-hidden bg-surface dark:bg-card rounded-3xl shadow-inner">
             {/* Soft glow background */}
             <div className="absolute top-20 -start-20 w-60 h-60 bg-accent/10 dark:bg-accent/20 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-40 -end-20 w-72 h-72 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-40 -end-20 w-72 h-72 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 px-4 py-6">
                 {/* Status Bar */}
@@ -68,10 +68,10 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                 </div>
 
                 {/* Title */}
-                <h2 className="text-xl font-black text-main dark:text-main leading-tight mb-1">
+                <h2 className="text-xl font-black text-main leading-tight mb-1">
                     كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary-hover">المعهد؟</span>
                 </h2>
-                <p className="text-xs text-muted dark:text-muted font-medium mb-5 leading-relaxed">
+                <p className="text-xs text-muted font-medium mb-5 leading-relaxed">
                     اختر الطريقة التي تناسبك وابدأ رحلتك التعليمية معنا
                 </p>
 
@@ -80,7 +80,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                     {steps.map((s, i) => (
                         <div key={`step-${i}`} className="bg-card rounded-2xl border border-border shadow-sm p-3.5 flex flex-col items-center text-center relative">
                             {/* Number Badge */}
-                            <div className="absolute -top-2 -start-2 w-5 h-5 rounded-full bg-primary dark:bg-primary flex items-center justify-center shadow-md">
+                            <div className="absolute -top-2 -start-2 w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow-md">
                                 <span className="text-micro font-black text-on-primary">{s.num}</span>
                             </div>
                             {/* Icon Box */}
@@ -88,9 +88,9 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                                 <s.icon size={18} className="text-on-primary" />
                             </div>
                             {/* Title */}
-                            <h3 className="text-xs font-black text-main dark:text-main mb-0.5">{s.title}</h3>
+                            <h3 className="text-xs font-black text-main mb-0.5">{s.title}</h3>
                             {/* Desc */}
-                            <p className="text-micro text-main dark:text-main font-medium leading-tight">{s.desc}</p>
+                            <p className="text-micro text-main font-medium leading-tight">{s.desc}</p>
                         </div>
                     ))}
                 </div>
@@ -109,8 +109,8 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                                 {item.icon === 'Hash' && <Hash size={12} className="text-on-primary" />}
                             </div>
                             <div>
-                                <span className="text-xs font-black text-main dark:text-main">{item.title}</span>
-                                <p className="text-micro text-muted dark:text-muted">{item.desc}</p>
+                                <span className="text-xs font-black text-main">{item.title}</span>
+                                <p className="text-micro text-muted">{item.desc}</p>
                             </div>
                         </div>
                     ))}

@@ -43,12 +43,12 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
     return (
         <div className={cn(
-            "w-full lg:w-[400px] flex flex-col bg-card shrink-0 overflow-hidden relative border-s border-border dark:border-border max-w-full overflow-x-hidden",
+            "w-full lg:w-[400px] flex flex-col bg-card shrink-0 overflow-hidden relative border-s border-border max-w-full overflow-x-hidden",
             selectedConv ? "hidden lg:flex" : "flex"
         )}>
             <div className="h-[60px] bg-surface dark:bg-card px-4 flex items-center justify-between shrink-0 border-b border-border/50 dark:border-white/5">
                 <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-success/30 dark:border-success/30 shadow-sm shrink-0">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-success/30 shadow-sm shrink-0">
                         <Image 
                             src="/chat-avatar.webp" 
                             alt="avatar" 
@@ -140,7 +140,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                                     </div>
                                 </div>
 
-                                <div className="flex-1 min-w-0 border-b border-border dark:border-border pb-3 mt-1 text-start">
+                                <div className="flex-1 min-w-0 border-b border-border pb-3 mt-1 text-start">
                                     <div className="flex items-center justify-between mb-0.5">
                                         <div className="flex items-center gap-1.5 overflow-hidden">
                                             {conv.isGroup && <ShieldCheck size={14} className="text-muted shrink-0" />}

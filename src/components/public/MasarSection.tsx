@@ -79,8 +79,8 @@ export const MasarSection = () => {
             {/* ─── Mobile version ─── */}
             <section className="block md:hidden relative overflow-hidden bg-background pt-3 pb-4">
                 {/* Decorative blobs */}
-                <div className="absolute top-20 -start-20 w-60 h-60 bg-accent/10 dark:bg-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
-                <div className="absolute bottom-40 -end-20 w-72 h-72 bg-primary/10 dark:bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+                <div className="absolute top-20 -start-20 w-60 h-60 bg-accent/10 rounded-full blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-40 -end-20 w-72 h-72 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
 
                 <div className="relative z-10 px-4">
                     {/* Hero Banner Image */}
@@ -100,7 +100,7 @@ export const MasarSection = () => {
                             <p className="text-muted dark:text-white/70 text-xs font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
                         </div>
                         <div className="w-10 h-10 rounded-2xl bg-primary-soft dark:bg-primary/30 flex items-center justify-center">
-                            <Download size={20} className="text-primary dark:text-primary" />
+                            <Download size={20} className="text-primary" />
                         </div>
                     </div>
 

@@ -20,8 +20,8 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         <Zap size={12} className="text-warning" />
                         <span className="text-micro font-black ">ابدأ رحلتك</span>
                     </div>
-                    <h2 className="text-xl md:text-5xl font-black text-main dark:text-main font-heading">
-                        كيف تشترك في <span className="text-primary dark:text-primary">المعهد؟</span>
+                    <h2 className="text-xl md:text-5xl font-black text-main font-heading">
+                        كيف تشترك في <span className="text-primary">المعهد؟</span>
                     </h2>
                 </div>
                 
@@ -81,16 +81,16 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                     <div className="scale-75 md:scale-100">
                                         {step.icon}
                                     </div>
-                                    <span className="absolute -top-1 -start-1 md:-top-2 md:-start-2 w-4 h-4 md:w-6 md:h-6 bg-surface dark:bg-card text-main dark:text-main rounded-full flex items-center justify-center text-micro md:text-micro font-black shadow-lg border border-border dark:border-border">
+                                    <span className="absolute -top-1 -start-1 md:-top-2 md:-start-2 w-4 h-4 md:w-6 md:h-6 bg-surface dark:bg-card text-main rounded-full flex items-center justify-center text-micro md:text-micro font-black shadow-lg border border-border">
                                         {step.id}
                                     </span>
                                 </div>
 
                                 <div className="text-center px-1 md:px-4 w-full">
-                                    <div className="text-xs md:text-sm font-black text-main dark:text-main mb-1 group-hover:text-primary dark:group-hover:text-primary transition-colors">
+                                    <div className="text-xs md:text-sm font-black text-main mb-1 group-hover:text-primary transition-colors">
                                         {step.title}
                                     </div>
-                                    <p className="hidden sm:block text-micro md:text-micro text-main dark:text-main leading-tight font-bold">
+                                    <p className="hidden sm:block text-micro md:text-micro text-main leading-tight font-bold">
                                         {step.desc}
                                     </p>
                                 </div>
@@ -105,7 +105,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative px-8 py-3.5 bg-primary dark:bg-primary text-on-primary font-black text-sm rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
+                            className="group relative px-8 py-3.5 bg-primary text-on-primary font-black text-sm rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="relative flex items-center gap-2">

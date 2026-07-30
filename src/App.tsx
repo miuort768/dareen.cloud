@@ -137,13 +137,13 @@ function App() {
   if (isLoading || isSettingsLoading) {
     if (loadTimeout) {
       return (
-        <div className="fixed inset-0 bg-gradient-to-br from-background to-primary dark:from-background dark:to-primary flex items-center justify-center p-6" dir="rtl">
+        <div className="fixed inset-0 bg-gradient-to-br from-background to-primary flex items-center justify-center p-6" dir="rtl">
           <div className="bg-white dark:bg-surface rounded-2xl shadow-2xl border border-border p-8 max-w-md w-full text-center space-y-4">
             <div className="w-16 h-16 mx-auto bg-warning-light dark:bg-warning/30 rounded-2xl flex items-center justify-center">
               <span className="text-3xl">⏳</span>
             </div>
             <h2 className="text-xl font-bold text-main">يستغرق التحميل وقتاً أطول من المعتاد</h2>
-            <p className="text-sm text-muted dark:text-muted">قد يكون الاتصال بالسيرفر بطيئاً. حاول مرة أخرى أو تواصل مع الدعم الفني.</p>
+            <p className="text-sm text-muted">قد يكون الاتصال بالسيرفر بطيئاً. حاول مرة أخرى أو تواصل مع الدعم الفني.</p>
             <div className="flex gap-3 justify-center pt-2">
               <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-primary/20">
                 إعادة التحميل

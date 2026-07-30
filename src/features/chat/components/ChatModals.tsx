@@ -89,7 +89,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                     {step === 'select' ? (
                         <>
                             {/* Search Bar - Now always visible in select step */}
-                            <div className="p-3 border-b border-border dark:border-border">
+                            <div className="p-3 border-b border-border">
                                 <div className="relative">
                                     <input
                                         type="text"
@@ -105,10 +105,10 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
                             {/* Selected Chips Horizontal List */}
                             {selectedUsers.length > 0 && (
-                                <div className="p-3 border-b border-border dark:border-border flex gap-3 overflow-x-auto custom-scrollbar bg-background/50 dark:bg-card/50 grow-0 shrink-0 min-h-[85px]">
+                                <div className="p-3 border-b border-border flex gap-3 overflow-x-auto custom-scrollbar bg-background/50 dark:bg-card/50 grow-0 shrink-0 min-h-[85px]">
                                     {selectedUsersObjects.map(user => (
                                         <div key={user.id} className="flex flex-col items-center gap-1 shrink-0 relative px-1">
-                                            <div className="w-12 h-12 bg-primary-soft dark:bg-card rounded-full flex items-center justify-center relative shadow-sm text-primary dark:text-primary font-medium text-xs">
+                                            <div className="w-12 h-12 bg-primary-soft dark:bg-card rounded-full flex items-center justify-center relative shadow-sm text-primary font-medium text-xs">
                                                 {user.name.charAt(0)}
                                                 <button 
                                                     onClick={() => setSelectedUsers(selectedUsers.filter(id => id !== user.id))}
@@ -118,7 +118,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                                     <X size={12} />
                                                 </button>
                                             </div>
-                                            <span className="text-micro font-normal text-muted dark:text-muted truncate w-14 text-center">{user.name}</span>
+                                            <span className="text-micro font-normal text-muted truncate w-14 text-center">{user.name}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -129,7 +129,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                 {!isCreatingGroup && (
                                     <button 
                                         onClick={() => setIsCreatingGroup(true)}
-                                        className="w-full p-4 flex items-center gap-4 hover:bg-surface dark:hover:bg-hover transition-colors border-b border-border dark:border-border"
+                                        className="w-full p-4 flex items-center gap-4 hover:bg-surface dark:hover:bg-hover transition-colors border-b border-border"
                                     >
                                         <div className="w-12 h-12 bg-success text-on-success rounded-full flex items-center justify-center shadow-sm">
                                             <UsersIcon size={24} />
@@ -155,21 +155,21 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                             role="button"
                                             tabIndex={0}
                                             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (isCreatingGroup || isEditingGroup) { setSelectedUsers(selectedUsers.includes(user.id) ? selectedUsers.filter(id => id !== user.id) : [...selectedUsers, user.id]); } else { handleCreateDirectChat(user.id); } } }}
-                                            className="p-4 flex items-center justify-between cursor-pointer hover:bg-surface dark:hover:bg-hover transition-colors border-b border-border dark:border-border"
+                                            className="p-4 flex items-center justify-between cursor-pointer hover:bg-surface dark:hover:bg-hover transition-colors border-b border-border"
                                         >
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 bg-primary-soft dark:bg-card rounded-full flex items-center justify-center font-medium text-primary dark:text-primary shadow-sm transition-all border-2 border-white dark:border-border">
+                                                <div className="w-12 h-12 bg-primary-soft dark:bg-card rounded-full flex items-center justify-center font-medium text-primary shadow-sm transition-all border-2 border-white dark:border-border">
                                                     {user.name.charAt(0)}
                                                 </div>
                                                 <div className="text-start">
                                                     <p className="font-normal text-base text-main">{user.name}</p>
-                                                    <p className="text-xs text-muted dark:text-muted">@{user.username}</p>
+                                                    <p className="text-xs text-muted">@{user.username}</p>
                                                 </div>
                                             </div>
                                             {(isCreatingGroup || isEditingGroup) && (
                                                 <div className={cn(
                                                     "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
-                                                    selectedUsers.includes(user.id) ? "bg-success border-success text-on-success" : "border-border dark:border-border"
+                                                    selectedUsers.includes(user.id) ? "bg-success border-success text-on-success" : "border-border"
                                                 )}>
                                                     {selectedUsers.includes(user.id) && <Check size={16} />}
                                                 </div>
@@ -222,7 +222,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                 </div>
 
                                 <div className="pt-6">
-                                    <p className="text-sm text-muted dark:text-muted mb-4 text-start">الأعضاء: {selectedUsers.length}</p>
+                                    <p className="text-sm text-muted mb-4 text-start">الأعضاء: {selectedUsers.length}</p>
                                     <div className="flex flex-wrap gap-2 justify-end">
                                         {selectedUsersObjects.slice(0, 5).map(u => (
                                             <span key={u.id} className="bg-surface dark:bg-card text-xs font-normal px-3 py-1 rounded-full dark:text-muted whitespace-nowrap">

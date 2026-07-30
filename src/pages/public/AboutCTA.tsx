@@ -38,7 +38,7 @@ export const AboutCTA = () => {
 
                                     <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                         <Link to="/courses" onClick={() => window.scrollTo(0, 0)}
-                                            className="group relative px-10 py-4 font-black text-base rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-3 bg-gradient-to-br from-warning to-[var(--text-warning)] text-[var(--text-on-primary)] shadow-xl">
+                                            className="group relative px-10 py-4 font-black text-base rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-3 bg-gradient-to-br from-warning to-[var(--text-warning)] text-on-primary shadow-xl">
                                             <span className="relative z-10">ابدأ رحلتك الآن</span>
                                             <ArrowLeft size={18} className="relative z-10 group-hover:-translate-x-1.5 transition-transform" />
                                         </Link>

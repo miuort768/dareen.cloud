@@ -208,12 +208,12 @@ export const Chat = () => {
                                 <p className="text-micro text-primary font-medium uppercase tracking-label">تواصل آمن • مشفر</p>
                                 <span className="h-[1px] w-8 bg-primary/30"></span>
                             </div>
-                            <p className="text-sm text-muted dark:text-muted max-w-sm mx-auto leading-relaxed font-medium">
+                            <p className="text-sm text-muted max-w-sm mx-auto leading-relaxed font-medium">
                                 أرسل واستقبل الرسائل على التابلت والكمبيوتر بتجربة متكاملة.
                             </p>
                         </div>
                         
-                        <div className="absolute bottom-10 flex items-center gap-2 text-muted dark:text-muted">
+                        <div className="absolute bottom-10 flex items-center gap-2 text-muted">
                              <div                             className={cn("w-1.5 h-1.5 rounded-full animate-pulse", isConnected ? "bg-success shadow-[0_0_6px_var(--bg-success)]" : "bg-error")}></div>
                              <span className="text-micro font-medium uppercase tracking-widest">{isConnected ? "النظام متصل وآمن" : "غير متصل"}</span>
                         </div>

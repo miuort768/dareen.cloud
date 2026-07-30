@@ -35,7 +35,7 @@ export const FAQSection = () => {
             </div>
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-4 md:mb-8">
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-primary/30 backdrop-blur-sm border border-border dark:border-border rounded-full mb-2 mx-auto shadow-sm">
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-primary/30 backdrop-blur-sm border border-border rounded-full mb-2 mx-auto shadow-sm">
                         <HelpCircle size={12} className="text-primary" />
                         <span className="text-micro font-black text-muted dark:text-main/70">لديك استفسار؟</span>
                     </div>
@@ -78,24 +78,24 @@ export const FAQSection = () => {
                         const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <HelpCircle size={80} />];
                         const isOpen = openIdx === idx;
                         return (
-                            <div key={idx} className="relative bg-surface dark:bg-card border border-border dark:border-border rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-primary transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-primary/20">
-                                <div className="absolute -bottom-4 -end-4 text-muted dark:text-muted opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                            <div key={idx} className="relative bg-surface dark:bg-card border border-border rounded-2xl overflow-hidden group hover:border-primary transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-primary/20">
+                                <div className="absolute -bottom-4 -end-4 text-muted opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none">
                                     {icons[idx % icons.length]}
                                 </div>
                                 <div className="absolute top-0 start-0 w-24 h-24 bg-primary/5 dark:bg-primary/10 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity pointer-events-none"></div>
                                 <div className="relative z-10">
                                     <button type="button" onClick={() => setOpenIdx(isOpen ? null : idx)} className="flex items-center justify-between w-full p-4 cursor-pointer text-start" aria-expanded={isOpen}>
-                                        <h3 className="text-xs md:text-sm font-black text-main dark:text-main group-hover:text-primary dark:group-hover:text-primary transition-colors">
+                                        <h3 className="text-xs md:text-sm font-black text-main group-hover:text-primary transition-colors">
                                             {item.q}
                                         </h3>
-                                        <span className={`w-6 h-6 rounded-full bg-primary-soft dark:bg-primary-soft border border-border dark:border-border flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-180' : ''}`}>
-                                            <ChevronDown size={14} className="text-primary dark:text-primary" />
+                                        <span className={`w-6 h-6 rounded-full bg-primary-soft border border-border flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                                            <ChevronDown size={14} className="text-primary" />
                                         </span>
                                     </button>
                                     {isOpen && (
                                         <div className="px-4 pb-4 pt-0">
                                             <div className="h-px w-full bg-gradient-to-r from-primary/10 via-surface dark:via-primary to-transparent mb-3"></div>
-                                            <p className="text-micro md:text-xs text-main dark:text-main leading-relaxed font-medium">
+                                            <p className="text-micro md:text-xs text-main leading-relaxed font-medium">
                                                 {item.a}
                                             </p>
                                         </div>

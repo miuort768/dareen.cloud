@@ -16,7 +16,7 @@ export const TermsOfWork = () => {
       } catch (e) { console.warn(e); return adminPhone.replace(/\D/g, ''); }
     };
     return (
-        <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">
+        <div className="min-h-full bg-card dark:bg-background font-sans text-main">
             <SEO
                 title="قوانين العمل"
                 description="قوانين وسياسات العمل في دارين السابعة - تعرف على حقوقك وواجباتك كمعلم أو موظف في منصتنا التعليمية."
@@ -49,7 +49,7 @@ export const TermsOfWork = () => {
                         قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary inline-block py-1">العمل</span> في دارين السابعة
                     </h1>
 
-                    <p className="text-micro md:text-lg text-warning dark:text-warning max-w-2xl mx-auto leading-relaxed font-medium whitespace-nowrap md:whitespace-normal">
+                    <p className="text-micro md:text-lg text-warning max-w-2xl mx-auto leading-relaxed font-medium whitespace-nowrap md:whitespace-normal">
                         لائحة العمل | السياسات والإجراءات المنظمة لعمل الكادر التعليمي .
                     </p>
                 </div>

@@ -86,7 +86,7 @@ export const Courses = () => {
   );
 
   return (
-    <div className="min-h-full bg-background dark:bg-background font-sans text-main dark:text-main relative flex flex-col">
+    <div className="min-h-full bg-background font-sans text-main relative flex flex-col">
       <SEO title="الدورات التعليمية أونلاين" description="دورات تعليمية أونلاين للمناهج السعودية والكويتية والإماراتية والقطرية والعمانية والبحرينية. دروس خصوصية في الرياضيات والعلوم واللغة العربية والإنجليزية وقدرات وتحصيلي في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق. تأسيس أطفال، تحفيظ قرآن، مراجعات نهائية مع نخبة المعلمين الخبراء." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'الدورات', item: '/courses' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <MobileHeader />
@@ -102,18 +102,18 @@ export const Courses = () => {
                         <AnimateOnScroll animation="fadeUp">
                         <div className="text-center mb-4 md:mb-6">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-2 md:mb-6">
-                                <Sparkles size={13} className="text-primary dark:text-primary" />
-                                <span className="text-micro font-black text-primary dark:text-primary">استكشف مسيرتك التعليمية</span>
+                                <Sparkles size={13} className="text-primary" />
+                                <span className="text-micro font-black text-primary">استكشف مسيرتك التعليمية</span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-main dark:text-main mb-2 md:mb-4 leading-tight tracking-tight">
+                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-main mb-2 md:mb-4 leading-tight tracking-tight">
                                 <span className="text-primary">
                                     دورات
                                 </span>{' '}
                                 دارين السابعة
                             </h1>
 
-                            <p className="text-sm sm:text-base text-muted dark:text-muted max-w-md mx-auto leading-relaxed font-medium">
+                            <p className="text-sm sm:text-base text-muted max-w-md mx-auto leading-relaxed font-medium">
                                 برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
                             </p>
                         </div>
@@ -192,11 +192,11 @@ export const Courses = () => {
                   </div>
 
                     <div className="p-3 pb-0 flex flex-col flex-1">
-                    <h2 className="text-lg md:text-xl font-heading font-black text-main dark:text-main leading-snug group-hover:text-primary dark:group-hover:text-primary transition-colors">
+                    <h2 className="text-lg md:text-xl font-heading font-black text-main leading-snug group-hover:text-primary dark:group-hover:text-primary transition-colors">
                       {course.title}
                     </h2>
 
-                    <p className="text-xs text-muted dark:text-muted leading-relaxed line-clamp-2 mt-2 mb-4">
+                    <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-2 mb-4">
                       {course.desc}
                     </p>
 
@@ -206,12 +206,12 @@ export const Courses = () => {
                           <Users size={12} className="text-primary" />
                         </div>
                         <div>
-                          <span className="text-xs font-black text-main dark:text-main leading-none block">{course.students}</span>
-                          <span className="text-micro font-bold text-muted dark:text-muted">طالب</span>
+                          <span className="text-xs font-black text-main leading-none block">{course.students}</span>
+                          <span className="text-micro font-bold text-muted">طالب</span>
                         </div>
                       </div>
 
-                      <span className="flex items-center gap-1.5 text-xs font-black text-success dark:text-success bg-success-light dark:bg-success/10 px-3 py-1.5 rounded-lg">
+                      <span className="flex items-center gap-1.5 text-xs font-black text-success bg-success-light dark:bg-success/10 px-3 py-1.5 rounded-lg">
                         <Sparkles size={10} />
                         تجربة مجانية
                       </span>
@@ -250,8 +250,8 @@ export const Courses = () => {
               <div className="w-16 h-16 rounded-card bg-background dark:bg-card/50 flex items-center justify-center mx-auto mb-4 border border-border dark:border-border/50">
                 <Search size={28} className="text-dim dark:text-muted" />
               </div>
-              <h2 className="text-xl font-black text-main dark:text-main mb-1">لا توجد نتائج</h2>
-              <p className="text-sm text-muted dark:text-muted font-medium">جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر</p>
+              <h2 className="text-xl font-black text-main mb-1">لا توجد نتائج</h2>
+              <p className="text-sm text-muted font-medium">جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر</p>
             </motion.div>
           )}
         </div>

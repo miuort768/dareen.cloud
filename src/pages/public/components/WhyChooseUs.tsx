@@ -21,9 +21,9 @@ const features = [
 ];
 
 const variantClasses: Record<string, { icon: string; bg: string; card: string }> = {
-  success: { icon: 'text-on-success', bg: 'bg-white/10', card: 'bg-success dark:bg-success' },
-  primary: { icon: 'text-on-primary', bg: 'bg-white/10', card: 'bg-primary dark:bg-primary' },
-  accent: { icon: 'text-on-accent', bg: 'bg-white/10', card: 'bg-accent dark:bg-accent' },
+  success: { icon: 'text-on-success', bg: 'bg-white/10', card: 'bg-success' },
+  primary: { icon: 'text-on-primary', bg: 'bg-white/10', card: 'bg-primary' },
+  accent: { icon: 'text-on-accent', bg: 'bg-white/10', card: 'bg-accent' },
 };
 
 const featureIcons = [ShieldCheck, Lightbulb, Heart];
@@ -96,7 +96,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 href={`https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء برحلة التميز التعليمية')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 bg-white/15 dark:bg-white/15 backdrop-blur-sm text-on-primary text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg hover:bg-white/25 transition-all active:scale-[0.98]"
+                className="w-full flex items-center justify-center gap-2 bg-white/15 backdrop-blur-sm text-on-primary text-xs font-bold px-5 py-2.5 rounded-xl shadow-lg hover:bg-white/25 transition-all active:scale-[0.98]"
               >
                 ابدأ رحلة التميز الآن
                 <ArrowLeft size={14} />

@@ -7,7 +7,7 @@ import { SEO } from '../../components/SEO';
 export const TermsOfService = () => {
     const adminPhone = useSettingsStore(s => s.adminPhone);
     return (
-        <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">
+        <div className="min-h-full bg-card dark:bg-background font-sans text-main">
             <SEO
                 title="شروط الاستخدام والأحكام"
                 description="شروط وأحكام استخدام منصة دارين السابعة للتعليم عن بعد. تعرف على حقوقك والتزاماتك كطالب، ولي أمر، أو معلم عند استخدام خدماتنا."

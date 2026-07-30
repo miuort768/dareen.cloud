@@ -48,7 +48,7 @@ export const ChatWindowHeader = ({
                     {typingInThisConv.length > 0 ? (
                         <span className="text-xs text-success font-normal animate-pulse">جاري الكتابة...</span>
                     ) : (
-                        <span className="text-xs text-muted dark:text-muted font-normal">
+                        <span className="text-xs text-muted font-normal">
                             {selectedConv.isGroup ? "مجموعة" : "محادثة مباشرة"}
                         </span>
                     )}
@@ -77,17 +77,17 @@ export const ChatWindowHeader = ({
                                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
                                     className="absolute top-full end-0 mt-2 w-48 bg-card shadow-sm z-[100] py-2 rounded-md">
                                     <button onClick={() => { openGroupSettings(); onToggleMoreMenu(); }}
-                                        className="w-full text-start px-4 py-3 text-sm text-muted hover:bg-hover dark:hover:bg-hover transition-colors">
+                                        className="w-full text-start px-4 py-3 text-sm text-muted hover:bg-hover transition-colors">
                                         معلومات المحادثة
                                     </button>
                                     {selectedConv.isGroup && (
                                         <button onClick={() => { openGroupSettings(); onToggleMoreMenu(); }}
-                                            className="w-full text-start px-4 py-3 text-sm text-muted dark:text-main hover:bg-hover dark:hover:bg-hover transition-colors font-normal">
+                                            className="w-full text-start px-4 py-3 text-sm text-muted dark:text-main hover:bg-hover transition-colors font-normal">
                                             تعديل المجموعة
                                         </button>
                                     )}
                                     <button onClick={() => { onDeleteConversation(); onToggleMoreMenu(); }}
-                                        className="w-full text-start px-4 py-3 text-sm text-error hover:bg-hover dark:hover:bg-hover transition-colors">
+                                        className="w-full text-start px-4 py-3 text-sm text-error hover:bg-hover transition-colors">
                                         حذف الدردشة
                                     </button>
                                 </motion.div>

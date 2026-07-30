@@ -31,7 +31,7 @@ export const AAbdullah = () => {
         { icon: VTargetArrow, title: 'التميز', desc: 'نسعى للأفضل دايماً', bgClass: 'bg-primary' },
     ];
 
-    const cardClass = 'bg-white dark:bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-border dark:border-border space-y-4';
+    const cardClass = 'bg-white dark:bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-border space-y-4';
     const sectionDelay = (i: number) => ({ initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: i * 0.1 } });
 
     return (
@@ -49,7 +49,7 @@ export const AAbdullah = () => {
                 >
                     <div className="flex flex-row items-center justify-center md:justify-start gap-2.5 md:gap-3">
                         <div
-                            className="flex w-12 h-12 md:w-16 md:h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl bg-primary dark:bg-primary shadow-primary/40"
+                            className="flex w-12 h-12 md:w-16 md:h-16 shrink-0 rounded-2xl items-center justify-center shadow-xl bg-primary shadow-primary/40"
                         >
                             <VCodeBracket size={22} className="text-on-primary" />
                         </div>
@@ -93,7 +93,7 @@ export const AAbdullah = () => {
                         <VRocket size={18} className="inline text-success" />
                         <VBolt size={16} className="inline text-accent" />
                     </div>
-                    <p className="text-sm leading-relaxed text-muted dark:text-muted">
+                    <p className="text-sm leading-relaxed text-muted">
                         خريج كلية التربية — جامعة الأزهر. مدرس عشق البرمجة،
                         ومؤمن إن التكنولوجيا هي المفتاح لتطوير التعليم العربي
                         وتخليه أكثر متعة وفايدة.
@@ -140,7 +140,7 @@ export const AAbdullah = () => {
                                         <Icon size={18} className="text-on-primary" />
                                     </div>
                                     <h3 className="text-sm font-bold text-main">{v.title}</h3>
-                                    <p className="text-xs text-muted dark:text-muted">{v.desc}</p>
+                                    <p className="text-xs text-muted">{v.desc}</p>
                                 </div>
                             );
                         })}
@@ -161,15 +161,15 @@ export const AAbdullah = () => {
                         <h2 className="text-lg font-semibold text-primary">رسالة إلى أولياء الأمور والمعلمين</h2>
                     </div>
                     <div className="space-y-3 ps-4">
-                        <p className="text-sm leading-relaxed text-muted dark:text-muted">
+                        <p className="text-sm leading-relaxed text-muted">
                             "الإتقان أساس النجاح والتطوير.
                         </p>
-                        <p className="text-sm leading-relaxed text-muted dark:text-muted">
+                        <p className="text-sm leading-relaxed text-muted">
                             الإنسان لازم يبدي بأفضل ما عنده،
                             {' '}مع التوكل على الله أول وأخير،
                             {' '}ويلتزم بالأخلاق في كل خطوة.
                         </p>
-                        <p className="text-sm leading-relaxed text-muted dark:text-muted">
+                        <p className="text-sm leading-relaxed text-muted">
                             لأن النجاح الحقيقي مو بس في النتيجة،
                             {' '}لكن في الطريق والأخلاق اللي نمشي فيها."
                         </p>

@@ -19,7 +19,7 @@ export const RefundPolicy = () => {
     const whatsappNumber = getNumber('تواصل مع قسم الحسابات');
 
     return (
-        <div className="min-h-full bg-card dark:bg-background font-sans text-main dark:text-main">
+        <div className="min-h-full bg-card dark:bg-background font-sans text-main">
             <SEO
                 title="سياسة الاسترداد والاسترجاع"
                 description="سياسة استرداد الرسوم وإلغاء الاشتراكات في دارين السابعة. تعرف على شروط الاسترجاع، إلغاء الحصص، وآلية استرداد المبالغ المدفوعة."
@@ -71,11 +71,11 @@ export const RefundPolicy = () => {
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-info-light dark:bg-info/30 rounded-card flex items-center justify-center shrink-0">
-                                <ShieldCheck className="w-6 h-6 text-info dark:text-info" />
+                                <ShieldCheck className="w-6 h-6 text-info" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main dark:text-main mb-2">مبادئ عامة</h2>
-                                <p className="text-sm md:text-base text-muted dark:text-muted leading-relaxed">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-2">مبادئ عامة</h2>
+                                <p className="text-sm md:text-base text-muted leading-relaxed">
                                     في دارين السابعة، نسعى لتقديم خدمة تعليمية متميزة. تهدف هذه السياسة إلى ضمان الشفافية والعدالة لكل من الطالب والمعهد فيما يخص الرسوم المدفوعة وإجراءات الإلغاء.
                                 </p>
                             </div>
@@ -86,21 +86,21 @@ export const RefundPolicy = () => {
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-success-light dark:bg-success/30 rounded-card flex items-center justify-center shrink-0">
-                                <CreditCard className="w-6 h-6 text-success dark:text-success" />
+                                <CreditCard className="w-6 h-6 text-success" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main dark:text-main mb-3">حالات طلب الاسترداد</h2>
-                                <div className="space-y-4 text-muted dark:text-muted">
+                                <h2 className="text-2xl font-black text-main mb-3">حالات طلب الاسترداد</h2>
+                                <div className="space-y-4 text-muted">
                                     <div className="p-4 bg-success-light/50 dark:bg-success/20 border-s-4 border-success">
-                                        <h3 className="font-bold text-main dark:text-main mb-1">قبل بدء الدورة:</h3>
+                                        <h3 className="font-bold text-main mb-1">قبل بدء الدورة:</h3>
                                         <p>يمكن استرداد كامل المبلغ المدفوع (بعد خصم رسوم التحويل البنكي إن وجدت) إذا تم تقديم طلب الاسترداد قبل 48 ساعة على الأقل من موعد أول حصة.</p>
                                     </div>
                                     <div className="p-4 bg-warning-light/50 dark:bg-warning/20 border-s-4 border-warning">
-                                        <h3 className="font-bold text-main dark:text-main mb-1">بعد الحصة الأولى (التجريبية):</h3>
+                                        <h3 className="font-bold text-main mb-1">بعد الحصة الأولى (التجريبية):</h3>
                                         <p>إذا كانت الدورة تتيح حصة تجريبية ولم يرغب الطالب في الاستمرار، يمكنه طلب استرداد باقي المبلغ المدفوع في غضون 24 ساعة من انتهاء الحصة الأولى.</p>
                                     </div>
                                     <div className="p-4 bg-background dark:bg-card/50 border-s-4 border-border">
-                                        <h3 className="font-bold text-main dark:text-main mb-1">خلال الدورة:</h3>
+                                        <h3 className="font-bold text-main mb-1">خلال الدورة:</h3>
                                         <p>لا يتم استرداد الرسوم بمجرد تجاوز الحصة الثانية إلا في حالات الظروف القهرية التي يقدرها المعهد، مع خصم قيمة الحصص التي تم تقديمها بالفعل.</p>
                                     </div>
                                 </div>
@@ -112,11 +112,11 @@ export const RefundPolicy = () => {
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-error-light dark:bg-error/30 rounded-card flex items-center justify-center shrink-0">
-                                <CalendarX className="w-6 h-6 text-error dark:text-error" />
+                                <CalendarX className="w-6 h-6 text-error" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main dark:text-main mb-3">سياسة إلغاء الحصص</h2>
-                                <div className="space-y-4 text-muted dark:text-muted">
+                                <h2 className="text-2xl font-black text-main mb-3">سياسة إلغاء الحصص</h2>
+                                <div className="space-y-4 text-muted">
                                     <ul className="list-disc list-inside space-y-3 ms-4">
                                         <li><span className="font-bold">إلغاء الطالب:</span> يجب إخطار المعهد بالإلغاء قبل 24 ساعة من موعد الحصة. في حال الإلغاء المفاجئ، يتم احتساب الحصة كأنها تم تقديمها.</li>
                                         <li><span className="font-bold">إلغاء المعهد:</span> في حال اعتذار المعلم، يلتزم المعهد بتعويض الحصة في موعد آخر يناسب الطالب أو تمديد صلاحية الباقة.</li>
@@ -131,11 +131,11 @@ export const RefundPolicy = () => {
                     <div className="mb-12">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-primary-soft dark:bg-card rounded-card flex items-center justify-center shrink-0">
-                                <Clock className="w-6 h-6 text-primary dark:text-primary" />
+                                <Clock className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main dark:text-main mb-3">إجراءات الاسترداد المالي</h2>
-                                <div className="space-y-2 text-muted dark:text-muted leading-relaxed">
+                                <h2 className="text-2xl font-black text-main mb-3">إجراءات الاسترداد المالي</h2>
+                                <div className="space-y-2 text-muted leading-relaxed">
                                     <p>تستغرق عملية معالجة طلب الاسترداد من <span className="font-bold">5 إلى 10 أيام عمل</span> بعد الموافقة على الطلب. يتم إعادة المبلغ إلى نفس وسيلة الدفع التي تم استخدامها في عملية الشراء الأصلية.</p>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@ export const RefundPolicy = () => {
                                 <div className="w-8 h-8 bg-warning/20 flex items-center justify-center">
                                     <AlertCircle className="w-4 h-4 text-warning" />
                                 </div>
-                                <h2 className="text-lg md:text-xl font-black text-main dark:text-main">المشاكل التقنية</h2>
+                                <h2 className="text-lg md:text-xl font-black text-main">المشاكل التقنية</h2>
                             </div>
                             <p className="text-muted dark:text-main/80 text-sm md:text-base leading-relaxed relative z-10 font-medium">
                                 في حال عدم إمكانية تقديم الحصة بسبب مشاكل تقنية من طرف المعهد، يتم تعويض الطالب بحصة بديلة. أما إذا كان الخلل من طرف الطالب (انقطاع الإنترنت أو تعطل الجهاز)، فالمعهد غير مسؤول عن تعويض الحصة، ومع ذلك نحاول دائماً المساعدة في حال كان هناك وقت متاح.
@@ -159,8 +159,8 @@ export const RefundPolicy = () => {
                     </div>
 
                     {/* Last Update */}
-                    <div className="mb-4 md:mb-6 text-center border-t border-border dark:border-border pt-6">
-                        <p className="text-sm text-muted dark:text-muted font-bold uppercase tracking-widest">
+                    <div className="mb-4 md:mb-6 text-center border-t border-border pt-6">
+                        <p className="text-sm text-muted font-bold uppercase tracking-widest">
                             آخر تحديث للسياسة: فبراير 2026
                         </p>
                     </div>

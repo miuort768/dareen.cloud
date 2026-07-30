@@ -38,7 +38,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
     if (isMessagesError) {
         return (
             <div className="flex-1 relative z-10">
-                <div className="flex items-center justify-center h-full text-muted dark:text-muted text-sm px-4">
+                <div className="flex items-center justify-center h-full text-muted text-sm px-4">
                     تعذر تحميل الرسائل. حاول مرة أخرى.
                 </div>
             </div>
@@ -58,7 +58,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
     if (filteredMessages.length === 0) {
         return (
             <div className="flex-1 relative z-10">
-                <div className="flex items-center justify-center h-full text-muted dark:text-muted text-sm px-4">
+                <div className="flex items-center justify-center h-full text-muted text-sm px-4">
                     لا توجد رسائل بعد. ابدأ المحادثة الآن.
                 </div>
             </div>
@@ -102,7 +102,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
                 {showScrollBottom && (
                     <motion.button key="scroll-bottom-btn" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}
                         onClick={scrollToBottom}
-                        className="absolute bottom-20 end-6 w-10 h-10 bg-card text-muted rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-hover dark:hover:bg-hover">
+                        className="absolute bottom-20 end-6 w-10 h-10 bg-card text-muted rounded-full shadow-sm flex items-center justify-center z-20 hover:bg-hover">
                         <ArrowDown size={20} />
                     </motion.button>
                 )}

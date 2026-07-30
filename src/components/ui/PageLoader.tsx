@@ -40,15 +40,15 @@ export const PageLoader = () => {
                 className="pb-16 md:pb-20 text-center space-y-6"
             >
                 <div className="space-y-1">
-                    <h2 className="text-3xl md:text-4xl font-heading font-medium text-main dark:text-main tracking-tighter">
-                        دارين <span className="text-primary dark:text-primary">للتعليم والتدريب</span>
+                    <h2 className="text-3xl md:text-4xl font-heading font-medium text-main tracking-tighter">
+                        دارين <span className="text-primary">للتعليم والتدريب</span>
                     </h2>
-                    <p className="text-muted dark:text-muted font-medium text-micro md:text-xs tracking-label uppercase">
+                    <p className="text-muted font-medium text-micro md:text-xs tracking-label uppercase">
                         Darin of Education & Training
                     </p>
                 </div>
 
-                <div className="w-56 h-1 bg-surface dark:bg-surface overflow-hidden relative mx-auto border border-border/50 dark:border-border/30">
+                <div className="w-56 h-1 bg-surface overflow-hidden relative mx-auto border border-border/50 dark:border-border/30">
                     <motion.div
                         initial={{ x: '-100%' }}
                         animate={{ x: '100%' }}
@@ -64,7 +64,7 @@ export const PageLoader = () => {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    <span className="text-micro font-medium text-primary dark:text-primary animate-pulse tracking-label uppercase">
+                    <span className="text-micro font-medium text-primary animate-pulse tracking-label uppercase">
                         جاري تهيئة النظام
                     </span>
                     <div className="flex gap-1">

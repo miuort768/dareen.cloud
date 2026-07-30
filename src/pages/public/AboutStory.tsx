@@ -38,31 +38,31 @@ export const AboutStory = () => (
                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card dark:bg-surface text-on-primary dark:text-main rounded-card mb-4">
                         <span className="text-micro font-black">تعرف عليـــنا</span>
                     </div>
-                    <h2 className="text-2xl md:text-4xl font-black text-main dark:text-main mb-4 font-heading leading-tight md:leading-tight">
+                    <h2 className="text-2xl md:text-4xl font-black text-main mb-4 font-heading leading-tight md:leading-tight">
                         ريادة في التعليم،<br />
                         <span className="text-primary">نهضة في الفكر</span>
                     </h2>
-                    <p className="text-muted dark:text-muted text-sm md:text-base leading-relaxed font-medium mb-8 max-w-xl">
+                    <p className="text-muted text-sm md:text-base leading-relaxed font-medium mb-8 max-w-xl">
                         بدأ دارين السابعة كحلم صغير لتقديم تعليم يختلف عن المألوف، واليوم أصبحنا منارة تعليمية يثق بها الآلاف. نعتمد على استراتيجيات التعلم النشط ونركز على تمكين الطالب من أدوات البحث والابتكار، ليواجه تحديات المستقبل بذكاء وثقة.
                     </p>
 
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.12 } } }} className="space-y-4">
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-card hover:bg-surface dark:hover:bg-card transition-colors border border-border dark:border-border">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-card hover:bg-surface dark:hover:bg-card transition-colors border border-border">
                             <div className="w-12 h-12 bg-white dark:bg-card rounded-card shadow-sm flex items-center justify-center text-primary shrink-0">
                                 <Zap size={24} />
                             </div>
                             <div>
-                                <h3 className="text-lg font-black text-main dark:text-main mb-1">رؤية الابتكار</h3>
-                                <p className="text-sm text-muted dark:text-muted font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
+                                <h3 className="text-lg font-black text-main mb-1">رؤية الابتكار</h3>
+                                <p className="text-sm text-muted font-medium">أن نكون الخيار الأول للتعليم النوعي المبتكر في المنطقة العربية.</p>
                             </div>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-card hover:bg-surface dark:hover:bg-card transition-colors border border-border dark:border-border">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-card hover:bg-surface dark:hover:bg-card transition-colors border border-border">
                             <div className="w-12 h-12 bg-white dark:bg-card rounded-card shadow-sm flex items-center justify-center text-warning shrink-0">
                                 <BookOpen size={24} />
                             </div>
                             <div>
-                                <h3 className="text-lg font-black text-main dark:text-main mb-1">رسالة التمكين</h3>
-                                <p className="text-sm text-muted dark:text-muted font-medium">تقديم تجربة تعليمية قيمّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.</p>
+                                <h3 className="text-lg font-black text-main mb-1">رسالة التمكين</h3>
+                                <p className="text-sm text-muted font-medium">تقديم تجربة تعليمية قيمّة وملهمة تُطلق العنان لإبداع الطالب وتضمن تفوقه.</p>
                             </div>
                         </motion.div>
                     </motion.div>

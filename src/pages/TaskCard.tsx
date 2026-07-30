@@ -57,7 +57,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
                 {task.description || "لا يوجد وصف إضافي لهذه المهمة..."}
             </p>
 
-            <div className="pt-3 border-t border-border dark:border-border flex items-center justify-between">
+            <div className="pt-3 border-t border-border flex items-center justify-between">
                 <div className="flex gap-2">
                     {task.status !== 'completed' ? (
                         <button
@@ -75,7 +75,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
                     ) : (
                         <button
                             onClick={() => onUpdateStatus(task.id, 'pending')}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 text-micro font-bold text-muted uppercase tracking-wider hover:text-dim dark:hover:text-dim transition-colors"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 text-micro font-bold text-muted uppercase tracking-wider hover:text-dim transition-colors"
                         >
                             <RefreshCcw size={12} />
                             إعادة

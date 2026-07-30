@@ -42,7 +42,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                         <input
                             required
                             type="text"
-                            className="w-full bg-background dark:bg-background border border-border rounded-2xl py-2.5 px-4 text-xs font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all"
+                            className="w-full bg-background border border-border rounded-2xl py-2.5 px-4 text-xs font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all"
                             value={data.title}
                             onChange={e => onChange({...data, title: e.target.value})}
                         />

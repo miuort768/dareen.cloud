@@ -9,7 +9,7 @@ import { AboutCTA } from './AboutCTA';
 
 export const About = () => {
     return (
-        <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-main relative overflow-x-hidden">
+        <div className="min-h-full bg-white dark:bg-background font-sans text-main relative overflow-x-hidden">
             <SEO title="من نحن" description="منصة دارين السابعة للتعليم عن بعد في الكويت، السعودية، قطر، الإمارات وعمان والبحرين. نوفر دروس خصوصية أونلاين في الدوحة والريان ومسقط وصلالة والمنامة والمحرق، تحفيظ قرآن، تأسيس أطفال، ومراجعات للمناهج الخليجية والبحرينية مع أفضل المعلمين المعتمدين. احجز حصة تجريبية مجانية." url="https://dareen.cloud/about" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'من نحن', item: '/about' }]} />
             <script type="application/ld+json">
                 {JSON.stringify({

@@ -16,7 +16,7 @@ export const PrivacyPolicy = () => {
       } catch (e) { console.warn(e); return adminPhone.replace(/\D/g, ''); }
     };
     return (
-        <div className="min-h-full bg-white dark:bg-background font-sans text-main dark:text-main">
+        <div className="min-h-full bg-white dark:bg-background font-sans text-main">
             <SEO
                 title="سياسة الخصوصية والأمان"
                 description="سياسة الخصوصية لمنصة دارين السابعة للتعليم عن بعد. نضمن حماية بيانات الطلاب وأولياء الأمور والمعلمين وفق أعلى معايير الأمان والخصوصية."
@@ -65,11 +65,11 @@ export const PrivacyPolicy = () => {
                     <div className="mb-4">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="w-12 h-12 bg-info-light dark:bg-info/30 rounded-card flex items-center justify-center shrink-0">
-                                <FileText className="w-6 h-6 text-info dark:text-info" />
+                                <FileText className="w-6 h-6 text-info" />
                             </div>
                             <div>
-                                <h2 className="text-xl md:text-2xl font-black text-main dark:text-main mb-2">مقدمة</h2>
-                                <p className="text-sm md:text-base text-muted dark:text-muted leading-relaxed">
+                                <h2 className="text-xl md:text-2xl font-black text-main mb-2">مقدمة</h2>
+                                <p className="text-sm md:text-base text-muted leading-relaxed">
                                     تصف سياسة الخصوصية هذه كيفية جمع دارين السابعة للتعليم والتدريب ("نحن" أو "المعهد") واستخدامنا وحمايتنا ومشاركتنا للمعلومات الشخصية التي نجمعها من خلال منصتنا التعليمية. باستخدامك لخدماتنا، فإنك توافق على الممارسات الموضحة في هذه السياسة.
                                 </p>
                             </div>
@@ -84,9 +84,9 @@ export const PrivacyPolicy = () => {
                             </div>
                             <div>
                                 <h2 className="text-2xl font-black text-main mb-3">المعلومات التي نجمعها</h2>
-                                <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
+                                <div className="space-y-2 text-muted text-micro md:text-sm">
                                     <div>
-                                        <h3 className="font-bold text-main dark:text-main mb-2">1. المعلومات الشخصية:</h3>
+                                        <h3 className="font-bold text-main mb-2">1. المعلومات الشخصية:</h3>
                                         <ul className="list-disc list-inside space-y-1 ms-4">
                                             <li>الاسم الكامل</li>
                                             <li>عنوان البريد الإلكتروني</li>
@@ -124,8 +124,8 @@ export const PrivacyPolicy = () => {
                                 <Eye className="w-6 h-6 text-primary" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main dark:text-main mb-3">كيف نستخدم معلوماتك</h2>
-                                <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
+                                <h2 className="text-2xl font-black text-main mb-3">كيف نستخدم معلوماتك</h2>
+                                <div className="space-y-2 text-muted text-micro md:text-sm">
                                     <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
                                     <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>تقديم وتحسين خدماتنا التعليمية</li>
@@ -148,8 +148,8 @@ export const PrivacyPolicy = () => {
                                 <Lock className="w-6 h-6 text-error" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main dark:text-main mb-3">حماية البيانات</h2>
-                                <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
+                                <h2 className="text-2xl font-black text-main mb-3">حماية البيانات</h2>
+                                <div className="space-y-2 text-muted text-micro md:text-sm">
                                     <p>نتخذ إجراءات أمنية صارمة لحماية معلوماتك الشخصية، بما في ذلك:</p>
                                     <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>تشفير البيانات أثناء النقل والتخزين</li>
@@ -170,8 +170,8 @@ export const PrivacyPolicy = () => {
                                 <UserCheck className="w-6 h-6 text-warning" />
                             </div>
                             <div>
-                                <h2 className="text-2xl font-black text-main dark:text-main mb-3">مشاركة المعلومات</h2>
-                                <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
+                                <h2 className="text-2xl font-black text-main mb-3">مشاركة المعلومات</h2>
+                                <div className="space-y-2 text-muted text-micro md:text-sm">
                                     <p>لا نبيع أو نؤجر معلوماتك الشخصية لأطراف ثالثة. قد نشارك معلوماتك فقط في الحالات التالية:</p>
                                     <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>مع المعلمين المعنيين لتقديم الخدمات التعليمية</li>
@@ -186,9 +186,9 @@ export const PrivacyPolicy = () => {
 
                     {/* User Rights */}
                     <div className="mb-4">
-                        <div className="bg-background dark:bg-card/50 border border-border dark:border-border p-8 rounded-card">
-                            <h2 className="text-2xl font-black text-main dark:text-main mb-4">حقوقك</h2>
-                            <div className="space-y-2 text-muted dark:text-muted text-micro md:text-sm">
+                        <div className="bg-background dark:bg-card/50 border border-border p-8 rounded-card">
+                            <h2 className="text-2xl font-black text-main mb-4">حقوقك</h2>
+                            <div className="space-y-2 text-muted text-micro md:text-sm">
                                 <p>لديك الحق في:</p>
                                 <ul className="list-disc list-inside space-y-1 ms-4">
                                     <li>الوصول إلى معلوماتك الشخصية ومراجعتها</li>
@@ -204,11 +204,11 @@ export const PrivacyPolicy = () => {
 
                     {/* Updates */}
                     <div className="mb-4">
-                        <h2 className="text-2xl font-black text-main dark:text-main mb-4">التحديثات على هذه السياسة</h2>
-                        <p className="text-muted dark:text-muted text-micro md:text-base leading-relaxed">
+                        <h2 className="text-2xl font-black text-main mb-4">التحديثات على هذه السياسة</h2>
+                        <p className="text-muted text-micro md:text-base leading-relaxed">
                             قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر. سنقوم بإخطارك بأي تغييرات جوهرية عن طريق نشر السياسة الجديدة على هذه الصفحة وتحديث تاريخ "آخر تحديث" أدناه.
                         </p>
-                        <p className="text-sm text-muted dark:text-muted mt-4 font-bold">
+                        <p className="text-sm text-muted mt-4 font-bold">
                             آخر تحديث: 21 يناير 2026
                         </p>
                     </div>

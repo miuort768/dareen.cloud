@@ -6,7 +6,7 @@ import { Home, ArrowLeft } from 'lucide-react';
 
 export const NotFound = () => {
     return (
-        <div className="min-h-full bg-background dark:bg-background font-sans text-main dark:text-main relative flex flex-col">
+        <div className="min-h-full bg-background font-sans text-main relative flex flex-col">
             <SEO title="الصفحة غير موجودة" description="عذراً، الصفحة التي تبحث عنها غير موجودة. يمكنك العودة إلى الصفحة الرئيسية أو تصفح دوراتنا التعليمية." url="https://dareen.cloud/404" noindex />
 
             <MobileHeader />
@@ -29,7 +29,7 @@ export const NotFound = () => {
                         الصفحة غير موجودة
                     </h2>
 
-                    <p className="text-sm md:text-base text-muted dark:text-muted leading-relaxed md:leading-relaxed mb-6 md:mb-8 max-w-sm mx-auto">
+                    <p className="text-sm md:text-base text-muted leading-relaxed md:leading-relaxed mb-6 md:mb-8 max-w-sm mx-auto">
                         عذراً، الصفحة التي تبحث عنها قد تكون انتقلت أو تم حذفها. يمكنك العودة إلى الرئيسية أو تصفح دوراتنا.
                     </p>
 

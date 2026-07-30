@@ -91,7 +91,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             {title}
                         </h3>
 
-                        <p className="text-muted dark:text-muted font-bold text-xs leading-relaxed mb-10 text-center max-w-[280px]">
+                        <p className="text-muted font-bold text-xs leading-relaxed mb-10 text-center max-w-[280px]">
                             {message}
                         </p>
 

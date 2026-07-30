@@ -29,7 +29,7 @@ export const SelectionGrid = ({
     if (isMobile && (view === 'classrooms' || view === 'terms' || view === 'subjects')) {
         return (
             <div className="pb-6">
-                <div className="bg-gradient-to-br from-[var(--bg-primary)] via-[var(--bg-primary)] to-white rounded-[32px] p-5 mb-6 border border-primary/50 mt-2 text-center">
+                <div className="bg-gradient-to-br from-primary via-primary to-white rounded-[32px] p-5 mb-6 border border-primary/50 mt-2 text-center">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full mb-3">
                         <BookOpen size={10} className="text-primary" />
                         <span className="text-micro font-black text-primary">
@@ -60,7 +60,7 @@ export const SelectionGrid = ({
                 <div className="grid grid-cols-2 gap-2.5">
                     {view === 'classrooms' && currentClassrooms.map((cls) => (
                         <button key={cls} onClick={() => onSelectGrade(cls)}
-                            className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-[var(--bg-primary-active)] to-[var(--bg-primary-active)] text-on-primary active:scale-[0.97] transition-all">
+                            className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-primary-active to-primary-active text-on-primary active:scale-[0.97] transition-all">
                             <GraduationCap size={18} />
                             <span className="text-micro font-black text-center">الصف {gradeNames[cls] || cls}</span>
                         </button>
@@ -134,7 +134,7 @@ export const SelectionGrid = ({
                     {view === 'classrooms' && currentClassrooms.map((cls, idx) => (
                             <div key={cls} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${idx * 60}ms` }}>
                                 <button onClick={() => onSelectGrade(cls)}
-                                    className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-[var(--bg-primary-active)] to-[var(--bg-primary-active)] text-on-primary border border-white/5 shadow-lg active:scale-[0.97] transition-all">
+                                    className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-primary-active to-primary-active text-on-primary border border-white/5 shadow-lg active:scale-[0.97] transition-all">
                                     <GraduationCap size={24} />
                                     <span className="text-sm font-black text-center">الصف {gradeNames[cls] || cls}</span>
                                 </button>

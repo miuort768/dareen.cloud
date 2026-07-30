@@ -91,7 +91,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                         <h3 className="text-xs font-semibold text-main dark:text-dim font-sans tracking-tight leading-none">
                             {title}
                         </h3>
-                        <p className="text-xs text-muted dark:text-muted mt-1.5 leading-relaxed font-medium">
+                        <p className="text-xs text-muted mt-1.5 leading-relaxed font-medium">
                             {message}
                         </p>
                     </div>
@@ -100,9 +100,9 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                     <button 
                         onClick={handleClose}
                         className={cn(
-                            'flex-shrink-0 text-muted hover:text-main dark:text-muted dark:hover:text-dim',
+                            'flex-shrink-0 text-muted hover:text-main dark:hover:text-dim',
                             'p-1.5 rounded-xl bg-background dark:bg-surface hover:bg-surface dark:hover:bg-hover',
-                            'border border-border dark:border-border transition-all active:scale-95'
+                            'border border-border transition-all active:scale-95'
                         )}
                     >
                         <X size={12} />
@@ -111,7 +111,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
 
                 {/* ── Smooth Progress Count Down Bar ── */}
                 {autoClose && (
-                    <div className="absolute bottom-0 end-0 start-0 h-[3px] bg-surface dark:bg-surface overflow-hidden">
+                    <div className="absolute bottom-0 end-0 start-0 h-[3px] bg-surface overflow-hidden">
                         <div 
                             className="h-full bg-success transition-all duration-75 ease-linear rounded-s-full"
                             style={{ width: `${progress}%` }}

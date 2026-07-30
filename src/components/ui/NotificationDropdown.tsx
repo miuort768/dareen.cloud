@@ -143,7 +143,7 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
             case 'live':
                 return (
                     <div className="w-8 h-8 bg-success-light dark:bg-success/30 rounded-lg flex items-center justify-center animate-pulse border border-success dark:border-success/50">
-                        <Smartphone className="text-success dark:text-success" size={16} />
+                        <Smartphone className="text-success" size={16} />
                     </div>
                 );
             case 'success':
@@ -203,7 +203,7 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
                             {unreadCount > 0 && (
                                 <button
                                     onClick={markAllAsRead}
-                                    className="text-micro sm:text-xs text-primary hover:text-primary font-medium dark:text-primary whitespace-nowrap"
+                                    className="text-micro sm:text-xs text-primary hover:text-primary font-medium whitespace-nowrap"
                                 >
                                     تحديد الكل
                                 </button>
@@ -211,7 +211,7 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
                             {Array.isArray(notifications) && notifications.length > 0 && (
                                 <button
                                     onClick={clearAll}
-                                    className="text-micro sm:text-xs text-error hover:text-error font-medium dark:text-error whitespace-nowrap"
+                                    className="text-micro sm:text-xs text-error hover:text-error font-medium whitespace-nowrap"
                                 >
                                     حذف الكل
                                 </button>
@@ -221,12 +221,12 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
 
                     {/* Push Notification Activation Prompt */}
                     {Notification.permission !== 'granted' && (
-                        <div className="p-3 bg-primary-soft border-b border-primary dark:bg-primary-soft dark:border-primary/30 flex items-center justify-between gap-3">
+                        <div className="p-3 bg-primary-soft border-b border-primary dark:border-primary/30 flex items-center justify-between gap-3">
                             <div className="flex items-center gap-2">
                                 <div className="p-1.5 bg-primary rounded-lg text-on-primary">
                                     <Smartphone size={14} />
                                 </div>
-                                <p className="text-micro sm:text-xs font-normal text-primary dark:text-primary">هل تريد ميزة الإشعارات الفورية؟</p>
+                                <p className="text-micro sm:text-xs font-normal text-primary">هل تريد ميزة الإشعارات الفورية؟</p>
                             </div>
                             <button
                                 onClick={async () => {
@@ -250,13 +250,13 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
                             <div className="p-12 text-center">
                                 <AlertCircle size={48} className="mx-auto mb-3 text-warning opacity-50" />
                                 <p className="text-sm font-normal text-main mb-1">الإشعارات معطلة</p>
-                                <p className="text-xs text-muted dark:text-muted">يمكنك تفعيلها من صفحة الإعدادات</p>
+                                <p className="text-xs text-muted">يمكنك تفعيلها من صفحة الإعدادات</p>
                             </div>
                         ) : (Array.isArray(notifications) && notifications.length > 0) ? (
                             notifications.map(notification => (
                                 <div
                                     key={notification.id}
-                                    className={`p-4 border-b border-border dark:border-border hover:bg-surface dark:hover:bg-card/50 transition-none cursor-pointer ${!notification.read ? 'bg-info-light/50 dark:bg-info/10' : ''
+                                    className={`p-4 border-b border-border hover:bg-surface dark:hover:bg-card/50 transition-none cursor-pointer ${!notification.read ? 'bg-info-light/50 dark:bg-info/10' : ''
                                         }`}
                                     onClick={() => {
                                         markAsRead(notification.id);
@@ -282,11 +282,11 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
                                                     <div className="w-1.5 h-1.5 bg-info rounded-full flex-shrink-0 mt-1"></div>
                                                 )}
                                             </div>
-                                            <p className="text-micro sm:text-xs text-muted dark:text-muted mt-1 line-clamp-2">
+                                            <p className="text-micro sm:text-xs text-muted mt-1 line-clamp-2">
                                                 {notification.message}
                                             </p>
                                             <div className="flex items-center justify-between mt-2">
-                                                <span className="text-micro sm:text-xs text-muted dark:text-muted">
+                                                <span className="text-micro sm:text-xs text-muted">
                                                     {formatDistanceToNow(new Date(notification.time), { addSuffix: true, locale: ar })}
                                                 </span>
                                                 <button
@@ -307,7 +307,7 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
                         ) : (
                             <div className="p-12 text-center">
                                 <Bell size={48} className="mx-auto mb-3 text-dim dark:text-main" />
-                                <p className="text-sm text-muted dark:text-muted">لا توجد إشعارات</p>
+                                <p className="text-sm text-muted">لا توجد إشعارات</p>
                             </div>
                         )}
                     </div>

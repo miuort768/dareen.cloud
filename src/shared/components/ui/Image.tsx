@@ -33,7 +33,7 @@ export const Image = ({
     return (
       <div className={cn('relative overflow-hidden', className)}>
         {withSkeleton && !loaded && (
-          <div className="absolute inset-0 animate-pulse bg-surface dark:bg-surface rounded-inherit" />
+          <div className="absolute inset-0 animate-pulse bg-surface rounded-inherit" />
         )}
         <picture>
           <source srcSet={webpSrc} type="image/webp" />
@@ -71,7 +71,7 @@ export const Image = ({
   return (
     <div className={cn('relative overflow-hidden', className)}>
       {withSkeleton && !loaded && (
-        <div className="absolute inset-0 animate-pulse bg-surface dark:bg-surface rounded-inherit" />
+        <div className="absolute inset-0 animate-pulse bg-surface rounded-inherit" />
       )}
       <img
         {...props}

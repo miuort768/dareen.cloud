@@ -54,7 +54,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-card border border-border dark:border-border shadow-2xl w-full max-w-md overflow-hidden rounded-none">
+            <div className="relative bg-white dark:bg-card border border-border shadow-2xl w-full max-w-md overflow-hidden rounded-none">
                 <div className="bg-primary p-4 text-on-primary flex justify-between items-center">
                     <div className="flex items-center gap-2 font-bold">
                         <ShieldCheck size={20} />
@@ -67,9 +67,9 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
                 <div className="p-6 space-y-6">
                     <div className="text-center">
-                        <p className="text-sm text-muted dark:text-muted font-bold mb-1">تسجيل للطالب</p>
-                        <h3 className="text-lg font-bold text-main dark:text-main">{studentName}</h3>
-                        <p className="text-xs text-primary font-bold mt-1 bg-primary-soft inline-block px-2 py-1 rounded-none dark:bg-primary/20 dark:text-primary">
+                        <p className="text-sm text-muted font-bold mb-1">تسجيل للطالب</p>
+                        <h3 className="text-lg font-bold text-main">{studentName}</h3>
+                        <p className="text-xs text-primary font-bold mt-1 bg-primary-soft inline-block px-2 py-1 rounded-none dark:bg-primary/20">
                             بتاريخ: {date}
                         </p>
                     </div>
@@ -80,7 +80,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             className={cn(
                                 "flex flex-col items-center gap-2 p-3 rounded-none border-2",
                                 status === 'completed'
-                                    ? "border-success bg-success-light text-success dark:bg-success/20 dark:text-success"
+                                    ? "border-success bg-success-light text-success dark:bg-success/20"
                                     : "border-border bg-white text-muted hover:border-success dark:bg-card dark:border-border"
                             )}
                         >
@@ -92,7 +92,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             className={cn(
                                 "flex flex-col items-center gap-2 p-3 rounded-none border-2",
                                 status === 'cancelled'
-                                    ? "border-error bg-error-light text-error dark:bg-error/20 dark:text-error"
+                                    ? "border-error bg-error-light text-error dark:bg-error/20"
                                     : "border-border bg-white text-muted hover:border-error dark:bg-card dark:border-border"
                             )}
                         >
@@ -110,7 +110,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                 <textarea 
                                     id="attendance-topics"
                                     placeholder="مثلاً: مراجعة سورة البقرة، أول 10 آيات..."
-                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-success focus:bg-white transition-all text-xs font-bold leading-relaxed dark:bg-card dark:text-main dark:border-border"
+                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-success focus:bg-white transition-all text-xs font-bold leading-relaxed dark:bg-card dark:text-main"
                                     rows={2}
                                     value={topics}
                                     onChange={(e) => setTopics(e.target.value)}
@@ -124,7 +124,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                     id="attendance-homework"
                                     type="text"
                                     placeholder="مثلاً: حفظ الجزء الثاني من الصفحة..."
-                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-warning focus:bg-white transition-all text-xs font-bold dark:bg-card dark:text-main dark:border-border"
+                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-warning focus:bg-white transition-all text-xs font-bold dark:bg-card dark:text-main"
                                     value={homework}
                                     onChange={(e) => setHomework(e.target.value)}
                                 />
@@ -164,7 +164,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             placeholder="أدخل كلمة المرور..."
                             className={cn(
                                 "w-full p-3 bg-background border rounded-none outline-none focus:ring-0 focus:border-primary dark:bg-card dark:text-main text-center font-mono tracking-widest",
-                                error ? "border-error" : "border-border dark:border-border"
+                                error ? "border-error" : "border-border"
                             )}
                             autoFocus
                         />

@@ -73,7 +73,7 @@ export const FloatingActions = () => {
                                 <motion.div 
                                     className="bg-white/80 dark:bg-card backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 dark:border-border shadow-xl opacity-0 group-hover:opacity-100 -translate-x-4 md:translate-x-4 group-hover:translate-x-0 transition-all duration-300"
                                 >
-                                    <span className="text-micro font-black text-main dark:text-main whitespace-nowrap uppercase tracking-wider">
+                                    <span className="text-micro font-black text-main whitespace-nowrap uppercase tracking-wider">
                                         {action.label}
                                     </span>
                                 </motion.div>

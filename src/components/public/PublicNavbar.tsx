@@ -72,12 +72,12 @@ export const PublicNavbar = () => {
                                 دارين السابعة
                             </p>
                             <span className="hidden lg:inline-flex items-center gap-1.5 text-xs text-primary dark:text-main md:dark:text-primary font-bold mt-0.5 italic">
-                                <svg viewBox="0 0 40 20" className="w-5 h-3.5 text-primary dark:text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <svg viewBox="0 0 40 20" className="w-5 h-3.5 text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M2 10 C10 2 18 2 20 10 C22 18 30 18 38 10" />
                                     <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
                                 </svg>
                                 أفضل مدرسة افتراضية
-                                <svg viewBox="0 0 40 20" className="w-5 h-3.5 text-primary dark:text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <svg viewBox="0 0 40 20" className="w-5 h-3.5 text-primary" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M2 10 C10 18 18 18 20 10 C22 2 30 2 38 10" />
                                     <circle cx="20" cy="10" r="1.5" fill="currentColor" stroke="none" />
                                 </svg>
@@ -89,7 +89,7 @@ export const PublicNavbar = () => {
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-1 lg:gap-2 bg-primary-soft dark:bg-primary-soft px-1.5 lg:px-2 py-1.5 rounded-full border border-primary dark:border-primary shadow-sm min-w-0 shrink relative z-10">
+                    <div className="hidden md:flex items-center gap-1 lg:gap-2 bg-primary-soft px-1.5 lg:px-2 py-1.5 rounded-full border border-primary shadow-sm min-w-0 shrink relative z-10">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
@@ -110,7 +110,7 @@ export const PublicNavbar = () => {
 
 
                         {isAuthenticated && isDesktop && (
-                            <div className="hidden lg:flex border-e border-border dark:border-border pe-3 xl:pe-4 h-8 items-center">
+                            <div className="hidden lg:flex border-e border-border pe-3 xl:pe-4 h-8 items-center">
                                 <NotificationDropdown />
                             </div>
                         )}
@@ -124,20 +124,20 @@ export const PublicNavbar = () => {
                                     aria-expanded={isDropdownOpen}
                                     aria-controls="user-dropdown"
                                 >
-                                    <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary dark:border-primary shadow-sm group-hover:border-primary transition-all">
+                                    <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-primary shadow-sm group-hover:border-primary transition-all">
                                         {currentUser?.avatar ? (
                                             <Image src={currentUser.avatar} alt={currentUser.name} className="w-full h-full" />
                                         ) : (
                                             <div className="w-full h-full bg-primary-soft dark:bg-primary flex items-center justify-center">
-                                                <User className="w-4 h-4 text-primary dark:text-primary" />
+                                                <User className="w-4 h-4 text-primary" />
                                             </div>
                                         )}
                                     </div>
                                     <span className="hidden lg:block font-bold text-xs xl:text-sm">{currentUser?.name.split(' ')[0]}</span>
                                     <ChevronDown className={`w-3 h-3 lg:w-4 lg:h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
-                                <div id="user-dropdown" className={`absolute end-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border dark:border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
-                                    <div className="p-4 border-b border-border dark:border-border bg-background/50 dark:bg-background/50">
+                                <div id="user-dropdown" className={`absolute end-0 mt-4 w-56 bg-white dark:bg-card rounded-2xl shadow-xl border border-border overflow-hidden z-50 transition-all duration-300 ${isDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                                    <div className="p-4 border-b border-border bg-background/50">
                                         <p className="text-sm font-bold text-main">{currentUser?.name}</p>
                                         <p className="text-xs text-muted">{currentUser?.username}</p>
                                     </div>
@@ -171,7 +171,7 @@ export const PublicNavbar = () => {
                         {/* Mobile Menu Toggle */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden p-2 text-primary dark:text-primary hover:bg-primary-soft dark:hover:bg-primary-soft/40 rounded-full transition-all active:scale-90"
+                            className="md:hidden p-2 text-primary hover:bg-primary-soft dark:hover:bg-primary-soft/40 rounded-full transition-all active:scale-90"
                             aria-label={isMenuOpen ? 'إغلاق القائمة الجانبية' : 'فتح القائمة الجانبية'}
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -193,7 +193,7 @@ export const PublicNavbar = () => {
                                 onClick={() => setIsMenuOpen(false)}
                                 className={`flex items-center gap-3 px-6 py-4 rounded-full font-bold transition-all ${isActive(item.path)
                                     ? 'bg-primary text-on-primary shadow-lg'
-                                    : 'text-main dark:text-main hover:bg-surface dark:hover:bg-hover'
+                                    : 'text-main hover:bg-surface dark:hover:bg-hover'
                                     }`}
                             >
                                 <span className={`w-1.5 h-1.5 rounded-full ${isActive(item.path) ? 'bg-white' : 'bg-primary'}`}></span>
@@ -207,14 +207,14 @@ export const PublicNavbar = () => {
                                     <Link
                                         to="/dashboard"
                                         onClick={() => setIsMenuOpen(false)}
-                                        className="flex items-center gap-3 px-6 py-4 rounded-full font-bold text-main dark:text-main hover:bg-surface dark:hover:bg-hover"
+                                        className="flex items-center gap-3 px-6 py-4 rounded-full font-bold text-main hover:bg-surface dark:hover:bg-hover"
                                     >
                                         <Sparkles className="w-5 h-5 text-primary" />
                                         لوحة التحكم
                                     </Link>
                                     <button
                                         onClick={async () => { if (!await confirm('هل أنت متأكد من تسجيل الخروج؟')) return; logout(); setIsMenuOpen(false); }}
-                                        className="flex w-full items-center gap-3 px-6 py-4 rounded-full font-bold text-error dark:text-error hover:bg-error-light dark:hover:bg-error/20"
+                                        className="flex w-full items-center gap-3 px-6 py-4 rounded-full font-bold text-error hover:bg-error-light dark:hover:bg-error/20"
                                     >
                                         <LogOut size={20} className="rotate-180" />
                                         تسجيل الخروج

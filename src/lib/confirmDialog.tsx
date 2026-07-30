@@ -100,7 +100,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
                                 {title}
                             </h3>
 
-                            <p className="text-sm text-muted dark:text-muted leading-relaxed mb-6 text-start max-w-[280px]">
+                            <p className="text-sm text-muted leading-relaxed mb-6 text-start max-w-[280px]">
                                 {options.message}
                             </p>
 
@@ -206,7 +206,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                                 {title}
                             </h3>
 
-                            <p className="text-sm text-muted dark:text-muted leading-relaxed mb-6 max-w-[260px]">
+                            <p className="text-sm text-muted leading-relaxed mb-6 max-w-[260px]">
                                 {options.message}
                             </p>
 

@@ -74,7 +74,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                                 <Sparkles size={16} className="text-warning/30" />
                              </div>
                              <p className="text-micro font-medium text-warning uppercase mb-2">تحضير الجلسة القادمة</p>
-                             <p className="text-sm font-normal text-warning dark:text-warning leading-tight">"{enrollment.nextSessionNotes}"</p>
+                             <p className="text-sm font-normal text-warning leading-tight">"{enrollment.nextSessionNotes}"</p>
                         </div>
                     )}
 
@@ -123,7 +123,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                 </div>
 
                 {/* Footer Actions */}
-                <div className="p-6 bg-background dark:bg-background border-t-2 border-border flex gap-4">
+                <div className="p-6 bg-background border-t-2 border-border flex gap-4">
                     <Button
                         onClick={() => onGenerateReport?.(student)}
                         className="flex-1 h-12 bg-success text-on-success rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
