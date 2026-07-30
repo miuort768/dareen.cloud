@@ -5,14 +5,10 @@ import { useSettingsStore } from '../../../store/settingsStore';
 import { SectionCard, SectionTitle, FieldLabel, InputField, TextAreaField, PrimaryBtn } from './SettingsUI';
 
 export const AcademyInfoSection = ({
-    localAcademyName, setLocalAcademyName,
-    localAcademyLogo, setLocalAcademyLogo,
-    localAcademyTagline, setLocalAcademyTagline,
-    localAdminPhone, setLocalAdminPhone,
-    localTelegramHandle, setLocalTelegramHandle,
-    academyAddress, setAcademyAddress,
-    academyEmail, setAcademyEmail,
-    handleSaveGeneral, isSaving,
+    localAcademyName, setLocalAcademyName, localAcademyLogo, setLocalAcademyLogo,
+    localAcademyTagline, setLocalAcademyTagline, localAdminPhone, setLocalAdminPhone,
+    localTelegramHandle, setLocalTelegramHandle, academyAddress, setAcademyAddress,
+    academyEmail, setAcademyEmail, handleSaveGeneral, isSaving,
 }: {
     localAcademyName: string; setLocalAcademyName: (v: string) => void;
     localAcademyLogo: string; setLocalAcademyLogo: (v: string) => void;
@@ -50,14 +46,14 @@ export const AcademyInfoSection = ({
                         <FieldLabel>الشعار</FieldLabel>
                         <div className="flex items-center gap-3">
                             {localAcademyLogo && (
-                                <Image src={localAcademyLogo} alt="Logo" className="w-12 h-12 rounded-lg border" />
+                                <Image src={localAcademyLogo} alt="Logo" className="w-12 h-12 rounded-lg border border-border/30" />
                             )}
                             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
-                            <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border text-xs font-bold text-muted hover:bg-hover rounded-xl transition-all">
+                            <button onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2.5 bg-background border border-border/30 text-xs font-bold text-muted hover:bg-surface hover:border-border rounded-xl transition-all">
                                 <ImageIcon size={14} /> {localAcademyLogo ? 'تغيير' : 'رفع'}
                             </button>
                             {localAcademyLogo && (
-                                <button onClick={() => setLocalAcademyLogo('')} className="text-micro font-bold text-error hover:text-error-dark">إزالة</button>
+                                <button onClick={() => setLocalAcademyLogo('')} className="text-[11px] font-bold text-error hover:text-error-dark transition-colors">إزالة</button>
                             )}
                         </div>
                     </div>
@@ -103,8 +99,8 @@ export const AcademyInfoSection = ({
                 </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-border">
-                <h4 className="font-bold text-main text-sm mb-4">روابط التطبيقات</h4>
+            <div className="mt-6 pt-5 border-t border-border/20">
+                <h4 className="font-bold text-sm text-main mb-4">روابط التطبيقات</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
                         <FieldLabel>رابط Google Play</FieldLabel>
@@ -123,7 +119,7 @@ export const AcademyInfoSection = ({
                 </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-border flex justify-end">
+            <div className="mt-6 pt-5 border-t border-border/20 flex justify-end">
                 <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving}>حفظ معلومات المعهد</PrimaryBtn>
             </div>
         </SectionCard>

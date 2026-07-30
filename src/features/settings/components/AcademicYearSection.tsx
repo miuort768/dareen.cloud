@@ -94,15 +94,18 @@ export const AcademicYearSection = ({
                 </div>
                 <div className="space-y-2">
                     {semesterList.map(s => (
-                        <div key={s.id} className="flex items-center gap-2">
+                        <div key={s.id} className="flex items-center gap-2 p-3 bg-background border border-border/20 rounded-xl">
                             <InputField value={s.name} onChange={e => renameSemester(s.id, e.target.value)} className="flex-1" />
-                            <DangerBtn onClick={() => removeSemester(s.id)}><Trash2 size={14} /></DangerBtn>
+                            <DangerBtn onClick={() => removeSemester(s.id)} className="!p-2.5 shrink-0"><Trash2 size={14} /></DangerBtn>
                         </div>
                     ))}
+                    {semesterList.length === 0 && (
+                        <p className="text-xs text-muted py-4 text-center">لا توجد فصول دراسية مضافة</p>
+                    )}
                 </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-border flex justify-end">
+            <div className="mt-6 pt-5 border-t border-border/20 flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ السنة الدراسية</PrimaryBtn>
             </div>
         </SectionCard>

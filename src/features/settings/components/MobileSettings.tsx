@@ -2,14 +2,9 @@ import { useState } from 'react';
 import { MessageSquare, Plus, Trash2, Save } from 'lucide-react';
 import { SectionCard, SectionTitle, InputField, PrimaryBtn, DangerBtn } from './SettingsUI';
 
-interface WhatsAppEntry {
-    label: string;
-    phone: string;
-}
-
+interface WhatsAppEntry { label: string; phone: string; }
 interface MobileSettingsProps {
-    whatsappNumbers: string;
-    setWhatsappNumbers: (v: string) => Promise<void>;
+    whatsappNumbers: string; setWhatsappNumbers: (v: string) => Promise<void>;
     showNotify: (msg: string) => void;
 }
 
@@ -60,27 +55,19 @@ export const MobileSettings = ({ whatsappNumbers, setWhatsappNumbers, showNotify
                 </p>
                 <div className="space-y-3">
                     {entries.map((entry, i) => (
-                        <div key={`setting-${i}`} className="flex items-start gap-2 p-3 bg-surface border border-border">
+                        <div key={`setting-${i}`} className="flex items-start gap-2 p-4 bg-background border border-border/20 rounded-xl">
                             <div className="flex-1 space-y-2">
-                                <InputField
-                                    placeholder="مسمى الزر (مثال: تواصل عام)"
-                                    value={entry.label}
-                                    onChange={e => updateEntry(i, 'label', e.target.value)}
-                                />
-                                <InputField
-                                    placeholder="رقم الهاتف (مثال: 201015098836)"
-                                    value={entry.phone}
-                                    onChange={e => updateEntry(i, 'phone', e.target.value)}
-                                />
+                                <InputField placeholder="مسمى الزر (مثال: تواصل عام)" value={entry.label} onChange={e => updateEntry(i, 'label', e.target.value)} />
+                                <InputField placeholder="رقم الهاتف (مثال: 201015098836)" value={entry.phone} onChange={e => updateEntry(i, 'phone', e.target.value)} />
                             </div>
-                            <DangerBtn onClick={() => removeEntry(i)} className="!p-2.5 mt-0">
+                            <DangerBtn onClick={() => removeEntry(i)} className="!p-2.5 mt-0 shrink-0">
                                 <Trash2 size={14} />
                             </DangerBtn>
                         </div>
                     ))}
                 </div>
                 <div className="flex items-center gap-2 mt-4">
-                    <PrimaryBtn onClick={addEntry} className="!bg-surface !text-primary !border !border-border">
+                    <PrimaryBtn onClick={addEntry} className="!bg-background !text-primary !border !border-border/30 !shadow-none hover:!bg-surface">
                         <Plus size={14} /> إضافة رقم
                     </PrimaryBtn>
                     <PrimaryBtn onClick={handleSave} loading={saving}>

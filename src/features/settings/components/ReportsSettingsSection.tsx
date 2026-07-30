@@ -3,6 +3,7 @@ import { FileText, Image, Download } from 'lucide-react';
 import { SectionCard, SectionTitle, FieldLabel, InputField, ToggleRow, PrimaryBtn } from './SettingsUI';
 import { settingsService } from '../services/settingsService';
 import { safeGet } from '../../../lib/api';
+import { cn } from '../../../lib/utils';
 
 export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: string) => void }) => {
     const [reportHeader, setReportHeader] = useState('');
@@ -43,11 +44,11 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
             <SectionTitle icon={FileText} label="إعدادات التقارير" sub="تخصيص شكل ومحتوى التقارير" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>تذييل التقرير</FieldLabel>
                     <InputField value={reportFooter} onChange={e => setReportFooter(e.target.value)} placeholder="شكراً لثقتكم" />
                 </div>
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>حجم الورق</FieldLabel>
                     <InputField value={pageSize} onChange={e => setPageSize(e.target.value)} placeholder="A4" />
                 </div>
@@ -61,14 +62,23 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
                 <FieldLabel>الصيغة الافتراضية للتصدير</FieldLabel>
                 <div className="flex gap-2 mt-1">
                     {(['pdf', 'excel'] as const).map(f => (
-                        <button key={f} onClick={() => setDefaultFormat(f)} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${defaultFormat === f ? 'bg-primary-soft text-primary border border-primary' : 'bg-surface text-muted border border-border hover:bg-hover'}`}>
+                        <button
+                            key={f}
+                            onClick={() => setDefaultFormat(f)}
+                            className={cn(
+                                'flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-bold transition-all border',
+                                defaultFormat === f
+                                    ? 'bg-primary text-on-primary border-primary shadow-sm'
+                                    : 'bg-background text-muted border-border/20 hover:border-primary/50'
+                            )}
+                        >
                             <Download size={14} /> {f === 'pdf' ? 'PDF' : 'Excel'}
                         </button>
                     ))}
                 </div>
             </div>
 
-            <div className="pt-4 border-t border-border flex justify-end">
+            <div className="pt-5 border-t border-border/20 flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ إعدادات التقارير</PrimaryBtn>
             </div>
         </SectionCard>

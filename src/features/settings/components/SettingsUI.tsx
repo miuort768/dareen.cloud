@@ -15,7 +15,8 @@ export const AVAILABLE_PERMISSIONS = [
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn(
-        'bg-card border border-border/30 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300',
+        'bg-card border border-border/20 rounded-2xl p-5 md:p-6',
+        'shadow-sm hover:shadow-md transition-all duration-300',
         className
     )}>
         {children}
@@ -23,19 +24,20 @@ export const SectionCard = ({ children, className = '' }: { children: React.Reac
 );
 
 export const SectionTitle = ({ icon: Icon, label, sub }: { icon: LucideIcon; label: string; sub?: string }) => (
-    <div className="flex items-center gap-3 mb-5 pb-4 border-b border-border/30">
-        <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-primary/10">
-            <Icon size={17} className="text-primary" />
+    <div className="flex items-center gap-3 mb-5 pb-4 border-b border-border/20">
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center shadow-sm">
+            <Icon size={18} className="text-primary" />
         </div>
-        <div>
+        <div className="flex-1">
             <p className="text-sm font-bold text-main">{label}</p>
             {sub && <p className="text-[11px] font-bold text-muted mt-0.5">{sub}</p>}
         </div>
+        <div className="w-16 h-0.5 rounded-full bg-gradient-to-l from-primary/40 to-transparent hidden sm:block" />
     </div>
 );
 
 export const FieldLabel = ({ children }: { children: React.ReactNode }) => (
-    <label className="block text-[11px] font-bold text-muted mb-1.5">
+    <label className="block text-[11px] font-bold text-muted mb-1.5 tracking-wide">
         {children}
     </label>
 );
@@ -44,10 +46,11 @@ export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) =
     <input
         {...props}
         className={cn(
-            'w-full bg-background border border-border/40',
-            'px-3.5 py-2.5 text-sm font-bold text-main',
-            'focus:outline-none focus:border-primary focus:ring-2 focus:ring-focus/50 transition-all',
-            'placeholder:text-muted/60',
+            'w-full bg-background border border-border/30',
+            'px-4 py-3 text-sm font-bold text-main',
+            'focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10',
+            'transition-all duration-200 rounded-xl',
+            'placeholder:text-muted/50',
             props.className
         )}
     />
@@ -57,10 +60,11 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
     <textarea
         {...props}
         className={cn(
-            'w-full bg-background border border-border/40',
-            'px-3.5 py-2.5 text-sm font-bold text-main resize-none',
-            'focus:outline-none focus:border-primary focus:ring-2 focus:ring-focus/50 transition-all',
-            'placeholder:text-muted/60',
+            'w-full bg-background border border-border/30',
+            'px-4 py-3 text-sm font-bold text-main resize-none',
+            'focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10',
+            'transition-all duration-200 rounded-xl',
+            'placeholder:text-muted/50',
             props.className
         )}
     />
@@ -73,7 +77,9 @@ export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () =
         onClick={onChange}
         className={cn(
             'w-11 h-6 rounded-full relative transition-all duration-300 shrink-0',
-            checked ? 'bg-primary shadow-sm shadow-primary/30' : 'bg-border/60'
+            checked
+                ? 'bg-gradient-to-r from-primary to-primary-active shadow-sm shadow-primary/30'
+                : 'bg-border/60 hover:bg-border'
         )}
     >
         <div className={cn(
@@ -89,8 +95,12 @@ export const PrimaryBtn = ({ onClick, loading, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover',
-            'text-on-primary text-xs font-bold px-5 py-2.5 rounded-xl active:scale-95 transition-all shadow-sm hover:shadow-md',
+            'flex items-center justify-center gap-2 bg-gradient-to-br from-primary to-primary-active',
+            'hover:from-primary-hover hover:to-primary',
+            'text-on-primary text-xs font-bold px-6 py-3 rounded-xl',
+            'active:scale-[0.97] transition-all duration-200',
+            'shadow-sm hover:shadow-md shadow-primary/20',
+            'disabled:opacity-50 disabled:cursor-not-allowed',
             className
         )}
     >
@@ -104,8 +114,10 @@ export const SecondaryBtn = ({ onClick, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 bg-card border border-border/40 hover:bg-surface',
-            'text-muted hover:text-main text-xs font-bold px-5 py-2.5 rounded-xl active:scale-95 transition-all',
+            'flex items-center justify-center gap-2 bg-card border border-border/30',
+            'hover:bg-surface hover:border-border text-muted hover:text-main',
+            'text-xs font-bold px-5 py-2.5 rounded-xl',
+            'active:scale-[0.97] transition-all duration-200',
             className
         )}
     >
@@ -119,8 +131,10 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
     <button
         onClick={onClick}
         className={cn(
-            'flex items-center justify-center gap-2 border-2 border-error/30 bg-error/10',
-            'hover:bg-error hover:text-on-error text-error text-xs font-bold px-5 py-2.5 rounded-xl active:scale-95 transition-all shadow-sm hover:shadow-md',
+            'flex items-center justify-center gap-2 bg-gradient-to-br from-error/10 to-error/5',
+            'border-2 border-error/30 hover:border-error hover:from-error hover:to-error-dark',
+            'hover:text-on-error text-error text-xs font-bold px-5 py-2.5 rounded-xl',
+            'active:scale-[0.97] transition-all duration-200 shadow-sm hover:shadow-md',
             className
         )}
     >
@@ -131,9 +145,9 @@ export const DangerBtn = ({ onClick, children, className = '' }: {
 export const ToggleRow = ({
     icon: Icon, label, sub, checked, onChange
 }: { icon: LucideIcon; label: string; sub?: string; checked: boolean; onChange: () => void }) => (
-    <div className="flex items-center justify-between py-3 px-4 bg-background border border-border/30 rounded-xl">
+    <div className="flex items-center justify-between py-3 px-4 bg-background border border-border/20 rounded-xl hover:border-border/40 transition-colors duration-200">
         <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary/10">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary/10 shrink-0">
                 <Icon size={15} className="text-primary" />
             </div>
             <div>

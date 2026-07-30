@@ -34,12 +34,12 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
         <SectionCard>
             <SectionTitle icon={Award} label="النقاط والمكافآت" sub="إعدادات نظام النقاط والشارات والتكريم" />
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>نقاط لكل جلسة</FieldLabel>
                     <InputField type="number" value={pointsPerSession} onChange={e => setPointsPerSession(e.target.value)} />
                 </div>
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>مكافأة التقييم</FieldLabel>
                     <InputField type="number" value={bonusPerRating} onChange={e => setBonusPerRating(e.target.value)} />
                 </div>
@@ -48,24 +48,24 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
             <div className="mb-6">
                 <FieldLabel>حدود الشارات</FieldLabel>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-1">
-                    <div className="p-3 bg-warning-soft rounded-xl border border-border">
+                    <div className="p-4 bg-gradient-to-br from-amber-50 to-amber-100/50 dark:from-amber-950/20 dark:to-amber-900/10 border border-amber-200/50 dark:border-amber-800/30 rounded-xl">
                         <div className="flex items-center gap-2 mb-2">
-                            <Star size={14} className="text-warning" />
-                            <span className="text-xs font-bold text-warning-dark">الشارة البرونزية</span>
+                            <Star size={14} className="text-amber-600 dark:text-amber-400" />
+                            <span className="text-xs font-bold text-amber-800 dark:text-amber-300">الشارة البرونزية</span>
                         </div>
                         <InputField type="number" value={badgeThreshold1} onChange={e => setBadgeThreshold1(e.target.value)} />
                     </div>
-                    <div className="p-3 bg-surface rounded-xl border border-border">
+                    <div className="p-4 bg-background border border-border/20 rounded-xl">
                         <div className="flex items-center gap-2 mb-2">
                             <Trophy size={14} className="text-muted" />
                             <span className="text-xs font-bold text-main">الشارة الفضية</span>
                         </div>
                         <InputField type="number" value={badgeThreshold2} onChange={e => setBadgeThreshold2(e.target.value)} />
                     </div>
-                    <div className="p-3 bg-warning-soft rounded-xl border border-border">
+                    <div className="p-4 bg-gradient-to-br from-yellow-50 to-amber-100/50 dark:from-yellow-950/20 dark:to-amber-900/10 border border-yellow-200/50 dark:border-yellow-800/30 rounded-xl">
                         <div className="flex items-center gap-2 mb-2">
-                            <Award size={14} className="text-warning-dark" />
-                            <span className="text-xs font-bold text-warning-dark">الشارة الذهبية</span>
+                            <Award size={14} className="text-yellow-600 dark:text-yellow-400" />
+                            <span className="text-xs font-bold text-yellow-800 dark:text-yellow-300">الشارة الذهبية</span>
                         </div>
                         <InputField type="number" value={badgeThreshold3} onChange={e => setBadgeThreshold3(e.target.value)} />
                     </div>
@@ -77,7 +77,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
                 <ToggleRow icon={Trophy} label="تفعيل لوحة الشرف" sub="عرض قائمة الطلاب المتميزين" checked={leaderboardEnabled} onChange={() => setLeaderboardEnabled(!leaderboardEnabled)} />
             </div>
 
-            <div className="mt-6 pt-4 border-t border-border flex justify-end">
+            <div className="mt-6 pt-5 border-t border-border/20 flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ إعدادات المكافآت</PrimaryBtn>
             </div>
         </SectionCard>

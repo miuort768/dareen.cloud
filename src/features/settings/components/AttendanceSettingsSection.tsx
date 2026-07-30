@@ -47,15 +47,15 @@ export const AttendanceSettingsSection = ({
             <SectionTitle icon={UserCheck} label="إعدادات الحضور" sub="التحكم بسياسات الحضور والغياب والتذكيرات" />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>حد التأخير (دقائق)</FieldLabel>
                     <InputField type="number" value={lateThreshold} onChange={e => setLateThreshold(e.target.value)} />
                 </div>
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>حد الغياب للتنبيه</FieldLabel>
                     <InputField type="number" value={absenceAlertThreshold} onChange={e => setAbsenceAlertThreshold(e.target.value)} />
                 </div>
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>التجميد التلقائي (غيابات)</FieldLabel>
                     <InputField type="number" value={localAutoFreeze} onChange={e => setLocalAutoFreeze(Number(e.target.value))} />
                 </div>
@@ -66,7 +66,7 @@ export const AttendanceSettingsSection = ({
                 <ToggleRow icon={Snowflake} label="قفل إدخال الحضور السابق" sub="منع تعديل الحضور لأيام سابقة" checked={localBackdateLock} onChange={() => setLocalBackdateLock(!localBackdateLock)} />
             </div>
 
-            <div className="mt-6 pt-4 border-t border-border flex justify-end">
+            <div className="mt-6 pt-5 border-t border-border/20 flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ إعدادات الحضور</PrimaryBtn>
             </div>
         </SectionCard>

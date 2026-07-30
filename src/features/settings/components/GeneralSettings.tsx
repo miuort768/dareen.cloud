@@ -2,59 +2,36 @@ import { Building2, Wallet, Monitor, Lock, CheckCircle2 } from 'lucide-react';
 import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn, ToggleRow } from './SettingsUI';
 
 interface GeneralSettingsProps {
-    localAcademyName: string;
-    setLocalAcademyName: (v: string) => void;
-    localAcademyLogo: string;
-    setLocalAcademyLogo: (v: string) => void;
-    localAcademyTagline: string;
-    setLocalAcademyTagline: (v: string) => void;
-    localAdminPhone: string;
-    setLocalAdminPhone: (v: string) => void;
-    localTelegramHandle: string;
-    setLocalTelegramHandle: (v: string) => void;
-    maintenanceMode: boolean;
-    setMaintenanceMode: (v: boolean) => Promise<void>;
+    localAcademyName: string; setLocalAcademyName: (v: string) => void;
+    localAcademyLogo: string; setLocalAcademyLogo: (v: string) => void;
+    localAcademyTagline: string; setLocalAcademyTagline: (v: string) => void;
+    localAdminPhone: string; setLocalAdminPhone: (v: string) => void;
+    localTelegramHandle: string; setLocalTelegramHandle: (v: string) => void;
+    maintenanceMode: boolean; setMaintenanceMode: (v: boolean) => Promise<void>;
     showNotify: (msg: string) => void;
-    localSemesterName: string;
-    setLocalSemesterName: (v: string) => void;
-    localPrice: number;
-    setLocalPrice: (v: number) => void;
-    localTeacherPrice: number;
-    setLocalTeacherPrice: (v: number) => void;
-    localCurrency: string;
-    setLocalCurrency: (v: string) => void;
-    localThreshold: number;
-    setLocalThreshold: (v: number) => void;
-    localAutoFreeze: number;
-    setLocalAutoFreeze: (v: number) => void;
-    localBackdateLock: boolean;
-    setLocalBackdateLock: (v: boolean) => void;
+    localSemesterName: string; setLocalSemesterName: (v: string) => void;
+    localPrice: number; setLocalPrice: (v: number) => void;
+    localTeacherPrice: number; setLocalTeacherPrice: (v: number) => void;
+    localCurrency: string; setLocalCurrency: (v: string) => void;
+    localThreshold: number; setLocalThreshold: (v: number) => void;
+    localAutoFreeze: number; setLocalAutoFreeze: (v: number) => void;
+    localBackdateLock: boolean; setLocalBackdateLock: (v: boolean) => void;
     setShowMaintenanceModal: (v: boolean) => void;
-    handleSaveGeneral: () => void;
-    isSaving: boolean;
+    handleSaveGeneral: () => void; isSaving: boolean;
 }
 
 export const GeneralSettings = ({
-    localAcademyName, setLocalAcademyName,
-    localAcademyLogo, setLocalAcademyLogo,
-    localAcademyTagline, setLocalAcademyTagline,
-    localAdminPhone, setLocalAdminPhone,
-    localTelegramHandle, setLocalTelegramHandle,
-    maintenanceMode, setMaintenanceMode,
-    showNotify,
-    localSemesterName, setLocalSemesterName,
-    localPrice, setLocalPrice,
-    localTeacherPrice, setLocalTeacherPrice,
-    localCurrency, setLocalCurrency,
-    localThreshold, setLocalThreshold,
-    localAutoFreeze, setLocalAutoFreeze,
-    localBackdateLock, setLocalBackdateLock,
-    setShowMaintenanceModal,
-    handleSaveGeneral, isSaving
+    localAcademyName, setLocalAcademyName, localAcademyLogo, setLocalAcademyLogo,
+    localAcademyTagline, setLocalAcademyTagline, localAdminPhone, setLocalAdminPhone,
+    localTelegramHandle, setLocalTelegramHandle, maintenanceMode, setMaintenanceMode,
+    showNotify, localSemesterName, setLocalSemesterName, localPrice, setLocalPrice,
+    localTeacherPrice, setLocalTeacherPrice, localCurrency, setLocalCurrency,
+    localThreshold, setLocalThreshold, localAutoFreeze, setLocalAutoFreeze,
+    localBackdateLock, setLocalBackdateLock, setShowMaintenanceModal, handleSaveGeneral, isSaving
 }: GeneralSettingsProps) => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SectionCard>
-            <SectionTitle icon={Building2} label="الهوية الأساسية" sub="هوية الأكاديمية" />
+            <SectionTitle icon={Building2} label="الهوية الأساسية" sub="بيانات الأكاديمية الأساسية" />
             <div className="space-y-3">
                 <div>
                     <FieldLabel>اسم الأكاديمية</FieldLabel>
@@ -77,8 +54,7 @@ export const GeneralSettings = ({
                     <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="تطبيق دارين" dir="ltr" className="font-mono" />
                 </div>
                 <ToggleRow
-                    icon={Monitor}
-                    label="وضع الصيانة"
+                    icon={Monitor} label="وضع الصيانة"
                     sub="تعطيل وصول المستخدمين العاديين"
                     checked={maintenanceMode}
                     onChange={() => {
@@ -90,7 +66,7 @@ export const GeneralSettings = ({
         </SectionCard>
 
         <SectionCard>
-            <SectionTitle icon={Wallet} label="الإعدادات المالية والأكاديمية" sub="المالية والأكاديمية" />
+            <SectionTitle icon={Wallet} label="الإعدادات المالية والأكاديمية" sub="أسعار وفصول وقواعد" />
             <div className="space-y-3">
                 <div>
                     <FieldLabel>تسمية الفصل الدراسي</FieldLabel>
@@ -111,30 +87,29 @@ export const GeneralSettings = ({
                     </div>
                     <div>
                         <FieldLabel>تنبيه الرصيد</FieldLabel>
-                        <InputField type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="text-center text-error bg-error-soft border-error" />
+                        <InputField type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="text-center text-error" />
                     </div>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                    <div className="p-3 bg-surface border border-border">
+                    <div className="p-4 bg-background border border-border/20 rounded-xl">
                         <FieldLabel>عدد أيام التجميد</FieldLabel>
                         <InputField type="number" value={localAutoFreeze} onChange={e => setLocalAutoFreeze(Number(e.target.value))} />
-                        <p className="text-micro font-bold text-muted mt-1">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
+                        <p className="text-[11px] font-bold text-muted mt-1.5">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
                     </div>
-                    <div className="p-3 bg-surface border border-border">
+                    <div className="p-4 bg-background border border-border/20 rounded-xl">
                         <ToggleRow
-                            icon={Lock}
-                            label="قفل التاريخ القديم"
+                            icon={Lock} label="قفل التاريخ القديم"
                             sub="منع تسجيل حصص بتواريخ سابقة"
-                            checked={localBackdateLock}
-                            onChange={() => setLocalBackdateLock(!localBackdateLock)}
+                            checked={localBackdateLock} onChange={() => setLocalBackdateLock(!localBackdateLock)}
                         />
                     </div>
                 </div>
 
-                <p className="text-micro text-muted bg-warning-soft px-3 py-2 border-s-2 border-warning">
+                <div className="flex items-center gap-2 text-[11px] font-bold text-warning-dark bg-warning-soft px-4 py-3 border-s-2 border-warning rounded-lg">
                     القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
-                </p>
+                </div>
+
                 <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2">
                     <CheckCircle2 size={14} /> حفظ الإعدادات الأساسية
                 </PrimaryBtn>

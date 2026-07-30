@@ -36,7 +36,7 @@ export const CommunicationsSection = ({
                     </div>
                     <div>
                         <FieldLabel>كلمة المرور</FieldLabel>
-                        <InputField type="password" placeholder="●●●●●●●●" />
+                        <InputField type="password" placeholder="••••••••" />
                     </div>
                 </div>
                 <div className="mt-4 flex justify-end">
@@ -48,11 +48,9 @@ export const CommunicationsSection = ({
                 <SectionTitle icon={MessageSquare} label="واتساب" sub="إعدادات الإشعارات عبر واتساب وقوالب الرسائل" />
                 <div className="space-y-4">
                     <ToggleRow
-                        icon={MessageSquare}
-                        label="الإشعار التلقائي عبر واتساب"
+                        icon={MessageSquare} label="الإشعار التلقائي عبر واتساب"
                         sub="إرسال إشعارات تلقائية للطلاب وأولياء الأمور"
-                        checked={whatsappAutoNotify}
-                        onChange={() => setWhatsappAutoNotify(!whatsappAutoNotify)}
+                        checked={whatsappAutoNotify} onChange={() => setWhatsappAutoNotify(!whatsappAutoNotify)}
                     />
                     <div>
                         <FieldLabel>قالب رسالة واتساب</FieldLabel>
@@ -86,7 +84,7 @@ export const CommunicationsSection = ({
                     </div>
                     <div>
                         <FieldLabel>API Key</FieldLabel>
-                        <InputField type="password" placeholder="●●●●●●●●" />
+                        <InputField type="password" placeholder="••••••••" />
                     </div>
                 </div>
                 <div className="mt-4 flex justify-end">

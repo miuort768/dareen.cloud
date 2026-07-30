@@ -40,15 +40,15 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
             <SectionTitle icon={Clock} label="أوقات العمل" sub="تحديد ساعات العمل وفترات الراحة" />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>مدة الجلسة (دقيقة)</FieldLabel>
                     <InputField type="number" value={sessionDuration} onChange={e => setSessionDuration(e.target.value)} />
                 </div>
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>بداية الاستراحة</FieldLabel>
                     <InputField type="time" value={breakStart} onChange={e => setBreakStart(e.target.value)} />
                 </div>
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>نهاية الاستراحة</FieldLabel>
                     <InputField type="time" value={breakEnd} onChange={e => setBreakEnd(e.target.value)} />
                 </div>
@@ -56,8 +56,13 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
 
             <div className="space-y-2">
                 {schedule.map(d => (
-                    <div key={d.day} className="flex items-center gap-3 p-3 bg-surface rounded-xl">
-                        <button onClick={() => toggleDay(d.day)} className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${d.enabled ? 'bg-primary-soft text-primary' : 'bg-hover text-muted'}`}>
+                    <div key={d.day} className="flex items-center gap-3 p-3 bg-background border border-border/20 rounded-xl hover:border-border/40 transition-colors">
+                        <button
+                            onClick={() => toggleDay(d.day)}
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all shrink-0 ${
+                                d.enabled ? 'bg-gradient-to-br from-primary/20 to-primary/5 text-primary shadow-sm' : 'bg-hover text-muted'
+                            }`}
+                        >
                             {d.day < 5 ? <Sun size={16} /> : <Moon size={16} />}
                         </button>
                         <span className={`text-sm font-bold w-16 md:w-20 ${d.enabled ? 'text-main' : 'text-muted'}`}>{DAYS[d.day]}</span>
@@ -68,13 +73,13 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
                                 <InputField type="time" value={d.end} onChange={e => updateTime(d.day, 'end', e.target.value)} className="w-24 md:w-28" />
                             </>
                         ) : (
-                            <span className="text-xs text-muted ms-4">إجازة</span>
+                            <span className="text-xs text-muted px-2 py-1.5 bg-hover rounded-lg">إجازة</span>
                         )}
                     </div>
                 ))}
             </div>
 
-            <div className="mt-6 pt-4 border-t border-border flex justify-end">
+            <div className="mt-6 pt-5 border-t border-border/20 flex justify-end">
                 <PrimaryBtn onClick={handleSave} loading={isSaving}>حفظ أوقات العمل</PrimaryBtn>
             </div>
         </SectionCard>

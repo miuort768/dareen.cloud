@@ -3,40 +3,29 @@ import { SectionCard, SectionTitle, ToggleRow, FieldLabel, InputField, TextAreaF
 import { settingsService } from '../services/settingsService';
 
 interface AdvancedSettingsProps {
-    whatsappAutoNotify: boolean;
-    setWhatsappAutoNotify: (v: boolean) => Promise<void> | void;
-    localWhatsappTemplate: string;
-    setLocalWhatsappTemplate: (v: string) => void;
-    setWhatsappTemplate: (v: string) => Promise<void> | void;
-    showNotify: (msg: string) => void;
-    reminderMinutesBefore: number;
-    setReminderMinutesBefore: (v: number) => void;
-    localSemesterName: string;
-    setLocalSemesterName: (v: string) => void;
-    localSemesters: string;
-    setLocalSemesters: (v: string) => void;
-    setSemesterName: (v: string) => Promise<void> | void;
-    setSemesters: (v: string) => Promise<void> | void;
+    whatsappAutoNotify: boolean; setWhatsappAutoNotify: (v: boolean) => Promise<void> | void;
+    localWhatsappTemplate: string; setLocalWhatsappTemplate: (v: string) => void;
+    setWhatsappTemplate: (v: string) => Promise<void> | void; showNotify: (msg: string) => void;
+    reminderMinutesBefore: number; setReminderMinutesBefore: (v: number) => void;
+    localSemesterName: string; setLocalSemesterName: (v: string) => void;
+    localSemesters: string; setLocalSemesters: (v: string) => void;
+    setSemesterName: (v: string) => Promise<void> | void; setSemesters: (v: string) => Promise<void> | void;
     setSecureAction: (action: { type: 'reset' | 'archive'; title: string; description: string; confirmWord: string; actionFn: () => void } | null) => void;
 }
 
 export const AdvancedSettings = ({
-    whatsappAutoNotify, setWhatsappAutoNotify,
-    localWhatsappTemplate, setLocalWhatsappTemplate, setWhatsappTemplate, showNotify,
-    reminderMinutesBefore, setReminderMinutesBefore,
-    localSemesterName, setLocalSemesterName,
-    localSemesters, setLocalSemesters,
-    setSemesterName, setSemesters,
-    setSecureAction
+    whatsappAutoNotify, setWhatsappAutoNotify, localWhatsappTemplate, setLocalWhatsappTemplate,
+    setWhatsappTemplate, showNotify, reminderMinutesBefore, setReminderMinutesBefore,
+    localSemesterName, setLocalSemesterName, localSemesters, setLocalSemesters,
+    setSemesterName, setSemesters, setSecureAction
 }: AdvancedSettingsProps) => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <SectionCard>
-            <SectionTitle icon={Phone} label="أتمتة الواتساب والرسائل" sub="أتمتة واتساب" />
+            <SectionTitle icon={Phone} label="أتمتة الواتساب والرسائل" sub="إعدادات الإشعارات التلقائية" />
             <div className="space-y-3">
                 <ToggleRow
-                    icon={Bell}
-                    label="إرسال الفواتير تلقائياً"
-                    sub="الإشعارات التلقائية"
+                    icon={Bell} label="إرسال الفواتير تلقائياً"
+                    sub="الإشعارات التلقائية للحصص والاشتراكات"
                     checked={whatsappAutoNotify}
                     onChange={() => setWhatsappAutoNotify(!whatsappAutoNotify)}
                 />
@@ -45,8 +34,7 @@ export const AdvancedSettings = ({
                     <TextAreaField
                         value={localWhatsappTemplate}
                         onChange={e => setLocalWhatsappTemplate(e.target.value)}
-                        rows={5}
-                        placeholder="اكتب رسالتك هنا..."
+                        rows={5} placeholder="اكتب رسالتك هنا..."
                     />
                 </div>
                 <div className="flex flex-wrap gap-1.5">
@@ -54,39 +42,31 @@ export const AdvancedSettings = ({
                         <button
                             key={tag}
                             onClick={() => setLocalWhatsappTemplate(prev => prev + ' ' + tag)}
-                            className="px-2.5 py-1 bg-card hover:bg-info-soft hover:text-info text-muted text-micro font-bold border border-border transition-all font-mono"
+                            className="px-3 py-1.5 bg-background hover:bg-info/10 hover:text-info text-muted text-[11px] font-bold border border-border/20 rounded-lg transition-all font-mono"
                         >
                             {tag}
                         </button>
                     ))}
                 </div>
-                <PrimaryBtn
-                    className="w-full"
-                    onClick={() => setWhatsappTemplate(localWhatsappTemplate).then(() => showNotify('تم حفظ القالب'))}
-                >
+                <PrimaryBtn className="w-full" onClick={() => setWhatsappTemplate(localWhatsappTemplate).then(() => showNotify('تم حفظ القالب'))}>
                     <CheckCircle2 size={13} /> حفظ وتفعيل القالب
                 </PrimaryBtn>
             </div>
         </SectionCard>
 
         <SectionCard>
-            <SectionTitle icon={Bell} label="تذكير أولياء الأمور بالحصص" sub="تذكير جلسات أولياء الأمور" />
+            <SectionTitle icon={Bell} label="تذكير أولياء الأمور بالحصص" sub="إعدادات التذكير قبل الحصة" />
             <div className="space-y-3">
-                <div>
+                <div className="p-4 bg-background border border-border/20 rounded-xl">
                     <FieldLabel>إرسال تذكير قبل الحصة بـ (دقائق)</FieldLabel>
-                    <InputField
-                        type="number"
-                        value={reminderMinutesBefore}
-                        onChange={e => setReminderMinutesBefore(Math.max(1, Number(e.target.value)))}
-                        placeholder="30"
-                    />
-                    <p className="text-micro text-muted mt-1">سيتم إرسال إشعار لولي الأمر قبل الحصة بهذا العدد من الدقائق</p>
+                    <InputField type="number" value={reminderMinutesBefore} onChange={e => setReminderMinutesBefore(Math.max(1, Number(e.target.value)))} placeholder="30" />
+                    <p className="text-[11px] text-muted mt-1.5">سيتم إرسال إشعار لولي الأمر قبل الحصة بهذا العدد من الدقائق</p>
                 </div>
             </div>
         </SectionCard>
 
         <SectionCard>
-            <SectionTitle icon={Calendar} label="إدارة الفصول والأرشيف" sub="السجل الأكاديمي" />
+            <SectionTitle icon={Calendar} label="إدارة الفصول والأرشيف" sub="السجل الأكاديمي والتاريخي" />
             <div className="space-y-3">
                 <div>
                     <FieldLabel>الفصل الحالي</FieldLabel>
@@ -94,32 +74,21 @@ export const AdvancedSettings = ({
                 </div>
                 <div>
                     <FieldLabel>الأرشيف التاريخي</FieldLabel>
-                    <TextAreaField
-                        value={localSemesters}
-                        onChange={e => setLocalSemesters(e.target.value)}
-                        rows={4}
-                        placeholder="الأرشيف التاريخي..."
-                    />
+                    <TextAreaField value={localSemesters} onChange={e => setLocalSemesters(e.target.value)} rows={4} placeholder="الأرشيف التاريخي..." />
                 </div>
-                <PrimaryBtn
-                    className="w-full"
-                    onClick={() => Promise.all([setSemesterName(localSemesterName), setSemesters(localSemesters)]).then(() => showNotify('تم تحديث الأرشيف'))}
-                >
+                <PrimaryBtn className="w-full" onClick={() => Promise.all([setSemesterName(localSemesterName), setSemesters(localSemesters)]).then(() => showNotify('تم تحديث الأرشيف'))}>
                     <RefreshCw size={13} /> مزامنة الفصول
                 </PrimaryBtn>
             </div>
 
-            <div className="mt-4 pt-4 border-t border-border">
-                <DangerBtn
-                    className="w-full"
-                    onClick={() => setSecureAction({
-                        type: 'reset',
-                        title: 'تصفير النظام بالكامل',
-                        description: 'سيتم مسح جميع البيانات المتعلقة بالطلاب والمعلمين والإيرادات للبدء من جديد. هذا الإجراء نهائي.',
-                        confirmWord: 'إعادة ضبط المنصة',
-                        actionFn: () => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })
-                    })}
-                >
+            <div className="mt-4 pt-4 border-t border-border/20">
+                <DangerBtn className="w-full" onClick={() => setSecureAction({
+                    type: 'reset',
+                    title: 'تصفير النظام بالكامل',
+                    description: 'سيتم مسح جميع البيانات المتعلقة بالطلاب والمعلمين والإيرادات للبدء من جديد. هذا الإجراء نهائي.',
+                    confirmWord: 'إعادة ضبط المنصة',
+                    actionFn: () => settingsService.systemReset().then(() => { localStorage.clear(); window.location.reload(); })
+                })}>
                     <Trash2 size={13} /> إعادة ضبط المصنع
                 </DangerBtn>
             </div>
