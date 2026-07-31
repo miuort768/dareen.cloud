@@ -16,6 +16,7 @@ import { BlogBreadcrumb } from '../../components/blog/BlogBreadcrumb';
 import { LoadMore } from '../../components/blog/LoadMore';
 import { LoadingState, EmptyState } from '../../components/blog/BlogStates';
 import { MobileHero, DesktopHero } from '../../components/blog/HeroSelection';
+import { DesktopLibraryLanding } from '../../components/blog/DesktopLibraryLanding';
 import { SelectionGrid } from '../../components/blog/SelectionGrid';
 import { PageLoader } from '../../components/ui/PageLoader';
 
@@ -270,35 +271,39 @@ export const Blog = () => {
       </div>
 
       {/* Desktop */}
-      <main id="main-content" className="hidden md:block pt-24 md:pt-32 pb-0 relative overflow-hidden">
+      <main id="main-content" className="hidden md:block pt-24 md:pt-32 pb-0 relative overflow-hidden bg-surface">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-[140px]" />
           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 rounded-full blur-[120px]" />
           <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[var(--bg-primary)]/20 to-transparent" />
         </div>
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
-          {isHeroView ? (
-            <DesktopHero view={view} gridItems={gridItems} currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} setSearchParams={setSearchParams} />
-          ) : view === 'results' ? (
-            <div className="max-w-6xl mx-auto">
-              <BlogBreadcrumb items={breadcrumbItems} currentName={currentSubjectName} onBack={goBack} onHome={() => setView('types')} showChangeButton={!isDirectType} />
-              {loading ? <LoadingState /> : filteredPosts.length === 0 ? <EmptyState /> : (
-                <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {filteredPosts.map((post, i) => renderPostCard(post, i))}
-                  </div>
-                  <LoadMore page={page} totalPages={totalPages} loading={loadingMore} onLoadMore={loadMore} />
-                </>
-              )}
-            </div>
-          ) : (
-            <SelectionGrid view={view} currentClassrooms={currentClassrooms} currentSubjects={currentSubjects}
-              selectedGrade={selectedGrade} termLabel={termLabel}
-              currentCurriculumName={currentCurriculumName} currentLevelName={currentLevelName}
-              filteredCount={filteredPosts.length} goBack={goBack}
-              onSelectGrade={setSelectedGrade} onSelectTerm={setSelectedTerm} onSelectSubject={setSelectedSubject} />
-          )}
-        </div>
+        {view === 'types' ? (
+          <DesktopLibraryLanding posts={posts} loading={loading} setSearchParams={setSearchParams} />
+        ) : (
+          <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
+            {isHeroView ? (
+              <DesktopHero view={view} gridItems={gridItems} currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} setSearchParams={setSearchParams} />
+            ) : view === 'results' ? (
+              <div className="max-w-6xl mx-auto">
+                <BlogBreadcrumb items={breadcrumbItems} currentName={currentSubjectName} onBack={goBack} onHome={() => setView('types')} showChangeButton={!isDirectType} />
+                {loading ? <LoadingState /> : filteredPosts.length === 0 ? <EmptyState /> : (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                      {filteredPosts.map((post, i) => renderPostCard(post, i))}
+                    </div>
+                    <LoadMore page={page} totalPages={totalPages} loading={loadingMore} onLoadMore={loadMore} />
+                  </>
+                )}
+              </div>
+            ) : (
+              <SelectionGrid view={view} currentClassrooms={currentClassrooms} currentSubjects={currentSubjects}
+                selectedGrade={selectedGrade} termLabel={termLabel}
+                currentCurriculumName={currentCurriculumName} currentLevelName={currentLevelName}
+                filteredCount={filteredPosts.length} goBack={goBack}
+                onSelectGrade={setSelectedGrade} onSelectTerm={setSelectedTerm} onSelectSubject={setSelectedSubject} />
+            )}
+          </div>
+        )}
       </main>
       <PublicFooter />
     </div>
