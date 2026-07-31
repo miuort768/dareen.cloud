@@ -2,12 +2,13 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loader2, Sparkles, Clock, BookOpen, Plus, CalendarDays, GraduationCap, Users, Filter, Printer } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useCurrentUser } from '../../../context/AppContext';
+import { useCurrentUser, useLogout } from '../../../context/AppContext';
 import { api } from '../../../lib/api';
 import { startLiveSession } from '../../../services/liveSessionService';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileSchedule } from '../components/MobileSchedule';
 import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page';
+import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader';
 import { cn } from '../../../lib/utils';
 
 interface Student { id: string; name: string; grade: string; parentPhone: string; enrollments: Enrollment[]; totalPoints?: number; }
@@ -45,6 +46,7 @@ export const Schedule = () => {
     const todayDayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
     const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
     const isTeacher = currentUser?.role === 'teacher';
+    const logout = useLogout();
 
     useEffect(() => { fetchData(); }, []);
 
@@ -177,6 +179,11 @@ export const Schedule = () => {
 
     return (
         <div className="min-h-full pb-24 relative" dir="rtl">
+            {isTeacher && (
+                <div className="hidden md:block">
+                    <TeacherDashboardHeader logout={logout} />
+                </div>
+            )}
             <div className="hidden md:block max-w-page mx-auto px-2">
                 <div className="relative overflow-hidden rounded-2xl">
                     {particles.map(p => (

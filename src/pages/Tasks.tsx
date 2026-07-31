@@ -6,9 +6,11 @@ import { cn } from '../lib/utils';
 import { StatCard } from '../shared/components/ui';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
+import { useCurrentUser, useLogout } from '../context/AppContext';
 import { PageLoader } from '../components/ui/PageLoader';
 import { TaskCard, EmptyTaskState } from './TaskCard';
 import { TaskFormModal } from './TaskFormModal';
+import { TeacherDashboardHeader } from './TeacherDashboardHeader';
 
 export interface Task {
     id: string;
@@ -27,6 +29,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 
 export const Tasks = () => {
     useEffect(() => { document.title = 'المهام | دارين السابعة للتعليم والتدريب'; }, []);
+    const currentUser = useCurrentUser();
+    const logout = useLogout();
     const [filterPriority, setFilterPriority] = useState<'all' | 'high' | 'medium' | 'low'>('all');
     const [searchTerm, setSearchTerm] = useState('');
     const [fabOpen, setFabOpen] = useState(false);
@@ -121,6 +125,11 @@ export const Tasks = () => {
 
     return (
         <div className="min-h-full pb-24 relative bg-background" dir="rtl">
+            {currentUser?.role === 'teacher' && (
+                <div className="hidden md:block">
+                    <TeacherDashboardHeader logout={logout} />
+                </div>
+            )}
             <div className="max-w-page mx-auto px-3 space-y-4">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                     className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8">

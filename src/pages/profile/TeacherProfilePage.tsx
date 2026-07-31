@@ -6,9 +6,10 @@ import {
     Star, Trophy, Award, Target, TrendingUp, Edit3, ChevronLeft
 } from 'lucide-react';
 import { api } from '../../lib/api';
-import { useCurrentUser } from '../../context/AppContext';
+import { useCurrentUser, useLogout } from '../../context/AppContext';
 import { getRankByPoints, TEACHER_RANKS } from '../../shared/utils/ranks';
 import { Skeleton, Button } from '../../shared/components/ui';
+import { TeacherDashboardHeader } from '../TeacherDashboardHeader';
 import { ProfileHero } from './ProfileHero';
 import { ProfileAchievements } from './ProfileAchievements';
 import { ProfileProgress } from './ProfileProgress';
@@ -99,6 +100,7 @@ const InfoRow = ({ icon, label, value, onEdit }: { icon: React.ReactNode; label:
 export const TeacherProfilePage = () => {
     useEffect(() => { document.title = 'الملف الشخصي | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
+    const logout = useLogout();
     const [teacherData, setTeacherData] = useState<TeacherData | null>(null);
     const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -181,6 +183,11 @@ export const TeacherProfilePage = () => {
     if (isLoading) {
         return (
             <div className="min-h-screen bg-background" dir="rtl">
+                {currentUser?.role === 'teacher' && (
+                    <div className="hidden md:block">
+                        <TeacherDashboardHeader logout={logout} />
+                    </div>
+                )}
                 <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
                     <Skeleton className="h-52 rounded-3xl" />
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-3"><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /></div>
@@ -195,6 +202,11 @@ export const TeacherProfilePage = () => {
 
     return (
         <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
+            {currentUser?.role === 'teacher' && (
+                <div className="hidden md:block">
+                    <TeacherDashboardHeader logout={logout} />
+                </div>
+            )}
             <div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6">
                 <motion.div {...stagger(0)}>
                     <ProfileHero

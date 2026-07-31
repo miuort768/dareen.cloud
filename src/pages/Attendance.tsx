@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Search, Users, Activity, CheckCircle, XCircle, Clock, Plus, List, BarChart3, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate, useLogout } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal';
 import { AttendanceStats } from '../features/attendance/components/AttendanceStats';
@@ -17,6 +17,7 @@ import { MobileAttendance } from '../features/attendance/components/MobileAttend
 import type { Student, Enrollment, Session } from '../features/attendance/types';
 import { generateWhatsAppLink } from '../lib/whatsapp';
 import { SectionCard, SectionTitle, BulkAttendanceButton, AdminTeacherGroupList } from './attendance-page';
+import { TeacherDashboardHeader } from './TeacherDashboardHeader';
 import { cn } from '../lib/utils';
 
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
@@ -42,6 +43,7 @@ const statusConfig = {
 export const Attendance = () => {
     useEffect(() => { document.title = 'الحضور والغياب | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
+    const logout = useLogout();
     const showNotification = useShowNotification();
     const whatsappAutoNotify = useWhatsappAutoNotify();
     const whatsappTemplate = useWhatsappTemplate();
@@ -168,6 +170,11 @@ export const Attendance = () => {
 
     return (
         <div className="min-h-full pb-24 relative font-sans" dir="rtl">
+            {currentUser?.role === 'teacher' && (
+                <div className="hidden md:block">
+                    <TeacherDashboardHeader logout={logout} />
+                </div>
+            )}
             <div className="max-w-page mx-auto px-2 space-y-4">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/70 p-6 md:p-8">
                     {particles.map(p => (

@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { useSearchParams } from 'react-router-dom';
 import { api, safeArray } from '../lib/api';
-import { useCurrentUser, useShowNotification } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useLogout } from '../context/AppContext';
 import { confirm } from '../lib/confirmDialog';
 import type { Comment, Post } from '../features/forum/types';
 import { ForumHeader, ForumCreatePost, ForumPostCard, ForumHelpBanner } from './forum-page';
+import { TeacherDashboardHeader } from './TeacherDashboardHeader';
 import { cn } from '../lib/utils';
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
@@ -19,6 +20,7 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 export const Forum = () => {
     useEffect(() => { document.title = 'المنتدى | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
+    const logout = useLogout();
     const showNotification = useShowNotification();
     const isAdmin = currentUser?.role === 'admin';
     const [searchParams] = useSearchParams();
@@ -157,6 +159,11 @@ export const Forum = () => {
 
     return (
         <div className="min-h-full overflow-x-hidden relative bg-background pb-20 font-sans" dir="rtl">
+            {currentUser?.role === 'teacher' && (
+                <div className="hidden md:block">
+                    <TeacherDashboardHeader logout={logout} />
+                </div>
+            )}
             <div className="relative z-10">
                 <div className="relative overflow-hidden rounded-2xl mx-4 max-w-[700px] md:mx-auto mt-4">
                     {particles.map(p => (
