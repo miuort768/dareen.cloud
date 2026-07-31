@@ -8,6 +8,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { cn } from '../../lib/utils';
 import { useUnreadStore } from '../../store/unreadStore';
+import { appTabBarHidden } from '../../shared/components/mobile';
 
 const routeMeta: Record<string, { title: string; subtitle: string; icon?: string }> = {
     '/dashboard': { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب' },
@@ -56,6 +57,8 @@ export const Header = memo(() => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    if (!isDesktop && appTabBarHidden(location.pathname)) return null;
 
     const getPageMeta = (path: string) => {
         const basePath = '/' + path.split('/')[1];

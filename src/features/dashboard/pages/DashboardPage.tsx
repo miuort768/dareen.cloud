@@ -11,6 +11,8 @@ import { NotificationsCenter } from '../components/NotificationsCenter';
 import { ActivityTimeline } from '../components/ActivityTimeline';
 import { SystemHealth } from '../components/SystemHealth';
 import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout';
+import { MobileDashboardView } from '../components/MobileDashboardView';
+import type { DashboardTask } from '../types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -33,6 +35,11 @@ const SectionLabel = ({ label }: { label: string }) => (
         <div className="flex-1 h-px bg-border/30" />
     </div>
 );
+
+const asTasks = (tasks: { status?: string }[]) => tasks as DashboardTask[];
+const asRecordList = (list: unknown[]) => list as Record<string, unknown>[];
+const asTimelineSessions = (list: unknown[]) =>
+    list as { id: string; studentName: string; date?: string; status?: string }[];
 
 export const Dashboard = () => {
     useEffect(() => { document.title = 'لوحة التحكم | دارين السابعة للتعليم والتدريب'; }, []);
@@ -199,15 +206,15 @@ export const Dashboard = () => {
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                                 <TodaysFocus
                                     todaySessions={todaySessions}
-                                    tasks={tasks}
+                                    tasks={asTasks(tasks)}
                                     lowBalanceCount={stats.lowBalanceCount}
                                 />
                                 <NotificationsCenter
-                                    tasks={tasks}
+                                    tasks={asTasks(tasks)}
                                     lowBalanceStudents={lowBalanceStudents}
-                                    students={rawStudents}
-                                    sessions={rawSessions}
-                                    studentInvoices={rawStudentInvoices}
+                                    students={asRecordList(rawStudents)}
+                                    sessions={asRecordList(rawSessions)}
+                                    studentInvoices={asRecordList(rawStudentInvoices)}
                                 />
                             </div>
                         </div>
@@ -219,7 +226,7 @@ export const Dashboard = () => {
                            ════════════════════════════════════════ */}
                         <div className="mb-8">
                             <SectionLabel label="النشاطات" />
-                            <ActivityTimeline sessions={rawSessions} tasks={tasks} />
+                            <ActivityTimeline sessions={asTimelineSessions(rawSessions)} tasks={asTasks(tasks)} />
                         </div>
 
                         <SectionDivider />
@@ -281,32 +288,19 @@ export const Dashboard = () => {
             </div>
 
             {/* Mobile */}
-            <div className="block md:hidden px-4 pt-4 space-y-4">
-                <HeroSection currentUser={currentUser} stats={stats} />
-
-                <KPICards stats={stats} />
-
-                <QuickActions />
-
-                <TodaysFocus
-                    todaySessions={[]}
-                    tasks={tasks}
-                    lowBalanceCount={stats.lowBalanceCount}
-                />
-
-                <FinanceOverview monthlyData={monthlyData} />
-
-                <NotificationsCenter
-                    tasks={tasks}
+            <div className="block md:hidden">
+                <MobileDashboardView
+                    currentUser={currentUser}
+                    stats={stats}
+                    todaySessions={todaySessions}
+                    monthlyData={monthlyData}
                     lowBalanceStudents={lowBalanceStudents}
-                    students={rawStudents}
-                    sessions={rawSessions}
-                    studentInvoices={rawStudentInvoices}
+                    tasks={tasks}
+                    rawStudents={rawStudents}
+                    rawSessions={rawSessions}
+                    rawStudentInvoices={rawStudentInvoices}
+                    onRefresh={fetchDashboardData}
                 />
-
-                <ActivityTimeline sessions={rawSessions} tasks={tasks} />
-
-                <SystemHealth stats={stats} />
             </div>
         </motion.div>
     );

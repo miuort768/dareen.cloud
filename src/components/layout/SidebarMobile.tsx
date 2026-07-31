@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import { Menu, LogOut } from 'lucide-react';
+import { LogOut } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -16,7 +17,7 @@ interface NavItem {
     name: string;
     href: string;
     id: string;
-    icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+    icon: LucideIcon;
 }
 
 interface SidebarMobileProps {
@@ -24,41 +25,12 @@ interface SidebarMobileProps {
     mobileMenuOpen: boolean;
     totalUnreadCount: number;
     academyName: string;
-    onToggleMenu: () => void;
     onCloseMenu: () => void;
     onLogout: () => void;
 }
 
-export const SidebarMobile = ({ navigation, mobileMenuOpen, totalUnreadCount, academyName, onToggleMenu, onCloseMenu, onLogout }: SidebarMobileProps) => (
+export const SidebarMobile = ({ navigation, mobileMenuOpen, totalUnreadCount, academyName, onCloseMenu, onLogout }: SidebarMobileProps) => (
     <>
-        <div className="lg:hidden fixed bottom-0 end-0 start-0 h-[70px] bg-card/95 backdrop-blur-xl border-t border-border flex items-center justify-around px-2 z-[100] overflow-hidden max-w-full transition-transform duration-300">
-            {navigation.slice(0, 4).map((item) => (
-                <NavLink key={`mobile-${item.href}-${item.id}`} to={item.href}
-                    className={({ isActive }) => cn(
-                        "flex items-center justify-center transition-all duration-500 rounded-full",
-                        isActive ? "bg-primary-soft text-primary px-4 py-2" : "text-muted p-2"
-                    )}
-                >
-                    {({ isActive }) => (
-                        <div className="flex items-center gap-2 relative">
-                            <span className={cn("text-xs font-medium whitespace-nowrap overflow-hidden transition-all duration-500", isActive ? "max-w-[100px] opacity-100" : "max-w-0 opacity-0")}>{item.name}</span>
-                            <div className="relative">
-                                <item.icon size={20} className="shrink-0" strokeWidth={isActive ? 2.5 : 2} />
-                                {item.id === 'chat' && totalUnreadCount > 0 && (
-                                    <Badge variant="destructive" className="absolute -top-2 -start-2 h-4 min-w-[16px] px-1 text-[9px] leading-none flex items-center justify-center">
-                                        {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
-                                    </Badge>
-                                )}
-                            </div>
-                        </div>
-                    )}
-                </NavLink>
-            ))}
-            <Button variant="ghost" size="icon" onClick={onToggleMenu} className="text-muted hover:text-primary">
-                <Menu size={22} />
-            </Button>
-        </div>
-
         <Sheet open={mobileMenuOpen} onOpenChange={(open) => !open && onCloseMenu()}>
             <SheetContent side="right" className="w-[85vw] sm:w-[350px] p-0 overflow-y-auto">
                 <SheetHeader className="p-4 border-b border-border">

@@ -6,6 +6,7 @@ import {
     MessageCircle, Award, CalendarCheck, UserPlus, Home, Megaphone,
     MessageSquare, BookOpen, Briefcase, Mail
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 import { confirm } from '../../lib/confirmDialog';
@@ -14,12 +15,13 @@ import { useUnreadStore } from '../../store/unreadStore';
 import { SessionCallAlert } from '../ui/SessionCallAlert';
 import { SidebarDesktop } from './SidebarDesktop';
 import { SidebarMobile } from './SidebarMobile';
+import { AppTabBar } from '../../shared/components/mobile';
 
 export interface NavItem {
     name: string;
     href: string;
     id: string;
-    icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
+    icon: LucideIcon;
 }
 
 export interface NavSection {
@@ -141,7 +143,7 @@ export const Sidebar = memo(() => {
                 sections={navigationSections}
                 collapsed={collapsed}
                 totalUnreadCount={totalUnreadCount}
-                user={currentUser ? { name: currentUser.name, avatar: currentUser.avatar, role: currentUser.role } : null}
+                user={currentUser ? { name: currentUser.name, avatar: currentUser.avatar, role: currentUser.role ?? '' } : null}
                 onToggleCollapse={() => setCollapsed(!collapsed)}
                 onLogout={handleLogout}
             />
@@ -150,10 +152,10 @@ export const Sidebar = memo(() => {
                 mobileMenuOpen={mobileMenuOpen}
                 totalUnreadCount={totalUnreadCount}
                 academyName={academyName}
-                onToggleMenu={() => setMobileMenuOpen(true)}
                 onCloseMenu={() => setMobileMenuOpen(false)}
                 onLogout={handleLogout}
             />
+            <AppTabBar onMore={() => setMobileMenuOpen(true)} />
             <SessionCallAlert />
         </>
     );

@@ -1,2 +1,2 @@
 export { MobileScheduleDayChips } from './MobileScheduleDayChips';
-export { MobileScheduleDetailsModal } from './MobileScheduleDetailsModal';
+export { MobileScheduleDetailsSheet } from './MobileScheduleDetailsSheet';

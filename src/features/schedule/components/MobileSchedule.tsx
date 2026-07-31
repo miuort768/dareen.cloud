@@ -7,7 +7,8 @@ import { api } from '../../../lib/api';
 import { triggerHaptic } from '../../../lib/haptics';
 import { startLiveSession } from '../../../services/liveSessionService';
 import { LiveClasses } from '../../../components/dashboard/LiveClasses';
-import { MobileScheduleDayChips, MobileScheduleDetailsModal } from './mobile-schedule';
+import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile';
+import { MobileScheduleDayChips, MobileScheduleDetailsSheet } from './mobile-schedule';
 
 interface Student { id: string; name: string; grade: string; enrollments: Enrollment[]; }
 interface Enrollment { teacher: string; subject: string; curr: string; schedule: ScheduleSlot[]; }
@@ -39,7 +40,7 @@ const TEACHER_STYLES = [
     { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/10', border: 'border-e-warning' },
 ];
 
-const fadeUp = { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.35, ease: 'easeOut' } };
+const fadeUp = { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.35, ease: 'easeOut' as const } };
 
 export const MobileSchedule = () => {
     const currentUser = useCurrentUser();
@@ -52,18 +53,17 @@ export const MobileSchedule = () => {
     const [selectedDay, setSelectedDay] = useState(todayName);
     const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
-    const [isRefreshing, setIsRefreshing] = useState(false);
-    const [pullDistance, setPullDistance] = useState(0);
-    const [startY, setStartY] = useState(0);
 
     const fetchData = async () => {
         try {
             setLoading(true);
-            const data = await api.get<Record<string, unknown>[]>('/students');
-            if (mountedRef.current) setStudents(Array.isArray(data) ? data : (data.data || []));
+            const raw = await api.get<unknown>('/students');
+            if (mountedRef.current) setStudents(Array.isArray(raw) ? (raw as Student[]) : ((raw as { data?: Student[] } | null)?.data || []));
         } catch (error) { console.error('Error fetching data', error); }
         finally { if (mountedRef.current) setLoading(false); }
     };
+
+    const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: fetchData });
 
     useEffect(() => { fetchData(); return () => { mountedRef.current = false; }; }, []);
 
@@ -111,21 +111,7 @@ export const MobileSchedule = () => {
         events.filter(e => Number(e.hour) === hour && e.period === period);
     const getTeacherStyle = (teacherName: string) => {
         const idx = uniqueTeachers.indexOf(teacherName);
-        return TEACHER_STYLES[Math.max(0, idx) % TEACHER_STYLES.length];
-    };
-
-    const handleTouchStart = (e: React.TouchEvent) => { if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY); };
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (startY === 0 || isRefreshing || window.scrollY > 0) return;
-        const diff = e.touches[0].clientY - startY;
-        if (diff > 0) setPullDistance(Math.min(diff * 0.4, 90));
-    };
-    const handleTouchEnd = async () => {
-        if (pullDistance > 60) {
-            setIsRefreshing(true); setPullDistance(50); triggerHaptic('medium');
-            try { await fetchData(); } catch (e) { console.error(e); }
-            setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 800);
-        } else { setPullDistance(0); setStartY(0); }
+        return TEACHER_STYLES[Math.max(0, idx) % TEACHER_STYLES.length]!;
     };
 
     const totalToday = allEvents.filter(e => e.day === selectedDay).length;
@@ -147,8 +133,8 @@ export const MobileSchedule = () => {
     };
 
     return (
-        <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
-            dir="rtl" className="min-h-full pb-4 overflow-x-hidden relative bg-background">
+        <MobilePage>
+            <div {...handlers}>
             <motion.div initial={{ height: pullDistance }} animate={{ height: isRefreshing ? 50 : pullDistance }}
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                 className="overflow-hidden flex items-center justify-center w-full">
@@ -187,10 +173,8 @@ export const MobileSchedule = () => {
                 </div>
             )}
             <div className="px-4 space-y-1">
-                {loading ? (
-                    <div className="py-16 text-center">
-                        <Loader2 size={24} className="animate-spin text-primary mx-auto" strokeWidth={1.5} />
-                    </div>
+                {loading && students.length === 0 ? (
+                    <MobileSkeleton rows={5} />
                 ) : filteredEvents.length > 0 ? (
                     TIME_SLOTS.map((slot, slotIdx) => {
                         const slotEvents = getDayEventsAtTime(filteredEvents, slot.hour, slot.period);
@@ -237,9 +221,10 @@ export const MobileSchedule = () => {
                     </div>
                 )}
             </div>
-            <MobileScheduleDetailsModal showDetails={showDetails} event={selectedEvent}
+            <MobileScheduleDetailsSheet showDetails={showDetails} event={selectedEvent}
                 onClose={() => setShowDetails(false)} onStartSession={handleStartSession}
                 onViewStudent={() => { triggerHaptic('light'); navigate('/students'); setShowDetails(false); }} />
-        </div>
+            </div>
+        </MobilePage>
     );
 };

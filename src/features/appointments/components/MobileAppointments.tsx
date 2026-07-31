@@ -2,9 +2,10 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { useCurrentUser } from '../../../context/AppContext';
 import { api } from '../../../lib/api';
 import { triggerHaptic } from '../../../lib/haptics';
+import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile';
 import type { Student, AppointmentEvent } from './mobile-appointments/types';
 import { DAYS_OF_WEEK } from './mobile-appointments/types';
-import { AppointmentPullToRefresh, AppointmentStats, AppointmentTabs, AppointmentFilters, AppointmentListView, AppointmentDetailsModal } from './mobile-appointments';
+import { AppointmentPullToRefresh, AppointmentStats, AppointmentTabs, AppointmentFilters, AppointmentListView, AppointmentDetailsSheet } from './mobile-appointments';
 
 export const MobileAppointments = () => {
     const currentUser = useCurrentUser();
@@ -19,9 +20,7 @@ export const MobileAppointments = () => {
     const [activeTab, setActiveTab] = useState<'upcoming' | 'completed'>('upcoming');
     const [completedSessionIds, setCompletedSessionIds] = useState<string[]>([]);
 
-    const [isRefreshing, setIsRefreshing] = useState(false);
-    const [pullDistance, setPullDistance] = useState(0);
-    const [startY, setStartY] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         mountedRef.current = true;
@@ -67,16 +66,19 @@ export const MobileAppointments = () => {
 
     const fetchData = async () => {
         if (!mountedRef.current) return;
+        setLoading(true);
         try {
-            const data = await api.get<Record<string, unknown>[]>('/students');
+            const raw = await api.get<unknown>('/students');
             if (!mountedRef.current) return;
-            setStudents(Array.isArray(data) ? data : (data.data || []));
+            setStudents(Array.isArray(raw) ? (raw as Student[]) : ((raw as { data?: Student[] } | null)?.data || []));
         } catch (error) {
             console.error("Error fetching data", error);
         } finally {
-            void mountedRef;
+            if (mountedRef.current) setLoading(false);
         }
     };
+
+    const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: fetchData });
 
     useEffect(() => {
         fetchData();
@@ -141,44 +143,34 @@ export const MobileAppointments = () => {
         }
     };
 
-    const handleTouchStart = (e: React.TouchEvent) => {
-        if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY);
-    };
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (startY === 0 || isRefreshing || window.scrollY > 0) return;
-        const diff = e.touches[0].clientY - startY;
-        if (diff > 0) setPullDistance(Math.min(diff * 0.4, 90));
-    };
-    const handleTouchEnd = async () => {
-        if (pullDistance > 60) {
-            setIsRefreshing(true); setPullDistance(50); triggerHaptic('medium');
-            try { await fetchData(); } catch (e) { console.error(e); }
-            setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 800);
-        } else { setPullDistance(0); setStartY(0); }
-    };
-
     const todayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
     const todayCount = upcomingAppointments.filter(a => a.day === todayName).length;
     const totalCount = allAppointments.length;
     const completedCount = completedAppointments.length;
 
     return (
-        <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
-            dir="rtl" className="min-h-full pb-4 overflow-x-hidden relative bg-background">
-
-            <AppointmentPullToRefresh pullDistance={pullDistance} isRefreshing={isRefreshing} />
-            <AppointmentStats todayCount={todayCount} totalCount={totalCount} completedCount={completedCount} />
-            <AppointmentTabs activeTab={activeTab} onTabChange={setActiveTab} totalCount={totalCount}
-                completedCount={completedCount} setSearchTerm={setSearchTerm} />
-            <AppointmentFilters searchTerm={searchTerm} onSearchChange={setSearchTerm} filterDay={filterDay}
-                onDayChange={setFilterDay} filterTeacher={filterTeacher} onTeacherChange={setFilterTeacher}
-                uniqueTeachers={uniqueTeachers} />
-            <AppointmentListView activeTab={activeTab} appointmentsByDay={appointmentsByDay}
-                onComplete={handleCompleteSession}
-                onSelect={(app) => { triggerHaptic('light'); setSelectedAppointment(app); setShowDetails(true); }} />
-            <AppointmentDetailsModal show={showDetails} appointment={selectedAppointment} activeTab={activeTab}
-                onClose={() => { triggerHaptic('light'); setShowDetails(false); }}
-                onComplete={handleCompleteSession} />
-        </div>
+        <MobilePage>
+            <div {...handlers}>
+                <AppointmentPullToRefresh pullDistance={pullDistance} isRefreshing={isRefreshing} />
+                {loading && students.length === 0 ? (
+                    <MobileSkeleton rows={6} />
+                ) : (
+                    <>
+                        <AppointmentStats todayCount={todayCount} totalCount={totalCount} completedCount={completedCount} />
+                        <AppointmentTabs activeTab={activeTab} onTabChange={setActiveTab} totalCount={totalCount}
+                            completedCount={completedCount} setSearchTerm={setSearchTerm} />
+                        <AppointmentFilters searchTerm={searchTerm} onSearchChange={setSearchTerm} filterDay={filterDay}
+                            onDayChange={setFilterDay} filterTeacher={filterTeacher} onTeacherChange={setFilterTeacher}
+                            uniqueTeachers={uniqueTeachers} />
+                        <AppointmentListView activeTab={activeTab} appointmentsByDay={appointmentsByDay}
+                            onComplete={handleCompleteSession}
+                            onSelect={(app) => { triggerHaptic('light'); setSelectedAppointment(app); setShowDetails(true); }} />
+                    </>
+                )}
+                <AppointmentDetailsSheet show={showDetails} appointment={selectedAppointment} activeTab={activeTab}
+                    onClose={() => { triggerHaptic('light'); setShowDetails(false); }}
+                    onComplete={handleCompleteSession} />
+            </div>
+        </MobilePage>
     );
 };

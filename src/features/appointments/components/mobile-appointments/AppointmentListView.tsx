@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Clock, CheckCircle2 } from 'lucide-react';
+import { Calendar, CheckCircle2 } from 'lucide-react';
 import { cn } from '../../../../lib/utils';
-import { triggerHaptic } from '../../../../lib/haptics';
+import { MobileListItem } from '../../../../shared/components/mobile';
 import type { AppointmentEvent } from './types';
 
 interface DayGroup {
@@ -32,38 +32,36 @@ export const AppointmentListView = ({ activeTab, appointmentsByDay, onComplete, 
                         </div>
                         <div className="p-2 space-y-1.5">
                             {appointments.map(app => (
-                                <motion.div key={app.id} whileTap={{ scale: 0.97 }}
-                                    onClick={() => { triggerHaptic('light'); onSelect(app); }}
-                                    className="p-3 rounded-xl border border-border cursor-pointer active:scale-[0.97] transition-all">
-                                    <div className="flex items-center justify-between mb-2">
-                                        <div className="flex items-center gap-1.5">
-                                            <Clock size={11} className="text-primary" strokeWidth={1.5} />
-                                            <span className="font-bold text-xs text-primary tabular-nums">{app.time}</span>
-                                        </div>
-                                        {activeTab === 'upcoming' ? (
-                                            <motion.button whileTap={{ scale: 0.93 }}
-                                                onClick={(e) => onComplete(app.id, e)}
-                                                className="px-2.5 py-1 bg-success text-on-success text-micro font-bold rounded-xl flex items-center gap-1">
-                                                <CheckCircle2 size={10} strokeWidth={1.5} /> إتمام
-                                            </motion.button>
-                                        ) : (
-                                            <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-success-soft text-success">تم</span>
-                                        )}
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-semibold shrink-0 bg-primary/10 text-primary">
+                                <MobileListItem
+                                    key={app.id}
+                                    leading={
+                                        <div className="w-7 h-7 rounded-xl flex items-center justify-center text-micro font-semibold bg-primary/10 text-primary">
                                             {app.studentName.charAt(0)}
                                         </div>
-                                        <div className="min-w-0 flex-1">
-                                            <p className="text-xs font-bold text-main leading-tight truncate">{app.studentName}</p>
-                                            <div className="flex items-center gap-1.5">
-                                                <span className="text-micro font-bold text-muted">{app.subject}</span>
-                                                <span className="text-micro font-bold text-muted">·</span>
-                                                <span className="text-micro font-bold text-muted truncate">{app.teacherName}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </motion.div>
+                                    }
+                                    title={app.studentName}
+                                    subtitle={
+                                        <span className="flex items-center gap-1.5">
+                                            <span className="text-primary tabular-nums font-bold">{app.time}</span>
+                                            <span className="text-muted">·</span>
+                                            <span>{app.subject}</span>
+                                            <span className="text-muted">·</span>
+                                            <span>{app.teacherName}</span>
+                                        </span>
+                                    }
+                                    trailing={activeTab === 'upcoming' ? (
+                                        <button
+                                            onClick={(e) => onComplete(app.id, e)}
+                                            className="px-2.5 py-1 bg-success text-on-success text-micro font-bold rounded-xl flex items-center gap-1 transition-transform active:scale-95"
+                                        >
+                                            <CheckCircle2 size={10} strokeWidth={1.5} /> إتمام
+                                        </button>
+                                    ) : (
+                                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-success-soft text-success">تم</span>
+                                    )}
+                                    showChevron
+                                    onClick={() => onSelect(app)}
+                                />
                             ))}
                         </div>
                     </div>

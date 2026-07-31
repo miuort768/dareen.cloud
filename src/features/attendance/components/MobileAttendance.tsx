@@ -4,7 +4,7 @@ import { Search, Users, History, Activity, CheckCircle2, Loader2, Sparkles, Cale
 import { cn } from '../../../lib/utils';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate } from '../../../context/AppContext';
 import { useAttendance } from '../hooks/useAttendance';
-import { usePullToRefresh } from '../hooks/usePullToRefresh';
+import { MobilePage, usePullToRefresh } from '../../../shared/components/mobile';
 import { triggerHaptic } from '../../../lib/haptics';
 import type { PeriodFilter } from './AttendanceFilters';
 import type { Student, Enrollment } from '../types';
@@ -74,7 +74,7 @@ export const MobileAttendance = () => {
         stats, matchedEnrollments, uniqueTeachers, refresh
     } = useAttendance(currentUser, date, dateRange);
 
-    const { isRefreshing, pullDistance, handleTouchStart, handleTouchMove, handleTouchEnd } = usePullToRefresh({ onRefresh: refresh });
+    const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: refresh });
 
     const isTeacher = currentUser?.role === 'teacher';
 
@@ -121,7 +121,7 @@ export const MobileAttendance = () => {
     const handleViewHistory = (studentId: string, studentName: string, grade?: string, subject?: string) => {
         const foundStudent = students.find(s => s.id === studentId);
         const enrollment = foundStudent?.enrollments?.find(e => e.subject === subject);
-        setHistoryStudent({ id: studentId, name: studentName, grade, subject, curriculum: enrollment?.curriculum });
+        setHistoryStudent({ id: studentId, name: studentName, grade, subject, curriculum: (enrollment as { curriculum?: string } | undefined)?.curriculum });
     };
 
     const handleBulkAttendance = async () => {
@@ -154,8 +154,8 @@ export const MobileAttendance = () => {
     };
 
     return (
-        <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}
-            dir="rtl" className="min-h-full pb-4 overflow-x-hidden relative bg-background">
+        <MobilePage>
+            <div {...handlers}>
 
             <motion.div style={{ height: pullDistance }} animate={{ height: isRefreshing ? 50 : pullDistance }}
                 transition={{ type: 'spring', damping: 25, stiffness: 300 }}
@@ -289,6 +289,7 @@ export const MobileAttendance = () => {
                         setRescheduleData(null);
                     }} />
             )}
-        </div>
+            </div>
+        </MobilePage>
     );
 };
