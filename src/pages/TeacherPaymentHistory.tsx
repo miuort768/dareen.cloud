@@ -2,9 +2,10 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CheckCircle, Clock, AlertTriangle, FileText, Wallet, BarChart3, Filter, Calendar, DollarSign } from 'lucide-react';
 import { api } from '../lib/api';
-import { useCurrentUser, useShowNotification } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useLogout } from '../context/AppContext';
 import { type TeacherInvoice, INVOICE_STATUS } from '../types/invoice';
 import { Skeleton } from '../shared/components/ui';
+import { TeacherDashboardHeader } from './TeacherDashboardHeader';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { CURRENCY_SYMBOL } from '../config/constants';
@@ -27,6 +28,7 @@ const statusConfig = (status: string) => {
 export const TeacherPaymentHistory = () => {
     useEffect(() => { document.title = 'سجل الدفعات | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
+    const logout = useLogout();
     const showNotification = useShowNotification();
     const [invoices, setInvoices] = useState<TeacherInvoice[]>([]);
     const [loading, setLoading] = useState(true);
@@ -94,6 +96,11 @@ export const TeacherPaymentHistory = () => {
     if (loading) {
         return (
             <div className="min-h-full pb-24 overflow-x-hidden" dir="rtl">
+                {currentUser?.role === 'teacher' && (
+                    <div className="hidden md:block">
+                        <TeacherDashboardHeader logout={logout} />
+                    </div>
+                )}
                 <div className="max-w-page mx-auto px-2 pt-4 space-y-4">
                     <Skeleton className="h-36 rounded-2xl" />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -107,6 +114,11 @@ export const TeacherPaymentHistory = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+            {currentUser?.role === 'teacher' && (
+                <div className="hidden md:block">
+                    <TeacherDashboardHeader logout={logout} />
+                </div>
+            )}
             <div className="max-w-page mx-auto px-2">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                     className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8 mb-4">
