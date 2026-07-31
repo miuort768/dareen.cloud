@@ -9,7 +9,7 @@ import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 import { api } from '../../lib/api';
 import { types, directTypes } from './LibraryConfig';
-import { BLOG_COUNTRIES } from './blogCustomers';
+import { BLOG_COUNTRIES, normalizePhoneInput } from './blogCustomers';
 import type { BlogPost } from '../../data/blogPosts';
 
 type TypeId = 'foundation' | 'solutions' | 'notes' | 'more';
@@ -378,7 +378,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                       dir="ltr"
                       inputMode="tel"
                       value={phone}
-                      onChange={e => setPhone(e.target.value)}
+                      onChange={e => setPhone(normalizePhoneInput(e.target.value))}
                       placeholder="5xxxxxxxx"
                       className="w-full rounded-xl border border-border bg-card ps-10 pe-4 py-3 text-sm text-main placeholder:text-dim outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
                     />

@@ -14,3 +14,7 @@ export interface BlogCustomer {
   phone: string;
   createdAt: string;
 }
+
+export const normalizePhoneInput = (value: string): string =>
+  value.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
+

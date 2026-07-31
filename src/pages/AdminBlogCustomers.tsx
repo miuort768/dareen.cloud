@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Mail, Trash2, Phone, MessageCircle, Search, Clock, Globe, Inbox, Calendar, Users, BookOpen } from 'lucide-react';
+import { Mail, Trash2, Phone, MessageCircle, Search, Clock, Globe, Inbox, Calendar, Users, BookOpen, TrendingUp } from 'lucide-react';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { motion } from 'framer-motion';
@@ -71,7 +71,7 @@ export const AdminBlogCustomers = () => {
 
     const formatDate = (dateStr: string) => {
         const d = new Date(dateStr);
-        return d.toLocaleDateString('ar-EG', {
+        return d.toLocaleString('ar-EG', {
             year: 'numeric', month: 'short', day: 'numeric',
             hour: '2-digit', minute: '2-digit'
         });
@@ -83,16 +83,23 @@ export const AdminBlogCustomers = () => {
         return d.toDateString() === now.toDateString();
     }).length, [customers]);
 
-    const uniqueCountries = useMemo(() => new Set(customers.map(c => c.country).filter(Boolean)).size, [customers]);
+    const weekCount = useMemo(() => {
+        const now = new Date();
+        const day = (now.getDay() + 6) % 7;
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - day);
+        weekStart.setHours(0, 0, 0, 0);
+        return customers.filter(c => new Date(c.createdAt) >= weekStart).length;
+    }, [customers]);
 
-    const withPhoneCount = useMemo(() => customers.filter(c => c.phone?.replace(/\D/g, '').length >= 7).length, [customers]);
+    const uniqueCountries = useMemo(() => new Set(customers.map(c => c.country).filter(Boolean)).size, [customers]);
 
     const kpiCards = useMemo(() => [
         { label: 'إجمالي العملاء', value: customers.length, icon: Users, gradient: 'bg-gradient-to-br from-primary-soft to-transparent', iconBg: 'bg-primary-soft text-primary', accent: 'bg-primary' },
         { label: 'عملاء اليوم', value: todayCount, icon: Calendar, gradient: 'bg-gradient-to-br from-info-soft to-transparent', iconBg: 'bg-info-soft text-info-dark', accent: 'bg-info' },
         { label: 'عدد الدول', value: uniqueCountries, icon: Globe, gradient: 'bg-gradient-to-br from-success-soft to-transparent', iconBg: 'bg-success-soft text-success', accent: 'bg-success' },
-        { label: 'بأرقام هاتف', value: withPhoneCount, icon: Phone, gradient: 'bg-gradient-to-br from-warning-soft to-transparent', iconBg: 'bg-warning-soft text-warning', accent: 'bg-warning' },
-    ], [customers.length, todayCount, uniqueCountries, withPhoneCount]);
+        { label: 'عملاء الأسبوع', value: weekCount, icon: TrendingUp, gradient: 'bg-gradient-to-br from-warning-soft to-transparent', iconBg: 'bg-warning-soft text-warning', accent: 'bg-warning' },
+    ], [customers.length, todayCount, uniqueCountries, weekCount]);
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">

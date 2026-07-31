@@ -5,15 +5,29 @@ const { authMiddleware } = require('../../middleware/auth');
 const ResponseHandler = require('../../utils/responseHandler');
 const { sanitizeInput } = require('../../middleware/advanced');
 const { prisma } = require('../../utils/prisma');
+const { createRateLimiter } = require('../../middleware/rateLimiter');
 
 const SUPPORTED_COUNTRIES = ['الكويت', 'السعودية', 'قطر', 'الإمارات', 'عمان'];
 
+const ARABIC_DIGITS = { '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4', '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9' };
+
+const normalizePhone = (phone) => String(phone || '')
+    .trim()
+    .replace(/\s+/g, '')
+    .replace(/[٠-٩]/g, d => ARABIC_DIGITS[d]);
+
+const subscribeLimiter = createRateLimiter({
+    windowMs: 60 * 60 * 1000,
+    max: 20,
+    message: 'لقد تجاوزت عدد محاولات الاشتراك، يرجى المحاولة لاحقاً'
+});
+
 router.use(sanitizeInput);
 
-router.post('/', async (req, res) => {
+router.post('/', subscribeLimiter, async (req, res) => {
     try {
         const { country, phone } = req.body || {};
-        const normalizedPhone = String(phone || '').replace(/\s/g, '').trim();
+        const normalizedPhone = normalizePhone(phone);
         if (!SUPPORTED_COUNTRIES.includes(country)) {
             return res.status(400).json({ error: 'يرجى اختيار الدولة من القائمة' });
         }
