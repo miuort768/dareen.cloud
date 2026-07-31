@@ -1,18 +1,23 @@
-import { Sun, Moon, Bell, Home, BookOpen, Calendar, MessageSquare, User } from 'lucide-react';
+import { LogOut, Sun, Moon, Bell, Home, Calendar, MessageSquare, User, MessageCircle } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 import { useCurrentUser } from '../../context/AppContext';
+import { confirm } from '../../lib/confirmDialog';
 import { cn } from '../../lib/utils';
+
+interface StudentDashboardHeaderProps {
+    logout: () => void;
+}
 
 const navTabs = [
     { id: 'home', label: 'الرئيسية', icon: Home, path: '/student-dashboard' },
-    { id: 'subjects', label: 'المواد', icon: BookOpen, path: '/schedule' },
     { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/schedule' },
+    { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
     { id: 'chat', label: 'الرسائل', icon: MessageSquare, path: '/chat' },
     { id: 'profile', label: 'الحساب', icon: User, path: '/student-profile' },
 ];
 
-export const StudentDashboardHeader = () => {
+export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) => {
     const navigate = useNavigate();
     const location = useLocation();
     const currentUser = useCurrentUser();
@@ -32,8 +37,8 @@ export const StudentDashboardHeader = () => {
                             <span className="text-sm font-bold text-on-primary">{firstName.charAt(0)}</span>
                         </div>
                         <div className="hidden sm:block">
-                            <h1 className="text-sm font-bold text-main leading-tight">{firstName}</h1>
-                            <p className="text-[11px] font-medium text-muted">طالب</p>
+                            <h1 className="text-sm font-bold text-main leading-tight">مرحباً {firstName}</h1>
+                            <p className="text-[11px] font-medium text-muted">لوحة تحكم الطالب</p>
                         </div>
                     </button>
 
@@ -52,6 +57,13 @@ export const StudentDashboardHeader = () => {
                         >
                             <Bell size={16} strokeWidth={1.5} />
                             <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface" />
+                        </button>
+                        <button
+                            onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
+                            aria-label="تسجيل الخروج"
+                            className="w-10 h-10 rounded-xl bg-surface border border-border flex items-center justify-center text-muted transition-colors hover:bg-error/10 hover:text-error"
+                        >
+                            <LogOut size={16} strokeWidth={1.5} />
                         </button>
                     </div>
                 </div>

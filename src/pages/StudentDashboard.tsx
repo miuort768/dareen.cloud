@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Loader2, RefreshCw } from 'lucide-react';
 import { api } from '../lib/api';
-import { useCurrentUser } from '../context/AppContext';
+import { useCurrentUser, useLogout } from '../context/AppContext';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../shared/utils/ranks';
 import { Skeleton } from '../shared/components/ui';
 import { triggerHaptic } from '../lib/haptics';
@@ -33,6 +33,7 @@ const fadeUp = (delay: number) => ({
 export const StudentDashboard = () => {
     useEffect(() => { document.title = 'لوحة تحكم الطالب | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
+    const logout = useLogout();
 
     const [studentData, setStudentData] = useState<StudentDashboardData | null>(null);
     const [sessions, setSessions] = useState<Session[]>([]);
@@ -212,7 +213,7 @@ export const StudentDashboard = () => {
                 </div>
             </motion.div>
 
-            <StudentDashboardHeader />
+            <StudentDashboardHeader logout={logout} />
 
             <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
                 <motion.div {...fadeUp(0)}>

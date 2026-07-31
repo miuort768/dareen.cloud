@@ -9,6 +9,7 @@ import { LiveClasses } from '../../../components/dashboard/LiveClasses';
 import { MobileSchedule } from '../components/MobileSchedule';
 import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page';
 import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader';
+import { StudentDashboardHeader } from '../../../pages/student-dashboard/StudentDashboardHeader';
 import { cn } from '../../../lib/utils';
 
 interface Student { id: string; name: string; grade: string; parentPhone: string; enrollments: Enrollment[]; totalPoints?: number; }
@@ -46,6 +47,7 @@ export const Schedule = () => {
     const todayDayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
     const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
     const isTeacher = currentUser?.role === 'teacher';
+    const isStudent = currentUser?.role === 'student';
     const logout = useLogout();
 
     useEffect(() => { fetchData(); }, []);
@@ -182,6 +184,11 @@ export const Schedule = () => {
             {isTeacher && (
                 <div className="hidden md:block">
                     <TeacherDashboardHeader logout={logout} />
+                </div>
+            )}
+            {isStudent && (
+                <div className="hidden md:block">
+                    <StudentDashboardHeader logout={logout} />
                 </div>
             )}
             <div className="hidden md:block max-w-page mx-auto px-2">
