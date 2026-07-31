@@ -144,7 +144,13 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
   const articles = useMemo(() => {
     const source = searchQuery ? posts : latestPosts;
     return source
-      .filter(p => !searchQuery || `${p.title} ${p.excerpt}`.toLowerCase().includes(searchQuery))
+      .filter(p => {
+        if (!searchQuery) return true;
+        const typeName = types.find(t => t.id === p.contentType)?.name || '';
+        const haystack = [p.title, p.excerpt, p.category, p.keywords, typeName]
+          .filter(Boolean).join(' ').toLowerCase();
+        return haystack.includes(searchQuery);
+      })
       .slice(0, 4);
   }, [posts, latestPosts, searchQuery]);
 
