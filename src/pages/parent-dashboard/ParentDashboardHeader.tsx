@@ -1,4 +1,4 @@
-import { LogOut, Sun, Moon, Bell, Home, BookOpen, Calendar, MessageSquare, User } from 'lucide-react';
+import { LogOut, Sun, Moon, Bell, Home, Users, MessageCircle, Wallet, User } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 import { useCurrentUser } from '../../context/AppContext';
@@ -11,9 +11,9 @@ interface ParentDashboardHeaderProps {
 
 const navTabs = [
     { id: 'home', label: 'الرئيسية', icon: Home, path: '/parent-dashboard' },
-    { id: 'subjects', label: 'المواد', icon: BookOpen, path: '/parent-students' },
-    { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/parent-students' },
-    { id: 'chat', label: 'الرسائل', icon: MessageSquare, path: '/chat' },
+    { id: 'children', label: 'أبنائي', icon: Users, path: '/parent-students' },
+    { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
+    { id: 'payments', label: 'سجل الدفع', icon: Wallet, path: '/parent-payment-history' },
     { id: 'profile', label: 'الحساب', icon: User, path: '/parent-profile' },
 ];
 

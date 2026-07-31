@@ -10,6 +10,7 @@ import { confirm } from '../lib/confirmDialog';
 import type { Comment, Post } from '../features/forum/types';
 import { ForumHeader, ForumCreatePost, ForumPostCard, ForumHelpBanner } from './forum-page';
 import { TeacherDashboardHeader } from './TeacherDashboardHeader';
+import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader';
 import { cn } from '../lib/utils';
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
@@ -162,6 +163,11 @@ export const Forum = () => {
             {currentUser?.role === 'teacher' && (
                 <div className="hidden md:block">
                     <TeacherDashboardHeader logout={logout} />
+                </div>
+            )}
+            {currentUser?.role === 'parent' && (
+                <div className="hidden md:block">
+                    <ParentDashboardHeader logout={logout} />
                 </div>
             )}
             <div className="relative z-10">

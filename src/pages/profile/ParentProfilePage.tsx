@@ -6,9 +6,10 @@ import {
     TrendingUp, Award, ChevronLeft, Edit3, Heart, Target
 } from 'lucide-react';
 import { api } from '../../lib/api';
-import { useCurrentUser } from '../../context/AppContext';
+import { useCurrentUser, useLogout } from '../../context/AppContext';
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks';
 import { Skeleton } from '../../shared/components/ui';
+import { ParentDashboardHeader } from '../parent-dashboard/ParentDashboardHeader';
 import { ProfileHero } from './ProfileHero';
 import { ProfileAchievements } from './ProfileAchievements';
 import { ProfileRecentActivity } from './ProfileRecentActivity';
@@ -81,6 +82,7 @@ interface PointLog {
 export const ParentProfilePage = () => {
     useEffect(() => { document.title = 'الملف الشخصي | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
+    const logout = useLogout();
     const navigate = useNavigate();
     const [children, setChildren] = useState<Student[]>([]);
     const [pointLogs, setPointLogs] = useState<PointLog[]>([]);
@@ -158,6 +160,9 @@ export const ParentProfilePage = () => {
     if (isLoading) {
         return (
             <div className="min-h-screen bg-background" dir="rtl">
+                <div className="hidden md:block">
+                    <ParentDashboardHeader logout={logout} />
+                </div>
                 <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
                     <Skeleton className="h-52 rounded-3xl" />
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3"><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /></div>
@@ -171,6 +176,9 @@ export const ParentProfilePage = () => {
 
     return (
         <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
+            <div className="hidden md:block">
+                <ParentDashboardHeader logout={logout} />
+            </div>
             <div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6">
                 <motion.div {...stagger(0)}>
                     <ProfileHero

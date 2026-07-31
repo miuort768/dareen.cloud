@@ -3,8 +3,9 @@ import { motion } from 'framer-motion';
 import { Search, CheckCircle, Clock, AlertCircle, FileText, ArrowLeft, Wallet, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
-import { useCurrentUser, useShowNotification } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useLogout } from '../context/AppContext';
 import { Skeleton } from '../shared/components/ui';
+import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader';
 import { CURRENCY_SYMBOL } from '../config/constants';
 import type { Student } from '../types';
 
@@ -53,6 +54,7 @@ export const ParentPaymentHistory = () => {
     useEffect(() => { document.title = 'سجل الدفعات | ولي الأمر'; }, []);
     const navigate = useNavigate();
     const currentUser = useCurrentUser();
+    const logout = useLogout();
     const showNotification = useShowNotification();
     const [invoices, setInvoices] = useState<StudentInvoiceData[]>([]);
     const [children, setChildren] = useState<Student[]>([]);
@@ -105,6 +107,9 @@ export const ParentPaymentHistory = () => {
     if (loading) {
         return (
             <div className="min-h-full pb-24 overflow-x-hidden" dir="rtl">
+                <div className="hidden md:block">
+                    <ParentDashboardHeader logout={logout} />
+                </div>
                 <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
                     <Skeleton className="h-28 rounded-2xl" />
                     <div className="grid grid-cols-3 gap-3"><Skeleton className="h-24 rounded-2xl" /><Skeleton className="h-24 rounded-2xl" /><Skeleton className="h-24 rounded-2xl" /></div>
@@ -116,6 +121,9 @@ export const ParentPaymentHistory = () => {
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface" dir="rtl">
+            <div className="hidden md:block">
+                <ParentDashboardHeader logout={logout} />
+            </div>
             {/* Hero */}
             <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background border-b border-border/60">
                 <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
