@@ -75,6 +75,9 @@ router.use('/jobs', jobsRouter);
 const contactRouter = require('./communication/contact');
 router.use('/contact', contactRouter);
 
+const blogCustomersRouter = require('./communication/blogCustomers');
+router.use('/blog-customers', blogCustomersRouter);
+
 // ── Auth middleware (protect all subsequent routes) ──
 router.use(authMiddleware);
 router.use(sanitizeInput);

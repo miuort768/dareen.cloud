@@ -416,6 +416,17 @@ model BlogPost {
   @@map("blog_posts")
 }
 
+model BlogCustomer {
+  id        String   @id @default(cuid())
+  country   String
+  phone     String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([country])
+  @@index([createdAt])
+  @@map("blog_customers")
+}
+
 model Lead {
   id          String   @id @default(cuid())
   studentName String

@@ -4,7 +4,7 @@ import {
     GraduationCap, LayoutDashboard, Users, Wallet, UserCheck, CalendarDays,
     Settings, FileText, Receipt, DollarSign, ListTodo, Presentation,
     MessageCircle, Award, CalendarCheck, UserPlus, Home, Megaphone,
-    MessageSquare, BookOpen, Briefcase, Mail
+    MessageSquare, BookOpen, Briefcase, Mail, BookUser
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
@@ -76,6 +76,7 @@ export const Sidebar = memo(() => {
         { name: 'سجل الدفعات', href: '/parent-payment-history', id: 'parent_payment_history', icon: DollarSign },
         { name: 'إدارة الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
         { name: 'إدارة المدونة', href: '/admin/blog', id: 'admin-blog', icon: FileText },
+        { name: 'عملاء المدونة', href: '/admin/blog-customers', id: 'admin-blog-customers', icon: BookUser },
         { name: 'المنتدى', href: '/forum', id: 'forum', icon: MessageSquare },
         { name: 'الإعدادات', href: '/settings', id: 'settings', icon: Settings },
         { name: 'الأبناء', href: '/parent-students', id: 'parent_students', icon: Users },
@@ -114,7 +115,7 @@ export const Sidebar = memo(() => {
             { label: 'الأشخاص', items: pick('leads', 'trial_sessions', 'teachers', 'students', 'parents') },
             { label: 'التعلّم', items: pick('evaluations', 'attendance', 'schedule', 'appointments', 'tasks') },
             { label: 'المالية', items: pick('finance', 'monthly_closing', 'student_invoices', 'teacher_invoices', 'teacher_payment_history', 'parent_payment_history') },
-            { label: 'المحتوى', items: pick('announcements', 'admin-blog', 'forum', 'reports', 'admin_contacts', 'admin_jobs') },
+            { label: 'المحتوى', items: pick('announcements', 'admin-blog', 'admin-blog-customers', 'forum', 'reports', 'admin_contacts', 'admin_jobs') },
             { label: 'النظام', items: pick('settings') },
         ].filter(section => section.items.length > 0);
     }, [filteredNavigation]);

@@ -58,6 +58,7 @@ const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })))
 const AAbdullah = lazy(() => import('./pages/AAbdullah').then(m => ({ default: m.AAbdullah })));
 const AdminJobs = lazy(() => import('./pages/AdminJobs').then(m => ({ default: m.AdminJobs })));
 const AdminContacts = lazy(() => import('./pages/AdminContacts').then(m => ({ default: m.AdminContacts })));
+const AdminBlogCustomers = lazy(() => import('./pages/AdminBlogCustomers').then(m => ({ default: m.AdminBlogCustomers })));
 const DesignSystemPage = lazy(() => import('./features/design-system/DesignSystemPage').then(m => ({ default: m.DesignSystemPage })));
 const StudentProfilePage = lazy(() => import('./pages/profile/StudentProfilePage').then(m => ({ default: m.StudentProfilePage })));
 const TeacherProfilePage = lazy(() => import('./pages/profile/TeacherProfilePage').then(m => ({ default: m.TeacherProfilePage })));
@@ -269,6 +270,7 @@ function App() {
 
             {/* Admin Blog Management */}
             <Route path="admin/blog" element={<ProtectedRoute permission="admin"><AdminBlog /></ProtectedRoute>} />
+            <Route path="admin/blog-customers" element={<ProtectedRoute permission="admin"><AdminBlogCustomers /></ProtectedRoute>} />
           </Route>
           </Route>
 

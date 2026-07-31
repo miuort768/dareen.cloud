@@ -2,12 +2,14 @@ import { useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BookOpen, Zap, CheckCircle, FileText, AlignLeft, Search, Eye, Clock,
-  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, GraduationCap,
+  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, GraduationCap, Globe, Phone,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
+import { api } from '../../lib/api';
 import { types, directTypes } from './LibraryConfig';
+import { BLOG_COUNTRIES } from './blogCustomers';
 import type { BlogPost } from '../../data/blogPosts';
 
 type TypeId = 'foundation' | 'solutions' | 'notes' | 'more';
@@ -112,8 +114,11 @@ interface DesktopLibraryLandingProps {
 
 export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: DesktopLibraryLandingProps) => {
   const [search, setSearch] = useState('');
-  const [email, setEmail] = useState('');
+  const [country, setCountry] = useState('');
+  const [phone, setPhone] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [subscribeError, setSubscribeError] = useState<string | null>(null);
 
   const goToType = (id: string) => {
     setSearchParams(prev => {
@@ -160,9 +165,19 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
     return counts;
   }, [posts]);
 
-  const handleSubscribe = (e: FormEvent) => {
+  const handleSubscribe = async (e: FormEvent) => {
     e.preventDefault();
-    if (email.trim()) setSubscribed(true);
+    if (!country || !phone.trim()) return;
+    setSubmitting(true);
+    setSubscribeError(null);
+    try {
+      await api.post('/blog-customers', { country, phone: phone.trim() });
+      setSubscribed(true);
+    } catch (err) {
+      setSubscribeError(err instanceof Error ? err.message : 'حدث خطأ ما، حاول مرة أخرى');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -325,31 +340,60 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             </span>
             <h3 className="text-base font-black text-main mb-1.5">اشترك في نشرتنا البريدية</h3>
             <p className="text-sm text-muted font-medium leading-relaxed mb-4">
-              كن أول من يصلك جديد الكتب والمذكرات والملخصات.
+              اختر دولتك وسجّل رقم هاتفك ليصلك جديد الكتب والمذكرات والملخصات.
             </p>
             {subscribed ? (
               <div className="flex items-center gap-2 rounded-xl bg-success-soft border border-success px-4 py-3">
                 <CheckCircle2 size={16} className="text-success shrink-0" />
-                <span className="text-sm font-bold text-success">تم اشتراكك بنجاح!</span>
+                <span className="text-sm font-bold text-success">تم تسجيل بياناتك بنجاح!</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="space-y-3">
-                <label className="sr-only" htmlFor="newsletter-email">البريد الإلكتروني</label>
-                <input
-                  id="newsletter-email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="بريدك الإلكتروني"
-                  className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-main placeholder:text-dim outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
-                />
+                <div>
+                  <label className="block text-xs font-bold text-main mb-1.5" htmlFor="newsletter-country">اختر الدولة</label>
+                  <div className="relative">
+                    <Globe size={16} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-dim pointer-events-none" />
+                    <select
+                      id="newsletter-country"
+                      required
+                      value={country}
+                      onChange={e => setCountry(e.target.value)}
+                      className="w-full appearance-none rounded-xl border border-border bg-card ps-10 pe-4 py-3 text-sm text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                    >
+                      <option value="" disabled>الدولة</option>
+                      {BLOG_COUNTRIES.map(c => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-main mb-1.5" htmlFor="newsletter-phone">رقم الهاتف</label>
+                  <div className="relative">
+                    <Phone size={16} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-dim pointer-events-none" />
+                    <input
+                      id="newsletter-phone"
+                      type="tel"
+                      required
+                      dir="ltr"
+                      inputMode="tel"
+                      value={phone}
+                      onChange={e => setPhone(e.target.value)}
+                      placeholder="5xxxxxxxx"
+                      className="w-full rounded-xl border border-border bg-card ps-10 pe-4 py-3 text-sm text-main placeholder:text-dim outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                    />
+                  </div>
+                </div>
+                {subscribeError && (
+                  <p className="text-xs font-bold text-error">{subscribeError}</p>
+                )}
                 <button
                   type="submit"
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-black text-on-primary transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+                  disabled={submitting}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-sm font-black text-on-primary transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-elevation-2 disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                 >
-                  اشترك الآن
-                  <Send size={14} />
+                  {submitting ? 'جارٍ الإرسال...' : 'اشترك الآن'}
+                  {!submitting && <Send size={14} />}
                 </button>
               </form>
             )}
