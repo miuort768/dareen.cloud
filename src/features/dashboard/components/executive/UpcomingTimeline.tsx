@@ -12,10 +12,10 @@ const URGENCY_DOT: Record<string, string> = {
 };
 
 const URGENCY_ROW: Record<string, string> = {
-    now: 'bg-error/10 border-error/20',
-    very_soon: 'bg-warning/10 border-warning/20',
-    soon: 'bg-info/10 border-info/20',
-    within_hour: 'bg-success/10 border-success/20',
+    now: 'bg-error-soft border-border',
+    very_soon: 'bg-warning-soft border-border',
+    soon: 'bg-info-soft border-border',
+    within_hour: 'bg-success-soft border-border',
     later: 'bg-surface border-border',
 };
 
@@ -47,7 +47,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
                 {sorted.length === 0 && (
                     <div className="text-center py-8">
                         <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
-                            <Calendar size={16} className="text-success/50" />
+                            <Calendar size={16} className="text-success" />
                         </div>
                         <p className="text-xs font-bold text-muted">لا توجد جلسات قادمة</p>
                     </div>
@@ -58,7 +58,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({ sessions }: { s
                         <div key={session.id} className="flex gap-3">
                             <div className="flex flex-col items-center">
                                 <div className={cn("w-2.5 h-2.5 rounded-full ring-2 ring-border shrink-0 mt-2", URGENCY_DOT[session.urgency] || 'bg-muted')} />
-                                {!isLast && <div className="w-px flex-1 min-h-[6px] bg-border/30" />}
+                                {!isLast && <div className="w-px flex-1 min-h-[6px] bg-divider" />}
                             </div>
                             <div className={cn("flex-1 min-w-0 p-3 rounded-xl border transition-colors mb-1.5", URGENCY_ROW[session.urgency] || 'bg-surface border-border')}>
                                 <div className="flex items-center justify-between gap-2 mb-1">

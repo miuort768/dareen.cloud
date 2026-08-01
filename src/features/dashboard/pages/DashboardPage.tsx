@@ -17,6 +17,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { LayoutDashboard, TrendingUp, RefreshCw, AlertCircle } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -25,14 +26,18 @@ const containerVariants = {
 
 const SectionDivider = () => (
     <div className="relative py-2">
-        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t border-border/30" />
+        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t border-divider" />
     </div>
 );
 
-const SectionLabel = ({ label }: { label: string }) => (
-    <div className="flex items-center gap-3 mb-4">
-        <span className="text-[10px] font-bold text-muted tracking-widest uppercase">{label}</span>
-        <div className="flex-1 h-px bg-border/30" />
+const SectionLabel = ({ label, hint }: { label: string; hint?: string }) => (
+    <div className="flex items-center gap-3 mb-5">
+        <span className="w-1 h-5 rounded-full bg-primary" />
+        <div className="flex items-baseline gap-2">
+            <h2 className="text-sm font-bold text-main">{label}</h2>
+            {hint && <span className="text-[10px] font-medium text-dim">{hint}</span>}
+        </div>
+        <div className="flex-1 h-px bg-divider" />
     </div>
 );
 
@@ -64,7 +69,7 @@ export const Dashboard = () => {
         return (
             <div className="min-h-[60vh] flex items-center justify-center">
                 <div className="text-center max-w-md">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-error/10 flex items-center justify-center ring-1 ring-error/20">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-error-soft flex items-center justify-center">
                         <AlertCircle size={28} className="text-error" />
                     </div>
                     <h2 className="text-lg font-bold text-main mb-2">لا تملك صلاحية الوصول</h2>
@@ -134,25 +139,35 @@ export const Dashboard = () => {
                 {currentUser.permissions?.includes('*') && (
                     <div className="flex items-center justify-between mb-6">
                         <div />
-                        <div className="inline-flex items-center bg-card border border-border/50 rounded-xl p-0.5 gap-0.5 shadow-sm">
-                            <Button
-                                variant={view === 'standard' ? 'default' : 'ghost'}
-                                size="sm"
+                        <div className="inline-flex items-center bg-card border border-border rounded-xl p-1 gap-1 shadow-elevation-1" role="tablist" aria-label="اختيار طريقة العرض">
+                            <button
+                                role="tab"
+                                aria-selected={view === 'standard'}
                                 onClick={() => setView('standard')}
-                                className="rounded-lg gap-1.5 h-8 text-xs"
+                                className={cn(
+                                    "inline-flex items-center gap-1.5 px-3 h-8 rounded-lg text-xs font-bold transition-all duration-fast",
+                                    view === 'standard'
+                                        ? "bg-primary text-on-primary shadow-sm"
+                                        : "text-muted hover:text-main hover:bg-hover"
+                                )}
                             >
                                 <LayoutDashboard size={14} />
                                 لوحة الإدارة
-                            </Button>
-                            <Button
-                                variant={view === 'executive' ? 'default' : 'ghost'}
-                                size="sm"
+                            </button>
+                            <button
+                                role="tab"
+                                aria-selected={view === 'executive'}
                                 onClick={() => setView('executive')}
-                                className="rounded-lg gap-1.5 h-8 text-xs"
+                                className={cn(
+                                    "inline-flex items-center gap-1.5 px-3 h-8 rounded-lg text-xs font-bold transition-all duration-fast",
+                                    view === 'executive'
+                                        ? "bg-primary text-on-primary shadow-sm"
+                                        : "text-muted hover:text-main hover:bg-hover"
+                                )}
                             >
                                 <TrendingUp size={14} />
                                 لوحة القيادة
-                            </Button>
+                            </button>
                         </div>
                         <Button
                             variant="ghost"
@@ -160,6 +175,7 @@ export const Dashboard = () => {
                             className="h-8 w-8 text-muted"
                             onClick={fetchDashboardData}
                             title="تحديث البيانات"
+                            aria-label="تحديث البيانات"
                         >
                             <RefreshCw size={14} />
                         </Button>
@@ -175,7 +191,7 @@ export const Dashboard = () => {
                             KPI Cards
                            ════════════════════════════════════════ */}
                         <div className="mb-8">
-                            <SectionLabel label="المؤشرات الرئيسية" />
+                            <SectionLabel label="المؤشرات الرئيسية" hint="ملخص الأداء المالي والتعليمي" />
                             <KPICards stats={stats} />
                         </div>
 
@@ -185,7 +201,7 @@ export const Dashboard = () => {
                             Chart + Performance
                            ════════════════════════════════════════ */}
                         <div className="mb-8">
-                            <SectionLabel label="تحليل الأداء" />
+                            <SectionLabel label="تحليل الأداء" hint="الإيرادات والمصروفات الشهرية" />
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
                                 <div className="lg:col-span-2">
                                     <FinanceOverview monthlyData={monthlyData} />
@@ -202,7 +218,7 @@ export const Dashboard = () => {
                             Upcoming + Notifications
                            ════════════════════════════════════════ */}
                         <div className="mb-8">
-                            <SectionLabel label="الجدول والتنبيهات" />
+                            <SectionLabel label="الجدول والتنبيهات" hint="حصص اليوم والمهام والتنبيهات" />
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                                 <TodaysFocus
                                     todaySessions={todaySessions}
@@ -225,7 +241,7 @@ export const Dashboard = () => {
                             Activity
                            ════════════════════════════════════════ */}
                         <div className="mb-8">
-                            <SectionLabel label="النشاطات" />
+                            <SectionLabel label="النشاطات" hint="آخر العمليات والجلسات" />
                             <ActivityTimeline sessions={asTimelineSessions(rawSessions)} tasks={asTasks(tasks)} />
                         </div>
 
@@ -235,6 +251,7 @@ export const Dashboard = () => {
                             System Health
                            ════════════════════════════════════════ */}
                         <div className="mb-8">
+                            <SectionLabel label="صحة النظام" hint="الحالة الفنية والأداء" />
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                                 <SystemHealth stats={stats} />
                                 <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5">
@@ -253,28 +270,28 @@ export const Dashboard = () => {
                                         <div className="p-4 rounded-xl bg-surface">
                                             <p className="text-[10px] text-muted mb-1">نسبة الحضور</p>
                                             <p className="text-xl font-bold text-main tabular-nums">{stats.attendanceRate}%</p>
-                                            <div className="mt-2 h-1.5 rounded-full bg-border/30 overflow-hidden">
+                                            <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
                                                 <div className="h-full rounded-full bg-success transition-all duration-700" style={{ width: `${Math.min(100, stats.attendanceRate)}%` }} />
                                             </div>
                                         </div>
                                         <div className="p-4 rounded-xl bg-surface">
                                             <p className="text-[10px] text-muted mb-1">فواتير مدفوعة</p>
                                             <p className="text-xl font-bold text-main tabular-nums">{stats.paidInvoices}</p>
-                                            <div className="mt-2 h-1.5 rounded-full bg-border/30 overflow-hidden">
+                                            <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
                                                 <div className="h-full rounded-full bg-info transition-all duration-700" style={{ width: `${Math.min(100, (stats.paidInvoices / Math.max(1, stats.pendingInvoices + stats.paidInvoices)) * 100)}%` }} />
                                             </div>
                                         </div>
                                         <div className="p-4 rounded-xl bg-surface">
                                             <p className="text-[10px] text-muted mb-1">حصص مكتملة</p>
                                             <p className="text-xl font-bold text-main tabular-nums">{stats.completedSessions}</p>
-                                            <div className="mt-2 h-1.5 rounded-full bg-border/30 overflow-hidden">
+                                            <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
                                                 <div className="h-full rounded-full bg-primary transition-all duration-700" style={{ width: `${Math.min(100, stats.totalSessions > 0 ? (stats.completedSessions / stats.totalSessions) * 100 : 0)}%` }} />
                                             </div>
                                         </div>
                                         <div className="p-4 rounded-xl bg-surface">
                                             <p className="text-[10px] text-muted mb-1">طلاب نشطون</p>
                                             <p className="text-xl font-bold text-main tabular-nums">{stats.studentsCount}</p>
-                                            <div className="mt-2 h-1.5 rounded-full bg-border/30 overflow-hidden">
+                                            <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
                                                 <div className="h-full rounded-full bg-warning transition-all duration-700" style={{ width: `${Math.min(100, (stats.studentsCount / Math.max(1, stats.studentsCount + stats.lowBalanceCount)) * 100)}%` }} />
                                             </div>
                                         </div>

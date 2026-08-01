@@ -4,9 +4,9 @@ import { AlertTriangle, XCircle, Info, Clock, Bell } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const SEVERITY_CONFIG: Record<string, { icon: typeof XCircle; rowBg: string; text: string; dot: string; label: string }> = {
-    critical: { icon: XCircle, rowBg: 'bg-error/10 border-error/20', text: 'text-error', dot: 'bg-error', label: 'حرج' },
-    warning: { icon: AlertTriangle, rowBg: 'bg-warning/10 border-warning/20', text: 'text-warning', dot: 'bg-warning', label: 'تحذير' },
-    reminder: { icon: Clock, rowBg: 'bg-info/10 border-info/20', text: 'text-info', dot: 'bg-info', label: 'تذكير' },
+    critical: { icon: XCircle, rowBg: 'bg-error-soft border-border', text: 'text-error', dot: 'bg-error', label: 'حرج' },
+    warning: { icon: AlertTriangle, rowBg: 'bg-warning-soft border-border', text: 'text-warning', dot: 'bg-warning', label: 'تحذير' },
+    reminder: { icon: Clock, rowBg: 'bg-info-soft border-border', text: 'text-info', dot: 'bg-info', label: 'تذكير' },
     info: { icon: Info, rowBg: 'bg-surface border-border', text: 'text-muted', dot: 'bg-muted', label: 'معلومة' },
 };
 
@@ -46,7 +46,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                     </div>
                 </div>
                 {counts.critical > 0 && (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-error-soft text-error border border-error/20">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-error-soft text-error border border-border">
                         {counts.critical} حرج
                     </span>
                 )}
@@ -76,7 +76,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                 {filtered.length === 0 && (
                     <div className="text-center py-8">
                         <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-success-soft flex items-center justify-center">
-                            <Info size={16} className="text-success/50" />
+                            <Info size={16} className="text-success" />
                         </div>
                         <p className="text-xs font-bold text-muted">لا توجد تنبيهات</p>
                     </div>

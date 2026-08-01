@@ -73,7 +73,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                         <Link key={`action-${i}`} to={action.href} className="block h-full">
                             <div className={cn(
                                 "group h-full p-4 rounded-2xl bg-card border border-border",
-                                "hover:border-border/80 transition-all duration-200",
+                                "hover:border-border-strong transition-all duration-200",
                                 "font-dash"
                             )}>
                                 <div className="flex items-center gap-3">

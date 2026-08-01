@@ -10,9 +10,9 @@ const STATUS_ICONS: Record<string, typeof CheckCircle> = {
 };
 
 const STATUS_STYLES: Record<string, { text: string; bg: string; badge: string }> = {
-    healthy: { text: 'text-success', bg: 'bg-success-soft', badge: 'bg-success-soft text-success border-success/20' },
-    warning: { text: 'text-warning', bg: 'bg-warning-soft', badge: 'bg-warning-soft text-warning border-warning/20' },
-    critical: { text: 'text-error', bg: 'bg-error-soft', badge: 'bg-error-soft text-error border-error/20' },
+    healthy: { text: 'text-success', bg: 'bg-success-soft', badge: 'bg-success-soft text-success border-border' },
+    warning: { text: 'text-warning', bg: 'bg-warning-soft', badge: 'bg-warning-soft text-warning border-border' },
+    critical: { text: 'text-error', bg: 'bg-error-soft', badge: 'bg-error-soft text-error border-border' },
 };
 
 const DEFAULT_STYLE = { text: 'text-muted', bg: 'bg-surface', badge: 'bg-surface text-muted border-border' };
@@ -44,7 +44,7 @@ const StatusRow = memo(function StatusRow({ icon: Icon, label, status, detail, p
             <div className="flex items-center gap-2.5">
                 {progress !== undefined && (
                     <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 rounded-full bg-border/30 overflow-hidden">
+                        <div className="w-16 h-1.5 rounded-full bg-hover overflow-hidden">
                             <div
                                 className={cn("h-full rounded-full transition-all duration-700", progress > 80 ? "bg-error" : progress > 60 ? "bg-warning" : "bg-success")}
                                 style={{ width: `${Math.min(100, progress)}%` }}
@@ -126,7 +126,7 @@ export const SystemStatus = memo(function SystemStatus({ health }: { health: Sys
                 />
             </div>
 
-            <div className="mt-3 pt-3 border-t border-border/50 flex items-center justify-between text-[9px] text-muted">
+            <div className="mt-3 pt-3 border-t border-divider flex items-center justify-between text-[9px] text-muted">
                 <span>مدة التشغيل: {uptimeHours}h</span>
                 <span>Node: {health.node || 'N/A'}</span>
             </div>

@@ -21,10 +21,10 @@ interface KPICardData {
 }
 
 const colorMap: Record<string, { bg: string; text: string; ring: string; accent: string }> = {
-    primary: { bg: 'bg-primary-soft', text: 'text-primary', ring: 'ring-primary/20', accent: 'bg-primary' },
-    success: { bg: 'bg-success-soft', text: 'text-success', ring: 'ring-success/20', accent: 'bg-success' },
-    info: { bg: 'bg-info-soft', text: 'text-info', ring: 'ring-info/20', accent: 'bg-info' },
-    warning: { bg: 'bg-warning-soft', text: 'text-warning', ring: 'ring-warning/20', accent: 'bg-warning' },
+    primary: { bg: 'bg-primary-soft', text: 'text-primary', ring: 'ring-border', accent: 'bg-primary' },
+    success: { bg: 'bg-success-soft', text: 'text-success', ring: 'ring-border', accent: 'bg-success' },
+    info: { bg: 'bg-info-soft', text: 'text-info', ring: 'ring-border', accent: 'bg-info' },
+    warning: { bg: 'bg-warning-soft', text: 'text-warning', ring: 'ring-border', accent: 'bg-warning' },
 };
 
 const KPICard = ({ item, index }: { item: KPICardData; index: number }) => {
@@ -53,8 +53,8 @@ const KPICard = ({ item, index }: { item: KPICardData; index: number }) => {
                     {item.trend && (
                         <div className={cn(
                             "flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold",
-                            item.trend === 'up' ? "bg-success/10 text-success" :
-                            item.trend === 'down' ? "bg-error/10 text-error" :
+                            item.trend === 'up' ? "bg-success-soft text-success" :
+                            item.trend === 'down' ? "bg-error-soft text-error" :
                             "bg-surface text-muted"
                         )}>
                             {item.trend === 'up' ? <TrendingUp size={10} /> : item.trend === 'down' ? <TrendingDown size={10} /> : null}

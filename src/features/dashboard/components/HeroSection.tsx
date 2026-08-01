@@ -165,7 +165,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
                                                 {item.value}
                                             </span>
                                         </div>
-                                        <div className="flex items-center gap-0.5 text-on-primary/70 text-[10px] font-bold">
+                                        <div className="flex items-center gap-0.5 text-white/70 text-[10px] font-bold">
                                             <TrendingUp size={10} />
                                             {item.trend === 'up' ? '+' : ''}
                                         </div>

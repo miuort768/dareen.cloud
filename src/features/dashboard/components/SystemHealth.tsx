@@ -102,13 +102,13 @@ export const SystemHealth = ({ stats }: SystemHealthProps) => {
                             <div
                                 key={i}
                                 className={cn(
-                                    "flex items-center gap-3 p-3 rounded-xl border",
-                                    issue.severity === 'error' ? "bg-error/10 border-error/20" : "bg-warning/10 border-warning/20"
+                                    "flex items-center gap-3 p-3 rounded-xl border border-border",
+                                    issue.severity === 'error' ? "bg-error-soft" : "bg-warning-soft"
                                 )}
                             >
                                 <div className={cn(
                                     "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
-                                    issue.severity === 'error' ? "bg-error/15 text-error" : "bg-warning/15 text-warning"
+                                    issue.severity === 'error' ? "bg-error-soft text-error" : "bg-warning-soft text-warning"
                                 )}>
                                     {issue.severity === 'error' ? <XCircle size={14} /> : <AlertTriangle size={14} />}
                                 </div>

@@ -57,11 +57,11 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
                     </div>
                 </div>
                 <div className="flex items-center gap-1.5">
-                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-success/10">
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-success-soft">
                         <TrendingUp size={9} className="text-success" />
                         <span className="text-[9px] font-bold tabular-nums text-success">{totalRevenue.toLocaleString()}</span>
                     </div>
-                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-warning/10">
+                    <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-warning-soft">
                         <TrendingDown size={9} className="text-warning" />
                         <span className="text-[9px] font-bold tabular-nums text-warning">{totalExpenses.toLocaleString()}</span>
                     </div>
@@ -72,10 +72,10 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
             {monthlyData.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-10 text-center">
                     <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mb-3">
-                        <BarChart3 size={28} className="text-primary/30" />
+                        <BarChart3 size={28} className="text-primary-200" />
                     </div>
                     <p className="text-sm font-bold text-muted">لا توجد بيانات مالية بعد</p>
-                    <p className="text-[11px] text-muted/60 mt-1">ابدأ بإضافة أول عملية مالية</p>
+                    <p className="text-[11px] text-dim mt-1">ابدأ بإضافة أول عملية مالية</p>
                     <Button onClick={() => navigate('/finance')} size="sm" className="mt-3 h-9 px-5 rounded-xl text-xs font-bold gap-1.5">
                         <Plus size={14} /> إضافة عملية
                     </Button>
@@ -118,7 +118,7 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
                     </div>
                     <div className={cn(
                         "flex items-center gap-1 px-2 py-0.5 rounded-lg",
-                        totalProfit >= 0 ? "bg-success/10" : "bg-error/10"
+                        totalProfit >= 0 ? "bg-success-soft" : "bg-error-soft"
                     )}>
                         <DollarSign size={9} className={totalProfit >= 0 ? "text-success" : "text-error"} />
                         <span className={cn(

@@ -34,7 +34,7 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
                         <button
                             key={action.label}
                             onClick={() => navigate(action.path)}
-                            className="group flex flex-col items-center gap-2 py-4 px-2 rounded-2xl border border-border/50 hover:border-border bg-surface/50 hover:bg-surface transition-all duration-200 cursor-pointer"
+                            className="group flex flex-col items-center gap-2 py-4 px-2 rounded-2xl border border-border hover:border-border-strong bg-surface hover:bg-hover transition-all duration-200 cursor-pointer"
                             title={action.label}
                         >
                             <div className={cn(

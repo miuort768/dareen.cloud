@@ -39,7 +39,7 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
                 {items.length === 0 && (
                     <div className="text-center py-8">
                         <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-surface flex items-center justify-center">
-                            <History size={16} className="text-muted/50" />
+                            <History size={16} className="text-dim" />
                         </div>
                         <p className="text-xs font-bold text-muted">لا توجد نشاطات</p>
                     </div>

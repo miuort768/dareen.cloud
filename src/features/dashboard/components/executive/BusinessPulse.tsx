@@ -12,10 +12,10 @@ const PULSE_TEXT: Record<string, string> = {
 };
 
 const PULSE_BADGE: Record<string, string> = {
-    excellent: 'bg-success-soft text-success border-success/20',
-    good: 'bg-info-soft text-info border-info/20',
-    fair: 'bg-warning-soft text-warning border-warning/20',
-    critical: 'bg-error-soft text-error border-error/20',
+    excellent: 'bg-success-soft text-success border-border',
+    good: 'bg-info-soft text-info border-border',
+    fair: 'bg-warning-soft text-warning border-border',
+    critical: 'bg-error-soft text-error border-border',
     unavailable: 'bg-surface text-muted border-border',
 };
 

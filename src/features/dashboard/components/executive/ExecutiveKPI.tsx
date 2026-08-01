@@ -49,8 +49,8 @@ const MetricCard = memo(function MetricCard({ label, value, icon, trend, percent
         <div className="p-4 rounded-2xl bg-card border border-border font-dash">
             <div className="flex items-center gap-3">
                 <div className={cn(
-                    "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ring-1",
-                    isUp ? "bg-success-soft ring-success/20" : "bg-error-soft ring-error/20"
+                    "w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ring-1 ring-border",
+                    isUp ? "bg-success-soft" : "bg-error-soft"
                 )}>
                     <Icon size={18} className={isUp ? 'text-success' : 'text-error'} />
                 </div>
@@ -59,7 +59,7 @@ const MetricCard = memo(function MetricCard({ label, value, icon, trend, percent
                     <p className="text-sm font-bold text-main tabular-nums mt-1">{value}</p>
                 </div>
             </div>
-            <div className="mt-3 h-1.5 rounded-full bg-border/30 overflow-hidden">
+            <div className="mt-3 h-1.5 rounded-full bg-hover overflow-hidden">
                 <div
                     className={cn("h-full rounded-full transition-all duration-700", isUp ? "bg-success" : "bg-error")}
                     style={{ width: `${Math.min(100, percent)}%` }}

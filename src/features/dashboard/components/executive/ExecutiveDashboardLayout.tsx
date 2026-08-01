@@ -59,7 +59,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
         return (
             <div className="min-h-[40vh] flex items-center justify-center">
                 <div className="text-center max-w-md">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-error/10 flex items-center justify-center ring-1 ring-error/20">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-error-soft flex items-center justify-center">
                         <AlertCircle size={28} className="text-error" />
                     </div>
                     <h2 className="text-lg font-bold text-main mb-2">تعذر تحميل البيانات</h2>

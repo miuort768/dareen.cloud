@@ -55,9 +55,9 @@ function buildInsights(stats: ExecutiveStats): Insight[] {
 }
 
 const TYPE_CONFIG: Record<InsightType, { icon: typeof Lightbulb; textClass: string; bgClass: string; iconBg: string }> = {
-    positive: { icon: TrendingUp, textClass: 'text-success', bgClass: 'bg-success/10 border-success/20', iconBg: 'bg-success-soft' },
-    negative: { icon: TrendingDown, textClass: 'text-error', bgClass: 'bg-error/10 border-error/20', iconBg: 'bg-error-soft' },
-    neutral: { icon: Target, textClass: 'text-info', bgClass: 'bg-info/10 border-info/20', iconBg: 'bg-info-soft' },
+    positive: { icon: TrendingUp, textClass: 'text-success', bgClass: 'bg-success-soft border-border', iconBg: 'bg-success-soft' },
+    negative: { icon: TrendingDown, textClass: 'text-error', bgClass: 'bg-error-soft border-border', iconBg: 'bg-error-soft' },
+    neutral: { icon: Target, textClass: 'text-info', bgClass: 'bg-info-soft border-border', iconBg: 'bg-info-soft' },
 };
 
 export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: ExecutiveStats }) {
@@ -80,7 +80,7 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
                 {insights.length === 0 && (
                     <div className="text-center py-8">
                         <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-surface flex items-center justify-center">
-                            <Lightbulb size={16} className="text-muted/50" />
+                            <Lightbulb size={16} className="text-dim" />
                         </div>
                         <p className="text-xs font-bold text-muted">لا توجد تحليلات</p>
                     </div>

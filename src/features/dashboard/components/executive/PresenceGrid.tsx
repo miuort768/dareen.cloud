@@ -48,7 +48,7 @@ export const PresenceGrid = memo(function PresenceGrid({ users, total }: { users
                         <p className="text-[10px] text-muted">المتصلون الآن</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-success-soft border border-success/20">
+                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-success-soft border border-border">
                     <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse" />
                     <span className="text-[10px] font-bold tabular-nums text-success">{onlineCount}/{total}</span>
                 </div>
@@ -58,7 +58,7 @@ export const PresenceGrid = memo(function PresenceGrid({ users, total }: { users
                 {users.length === 0 && (
                     <div className="text-center py-8">
                         <div className="w-10 h-10 mx-auto mb-2 rounded-xl bg-surface flex items-center justify-center">
-                            <Users size={16} className="text-muted/50" />
+                            <Users size={16} className="text-dim" />
                         </div>
                         <p className="text-xs font-bold text-muted">لا يوجد متصلين</p>
                     </div>

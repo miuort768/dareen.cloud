@@ -144,8 +144,10 @@ export const NotificationsCenter = ({
                         <p className="text-[10px] text-muted">مراقبة الأنظمة</p>
                     </div>
                 </div>
-                <div className="flex p-0.5 rounded-lg bg-surface gap-0.5">
+                <div className="flex p-0.5 rounded-lg bg-surface gap-0.5" role="tablist">
                     <button
+                        role="tab"
+                        aria-selected={activeTab === 'smart'}
                         onClick={() => setActiveTab('smart')}
                         className={cn(
                             "px-3 py-1.5 text-[10px] font-bold transition-colors flex items-center gap-1 rounded-md",
@@ -156,6 +158,8 @@ export const NotificationsCenter = ({
                         ذكية
                     </button>
                     <button
+                        role="tab"
+                        aria-selected={activeTab === 'room'}
                         onClick={() => setActiveTab('room')}
                         className={cn(
                             "px-3 py-1.5 text-[10px] font-bold transition-colors flex items-center gap-1 rounded-md",
@@ -172,22 +176,22 @@ export const NotificationsCenter = ({
             {activeTab === 'smart' && (
                 <div className="space-y-1">
                     {criticalCount > 0 && (
-                        <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-error-soft text-error border-error/20 mb-3">
+                        <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-error-soft text-error border-border mb-3">
                             {criticalCount} تنبيه حرج
                         </Badge>
                     )}
                     {smartAlerts.length > 0 ? (
                         <div className="relative">
-                            <div className="absolute start-[15px] top-2 bottom-2 w-px bg-border/30" />
+                            <div className="absolute start-[15px] top-2 bottom-2 w-px bg-divider" />
                             {smartAlerts.map((alert, idx) => (
                                 <div key={alert.id} className="flex gap-3 relative pb-3">
                                     <div className={cn(
                                         "w-[30px] h-[30px] rounded-lg flex items-center justify-center shrink-0 ring-2 ring-card z-10",
-                                        alert.type === 'critical' ? "bg-error/15 text-error" : "bg-warning/15 text-warning"
+                                        alert.type === 'critical' ? "bg-error-soft text-error" : "bg-warning-soft text-warning"
                                     )}>
                                         {alert.type === 'critical' ? <AlertTriangle size={12} /> : <CheckCircle2 size={12} />}
                                     </div>
-                                    <div className="flex-1 min-w-0 p-3 rounded-xl border bg-card border-border/50 hover:bg-surface transition-colors cursor-pointer"
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border bg-card border-border hover:bg-surface transition-colors cursor-pointer"
                                         onClick={() => typeof alert.action === 'function' && alert.action()}
                                         role="button"
                                         tabIndex={0}
@@ -207,7 +211,7 @@ export const NotificationsCenter = ({
                             <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card">
                                 <CheckCircle2 size={14} className="text-success" />
                             </div>
-                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-success/20 bg-success/[0.03]">
+                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border bg-success-soft">
                                 <div className="flex items-center justify-between gap-2">
                                     <h3 className="font-bold text-[11px] text-success">كل الأنظمة تعمل</h3>
                                     <span className="text-[9px] text-muted shrink-0">الآن</span>
@@ -224,13 +228,13 @@ export const NotificationsCenter = ({
                 <div className="space-y-1 max-h-[320px] overflow-y-auto custom-scrollbar">
                     {roomAlerts.length > 0 ? (
                         <div className="relative">
-                            <div className="absolute start-[15px] top-2 bottom-2 w-px bg-border/30" />
+                            <div className="absolute start-[15px] top-2 bottom-2 w-px bg-divider" />
                             {roomAlerts.map((alert, idx) => (
                                 <div key={alert.id} className="flex gap-3 relative pb-3">
                                     <div className="w-[30px] h-[30px] rounded-lg bg-primary-soft flex items-center justify-center shrink-0 ring-2 ring-card z-10">
                                         <alert.icon size={12} className="text-primary" />
                                     </div>
-                                    <div className="flex-1 min-w-0 p-3 rounded-xl border border-border/50 bg-card hover:bg-surface transition-colors">
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border border-border bg-card hover:bg-surface transition-colors">
                                         <div className="flex items-center justify-between gap-2 mb-1">
                                             <h4 className="text-[11px] font-bold text-main truncate">{alert.title}</h4>
                                             <span className="text-[9px] text-muted shrink-0">{idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}</span>
@@ -254,9 +258,9 @@ export const NotificationsCenter = ({
                     ) : (
                         <div className="relative flex gap-3 py-2">
                             <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card">
-                                <Info size={14} className="text-success/50" />
+                                <Info size={14} className="text-success" />
                             </div>
-                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-success/20 bg-success/[0.03]">
+                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border bg-success-soft">
                                 <div className="flex items-center justify-between gap-2">
                                     <h3 className="font-bold text-[11px] text-success">كل الأنظمة تعمل</h3>
                                     <span className="text-[9px] text-muted shrink-0">الآن</span>

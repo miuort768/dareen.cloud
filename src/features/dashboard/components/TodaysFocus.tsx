@@ -5,14 +5,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
 const subjectColors: Record<string, { dot: string; bg: string; text: string }> = {
-    رياضيات: { dot: 'bg-primary', bg: 'bg-primary/10', text: 'text-primary' },
-    عربي: { dot: 'bg-success', bg: 'bg-success/10', text: 'text-success' },
-    علوم: { dot: 'bg-info', bg: 'bg-info/10', text: 'text-info' },
-    إنجليزي: { dot: 'bg-warning', bg: 'bg-warning/10', text: 'text-warning' },
-    فيزياء: { dot: 'bg-accent', bg: 'bg-accent/10', text: 'text-accent' },
-    كيمياء: { dot: 'bg-error', bg: 'bg-error/10', text: 'text-error' },
-    تاريخ: { dot: 'bg-warning', bg: 'bg-warning/10', text: 'text-warning' },
-    جغرافيا: { dot: 'bg-success', bg: 'bg-success/10', text: 'text-success' },
+    رياضيات: { dot: 'bg-primary', bg: 'bg-primary-soft', text: 'text-primary' },
+    عربي: { dot: 'bg-success', bg: 'bg-success-soft', text: 'text-success' },
+    علوم: { dot: 'bg-info', bg: 'bg-info-soft', text: 'text-info' },
+    إنجليزي: { dot: 'bg-warning', bg: 'bg-warning-soft', text: 'text-warning' },
+    فيزياء: { dot: 'bg-accent', bg: 'bg-accent-soft', text: 'text-accent' },
+    كيمياء: { dot: 'bg-error', bg: 'bg-error-soft', text: 'text-error' },
+    تاريخ: { dot: 'bg-warning', bg: 'bg-warning-soft', text: 'text-warning' },
+    جغرافيا: { dot: 'bg-success', bg: 'bg-success-soft', text: 'text-success' },
 };
 
 const getSubjectColor = (subject?: string) => {
@@ -43,7 +43,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                     </div>
                 </div>
                 {hasAnyData && (
-                    <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-primary-soft text-primary border-primary/20">
+                    <Badge variant="default" className="text-[10px] h-5 px-2.5 rounded-lg bg-primary-soft text-primary border-border">
                         {todaySessions.length + tasks.length + lowBalanceCount}
                     </Badge>
                 )}
@@ -51,7 +51,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
 
             <div className="space-y-2">
                 {todaySessions.length > 0 && (
-                    <div className="p-3 rounded-xl bg-info-soft border border-info/20">
+                    <div className="p-3 rounded-xl bg-info-soft border border-border"> 
                         <div className="flex items-center gap-2 mb-2">
                             <CalendarCheck size={12} className="text-info" />
                             <span className="text-[11px] font-bold text-info">{todaySessions.length} حصص اليوم</span>
@@ -89,7 +89,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                 )}
 
                 {tasks.length > 0 && (
-                    <div className="p-3 rounded-xl bg-warning-soft border border-warning/20">
+                    <div className="p-3 rounded-xl bg-warning-soft border border-border">
                         <div className="flex items-center gap-2 mb-2">
                             <ListTodo size={12} className="text-warning" />
                             <span className="text-[11px] font-bold text-warning">{tasks.length} مهام نشطة</span>
@@ -113,7 +113,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                 )}
 
                 {lowBalanceCount > 0 && (
-                    <div className="p-3 rounded-xl bg-error-soft border border-error/20">
+                    <div className="p-3 rounded-xl bg-error-soft border border-border">
                         <div className="flex items-center gap-2">
                             <AlertTriangle size={12} className="text-error" />
                             <span className="text-[11px] font-bold text-error">{lowBalanceCount} تنبيه رصيد منخفض</span>
@@ -125,7 +125,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                     <div className="text-center py-8">
                         <span className="text-3xl block mb-3">📅</span>
                         <p className="text-sm font-bold text-muted">لا توجد مهام اليوم</p>
-                        <p className="text-[11px] text-muted/60 mt-1">استمتع بيوم هادئ ☀️</p>
+                        <p className="text-[11px] text-dim mt-1">استمتع بيوم هادئ ☀️</p>
                         <Link to="/tasks">
                             <Button size="sm" className="mt-3 h-8 px-4 rounded-xl text-[10px] font-bold gap-1.5">
                                 <Plus size={12} /> إنشاء مهمة
