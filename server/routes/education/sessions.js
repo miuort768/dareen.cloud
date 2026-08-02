@@ -94,9 +94,11 @@ router.get('/', authMiddleware, async (req, res) => {
             }
         } else if (req.user.role === 'teacher') {
             where.teacherId = req.user.id;
-        } else {
+        } else if (req.user.role === 'admin') {
             if (studentId) where.studentId = studentId;
             if (teacherId) where.teacherId = teacherId;
+        } else {
+            return res.status(403).json({ error: 'Forbidden: Insufficient permissions' });
         }
 
         const isTeacher = req.user.role === 'teacher';
@@ -126,11 +128,26 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 });
 
-router.post('/', authMiddleware, validate(createSessionSchema), async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin', 'teacher']), validate(createSessionSchema), async (req, res) => {
     const body = req.body;
     const isTeacher = req.user.role === 'teacher';
 
     try {
+        if (isTeacher) {
+            // Force the session to be recorded under the requesting teacher's identity
+            body.teacherId = req.user.id;
+            body.teacherName = req.user.teacherName || req.user.name || body.teacherName;
+
+            // Teachers may only create sessions for students enrolled with them
+            const teacherName = body.teacherName;
+            const where = { studentId: body.studentId, deletedAt: null, OR: [{ teacherId: req.user.id }] };
+            if (teacherName) where.OR.push({ teacherFallback: { equals: teacherName, mode: 'insensitive' } });
+            const ownership = await prisma.enrollment.findFirst({ where, select: { id: true } });
+            if (!ownership) {
+                return res.status(403).json({ error: 'Access denied: student is not enrolled with you' });
+            }
+        }
+
         const newItem = await prisma.$transaction(async (tx) => {
             const id = body.id || `sess_${crypto.randomBytes(4).toString('hex')}`;
             let studentPrice = body.price || 0;
@@ -219,18 +236,28 @@ router.post('/', authMiddleware, validate(createSessionSchema), async (req, res)
     }
 });
 
-router.patch('/:id', authMiddleware, validate(updateSessionSchema), async (req, res) => {
+router.patch('/:id', authMiddleware, checkRole(['admin', 'teacher']), validate(updateSessionSchema), async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
     const isTeacher = req.user.role === 'teacher';
     const allowedFields = ['status', 'date', 'time', 'day', 'price', 'teacherId', 'teacherName', 'subject', 'topics', 'homework', 'needsCompensation', 'studentCurrency', 'teacherCurrency', 'exchangeRateFrom', 'exchangeRateTo', 'exchangeRateValue'];
-    const keys = Object.keys(updates).filter(k => allowedFields.includes(k));
+    let keys = Object.keys(updates).filter(k => allowedFields.includes(k));
+    if (isTeacher) {
+        // Teachers cannot reassign sessions to another teacher
+        keys = keys.filter(k => k !== 'teacherId' && k !== 'teacherName');
+    }
     if (keys.length === 0) return res.status(400).json({ error: 'No valid fields to update' });
 
     const data = {};
     keys.forEach(k => { data[k] = updates[k]; });
 
     try {
+        const existing = await prisma.session.findUnique({ where: { id }, select: { id: true, teacherId: true } });
+        if (!existing) return res.status(404).json({ error: 'Session not found' });
+        if (isTeacher && existing.teacherId !== req.user.id) {
+            return res.status(403).json({ error: 'Access denied: cannot modify other teachers sessions' });
+        }
+
         const updated = await prisma.$transaction(async (tx) => {
             const oldSession = await tx.session.findUnique({ where: { id } });
             if (!oldSession) throw new Error('Session not found');

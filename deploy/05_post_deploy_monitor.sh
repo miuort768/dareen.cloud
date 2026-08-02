@@ -85,12 +85,13 @@ while [ $(date +%s) -lt $END_TIME ]; do
     # ── Rollback ──
     if [ "$CONSECUTIVE_FAILS" -ge "$MAX_CONSECUTIVE_FAILS" ] && [ "$ROLLBACK" = "true" ]; then
         echo ""
-        echo "  ❌ $CONSECUTIVE_FAILS consecutive failures — ROLLBACK"
+        echo "  ❌ $CONSECUTIVE_FAILS consecutive failures — ROLLBACK required"
         echo ""
-        docker-compose down
-        bash deploy/01_backup.sh --restore 2>/dev/null || true
-        docker-compose up -d --build app
-        echo "  Rollback complete. App restarted with SQLite."
+        echo "  Manual rollback steps:"
+        echo "    1. docker-compose down"
+        echo "    2. Restore the latest PostgreSQL dump:"
+        echo "       cat backups/<latest>/*.pgdump | docker-compose exec -T postgres pg_restore -U darin -d darin"
+        echo "    3. docker-compose up -d --build app"
         exit 1
     fi
 

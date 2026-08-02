@@ -13,7 +13,7 @@ const emitLeadUpdate = (req) => {
     if (io) io.to('admin_room').emit('lead_updated');
 };
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const leads = await prisma.lead.findMany({ orderBy: { createdAt: 'desc' } });
         res.json(leads);
@@ -22,7 +22,7 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 });
 
-router.get('/stats', authMiddleware, async (req, res) => {
+router.get('/stats', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const leads = await prisma.lead.findMany({ select: { status: true } });
         const total = leads.length;
@@ -36,7 +36,7 @@ router.get('/stats', authMiddleware, async (req, res) => {
     }
 });
 
-router.post('/', authMiddleware, validate(createLeadSchema), async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin']), validate(createLeadSchema), async (req, res) => {
     try {
         const { studentName, phone, subject, curriculum, status, priority, notes } = req.body;
         const finalName = studentName?.trim() || 'عميل بدون اسم';
@@ -59,7 +59,7 @@ router.post('/', authMiddleware, validate(createLeadSchema), async (req, res) =>
     }
 });
 
-router.put('/:id', authMiddleware, validate(updateLeadSchema), async (req, res) => {
+router.put('/:id', authMiddleware, checkRole(['admin']), validate(updateLeadSchema), async (req, res) => {
     try {
         const { studentName, phone, subject, curriculum, status, priority, notes } = req.body;
         const updateData = {};

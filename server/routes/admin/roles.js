@@ -1,10 +1,10 @@
-const express = require('express');
+﻿const express = require('express');
 const router = express.Router();
 const { prisma } = require('../../utils/prisma');
-const { authMiddleware } = require('../../middleware/auth');
+const { authMiddleware, checkRole } = require('../../middleware/auth');
 const cache = require('../../services/cacheService');
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const roles = await prisma.role.findMany({
             include: {
@@ -21,7 +21,7 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 });
 
-router.get('/permissions', authMiddleware, async (req, res) => {
+router.get('/permissions', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const permissions = await prisma.permission.findMany({
             orderBy: [{ group: 'asc' }, { id: 'asc' }],
@@ -32,7 +32,7 @@ router.get('/permissions', authMiddleware, async (req, res) => {
     }
 });
 
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const { name, label, description } = req.body;
         const role = await prisma.role.create({
@@ -45,7 +45,7 @@ router.post('/', authMiddleware, async (req, res) => {
     }
 });
 
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const { id } = req.params;
         const { label, description } = req.body;
@@ -59,7 +59,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
     }
 });
 
-router.put('/:id/permissions', authMiddleware, async (req, res) => {
+router.put('/:id/permissions', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const { id } = req.params;
         const { permissionIds } = req.body;
@@ -84,7 +84,7 @@ router.put('/:id/permissions', authMiddleware, async (req, res) => {
     }
 });
 
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const { id } = req.params;
         await prisma.role.delete({ where: { id: parseInt(id) } });
@@ -95,7 +95,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     }
 });
 
-router.get('/user/:userId', authMiddleware, async (req, res) => {
+router.get('/user/:userId', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const userRoles = await prisma.userRole.findMany({
             where: { userId: req.params.userId },
@@ -107,7 +107,7 @@ router.get('/user/:userId', authMiddleware, async (req, res) => {
     }
 });
 
-router.post('/user/:userId', authMiddleware, async (req, res) => {
+router.post('/user/:userId', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const { userId } = req.params;
         const { roleIds } = req.body;

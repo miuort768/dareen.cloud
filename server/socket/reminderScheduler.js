@@ -1,10 +1,12 @@
 const { v4: uuidv4 } = require('uuid');
 const { prisma } = require('../utils/prisma');
 
+let timer = null;
+
 module.exports = (app) => {
     const CHECK_INTERVAL = 60 * 1000;
 
-    setInterval(async () => {
+    timer = setInterval(async () => {
         try {
             const settings = await prisma.systemSetting.findUnique({
                 where: { key: 'reminder_minutes_before' }
@@ -63,4 +65,11 @@ module.exports = (app) => {
         }
     }, CHECK_INTERVAL);
     console.log(`⏰ Reminder scheduler started (checking every ${CHECK_INTERVAL / 1000}s)`);
+};
+
+module.exports.stop = () => {
+    if (timer) {
+        clearInterval(timer);
+        timer = null;
+    }
 };

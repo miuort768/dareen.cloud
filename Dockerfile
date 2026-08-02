@@ -27,10 +27,9 @@ COPY server/package*.json ./server/
 RUN cd server && npm install
 
 # نسخ بقية كود الخادم (بما في ذلك السكيما)
-COPY server/ ./server/
+COPY --chown=node:node server/ ./server/
 
-# تبديل سكيما Prisma إلى PostgreSQL وتوليد العميل ثم إزالة devDeps
-RUN cp ./server/prisma/schema.pg.prisma ./server/prisma/schema.prisma
+# توليد Prisma Client من schema.prisma الموحّد ثم إزالة devDeps
 ENV DATABASE_URL=postgresql://placeholder:placeholder@postgres:5432/placeholder
 RUN cd server && npx prisma generate && npm prune --production
 
@@ -40,6 +39,12 @@ COPY --from=frontend-builder /app/dist ./dist
 # إعداد المتغيرات البيئية
 ENV NODE_ENV=production
 ENV PORT=3001
+
+# إنشاء دليل السجلات بصلاحيات المستخدم غير الجذر
+RUN mkdir -p /app/logs && chown -R node:node /app/logs
+
+# تشغيل التطبيق كمستخدم غير جذر
+USER node
 
 # فتح المنفذ
 EXPOSE 3001

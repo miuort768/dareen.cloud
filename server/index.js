@@ -237,21 +237,8 @@ async function startServer() {
             await fsp.mkdir(dir, { recursive: true }).catch(() => {});
         }
 
-        // Schema sync is intentionally disabled in production.
-        // Use `npx prisma migrate deploy` for controlled migrations instead.
-        if (process.env.NODE_ENV !== 'production') {
-            try {
-                const { execSync } = require('child_process');
-                execSync('npx prisma db push', {
-                    cwd: __dirname,
-                    stdio: 'pipe',
-                    timeout: 30000,
-                    env: { ...process.env, DATABASE_URL: process.env.DATABASE_URL }
-                });
-            } catch (syncErr) {
-                console.warn('DB schema sync warning (non-fatal):', syncErr.message);
-            }
-        }
+        // Database migrations are applied via `npx prisma migrate deploy`
+        // (locally: `npx prisma migrate dev`). No auto-sync on startup.
 
         const { initQueueSystem } = require('./services');
         initQueueSystem().catch((err) => {
@@ -285,13 +272,37 @@ async function startServer() {
 
         const shutdown = async (signal) => {
             console.log(`${signal} received. Shutting down gracefully...`);
+
+            // Force-exit if graceful shutdown hangs (open connections, stuck workers)
+            const forceExit = setTimeout(() => {
+                console.error('Shutdown timed out — forcing exit');
+                process.exit(1);
+            }, 10000);
+            forceExit.unref();
+
             serverInstance.close(async () => {
                 try {
+                    // Stop background schedulers and workers
+                    try { require('./socket/reminderScheduler').stop(); } catch { /* ignore */ }
+                    try {
+                        const { shutdownSchedulers } = require('./services/queue/scheduler');
+                        shutdownSchedulers();
+                    } catch { /* ignore */ }
+                    try {
+                        const { shutdownWorkers } = require('./services/queue/workers');
+                        await shutdownWorkers();
+                    } catch { /* ignore */ }
+                    try {
+                        const { stopAutoBackup } = require('./services/backupService');
+                        stopAutoBackup();
+                    } catch { /* ignore */ }
                     await logger.close();
                     await prisma.$disconnect();
+                    clearTimeout(forceExit);
                     process.exit(0);
                 } catch (err) {
                     console.error('Error during shutdown:', err);
+                    clearTimeout(forceExit);
                     process.exit(1);
                 }
             });
@@ -299,6 +310,10 @@ async function startServer() {
 
         process.on('SIGTERM', () => shutdown('SIGTERM'));
         process.on('SIGINT', () => shutdown('SIGINT'));
+        process.on('uncaughtException', (err) => {
+            logger.error('Uncaught Exception:', err);
+            shutdown('uncaughtException');
+        });
         process.on('unhandledRejection', (reason, promise) => {
             logger.error('Unhandled Rejection:', reason);
         });

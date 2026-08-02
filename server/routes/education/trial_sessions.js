@@ -13,7 +13,7 @@ const emitTrialUpdate = (req) => {
     if (io) io.to('admin_room').emit('trial_session_updated');
 };
 
-router.get('/', async (req, res) => {
+router.get('/', checkRole(['admin']), async (req, res) => {
     try {
         const trials = await prisma.trialSession.findMany({ orderBy: { createdAt: 'desc' } });
         res.json(trials);
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/stats', async (req, res) => {
+router.get('/stats', checkRole(['admin']), async (req, res) => {
     try {
         const [total, completed, pending, cancelled] = await Promise.all([
             prisma.trialSession.count(),
@@ -36,7 +36,7 @@ router.get('/stats', async (req, res) => {
     }
 });
 
-router.post('/', validate(createTrialSessionSchema), async (req, res) => {
+router.post('/', checkRole(['admin']), validate(createTrialSessionSchema), async (req, res) => {
     try {
         const { studentName, parentPhone, subject, teacherId, teacherName, date, time, notes } = req.body;
         const id = uuidv4();
@@ -58,7 +58,7 @@ router.post('/', validate(createTrialSessionSchema), async (req, res) => {
     }
 });
 
-router.put('/:id', validate(updateTrialSessionSchema), async (req, res) => {
+router.put('/:id', checkRole(['admin']), validate(updateTrialSessionSchema), async (req, res) => {
     try {
         const { studentName, parentPhone, subject, teacherId, teacherName, date, time, status, notes } = req.body;
         const data = {};

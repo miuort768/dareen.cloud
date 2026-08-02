@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-const { authMiddleware } = require('../../middleware/auth');
+const { authMiddleware, checkRole } = require('../../middleware/auth');
 const ResponseHandler = require('../../utils/responseHandler');
 const logger = require('../../utils/logger');
 const { sanitizeInput } = require('../../middleware/advanced');
@@ -62,7 +62,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const apps = await prisma.jobApplication.findMany({ orderBy: { createdAt: 'desc' } });
         res.json(apps);
@@ -71,7 +71,7 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 });
 
-router.patch('/:id/contacted', authMiddleware, async (req, res) => {
+router.patch('/:id/contacted', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const app = await prisma.jobApplication.findUnique({ where: { id: req.params.id } });
         if (!app) return res.status(404).json({ error: 'الطلب غير موجود' });
@@ -86,7 +86,7 @@ router.patch('/:id/contacted', authMiddleware, async (req, res) => {
     }
 });
 
-router.delete('/:id', authMiddleware, async (req, res) => {
+router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         await prisma.jobApplication.delete({ where: { id: req.params.id } });
         res.json({ message: 'تم الحذف' });

@@ -64,20 +64,31 @@ async function sendPushToUser(db, userId, title, message, url = '/') {
     }
 }
 
-router.post('/notify-student-parent', authMiddleware, async (req, res) => {
+router.post('/notify-student-parent', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
     try {
         const { studentId, title, body } = req.body;
         if (!studentId) return res.status(400).json({ error: 'studentId required' });
 
-        const parents = await prisma.parent.findMany();
+        const student = await prisma.student.findUnique({
+            where: { id: studentId },
+            select: { parentId: true, parentPhone: true }
+        });
+        if (!student) return res.status(404).json({ error: 'Student not found' });
+
+        const parents = await prisma.parent.findMany({
+            where: {
+                OR: [
+                    { id: student.parentId || '' },
+                    { phone: student.parentPhone || '' }
+                ]
+            },
+            select: { id: true }
+        });
+
         let notified = 0;
         for (const parent of parents) {
-            let children = [];
-            try { children = JSON.parse(parent.children || '[]'); } catch { children = []; }
-            if (children.includes(studentId)) {
-                await sendPushToUser(null, parent.id, title || 'بدأت الحصة', body || 'بدأت حصة جديدة لطفلك', '/');
-                notified++;
-            }
+            await sendPushToUser(null, parent.id, title || 'بدأت الحصة', body || 'بدأت حصة جديدة لطفلك', '/');
+            notified++;
         }
         res.json({ success: true, notified });
     } catch (err) {

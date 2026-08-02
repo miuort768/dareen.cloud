@@ -25,7 +25,7 @@ echo "  ── Pre-flight Checks ──"
 echo "    Running prisma validate..."
 docker-compose run --rm \
     -e DATABASE_URL="postgresql://darin:${DB_PASSWORD}@postgres:5432/darin" \
-    app npx prisma validate --schema=./server/prisma/schema.pg.prisma || {
+    app sh -c "cd server && npx prisma validate" || {
     echo "    ❌ Prisma schema validation failed"
     exit 1
 }

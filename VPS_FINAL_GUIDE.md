@@ -25,7 +25,17 @@ cd darin-app
 # أنشئ ملف الإعدادات (مرة واحدة فقط)
 cp .env.example .env
 ```
-*ملاحظة: تأكد من تعديل قيم `.env` إذا كانت هناك سرية خاصة.*
+*⚠️ ملاحظة: ملف `.env` في جذر المشروع هو **مصدر الأسرار الوحيد** للنشر — `docker-compose.yml` يقرأه مباشرة (DB_PASSWORD, REDIS_PASSWORD, JWT_SECRET).*
+
+المتغيرات الإلزامية قبل أي `docker-compose up` (بدونها يفشل النشر فورًا):
+```bash
+DB_PASSWORD=            # كلمة مرور PostgreSQL
+REDIS_PASSWORD=         # كلمة مرور Redis (إلزامية)
+JWT_SECRET=             # توقيع الجلسات — اترك قيمة قوية، لا القيمة الافتراضية
+FRONTEND_URL=https://dareen.cloud
+REMOTE_BACKUP_TARGET=   # اختياري: وجهة نسخ احتياطي خارج السيرفر (rsync)
+```
+> ملاحظة: ملف `server/.env.production` لم يعد مستخدمًا في مسار النشر — لا تضع الأسرار فيه.
 
 ### تشغيل المشروع (Docker):
 لقد جهزت لك ملفات Docker لتعمل بضغطة واحدة:

@@ -14,13 +14,16 @@ if [ ! -f .env ]; then
 fi
 source .env
 
-# 2. نسخ احتياطي لقواعد البيانات SQLite
-BACKUP_DIR="backups/pre-pg-$(date +%Y%m%d_%H%M%S)"
+# 2. نسخ احتياطي لقاعدة البيانات (اختياري — إن كانت PostgreSQL تعمل)
+BACKUP_DIR="backups/pre-deploy-$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
-echo "Backing up SQLite databases to $BACKUP_DIR..."
-cp server/database.sqlite "$BACKUP_DIR/" 2>/dev/null || echo "  (no legacy DB)"
-cp server/dev.db "$BACKUP_DIR/" 2>/dev/null || echo "  (no dev.db)"
-echo "  Done."
+echo "Backup directory created: $BACKUP_DIR"
+if docker-compose exec -T postgres pg_isready -U darin -d darin &>/dev/null; then
+    docker-compose exec -T postgres pg_dump -U darin -d darin -Fc > "$BACKUP_DIR/darin_db.pgdump"
+    echo "  PostgreSQL dumped → $BACKUP_DIR/darin_db.pgdump"
+else
+    echo "  PostgreSQL not running yet — no dump (first deploy)."
+fi
 
 # 3. إيقاف الخدمات الحالية
 echo "Stopping current services..."
@@ -39,28 +42,17 @@ docker-compose exec -T postgres pg_isready -U darin -d darin || {
 }
 echo "  PostgreSQL is ready."
 
-# 5. تطبيق السكيما (إنشاء الجداول)
-echo "Pushing Prisma schema to PostgreSQL..."
+# 5. تطبيق الهجرات (Prisma Migrate)
+echo "Applying migrations to PostgreSQL..."
 docker-compose run --rm \
     -e DATABASE_URL="postgresql://darin:${DB_PASSWORD}@postgres:5432/darin" \
-    app npx prisma db push --schema=./server/prisma/schema.pg.prisma --accept-data-loss
-echo "  Schema pushed."
+    app sh -c "cd server && npx prisma migrate deploy"
+echo "  Migrations applied."
 
 # 6. بناء وتشغيل التطبيق
 echo "Building and starting the app..."
 docker-compose up -d --build app
 echo "  App started."
-
-# 7. ترحيل البيانات من SQLite إلى PostgreSQL
-echo ""
-echo "=== Data Migration: SQLite → PostgreSQL ==="
-echo ""
-
-# تشغيل السكريبت في container مؤقت
-docker-compose run --rm \
-    -e DATABASE_URL="postgresql://darin:${DB_PASSWORD}@postgres:5432/darin" \
-    -e SOURCE_DB="/database/dev.db" \
-    app node server/scripts/migrate_sqlite_to_pg.js
 
 echo ""
 echo "=== Deployment Complete ==="
@@ -68,6 +60,9 @@ echo "Verify the app at https://dareen.cloud"
 echo ""
 echo "To rollback:"
 echo "  1. docker-compose down"
-echo "  2. Restore from $BACKUP_DIR"
-echo "  3. git checkout schema.prisma (SQLite version)"
-echo "  4. docker-compose up -d --build app"
+echo "  2. Restore the latest PostgreSQL dump:"
+echo "     cat $BACKUP_DIR/darin_db.pgdump | docker-compose exec -T postgres pg_restore -U darin -d darin"
+echo "  3. docker-compose up -d --build app"
+echo ""
+echo "Note: legacy SQLite data migration (server/scripts/migrate_sqlite_to_pg.js) is obsolete."
+echo "      Do NOT run it — data lives in PostgreSQL only."

@@ -35,21 +35,12 @@ echo "  Starting Redis..."
 docker-compose up -d redis
 echo ""
 
-# 3. دفع السكيما (إنشاء الجداول)
-echo "  Pushing Prisma schema..."
+# 3. تطبيق الهجرات (Prisma Migrate)
+echo "  Applying migrations..."
 docker-compose run --rm \
     -e DATABASE_URL="postgresql://darin:${DB_PASSWORD}@postgres:5432/darin" \
-    app npx prisma db push --schema=./server/prisma/schema.pg.prisma --accept-data-loss
-echo "  ✅ Schema pushed"
-echo ""
-
-# 4. ترحيل البيانات
-echo "  Migrating data from SQLite to PostgreSQL..."
-docker-compose run --rm \
-    -e DATABASE_URL="postgresql://darin:${DB_PASSWORD}@postgres:5432/darin" \
-    -e SOURCE_DB="/database/dev.db" \
-    app node server/scripts/migrate_sqlite_to_pg.js
-echo "  ✅ Data migration complete"
+    app sh -c "cd server && npx prisma migrate deploy"
+echo "  ✅ Migrations applied"
 echo ""
 
 echo "═══════════════════════════════════════"

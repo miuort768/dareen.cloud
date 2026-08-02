@@ -334,7 +334,7 @@ router.post('/restore', async (req, res) => {
             if (data.dismissedNotifications) {
                 for (const n of data.dismissedNotifications) {
                     try {
-                        await tx.$executeRawUnsafe('INSERT OR IGNORE INTO dismissed_notifications (id) VALUES (?)', [n.id]);
+                        await tx.$executeRawUnsafe('INSERT INTO dismissed_notifications (id) VALUES ($1) ON CONFLICT (id) DO NOTHING', [n.id]);
                     } catch (e) { }
                 }
             }
@@ -615,7 +615,7 @@ router.get('/dismissed-notifications', async (req, res) => {
 router.post('/dismissed-notifications', async (req, res) => {
     const { id } = req.body;
     try {
-        await prisma.$executeRawUnsafe('INSERT OR IGNORE INTO dismissed_notifications (id) VALUES (?)', [id]);
+        await prisma.$executeRawUnsafe('INSERT INTO dismissed_notifications (id) VALUES ($1) ON CONFLICT (id) DO NOTHING', [id]);
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');

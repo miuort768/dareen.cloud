@@ -40,9 +40,8 @@ Node API (Express + Prisma)
 
 | File | Provider | Use |
 |------|----------|-----|
-| `server/prisma/schema.prisma` | SQLite | Local development |
-| `server/prisma/schema.pg.prisma` | PostgreSQL | Production deployment |
-| `server/prisma/schema.sqlite.prisma` | SQLite | Backup copy |
+| `server/prisma/schema.prisma` | PostgreSQL | Single source of truth (all environments) |
+| `server/prisma/migrations/` | PostgreSQL | Baseline + delta, applied via `prisma migrate deploy` |
 
 ## Phases Completed
 
@@ -81,17 +80,15 @@ server/
 │   ├── migrate_data_batch2.js
 │   ├── migrate_data_batch3.js
 │   ├── migrate_data_batch4567.js
-│   └── migrate_sqlite_to_pg.js
+│   └── migrate_sqlite_to_pg.js   (legacy/obsolete — لا يُستخدم في النشر)
 ├── prisma/
-│   ├── schema.prisma              (SQLite dev)
-│   ├── schema.pg.prisma           (PostgreSQL prod)
-│   ├── schema.sqlite.prisma       (backup)
+│   ├── schema.prisma              (PostgreSQL — single source of truth)
 │   ├── prisma.config.ts
-│   └── migrations/                (deleted, using db push)
+│   └── migrations/                (baseline + delta, migrate deploy)
 ├── utils/prisma.js                (adapter auto-detect)
-├── .env                           (SQLite local)
+├── .env                           (local, PostgreSQL via docker-compose)
 └── .env.production                (PostgreSQL prod)
 
 docker-compose.yml                 (app + livekit + postgres)
-Dockerfile                         (swaps schema.pg.prisma at build)
+Dockerfile                         (generates Client from schema.prisma)
 ```

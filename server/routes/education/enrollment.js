@@ -5,6 +5,7 @@ const { authMiddleware, checkRole } = require('../../middleware/auth');
 const validate = require('../../middleware/validation');
 const { createEnrollmentSchema, updateEnrollmentSchema } = require('../../utils/validators');
 const enrollmentService = require('../../services/enrollmentService');
+const { prisma } = require('../../utils/prisma');
 
 router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
@@ -18,6 +19,15 @@ router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
 
 router.get('/student/:studentId', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
   try {
+    if (req.user.role === 'teacher') {
+      const teacherName = req.user.teacherName || req.user.name;
+      const where = { studentId: req.params.studentId, deletedAt: null, OR: [{ teacherId: req.user.id }] };
+      if (teacherName) where.OR.push({ teacherFallback: { equals: teacherName, mode: 'insensitive' } });
+      const ownership = await prisma.enrollment.findFirst({ where, select: { id: true } });
+      if (!ownership) {
+        return res.status(403).json({ error: 'Access denied: student is not yours' });
+      }
+    }
     const enrollments = await enrollmentService.getStudentEnrollments(req.params.studentId);
     res.json(enrollments);
   } catch (err) {
@@ -28,6 +38,9 @@ router.get('/student/:studentId', authMiddleware, checkRole(['admin', 'teacher']
 
 router.get('/teacher/:teacherId', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
   try {
+    if (req.user.role === 'teacher' && req.user.id !== req.params.teacherId) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
     const enrollments = await enrollmentService.getTeacherEnrollments(req.params.teacherId);
     res.json(enrollments);
   } catch (err) {

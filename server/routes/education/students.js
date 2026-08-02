@@ -6,7 +6,7 @@ const { createStudentSchema, updateStudentSchema } = require('../../utils/valida
 const studentService = require('../../services/studentService');
 const logger = require('../../utils/logger');
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
   try {
     const result = await studentService.getStudents(req.query, req.user);
     res.json(result);

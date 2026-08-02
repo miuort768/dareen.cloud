@@ -194,10 +194,19 @@ router.post('/refresh', async (req, res) => {
     const { token } = req.body;
     if (!token) return res.status(400).json({ error: 'Token is required' });
     try {
-        // Use jwt.decode instead of jwt.verify so expired tokens can still be refreshed
-        const decoded = jwt.decode(token);
+        // Verify the signature even for expired tokens so active sessions can keep refreshing,
+        // but never trust an unverified payload (jwt.decode accepts forged tokens).
+        const decoded = jwt.verify(token, process.env.JWT_SECRET, { ignoreExpiration: true });
         if (!decoded || !decoded.id || !decoded.role) {
             return res.status(401).json({ error: 'Invalid token payload' });
+        }
+
+        // Only allow refresh for tokens that expired within the configured grace window
+        if (decoded.exp) {
+            const graceMs = parseInt(process.env.REFRESH_GRACE_MS, 10) || 7 * 24 * 60 * 60 * 1000;
+            if (Date.now() > decoded.exp * 1000 + graceMs) {
+                return res.status(401).json({ error: 'Token expired' });
+            }
         }
 
         // Verify token_version still matches (prevents refresh after password change / logout-all)

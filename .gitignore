@@ -35,6 +35,9 @@ playwright-report/
 blob-report/
 .playwright/
 
+# Dynamic UI Audit generated reports
+e2e/reports/
+
 # SQLite databases
 *.sqlite*
 database.sqlite*

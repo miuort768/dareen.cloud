@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-const { authMiddleware } = require('../../middleware/auth');
+const { authMiddleware, checkRole } = require('../../middleware/auth');
 const ResponseHandler = require('../../utils/responseHandler');
 const logger = require('../../utils/logger');
 const { sanitizeInput } = require('../../middleware/advanced');
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/', authMiddleware, async (req, res) => {
+router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         const messages = await prisma.contactMessage.findMany({ orderBy: { createdAt: 'desc' } });
         res.json(messages);
@@ -40,11 +40,7 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 });
 
-router.delete('/:id', authMiddleware, async (req, res, next) => {
-    const roles = ['admin'];
-    if (!roles.includes(req.user.role) && !req.user.permissions?.includes('*')) {
-        return res.status(403).json({ error: 'Forbidden: Admins only' });
-    }
+router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         await prisma.contactMessage.delete({ where: { id: req.params.id } });
         res.json({ message: 'تم الحذف' });

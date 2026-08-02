@@ -27,6 +27,9 @@ router.post('/profiles', async (req, res) => {
 
 router.put('/profiles/:id', async (req, res) => {
     try {
+        if (req.user.role !== 'admin' && req.user.id !== req.params.id) {
+            return ResponseHandler.error(res, 'Unauthorized to update this profile', 403);
+        }
         const result = await chatService.updateProfile(req.params.id, req.body);
         ResponseHandler.success(res, result);
     } catch (err) {
@@ -36,6 +39,9 @@ router.put('/profiles/:id', async (req, res) => {
 
 router.delete('/profiles/:id', async (req, res) => {
     try {
+        if (req.user.role !== 'admin') {
+            return ResponseHandler.error(res, 'Unauthorized to delete this profile', 403);
+        }
         const result = await chatService.deleteProfile(req.params.id);
         ResponseHandler.success(res, result);
     } catch (err) {

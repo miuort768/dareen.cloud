@@ -3,6 +3,11 @@ dist
 server/node_modules
 .git
 .env
+.env.*
 server/.env
+server/.env.*
+!server/.env.production.example
 *.sqlite
+**/*.db
 *.log
+logs/

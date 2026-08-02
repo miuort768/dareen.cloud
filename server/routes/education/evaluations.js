@@ -9,7 +9,10 @@ const { prisma } = require('../../utils/prisma');
 
 router.get('/', authMiddleware, checkRole(['admin', 'teacher']), async (req, res) => {
     try {
+        const where = {};
+        if (req.user.role === 'teacher') where.teacherId = req.user.id;
         const evaluations = await prisma.evaluation.findMany({
+            where,
             orderBy: { createdAt: 'desc' },
             take: 200
         });
@@ -34,6 +37,18 @@ router.get('/student/:studentId', authMiddleware, async (req, res) => {
             if (!child) {
                 return res.status(403).json({ error: 'Access denied: student is not your child' });
             }
+        }
+        if (req.user.role === 'teacher') {
+            const teacherName = req.user.teacherName || req.user.name;
+            const where = { studentId, deletedAt: null, OR: [{ teacherId: req.user.id }] };
+            if (teacherName) where.OR.push({ teacherFallback: { equals: teacherName, mode: 'insensitive' } });
+            const ownership = await prisma.enrollment.findFirst({ where, select: { id: true } });
+            if (!ownership) {
+                return res.status(403).json({ error: 'Access denied: student is not yours' });
+            }
+        }
+        if (!['admin', 'teacher', 'parent', 'student'].includes(req.user.role)) {
+            return res.status(403).json({ error: 'Access denied' });
         }
         const evaluations = await prisma.evaluation.findMany({
             where: { studentId },

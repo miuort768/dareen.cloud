@@ -72,16 +72,11 @@ check('Disk space > 5GB', () => {
     }
 });
 
-// ─── SQLite files ───
-check('SQLite databases accessible', () => {
-    const dir = path.join(__dirname, '..', 'server');
-    const files = ['database.sqlite', 'dev.db'];
-    let okCount = 0;
-    for (const f of files) {
-        const fp = path.join(dir, f);
-        if (fs.existsSync(fp)) { okCount++; } else { fail(`Missing: ${f}`); }
-    }
-    if (okCount === files.length) ok(`All ${files.length} SQLite databases found`);
+// ─── Prisma migrations ───
+check('Prisma migrations directory exists', () => {
+    const migDir = path.join(__dirname, '..', 'server', 'prisma', 'migrations');
+    if (fs.existsSync(migDir)) ok('prisma/migrations directory found');
+    else fail('prisma/migrations directory not found');
 });
 
 // ─── Uploads directory ───
@@ -125,16 +120,27 @@ check('PostgreSQL reachable', () => {
     }
 });
 
-// ─── .env.production ───
-check('.env.production exists and has DB_PASSWORD', () => {
-    const envPath = path.join(__dirname, '..', 'server', '.env.production');
-    if (!fs.existsSync(envPath)) return fail('.env.production not found');
+// ─── Root .env (source of truth for docker-compose) ───
+check('Root .env has DB_PASSWORD, REDIS_PASSWORD, JWT_SECRET', () => {
+    const envPath = path.join(__dirname, '..', '.env');
+    if (!fs.existsSync(envPath)) {
+        return fail('.env not found at project root. Run: cp .env.example .env');
+    }
     const content = fs.readFileSync(envPath, 'utf8');
-    const pwMatch = content.match(/DB_PASSWORD=(.+)/);
-    if (pwMatch && pwMatch[1] && pwMatch[1] !== 'your_secure_password_here') {
-        ok('DB_PASSWORD is set in .env.production');
+    const missing = [];
+    for (const key of ['DB_PASSWORD', 'REDIS_PASSWORD', 'JWT_SECRET']) {
+        const m = content.match(new RegExp(`^${key}=(.+)$`, 'm'));
+        const value = m && m[1];
+        if (!value) {
+            missing.push(key);
+        } else if (/your_secret|your_secure_password_here|change-me|your-super-secret/.test(value)) {
+            missing.push(`${key} (still a default value)`);
+        }
+    }
+    if (missing.length) {
+        fail(`Missing or default in root .env: ${missing.join(', ')}`);
     } else {
-        fail('DB_PASSWORD missing or still default in .env.production');
+        ok('DB_PASSWORD, REDIS_PASSWORD, JWT_SECRET are set in root .env');
     }
 });
 

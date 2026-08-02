@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 // ========== Phase 1: Core Domain ==========
@@ -157,7 +157,7 @@ model Session {
   teacherCurrency  String?
   exchangeRateFrom String?
   exchangeRateTo   String?
-  exchangeRateValue Decimal?
+  exchangeRateValue Decimal? @db.Decimal(18, 8)
   status           String   @default("scheduled")
   topics           String?
   homework         String?
@@ -277,8 +277,8 @@ model ExchangeRate {
   id            Int      @id @default(autoincrement())
   fromCurrency  String
   toCurrency    String
-  buyRate       Decimal
-  sellRate      Decimal
+  buyRate       Decimal @db.Decimal(18, 8)
+  sellRate      Decimal @db.Decimal(18, 8)
   effectiveDate DateTime
   notes         String?
   createdAt     DateTime @default(now())

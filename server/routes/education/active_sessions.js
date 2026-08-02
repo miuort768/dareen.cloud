@@ -35,8 +35,10 @@ router.get('/my', async (req, res) => {
             activeSessions = await prisma.activeSession.findMany({
                 where: { teacherId: req.user.id }
             });
-        } else {
+        } else if (req.user.role === 'admin') {
             activeSessions = await prisma.activeSession.findMany();
+        } else {
+            return res.status(403).json({ error: 'Forbidden: Insufficient permissions' });
         }
         res.json(activeSessions);
     } catch (err) {

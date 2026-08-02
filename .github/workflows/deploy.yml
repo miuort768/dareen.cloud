@@ -4,28 +4,97 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'server/**'
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - '.github/workflows/deploy.yml'
 
 jobs:
-  deploy:
+  verify:
+    name: Verify (client build)
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Build client (production bundle)
+        run: npx vite build
+
+  test:
+    name: Server tests
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Run server test suite
+        run: npm test --prefix server
+
+  deploy:
+    name: Deploy to Hostinger VPS
+    runs-on: ubuntu-latest
+    needs: [verify, test]
+    timeout-minutes: 30
     steps:
       - name: Deploy to Hostinger VPS
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
           username: ${{ secrets.HOSTINGER_USER }}
           password: ${{ secrets.HOSTINGER_PASSWORD }}
           port: 22
           script: |
-            # Navigate to project directory (Change this to your actual path)
+            set -euo pipefail
             cd /home/${{ secrets.HOSTINGER_USER }}/darin-app || cd ~/darin-app
-            
-            # Pull latest changes
-            git pull origin main
-            
-            # Rebuild and restart containers
-            docker-compose down
-            docker-compose up -d --build
-            
-            # Clean up unused images
+
+            # 1. Pull latest code deterministically
+            git fetch origin main
+            git reset --hard origin/main
+
+            # 2. Backup before any destructive change
+            bash deploy/01_backup.sh
+
+            # 3. Build the app image
+            docker-compose build app
+
+            # 4. Ensure PostgreSQL and Redis are up
+            docker-compose up -d postgres redis
+
+            # 5. Apply migrations (Prisma Migrate)
+            docker-compose run --rm app sh -c "cd server && npx prisma migrate deploy"
+
+            # 6. Rebuild and restart containers
+            docker-compose up -d app
+
+            # 7. Wait for the app health check
+            for i in $(seq 1 30); do
+              if curl -sf http://localhost:3001/health > /dev/null 2>&1; then
+                echo "Health check passed after ${i}s"
+                break
+              fi
+              if [ "$i" -eq 30 ]; then
+                echo "Health check FAILED — aborting deploy" >&2
+                docker-compose logs app --tail 40
+                exit 1
+              fi
+              sleep 2
+            done
+
+            # 8. Clean up unused images
             docker image prune -f

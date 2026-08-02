@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
-const { authMiddleware } = require('../../middleware/auth');
+const { authMiddleware, checkRole } = require('../../middleware/auth');
 const validate = require('../../middleware/validation');
 const { createAvailabilitySchema } = require('../../utils/validators');
 const ResponseHandler = require('../../utils/responseHandler');
@@ -10,7 +10,7 @@ const { prisma } = require('../../utils/prisma');
 
 router.use(authMiddleware);
 
-router.get('/', async (req, res) => {
+router.get('/', checkRole(['admin']), async (req, res) => {
     try {
         const teacherId = req.query.teacherId;
         let rows;
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/available-at', async (req, res) => {
+router.get('/available-at', checkRole(['admin', 'teacher']), async (req, res) => {
     try {
         const { day, time } = req.query;
         if (day === undefined || !time) {
@@ -72,7 +72,7 @@ router.get('/available-at', async (req, res) => {
     }
 });
 
-router.post('/bulk', validate(createAvailabilitySchema), async (req, res) => {
+router.post('/bulk', checkRole(['admin']), validate(createAvailabilitySchema), async (req, res) => {
     try {
         const { teacherId, teacherName, slots } = req.body;
         if (!teacherId || !slots || !Array.isArray(slots)) {
@@ -105,7 +105,7 @@ router.post('/bulk', validate(createAvailabilitySchema), async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', checkRole(['admin']), async (req, res) => {
     try {
         const { dayOfWeek, startTime, endTime, isAvailable } = req.body;
         const data = {};
@@ -125,7 +125,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', checkRole(['admin']), async (req, res) => {
     try {
         await prisma.teacherAvailability.delete({ where: { id: req.params.id } });
         res.json({ success: true });

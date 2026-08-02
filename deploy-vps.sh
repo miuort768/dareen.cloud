@@ -61,9 +61,14 @@ fi
 # 5. بناء وتشغيل الحاويات (بدون cache لضمان أحدث نسخة)
 echo "🏗️ بناء وتشغيل الحاويات..."
 docker compose build --no-cache --build-arg VITE_LIVEKIT_URL="$VITE_LIVEKIT_URL"
+
+# 6. تطبيق الهجرات قبل إقلاع التطبيق
+echo "🗄️ تطبيق هجرات Prisma Migrate..."
+docker compose up -d postgres
+docker compose run --rm app sh -c "cd server && npx prisma migrate deploy"
 docker compose up -d
 
-# 5. تنظيف الصور القديمة (غير المستخدمة) لتوفير مساحة
+# 7. تنظيف الصور القديمة (غير المستخدمة) لتوفير مساحة
 echo "🧹 تنظيف الملفات غير المستخدمة..."
 docker image prune -f
 

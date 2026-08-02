@@ -51,7 +51,7 @@ check('Accounts without entityId', async () => {
 
 check('Duplicate normalizedLogin', async () => {
   const dupes = await prisma.$queryRawUnsafe(`
-    SELECT normalizedLogin, COUNT(*) as cnt FROM accounts GROUP BY normalizedLogin HAVING cnt > 1
+    SELECT "normalizedLogin", COUNT(*) as cnt FROM accounts GROUP BY "normalizedLogin" HAVING COUNT(*) > 1
   `);
   const count = Array.isArray(dupes) ? dupes.length : 0;
   return { count, match: count === 0 };

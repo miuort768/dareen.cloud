@@ -145,7 +145,7 @@ model Credential {
 
 ### خطوات التنفيذ — المرحلة الأولى (إضافة الجدول)
 
-1. إضافة `Credential` model إلى `schema.prisma` و `schema.pg.prisma` و `schema.sqlite.prisma`
+1. إضافة `Credential` model إلى `schema.prisma` (المخطط الموحّد الوحيد)
 2. تشغيل `npx prisma migrate dev --name add_credentials`
 3. إنشاء سكربت ترحيل البيانات `server/scripts/migrate_credentials.js`:
    ```js
@@ -165,8 +165,6 @@ model Credential {
 
 ### الملفات المتأثرة
 - `server/prisma/schema.prisma` — إضافة Credential model
-- `server/prisma/schema.pg.prisma` — إضافة Credential model
-- `server/prisma/schema.sqlite.prisma` — إضافة Credential model
 - `server/routes/auth.js` (سيصبح `core/auth.js`) — إعادة كتابة كاملة
 - `server/middleware/auth.js` — تحديث التحقق من `tokenVersion`
 - جميع الـ Routes التي تتعامل مع `tokenVersion`

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const fs = require('fs');
 const path = require('path');
 const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
@@ -13,6 +14,7 @@ const performance = require('./performance');
 const report = require('./report');
 
 const SQLITE_PATH = process.env.SOURCE_DB || path.join(__dirname, '..', '..', 'dev.db');
+const HAS_SQLITE = fs.existsSync(SQLITE_PATH);
 const PG_URL = process.env.DATABASE_URL;
 
 async function main() {
@@ -42,8 +44,18 @@ async function main() {
         });
     }
 
-    // Connect to SQLite
-    const sqliteDb = await open({ filename: SQLITE_PATH, driver: sqlite3.Database });
+    // Connect to legacy SQLite source (if present) for data comparison
+    let sqliteDb = null;
+    if (HAS_SQLITE) {
+        sqliteDb = await open({ filename: SQLITE_PATH, driver: sqlite3.Database });
+    } else if (runData) {
+        results.push({
+            name: 'Legacy SQLite Data Source',
+            status: 'WARN',
+            details: 'Legacy SQLite source not found — data comparison skipped (PostgreSQL is the single source of truth)',
+            score: 80,
+        });
+    }
 
     // Connect to PostgreSQL
     if (!PG_URL) {
@@ -55,7 +67,7 @@ async function main() {
     const pgPrisma = new PrismaClient({ adapter });
 
     try {
-        if (runData) {
+        if (runData && sqliteDb) {
             const integrity = await dataIntegrity.check({ pgPrisma, sqliteDb });
             results.push(integrity);
 
@@ -75,7 +87,7 @@ async function main() {
             results.push(perf);
         }
     } finally {
-        await sqliteDb.close();
+        if (sqliteDb) await sqliteDb.close();
         await pgPrisma.$disconnect();
         await pool.end();
     }
