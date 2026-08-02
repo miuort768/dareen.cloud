@@ -13,7 +13,6 @@ import { ConfirmModal } from '../../../shared/components/ConfirmModal';
 import { StudentStats } from '../components/StudentStats';
 import { StudentForm } from '../components/StudentForm';
 import { StudentTable } from '../components/StudentTable';
-import { StudentDetails } from '../components/StudentDetails';
 import { StudentDrawer } from '../components/StudentDrawer';
 import { StudentsPageHeader } from '../components/StudentsPageHeader';
 import { StudentsFilters } from '../components/StudentsFilters';
@@ -127,13 +126,13 @@ export const Students = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    const handleAddEnrollment = async (enrollData: EnrollmentFormData) => {
-        if (!selectedStudent) return;
+    const handleAddEnrollment = async (student: Student, enrollData: EnrollmentFormData) => {
+        if (!student) return;
         setIsAddingEnrollment(true);
 
         try {
             const created = await api.post('/enrollments', {
-                studentId: selectedStudent.id,
+                studentId: student.id,
                 teacherId: enrollData.teacherId || null,
                 teacher: enrollData.teacher,
                 subject: enrollData.subject,
@@ -149,10 +148,11 @@ export const Students = () => {
 
             queryClient.invalidateQueries({ queryKey: ['students'] });
             const updatedStudent = {
-                ...selectedStudent,
-                enrollments: [...(selectedStudent.enrollments || []), created]
+                ...student,
+                enrollments: [...(student.enrollments || []), created]
             };
-            setSelectedStudent(updatedStudent);
+            setSelectedStudent(prev => (prev?.id === student.id ? updatedStudent : prev));
+            setDrawerStudent(prev => (prev?.id === student.id ? updatedStudent : prev));
             showNotification('تم إضافة الاشتراك والجلسات بنجاح', 'success');
         } catch (error) {
             console.error('Error adding enrollment:', error);
@@ -355,7 +355,13 @@ export const Students = () => {
                 </motion.div>
             </div>
 
-            <StudentDrawer student={drawerStudent} onClose={() => setDrawerStudent(null)} />
+            <StudentDrawer
+                student={drawerStudent}
+                onClose={() => setDrawerStudent(null)}
+                teachers={teachers}
+                isAddingProgram={isAddingEnrollment}
+                onAddProgram={(data) => drawerStudent && handleAddEnrollment(drawerStudent, data)}
+            />
 
             <SendNotificationModal
                 isOpen={!!notifyingStudent}

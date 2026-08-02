@@ -21,22 +21,6 @@ export const Reports = () => {
 
     const [fabOpen, setFabOpen] = useState(false);
 
-    if (state.loading) {
-        return (
-            <div className="space-y-6 p-4 md:p-6">
-                <Skeleton className="h-20" />
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    {[...Array(4)].map((_, i) => <Skeleton key={`skel-${i}`} className="h-24" />)}
-                </div>
-                <Skeleton className="h-16" />
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <Skeleton className="h-80" />
-                    <Skeleton className="h-80" />
-                </div>
-            </div>
-        );
-    }
-
     const tabs = [
         { id: 'overview', label: 'نظرة عامة', icon: LayoutDashboard },
         { id: 'academic', label: 'الأكاديمي', icon: Award },
@@ -66,6 +50,22 @@ export const Reports = () => {
         { icon: CheckCircle2, label: 'تقرير الحضور', onClick: () => actions.setActiveReport('attendance') },
         { icon: DollarSign, label: 'تقرير مالي', onClick: () => actions.setActiveReport('financial') },
     ], [actions]);
+
+    if (state.loading) {
+        return (
+            <div className="space-y-6 p-4 md:p-6">
+                <Skeleton className="h-20" />
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[...Array(4)].map((_, i) => <Skeleton key={`skel-${i}`} className="h-24" />)}
+                </div>
+                <Skeleton className="h-16" />
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <Skeleton className="h-80" />
+                    <Skeleton className="h-80" />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">

@@ -96,7 +96,7 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
         </div>
 
         {/* Navigation */}
-        <nav className={cn("flex-1 overflow-y-auto custom-scrollbar transition-all duration-300", collapsed ? "py-1.5" : "py-3")} data-sidebar-nav>
+        <nav className={cn("flex-1 overflow-y-auto min-h-0 custom-scrollbar transition-all duration-300", collapsed ? "py-1.5" : "py-3")} data-sidebar-nav>
             {sections.map((section, sIdx) => (
                 <div key={section.label} className={cn(sIdx > 0 && (collapsed ? "mt-0" : "mt-1"))}>
                     <div className={cn(

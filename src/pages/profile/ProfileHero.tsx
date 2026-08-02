@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, Settings, Share2, Edit3, Clock, ShieldCheck, CalendarDays, Users, BookOpen, Play, Star, DollarSign } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Button } from '../../shared/components/ui';
+import { useCurrentUser, useShowNotification } from '../../context/AppContext';
 import type { DashboardStats } from '../../features/dashboard/types';
 
 interface ProfileHeroProps {
@@ -23,12 +24,34 @@ const ROLE_CONFIG = {
 export const ProfileHero = ({ name, role, subtitle, points, rank, attendanceRate, stats }: ProfileHeroProps) => {
     const navigate = useNavigate();
     const config = ROLE_CONFIG[role];
+    const currentUser = useCurrentUser();
+    const showNotification = useShowNotification();
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentTime(new Date()), 30000);
         return () => clearInterval(timer);
     }, []);
+
+    const canAccessSettings = !!currentUser && (currentUser.permissions?.includes('*') || currentUser.permissions?.includes('settings'));
+
+    const handleShare = async () => {
+        const url = window.location.href;
+        if (navigator.share) {
+            try {
+                await navigator.share({ title: document.title, url });
+                return;
+            } catch (error) {
+                if ((error as Error)?.name === 'AbortError') return;
+            }
+        }
+        try {
+            await navigator.clipboard.writeText(url);
+            showNotification('تم نسخ رابط الملف الشخصي', 'success');
+        } catch {
+            showNotification('تعذر نسخ الرابط', 'error');
+        }
+    };
 
     const dateStr = new Intl.DateTimeFormat('ar-EG', {
         weekday: 'long',
@@ -61,13 +84,17 @@ export const ProfileHero = ({ name, role, subtitle, points, rank, attendanceRate
                         العودة للوحة التحكم
                     </button>
                     <div className="flex items-center gap-2">
-                        <button className="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center hover:bg-white/25 transition-colors" title="تعديل الملف الشخصي">
-                            <Edit3 size={13} className="text-white" />
-                        </button>
-                        <button className="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center hover:bg-white/25 transition-colors" title="الإعدادات">
-                            <Settings size={13} className="text-white" />
-                        </button>
-                        <button className="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center hover:bg-white/25 transition-colors" title="مشاركة الملف">
+                        {canAccessSettings && (
+                            <>
+                                <button onClick={() => navigate('/settings')} className="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center hover:bg-white/25 transition-colors" title="تعديل الملف الشخصي" aria-label="تعديل الملف الشخصي">
+                                    <Edit3 size={13} className="text-white" />
+                                </button>
+                                <button onClick={() => navigate('/settings')} className="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center hover:bg-white/25 transition-colors" title="الإعدادات" aria-label="الإعدادات">
+                                    <Settings size={13} className="text-white" />
+                                </button>
+                            </>
+                        )}
+                        <button onClick={handleShare} className="w-8 h-8 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center hover:bg-white/25 transition-colors" title="مشاركة الملف" aria-label="مشاركة الملف">
                             <Share2 size={13} className="text-white" />
                         </button>
                     </div>

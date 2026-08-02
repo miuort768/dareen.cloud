@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, Users, Award, User, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles, Wallet, ArrowLeft, Loader2, RefreshCw } from 'lucide-react';
+import { Clock, Users, Award, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles, Wallet, ArrowLeft, Loader2, RefreshCw, User as UserIcon } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { cn } from '../lib/utils';
@@ -109,7 +109,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-primary-active flex items-center justify-center shadow-lg shadow-primary/20">
-                                <User size={18} className="text-on-primary" />
+                                <UserIcon size={18} className="text-on-primary" />
                             </div>
                             <div>
                                 <h1 className="text-sm font-bold text-main leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>

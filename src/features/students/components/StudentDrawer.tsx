@@ -2,13 +2,25 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, Phone, MessageSquare, Star, Trophy, BookOpen, Users, DollarSign, Calendar, Clock, GraduationCap, CheckCircle2, Award, Plus, TrendingUp, Briefcase, UserCheck, Zap, Flame } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import type { Student, Enrollment } from '../types';
+import type { Student, Enrollment, ScheduleSlot } from '../types';
+import type { Teacher } from '../../teachers/types';
+import { EnrollmentForm } from './EnrollmentForm';
 
 interface StudentDrawerProps {
   student: Student | null;
   onClose: () => void;
   onEdit?: (student: Student) => void;
   sessions?: { date: string; status: string; subject: string }[];
+  teachers?: Teacher[];
+  isAddingProgram?: boolean;
+  onAddProgram?: (data: {
+    teacherId?: string;
+    teacher: string;
+    subject: string;
+    curr: string;
+    totalSessions: number;
+    schedule: ScheduleSlot[];
+  }) => void;
 }
 
 type TabKey = 'overview' | 'programs' | 'timeline';
@@ -57,8 +69,9 @@ const tabs: { key: TabKey; label: string; icon: React.ComponentType<{ size?: num
   { key: 'timeline', label: 'النشاطات', icon: Clock },
 ];
 
-export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: StudentDrawerProps) => {
+export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teachers = [], isAddingProgram = false, onAddProgram }: StudentDrawerProps) => {
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
+  const [showAddProgram, setShowAddProgram] = useState(false);
 
   if (!student) return null;
 
@@ -423,9 +436,32 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [] }: Stude
                 )}
 
                 {/* Add Program CTA */}
-                <button className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-dashed border-border text-muted text-[10px] font-bold hover:border-primary hover:text-primary transition-all">
-                  <Plus size={13} /> إضافة برنامج جديد
-                </button>
+                {showAddProgram ? (
+                  <div className="bg-surface rounded-2xl p-4 border border-border">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-[11px] font-bold text-main">إضافة برنامج جديد</p>
+                      <button
+                        onClick={() => setShowAddProgram(false)}
+                        className="text-[10px] font-bold text-muted hover:text-main transition-colors"
+                        aria-label="إغلاق نموذج إضافة برنامج"
+                      >
+                        إلغاء
+                      </button>
+                    </div>
+                    <EnrollmentForm
+                      teachers={teachers}
+                      onSubmit={(data) => onAddProgram?.(data)}
+                      isLoading={isAddingProgram}
+                    />
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setShowAddProgram(true)}
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-dashed border-border text-muted text-[10px] font-bold hover:border-primary hover:text-primary transition-all"
+                  >
+                    <Plus size={13} /> إضافة برنامج جديد
+                  </button>
+                )}
               </div>
             )}
 
