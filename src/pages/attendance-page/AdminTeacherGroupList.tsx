@@ -112,7 +112,7 @@ export const AdminTeacherGroupList = ({ uniqueTeachers, filterTeacher, students,
                                 }
 
                                 return (
-                                    <div key={`${student.id}-${enrollment.subject}`} className="bg-card border border-border shadow-sm rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                                    <div key={`${student.id}-${enrollment.id || enrollment.subject}`} className="bg-card border border-border shadow-sm rounded-2xl p-5 space-y-4 flex flex-col justify-between">
                                         <div className="flex justify-between items-start">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-sm font-semibold">

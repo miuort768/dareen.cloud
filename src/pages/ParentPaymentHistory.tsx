@@ -70,7 +70,7 @@ export const ParentPaymentHistory = () => {
                 setLoading(true);
                 const [studentsData, invData] = await Promise.all([
                     api.get<Student[]>('/parents/my-children'),
-                    api.get<StudentInvoiceData[]>('/studentInvoices')
+                    api.get<StudentInvoiceData[]>('/invoices/me/student')
                 ]);
                 if (cancelled) return;
                 const students = Array.isArray(studentsData) ? studentsData : [];

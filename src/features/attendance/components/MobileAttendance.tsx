@@ -229,7 +229,7 @@ export const MobileAttendance = () => {
                                         (me.student.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
                                         (me.enrollment.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase())
                                     ).map(({ student, enrollment }) => (
-                                        <StudentAttendanceCard key={`${student.id}-${enrollment.subject}`}
+                                        <StudentAttendanceCard key={`${student.id}-${enrollment.id || enrollment.subject}`}
                                             student={student} enrollment={enrollment}
                                             onAttend={() => { triggerHaptic('light'); setLogDate(date); setSecureModalData({ student, enrollment }); }}
                                             onHistory={() => handleViewHistory(student.id, student.name, student.grade, enrollment.subject)}

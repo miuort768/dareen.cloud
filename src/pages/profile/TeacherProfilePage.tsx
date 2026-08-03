@@ -110,14 +110,9 @@ export const TeacherProfilePage = () => {
         const fetchAll = async () => {
             try {
                 setIsLoading(true);
-                const [teachers, statsRes] = await Promise.all([
-                    api.get<TeacherData[]>('/teachers'),
-                    api.get<DashboardStats>('/dashboard/stats').catch(() => null),
-                ]);
+                const me = await api.get<TeacherData>('/teachers/me');
                 if (cancelled) return;
-                const me = teachers.find(t => t.id === currentUser?.id);
-                setTeacherData(me || null);
-                setDashboardStats(statsRes);
+                setTeacherData(me);
             } catch (e) {
                 console.error('Error fetching teacher profile:', e);
             } finally {

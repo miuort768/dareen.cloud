@@ -24,8 +24,15 @@ router.use('/auth/login', strictLimiter);
 router.use('/auth/register', strictLimiter);
 router.use('/auth/forgot-password', strictLimiter);
 router.use('/auth/reset-password', strictLimiter);
-router.use('/auth/verify', moderateLimiter);
 router.use('/public-chat', moderateLimiter);
+
+// Verify only validates an existing token (no session created) — generous cap
+const verifyLimiter = createRateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 300,
+    message: 'محاولات تحقق كثيرة جداً، يرجى المحاولة بعد 15 دقيقة',
+});
+router.use('/auth/verify', verifyLimiter);
 
 // ── Public routes (no auth) ──
 const { authRouter } = require('./core/auth');
@@ -170,6 +177,9 @@ const { monitoringRouter } = require('./admin/monitoring');
 router.use('/monitoring', isAdmin, monitoringRouter);
 
 // ── Special routes with URL rewriting ──
+const { selfInvoiceRouter } = require('./finance/selfInvoices');
+router.use('/invoices/me', selfInvoiceRouter);
+
 const { invoiceRouter } = require('./finance/invoices');
 router.use('/studentInvoices', isAdmin, (req, res, next) => {
     req.url = (req.url === '' || req.url === '/') ? '/student' : '/student' + req.url;

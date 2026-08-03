@@ -25,7 +25,7 @@ export const InvoicesCard = () => {
         let cancelled = false;
         const fetchInvoices = async () => {
             try {
-                const data = await api.get<StudentInvoice[]>('/studentInvoices');
+                const data = await api.get<StudentInvoice[]>('/invoices/me/student');
                 const all = Array.isArray(data) ? data : [];
                 const mine = all.filter(inv => inv.studentId === currentUser?.id);
                 if (!cancelled) setInvoices(mine);

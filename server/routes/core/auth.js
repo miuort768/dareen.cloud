@@ -21,7 +21,7 @@ const loginLimiter = createRateLimiter({
 });
 
 const verifyLimiter = createRateLimiter({
-    windowMs: 15 * 60 * 1000, max: 30,
+    windowMs: 15 * 60 * 1000, max: 300,
     message: 'محاولات تحقق كثيرة جداً، يرجى المحاولة بعد 15 دقيقة'
 });
 

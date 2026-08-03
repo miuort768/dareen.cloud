@@ -10,18 +10,20 @@ export const useDashboardData = (currentUser: User | null) => {
     const queryClient = useQueryClient();
 
     const enabled = !!currentUser;
+    const isTeacher = currentUser?.role === 'teacher';
 
     const results = useQueries({
         queries: [
             { queryKey: ['students'], queryFn: () => api.get<Student[]>('/students'), staleTime: 5 * 60 * 1000, enabled },
-            { queryKey: ['teachers'], queryFn: () => api.get<Teacher[]>('/teachers'), staleTime: 5 * 60 * 1000, enabled },
-            { queryKey: ['parents'], queryFn: () => api.get<Parent[]>('/parents'), staleTime: 5 * 60 * 1000, enabled },
+            { queryKey: ['teachers'], queryFn: () => api.get<Teacher[]>('/teachers'), staleTime: 5 * 60 * 1000, enabled: enabled && !isTeacher },
+            { queryKey: ['teacherMe'], queryFn: () => api.get<Teacher>('/teachers/me'), staleTime: 5 * 60 * 1000, enabled: enabled && isTeacher },
+            { queryKey: ['parents'], queryFn: () => api.get<Parent[]>('/parents'), staleTime: 5 * 60 * 1000, enabled: enabled && !isTeacher },
             { queryKey: ['sessions'], queryFn: () => api.get<Session[]>('/sessions'), staleTime: 1 * 60 * 1000, enabled },
-            { queryKey: ['teacherInvoices'], queryFn: () => api.get<TeacherInvoice[]>('/invoices/teacher'), staleTime: 5 * 60 * 1000, enabled },
-            { queryKey: ['studentInvoices'], queryFn: () => api.get<StudentInvoice[]>('/invoices/student'), staleTime: 5 * 60 * 1000, enabled },
+            { queryKey: ['teacherInvoices'], queryFn: () => api.get<TeacherInvoice[]>(isTeacher ? '/invoices/me/teacher' : '/invoices/teacher'), staleTime: 5 * 60 * 1000, enabled },
+            { queryKey: ['studentInvoices'], queryFn: () => api.get<StudentInvoice[]>('/invoices/student'), staleTime: 5 * 60 * 1000, enabled: enabled && !isTeacher },
             { queryKey: ['tasks'], queryFn: () => api.get<DashboardTask[]>('/tasks'), staleTime: 1 * 60 * 1000, enabled },
-            { queryKey: ['transactions'], queryFn: () => api.get<Transaction[]>('/finance/transactions'), staleTime: 5 * 60 * 1000, enabled },
-            { queryKey: ['fixedExpenses'], queryFn: () => api.get<FixedExpense[]>('/finance/fixed-expenses'), staleTime: 5 * 60 * 1000, enabled },
+            { queryKey: ['transactions'], queryFn: () => api.get<Transaction[]>('/finance/transactions'), staleTime: 5 * 60 * 1000, enabled: enabled && !isTeacher },
+            { queryKey: ['fixedExpenses'], queryFn: () => api.get<FixedExpense[]>('/finance/fixed-expenses'), staleTime: 5 * 60 * 1000, enabled: enabled && !isTeacher },
             { queryKey: ['evaluations'], queryFn: () => api.get<Record<string, unknown>[]>('/evaluations'), staleTime: 1 * 60 * 1000, enabled },
         ]
     });
@@ -29,6 +31,7 @@ export const useDashboardData = (currentUser: User | null) => {
     const [
         studentsQuery,
         teachersQuery,
+        teacherMeQuery,
         parentsQuery,
         sessionsQuery,
         teacherInvoicesQuery,
@@ -56,6 +59,7 @@ export const useDashboardData = (currentUser: User | null) => {
 
         const students = getSafeArray(studentsQuery.data) as Student[];
         const teachers = getSafeArray(teachersQuery.data) as Teacher[];
+        const teacherMe = teacherMeQuery.data as Teacher | undefined;
         const parents = getSafeArray(parentsQuery.data) as Parent[];
         const sessions = getSafeArray(sessionsQuery.data) as Session[];
         const teacherInvoices = getSafeArray(teacherInvoicesQuery.data) as TeacherInvoice[];
@@ -199,7 +203,7 @@ export const useDashboardData = (currentUser: User | null) => {
             monthCompletedSessions: monthComplete.length,
             monthTotalSessions: filteredSessions.filter((s: Session) => isSameMonth(s.date, now) && (s.status === 'scheduled' || s.status === 'completed')).length,
 
-            teacherPoints: isTeacher ? teachers.find((t: Teacher) => t.id === currentUser.id)?.points || 0 : undefined,
+            teacherPoints: isTeacher ? (teacherMe?.points ?? teachers.find((t: Teacher) => t.id === currentUser.id)?.points) || 0 : undefined,
             weekTotalSessions: isTeacher ? filteredSessions.filter((s: Session) => {
                 const sDate = new Date(s.date);
                 const weekAgo = new Date();
@@ -222,7 +226,7 @@ export const useDashboardData = (currentUser: User | null) => {
                     subject: s.subject,
                     status: s.status
                 })) : undefined,
-            teacherSessionPrice: isTeacher ? teachers.find((t: Teacher) => t.id === currentUser.id)?.price || 0 : undefined,
+            teacherSessionPrice: isTeacher ? (teacherMe?.price ?? teachers.find((t: Teacher) => t.id === currentUser.id)?.price) || 0 : undefined,
             evaluationsCompleted: isTeacher ? filteredSessions.filter((s: Session) => 
                 s.status === 'completed' && 
                 s.topics && 

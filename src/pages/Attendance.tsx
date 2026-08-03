@@ -276,7 +276,7 @@ export const Attendance = () => {
                                             (me.student.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
                                             (me.enrollment.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase())
                                         ).map(({ student, enrollment }, idx) => (
-                                            <motion.div key={`${student.id}-${enrollment.subject}`}
+                                            <motion.div key={`${student.id}-${enrollment.id || enrollment.subject || idx}`}
                                                 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.04 * idx }}>
                                                 <TeacherStudentCard
                                                     student={student} enrollment={enrollment}

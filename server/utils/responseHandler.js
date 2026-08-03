@@ -28,6 +28,14 @@ class ResponseHandler {
         return this.error(res, `${entity} not found`, 404);
     }
 
+    static unauthorized(res, message = 'Unauthorized') {
+        return this.error(res, message, 401);
+    }
+
+    static forbidden(res, message = 'Forbidden') {
+        return this.error(res, message, 403);
+    }
+
     static badRequest(res, message) {
         return this.error(res, message, 400);
     }

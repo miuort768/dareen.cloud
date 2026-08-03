@@ -108,14 +108,27 @@ const SEARCH_HANDLERS = {
     studentInvoices: searchStudentInvoices,
 };
 
+const TEACHER_ALLOWED_TYPES = ['students', 'sessions'];
+
+function getAllowedTypes(types, user) {
+    if (!user || user.role === 'admin') {
+        return types;
+    }
+    if (user.role === 'teacher') {
+        return types.filter(t => TEACHER_ALLOWED_TYPES.includes(t));
+    }
+    return [];
+}
+
 async function unifiedSearch({ q, types, limit = 10, user }) {
     if (!q || q.trim().length === 0) {
         return { query: '', results: {}, total: 0 };
     }
     const trimmed = q.trim();
-    const requestedTypes = types && types.length > 0
+    const baseTypes = types && types.length > 0
         ? types.filter(t => SEARCH_HANDLERS[t])
         : Object.keys(SEARCH_HANDLERS);
+    const requestedTypes = getAllowedTypes(baseTypes, user);
 
     const tasks = requestedTypes.map(type => {
         const handler = SEARCH_HANDLERS[type];

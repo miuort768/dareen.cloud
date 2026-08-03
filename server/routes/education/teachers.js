@@ -16,6 +16,20 @@ router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
   }
 });
 
+router.get('/me', authMiddleware, async (req, res) => {
+  try {
+    if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'هذه الميزة متاحة للمعلمين فقط' });
+    }
+    const teacher = await teacherService.getTeacherById(req.user.id);
+    res.json(teacher);
+  } catch (err) {
+    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
+    logger.error('Error fetching own teacher profile', err, { id: req.user.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.get('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
     const teacher = await teacherService.getTeacherById(req.params.id);

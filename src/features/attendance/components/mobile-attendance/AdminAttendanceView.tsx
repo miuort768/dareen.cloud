@@ -69,7 +69,7 @@ export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, s
                                 const total = enrollment.sessionsTotal || 1;
                                 const progressPct = Math.min(100, Math.round((used / total) * 100));
                                 return (
-                                    <motion.div key={`${student.id}-${enrollment.subject}`} whileTap={{ scale: 0.98 }}
+                                    <motion.div key={`${student.id}-${enrollment.id || enrollment.subject}`} whileTap={{ scale: 0.98 }}
                                         className="p-3 rounded-xl border border-border space-y-2">
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">

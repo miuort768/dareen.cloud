@@ -41,7 +41,7 @@ export const TeacherPaymentHistory = () => {
         const fetch = async () => {
             try {
                 setLoading(true);
-                const data = await api.get<TeacherInvoice[]>('/invoices/teacher');
+                const data = await api.get<TeacherInvoice[]>('/invoices/me/teacher');
                 if (cancelled) return;
                 const all = Array.isArray(data) ? data : ((data as { data?: TeacherInvoice[] }).data || []);
                 const teacherName = currentUser?.teacherName || currentUser?.name || '';
