@@ -8,7 +8,7 @@ const { validateImageUpload } = require('../../middleware/upload');
 const { processImage } = require('../../services/imageService');
 const logger = require('../../utils/logger');
 
-const UPLOAD_DIR = path.join(__dirname, '../../public/uploads/blog');
+const UPLOAD_DIR = path.join(__dirname, '..', '..', '..', 'public', 'uploads', 'blog');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, UPLOAD_DIR),

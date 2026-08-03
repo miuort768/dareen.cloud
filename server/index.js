@@ -97,6 +97,9 @@ app.use(helmet({
 app.use(correlationIdMiddleware);
 app.use(auditMiddleware);
 app.use(monitoringMiddleware);
+// Backup restore payloads can be several MB — allow a dedicated large body
+// before the global 1mb parser (body-parser skips once req._body is set).
+app.use('/api/system/restore', express.json({ limit: '50mb' }));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 

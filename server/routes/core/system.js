@@ -10,6 +10,26 @@ const { audit } = require('../../services/auditService');
 const { createBackup, getBackupHistory } = require('../../services/backupService');
 const { getMetrics } = require('../../middleware/monitoring');
 
+// `dismissed_notifications` is a legacy raw table; current schema stores the
+// flag as notifications.is_dismissed. Guard raw SQL so it is skipped when the
+// table is absent — an unguarded statement would abort the whole transaction.
+async function hasDismissedNotificationsTable(tx) {
+    try {
+        const rows = await tx.$queryRawUnsafe(
+            "SELECT to_regclass('public.dismissed_notifications') IS NOT NULL AS ok"
+        );
+        return !!(rows && rows[0] && rows[0].ok);
+    } catch (e) {
+        return false;
+    }
+}
+
+async function clearDismissedNotifications(tx) {
+    if (await hasDismissedNotificationsTable(tx)) {
+        await tx.$executeRawUnsafe('DELETE FROM dismissed_notifications');
+    }
+}
+
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
 
@@ -96,7 +116,7 @@ router.get('/backup', async (req, res) => {
             prisma.task.findMany(),
             prisma.completedSession.findMany(),
             prisma.systemSetting.findMany(),
-            prisma.user.findMany({ select: { id: true, name: true, username: true, role: true, permissions: true } }),
+            prisma.user.findMany({ select: { id: true, name: true, username: true, role: true, permissions: true, password: true } }),
             prisma.announcement.findMany(),
             prisma.conversation.findMany(),
             prisma.message.findMany(),
@@ -161,6 +181,8 @@ router.post('/restore', async (req, res) => {
     if (!data) return res.status(400).json({ error: 'No data provided' });
 
     try {
+        // Restore can insert tens of thousands of rows (sessions, messages, audit
+        // logs). The default interactive transaction timeout (5s) is far too short.
         await prisma.$transaction(async (tx) => {
             await tx.message.deleteMany();
             await tx.conversationMember.deleteMany();
@@ -182,7 +204,7 @@ router.post('/restore', async (req, res) => {
             await tx.auditLog.deleteMany();
             await tx.whatsAppTemplate.deleteMany();
             await tx.systemSetting.deleteMany();
-            try { await tx.$executeRawUnsafe('DELETE FROM dismissed_notifications'); } catch (e) { }
+            await clearDismissedNotifications(tx);
             if (data.users && data.users.length > 0) {
                 await tx.user.deleteMany({ where: { NOT: { username: 'admin' } } });
             }
@@ -332,10 +354,12 @@ router.post('/restore', async (req, res) => {
             }
 
             if (data.dismissedNotifications) {
-                for (const n of data.dismissedNotifications) {
-                    try {
-                        await tx.$executeRawUnsafe('INSERT INTO dismissed_notifications (id) VALUES ($1) ON CONFLICT (id) DO NOTHING', [n.id]);
-                    } catch (e) { }
+                if (await hasDismissedNotificationsTable(tx)) {
+                    for (const n of data.dismissedNotifications) {
+                        try {
+                            await tx.$executeRawUnsafe('INSERT INTO dismissed_notifications (id) VALUES ($1) ON CONFLICT (id) DO NOTHING', [n.id]);
+                        } catch (e) { }
+                    }
                 }
             }
 
@@ -435,7 +459,7 @@ router.post('/restore', async (req, res) => {
                     });
                 }
             }
-        });
+        }, { timeout: 300000, maxWait: 15000 });
 
         res.json({ message: 'Restore successful, system completely updated.' });
     } catch (err) {
@@ -461,7 +485,7 @@ router.post('/system-reset', async (req, res) => {
             await tx.completedSession.deleteMany();
             await tx.auditLog.deleteMany();
             await tx.whatsAppTemplate.deleteMany();
-            try { await tx.$executeRawUnsafe('DELETE FROM dismissed_notifications'); } catch (e) { }
+            await clearDismissedNotifications(tx);
             await tx.user.deleteMany({ where: { NOT: { role: { in: ['admin', 'supervisor'] } } } });
             await tx.systemSetting.deleteMany();
 

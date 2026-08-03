@@ -51,6 +51,9 @@ dev.db
 public/**/*.webp
 public/**/*.avif
 
+# Runtime uploads (created by upload.js / ImageWorker)
+public/uploads/
+
 # Server generated files
 server/coverage/
 server/scripts/migration-report-*.json
