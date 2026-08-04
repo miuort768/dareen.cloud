@@ -9,7 +9,7 @@ const { prisma } = require('../../utils/prisma');
 const { audit } = require('../../services/auditService');
 const { createBackup, getBackupHistory } = require('../../services/backupService');
 const { getMetrics } = require('../../middleware/monitoring');
-const { normalizeUsername, findIdentityByUsername } = require('../../services/authAccounts');
+const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccount } = require('../../services/authAccounts');
 
 // `dismissedNotifications` uses notifications.is_dismissed; reset helper.
 async function clearDismissedNotifications(tx) {
@@ -89,7 +89,7 @@ router.get('/backup', async (req, res) => {
             studentInvoices, manualTransactions, fixedExpenses,
             tasks, completedSessions, systemSettings, users,
             announcements, conversations, messages, notifications, chatProfiles, conversationMembers,
-            auditLogs, whatsappTemplates
+            auditLogs, whatsappTemplates, accounts
         ] = await Promise.all([
             prisma.student.findMany({ include: { enrollments: true } }),
             prisma.teacher.findMany(),
@@ -111,6 +111,7 @@ router.get('/backup', async (req, res) => {
             prisma.conversationMember.findMany(),
             prisma.auditLog.findMany(),
             prisma.whatsAppTemplate.findMany(),
+            prisma.account.findMany().catch(() => []),
         ]);
 
         const dismissedNotifications = (await prisma.notification.findMany({
@@ -152,7 +153,8 @@ router.get('/backup', async (req, res) => {
                 chatProfiles,
                 conversationMembers,
                 auditLogs,
-                whatsappTemplates
+                whatsappTemplates,
+                accounts
             }
         };
 
@@ -224,7 +226,7 @@ router.post('/restore', async (req, res) => {
             if (data.parents) {
                 for (const p of data.parents) {
                     await tx.parent.create({
-                        data: { id: p.id, name: p.name, phone: p.phone || '', email: p.email || '' }
+                        data: { id: p.id, name: p.name, phone: p.phone || '', email: p.email || '', username: p.username || null, password: p.password || null }
                     });
                 }
             }
@@ -438,7 +440,63 @@ router.post('/restore', async (req, res) => {
                     });
                 }
             }
+
+            // Rebuild the unified accounts table from the restored legacy rows so
+            // accounts/dual modes stay consistent after a restore. Users are
+            // excluded: restore keeps the current admin (synced after the
+            // transaction). Collisions resolve in login-search order.
+            await tx.account.deleteMany().catch(() => {});
+            const rebuiltLogins = new Set();
+            const rebuildAccount = async ({ accountType, entityId, username, passwordHash }) => {
+                if (!username || !passwordHash) return;
+                const normalizedLogin = username.trim().toLowerCase();
+                if (!normalizedLogin || rebuiltLogins.has(normalizedLogin)) return;
+                rebuiltLogins.add(normalizedLogin);
+                await tx.account.create({
+                    data: {
+                        username: normalizedLogin,
+                        normalizedLogin,
+                        passwordHash,
+                        accountType,
+                        entityId,
+                        tokenVersion: 0,
+                        isActive: true,
+                        isLocked: false,
+                    },
+                });
+            };
+
+            if (data.teachers) {
+                for (const t of data.teachers) {
+                    await rebuildAccount({ accountType: 'TEACHER', entityId: t.id, username: t.username, passwordHash: t.password });
+                }
+            }
+            if (data.chatProfiles) {
+                for (const cp of data.chatProfiles) {
+                    await rebuildAccount({ accountType: 'CHAT_USER', entityId: cp.id, username: cp.username, passwordHash: cp.password });
+                }
+            }
+            if (data.parents) {
+                for (const p of data.parents) {
+                    await rebuildAccount({ accountType: 'PARENT', entityId: p.id, username: p.username, passwordHash: p.password });
+                }
+            }
+            if (data.students) {
+                for (const s of data.students) {
+                    await rebuildAccount({ accountType: 'STUDENT', entityId: s.id, username: s.username, passwordHash: s.password });
+                }
+            }
         }, { timeout: 300000, maxWait: 15000 });
+
+        // Keep the current admin's account row in sync (admin user is never restored).
+        try {
+            const adminUser = await prisma.user.findFirst({ where: { role: 'admin' } });
+            if (adminUser && adminUser.username && adminUser.password) {
+                await syncAccount({ entityType: 'admin', entityId: adminUser.id, username: adminUser.username, passwordHash: adminUser.password });
+            }
+        } catch (err) {
+            logger.warn('Admin account re-sync after restore skipped', err);
+        }
 
         res.json({ message: 'Restore successful, system completely updated.' });
     } catch (err) {
@@ -570,12 +628,14 @@ router.post('/users', async (req, res) => {
             }
         }
         const hashedPassword = await bcrypt.hash(password, 10);
+        const userId = id || require('uuid').v4();
         await prisma.user.create({
             data: {
-                id: id || require('uuid').v4(), name, username: dbUsername, password: hashedPassword,
+                id: userId, name, username: dbUsername, password: hashedPassword,
                 role: role || 'admin', permissions: JSON.stringify(permissions || [])
             }
         });
+        await syncAccount({ entityType: 'admin', entityId: userId, username: dbUsername, passwordHash: hashedPassword });
         cache.del('system:users');
         res.status(201).json({ success: true });
     } catch (err) {
@@ -600,6 +660,7 @@ router.put('/users/:id', async (req, res) => {
             data.password = await bcrypt.hash(password, 10);
         }
         await prisma.user.update({ where: { id }, data });
+        await syncAccount({ entityType: 'admin', entityId: id, username: dbUsername, passwordHash: data.password });
         cache.del('system:users');
         res.json({ success: true });
     } catch (err) {
@@ -611,6 +672,8 @@ router.delete('/users/:id', async (req, res) => {
     const { id } = req.params;
     try {
         await prisma.user.delete({ where: { id } });
+        await deactivateAccount('admin', id);
+        cache.del('system:users');
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');

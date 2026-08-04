@@ -107,7 +107,7 @@ async function createAuditEntry({
     userId,
     username,
     entityType,
-    entityId,
+    entityId: entityId != null ? String(entityId) : null,
     ipAddress,
     userAgent,
     requestId,

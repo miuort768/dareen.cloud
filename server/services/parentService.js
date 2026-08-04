@@ -5,7 +5,7 @@ const cache = require('./cacheService');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
 const { CACHE_KEYS } = require('../constants/cacheKeys');
 const { audit } = require('./auditService');
-const { normalizeUsername, findIdentityByUsername } = require('./authAccounts');
+const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccount, deactivateBulkAccounts } = require('./authAccounts');
 
 const CK = CACHE_KEYS.parents;
 
@@ -50,7 +50,7 @@ async function createParent(data, user) {
     throw Object.assign(new Error('Name and phone are required'), { statusCode: 400 });
   }
 
-  const dbUsername = await normalizeUsername(username) || (phone || '').trim();
+  const dbUsername = await normalizeUsername(username) || (phone || '').trim() || null;
   if (dbUsername) {
     const existing = await findIdentityByUsername(dbUsername);
     if (existing) {
@@ -72,6 +72,8 @@ async function createParent(data, user) {
     });
   });
 
+  await syncAccount({ entityType: 'parent', entityId: newId, username: dbUsername, passwordHash: hashedPassword });
+
   cache.del(CK.list());
   await audit(user.id, user.username, AUDIT_ACTIONS.PARENT_CREATED,
     { name: parent.name }, 'parent', parent.id);
@@ -87,16 +89,17 @@ async function updateParent(id, data, user) {
     throw Object.assign(new Error('Parent not found'), { statusCode: 404 });
   }
 
-  const dbUsername = await normalizeUsername(username) || (phone || '').trim();
+  const dbUsername = await normalizeUsername(username) || (phone || '').trim() || null;
   if (dbUsername) {
     const duplicate = await findIdentityByUsername(dbUsername);
     if (duplicate && duplicate.id !== id) {
       throw Object.assign(new Error('اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر لولي الأمر.'), { statusCode: 400, code: 'P2002' });
     }
   }
-  const updateData = { name, phone, email: email || '', username: dbUsername };
+  const updateData = { name, phone, email: email || '' };
+  if (dbUsername) updateData.username = dbUsername;
 
-  if (password && password.trim() !== '') {
+  if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
     updateData.password = await bcrypt.hash(password, 10);
   }
 
@@ -105,6 +108,12 @@ async function updateParent(id, data, user) {
       where: { id },
       data: updateData,
     });
+  });
+
+  await syncAccount({
+    entityType: 'parent', entityId: id,
+    username: dbUsername || existing.username || null,
+    passwordHash: updateData.password || existing.password || null,
   });
 
   cache.del(CK.byId(id));
@@ -128,6 +137,7 @@ async function deleteParent(id, user) {
     });
   });
 
+  await deactivateAccount('parent', id);
   cache.del(CK.byId(id));
   cache.del(CK.list());
   await audit(user.id, user.username, AUDIT_ACTIONS.PARENT_DELETED,
@@ -143,6 +153,9 @@ async function deleteAllParents(user) {
   });
 
   cache.del(CK.list());
+  if (result.count > 0) {
+    await deactivateBulkAccounts('parent');
+  }
   await audit(user.id, user.username, AUDIT_ACTIONS.PARENT_DELETED_ALL,
     { bulk: true, count: result.count }, 'parent', null);
 
@@ -164,6 +177,8 @@ async function restoreParent(id, user) {
       data: { deletedAt: null },
     });
   });
+
+  await syncAccount({ entityType: 'parent', entityId: id, username: existing.username, passwordHash: existing.password, isActive: true });
 
   cache.del(CK.byId(id));
   cache.del(CK.list());

@@ -36,14 +36,52 @@ const LEGACY_MODEL_MAP = {
   CHAT_USER: 'chatProfile',
 };
 
+// Login identity resolution must mirror the legacy lookup exactly
+// (search order: admin → teacher → chatProfile → parent → student) so a
+// collision resolves identically in every AUTH_MODE.
+async function resolveLegacyIdentity(normalizedLogin) {
+  const results = await Promise.all([
+    prisma.user.findFirst({ where: { username: normalizedLogin } }).then(u => u ? { ...u, role: 'admin', _src: 'user' } : null).catch(() => null),
+    prisma.teacher.findFirst({ where: { OR: [{ username: normalizedLogin }, { email: normalizedLogin }], deletedAt: null } }).then(t => t ? { ...t, role: 'teacher', _src: 'teacher' } : null).catch(() => null),
+    prisma.chatProfile.findFirst({ where: { username: normalizedLogin } }).then(c => c ? { ...c, role: 'chat_user', _src: 'chatProfile' } : null).catch(() => null),
+    prisma.parent.findFirst({ where: { OR: [{ username: normalizedLogin }, { phone: normalizedLogin }], deletedAt: null } }).then(p => p ? { ...p, role: 'parent', _src: 'parent' } : null).catch(() => null),
+    prisma.student.findFirst({ where: { OR: [{ username: normalizedLogin }, { studentPhone: normalizedLogin }], deletedAt: null } }).then(s => s ? { ...s, role: 'student', _src: 'student' } : null).catch(() => null),
+  ]);
+  return results.find(Boolean) || null;
+}
+
+// In accounts/dual mode a login identity can be a username, an email, a phone
+// or a studentPhone (all accepted in legacy). Accounts are keyed by
+// normalizedLogin (username), so when the direct match fails we resolve the
+// identity to its entity and fall back to that entity's account row.
+async function findAccountForLogin(normalizedLogin) {
+  const direct = await prisma.account.findUnique({ where: { normalizedLogin } }).catch(() => null);
+  if (direct) return direct;
+
+  const identity = await resolveLegacyIdentity(normalizedLogin);
+  if (!identity) return null;
+
+  return prisma.account.findFirst({
+    where: { accountType: identity.role.toUpperCase(), entityId: identity.id },
+  }).catch(() => null);
+}
+
+async function touchLastLogin(accountId) {
+  try {
+    await prisma.account.update({ where: { id: accountId }, data: { lastLoginAt: new Date() } });
+  } catch { /* best-effort */ }
+}
+
 async function authenticate(normalizedLogin, password) {
   if (isAccountsMode()) {
-    const account = await prisma.account.findUnique({ where: { normalizedLogin } });
+    const account = await findAccountForLogin(normalizedLogin);
     if (!account) return null;
     if (!account.isActive || account.isLocked) return null;
 
     const valid = await bcrypt.compare(password, account.passwordHash);
     if (!valid) return null;
+
+    touchLastLogin(account.id);
 
     return {
       accountId: account.id,
@@ -56,11 +94,12 @@ async function authenticate(normalizedLogin, password) {
   }
 
   if (isDualMode()) {
-    const account = await prisma.account.findUnique({ where: { normalizedLogin } });
+    const account = await findAccountForLogin(normalizedLogin);
     if (account) {
       if (!account.isActive || account.isLocked) return null;
       const valid = await bcrypt.compare(password, account.passwordHash);
       if (valid) {
+        touchLastLogin(account.id);
         return {
           accountId: account.id,
           id: account.entityId,
@@ -77,15 +116,7 @@ async function authenticate(normalizedLogin, password) {
 }
 
 async function legacyAuthenticate(normalizedLogin, password) {
-  const results = await Promise.all([
-    prisma.user.findFirst({ where: { username: normalizedLogin } }).then(u => u ? { ...u, role: 'admin', _src: 'user' } : null).catch(() => null),
-    prisma.teacher.findFirst({ where: { OR: [{ username: normalizedLogin }, { email: normalizedLogin }], deletedAt: null } }).then(t => t ? { ...t, role: 'teacher', _src: 'teacher' } : null).catch(() => null),
-    prisma.chatProfile.findFirst({ where: { username: normalizedLogin } }).then(c => c ? { ...c, role: 'chat_user', _src: 'chatProfile' } : null).catch(() => null),
-    prisma.parent.findFirst({ where: { OR: [{ username: normalizedLogin }, { phone: normalizedLogin }], deletedAt: null } }).then(p => p ? { ...p, role: 'parent', _src: 'parent' } : null).catch(() => null),
-    prisma.student.findFirst({ where: { OR: [{ username: normalizedLogin }, { studentPhone: normalizedLogin }], deletedAt: null } }).then(s => s ? { ...s, role: 'student', _src: 'student' } : null).catch(() => null),
-  ]);
-
-  const userData = results.find(Boolean);
+  const userData = await resolveLegacyIdentity(normalizedLogin);
   if (!userData) return null;
 
   const valid = userData.password && userData.password.startsWith('$2b$') && await bcrypt.compare(password, userData.password);
@@ -201,7 +232,7 @@ async function getAccountByEntity(entityType, entityId) {
 // search order: user → teacher → chatProfile → parent → student).
 async function normalizeUsername(username) {
   const value = typeof username === 'string' ? username.trim() : '';
-  return value.toLowerCase();
+  return value ? value.toLowerCase() : null;
 }
 
 async function findIdentityByUsername(username) {
@@ -211,12 +242,85 @@ async function findIdentityByUsername(username) {
   const hits = await Promise.all([
     prisma.user.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' } }, select: { id: true, username: true } }),
     prisma.teacher.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
-    prisma.student.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
-    prisma.parent.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
     prisma.chatProfile.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' } }, select: { id: true, username: true } }),
+    prisma.parent.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
+    prisma.student.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
+    // The unified accounts table is the authoritative global-unique source when present
+    prisma.account.findUnique({ where: { normalizedLogin: normalized } }).then(a => a ? { id: a.entityId, username: a.username } : null).catch(() => null),
   ]);
 
   return hits.find(Boolean) || null;
+}
+
+// Keep the unified accounts table in sync with runtime create/update/delete.
+// No-op in legacy mode (login reads legacy tables only); guards against the
+// accounts table being absent in some deployments.
+async function syncAccount({ entityType, entityId, username, passwordHash, isActive = true }) {
+  if (!isAccountsOrDual() || !entityId) return null;
+  const accountType = ACCOUNT_TYPE_MAP[entityType];
+  if (!accountType) return null;
+
+  const normalizedLogin = await normalizeUsername(username);
+  if (!normalizedLogin) return null;
+
+  try {
+    const existing = await prisma.account.findFirst({ where: { accountType, entityId } });
+    if (existing) {
+      return prisma.account.update({
+        where: { id: existing.id },
+        data: {
+          username: normalizedLogin,
+          normalizedLogin,
+          ...(passwordHash ? { passwordHash } : {}),
+          isActive,
+        },
+      });
+    }
+    if (!passwordHash) return null;
+    return prisma.account.create({
+      data: {
+        username: normalizedLogin,
+        normalizedLogin,
+        passwordHash,
+        accountType,
+        entityId,
+        tokenVersion: 0,
+        isActive,
+        isLocked: false,
+      },
+    });
+  } catch (err) {
+    logger.warn('Account sync skipped', err);
+    return null;
+  }
+}
+
+async function deactivateAccount(entityType, entityId) {
+  if (!isAccountsOrDual() || !entityId) return;
+  const accountType = ACCOUNT_TYPE_MAP[entityType];
+  if (!accountType) return;
+  try {
+    await prisma.account.updateMany({
+      where: { accountType, entityId },
+      data: { isActive: false },
+    });
+  } catch (err) {
+    logger.warn('Account deactivate skipped', err);
+  }
+}
+
+async function deactivateBulkAccounts(entityType) {
+  if (!isAccountsOrDual()) return;
+  const accountType = ACCOUNT_TYPE_MAP[entityType];
+  if (!accountType) return;
+  try {
+    await prisma.account.updateMany({
+      where: { accountType },
+      data: { isActive: false },
+    });
+  } catch (err) {
+    logger.warn('Account bulk deactivate skipped', err);
+  }
 }
 
 module.exports = {
@@ -232,4 +336,7 @@ module.exports = {
   isAccountsOrDual,
   normalizeUsername,
   findIdentityByUsername,
+  syncAccount,
+  deactivateAccount,
+  deactivateBulkAccounts,
 };

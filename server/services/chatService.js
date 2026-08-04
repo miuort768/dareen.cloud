@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { prisma } = require('../utils/prisma');
+const { syncAccount, deactivateAccount } = require('./authAccounts');
 
 class ChatService {
     async getProfiles() {
@@ -93,11 +94,18 @@ class ChatService {
             data.password = await bcrypt.hash(password, 10);
         }
         await prisma.chatProfile.update({ where: { id }, data });
+        if (username !== undefined || password) {
+            const fresh = await prisma.chatProfile.findUnique({ where: { id } });
+            if (fresh) {
+                await syncAccount({ entityType: 'chat_user', entityId: id, username: fresh.username, passwordHash: fresh.password });
+            }
+        }
         return { success: true };
     }
 
     async deleteProfile(id) {
         await prisma.chatProfile.delete({ where: { id } });
+        await deactivateAccount('chat_user', id);
         return { success: true };
     }
 
@@ -108,6 +116,7 @@ class ChatService {
         await prisma.chatProfile.create({
             data: { id, name, username, password: hashedPassword, avatar: avatar || '' }
         });
+        await syncAccount({ entityType: 'chat_user', entityId: id, username, passwordHash: hashedPassword });
         return { id, name, username, avatar: avatar || '' };
     }
 

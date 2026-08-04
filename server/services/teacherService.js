@@ -5,7 +5,7 @@ const cache = require('./cacheService');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
 const { CACHE_KEYS } = require('../constants/cacheKeys');
 const { audit } = require('./auditService');
-const { normalizeUsername, findIdentityByUsername } = require('./authAccounts');
+const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccount } = require('./authAccounts');
 
 const teacherSelect = {
   id: true, name: true, phone1: true, phone2: true,
@@ -77,6 +77,8 @@ async function createTeacher(data, user) {
     });
   });
 
+  await syncAccount({ entityType: 'teacher', entityId: teacher.id, username: dbUsername, passwordHash: hashed });
+
   cache.del(CK.list());
   await audit(user.id, user.username, AUDIT_ACTIONS.TEACHER_CREATED,
     { name: teacher.name }, 'teacher', teacher.id);
@@ -100,7 +102,8 @@ async function updateTeacher(id, data, user) {
     }
   }
 
-  const updateData = { name, phone1, phone2, subject, price: price || 0, currency: currency || 'EGP', email, username: dbUsername };
+  const updateData = { name, phone1, phone2, subject, price: price || 0, currency: currency || 'EGP', email };
+  if (dbUsername) updateData.username = dbUsername;
 
   if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
     updateData.password = await bcrypt.hash(password, 10);
@@ -111,6 +114,12 @@ async function updateTeacher(id, data, user) {
       where: { id },
       data: updateData,
     });
+  });
+
+  await syncAccount({
+    entityType: 'teacher', entityId: id,
+    username: dbUsername || existing.username || null,
+    passwordHash: updateData.password || existing.password || null,
   });
 
   cache.del(CK.byId(id));
@@ -134,6 +143,7 @@ async function deleteTeacher(id, user) {
     });
   });
 
+  await deactivateAccount('teacher', id);
   cache.del(CK.byId(id));
   cache.del(CK.list());
   await audit(user.id, user.username, AUDIT_ACTIONS.TEACHER_DELETED,
@@ -168,6 +178,8 @@ async function restoreTeacher(id, user) {
       data: { deletedAt: null },
     });
   });
+
+  await syncAccount({ entityType: 'teacher', entityId: id, username: existing.username, passwordHash: existing.password, isActive: true });
 
   cache.del(CK.byId(id));
   cache.del(CK.list());

@@ -34,6 +34,19 @@ const SOURCE_TABLES = [
     }),
   },
   {
+    name: 'chat_profiles',
+    model: 'chatProfile',
+    accountType: 'CHAT_USER',
+    loginField: 'username',
+    legacyPwdField: 'password',
+    skipDeleted: false,
+    mapping: (row) => ({
+      username: row.username,
+      passwordHash: row.password,
+      entityId: row.id,
+    }),
+  },
+  {
     name: 'parents',
     model: 'parent',
     accountType: 'PARENT',
@@ -59,19 +72,6 @@ const SOURCE_TABLES = [
       entityId: row.id,
     }),
   },
-  {
-    name: 'chat_profiles',
-    model: 'chatProfile',
-    accountType: 'CHAT_USER',
-    loginField: 'username',
-    legacyPwdField: 'password',
-    skipDeleted: false,
-    mapping: (row) => ({
-      username: row.username,
-      passwordHash: row.password,
-      entityId: row.id,
-    }),
-  },
 ];
 
 async function migrateAccounts() {
@@ -82,7 +82,7 @@ async function migrateAccounts() {
     processed: 0,
     created: 0,
     duplicates: 0,
-    skippedNoPassword: 0,
+    skippedNoLogin: 0,
     failed: 0,
     errors: [],
     durationMs: 0,
@@ -92,7 +92,7 @@ async function migrateAccounts() {
 
   for (const source of SOURCE_TABLES) {
     logger.info(`Migrating ${source.name}...`);
-    const sourceReport = { processed: 0, created: 0, duplicates: 0, skippedNoPassword: 0, failed: 0 };
+    const sourceReport = { processed: 0, created: 0, duplicates: 0, skippedNoLogin: 0, failed: 0 };
 
     try {
       const where = {};
@@ -112,13 +112,13 @@ async function migrateAccounts() {
         const username = mapResult.username;
 
         if (!username) {
-          sourceReport.skippedNoPassword++;
+          sourceReport.skippedNoLogin++;
           continue;
         }
 
         const passwordHash = mapResult.passwordHash || mapResult.legacyPwdHash;
         if (!passwordHash) {
-          sourceReport.skippedNoPassword++;
+          sourceReport.skippedNoLogin++;
           continue;
         }
 
@@ -159,10 +159,10 @@ async function migrateAccounts() {
     report.processed += sourceReport.processed;
     report.created += sourceReport.created;
     report.duplicates += sourceReport.duplicates;
-    report.skippedNoPassword += sourceReport.skippedNoPassword;
+    report.skippedNoLogin += sourceReport.skippedNoLogin;
     report.failed += sourceReport.failed;
 
-    logger.info(`  ${source.name}: ${sourceReport.processed} processed, ${sourceReport.created} created, ${sourceReport.duplicates} duplicates, ${sourceReport.skippedNoPassword} no-pwd, ${sourceReport.failed} failed`);
+    logger.info(`  ${source.name}: ${sourceReport.processed} processed, ${sourceReport.created} created, ${sourceReport.duplicates} duplicates, ${sourceReport.skippedNoLogin} no-login, ${sourceReport.failed} failed`);
   }
 
   report.finishedAt = new Date().toISOString();
@@ -173,7 +173,7 @@ async function migrateAccounts() {
   logger.info(`Migration report saved to ${reportPath}`);
 
   logger.info('=== Account Migration Finished ===');
-  logger.info(`Processed: ${report.processed} | Created: ${report.created} | Duplicates: ${report.duplicates} | Skipped (no pwd): ${report.skippedNoPassword} | Failed: ${report.failed} | Duration: ${report.durationMs}ms`);
+  logger.info(`Processed: ${report.processed} | Created: ${report.created} | Duplicates: ${report.duplicates} | Skipped (no login): ${report.skippedNoLogin} | Failed: ${report.failed} | Duration: ${report.durationMs}ms`);
 
   if (report.failed > 0) {
     logger.warn(`${report.failed} records failed. See report for details.`);

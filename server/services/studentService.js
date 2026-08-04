@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const { prisma } = require('../utils/prisma');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
 const { audit } = require('./auditService');
-const { normalizeUsername, findIdentityByUsername } = require('./authAccounts');
+const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccount, deactivateBulkAccounts } = require('./authAccounts');
 
 const studentInclude = {
   enrollments: true,
@@ -138,6 +138,8 @@ async function createStudent(data, user) {
     return tx.student.findUnique({ where: { id: newId }, include: studentInclude });
   });
 
+  await syncAccount({ entityType: 'student', entityId: newId, username: dbUsername, passwordHash: hashed });
+
   await audit(user.id, user.username, AUDIT_ACTIONS.STUDENT_CREATED, { name: student.name }, 'student', student.id);
   return mapStudent(student);
 }
@@ -154,15 +156,15 @@ async function updateStudent(id, data, user) {
     }
   }
 
+  const newPasswordHash = await hashPassword(password);
+
   const student = await prisma.$transaction(async (tx) => {
     const updateData = {
       name, grade, parentPhone, studentPhone, curriculum, notes,
       sessionPrice: sessionPrice || 0, currency: currency || 'KWD',
-      username: dbUsername,
     };
-    if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
-      updateData.password = await bcrypt.hash(password, 10);
-    }
+    if (dbUsername) updateData.username = dbUsername;
+    if (newPasswordHash) updateData.password = newPasswordHash;
     await tx.student.update({ where: { id }, data: updateData });
 
     if (enrollments !== undefined && Array.isArray(enrollments)) {
@@ -215,6 +217,12 @@ async function updateStudent(id, data, user) {
     return tx.student.findUnique({ where: { id }, include: studentInclude });
   });
 
+  await syncAccount({
+    entityType: 'student', entityId: id,
+    username: dbUsername || student?.username || null,
+    passwordHash: newPasswordHash || student?.password || null,
+  });
+
   await audit(user.id, user.username, AUDIT_ACTIONS.STUDENT_UPDATED, { id }, 'student', id);
   return mapStudent(student);
 }
@@ -224,6 +232,7 @@ async function deleteStudent(id, user) {
     await tx.enrollment.updateMany({ where: { studentId: id }, data: { deletedAt: new Date() } });
     await tx.student.update({ where: { id }, data: { deletedAt: new Date() } });
   });
+  await deactivateAccount('student', id);
   await audit(user.id, user.username, AUDIT_ACTIONS.STUDENT_DELETED, { id }, 'student', id);
 }
 
@@ -233,6 +242,9 @@ async function deleteAllStudents(user) {
     const updated = await tx.student.updateMany({ data: { deletedAt: new Date() } });
     return updated;
   });
+  if (result.count > 0) {
+    await deactivateBulkAccounts('student');
+  }
   await audit(user.id, user.username, AUDIT_ACTIONS.STUDENT_DELETED, { bulk: true, count: result.count }, 'student', null);
 }
 
