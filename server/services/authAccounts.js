@@ -196,6 +196,29 @@ async function getAccountByEntity(entityType, entityId) {
   return prisma.account.findFirst({ where: { accountType: upperType, entityId } });
 }
 
+// Usernames are stored lowercase (login lowercases input). Collision check must
+// be case-insensitive so a new account can't lock out an existing one (login
+// search order: user → teacher → chatProfile → parent → student).
+async function normalizeUsername(username) {
+  const value = typeof username === 'string' ? username.trim() : '';
+  return value.toLowerCase();
+}
+
+async function findIdentityByUsername(username) {
+  const normalized = await normalizeUsername(username);
+  if (!normalized) return null;
+
+  const hits = await Promise.all([
+    prisma.user.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' } }, select: { id: true, username: true } }),
+    prisma.teacher.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
+    prisma.student.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
+    prisma.parent.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
+    prisma.chatProfile.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' } }, select: { id: true, username: true } }),
+  ]);
+
+  return hits.find(Boolean) || null;
+}
+
 module.exports = {
   authenticate,
   findAccountByIdentity,
@@ -207,4 +230,6 @@ module.exports = {
   isAccountsMode,
   isDualMode,
   isAccountsOrDual,
+  normalizeUsername,
+  findIdentityByUsername,
 };

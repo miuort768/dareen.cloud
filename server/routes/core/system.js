@@ -9,6 +9,7 @@ const { prisma } = require('../../utils/prisma');
 const { audit } = require('../../services/auditService');
 const { createBackup, getBackupHistory } = require('../../services/backupService');
 const { getMetrics } = require('../../middleware/monitoring');
+const { normalizeUsername, findIdentityByUsername } = require('../../services/authAccounts');
 
 // `dismissedNotifications` uses notifications.is_dismissed; reset helper.
 async function clearDismissedNotifications(tx) {
@@ -561,10 +562,17 @@ router.post('/users', async (req, res) => {
     const { id, name, username, password, role, permissions } = req.body;
     try {
         const bcrypt = require('bcrypt');
+        const dbUsername = await normalizeUsername(username);
+        if (dbUsername) {
+            const existing = await findIdentityByUsername(dbUsername);
+            if (existing) {
+                return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.' });
+            }
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         await prisma.user.create({
             data: {
-                id: id || require('uuid').v4(), name, username, password: hashedPassword,
+                id: id || require('uuid').v4(), name, username: dbUsername, password: hashedPassword,
                 role: role || 'admin', permissions: JSON.stringify(permissions || [])
             }
         });
@@ -580,7 +588,14 @@ router.put('/users/:id', async (req, res) => {
     const { name, username, password, role, permissions } = req.body;
     try {
         const bcrypt = require('bcrypt');
-        const data = { name, username, role: role || 'admin', permissions: JSON.stringify(permissions || []) };
+        const dbUsername = await normalizeUsername(username);
+        if (dbUsername) {
+            const duplicate = await findIdentityByUsername(dbUsername);
+            if (duplicate && duplicate.id !== id) {
+                return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.' });
+            }
+        }
+        const data = { name, username: dbUsername, role: role || 'admin', permissions: JSON.stringify(permissions || []) };
         if (password && password.trim() !== '') {
             data.password = await bcrypt.hash(password, 10);
         }

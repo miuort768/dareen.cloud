@@ -5,6 +5,7 @@ const cache = require('./cacheService');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
 const { CACHE_KEYS } = require('../constants/cacheKeys');
 const { audit } = require('./auditService');
+const { normalizeUsername, findIdentityByUsername } = require('./authAccounts');
 
 const CK = CACHE_KEYS.parents;
 
@@ -49,7 +50,13 @@ async function createParent(data, user) {
     throw Object.assign(new Error('Name and phone are required'), { statusCode: 400 });
   }
 
-  const dbUsername = username || phone;
+  const dbUsername = await normalizeUsername(username) || (phone || '').trim();
+  if (dbUsername) {
+    const existing = await findIdentityByUsername(dbUsername);
+    if (existing) {
+      throw Object.assign(new Error('اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر لولي الأمر.'), { statusCode: 400, code: 'P2002' });
+    }
+  }
   const dbPassword = password || '123456';
   const newId = id || uuidv4();
   const hashedPassword = await bcrypt.hash(dbPassword, 10);
@@ -80,7 +87,13 @@ async function updateParent(id, data, user) {
     throw Object.assign(new Error('Parent not found'), { statusCode: 404 });
   }
 
-  const dbUsername = username || phone;
+  const dbUsername = await normalizeUsername(username) || (phone || '').trim();
+  if (dbUsername) {
+    const duplicate = await findIdentityByUsername(dbUsername);
+    if (duplicate && duplicate.id !== id) {
+      throw Object.assign(new Error('اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر لولي الأمر.'), { statusCode: 400, code: 'P2002' });
+    }
+  }
   const updateData = { name, phone, email: email || '', username: dbUsername };
 
   if (password && password.trim() !== '') {

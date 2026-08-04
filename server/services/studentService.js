@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const { prisma } = require('../utils/prisma');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
 const { audit } = require('./auditService');
+const { normalizeUsername, findIdentityByUsername } = require('./authAccounts');
 
 const studentInclude = {
   enrollments: true,
@@ -97,7 +98,15 @@ async function createStudent(data, user) {
   const newId = id || `std_${crypto.randomBytes(4).toString('hex')}`;
 
   const hashed = await hashPassword(password);
-  const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
+  const dbUsername = await normalizeUsername(username);
+  if (dbUsername) {
+    const existing = await findIdentityByUsername(dbUsername);
+    if (existing) {
+      const conflict = new Error('اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر للطالب.');
+      conflict.code = 'P2002';
+      throw conflict;
+    }
+  }
 
   const student = await prisma.$transaction(async (tx) => {
     await tx.student.create({
@@ -135,7 +144,15 @@ async function createStudent(data, user) {
 
 async function updateStudent(id, data, user) {
   const { name, grade, parentPhone, studentPhone, curriculum, notes, sessionPrice, enrollments, username, password, currency } = data;
-  const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
+  const dbUsername = await normalizeUsername(username);
+  if (dbUsername) {
+    const duplicate = await findIdentityByUsername(dbUsername);
+    if (duplicate && duplicate.id !== id) {
+      const conflict = new Error('اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر للطالب.');
+      conflict.code = 'P2002';
+      throw conflict;
+    }
+  }
 
   const student = await prisma.$transaction(async (tx) => {
     const updateData = {

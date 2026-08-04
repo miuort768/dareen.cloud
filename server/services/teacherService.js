@@ -5,6 +5,7 @@ const cache = require('./cacheService');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
 const { CACHE_KEYS } = require('../constants/cacheKeys');
 const { audit } = require('./auditService');
+const { normalizeUsername, findIdentityByUsername } = require('./authAccounts');
 
 const teacherSelect = {
   id: true, name: true, phone1: true, phone2: true,
@@ -57,14 +58,13 @@ async function createTeacher(data, user) {
     throw Object.assign(new Error('Name is required'), { statusCode: 400 });
   }
 
-  if (username && username.trim() !== '') {
-    const existing = await prisma.teacher.findUnique({ where: { username: username.trim() } });
+  const dbUsername = await normalizeUsername(username);
+  if (dbUsername) {
+    const existing = await findIdentityByUsername(dbUsername);
     if (existing) {
       throw Object.assign(new Error('اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.'), { statusCode: 400, code: 'P2002' });
     }
   }
-
-  const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
   const hashed = await hashPassword(password);
 
   const teacher = await prisma.$transaction(async (tx) => {
@@ -92,16 +92,14 @@ async function updateTeacher(id, data, user) {
     throw Object.assign(new Error('Teacher not found'), { statusCode: 404 });
   }
 
-  if (username && username.trim() !== '') {
-    const duplicate = await prisma.teacher.findFirst({
-      where: { username: username.trim(), id: { not: id } },
-    });
-    if (duplicate) {
+  const dbUsername = await normalizeUsername(username);
+  if (dbUsername) {
+    const duplicate = await findIdentityByUsername(dbUsername);
+    if (duplicate && duplicate.id !== id) {
       throw Object.assign(new Error('اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.'), { statusCode: 400, code: 'P2002' });
     }
   }
 
-  const dbUsername = (username && username.trim() !== '') ? username.trim() : null;
   const updateData = { name, phone1, phone2, subject, price: price || 0, currency: currency || 'EGP', email, username: dbUsername };
 
   if (password && password.trim() !== '' && !password.startsWith('$2b$')) {
