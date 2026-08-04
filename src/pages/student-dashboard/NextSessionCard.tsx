@@ -1,4 +1,4 @@
-import { Clock, BookOpen, ArrowLeft, GraduationCap } from 'lucide-react';
+import { Clock, BookOpen, ArrowLeft, GraduationCap, PartyPopper } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { NextSession as NextSessionType } from './types';
 
@@ -17,7 +17,7 @@ export const NextSessionCard = ({ nextSession }: NextSessionCardProps) => {
                         <Clock size={28} className="text-success" />
                     </div>
                     <div className="text-center md:text-start">
-                        <p className="text-lg font-bold text-main mb-1">🎉 لا توجد حصص اليوم</p>
+                        <p className="text-lg font-bold text-main mb-1">لا توجد حصص اليوم</p>
                         <p className="text-sm font-medium text-muted">استرح وتابع أنشطتك الأخرى.</p>
                     </div>
                 </div>

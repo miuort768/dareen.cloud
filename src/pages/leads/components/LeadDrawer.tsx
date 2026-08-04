@@ -109,8 +109,8 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                                     onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
                                 >
                                     {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
-                                        <option key={key} value={key}>{key === 'new' ? '🆕 جديد' : key === 'contacted' ? '📞 تم الاتصال' : key === 'interested' ? '⭐ مهتم' : key === 'trial' ? '🎯 حصة تجريبية' : key === 'converted' ? '✅ محول' : '❌ مفقود'}</option>
-                                    ))}
+                                         <option key={key} value={key}>{statusColors[key].label}</option>
+                                     ))}
                                 </select>
                                 <span className={cn('inline-flex items-center px-2.5 py-1 text-xs font-bold rounded-lg', priority.bg, priority.color)}>
                                     {priority.label}

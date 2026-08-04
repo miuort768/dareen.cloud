@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Image } from '../../shared/components/ui';
-import { FileText, ExternalLink, Download, Eye, ArrowLeft, Calendar, Flame } from 'lucide-react';
+import { FileText, ExternalLink, Download, Eye, ArrowLeft, Calendar, Flame, CheckCircle2 } from 'lucide-react';
 import { subjectNameMap } from './LibraryConfig';
 
 interface BlogPost {
@@ -83,7 +83,7 @@ export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButt
                                     disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'download')}
                                     className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-warning to-warning hover:opacity-90 text-on-warning text-xs font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-warning/20 hover:shadow-warning/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
                                     <Download size={14} />
-                                    <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.downloadButtonText || post.download_button_text || 'تحميل'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل'}</span>
+                                    <span>{foundationBtnState?.type === 'download' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.downloadButtonText || post.download_button_text || 'تحميل'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'download' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? ' جاهز' : post.downloadButtonText || post.download_button_text || 'تحميل'}</span>
                                 </button>
                             )}
                             {post.watchLink && (
@@ -91,7 +91,7 @@ export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButt
                                     disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'watch')}
                                     className="flex-1 inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-primary hover:opacity-90 text-on-primary text-xs font-black py-3 rounded-xl transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/30 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
                                     <Eye size={14} />
-                                    <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? 'جاهز ✓' : post.watchButtonText || post.watch_button_text || 'مشاهدة'}</span>
+                                    <span>{foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'counting' && foundationBtnState.postId === post.id ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة'} (${foundationBtnState.seconds})` : foundationBtnState?.type === 'watch' && foundationBtnState.phase === 'ready' && foundationBtnState.postId === post.id ? ' جاهز' : post.watchButtonText || post.watch_button_text || 'مشاهدة'}</span>
                                 </button>
                             )}
                         </div>

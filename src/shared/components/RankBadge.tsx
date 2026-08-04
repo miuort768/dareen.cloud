@@ -1,4 +1,6 @@
+import { Star } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { RANK_ICON_MAP } from '../utils/ranks';
 import type { Rank } from '../utils/ranks';
 
 interface RankBadgeProps {
@@ -16,10 +18,12 @@ export const RankBadge = ({ rank, className, showName = true, size = 'md' }: Ran
     };
 
     const iconSizes = {
-        sm: 'text-micro',
-        md: 'text-sm',
-        lg: 'text-lg'
+        sm: 10,
+        md: 14,
+        lg: 18
     };
+
+    const IconComponent = RANK_ICON_MAP[rank.icon] || Star;
 
     return (
         <div className={cn(
@@ -28,7 +32,7 @@ export const RankBadge = ({ rank, className, showName = true, size = 'md' }: Ran
             sizeClasses[size],
             className
         )}>
-            <span className={cn(iconSizes[size])}>{rank.icon}</span>
+            <IconComponent size={iconSizes[size]} />
             {showName && <span className="tracking-tighter">{rank.name}</span>}
         </div>
     );

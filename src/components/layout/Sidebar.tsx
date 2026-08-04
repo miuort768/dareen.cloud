@@ -13,6 +13,7 @@ import { confirm } from '../../lib/confirmDialog';
 import { useAcademyName, useLogout, useCurrentUser, useSidebarCollapsed, useSetSidebarCollapsed } from '../../context/AppContext';
 import { useUnreadStore } from '../../store/unreadStore';
 import { SessionCallAlert } from '../ui/SessionCallAlert';
+import { ActiveSessionBanner } from '../ui/ActiveSessionBanner';
 import { SidebarDesktop } from './SidebarDesktop';
 import { SidebarMobile } from './SidebarMobile';
 import { AppTabBar } from '../../shared/components/mobile';
@@ -157,6 +158,7 @@ export const Sidebar = memo(() => {
                 onLogout={handleLogout}
             />
             <AppTabBar onMore={() => setMobileMenuOpen(true)} />
+            <ActiveSessionBanner />
             <SessionCallAlert />
         </>
     );

@@ -111,9 +111,13 @@ export const Forum = () => {
         const text = commentTexts[postId];
         if (!text || !text.trim()) return;
         try {
-            await api.post(`/forum/${postId}/comments`, { content: text });
+            const res = await api.post<{ awardedPoints?: number }>(`/forum/${postId}/comments`, { content: text });
             setCommentTexts((prev: Record<string, string>) => ({ ...prev, [postId]: '' }));
-            showNotification('تم إضافة التعليق', 'success');
+            if (res?.awardedPoints && res.awardedPoints > 0) {
+                showNotification(`تم إضافة التعليق +${res.awardedPoints} نقطة!`, 'success');
+            } else {
+                showNotification('تم إضافة التعليق', 'success');
+            }
             queryClient.invalidateQueries({ queryKey: ['forum'] });
         } catch (e) {
             console.error(e);

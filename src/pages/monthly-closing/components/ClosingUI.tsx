@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
@@ -65,7 +66,7 @@ export const KpiCard = ({ title, value, icon: Icon, accent, subValue, trend }: {
                 </div>
                 {trend && (
                     <div className={cn("inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-xs font-bold", trend.positive ? 'bg-success/10 text-success' : 'bg-error/10 text-error')}>
-                        {trend.positive ? '↑' : '↓'} {Math.abs(trend.value)}%
+                        {trend.positive ? <TrendingUp size={12} /> : <TrendingDown size={12} />} {Math.abs(trend.value)}%
                     </div>
                 )}
             </div>

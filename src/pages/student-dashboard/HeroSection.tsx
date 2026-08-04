@@ -1,4 +1,5 @@
 import { GraduationCap, Sparkles } from 'lucide-react';
+import { RANK_ICON_MAP } from '../../shared/utils/ranks';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 
@@ -25,6 +26,7 @@ const getDayName = (): string => {
 
 export const HeroSection = ({ name, grade, curriculum, points, rank, attendanceRate }: HeroSectionProps) => {
     const firstName = name.split(' ')[0] || name;
+    const RankIconComponent = RANK_ICON_MAP[rank.icon] || Sparkles;
 
     const radius = 54;
     const circumference = 2 * Math.PI * radius;
@@ -39,7 +41,7 @@ export const HeroSection = ({ name, grade, curriculum, points, rank, attendanceR
             <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6">
                 <div className="flex-1 min-w-0">
                     <p className="text-sm font-bold text-white/80 mb-1">
-                        {getGreeting()}، {firstName} <span className="inline-block me-1">{rank.icon}</span>
+                        {getGreeting()}، {firstName} <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-white/15 align-middle"><RankIconComponent size={12} className="text-white" /></span>
                     </p>
                     <h1 className="text-2xl md:text-[30px] font-bold text-white leading-tight mb-2">
                         {firstName}

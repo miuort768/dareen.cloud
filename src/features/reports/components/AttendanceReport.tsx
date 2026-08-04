@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, GraduationCap, CheckCircle2, XCircle, Calendar, TrendingUp } from 'lucide-react';
+import { Activity, GraduationCap, CheckCircle2, XCircle, Calendar, TrendingUp, Trophy, Medal, Award } from 'lucide-react';
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
     ResponsiveContainer
@@ -163,12 +163,12 @@ export const AttendanceReport = React.memo(({
                                     const rate = teacher.rate;
                                     const barColor = rate >= 80 ? 'bg-success' : rate >= 60 ? 'bg-warning' : 'bg-error';
                                     const textColor = rate >= 80 ? 'text-success' : rate >= 60 ? 'text-warning' : 'text-error';
-                                    const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : null;
+                                    const medalIcon = index === 0 ? <Trophy size={12} className="text-warning" /> : index === 1 ? <Medal size={12} className="text-muted" /> : index === 2 ? <Award size={12} className="text-warning/60" /> : null;
                                     return (
                                         <tr key={index} className="hover:bg-hover transition-colors">
                                             <td className="px-5 py-3">
-                                                <span className="text-micro font-medium text-muted font-mono">
-                                                    {medal || String(index + 1).padStart(2, '0')}
+                                                <span className="text-micro font-medium text-muted font-mono flex items-center justify-center gap-1">
+                                                    {medalIcon || String(index + 1).padStart(2, '0')}
                                                 </span>
                                             </td>
                                             <td className="px-5 py-3">
@@ -208,11 +208,11 @@ export const AttendanceReport = React.memo(({
                             const rate = teacher.rate;
                             const barColor = rate >= 80 ? 'bg-success' : rate >= 60 ? 'bg-warning' : 'bg-error';
                             const textColor = rate >= 80 ? 'text-success' : rate >= 60 ? 'text-warning' : 'text-error';
-                            const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : null;
+                            const medalIcon = index === 0 ? <Trophy size={14} className="text-warning" /> : index === 1 ? <Medal size={14} className="text-muted" /> : index === 2 ? <Award size={14} className="text-warning/60" /> : null;
                             return (
                                 <div key={index} className="p-4 flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-semibold shrink-0 bg-chart-3/10 text-chart-3">
-                                        {medal || teacher.teacher.charAt(0)}
+                                        {medalIcon || teacher.teacher.charAt(0)}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center justify-between mb-1">
@@ -220,8 +220,8 @@ export const AttendanceReport = React.memo(({
                                             <span className={cn("text-micro font-medium me-2 shrink-0", textColor)}>{rate}%</span>
                                         </div>
                                         <div className="flex items-center gap-3 mb-1.5">
-                                            <span className="text-micro text-success font-normal">{teacher.completed} ✓</span>
-                                            <span className="text-micro text-error font-normal">{teacher.cancelled} ✗</span>
+                                             <span className="text-micro text-success font-normal">{teacher.completed} <CheckCircle2 size={10} className="inline" /></span>
+                                             <span className="text-micro text-error font-normal">{teacher.cancelled} <XCircle size={10} className="inline" /></span>
                                             <span className="text-micro text-muted font-normal">{teacher.total} إجمالي</span>
                                         </div>
                                         <div className="h-1.5 bg-surface rounded-xl overflow-hidden">

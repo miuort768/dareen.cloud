@@ -1,6 +1,6 @@
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
-import { ShieldCheck, AlertCircle, CreditCard, Clock, CalendarX, Headphones, Sparkles } from 'lucide-react';
+import { ShieldCheck, AlertCircle, CreditCard, Clock, CalendarX, Headphones, Sparkles, Heart } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 import { SEO } from '../../components/SEO';
 
@@ -53,7 +53,7 @@ export const RefundPolicy = () => {
                     </h1>
 
                     <p className="text-micro md:text-lg text-on-primary/80 md:text-muted max-w-2xl mx-auto leading-relaxed font-medium md:hidden">
-                        نحن نقدر ثقتكم بنا <span className="inline-block">❤️</span>
+                         نحن نقدر ثقتكم بنا <Heart size={14} className="inline text-error fill-error" />
                         <br />
                         ونحرص على توضيح كافة حقوقكم المالية وضوابط الاشتراك
                     </p>

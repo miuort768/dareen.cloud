@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 interface Activity {
     id: string;
-    icon: string;
+    icon: React.ReactNode;
     title: string;
     description?: string;
     timestamp: string;
@@ -50,7 +50,7 @@ export const ProfileRecentActivity = ({ activities, title = 'آخر النشاط
                                 "relative z-10 w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border",
                                 typeColors[act.type || 'default']
                             )}>
-                                <span className="text-sm">{act.icon}</span>
+                                 <span className="flex items-center justify-center">{act.icon}</span>
                             </div>
                             <div className="flex-1 min-w-0 pt-1">
                                 <p className="text-xs font-bold text-main">{act.title}</p>

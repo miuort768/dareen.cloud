@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { CheckCircle2, BookOpen, BookMarked, Star } from 'lucide-react';
 import type { Student } from '../../types';
 
 interface AcademicPerformanceProps {
@@ -60,34 +61,36 @@ export const AcademicPerformance = ({ sessions, children: kids, points, rank }: 
                     max={100}
                     color="text-success"
                     label="الحضور"
-                    icon={() => <span className="text-success">✓</span>}
+                    icon={CheckCircle2}
                 />
                 <ProgressBar
                     value={totalSubjects}
                     max={Math.max(totalSubjects, 1)}
                     color="text-info"
                     label="الواجبات"
-                    icon={() => <span className="text-info">📚</span>}
+                    icon={BookOpen}
                 />
                 <ProgressBar
                     value={sessionsUsed}
                     max={Math.max(sessionsTotal, 1)}
                     color="text-primary"
                     label="المنهج"
-                    icon={() => <span className="text-primary">📖</span>}
+                    icon={BookMarked}
                 />
                 <ProgressBar
                     value={Math.min(points, 500)}
                     max={500}
                     color="text-warning"
                     label="XP"
-                    icon={() => <span className="text-warning">⭐</span>}
+                    icon={Star}
                 />
             </div>
 
             <div className="mt-5 p-4 rounded-xl bg-gradient-to-l from-warning/10 via-warning/[0.03] to-surface border border-warning/20 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <span className="text-2xl">⭐</span>
+                    <div className="w-10 h-10 rounded-xl bg-warning/15 flex items-center justify-center">
+                        <Star size={20} className="text-warning" />
+                    </div>
                     <div>
                         <p className="text-sm font-bold text-main">{rank.name}</p>
                         <p className="text-xs text-muted font-medium">{points} نقطة خبرة</p>

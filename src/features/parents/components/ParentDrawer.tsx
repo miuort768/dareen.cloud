@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Phone, Mail, MessageCircle, Edit, Trash2, Users, GraduationCap, BookOpen, Calendar, TrendingUp, Clock, AlertCircle, Star } from 'lucide-react';
+import { X, Phone, Mail, MessageCircle, Edit, Trash2, Users, GraduationCap, BookOpen, Calendar, TrendingUp, Clock, AlertCircle, Star, AlertTriangle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { ProgressBar } from '../../../shared/components/ui';
 import type { Parent, Student } from '../../../types';
@@ -87,7 +87,7 @@ export const ParentDrawer = ({ parent, details, onClose, onEdit, onDelete, onWha
                                 <p className="text-[10px] text-white/70 mt-0.5">ID: {(parent.id || '').substring(0, 8)}</p>
                                 <div className="flex items-center gap-1.5 mt-1.5">
                                     {hasOverdue && (
-                                        <span className="flex items-center gap-1 px-1.5 py-0.5 bg-error-soft/80 text-error text-[8px] font-bold rounded">⚠️ متأخرات</span>
+                                         <span className="flex items-center gap-1 px-1.5 py-0.5 bg-error-soft/80 text-error text-[8px] font-bold rounded"><AlertTriangle size={8} /> متأخرات</span>
                                     )}
                                     <span className={cn(
                                         "flex items-center gap-1 px-1.5 py-0.5 text-[8px] font-bold rounded",

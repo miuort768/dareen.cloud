@@ -1,4 +1,5 @@
 const DS_VERSION_LABEL = '1.2';
+import { AlertTriangle } from 'lucide-react';
 import { ColorSection } from './sections/ColorSection';
 import { TypographySection } from './sections/TypographySection';
 import { ButtonSection } from './sections/ButtonSection';
@@ -66,7 +67,7 @@ export function DesignSystemPage() {
       {/* Experimental Warning */}
       <div role="alert" className="bg-error-soft border-b border-error">
         <div className="max-w-7xl mx-auto px-4 py-2 text-xs text-error-dark text-center font-medium">
-          ⚠ Internal Development Only — هذه الواجهة للمراجعة الداخلية وليست مرجعًا نهائيًا
+          <AlertTriangle size={12} className="inline me-1" /> Internal Development Only — هذه الواجهة للمراجعة الداخلية وليست مرجعًا نهائيًا
         </div>
       </div>
 

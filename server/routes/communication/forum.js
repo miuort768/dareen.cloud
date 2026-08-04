@@ -204,7 +204,17 @@ router.post('/:id/comments', async (req, res) => {
 
         await prisma.forumComment.create({ data: newComment });
 
-        res.status(201).json(newComment);
+        let awardedPoints = 0;
+        if (user.role === 'teacher') {
+            awardedPoints = 10;
+            await prisma.teacher.update({
+                where: { id: user.id },
+                data: { points: { increment: awardedPoints } }
+            });
+            logger.info(`Teacher ${realName} awarded ${awardedPoints} points for forum answer`);
+        }
+
+        res.status(201).json({ ...newComment, awardedPoints });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Create comment');
     }

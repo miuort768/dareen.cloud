@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
     Phone, Mail, Users, BookOpen, Star, User, CalendarDays,
-    TrendingUp, Award, ChevronLeft, Edit3, Heart, Target
+    TrendingUp, Award, ChevronLeft, Edit3, Heart, Target,
+    Trophy, Flame
 } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useCurrentUser, useLogout } from '../../context/AppContext';
@@ -132,17 +133,17 @@ export const ParentProfilePage = () => {
     const totalSubjects = children.reduce((s, c) => s + (c.enrollments?.length || 0), 0);
 
     const achievements = [
-        { id: '1', icon: '👨‍👩‍👧‍👦', title: 'أب/أم مثالي', unlocked: children.length >= 2, progress: Math.min(Math.round((children.length / 2) * 100), 100) },
-        { id: '2', icon: '⭐', title: '500 نقطة عائلية', unlocked: totalPoints >= 500, progress: Math.min(Math.round((totalPoints / 500) * 100), 100) },
-        { id: '3', icon: '📚', title: 'متابع مميز', unlocked: totalSubjects >= 5, progress: Math.min(Math.round((totalSubjects / 5) * 100), 100) },
-        { id: '4', icon: '🔥', title: 'متابعة يومية', unlocked: pointLogs.length >= 30, progress: Math.min(Math.round((pointLogs.length / 30) * 100), 100) },
-        { id: '5', icon: '🏆', title: 'عائلة ذهبية', unlocked: totalPoints >= 1000, progress: Math.min(Math.round((totalPoints / 1000) * 100), 100) },
+        { id: '1', icon: <Users size={20} className="text-primary" />, title: 'أب/أم مثالي', unlocked: children.length >= 2, progress: Math.min(Math.round((children.length / 2) * 100), 100) },
+        { id: '2', icon: <Star size={20} className="text-warning" />, title: '500 نقطة عائلية', unlocked: totalPoints >= 500, progress: Math.min(Math.round((totalPoints / 500) * 100), 100) },
+        { id: '3', icon: <BookOpen size={20} className="text-info" />, title: 'متابع مميز', unlocked: totalSubjects >= 5, progress: Math.min(Math.round((totalSubjects / 5) * 100), 100) },
+        { id: '4', icon: <Flame size={20} className="text-error" />, title: 'متابعة يومية', unlocked: pointLogs.length >= 30, progress: Math.min(Math.round((pointLogs.length / 30) * 100), 100) },
+        { id: '5', icon: <Trophy size={20} className="text-warning" />, title: 'عائلة ذهبية', unlocked: totalPoints >= 1000, progress: Math.min(Math.round((totalPoints / 1000) * 100), 100) },
     ];
 
     const activities: { id: string; icon: string; title: string; description?: string; timestamp: string; type: 'success' | 'info' | 'default' | 'warning' }[] = useMemo(() => {
         return pointLogs.slice(0, 5).map((l, i) => ({
             id: l.id || `log-${i}`,
-            icon: '⭐',
+            icon: <Star size={14} className="text-warning" />,
             title: `${l.studentName || 'طالب'} حصل على ${l.points || 0} نقطة`,
             description: l.reason || 'تقدم في التعلم',
             timestamp: l.createdAt ? new Date(l.createdAt).toLocaleDateString('ar-EG') : `منذ ${i + 1} أيام`,
@@ -259,7 +260,7 @@ export const ParentProfilePage = () => {
 
                 <motion.div {...stagger(4)}>
                     <ProfileBottomMotivation
-                        icon="👨‍👩‍👧‍👦"
+                        icon={<Users size={28} className="text-white" />}
                         title="أنت عائلة ملهمة!"
                         description={`${children.length > 1 ? 'أبناؤك' : 'ابنك'} يتقدمون بفضل متابعتك المستمرة — استمر في دعمهم لتحقيق المزيد`}
                         progress={Math.min(Math.round((totalPoints / 1000) * 100), 100)}

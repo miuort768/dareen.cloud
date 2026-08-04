@@ -15,7 +15,7 @@ export const NextSessionBanner = ({ todayTasks }: NextSessionBannerProps) => {
                         <Calendar size={28} className="text-success" />
                     </div>
                     <div className="text-center md:text-start">
-                        <p className="text-lg font-bold text-main mb-1">🎉 لا توجد حصص اليوم</p>
+                        <p className="text-lg font-bold text-main mb-1">لا توجد حصص اليوم</p>
                         <p className="text-sm font-medium text-muted">استمتع بيومك مع أبنائك.</p>
                     </div>
                 </div>

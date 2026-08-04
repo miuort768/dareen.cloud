@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import {
     Phone, Mail, BookOpen, Users, Play, DollarSign, MapPin, FileText,
     CalendarDays, Clock, GraduationCap, Globe, Laptop, UserCheck,
-    Star, Trophy, Award, Target, TrendingUp, Edit3, ChevronLeft
+    Star, Trophy, Award, Target, TrendingUp, Edit3, ChevronLeft,
+    Flame, CheckCircle2, BarChart3, UserPlus
 } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useCurrentUser, useLogout } from '../../context/AppContext';
@@ -145,11 +146,11 @@ export const TeacherProfilePage = () => {
     ];
 
     const achievements = [
-        { id: '1', icon: '🏆', title: 'المعلمة الذهبية', unlocked: points >= 1000, progress: Math.min(Math.round((points / 1000) * 100), 100) },
-        { id: '2', icon: '⭐', title: '500 نقطة', unlocked: points >= 500, progress: Math.min(Math.round((points / 500) * 100), 100) },
-        { id: '3', icon: '🎓', title: 'أول 100 طالب', unlocked: (dashboardStats?.studentsCount || 0) >= 100, progress: Math.min(Math.round(((dashboardStats?.studentsCount || 0) / 100) * 100), 100) },
-        { id: '4', icon: '🔥', title: '30 يوم نشاط', unlocked: false, progress: 40 },
-        { id: '5', icon: '📚', title: '100 حصة', unlocked: (dashboardStats?.completedSessions || 0) >= 100, progress: Math.min(Math.round(((dashboardStats?.completedSessions || 0) / 100) * 100), 100) },
+        { id: '1', icon: <Trophy size={20} className="text-warning" />, title: 'المعلمة الذهبية', unlocked: points >= 1000, progress: Math.min(Math.round((points / 1000) * 100), 100) },
+        { id: '2', icon: <Star size={20} className="text-warning" />, title: '500 نقطة', unlocked: points >= 500, progress: Math.min(Math.round((points / 500) * 100), 100) },
+        { id: '3', icon: <GraduationCap size={20} className="text-info" />, title: 'أول 100 طالب', unlocked: (dashboardStats?.studentsCount || 0) >= 100, progress: Math.min(Math.round(((dashboardStats?.studentsCount || 0) / 100) * 100), 100) },
+        { id: '4', icon: <Flame size={20} className="text-error" />, title: '30 يوم نشاط', unlocked: false, progress: 40 },
+        { id: '5', icon: <BookOpen size={20} className="text-primary" />, title: '100 حصة', unlocked: (dashboardStats?.completedSessions || 0) >= 100, progress: Math.min(Math.round(((dashboardStats?.completedSessions || 0) / 100) * 100), 100) },
     ];
 
     const progressItems = [
@@ -160,11 +161,11 @@ export const TeacherProfilePage = () => {
     ];
 
     const activities = [
-        { id: 'a1', icon: '➕', title: 'تمت إضافة طالب جديد', description: 'أحمد محمد — مادة الرياضيات', timestamp: 'منذ ساعتين', type: 'success' as const },
-        { id: 'a2', icon: '✅', title: 'تم إنهاء حصة الرياضيات', description: 'مع محمد علي — 60 دقيقة', timestamp: 'منذ 4 ساعات', type: 'info' as const },
-        { id: 'a3', icon: '📝', title: 'تم تحديث الملف الشخصي', description: 'تم إضافة السيرة الذاتية', timestamp: 'منذ يوم', type: 'default' as const },
-        { id: 'a4', icon: '🏆', title: 'تم الحصول على شارة جديدة', description: 'المعلمة الذهبية — 1000 نقطة', timestamp: 'منذ 3 أيام', type: 'success' as const },
-        { id: 'a5', icon: '📊', title: 'تقرير الأداء الشهري', description: 'تم إصدار تقييم شهر يونيو', timestamp: 'منذ 5 أيام', type: 'warning' as const },
+        { id: 'a1', icon: <UserPlus size={14} className="text-success" />, title: 'تمت إضافة طالب جديد', description: 'أحمد محمد — مادة الرياضيات', timestamp: 'منذ ساعتين', type: 'success' as const },
+        { id: 'a2', icon: <CheckCircle2 size={14} className="text-info" />, title: 'تم إنهاء حصة الرياضيات', description: 'مع محمد علي — 60 دقيقة', timestamp: 'منذ 4 ساعات', type: 'info' as const },
+        { id: 'a3', icon: <FileText size={14} className="text-muted" />, title: 'تم تحديث الملف الشخصي', description: 'تم إضافة السيرة الذاتية', timestamp: 'منذ يوم', type: 'default' as const },
+        { id: 'a4', icon: <Trophy size={14} className="text-success" />, title: 'تم الحصول على شارة جديدة', description: 'المعلمة الذهبية — 1000 نقطة', timestamp: 'منذ 3 أيام', type: 'success' as const },
+        { id: 'a5', icon: <BarChart3 size={14} className="text-warning" />, title: 'تقرير الأداء الشهري', description: 'تم إصدار تقييم شهر يونيو', timestamp: 'منذ 5 أيام', type: 'warning' as const },
     ];
 
     const reviews = [
@@ -268,7 +269,7 @@ export const TeacherProfilePage = () => {
 
                 <motion.div {...stagger(6)}>
                     <ProfileBottomMotivation
-                        icon="🎯"
+                        icon={<Target size={28} className="text-white" />}
                         title="استمر في التدريس!"
                         description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد وصلت إلى أعلى المراتب! استمر في التألق'}
                         progress={nextRank ? Math.round((points / 1000) * 100) : 100}

@@ -188,6 +188,9 @@ router.post('/start', authMiddleware, async (req, res) => {
             io.to(`user_${student.parentId}`).emit('notification', {
               id: parentNotifId, title: 'تنبيه حصة مباشرة لابنكم', message: parentMsg, type: 'live', link: meetingUrl
             });
+            io.to(`user_${student.parentId}`).emit('session_invite', {
+              teacherName, subject, sessionId: id, meetingUrl, meetingProvider: provider
+            });
           }
         } catch (notifErr) {
           logger.error('Failed to create notifications:', notifErr);
@@ -199,6 +202,94 @@ router.post('/start', authMiddleware, async (req, res) => {
     res.status(201).json({ id, teacherId, teacherName, meetingUrl: meetingUrl.trim() });
   } catch (err) {
     ResponseHandler.serverError(res, err, 'Start live session');
+  }
+});
+
+router.put('/:id', authMiddleware, async (req, res) => {
+  if (!['teacher', 'admin'].includes(req.user.role) && !req.user.permissions?.includes('*')) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
+  try {
+    const { meetingProvider, meetingUrl } = req.body;
+    const provider = meetingProvider || 'google_meet';
+
+    if (!MEETING_PROVIDERS.includes(provider)) {
+      return res.status(400).json({ error: 'نوع الاجتماع غير مدعوم' });
+    }
+
+    const urlError = validateMeetingUrl(provider, meetingUrl);
+    if (urlError) {
+      return res.status(400).json({ error: urlError });
+    }
+
+    const isAdmin = req.user.role === 'admin' || req.user.permissions?.includes('*');
+    const where = isAdmin
+      ? { id: req.params.id, status: 'active' }
+      : { id: req.params.id, teacherId: req.user.id, status: 'active' };
+
+    const existing = await prisma.liveSession.findFirst({ where });
+    if (!existing) {
+      return res.status(404).json({ error: 'الحصة غير موجودة أو ended' });
+    }
+
+    let meetingCode = null;
+    if (provider === 'google_meet') {
+      const match = meetingUrl.match(/meet\.google\.com\/([a-z\-]+)/);
+      if (match) meetingCode = match[1];
+    } else if (provider === 'zoom') {
+      const match = meetingUrl.match(/\/j\/(\d+)/);
+      if (match) meetingCode = match[1];
+    }
+
+    await prisma.liveSession.update({
+      where: { id: req.params.id },
+      data: {
+        meetingUrl: meetingUrl.trim(),
+        meetingProvider: provider,
+        meetingCode,
+      }
+    });
+
+    const io = req.app.get('socketio');
+    if (io && existing.targetStudentId) {
+      const payload = {
+        sessionId: req.params.id,
+        meetingUrl: meetingUrl.trim(),
+        meetingProvider: provider,
+      };
+
+      io.to(`user_${existing.targetStudentId}`).emit('session_link_updated', payload);
+
+      const student = await prisma.student.findUnique({
+        where: { id: existing.targetStudentId },
+        select: { parentId: true }
+      });
+      if (student?.parentId) {
+        io.to(`user_${student.parentId}`).emit('session_link_updated', payload);
+
+        const parentNotifId = genId();
+        const teacherName = existing.teacherName || req.user.name || 'المعلمة';
+        await prisma.notification.create({
+          data: {
+            id: parentNotifId,
+            senderId: req.user.id,
+            receiverId: student.parentId,
+            senderName: teacherName,
+            title: 'تحديث رابط الحصة المباشرة',
+            message: `تم تحديث رابط الحصة المباشرة. الرابط الجديد: ${meetingUrl.trim()}`,
+            type: 'live',
+            time: new Date().toISOString(),
+            link: meetingUrl.trim(),
+          }
+        });
+      }
+    }
+
+    logger.info(`Live session updated: ${req.params.id} by ${req.user?.name || 'unknown'}`);
+    res.json({ success: true, meetingUrl: meetingUrl.trim() });
+  } catch (err) {
+    ResponseHandler.serverError(res, err, 'Update live session');
   }
 });
 
@@ -226,6 +317,14 @@ router.post('/end/:id', authMiddleware, async (req, res) => {
     const io = req.app.get('socketio');
     if (io && session?.targetStudentId) {
       io.to(`user_${session.targetStudentId}`).emit('session_ended', { sessionId: req.params.id });
+
+      const student = await prisma.student.findUnique({
+        where: { id: session.targetStudentId },
+        select: { parentId: true }
+      });
+      if (student?.parentId) {
+        io.to(`user_${student.parentId}`).emit('session_ended', { sessionId: req.params.id });
+      }
     }
 
     logger.info(`Live session ended: ${req.params.id} by ${req.user?.name || 'unknown'}`);

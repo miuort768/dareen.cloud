@@ -34,7 +34,7 @@ class SocketService {
 
             this.socket.on(SOCKET_EVENTS.CONNECT_ERROR, (err) => {
                 if (err.message === 'Authentication error') {
-                    console.error('❌ Socket auth failed');
+                    console.error('Socket auth failed');
                     this.reconnectAttempts++;
                     if (this.reconnectAttempts >= this.maxReconnectAttempts) {
                         this.socket?.disconnect();
@@ -44,7 +44,7 @@ class SocketService {
                     }
                     return;
                 }
-                console.error('❌ Socket connection error:', err.message);
+                console.error('Socket connection error:', err.message);
             });
         } else {
             const currentToken = (this.socket.auth as { token?: string })?.token;

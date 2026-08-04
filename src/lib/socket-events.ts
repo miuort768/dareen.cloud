@@ -17,6 +17,7 @@ export const SOCKET_EVENTS = {
   // Live Sessions
   SESSION_INVITE: 'session_invite',
   SESSION_ENDED: 'session_ended',
+  SESSION_LINK_UPDATED: 'session_link_updated',
   LIVE_SESSION_STARTED: 'live_session_started',
 
   // Notifications
@@ -35,6 +36,12 @@ export const SOCKET_EVENTS = {
 export interface SessionInvitePayload {
   teacherName: string;
   subject: string;
+  sessionId: string;
+  meetingUrl: string;
+  meetingProvider: string;
+}
+
+export interface SessionLinkUpdatedPayload {
   sessionId: string;
   meetingUrl: string;
   meetingProvider: string;

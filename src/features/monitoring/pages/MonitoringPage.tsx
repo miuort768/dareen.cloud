@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { settingsService } from '../../settings/services/settingsService';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, CheckCircle2, XCircle } from 'lucide-react';
 import { Spinner } from '../../../shared/components/ui';
 
 interface MonitoringData {
@@ -86,7 +86,7 @@ export const MonitoringPage = () => {
                 <div className="bg-surface dark:bg-card p-4 rounded-card border border-border">
                     <h3 className="text-sm font-bold text-main mb-2">النظام</h3>
                     <div className="text-sm text-muted">عمر التشغيل: {fmtUptime(data?.uptime || 0)}</div>
-                    <div className="text-sm text-muted">قاعدة البيانات: {data?.database === 'connected' ? '✅ متصلة' : '❌ منفصلة'}</div>
+                    <div className="text-sm text-muted">قاعدة البيانات: {data?.database === 'connected' ? <span className="inline-flex items-center gap-1"><CheckCircle2 size={12} className="text-success" /> متصلة</span> : <span className="inline-flex items-center gap-1"><XCircle size={12} className="text-error" /> منفصلة</span>}</div>
                     <div className="text-sm text-muted">آخر تحديث: {data?.timestamp ? new Date(data.timestamp).toLocaleString('ar-SA') : ''}</div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { TrendingUp, TrendingDown } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 export interface StatCardProps {
@@ -125,7 +126,7 @@ export const StatCard = ({
 
           {trend && (
             <div className={cn('flex items-center gap-1 mt-2 text-xs font-semibold', s.trend)}>
-              <span>{trend.isUp ? '↑' : '↓'}</span>
+              <span>{trend.isUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}</span>
               <span>{trend.value}%</span>
               {trend.label && <span className="opacity-60">{trend.label}</span>}
             </div>

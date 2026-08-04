@@ -3,7 +3,7 @@ import { ExternalLink, X, BellRing } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCurrentUser } from '../../context/AppContext';
 import { socketService } from '../../lib/socket';
-import { SOCKET_EVENTS, type SessionInvitePayload } from '../../lib/socket-events';
+import { SOCKET_EVENTS, type SessionInvitePayload, type SessionLinkUpdatedPayload } from '../../lib/socket-events';
 
 const PROVIDER_NAMES: Record<string, string> = {
     google_meet: 'Google Meet',
@@ -15,6 +15,7 @@ export const SessionCallAlert = () => {
     const currentUser = useCurrentUser();
     const [callData, setCallData] = useState<SessionInvitePayload | null>(null);
     const [show, setShow] = useState(false);
+    const [linkUpdated, setLinkUpdated] = useState(false);
     const notificationAudioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
@@ -26,9 +27,10 @@ export const SessionCallAlert = () => {
         const socket = socketService.getSocket();
         if (!socket || (currentUser?.role !== 'student' && currentUser?.role !== 'parent')) return;
 
-        const handleInvite = (data: CallData) => {
+        const handleInvite = (data: SessionInvitePayload) => {
             setCallData(data);
             setShow(true);
+            setLinkUpdated(false);
             audio.currentTime = 0;
             audio.play().catch((e) => console.warn(e));
         };
@@ -36,14 +38,28 @@ export const SessionCallAlert = () => {
         const handleEnded = () => {
             setShow(false);
             setCallData(null);
+            setLinkUpdated(false);
+        };
+
+        const handleLinkUpdated = (data: SessionLinkUpdatedPayload) => {
+            setCallData(prev => {
+                if (prev && prev.sessionId === data.sessionId) {
+                    return { ...prev, meetingUrl: data.meetingUrl, meetingProvider: data.meetingProvider };
+                }
+                return prev;
+            });
+            setLinkUpdated(true);
+            setTimeout(() => setLinkUpdated(false), 3000);
         };
 
         socket.on(SOCKET_EVENTS.SESSION_INVITE, handleInvite);
         socket.on(SOCKET_EVENTS.SESSION_ENDED, handleEnded);
+        socket.on(SOCKET_EVENTS.SESSION_LINK_UPDATED, handleLinkUpdated);
 
         return () => {
             socket.off(SOCKET_EVENTS.SESSION_INVITE, handleInvite);
             socket.off(SOCKET_EVENTS.SESSION_ENDED, handleEnded);
+            socket.off(SOCKET_EVENTS.SESSION_LINK_UPDATED, handleLinkUpdated);
         };
     }, [currentUser]);
 
@@ -76,6 +92,15 @@ export const SessionCallAlert = () => {
                             <p className="text-micro font-bold text-primary">
                                 عبر {PROVIDER_NAMES[callData.meetingProvider] || callData.meetingProvider}
                             </p>
+                            {linkUpdated && (
+                                <motion.p
+                                    initial={{ opacity: 0, y: -4 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="text-micro font-bold text-success mt-1"
+                                >
+                                    تم تحديث الرابط!
+                                </motion.p>
+                            )}
                         </div>
                         
                         <div className="flex gap-2">

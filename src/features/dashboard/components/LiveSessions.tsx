@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Radio, Users, Loader2, Plus, AlertCircle, RefreshCcw, ExternalLink, Copy, StopCircle, LinkIcon, Video, CheckCircle2 } from 'lucide-react';
+import { Radio, Users, Loader2, Plus, AlertCircle, RefreshCcw, ExternalLink, Copy, StopCircle, LinkIcon, Video, CheckCircle2, Pencil } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { socketService } from '../../../lib/socket';
 import { SOCKET_EVENTS } from '../../../lib/socket-events';
 import { useCurrentUser } from '../../../context/AppContext';
-import { startLiveSession } from '../../../services/liveSessionService';
+import { startLiveSession, updateLiveSession } from '../../../services/liveSessionService';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import type { LiveSession } from '../../../types';
@@ -35,6 +35,13 @@ export const LiveSessions = () => {
     const [meetingUrl, setMeetingUrl] = useState('');
     const [subject, setSubject] = useState('');
 
+    const [showEditDialog, setShowEditDialog] = useState(false);
+    const [editingSession, setEditingSession] = useState<LiveSession | null>(null);
+    const [editProvider, setEditProvider] = useState('google_meet');
+    const [editUrl, setEditUrl] = useState('');
+    const [editSaving, setEditSaving] = useState(false);
+    const [editError, setEditError] = useState<string | null>(null);
+
     const fetchSessions = useCallback(async () => {
         try {
             const data = await api.get<LiveSession[]>('/live/active');
@@ -53,11 +60,13 @@ export const LiveSessions = () => {
         if (socket) {
             socket.on(SOCKET_EVENTS.SESSION_INVITE, fetchSessions);
             socket.on(SOCKET_EVENTS.SESSION_ENDED, fetchSessions);
+            socket.on(SOCKET_EVENTS.SESSION_LINK_UPDATED, fetchSessions);
         }
         return () => {
             if (socket) {
                 socket.off(SOCKET_EVENTS.SESSION_INVITE, fetchSessions);
                 socket.off(SOCKET_EVENTS.SESSION_ENDED, fetchSessions);
+                socket.off(SOCKET_EVENTS.SESSION_LINK_UPDATED, fetchSessions);
             }
         };
     }, [fetchSessions]);
@@ -106,6 +115,38 @@ export const LiveSessions = () => {
             setTimeout(() => setCopiedId(null), 2000);
         } catch {
             setError('فشل نسخ الرابط');
+        }
+    };
+
+    const openEditDialog = (session: LiveSession) => {
+        setEditingSession(session);
+        setEditProvider(session.meetingProvider);
+        setEditUrl(session.meetingUrl || '');
+        setEditError(null);
+        setShowEditDialog(true);
+    };
+
+    const saveEditedLink = async () => {
+        if (!editingSession || !editUrl.trim()) {
+            setEditError('يرجى إدخال رابط الاجتماع');
+            return;
+        }
+        setEditSaving(true);
+        setEditError(null);
+        try {
+            await updateLiveSession({
+                sessionId: editingSession.id,
+                meetingProvider: editProvider as 'google_meet' | 'zoom' | 'custom',
+                meetingUrl: editUrl.trim(),
+            });
+            setShowEditDialog(false);
+            setEditingSession(null);
+            setEditUrl('');
+            await fetchSessions();
+        } catch (err: unknown) {
+            setEditError(err instanceof Error ? err.message : 'فشل تحديث الرابط');
+        } finally {
+            setEditSaving(false);
         }
     };
 
@@ -219,6 +260,16 @@ export const LiveSessions = () => {
                                 </button>
                                 {isTeacher && (
                                     <button
+                                        onClick={() => openEditDialog(session)}
+                                        className="h-8 w-8 rounded-xl border border-border text-muted hover:bg-surface transition-colors flex items-center justify-center"
+                                        title="تعديل الرابط"
+                                        aria-label="تعديل رابط الحصة"
+                                    >
+                                        <Pencil size={12} />
+                                    </button>
+                                )}
+                                {isTeacher && (
+                                    <button
                                         onClick={() => endSession(session.id)}
                                         className="h-8 w-8 rounded-xl text-error hover:bg-error/10 transition-colors flex items-center justify-center"
                                         title="إنهاء الحصة"
@@ -326,6 +377,93 @@ export const LiveSessions = () => {
                                 className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary text-on-primary gap-2"
                             >
                                 {starting ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'بدء الحصة'}
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showEditDialog && editingSession && (
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40"
+                    onClick={() => setShowEditDialog(false)}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="تعديل رابط الحصة"
+                    onKeyDown={(e) => { if (e.key === 'Escape') setShowEditDialog(false); }}
+                >
+                    <div
+                        className="bg-card rounded-2xl shadow-2xl border border-border p-6 max-w-md w-full space-y-5"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <h3 className="font-bold text-lg text-main text-center">تعديل رابط الحصة</h3>
+
+                        <div>
+                            <label className="block text-xs font-bold text-muted mb-2">نوع الاجتماع</label>
+                            <div className="flex gap-2">
+                                {PROVIDERS.map((p) => (
+                                    <button
+                                        key={p.value}
+                                        onClick={() => setEditProvider(p.value)}
+                                        className={cn(
+                                            "flex-1 py-3 px-2 text-[11px] font-bold rounded-xl border-2 transition-all",
+                                            editProvider === p.value
+                                                ? "border-primary bg-primary-soft text-primary"
+                                                : "border-border text-muted hover:border-border"
+                                        )}
+                                    >
+                                        {p.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-xs font-bold text-muted mb-2">رابط الاجتماع</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="url"
+                                    value={editUrl}
+                                    onChange={(e) => setEditUrl(e.target.value)}
+                                    placeholder={
+                                        editProvider === 'google_meet' ? 'https://meet.google.com/abc-defg-hij' :
+                                        editProvider === 'zoom' ? 'https://zoom.us/j/1234567890' :
+                                        'https://...'
+                                    }
+                                    className="flex-1 px-4 py-3 text-sm font-medium bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-focus"
+                                />
+                                {editProvider === 'google_meet' && (
+                                    <a
+                                        href="https://meet.google.com/new"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="px-3 py-3 text-[11px] font-bold rounded-xl bg-success/10 border border-success/20 text-success hover:bg-success/20 transition-colors whitespace-nowrap flex items-center gap-1"
+                                        title="إنشاء رابط Google Meet جديد"
+                                    >
+                                        <LinkIcon size={14} /> إنشاء
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+
+                        {editError && (
+                            <p className="text-error text-xs font-bold">{editError}</p>
+                        )}
+
+                        <div className="flex gap-3 pt-2">
+                            <Button
+                                variant="outline"
+                                onClick={() => { setShowEditDialog(false); setEditingSession(null); setEditError(null); }}
+                                className="flex-1 h-11 rounded-xl text-xs font-bold"
+                            >
+                                إلغاء
+                            </Button>
+                            <Button
+                                onClick={saveEditedLink}
+                                disabled={editSaving}
+                                className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary text-on-primary gap-2"
+                            >
+                                {editSaving ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'حفظ التعديل'}
                             </Button>
                         </div>
                     </div>

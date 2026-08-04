@@ -7,7 +7,7 @@ import { socketService } from '../lib/socket';
 import { SOCKET_EVENTS } from '../lib/socket-events';
 import type { Lead, LeadStatus } from '../features/crm/types';
 import { ErrorBanner } from '../shared/components/ui/ErrorState';
-import { PrimaryBtn, statusColors, statusEmojis } from './leads/components/LeadsUI';
+import { PrimaryBtn, statusColors, statusIconComponents } from './leads/components/LeadsUI';
 import { LeadTable } from './leads/components/LeadTable';
 import { LeadCards } from './leads/components/LeadCards';
 import { AddLeadModal } from './leads/components/AddLeadModal';
@@ -274,7 +274,8 @@ export const Leads = () => {
                                         : 'bg-card text-muted border-border hover:border-border hover:text-main'
                                 )}
                             >
-                                📊 الكل
+                                <BarChart3 size={12} />
+                                الكل
                                 <span className={cn(
                                     'text-[10px] px-1.5 py-px rounded-full',
                                     filterStatus === 'all' ? 'bg-white/15 text-on-primary' : 'bg-surface text-muted'
@@ -282,7 +283,7 @@ export const Leads = () => {
                             </button>
                             {StatusKeys.map((key) => {
                                 const cfg = statusColors[key];
-                                const emoji = statusEmojis[key];
+                                const Icon = statusIconComponents[key];
                                 const isActive = filterStatus === key;
                                 return (
                                     <button
@@ -295,7 +296,7 @@ export const Leads = () => {
                                                 : 'bg-card text-muted border-border hover:border-border hover:text-main'
                                         )}
                                     >
-                                        {emoji && <span>{emoji}</span>}
+                                        {Icon && <Icon size={12} />}
                                         {cfg.label}
                                         <span className={cn(
                                             'text-[10px] px-1.5 py-px rounded-full',

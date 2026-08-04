@@ -1,8 +1,8 @@
 import { memo, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
-import { Phone, MessageSquare, CheckCircle2, Trash2, ChevronDown } from 'lucide-react';
+import { Phone, MessageSquare, CheckCircle2, Trash2, ChevronDown, FileText } from 'lucide-react';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
-import { GradientAvatar, getPriority, getLeadAge, ActionBtn } from './LeadsUI';
+import { GradientAvatar, getPriority, getLeadAge, ActionBtn, statusColors } from './LeadsUI';
 import { cn } from '../../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -62,7 +62,7 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                                     className="shrink-0 inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-warning/10 text-warning hover:bg-warning/20 transition-all"
                                                     title={lead.notes}
                                                 >
-                                                    📝 <span className="max-w-[40px] truncate">{lead.notes}</span>
+                                                     <FileText size={10} /> <span className="max-w-[40px] truncate">{lead.notes}</span>
                                                     <ChevronDown size={8} className={cn('transition-transform', isNoteExpanded && 'rotate-180')} />
                                                 </button>
                                             )}
@@ -100,9 +100,9 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                         onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
-                                            <option key={key} value={key}>{key === 'new' ? '🆕 جديد' : key === 'contacted' ? '📞 تم الاتصال' : key === 'interested' ? '⭐ مهتم' : key === 'trial' ? '🎯 حصة تجريبية' : key === 'converted' ? '✅ محول' : '❌ مفقود'}</option>
-                                        ))}
+                                         {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
+                                             <option key={key} value={key}>{statusColors[key].label}</option>
+                                         ))}
                                     </select>
                                 </div>
 
@@ -112,7 +112,7 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                         'inline-flex items-center px-1.5 py-0.5 text-[9px] font-bold rounded-full',
                                         priority.bg, priority.color
                                     )}>
-                                        {lead.priority === 'high' ? '🔴' : lead.priority === 'medium' ? '🟡' : '🟢'} {priority.label}
+                                         {lead.priority === 'high' ? <span className="w-2 h-2 rounded-full bg-error inline-block" /> : lead.priority === 'medium' ? <span className="w-2 h-2 rounded-full bg-warning inline-block" /> : <span className="w-2 h-2 rounded-full bg-muted inline-block" />} {priority.label}
                                     </span>
                                 </div>
 

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import {
     GraduationCap, BookOpen, Clock, Trophy, Target, Star,
     Phone, User, CalendarDays, Award, TrendingUp, Edit3,
-    CheckCircle2, Play
+    CheckCircle2, Play, Flame, XCircle, Calendar
 } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useCurrentUser, useLogout } from '../../context/AppContext';
@@ -158,11 +158,11 @@ export const StudentProfilePage = () => {
     }, [sessions, enrollments]);
 
     const achievements = [
-        { id: '1', icon: '🏆', title: 'الطالب الماسي', unlocked: points >= 1000, progress: Math.min(Math.round((points / 1000) * 100), 100) },
-        { id: '2', icon: '⭐', title: '500 نقطة', unlocked: points >= 500, progress: Math.min(Math.round((points / 500) * 100), 100) },
-        { id: '3', icon: '📚', title: '50 حصة مكتملة', unlocked: stats.completedSessions >= 50, progress: Math.min(Math.round((stats.completedSessions / 50) * 100), 100) },
-        { id: '4', icon: '🔥', title: 'أسبوع مثالي', unlocked: stats.attendanceRate >= 95, progress: Math.min(stats.attendanceRate, 100) },
-        { id: '5', icon: '🎯', title: 'تقدم المنهج', unlocked: stats.curriculumProgress >= 90, progress: Math.min(stats.curriculumProgress, 100) },
+        { id: '1', icon: <Trophy size={20} className="text-warning" />, title: 'الطالب الماسي', unlocked: points >= 1000, progress: Math.min(Math.round((points / 1000) * 100), 100) },
+        { id: '2', icon: <Star size={20} className="text-warning" />, title: '500 نقطة', unlocked: points >= 500, progress: Math.min(Math.round((points / 500) * 100), 100) },
+        { id: '3', icon: <BookOpen size={20} className="text-primary" />, title: '50 حصة مكتملة', unlocked: stats.completedSessions >= 50, progress: Math.min(Math.round((stats.completedSessions / 50) * 100), 100) },
+        { id: '4', icon: <Flame size={20} className="text-error" />, title: 'أسبوع مثالي', unlocked: stats.attendanceRate >= 95, progress: Math.min(stats.attendanceRate, 100) },
+        { id: '5', icon: <Target size={20} className="text-info" />, title: 'تقدم المنهج', unlocked: stats.curriculumProgress >= 90, progress: Math.min(stats.curriculumProgress, 100) },
     ];
 
     const progressItems = [
@@ -174,7 +174,7 @@ export const StudentProfilePage = () => {
 
     const activities = sessions.slice(0, 5).map((s, i) => ({
         id: s.id || `act-${i}`,
-        icon: s.status === 'completed' ? '✅' : s.status === 'cancelled' ? '❌' : '📅',
+        icon: s.status === 'completed' ? <CheckCircle2 size={14} className="text-success" /> : s.status === 'cancelled' ? <XCircle size={14} className="text-error" /> : <Calendar size={14} className="text-info" />,
         title: s.status === 'completed' ? `تم إنهاء حصة ${s.subject || ''}` : s.status === 'cancelled' ? `تم إلغاء حصة ${s.subject || ''}` : `حصة ${s.subject || ''} مجدولة`,
         description: s.teacherName ? `مع ${s.teacherName}` : undefined,
         timestamp: s.date || `منذ ${i + 1} أيام`,
@@ -296,7 +296,7 @@ export const StudentProfilePage = () => {
 
                 <motion.div {...stagger(5)}>
                     <ProfileBottomMotivation
-                        icon="🎯"
+                        icon={<Target size={28} className="text-white" />}
                         title={nextRank.next ? `تبقى ${nextRank.pointsNeeded} نقطة للوصول إلى ${nextRank.next.name}` : 'أحسنت! وصلت لأعلى المراتب'}
                         description={nextRank.next ? `واصل التعلم واجمع النقاط لتصل إلى الرتبة التالية` : 'أنت نجم دارين السابعة!'}
                         progress={nextRank.next ? Math.min(Math.round((points / (points + (nextRank.pointsNeeded || 1))) * 100), 100) : 100}

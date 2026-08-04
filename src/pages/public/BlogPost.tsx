@@ -175,7 +175,7 @@ export const BlogPost = () => {
                                     disabled={buttonState !== null && buttonState.type !== 'download'}
                                     className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-xs sm:text-sm rounded-card hover:bg-error hover:text-on-error transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card text-on-primary'}`}>
                                     <Download size={16} />
-                                    <span>{buttonState?.type === 'download' && buttonState.phase === 'counting' ? `${post.downloadButtonText || post.download_button_text || 'تحميل الملف'} (${buttonState.seconds})` : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : post.downloadButtonText || post.download_button_text || 'تحميل الملف'}</span>
+                                    <span>{buttonState?.type === 'download' && buttonState.phase === 'counting' ? `${post.downloadButtonText || post.download_button_text || 'تحميل الملف'} (${buttonState.seconds})` : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'الملف جاهز' : post.downloadButtonText || post.download_button_text || 'تحميل الملف'}</span>
                                 </button>
                             )}
                             {post.watchLink && (
@@ -183,7 +183,7 @@ export const BlogPost = () => {
                                     disabled={buttonState !== null && buttonState.type !== 'watch'}
                                     className={`flex-1 inline-flex items-center justify-center gap-2 px-6 md:px-16 py-3 md:py-4 font-black text-xs sm:text-sm rounded-card hover:bg-error-active transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}>
                                     <Eye size={16} />
-                                    <span>{buttonState?.type === 'watch' && buttonState.phase === 'counting' ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة الملف'} (${buttonState.seconds})` : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'الملف جاهز ✓' : post.watchButtonText || post.watch_button_text || 'مشاهدة الملف'}</span>
+                                    <span>{buttonState?.type === 'watch' && buttonState.phase === 'counting' ? `${post.watchButtonText || post.watch_button_text || 'مشاهدة الملف'} (${buttonState.seconds})` : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'الملف جاهز' : post.watchButtonText || post.watch_button_text || 'مشاهدة الملف'}</span>
                                 </button>
                             )}
                         </div>

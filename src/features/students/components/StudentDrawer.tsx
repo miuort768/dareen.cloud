@@ -242,7 +242,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teacher
                         <Flame size={14} className="text-warning" />
                         <span className="text-[10px] font-bold text-warning">{streakDays} يوم</span>
                       </div>
-                      <span className="text-[9px] text-muted">سلسلة متصلة 🔥</span>
+                      <span className="text-[9px] text-muted">سلسلة متصلة <Flame size={9} className="inline text-warning" /></span>
                     </div>
                   )}
                 </div>
@@ -499,7 +499,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teacher
                                 "text-[9px] font-bold",
                                 isCompleted ? 'text-success' : isCancelled ? 'text-error' : 'text-warning'
                               )}>
-                                {isCompleted ? '✔ حضر' : isCancelled ? '✘ غائب' : '🕐 مجدول'}
+                                 {isCompleted ? 'حضر' : isCancelled ? 'غائب' : 'مجدول'}
                               </span>
                             </div>
                             <p className="text-[9px] text-muted mt-0.5">{s.date}</p>

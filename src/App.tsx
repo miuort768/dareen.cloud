@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import { PageLoader } from './components/ui/PageLoader';
 
 import { Layout } from './components/layout/Layout';
+import { AlertTriangle, Loader2 } from 'lucide-react';
 import { useCurrentUser, useIsAuthenticated, useIsLoading, useIsSettingsLoading, useMaintenanceMode } from './context/AppContext';
 import { InstallPWA } from './components/ui/InstallPWA';
 const RouteErrorBoundary = lazy(() => import('./components/RouteErrorBoundary').then(m => ({ default: m.RouteErrorBoundary })));
@@ -141,7 +142,7 @@ function App() {
         <div className="fixed inset-0 bg-gradient-to-br from-background to-primary flex items-center justify-center p-6" dir="rtl">
           <div className="bg-white dark:bg-surface rounded-2xl shadow-2xl border border-border p-8 max-w-md w-full text-center space-y-4">
             <div className="w-16 h-16 mx-auto bg-warning-light dark:bg-warning/30 rounded-2xl flex items-center justify-center">
-              <span className="text-3xl">⏳</span>
+              <Loader2 size={28} className="text-warning animate-spin" />
             </div>
             <h2 className="text-xl font-bold text-main">يستغرق التحميل وقتاً أطول من المعتاد</h2>
             <p className="text-sm text-muted">قد يكون الاتصال بالسيرفر بطيئاً. حاول مرة أخرى أو تواصل مع الدعم الفني.</p>
@@ -173,7 +174,7 @@ function App() {
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
         <div className="fixed top-0 inset-x-0 z-[9999] bg-warning text-on-warning text-micro font-semibold py-0.5 text-center flex items-center justify-center gap-2 shadow-lg">
-          <span className="animate-pulse">⚠️ وضع الصيانة مفعل (يراه الجميع عداك)</span>
+           <span className="animate-pulse flex items-center gap-1"><AlertTriangle size={14} /> وضع الصيانة مفعل (يراه الجميع عداك)</span>
           <button
             onClick={() => navigate('/settings')}
             className="underline hover:no-underline"

@@ -1,5 +1,5 @@
 import { memo, useMemo, useState, Fragment } from 'react';
-import { Edit, Trash2, Users, Phone, Mail, MessageCircle, ArrowUpRight, GraduationCap, AlertCircle, Star, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { Edit, Trash2, Users, Phone, Mail, MessageCircle, ArrowUpRight, GraduationCap, AlertCircle, Star, X, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 import type { Parent, Student } from '../../../types';
@@ -133,7 +133,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
                                                             {status.label}
                                                         </span>
                                                         {hasOverdue && (
-                                                            <span className="text-[8px] text-error animate-pulse">⚠️</span>
+                                                             <span className="text-[8px] text-error animate-pulse"><AlertTriangle size={8} /></span>
                                                         )}
                                                     </div>
                                                     <p className="text-[9px] text-muted font-mono mt-0.5">ID: {(parent.id || '').substring(0, 8)}</p>

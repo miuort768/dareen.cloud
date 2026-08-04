@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, ShieldCheck, CalendarDays, Users, BookOpen, Calendar } from 'lucide-react';
+import { Clock, ShieldCheck, CalendarDays, Users, BookOpen, Calendar, Hand } from 'lucide-react';
 import type { User } from '../../../types/auth';
 import type { DashboardStats } from '../types';
 
@@ -47,7 +47,7 @@ export const DashboardHeader = ({ isTeacher, currentUser, stats }: DashboardHead
             <div className="relative z-10 p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-5">
                 <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-2xl bg-white/15 flex items-center justify-center shrink-0 backdrop-blur-sm ring-1 ring-white/20">
-                        <span className="text-2xl">👋</span>
+                        <Hand size={24} className="text-white" />
                     </div>
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { TrendingUp, TrendingDown, Users, UserPlus, CheckCircle2, Phone, Star, Target, XCircle, BarChart3, FileText, Search, AlertTriangle, MessageSquare } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { LeadStatus, LeadPriority } from '../../../features/crm/types';
 
@@ -45,17 +46,10 @@ export const Sparkline = ({ value, color, height = 5 }: { value: number; color: 
     );
 };
 
-export const statEmojis: Record<string, string> = {
-    'إجمالي العملاء': '👥',
-    'عملاء جدد': '🆕',
-    'تم التحويل': '✅',
-    'معدل التحويل': '📈',
-};
-
 export const StatCard = ({ title, value, icon: Icon, sparklineColor, trend }: {
     title: string;
     value: string | number;
-    icon?: React.ComponentType<{ size?: number }>;
+    icon?: React.ComponentType<{ size?: number; className?: string }>;
     sparklineColor?: string;
     trend?: { value: string; up: boolean };
 }) => {
@@ -82,10 +76,10 @@ export const StatCard = ({ title, value, icon: Icon, sparklineColor, trend }: {
     return (
         <div className="relative p-4 rounded-2xl bg-card border border-border overflow-hidden group hover:shadow-sm transition-all">
             <div className="flex items-start justify-between mb-2">
-                <span className="text-lg">{statEmojis[title] || '📊'}</span>
+                {Icon ? <Icon size={18} className="text-primary" /> : <BarChart3 size={18} className="text-primary" />}
                 {trend && (
                     <span className={cn('text-[10px] font-bold flex items-center gap-0.5', trend.up ? 'text-success' : 'text-error')}>
-                        {trend.up ? '↑' : '↓'} {trend.value}
+                        {trend.up ? <TrendingUp size={10} /> : <TrendingDown size={10} />} {trend.value}
                     </span>
                 )}
             </div>
@@ -96,14 +90,14 @@ export const StatCard = ({ title, value, icon: Icon, sparklineColor, trend }: {
     );
 };
 
-export const statusEmojis: Record<LeadStatus | 'all', string> = {
-    all: '📊',
-    new: '🆕',
-    contacted: '📞',
-    interested: '⭐',
-    trial: '🎯',
-    converted: '✅',
-    lost: '❌',
+export const statusIconComponents: Record<LeadStatus | 'all', React.ComponentType<{ size?: number; className?: string }>> = {
+    all: BarChart3,
+    new: UserPlus,
+    contacted: Phone,
+    interested: Star,
+    trial: Target,
+    converted: CheckCircle2,
+    lost: XCircle,
 };
 export const statusColors: Record<LeadStatus, { label: string; color: string; bg: string; dot: string }> = {
     new: { label: 'جديد', color: 'text-info', bg: 'bg-info-soft', dot: 'bg-info' },
@@ -116,7 +110,7 @@ export const statusColors: Record<LeadStatus, { label: string; color: string; bg
 
 export const StatusChip = ({ status, size = 'sm' }: { status: LeadStatus; size?: 'sm' | 'md' }) => {
     const cfg = statusColors[status];
-    const emoji = statusEmojis[status];
+    const Icon = statusIconComponents[status];
     return (
         <span className={cn(
             'inline-flex items-center gap-1 font-bold rounded-full border transition-all',
@@ -124,7 +118,7 @@ export const StatusChip = ({ status, size = 'sm' }: { status: LeadStatus; size?:
             cfg.bg, cfg.color, 'border-current/15'
         )}>
             <span className={cn('w-1.5 h-1.5 rounded-full', cfg.dot)} />
-            {emoji && <span className="text-[10px]">{emoji}</span>}
+            {Icon && <Icon size={10} />}
             {cfg.label}
         </span>
     );

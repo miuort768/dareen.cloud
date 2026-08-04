@@ -150,7 +150,7 @@ export const useSettingsHandlers = () => {
                 await settingsService.restoreBackup(JSON.parse(event.target?.result as string));
                 showNotify('تم استيراد البيانات بنجاح');
                 setTimeout(() => window.location.reload(), 2000);
-            } catch (e: unknown) { alert(`⚠️ ${e instanceof Error ? e.message : 'خطأ غير متوقع'}`); }
+             } catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
             finally { setIsSaving(false); if (e.target) e.target.value = ''; }
         };
         reader.readAsText(file);

@@ -1,7 +1,7 @@
 import { cn } from '../../../lib/utils';
-import { Phone, MessageSquare, CheckCircle2, Trash2 } from 'lucide-react';
+import { Phone, MessageSquare, CheckCircle2, Trash2, Search, FileText } from 'lucide-react';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
-import { GradientAvatar, StatusChip, getPriority, getLeadAge, ActionBtn } from './LeadsUI';
+import { GradientAvatar, StatusChip, getPriority, getLeadAge, ActionBtn, statusColors } from './LeadsUI';
 
 interface LeadCardsProps {
     filteredLeads: Lead[];
@@ -15,7 +15,7 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
         <div className="lg:hidden space-y-2.5">
             {filteredLeads.length === 0 ? (
                 <div className="bg-card border border-border rounded-2xl py-12 text-center">
-                    <span className="text-3xl mb-3 block">🔍</span>
+                    <Search size={36} className="mx-auto mb-3 text-muted/30" />
                     <p className="text-sm font-bold text-muted">لا توجد نتائج بحث</p>
                     <p className="text-xs text-muted mt-1">لا يوجد عملاء متطابقون مع معايير البحث</p>
                 </div>
@@ -38,7 +38,7 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                                         <h4 className="font-bold text-sm text-main leading-tight truncate">
                                             {lead.studentName || 'عميل بدون اسم'}
                                         </h4>
-                                        {lead.notes && <span className="shrink-0 text-[10px]" title={lead.notes}>📝</span>}
+                                         {lead.notes && <span className="shrink-0" title={lead.notes}><FileText size={12} className="text-warning" /></span>}
                                     </div>
                                     <div className="flex items-center gap-2 mt-0.5">
                                         {lead.createdAt && (
@@ -78,7 +78,7 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                             <div className="flex items-center justify-between gap-2">
                                 <div className="flex items-center gap-1">
                                     <span className={cn('inline-flex items-center gap-1 px-2 py-0.5 text-[9px] font-bold rounded-full', priority.bg, priority.color)}>
-                                        {lead.priority === 'high' ? '🔴' : lead.priority === 'medium' ? '🟡' : '🟢'} {priority.label}
+                                         {lead.priority === 'high' ? <span className="w-2 h-2 rounded-full bg-error inline-block" /> : lead.priority === 'medium' ? <span className="w-2 h-2 rounded-full bg-warning inline-block" /> : <span className="w-2 h-2 rounded-full bg-muted inline-block" />} {priority.label}
                                     </span>
                                     <select
                                         className={cn(
@@ -88,9 +88,9 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                                         aria-label="حالة العميل"
                                         onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
                                     >
-                                        {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
-                                            <option key={key} value={key}>{key === 'new' ? '🆕 جديد' : key === 'contacted' ? '📞 تم الاتصال' : key === 'interested' ? '⭐ مهتم' : key === 'trial' ? '🎯 حصة تجريبية' : key === 'converted' ? '✅ محول' : '❌ مفقود'}</option>
-                                        ))}
+                                         {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
+                                             <option key={key} value={key}>{statusColors[key].label}</option>
+                                         ))}
                                     </select>
                                 </div>
                                 <div className="flex items-center gap-0.5">

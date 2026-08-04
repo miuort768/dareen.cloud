@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react';
-import { Edit, Trash, Bell, GraduationCap, Star, ArrowUpDown, ChevronUp, ChevronDown } from 'lucide-react';
+import { Edit, Trash, Bell, GraduationCap, Star, ArrowUpDown, ChevronUp, ChevronDown, AlertTriangle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { Table, ProgressBar } from '../../../shared/components/ui';
 import type { Column } from '../../../shared/components/ui';
@@ -59,7 +59,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
               <div className="flex items-center gap-1.5">
                 <p className="font-bold text-xs text-main leading-tight">{student.name || '—'}</p>
                 {hasLowBalance && (
-                  <span className="text-[8px] font-bold text-error bg-error-soft px-1.5 py-0.5 rounded animate-pulse">⚠️</span>
+                   <span className="text-[8px] font-bold text-error bg-error-soft px-1.5 py-0.5 rounded animate-pulse"><AlertTriangle size={8} /></span>
                 )}
               </div>
               <div className="flex items-center gap-2 mt-0.5">
@@ -217,7 +217,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
                     <Star size={8} />{pts}
                   </span>
                 )}
-                {hasLowBalance && <span className="text-[9px] text-error">⚠️</span>}
+                 {hasLowBalance && <AlertTriangle size={10} className="text-error" />}
               </div>
             </div>
           </div>

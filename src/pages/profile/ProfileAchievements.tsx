@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 interface Achievement {
     id: string;
-    icon: string;
+    icon: React.ReactNode;
     title: string;
     unlocked: boolean;
     progress?: number;
@@ -44,8 +44,8 @@ export const ProfileAchievements = ({ achievements, title = 'الإنجازات'
                         )}
                     >
                         <span className={cn(
-                            "text-2xl leading-none",
-                            ach.unlocked ? "" : "grayscale"
+                            "flex items-center justify-center",
+                            ach.unlocked ? "" : "grayscale opacity-50"
                         )}>
                             {ach.icon}
                         </span>

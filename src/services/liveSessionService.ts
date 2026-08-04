@@ -23,3 +23,16 @@ export async function startLiveSession(params: {
 
   return res;
 }
+
+export async function updateLiveSession(params: {
+  sessionId: string;
+  meetingProvider: 'google_meet' | 'zoom' | 'custom';
+  meetingUrl: string;
+}): Promise<{ success: boolean; meetingUrl: string }> {
+  const res = await api.put<{ success: boolean; meetingUrl: string }>(`/live/${params.sessionId}`, {
+    meetingProvider: params.meetingProvider,
+    meetingUrl: params.meetingUrl.trim(),
+  });
+
+  return res;
+}
