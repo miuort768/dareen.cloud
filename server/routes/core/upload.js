@@ -57,7 +57,15 @@ router.post('/blog-image', authMiddleware, checkRole(['admin']), upload.single('
             logger.info('Image processed synchronously: ' + filename + ' (' + result.result.compression + ' compression)');
         }
     }).catch((err) => {
-        logger.error('Image processing failed for ' + filename + ': ' + (err.message || err));
+        const msg = (err && err.message) || '';
+        // Validation rejections (bad user uploads) are expected outcomes,
+        // not server faults — keep them out of the error log.
+        const validation = /Image too small|Invalid or corrupted image|Unsupported MIME type|File (empty|not found)|exceeds max size|Unable to read image dimensions|sharp library not available/.test(msg);
+        if (validation) {
+            logger.warn('Image rejected for ' + filename + ': ' + msg);
+        } else {
+            logger.error('Image processing failed for ' + filename + ': ' + msg);
+        }
     });
 
     res.json({ url, filename });

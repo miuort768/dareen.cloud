@@ -52,9 +52,11 @@ function createClient() {
         });
 
         client.on('error', (err) => {
-            if (err.code !== 'ECONNREFUSED' && err.code !== 'ETIMEOUT') {
-                logger.error('Redis error:', err.message);
-            }
+            const code = (err && err.code) || '';
+            const msg = (err && err.message) || '';
+            const connectionNoise = ['ECONNREFUSED', 'ETIMEOUT', 'EHOSTUNREACH', 'ENETUNREACH', 'EADDRNOTAVAIL', 'ERR_SOCKET_CONNECTION_TIMEOUT', 'ECONNRESET', 'EPIPE', 'ENOTFOUND'].includes(code);
+            if (connectionNoise || !code || !msg) return;
+            logger.error('Redis error:', msg);
         });
 
         client.on('close', () => {

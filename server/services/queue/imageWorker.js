@@ -125,7 +125,14 @@ class ImageWorker {
         } catch (err) {
             metrics.status = 'failed';
             metrics.errors.push(err.message);
-            logger.error('Image processing failed for ' + filename + ': ' + err.message);
+            // Validation rejections (bad user uploads) are expected outcomes,
+            // not server faults — keep them out of the error log.
+            const validation = /Image too small|Invalid or corrupted image|Unsupported MIME type|File (empty|not found)|exceeds max size|Unable to read image dimensions|sharp library not available/.test(err.message || '');
+            if (validation) {
+                logger.warn('Image rejected for ' + filename + ': ' + err.message);
+            } else {
+                logger.error('Image processing failed for ' + filename + ': ' + err.message);
+            }
             throw err;
         }
 
@@ -190,7 +197,13 @@ function initialize() {
     });
 
     imageWorker.on('failed', async (job, err) => {
-        logger.error('Image processing failed for job ' + (job?.id || '?') + ': ' + (err?.message || err));
+        const msg = (err && err.message) || '';
+        const validation = /Image too small|Invalid or corrupted image|Unsupported MIME type|File (empty|not found)|exceeds max size|Unable to read image dimensions|sharp library not available/.test(msg);
+        if (validation) {
+            logger.warn('Image rejected for job ' + (job?.id || '?') + ': ' + msg);
+        } else {
+            logger.error('Image processing failed for job ' + (job?.id || '?') + ': ' + msg);
+        }
         if (job && job.attemptsMade >= (job.opts?.attempts || 3)) {
             try {
                 const queues = getQueues();

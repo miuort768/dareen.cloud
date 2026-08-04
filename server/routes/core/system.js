@@ -10,24 +10,9 @@ const { audit } = require('../../services/auditService');
 const { createBackup, getBackupHistory } = require('../../services/backupService');
 const { getMetrics } = require('../../middleware/monitoring');
 
-// `dismissed_notifications` is a legacy raw table; current schema stores the
-// flag as notifications.is_dismissed. Guard raw SQL so it is skipped when the
-// table is absent — an unguarded statement would abort the whole transaction.
-async function hasDismissedNotificationsTable(tx) {
-    try {
-        const rows = await tx.$queryRawUnsafe(
-            "SELECT to_regclass('public.dismissed_notifications') IS NOT NULL AS ok"
-        );
-        return !!(rows && rows[0] && rows[0].ok);
-    } catch (e) {
-        return false;
-    }
-}
-
+// `dismissedNotifications` uses notifications.is_dismissed; reset helper.
 async function clearDismissedNotifications(tx) {
-    if (await hasDismissedNotificationsTable(tx)) {
-        await tx.$executeRawUnsafe('DELETE FROM dismissed_notifications');
-    }
+    await tx.notification.updateMany({ data: { isDismissed: 0 } });
 }
 
 router.use(authMiddleware);
@@ -127,10 +112,10 @@ router.get('/backup', async (req, res) => {
             prisma.whatsAppTemplate.findMany(),
         ]);
 
-        let dismissedNotifications = [];
-        try {
-            dismissedNotifications = await prisma.$queryRawUnsafe('SELECT id FROM dismissed_notifications');
-        } catch (e) { }
+        const dismissedNotifications = (await prisma.notification.findMany({
+            where: { isDismissed: 1 },
+            select: { id: true }
+        })).map(n => n.id);
 
         const studentsWithEnrollments = students.map(s => ({
             ...s,
@@ -353,15 +338,7 @@ router.post('/restore', async (req, res) => {
                 }
             }
 
-            if (data.dismissedNotifications) {
-                if (await hasDismissedNotificationsTable(tx)) {
-                    for (const n of data.dismissedNotifications) {
-                        try {
-                            await tx.$executeRawUnsafe('INSERT INTO dismissed_notifications (id) VALUES ($1) ON CONFLICT (id) DO NOTHING', [n.id]);
-                        } catch (e) { }
-                    }
-                }
-            }
+            const dismissedSet = new Set((data.dismissedNotifications || []).map(n => (typeof n === 'string' ? n : n.id)));
 
             if (data.notifications) {
                 for (const n of data.notifications) {
@@ -371,6 +348,7 @@ router.post('/restore', async (req, res) => {
                             senderName: n.senderName || 'System', title: n.title, message: n.message || '',
                             type: n.type || 'info', time: n.time, read: n.read ?? 0,
                             conversationId: n.conversationId || '',
+                            isDismissed: dismissedSet.has(n.id) ? 1 : 0,
                         }
                     });
                 }
@@ -626,20 +604,21 @@ router.delete('/users/:id', async (req, res) => {
 
 router.get('/dismissed-notifications', async (req, res) => {
     try {
-        const dismissed = await prisma.$queryRawUnsafe('SELECT id FROM dismissed_notifications');
-        res.json((dismissed || []).map(d => d.id));
+        const rows = await prisma.notification.findMany({
+            where: { isDismissed: 1 },
+            select: { id: true }
+        });
+        res.json((rows || []).map(r => r.id));
     } catch (err) {
-        if (err?.code === 'P2021' || err?.message?.includes('does not exist') || err?.message?.includes('no such table')) {
-            return res.json([]);
-        }
         ResponseHandler.serverError(res, err, 'System route error');
     }
 });
 
 router.post('/dismissed-notifications', async (req, res) => {
     const { id } = req.body;
+    if (!id) return res.status(400).json({ error: 'id is required' });
     try {
-        await prisma.$executeRawUnsafe('INSERT INTO dismissed_notifications (id) VALUES ($1) ON CONFLICT (id) DO NOTHING', [id]);
+        await prisma.notification.update({ where: { id }, data: { isDismissed: 1 } });
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
@@ -648,7 +627,7 @@ router.post('/dismissed-notifications', async (req, res) => {
 
 router.delete('/dismissed-notifications/reset', async (req, res) => {
     try {
-        await prisma.$executeRawUnsafe('DELETE FROM dismissed_notifications');
+        await prisma.notification.updateMany({ data: { isDismissed: 0 } });
         res.json({ success: true });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'System route error');
