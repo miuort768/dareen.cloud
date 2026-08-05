@@ -38,7 +38,7 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
     return (
         <div className={cn(
             "group relative flex items-center gap-3 p-3 pe-2 w-full sm:min-w-[300px] sm:max-w-[380px] bg-card border border-border shadow-elevation-3 rounded-2xl transition-all duration-500 overflow-hidden",
-            isExiting ? "opacity-0 scale-95 translate-x-4" : "animate-in slide-in-from-start-8 fade-in",
+            isExiting ? "opacity-0 scale-95 -translate-x-4" : "animate-in slide-in-from-left-8 fade-in",
             "hover:shadow-elevation-4 hover:-translate-y-0.5"
         )}>
             <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ring-1 shadow-sm", iconBg, iconText, ring)}>
@@ -72,7 +72,7 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
 
 export const ToastContainer = ({ toasts, onClose }: { toasts: ToastProps[]; onClose: (id: string) => void }) => {
     return (
-        <div className="fixed bottom-4 end-4 md:start-auto md:end-6 md:bottom-6 z-[900] flex flex-col items-end gap-3 pointer-events-none" dir="rtl">
+        <div className="fixed bottom-4 left-4 md:left-6 md:bottom-6 z-[900] flex flex-col items-start gap-3 pointer-events-none">
             <div className="pointer-events-auto flex flex-col gap-2.5 w-full max-w-[380px]">
                 {toasts.map(toast => (
                     <Toast key={toast.id} {...toast} onClose={onClose} />
