@@ -4,7 +4,6 @@ import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 import { useCurrentUser } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
-import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { cn } from '../../lib/utils';
 import { useUnreadStore } from '../../store/unreadStore';
@@ -168,15 +167,13 @@ export const Header = memo(() => {
                     )}
 
                     <Link to={userLink} className="shrink-0">
-                        <Avatar className="w-8 h-8 lg:w-9 lg:h-9 ring-2 ring-border hover:ring-primary/30 transition-all">
+                        <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-gradient-to-br from-primary-soft to-primary-light flex items-center justify-center ring-1 ring-border hover:ring-primary/40 hover:shadow-md transition-all cursor-pointer">
                             {currentUser?.avatar ? (
-                                <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
+                                <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full rounded-xl object-cover" />
                             ) : (
-                                <AvatarFallback className="bg-gradient-to-br from-primary-soft to-primary-light text-on-primary">
-                                    <User size={16} className="lg:size-[18px]" />
-                                </AvatarFallback>
+                                <User size={17} className="text-on-primary lg:size-[18px]" />
                             )}
-                        </Avatar>
+                        </div>
                     </Link>
                 </div>
             </div>
