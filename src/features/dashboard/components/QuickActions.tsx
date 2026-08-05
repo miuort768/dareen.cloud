@@ -65,35 +65,28 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 )}
             </button>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 gap-2.5">
                 {actions.map((action, i) => {
                     const Icon = action.icon;
 
                     return (
                         <Link key={`action-${i}`} to={action.href} className="block h-full">
                             <div className={cn(
-                                "group h-full p-4 rounded-2xl bg-card border border-border",
-                                "hover:border-border-strong transition-all duration-200",
-                                "font-dash"
+                                "group h-full p-4 sm:p-4 rounded-2xl bg-card border border-border",
+                                "hover:border-primary/30 hover:shadow-sm transition-all duration-200",
+                                "active:scale-[0.97]"
                             )}>
-                                <div className="flex items-center gap-3">
+                                <div className="flex flex-col items-center gap-2.5 text-center">
                                     <div className={cn(
-                                        "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
+                                        "w-11 h-11 rounded-xl flex items-center justify-center",
                                         action.color,
                                         "group-hover:scale-105 transition-transform duration-200"
                                     )}>
-                                        <Icon size={18} />
+                                        <Icon size={20} />
                                     </div>
-
-                                    <div className="flex-1 min-w-0">
-                                        <h3 className="font-bold text-sm text-main leading-tight truncate">
-                                            {action.title}
-                                        </h3>
-                                        <div className="flex items-center gap-1 text-[11px] font-medium text-muted group-hover:text-primary transition-colors mt-1">
-                                            <span>انتقال</span>
-                                            <ArrowLeft size={10} />
-                                        </div>
-                                    </div>
+                                    <h3 className="font-bold text-[13px] text-main leading-tight">
+                                        {action.title}
+                                    </h3>
                                 </div>
                             </div>
                         </Link>
