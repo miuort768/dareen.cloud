@@ -106,7 +106,7 @@ export const EvaluationsHeader = ({ stats, showAddButton, searchTerm, onSearchCh
                             className="w-full bg-white/15 backdrop-blur-sm border border-white/20 text-white text-[11px] font-bold ps-9 pe-3 py-2.5 outline-none focus:bg-white/20 focus:border-white/40 rounded-xl transition-all placeholder:text-white/40"
                         />
                         {searchTerm && (
-                            <button onClick={() => onSearchChange('')} className="absolute end-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors">
+                            <button aria-label="مسح البحث" onClick={() => onSearchChange('')} className="absolute end-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors">
                                 <X size={13} />
                             </button>
                         )}

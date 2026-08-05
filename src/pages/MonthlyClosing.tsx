@@ -164,10 +164,10 @@ export const MonthlyClosing = () => {
                     </div>
                     <div className="relative z-10 flex flex-wrap items-center gap-2 mt-4">
                         <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-3 py-1.5 border border-white/10">
-                            <input type="date" className="w-[95px] bg-transparent text-xs font-bold text-white outline-none border-none [color-scheme:var(--color-scheme)] placeholder:text-white/40"
+                            <input aria-label="تاريخ البداية" type="date" className="w-[95px] bg-transparent text-xs font-bold text-white outline-none border-none [color-scheme:var(--color-scheme)] placeholder:text-white/40"
                                 value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                             <span className="text-white/50">–</span>
-                            <input type="date" className="w-[95px] bg-transparent text-xs font-bold text-white outline-none border-none [color-scheme:var(--color-scheme)] placeholder:text-white/40"
+                            <input aria-label="تاريخ النهاية" type="date" className="w-[95px] bg-transparent text-xs font-bold text-white outline-none border-none [color-scheme:var(--color-scheme)] placeholder:text-white/40"
                                 value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                         </div>
                         <button onClick={handleRefresh}

@@ -136,9 +136,9 @@ export const SessionsModal = ({
                                     if (totalPages <= 1) return null;
                                     return (
                                         <div className="flex items-center gap-2">
-                                            <button disabled={sessionsPage === 1} onClick={() => onPageChange(Math.max(1, sessionsPage - 1))} className="w-6 h-6 flex items-center justify-center rounded-lg border border-border disabled:opacity-30 text-muted hover:bg-surface transition-all"><ChevronRight size={14} /></button>
+                                            <button aria-label="الصفحة السابقة" disabled={sessionsPage === 1} onClick={() => onPageChange(Math.max(1, sessionsPage - 1))} className="w-6 h-6 flex items-center justify-center rounded-lg border border-border disabled:opacity-30 text-muted hover:bg-surface transition-all"><ChevronRight size={14} /></button>
                                             <span className="text-micro font-medium text-muted">{sessionsPage} / {totalPages}</span>
-                                            <button disabled={sessionsPage === totalPages} onClick={() => onPageChange(Math.min(totalPages, sessionsPage + 1))} className="w-6 h-6 flex items-center justify-center rounded-lg border border-border disabled:opacity-30 text-muted hover:bg-surface transition-all"><ChevronLeft size={14} /></button>
+                                            <button aria-label="الصفحة التالية" disabled={sessionsPage === totalPages} onClick={() => onPageChange(Math.min(totalPages, sessionsPage + 1))} className="w-6 h-6 flex items-center justify-center rounded-lg border border-border disabled:opacity-30 text-muted hover:bg-surface transition-all"><ChevronLeft size={14} /></button>
                                         </div>
                                     );
                                 })()}

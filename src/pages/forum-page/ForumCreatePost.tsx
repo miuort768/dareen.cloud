@@ -9,7 +9,7 @@ interface ForumCreatePostProps {
 export const ForumCreatePost = ({ newPostContent, setNewPostContent, handleCreatePost }: ForumCreatePostProps) => (
     <div className="bg-card rounded-card p-5">
         <div className="space-y-3">
-            <textarea value={newPostContent}
+            <textarea aria-label="اكتب منشورك" value={newPostContent}
                 onChange={(e) => setNewPostContent(e.target.value)}
                 className="w-full bg-background rounded-card p-4 min-h-[100px] text-sm font-medium text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all placeholder:text-muted resize-none border border-border leading-relaxed"
                 placeholder="شارك فكرة أو سؤال…" />

@@ -35,6 +35,7 @@ export const ChatInputFooter = ({ newMessage, onMessageChange, onSend, isSending
         <footer className="bg-surface dark:bg-card px-3 py-3 z-10 flex items-center gap-3">
             <div className="flex-1 relative flex items-center">
                 <textarea
+                    aria-label="اكتب رسالة"
                     rows={1}
                     value={newMessage}
                     onInput={(e) => { const target = e.target as HTMLTextAreaElement; target.style.height = 'auto'; target.style.height = `${Math.min(target.scrollHeight, 150)}px`; }}

@@ -53,7 +53,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                             <p className="text-micro font-medium text-on-primary opacity-70 tracking-widest mt-0.5">إدخال مباشر إلى سجل الحسابات</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-60 hover:opacity-100 hover:bg-white/15 transition-colors rounded-xl"><X size={18} /></button>
+                    <button aria-label="إغلاق" onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary opacity-60 hover:opacity-100 hover:bg-white/15 transition-colors rounded-xl"><X size={18} /></button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-4 md:p-8 space-y-6">

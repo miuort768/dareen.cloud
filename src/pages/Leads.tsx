@@ -252,7 +252,7 @@ export const Leads = () => {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 {searchTerm && (
-                                    <button onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted hover:text-main transition-colors">
+                                    <button aria-label="مسح البحث" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted hover:text-main transition-colors">
                                         <X size={14} />
                                     </button>
                                 )}

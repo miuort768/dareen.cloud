@@ -185,7 +185,7 @@ export const CurrenciesSection = ({
                                         <td className="py-3 px-4 text-muted">{r.sellRate}</td>
                                         <td className="py-3 px-4 text-muted">{new Date(r.effectiveDate).toLocaleDateString('ar')}</td>
                                         <td className="py-3 px-4 text-end">
-                                            <button onClick={() => removeRate(r.id)} className="p-2 rounded-lg hover:bg-error-soft text-error transition-all"><Trash2 size={13} /></button>
+                                            <button aria-label="حذف سعر الصرف" onClick={() => removeRate(r.id)} className="p-2 rounded-lg hover:bg-error-soft text-error transition-all"><Trash2 size={13} /></button>
                                         </td>
                                     </tr>
                                 ))}

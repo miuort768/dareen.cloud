@@ -274,16 +274,16 @@ export const TeacherInvoices = () => {
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
                     <div className="flex flex-wrap items-center gap-3 mb-4">
                         <div className="flex items-center gap-2 bg-card border border-border/30 rounded-xl px-3 py-2">
-                            <input type="date" className="w-[120px] bg-transparent text-xs font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
+                            <input aria-label="تاريخ البداية" type="date" className="w-[120px] bg-transparent text-xs font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
                                 value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                             <span className="text-muted">–</span>
-                            <input type="date" className="w-[120px] bg-transparent text-xs font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
+                            <input aria-label="تاريخ النهاية" type="date" className="w-[120px] bg-transparent text-xs font-bold text-main outline-none border-none [color-scheme:var(--color-scheme)]"
                                 value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                         </div>
                         <div className="flex-1 flex items-center gap-2">
-                            <input type="text" placeholder="بحث باسم المعلمة..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
+                            <input aria-label="بحث باسم المعلمة" type="text" placeholder="بحث باسم المعلمة..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
                                 className="flex-1 bg-card border border-border/30 rounded-xl px-3.5 py-2 text-xs font-bold text-main placeholder:text-muted/60 focus:outline-none focus:border-primary transition-all" />
-                            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}
+                            <select aria-label="فلترة الحالة" value={filterStatus} onChange={e => setFilterStatus(e.target.value)}
                                 className="bg-card border border-border/30 rounded-xl px-3 py-2 text-xs font-bold text-main focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer">
                                 <option value="all">الكل</option>
                                 <option value={INVOICE_STATUS.PAID}>مدفوعة</option>

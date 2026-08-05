@@ -53,7 +53,7 @@ export const HistoryModal = ({ student, evaluations, canDelete, onDelete, onClos
                                     <div className="flex items-center gap-2">
                                         <span className="text-micro font-normal text-muted tabular-nums">{format(new Date(ev.created_at || ev.date), 'dd/MM/yyyy')}</span>
                                         {canDelete(ev) && (
-                                            <button onClick={() => onDelete(ev.id)} className="text-muted hover:text-error transition-colors p-1 hover:bg-error-soft rounded-xl"><Trash2 size={12} /></button>
+                                            <button aria-label="حذف التقييم" onClick={() => onDelete(ev.id)} className="text-muted hover:text-error transition-colors p-1 hover:bg-error-soft rounded-xl"><Trash2 size={12} /></button>
                                         )}
                                     </div>
                                 </div>

@@ -78,10 +78,10 @@ export const AttendanceFilters = ({
                 {periodFilter === 'custom' && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="flex flex-wrap items-center gap-2 mb-3 pb-3 border-b border-border">
                         <span className="text-[9px] font-bold text-muted">من</span>
-                        <input type="date" value={customStartDate || ''} onChange={e => onCustomStartChange?.(e.target.value)}
+                        <input aria-label="تاريخ البداية" type="date" value={customStartDate || ''} onChange={e => onCustomStartChange?.(e.target.value)}
                             className="px-2 py-1.5 bg-surface border border-border rounded-lg text-[9px] font-bold outline-none focus:border-primary transition-all" />
                         <span className="text-[9px] font-bold text-muted">إلى</span>
-                        <input type="date" value={customEndDate || ''} onChange={e => onCustomEndChange?.(e.target.value)}
+                        <input aria-label="تاريخ النهاية" type="date" value={customEndDate || ''} onChange={e => onCustomEndChange?.(e.target.value)}
                             className="px-2 py-1.5 bg-surface border border-border rounded-lg text-[9px] font-bold outline-none focus:border-primary transition-all" />
                     </motion.div>
                 )}
@@ -91,7 +91,7 @@ export const AttendanceFilters = ({
                     {/* Search */}
                     <div className="relative flex-1">
                         <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-                        <input type="text" placeholder="اسم الطالب، المادة..."
+                        <input aria-label="بحث بالاسم أو المادة" type="text" placeholder="اسم الطالب، المادة..."
                             value={searchTerm} onChange={(e) => onSearchChange(e.target.value)}
                             className="w-full ps-8 pe-3 py-2 bg-surface border border-border rounded-lg text-[10px] font-medium focus:outline-none focus:border-primary transition-all" />
                     </div>
