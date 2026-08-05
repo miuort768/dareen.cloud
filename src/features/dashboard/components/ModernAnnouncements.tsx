@@ -112,21 +112,21 @@ export const ModernAnnouncements = () => {
                                 {current.date}
                             </Badge>
                         </div>
-                        <h4 className="text-main font-bold text-sm mb-1 leading-tight">
+                        <h4 className="text-main font-bold text-[13px] mb-1 leading-tight">
                             {current.title}
                         </h4>
-                        <p className="text-muted text-xs leading-relaxed line-clamp-2">
+                        <p className="text-muted text-[11px] leading-relaxed line-clamp-2">
                             {current.content}
                         </p>
                     </div>
 
                     {announcements.length > 1 && (
                         <div className="absolute bottom-3 end-4 flex gap-1.5" onClick={e => e.stopPropagation()}>
-                            <Button variant="outline" size="icon" onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} aria-label="السابق" className="h-7 w-7 rounded-lg">
-                                <ChevronRight size={12} />
+                            <Button variant="outline" size="icon" onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} aria-label="السابق" className="h-8 w-8 rounded-lg">
+                                <ChevronRight size={13} />
                             </Button>
-                            <Button variant="outline" size="icon" onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} aria-label="التالي" className="h-7 w-7 rounded-lg">
-                                <ChevronLeft size={12} />
+                            <Button variant="outline" size="icon" onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} aria-label="التالي" className="h-8 w-8 rounded-lg">
+                                <ChevronLeft size={13} />
                             </Button>
                         </div>
                     )}

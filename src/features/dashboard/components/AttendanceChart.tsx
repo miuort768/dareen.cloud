@@ -44,7 +44,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
 
     return (
         <div>
-            <h3 className="text-xs font-bold text-muted mb-3">{label}</h3>
+            <h3 className="text-[13px] font-bold text-main mb-3">{label}</h3>
             <div className="flex flex-col items-center gap-4">
                 <div className="relative shrink-0">
                     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>

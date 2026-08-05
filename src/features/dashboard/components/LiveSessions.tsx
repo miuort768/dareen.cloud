@@ -162,15 +162,15 @@ export const LiveSessions = () => {
                         <Radio size={16} className="text-success" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-main">الحصص المباشرة</h3>
-                        <p className="text-[10px] text-muted">روابط البث المباشر</p>
+                        <h3 className="text-[13px] font-bold text-main">الحصص المباشرة</h3>
+                        <p className="text-[11px] text-muted">روابط البث المباشر</p>
                     </div>
                 </div>
                 {isTeacher && (
                     <Button
                         onClick={() => setShowDialog(true)}
                         size="sm"
-                        className="h-8 px-3 rounded-xl text-[11px] font-bold gap-1.5 bg-primary text-on-primary"
+                        className="h-9 px-3.5 rounded-xl text-[11px] font-bold gap-1.5 bg-primary text-on-primary"
                     >
                         <Plus size={13} />
                         بدء حصة
@@ -201,11 +201,11 @@ export const LiveSessions = () => {
                     <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-primary-soft flex items-center justify-center">
                         <Video size={28} className="text-primary/30" />
                     </div>
-                    <p className="text-sm font-bold text-muted">لا توجد حصص مباشرة حالياً</p>
+                    <p className="text-[13px] font-bold text-muted">لا توجد حصص مباشرة حالياً</p>
                     <p className="text-[11px] text-muted/60 mt-1">ابدأ حصتك بضغطة واحدة</p>
                     {isTeacher && (
-                        <Button onClick={() => setShowDialog(true)} size="sm" className="mt-3 h-9 px-5 rounded-xl text-xs font-bold gap-1.5 bg-primary text-on-primary">
-                            <Plus size={14} /> بدء حصة
+                        <Button onClick={() => setShowDialog(true)} size="sm" className="mt-3 h-9 px-5 rounded-xl text-[11px] font-bold gap-1.5 bg-primary text-on-primary">
+                            <Plus size={13} /> بدء حصة
                         </Button>
                     )}
                 </div>
@@ -246,7 +246,7 @@ export const LiveSessions = () => {
                                     href={session.meetingUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="h-8 px-3 rounded-xl bg-primary text-on-primary text-[10px] font-bold flex items-center gap-1.5 hover:bg-primary-hover transition-colors"
+                                    className="h-8 px-3 rounded-xl bg-primary text-on-primary text-[11px] font-bold flex items-center gap-1.5 hover:bg-primary-hover transition-colors"
                                 >
                                     <ExternalLink size={11} />
                                     انضم
@@ -257,7 +257,7 @@ export const LiveSessions = () => {
                                     title="نسخ الرابط"
                                     aria-label="نسخ رابط الحصة"
                                 >
-                                    {copiedId === session.id ? <CheckCircle2 size={12} className="text-success" /> : <Copy size={12} />}
+                                    {copiedId === session.id ? <CheckCircle2 size={13} className="text-success" /> : <Copy size={13} />}
                                 </button>
                                 {isTeacher && (
                                     <button
@@ -266,7 +266,7 @@ export const LiveSessions = () => {
                                         title="تعديل الرابط"
                                         aria-label="تعديل رابط الحصة"
                                     >
-                                        <Pencil size={12} />
+                                        <Pencil size={13} />
                                     </button>
                                 )}
                                 {isTeacher && (
@@ -276,7 +276,7 @@ export const LiveSessions = () => {
                                         title="إنهاء الحصة"
                                         aria-label="إنهاء الحصة"
                                     >
-                                        <StopCircle size={12} />
+                                        <StopCircle size={13} />
                                     </button>
                                 )}
                             </div>

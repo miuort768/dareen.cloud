@@ -77,12 +77,12 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
 
     return (
         <div>
-            <h3 className="text-xs font-bold text-muted mb-3 flex items-center gap-2">
+            <h3 className="text-[13px] font-bold text-main mb-3 flex items-center gap-2">
                 <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", expired.length > 0 ? 'bg-error' : low.length > 0 ? 'bg-warning' : 'bg-success')} />
                 مركز التنبيهات
                 {urgencyLabel && (
                     <span className={cn(
-                        "px-1.5 py-0.5 rounded text-[9px] font-bold",
+                        "px-1.5 py-0.5 rounded text-[10px] font-bold",
                         expired.length > 0 ? 'bg-error/15 text-error' : 'bg-warning/15 text-warning'
                     )}>
                         {urgencyLabel}
@@ -100,7 +100,7 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
                             <alert.icon size={16} className={alert.iconColor} />
                         </div>
                         <div className="min-w-0 flex-1">
-                            <p className={cn("text-xs font-bold mb-0.5", alert.text)}>{alert.title}</p>
+                            <p className={cn("text-[13px] font-bold mb-0.5", alert.text)}>{alert.title}</p>
                             <p className="text-[11px] font-medium text-muted line-clamp-2 leading-relaxed">{alert.desc}</p>
                         </div>
                         <ChevronLeft size={14} className="text-muted shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity" />

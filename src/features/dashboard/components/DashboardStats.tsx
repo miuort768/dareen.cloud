@@ -55,7 +55,7 @@ const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
                     : item.value}
                 {item.prefix && <span className="text-xs font-medium text-muted me-1">{item.prefix}</span>}
             </p>
-            <p className="text-xs text-muted font-medium">{item.title}</p>
+            <p className="text-[13px] text-muted font-medium">{item.title}</p>
         </motion.div>
     );
 };

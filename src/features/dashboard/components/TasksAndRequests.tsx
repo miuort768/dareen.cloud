@@ -13,12 +13,12 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
     return (
         <div className="flex flex-col h-full">
             <div className="flex items-center justify-between mb-3">
-                <h3 className="text-xs font-bold text-muted flex items-center gap-2">
-                    <ListTodo size={12} className="text-primary" />
+                <h3 className="text-[13px] font-bold text-main flex items-center gap-2">
+                    <ListTodo size={13} className="text-primary" />
                     المهام والطلبات
                 </h3>
                 <Link to="/tasks">
-                    <Button variant="ghost" size="icon" className="w-7 h-7 rounded-lg" aria-label="عرض المهام">
+                    <Button variant="ghost" size="icon" className="w-8 h-8 rounded-lg" aria-label="عرض المهام">
                         <ChevronLeft size={14} />
                     </Button>
                 </Link>
@@ -42,11 +42,11 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                                 {task.priority === 'high' ? <AlertTriangle size={13} /> : <Clock size={13} />}
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-xs font-bold text-main truncate">{task.title}</p>
+                                <p className="text-[13px] font-bold text-main truncate">{task.title}</p>
                                 <div className="flex items-center gap-2 mt-0.5">
-                                    <span className="text-micro font-medium text-muted">{task.dueDate}</span>
+                                    <span className="text-[11px] font-medium text-muted">{task.dueDate}</span>
                                     {task.priority === 'high' && (
-                                        <Badge variant="destructive" className="text-micro">عاجل</Badge>
+                                        <Badge variant="destructive" className="text-[10px]">عاجل</Badge>
                                     )}
                                 </div>
                             </div>
@@ -57,7 +57,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                         <div className="w-10 h-10 rounded-xl bg-surface flex items-center justify-center mb-2">
                             <ListTodo size={18} className="text-dim" />
                         </div>
-                        <p className="text-micro font-bold text-muted">لا توجد مهام نشطة حالياً</p>
+                        <p className="text-[11px] font-bold text-muted">لا توجد مهام نشطة حالياً</p>
                     </div>
                 )}
             </div>

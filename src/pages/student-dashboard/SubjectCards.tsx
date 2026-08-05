@@ -20,8 +20,8 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
     return (
         <div>
             <div className="flex items-center justify-between mb-3">
-                <button onClick={() => navigate('/schedule')} className="text-primary text-xs font-bold">عرض الكل</button>
-                <h3 className="text-sm font-bold text-main">المواد</h3>
+                <button onClick={() => navigate('/schedule')} className="text-primary text-[11px] font-bold">عرض الكل</button>
+                <h3 className="text-[13px] font-bold text-main">المواد</h3>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -41,9 +41,9 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
                                     <BookOpen size={18} className={color.text} />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <h4 className="text-xs font-bold text-main truncate">{en.subject || 'دورة'}</h4>
+                                    <h4 className="text-[13px] font-bold text-main truncate">{en.subject || 'دورة'}</h4>
                                     {en.teacherName && (
-                                        <p className="text-micro text-muted flex items-center gap-1">
+                                        <p className="text-[11px] text-muted flex items-center gap-1">
                                             <User size={9} /> {en.teacherName}
                                         </p>
                                     )}
@@ -60,8 +60,8 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
                             </div>
 
                             <div className="flex items-center justify-between">
-                                <span className="text-micro text-muted">{used} من {total} حصة</span>
-                                <span className={`text-micro font-bold ${color.text}`}>{progress}%</span>
+                                <span className="text-[11px] text-muted">{used} من {total} حصة</span>
+                                <span className={`text-[11px] font-bold ${color.text}`}>{progress}%</span>
                             </div>
                         </div>
                     );

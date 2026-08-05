@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Wallet, ArrowLeft } from 'lucide-react';
+import { Wallet, ArrowLeft, RefreshCw } from 'lucide-react';
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks';
 import { HeroSection } from './HeroSection';
 import { ChildrenCards } from './ChildrenCards';
@@ -69,7 +69,9 @@ export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sess
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
-                        <button onClick={onRefresh} className="w-10 h-10 rounded-xl border border-border flex items-center justify-center text-muted hover:bg-hover transition-colors">تحديث</button>
+                        <button onClick={onRefresh} className="w-10 h-10 rounded-xl border border-border flex items-center justify-center text-muted hover:bg-hover transition-colors" aria-label="تحديث">
+                            <RefreshCw size={16} />
+                        </button>
                     </div>
                 </div>
             </header>

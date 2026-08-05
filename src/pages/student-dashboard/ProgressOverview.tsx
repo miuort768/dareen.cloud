@@ -43,7 +43,7 @@ export const ProgressOverview = ({ stats, points, rank, nextRank }: ProgressOver
 
     return (
         <div className="rounded-2xl bg-card border border-border p-5 md:p-6 transition-all duration-300 hover:shadow-elevation-1">
-            <h3 className="text-base md:text-[22px] font-bold text-main mb-5">التقدم الأكاديمي</h3>
+            <h3 className="text-base font-bold text-main mb-5">التقدم الأكاديمي</h3>
 
             <div className="space-y-4">
                 <ProgressBar value={stats.attendanceRate} max={100} color="text-success" label="الحضور" icon={CheckCircle2} />

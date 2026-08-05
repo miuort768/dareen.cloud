@@ -14,10 +14,10 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
     return (
         <div className="bg-card border border-border rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-bold text-main">الأبناء</h3>
+                <h3 className="text-[13px] font-bold text-main">الأبناء</h3>
                 <button
                     onClick={() => navigate('/parent-students')}
-                    className="text-micro font-bold text-primary flex items-center gap-1 hover:underline"
+                    className="text-[11px] font-bold text-primary flex items-center gap-1 hover:underline"
                 >
                     عرض الكل <ChevronLeft size={12} />
                 </button>
@@ -41,8 +41,8 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
                                 </span>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-xs font-bold text-main truncate">{child.name}</p>
-                                <div className="flex items-center gap-2 text-micro text-muted mt-0.5">
+                                <p className="text-[13px] font-bold text-main truncate">{child.name}</p>
+                                <div className="flex items-center gap-2 text-[11px] text-muted mt-0.5">
                                     {child.grade && (
                                         <span className="inline-flex items-center gap-1">
                                             <BookOpen size={9} /> {child.grade}
@@ -65,7 +65,7 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
                                         />
                                     </svg>
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <span className="text-micro font-bold text-main">{progress}%</span>
+                                        <span className="text-[11px] font-bold text-main">{progress}%</span>
                                     </div>
                                 </div>
                             </div>

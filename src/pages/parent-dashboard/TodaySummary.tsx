@@ -94,7 +94,7 @@ export const TodaySummary = ({ sessions, children: kids, todayTasks }: TodaySumm
                         <p className="text-2xl md:text-[28px] font-bold text-main leading-none tracking-tight mb-1">
                             {val.value}
                         </p>
-                        <p className="text-xs font-medium text-muted">{card.label}</p>
+                        <p className="text-[13px] font-medium text-muted">{card.label}</p>
                         {val.subtitle && (
                             <p className={`text-[11px] font-semibold mt-1.5 ${card.text}`}>{val.subtitle}</p>
                         )}

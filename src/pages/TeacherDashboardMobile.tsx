@@ -108,32 +108,32 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                 <div className="px-5 pt-5 pb-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary to-primary-active flex items-center justify-center shadow-lg shadow-primary/20">
+                            <div className="w-11 h-11 rounded-xl bg-primary flex items-center justify-center">
                                 <UserIcon size={18} className="text-on-primary" />
                             </div>
                             <div>
-                                <h1 className="text-sm font-bold text-main leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
+                                <h1 className="text-base font-bold text-main leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
                                 <p className="text-[11px] font-medium text-muted">معلم</p>
                             </div>
                         </div>
-                        <div className="w-8 h-8 rounded-xl bg-primary-soft flex items-center justify-center relative">
-                            <Bell size={15} className="text-muted" />
+                        <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center relative">
+                            <Bell size={15} className="text-primary" />
                             <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface" />
                         </div>
                     </div>
                     {/* Stats row */}
                     <div className="flex items-center gap-2 mt-3">
-                        <div className="flex-1 bg-primary-soft rounded-xl py-2 px-3 flex items-center gap-2 border border-primary/20">
-                            <Clock size={12} className="text-primary shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{stats.todaySessions || 0}</span><span className="text-muted text-micro font-medium">حصص</span></div>
+                        <div className="flex-1 bg-primary-soft rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20">
+                            <Clock size={13} className="text-primary shrink-0" />
+                            <div className="flex items-baseline gap-1"><span className="text-main font-bold text-base">{stats.todaySessions || 0}</span><span className="text-muted text-[11px] font-medium">حصص</span></div>
                         </div>
-                        <div className="flex-1 bg-primary-soft rounded-xl py-2 px-3 flex items-center gap-2 border border-primary/20">
-                            <Users size={12} className="text-info shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{stats.studentsCount || 0}</span><span className="text-muted text-micro font-medium">طلاب</span></div>
+                        <div className="flex-1 bg-primary-soft rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20">
+                            <Users size={13} className="text-info shrink-0" />
+                            <div className="flex items-baseline gap-1"><span className="text-main font-bold text-base">{stats.studentsCount || 0}</span><span className="text-muted text-[11px] font-medium">طلاب</span></div>
                         </div>
-                        <div className="flex-1 bg-primary-soft rounded-xl py-2 px-3 flex items-center gap-2 border border-primary/20">
-                            <Award size={12} className="text-success shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main font-bold text-sm">{(stats.attendanceRate || 0)}%</span><span className="text-muted text-micro font-medium">حضور</span></div>
+                        <div className="flex-1 bg-primary-soft rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20">
+                            <Award size={13} className="text-success shrink-0" />
+                            <div className="flex items-baseline gap-1"><span className="text-main font-bold text-base">{(stats.attendanceRate || 0)}%</span><span className="text-muted text-[11px] font-medium">حضور</span></div>
                         </div>
                     </div>
                 </div>
@@ -173,15 +173,15 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 </GlassCard>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
-                                        <Sparkles size={13} className="text-primary" />
-                                        <h2 className="text-xs font-bold text-muted">البث المباشر</h2>
+                                        <Sparkles size={14} className="text-primary" />
+                                        <h2 className="text-[13px] font-bold text-main">البث المباشر</h2>
                                     </div>
                                     <Card><div className="p-3.5"><LiveSessions /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
-                                        <Sparkles size={13} className="text-warning" />
-                                        <h2 className="text-xs font-bold text-muted">الإعلانات</h2>
+                                        <Sparkles size={14} className="text-warning" />
+                                        <h2 className="text-[13px] font-bold text-main">الإعلانات</h2>
                                     </div>
                                     <Card><div className="p-3.5"><ModernAnnouncements /></div></Card>
                                 </section>
@@ -192,8 +192,8 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 {timeline.length > 0 ? (
                                     <section>
                                         <div className="flex items-center gap-2 mb-3 px-1">
-                                            <Sparkles size={13} className="text-info" />
-                                            <h2 className="text-xs font-bold text-muted">حصص اليوم</h2>
+                                            <Sparkles size={14} className="text-info" />
+                                            <h2 className="text-[13px] font-bold text-main">حصص اليوم</h2>
                                         </div>
                                         <GlassCard className="p-4">
                                             <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
@@ -221,22 +221,22 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 </div>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
-                                        <Sparkles size={13} className="text-success" />
-                                        <h2 className="text-xs font-bold text-muted">الإنجازات</h2>
+                                        <Sparkles size={14} className="text-success" />
+                                        <h2 className="text-[13px] font-bold text-main">الإنجازات</h2>
                                     </div>
                                     <Card><div className="p-3.5"><TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
-                                        <Sparkles size={13} className="text-error" />
-                                        <h2 className="text-xs font-bold text-muted">المهام والطلبات</h2>
+                                        <Sparkles size={14} className="text-error" />
+                                        <h2 className="text-[13px] font-bold text-main">المهام والطلبات</h2>
                                     </div>
                                     <Card><div className="p-3.5"><TasksAndRequests tasks={tasks} /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
-                                        <Sparkles size={13} className="text-warning" />
-                                        <h2 className="text-xs font-bold text-muted">أعلى حضور</h2>
+                                        <Sparkles size={14} className="text-warning" />
+                                        <h2 className="text-[13px] font-bold text-main">أعلى حضور</h2>
                                     </div>
                                     <Card><div className="p-3.5"><TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} /></div></Card>
                                 </section>
@@ -256,13 +256,13 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                             return (
                                                     <motion.button key={tab.id} whileTap={{ scale: 0.9 }}
                                                     onClick={() => handleTabChange(tab.id)}
-                                                    className="relative flex flex-col items-center gap-0.5 py-1 px-4 min-w-[64px]"
+                                                    className="relative flex flex-col items-center gap-0.5 py-1 px-5 min-w-[60px]"
                                 >
                                     <div className={cn(
                                         "rounded-xl p-1.5 transition-all duration-300 relative",
-                                        isActive && "bg-gradient-to-br from-primary/10 to-primary-active/10"
+                                        isActive && "bg-primary/10"
                                     )}>
-                                        <tab.icon size={20} strokeWidth={isActive ? 2 : 1.5}
+                                        <tab.icon size={20} strokeWidth={isActive ? 2.2 : 1.5}
                                             className={cn("transition-colors duration-300", isActive ? "text-primary" : "text-muted")}
                                         />
                                     </div>

@@ -46,7 +46,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 }}
                 className={cn(
                     "w-full p-4 rounded-2xl border-2 border-primary/30",
-                    "bg-primary text-on-primary font-bold text-base",
+                    "bg-primary text-on-primary font-bold text-sm",
                     "hover:bg-primary-hover hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20",
                     "active:bg-primary-active",
                     "transition-all duration-200",
@@ -55,9 +55,9 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 )}
             >
                 <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 group-hover:bg-white/30 transition-colors">
-                    <Play size={20} fill="currentColor" />
+                    <Play size={18} fill="currentColor" />
                 </span>
-                <span className="text-lg">بدء الحصة الآن</span>
+                <span className="text-base">بدء الحصة الآن</span>
                 {sessionAvailable && (
                     <span className="px-2 py-0.5 rounded-lg bg-success text-on-success text-[10px] font-bold animate-pulse">
                         متاح

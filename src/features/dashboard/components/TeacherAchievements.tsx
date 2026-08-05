@@ -18,8 +18,8 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
     return (
         <div>
             <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xs font-bold text-muted flex items-center gap-2">
-                        <Star size={12} className="text-warning" />
+                    <h3 className="text-[13px] font-bold text-main flex items-center gap-2">
+                        <Star size={13} className="text-warning" />
                         {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
                     </h3>
                     {isTeacher && (
@@ -32,7 +32,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     <div className="relative z-10">
                         <div className="flex items-center gap-1.5 mb-2">
                             <TrendingUp size={12} className="text-white/70" />
-                            <span className="text-micro font-bold text-white/70">
+                            <span className="text-[11px] font-bold text-white/70">
                                 {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
                             </span>
                         </div>
@@ -40,10 +40,10 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                             <span className="text-2xl font-bold tabular-nums text-white">
                                 {isTeacher ? (stats.monthNetProfit || 0).toLocaleString('ar-EG') : stats.expectedCollection.toLocaleString('ar-EG')}
                             </span>
-                            <span className="text-micro font-bold text-white/70">{CURRENCY_SYMBOL}</span>
+                            <span className="text-[11px] font-bold text-white/70">{CURRENCY_SYMBOL}</span>
                         </div>
                         {isTeacher && (
-                            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/15 backdrop-blur-sm rounded-xl text-micro font-bold text-white">
+                            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/15 backdrop-blur-sm rounded-xl text-[11px] font-bold text-white">
                                 <Award size={10} />
                                 {stats.teacherPoints || 0} XP
                             </div>
@@ -58,7 +58,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                         </div>
                         <div>
                             <span className="text-lg font-bold text-error tabular-nums">{expiredCount}</span>
-                            <p className="text-micro font-bold text-error/70">منتهي</p>
+                            <p className="text-[11px] font-bold text-error/70">منتهي</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-3 p-3 rounded-xl bg-warning/10 border border-warning/20">
@@ -67,7 +67,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                         </div>
                         <div>
                             <span className="text-lg font-bold text-warning tabular-nums">{lowCount}</span>
-                            <p className="text-micro font-bold text-warning/70">مستحق</p>
+                            <p className="text-[11px] font-bold text-warning/70">مستحق</p>
                         </div>
                     </div>
                 </div>
