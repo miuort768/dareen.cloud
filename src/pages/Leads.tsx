@@ -33,7 +33,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
                         <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/15"><AlertTriangle size={18} className="text-on-error" /></div>
                         <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
                     </div>
-                    <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-on-error/70 rounded-xl transition-all" aria-label="إغلاق"><X size={16} /></button>
+                    <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-error rounded-lg transition-all" aria-label="إغلاق"><X size={14} /></button>
                 </div>
                 <div className="p-5">
                     <p className="text-sm font-bold text-main mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
