@@ -1,5 +1,6 @@
 import { TrendingUp, Wallet, AlertCircle, FileText, CheckCircle, XCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 
 interface InvoiceStatsProps {
     totalRevenue: number;
@@ -21,9 +22,9 @@ const stats = [
 
 const getValue = (props: InvoiceStatsProps, key: string) => {
   switch (key) {
-    case 'total': return `${props.totalRevenue.toLocaleString()} ج.م`;
-    case 'pending': return `${props.pendingRevenue.toLocaleString()} ج.م`;
-    case 'overdue': return `${props.overdueRevenue.toLocaleString()} ج.م`;
+    case 'total': return `${props.totalRevenue.toLocaleString()} ${CURRENCY_SYMBOL}`;
+    case 'pending': return `${props.pendingRevenue.toLocaleString()} ${CURRENCY_SYMBOL}`;
+    case 'overdue': return `${props.overdueRevenue.toLocaleString()} ${CURRENCY_SYMBOL}`;
     case 'count': return props.invoicesLength;
     case 'paid': return props.paidCount;
     case 'unpaid': return props.pendingCount;

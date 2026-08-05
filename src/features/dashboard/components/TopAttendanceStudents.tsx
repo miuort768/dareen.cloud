@@ -9,7 +9,7 @@ interface TopAttendanceStudentsProps {
 
 export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanceStudentsProps) => {
     const topPresentStudents = useMemo(() => {
-        const studentStats: Record<string, { name: string; count: number }> = {};
+        const studentStats: Record<string, { id: string; name: string; count: number }> = {};
         const now = new Date();
         const currentMonth = now.toISOString().slice(0, 7);
 
@@ -20,7 +20,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
             if (isCompleted && isThisMonth) {
                 const id = s.studentId || s.studentName;
                 if (!studentStats[id]) {
-                    studentStats[id] = { name: s.studentName, count: 0 };
+                    studentStats[id] = { id, name: s.studentName, count: 0 };
                 }
                 studentStats[id].count += 1;
             }
@@ -56,7 +56,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                     topPresentStudents.map((stu, i) => (
                         <div
                             key={`att-${i}`}
-                            onClick={() => onStudentClick?.({ id: stu.name, name: stu.name })}
+                            onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
                             className="flex items-center justify-between p-2 rounded-xl bg-background border border-border hover:border-warning transition-all cursor-pointer"
                         >
                             <div className="flex items-center gap-2">
@@ -91,7 +91,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
 
             <div className="mt-2.5 bg-warning p-2.5 text-on-warning rounded-xl flex items-center justify-between">
                 <div>
-                    <p className="text-micro font-bold text-warning">إجمالي حصص الشهر</p>
+                    <p className="text-micro font-bold text-on-warning">إجمالي حصص الشهر</p>
                     <p className="text-base font-bold tabular-nums">{totalMonthSessions}</p>
                 </div>
                 <div className="w-7 h-7 rounded-lg bg-white/15 backdrop-blur-sm flex items-center justify-center">

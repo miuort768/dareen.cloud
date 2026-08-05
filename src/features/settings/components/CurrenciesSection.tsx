@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Coins, Plus, Trash2, RefreshCw } from 'lucide-react';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 import { SectionCard, SectionTitle, InputField, PrimaryBtn } from './SettingsUI';
 import { settingsService } from '../services/settingsService';
 import type { Currency, ExchangeRate } from '../services/settingsService';
@@ -43,7 +44,7 @@ export const CurrenciesSection = ({
             setNewCode(''); setNewName(''); setNewSymbol('');
             showNotify('تم إضافة العملة');
             fetchData();
-        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ'); }
+        } catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ'); }
     };
 
     const removeCurrency = async (code: string) => {
@@ -51,7 +52,7 @@ export const CurrenciesSection = ({
             await settingsService.deleteCurrency(code);
             showNotify('تم حذف العملة');
             fetchData();
-        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ'); }
+        } catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ'); }
     };
 
     const addRate = async () => {
@@ -67,7 +68,7 @@ export const CurrenciesSection = ({
             setNewRate({ fromCurrency: '', toCurrency: '', buyRate: '', sellRate: '', notes: '' });
             showNotify('تم إضافة سعر الصرف');
             fetchData();
-        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ'); }
+        } catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ'); }
     };
 
     const removeRate = async (id: number) => {
@@ -75,7 +76,7 @@ export const CurrenciesSection = ({
             await settingsService.deleteExchangeRate(id);
             showNotify('تم حذف سعر الصرف');
             fetchData();
-        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ'); }
+        } catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ'); }
     };
 
     const setAsDefault = (code: string) => {
@@ -147,7 +148,7 @@ export const CurrenciesSection = ({
                     </div>
 
                     <div className="mt-4 p-4 bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 rounded-xl">
-                        <p className="text-xs font-bold text-primary">العملة الافتراضية: {localCurrency || 'ج.م'}</p>
+                        <p className="text-xs font-bold text-primary">العملة الافتراضية: {localCurrency || CURRENCY_SYMBOL}</p>
                     </div>
                 </>
             )}

@@ -3,6 +3,8 @@ import { X, Calendar, CheckCircle2, XCircle, Clock, AlertCircle, Trash2, Edit2, 
 import { api } from '../../../lib/api';
 import { Skeleton } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
+import { useShowNotification } from '../../../context/AppContext';
+import { confirm } from '../../../lib/confirmDialog';
 import type { Session } from '../types';
 
 interface AttendanceHistoryModalProps {
@@ -22,6 +24,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     const [loading, setLoading] = useState(true);
     const [editingSession, setEditingSession] = useState<Session | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
+    const showNotification = useShowNotification();
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -54,7 +57,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     }, [isOpen, studentId, teacherName, studentSubject]);
 
     const handleDelete = async (id: string) => {
-        if (!confirm('هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+        if (!(await confirm({ title: 'حذف السجل', description: 'هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.', confirmText: 'حذف', cancelText: 'إلغاء' }))) return;
 
         setDeletingId(id);
         try {
@@ -63,7 +66,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
             onSessionChange?.();
         } catch (error) {
             console.error("Error deleting session:", error);
-            alert('حدث خطأ أثناء الحذف');
+            showNotification('حدث خطأ أثناء الحذف', 'error');
         } finally {
             setDeletingId(null);
         }
@@ -88,7 +91,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
             onSessionChange?.();
         } catch (error) {
             console.error("Error updating session:", error);
-            alert('حدث خطأ أثناء التحديث');
+            showNotification('حدث خطأ أثناء التحديث', 'error');
         }
     };
 

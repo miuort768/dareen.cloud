@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { FileText, Printer, Edit, Trash2 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 import { SectionCard } from './InvoiceUI';
 
 interface StudentInvoice {
@@ -80,7 +81,7 @@ export const InvoiceTable = memo(({ filteredInvoices, toggleStatus, handleEdit, 
                 <span className="text-micro font-medium text-muted truncate max-w-[150px] inline-block">{inv.description}</span>
               </td>
               <td className="px-4 py-3 text-center">
-                <span className="font-mono text-xs font-semibold text-main">{inv.amount.toLocaleString()} ج.م</span>
+                <span className="font-mono text-xs font-semibold text-main">{inv.amount.toLocaleString()} {CURRENCY_SYMBOL}</span>
               </td>
               <td className="px-4 py-3 text-center">
                 <span className="text-micro font-medium text-muted">{inv.dueDate}</span>
@@ -131,7 +132,7 @@ export const InvoiceTable = memo(({ filteredInvoices, toggleStatus, handleEdit, 
                 <div className="flex items-center gap-3">
                   <div>
                     <p className="text-micro font-bold text-muted uppercase mb-0.5">المبلغ</p>
-                    <span className="font-mono text-sm font-black text-main">{inv.amount.toLocaleString()} ج.م</span>
+                    <span className="font-mono text-sm font-black text-main">{inv.amount.toLocaleString()} {CURRENCY_SYMBOL}</span>
                   </div>
                   <div className="w-px h-6 bg-border" />
                   <div>

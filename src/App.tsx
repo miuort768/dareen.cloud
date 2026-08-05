@@ -6,6 +6,7 @@ import { Layout } from './components/layout/Layout';
 import { AlertTriangle, Loader2 } from 'lucide-react';
 import { useCurrentUser, useIsAuthenticated, useIsLoading, useIsSettingsLoading, useMaintenanceMode } from './context/AppContext';
 import { InstallPWA } from './components/ui/InstallPWA';
+import { confirm } from './lib/confirmDialog';
 const RouteErrorBoundary = lazy(() => import('./components/RouteErrorBoundary').then(m => ({ default: m.RouteErrorBoundary })));
 
 // Lazy load pages for high performance
@@ -150,7 +151,7 @@ function App() {
               <button onClick={() => window.location.reload()} className="px-6 py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-sm rounded-xl transition-colors shadow-lg shadow-primary/20">
                 إعادة التحميل
               </button>
-              <button onClick={() => { if (window.confirm('هل أنت متأكد من مسح جميع البيانات المخزنة؟')) { ['auth_token', 'app_current_user', 'app_isAuthenticated', 'theme', 'public-theme'].forEach(k => { try { localStorage.removeItem(k); } catch (e) { console.warn(e); } }); window.location.reload(); } }} className="px-6 py-2.5 bg-error hover:bg-error hover:text-on-error text-on-error font-bold text-sm rounded-xl transition-colors shadow-lg shadow-error/20">
+              <button onClick={async () => { if (await confirm({ title: 'مسح التخزين', description: 'هل أنت متأكد من مسح جميع البيانات المخزنة؟', confirmText: 'مسح', cancelText: 'إلغاء' })) { ['auth_token', 'app_current_user', 'app_isAuthenticated', 'theme', 'public-theme'].forEach(k => { try { localStorage.removeItem(k); } catch (e) { console.warn(e); } }); window.location.reload(); } }} className="px-6 py-2.5 bg-error hover:bg-error hover:text-on-error text-on-error font-bold text-sm rounded-xl transition-colors shadow-lg shadow-error/20">
                 مسح التخزين وإعادة التحميل
               </button>
             </div>

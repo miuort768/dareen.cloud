@@ -39,13 +39,15 @@ export const NotificationsCenter = ({
     const adminPhone = useAdminPhone();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<'smart' | 'room'>('smart');
+    const [dismissedIds, setDismissedIds] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchDismissed = async () => {
             try {
-                await api.get<string[]>('/system/dismissed-notifications');
+                const data = await api.get<string[]>('/system/dismissed-notifications');
+                if (Array.isArray(data)) setDismissedIds(data);
             } catch {
-                // ignore
+                // non-critical background fetch
             }
         };
         fetchDismissed();
@@ -125,7 +127,7 @@ export const NotificationsCenter = ({
                 actionLabel: 'عرض',
                 icon: Bell,
             })) : [])
-        ].sort((a) => (a.priority === 'high' ? -1 : 1));
+        ].sort((a, b) => (a.priority === 'high' ? -1 : b.priority === 'high' ? 1 : 0));
         return notifications;
     }, [tasks, lowBalanceStudents, adminPhone, navigate]);
 

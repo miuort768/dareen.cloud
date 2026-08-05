@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCurrentUser, useLogout } from '../../../context/AppContext';
 import { api } from '../../../lib/api';
 import { startLiveSession } from '../../../services/liveSessionService';
-import { LiveClasses } from '../../../components/dashboard/LiveClasses';
+import { LiveSessions } from '../../dashboard/components/LiveSessions';
 import { MobileSchedule } from '../components/MobileSchedule';
 import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page';
 import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader';
@@ -225,7 +225,7 @@ export const Schedule = () => {
                     </div>
                 </motion.div>
 
-                {currentUser?.role === 'admin' && <LiveClasses />}
+                {currentUser?.role === 'admin' && <LiveSessions />}
 
                 {nextSession && (
                     <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="mb-3">

@@ -18,7 +18,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                     المهام والطلبات
                 </h3>
                 <Link to="/tasks">
-                    <Button variant="ghost" size="icon" className="w-7 h-7 rounded-lg">
+                    <Button variant="ghost" size="icon" className="w-7 h-7 rounded-lg" aria-label="عرض المهام">
                         <ChevronLeft size={14} />
                     </Button>
                 </Link>

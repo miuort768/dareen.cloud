@@ -46,7 +46,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 }}
                 className={cn(
                     "w-full p-4 rounded-2xl border-2 border-primary/30",
-                    "bg-primary text-white font-bold text-base",
+                    "bg-primary text-on-primary font-bold text-base",
                     "hover:bg-primary-hover hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20",
                     "active:bg-primary-active",
                     "transition-all duration-200",
@@ -59,7 +59,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 </span>
                 <span className="text-lg">بدء الحصة الآن</span>
                 {sessionAvailable && (
-                    <span className="px-2 py-0.5 rounded-lg bg-success text-white text-[10px] font-bold animate-pulse">
+                    <span className="px-2 py-0.5 rounded-lg bg-success text-on-success text-[10px] font-bold animate-pulse">
                         متاح
                     </span>
                 )}

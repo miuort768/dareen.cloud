@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { BookOpen, TrendingUp, Activity, MessageSquare, Radio, Play } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { useShowNotification } from '../../../context/AppContext';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
 
 import { startLiveSession } from '../../../services/liveSessionService';
@@ -37,6 +38,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [notes, setNotes] = useState(en.nextSessionNotes || '');
+    const showNotification = useShowNotification();
     const [isSavingNotes, setIsSavingNotes] = useState(false);
     const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -140,7 +142,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             if (result?.meetingUrl) window.open(result.meetingUrl, '_blank');
         } catch (err: unknown) {
             const msg = err instanceof Error ? err.message : '';
-            alert(`فشل بدء البث: ${msg}`);
+            showNotification(`فشل بدء البث: ${msg}`, 'error');
         }
     };
 

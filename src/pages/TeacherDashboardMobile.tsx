@@ -14,7 +14,7 @@ import { TopAttendanceStudents } from '../features/dashboard/components/TopAtten
 import { TeacherSessionTimeline } from '../features/dashboard/components/TeacherSessionTimeline';
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
-import { LiveClasses } from '../components/dashboard/LiveClasses';
+import { LiveSessions } from '../features/dashboard/components/LiveSessions';
 import { NextSessionHero } from '../features/dashboard/components/NextSessionHero';
 import { QuickActions } from '../features/dashboard/components/QuickActions';
 import { SmartNotifications } from '../features/dashboard/components/SmartNotifications';
@@ -54,7 +54,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
     const handleRefresh = async () => {
         triggerHaptic('medium');
         setIsRefreshing(true);
-        try { await onRefresh(); } catch (e) { console.error(e); }
+        try { await onRefresh(); } catch { void 0; }
         setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 400);
     };
 
@@ -151,7 +151,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                     </GlassCard>
                                 )}
                                 <GlassCard className="p-4">
-                                    <QuickActions navigate={navigate} onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} />
+                                    <QuickActions onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} sessionAvailable={!!nextSession} />
                                 </GlassCard>
                                 <GlassCard className="p-4">
                                     <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
@@ -176,7 +176,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                         <Sparkles size={13} className="text-primary" />
                                         <h2 className="text-xs font-bold text-muted">البث المباشر</h2>
                                     </div>
-                                    <Card><div className="p-3.5"><LiveClasses /></div></Card>
+                                    <Card><div className="p-3.5"><LiveSessions /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
@@ -283,7 +283,20 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
 
             {briefingStudent && (
                 <StudentQuickBrief isOpen={!!briefingStudent} onClose={() => setBriefingStudent(null)}
-                    onGenerateReport={(student) => { setSelectedStudentForReport({ id: student.id, name: student.name, grade: student.grade, subject: 'مادة عامة', points: student.totalPoints || 0, attendance: 95, sessionsCompleted: 12, lastNotes: [student.notes || 'تقدم ممتاز في المادة'] }); setBriefingStudent(null); }}
+                    onGenerateReport={(student) => {
+                        const studentSessions = rawSessions.filter((s: Record<string, unknown>) => s.studentId === student.id || s.studentID === student.id);
+                        const completed = studentSessions.filter((s: Record<string, unknown>) => s.status === 'completed').length;
+                        const total = studentSessions.filter((s: Record<string, unknown>) => s.status === 'completed' || s.status === 'cancelled').length;
+                        setSelectedStudentForReport({
+                            id: student.id, name: student.name, grade: student.grade,
+                            subject: student.curriculum || 'مادة عامة',
+                            points: student.totalPoints || 0,
+                            attendance: total > 0 ? Math.round((completed / total) * 100) : 0,
+                            sessionsCompleted: completed,
+                            lastNotes: [student.notes || 'تقدم ممتاز في المادة']
+                        });
+                        setBriefingStudent(null);
+                    }}
                     student={briefingStudent} recentSessions={[]} />
             )}
             {selectedStudentForReport && (

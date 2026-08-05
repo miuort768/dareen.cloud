@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PageLoader } from '../components/ui/PageLoader';
 import { useCurrentUser, useLogout } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
@@ -9,7 +10,11 @@ export const TeacherDashboard = () => {
     useEffect(() => { document.title = 'لوحة تحكم المعلمة | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
     const logout = useLogout();
+    const navigate = useNavigate();
     const { stats, tasks, loading, rawSessions, lowBalanceStudents, focusStudents, fetchDashboardData } = useDashboardData(currentUser);
+
+    const isInvalidRole = !!currentUser && currentUser.role !== 'teacher';
+    useEffect(() => { if (isInvalidRole) navigate('/', { replace: true }); }, [isInvalidRole, navigate]);
 
     if (!currentUser || currentUser.role !== 'teacher') return <div className="min-h-full bg-surface font-sans" />;
     if (loading) return <PageLoader />;

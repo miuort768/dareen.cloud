@@ -4,6 +4,7 @@ import { User, Users, Plus, Award, Star, TrendingUp, Filter, BarChart3 } from 'l
 import { motion, AnimatePresence } from 'framer-motion';
 import { api, safeArray } from '../../../lib/api';
 import { useCurrentUser } from '../../../context/AppContext';
+import { confirm } from '../../../lib/confirmDialog';
 import { EvaluationsHeader } from '../components/EvaluationsHeader';
 import { EvaluationCard } from '../components/EvaluationCard';
 import { EvaluationDrawer } from '../components/EvaluationDrawer';
@@ -95,7 +96,7 @@ export const Evaluations = () => {
     };
 
     const handleDelete = async (id: string) => {
-        if (!window.confirm('هل أنت متأكد من حذف هذا التقييم؟ سيتم خصم النقاط من الطالب.')) return;
+        if (!(await confirm({ title: 'حذف التقييم', description: 'هل أنت متأكد من حذف هذا التقييم؟ سيتم خصم النقاط من الطالب.', confirmText: 'حذف', cancelText: 'إلغاء' }))) return;
         try { await api.delete(`/evaluations/${id}`); fetchData(); }
         catch (error) { console.error('Error deleting evaluation', error); }
     };

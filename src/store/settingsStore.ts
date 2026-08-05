@@ -138,7 +138,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     whatsappAutoNotify: false,
     defaultSessionPrice: 0,
     defaultTeacherPrice: 0,
-    currencySymbol: 'ج.م',
+    currencySymbol: 'ر.س',
     semesterName: 'الفصل الدراسي',
     semesters: 'الفصل الأول,الفصل الثاني',
     whatsappTemplate: 'تم تسجيل حصة {Subject} للطالب {Student} بتاريخ {Date}',

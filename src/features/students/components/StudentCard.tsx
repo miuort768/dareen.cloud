@@ -1,5 +1,6 @@
 import { QRCodeSVG } from 'qrcode.react';
 import { GraduationCap, Phone, User, ShieldCheck, X, Printer } from 'lucide-react';
+import { useAcademyName } from '../../../context/AppContext';
 import type { Student } from '../types';
 
 interface StudentCardProps {
@@ -8,6 +9,7 @@ interface StudentCardProps {
 }
 
 export const StudentCard = ({ student, onClose }: StudentCardProps) => {
+    const academyName = useAcademyName();
     const handlePrint = () => {
         window.print();
     };
@@ -39,7 +41,7 @@ export const StudentCard = ({ student, onClose }: StudentCardProps) => {
                         <div className="space-y-1">
                             <div className="flex items-center gap-2 text-primary">
                                 <ShieldCheck size={20} className="fill-current/10" />
-                                <span className="font-medium text-xs uppercase tracking-widest">أكاديمية دارين</span>
+                                <span className="font-medium text-xs uppercase tracking-widest">{academyName || 'دارين'}</span>
                             </div>
                             <h2 className="text-xl font-medium text-main leading-none">بطاقة تعريف طالب</h2>
                         </div>

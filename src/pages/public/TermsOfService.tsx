@@ -136,7 +136,7 @@ export const TermsOfService = () => {
                                     <div>
                                         <h3 className="font-bold text-main mb-2">1. الأسعار:</h3>
                                         <ul className="list-disc list-inside space-y-1 ms-4">
-                                            <li>جميع الأسعار معروضة بالدينار الكويتي (KWD) ما لم يُذكر خلاف ذلك</li>
+                                            <li>جميع الأسعار معروضة بالريال السعودي (SAR) ما لم يُذكر خلاف ذلك</li>
                                             <li>نحتفظ بالحق في تغيير الأسعار في أي وقت</li>
                                             <li>التغييرات في الأسعار لن تؤثر على الدورات المدفوعة مسبقًا</li>
                                         </ul>

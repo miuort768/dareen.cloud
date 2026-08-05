@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Phone, MessageSquare, BookOpen, Users, DollarSign, Calendar, Clock, GraduationCap, Star, MessageCircle, ChevronLeft, Edit, Trash2, Bell } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 import type { Teacher } from '../../../types';
 
 interface TeacherDrawerProps {
@@ -170,7 +171,7 @@ export const TeacherDrawer = ({ teacher, onClose, onEdit, onDelete, onNotify, on
               {teacher.price > 0 && (
                 <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
                   <span className="text-[11px] text-muted">سعر الحصة</span>
-                  <span className="text-xs font-bold text-success">{teacher.price} {teacher.currency || 'ج.م'}</span>
+                  <span className="text-xs font-bold text-success">{teacher.price} {teacher.currency || CURRENCY_SYMBOL}</span>
                 </div>
               )}
             </div>

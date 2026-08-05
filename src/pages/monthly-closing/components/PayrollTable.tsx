@@ -1,5 +1,6 @@
 import React from 'react';
 import { Receipt, Download } from 'lucide-react';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 import { SectionCard, SectionTitle, SecondaryBtn } from './ClosingUI';
 
 interface PayrollItem {
@@ -69,7 +70,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                                 </td>
                                 <td className="px-4 py-4">
                                     <div className="flex flex-col items-center gap-1.5">
-                                        <span className="font-bold text-xs text-success">{item.totalAmount.toLocaleString()} ج.م</span>
+                                        <span className="font-bold text-xs text-success">{item.totalAmount.toLocaleString()} {CURRENCY_SYMBOL}</span>
                                         <button onClick={() => setSelectedTeacherForSlip(item)} className="text-micro font-bold text-primary hover:underline flex items-center gap-1">
                                             <Receipt size={10} /> القسيمة
                                         </button>
@@ -104,7 +105,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({ payrollData, teacher
                             </div>
                             <div className="text-center p-2 bg-card rounded-lg">
                                 <span className="block text-micro text-muted mb-0.5">الصافي</span>
-                                <span className="text-xs font-bold text-success">{item.totalAmount.toLocaleString()} ج.م</span>
+                                <span className="text-xs font-bold text-success">{item.totalAmount.toLocaleString()} {CURRENCY_SYMBOL}</span>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">

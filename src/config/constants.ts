@@ -1,1 +1,1 @@
-export const CURRENCY_SYMBOL = "ج.م";
+export const CURRENCY_SYMBOL = "ر.س";

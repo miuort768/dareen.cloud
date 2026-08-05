@@ -22,7 +22,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
         curriculum: '',
         notes: '',
         sessionPrice: '',
-        currency: 'KWD',
+        currency: 'SAR',
         username: '',
         password: ''
     });
@@ -37,7 +37,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 curriculum: initialData.curriculum || '',
                 notes: initialData.notes || '',
                 sessionPrice: String(initialData.sessionPrice || 0),
-                currency: initialData.currency || 'KWD',
+                currency: initialData.currency || 'SAR',
                 username: initialData.username || '',
                 password: '' 
             });

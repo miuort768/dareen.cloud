@@ -31,7 +31,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
                 { key: 'break_time', value: JSON.stringify({ start: breakStart, end: breakEnd }) },
             ]);
             showNotify('تم حفظ أوقات العمل');
-        } catch (e) { console.error(e); alert('خطأ في الحفظ'); }
+        } catch (e) { console.error(e); showNotify('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 

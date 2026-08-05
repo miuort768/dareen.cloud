@@ -121,7 +121,7 @@ export const useSettingsHandlers = () => {
                 setSetting('autoFreezeThreshold', Number(localAutoFreeze)),
             ]);
             showNotify('تم حفظ الإعدادات بنجاح');
-        } catch (e) { console.error('Save error:', e); alert('خطأ في الحفظ'); }
+        } catch (e) { console.error('Save error:', e); showNotify('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 
@@ -135,7 +135,7 @@ export const useSettingsHandlers = () => {
             a.href = url; a.download = `darin_backup_${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a); a.click(); a.remove();
             showNotify('تم تحميل النسخة الاحتياطية بنجاح');
-        } catch (e: unknown) { alert('فشل تصدير البيانات: ' + (e instanceof Error ? e.message : 'خطأ غير متوقع')); }
+        } catch (e: unknown) { showNotify('فشل تصدير البيانات: ' + (e instanceof Error ? e.message : 'خطأ غير متوقع')); }
         finally { setIsSaving(false); }
     };
 
@@ -164,7 +164,7 @@ export const useSettingsHandlers = () => {
             actionFn: async () => {
                 setIsSaving(true);
                 try { await settingsService.systemReset(); showNotify('تم تصفير النظام بنجاح'); window.location.reload(); }
-                catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
+                catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
                 finally { setIsSaving(false); }
             }
         });
@@ -178,7 +178,7 @@ export const useSettingsHandlers = () => {
             actionFn: async () => {
                 setIsSaving(true);
                 try { await settingsService.archiveMonth(); showNotify('تمت الأرشفة بنجاح'); }
-                catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
+                catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
                 finally { setIsSaving(false); }
             }
         });

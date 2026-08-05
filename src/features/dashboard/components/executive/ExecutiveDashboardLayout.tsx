@@ -89,15 +89,15 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
                     <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
-                                <TrendingUp size={22} className="text-white" />
+                                <TrendingUp size={22} className="text-on-primary" />
                             </div>
                             <div className="space-y-1">
-                                <h1 className="text-xl md:text-2xl font-bold text-white leading-tight">لوحة القيادة التنفيذية</h1>
-                                <p className="text-sm text-white/70">نظرة شاملة على أداء المنشأة</p>
+                                <h1 className="text-xl md:text-2xl font-bold text-on-primary leading-tight">لوحة القيادة التنفيذية</h1>
+                                <p className="text-sm text-on-primary/70">نظرة شاملة على أداء المنشأة</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 text-white text-xs font-semibold tabular-nums">
+                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 text-on-primary text-xs font-semibold tabular-nums">
                                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                                 مباشر
                             </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useCurrentUser } from '../context/AppContext';
+import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { api } from '../lib/api';
 import { PageLoader } from '../components/ui/PageLoader';
 import { ErrorBanner } from '../shared/components/ui/ErrorState';
@@ -25,6 +25,7 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 export const Appointments = () => {
     useEffect(() => { document.title = 'المواعيد | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
+    const showNotification = useShowNotification();
     const [students, setStudents] = useState<Student[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');
@@ -86,7 +87,7 @@ export const Appointments = () => {
             setCompletedSessionIds(prev => [...prev, id]);
         } catch (error) {
             console.error("Error completing session:", error);
-            alert('عذراً، حدث خطأ في تسجيل إتمام الحصة. يرجى المحاولة مرة أخرى.');
+            showNotification('عذراً، حدث خطأ في تسجيل إتمام الحصة. يرجى المحاولة مرة أخرى.', 'error');
         }
     };
 

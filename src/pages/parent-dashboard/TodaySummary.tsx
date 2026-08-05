@@ -1,5 +1,5 @@
 import { CheckCircle2, XCircle, BookOpen, CalendarDays } from 'lucide-react';
-import { format } from 'date-fns';
+import { format, startOfWeek } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import type { Student } from '../../types';
 
@@ -58,11 +58,19 @@ export const TodaySummary = ({ sessions, children: kids, todayTasks }: TodaySumm
     const completed = sessions.filter(s => s.status === 'completed').length;
     const cancelled = sessions.filter(s => s.status === 'cancelled').length;
 
+    const weekStart = startOfWeek(new Date(), { weekStartsOn: 0 });
+    const weeklyCompleted = sessions.filter(s => {
+        if (s.status !== 'completed') return false;
+        const sessionDate = (s as Record<string, unknown>).date;
+        if (!sessionDate || typeof sessionDate !== 'string') return false;
+        try { return new Date(sessionDate) >= weekStart; } catch { return false; }
+    }).length;
+
     const dayIndex = new Date().getDay();
     const todayName = ARABIC_DAYS[dayIndex];
 
     const values: Record<string, { value: string | number; subtitle?: string }> = {
-        present: { value: completed, subtitle: completed > 0 ? '+3 هذا الأسبوع' : undefined },
+        present: { value: completed, subtitle: weeklyCompleted > 0 ? `+${weeklyCompleted} هذا الأسبوع` : undefined },
         absent: { value: cancelled, subtitle: cancelled > 0 ? undefined : undefined },
         lessons: { value: todayTasks.length, subtitle: todayTasks.length > 0 ? 'حصص اليوم' : 'لا توجد حصص' },
         day: { value: todayName, subtitle: format(new Date(), 'd MMMM', { locale: ar }) },

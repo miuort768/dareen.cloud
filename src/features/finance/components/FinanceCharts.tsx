@@ -32,7 +32,7 @@ const aggregateByPeriod = (data: MonthlyData[], period: Period): MonthlyData[] =
     return result;
 };
 
-export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurrency = 'KWD' }: FinanceChartsProps) => {
+export const FinanceCharts = ({ monthlyData, pieData, totalExpenses, reportCurrency = 'SAR' }: FinanceChartsProps) => {
     const [period, setPeriod] = useState<Period>('شهري');
     const chartData = useMemo(() => aggregateByPeriod(monthlyData, period), [monthlyData, period]);
     const sortedPie = useMemo(() => [...pieData].sort((a, b) => b.value - a.value), [pieData]);

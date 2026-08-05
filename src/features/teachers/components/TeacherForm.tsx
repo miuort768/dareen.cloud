@@ -17,7 +17,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
         phone2: '',
         subject: '',
         price: '',
-        currency: 'EGP',
+        currency: 'SAR',
         username: '',
         password: ''
     });
@@ -33,7 +33,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                 price: String(initialData.price),
                 username: initialData.username || '',
                 password: initialData.password || '',
-                currency: initialData.currency || 'EGP'
+                currency: initialData.currency || 'SAR'
             });
             setEnableLogin(!!initialData.username);
         }
@@ -44,7 +44,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
         onSubmit({
             ...formData,
             price: Number(formData.price),
-            currency: formData.currency || 'EGP',
+            currency: formData.currency || 'SAR',
             username: enableLogin ? formData.username : '',
             password: enableLogin ? formData.password : ''
         });

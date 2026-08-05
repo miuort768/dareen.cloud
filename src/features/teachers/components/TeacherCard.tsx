@@ -1,5 +1,6 @@
 import { QRCodeSVG } from 'qrcode.react';
 import { GraduationCap, Phone, User, X, Printer, Award } from 'lucide-react';
+import { useAcademyName } from '../../../context/AppContext';
 import type { Teacher } from '../types';
 
 interface TeacherCardProps {
@@ -8,6 +9,7 @@ interface TeacherCardProps {
 }
 
 export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
+    const academyName = useAcademyName();
     const handlePrint = () => {
         window.print();
     };
@@ -39,7 +41,7 @@ export const TeacherCard = ({ teacher, onClose }: TeacherCardProps) => {
                         <div className="space-y-1">
                             <div className="flex items-center gap-2 text-info">
                                 <Award size={18} />
-                                <span className="font-medium text-xs leading-none">أكاديمية دارين</span>
+                                <span className="font-medium text-xs leading-none">{academyName || 'دارين'}</span>
                             </div>
                             <h2 className="text-xl font-heading font-bold text-main leading-none">بطاقة هوية معلم</h2>
                         </div>

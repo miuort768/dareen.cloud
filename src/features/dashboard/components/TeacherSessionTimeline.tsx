@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 
 interface TimelineSession {
     id: string;
+    studentId?: string;
     studentName: string;
     time: string;
     subject: string;
@@ -38,7 +39,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                     </div>
                 </div>
                 <Badge variant="secondary" className="hidden md:inline-flex items-center gap-2 px-3 py-1 bg-success text-on-success border border-success rounded-none">
-                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                    <div className="w-1.5 h-1.5 bg-on-success rounded-full animate-pulse" />
                     <span className="text-micro font-medium uppercase">LIVE NOW</span>
                 </Badge>
             </div>
@@ -53,10 +54,10 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                     return (
                         <div
                             key={session.id}
-                            onClick={() => onStudentClick?.({ id: session.studentName, name: session.studentName })}
+                            onClick={() => onStudentClick?.({ id: session.studentId || session.id, name: session.studentName })}
                             role="button"
                             tabIndex={0}
-                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onStudentClick?.({ id: session.studentName, name: session.studentName }); } }}
+                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onStudentClick?.({ id: session.studentId || session.id, name: session.studentName }); } }}
                             className={cn(
                                 "flex-shrink-0 w-[150px] md:w-[calc(25%-12px)] min-w-[150px] md:min-w-0 p-4 rounded-none border transition-all relative group/card shadow-soft cursor-pointer",
                                 isCompleted
@@ -113,7 +114,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                             {/* Hover play overlay */}
                             {isOngoing && (
                                 <Button onClick={() => onSessionStart?.(session.id)} className="absolute inset-2 bg-primary/95 dark:bg-primary-hover/95 text-on-primary rounded-none border border-primary dark:border-primary flex-col opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10">
-                                    <div className="w-9 h-9 bg-white dark:bg-surface text-main rounded-none border border-white/20 flex items-center justify-center mb-2 shadow-soft">
+                                    <div className="w-9 h-9 bg-card dark:bg-surface text-main rounded-none border border-border/20 flex items-center justify-center mb-2 shadow-soft">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>
                                     <span className="font-medium text-micro uppercase">بدء الحصة</span>

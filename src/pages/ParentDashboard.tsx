@@ -1,36 +1,14 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Wallet, ArrowLeft, Loader2, RefreshCw } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
-import { getRankByPoints, STUDENT_RANKS } from '../shared/utils/ranks';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { Skeleton } from '../shared/components/ui';
-import { triggerHaptic } from '../lib/haptics';
-import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader';
-import { MobileBottomNav } from './parent-dashboard/MobileBottomNav';
-import { HeroSection } from './parent-dashboard/HeroSection';
-import { ChildrenCards } from './parent-dashboard/ChildrenCards';
-import { TodaySummary } from './parent-dashboard/TodaySummary';
-import { AcademicPerformance } from './parent-dashboard/AcademicPerformance';
-import { NextSessionBanner } from './parent-dashboard/NextSessionBanner';
-import { HomeworkNotes } from './parent-dashboard/HomeworkNotes';
-import { AchievementsSection } from './parent-dashboard/AchievementsSection';
-import { RecentActivity } from './parent-dashboard/RecentActivity';
-import { ActiveTimersBanner } from './parent-dashboard/ActiveTimersBanner';
-import { SupportBanner } from './parent-dashboard/SupportBanner';
+import { ParentDashboardDesktop } from './parent-dashboard/ParentDashboardDesktop';
+import { ParentDashboardMobile } from './parent-dashboard/ParentDashboardMobile';
 import type { Student } from '../types';
 import type { PointLogEntry } from './parent-dashboard/types';
-
-const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-
-const fadeUp = (delay: number) => ({
-    initial: { opacity: 0, y: 16 },
-    animate: { opacity: 1, y: 0 },
-    transition: { delay, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] },
-});
 
 export const ParentDashboard = () => {
     useEffect(() => { document.title = 'لوحة تحكم ولي الأمر | دارين السابعة للتعليم والتدريب'; }, []);
@@ -43,25 +21,27 @@ export const ParentDashboard = () => {
     const [sessions, setSessions] = useState<Student[]>([]);
     const [allPointLogs, setAllPointLogs] = useState<PointLogEntry[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isRefreshing, setIsRefreshing] = useState(false);
-    const [pullDistance, setPullDistance] = useState(0);
-    const [startY, setStartY] = useState(0);
+    const [error, setError] = useState<string | null>(null);
+    const [partialError, setPartialError] = useState<string | null>(null);
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
     const fetchAll = async (silent = false) => {
         try {
             if (!silent) setIsLoading(true);
+            setError(null);
+            setPartialError(null);
             const students = await api.get<Student[]>('/parents/my-children');
             setChildren(students);
 
+            let failedChildren = 0;
             const sessionsPromises = students.map(async s => {
                 try { return await api.get<unknown[]>(`/parents/child-sessions/${s.id}`) || []; }
-                catch (e) { console.error(`Failed to fetch sessions for child ${s.id}:`, e); return []; }
+                catch { failedChildren++; return []; }
             });
             const logsPromises = students.map(async s => {
                 try { return await api.get<unknown[]>(`/student-portal/me/points-log?studentId=${s.id}`) || []; }
-                catch (e) { console.error(`Failed to fetch logs for child ${s.id}:`, e); return []; }
+                catch { failedChildren++; return []; }
             });
 
             const [allSessionsResults, allLogsResults] = await Promise.all([
@@ -69,6 +49,7 @@ export const ParentDashboard = () => {
                 Promise.all(logsPromises)
             ]);
 
+            if (failedChildren > 0) setPartialError(`تعذر تحميل بيانات ${failedChildren} من الأبناء. 일부 البيانات قد تكون غير محدثة.`);
             setSessions(allSessionsResults.flat());
 
             const flattenedLogs = allLogsResults.map((logs, idx) =>
@@ -80,8 +61,8 @@ export const ParentDashboard = () => {
                 const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
                 return timeB - timeA;
             }));
-        } catch (error) {
-            console.error('Error fetching dashboard data:', error);
+        } catch {
+            if (!silent) setError('فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.');
         } finally {
             if (!silent) setIsLoading(false);
         }
@@ -91,7 +72,6 @@ export const ParentDashboard = () => {
         fetchAll();
     }, []);
 
-    // ── Active timer polling ──
     const [activeTimers, setActiveTimers] = useState<Student[]>([]);
     const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const pollIdRef = useRef(0);
@@ -101,13 +81,8 @@ export const ParentDashboard = () => {
         const poll = async () => {
             const id = ++pollIdRef.current;
             try {
-                const token = localStorage.getItem('auth_token');
-                const res = await fetch('/api/active-sessions/my', {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                if (!res.ok) return;
+                const data = await api.get<Student[]>('/active-sessions/my');
                 if (id !== pollIdRef.current) return;
-                const data: Student[] = await res.json();
                 setActiveTimers(data);
 
                 if (data.length > 0 && !timerTickRef.current) {
@@ -116,7 +91,7 @@ export const ParentDashboard = () => {
                     clearInterval(timerTickRef.current);
                     timerTickRef.current = null;
                 }
-            } catch (e) { console.warn('فشل التحقق من الجلسات النشطة', e); }
+            } catch { /* polling error — will retry next cycle */ }
         };
         poll();
         const interval = setInterval(poll, 5000);
@@ -132,10 +107,10 @@ export const ParentDashboard = () => {
             try {
                 const students = await api.get<Student[]>('/parents/my-children');
                 setChildren(students);
-            } catch (e) { console.error(e); }
+            } catch { void 0; }
         };
         fetchChildren();
-    }, [activeTimers.length > 0]);
+    }, [activeTimers.length]);
 
     const formatTime = (startedAt: string | null | undefined) => {
         if (!startedAt) return '--:--';
@@ -144,26 +119,6 @@ export const ParentDashboard = () => {
         const s = (secs % 60).toString().padStart(2, '0');
         return `${m}:${s}`;
     };
-
-    const stats = useMemo(() => {
-        const completed = sessions.filter(s => s.status === 'completed').length;
-        const totalRecorded = sessions.filter(s => s.status === 'completed' || s.status === 'cancelled').length;
-        const attendanceRate = totalRecorded > 0 ? Math.round((completed / totalRecorded) * 100) : 0;
-
-        let sessionsUsed = 0;
-        let sessionsTotal = 0;
-        children.forEach(c => {
-            (c.enrollments || []).forEach((en: { sessionsUsed: number; sessionsTotal: number }) => {
-                sessionsUsed += Number(en.sessionsUsed || 0);
-                sessionsTotal += Number(en.sessionsTotal || 0);
-            });
-        });
-
-        const academicProgress = sessionsTotal > 0 ? Math.round((sessionsUsed / sessionsTotal) * 100) : 0;
-        const upcomingSessions = sessions.filter(s => s.status !== 'completed' && s.status !== 'cancelled').length;
-
-        return { childCount: children.length, upcomingSessions, attendanceRate, academicProgress, totalSessionsUsed: sessionsUsed, totalSessionsTotal: sessionsTotal };
-    }, [sessions, children]);
 
     const todayTasks = useMemo(() => {
         const tasks: { studentName: string; subject: string; teacher: string; time: string; period: string }[] = [];
@@ -184,29 +139,6 @@ export const ParentDashboard = () => {
         });
         return tasks.sort((a, b) => (a.time || '').localeCompare(b.time || ''));
     }, [children, todayArabic]);
-
-    const points = allPointLogs?.reduce((sum, log) => sum + (log.points || 0), 0) || 0;
-    const rank = getRankByPoints(points, STUDENT_RANKS);
-
-    const handleRefresh = async () => {
-        triggerHaptic('medium');
-        setIsRefreshing(true);
-        try { await fetchAll(true); } catch (e) { console.error(e); }
-        setTimeout(() => { setIsRefreshing(false); setPullDistance(0); setStartY(0); triggerHaptic('light'); }, 400);
-    };
-
-    const handleTouchStart = (e: React.TouchEvent) => {
-        if (window.scrollY === 0 && !isRefreshing) setStartY(e.touches[0].clientY);
-    };
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (startY === 0 || isRefreshing || window.scrollY > 0) return;
-        const diff = e.touches[0].clientY - startY;
-        if (diff > 0) setPullDistance(Math.min(diff * 0.4, 90));
-    };
-    const handleTouchEnd = async () => {
-        if (pullDistance > 55) { await handleRefresh(); }
-        else { setPullDistance(0); setStartY(0); }
-    };
 
     if (isLoading) {
         return (
@@ -236,108 +168,43 @@ export const ParentDashboard = () => {
         );
     }
 
-    return (
-        <div
-            className="min-h-screen bg-background overflow-x-hidden"
-            dir="rtl"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-        >
-            {/* Pull to refresh indicator */}
-            <motion.div
-                animate={{ height: isRefreshing ? 44 : pullDistance }}
-                className="overflow-hidden flex items-center justify-center"
-            >
-                <div className="flex items-center gap-2 text-primary font-bold text-xs">
-                    {isRefreshing ? (
-                        <><Loader2 size={16} className="animate-spin" /><span>جاري التحديث...</span></>
-                    ) : pullDistance > 40 ? (
-                        <><RefreshCw size={16} className="animate-pulse" /><span>أفلت للتحديث</span></>
-                    ) : (
-                        <span className="text-muted">اسحب للتحديث</span>
-                    )}
+    if (error) {
+        return (
+            <div className="min-h-screen bg-background flex items-center justify-center" dir="rtl">
+                <div className="text-center space-y-3 p-6">
+                    <p className="text-muted text-sm">{error}</p>
+                    <button onClick={() => fetchAll()} className="text-sm text-primary hover:underline">إعادة المحاولة</button>
                 </div>
-            </motion.div>
-
-            <ParentDashboardHeader logout={logout} />
-
-            <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
-                <motion.div {...fadeUp(0)}>
-                    <HeroSection
-                        name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
-                        children={children}
-                        attendanceRate={stats.attendanceRate}
-                        academicProgress={stats.academicProgress}
-                    />
-                </motion.div>
-
-                <motion.div {...fadeUp(0.06)}>
-                    <TodaySummary sessions={sessions} children={children} todayTasks={todayTasks} />
-                </motion.div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4">
-                    <div className="lg:col-span-2 space-y-3 md:space-y-4">
-                        {activeTimers.length > 0 && (
-                            <motion.div {...fadeUp(0.1)}>
-                                <ActiveTimersBanner activeTimers={activeTimers} children={children} formatTime={formatTime} />
-                            </motion.div>
-                        )}
-
-                        <motion.div {...fadeUp(0.12)}>
-                            <NextSessionBanner todayTasks={todayTasks} />
-                        </motion.div>
-
-                        <motion.div {...fadeUp(0.16)}>
-                            <ChildrenCards children={children} />
-                        </motion.div>
-
-                        <motion.div {...fadeUp(0.2)}>
-                            <HomeworkNotes children={children} />
-                        </motion.div>
-
-                        {allPointLogs.length > 0 && (
-                            <motion.div {...fadeUp(0.24)}>
-                                <RecentActivity allPointLogs={allPointLogs} />
-                            </motion.div>
-                        )}
-                    </div>
-
-                    <div className="space-y-3 md:space-y-4">
-                        <motion.div {...fadeUp(0.14)}>
-                            <AcademicPerformance sessions={sessions} children={children} points={points} rank={rank} />
-                        </motion.div>
-
-                        <motion.div {...fadeUp(0.18)}>
-                            <AchievementsSection points={points} rank={rank} />
-                        </motion.div>
-
-                        <motion.div {...fadeUp(0.28)}>
-                            <SupportBanner adminPhone={adminPhone} />
-                        </motion.div>
-                        <motion.div {...fadeUp(0.3)}>
-                            <button onClick={() => navigate('/parent-payment-history')}
-                                className="w-full bg-card border border-border rounded-2xl p-4 flex items-center gap-3 hover:bg-hover transition-colors text-start"
-                                aria-label="سجل الدفعات"
-                            >
-                                <div className="w-10 h-10 rounded-xl bg-success-soft flex items-center justify-center shrink-0">
-                                    <Wallet size={18} className="text-success" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-bold text-main">سجل الدفعات</p>
-                                    <p className="text-[11px] text-muted">عرض فواتير أبنائك ومدفوعاتك</p>
-                                </div>
-                                <ArrowLeft size={16} className="text-muted shrink-0" />
-                            </button>
-                        </motion.div>
-                    </div>
-                </div>
-            </main>
-
-            <div className="block md:hidden">
-                <MobileBottomNav />
             </div>
-        </div>
+        );
+    }
+
+    const sharedProps = {
+        currentUser,
+        adminPhone,
+        children,
+        sessions,
+        allPointLogs,
+        activeTimers,
+        todayTasks,
+        formatTime,
+        onRefresh: () => fetchAll(true),
+    };
+
+    return (
+        <>
+            {partialError && (
+                <div className="bg-warning/10 border-b border-warning/20 px-4 py-2 text-center">
+                    <p className="text-xs font-medium text-warning">{partialError}</p>
+                </div>
+            )}
+            <div className="hidden md:block">
+                <ParentDashboardDesktop {...sharedProps} />
+            </div>
+            <div className="block md:hidden">
+                <ParentDashboardMobile {...sharedProps} logout={logout} />
+            </div>
+        </>
     );
 };
 

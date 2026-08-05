@@ -37,7 +37,7 @@ export const BackupSection = ({
         try {
             await settingsService.createBackup();
             fetchHistory();
-        } catch (e: unknown) { alert(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
+        } catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ غير متوقع'); }
     };
 
     const formatSize = (bytes: number) => {

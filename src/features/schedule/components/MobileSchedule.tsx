@@ -6,7 +6,7 @@ import { useCurrentUser } from '../../../context/AppContext';
 import { api } from '../../../lib/api';
 import { triggerHaptic } from '../../../lib/haptics';
 import { startLiveSession } from '../../../services/liveSessionService';
-import { LiveClasses } from '../../../components/dashboard/LiveClasses';
+import { LiveSessions } from '../../dashboard/components/LiveSessions';
 import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile';
 import { MobileScheduleDayChips, MobileScheduleDetailsSheet } from './mobile-schedule';
 
@@ -168,7 +168,7 @@ export const MobileSchedule = () => {
             {currentUser?.role === 'admin' && (
                 <div className="px-4 pb-2">
                     <div className="bg-card rounded-2xl border border-border overflow-hidden">
-                        <div className="p-3"><LiveClasses /></div>
+                        <div className="p-3"><LiveSessions /></div>
                     </div>
                 </div>
             )}

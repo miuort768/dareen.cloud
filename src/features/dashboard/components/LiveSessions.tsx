@@ -6,6 +6,7 @@ import { SOCKET_EVENTS } from '../../../lib/socket-events';
 import { useCurrentUser } from '../../../context/AppContext';
 import { startLiveSession, updateLiveSession } from '../../../services/liveSessionService';
 import { cn } from '@/lib/utils';
+import { confirm } from '../../../lib/confirmDialog';
 import { Button } from '@/components/ui/button';
 import type { LiveSession } from '../../../types';
 
@@ -99,7 +100,7 @@ export const LiveSessions = () => {
     };
 
     const endSession = async (sessionId: string) => {
-        if (!window.confirm('هل أنت متأكد من إنهاء هذه الحصة المباشرة؟')) return;
+        if (!(await confirm({ title: 'إنهاء الحصة المباشرة', description: 'هل أنت متأكد من إنهاء هذه الحصة المباشرة؟', confirmText: 'إنهاء', cancelText: 'إلغاء' }))) return;
         try {
             await api.post(`/live/end/${sessionId}`, {});
             await fetchSessions();
@@ -301,8 +302,9 @@ export const LiveSessions = () => {
                         <h3 className="font-bold text-lg text-main text-center">بدء حصة مباشرة</h3>
 
                         <div>
-                            <label className="block text-xs font-bold text-muted mb-2">المادة</label>
+                            <label htmlFor="live-subject" className="block text-xs font-bold text-muted mb-2">المادة</label>
                             <input
+                                id="live-subject"
                                 type="text"
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
@@ -332,9 +334,10 @@ export const LiveSessions = () => {
                         </div>
 
                         <div>
-                            <label className="block text-xs font-bold text-muted mb-2">رابط الاجتماع</label>
+                            <label htmlFor="live-meeting-url" className="block text-xs font-bold text-muted mb-2">رابط الاجتماع</label>
                             <div className="flex gap-2">
                                 <input
+                                    id="live-meeting-url"
                                     type="url"
                                     value={meetingUrl}
                                     onChange={(e) => setMeetingUrl(e.target.value)}
@@ -419,9 +422,10 @@ export const LiveSessions = () => {
                         </div>
 
                         <div>
-                            <label className="block text-xs font-bold text-muted mb-2">رابط الاجتماع</label>
+                            <label htmlFor="edit-meeting-url" className="block text-xs font-bold text-muted mb-2">رابط الاجتماع</label>
                             <div className="flex gap-2">
                                 <input
+                                    id="edit-meeting-url"
                                     type="url"
                                     value={editUrl}
                                     onChange={(e) => setEditUrl(e.target.value)}

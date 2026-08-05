@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Users, BookOpen, CalendarCheck, CheckCircle2, GraduationCap, TrendingUp, TrendingDown, DollarSign } from 'lucide-react';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 import type { DashboardStats as Stats } from '../types';
 
 interface DashboardStatsProps {
@@ -108,7 +109,7 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
             value: stats.totalRevenue || 0,
             icon: TrendingUp,
             color: 'success',
-            prefix: 'ج.م',
+            prefix: CURRENCY_SYMBOL,
             formatter: (val: number) => val.toLocaleString(),
         },
         {
@@ -116,7 +117,7 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
             value: stats.totalExpenses || 0,
             icon: TrendingDown,
             color: 'error',
-            prefix: 'ج.م',
+            prefix: CURRENCY_SYMBOL,
             formatter: (val: number) => val.toLocaleString(),
         },
         {
@@ -124,7 +125,7 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
             value: stats.totalNetProfit || 0,
             icon: DollarSign,
             color: 'info',
-            prefix: 'ج.م',
+            prefix: CURRENCY_SYMBOL,
             formatter: (val: number) => val.toLocaleString(),
         },
     ];

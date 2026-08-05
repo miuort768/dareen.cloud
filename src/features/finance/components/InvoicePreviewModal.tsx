@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, Printer, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useSettingsStore } from '../../../store/settingsStore';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 
 interface InvoicePreviewModalProps {
     isOpen: boolean;
@@ -69,7 +70,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                     {(academyName || 'A').charAt(0)}
                                 </div>
                                 <div>
-                                    <h2 className="text-xl font-medium text-main tracking-tighter">{academyName || 'أكاديمية الشيخ خوارزمي'}</h2>
+                                    <h2 className="text-xl font-medium text-main tracking-tighter">{academyName || 'دارين السابعة'}</h2>
                                     <p className="text-micro text-muted font-normal uppercase tracking-widest">فاتورة الأكاديمية</p>
                                 </div>
                             </div>
@@ -152,7 +153,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                                 </td>
                                                 {!hidePricing && (
                                                     <td className="py-3 text-end text-xs font-medium font-mono text-main">
-                                                        {item.amount.toLocaleString()} <span className="text-micro">ج.م</span>
+                                                        {item.amount.toLocaleString()} <span className="text-micro">{CURRENCY_SYMBOL}</span>
                                                     </td>
                                                 )}
                                             </tr>
@@ -174,7 +175,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                         {!hidePricing && (
                             <div className="w-full max-w-[200px] flex justify-between items-center px-2 py-3 bg-surface">
                                 <span className="text-xs font-medium uppercase tracking-widest">الإجمالي</span>
-                                <span className="text-lg font-medium font-mono text-main">{invoice.amount.toLocaleString()} ج.م</span>
+                                <span className="text-lg font-medium font-mono text-main">{invoice.amount.toLocaleString()} {CURRENCY_SYMBOL}</span>
                             </div>
                         )}
                     </div>

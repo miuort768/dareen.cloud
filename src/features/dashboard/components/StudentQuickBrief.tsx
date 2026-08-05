@@ -48,7 +48,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                                 <h3 className="text-xl font-medium text-main uppercase tracking-tight">{student.name}</h3>
                                 <div className="flex items-center gap-2 mt-2">
                                     <span className="px-2 py-0.5 bg-background text-main text-micro font-medium uppercase">{student.grade}</span>
-                                    <span className="px-2 py-0.5 bg-warning text-warning border-2 border-border text-micro font-medium uppercase flex items-center gap-1">
+                                    <span className="px-2 py-0.5 bg-warning text-on-warning border-2 border-border text-micro font-medium uppercase flex items-center gap-1">
                                         <Star size={10} className="fill-warning" />
                                         {student.totalPoints || 0} النقاط
                                     </span>
@@ -59,6 +59,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                             onClick={onClose}
                             variant="ghost"
                             className="w-8 h-8 rounded-none border-2 border-border hover:bg-error hover:text-on-error"
+                            aria-label="إغلاق"
                         >
                             <X size={18} />
                         </Button>

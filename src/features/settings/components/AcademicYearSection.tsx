@@ -60,7 +60,7 @@ export const AcademicYearSection = ({
                 ]),
             ]);
             showNotify('تم حفظ السنة الدراسية');
-        } catch (e) { console.error(e); alert('خطأ في الحفظ'); }
+        } catch (e) { console.error(e); showNotify('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 

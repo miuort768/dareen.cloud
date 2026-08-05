@@ -35,7 +35,7 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
                 { key: 'report_page_size', value: pageSize },
             ]);
             showNotify('تم حفظ إعدادات التقارير');
-        } catch (e) { console.error(e); alert('خطأ في الحفظ'); }
+        } catch (e) { console.error(e); showNotify('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 

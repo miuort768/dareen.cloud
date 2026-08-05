@@ -11,7 +11,7 @@ interface StrategicSummaryProps {
     reportCurrency?: string;
 }
 
-export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjectedProfit, totalProjectedIncome, totalActualCollections, totalTeacherPayout, reportCurrency = 'KWD' }) => {
+export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjectedProfit, totalProjectedIncome, totalActualCollections, totalTeacherPayout, reportCurrency = 'SAR' }) => {
     return (
         <SectionCard className="p-4 sm:p-6 lg:p-12 bg-background text-main relative overflow-hidden shadow-2xl">
             <div className="absolute top-0 start-0 w-[500px] h-[500px] bg-info/10 rotate-12 -translate-y-1/2 translate-x-1/3 blur-3xl pointer-events-none"></div>

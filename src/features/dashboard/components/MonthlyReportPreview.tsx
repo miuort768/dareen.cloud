@@ -53,12 +53,12 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         {/* Quantitative Metrics Grid */}
                         <div className="grid grid-cols-3 gap-4">
                             {[
-                                { label: 'الحضور', value: `${student.attendance}%`, icon: ShieldCheck, color: 'bg-success' },
-                                { label: 'إجمالي النقاط', value: student.points, icon: Star, color: 'bg-warning' },
-                                { label: 'الجلسات', value: student.sessionsCompleted, icon: Calendar, color: 'bg-primary' }
+                                { label: 'الحضور', value: `${student.attendance}%`, icon: ShieldCheck, color: 'bg-success', onColor: 'text-on-success' },
+                                { label: 'إجمالي النقاط', value: student.points, icon: Star, color: 'bg-warning', onColor: 'text-on-warning' },
+                                { label: 'الجلسات', value: student.sessionsCompleted, icon: Calendar, color: 'bg-primary', onColor: 'text-on-primary' }
                             ].map((item, idx) => (
                                 <div key={idx} className="bg-card p-5 border-2 border-border rounded-none text-center shadow-md transition-transform hover:translate-y-[-2px]">
-                                    <div className={cn("w-10 h-10 rounded-none border-2 border-border flex items-center justify-center mx-auto mb-3 text-on-primary", item.color)}>
+                                    <div className={cn("w-10 h-10 rounded-none border-2 border-border flex items-center justify-center mx-auto mb-3", item.onColor, item.color)}>
                                         <item.icon size={20} />
                                     </div>
                                     <p className="text-xl font-medium text-main tabular-nums">{item.value}</p>
@@ -111,6 +111,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         onClick={onClose}
                         variant="ghost"
                         className="w-14 h-14 rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:bg-error hover:text-on-error"
+                        aria-label="إغلاق"
                     >
                         <X size={24} />
                     </Button>

@@ -254,7 +254,7 @@ export const Reports = () => {
                     {state.activeReport === 'financial' && (
                         <FinancialReport totalRevenue={state.totalRevenue} monthRevenue={state.monthRevenue}
                             totalExpenses={state.totalExpenses} monthExpenses={state.monthExpenses}
-                            completedSessions={state.completedSessions} reportCurrency="KWD" />
+                            completedSessions={state.completedSessions} reportCurrency="SAR" />
                     )}
 
                     {state.activeReport === 'enrollment' && (

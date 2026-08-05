@@ -24,7 +24,7 @@ const courseSchema = {
     description: c.desc,
     provider: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' },
     aggregateRating: { '@type': 'AggregateRating', ratingValue: c.rating, bestRating: 5, ratingCount: parseStudentCount(c.students) },
-    offers: { '@type': 'Offer', priceCurrency: 'KWD', price: '0', availability: 'https://schema.org/InStock' },
+    offers: { '@type': 'Offer', priceCurrency: 'SAR', price: '0', availability: 'https://schema.org/InStock' },
   })),
 };
 

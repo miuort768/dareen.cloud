@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { financeService } from '../services/financeService';
 import type { Session, TeacherInvoice, Transaction, FixedExpense } from '../../../types';
 import { CHART_COLORS } from '../types';
+import { confirm } from '../../../lib/confirmDialog';
 
 interface FinanceStats {
     reportCurrency?: string;
@@ -94,7 +95,7 @@ export const useFinance = () => {
     };
 
     const handleClearAllFixedExpenses = async () => {
-        if (!window.confirm('هل أنت متأكد من تصفير جميع المبالغ؟')) return;
+        if (!(await confirm({ title: 'تصفير جميع المبالغ', description: 'هل أنت متأكد من تصفير جميع المبالغ؟', confirmText: 'تصفير', cancelText: 'إلغاء' }))) return;
         try {
             const resetData = await financeService.resetFixedExpenses();
             setFixedExpenses(resetData);
@@ -104,7 +105,7 @@ export const useFinance = () => {
     };
 
     const handleDeleteAllTransactions = async () => {
-        if (!window.confirm('هل أنت متأكد من حذف جميع المعاملات اليدوية؟ لا يمكن التراجع عن هذا الإجراء.')) return;
+        if (!(await confirm({ title: 'حذف جميع المعاملات', description: 'هل أنت متأكد من حذف جميع المعاملات اليدوية؟ لا يمكن التراجع عن هذا الإجراء.', confirmText: 'حذف', cancelText: 'إلغاء' }))) return;
         try {
             await financeService.deleteAllTransactions();
             setManualTransactions([]);
@@ -116,7 +117,7 @@ export const useFinance = () => {
     // Derived Data
     const reportCurrency = useMemo(() => {
         if (serverStats?.reportCurrency) return serverStats.reportCurrency as string;
-        return 'KWD';
+        return 'SAR';
     }, [serverStats]);
 
     const stats = useMemo(() => {

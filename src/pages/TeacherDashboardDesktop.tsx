@@ -9,7 +9,7 @@ import { TopAttendanceStudents } from '../features/dashboard/components/TopAtten
 import { TeacherSessionTimeline } from '../features/dashboard/components/TeacherSessionTimeline';
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief';
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview';
-import { LiveClasses } from '../components/dashboard/LiveClasses';
+import { LiveSessions } from '../features/dashboard/components/LiveSessions';
 import { NextSessionHero } from '../features/dashboard/components/NextSessionHero';
 import { QuickActions } from '../features/dashboard/components/QuickActions';
 import { SmartNotifications } from '../features/dashboard/components/SmartNotifications';
@@ -37,7 +37,7 @@ const fadeUp = (delay: number) => ({
     transition: { delay, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] },
 });
 
-export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline, logout }: TeacherDashboardDesktopProps) => {
+export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline, logout }: TeacherDashboardDesktopProps) => {
     const navigate = useNavigate();
     const [briefingStudent, setBriefingStudent] = useState<{ id?: string; name?: string; grade?: string; notes?: string; totalPoints?: number } | null>(null);
     const [selectedStudentForReport, setSelectedStudentForReport] = useState<{ id: string; name: string; grade: string; subject: string; points: number; attendance: number; sessionsCompleted: number; lastNotes: string[] } | null>(null);
@@ -74,7 +74,7 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
             >
                 <div className="lg:col-span-8 space-y-3 md:space-y-4">
                     <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
-                        <LiveClasses />
+                        <LiveSessions />
                     </div>
                     <div className="rounded-2xl bg-card border border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <ModernAnnouncements />
@@ -108,7 +108,20 @@ export const TeacherDashboardDesktop = ({ currentUser, stats, rawSessions, tasks
 
             {briefingStudent && (
                 <StudentQuickBrief isOpen={!!briefingStudent} onClose={() => setBriefingStudent(null)}
-                    onGenerateReport={(student) => { setSelectedStudentForReport({ id: student.id, name: student.name, grade: student.grade, subject: 'مادة عامة', points: student.totalPoints || 0, attendance: 95, sessionsCompleted: 12, lastNotes: [student.notes || 'تقدم ممتاز في المادة'] }); setBriefingStudent(null); }}
+                    onGenerateReport={(student) => {
+                        const studentSessions = rawSessions.filter((s: Record<string, unknown>) => s.studentId === student.id || s.studentID === student.id);
+                        const completed = studentSessions.filter((s: Record<string, unknown>) => s.status === 'completed').length;
+                        const total = studentSessions.filter((s: Record<string, unknown>) => s.status === 'completed' || s.status === 'cancelled').length;
+                        setSelectedStudentForReport({
+                            id: student.id, name: student.name, grade: student.grade,
+                            subject: student.curriculum || 'مادة عامة',
+                            points: student.totalPoints || 0,
+                            attendance: total > 0 ? Math.round((completed / total) * 100) : 0,
+                            sessionsCompleted: completed,
+                            lastNotes: [student.notes || 'تقدم ممتاز في المادة']
+                        });
+                        setBriefingStudent(null);
+                    }}
                     student={briefingStudent} recentSessions={[]} />
             )}
             {selectedStudentForReport && (

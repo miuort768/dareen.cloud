@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GraduationCap, Plus, RefreshCw, FileText, BarChart3, Filter, DollarSign, CheckCircle2, AlertCircle, CreditCard } from 'lucide-react';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
+import { CURRENCY_SYMBOL } from '../config/constants';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { type TeacherInvoice, type Teacher, type TeacherInvoiceFormData, INVOICE_STATUS } from '../types/invoice';
 import { PageLoader } from '../components/ui/PageLoader';
@@ -27,7 +28,7 @@ export const TeacherInvoices = () => {
     const [formData, setFormData] = useState<TeacherInvoiceFormData>({
         teacherId: '', teacher: '', specialization: '', amount: '',
         paymentMethod: '', status: INVOICE_STATUS.PROCESSING,
-        personalExpenses: '', currency: 'EGP'
+        personalExpenses: '', currency: 'SAR'
     });
     const [teachers, setTeachers] = useState<Teacher[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -95,9 +96,9 @@ export const TeacherInvoices = () => {
 
     const kpiCards = useMemo(() => [
         { label: 'المعلمات', value: filteredInvoices.length, icon: GraduationCap, accent: 'primary' as const },
-        { label: 'الإجمالي', value: `${stats.totalAmount.toLocaleString()} ج.م`, icon: DollarSign, accent: 'success' as const },
-        { label: 'مدفوع', value: `${stats.paidAmount.toLocaleString()} ج.م`, icon: CheckCircle2, accent: 'info' as const },
-        { label: 'معلق', value: `${stats.unpaidAmount.toLocaleString()} ج.م`, icon: AlertCircle, accent: 'error' as const },
+        { label: 'الإجمالي', value: `${stats.totalAmount.toLocaleString()} ${CURRENCY_SYMBOL}`, icon: DollarSign, accent: 'success' as const },
+        { label: 'مدفوع', value: `${stats.paidAmount.toLocaleString()} ${CURRENCY_SYMBOL}`, icon: CheckCircle2, accent: 'info' as const },
+        { label: 'معلق', value: `${stats.unpaidAmount.toLocaleString()} ${CURRENCY_SYMBOL}`, icon: AlertCircle, accent: 'error' as const },
     ], [filteredInvoices.length, stats]);
 
     const handleEdit = useCallback((invoice: TeacherInvoice) => {
@@ -106,14 +107,14 @@ export const TeacherInvoices = () => {
         setFormData({
             teacherId: teacherObj?.id || '', teacher: invoice.teacher, specialization: invoice.specialization,
             amount: invoice.amount.toString(), paymentMethod: invoice.paymentMethod, status: invoice.status,
-            personalExpenses: invoice.personalExpenses ? invoice.personalExpenses.toString() : '', currency: invoice.currency || 'EGP'
+            personalExpenses: invoice.personalExpenses ? invoice.personalExpenses.toString() : '', currency: invoice.currency || 'SAR'
         });
         setShowForm(true); window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [teachers]);
 
     const handleCancel = useCallback(() => {
         setEditingId(null);
-        setFormData({ teacherId: '', teacher: '', specialization: '', amount: '', paymentMethod: '', status: INVOICE_STATUS.PROCESSING, personalExpenses: '', currency: 'EGP' });
+        setFormData({ teacherId: '', teacher: '', specialization: '', amount: '', paymentMethod: '', status: INVOICE_STATUS.PROCESSING, personalExpenses: '', currency: 'SAR' });
         setShowForm(false);
     }, []);
 
@@ -125,7 +126,7 @@ export const TeacherInvoices = () => {
         const invoiceData = {
             teacherId: formData.teacherId || null, teacher: formData.teacher, specialization: formData.specialization,
             amount: amountValue, paymentMethod: formData.paymentMethod, status: formData.status,
-            personalExpenses: personalExpValue, currency: formData.currency || 'EGP',
+            personalExpenses: personalExpValue, currency: formData.currency || 'SAR',
             date: new Date().toISOString().split('T')[0]
         };
         try {
@@ -186,7 +187,7 @@ export const TeacherInvoices = () => {
                             const totalAmount = teacherSessions.reduce((sum, sess) => sum + (sess.teacherPrice || t.price || 0), 0);
                             return api.post('/invoices/teacher', {
                                 teacherId: t.id || null, teacher: t.name, specialization: t.subject || '', amount: totalAmount,
-                                paymentMethod: 'نقدي', status: INVOICE_STATUS.PROCESSING, personalExpenses: 0, currency: 'EGP',
+                                paymentMethod: 'نقدي', status: INVOICE_STATUS.PROCESSING, personalExpenses: 0, currency: 'SAR',
                                 date: new Date().toISOString().split('T')[0]
                             });
                         }));

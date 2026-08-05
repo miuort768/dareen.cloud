@@ -6,7 +6,6 @@ import type { DashboardStats } from '../types';
 
 interface HeroSectionProps {
     currentUser: User | null;
-    isTeacher?: boolean;
     stats?: DashboardStats;
 }
 

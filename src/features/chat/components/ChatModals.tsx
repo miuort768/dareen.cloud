@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { X, Users as UsersIcon, ChevronLeft, Search, Check, Camera } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { useChatUIStore } from '../../../store/chatUIStore';
+import { useShowNotification } from '../../../context/AppContext';
 import type { ChatUser } from '../../../types/chat.types';
 
 export interface ProfileFormData {
@@ -42,6 +43,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
     const isDeleting = useChatUIStore(s => s.isDeleting);
     
     const avatarInputRef = useRef<HTMLInputElement>(null);
+    const showNotification = useShowNotification();
     const [step, setStep] = React.useState<'select' | 'info'>('select');
 
     const selectedUsersObjects = availableUsers.filter(u => selectedUsers.includes(u.id));
@@ -200,7 +202,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     <div className="absolute inset-0 bg-black/20 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                         <span className="text-on-primary text-xs font-normal uppercase tracking-wider">تغيير الصورة</span>
                                     </div>
-                                    <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) { alert('سيتم تفعيل رفع الصور قريباً'); } e.target.value = ''; }} />
+                                    <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={(e) => { const file = e.target.files?.[0]; if (file) { showNotification('سيتم تفعيل رفع الصور قريباً', 'info'); } e.target.value = ''; }} />
                                 </div>
                                 <p className="mt-4 text-xs font-normal text-muted uppercase tracking-widest">أيقونة المجموعة</p>
                             </div>

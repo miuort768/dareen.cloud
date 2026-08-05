@@ -153,7 +153,7 @@ export const MonthlyClosing = () => {
                         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
                             <div className="text-center">
                                 <p className="text-white/60 text-xs mb-1">صافي الربح</p>
-                                <p className="text-2xl font-bold text-white tabular-nums">{netProjectedProfit.toLocaleString()} <span className="text-sm text-white/60">KWD</span></p>
+                                <p className="text-2xl font-bold text-white tabular-nums">{netProjectedProfit.toLocaleString()} <span className="text-sm text-white/60">SAR</span></p>
                             </div>
                             <div className="w-px h-10 bg-white/10" />
                             <div className="text-center">
@@ -179,11 +179,11 @@ export const MonthlyClosing = () => {
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-                        <KpiCard title="صافي الربح المتوقع" value={`${netProjectedProfit.toLocaleString()} KWD`} icon={TrendingUp} accent="primary"
+                        <KpiCard title="صافي الربح المتوقع" value={`${netProjectedProfit.toLocaleString()} SAR`} icon={TrendingUp} accent="primary"
                             subValue={`${totalProjectedIncome > 0 ? ((netProjectedProfit / totalProjectedIncome) * 100).toFixed(0) : 0}% هامش ربح`} />
-                        <KpiCard title="التحصيلات الفعلية" value={`${totalActualCollections.toLocaleString()} KWD`} icon={Wallet} accent="success"
-                            subValue={`صافي التدفق: ${netActualCashFlow.toLocaleString()} KWD`} />
-                        <KpiCard title="رواتب المعلمات" value={`${totalTeacherPayout.toLocaleString()} KWD`} icon={TrendingDown} accent="error"
+                        <KpiCard title="التحصيلات الفعلية" value={`${totalActualCollections.toLocaleString()} SAR`} icon={Wallet} accent="success"
+                            subValue={`صافي التدفق: ${netActualCashFlow.toLocaleString()} SAR`} />
+                        <KpiCard title="رواتب المعلمات" value={`${totalTeacherPayout.toLocaleString()} SAR`} icon={TrendingDown} accent="error"
                             subValue={`${payrollData.length} معلمة مسجلة`} />
                         <KpiCard title="إجمالي الجلسات" value={filteredSessions.length} icon={ActivityIcon} accent="warning" subValue="كل الجلسات المكتملة" />
                     </div>
@@ -207,10 +207,10 @@ export const MonthlyClosing = () => {
                     {activeTab === 'payroll' && <PayrollTable payrollData={payrollData} teacherAdjustments={teacherAdjustments} handleTeacherAdjustment={handleTeacherAdjustment} setSelectedTeacherForSlip={setSelectedTeacherForSlip} startDate={startDate} endDate={endDate} />}
                     {activeTab === 'collections' && <CollectionsTable studentInvoices={studentInvoices} startDate={startDate} endDate={endDate} />}
                     {activeTab === 'renewals' && <RenewalsCards renewalsData={renewalsData} />}
-                    {activeTab === 'analysis' && <SubjectAnalysis subjectAnalysis={subjectAnalysis} reportCurrency="KWD" />}
+                    {activeTab === 'analysis' && <SubjectAnalysis subjectAnalysis={subjectAnalysis} reportCurrency="SAR" />}
                     {activeTab === 'teachers' && <TeacherPerformance teacherPerformance={teacherPerformance} />}
                     {activeTab === 'compensation' && <CompensationTable filteredSessions={filteredSessions} />}
-                    {activeTab === 'summary' && <StrategicSummary netProjectedProfit={netProjectedProfit} totalProjectedIncome={totalProjectedIncome} totalActualCollections={totalActualCollections} totalTeacherPayout={totalTeacherPayout} reportCurrency="KWD" />}
+                    {activeTab === 'summary' && <StrategicSummary netProjectedProfit={netProjectedProfit} totalProjectedIncome={totalProjectedIncome} totalActualCollections={totalActualCollections} totalTeacherPayout={totalTeacherPayout} reportCurrency="SAR" />}
                 </motion.div>
 
                 {selectedTeacherForSlip && <SalarySlipModal teacher={selectedTeacherForSlip} month={`${startDate} / ${endDate}`} onClose={() => setSelectedTeacherForSlip(null)} />}

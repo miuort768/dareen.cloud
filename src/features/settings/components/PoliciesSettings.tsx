@@ -100,7 +100,7 @@ export const PoliciesSettings = ({
                         actionFn: () => settingsService.archiveMonth().then(() => {
                             showNotify('تم تجميد وأرشفة بيانات الشهر المالي!');
                             setTimeout(() => window.location.reload(), 2000);
-                        }).catch((e) => { console.error('Archive month error:', e); alert('حدث خطأ أثناء إقفال الشهر!'); })
+                        }).catch((e) => { console.error('Archive month error:', e); showNotify('حدث خطأ أثناء إقفال الشهر!'); })
                     })}>
                         <Lock size={13} /> إقفال الفترة الحالية
                     </DangerBtn>

@@ -26,7 +26,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
                 { key: 'rewards_leaderboard_enabled', value: String(leaderboardEnabled) },
             ]);
             showNotify('تم حفظ إعدادات النقاط والمكافآت');
-        } catch (e) { console.error(e); alert('خطأ في الحفظ'); }
+        } catch (e) { console.error(e); showNotify('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 

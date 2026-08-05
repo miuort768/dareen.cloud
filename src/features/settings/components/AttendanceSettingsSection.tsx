@@ -38,7 +38,7 @@ export const AttendanceSettingsSection = ({
                 { key: 'backdate_lock_enabled', value: String(localBackdateLock) },
             ]);
             showNotify('تم حفظ إعدادات الحضور');
-        } catch (e) { console.error(e); alert('خطأ في الحفظ'); }
+        } catch (e) { console.error(e); showNotify('خطأ في الحفظ'); }
         finally { setIsSaving(false); }
     };
 

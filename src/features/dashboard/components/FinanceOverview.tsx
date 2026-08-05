@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import type { TooltipProps } from 'recharts';
 import { DollarSign, TrendingUp, TrendingDown, BarChart3, Plus } from 'lucide-react';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 import type { DashboardMonthData as MonthData } from '../types';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -23,7 +24,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
                         <span className="text-[10px] font-medium text-muted">{entry.name}</span>
                     </div>
                     <span className="text-xs font-bold text-main tabular-nums">
-                        {Number(entry.value).toLocaleString()} ج.م
+                        {Number(entry.value).toLocaleString()} {CURRENCY_SYMBOL}
                     </span>
                 </div>
             ))}
@@ -125,7 +126,7 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
                             "text-[9px] font-bold tabular-nums",
                             totalProfit >= 0 ? "text-success" : "text-error"
                         )}>
-                            صافي: {totalProfit.toLocaleString()} ج.م
+                            صافي: {totalProfit.toLocaleString()} {CURRENCY_SYMBOL}
                         </span>
                     </div>
                 </div>

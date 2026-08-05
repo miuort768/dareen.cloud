@@ -1,4 +1,5 @@
 import { Award, AlertCircle, Clock, Star, TrendingUp } from 'lucide-react';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types';
 import { getRankByPoints, TEACHER_RANKS } from '../../../shared/utils/ranks';
 import { RankBadge } from '../../../shared/components/RankBadge';
@@ -39,7 +40,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                             <span className="text-2xl font-bold tabular-nums text-white">
                                 {isTeacher ? (stats.monthNetProfit || 0).toLocaleString('ar-EG') : stats.expectedCollection.toLocaleString('ar-EG')}
                             </span>
-                            <span className="text-micro font-bold text-white/70">ج.م</span>
+                            <span className="text-micro font-bold text-white/70">{CURRENCY_SYMBOL}</span>
                         </div>
                         {isTeacher && (
                             <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/15 backdrop-blur-sm rounded-xl text-micro font-bold text-white">

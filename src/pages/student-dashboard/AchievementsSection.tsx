@@ -8,15 +8,15 @@ interface AchievementsSectionProps {
     nextRank: { next: { name: string; minPoints: number } | null; pointsNeeded: number };
 }
 
-const badges = [
-    { icon: Star, label: 'طالب نشيط', unlocked: true, color: 'text-warning', bg: 'bg-warning/10', ring: 'ring-warning/20' },
-    { icon: Flame, label: '7 أيام متتالية', unlocked: true, color: 'text-error', bg: 'bg-error/10', ring: 'ring-error/20' },
-    { icon: BookOpen, label: 'أنهيت أول مادة', unlocked: true, color: 'text-info', bg: 'bg-info/10', ring: 'ring-info/20' },
-    { icon: Lock, label: 'أكمل 10 واجبات', unlocked: false, color: 'text-muted', bg: 'bg-surface', ring: 'ring-border' },
-];
-
 export const AchievementsSection = ({ points, rank, nextRank }: AchievementsSectionProps) => {
     const xpPercent = nextRank.next ? Math.min(Math.round((points / nextRank.next.minPoints) * 100), 100) : 100;
+
+    const badges = [
+        { icon: Star, label: 'طالب نشيط', unlocked: points >= 100, color: 'text-warning', bg: 'bg-warning/10', ring: 'ring-warning/20' },
+        { icon: Flame, label: '7 أيام متتالية', unlocked: points >= 200, color: 'text-error', bg: 'bg-error/10', ring: 'ring-error/20' },
+        { icon: BookOpen, label: 'أنهيت أول مادة', unlocked: points >= 500, color: 'text-info', bg: 'bg-info/10', ring: 'ring-info/20' },
+        { icon: Lock, label: 'أكمل 10 واجبات', unlocked: points >= 1000, color: 'text-muted', bg: 'bg-surface', ring: 'ring-border' },
+    ];
 
     return (
         <div className="rounded-2xl bg-card border border-border p-5 md:p-6">

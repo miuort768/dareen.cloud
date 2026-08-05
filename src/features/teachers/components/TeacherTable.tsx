@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Edit, Trash2, GraduationCap, MessageCircle, Bell, Star, ChevronUp, ChevronDown, ArrowUpDown } from 'lucide-react';
 import type { Teacher } from '../types';
 import { cn } from '../../../lib/utils';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 
 interface TeacherTableProps {
   teachers: Teacher[];
@@ -185,7 +186,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                     <td className="px-5 py-4 text-center">
                       <div className="inline-flex items-center gap-1">
                         <span className="text-sm font-bold text-success">{teacher.price}</span>
-                        <span className="text-[9px] text-muted">ج.م</span>
+                        <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span>
                       </div>
                     </td>
                     <td className="px-5 py-4">
@@ -265,7 +266,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                 </div>
                 <div className="text-end shrink-0 ms-2">
                   <span className="text-sm font-bold text-success">{teacher.price}</span>
-                  <span className="text-[9px] text-muted block">ج.م / حصة</span>
+                  <span className="text-[9px] text-muted block">{CURRENCY_SYMBOL} / حصة</span>
                 </div>
               </div>
               <div className="flex items-center gap-1.5">

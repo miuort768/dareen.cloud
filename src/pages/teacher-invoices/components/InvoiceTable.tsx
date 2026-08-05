@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { Edit, Trash2, GraduationCap } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 import { SectionCard } from './InvoiceUI';
 import { Badge } from '../../../shared/components/ui';
 
@@ -70,11 +71,11 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
                     <span className="text-micro font-medium text-muted">{inv.specialization}</span>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs font-bold text-muted">
-                    {inv.amount.toLocaleString()} ج.م
+                    {inv.amount.toLocaleString()} {CURRENCY_SYMBOL}
                   </td>
                   <td className="px-4 py-3 text-center">
                     <Badge variant="success" size="sm">
-                      {(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م
+                      {(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} {CURRENCY_SYMBOL}
                     </Badge>
                   </td>
                   <td className="px-4 py-3">
@@ -124,12 +125,12 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
                 <div className="flex items-center gap-3">
                   <div>
                     <p className="text-micro font-bold text-muted uppercase mb-0.5">المبلغ</p>
-                    <span className="font-mono text-sm font-bold text-main">{inv.amount.toLocaleString()} ج.م</span>
+                    <span className="font-mono text-sm font-bold text-main">{inv.amount.toLocaleString()} {CURRENCY_SYMBOL}</span>
                   </div>
                   <div className="w-px h-6 bg-border" />
                   <div>
                     <p className="text-micro font-bold text-muted uppercase mb-0.5">الصافي</p>
-                    <span className="text-xs font-bold text-success-dark">{(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} ج.م</span>
+                    <span className="text-xs font-bold text-success-dark">{(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} {CURRENCY_SYMBOL}</span>
                   </div>
                 </div>
                 <Badge variant={statusVariant[inv.status] || 'error'} size="sm">

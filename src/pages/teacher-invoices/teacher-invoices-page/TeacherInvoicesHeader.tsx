@@ -1,5 +1,6 @@
 import { Search, Calendar, GraduationCap, Plus, X, UserPlus, Trash2, Printer } from 'lucide-react';
 import { INVOICE_STATUS } from '../../../types/invoice';
+import { CURRENCY_SYMBOL } from '../../../config/constants';
 import { PrimaryBtn, SecondaryBtn, DangerBtn } from '../components/InvoiceUI';
 
 interface TeacherInvoicesHeaderProps {
@@ -37,7 +38,7 @@ export const TeacherInvoicesHeader = ({
                 </div>
             </div>
             <span className="text-[10px] font-bold text-success bg-success-soft px-2.5 py-1 rounded-lg whitespace-nowrap">
-                {stats.totalAmount.toLocaleString()} ج.م
+                {stats.totalAmount.toLocaleString()} {CURRENCY_SYMBOL}
             </span>
         </div>
         <div className="flex flex-col lg:flex-row gap-2 items-center">
