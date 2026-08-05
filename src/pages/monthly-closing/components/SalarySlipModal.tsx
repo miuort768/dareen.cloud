@@ -39,7 +39,7 @@ export const SalarySlipModal = ({ teacher, month, onClose }: { teacher: TeacherS
                             <p className="text-micro font-medium text-on-primary/70 tracking-wider">سجل مالي معتمد • {month}</p>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/10 transition-colors rounded-xl" aria-label="إغلاق">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-error hover:bg-error/20 transition-colors rounded-xl" aria-label="إغلاق">
                         <X size={18} />
                     </button>
                 </div>

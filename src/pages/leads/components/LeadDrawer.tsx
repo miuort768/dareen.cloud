@@ -98,8 +98,8 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                                             </div>
                                         </div>
                                     </div>
-                                    <button ref={closeRef} onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-hover rounded-xl transition-all" aria-label="إغلاق">
-                                        <X size={18} className="text-muted" />
+                                    <button ref={closeRef} onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-error-soft rounded-xl transition-all" aria-label="إغلاق">
+                                        <X size={18} className="text-error" />
                                     </button>
                                 </div>
 

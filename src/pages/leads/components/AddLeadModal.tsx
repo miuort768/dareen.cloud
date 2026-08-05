@@ -51,7 +51,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                                 </div>
                                 <button
                                     onClick={() => setIsAddModalOpen(false)}
-                                    className="w-7 h-7 flex items-center justify-center hover:bg-white/10 text-on-primary/70 rounded-xl transition-all"
+                                    className="w-7 h-7 flex items-center justify-center hover:bg-error/20 text-error rounded-xl transition-all"
                                     aria-label="إغلاق"
                                 >
                                     <X size={16} />
