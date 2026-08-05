@@ -51,7 +51,7 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
 
                         {/* Card body */}
                         <div className="px-3.5 pb-2 flex items-center gap-3 text-xs text-muted">
-                            <span className="font-mono">{lead.phone}</span>
+                            <span onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} className="font-mono hover:text-success cursor-pointer transition-colors">{lead.phone}</span>
                             <span className="text-muted/40">·</span>
                             <span>{lead.subject}</span>
                             {lead.curriculum && (

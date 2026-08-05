@@ -177,7 +177,7 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                                         <div className="space-y-3">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center shrink-0 ring-1 ring-success/20"><Phone size={14} className="text-success" /></div>
-                                                <div className="min-w-0"><p className="text-[10px] text-muted">الهاتف</p><p className="text-sm font-bold text-main font-mono">{lead.phone}</p></div>
+                                                <div className="min-w-0"><p className="text-[10px] text-muted">الهاتف</p><p onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="text-sm font-bold text-main font-mono hover:text-success cursor-pointer transition-colors">{lead.phone}</p></div>
                                             </div>
                                             <div className="flex items-center gap-3">
                                                 <div className="w-8 h-8 rounded-xl bg-info-soft flex items-center justify-center shrink-0 ring-1 ring-info/20"><Tag size={14} className="text-info" /></div>

@@ -56,7 +56,7 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
 
                                 {/* التواصل */}
                                 <div className="w-[14%] px-2">
-                                    <span className="font-mono text-xs text-main">{lead.phone}</span>
+                                    <span onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} className="font-mono text-xs text-main hover:text-success cursor-pointer transition-colors">{lead.phone}</span>
                                 </div>
 
                                 {/* المادة */}
