@@ -14,26 +14,34 @@ interface HeroSelectionProps {
 
 export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="pb-6">
-        <div className="bg-gradient-to-br from-primary/80 via-white to-primary/30 rounded-3xl px-5 pt-4 pb-3 mb-3 border border-primary/50">
-            <h2 className="text-xl font-black text-primary leading-tight">
+        {/* Hero Card */}
+        <div className="bg-gradient-to-br from-primary via-primary-deep to-primary rounded-3xl px-5 pt-5 pb-4 mb-4 border border-primary/30 shadow-lg shadow-primary/10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 backdrop-blur-sm rounded-full mb-3">
+                <BookOpen size={10} className="text-on-primary" />
+                <span className="text-[10px] font-extrabold text-on-primary">
+                    {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? currentTypeName : currentCurriculumName}
+                </span>
+            </div>
+            <h2 className="text-xl font-black text-on-primary leading-tight mb-1">
                 {view === 'types' ? (
-                    <>تحميل مجاني بدون اعلانات</>
+                    <>تحميل مجاني بدون إعلانات</>
                 ) : view === 'curriculums' ? (
-                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">المنهج</span></>
+                    <>اختر <span className="text-on-primary/80">المنهج</span></>
                 ) : (
-                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">المرحلة</span></>
+                    <>اختر <span className="text-on-primary/80">المرحلة</span></>
                 )}
             </h2>
-            <p className="text-xs text-main font-medium mt-1.5 leading-relaxed">
+            <p className="text-xs text-on-primary/70 font-medium leading-relaxed">
                 {view === 'types'
-                    ? 'اختر ما تريد من كتب او مذكرات مجانا'
+                    ? 'اختر ما تريد من كتب أو مذكرات مجاناً'
                     : view === 'curriculums'
-                    ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-                    : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
+                    ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج`
+                    : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`}
             </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        {/* Grid */}
+        <div className="grid grid-cols-2 gap-2.5 mb-5">
             {gridItems.map((item: GridItem) => (
                 <button key={item.id} onClick={() => {
                     setSearchParams(prev => {
@@ -49,12 +57,12 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
                         return next;
                     });
                 }}
-                    className={cn("relative flex flex-col items-center justify-center gap-2 p-5 rounded-2xl text-on-primary overflow-hidden shadow-lg active:scale-[0.97] transition-all bg-gradient-to-br", item.gradient)}>
-                    <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
-                        <item.icon size={20} />
+                    className="relative flex flex-col items-center justify-center gap-2.5 p-5 rounded-2xl bg-card border border-border text-main overflow-hidden shadow-sm active:scale-[0.97] transition-all duration-200 hover:shadow-md hover:border-primary/30">
+                    <div className="w-11 h-11 rounded-xl bg-primary-soft flex items-center justify-center">
+                        <item.icon size={20} className="text-primary" />
                     </div>
-                    <span className="text-sm font-black text-center leading-tight">{item.name}</span>
-                    {item.sub && <span className="text-xs text-on-primary/70 font-bold">{item.sub}</span>}
+                    <span className="text-sm font-extrabold text-center leading-tight">{item.name}</span>
+                    {item.sub && <span className="text-[10px] text-muted font-bold">{item.sub}</span>}
                 </button>
             ))}
         </div>
@@ -64,32 +72,32 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
 export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
         <div className="w-full lg:w-[55%] text-center lg:text-start">
-            <div className="inline-flex animate-in fade-in slide-in-from-top-2 duration-500 items-center gap-2 px-4 py-1.5 bg-primary-soft/60 backdrop-blur-sm border border-primary rounded-full mb-5">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-soft border border-primary/20 rounded-2xl mb-5">
                 <BookOpen size={13} className="text-primary" />
-                <span className="text-micro font-black text-primary">
+                <span className="text-xs font-extrabold text-primary">
                     {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
                 </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-main mb-4 leading-tight animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-main mb-4 leading-tight">
                 {view === 'types' ? (
-                    <>مكتبة <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">دارين</span> التعليمية</>
+                    <>مكتبة <span className="text-primary">دارين</span> التعليمية</>
                 ) : view === 'curriculums' ? (
-                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">المنهج</span></>
+                    <>اختر <span className="text-primary">المنهج</span></>
                 ) : (
-                    <>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">المرحلة</span></>
+                    <>اختر <span className="text-primary">المرحلة</span></>
                 )}
             </h1>
-            <p className="text-sm sm:text-base text-muted leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
+            <p className="text-sm sm:text-base text-muted leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium">
                 {view === 'types'
-                    ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في مناهج الكويت و قطر والامارات والسعودية'
+                    ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في مناهج الكويت وقطر والإمارات والسعودية'
                     : view === 'curriculums'
                     ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
                     : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
             </p>
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
                 {gridItems.map((item: GridItem, i: number) => (
-                    <div key={item.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 80}ms` }}>
+                    <div key={item.id}>
                         <button onClick={() => {
                             setSearchParams(prev => {
                                 const next = new URLSearchParams(prev);
@@ -104,21 +112,22 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                                 return next;
                             });
                         }}
-                            className={cn("relative w-full py-4 px-3 flex flex-col items-center justify-center gap-1.5 rounded-2xl text-on-primary overflow-hidden transition-all duration-300 active:scale-[0.97] shadow-lg bg-gradient-to-br", item.gradient)}>
-                            <div className="absolute inset-0 bg-white/0 hover:bg-white/10 transition-colors duration-300" />
-                            <item.icon size={20} className="relative z-10" />
-                            <span className="relative z-10 text-xs sm:text-sm font-black text-center leading-tight">{item.name}</span>
-                            {item.sub && <span className="relative z-10 text-micro text-on-primary/70 font-bold">{item.sub}</span>}
+                            className="relative w-full py-5 px-4 flex flex-col items-center justify-center gap-2 rounded-2xl bg-card border border-border text-main overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elevation-2 hover:border-primary/30 active:scale-[0.97]">
+                            <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
+                                <item.icon size={18} className="text-primary" />
+                            </div>
+                            <span className="text-sm font-extrabold text-center leading-tight">{item.name}</span>
+                            {item.sub && <span className="text-[11px] text-muted font-medium">{item.sub}</span>}
                         </button>
                     </div>
                 ))}
             </div>
         </div>
-        <div className="hidden lg:flex w-full lg:w-[45%] justify-center animate-in fade-in slide-in-from-end-8 duration-700 delay-300">
+        <div className="hidden lg:flex w-full lg:w-[45%] justify-center">
             <div className="relative w-full max-w-[420px] aspect-[3/4] flex items-center justify-center">
-                <div className="absolute inset-[12%] border-[1.5px] border-dashed border-primary/40 rounded-full animate-spin-slow pointer-events-none"></div>
-                <div className="absolute inset-[17%] border-[1.5px] border-dashed border-accent/30 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/20 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+                <div className="absolute inset-[12%] border-[1.5px] border-dashed border-primary/30 rounded-full animate-spin-slow pointer-events-none"></div>
+                <div className="absolute inset-[17%] border-[1.5px] border-dashed border-accent/20 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-primary/10 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
                 <picture className="w-full h-full flex items-center justify-center">
                     <source srcSet="/book3.webp" type="image/webp" />
                     <source srcSet="/book3.avif" type="image/avif" />

@@ -26,72 +26,91 @@ export const SelectionGrid = ({
     filteredCount, goBack, onSelectGrade, onSelectTerm, onSelectSubject,
     isMobile
 }: SelectionGridProps) => {
+
+    const headerLabel = view === 'classrooms'
+        ? `${currentCurriculumName} — ${currentLevelName}`
+        : view === 'terms' ? `الصف ${gradeNames[selectedGrade]}`
+        : `المواد — ${termLabel}`;
+
+    const headerTitle = view === 'classrooms' ? 'الصف الدراسي'
+        : view === 'terms' ? 'الترم'
+        : 'المادة';
+
+    const headerSubtitle = view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
+        : view === 'terms' ? 'اختر الترم الدراسي'
+        : `${filteredCount} نتيجة متاحة`;
+
+    const headerIcon = view === 'classrooms' ? GraduationCap : BookOpen;
+
     if (isMobile && (view === 'classrooms' || view === 'terms' || view === 'subjects')) {
         return (
             <div className="pb-6">
-                <div className="bg-gradient-to-br from-primary via-primary to-white rounded-[32px] p-5 mb-6 border border-primary/50 mt-2 text-center">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/80 rounded-full mb-3">
-                        <BookOpen size={10} className="text-primary" />
-                        <span className="text-micro font-black text-primary">
-                            {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
-                                : view === 'terms' ? `الصف ${gradeNames[selectedGrade]}`
-                                : `المواد — ${termLabel}`}
-                        </span>
+                {/* Header Card */}
+                <div className="bg-gradient-to-br from-primary via-primary-deep to-primary rounded-3xl p-5 mb-5 border border-primary/30 shadow-lg shadow-primary/10 mt-2 text-center">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 backdrop-blur-sm rounded-full mb-3">
+                        {(() => { const Icon = headerIcon; return <Icon size={10} className="text-on-primary" />; })()}
+                        <span className="text-[10px] font-extrabold text-on-primary">{headerLabel}</span>
                     </div>
-                    <h2 className="text-base font-black text-primary">
-                        {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">الصف الدراسي</span></>)
-                            : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">الترم</span></>)
-                            : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary">المادة</span></>)}
+                    <h2 className="text-base font-black text-on-primary">
+                        اختر <span className="text-on-primary/80">{headerTitle}</span>
                     </h2>
-                    <p className="text-micro text-muted font-medium mt-1">
-                        {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
-                            : view === 'terms' ? 'اختر الترم الدراسي'
-                            : `${filteredCount} نتيجة متاحة`}
-                    </p>
+                    <p className="text-[11px] text-on-primary/70 font-medium mt-1">{headerSubtitle}</p>
                 </div>
 
-                <div className="mb-3">
+                {/* Book Image */}
+                <div className="mb-4">
                     <picture>
                         <source srcSet="/bbook.webp" type="image/webp" />
                         <source srcSet="/bbook.avif" type="image/avif" />
-                        <img src="/bbook.png" alt="بوابة دارين التعليمية" loading="lazy" className="w-full max-w-[200px] mx-auto h-auto block" />
+                        <img src="/bbook.png" alt="بوابة دارين التعليمية" loading="lazy" className="w-full max-w-[180px] mx-auto h-auto block" />
                     </picture>
                 </div>
+
+                {/* Grid */}
                 <div className="grid grid-cols-2 gap-2.5">
                     {view === 'classrooms' && currentClassrooms.map((cls) => (
                         <button key={cls} onClick={() => onSelectGrade(cls)}
-                            className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-primary-active to-primary-active text-on-primary active:scale-[0.97] transition-all">
-                            <GraduationCap size={18} />
-                            <span className="text-micro font-black text-center">الصف {gradeNames[cls] || cls}</span>
+                            className="flex flex-col items-center justify-center gap-2.5 p-4 rounded-2xl bg-card border border-border text-main active:scale-[0.97] transition-all duration-200 hover:shadow-md hover:border-primary/30">
+                            <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
+                                <GraduationCap size={18} className="text-primary" />
+                            </div>
+                            <span className="text-xs font-extrabold text-center">الصف {gradeNames[cls] || cls}</span>
                         </button>
                     ))}
 
                     {view === 'terms' && (
                         <>
                             <button onClick={() => onSelectTerm('1')}
-                                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-primary to-primary text-on-primary active:scale-[0.97] transition-all">
-                                <BookOpen size={18} />
-                                <span className="text-micro font-black">ترم أول</span>
+                                className="flex flex-col items-center justify-center gap-2.5 p-4 rounded-2xl bg-card border border-border text-main active:scale-[0.97] transition-all duration-200 hover:shadow-md hover:border-primary/30">
+                                <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
+                                    <BookOpen size={18} className="text-primary" />
+                                </div>
+                                <span className="text-xs font-extrabold">ترم أول</span>
                             </button>
                             <button onClick={() => onSelectTerm('2')}
-                                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-primary to-primary text-on-primary active:scale-[0.97] transition-all">
-                                <BookOpen size={18} />
-                                <span className="text-micro font-black">ترم ثاني</span>
+                                className="flex flex-col items-center justify-center gap-2.5 p-4 rounded-2xl bg-card border border-border text-main active:scale-[0.97] transition-all duration-200 hover:shadow-md hover:border-primary/30">
+                                <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
+                                    <BookOpen size={18} className="text-primary" />
+                                </div>
+                                <span className="text-xs font-extrabold">ترم ثاني</span>
                             </button>
                         </>
                     )}
 
                     {view === 'subjects' && currentSubjects.map((subj) => (
                         <button key={subj.id} onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
-                            className={cn("flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br text-on-primary active:scale-[0.97] transition-all", subj.gradient)}>
-                            <span className="text-micro font-black text-center">{subj.name}</span>
+                            className="flex flex-col items-center justify-center gap-2.5 p-4 rounded-2xl bg-card border border-border text-main active:scale-[0.97] transition-all duration-200 hover:shadow-md hover:border-primary/30">
+                            <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
+                                <BookOpen size={18} className="text-primary" />
+                            </div>
+                            <span className="text-xs font-extrabold text-center">{subj.name}</span>
                         </button>
                     ))}
 
                     <button onClick={goBack}
-                        className="flex flex-row items-center justify-center gap-2 p-3 rounded-2xl bg-hover border border-border text-main hover:bg-surface active:scale-[0.97] transition-all">
+                        className="flex flex-row items-center justify-center gap-2 p-3 rounded-2xl bg-surface border border-border text-muted hover:text-main active:scale-[0.97] transition-all duration-200">
                         <ArrowLeft size={14} />
-                        <span className="text-micro font-black">العودة</span>
+                        <span className="text-xs font-extrabold">العودة</span>
                     </button>
                 </div>
             </div>
@@ -101,81 +120,74 @@ export const SelectionGrid = ({
     if (!isMobile && (view === 'classrooms' || view === 'terms' || view === 'subjects')) {
         return (
             <>
-                <div className="text-center max-w-3xl mx-auto mb-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-soft/60 backdrop-blur-sm border border-primary rounded-2xl mb-4">
-                        <BookOpen size={14} className="text-primary" />
-                        <span className="text-xs font-bold text-primary">
-                            {view === 'classrooms' ? `${currentCurriculumName} — ${currentLevelName}`
-                                : view === 'terms' ? `الصف ${gradeNames[selectedGrade]}`
-                                : `المواد — ${termLabel}`}
-                        </span>
+                {/* Header */}
+                <div className="text-center max-w-3xl mx-auto mb-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-soft border border-primary/20 rounded-2xl mb-4">
+                        {(() => { const Icon = headerIcon; return <Icon size={13} className="text-primary" />; })()}
+                        <span className="text-xs font-extrabold text-primary">{headerLabel}</span>
                     </div>
-                    <h2 className="text-2xl font-black text-main mb-3">
-                        {view === 'classrooms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">الصف الدراسي</span></>)
-                            : view === 'terms' ? (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">الترم</span></>)
-                            : (<>اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">المادة</span></>)}
+                    <h2 className="text-2xl font-heading font-black text-main mb-3">
+                        اختر <span className="text-primary">{headerTitle}</span>
                     </h2>
-                    <p className="text-sm text-muted font-medium">
-                        {view === 'classrooms' ? 'اختر الصف للوصول للمحتوى'
-                            : view === 'terms' ? 'اختر الترم الدراسي'
-                            : `${filteredCount} نتيجة متاحة`}
-                    </p>
+                    <p className="text-sm text-muted font-medium">{headerSubtitle}</p>
                 </div>
 
+                {/* Book Image */}
                 <div className="mb-6">
                     <picture>
                         <source srcSet="/bbook.webp" type="image/webp" />
                         <source srcSet="/bbook.avif" type="image/avif" />
-                        <img src="/bbook.png" alt="بوابة دارين التعليمية" loading="lazy" className="w-auto mx-auto h-auto block max-w-[320px]" />
+                        <img src="/bbook.png" alt="بوابة دارين التعليمية" loading="lazy" className="w-auto mx-auto h-auto block max-w-[280px]" />
                     </picture>
                 </div>
+
+                {/* Grid */}
                 <div className="max-w-4xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
-                    {view === 'classrooms' && currentClassrooms.map((cls, idx) => (
-                            <div key={cls} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${idx * 60}ms` }}>
-                                <button onClick={() => onSelectGrade(cls)}
-                                    className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-primary-active to-primary-active text-on-primary border border-white/5 shadow-lg active:scale-[0.97] transition-all">
-                                    <GraduationCap size={24} />
-                                    <span className="text-sm font-black text-center">الصف {gradeNames[cls] || cls}</span>
-                                </button>
-                            </div>
+                        {view === 'classrooms' && currentClassrooms.map((cls) => (
+                            <button key={cls} onClick={() => onSelectGrade(cls)}
+                                className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-card border border-border text-main hover:shadow-elevation-2 hover:border-primary/30 active:scale-[0.97] transition-all duration-200">
+                                <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center">
+                                    <GraduationCap size={22} className="text-primary" />
+                                </div>
+                                <span className="text-sm font-extrabold text-center">الصف {gradeNames[cls] || cls}</span>
+                            </button>
                         ))}
 
                         {view === 'terms' && (
                             <>
-                                <div className="animate-in zoom-in-95 duration-500">
-                                    <button onClick={() => onSelectTerm('1')}
-                                        className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-primary to-primary text-on-primary shadow-lg active:scale-[0.97] transition-all">
-                                        <BookOpen size={24} />
-                                        <span className="text-sm font-black">ترم أول</span>
-                                    </button>
-                                </div>
-                                <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: '60ms' }}>
-                                    <button onClick={() => onSelectTerm('2')}
-                                        className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br from-primary to-primary text-on-primary shadow-lg active:scale-[0.97] transition-all">
-                                        <BookOpen size={24} />
-                                        <span className="text-sm font-black">ترم ثاني</span>
-                                    </button>
-                                </div>
+                                <button onClick={() => onSelectTerm('1')}
+                                    className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-card border border-border text-main hover:shadow-elevation-2 hover:border-primary/30 active:scale-[0.97] transition-all duration-200">
+                                    <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center">
+                                        <BookOpen size={22} className="text-primary" />
+                                    </div>
+                                    <span className="text-sm font-extrabold">ترم أول</span>
+                                </button>
+                                <button onClick={() => onSelectTerm('2')}
+                                    className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-card border border-border text-main hover:shadow-elevation-2 hover:border-primary/30 active:scale-[0.97] transition-all duration-200">
+                                    <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center">
+                                        <BookOpen size={22} className="text-primary" />
+                                    </div>
+                                    <span className="text-sm font-extrabold">ترم ثاني</span>
+                                </button>
                             </>
                         )}
 
-                    {view === 'subjects' && currentSubjects.map((subj, idx) => (
-                            <div key={subj.id} className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${idx * 60}ms` }}>
-                                <button onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
-                                    className={cn("w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-gradient-to-br text-on-primary shadow-lg active:scale-[0.97] transition-all", subj.gradient)}>
-                                    <span className="text-sm font-black text-center">{subj.name}</span>
-                                </button>
-                            </div>
+                        {view === 'subjects' && currentSubjects.map((subj) => (
+                            <button key={subj.id} onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
+                                className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-card border border-border text-main hover:shadow-elevation-2 hover:border-primary/30 active:scale-[0.97] transition-all duration-200">
+                                <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center">
+                                    <BookOpen size={22} className="text-primary" />
+                                </div>
+                                <span className="text-sm font-extrabold text-center">{subj.name}</span>
+                            </button>
                         ))}
 
-                        <div className="animate-in zoom-in-95 duration-500">
-                            <button onClick={goBack}
-                                className="w-full py-4 px-3 flex flex-row items-center justify-center gap-3 rounded-2xl bg-hover border border-border text-main hover:bg-surface active:scale-[0.97] transition-all">
-                                <ArrowLeft size={18} />
-                                <span className="text-sm font-black">العودة</span>
-                            </button>
-                        </div>
+                        <button onClick={goBack}
+                            className="w-full py-5 px-3 flex flex-row items-center justify-center gap-3 rounded-2xl bg-surface border border-border text-muted hover:text-main active:scale-[0.97] transition-all duration-200">
+                            <ArrowLeft size={16} />
+                            <span className="text-sm font-extrabold">العودة</span>
+                        </button>
                     </div>
                 </div>
             </>

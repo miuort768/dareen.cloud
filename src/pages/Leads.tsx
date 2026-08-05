@@ -146,7 +146,7 @@ export const Leads = () => {
     if (isLeadsError) {
         return (
             <div className="bg-background min-h-screen pb-24" dir="rtl">
-                <div className="relative z-10 mx-auto px-2 md:px-4 max-w-page">
+                <div className="relative z-10 mx-auto px-4 md:px-6 max-w-page">
                     <ErrorBanner className="mt-6 md:mt-10" />
                 </div>
             </div>
@@ -163,21 +163,18 @@ export const Leads = () => {
             className="bg-background min-h-screen pb-24"
             dir="rtl"
         >
-            <div className="relative z-10 mx-auto px-2 max-w-page">
+            <div className="relative z-10 mx-auto px-4 md:px-6 max-w-page">
                 {/* ===== HERO SECTION ===== */}
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary-deep mt-4 mb-6">
-                    {/* Decorative elements */}
                     <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                     <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-3xl" />
 
-                    {/* Hero content */}
-                    <div className="relative z-10 px-4 md:px-6 py-6">
-                        {/* Top row: title + actions */}
-                        <div className="flex items-center justify-between mb-6">
+                    <div className="relative z-10 px-5 md:px-8 py-6 md:py-8">
+                        {/* Top row */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                             <div>
                                 <h1 className="text-xl md:text-2xl font-bold font-outfit text-white mb-1">العملاء المتوقعون</h1>
-                                <p className="text-white/70 text-sm">تابع وأدر جميع العملاء المتوقعين وحوّلهم إلى عقود ناجحة</p>
+                                <p className="text-white/60 text-xs md:text-sm">تابع وأدر جميع العملاء المتوقعين وحوّلهم إلى عقود ناجحة</p>
                             </div>
                             <div className="flex items-center gap-2">
                                 <button
@@ -190,55 +187,55 @@ export const Leads = () => {
                                     )}
                                 >
                                     {showLost ? <Eye size={14} /> : <EyeOff size={14} />}
-                                    <span>{showLost ? 'النشطاء' : 'المفقودين'}</span>
+                                    <span className="hidden sm:inline">{showLost ? 'النشطاء' : 'المفقودين'}</span>
                                 </button>
                                 <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 text-xs">
-                                    <Plus size={14} /> عميل جديد
+                                    <Plus size={14} /> جديد
                                 </PrimaryBtn>
                             </div>
                         </div>
 
                         {/* KPI Stats */}
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/15">
-                                <div className="flex items-center gap-2 text-white/70 text-xs mb-1.5">
-                                    <Users size={14} />
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 md:gap-3">
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 md:p-4 border border-white/10">
+                                <div className="flex items-center gap-2 text-white/60 text-[11px] md:text-xs mb-2">
+                                    <Users size={13} />
                                     <span>إجمالي العملاء</span>
                                 </div>
-                                <div className="text-2xl font-bold font-outfit text-white">{stats?.total || 0}</div>
-                                <div className="text-white/60 text-[11px] mt-1">{activeCount} نشط</div>
+                                <div className="text-xl md:text-2xl font-bold font-outfit text-white">{stats?.total || 0}</div>
+                                <div className="text-white/50 text-[10px] md:text-[11px] mt-1">{activeCount} نشط</div>
                             </div>
-                            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/15">
-                                <div className="flex items-center gap-2 text-white/70 text-xs mb-1.5">
-                                    <Activity size={14} />
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 md:p-4 border border-white/10">
+                                <div className="flex items-center gap-2 text-white/60 text-[11px] md:text-xs mb-2">
+                                    <Activity size={13} />
                                     <span>عملاء جدد</span>
                                 </div>
-                                <div className="text-2xl font-bold font-outfit text-white">{stats?.new || 0}</div>
-                                <div className="text-success text-[11px] mt-1">هذا الشهر</div>
+                                <div className="text-xl md:text-2xl font-bold font-outfit text-white">{stats?.new || 0}</div>
+                                <div className="text-success text-[10px] md:text-[11px] mt-1">هذا الشهر</div>
                             </div>
-                            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/15">
-                                <div className="flex items-center gap-2 text-white/70 text-xs mb-1.5">
-                                    <Phone size={14} />
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 md:p-4 border border-white/10">
+                                <div className="flex items-center gap-2 text-white/60 text-[11px] md:text-xs mb-2">
+                                    <Phone size={13} />
                                     <span>تم التحويل</span>
                                 </div>
-                                <div className="text-2xl font-bold font-outfit text-white">{stats?.converted || 0}</div>
-                                <div className="text-white/60 text-[11px] mt-1">إلى مشتركين</div>
+                                <div className="text-xl md:text-2xl font-bold font-outfit text-white">{stats?.converted || 0}</div>
+                                <div className="text-white/50 text-[10px] md:text-[11px] mt-1">إلى مشتركين</div>
                             </div>
-                            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/15">
-                                <div className="flex items-center gap-2 text-white/70 text-xs mb-1.5">
-                                    <BarChart3 size={14} />
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 md:p-4 border border-white/10">
+                                <div className="flex items-center gap-2 text-white/60 text-[11px] md:text-xs mb-2">
+                                    <BarChart3 size={13} />
                                     <span>معدل التحويل</span>
                                 </div>
-                                <div className="text-2xl font-bold font-outfit text-white">{(stats?.conversionRate ?? 0).toFixed(1)}%</div>
-                                <div className="text-success text-[11px] mt-1">معدل النجاح</div>
+                                <div className="text-xl md:text-2xl font-bold font-outfit text-white">{(stats?.conversionRate ?? 0).toFixed(1)}%</div>
+                                <div className="text-success text-[10px] md:text-[11px] mt-1">معدل النجاح</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* ===== MAIN CONTENT CARD ===== */}
+                {/* ===== MAIN CONTENT ===== */}
                 <div className="bg-card rounded-2xl shadow-elevation-1 border border-border overflow-hidden">
-                    {/* Toolbar: search + filters */}
+                    {/* Toolbar */}
                     <div className="p-4 lg:p-5 border-b border-border">
                         <div className="flex items-center gap-3">
                             <div className="relative flex-1">
@@ -262,7 +259,7 @@ export const Leads = () => {
                             </div>
                         </div>
 
-                        {/* Filter pills (Gmail-style with counts) */}
+                        {/* Filter pills */}
                         <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none mt-3">
                             <button
                                 onClick={() => setFilterStatus('all')}
@@ -307,24 +304,24 @@ export const Leads = () => {
                         </div>
                     </div>
 
-                    {/* Content: table or cards */}
+                    {/* Content */}
                     <div>
                         <LeadTable filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
                         <LeadCards filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
                     </div>
                 </div>
 
-                {/* ===== FAB BUTTON ===== */}
+                {/* FAB */}
                 <motion.button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="fixed bottom-8 left-8 z-40 w-14 h-14 bg-primary text-on-primary rounded-xl shadow-xl shadow-primary/30 flex items-center justify-center hover:bg-primary-hover active:scale-95 transition-all"
+                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-primary text-on-primary rounded-xl shadow-xl shadow-primary/30 flex items-center justify-center hover:bg-primary-hover active:scale-95 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                 >
-                    <Plus size={24} />
+                    <Plus size={22} />
                 </motion.button>
 
-                {/* ===== MODALS ===== */}
+                {/* Modals */}
                 <AnimatePresence>
                     {confirmLeadId && <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={() => setConfirmLeadId(null)} />}
                 </AnimatePresence>

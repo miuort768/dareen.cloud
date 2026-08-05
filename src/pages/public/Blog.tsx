@@ -204,53 +204,50 @@ export const Blog = () => {
       <div className="md:hidden pb-0 px-3 relative bg-surface">
         {isHeroView ? (
           <div className="pb-6">
-            <div className="flex items-center justify-between mb-5 mt-2">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-card border border-border">
-                    <span className="text-xs font-bold text-main">7SCHOOL.ONLINE/BOOKS</span>
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-primary flex items-center justify-center">
-                      <Download size={10} className="text-on-primary" />
-                    </div>
-                  </div>
+            {/* Top Bar */}
+            <div className="flex items-center justify-between mb-4 mt-2">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-card rounded-xl border border-border">
+                <span className="text-[11px] font-extrabold text-main">7SCHOOL.ONLINE/BOOKS</span>
+                <div className="w-5 h-5 rounded-lg bg-primary flex items-center justify-center">
+                  <Download size={10} className="text-on-primary" />
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
                   target="_blank" rel="noopener noreferrer"
-                   className="w-10 h-10 rounded-card bg-white flex items-center justify-center hover:bg-success-light transition-all">
-                  <MessageCircle size={16} className="text-success" />
+                   className="w-9 h-9 rounded-xl bg-card border border-border flex items-center justify-center hover:border-success/40 transition-all">
+                  <MessageCircle size={15} className="text-success" />
                 </a>
                 <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
                   target="_blank" rel="noopener noreferrer"
-                   className="w-10 h-10 rounded-card bg-white flex items-center justify-center hover:bg-info transition-all">
-                    <Send size={16} className="text-info" />
+                   className="w-9 h-9 rounded-xl bg-card border border-border flex items-center justify-center hover:border-info/40 transition-all">
+                    <Send size={15} className="text-info" />
                 </a>
               </div>
             </div>
 
-            <div className="relative bg-gradient-to-br from-primary via-primary to-white rounded-card overflow-hidden mb-6 border border-primary/50">
+            {/* Hero Banner */}
+            <div className="relative bg-gradient-to-br from-primary via-primary-deep to-primary rounded-3xl overflow-hidden mb-5 border border-primary/30 shadow-lg shadow-primary/10">
               <div className="flex items-center gap-4 p-5">
-                <div className="flex-1">
-                  <p className="text-lg font-black text-on-primary leading-tight mb-1">برعادية دارين<span className="text-inverse"> السابعة</span></p>
-                  <p className="text-xs font-bold text-on-primary/90 mb-2">أفضل الكتب والملخصات</p>
-                  <p className="text-micro text-on-primary/80 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
-                  <div className="flex flex-col gap-1.5">
-                    <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
-                      target="_blank" rel="noopener noreferrer"
-                       className="bg-white text-main text-micro font-bold px-4 py-2 rounded-full border border-border hover:border-primary hover:text-primary transition-all w-full text-center block">
-                      طلب حصة مجانية
-                    </a>
+                <div className="flex-1 min-w-0">
+                  <p className="text-lg font-black text-on-primary leading-tight mb-1">برامج <span className="text-on-primary/80">دارين</span> السابعة</p>
+                  <p className="text-[11px] font-bold text-on-primary/80 mb-2">أفضل الكتب والملخصات</p>
+                  <p className="text-[10px] text-on-primary/60 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
+                  <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
+                    target="_blank" rel="noopener noreferrer"
+                     className="inline-flex items-center justify-center bg-on-primary text-primary text-[11px] font-extrabold px-4 py-2 rounded-xl hover:bg-white transition-all w-full">
+                    طلب حصة مجانية
+                  </a>
+                </div>
+                <div className="relative shrink-0">
+                  <div className="absolute inset-0 bg-primary-light/30 rounded-full blur-xl" />
+                  <div className="relative w-[100px]">
+                    <Image src="/bbook.png" alt="طفل يدرس على منصة دارين" className="w-full h-auto" imgClassName="object-contain drop-shadow-lg" />
                   </div>
                 </div>
-                  <div className="relative shrink-0">
-                    <div className="absolute inset-0 bg-primary-light/50 rounded-full blur-xl" />
-                    <div className="relative w-[117px] md:w-[90px]">
-                      <Image src="/bbook.png" alt="طفل يدرس على منصة دارين" className="w-full h-auto" imgClassName="object-contain drop-shadow-lg" />
-                    </div>
-                  </div>
               </div>
             </div>
+
             <MobileHero view={view} gridItems={gridItems} currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} setSearchParams={setSearchParams} />
           </div>
         ) : view === 'results' ? (
@@ -273,9 +270,8 @@ export const Blog = () => {
       {/* Desktop */}
       <main id="main-content" className="hidden md:block pt-24 md:pt-32 pb-0 relative overflow-hidden bg-surface">
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 rounded-full blur-[120px]" />
-          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[var(--bg-primary)]/20 to-transparent" />
+          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-primary/5 to-transparent rounded-full blur-[140px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-info/3 to-transparent rounded-full blur-[120px]" />
         </div>
         {view === 'types' ? (
           <DesktopLibraryLanding posts={posts} loading={loading} setSearchParams={setSearchParams} />
