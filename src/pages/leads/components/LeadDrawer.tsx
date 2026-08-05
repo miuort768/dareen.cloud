@@ -72,13 +72,13 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
         <AnimatePresence>
             {isOpen && (
                 <>
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] bg-black/50 backdrop-blur-sm" onClick={onClose} />
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/50 backdrop-blur-sm" onClick={onClose} />
                     <motion.div
                         initial={{ x: '100%' }}
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="fixed inset-y-0 start-0 z-[200] w-full max-w-md bg-card border-e border-border shadow-elevation-3 flex flex-col"
+                        className="fixed inset-y-0 start-0 z-[600] w-full max-w-md bg-card border-e border-border shadow-elevation-3 flex flex-col"
                         dir="rtl"
                     >
                         {/* Header */}

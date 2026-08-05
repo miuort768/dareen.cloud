@@ -1,7 +1,7 @@
 import { cn } from '../../../lib/utils';
 import { Phone, MessageSquare, CheckCircle2, Trash2, Search, FileText } from 'lucide-react';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
-import { GradientAvatar, StatusChip, getPriority, getLeadAge, ActionBtn, statusColors } from './LeadsUI';
+import { GradientAvatar, StatusChip, getPriority, ActionBtn, statusColors } from './LeadsUI';
 
 interface LeadCardsProps {
     filteredLeads: Lead[];
@@ -20,7 +20,6 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                     <p className="text-xs text-muted mt-1">لا يوجد عملاء متطابقون مع معايير البحث</p>
                 </div>
             ) : filteredLeads.map((lead, idx) => {
-                const age = getLeadAge(lead.createdAt);
                 const priority = getPriority(lead.priority);
                 return (
                     <div
@@ -41,9 +40,6 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                                          {lead.notes && <span className="shrink-0" title={lead.notes}><FileText size={12} className="text-warning" /></span>}
                                     </div>
                                     <div className="flex items-center gap-2 mt-0.5">
-                                        {lead.createdAt && (
-                                            <span className={cn('text-[10px] font-medium', age.color)}>{age.text}</span>
-                                        )}
                                         {lead.source && (
                                             <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-0.5 rounded">{lead.source}</span>
                                         )}

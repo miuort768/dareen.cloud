@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { Phone, MessageSquare, CheckCircle2, Trash2, ChevronDown, FileText } from 'lucide-react';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
-import { GradientAvatar, getPriority, getLeadAge, ActionBtn, statusColors } from './LeadsUI';
+import { GradientAvatar, getPriority, ActionBtn, statusColors } from './LeadsUI';
 import { cn } from '../../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -36,7 +36,6 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                 style={{ height: Math.min(filteredLeads.length * 49 + 100, 560) }}
                 data={filteredLeads}
                 itemContent={(index, lead) => {
-                    const age = getLeadAge(lead.createdAt);
                     const priority = getPriority(lead.priority);
                     const hasNotes = !!lead.notes;
                     const isNoteExpanded = expandedNotes === lead.id;
@@ -68,9 +67,6 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                             )}
                                         </div>
                                         <div className="flex items-center gap-1.5 mt-0.5">
-                                            {lead.createdAt && (
-                                                <span className={cn('text-[9px] font-medium', age.color)}>{age.text}</span>
-                                            )}
                                             {lead.source && (
                                                 <span className="text-[9px] font-medium text-info bg-info-soft px-1 py-px rounded">{lead.source}</span>
                                             )}
