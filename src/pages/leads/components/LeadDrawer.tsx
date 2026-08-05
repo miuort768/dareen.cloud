@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, Phone, MessageSquare, CheckCircle2, Edit3, Clock, UserPlus, Tag, Calendar, AlertTriangle } from 'lucide-react';
+import { X, Phone, MessageSquare, CheckCircle2, Edit3, UserPlus, Tag, Calendar, AlertTriangle, Save } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
@@ -47,8 +47,12 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
     return events.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
 
+const inputClass = "w-full bg-surface border border-border rounded-xl px-3 py-2 text-xs font-bold text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all";
+const labelClass = "text-[10px] font-bold text-muted mb-1 block";
+
 export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawerProps) => {
-    const [isEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editData, setEditData] = useState({ phone: '', subject: '', curriculum: '', notes: '' });
     const closeRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
@@ -61,12 +65,24 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
         }
     }, [isOpen, onClose]);
 
+    useEffect(() => {
+        if (lead) {
+            setEditData({ phone: lead.phone, subject: lead.subject, curriculum: lead.curriculum || '', notes: lead.notes || '' });
+        }
+        setIsEditing(false);
+    }, [lead]);
+
     if (!lead) return null;
 
     const age = getLeadAge(lead.createdAt);
     const timeline = getTimelineEvents(lead);
     const statusCfg = statusColors[lead.status as LeadStatus] || statusColors.new;
     const priority = getPriority(lead.priority as LeadPriority);
+
+    const handleSave = () => {
+        updateMutation.mutate({ id: lead.id, updates: { phone: editData.phone, subject: editData.subject, curriculum: editData.curriculum, notes: editData.notes } });
+        setIsEditing(false);
+    };
 
     return (
         <AnimatePresence>
@@ -123,32 +139,67 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                             {/* Content */}
                             <div className="flex-1 overflow-y-auto custom-scrollbar">
                                 <div className="px-5 py-4 border-b border-border">
-                                    <h3 className="text-xs font-bold text-muted mb-3">البيانات</h3>
-                                    <div className="space-y-3">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center shrink-0 ring-1 ring-success/20"><Phone size={14} className="text-success" /></div>
-                                            <div className="min-w-0"><p className="text-[10px] text-muted">الهاتف</p><p className="text-sm font-bold text-main font-mono">{lead.phone}</p></div>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-xl bg-info-soft flex items-center justify-center shrink-0 ring-1 ring-info/20"><Tag size={14} className="text-info" /></div>
-                                            <div className="min-w-0"><p className="text-[10px] text-muted">المادة</p><p className="text-sm font-bold text-main">{lead.subject}</p></div>
-                                        </div>
-                                        {lead.curriculum && (
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-xl bg-warning-soft flex items-center justify-center shrink-0 ring-1 ring-warning/20"><Tag size={14} className="text-warning" /></div>
-                                                <div className="min-w-0"><p className="text-[10px] text-muted">المنهج</p><p className="text-sm font-bold text-main">{lead.curriculum}</p></div>
-                                            </div>
-                                        )}
-                                        {lead.parentName && (
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-xl bg-primary-soft flex items-center justify-center shrink-0 ring-1 ring-primary/20"><UserPlus size={14} className="text-primary" /></div>
-                                                <div className="min-w-0"><p className="text-[10px] text-muted">ولي الأمر</p><p className="text-sm font-bold text-main">{lead.parentName}</p></div>
-                                            </div>
+                                    <div className="flex items-center justify-between mb-3">
+                                        <h3 className="text-xs font-bold text-muted">البيانات</h3>
+                                        {!isEditing && (
+                                            <button onClick={() => setIsEditing(true)} className="text-[10px] font-bold text-primary hover:text-primary-hover transition-colors">تعديل</button>
                                         )}
                                     </div>
+
+                                    {isEditing ? (
+                                        <div className="space-y-3">
+                                            <div>
+                                                <label className={labelClass}>الهاتف</label>
+                                                <input type="tel" value={editData.phone} onChange={(e) => setEditData({ ...editData, phone: e.target.value })} className={inputClass} />
+                                            </div>
+                                            <div>
+                                                <label className={labelClass}>المادة</label>
+                                                <input type="text" value={editData.subject} onChange={(e) => setEditData({ ...editData, subject: e.target.value })} className={inputClass} />
+                                            </div>
+                                            <div>
+                                                <label className={labelClass}>المنهج</label>
+                                                <input type="text" value={editData.curriculum} onChange={(e) => setEditData({ ...editData, curriculum: e.target.value })} className={inputClass} />
+                                            </div>
+                                            <div>
+                                                <label className={labelClass}>ملاحظات</label>
+                                                <textarea value={editData.notes} onChange={(e) => setEditData({ ...editData, notes: e.target.value })} rows={3} className={cn(inputClass, "resize-none")} />
+                                            </div>
+                                            <div className="flex gap-2 pt-1">
+                                                <button onClick={handleSave} className="flex items-center gap-1.5 px-4 py-2 bg-primary text-on-primary text-xs font-bold rounded-xl hover:bg-primary-hover transition-all">
+                                                    <Save size={14} /> حفظ
+                                                </button>
+                                                <button onClick={() => { setIsEditing(false); setEditData({ phone: lead.phone, subject: lead.subject, curriculum: lead.curriculum || '', notes: lead.notes || '' }); }} className="px-4 py-2 bg-surface text-muted text-xs font-bold rounded-xl hover:bg-hover transition-all">
+                                                    إلغاء
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center shrink-0 ring-1 ring-success/20"><Phone size={14} className="text-success" /></div>
+                                                <div className="min-w-0"><p className="text-[10px] text-muted">الهاتف</p><p className="text-sm font-bold text-main font-mono">{lead.phone}</p></div>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-xl bg-info-soft flex items-center justify-center shrink-0 ring-1 ring-info/20"><Tag size={14} className="text-info" /></div>
+                                                <div className="min-w-0"><p className="text-[10px] text-muted">المادة</p><p className="text-sm font-bold text-main">{lead.subject}</p></div>
+                                            </div>
+                                            {lead.curriculum && (
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-xl bg-warning-soft flex items-center justify-center shrink-0 ring-1 ring-warning/20"><Tag size={14} className="text-warning" /></div>
+                                                    <div className="min-w-0"><p className="text-[10px] text-muted">المنهج</p><p className="text-sm font-bold text-main">{lead.curriculum}</p></div>
+                                                </div>
+                                            )}
+                                            {lead.parentName && (
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-xl bg-primary-soft flex items-center justify-center shrink-0 ring-1 ring-primary/20"><UserPlus size={14} className="text-primary" /></div>
+                                                    <div className="min-w-0"><p className="text-[10px] text-muted">ولي الأمر</p><p className="text-sm font-bold text-main">{lead.parentName}</p></div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
 
-                                {lead.notes && (
+                                {lead.notes && !isEditing && (
                                     <div className="px-5 py-4 border-b border-border">
                                         <h3 className="text-xs font-bold text-muted mb-2">ملاحظات</h3>
                                         <p className="text-sm text-main leading-relaxed bg-warning/5 border-s-2 border-s-warning p-3 rounded-xl">{lead.notes}</p>
@@ -187,8 +238,8 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                                     <button onClick={() => { updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); onClose(); }} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-info/10 text-info hover:bg-info/20 transition-all">
                                         <CheckCircle2 size={16} /><span className="text-[10px] font-bold">تحويل</span>
                                     </button>
-                                    <button onClick={() => setIsEditing(true)} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-surface hover:bg-hover transition-all">
-                                        <Edit3 size={16} className="text-muted" /><span className="text-[10px] font-bold text-muted">تعديل</span>
+                                    <button onClick={() => setIsEditing(true)} className={cn("flex flex-col items-center gap-1 py-2 rounded-xl transition-all", isEditing ? "bg-primary/10 text-primary" : "bg-surface hover:bg-hover")}>
+                                        <Edit3 size={16} className={isEditing ? "text-primary" : "text-muted"} /><span className={cn("text-[10px] font-bold", isEditing ? "text-primary" : "text-muted")}>تعديل</span>
                                     </button>
                                 </div>
                             </div>
