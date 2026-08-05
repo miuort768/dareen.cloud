@@ -167,11 +167,11 @@ export const Header = memo(() => {
                     )}
 
                     <Link to={userLink} className="shrink-0">
-                        <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-xl bg-gradient-to-br from-primary-soft to-primary-light flex items-center justify-center ring-1 ring-border hover:ring-primary/40 hover:shadow-md transition-all cursor-pointer">
+                        <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center hover:shadow-md transition-all cursor-pointer">
                             {currentUser?.avatar ? (
-                                <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full rounded-xl object-cover" />
+                                <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full rounded-lg object-cover" />
                             ) : (
-                                <User size={17} className="text-on-primary lg:size-[18px]" />
+                                <User size={15} className="text-on-primary" />
                             )}
                         </div>
                     </Link>
