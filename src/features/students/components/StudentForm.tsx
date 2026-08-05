@@ -177,7 +177,7 @@ const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required
                 {Icon && <Icon className="absolute start-3 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors z-10" size={14} />}
                 <select
                     id={selectId}
-                    required={required}
+                    required
                     value={value}
                     onChange={e => onChange(e.target.value)}
                     className={cn(
