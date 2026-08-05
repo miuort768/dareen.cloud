@@ -42,7 +42,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                     >
                         <div className="bg-card w-full max-w-lg shadow-elevation-2 rounded-2xl overflow-hidden border border-border">
                             {/* Header */}
-                            <div className="bg-gradient-to-l from-primary via-primary-dark/90 to-primary-dark px-5 py-4 flex items-center justify-between">
+                            <div className="bg-gradient-to-l from-primary to-primary-deep px-5 py-4 flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-white/15">
                                         <UserPlus size={16} className="text-on-primary" />

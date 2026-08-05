@@ -165,7 +165,7 @@ export const Leads = () => {
         >
             <div className="relative z-10 mx-auto px-2 max-w-page">
                 {/* ===== HERO SECTION ===== */}
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-dark/80 to-primary-dark mt-4 mb-6">
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary-deep mt-4 mb-6">
                     {/* Decorative elements */}
                     <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                     <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
@@ -200,44 +200,44 @@ export const Leads = () => {
 
                         {/* KPI Stats */}
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
+                            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/15">
+                                <div className="flex items-center gap-2 text-white/70 text-xs mb-1.5">
                                     <Users size={14} />
                                     <span>إجمالي العملاء</span>
                                 </div>
                                 <div className="text-2xl font-bold font-outfit text-white">{stats?.total || 0}</div>
-                                <div className="text-white/50 text-[11px] mt-1">{activeCount} نشط</div>
+                                <div className="text-white/60 text-[11px] mt-1">{activeCount} نشط</div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
+                            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/15">
+                                <div className="flex items-center gap-2 text-white/70 text-xs mb-1.5">
                                     <Activity size={14} />
                                     <span>عملاء جدد</span>
                                 </div>
                                 <div className="text-2xl font-bold font-outfit text-white">{stats?.new || 0}</div>
-                                <div className="text-green-300 text-[11px] mt-1">هذا الشهر</div>
+                                <div className="text-success text-[11px] mt-1">هذا الشهر</div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
+                            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/15">
+                                <div className="flex items-center gap-2 text-white/70 text-xs mb-1.5">
                                     <Phone size={14} />
                                     <span>تم التحويل</span>
                                 </div>
                                 <div className="text-2xl font-bold font-outfit text-white">{stats?.converted || 0}</div>
-                                <div className="text-white/50 text-[11px] mt-1">إلى مشتركين</div>
+                                <div className="text-white/60 text-[11px] mt-1">إلى مشتركين</div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
+                            <div className="bg-white/15 backdrop-blur-sm rounded-xl p-4 border border-white/15">
+                                <div className="flex items-center gap-2 text-white/70 text-xs mb-1.5">
                                     <BarChart3 size={14} />
                                     <span>معدل التحويل</span>
                                 </div>
                                 <div className="text-2xl font-bold font-outfit text-white">{(stats?.conversionRate ?? 0).toFixed(1)}%</div>
-                                <div className="text-green-300 text-[11px] mt-1">معدل النجاح</div>
+                                <div className="text-success text-[11px] mt-1">معدل النجاح</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* ===== MAIN CONTENT CARD ===== */}
-                <div className="bg-main rounded-2xl shadow-elevation-1 border border-border overflow-hidden">
+                <div className="bg-card rounded-2xl shadow-elevation-1 border border-border overflow-hidden">
                     {/* Toolbar: search + filters */}
                     <div className="p-4 lg:p-5 border-b border-border">
                         <div className="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">

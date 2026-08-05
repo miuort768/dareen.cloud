@@ -4,7 +4,7 @@ export const LeadsSkeleton = () => (
     <div className="bg-background min-h-screen pb-24" dir="rtl">
         <div className="relative z-10 mx-auto px-2 max-w-page">
             {/* Hero skeleton */}
-            <div className="rounded-2xl bg-gradient-to-br from-primary via-primary-dark/80 to-primary-dark mt-4 mb-6 px-4 md:px-6 py-6">
+            <div className="rounded-2xl bg-gradient-to-br from-primary to-primary-deep mt-4 mb-6 px-4 md:px-6 py-6">
                 <div className="flex items-center justify-between mb-6">
                     <div>
                         <Skeleton className="h-6 w-44 mb-1 bg-white/15" />
@@ -27,7 +27,7 @@ export const LeadsSkeleton = () => (
             </div>
 
             {/* Main content card skeleton */}
-            <div className="bg-main rounded-2xl border border-border overflow-hidden">
+            <div className="bg-card rounded-2xl border border-border overflow-hidden">
                 {/* Toolbar */}
                 <div className="p-4 lg:p-5 border-b border-border">
                     <div className="flex flex-col lg:flex-row gap-3">
