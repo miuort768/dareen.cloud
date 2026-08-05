@@ -246,32 +246,31 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                 </AnimatePresence>
             </div>
 
-            {/* iOS-style Bottom Tab Bar */}
+            {/* Bottom Tab Bar */}
             <div className="fixed bottom-0 inset-x-0 z-50">
-                <div className="h-2 bg-background" />
-                <div className="bg-card border-t border-border shadow-2xl shadow-black/5 pb-[env(safe-area-inset-bottom)]">
-                    <div className="flex items-center justify-around px-2 py-1.5">
+                <div className="bg-card/95 backdrop-blur-xl border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]">
+                    <div className="flex items-end justify-around h-[68px] px-1 pt-1.5 pb-1">
                         {tabs.map(tab => {
                             const isActive = activeTab === tab.id;
                             return (
-                                                    <motion.button key={tab.id} whileTap={{ scale: 0.9 }}
-                                                    onClick={() => handleTabChange(tab.id)}
-                                                    className="relative flex flex-col items-center gap-0.5 py-1 px-5 min-w-[60px]"
+                                <motion.button key={tab.id} whileTap={{ scale: 0.85 }}
+                                    onClick={() => handleTabChange(tab.id)}
+                                    className="relative flex flex-col items-center justify-center flex-1 h-full pt-1.5 pb-1"
                                 >
                                     <div className={cn(
-                                        "rounded-xl p-1.5 transition-all duration-300 relative",
-                                        isActive && "bg-primary/10"
+                                        "rounded-xl p-1.5 transition-all duration-200",
+                                        isActive ? "bg-primary/10" : "bg-transparent"
                                     )}>
                                         <tab.icon size={20} strokeWidth={isActive ? 2.2 : 1.5}
-                                            className={cn("transition-colors duration-300", isActive ? "text-primary" : "text-muted")}
+                                            className={cn("transition-colors duration-200", isActive ? "text-primary" : "text-muted")}
                                         />
                                     </div>
-                                    <span className={cn("text-[10px] font-bold transition-all duration-300", isActive ? "text-primary" : "text-muted")}>
+                                    <span className={cn("text-[10px] font-bold transition-colors duration-200 mt-0.5", isActive ? "text-primary" : "text-muted")}>
                                         {tab.label}
                                     </span>
                                     {isActive && (
-                                        <motion.div layoutId="teacher-tab-indicator"
-                                            className="absolute -top-1.5 w-8 h-1 rounded-full bg-gradient-to-r from-primary to-primary-active shadow-lg shadow-primary/30"
+                                        <motion.div layoutId="teacher-tab-dot"
+                                            className="absolute top-0 w-1 h-1 rounded-full bg-primary"
                                         />
                                     )}
                                 </motion.button>

@@ -1,14 +1,14 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, User, Library, MoreHorizontal } from 'lucide-react';
+import { Home, User, Library, MoreHorizontal, MessageCircle } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { triggerHaptic } from '../../lib/haptics';
 
 const navItems = [
-    { id: 'more', label: 'المزيد', icon: MoreHorizontal, path: '/forum' },
-    { id: 'profile', label: 'الملف الشخصي', icon: User, path: '/student-profile' },
+    { id: 'chat', label: 'الرسائل', icon: MessageCircle, path: '/chat' },
+    { id: 'profile', label: 'حسابي', icon: User, path: '/student-profile' },
     { id: 'home', label: 'الرئيسية', icon: Home, path: '/student-dashboard', isCenter: true },
-    { id: 'library', label: 'مكتبة الدورات', icon: Library, path: '/schedule' },
+    { id: 'library', label: 'المكتبة', icon: Library, path: '/schedule' },
 ];
 
 export const MobileBottomNav = () => {
@@ -17,9 +17,8 @@ export const MobileBottomNav = () => {
 
     return (
         <nav className="fixed bottom-0 end-0 start-0 z-50" aria-label="التنقل الرئيسي">
-            <div className="h-2 bg-background" />
-            <div className="bg-card border-t border-border shadow-elevation-2 pb-[env(safe-area-inset-bottom)]">
-                <div className="flex items-center justify-around h-[68px] px-2">
+            <div className="bg-card/95 backdrop-blur-xl border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]">
+                <div className="flex items-end justify-around h-[72px] px-1 pt-1.5 pb-1">
                     {navItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = location.pathname === item.path || (item.id === 'home' && location.pathname === '/student-dashboard');
@@ -27,26 +26,47 @@ export const MobileBottomNav = () => {
                         return (
                             <motion.button
                                 key={item.id}
-                                whileTap={{ scale: 0.9 }}
+                                whileTap={{ scale: 0.85 }}
                                 onClick={() => { triggerHaptic('light'); navigate(item.path); }}
-                                className={`flex flex-col items-center justify-center gap-1 transition-all duration-200 touch-manipulation relative ${isCenter ? 'w-14 h-14 -mt-6' : 'w-full h-full'}`}
+                                className={cn(
+                                    "flex flex-col items-center justify-center relative touch-manipulation",
+                                    isCenter ? "w-16 h-16 -mt-5" : "flex-1 h-full pt-1.5 pb-1"
+                                )}
                             >
                                 {isCenter ? (
-                                    <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center">
-                                        <Icon size={26} className="text-on-primary" />
-                                    </div>
+                                    <>
+                                        <div className="absolute inset-0 bg-primary/10 rounded-2xl blur-md scale-110" />
+                                        <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center shadow-lg shadow-primary/25">
+                                            <Icon size={24} className="text-on-primary" strokeWidth={2.2} />
+                                        </div>
+                                    </>
                                 ) : (
                                     <>
-                                        <div className={cn("rounded-xl p-1 transition-all duration-300", isActive && "bg-primary-soft")}>
+                                        <div className={cn(
+                                            "rounded-xl p-1.5 transition-all duration-200",
+                                            isActive ? "bg-primary/10" : "bg-transparent"
+                                        )}>
                                             <Icon
                                                 size={20}
-                                                className={cn("transition-colors duration-300", isActive ? "text-primary" : "text-muted")}
-                                                strokeWidth={isActive ? 2 : 1.5}
+                                                className={cn(
+                                                    "transition-colors duration-200",
+                                                    isActive ? "text-primary" : "text-muted"
+                                                )}
+                                                strokeWidth={isActive ? 2.2 : 1.5}
                                             />
                                         </div>
-                                        <span className={cn("text-micro font-bold transition-all duration-300", isActive ? "text-primary" : "text-muted")}>
+                                        <span className={cn(
+                                            "text-[10px] font-bold transition-colors duration-200 mt-0.5",
+                                            isActive ? "text-primary" : "text-muted"
+                                        )}>
                                             {item.label}
                                         </span>
+                                        {isActive && (
+                                            <motion.div
+                                                layoutId="student-tab-dot"
+                                                className="absolute top-0 w-1 h-1 rounded-full bg-primary"
+                                            />
+                                        )}
                                     </>
                                 )}
                             </motion.button>
