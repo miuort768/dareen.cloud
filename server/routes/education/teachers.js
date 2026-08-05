@@ -17,6 +17,8 @@ router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
   }
 });
 
+// ========== /me routes (MUST be before /:id) ==========
+
 router.get('/me', authMiddleware, async (req, res) => {
   try {
     if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
@@ -30,87 +32,6 @@ router.get('/me', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-router.get('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
-  try {
-    const teacher = await teacherService.getTeacherById(req.params.id);
-    res.json(teacher);
-  } catch (err) {
-    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
-    logger.error('Error fetching teacher', err, { id: req.params.id });
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-router.get('/:id/payment-settings', authMiddleware, checkRole(['admin']), async (req, res) => {
-  try {
-    const setting = await prisma.teacherPaymentSetting.findUnique({
-      where: { teacherId: req.params.id },
-    });
-    res.json(setting || null);
-  } catch (err) {
-    logger.error('Error fetching teacher payment settings', err, { teacherId: req.params.id });
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-router.post('/', authMiddleware, checkRole(['admin']), validate(createTeacherSchema), async (req, res) => {
-  try {
-    const teacher = await teacherService.createTeacher(req.body, req.user);
-    res.status(201).json(teacher);
-  } catch (err) {
-    if (err.statusCode === 400 || err.code === 'P2002') return res.status(400).json({ error: err.message || 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.' });
-    logger.error('Error adding teacher', err, { name: req.body.name });
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-router.put('/:id', authMiddleware, checkRole(['admin']), validate(updateTeacherSchema), async (req, res) => {
-  try {
-    const teacher = await teacherService.updateTeacher(req.params.id, req.body, req.user);
-    res.json(teacher);
-  } catch (err) {
-    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
-    if (err.code === 'P2002') return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.' });
-    logger.error('Error updating teacher', err, { id: req.params.id });
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
-  try {
-    await teacherService.deleteTeacher(req.params.id, req.user);
-    res.json({ message: 'Deleted' });
-  } catch (err) {
-    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
-    logger.error('Error deleting teacher', err, { id: req.params.id });
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
-  try {
-    const count = await teacherService.deleteAllTeachers(req.user);
-    res.json({ message: 'All teachers deleted', count });
-  } catch (err) {
-    logger.error('Error deleting all teachers', err);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-router.post('/:id/restore', authMiddleware, checkRole(['admin']), async (req, res) => {
-  try {
-    const teacher = await teacherService.restoreTeacher(req.params.id, req.user);
-    res.json(teacher);
-  } catch (err) {
-    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
-    if (err.statusCode === 400) return res.status(400).json({ error: err.message });
-    logger.error('Error restoring teacher', err, { id: req.params.id });
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-// ========== Payment Settings (teacher self-service) ==========
 
 router.get('/me/payment-settings', authMiddleware, async (req, res) => {
   try {
@@ -206,6 +127,87 @@ router.delete('/me/payment-settings', authMiddleware, async (req, res) => {
     res.json({ message: 'تم حذف إعدادات الدفع' });
   } catch (err) {
     logger.error('Error deleting payment settings', err, { teacherId: req.user.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// ========== /:id routes (MUST be after /me routes) ==========
+
+router.get('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
+  try {
+    const teacher = await teacherService.getTeacherById(req.params.id);
+    res.json(teacher);
+  } catch (err) {
+    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
+    logger.error('Error fetching teacher', err, { id: req.params.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/:id/payment-settings', authMiddleware, checkRole(['admin']), async (req, res) => {
+  try {
+    const setting = await prisma.teacherPaymentSetting.findUnique({
+      where: { teacherId: req.params.id },
+    });
+    res.json(setting || null);
+  } catch (err) {
+    logger.error('Error fetching teacher payment settings', err, { teacherId: req.params.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.post('/', authMiddleware, checkRole(['admin']), validate(createTeacherSchema), async (req, res) => {
+  try {
+    const teacher = await teacherService.createTeacher(req.body, req.user);
+    res.status(201).json(teacher);
+  } catch (err) {
+    if (err.statusCode === 400 || err.code === 'P2002') return res.status(400).json({ error: err.message || 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.' });
+    logger.error('Error adding teacher', err, { name: req.body.name });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.put('/:id', authMiddleware, checkRole(['admin']), validate(updateTeacherSchema), async (req, res) => {
+  try {
+    const teacher = await teacherService.updateTeacher(req.params.id, req.body, req.user);
+    res.json(teacher);
+  } catch (err) {
+    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
+    if (err.code === 'P2002') return res.status(400).json({ error: 'اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر.' });
+    logger.error('Error updating teacher', err, { id: req.params.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
+  try {
+    await teacherService.deleteTeacher(req.params.id, req.user);
+    res.json({ message: 'Deleted' });
+  } catch (err) {
+    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
+    logger.error('Error deleting teacher', err, { id: req.params.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
+  try {
+    const count = await teacherService.deleteAllTeachers(req.user);
+    res.json({ message: 'All teachers deleted', count });
+  } catch (err) {
+    logger.error('Error deleting all teachers', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.post('/:id/restore', authMiddleware, checkRole(['admin']), async (req, res) => {
+  try {
+    const teacher = await teacherService.restoreTeacher(req.params.id, req.user);
+    res.json(teacher);
+  } catch (err) {
+    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
+    if (err.statusCode === 400) return res.status(400).json({ error: err.message });
+    logger.error('Error restoring teacher', err, { id: req.params.id });
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
