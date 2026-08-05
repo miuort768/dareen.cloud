@@ -240,8 +240,8 @@ export const Leads = () => {
                 <div className="bg-card rounded-2xl shadow-elevation-1 border border-border overflow-hidden">
                     {/* Toolbar: search + filters */}
                     <div className="p-4 lg:p-5 border-b border-border">
-                        <div className="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
-                            <div className="relative flex-1 max-w-md">
+                        <div className="flex items-center gap-3">
+                            <div className="relative flex-1">
                                 <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted" />
                                 <input
                                     type="text"
@@ -257,9 +257,8 @@ export const Leads = () => {
                                     </button>
                                 )}
                             </div>
-                            <div className="text-xs text-muted">
+                            <div className="text-xs text-muted shrink-0">
                                 <span className="font-bold text-main">{filteredLeads.length}</span> عميل
-                                {searchTerm && ' نتائج بحث'}
                             </div>
                         </div>
 
@@ -318,7 +317,7 @@ export const Leads = () => {
                 {/* ===== FAB BUTTON ===== */}
                 <motion.button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="fixed bottom-8 left-8 z-40 w-14 h-14 bg-primary text-on-primary rounded-full shadow-xl shadow-primary/30 flex items-center justify-center hover:bg-primary-hover active:scale-95 transition-all"
+                    className="fixed bottom-8 left-8 z-40 w-14 h-14 bg-primary text-on-primary rounded-xl shadow-xl shadow-primary/30 flex items-center justify-center hover:bg-primary-hover active:scale-95 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                 >

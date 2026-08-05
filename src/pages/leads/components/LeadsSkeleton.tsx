@@ -30,10 +30,11 @@ export const LeadsSkeleton = () => (
             <div className="bg-card rounded-2xl border border-border overflow-hidden">
                 {/* Toolbar */}
                 <div className="p-4 lg:p-5 border-b border-border">
-                    <div className="flex flex-col lg:flex-row gap-3">
-                        <div className="flex-1 max-w-md">
+                    <div className="flex items-center gap-3">
+                        <div className="flex-1">
                             <Skeleton className="h-10 w-full rounded-xl" />
                         </div>
+                        <Skeleton className="h-4 w-16 shrink-0" />
                     </div>
                     <div className="flex gap-1.5 mt-3">
                         {Array.from({ length: 6 }).map((_, i) => (
