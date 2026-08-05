@@ -5,6 +5,7 @@ const { authMiddleware, checkRole } = require('../../middleware/auth');
 const validate = require('../../middleware/validation');
 const { createTeacherSchema, updateTeacherSchema } = require('../../utils/validators');
 const teacherService = require('../../services/teacherService');
+const { prisma } = require('../../utils/prisma');
 
 router.get('/', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
@@ -37,6 +38,18 @@ router.get('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
   } catch (err) {
     if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
     logger.error('Error fetching teacher', err, { id: req.params.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/:id/payment-settings', authMiddleware, checkRole(['admin']), async (req, res) => {
+  try {
+    const setting = await prisma.teacherPaymentSetting.findUnique({
+      where: { teacherId: req.params.id },
+    });
+    res.json(setting || null);
+  } catch (err) {
+    logger.error('Error fetching teacher payment settings', err, { teacherId: req.params.id });
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
@@ -93,6 +106,106 @@ router.post('/:id/restore', authMiddleware, checkRole(['admin']), async (req, re
     if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
     if (err.statusCode === 400) return res.status(400).json({ error: err.message });
     logger.error('Error restoring teacher', err, { id: req.params.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// ========== Payment Settings (teacher self-service) ==========
+
+router.get('/me/payment-settings', authMiddleware, async (req, res) => {
+  try {
+    if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'هذه الميزة متاحة للمعلمين فقط' });
+    }
+    const setting = await prisma.teacherPaymentSetting.findUnique({
+      where: { teacherId: req.user.id },
+    });
+    res.json(setting || null);
+  } catch (err) {
+    logger.error('Error fetching payment settings', err, { teacherId: req.user.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.put('/me/payment-settings', authMiddleware, async (req, res) => {
+  try {
+    if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'هذه الميزة متاحة للمعلمين فقط' });
+    }
+    const { method, walletProvider, walletPhone, instapayId, accountHolder, instapayPhone, iban, bankName } = req.body;
+
+    if (!method || !['wallet', 'instapay', 'bank_transfer'].includes(method)) {
+      return res.status(400).json({ error: 'طريقة الدفع غير صحيحة' });
+    }
+
+    if (method === 'wallet') {
+      if (!walletProvider || !['vodafone', 'etisalat', 'orange'].includes(walletProvider)) {
+        return res.status(400).json({ error: 'يجب اختيار محفظة إلكترونية صحيحة' });
+      }
+      if (!walletPhone || !/^[0-9]{11}$/.test(walletPhone)) {
+        return res.status(400).json({ error: 'رقم الهاتف يجب أن يكون 11 خانة' });
+      }
+    }
+
+    if (method === 'instapay') {
+      if (!instapayId || !instapayId.trim()) {
+        return res.status(400).json({ error: 'يجب إدخال معرف الانستا باي' });
+      }
+      if (!accountHolder || !accountHolder.trim()) {
+        return res.status(400).json({ error: 'يجب إدخال اسم صاحب الحساب' });
+      }
+      if (!instapayPhone || !/^[0-9]{11}$/.test(instapayPhone)) {
+        return res.status(400).json({ error: 'رقم الهاتف المربوط بالانستا باي يجب أن يكون 11 خانة' });
+      }
+    }
+
+    if (method === 'bank_transfer') {
+      if (!accountHolder || !accountHolder.trim()) {
+        return res.status(400).json({ error: 'يجب إدخال اسم صاحب الحساب' });
+      }
+      if (!iban || !iban.trim()) {
+        return res.status(400).json({ error: 'يجب إدخال رقم الايبان' });
+      }
+      if (!bankName || !bankName.trim()) {
+        return res.status(400).json({ error: 'يجب إدخال اسم البنك' });
+      }
+    }
+
+    const data = {
+      method,
+      walletProvider: method === 'wallet' ? walletProvider : null,
+      walletPhone: method === 'wallet' ? walletPhone : null,
+      instapayId: method === 'instapay' ? instapayId?.trim() : null,
+      accountHolder: (method === 'instapay' || method === 'bank_transfer') ? accountHolder?.trim() : null,
+      instapayPhone: method === 'instapay' ? instapayPhone : null,
+      iban: method === 'bank_transfer' ? iban?.trim() : null,
+      bankName: method === 'bank_transfer' ? bankName?.trim() : null,
+    };
+
+    const setting = await prisma.teacherPaymentSetting.upsert({
+      where: { teacherId: req.user.id },
+      update: data,
+      create: { ...data, teacherId: req.user.id },
+    });
+
+    res.json(setting);
+  } catch (err) {
+    logger.error('Error saving payment settings', err, { teacherId: req.user.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.delete('/me/payment-settings', authMiddleware, async (req, res) => {
+  try {
+    if (req.user.role !== 'teacher' && req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'هذه الميزة متاحة للمعلمين فقط' });
+    }
+    await prisma.teacherPaymentSetting.deleteMany({
+      where: { teacherId: req.user.id },
+    });
+    res.json({ message: 'تم حذف إعدادات الدفع' });
+  } catch (err) {
+    logger.error('Error deleting payment settings', err, { teacherId: req.user.id });
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

@@ -3,6 +3,7 @@ import { ArrowRight, Settings, Share2, Edit3, Clock, ShieldCheck, CalendarDays, 
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Button } from '../../shared/components/ui';
 import { useCurrentUser, useShowNotification } from '../../context/AppContext';
+import { CURRENCY_SYMBOL } from '../../config/constants';
 import type { DashboardStats } from '../../features/dashboard/types';
 
 interface ProfileHeroProps {
@@ -64,7 +65,7 @@ export const ProfileHero = ({ name, role, subtitle, points, rank, attendanceRate
         { icon: Users, value: stats?.studentsCount ?? 0, label: 'طالب', color: 'text-white/80' },
         { icon: BookOpen, value: stats?.totalEnrollments ?? 0, label: 'اشتراك', color: 'text-white/80' },
         { icon: Play, value: stats?.todaySessions ?? 0, label: 'حصص اليوم', color: 'text-white/80' },
-        { icon: DollarSign, value: stats?.teacherSessionPrice ?? 0, label: 'سعر الحصة', color: 'text-white/80', prefix: 'د.ك' },
+        { icon: DollarSign, value: stats?.teacherSessionPrice ?? 0, label: 'سعر الحصة', color: 'text-white/80', prefix: CURRENCY_SYMBOL },
     ];
 
     return (

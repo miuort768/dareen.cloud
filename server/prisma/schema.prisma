@@ -46,6 +46,7 @@ model Teacher {
   availability   TeacherAvailability[]
   activeSessions ActiveSession[]
   liveSessions   LiveSession[]
+  paymentSetting TeacherPaymentSetting?
 
   @@index([email])
   @@index([phone1])
@@ -777,6 +778,27 @@ model RolePermission {
 
   @@id([roleId, permissionId])
   @@map("role_permissions")
+}
+
+model TeacherPaymentSetting {
+  id              String   @id @default(cuid())
+  teacherId       String   @map("teacher_id")
+  method          String   // "wallet" | "instapay" | "bank_transfer"
+  walletProvider  String?  @map("wallet_provider") // "vodafone" | "etisalat" | "orange"
+  walletPhone     String?  @map("wallet_phone") // 11-digit phone for wallet
+  instapayId      String?  @map("instapay_id")
+  accountHolder   String?  @map("account_holder") // instapay or bank
+  instapayPhone   String?  @map("instapay_phone") // phone linked to instapay
+  iban            String?
+  bankName        String?  @map("bank_name")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  teacher Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([teacherId]) // one payment setting per teacher
+  @@index([teacherId])
+  @@map("teacher_payment_settings")
 }
 
 model UserRole {

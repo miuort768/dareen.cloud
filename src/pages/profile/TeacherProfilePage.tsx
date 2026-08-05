@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useCurrentUser, useLogout } from '../../context/AppContext';
+import { CURRENCY_SYMBOL } from '../../config/constants';
 import { getRankByPoints, TEACHER_RANKS } from '../../shared/utils/ranks';
 import { Skeleton, Button } from '../../shared/components/ui';
 import { TeacherDashboardHeader } from '../TeacherDashboardHeader';
@@ -17,6 +18,7 @@ import { ProfileProgress } from './ProfileProgress';
 import { ProfileRecentActivity } from './ProfileRecentActivity';
 import { ProfileReviews } from './ProfileReviews';
 import { ProfileBottomMotivation } from './ProfileBottomMotivation';
+import { PaymentSettingsSection } from './PaymentSettingsSection';
 import type { DashboardStats } from '../../features/dashboard/types';
 
 const stagger = (i: number) => ({
@@ -131,7 +133,7 @@ export const TeacherProfilePage = () => {
         { icon: <BookOpen size={13} className="text-primary" />, label: 'المادة', value: teacherData?.subject || '—' },
         { icon: <Phone size={13} className="text-success" />, label: 'رقم الهاتف', value: teacherData?.phone1 || '—' },
         { icon: <Mail size={13} className="text-info" />, label: 'البريد الإلكتروني', value: teacherData?.email || '—' },
-        { icon: <DollarSign size={13} className="text-warning" />, label: 'سعر الحصة', value: teacherData?.price ? `${teacherData.price} د.ك` : '—' },
+        { icon: <DollarSign size={13} className="text-warning" />, label: 'سعر الحصة', value: teacherData?.price ? `${teacherData.price} ${CURRENCY_SYMBOL}` : '—' },
         { icon: <MapPin size={13} className="text-error" />, label: 'المدينة', value: teacherData?.city || '—' },
     ];
 
@@ -250,6 +252,8 @@ export const TeacherProfilePage = () => {
                                 </div>
                             )}
                         </div>
+
+                        <PaymentSettingsSection />
                     </motion.div>
 
                     <motion.div {...stagger(3)} className="space-y-4 md:space-y-6">

@@ -1,8 +1,21 @@
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Phone, MessageSquare, BookOpen, Users, DollarSign, Calendar, Clock, GraduationCap, Star, MessageCircle, ChevronLeft, Edit, Trash2, Bell } from 'lucide-react';
+import { X, Phone, MessageSquare, BookOpen, Users, DollarSign, Calendar, Clock, GraduationCap, Star, MessageCircle, ChevronLeft, Edit, Trash2, Bell, Wallet, Smartphone, Building2, CreditCard } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
+import { api } from '../../../lib/api';
 import type { Teacher } from '../../../types';
+
+interface PaymentSetting {
+  method: string;
+  walletProvider?: string;
+  walletPhone?: string;
+  instapayId?: string;
+  accountHolder?: string;
+  instapayPhone?: string;
+  iban?: string;
+  bankName?: string;
+}
 
 interface TeacherDrawerProps {
   teacher: Teacher | null;
@@ -59,6 +72,15 @@ const statusConfig: Record<string, { label: string; dot: string; bg: string; tex
 };
 
 export const TeacherDrawer = ({ teacher, onClose, onEdit, onDelete, onNotify, onChat, onCall, onWhatsApp, studentCount = 0, totalRevenue = 0, recentSessions = [] }: TeacherDrawerProps) => {
+  const [paymentSetting, setPaymentSetting] = useState<PaymentSetting | null>(null);
+
+  useEffect(() => {
+    if (!teacher) return;
+    api.get<PaymentSetting | null>(`/teachers/${teacher.id}/payment-settings`)
+      .then(setPaymentSetting)
+      .catch(() => {});
+  }, [teacher?.id]);
+
   if (!teacher) return null;
 
   const gradient = getAvatarGradient(teacher.name);
@@ -176,6 +198,74 @@ export const TeacherDrawer = ({ teacher, onClose, onEdit, onDelete, onNotify, on
               )}
             </div>
           </div>
+
+          {/* Payment Settings */}
+          {paymentSetting && (
+            <div className="p-5 border-b border-border">
+              <h3 className="text-[11px] font-bold text-muted mb-3 flex items-center gap-1.5">
+                <CreditCard size={12} />
+                إعدادات الدفع
+              </h3>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
+                  <span className="text-[11px] text-muted">طريقة الدفع</span>
+                  <span className="text-xs font-bold text-main">
+                    {paymentSetting.method === 'wallet' && 'محفظة إلكترونية'}
+                    {paymentSetting.method === 'instapay' && 'انستا باي'}
+                    {paymentSetting.method === 'bank_transfer' && 'تحويل بنكي'}
+                  </span>
+                </div>
+                {paymentSetting.method === 'wallet' && (
+                  <>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
+                      <span className="text-[11px] text-muted">المحفظة</span>
+                      <span className="text-xs font-bold text-main">
+                        {paymentSetting.walletProvider === 'vodafone' && 'فودافون كاش'}
+                        {paymentSetting.walletProvider === 'etisalat' && 'اتصالات كاش'}
+                        {paymentSetting.walletProvider === 'orange' && 'أورنج كاش'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
+                      <span className="text-[11px] text-muted">رقم الهاتف</span>
+                      <span className="text-xs font-bold text-main font-mono" dir="ltr">{paymentSetting.walletPhone}</span>
+                    </div>
+                  </>
+                )}
+                {paymentSetting.method === 'instapay' && (
+                  <>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
+                      <span className="text-[11px] text-muted">معرف الانستا باي</span>
+                      <span className="text-xs font-bold text-main font-mono" dir="ltr">{paymentSetting.instapayId}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
+                      <span className="text-[11px] text-muted">صاحب الحساب</span>
+                      <span className="text-xs font-bold text-main">{paymentSetting.accountHolder}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
+                      <span className="text-[11px] text-muted">رقم الهاتف المربوط</span>
+                      <span className="text-xs font-bold text-main font-mono" dir="ltr">{paymentSetting.instapayPhone}</span>
+                    </div>
+                  </>
+                )}
+                {paymentSetting.method === 'bank_transfer' && (
+                  <>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
+                      <span className="text-[11px] text-muted">صاحب الحساب</span>
+                      <span className="text-xs font-bold text-main">{paymentSetting.accountHolder}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
+                      <span className="text-[11px] text-muted">الايبان</span>
+                      <span className="text-xs font-bold text-main font-mono" dir="ltr">{paymentSetting.iban}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-3 rounded-xl bg-surface">
+                      <span className="text-[11px] text-muted">البنك</span>
+                      <span className="text-xs font-bold text-main">{paymentSetting.bankName}</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Quick Actions */}
           <div className="p-5 border-b border-border">
