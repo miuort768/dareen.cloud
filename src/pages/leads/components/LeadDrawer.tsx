@@ -74,120 +74,123 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                 <>
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[600] bg-black/50 backdrop-blur-sm" onClick={onClose} />
                     <motion.div
-                        initial={{ x: '100%' }}
-                        animate={{ x: 0 }}
-                        exit={{ x: '100%' }}
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="fixed inset-y-0 start-0 z-[600] w-full max-w-md bg-card border-e border-border shadow-elevation-3 flex flex-col"
+                        className="fixed inset-0 z-[600] flex items-center justify-center p-4 pointer-events-none"
                         dir="rtl"
                     >
-                        {/* Header */}
-                        <div className="shrink-0 px-5 py-4 border-b border-border">
-                            <div className="flex items-center justify-between mb-3">
-                                <div className="flex items-center gap-3">
-                                    <GradientAvatar name={lead.studentName || 'ع'} size="md" />
-                                    <div>
-                                        <h2 className="text-sm font-bold text-main">{lead.studentName || 'عميل بدون اسم'}</h2>
-                                        <div className="flex items-center gap-2 mt-0.5">
-                                            <span className={cn('text-[10px] font-medium', age.color)}>{age.text}</span>
-                                            {lead.source && (
-                                                <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-0.5 rounded">{lead.source}</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                                <button ref={closeRef} onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-hover rounded-xl transition-all" aria-label="إغلاق">
-                                    <X size={18} className="text-muted" />
-                                </button>
-                            </div>
+                        <div className="w-full max-w-lg max-h-[85vh] bg-card border border-border shadow-elevation-3 rounded-2xl flex flex-col pointer-events-auto">
 
-                            <div className="flex items-center gap-2">
-                                <select
-                                    className={cn('px-2.5 py-1 text-xs font-bold border-0 outline-none cursor-pointer rounded-lg', statusCfg.bg, statusCfg.color)}
-                                    value={lead.status}
-                                    aria-label="حالة العميل"
-                                    onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
-                                >
-                                    {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
-                                         <option key={key} value={key}>{statusColors[key].label}</option>
-                                     ))}
-                                </select>
-                                <span className={cn('inline-flex items-center px-2.5 py-1 text-xs font-bold rounded-lg', priority.bg, priority.color)}>
-                                    {priority.label}
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="flex-1 overflow-y-auto custom-scrollbar">
-                            <div className="px-5 py-4 border-b border-border">
-                                <h3 className="text-xs font-bold text-muted mb-3">البيانات</h3>
-                                <div className="space-y-3">
+                            {/* Header */}
+                            <div className="shrink-0 px-5 py-4 border-b border-border">
+                                <div className="flex items-center justify-between mb-3">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center shrink-0 ring-1 ring-success/20"><Phone size={14} className="text-success" /></div>
-                                        <div className="min-w-0"><p className="text-[10px] text-muted">الهاتف</p><p className="text-sm font-bold text-main font-mono">{lead.phone}</p></div>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-xl bg-info-soft flex items-center justify-center shrink-0 ring-1 ring-info/20"><Tag size={14} className="text-info" /></div>
-                                        <div className="min-w-0"><p className="text-[10px] text-muted">المادة</p><p className="text-sm font-bold text-main">{lead.subject}</p></div>
-                                    </div>
-                                    {lead.curriculum && (
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-xl bg-warning-soft flex items-center justify-center shrink-0 ring-1 ring-warning/20"><Tag size={14} className="text-warning" /></div>
-                                            <div className="min-w-0"><p className="text-[10px] text-muted">المنهج</p><p className="text-sm font-bold text-main">{lead.curriculum}</p></div>
-                                        </div>
-                                    )}
-                                    {lead.parentName && (
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-xl bg-primary-soft flex items-center justify-center shrink-0 ring-1 ring-primary/20"><UserPlus size={14} className="text-primary" /></div>
-                                            <div className="min-w-0"><p className="text-[10px] text-muted">ولي الأمر</p><p className="text-sm font-bold text-main">{lead.parentName}</p></div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-                            {lead.notes && (
-                                <div className="px-5 py-4 border-b border-border">
-                                    <h3 className="text-xs font-bold text-muted mb-2">ملاحظات</h3>
-                                    <p className="text-sm text-main leading-relaxed bg-warning/5 border-s-2 border-s-warning p-3 rounded-xl">{lead.notes}</p>
-                                </div>
-                            )}
-
-                            <div className="px-5 py-4">
-                                <h3 className="text-xs font-bold text-muted mb-3">السجل</h3>
-                                <div className="space-y-0">
-                                    {timeline.map((event, idx) => {
-                                        const Icon = event.icon;
-                                        return (
-                                            <div key={event.id} className="flex gap-3 relative">
-                                                {idx < timeline.length - 1 && <div className="absolute top-8 start-[15px] w-px h-full bg-border" />}
-                                                <div className={cn('w-8 h-8 rounded-xl flex items-center justify-center shrink-0 relative z-10 ring-1 ring-black/5', event.color)}><Icon size={14} /></div>
-                                                <div className="pb-4 min-w-0">
-                                                    <p className="text-xs font-bold text-main">{event.label}</p>
-                                                    <p className="text-[10px] text-muted mt-0.5">{formatRelativeTime(event.date)}</p>
-                                                </div>
+                                        <GradientAvatar name={lead.studentName || 'ع'} size="md" />
+                                        <div>
+                                            <h2 className="text-sm font-bold text-main">{lead.studentName || 'عميل بدون اسم'}</h2>
+                                            <div className="flex items-center gap-2 mt-0.5">
+                                                <span className={cn('text-[10px] font-medium', age.color)}>{age.text}</span>
+                                                {lead.source && (
+                                                    <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-0.5 rounded">{lead.source}</span>
+                                                )}
                                             </div>
-                                        );
-                                    })}
+                                        </div>
+                                    </div>
+                                    <button ref={closeRef} onClick={onClose} className="w-8 h-8 flex items-center justify-center hover:bg-hover rounded-xl transition-all" aria-label="إغلاق">
+                                        <X size={18} className="text-muted" />
+                                    </button>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <select
+                                        className={cn('px-2.5 py-1 text-xs font-bold border-0 outline-none cursor-pointer rounded-lg', statusCfg.bg, statusCfg.color)}
+                                        value={lead.status}
+                                        aria-label="حالة العميل"
+                                        onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
+                                    >
+                                        {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
+                                             <option key={key} value={key}>{statusColors[key].label}</option>
+                                         ))}
+                                    </select>
+                                    <span className={cn('inline-flex items-center px-2.5 py-1 text-xs font-bold rounded-lg', priority.bg, priority.color)}>
+                                        {priority.label}
+                                    </span>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Footer Actions */}
-                        <div className="shrink-0 border-t border-border px-5 py-3">
-                            <div className="grid grid-cols-4 gap-2">
-                                <button onClick={() => window.open(`tel:${lead.phone}`)} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success/10 text-success hover:bg-success/20 transition-all">
-                                    <Phone size={16} /><span className="text-[10px] font-bold">اتصال</span>
-                                </button>
-                                <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success/10 text-success hover:bg-success/20 transition-all">
-                                    <MessageSquare size={16} /><span className="text-[10px] font-bold">واتساب</span>
-                                </button>
-                                <button onClick={() => { updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); onClose(); }} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-info/10 text-info hover:bg-info/20 transition-all">
-                                    <CheckCircle2 size={16} /><span className="text-[10px] font-bold">تحويل</span>
-                                </button>
-                                <button onClick={() => setIsEditing(true)} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-surface hover:bg-hover transition-all">
-                                    <Edit3 size={16} className="text-muted" /><span className="text-[10px] font-bold text-muted">تعديل</span>
-                                </button>
+                            {/* Content */}
+                            <div className="flex-1 overflow-y-auto custom-scrollbar">
+                                <div className="px-5 py-4 border-b border-border">
+                                    <h3 className="text-xs font-bold text-muted mb-3">البيانات</h3>
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center shrink-0 ring-1 ring-success/20"><Phone size={14} className="text-success" /></div>
+                                            <div className="min-w-0"><p className="text-[10px] text-muted">الهاتف</p><p className="text-sm font-bold text-main font-mono">{lead.phone}</p></div>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-xl bg-info-soft flex items-center justify-center shrink-0 ring-1 ring-info/20"><Tag size={14} className="text-info" /></div>
+                                            <div className="min-w-0"><p className="text-[10px] text-muted">المادة</p><p className="text-sm font-bold text-main">{lead.subject}</p></div>
+                                        </div>
+                                        {lead.curriculum && (
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-xl bg-warning-soft flex items-center justify-center shrink-0 ring-1 ring-warning/20"><Tag size={14} className="text-warning" /></div>
+                                                <div className="min-w-0"><p className="text-[10px] text-muted">المنهج</p><p className="text-sm font-bold text-main">{lead.curriculum}</p></div>
+                                            </div>
+                                        )}
+                                        {lead.parentName && (
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-xl bg-primary-soft flex items-center justify-center shrink-0 ring-1 ring-primary/20"><UserPlus size={14} className="text-primary" /></div>
+                                                <div className="min-w-0"><p className="text-[10px] text-muted">ولي الأمر</p><p className="text-sm font-bold text-main">{lead.parentName}</p></div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {lead.notes && (
+                                    <div className="px-5 py-4 border-b border-border">
+                                        <h3 className="text-xs font-bold text-muted mb-2">ملاحظات</h3>
+                                        <p className="text-sm text-main leading-relaxed bg-warning/5 border-s-2 border-s-warning p-3 rounded-xl">{lead.notes}</p>
+                                    </div>
+                                )}
+
+                                <div className="px-5 py-4">
+                                    <h3 className="text-xs font-bold text-muted mb-3">السجل</h3>
+                                    <div className="space-y-0">
+                                        {timeline.map((event, idx) => {
+                                            const Icon = event.icon;
+                                            return (
+                                                <div key={event.id} className="flex gap-3 relative">
+                                                    {idx < timeline.length - 1 && <div className="absolute top-8 start-[15px] w-px h-full bg-border" />}
+                                                    <div className={cn('w-8 h-8 rounded-xl flex items-center justify-center shrink-0 relative z-10 ring-1 ring-black/5', event.color)}><Icon size={14} /></div>
+                                                    <div className="pb-4 min-w-0">
+                                                        <p className="text-xs font-bold text-main">{event.label}</p>
+                                                        <p className="text-[10px] text-muted mt-0.5">{formatRelativeTime(event.date)}</p>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Footer Actions */}
+                            <div className="shrink-0 border-t border-border px-5 py-3">
+                                <div className="grid grid-cols-4 gap-2">
+                                    <button onClick={() => window.open(`tel:${lead.phone}`)} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success/10 text-success hover:bg-success/20 transition-all">
+                                        <Phone size={16} /><span className="text-[10px] font-bold">اتصال</span>
+                                    </button>
+                                    <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success/10 text-success hover:bg-success/20 transition-all">
+                                        <MessageSquare size={16} /><span className="text-[10px] font-bold">واتساب</span>
+                                    </button>
+                                    <button onClick={() => { updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); onClose(); }} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-info/10 text-info hover:bg-info/20 transition-all">
+                                        <CheckCircle2 size={16} /><span className="text-[10px] font-bold">تحويل</span>
+                                    </button>
+                                    <button onClick={() => setIsEditing(true)} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-surface hover:bg-hover transition-all">
+                                        <Edit3 size={16} className="text-muted" /><span className="text-[10px] font-bold text-muted">تعديل</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
