@@ -17,22 +17,20 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
     if (filteredLeads.length === 0) return null;
 
     return (
-        <div className="hidden lg:block overflow-hidden bg-card border border-border">
-            <table className="w-full border-collapse">
-                <thead>
-                    <tr className="bg-surface/80 border-b border-border">
-                        <th className="text-end px-4 py-2.5 font-bold text-[10px] tracking-wider text-muted uppercase w-[22%]">العميل</th>
-                        <th className="text-end px-4 py-2.5 font-bold text-[10px] tracking-wider text-muted uppercase w-[14%]">التواصل</th>
-                        <th className="text-end px-4 py-2.5 font-bold text-[10px] tracking-wider text-muted uppercase w-[14%]">المادة</th>
-                        <th className="text-end px-4 py-2.5 font-bold text-[10px] tracking-wider text-muted uppercase w-[14%]">الحالة</th>
-                        <th className="text-center px-4 py-2.5 font-bold text-[10px] tracking-wider text-muted uppercase w-[10%]">الأولوية</th>
-                        <th className="text-center px-4 py-2.5 font-bold text-[10px] tracking-wider text-muted uppercase w-[26%]">الإجراءات</th>
-                    </tr>
-                </thead>
-            </table>
+        <div className="hidden lg:block bg-card border border-border">
             <Virtuoso
                 style={{ height: Math.min(filteredLeads.length * 49 + 100, 560) }}
                 data={filteredLeads}
+                fixedHeaderContent={() => (
+                    <div className="flex items-center px-4 py-2.5 bg-surface/95 backdrop-blur-sm border-b border-border">
+                        <div className="w-[22%] px-2 font-bold text-[10px] tracking-wider text-muted uppercase text-end">العميل</div>
+                        <div className="w-[14%] px-2 font-bold text-[10px] tracking-wider text-muted uppercase text-end">التواصل</div>
+                        <div className="w-[14%] px-2 font-bold text-[10px] tracking-wider text-muted uppercase text-end">المادة</div>
+                        <div className="w-[14%] px-2 font-bold text-[10px] tracking-wider text-muted uppercase text-end">الحالة</div>
+                        <div className="w-[10%] px-1 font-bold text-[10px] tracking-wider text-muted uppercase text-center">الأولوية</div>
+                        <div className="w-[26%] px-2 font-bold text-[10px] tracking-wider text-muted uppercase text-center">الإجراءات</div>
+                    </div>
+                )}
                 itemContent={(index, lead) => {
                     const priority = getPriority(lead.priority);
                     return (
