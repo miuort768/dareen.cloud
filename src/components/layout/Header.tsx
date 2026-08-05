@@ -78,19 +78,19 @@ export const Header = memo(() => {
         <header className={cn(
             "sticky top-0 z-40 w-full",
             "h-16 lg:h-[72px]",
-            "bg-surface/80 dark:bg-surface/90",
-            "backdrop-blur-xl border-b border-border/50",
+            "bg-surface dark:bg-card",
+            "backdrop-blur-xl border-b border-border",
             "transition-all duration-300"
         )}>
             <div className="flex items-center justify-between h-full px-4 lg:px-8 max-w-[1600px] mx-auto">
                 <div className="flex items-center gap-4 flex-1 min-w-0">
                     {meta && (
                         <div className="min-w-0">
-                            <h1 className="text-base lg:text-lg font-bold text-main leading-tight truncate">
+                            <h1 className="text-sm lg:text-base font-extrabold text-main leading-tight truncate">
                                 {meta.title}
                             </h1>
                             {isDesktop && meta.subtitle && (
-                                <p className="text-xs text-muted leading-snug mt-0.5 truncate">
+                                <p className="text-[11px] text-muted leading-snug mt-0.5 truncate">
                                     {meta.subtitle}
                                 </p>
                             )}
