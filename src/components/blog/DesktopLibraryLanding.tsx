@@ -2,12 +2,13 @@ import { useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import {
   BookOpen, Zap, CheckCircle, FileText, AlignLeft, Search, Eye, Clock,
-  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, GraduationCap, Globe, Phone,
+  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, GraduationCap, Globe, Phone, ChevronDown,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 import { api } from '../../lib/api';
+import { useAcademyName } from '../../context/AppContext';
 import { types, directTypes } from './LibraryConfig';
 import { BLOG_COUNTRIES, normalizePhoneInput } from './blogCustomers';
 import type { BlogPost } from '../../data/blogPosts';
@@ -125,6 +126,7 @@ interface DesktopLibraryLandingProps {
 }
 
 export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: DesktopLibraryLandingProps) => {
+  const academyName = useAcademyName();
   const [search, setSearch] = useState('');
   const [country, setCountry] = useState('');
   const [phone, setPhone] = useState('');
@@ -255,8 +257,8 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             <div className="absolute bottom-[-20%] left-[-10%] w-[70%] h-[60%] bg-success/5 blur-3xl rounded-full pointer-events-none" />
             <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[55%] bg-warning/5 blur-3xl rounded-full pointer-events-none" />
             <Image
-              src="/dareen_books_portal_v3.png"
-              alt="بوابة دارين التعليمية للكتب والمذكرات"
+              src="/bbook.png"
+              alt={`بوابة ${academyName} التعليمية للكتب والمذكرات`}
               className="absolute inset-0"
               imgClassName="object-contain p-8 lg:p-10 drop-shadow-xl"
               withSkeleton
@@ -269,37 +271,45 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
       <section id="library-categories" className="mt-12">
         <div className="flex items-end justify-between gap-4 mb-7">
           <div>
-            <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">تصفح الأقسام</h2>
+            <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">الفئات الأكثر قراءة</h2>
             <p className="text-sm text-muted font-medium mt-1.5">اختر القسم الذي يناسب احتياجك التعليمي</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {types.map(t => {
             const s = TYPE_STYLES[t.id as TypeId];
+            const count = categoryCounts[t.id] || 0;
             return (
               <button
                 key={t.id}
                 type="button"
                 onClick={() => goToType(t.id)}
                 className={cn(
-                  'group relative overflow-hidden rounded-2xl border bg-card p-6 text-start transition-all duration-300',
+                  'group relative overflow-hidden rounded-2xl border bg-card p-5 text-start transition-all duration-300',
                   'hover:-translate-y-0.5 hover:shadow-elevation-2',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
                   s.cardBorder
                 )}
               >
                 <div className={cn('absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300', s.gradient)} />
-                <div className="relative z-10">
-                  <span className={cn('w-12 h-12 rounded-2xl flex items-center justify-center mb-4', s.iconWrap)}>
+                <div className="relative z-10 flex items-start gap-4">
+                  <span className={cn('w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center', s.iconWrap)}>
                     <t.icon size={22} className={s.iconColor} />
                   </span>
-                  <h3 className="text-lg font-heading font-black text-main mb-1.5 group-hover:text-primary transition-colors duration-300">{t.name}</h3>
-                  <p className="text-[13px] text-muted font-medium leading-relaxed">{s.desc}</p>
-                  <span className={cn('inline-flex items-center gap-1.5 mt-4 text-sm font-extrabold transition-colors duration-300', s.linkColor)}>
-                    تصفح القسم
-                    <ArrowLeft size={14} className="transition-transform duration-300 group-hover:-translate-x-1" />
-                  </span>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <h3 className="text-sm font-extrabold text-main group-hover:text-primary transition-colors duration-300 truncate">{t.name}</h3>
+                      <span className={cn('shrink-0 text-[11px] font-extrabold rounded-lg px-2 py-0.5', s.badge)}>
+                        {count}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-muted font-medium leading-relaxed">{s.miniDesc}</p>
+                    <span className={cn('inline-flex items-center gap-1 mt-2.5 text-xs font-extrabold transition-colors duration-300', s.linkColor)}>
+                      تصفح
+                      <ArrowLeft size={12} className="transition-transform duration-300 group-hover:-translate-x-1" />
+                    </span>
+                  </div>
                 </div>
               </button>
             );
@@ -389,13 +399,14 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                       required
                       value={country}
                       onChange={e => setCountry(e.target.value)}
-                      className="w-full appearance-none rounded-xl border border-border bg-surface ps-9 pe-4 py-2.5 text-sm text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                      className="w-full appearance-none rounded-xl border border-border bg-surface ps-9 pe-9 py-2.5 text-sm text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
                     >
                       <option value="" disabled>اختر الدولة</option>
                       {BLOG_COUNTRIES.map(c => (
                         <option key={c} value={c}>{c}</option>
                       ))}
                     </select>
+                    <ChevronDown size={14} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                   </div>
                 </div>
                 <div>
@@ -475,9 +486,9 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                   <Link
                     key={post.id}
                     to={`/books/${post.slug}`}
-                    className="group rounded-2xl border border-border bg-card overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+                    className="group flex gap-4 rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden bg-surface">
+                    <div className="relative w-28 h-28 shrink-0 rounded-xl overflow-hidden bg-surface">
                       <Image
                         src={post.coverImage}
                         alt={post.title}
@@ -485,24 +496,24 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                         imgClassName="object-cover transition-transform duration-500 group-hover:scale-105"
                         withSkeleton
                       />
-                      <span className={cn('absolute top-3 start-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-[11px] font-extrabold', style.badge)}>
-                        <Icon size={11} />
+                      <span className={cn('absolute top-2 end-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[9px] font-extrabold', style.badge)}>
+                        <Icon size={9} />
                         {label}
                       </span>
                     </div>
-                    <div className="p-5">
-                      <h3 className="text-base lg:text-lg font-heading font-black text-main leading-snug mb-2 line-clamp-2 group-hover:text-primary transition-colors duration-300">
+                    <div className="flex-1 min-w-0 flex flex-col">
+                      <h3 className="text-sm font-extrabold text-main leading-snug mb-1.5 line-clamp-2 group-hover:text-primary transition-colors duration-300">
                         {post.title}
                       </h3>
-                      <p className="text-[13px] text-muted font-medium leading-relaxed line-clamp-2 mb-4">{post.excerpt}</p>
-                      <div className="flex items-center justify-between text-xs text-muted font-bold">
-                        <span className="flex items-center gap-1.5">
-                          <Eye size={13} />
-                          {(post.views ?? 0).toLocaleString('en-US')} مشاهدة
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <Clock size={13} />
+                      <p className="text-[11px] text-muted font-medium leading-relaxed line-clamp-3 mb-3">{post.excerpt}</p>
+                      <div className="mt-auto flex items-center justify-between">
+                        <span className="flex items-center gap-1.5 text-[10px] text-muted font-bold">
+                          <Clock size={11} />
                           {formatDate(post.date)}
+                        </span>
+                        <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-on-primary text-[11px] font-extrabold transition-all duration-300 hover:bg-primary-hover group-hover:shadow-md">
+                          اقرأ المقال
+                          <ArrowLeft size={11} className="transition-transform duration-300 group-hover:-translate-x-0.5" />
                         </span>
                       </div>
                     </div>
