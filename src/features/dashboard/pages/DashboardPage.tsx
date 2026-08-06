@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../../../store/authStore';
 import { useDashboardData } from '../hooks/useDashboardData';
 import { HeroSection } from '../components/HeroSection';
@@ -80,246 +80,254 @@ export const Dashboard = () => {
         );
     }
 
-    if (loading) {
-        return (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-full pb-24" dir="rtl">
-                <div className="hidden md:block max-w-page mx-auto px-6 space-y-6 relative z-10">
-                    <Skeleton className="h-[180px] rounded-2xl" />
-                    <div className="grid grid-cols-4 gap-3">
-                        {Array.from({ length: 4 }).map((_, i) => (
-                            <Card key={`skel-kpi-${i}`} className="overflow-hidden">
-                                <CardContent className="p-5">
-                                    <Skeleton className="h-10 w-10 rounded-xl mb-3" />
-                                    <Skeleton className="h-8 w-24 mb-1" />
-                                    <Skeleton className="h-3 w-20" />
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                    <div className="grid grid-cols-2 gap-6">
-                        <Skeleton className="h-[280px] rounded-2xl" />
-                        <Skeleton className="h-[280px] rounded-2xl" />
-                    </div>
-                    <div className="grid grid-cols-2 gap-6">
-                        <Skeleton className="h-[240px] rounded-2xl" />
-                        <Skeleton className="h-[240px] rounded-2xl" />
-                    </div>
-                </div>
-
-                <div className="block md:hidden px-4 pt-4 space-y-4">
-                    <Skeleton className="h-[160px] rounded-2xl" />
-                    <div className="flex gap-3 overflow-hidden">
-                        {Array.from({ length: 4 }).map((_, i) => (
-                            <Skeleton key={`skel-mob-${i}`} className="h-24 w-[140px] rounded-2xl shrink-0" />
-                        ))}
-                    </div>
-                    <Skeleton className="h-[200px] rounded-2xl" />
-                </div>
-            </motion.div>
-        );
-    }
-
     return (
-        <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="min-h-full pb-24 bg-background"
-            dir="rtl"
-        >
-            {/* Desktop */}
-            <div className="hidden md:block max-w-page mx-auto px-6 relative z-10">
-
-                {/* ── Hero ── */}
-                <div className="pt-6 pb-4">
-                    <HeroSection currentUser={currentUser} stats={stats} />
-                </div>
-
-                {/* ── View Toggle ── */}
-                {currentUser.permissions?.includes('*') && (
-                    <div className="flex items-center justify-between mb-6">
-                        <div />
-                        <div className="inline-flex items-center bg-card border border-border rounded-xl p-1 gap-1 shadow-elevation-1" role="tablist" aria-label="اختيار طريقة العرض">
-                            <button
-                                role="tab"
-                                aria-selected={view === 'standard'}
-                                onClick={() => setView('standard')}
-                                className={cn(
-                                    "inline-flex items-center gap-1.5 px-3 h-8 rounded-lg text-xs font-bold transition-all duration-fast",
-                                    view === 'standard'
-                                        ? "bg-primary text-on-primary shadow-sm"
-                                        : "text-muted hover:text-main hover:bg-hover"
-                                )}
-                            >
-                                <LayoutDashboard size={14} />
-                                لوحة الإدارة
-                            </button>
-                            <button
-                                role="tab"
-                                aria-selected={view === 'executive'}
-                                onClick={() => setView('executive')}
-                                className={cn(
-                                    "inline-flex items-center gap-1.5 px-3 h-8 rounded-lg text-xs font-bold transition-all duration-fast",
-                                    view === 'executive'
-                                        ? "bg-primary text-on-primary shadow-sm"
-                                        : "text-muted hover:text-main hover:bg-hover"
-                                )}
-                            >
-                                <TrendingUp size={14} />
-                                لوحة القيادة
-                            </button>
+        <AnimatePresence mode="wait">
+            {loading ? (
+                <motion.div
+                    key="loading"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="min-h-full pb-24"
+                    dir="rtl"
+                >
+                    <div className="hidden md:block max-w-page mx-auto px-6 space-y-6 relative z-10">
+                        <Skeleton className="h-[180px] rounded-2xl" />
+                        <div className="grid grid-cols-4 gap-3">
+                            {Array.from({ length: 4 }).map((_, i) => (
+                                <Card key={`skel-kpi-${i}`} className="overflow-hidden">
+                                    <CardContent className="p-5">
+                                        <Skeleton className="h-10 w-10 rounded-xl mb-3" />
+                                        <Skeleton className="h-8 w-24 mb-1" />
+                                        <Skeleton className="h-3 w-20" />
+                                    </CardContent>
+                                </Card>
+                            ))}
                         </div>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-muted"
-                            onClick={fetchDashboardData}
-                            title="تحديث البيانات"
-                            aria-label="تحديث البيانات"
-                        >
-                            <RefreshCw size={14} />
-                        </Button>
+                        <div className="grid grid-cols-2 gap-6">
+                            <Skeleton className="h-[280px] rounded-2xl" />
+                            <Skeleton className="h-[280px] rounded-2xl" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-6">
+                            <Skeleton className="h-[240px] rounded-2xl" />
+                            <Skeleton className="h-[240px] rounded-2xl" />
+                        </div>
                     </div>
-                )}
 
-                {view === 'executive' ? (
-                    <ExecutiveDashboard />
-                ) : (
-                    <motion.div variants={containerVariants}>
+                    <div className="block md:hidden px-4 pt-4 space-y-4">
+                        <Skeleton className="h-[160px] rounded-2xl" />
+                        <div className="flex gap-3 overflow-hidden">
+                            {Array.from({ length: 4 }).map((_, i) => (
+                                <Skeleton key={`skel-mob-${i}`} className="h-24 w-[140px] rounded-2xl shrink-0" />
+                            ))}
+                        </div>
+                        <Skeleton className="h-[200px] rounded-2xl" />
+                    </div>
+                </motion.div>
+            ) : (
+                <motion.div
+                    key="content"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="min-h-full pb-24 bg-background"
+                    dir="rtl"
+                >
+                    {/* Desktop */}
+                    <div className="hidden md:block max-w-page mx-auto px-6 relative z-10">
 
-                        {/* ════════════════════════════════════════
-                            KPI Cards
-                           ════════════════════════════════════════ */}
-                        <div className="mb-8">
-                            <SectionLabel label="المؤشرات الرئيسية" hint="ملخص الأداء المالي والتعليمي" />
-                            <KPICards stats={stats} />
+                        {/* ── Hero ── */}
+                        <div className="pt-6 pb-4">
+                            <HeroSection currentUser={currentUser} stats={stats} />
                         </div>
 
-                        <SectionDivider />
-
-                        {/* ════════════════════════════════════════
-                            Chart + Performance
-                           ════════════════════════════════════════ */}
-                        <div className="mb-8">
-                            <SectionLabel label="تحليل الأداء" hint="الإيرادات والمصروفات الشهرية" />
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                                <div className="lg:col-span-2">
-                                    <FinanceOverview monthlyData={monthlyData} />
+                        {/* ── View Toggle ── */}
+                        {currentUser.permissions?.includes('*') && (
+                            <div className="flex items-center justify-between mb-6">
+                                <div />
+                                <div className="inline-flex items-center bg-card border border-border rounded-xl p-1 gap-1 shadow-elevation-1" role="tablist" aria-label="اختيار طريقة العرض">
+                                    <button
+                                        role="tab"
+                                        aria-selected={view === 'standard'}
+                                        onClick={() => setView('standard')}
+                                        className={cn(
+                                            "inline-flex items-center gap-1.5 px-3 h-8 rounded-lg text-xs font-bold transition-all duration-fast",
+                                            view === 'standard'
+                                                ? "bg-primary text-on-primary shadow-sm"
+                                                : "text-muted hover:text-main hover:bg-hover"
+                                        )}
+                                    >
+                                        <LayoutDashboard size={14} />
+                                        لوحة الإدارة
+                                    </button>
+                                    <button
+                                        role="tab"
+                                        aria-selected={view === 'executive'}
+                                        onClick={() => setView('executive')}
+                                        className={cn(
+                                            "inline-flex items-center gap-1.5 px-3 h-8 rounded-lg text-xs font-bold transition-all duration-fast",
+                                            view === 'executive'
+                                                ? "bg-primary text-on-primary shadow-sm"
+                                                : "text-muted hover:text-main hover:bg-hover"
+                                        )}
+                                    >
+                                        <TrendingUp size={14} />
+                                        لوحة القيادة
+                                    </button>
                                 </div>
-                                <div className="lg:col-span-1">
-                                    <QuickActions />
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8 text-muted"
+                                    onClick={fetchDashboardData}
+                                    title="تحديث البيانات"
+                                    aria-label="تحديث البيانات"
+                                >
+                                    <RefreshCw size={14} />
+                                </Button>
+                            </div>
+                        )}
+
+                        {view === 'executive' ? (
+                            <ExecutiveDashboard />
+                        ) : (
+                            <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+
+                                {/* ════════════════════════════════════════
+                                    KPI Cards
+                                   ════════════════════════════════════════ */}
+                                <div className="mb-8">
+                                    <SectionLabel label="المؤشرات الرئيسية" hint="ملخص الأداء المالي والتعليمي" />
+                                    <KPICards stats={stats} />
                                 </div>
-                            </div>
-                        </div>
 
-                        <SectionDivider />
+                                <SectionDivider />
 
-                        {/* ════════════════════════════════════════
-                            Upcoming + Notifications
-                           ════════════════════════════════════════ */}
-                        <div className="mb-8">
-                            <SectionLabel label="الجدول والتنبيهات" hint="حصص اليوم والمهام والتنبيهات" />
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                                <TodaysFocus
-                                    todaySessions={todaySessions}
-                                    tasks={asTasks(tasks)}
-                                    lowBalanceCount={stats.lowBalanceCount}
-                                />
-                                <NotificationsCenter
-                                    tasks={asTasks(tasks)}
-                                    lowBalanceStudents={lowBalanceStudents}
-                                    students={asRecordList(rawStudents)}
-                                    sessions={asRecordList(rawSessions)}
-                                    studentInvoices={asRecordList(rawStudentInvoices)}
-                                />
-                            </div>
-                        </div>
-
-                        <SectionDivider />
-
-                        {/* ════════════════════════════════════════
-                            Activity
-                           ════════════════════════════════════════ */}
-                        <div className="mb-8">
-                            <SectionLabel label="النشاطات" hint="آخر العمليات والجلسات" />
-                            <ActivityTimeline sessions={asTimelineSessions(rawSessions)} tasks={asTasks(tasks)} />
-                        </div>
-
-                        <SectionDivider />
-
-                        {/* ════════════════════════════════════════
-                            System Health
-                           ════════════════════════════════════════ */}
-                        <div className="mb-8">
-                            <SectionLabel label="صحة النظام" hint="الحالة الفنية والأداء" />
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                                <SystemHealth stats={stats} />
-                                <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
-                                                <TrendingUp size={16} className="text-primary" />
-                                            </div>
-                                            <div>
-                                                <h3 className="text-sm font-bold text-main">نظرة سريعة</h3>
-                                                <p className="text-[10px] text-muted">مؤشرات الأداء</p>
-                                            </div>
+                                {/* ════════════════════════════════════════
+                                    Chart + Performance
+                                   ════════════════════════════════════════ */}
+                                <div className="mb-8">
+                                    <SectionLabel label="تحليل الأداء" hint="الإيرادات والمصروفات الشهرية" />
+                                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                                        <div className="lg:col-span-2">
+                                            <FinanceOverview monthlyData={monthlyData} />
                                         </div>
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <div className="p-4 rounded-xl bg-surface">
-                                            <p className="text-[10px] text-muted mb-1">نسبة الحضور</p>
-                                            <p className="text-xl font-bold text-main tabular-nums">{stats.attendanceRate}%</p>
-                                            <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
-                                                <div className="h-full rounded-full bg-success transition-all duration-700" style={{ width: `${Math.min(100, stats.attendanceRate)}%` }} />
-                                            </div>
-                                        </div>
-                                        <div className="p-4 rounded-xl bg-surface">
-                                            <p className="text-[10px] text-muted mb-1">فواتير مدفوعة</p>
-                                            <p className="text-xl font-bold text-main tabular-nums">{stats.paidInvoices}</p>
-                                            <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
-                                                <div className="h-full rounded-full bg-info transition-all duration-700" style={{ width: `${Math.min(100, (stats.paidInvoices / Math.max(1, stats.pendingInvoices + stats.paidInvoices)) * 100)}%` }} />
-                                            </div>
-                                        </div>
-                                        <div className="p-4 rounded-xl bg-surface">
-                                            <p className="text-[10px] text-muted mb-1">حصص مكتملة</p>
-                                            <p className="text-xl font-bold text-main tabular-nums">{stats.completedSessions}</p>
-                                            <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
-                                                <div className="h-full rounded-full bg-primary transition-all duration-700" style={{ width: `${Math.min(100, stats.totalSessions > 0 ? (stats.completedSessions / stats.totalSessions) * 100 : 0)}%` }} />
-                                            </div>
-                                        </div>
-                                        <div className="p-4 rounded-xl bg-surface">
-                                            <p className="text-[10px] text-muted mb-1">طلاب نشطون</p>
-                                            <p className="text-xl font-bold text-main tabular-nums">{stats.studentsCount}</p>
-                                            <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
-                                                <div className="h-full rounded-full bg-warning transition-all duration-700" style={{ width: `${Math.min(100, (stats.studentsCount / Math.max(1, stats.studentsCount + stats.lowBalanceCount)) * 100)}%` }} />
-                                            </div>
+                                        <div className="lg:col-span-1">
+                                            <QuickActions />
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                    </motion.div>
-                )}
-            </div>
+                                <SectionDivider />
 
-            {/* Mobile */}
-            <div className="block md:hidden">
-                <MobileDashboardView
-                    currentUser={currentUser}
-                    stats={stats}
-                    todaySessions={todaySessions}
-                    monthlyData={monthlyData}
-                    lowBalanceStudents={lowBalanceStudents}
-                    tasks={tasks}
-                    rawStudents={rawStudents}
-                    rawSessions={rawSessions}
-                    rawStudentInvoices={rawStudentInvoices}
-                    onRefresh={fetchDashboardData}
-                />
-            </div>
-        </motion.div>
+                                {/* ════════════════════════════════════════
+                                    Upcoming + Notifications
+                                   ════════════════════════════════════════ */}
+                                <div className="mb-8">
+                                    <SectionLabel label="الجدول والتنبيهات" hint="حصص اليوم والمهام والتنبيهات" />
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                        <TodaysFocus
+                                            todaySessions={todaySessions}
+                                            tasks={asTasks(tasks)}
+                                            lowBalanceCount={stats.lowBalanceCount}
+                                        />
+                                        <NotificationsCenter
+                                            tasks={asTasks(tasks)}
+                                            lowBalanceStudents={lowBalanceStudents}
+                                            students={asRecordList(rawStudents)}
+                                            sessions={asRecordList(rawSessions)}
+                                            studentInvoices={asRecordList(rawStudentInvoices)}
+                                        />
+                                    </div>
+                                </div>
+
+                                <SectionDivider />
+
+                                {/* ════════════════════════════════════════
+                                    Activity
+                                   ════════════════════════════════════════ */}
+                                <div className="mb-8">
+                                    <SectionLabel label="النشاطات" hint="آخر العمليات والجلسات" />
+                                    <ActivityTimeline sessions={asTimelineSessions(rawSessions)} tasks={asTasks(tasks)} />
+                                </div>
+
+                                <SectionDivider />
+
+                                {/* ════════════════════════════════════════
+                                    System Health
+                                   ════════════════════════════════════════ */}
+                                <div className="mb-8">
+                                    <SectionLabel label="صحة النظام" hint="الحالة الفنية والأداء" />
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                        <SystemHealth stats={stats} />
+                                        <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5">
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
+                                                        <TrendingUp size={16} className="text-primary" />
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="text-sm font-bold text-main">نظرة سريعة</h3>
+                                                        <p className="text-[10px] text-muted">مؤشرات الأداء</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <div className="p-4 rounded-xl bg-surface">
+                                                    <p className="text-[10px] text-muted mb-1">نسبة الحضور</p>
+                                                    <p className="text-xl font-bold text-main tabular-nums">{stats.attendanceRate}%</p>
+                                                    <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
+                                                        <div className="h-full rounded-full bg-success transition-all duration-700" style={{ width: `${Math.min(100, stats.attendanceRate)}%` }} />
+                                                    </div>
+                                                </div>
+                                                <div className="p-4 rounded-xl bg-surface">
+                                                    <p className="text-[10px] text-muted mb-1">فواتير مدفوعة</p>
+                                                    <p className="text-xl font-bold text-main tabular-nums">{stats.paidInvoices}</p>
+                                                    <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
+                                                        <div className="h-full rounded-full bg-info transition-all duration-700" style={{ width: `${Math.min(100, (stats.paidInvoices / Math.max(1, stats.pendingInvoices + stats.paidInvoices)) * 100)}%` }} />
+                                                    </div>
+                                                </div>
+                                                <div className="p-4 rounded-xl bg-surface">
+                                                    <p className="text-[10px] text-muted mb-1">حصص مكتملة</p>
+                                                    <p className="text-xl font-bold text-main tabular-nums">{stats.completedSessions}</p>
+                                                    <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
+                                                        <div className="h-full rounded-full bg-primary transition-all duration-700" style={{ width: `${Math.min(100, stats.totalSessions > 0 ? (stats.completedSessions / stats.totalSessions) * 100 : 0)}%` }} />
+                                                    </div>
+                                                </div>
+                                                <div className="p-4 rounded-xl bg-surface">
+                                                    <p className="text-[10px] text-muted mb-1">طلاب نشطون</p>
+                                                    <p className="text-xl font-bold text-main tabular-nums">{stats.studentsCount}</p>
+                                                    <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
+                                                        <div className="h-full rounded-full bg-warning transition-all duration-700" style={{ width: `${Math.min(100, (stats.studentsCount / Math.max(1, stats.studentsCount + stats.lowBalanceCount)) * 100)}%` }} />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </motion.div>
+                        )}
+                    </div>
+
+                    {/* Mobile */}
+                    <div className="block md:hidden">
+                        <MobileDashboardView
+                            currentUser={currentUser}
+                            stats={stats}
+                            todaySessions={todaySessions}
+                            monthlyData={monthlyData}
+                            lowBalanceStudents={lowBalanceStudents}
+                            tasks={tasks}
+                            rawStudents={rawStudents}
+                            rawSessions={rawSessions}
+                            rawStudentInvoices={rawStudentInvoices}
+                            onRefresh={fetchDashboardData}
+                        />
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 };
 
