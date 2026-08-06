@@ -29,6 +29,7 @@ export const useAuthStore = create<AuthState>()(
                     const user = res?.user;
                     if (!token || !user) return false;
                     set({ token, currentUser: user, isAuthenticated: true, isLoading: false });
+                    localStorage.setItem('auth_token', token);
 
                     // Subscribe to push notifications if permission is granted
                     import('../services/pushService').then(({ pushService }) => {
@@ -51,6 +52,7 @@ export const useAuthStore = create<AuthState>()(
 
             logout: () => {
                 set({ token: null, currentUser: null, isAuthenticated: false, isLoading: false });
+                localStorage.removeItem('auth_token');
             },
 
             updateCurrentUser: async (updates: Partial<User>) => {
@@ -80,6 +82,7 @@ export const useAuthStore = create<AuthState>()(
                         // Rolling token: server issues a fresh token on successful verify
                         if (data.token) {
                             set({ token: data.token });
+                            localStorage.setItem('auth_token', data.token);
                         }
                         set({ currentUser: data.user, isAuthenticated: true });
 
@@ -96,11 +99,13 @@ export const useAuthStore = create<AuthState>()(
                             const refreshData = await api.post<{ token: string }>('/auth/refresh', { token });
                             if (refreshData.token) {
                                 set({ token: refreshData.token });
+                                localStorage.setItem('auth_token', refreshData.token);
                                 // Re-verify with the new token
                                 const retryData = await api.post<{ valid: boolean; user: User; token?: string }>('/auth/verify', { token: refreshData.token });
                                 if (retryData.valid && retryData.user) {
                                     if (retryData.token) {
                                         set({ token: retryData.token });
+                                        localStorage.setItem('auth_token', retryData.token);
                                     }
                                     set({ currentUser: retryData.user, isAuthenticated: true });
                                     return;
@@ -126,6 +131,12 @@ export const useAuthStore = create<AuthState>()(
                 isAuthenticated: state.isAuthenticated,
                 token: state.token,
             }),
+            onRehydrateStorage: () => (state) => {
+                // Sync token to localStorage('auth_token') so api.ts can read it
+                if (state?.token) {
+                    localStorage.setItem('auth_token', state.token);
+                }
+            },
         }
     )
 );

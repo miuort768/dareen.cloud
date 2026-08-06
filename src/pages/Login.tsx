@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Lock, User, Eye, EyeOff, ArrowRight, Headphones, ArrowLeft } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
 import { useLogin, useAcademyName } from '../context/AppContext';
+import { useAuthStore } from '../store/authStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { SEO } from '../components/SEO';
 import { PublicNavbar } from '../components/public/PublicNavbar';
@@ -33,14 +34,14 @@ export const Login = () => {
         try {
             const success = await login(username, password);
             if (success) {
-                const savedUser = JSON.parse(localStorage.getItem('app_current_user') || '{}');
-                if (savedUser.role === 'chat_user') {
+                const savedUser = useAuthStore.getState().currentUser;
+                if (savedUser?.role === 'chat_user') {
                     navigate('/chat', { replace: true });
-                } else if (savedUser.role === 'parent') {
+                } else if (savedUser?.role === 'parent') {
                     navigate('/parent-dashboard', { replace: true });
-                } else if (savedUser.role === 'student') {
+                } else if (savedUser?.role === 'student') {
                     navigate('/student-dashboard', { replace: true });
-                } else if (savedUser.role === 'teacher') {
+                } else if (savedUser?.role === 'teacher') {
                     navigate('/teacher-dashboard', { replace: true });
                 } else {
                     navigate('/admin-dashboard', { replace: true });
