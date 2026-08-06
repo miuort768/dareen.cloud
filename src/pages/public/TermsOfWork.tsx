@@ -246,7 +246,7 @@ export const TermsOfWork = () => {
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-xl md:text-2xl font-bold text-main mb-2">هل لديك استفسارات؟</h2>
-                            <p className="text-muted mb-4 max-w-md mx-auto">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
+                            <p className="text-muted mb-4 max-w-md mx-auto text-xs md:text-sm whitespace-nowrap">فريق الموارد البشرية متواجد للإجابة على جميع استفساراتك</p>
 
                             <a
                                 href={`https://wa.me/${getNumber('تواصل مع إدارة المعهد')}`}

@@ -220,7 +220,7 @@ export const PrivacyPolicy = () => {
 
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-black text-on-primary mb-2">هل لديك استفسارات فنية؟</h2>
-                            <p className="text-on-primary/80 mb-8 max-w-md mx-auto">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
+                            <p className="text-on-primary/80 mb-8 max-w-md mx-auto text-xs md:text-sm whitespace-nowrap">فريق الدعم الفني متواجد لمساعدتك في أي وقت عبر الواتساب</p>
 
                             <a
                                 href={`https://wa.me/${getNumber('تواصل مع الدعم الفني')}`}
