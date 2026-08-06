@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loader2, Sparkles, Clock, BookOpen, Plus, CalendarDays, GraduationCap, Users, Filter, Printer } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -50,16 +50,16 @@ export const Schedule = () => {
     const isStudent = currentUser?.role === 'student';
     const logout = useLogout();
 
-    useEffect(() => { fetchData(); }, []);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             setLoading(true);
             const data = await api.get<Record<string, unknown>[]>('/students');
             setStudents(Array.isArray(data) ? data : (data.data || []));
         } catch (error) { console.error('Error fetching data', error); }
         finally { setLoading(false); }
-    };
+    }, []);
+
+    useEffect(() => { fetchData(); }, [fetchData]);
 
     const weekLabel = useMemo(() => {
         const now = new Date();

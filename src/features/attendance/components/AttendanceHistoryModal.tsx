@@ -54,7 +54,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     });
 
     const updateMutation = useMutation({
-        mutationFn: ({ id, data }: { id: string; data: any }) => api.patch(`/sessions/${id}`, data),
+        mutationFn: ({ id, data }: { id: string; data: { date: string; status: string; day: string } }) => api.patch(`/sessions/${id}`, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['attendance-history'] });
             onSessionChange?.();

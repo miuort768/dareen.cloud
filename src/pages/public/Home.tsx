@@ -68,12 +68,12 @@ export const Home = () => {
         };
         timer = setTimeout(type, typingSpeed);
         return () => clearTimeout(timer);
-    }, []);
+    }, [academyName]);
 
     useEffect(() => {
         const timer = setInterval(() => setCurrentIndex((prev) => (prev + 1) % reviews.length), 13000);
         return () => clearInterval(timer);
-    }, []);
+    }, [reviews.length]);
 
     return (
         <div className="min-h-full bg-surface text-main relative overflow-x-hidden transition-colors duration-500">

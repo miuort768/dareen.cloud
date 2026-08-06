@@ -230,7 +230,7 @@ export const TrialSessions = () => {
                   <span>تمت بنجاح</span>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-white"><Counter value={stats?.completed || 0} /></div>
-                <div className="text-green-300 text-[11px] mt-1">ناجحة</div>
+                <div className="text-success text-[11px] mt-1">ناجحة</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                 <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
@@ -238,7 +238,7 @@ export const TrialSessions = () => {
                   <span>قيد الانتظار</span>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-white"><Counter value={stats?.pending || 0} /></div>
-                <div className="text-yellow-300 text-[11px] mt-1">بانتظار الموعد</div>
+                <div className="text-warning text-[11px] mt-1">بانتظار الموعد</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
                 <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
@@ -246,7 +246,7 @@ export const TrialSessions = () => {
                   <span>معدل التحويل</span>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-white">{conversionRate}%</div>
-                <div className="text-green-300 text-[11px] mt-1">{stats?.converted || 0} تحويل</div>
+                <div className="text-success text-[11px] mt-1">{stats?.converted || 0} تحويل</div>
               </div>
             </div>
           </div>

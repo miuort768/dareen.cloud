@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CalendarDays, Search, Loader2, Sparkles } from 'lucide-react';
@@ -54,18 +54,18 @@ export const MobileSchedule = () => {
     const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             setLoading(true);
             const raw = await api.get<unknown>('/students');
             if (mountedRef.current) setStudents(Array.isArray(raw) ? (raw as Student[]) : ((raw as { data?: Student[] } | null)?.data || []));
         } catch (error) { console.error('Error fetching data', error); }
         finally { if (mountedRef.current) setLoading(false); }
-    };
+    }, []);
 
     const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: fetchData });
 
-    useEffect(() => { fetchData(); return () => { mountedRef.current = false; }; }, []);
+    useEffect(() => { fetchData(); return () => { mountedRef.current = false; }; }, [fetchData]);
 
     const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
     const allEvents: ScheduleEvent[] = useMemo(() => {

@@ -46,7 +46,7 @@ export const Finance = () => {
     };
 
     const handlePreviewInvoice = useMemo(() => (invNumber: string) => {
-        const t = state.filteredTransactions?.find((tr: any) => tr.invoiceNumber === invNumber || String(tr.id).includes(invNumber));
+        const t = state.filteredTransactions?.find((tr) => tr.invoiceNumber === invNumber || String(tr.id).includes(invNumber));
         if (t) {
             setPreviewInvoice({
                 id: invNumber, studentName: t.studentName || 'طالب', amount: t.amount || 0,

@@ -64,7 +64,7 @@ export const Blog = () => {
 
   useEffect(() => {
     if (postsData) setAllPosts(basePosts);
-  }, [postsData]);
+  }, [postsData, basePosts]);
 
   const posts = allPosts.length > 0 ? allPosts : basePosts;
 
