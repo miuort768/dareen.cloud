@@ -90,14 +90,14 @@ export const PublicNavbar = () => {
                     </Link>
 
                     {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-1 lg:gap-2 bg-primary-soft px-1.5 lg:px-2 py-1.5 rounded-full border border-primary shadow-sm min-w-0 shrink relative z-10">
+                    <div className="hidden md:flex items-center gap-1 lg:gap-2 bg-primary-soft dark:bg-white/10 px-1.5 lg:px-2 py-1.5 rounded-full border border-primary dark:border-white/20 shadow-sm min-w-0 shrink relative z-10">
                         {navItems.map((item) => (
                             <Link
                                 key={item.path}
                                 to={item.path}
                                 className={`px-3 lg:px-5 xl:px-6 py-2 rounded-full font-bold text-xs lg:text-sm transition-colors duration-150 whitespace-nowrap ${isActive(item.path)
                                     ? 'bg-primary text-on-primary shadow-lg shadow-primary/30'
-                                    : 'text-main hover:bg-primary hover:text-on-primary dark:text-main dark:hover:bg-primary dark:hover:text-on-primary'
+                                    : 'text-main hover:bg-primary hover:text-on-primary dark:text-white dark:hover:bg-primary dark:hover:text-on-primary'
                                     }`}
                             >
                                 {item.name}
@@ -172,7 +172,7 @@ export const PublicNavbar = () => {
                         {/* Mobile Menu Toggle */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden p-2 text-primary hover:bg-primary-soft dark:hover:bg-primary-soft/40 rounded-full transition-all active:scale-90"
+                            className="md:hidden p-2 text-primary dark:text-white hover:bg-primary-soft dark:hover:bg-white/10 rounded-full transition-all active:scale-90"
                             aria-label={isMenuOpen ? 'إغلاق القائمة الجانبية' : 'فتح القائمة الجانبية'}
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -194,7 +194,7 @@ export const PublicNavbar = () => {
                                 onClick={() => setIsMenuOpen(false)}
                                 className={`flex items-center gap-3 px-6 py-4 rounded-full font-bold transition-all ${isActive(item.path)
                                     ? 'bg-primary text-on-primary shadow-lg'
-                                    : 'text-main hover:bg-surface dark:hover:bg-hover'
+                                    : 'text-main hover:bg-surface dark:text-white dark:hover:bg-hover'
                                     }`}
                             >
                                 <span className={`w-1.5 h-1.5 rounded-full ${isActive(item.path) ? 'bg-white' : 'bg-primary'}`}></span>
