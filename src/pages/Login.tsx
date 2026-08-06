@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Lock, User, Eye, EyeOff, ArrowRight, Headphones, GraduationCap, ArrowLeft } from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ArrowRight, Headphones, ArrowLeft } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
 import { useLogin, useAcademyName } from '../context/AppContext';
 import { useSettingsStore } from '../store/settingsStore';
@@ -81,43 +81,19 @@ export const Login = () => {
                     <div className="relative z-10 flex flex-col justify-center items-center w-full p-12 text-on-primary">
                         {/* Logo */}
                         <div className="relative mb-10">
-                            <div className="w-28 h-28 bg-white/15 backdrop-blur-sm rounded-3xl flex items-center justify-center border border-white/20 shadow-xl">
-                                <GraduationCap size={52} className="text-on-primary" />
+                            <div className="absolute inset-0 bg-white/20 rounded-full blur-3xl" />
+                            <div className="relative w-40 h-40">
+                                <Image src="/bbook.png" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-2xl" />
                             </div>
                         </div>
 
                         {/* Heading */}
-                        <h1 className="text-3xl xl:text-4xl font-black text-center leading-tight mb-4 font-heading">
-                            مرحباً بك في
-                            <br />
-                            <span className="text-on-primary/90">{academyName}</span>
+                        <h1 className="text-3xl xl:text-4xl font-black text-center leading-tight mb-3 font-heading">
+                            مرحباً بك في {academyName}
                         </h1>
-                        <p className="text-on-primary/70 text-sm text-center max-w-sm leading-relaxed mb-12">
+                        <p className="text-on-primary/70 text-sm text-center max-w-sm leading-relaxed">
                             منصة تعليمية متكاملة للطلاب والمعلمين وأولياء الأمور
                         </p>
-
-                        {/* Stats */}
-                        <div className="grid grid-cols-2 gap-4 w-full max-w-sm">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/10">
-                                <span className="text-3xl font-black block mb-1">5k+</span>
-                                <span className="text-xs text-on-primary/70 font-bold">طالب مسجل</span>
-                            </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/10">
-                                <span className="text-3xl font-black block mb-1">10+</span>
-                                <span className="text-xs text-on-primary/70 font-bold">سنوات خبرة</span>
-                            </div>
-                        </div>
-
-                        {/* Support */}
-                        <a
-                            href={`https://wa.me/${adminPhone}?text=أحتاج مساعدة في تسجيل الدخول`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-10 flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl px-5 py-3 transition-all border border-white/10"
-                        >
-                            <Headphones size={18} />
-                            <span className="text-sm font-bold">الدعم الفني متاح 24/7</span>
-                        </a>
                     </div>
                 </div>
 
@@ -126,8 +102,8 @@ export const Login = () => {
                     <div className="w-full max-w-md">
                         {/* Mobile Logo */}
                         <div className="lg:hidden text-center mb-8">
-                            <div className="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center text-on-primary mx-auto mb-4 shadow-lg shadow-primary/20">
-                                <GraduationCap size={40} />
+                            <div className="w-24 h-24 mx-auto mb-4">
+                                <Image src="/bbook.png" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-lg" />
                             </div>
                             <h1 className="text-xl font-black text-main font-heading">{academyName}</h1>
                         </div>
