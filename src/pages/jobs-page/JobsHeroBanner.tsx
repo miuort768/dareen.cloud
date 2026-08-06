@@ -9,7 +9,7 @@ export const JobsHeroBanner = () => (
                     <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
                         className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 bg-white/15 rounded-card mb-3 md:mb-4">
                         <Sparkles size={12} className="text-warning" />
-                        <span className="text-xs md:text-sm font-bold text-on-primary">خطوة لتكون من العائلة</span>
+                        <span className="text-xs md:text-sm font-bold text-on-primary">خطوة لتكوني من العائلة</span>
                     </motion.div>
                     <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
                         className="text-2xl md:text-5xl font-bold font-heading text-on-primary mb-2 md:mb-3 leading-tight">

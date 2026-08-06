@@ -58,18 +58,18 @@ export const AboutCTA = () => {
                                                     <Users size={22} className="text-accent" />
                                                 </div>
                                                 <span className="text-3xl md:text-4xl font-black text-on-primary mb-1 block tracking-tight">5k+</span>
-                                                <span className="text-micro text-accent opacity-70 font-black">طالب فعال</span>
+                                                <span className="text-micro text-on-primary/90 font-black">طالب فعال</span>
                                             </div>
                                         </div>
 
                                         <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm hover:-translate-y-1.5 bg-white/5 border border-white/10">
                                             <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" style={{ background: 'radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--bg-primary) 6%, transparent), transparent 70%)' }} />
                                             <div className="relative z-10">
-                                                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'color-mix(in srgb, var(--bg-primary) 15%, transparent)' }}>
-                                                    <Target size={22} className="text-primary" />
+                                                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500" style={{ background: 'color-mix(in srgb, var(--bg-warning) 20%, transparent)' }}>
+                                                    <Target size={22} className="text-warning" />
                                                 </div>
                                                 <span className="text-3xl md:text-4xl font-black text-on-primary mb-1 block tracking-tight">97.3%</span>
-                                                <span className="text-micro text-primary opacity-70 font-black">نسبة نجاح</span>
+                                                <span className="text-micro text-on-primary/90 font-black">نسبة نجاح</span>
                                             </div>
                                         </div>
                                     </div>

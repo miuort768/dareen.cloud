@@ -35,10 +35,10 @@ export const AboutStory = () => (
                 </div>
 
                 <div className="w-full lg:w-1/2 order-1 lg:order-2 text-start">
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card dark:bg-surface text-on-primary dark:text-main rounded-card mb-4">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-card dark:bg-surface text-main dark:text-main rounded-card mb-4">
                         <span className="text-micro font-black">تعرف عليـــنا</span>
                     </div>
-                    <h2 className="text-2xl md:text-4xl font-black text-main mb-4 font-heading leading-tight md:leading-tight">
+                    <h2 className="text-2xl md:text-4xl font-black text-main mb-6 font-heading leading-tight md:leading-tight">
                         ريادة في التعليم،<br />
                         <span className="text-primary">نهضة في الفكر</span>
                     </h2>

@@ -115,7 +115,7 @@ export const Courses = () => {
                                 {academyName}
                             </h1>
 
-                            <p className="text-sm sm:text-base text-muted max-w-md mx-auto leading-relaxed font-medium">
+                            <p className="text-sm sm:text-base text-muted max-w-2xl mx-auto leading-relaxed font-medium md:whitespace-nowrap">
                                 برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
                             </p>
                         </div>

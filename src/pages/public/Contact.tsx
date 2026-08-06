@@ -42,8 +42,8 @@ export const Contact = () => {
         {
             icon: Mail,
             title: 'البريد الإلكتروني',
-            value: 'miuort768@gmail.com',
-            href: 'mailto:miuort768@gmail.com',
+            value: 'info@dareen7.com',
+            href: 'mailto:info@dareen7.com',
             gradient: 'from-primary to-primary',
             bg: 'bg-primary-soft dark:bg-primary/10',
             border: 'border-primary dark:border-primary/20',
@@ -70,7 +70,7 @@ export const Contact = () => {
                     '@type': 'ContactPage',
                     name: 'اتصل بنا - دارين السابعة',
                     description: 'تواصل مع فريق دارين السابعة للاستفسار عن خدمات التعليم عن بعد',
-                    mainEntity: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud', telephone: `+${adminPhone}`, email: 'miuort768@gmail.com', contactPoint: { '@type': 'ContactPoint', telephone: `+${adminPhone}`, contactType: 'customer service', availableLanguage: ['Arabic', 'English'] } }
+                    mainEntity: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud', telephone: `+${adminPhone}`, email: 'info@dareen7.com', contactPoint: { '@type': 'ContactPoint', telephone: `+${adminPhone}`, contactType: 'customer service', availableLanguage: ['Arabic', 'English'] } }
                 })}
             </script>
             <MobileHeader />
