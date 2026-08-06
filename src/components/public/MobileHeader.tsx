@@ -4,11 +4,13 @@ import { Menu, X, GraduationCap, LogIn, Sun, Bed, Home, BookOpen, Book, Info, Ph
 import { PublicNavbar } from './PublicNavbar';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
 import { useIsAuthenticated } from '../../context/useApp';
+import { useAcademyName } from '../../context/AppContext';
 
 export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useDarkMode();
   const isAuthenticated = useIsAuthenticated();
+  const academyName = useAcademyName();
 
   const navItems = [
     { label: 'الرئيسية', path: '/', icon: Home },

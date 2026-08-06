@@ -15,20 +15,6 @@ const parseStudentCount = (s: string) => {
   return s.includes('k') || s.includes('K') ? Math.round(n * 1000) : Math.round(n);
 };
 
-const courseSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  itemListElement: COURSES.map((c, i) => ({
-    '@type': 'Course',
-    position: i + 1,
-    name: c.title,
-    description: c.desc,
-    provider: { '@type': 'EducationalOrganization', name: academyName, url: 'https://dareen.cloud' },
-    aggregateRating: { '@type': 'AggregateRating', ratingValue: c.rating, bestRating: 5, ratingCount: parseStudentCount(c.students) },
-    offers: { '@type': 'Offer', priceCurrency: 'SAR', price: '0', availability: 'https://schema.org/InStock' },
-  })),
-};
-
 const containerVariants = {
   hidden: {},
   visible: {
@@ -86,6 +72,20 @@ export const Courses = () => {
     }),
     [activeCategory, searchQuery]
   );
+
+  const courseSchema = useMemo(() => ({
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: COURSES.map((c, i) => ({
+      '@type': 'Course',
+      position: i + 1,
+      name: c.title,
+      description: c.desc,
+      provider: { '@type': 'EducationalOrganization', name: academyName, url: 'https://dareen.cloud' },
+      aggregateRating: { '@type': 'AggregateRating', ratingValue: c.rating, bestRating: 5, ratingCount: parseStudentCount(c.students) },
+      offers: { '@type': 'Offer', priceCurrency: 'SAR', price: '0', availability: 'https://schema.org/InStock' },
+    })),
+  }), [academyName]);
 
   return (
     <div className="min-h-full bg-background font-sans text-main relative flex flex-col">
