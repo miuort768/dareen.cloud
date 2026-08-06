@@ -1,55 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { 
-    Lock, User, Eye, EyeOff, ArrowRight, Headphones,
-    Sparkles, Users, Trophy, CheckCircle, ShieldCheck, Star, GraduationCap, Crown
-} from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ArrowRight, Headphones, GraduationCap, ArrowLeft } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
 import { useLogin, useAcademyName } from '../context/AppContext';
 import { useSettingsStore } from '../store/settingsStore';
 import { SEO } from '../components/SEO';
 import { PublicNavbar } from '../components/public/PublicNavbar';
-import { Card, Input, Button, Alert } from '../shared/components/ui';
+import { Image } from '../shared/components/ui';
+import { cn } from '../lib/utils';
 
 export const Login = () => {
     const academyName = useAcademyName();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [isPasswordFocused, setIsPasswordFocused] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const login = useLogin();
     const adminPhone = useSettingsStore(s => s.adminPhone);
     const navigate = useNavigate();
 
-    const [typedText, setTypedText] = useState('');
-    const fullText = 'طموح لا يعرف الحدود معانا';
-    
     useEffect(() => {
-        let i = 0;
-        let isDeleting = false;
-        let timer: ReturnType<typeof setTimeout>;
-        
-        const type = () => {
-            const current = fullText.substring(0, i);
-            setTypedText(current);
-            
-            if (!isDeleting && i < fullText.length) {
-                i++;
-                timer = setTimeout(type, 150);
-            } else if (isDeleting && i > 0) {
-                i--;
-                timer = setTimeout(type, 100);
-            } else {
-                isDeleting = !isDeleting;
-                timer = setTimeout(type, isDeleting ? 2000 : 1000);
-            }
-        };
-        
-        timer = setTimeout(type, 1000);
-        return () => clearTimeout(timer);
-    }, []);
+        document.title = `تسجيل الدخول — ${academyName}`;
+    }, [academyName]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,11 +49,10 @@ export const Login = () => {
                 setError('اسم المستخدم أو كلمة المرور غير صحيحة');
             }
         } catch (err: unknown) {
-            console.error('Login error detail:', err);
             if (err instanceof Error && (err.message.includes('Failed to fetch') || err.message.includes('Network Error'))) {
-                setError('تعذر الاتصال بالخادم. تأكد من اتصال الإنترنت أو إعدادات الرابط.');
+                setError('تعذر الاتصال بالخادم. تأكد من اتصال الإنترنت.');
             } else {
-                setError(`حدث خطأ غير متوقع: ${err.message || 'غير معروف'}`);
+                setError(`حدث خطأ: ${err.message || 'غير معروف'}`);
             }
         } finally {
             setLoading(false);
@@ -88,193 +60,179 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-surface flex font-sans overflow-x-hidden overflow-y-auto relative transition-colors duration-500">
-            <SEO title="تسجيل الدخول" description="تسجيل دخول الطلاب، المعلمين، وأولياء الأمور إلى منصة دارين السابعة للتعليم عن بعد. متابعة الحصص، الجدول الدراسي، والنتائج من مكان واحد." url="https://dareen.cloud/login" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'تسجيل الدخول', item: '/login' }]} />
+        <div className="min-h-screen bg-background font-sans relative overflow-hidden">
+            <SEO title="تسجيل الدخول" description="تسجيل دخول الطلاب والمعلمين وأولياء الأمور إلى منصة دارين السابعة" url="https://dareen.cloud/login" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'تسجيل الدخول', item: '/login' }]} />
 
+            {/* Navbar */}
             <div className="hidden md:block absolute top-0 w-full z-50">
                 <PublicNavbar />
             </div>
 
-            <div className="w-full min-h-screen flex flex-col md:flex-row justify-center items-start md:items-center max-w-7xl mx-auto relative z-10 px-4 pt-24 pb-12 md:pt-32">
+            <div className="w-full min-h-screen flex flex-col md:flex-row">
 
-                {/* Visual Section */}
-                <div className="hidden md:flex md:w-1/2 bg-transparent relative flex-col justify-center items-center">
-                    <div className="absolute inset-0 z-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(var(--text-main) 0.5px, transparent 0.5px)', backgroundSize: '32px 32px' }}></div>
-                    
-                    <div className="relative z-10 w-full max-w-md flex flex-col items-start justify-center p-8 text-start" dir="rtl">
-                        <div className="mb-10 w-full">
-                            <div className="inline-flex items-center gap-3 bg-main px-5 py-2.5 border-e-4 border-accent shadow-md mb-10">
-                                <CheckCircle className="text-accent" size={18} />
-                                <span className="text-xs font-semibold text-inverse uppercase tracking-label">أفضل مدرسة افتراضية</span>
-                            </div>
+                {/* ===== Hero Section (Desktop) ===== */}
+                <div className="hidden lg:flex lg:w-[45%] bg-primary relative overflow-hidden">
+                    {/* Background patterns */}
+                    <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-20 end-20 w-64 h-64 bg-white/20 rounded-full blur-3xl" />
+                        <div className="absolute bottom-20 start-20 w-80 h-80 bg-white/10 rounded-full blur-3xl" />
+                    </div>
 
-                            <div className="flex items-center gap-3 mb-6">
-                                <Sparkles className="text-accent" size={28} />
-                                <span className="text-sm font-bold uppercase text-main tracking-label">منصة دارين السابعة</span>
-                            </div>
-                            
-                            <h2 className="text-section font-bold text-main mb-8 leading-tight border-s-8 border-success ps-8 min-h-[4.5rem]">
-                                {typedText}
-                                <span className="inline-block w-[5px] h-7 bg-success ms-2 animate-pulse align-middle"></span>
-                            </h2>
-                            <p className="text-primary text-base font-bold max-w-md leading-relaxed">بدايتك المثالية للنجاح الأكاديمي والمهني برؤية تعليمية عالمية</p>
-                            <p className="text-muted text-sm font-bold mt-2">نحو مستقبل مشرق بالتميز والإبداع</p>
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-5 w-full">
-                            <div className="bg-white/60 dark:bg-card backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-s-4 border-s-error">
-                                <div className="w-12 h-12 bg-error-soft flex items-center justify-center text-error border border-border rounded-card">
-                                    <Users size={24} />
-                                </div>
-                                <div className="text-start">
-                                    <div className="text-xs font-semibold text-muted uppercase tracking-widest mb-1">ثقة الطلاب</div>
-                                    <div className="text-card-title font-bold text-main">+5,000 طالب</div>
-                                </div>
-                            </div>
-
-                            <div className="bg-white/60 dark:bg-card backdrop-blur-sm border border-border/60 p-6 flex items-center gap-6 border-s-4 border-s-success">
-                                <div className="w-12 h-12 bg-success-soft flex items-center justify-center text-success border border-border rounded-card">
-                                    <Trophy size={24} />
-                                </div>
-                                <div className="text-start">
-                                    <div className="text-xs font-semibold text-muted uppercase tracking-widest mb-1">إنجازاتنا</div>
-                                    <div className="text-card-title font-bold text-main">نخبة الأوائل</div>
-                                </div>
+                    <div className="relative z-10 flex flex-col justify-center items-center w-full p-12 text-on-primary">
+                        {/* Logo */}
+                        <div className="relative mb-10">
+                            <div className="w-28 h-28 bg-white/15 backdrop-blur-sm rounded-3xl flex items-center justify-center border border-white/20 shadow-xl">
+                                <GraduationCap size={52} className="text-on-primary" />
                             </div>
                         </div>
 
-                        <div className="mt-8 flex flex-wrap gap-4 md:gap-8">
-                            <div className="flex items-center gap-3">
-                                <ShieldCheck size={20} className="text-accent" />
-                                <span className="text-xs font-semibold tracking-widest uppercase text-accent">بيئة آمنة</span>
+                        {/* Heading */}
+                        <h1 className="text-3xl xl:text-4xl font-black text-center leading-tight mb-4 font-heading">
+                            مرحباً بك في
+                            <br />
+                            <span className="text-on-primary/90">{academyName}</span>
+                        </h1>
+                        <p className="text-on-primary/70 text-sm text-center max-w-sm leading-relaxed mb-12">
+                            منصة تعليمية متكاملة للطلاب والمعلمين وأولياء الأمور
+                        </p>
+
+                        {/* Stats */}
+                        <div className="grid grid-cols-2 gap-4 w-full max-w-sm">
+                            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/10">
+                                <span className="text-3xl font-black block mb-1">5k+</span>
+                                <span className="text-xs text-on-primary/70 font-bold">طالب مسجل</span>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <Star size={20} className="text-accent" />
-                                <span className="text-xs font-semibold tracking-widest uppercase text-accent">جودة معيارية</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <GraduationCap size={20} className="text-accent" />
-                                <span className="text-xs font-semibold tracking-widest uppercase text-accent">كادر عالمي</span>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 text-center border border-white/10">
+                                <span className="text-3xl font-black block mb-1">10+</span>
+                                <span className="text-xs text-on-primary/70 font-bold">سنوات خبرة</span>
                             </div>
                         </div>
+
+                        {/* Support */}
+                        <a
+                            href={`https://wa.me/${adminPhone}?text=أحتاج مساعدة في تسجيل الدخول`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-10 flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-xl px-5 py-3 transition-all border border-white/10"
+                        >
+                            <Headphones size={18} />
+                            <span className="text-sm font-bold">الدعم الفني متاح 24/7</span>
+                        </a>
                     </div>
                 </div>
 
-                {/* Login Form Section */}
-                <div className="w-full md:w-1/2 flex items-center justify-center p-4 sm:p-8 lg:p-12 bg-transparent">
-                    <div className="w-full max-w-md relative z-10">
-                        <div className="text-center mb-8">
-                            <div className="w-24 h-24 sm:w-28 sm:h-28 bg-main rounded-card flex items-center justify-center text-inverse mx-auto mb-6 relative shadow-card overflow-visible">
-                                <Crown className="absolute -top-7 -end-3 text-accent drop-shadow-lg transform -rotate-12 z-30" size={50} strokeWidth={2.5} fill="var(--bg-accent)" />
-
-                                <div className="absolute top-1/2 end-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center gap-1.5 z-20 w-40 mt-1">
-                                    <div className="relative w-14 h-14 bg-card rounded-card border-[5px] border-error overflow-hidden shadow-inner flex shrink-0">
-                                        <div className="absolute inset-0 flex items-center justify-center bg-surface/50">
-                                            <div className={`w-4 h-4 bg-main rounded-full transition-transform duration-300 ${isPasswordFocused ? 'translate-y-6 scale-90' : 'scale-100'} relative`}>
-                                                <div className="absolute top-0.5 start-0.5 w-1 h-1 bg-card rounded-full opacity-90"></div>
-                                            </div>
-                                        </div>
-                                        <div className={`absolute top-0 end-0 w-full bg-main transition-all duration-300 z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
-                                    </div>
-
-                                    <div className="w-4 h-1.5 bg-main rounded-full shrink-0 -mt-2"></div>
-
-                                    <div className="relative w-14 h-14 bg-card rounded-card border-[5px] border-success overflow-hidden shadow-inner flex shrink-0">
-                                        <div className="absolute inset-0 flex items-center justify-center bg-surface/50">
-                                            <div className={`w-4 h-4 bg-main rounded-full transition-transform duration-300 ${isPasswordFocused ? 'translate-y-6 scale-90' : 'scale-100'} relative`}>
-                                                <div className="absolute top-0.5 start-0.5 w-1 h-1 bg-card rounded-full opacity-90"></div>
-                                            </div>
-                                        </div>
-                                        <div className={`absolute top-0 end-0 w-full bg-main transition-all duration-300 z-10 ${isPasswordFocused ? 'h-full' : 'h-0'}`} />
-                                    </div>
-                                </div>
+                {/* ===== Form Section ===== */}
+                <div className="flex-1 flex flex-col justify-center items-center px-4 sm:px-8 lg:px-16 py-8 lg:py-0">
+                    <div className="w-full max-w-md">
+                        {/* Mobile Logo */}
+                        <div className="lg:hidden text-center mb-8">
+                            <div className="w-20 h-20 bg-primary rounded-2xl flex items-center justify-center text-on-primary mx-auto mb-4 shadow-lg shadow-primary/20">
+                                <GraduationCap size={40} />
                             </div>
-
-                            <h1 className="text-section font-bold text-main mb-2 font-heading tracking-tight">أهلاً بك في {academyName}</h1>
-                            <p className="text-muted font-bold text-sm sm:text-base">يرجى تسجيل الدخول للمتابعة إلى حسابك</p>
+                            <h1 className="text-xl font-black text-main font-heading">{academyName}</h1>
                         </div>
 
-                        <Card variant="elevated" hoverLift={false}>
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                {error && (
-                                    <Alert variant="error" className="text-sm font-bold">
-                                        {error}
-                                    </Alert>
-                                )}
+                        {/* Welcome text */}
+                        <div className="mb-8">
+                            <h2 className="text-2xl lg:text-3xl font-black text-main mb-2 font-heading">تسجيل الدخول</h2>
+                            <p className="text-muted text-sm font-medium">أدخل بياناتك للوصول إلى حسابك</p>
+                        </div>
 
-                                <div>
-                                    <label htmlFor="login-username" className="text-sm font-bold text-main block mb-1.5">اسم المستخدم</label>
-                                    <Input
+                        {/* Error */}
+                        {error && (
+                            <div className="mb-4 p-4 bg-error-soft border border-error/20 rounded-xl">
+                                <p className="text-sm font-bold text-error">{error}</p>
+                            </div>
+                        )}
+
+                        {/* Form */}
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            {/* Username */}
+                            <div>
+                                <label htmlFor="login-username" className="text-xs font-bold text-muted mb-1.5 block">اسم المستخدم</label>
+                                <div className="relative">
+                                    <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+                                    <input
                                         id="login-username"
                                         type="text"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
-                                        placeholder="أدخل اسم المستخدم..."
-                                        leftIcon={<User size={20} className="text-dim" />}
+                                        placeholder="أدخل اسم المستخدم"
                                         required
+                                        className="w-full h-12 bg-card border border-border rounded-xl ps-12 pe-4 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
                                     />
                                 </div>
+                            </div>
 
-                                <div>
-                                    <label htmlFor="login-password" className="text-sm font-bold text-main block mb-1.5">كلمة المرور</label>
-                                    <Input
+                            {/* Password */}
+                            <div>
+                                <label htmlFor="login-password" className="text-xs font-bold text-muted mb-1.5 block">كلمة المرور</label>
+                                <div className="relative">
+                                    <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+                                    <input
                                         id="login-password"
                                         type={showPassword ? 'text' : 'password'}
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    onFocus={() => setIsPasswordFocused(true)}
-                                    onBlur={() => setIsPasswordFocused(false)}
-                                    placeholder="أدخل كلمة المرور..."
-                                    leftIcon={<Lock size={20} className="text-dim" />}
-                                    rightIcon={
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPassword(!showPassword)}
-                                            className="text-muted hover:text-main transition-colors w-9 h-9 flex items-center justify-center -m-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                                            aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
-                                        >
-                                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                        </button>
-                                    }
-                                    required
-                                    style={{ fontFamily: showPassword ? 'inherit' : 'caption' } as React.CSSProperties}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="أدخل كلمة المرور"
+                                        required
+                                        className="w-full h-12 bg-card border border-border rounded-xl ps-12 pe-12 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                                        style={{ fontVariantNumeric: showPassword ? 'normal' : 'tabular-nums' }}
                                     />
-                                </div>
-
-                                <Button
-                                    type="submit"
-                                    variant="primary"
-                                    size="md"
-                                    isLoading={loading}
-                                    className="w-full"
-                                >
-                                    <span>دخول للحساب</span>
-                                    <ArrowRight size={18} />
-                                </Button>
-
-                                <div className="flex justify-center pt-2">
-                                    <Link 
-                                        to="/" 
-                                        className="text-sm text-success font-bold hover:text-success-dark transition-colors flex items-center gap-2"
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute end-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-muted hover:text-main transition-colors rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                        aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
                                     >
-                                        <ArrowRight size={16} className="rotate-180" />
-                                        <span>العودة للرئيسية</span>
-                                    </Link>
+                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
                                 </div>
-                            </form>
-                        </Card>
+                            </div>
 
-                        <div className="mt-4 pt-4 border-t border-border flex flex-col gap-1.5">
-                            <a
-                                href={`https://wa.me/${adminPhone}?text=أحتاج مساعدة في تسجيل الدخول`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-full bg-main text-inverse py-3.5 rounded-card font-bold flex items-center justify-center gap-3 transition-all hover:opacity-90 active:scale-[0.98] shadow-card"
+                            {/* Submit */}
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className={cn(
+                                    "w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300",
+                                    "bg-primary text-on-primary hover:bg-primary-hover active:scale-[0.98]",
+                                    "disabled:opacity-50 disabled:cursor-not-allowed",
+                                    "shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
+                                )}
                             >
-                                <Headphones size={20} />
-                                <span>تواصل مع الدعم الفني</span>
-                            </a>
-                            <p className="text-center text-xs text-muted font-bold">متاح على مدار الساعة للمساعدة</p>
+                                {loading ? (
+                                    <div className="w-5 h-5 border-2 border-on-primary/30 border-t-on-primary rounded-full animate-spin" />
+                                ) : (
+                                    <>
+                                        <span>تسجيل الدخول</span>
+                                        <ArrowLeft size={18} />
+                                    </>
+                                )}
+                            </button>
+                        </form>
+
+                        {/* Footer links */}
+                        <div className="mt-6 flex flex-col items-center gap-3">
+                            <Link
+                                to="/"
+                                className="text-sm text-muted hover:text-primary transition-colors flex items-center gap-2 font-bold"
+                            >
+                                <ArrowRight size={16} />
+                                <span>العودة للرئيسية</span>
+                            </Link>
+
+                            <div className="pt-4 border-t border-border w-full">
+                                <a
+                                    href={`https://wa.me/${adminPhone}?text=أحتاج مساعدة في تسجيل الدخول`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full h-12 bg-success text-on-success rounded-xl font-bold flex items-center justify-center gap-2 transition-all hover:bg-success/90 active:scale-[0.98]"
+                                >
+                                    <Headphones size={18} />
+                                    <span>الدعم الفني</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
