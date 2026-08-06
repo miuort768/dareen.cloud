@@ -185,7 +185,9 @@ function App() {
         </div>
       )}
       <ScrollToTop />
-      <InstallPWA />
+      {['/', '/courses', '/about', '/contact', '/books', '/privacy-policy', '/refund-policy', '/terms-of-service', '/terms-of-work', '/jobs', '/a.abdullah'].includes(location.pathname) && (
+        <InstallPWA />
+      )}
       {/* Public Facing Actions - Only show on specific public pages */}
 
 
