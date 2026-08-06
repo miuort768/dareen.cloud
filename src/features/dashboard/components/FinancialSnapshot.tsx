@@ -1,5 +1,6 @@
 import { TrendingUp, DollarSign, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CURRENCY_SYMBOL } from '@/config/constants';
 
 interface FinancialSnapshotProps {
     monthNetProfit: number;
@@ -30,7 +31,7 @@ export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollec
                             <p className="text-[11px] font-bold text-muted">{item.label}</p>
                         </div>
                         <span className={cn("text-sm font-semibold tabular-nums", item.valueColor)}>
-                            {item.value.toLocaleString('ar-EG')} <span className="text-[11px] font-bold">د.ك</span>
+                            {item.value.toLocaleString('ar-EG')} <span className="text-[11px] font-bold">{CURRENCY_SYMBOL}</span>
                         </span>
                     </div>
                 ))}

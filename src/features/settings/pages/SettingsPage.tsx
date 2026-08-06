@@ -9,6 +9,7 @@ import { MaintenanceModal } from '../components/MaintenanceModal';
 import { SuccessToast } from '../components/SuccessToast';
 import { TABS, SettingsTabContent } from './settings-page';
 import { useSettingsHandlers } from '../hooks/useSettingsHandlers';
+import { useAcademyName } from '../../../context/AppContext';
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
     id: i, x: Math.random() * 100, y: Math.random() * 100,
@@ -25,7 +26,8 @@ const tabGroups = [
 ];
 
 export const Settings = () => {
-    useEffect(() => { document.title = 'الإعدادات | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `الإعدادات | ${academyName} للتعليم والتدريب`; }, [academyName]);
     const h = useSettingsHandlers();
 
     const activeTabLabel = TABS.find(t => t.id === h.activeTab)?.label || '';

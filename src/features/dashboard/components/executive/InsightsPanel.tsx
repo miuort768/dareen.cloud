@@ -2,6 +2,7 @@ import { memo } from 'react';
 import type { ExecutiveStats } from '../../services/executiveService';
 import { Lightbulb, TrendingUp, TrendingDown, Target } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CURRENCY_SYMBOL } from '@/config/constants';
 
 type InsightType = 'positive' | 'negative' | 'neutral';
 
@@ -22,7 +23,7 @@ function buildInsights(stats: ExecutiveStats): Insight[] {
     }
 
     if (stats.mostProfitableSubject?.name) {
-        insights.push({ text: `المادة الأكثر ربحاً: ${stats.mostProfitableSubject.name} (${stats.mostProfitableSubject.revenue.toLocaleString()} ر.س)`, type: 'positive' });
+        insights.push({ text: `المادة الأكثر ربحاً: ${stats.mostProfitableSubject.name} (${stats.mostProfitableSubject.revenue.toLocaleString()} ${CURRENCY_SYMBOL})`, type: 'positive' });
     }
 
     if (stats.mostActiveTeacher?.name) {

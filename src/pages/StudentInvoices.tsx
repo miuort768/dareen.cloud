@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Receipt, CheckCircle, Clock, AlertCircle, FileText, TrendingUp, ArrowDownRight, Printer, DollarSign } from 'lucide-react';
 import { api } from '../lib/api';
-import { useCurrentUser } from '../context/AppContext';
+import { useCurrentUser, useAcademyName } from '../context/AppContext';
 import { Skeleton } from '../shared/components/ui';
 import { CURRENCY_SYMBOL } from '../config/constants';
 import { cn } from '../lib/utils';
@@ -32,7 +32,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const StudentInvoices = () => {
-    useEffect(() => { document.title = 'فواتيري | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `فواتيري | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
     const [loading, setLoading] = useState(true);

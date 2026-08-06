@@ -11,6 +11,7 @@ import { TrialSessionCard } from './TrialSessionCard';
 import { TrialSessionFormModal } from './TrialSessionFormModal';
 import { TrialSessionDrawer } from './TrialSessionDrawer';
 import { useUIStore } from '../store/uiStore';
+import { useAcademyName } from '../context/AppContext';
 import { Skeleton } from '../shared/components/ui/Skeleton';
 
 export interface TrialSession {
@@ -77,7 +78,8 @@ const TrialSessionsSkeleton = () => (
 );
 
 export const TrialSessions = () => {
-  useEffect(() => { document.title = 'الجلسات التجريبية | دارين السابعة للتعليم والتدريب'; }, []);
+  const academyName = useAcademyName();
+  useEffect(() => { document.title = `الجلسات التجريبية | ${academyName}`; }, [academyName]);
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('');
   const [filterSubject, setFilterSubject] = useState<string>('');

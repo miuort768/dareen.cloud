@@ -6,7 +6,7 @@ import {
     CheckCircle2, Play, Flame, XCircle, Calendar
 } from 'lucide-react';
 import { api } from '../../lib/api';
-import { useCurrentUser, useLogout } from '../../context/AppContext';
+import { useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks';
 import { Skeleton } from '../../shared/components/ui';
 import { StudentDashboardHeader } from '../student-dashboard/StudentDashboardHeader';
@@ -103,7 +103,8 @@ const InfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: string;
 );
 
 export const StudentProfilePage = () => {
-    useEffect(() => { document.title = 'الملف الشخصي | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `الملف الشخصي | ${academyName} للتعليم والتدريب`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const [studentData, setStudentData] = useState<StudentData | null>(null);
@@ -298,7 +299,7 @@ export const StudentProfilePage = () => {
                     <ProfileBottomMotivation
                         icon={<Target size={28} className="text-white" />}
                         title={nextRank.next ? `تبقى ${nextRank.pointsNeeded} نقطة للوصول إلى ${nextRank.next.name}` : 'أحسنت! وصلت لأعلى المراتب'}
-                        description={nextRank.next ? `واصل التعلم واجمع النقاط لتصل إلى الرتبة التالية` : 'أنت نجم دارين السابعة!'}
+                        description={nextRank.next ? `واصل التعلم واجمع النقاط لتصل إلى الرتبة التالية` : `أنت نجم ${academyName}!`}
                         progress={nextRank.next ? Math.min(Math.round((points / (points + (nextRank.pointsNeeded || 1))) * 100), 100) : 100}
                         progressLabel="التقدم نحو الرتبة التالية"
                         targetLabel={nextRank.next ? `${nextRank.pointsNeeded} نقطة متبقية` : 'أحسنت!'}

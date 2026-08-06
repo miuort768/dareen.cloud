@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CheckCircle, Clock, AlertTriangle, FileText, Wallet, BarChart3, Filter, Calendar, DollarSign } from 'lucide-react';
 import { api } from '../lib/api';
-import { useCurrentUser, useShowNotification, useLogout } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useLogout, useAcademyName } from '../context/AppContext';
 import { type TeacherInvoice, INVOICE_STATUS } from '../types/invoice';
 import { Skeleton } from '../shared/components/ui';
 import { TeacherDashboardHeader } from './TeacherDashboardHeader';
@@ -26,7 +26,8 @@ const statusConfig = (status: string) => {
 };
 
 export const TeacherPaymentHistory = () => {
-    useEffect(() => { document.title = 'سجل الدفعات | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `سجل الدفعات | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const showNotification = useShowNotification();

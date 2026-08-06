@@ -5,6 +5,7 @@ import { PublicFooter } from '../../components/public/PublicFooter';
 import { Image } from '../../shared/components/ui';
 import { Search, Users, Sparkles, Star, MessageCircle } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
+import { useAcademyName } from '../../context/AppContext';
 import { SEO } from '../../components/SEO';
 import { COURSES, CATEGORIES } from '../../data/courses';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
@@ -22,7 +23,7 @@ const courseSchema = {
     position: i + 1,
     name: c.title,
     description: c.desc,
-    provider: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' },
+    provider: { '@type': 'EducationalOrganization', name: academyName, url: 'https://dareen.cloud' },
     aggregateRating: { '@type': 'AggregateRating', ratingValue: c.rating, bestRating: 5, ratingCount: parseStudentCount(c.students) },
     offers: { '@type': 'Offer', priceCurrency: 'SAR', price: '0', availability: 'https://schema.org/InStock' },
   })),
@@ -58,6 +59,7 @@ const StarRating = ({ rating }: { rating: number }) => (
 );
 
 export const Courses = () => {
+  const academyName = useAcademyName();
   const adminPhone = useSettingsStore(s => s.adminPhone);
   const whatsappNumbers = useSettingsStore(s => s.whatsappNumbers);
 
@@ -110,7 +112,7 @@ export const Courses = () => {
                                 <span className="text-primary">
                                     دورات
                                 </span>{' '}
-                                دارين السابعة
+                                {academyName}
                             </h1>
 
                             <p className="text-sm sm:text-base text-muted max-w-md mx-auto leading-relaxed font-medium">
@@ -141,7 +143,7 @@ export const Courses = () => {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-card font-black text-xs transition-all duration-300 ${
                     activeCategory === cat.value
                       ? 'bg-primary-active dark:bg-surface text-on-primary dark:text-main shadow-lg shadow-card/20 dark:shadow-lg'
-                      : 'bg-white dark:bg-card/50 text-muted dark:text-muted border border-border dark:border-border/50 hover:border-border/20 dark:hover:border-border/20 hover:text-main dark:hover:text-dim'
+                      : 'bg-surface text-muted border border-border hover:border-border/20 hover:text-main'
                   }`}
                 >
                   <span className="flex items-center gap-2">
@@ -176,7 +178,7 @@ export const Courses = () => {
                       imgClassName="object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
                     />
 
-                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white dark:from-card to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-card to-transparent" />
 
                     <div className="absolute top-3 start-3 z-10">
                       <div className={`px-2.5 py-1 rounded-lg text-micro font-black text-on-primary shadow-lg bg-gradient-to-br ${course.color}`}>
@@ -185,7 +187,7 @@ export const Courses = () => {
                     </div>
 
                     <div className="absolute bottom-3 end-3 z-10">
-                      <div className="bg-white/90 dark:bg-card backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
+                      <div className="bg-surface/90 dark:bg-card backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
                         <StarRating rating={course.rating} />
                       </div>
                     </div>

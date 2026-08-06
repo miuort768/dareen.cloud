@@ -2,6 +2,7 @@ import { memo } from 'react';
 import type { ExecutiveStats } from '../../services/executiveService';
 import { DollarSign, Wallet, BarChart3, BookOpen, Users, RefreshCw, UserX, CheckCircle, Star, Clock, GraduationCap, AlertTriangle, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CURRENCY_SYMBOL } from '@/config/constants';
 
 const ICON_MAP: Record<string, typeof DollarSign> = {
     revenue: DollarSign,
@@ -19,9 +20,9 @@ const ICON_MAP: Record<string, typeof DollarSign> = {
 };
 
 const METRICS = (s: ExecutiveStats) => [
-    { label: 'إيرادات اليوم', value: `${s.todayRevenue.toLocaleString()} ر.س`, icon: 'revenue', trend: 'up' as const, percent: Math.min(100, Math.round((s.todayRevenue / 50000) * 100)) },
-    { label: 'الدفع النقدي', value: `${s.cashToday.toLocaleString()} ر.س`, icon: 'cash', trend: 'up' as const, percent: Math.min(100, Math.round((s.cashToday / 30000) * 100)) },
-    { label: 'الأرباح', value: `${s.todayProfit.toLocaleString()} ر.س`, icon: 'profit', trend: 'up' as const, percent: Math.min(100, Math.round((s.todayProfit / 20000) * 100)) },
+    { label: 'إيرادات اليوم', value: `${s.todayRevenue.toLocaleString()} ${CURRENCY_SYMBOL}`, icon: 'revenue', trend: 'up' as const, percent: Math.min(100, Math.round((s.todayRevenue / 50000) * 100)) },
+    { label: 'الدفع النقدي', value: `${s.cashToday.toLocaleString()} ${CURRENCY_SYMBOL}`, icon: 'cash', trend: 'up' as const, percent: Math.min(100, Math.round((s.cashToday / 30000) * 100)) },
+    { label: 'الأرباح', value: `${s.todayProfit.toLocaleString()} ${CURRENCY_SYMBOL}`, icon: 'profit', trend: 'up' as const, percent: Math.min(100, Math.round((s.todayProfit / 20000) * 100)) },
     { label: 'الجلسات النشطة', value: `${s.activeSessions}`, icon: 'sessions', trend: 'up' as const, percent: Math.min(100, Math.round((s.activeSessions / 50) * 100)) },
     { label: 'نسبة الإشغال', value: `${s.occupancyRate}%`, icon: 'occupancy', trend: s.occupancyRate > 75 ? 'up' as const : 'down' as const, percent: s.occupancyRate },
     { label: 'نسبة التجديد', value: `${s.renewalRate}%`, icon: 'renewal', trend: 'up' as const, percent: s.renewalRate },

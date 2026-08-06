@@ -3,7 +3,7 @@ import { AlertCircle, Plus, Users, GraduationCap, Phone, Mail, Download } from '
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { downloadExport } from '../lib/download';
-import { useShowNotification } from '../context/AppContext';
+import { useShowNotification, useAcademyName } from '../context/AppContext';
 
 import { ParentsHeader } from '../features/parents/components/ParentsHeader';
 import { ParentsTable } from '../features/parents/components/ParentsTable';
@@ -26,7 +26,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const Parents = () => {
-    useEffect(() => { document.title = 'أولياء الأمور | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `أولياء الأمور | ${academyName}`; }, [academyName]);
     const { state, actions } = useParents();
     const showNotification = useShowNotification();
     const [fabOpen, setFabOpen] = useState(false);

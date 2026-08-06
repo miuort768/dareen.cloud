@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 import { useSettingsStore } from '../../store/settingsStore';
+import { useAcademyName } from '../../context/AppContext';
 
 
 import { SEO } from '../../components/SEO';
@@ -26,6 +27,7 @@ import { useIsAuthenticated } from '../../context/useApp';
 
 
 export const Home = () => {
+    const academyName = useAcademyName();
     const adminPhone = useSettingsStore(s => s.adminPhone);
     const heroBanners = useSettingsStore(s => s.heroBanners);
     const whatsappNumbers = useSettingsStore(s => s.whatsappNumbers);
@@ -54,7 +56,7 @@ export const Home = () => {
     try { if (heroBanners) bannersArray = JSON.parse(heroBanners); } catch (e) { console.warn(e); }
 
     useEffect(() => {
-        const fullText = "منصة دارين السابعة";
+        const fullText = `منصة ${academyName}`;
         let i = 0, isDeleting = false, typingSpeed = 150, timer: ReturnType<typeof setTimeout>;
         const type = () => {
             const currentText = isDeleting ? fullText.substring(0, i - 1) : fullText.substring(0, i + 1);
@@ -83,7 +85,7 @@ export const Home = () => {
             <MobileHeader />
             <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative">
                 <div className="flex gap-1.5 mt-2 mb-3">
-                    <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في دارين السابعة')}`}
+                    <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
                         target="_blank" rel="noopener noreferrer"
                         className="flex-1 bg-primary text-on-primary text-xs font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
                         <Headphones className="w-2.5 h-2.5 shrink-0" /> طلب حصة مجانية

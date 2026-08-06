@@ -1,6 +1,7 @@
 import { Share2, FileDown, CheckCircle2, Star, Calendar, X, Award, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { useAcademyName } from '../../../context/AppContext';
 
 interface MonthlyReportPreviewProps {
     isOpen: boolean;
@@ -20,6 +21,7 @@ interface MonthlyReportPreviewProps {
 
 export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: MonthlyReportPreviewProps) => {
     if (!isOpen || !student) return null;
+    const academyName = useAcademyName();
 
     return (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-background/50" dir="rtl">
@@ -33,7 +35,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         </div>
                         <div>
                             <h3 className="text-xl font-medium text-main uppercase tracking-tight italic">تقرير التميز الأكاديمي</h3>
-                            <p className="text-micro font-medium text-muted uppercase mt-1">منصة دارين التعليمية — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
+                            <p className="text-micro font-medium text-muted uppercase mt-1">منصة {academyName} التعليمية — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
                         </div>
                     </div>
 

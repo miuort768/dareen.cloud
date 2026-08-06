@@ -31,7 +31,7 @@ export const ChartTooltip = ({
       className
     )}>
       {label && (
-        <div className="flex items-center gap-2 mb-3 border-b border-divider pb-2">
+        <div className="flex items-center gap-2 mb-3 border-b border-border pb-2">
           <p className="text-xs font-bold text-main">{label}</p>
         </div>
       )}
@@ -48,7 +48,7 @@ export const ChartTooltip = ({
           </div>
         ))}
       </div>
-      <div className="mt-3 pt-2 border-t border-divider flex items-center justify-between">
+      <div className="mt-3 pt-2 border-t border-border flex items-center justify-between">
         <span className="text-micro font-bold text-dim">المجموع</span>
         <span className="text-xs font-bold text-main tabular-nums">{formatValue(total)}</span>
       </div>

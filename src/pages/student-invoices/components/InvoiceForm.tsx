@@ -65,7 +65,8 @@ export const InvoiceForm = ({
         <button
           type="button"
           onClick={handleCancel}
-          className="p-1.5 text-muted hover:text-muted hover:bg-surface transition-all rounded-xl"
+          aria-label="إغلاق"
+          className="w-8 h-8 flex items-center justify-center text-muted hover:text-muted hover:bg-surface transition-all rounded-xl"
         >
           <X size={16} />
         </button>

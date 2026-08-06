@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { useSearchParams } from 'react-router-dom';
 import { api, safeArray } from '../lib/api';
-import { useCurrentUser, useShowNotification, useLogout } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useLogout, useAcademyName } from '../context/AppContext';
 import { confirm } from '../lib/confirmDialog';
 import type { Comment, Post } from '../features/forum/types';
 import { ForumHeader, ForumCreatePost, ForumPostCard, ForumHelpBanner } from './forum-page';
@@ -20,7 +20,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const Forum = () => {
-    useEffect(() => { document.title = 'المنتدى | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `المنتدى | ${academyName} للتعليم والتدريب`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const showNotification = useShowNotification();

@@ -49,7 +49,7 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                     <div className="min-w-0">
                                         <h4 className="font-bold text-xs text-main truncate">{lead.studentName || 'عميل بدون اسم'}</h4>
                                         {lead.source && (
-                                            <span className="text-[9px] font-medium text-info bg-info-soft px-1 py-px rounded mt-0.5 inline-block">{lead.source}</span>
+                                            <span className="text-[10px] font-medium text-info bg-info-soft px-1 py-px rounded mt-0.5 inline-block">{lead.source}</span>
                                         )}
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                 {/* الأولوية */}
                                 <div className="w-[10%] text-center px-1">
                                     <span className={cn(
-                                        'inline-flex items-center gap-1 px-1.5 py-0.5 text-[9px] font-bold rounded-lg',
+                                        'inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-bold rounded-lg',
                                         priority.bg, priority.color
                                     )}>
                                         {lead.priority === 'high' ? <span className="w-2 h-2 rounded-full bg-error inline-block" /> : lead.priority === 'medium' ? <span className="w-2 h-2 rounded-full bg-warning inline-block" /> : <span className="w-2 h-2 rounded-full bg-muted inline-block" />}

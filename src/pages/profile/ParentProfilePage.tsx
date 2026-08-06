@@ -7,7 +7,7 @@ import {
     Trophy, Flame
 } from 'lucide-react';
 import { api } from '../../lib/api';
-import { useCurrentUser, useLogout } from '../../context/AppContext';
+import { useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext';
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks';
 import { Skeleton } from '../../shared/components/ui';
 import { ParentDashboardHeader } from '../parent-dashboard/ParentDashboardHeader';
@@ -81,7 +81,8 @@ interface PointLog {
 }
 
 export const ParentProfilePage = () => {
-    useEffect(() => { document.title = 'الملف الشخصي | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `الملف الشخصي | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const navigate = useNavigate();

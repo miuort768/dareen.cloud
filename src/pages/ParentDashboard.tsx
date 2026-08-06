@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
-import { useCurrentUser, useAdminPhone, useLogout } from '../context/AppContext';
+import { useCurrentUser, useAdminPhone, useLogout, useAcademyName } from '../context/AppContext';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { Skeleton } from '../shared/components/ui';
@@ -11,7 +11,8 @@ import type { Student } from '../types';
 import type { PointLogEntry } from './parent-dashboard/types';
 
 export const ParentDashboard = () => {
-    useEffect(() => { document.title = 'لوحة تحكم ولي الأمر | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `لوحة تحكم ولي الأمر | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const adminPhone = useAdminPhone();
     const logout = useLogout();

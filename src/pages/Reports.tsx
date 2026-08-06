@@ -8,6 +8,8 @@ import { AcademicReport } from '../features/reports/components/AcademicReport';
 import { AttendanceReport } from '../features/reports/components/AttendanceReport';
 import { FinancialReport } from '../features/reports/components/FinancialReport';
 import type { ReportType } from '../features/reports/types';
+import { CURRENCY_SYMBOL } from '@/config/constants';
+import { useAcademyName } from '../context/AppContext';
 import { cn } from '../lib/utils';
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
@@ -16,7 +18,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const Reports = () => {
-    useEffect(() => { document.title = 'التقارير | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `التقارير | ${academyName}`; }, [academyName]);
     const { state, actions, filtered } = useReports();
 
     const [fabOpen, setFabOpen] = useState(false);
@@ -254,7 +257,7 @@ export const Reports = () => {
                     {state.activeReport === 'financial' && (
                         <FinancialReport totalRevenue={state.totalRevenue} monthRevenue={state.monthRevenue}
                             totalExpenses={state.totalExpenses} monthExpenses={state.monthExpenses}
-                            completedSessions={state.completedSessions} reportCurrency="SAR" />
+                            completedSessions={state.completedSessions} reportCurrency={CURRENCY_SYMBOL} />
                     )}
 
                     {state.activeReport === 'enrollment' && (

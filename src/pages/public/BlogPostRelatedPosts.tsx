@@ -20,7 +20,7 @@ export const BlogPostRelatedPosts = ({ posts }: BlogPostRelatedPostsProps) => {
             <h2 className="text-2xl font-black text-main mb-6">مقالات ذات صلة</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {posts.map((rp) => (
-                    <Link key={rp.slug} to={`/books/${rp.slug}`} className="group block bg-white rounded-card overflow-hidden shadow-md hover:shadow-xl transition-all border border-border">
+                    <Link key={rp.slug} to={`/books/${rp.slug}`} className="group block bg-card rounded-card overflow-hidden shadow-md hover:shadow-xl transition-all border border-border">
                         <div className="aspect-[16/9] bg-surface overflow-hidden">
                             <Image src={rp.coverImage || ''} alt={rp.title} className="w-full h-full group-hover:scale-105" />
                         </div>

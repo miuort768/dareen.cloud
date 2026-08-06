@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useCurrentUser, useShowNotification } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext';
 import { api } from '../lib/api';
 import { PageLoader } from '../components/ui/PageLoader';
 import { ErrorBanner } from '../shared/components/ui/ErrorState';
@@ -23,7 +23,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const Appointments = () => {
-    useEffect(() => { document.title = 'المواعيد | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `المواعيد | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();
     const [students, setStudents] = useState<Student[]>([]);

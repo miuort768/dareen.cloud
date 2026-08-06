@@ -3,6 +3,7 @@ import { Receipt, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../lib/api';
 import { useCurrentUser } from '../../context/AppContext';
+import { CURRENCY_SYMBOL } from '@/config/constants';
 
 interface StudentInvoice {
     id: string;
@@ -66,7 +67,7 @@ export const InvoicesCard = () => {
 
             <div className="flex items-center justify-between p-3 bg-surface rounded-xl">
                 <span className="text-micro text-muted">المبلغ المطلوب</span>
-                <span className="text-sm font-bold text-error">{totalPending.toFixed(3)} د.ك</span>
+                <span className="text-sm font-bold text-error">{totalPending.toFixed(3)} {CURRENCY_SYMBOL}</span>
             </div>
         </div>
     );

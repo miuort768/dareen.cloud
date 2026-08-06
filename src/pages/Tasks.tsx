@@ -6,7 +6,7 @@ import { cn } from '../lib/utils';
 import { StatCard } from '../shared/components/ui';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
-import { useCurrentUser, useLogout } from '../context/AppContext';
+import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext';
 import { PageLoader } from '../components/ui/PageLoader';
 import { TaskCard, EmptyTaskState } from './TaskCard';
 import { TaskFormModal } from './TaskFormModal';
@@ -28,7 +28,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const Tasks = () => {
-    useEffect(() => { document.title = 'المهام | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `المهام | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const [filterPriority, setFilterPriority] = useState<'all' | 'high' | 'medium' | 'low'>('all');

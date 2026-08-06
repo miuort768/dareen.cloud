@@ -14,7 +14,7 @@ import {
     MessageCircle
 } from 'lucide-react';
 import { api, safeArray } from '../lib/api';
-import { useAdminPhone } from '../context/AppContext';
+import { useAdminPhone, useAcademyName } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -37,7 +37,8 @@ interface Announcement {
 }
 
 export const ParentAnnouncements = () => {
-    useEffect(() => { document.title = 'الإعلانات | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `الإعلانات | ${academyName}`; }, [academyName]);
     const adminPhone = useAdminPhone();
     const [searchQuery, setSearchQuery] = useState('');
     const [filterType, setFilterType] = useState<string>('all');

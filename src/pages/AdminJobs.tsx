@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { SUBJECTS } from '../data/subjects';
+import { useAcademyName } from '../context/AppContext';
 import { cn } from '../lib/utils';
 
 interface JobApp {
@@ -29,7 +30,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const AdminJobs = () => {
-    useEffect(() => { document.title = 'الوظائف | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `الوظائف | ${academyName}`; }, [academyName]);
     const queryClient = useQueryClient();
     const { data: apps = [], isLoading: loading } = useQuery<JobApp[]>({
         queryKey: ['jobs'],

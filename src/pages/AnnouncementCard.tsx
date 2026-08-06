@@ -55,11 +55,11 @@ export const AnnouncementCard = ({ announcement: ann, onEdit, onDelete }: Announ
                         </div>
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <button onClick={() => onEdit(ann)} aria-label="تعديل الإعلان" className="w-7 h-7 bg-surface text-muted flex items-center justify-center border border-border hover:bg-primary hover:text-on-primary transition-all rounded-xl active:scale-90">
-                            <Edit3 size={12} />
+                        <button onClick={() => onEdit(ann)} aria-label="تعديل الإعلان" className="w-8 h-8 bg-surface text-muted flex items-center justify-center border border-border hover:bg-primary hover:text-on-primary transition-all rounded-xl active:scale-90">
+                            <Edit3 size={13} />
                         </button>
-                        <button onClick={() => onDelete(ann.id)} aria-label="حذف الإعلان" className="w-7 h-7 bg-surface text-error flex items-center justify-center border border-border hover:bg-error hover:text-on-error transition-all rounded-xl active:scale-90">
-                            <Trash2 size={12} />
+                        <button onClick={() => onDelete(ann.id)} aria-label="حذف الإعلان" className="w-8 h-8 bg-surface text-error flex items-center justify-center border border-border hover:bg-error hover:text-on-error transition-all rounded-xl active:scale-90">
+                            <Trash2 size={13} />
                         </button>
                     </div>
                 </div>

@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageLoader } from '../components/ui/PageLoader';
-import { useCurrentUser, useLogout } from '../context/AppContext';
+import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext';
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
 import { TeacherDashboardDesktop } from './TeacherDashboardDesktop';
 import { TeacherDashboardMobile } from './TeacherDashboardMobile';
 
 export const TeacherDashboard = () => {
-    useEffect(() => { document.title = 'لوحة تحكم المعلمة | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `لوحة تحكم المعلمة | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const navigate = useNavigate();

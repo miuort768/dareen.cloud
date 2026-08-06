@@ -5,13 +5,14 @@ import {
     Sparkles, Users, Trophy, CheckCircle, ShieldCheck, Star, GraduationCap, Crown
 } from 'lucide-react';
 import { triggerHaptic } from '../lib/haptics';
-import { useLogin } from '../context/AppContext';
+import { useLogin, useAcademyName } from '../context/AppContext';
 import { useSettingsStore } from '../store/settingsStore';
 import { SEO } from '../components/SEO';
 import { PublicNavbar } from '../components/public/PublicNavbar';
 import { Card, Input, Button, Alert } from '../shared/components/ui';
 
 export const Login = () => {
+    const academyName = useAcademyName();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -189,7 +190,7 @@ export const Login = () => {
                                 </div>
                             </div>
 
-                            <h1 className="text-section font-bold text-main mb-2 font-heading tracking-tight">أهلاً بك في دارين</h1>
+                            <h1 className="text-section font-bold text-main mb-2 font-heading tracking-tight">أهلاً بك في {academyName}</h1>
                             <p className="text-muted font-bold text-sm sm:text-base">يرجى تسجيل الدخول للمتابعة إلى حسابك</p>
                         </div>
 

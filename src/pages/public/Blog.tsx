@@ -9,6 +9,7 @@ import { blogPosts as staticPosts, type BlogPost } from '../../data/blogPosts';
 import { MessageCircle, Send, Download, Zap, FileText } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
+import { useAcademyName } from '../../context/AppContext';
 import { types, curriculums, gradesMap, subjectsMap, classroomsMap, directTypes } from '../../components/blog/LibraryConfig';
 import type { ViewType } from '../../components/blog/LibraryConfig';
 import { FoundationCard, RegularCard } from '../../components/blog/BlogCard';
@@ -25,6 +26,7 @@ export const Blog = () => {
   const adminPhone = useSettingsStore(s => s.adminPhone);
   const libraryWhatsapp = useSettingsStore(s => s.libraryWhatsapp);
   const libraryTelegram = useSettingsStore(s => s.libraryTelegram);
+  const academyName = useAcademyName();
   const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [posts, setPosts] = useState<typeof staticPosts>([]);
   const [loading, setLoading] = useState(true);
@@ -215,12 +217,14 @@ export const Blog = () => {
               <div className="flex items-center gap-1.5">
                 <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
                   target="_blank" rel="noopener noreferrer"
-                   className="w-9 h-9 rounded-xl bg-card border border-border flex items-center justify-center hover:border-success/40 transition-all">
+                   className="w-9 h-9 rounded-xl bg-card border border-border flex items-center justify-center hover:border-success/40 transition-all"
+                   aria-label="واتساب">
                   <MessageCircle size={15} className="text-success" />
                 </a>
                 <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
                   target="_blank" rel="noopener noreferrer"
-                   className="w-9 h-9 rounded-xl bg-card border border-border flex items-center justify-center hover:border-info/40 transition-all">
+                   className="w-9 h-9 rounded-xl bg-card border border-border flex items-center justify-center hover:border-info/40 transition-all"
+                   aria-label="تيليجرام">
                     <Send size={15} className="text-info" />
                 </a>
               </div>
@@ -230,19 +234,19 @@ export const Blog = () => {
             <div className="relative bg-gradient-to-br from-primary via-primary-deep to-primary rounded-3xl overflow-hidden mb-5 border border-primary/30 shadow-lg shadow-primary/10">
               <div className="flex items-center gap-4 p-5">
                 <div className="flex-1 min-w-0">
-                  <p className="text-lg font-black text-on-primary leading-tight mb-1">برامج <span className="text-on-primary/80">دارين</span> السابعة</p>
+                  <p className="text-lg font-black text-on-primary leading-tight mb-1">برامج <span className="text-on-primary/80">{academyName}</span></p>
                   <p className="text-[11px] font-bold text-on-primary/80 mb-2">أفضل الكتب والملخصات</p>
                   <p className="text-[10px] text-on-primary/60 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
                   <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                     target="_blank" rel="noopener noreferrer"
-                     className="inline-flex items-center justify-center bg-on-primary text-primary text-[11px] font-extrabold px-4 py-2 rounded-xl hover:bg-white transition-all w-full">
+                     className="inline-flex items-center justify-center bg-on-primary text-primary text-[11px] font-extrabold px-4 py-2 rounded-xl hover:bg-surface transition-all w-full">
                     طلب حصة مجانية
                   </a>
                 </div>
                 <div className="relative shrink-0">
                   <div className="absolute inset-0 bg-primary-light/30 rounded-full blur-xl" />
                   <div className="relative w-[100px]">
-                    <Image src="/bbook.png" alt="طفل يدرس على منصة دارين" className="w-full h-auto" imgClassName="object-contain drop-shadow-lg" />
+                    <Image src="/bbook.png" alt={`طفل يدرس على منصة ${academyName}`} className="w-full h-auto" imgClassName="object-contain drop-shadow-lg" />
                   </div>
                 </div>
               </div>

@@ -7,7 +7,7 @@ import {
     Flame, CheckCircle2, BarChart3, UserPlus
 } from 'lucide-react';
 import { api } from '../../lib/api';
-import { useCurrentUser, useLogout } from '../../context/AppContext';
+import { useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext';
 import { CURRENCY_SYMBOL } from '../../config/constants';
 import { getRankByPoints, TEACHER_RANKS } from '../../shared/utils/ranks';
 import { Skeleton, Button } from '../../shared/components/ui';
@@ -101,7 +101,8 @@ const InfoRow = ({ icon, label, value, onEdit }: { icon: React.ReactNode; label:
 );
 
 export const TeacherProfilePage = () => {
-    useEffect(() => { document.title = 'الملف الشخصي | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `الملف الشخصي | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const [teacherData, setTeacherData] = useState<TeacherData | null>(null);

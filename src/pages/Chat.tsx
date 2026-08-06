@@ -10,9 +10,11 @@ import { useChatUIStore } from '../store/chatUIStore';
 import { useChat, useMessages } from '../hooks/useChat';
 import { Image } from '../shared/components/ui';
 import { cn } from '../lib/utils';
+import { useAcademyName } from '../context/AppContext';
 
 export const Chat = () => {
-    React.useEffect(() => { document.title = 'المحادثات | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    React.useEffect(() => { document.title = `المحادثات | ${academyName} للتعليم والتدريب`; }, [academyName]);
     const [deleteType, setDeleteType] = useState<'all_conversations' | 'conversation'>('conversation');
     const [itemToDelete, setItemToDelete] = useState<{ displayName: string; id?: string } | null>(null);
     const currentUser = useAuthStore(s => s.currentUser);
@@ -200,9 +202,9 @@ export const Chat = () => {
                         
                         <div className="z-10 text-center">
                             <div className="w-20 h-20 bg-surface border border-border flex items-center justify-center mx-auto mb-8 shadow-sm rounded-none">
-                                <Image src="/logo.png" alt="دارين" className="w-12 h-12" imgClassName="object-contain" />
+                                <Image src="/logo.png" alt={academyName} className="w-12 h-12" imgClassName="object-contain" />
                             </div>
-                            <h2 className="text-3xl font-medium text-main mb-3 tracking-tighter uppercase">واتساب دارين للكمبيوتر</h2>
+                            <h2 className="text-3xl font-medium text-main mb-3 tracking-tighter uppercase">واتساب {academyName} للكمبيوتر</h2>
                             <div className="flex items-center justify-center gap-3 mb-6">
                                 <span className="h-[1px] w-8 bg-primary/30"></span>
                                 <p className="text-micro text-primary font-medium uppercase tracking-label">تواصل آمن • مشفر</p>

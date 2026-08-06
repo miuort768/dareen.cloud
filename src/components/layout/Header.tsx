@@ -82,7 +82,7 @@ export const Header = memo(() => {
             "backdrop-blur-xl border-b border-border",
             "transition-all duration-300"
         )}>
-            <div className="flex items-center justify-between h-full px-4 lg:px-8 max-w-[1600px] mx-auto">
+            <div className="flex items-center justify-between h-full px-4 lg:px-8 max-w-page mx-auto">
                 <div className="flex items-center gap-4 flex-1 min-w-0">
                     {meta && (
                         <div className="min-w-0">
@@ -106,6 +106,7 @@ export const Header = memo(() => {
                                 <input
                                     type="text"
                                     placeholder="بحث..."
+                                    aria-label="بحث"
                                     className="h-9 w-[200px] rounded-xl border border-border bg-background pr-9 pl-3 text-xs text-main placeholder:text-muted outline-none focus:border-primary transition-colors"
                                 />
                             </div>
@@ -150,6 +151,7 @@ export const Header = memo(() => {
                         <div className="flex items-center bg-background border border-border rounded-xl p-0.5 gap-px">
                             <Link
                                 to="/chat"
+                                aria-label="الدردشة"
                                 className={cn(
                                     "relative flex items-center justify-center w-8 h-8 rounded-lg",
                                     "text-muted hover:text-main hover:bg-accent/10 transition-colors"
@@ -166,7 +168,7 @@ export const Header = memo(() => {
                         </div>
                     )}
 
-                    <Link to={userLink} className="shrink-0">
+                    <Link to={userLink} className="shrink-0" aria-label="الملف الشخصي">
                         <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center hover:shadow-md transition-all cursor-pointer">
                             {currentUser?.avatar ? (
                                 <img src={currentUser.avatar} alt={currentUser.name} className="w-full h-full rounded-lg object-cover" />

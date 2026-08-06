@@ -4,7 +4,7 @@ import { GraduationCap, Plus, RefreshCw, FileText, BarChart3, Filter, DollarSign
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
 import { CURRENCY_SYMBOL } from '../config/constants';
-import { useCurrentUser, useShowNotification } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext';
 import { type TeacherInvoice, type Teacher, type TeacherInvoiceFormData, INVOICE_STATUS } from '../types/invoice';
 import { PageLoader } from '../components/ui/PageLoader';
 import { InvoiceStats } from './teacher-invoices/components/InvoiceStats';
@@ -19,7 +19,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const TeacherInvoices = () => {
-    useEffect(() => { document.title = 'فواتير المعلمات | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `فواتير المعلمات | ${academyName}`; }, [academyName]);
     const [invoices, setInvoices] = useState<TeacherInvoice[]>([]);
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);

@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { api } from '../lib/api';
-import { useCurrentUser, useLogout } from '../context/AppContext';
+import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext';
 import { Skeleton } from '../shared/components/ui';
 import type { StudentDashboardData, Session, PointLog } from './student-dashboard/types';
 import { StudentDashboardDesktop } from './student-dashboard/StudentDashboardDesktop';
 import { StudentDashboardMobile } from './student-dashboard/StudentDashboardMobile';
 
 export const StudentDashboard = () => {
-    useEffect(() => { document.title = 'لوحة تحكم الطالب | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `لوحة تحكم الطالب | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
 

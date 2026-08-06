@@ -1,4 +1,4 @@
-import { ThumbsUp, MoreHorizontal, AlertTriangle, Clock, Trash2, User, Send } from 'lucide-react';
+import { ThumbsUp, MoreHorizontal, AlertTriangle, Clock, Trash2, User, Send, MessageSquare } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { cn } from '../../lib/utils';

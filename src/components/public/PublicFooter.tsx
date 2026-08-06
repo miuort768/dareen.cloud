@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Instagram, Phone, MapPin } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
+import { useAcademyName } from '../../context/AppContext';
 
 export const PublicFooter = () => {
     const navigate = useNavigate();
+    const academyName = useAcademyName();
     const adminPhone = useSettingsStore(s => s.adminPhone);
 
     return (
@@ -25,7 +27,7 @@ export const PublicFooter = () => {
                                 <span className="text-2xl font-black text-on-primary">د</span>
                             </div>
                             <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover font-heading">
-                                دارين السابعة
+                                {academyName}
                             </span>
                         </div>
                         <p className="text-muted text-sm lg:text-xs leading-relaxed border-s-2 border-border ps-4">
@@ -117,7 +119,7 @@ export const PublicFooter = () => {
                 <div className="border-t border-border pt-5 md:pt-6 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
                     <div className="text-center md:text-start">
                         <p className="text-muted text-sm">
-                            &copy; {new Date().getFullYear()} <span className="text-main font-medium">دارين السابعة</span>. جميع الحقوق محفوظة.
+                            &copy; {new Date().getFullYear()} <span className="text-main font-medium">{academyName}</span>. جميع الحقوق محفوظة.
                         </p>
                     </div>
 

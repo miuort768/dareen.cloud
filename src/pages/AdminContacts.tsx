@@ -4,7 +4,7 @@ import { Mail, Trash2, Phone, MessageCircle, Search, Clock, User, BookOpen, Inbo
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useIsLoading } from '../context/AppContext';
+import { useIsLoading, useAcademyName } from '../context/AppContext';
 import { cn } from '../lib/utils';
 
 interface ContactMsg {
@@ -23,7 +23,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const AdminContacts = () => {
-    useEffect(() => { document.title = 'رسائل التواصل | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `رسائل التواصل | ${academyName}`; }, [academyName]);
     const queryClient = useQueryClient();
     const authLoading = useIsLoading();
     const { data: messages = [], isLoading: loading, error: queryError } = useQuery<ContactMsg[], Error>({

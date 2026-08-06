@@ -115,7 +115,7 @@ export const BlogPost = () => {
 
 
     return (
-        <div className="min-h-full bg-white font-sans text-main relative flex flex-col">
+        <div className="min-h-full bg-background font-sans text-main relative flex flex-col">
             <SEO
                 title={post.seoTitle || post.title}
                 description={post.seoDescription || post.excerpt}

@@ -4,7 +4,7 @@ import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 import { Zap, BookOpen, Sparkles, Target } from 'lucide-react';
 
 export const AboutStory = () => (
-    <section className="py-6 md:py-8 relative overflow-hidden bg-white dark:bg-background">
+    <section className="py-6 md:py-8 relative overflow-hidden bg-background">
         <div className="container mx-auto px-4 relative z-10">
             <AnimateOnScroll animation="fadeUp">
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 max-w-6xl mx-auto">
@@ -48,7 +48,7 @@ export const AboutStory = () => (
 
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.12 } } }} className="space-y-4">
                         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-card hover:bg-surface dark:hover:bg-card transition-colors border border-border">
-                            <div className="w-12 h-12 bg-white dark:bg-card rounded-card shadow-sm flex items-center justify-center text-primary shrink-0">
+                            <div className="w-12 h-12 bg-card rounded-card shadow-sm flex items-center justify-center text-primary shrink-0">
                                 <Zap size={24} />
                             </div>
                             <div>
@@ -57,7 +57,7 @@ export const AboutStory = () => (
                             </div>
                         </motion.div>
                         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="flex items-start gap-4 p-6 bg-background dark:bg-card/50 rounded-card hover:bg-surface dark:hover:bg-card transition-colors border border-border">
-                            <div className="w-12 h-12 bg-white dark:bg-card rounded-card shadow-sm flex items-center justify-center text-warning shrink-0">
+                            <div className="w-12 h-12 bg-card rounded-card shadow-sm flex items-center justify-center text-warning shrink-0">
                                 <BookOpen size={24} />
                             </div>
                             <div>

@@ -64,7 +64,7 @@ export const ProfileAchievements = ({ achievements, title = 'الإنجازات'
                             </div>
                         )}
                         {!ach.unlocked && (
-                            <span className="text-[8px] font-bold text-muted">مقفل</span>
+                            <span className="text-[10px] font-bold text-muted">مقفل</span>
                         )}
                     </motion.div>
                 ))}

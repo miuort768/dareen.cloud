@@ -4,7 +4,7 @@ import { Mail, Trash2, Phone, MessageCircle, Search, Clock, Globe, Inbox, Calend
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { motion } from 'framer-motion';
-import { useIsLoading } from '../context/AppContext';
+import { useIsLoading, useAcademyName } from '../context/AppContext';
 import { cn } from '../lib/utils';
 import { COUNTRY_CURRICULUM } from '../components/blog/blogCustomers';
 import type { BlogCustomer } from '../components/blog/blogCustomers';
@@ -29,7 +29,8 @@ const FALLBACK_STYLE: CountryStyle = { badge: 'bg-primary-soft text-primary', ic
 const getCountryStyle = (country: string) => COUNTRY_STYLES[country] || FALLBACK_STYLE;
 
 export const AdminBlogCustomers = () => {
-    useEffect(() => { document.title = 'عملاء المدونة | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `عملاء المدونة | ${academyName}`; }, [academyName]);
     const queryClient = useQueryClient();
     const authLoading = useIsLoading();
     const { data: customers = [], isLoading: loading, error: queryError } = useQuery<BlogCustomer[], Error>({

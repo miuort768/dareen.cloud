@@ -4,7 +4,7 @@ import { Megaphone, Plus, Bell, Calendar, Filter, BarChart3 } from 'lucide-react
 import { motion, AnimatePresence } from 'framer-motion';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { api, safeArray } from '../lib/api';
-import { useShowNotification } from '../context/AppContext';
+import { useShowNotification, useAcademyName } from '../context/AppContext';
 import { confirm } from '../lib/confirmDialog';
 import { AnnouncementCard } from './AnnouncementCard';
 import { AnnouncementFormModal } from './AnnouncementFormModal';
@@ -27,7 +27,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const Announcements = () => {
-    useEffect(() => { document.title = 'الإعلانات | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `الإعلانات | ${academyName}`; }, [academyName]);
     const showNotification = useShowNotification();
     const queryClient = useQueryClient();
     const [isModalOpen, setIsModalOpen] = useState(false);

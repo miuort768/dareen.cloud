@@ -82,7 +82,7 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                                 <div className="border-t border-border px-4 py-3">
                                     <div className="flex items-center justify-between gap-2">
                                         <div className="flex items-center gap-1.5">
-                                            <span className={cn('inline-flex items-center gap-1 px-2 py-0.5 text-[9px] font-bold rounded-lg', priority.bg, priority.color)}>
+                                            <span className={cn('inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold rounded-lg', priority.bg, priority.color)}>
                                                 {lead.priority === 'high' ? <span className="w-1.5 h-1.5 rounded-full bg-error inline-block" /> : lead.priority === 'medium' ? <span className="w-1.5 h-1.5 rounded-full bg-warning inline-block" /> : <span className="w-1.5 h-1.5 rounded-full bg-muted inline-block" />}
                                                 {priority.label}
                                             </span>

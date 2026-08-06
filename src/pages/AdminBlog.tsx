@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useShowNotification } from '../context/AppContext';
+import { useShowNotification, useAcademyName } from '../context/AppContext';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { useSettingsStore } from '../store/settingsStore';
@@ -19,7 +19,8 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const AdminBlog = () => {
-    useEffect(() => { document.title = 'المدونة | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `المدونة | ${academyName}`; }, [academyName]);
     const showNotification = useShowNotification();
     const queryClient = useQueryClient();
     const { data: posts = [], isLoading: loading } = useQuery<BlogPost[]>({

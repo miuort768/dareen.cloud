@@ -37,8 +37,9 @@ const AvatarLetter = ({ name }: { name: string }) => (
 const ActionButton = ({ icon: Icon, onClick, title, hoverClass }: { icon: React.ComponentType<{ size?: number }>; onClick: () => void; title: string; hoverClass: string }) => (
   <button
     onClick={onClick}
-    className={cn("p-1.5 text-muted transition-all active:scale-90", hoverClass)}
+    className={cn("w-8 h-8 flex items-center justify-center text-muted transition-all active:scale-90 rounded-lg", hoverClass)}
     title={title}
+    aria-label={title}
   >
     <Icon size={13} />
   </button>

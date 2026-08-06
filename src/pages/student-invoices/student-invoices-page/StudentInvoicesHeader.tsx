@@ -1,5 +1,6 @@
 import { Search, FileText, Plus, X, UserPlus, Printer, Trash2 } from 'lucide-react';
 import { PrimaryBtn, SecondaryBtn, DangerBtn } from '../components/InvoiceUI';
+import { CURRENCY_SYMBOL } from '@/config/constants';
 
 interface StudentInvoicesHeaderProps {
     totalRevenue: number;
@@ -30,7 +31,7 @@ export const StudentInvoicesHeader = ({
                 </div>
             </div>
             <span className="text-[10px] font-bold text-success bg-success-soft px-2.5 py-1 rounded-lg whitespace-nowrap">
-                {totalRevenue.toLocaleString()} د.ك
+                {totalRevenue.toLocaleString()} {CURRENCY_SYMBOL}
             </span>
         </div>
         <div className="flex flex-col lg:flex-row gap-2 items-center">

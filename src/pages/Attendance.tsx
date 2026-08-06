@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Search, Users, Activity, CheckCircle, XCircle, Clock, Plus, List, BarChart3, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate, useLogout } from '../context/AppContext';
+import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate, useLogout, useAcademyName } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal';
 import { AttendanceStats } from '../features/attendance/components/AttendanceStats';
@@ -41,7 +41,8 @@ const statusConfig = {
 } as const;
 
 export const Attendance = () => {
-    useEffect(() => { document.title = 'الحضور والغياب | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `الحضور والغياب | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const showNotification = useShowNotification();

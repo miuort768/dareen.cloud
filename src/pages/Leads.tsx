@@ -14,6 +14,7 @@ import { AddLeadModal } from './leads/components/AddLeadModal';
 import { LeadsSkeleton } from './leads/components/LeadsSkeleton';
 import { LeadDrawer } from './leads/components/LeadDrawer';
 import { useUIStore } from '../store/uiStore';
+import { useAcademyName } from '../context/AppContext';
 import { cn } from '../lib/utils';
 
 const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; onCancel: () => void }) => {
@@ -51,7 +52,8 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
 const StatusKeys: LeadStatus[] = ['new', 'contacted', 'interested', 'trial', 'converted'];
 
 export const Leads = () => {
-    useEffect(() => { document.title = 'العملاء المحتملون | دارين السابعة للتعليم والتدريب'; }, []);
+    const academyName = useAcademyName();
+    useEffect(() => { document.title = `العملاء المحتملون | ${academyName} للتعليم والتدريب`; }, [academyName]);
     const queryClient = useQueryClient();
     const showNotification = useUIStore((s) => s.showNotification);
 
@@ -317,6 +319,7 @@ export const Leads = () => {
                     className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-primary text-on-primary rounded-xl shadow-xl shadow-primary/30 flex items-center justify-center hover:bg-primary-hover active:scale-95 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    aria-label="إضافة عميل"
                 >
                     <Plus size={22} />
                 </motion.button>

@@ -62,7 +62,7 @@ export const Contact = () => {
     ];
 
     return (
-        <div className="min-h-full bg-white dark:bg-background font-sans text-main flex flex-col">
+        <div className="min-h-full bg-background font-sans text-main flex flex-col">
             <SEO title="اتصل بنا" description="تواصل مع فريق دارين السابعة للاستفسار عن دروس خصوصية أونلاين في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق، قدرات وتحصيلي، تحفيظ قرآن، تأسيس أطفال، واشتراكات الطلاب في السعودية والكويت والإمارات وقطر وعمان والبحرين. احجز حصة تجريبية مجانية عبر واتساب." url="https://dareen.cloud/contact" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'اتصل بنا', item: '/contact' }]} />
             <script type="application/ld+json">
                 {JSON.stringify({

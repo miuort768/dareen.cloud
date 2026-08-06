@@ -22,7 +22,7 @@ export const AboutValues = () => (
             </div>
 
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto">
-                <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-primary)]/50 dark:from-card dark:to-[var(--bg-primary)]/20 p-6 md:p-8 rounded-card border border-primary/50 dark:border-primary/30 relative overflow-hidden shadow-sm">
+                <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-card to-primary/10 dark:to-primary/5 p-6 md:p-8 rounded-card border border-primary/50 dark:border-primary/30 relative overflow-hidden shadow-sm">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-12 rounded-card bg-gradient-to-br from-primary to-primary text-on-primary flex items-center justify-center shadow-lg shadow-primary/20 shrink-0">
                             <Shield className="w-6 h-6" />
@@ -32,7 +32,7 @@ export const AboutValues = () => (
                     <p className="text-xs md:text-sm text-muted leading-relaxed font-medium">نلتزم بأعلى معايير النزاهة والصدق في كل تفاعل تعليمي، لنكون الشريك الموثوق لمستقبل أبنائكم.</p>
                 </motion.div>
 
-                <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-warning)]/50 dark:from-card dark:to-[var(--bg-warning)]/20 p-6 md:p-8 rounded-2xl border border-warning/50 dark:border-warning/30 relative overflow-hidden shadow-sm">
+                <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-card to-warning/10 dark:to-warning/5 p-6 md:p-8 rounded-2xl border border-warning/50 dark:border-warning/30 relative overflow-hidden shadow-sm">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-12 rounded-card bg-gradient-to-br from-warning to-warning text-on-warning flex items-center justify-center shadow-lg shadow-warning/20 shrink-0">
                             <Lightbulb className="w-6 h-6" />
@@ -42,7 +42,7 @@ export const AboutValues = () => (
                     <p className="text-xs md:text-sm text-muted leading-relaxed font-medium">نطور أدواتنا باستمرار لنجعل من رحلة العلم تجربة استثنائية مشوقة تفتح آفاق العقل.</p>
                 </motion.div>
 
-                <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-success)]/50 dark:from-card dark:to-[var(--bg-success)]/20 p-6 md:p-8 rounded-2xl border border-success/50 dark:border-success/30 relative overflow-hidden shadow-sm">
+                <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-card to-success/10 dark:to-success/5 p-6 md:p-8 rounded-2xl border border-success/50 dark:border-success/30 relative overflow-hidden shadow-sm">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-12 rounded-card bg-gradient-to-br from-success to-success text-on-success flex items-center justify-center shadow-lg shadow-success/20 shrink-0">
                             <Award className="w-6 h-6" />
@@ -52,7 +52,7 @@ export const AboutValues = () => (
                     <p className="text-xs md:text-sm text-muted leading-relaxed font-medium">لا نرضى بأقل من الجودة الفائقة في كل برنامج نقدمه، لضمان مخرجات تعليمية تليق بطلابنا.</p>
                 </motion.div>
 
-                <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-white to-[var(--bg-error)]/50 dark:from-card dark:to-[var(--bg-error)]/20 p-6 md:p-8 rounded-2xl border border-error/50 dark:border-error/30 relative overflow-hidden shadow-sm">
+                <motion.div variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-gradient-to-br from-card to-error/10 dark:to-error/5 p-6 md:p-8 rounded-2xl border border-error/50 dark:border-error/30 relative overflow-hidden shadow-sm">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-12 rounded-card bg-gradient-to-br from-error to-error text-on-error flex items-center justify-center shadow-lg shadow-error/20 shrink-0">
                             <Compass className="w-6 h-6" />

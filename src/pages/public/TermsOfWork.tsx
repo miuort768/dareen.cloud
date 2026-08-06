@@ -2,9 +2,11 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Briefcase, FileCheck, Clock, Shield, Award, UserCheck, AlertCircle, Headphones } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
+import { useAcademyName } from '../../context/AppContext';
 import { SEO } from '../../components/SEO';
 
 export const TermsOfWork = () => {
+    const academyName = useAcademyName();
     const adminPhone = useSettingsStore(s => s.adminPhone);
     const whatsappNumbers = useSettingsStore(s => s.whatsappNumbers);
 
@@ -19,7 +21,7 @@ export const TermsOfWork = () => {
         <div className="min-h-full bg-card dark:bg-background font-sans text-main">
             <SEO
                 title="قوانين العمل"
-                description="قوانين وسياسات العمل في دارين السابعة - تعرف على حقوقك وواجباتك كمعلم أو موظف في منصتنا التعليمية."
+                description={`قوانين وسياسات العمل في ${academyName} - تعرف على حقوقك وواجباتك كمعلم أو موظف في منصتنا التعليمية.`}
                 url="https://dareen.cloud/terms-of-work"
                 breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'قوانين العمل', item: '/terms-of-work' }]}
             />
@@ -27,9 +29,9 @@ export const TermsOfWork = () => {
                 {JSON.stringify({
                     '@context': 'https://schema.org',
                     '@type': 'WebPage',
-                    name: 'قوانين العمل - دارين السابعة',
-                    description: 'قوانين وسياسات العمل في دارين السابعة للمعلمين والموظفين',
-                    publisher: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' }
+                    name: `قوانين العمل - ${academyName}`,
+                    description: `قوانين وسياسات العمل في ${academyName} للمعلمين والموظفين`,
+                    publisher: { '@type': 'EducationalOrganization', name: academyName, url: 'https://dareen.cloud' }
                 })}
             </script>
             <MobileHeader />
@@ -46,7 +48,7 @@ export const TermsOfWork = () => {
                     </div>
 
                     <h1 className="text-lg md:text-5xl font-bold text-primary md:text-main dark:text-main mb-1 md:mb-3 leading-tight font-heading">
-                        قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary inline-block py-1">العمل</span> في دارين السابعة
+                        قوانين <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary inline-block py-1">العمل</span> في {academyName}
                     </h1>
 
                     <p className="text-micro md:text-lg text-warning max-w-2xl mx-auto leading-relaxed font-medium whitespace-nowrap md:whitespace-normal">
@@ -68,7 +70,7 @@ export const TermsOfWork = () => {
                             <div>
                                 <h2 className="text-xl md:text-2xl font-bold text-main mb-2">مقدمة</h2>
                                 <p className="text-sm md:text-base text-muted leading-relaxed">
-                                    تهدف هذه القوانين إلى تنظيم علاقة العمل بين دارين السابعة وجميع المعلمين والموظفين العاملين في المنصة. الالتزام بهذه القوانين يضمن بيئة عمل مهنية ومنتظمة تحقق أهدافنا التعليمية المشتركة.
+                                    تهدف هذه القوانين إلى تنظيم علاقة العمل بين {academyName} وجميع المعلمين والموظفين العاملين في المنصة. الالتزام بهذه القوانين يضمن بيئة عمل مهنية ومنتظمة تحقق أهدافنا التعليمية المشتركة.
                                 </p>
                             </div>
                         </div>
@@ -88,7 +90,7 @@ export const TermsOfWork = () => {
                                         <li>خبرة لا تقل عن سنتين في التدريس أون لاين أو حضوري</li>
                                         <li>اجتياز المقابلة الشخصية والتقييم العملي</li>
                                         <li>تقديم وثائق ومستندات رسمية تثبت المؤهلات والخبرات</li>
-                                        <li>اجتياز دورة تدريبية في استخدام منصة دارين السابعة</li>
+                                        <li>اجتياز دورة تدريبية في استخدام منصة {academyName}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -112,7 +114,7 @@ export const TermsOfWork = () => {
                                         <li>الحفاظ على سرية معلومات الطلاب وعدم مشاركتها او تسريبها</li>
                                         <li>عدم إقامة حصص خصوصية خارج المنصة مع طلابنا</li>
                                         <li>الإبلاغ الفوري عن أي مشكلات تقنية أو سلوكية تطرأ أثناء الحصة</li>
-                                        <li>الالتزام بمنهج دارين السابعة وخططها الدراسية</li>
+                                        <li>الالتزام بمنهج {academyName} وخططها الدراسية</li>
                                     </ul>
                                 </div>
                             </div>
@@ -134,7 +136,7 @@ export const TermsOfWork = () => {
                                         <li>إبلاغ الإدارة قبل 24 ساعة لإلغاء الحصة.</li>
                                         <li>الإلغاء المفاجئ يؤدي إلى خصم قيمة الحصة كاملة</li>
                                         <li>3 إلغاءات شهرية بعذر مقبول، ثم يُخصم من الراتب.</li>
-                                        <li>الإجازات الرسمية تُحتسب حسب تقويم دارين السابعة</li>
+                                        <li>الإجازات الرسمية تُحتسب حسب تقويم {academyName}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -181,7 +183,7 @@ export const TermsOfWork = () => {
                             <div>
                                 <h2 className="text-xl md:text-2xl font-bold text-main mb-3">إنهاء التعاقد</h2>
                                 <div className="space-y-1 text-muted text-xs md:text-sm">
-                                    <p>يحق لدارين السابعة إنهاء التعاقد مع المعلم أو الموظف في الحالات التالية:</p>
+                                    <p>يحق لـ{academyName} إنهاء التعاقد مع المعلم أو الموظف في الحالات التالية:</p>
                                     <ul className="list-disc list-inside space-y-1 ms-4">
                                         <li>الإخلال الجسيم بقواعد السلوك المهني</li>
                                         <li>أكثر من 5 غيابات شهريًا دون عذر مقبول.</li>
@@ -224,11 +226,11 @@ export const TermsOfWork = () => {
                             <ul className="list-disc list-inside space-y-1 ms-4">
                                 <li>الالتزام بجميع القوانين والسياسات المذكورة أعلاه</li>
                                 <li>تقديم أفضل ما لديك من جهد وخبرة لخدمة طلاب المنصة</li>
-                                <li>التمثيل المشرف لدارين السابعة في جميع تعاملاتك</li>
+                                <li>التمثيل المشرف لـ{academyName} في جميع تعاملاتك</li>
                                 <li>المساهمة في خلق بيئة تعليمية إيجابية ومحفزة</li>
                             </ul>
                             <p className="font-bold mt-4">
-                                دارين السابعة ترحب بكم وتتمنى لكم التوفيق في مسيرتكم المهنية معنا.
+                                {academyName} ترحب بكم وتتمنى لكم التوفيق في مسيرتكم المهنية معنا.
                             </p>
                         </div>
                     </div>

@@ -47,10 +47,10 @@ export const BlogGrid = ({ loading, filteredPosts, handleOpenModal, handleDelete
                         </div>
                         <div className="flex items-center justify-between pt-2 border-t border-border">
                             <div className="flex gap-2">
-                                <button onClick={() => handleOpenModal(post)} className="p-1.5 rounded-xl text-info" aria-label="تعديل"><Edit2 size={14} /></button>
-                                <button onClick={() => handleDelete(post.id)} className="p-1.5 rounded-xl text-error" aria-label="حذف"><Trash2 size={14} /></button>
+                                <button onClick={() => handleOpenModal(post)} className="w-8 h-8 flex items-center justify-center rounded-xl text-info hover:bg-info-soft transition-colors" aria-label="تعديل"><Edit2 size={14} /></button>
+                                <button onClick={() => handleDelete(post.id)} className="w-8 h-8 flex items-center justify-center rounded-xl text-error hover:bg-error-soft transition-colors" aria-label="حذف"><Trash2 size={14} /></button>
                             </div>
-                            <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" aria-label="عرض المقال" className="p-1.5 text-muted"><ExternalLink size={14} /></a>
+                            <a href={`/books/${post.slug}`} target="_blank" rel="noopener noreferrer" aria-label="عرض المقال" className="w-8 h-8 flex items-center justify-center text-muted hover:bg-surface rounded-xl transition-colors"><ExternalLink size={14} /></a>
                         </div>
                     </div>
                 </div>

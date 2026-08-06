@@ -32,12 +32,13 @@ export const BlogHeader = ({
                 </div>
                 <div className="flex items-center gap-1.5">
                     <button onClick={() => setShowSettings(s => !s)}
-                        className="w-8 h-8 flex items-center justify-center bg-surface border border-border rounded-lg text-muted hover:text-main transition-all">
+                        aria-label="إعدادات المكتبة"
+                        className="w-9 h-9 flex items-center justify-center bg-surface border border-border rounded-lg text-muted hover:text-main transition-all">
                         <Settings size={13} />
                     </button>
                     <button onClick={handleOpenModal}
-                        className="flex items-center gap-1 h-8 px-2.5 bg-error text-on-error text-[10px] font-bold rounded-lg active:scale-95 transition-transform">
-                        <Plus size={11} /> مقال
+                        className="flex items-center gap-1 h-9 px-3 bg-error text-on-error text-[11px] font-bold rounded-lg active:scale-95 transition-transform">
+                        <Plus size={13} /> مقال
                     </button>
                 </div>
             </div>

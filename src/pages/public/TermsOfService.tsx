@@ -2,15 +2,17 @@ import { PublicNavbar } from '../../components/public/PublicNavbar';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { Scale, FileCheck, AlertCircle, UserX, CreditCard, BookOpen, Headphones } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
+import { useAcademyName } from '../../context/AppContext';
 import { SEO } from '../../components/SEO';
 
 export const TermsOfService = () => {
+    const academyName = useAcademyName();
     const adminPhone = useSettingsStore(s => s.adminPhone);
     return (
         <div className="min-h-full bg-card dark:bg-background font-sans text-main">
             <SEO
                 title="شروط الاستخدام والأحكام"
-                description="شروط وأحكام استخدام منصة دارين السابعة للتعليم عن بعد. تعرف على حقوقك والتزاماتك كطالب، ولي أمر، أو معلم عند استخدام خدماتنا."
+                description={`شروط وأحكام استخدام منصة ${academyName} للتعليم عن بعد. تعرف على حقوقك والتزاماتك كطالب، ولي أمر، أو معلم عند استخدام خدماتنا.`}
                 url="https://dareen.cloud/terms-of-service"
                 image="/dareen_logo_new.jpg"
                 breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'شروط الاستخدام', item: '/terms-of-service' }]}
@@ -19,9 +21,9 @@ export const TermsOfService = () => {
                 {JSON.stringify({
                     '@context': 'https://schema.org',
                     '@type': 'WebPage',
-                    name: 'شروط الاستخدام والأحكام - دارين السابعة',
-                    description: 'شروط وأحكام استخدام منصة دارين السابعة للتعليم عن بعد',
-                    publisher: { '@type': 'EducationalOrganization', name: 'دارين السابعة', url: 'https://dareen.cloud' }
+                    name: `شروط الاستخدام والأحكام - ${academyName}`,
+                    description: `شروط وأحكام استخدام منصة ${academyName} للتعليم عن بعد`,
+                    publisher: { '@type': 'EducationalOrganization', name: academyName, url: 'https://dareen.cloud' }
                 })}
             </script>
             <PublicNavbar />

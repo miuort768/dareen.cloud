@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Users, BookOpen, DollarSign, TrendingUp, TrendingDown, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { CURRENCY_SYMBOL } from '@/config/constants';
 import type { DashboardStats } from '../types';
 
 interface KPICardsProps {
@@ -92,7 +93,7 @@ export const KPICards = ({ stats }: KPICardsProps) => {
             color: 'success',
             trend: 'up',
             trendValue: revenueGrowth,
-            prefix: 'ر.س',
+            prefix: CURRENCY_SYMBOL,
             formatter: (val: number) => val.toLocaleString(),
             size: 'lg',
         },
@@ -121,7 +122,7 @@ export const KPICards = ({ stats }: KPICardsProps) => {
             color: profitTrend === 'up' ? 'success' : profitTrend === 'down' ? 'warning' : 'info',
             trend: profitTrend,
             trendValue: profitTrend === 'up' ? 'إيجابي' : profitTrend === 'down' ? 'سلبي' : '—',
-            prefix: 'ر.س',
+            prefix: CURRENCY_SYMBOL,
             formatter: (val: number) => val.toLocaleString(),
             size: 'sm',
         },
