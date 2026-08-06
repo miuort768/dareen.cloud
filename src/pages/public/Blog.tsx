@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { Image } from '../../shared/components/ui';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -28,11 +29,6 @@ export const Blog = () => {
   const libraryTelegram = useSettingsStore(s => s.libraryTelegram);
   const academyName = useAcademyName();
   const whatsappNumber = adminPhone.replace(/\D/g, '');
-  const [posts, setPosts] = useState<typeof staticPosts>([]);
-  const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const view = (searchParams.get('view') as ViewType) || 'types';
   const selectedType = searchParams.get('type') || '';
@@ -49,6 +45,28 @@ export const Blog = () => {
       const timer = setTimeout(() => setShowSplash(false), 2000);
       return () => clearTimeout(timer);
   }, []);
+
+  const { data: postsData, isLoading: loading } = useQuery({
+    queryKey: ['blog-posts'],
+    queryFn: async () => {
+      const res = await api.get<{ posts?: BlogPost[]; data?: BlogPost[]; totalPages?: number } | BlogPost[]>('/blog?page=1&limit=12');
+      const posts = res?.posts || res?.data || (Array.isArray(res) ? res : []);
+      return { posts, totalPages: res?.totalPages || 1 };
+    },
+  });
+
+  const basePosts = postsData?.posts?.length > 0 ? postsData.posts : staticPosts;
+  const totalPages = postsData?.totalPages || 1;
+
+  const [allPosts, setAllPosts] = useState<typeof staticPosts>([]);
+  const [page, setPage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+
+  useEffect(() => {
+    if (postsData) setAllPosts(basePosts);
+  }, [postsData]);
+
+  const posts = allPosts.length > 0 ? allPosts : basePosts;
 
   const handleFoundationButtonClick = (type: 'download' | 'watch', url: string, postId: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -128,20 +146,6 @@ export const Blog = () => {
   const isHeroView = view === 'types' || view === 'curriculums' || view === 'grades';
   const gridItems = view === 'types' ? types : view === 'curriculums' ? curriculums : currentGrades;
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await api.get<{ posts?: BlogPost[]; data?: BlogPost[]; totalPages?: number } | BlogPost[]>('/blog?page=1&limit=12');
-        const fetchedPosts = res?.posts || res?.data || (Array.isArray(res) ? res : []);
-        setPosts(fetchedPosts.length > 0 ? fetchedPosts : staticPosts);
-        setTotalPages(res?.totalPages || 1);
-        setPage(1);
-      } catch (e) { console.warn(e); setPosts(staticPosts); }
-      finally { setLoading(false); }
-    };
-    fetchPosts();
-  }, []);
-
   const loadMore = async () => {
     if (loadingMore || page >= totalPages) return;
     setLoadingMore(true);
@@ -149,9 +153,8 @@ export const Blog = () => {
       const nextPage = page + 1;
       const res = await api.get<{ posts?: BlogPost[]; data?: BlogPost[] } | BlogPost[]>(`/blog?page=${nextPage}&limit=12`);
       const fetchedPosts = res?.posts || res?.data || (Array.isArray(res) ? res : []);
-      setPosts(prev => [...prev, ...fetchedPosts]);
+      setAllPosts(prev => [...prev, ...fetchedPosts]);
       setPage(nextPage);
-      setTotalPages(res?.totalPages || 1);
     } catch (e) { console.warn(e); } finally { setLoadingMore(false); }
   };
 

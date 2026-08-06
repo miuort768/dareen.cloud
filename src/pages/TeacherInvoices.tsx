@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GraduationCap, Plus, RefreshCw, FileText, BarChart3, Filter, DollarSign, CheckCircle2, AlertCircle, CreditCard } from 'lucide-react';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -21,17 +22,16 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 export const TeacherInvoices = () => {
     const academyName = useAcademyName();
     useEffect(() => { document.title = `فواتير المعلمات | ${academyName}`; }, [academyName]);
-    const [invoices, setInvoices] = useState<TeacherInvoice[]>([]);
+    const queryClient = useQueryClient();
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
+    const [isDeletingAll, setIsDeletingAll] = useState(false);
     const [formData, setFormData] = useState<TeacherInvoiceFormData>({
         teacherId: '', teacher: '', specialization: '', amount: '',
         paymentMethod: '', status: INVOICE_STATUS.PROCESSING,
         personalExpenses: '', currency: 'SAR'
     });
-    const [teachers, setTeachers] = useState<Teacher[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<string>('all');
     const [startDate, setStartDate] = useState(() => {
@@ -48,6 +48,47 @@ export const TeacherInvoices = () => {
         isOpen: false, title: '', message: '', onConfirm: () => {}, isDestructive: true
     });
 
+    const { data: invoicesData, isLoading: loading } = useQuery({
+        queryKey: ['teacher-invoices'],
+        queryFn: async () => {
+            const [invData, teaData] = await Promise.all([
+                api.get<TeacherInvoice[]>('/invoices/teacher'),
+                api.get<Teacher[]>('/teachers')
+            ]);
+            const formattedData = (Array.isArray(invData) ? invData : ((invData as { data?: TeacherInvoice[] }).data || [])).map((item) => ({ ...item, id: String(item.id) }));
+            const teachersData = Array.isArray(teaData) ? teaData : (teaData as { data?: Teacher[] }).data || [];
+            return { invoices: formattedData, teachers: teachersData };
+        },
+    });
+
+    const invoices = invoicesData?.invoices ?? [];
+    const teachers = invoicesData?.teachers ?? [];
+
+    const invalidateInvoices = useCallback(() => {
+        queryClient.invalidateQueries({ queryKey: ['teacher-invoices'] });
+    }, [queryClient]);
+
+    const createMutation = useMutation({
+        mutationFn: async (data: Record<string, unknown>) => {
+            await api.post('/invoices/teacher', data);
+        },
+        onSuccess: () => { invalidateInvoices(); },
+    });
+
+    const updateMutation = useMutation({
+        mutationFn: async ({ id, data }: { id: string; data: Record<string, unknown> }) => {
+            await api.put(`/invoices/teacher/${id}`, data);
+        },
+        onSuccess: () => { invalidateInvoices(); },
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: async (id: string) => {
+            await api.delete(`/invoices/teacher/${id}`);
+        },
+        onSuccess: () => { invalidateInvoices(); },
+    });
+
     const handleFabAction = (action: string) => {
         setFabOpen(false);
         switch (action) {
@@ -56,21 +97,6 @@ export const TeacherInvoices = () => {
             case 'print': window.print(); break;
         }
     };
-
-    const fetchInvoices = useCallback(async () => {
-        try { setLoading(true);
-            const [invData, teaData] = await Promise.all([
-                api.get<TeacherInvoice[]>('/invoices/teacher'),
-                api.get<Teacher[]>('/teachers')
-            ]);
-            const formattedData = (Array.isArray(invData) ? invData : ((invData as { data?: TeacherInvoice[] }).data || [])).map((item) => ({ ...item, id: String(item.id) }));
-            setInvoices(formattedData);
-            setTeachers(Array.isArray(teaData) ? teaData : (teaData as { data?: Teacher[] }).data || []);
-        } catch (error) { console.error('Error fetching data:', error); showNotification('خطأ في تحميل البيانات. يرجى المحاولة مرة أخرى.', 'error'); }
-        finally { setLoading(false); }
-    }, [showNotification]);
-
-    useEffect(() => { fetchInvoices(); }, [fetchInvoices]);
 
     const filteredInvoices = useMemo(() => {
         let list = invoices;
@@ -131,23 +157,23 @@ export const TeacherInvoices = () => {
             date: new Date().toISOString().split('T')[0]
         };
         try {
-            if (editingId) await api.put(`/invoices/teacher/${editingId}`, { ...invoiceData, id: editingId });
-            else await api.post('/invoices/teacher', invoiceData);
-            await fetchInvoices(); handleCancel();
+            if (editingId) await updateMutation.mutateAsync({ id: editingId, data: { ...invoiceData, id: editingId } });
+            else await createMutation.mutateAsync(invoiceData);
+            handleCancel();
             showNotification(editingId ? 'تم تحديث الفاتورة بنجاح' : 'تم إنشاء الفاتورة بنجاح', 'success');
         } catch (error) { console.error('Error saving invoice:', error); showNotification('فشل حفظ الفاتورة', 'error'); }
         finally { setIsSaving(false); }
-    }, [formData, editingId, handleCancel, fetchInvoices, showNotification]);
+    }, [formData, editingId, handleCancel, createMutation, updateMutation, showNotification]);
 
     const handleDelete = useCallback((id: string) => {
         setConfirmModal({
             isOpen: true, title: 'حذف الفاتورة', message: 'هل أنت متأكد من أنك تريد حذف هذه الفاتورة؟ لا يمكن التراجع عن هذا الإجراء.', isDestructive: true,
             onConfirm: async () => {
-                try { await api.delete(`/invoices/teacher/${id}`); fetchInvoices(); showNotification('تم حذف الفاتورة بنجاح', 'success'); }
+                try { await deleteMutation.mutateAsync(id); showNotification('تم حذف الفاتورة بنجاح', 'success'); }
                 catch (error) { console.error('Error deleting invoice:', error); showNotification('فشل حذف الفاتورة', 'error'); }
             }
         });
-    }, [fetchInvoices, showNotification]);
+    }, [deleteMutation, showNotification]);
 
     const handleDeleteAll = useCallback(() => {
         if (invoices.length === 0) return;
@@ -155,18 +181,18 @@ export const TeacherInvoices = () => {
             isOpen: true, title: 'حذف جميع الفواتير', message: `هل أنت متأكد من حذف جميع الفواتير (${invoices.length})؟ لا يمكن التراجع عن هذا الإجراء.`, isDestructive: true,
             onConfirm: async () => {
                 try {
-                    setLoading(true);
+                    setIsDeletingAll(true);
                     await Promise.all(invoices.map(inv => api.delete(`/invoices/teacher/${inv.id}`)));
-                    await fetchInvoices(); showNotification('تم حذف جميع الفواتير بنجاح', 'success');
+                    invalidateInvoices();
+                    showNotification('تم حذف جميع الفواتير بنجاح', 'success');
                 } catch (error) { console.error('Error deleting all invoices:', error); showNotification('فشل حذف جميع الفواتير', 'error'); }
-                finally { setLoading(false); }
+                finally { setIsDeletingAll(false); }
             }
         });
-    }, [invoices, fetchInvoices, showNotification]);
+    }, [invoices, invalidateInvoices, showNotification]);
 
     const handleImportTeachers = useCallback(async () => {
         try {
-            setLoading(true);
             const [teachersList, allSessions] = await Promise.all([
                 api.get<Teacher[]>('/teachers'),
                 api.get<{ id?: string; teacherId?: string; teacherName?: string; teacherPrice?: number; status?: string }[]>('/sessions')
@@ -175,14 +201,13 @@ export const TeacherInvoices = () => {
             const teachersToImport = teachersList.filter((t) => !currentTeacherNames.has(t.name));
             if (teachersToImport.length === 0) {
                 setConfirmModal({ isOpen: true, title: 'لا يوجد معلمون جدد', message: 'جميع المعلمين المسجلين موجودون بالفعل في الفواتير.', isDestructive: false, onConfirm: () => {} });
-                setLoading(false); return;
+                return;
             }
-            setLoading(false);
             setConfirmModal({
                 isOpen: true, title: 'استيراد المعلمات', message: `سيتم استيراد ${teachersToImport.length} معلمة جديد إلى الفواتير. هل تريد المتابعة؟`, isDestructive: false,
                 onConfirm: async () => {
                     try {
-                        setLoading(true);
+                        setIsSaving(true);
                         await Promise.all(teachersToImport.map((t) => {
                             const teacherSessions = allSessions.filter((sess) => (sess.teacherId === t.id || sess.teacherName === t.name) && sess.status === 'completed');
                             const totalAmount = teacherSessions.reduce((sum, sess) => sum + (sess.teacherPrice || t.price || 0), 0);
@@ -192,14 +217,14 @@ export const TeacherInvoices = () => {
                                 date: new Date().toISOString().split('T')[0]
                             });
                         }));
-                        await fetchInvoices();
+                        invalidateInvoices();
                         showNotification(`تم استيراد ${teachersToImport.length} معلمة بنجاح`, 'success');
                     } catch (error) { console.error('Error importing teachers:', error); showNotification('فشل استيراد المعلمات', 'error'); }
-                    finally { setLoading(false); }
+                    finally { setIsSaving(false); }
                 }
             });
-        } catch (error) { console.error('Error during import process:', error); showNotification('فشل تحميل بيانات المعلمات', 'error'); setLoading(false); }
-    }, [invoices, fetchInvoices, showNotification]);
+        } catch (error) { console.error('Error during import process:', error); showNotification('فشل تحميل بيانات المعلمات', 'error'); }
+    }, [invoices, invalidateInvoices, showNotification]);
 
     const fabActions = useMemo(() => [
         { icon: Plus, label: 'إضافة فاتورة', onClick: () => handleFabAction('add') },

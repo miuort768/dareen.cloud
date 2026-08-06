@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCurrentUser } from '../../../context/AppContext';
 import { api } from '../../../lib/api';
 import { triggerHaptic } from '../../../lib/haptics';
@@ -9,81 +10,51 @@ import { AppointmentPullToRefresh, AppointmentStats, AppointmentTabs, Appointmen
 
 export const MobileAppointments = () => {
     const currentUser = useCurrentUser();
+    const queryClient = useQueryClient();
     const mountedRef = useRef(true);
 
-    const [students, setStudents] = useState<Student[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');
     const [filterTeacher, setFilterTeacher] = useState<string>('all');
     const [selectedAppointment, setSelectedAppointment] = useState<AppointmentEvent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
     const [activeTab, setActiveTab] = useState<'upcoming' | 'completed'>('upcoming');
-    const [completedSessionIds, setCompletedSessionIds] = useState<string[]>([]);
 
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        mountedRef.current = true;
-        const checkAndReset = async () => {
-            try {
-                if (currentUser?.role === 'admin') {
-                    const settings = await api.get<Record<string, unknown>>('/system/settings');
-                    if (!mountedRef.current) return;
-                    const lastResetDate = settings?.last_appointment_reset as string;
-                    const todayStr = new Date().toDateString();
-                    if (lastResetDate !== todayStr) {
-                        await api.delete('/appointments/completed-sessions/reset');
-                        if (!mountedRef.current) return;
-                        setCompletedSessionIds([]);
-                        await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
-                    } else {
-                        const sessions = await api.get<string[]>('/appointments/completed-sessions');
-                        if (!mountedRef.current) return;
-                        setCompletedSessionIds(sessions || []);
-                    }
-                } else {
-                    const sessions = await api.get<string[]>('/appointments/completed-sessions');
-                    if (!mountedRef.current) return;
-                    setCompletedSessionIds(sessions || []);
-                }
-            } catch (error) {
-                console.error("Error managing appointment reset:", error);
-            }
-        };
-        checkAndReset();
-        return () => { mountedRef.current = false; };
-    }, [currentUser]);
-
-    useEffect(() => {
-        const interval = setInterval(async () => {
-            try {
-                const sessions = await api.get<string[]>('/appointments/completed-sessions');
-                if (mountedRef.current) setCompletedSessionIds(sessions || []);
-            } catch (e) { console.warn(e); }
-        }, 15000);
-        return () => clearInterval(interval);
-    }, []);
-
-    const fetchData = async () => {
-        if (!mountedRef.current) return;
-        setLoading(true);
-        try {
+    const { data: students = [], isLoading: loading } = useQuery<Student[]>({
+        queryKey: ['appointments-students'],
+        queryFn: async () => {
             const raw = await api.get<unknown>('/students');
-            if (!mountedRef.current) return;
-            setStudents(Array.isArray(raw) ? (raw as Student[]) : ((raw as { data?: Student[] } | null)?.data || []));
-        } catch (error) {
-            console.error("Error fetching data", error);
-        } finally {
-            if (mountedRef.current) setLoading(false);
-        }
-    };
+            return Array.isArray(raw) ? (raw as Student[]) : ((raw as { data?: Student[] } | null)?.data || []);
+        },
+    });
 
-    const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: fetchData });
+    const { data: completedSessionIds = [] } = useQuery<string[]>({
+        queryKey: ['completed-sessions'],
+        queryFn: async () => {
+            if (currentUser?.role === 'admin') {
+                const settings = await api.get<Record<string, unknown>>('/system/settings');
+                const lastResetDate = settings?.last_appointment_reset as string;
+                const todayStr = new Date().toDateString();
+                if (lastResetDate !== todayStr) {
+                    await api.delete('/appointments/completed-sessions/reset');
+                    await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
+                    return [];
+                }
+            }
+            const sessions = await api.get<string[]>('/appointments/completed-sessions');
+            return sessions || [];
+        },
+        refetchInterval: 15000,
+    });
 
-    useEffect(() => {
-        fetchData();
-        return () => { mountedRef.current = false; };
-    }, []);
+    const completeMutation = useMutation({
+        mutationFn: (id: string) => api.post('/appointments/completed-sessions', { id }),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['completed-sessions'] }),
+    });
+
+    const { isRefreshing, pullDistance, handlers } = usePullToRefresh({
+        onRefresh: () => queryClient.invalidateQueries({ queryKey: ['appointments-students'] }),
+    });
 
     const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
 
@@ -132,15 +103,10 @@ export const MobileAppointments = () => {
                 .sort((a, b) => (Number(a.hour) + (a.isPM && Number(a.hour) !== 12 ? 12 : 0)) - (Number(b.hour) + (b.isPM && Number(b.hour) !== 12 ? 12 : 0)))
         })).filter(dayObj => filterDay === 'all' || dayObj.day === filterDay), [filteredAppointments, filterDay]);
 
-    const handleCompleteSession = async (id: string, e: React.MouseEvent) => {
+    const handleCompleteSession = (id: string, e: React.MouseEvent) => {
         e.stopPropagation();
         triggerHaptic('medium');
-        try {
-            await api.post('/appointments/completed-sessions', { id });
-            setCompletedSessionIds(prev => [...prev, id]);
-        } catch (error) {
-            console.error("Error completing session:", error);
-        }
+        completeMutation.mutate(id);
     };
 
     const todayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Receipt, CheckCircle, Clock, AlertCircle, FileText, TrendingUp, ArrowDownRight, Printer, DollarSign } from 'lucide-react';
 import { api } from '../lib/api';
@@ -35,30 +36,19 @@ export const StudentInvoices = () => {
     const academyName = useAcademyName();
     useEffect(() => { document.title = `فواتيري | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
-    const [invoices, setInvoices] = useState<StudentInvoice[]>([]);
-    const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<'all' | 'paid' | 'pending' | 'overdue'>('all');
     const [fabOpen, setFabOpen] = useState(false);
 
-    useEffect(() => {
-        let cancelled = false;
-        const fetchInvoices = async () => {
-            try {
-                setLoading(true);
-                const data = await api.get<StudentInvoice[]>('/invoices/me/student');
-                const all = Array.isArray(data) ? data : [];
-                const mine = all.filter(inv => inv.studentId === currentUser?.id);
-                if (!cancelled) setInvoices(mine);
-            } catch (error) {
-                console.error('Error fetching invoices:', error);
-            } finally {
-                if (!cancelled) setLoading(false);
-            }
-        };
-        if (currentUser?.id) fetchInvoices();
-        return () => { cancelled = true; };
-    }, [currentUser?.id]);
+    const { data: invoices = [], isLoading: loading } = useQuery<StudentInvoice[]>({
+        queryKey: ['student-invoices'],
+        queryFn: async () => {
+            const data = await api.get<StudentInvoice[]>('/invoices/me/student');
+            const all = Array.isArray(data) ? data : [];
+            return all.filter(inv => inv.studentId === currentUser?.id);
+        },
+        enabled: !!currentUser?.id,
+    });
 
     const filteredInvoices = useMemo(() => invoices.filter(inv => {
         const matchesSearch = inv.description.toLowerCase().includes(searchTerm.toLowerCase());

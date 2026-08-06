@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext';
 import { api } from '../lib/api';
 import { PageLoader } from '../components/ui/PageLoader';
@@ -10,7 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 
 interface Student { id: string; name: string; grade: string; parentPhone: string; enrollments: Enrollment[]; }
-interface Enrollment { teacher: string; subject: string; curr: string; sessionsTotal: number; sessionsUsed: number; schedule: ScheduleSlot[]; }
+interface Enrollment { teacher: string; subject: string; curr: string; sessionsTotal: number; sessionsUsed: number; schedule: ScheduleSlot[]; teacherId?: string; }
 interface ScheduleSlot { day: string; hour: string; period: string; }
 interface AppointmentEvent {
     id: string; studentName: string; studentGrade: string; teacherName: string;
@@ -27,90 +28,56 @@ export const Appointments = () => {
     useEffect(() => { document.title = `المواعيد | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();
-    const [students, setStudents] = useState<Student[]>([]);
+    const queryClient = useQueryClient();
+
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');
     const [filterTeacher, setFilterTeacher] = useState<string>('all');
     const [selectedAppointment, setSelectedAppointment] = useState<AppointmentEvent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
-    const [completedSessionIds, setCompletedSessionIds] = useState<string[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [fabOpen, setFabOpen] = useState(false);
-    const mountedRef = useRef(true);
 
-    useEffect(() => {
-        mountedRef.current = true;
-        const checkAndReset = async () => {
-            try {
-                if (currentUser?.role === 'admin') {
-                    const settings = await api.get<Record<string, unknown>>('/system/settings');
-                    if (!mountedRef.current) return;
-                    const lastResetDate = settings?.last_appointment_reset;
-                    const todayStr = new Date().toDateString();
-                    if (lastResetDate !== todayStr) {
-                        await api.delete('/appointments/completed-sessions/reset');
-                        if (!mountedRef.current) return;
-                        setCompletedSessionIds([]);
-                        await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
-                    } else {
-                        const sessions = await api.get<string[]>('/appointments/completed-sessions');
-                        if (!mountedRef.current) return;
-                        setCompletedSessionIds(sessions || []);
-                    }
-                } else {
-                    const sessions = await api.get<string[]>('/appointments/completed-sessions');
-                    if (!mountedRef.current) return;
-                    setCompletedSessionIds(sessions || []);
+    const { data: students = [], isLoading: loading, error: queryError } = useQuery({
+        queryKey: ['appointments-students'],
+        queryFn: async () => {
+            const data = await api.get('/students');
+            return Array.isArray(data) ? data : (data.data || []);
+        },
+    });
+
+    const { data: completedSessionIds = [] } = useQuery({
+        queryKey: ['completed-sessions'],
+        queryFn: async () => {
+            if (currentUser?.role === 'admin') {
+                const settings = await api.get('/system/settings');
+                const lastResetDate = settings?.last_appointment_reset;
+                const todayStr = new Date().toDateString();
+                if (lastResetDate !== todayStr) {
+                    await api.delete('/appointments/completed-sessions/reset');
+                    await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
+                    return [];
                 }
-            } catch (error) {
-                console.error("Error managing appointment reset:", error);
             }
-        };
-        checkAndReset();
-        return () => { mountedRef.current = false; };
-    }, [currentUser]);
+            const sessions = await api.get('/appointments/completed-sessions');
+            return sessions || [];
+        },
+        refetchInterval: 15000,
+    });
 
-    useEffect(() => {
-        const interval = setInterval(async () => {
-            try {
-                const sessions = await api.get<string[]>('/appointments/completed-sessions');
-                if (mountedRef.current) setCompletedSessionIds(sessions || []);
-            } catch (e) { console.warn(e); }
-        }, 15000);
-        return () => clearInterval(interval);
-    }, []);
-
-    const handleCompleteSession = async (id: string, e: React.MouseEvent) => {
-        e.stopPropagation();
-        try {
-            await api.post('/appointments/completed-sessions', { id });
-            setCompletedSessionIds(prev => [...prev, id]);
-        } catch (error) {
-            console.error("Error completing session:", error);
+    const completeMutation = useMutation({
+        mutationFn: (id: string) => api.post('/appointments/completed-sessions', { id }),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['completed-sessions'] }),
+        onError: () => {
             showNotification('عذراً، حدث خطأ في تسجيل إتمام الحصة. يرجى المحاولة مرة أخرى.', 'error');
-        }
+        },
+    });
+
+    const handleCompleteSession = (id: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        completeMutation.mutate(id);
     };
 
-    useEffect(() => {
-        mountedRef.current = true;
-        const fetchData = async () => {
-            if (!mountedRef.current) return;
-            setLoading(true);
-            try {
-                const data = await api.get<Record<string, unknown>[]>('/students');
-                if (!mountedRef.current) return;
-                setStudents(Array.isArray(data) ? data : (data.data || []));
-            } catch (error) {
-                console.error("Error fetching data", error);
-                if (mountedRef.current) setError('حدث خطأ في تحميل البيانات');
-            } finally {
-                if (mountedRef.current) setLoading(false);
-            }
-        };
-        fetchData();
-        return () => { mountedRef.current = false; };
-    }, []);
+    const error = queryError ? 'حدث خطأ في تحميل البيانات' : null;
 
     const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
     const allAppointments: AppointmentEvent[] = (students || []).flatMap(student =>

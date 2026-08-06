@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { X, Calendar, CheckCircle2, XCircle, Clock, AlertCircle, Trash2, Edit2, Save, XSquare } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { Skeleton } from '../../../shared/components/ui';
@@ -20,50 +21,53 @@ interface AttendanceHistoryModalProps {
 }
 
 export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId, teacherName, studentGrade, studentSubject, studentCurriculum, onSessionChange }: AttendanceHistoryModalProps) => {
-    const [history, setHistory] = useState<Session[]>([]);
-    const [loading, setLoading] = useState(true);
     const [editingSession, setEditingSession] = useState<Session | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const showNotification = useShowNotification();
     const containerRef = useRef<HTMLDivElement>(null);
+    const queryClient = useQueryClient();
 
-    useEffect(() => {
-        const fetchHistory = async () => {
-            setLoading(true);
-            try {
-                const data = await api.get<Session[]>(`/sessions?studentId=${studentId}&q=${encodeURIComponent(teacherName)}`);
-                const sessions = Array.isArray(data) ? data : [];
+    const { data: history = [], isLoading: loading } = useQuery({
+        queryKey: ['attendance-history', studentId, teacherName, studentSubject],
+        queryFn: async () => {
+            const data = await api.get<Session[]>(`/sessions?studentId=${studentId}&q=${encodeURIComponent(teacherName)}`);
+            const sessions = Array.isArray(data) ? data : [];
+            return sessions
+                .filter(
+                    s =>
+                        s.studentId === studentId &&
+                        s.teacherName === teacherName &&
+                        (studentSubject ? s.subject === studentSubject : true) &&
+                        (s.status === 'completed' || s.status === 'cancelled')
+                )
+                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        },
+        enabled: isOpen && !!studentId,
+    });
 
-                const studentHistory = sessions.filter(s =>
-                    s.studentId === studentId &&
-                    s.teacherName === teacherName &&
-                    (studentSubject ? s.subject === studentSubject : true) &&
-                    (s.status === 'completed' || s.status === 'cancelled')
-                ).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    const deleteMutation = useMutation({
+        mutationFn: (id: string) => api.delete(`/sessions/${id}`),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['attendance-history'] });
+            onSessionChange?.();
+        },
+    });
 
-                setHistory(studentHistory);
-            } catch (error) {
-                console.error("Error fetching attendance history:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (isOpen) {
-            fetchHistory();
+    const updateMutation = useMutation({
+        mutationFn: ({ id, data }: { id: string; data: any }) => api.patch(`/sessions/${id}`, data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['attendance-history'] });
+            onSessionChange?.();
             setEditingSession(null);
-            setDeletingId(null);
-        }
-    }, [isOpen, studentId, teacherName, studentSubject]);
+        },
+    });
 
     const handleDelete = async (id: string) => {
         if (!(await confirm({ title: 'حذف السجل', description: 'هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.', confirmText: 'حذف', cancelText: 'إلغاء' }))) return;
 
         setDeletingId(id);
         try {
-            await api.delete(`/sessions/${id}`);
-            setHistory(prev => prev.filter(s => s.id !== id));
-            onSessionChange?.();
+            await deleteMutation.mutateAsync(id);
         } catch (error) {
             console.error("Error deleting session:", error);
             showNotification('حدث خطأ أثناء الحذف', 'error');
@@ -76,19 +80,14 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
         if (!editingSession) return;
 
         try {
-            await api.patch(`/sessions/${editingSession.id}`, {
-                date: editingSession.date,
-                status: editingSession.status,
-                day: new Date(editingSession.date).toLocaleDateString('ar-EG', { weekday: 'long' })
+            await updateMutation.mutateAsync({
+                id: editingSession.id,
+                data: {
+                    date: editingSession.date,
+                    status: editingSession.status,
+                    day: new Date(editingSession.date).toLocaleDateString('ar-EG', { weekday: 'long' }),
+                },
             });
-
-            const updatedSession = {
-                ...editingSession,
-                day: new Date(editingSession.date).toLocaleDateString('ar-EG', { weekday: 'long' })
-            };
-            setHistory(prev => prev.map(s => s.id === editingSession.id ? updatedSession : s));
-            setEditingSession(null);
-            onSessionChange?.();
         } catch (error) {
             console.error("Error updating session:", error);
             showNotification('حدث خطأ أثناء التحديث', 'error');
@@ -98,12 +97,6 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
     const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
         if (e.key === 'Escape') { e.stopPropagation(); onClose(); }
     }, [onClose]);
-
-    useEffect(() => {
-        if (!isOpen) return;
-        const first = containerRef.current?.querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-        first?.focus();
-    }, [isOpen]);
 
     if (!isOpen) return null;
 

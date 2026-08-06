@@ -1,7 +1,8 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Navigate } from 'react-router-dom';
 import { User, Users, Plus, Award, Star, TrendingUp, Filter, BarChart3 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api, safeArray } from '../../../lib/api';
 import { useCurrentUser } from '../../../context/AppContext';
 import { confirm } from '../../../lib/confirmDialog';
@@ -20,49 +21,53 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 export const Evaluations = () => {
     useEffect(() => { document.title = 'التقييمات | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useCurrentUser();
-    const [evaluations, setEvaluations] = useState<Evaluation[]>([]);
-    const [students, setStudents] = useState<Student[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const queryClient = useQueryClient();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [profileStudent, setProfileStudent] = useState<Student | null>(null);
     const [formData, setFormData] = useState({ studentId: '', rating: 'ممتاز', points: 0, notes: '' });
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState('');
     const [fabOpen, setFabOpen] = useState(false);
-    const mountedRef = useRef(true);
     const resetForm = () => setFormData({ studentId: '', rating: 'ممتاز', points: 0, notes: '' });
 
-    const fetchData = useCallback(async () => {
-        if (!mountedRef.current) return;
-        try {
-            setIsLoading(true);
+    const { data, isLoading } = useQuery({
+        queryKey: ['evaluations-data', currentUser?.id, currentUser?.role],
+        queryFn: async () => {
             if (currentUser?.role === 'parent') {
                 const myChildren = await api.get<Student[]>('/parents/my-children');
-                if (!mountedRef.current) return;
-                setStudents(safeArray<Student>(myChildren));
-                const evalsPromises = myChildren.map(c => api.get<Evaluation[]>(`/evaluations/student/${c.id}`).catch(() => [] as Evaluation[]));
+                const children = safeArray<Student>(myChildren);
+                const evalsPromises = children.map(c =>
+                    api.get<Evaluation[]>(`/evaluations/student/${c.id}`).catch(() => [] as Evaluation[])
+                );
                 const allEvalsResults = await Promise.all(evalsPromises);
-                if (!mountedRef.current) return;
-                setEvaluations(allEvalsResults.flat());
-            } else {
-                const studentsRes = await api.get<Student[]>('/students');
-                if (!mountedRef.current) return;
-                setStudents(safeArray<Student>(studentsRes));
-                let evalsUrl = '/evaluations';
-                if (currentUser?.role === 'teacher') evalsUrl = `/evaluations/teacher/${currentUser.id}`;
-                const evalsRes = await api.get<Evaluation[]>(evalsUrl);
-                if (!mountedRef.current) return;
-                setEvaluations(evalsRes);
+                return { students: children, evaluations: allEvalsResults.flat() };
             }
-        } catch (error) {
-            console.error('Error fetching evaluations:', error);
-        } finally {
-            if (mountedRef.current) setIsLoading(false);
-        }
-    }, [currentUser]);
+            const studentsRes = await api.get<Student[]>('/students');
+            const studentsList = safeArray<Student>(studentsRes);
+            let evalsUrl = '/evaluations';
+            if (currentUser?.role === 'teacher') evalsUrl = `/evaluations/teacher/${currentUser.id}`;
+            const evalsRes = await api.get<Evaluation[]>(evalsUrl);
+            return { students: studentsList, evaluations: evalsRes };
+        },
+        enabled: !!currentUser,
+    });
 
-    useEffect(() => { mountedRef.current = true; fetchData(); return () => { mountedRef.current = false; }; }, [currentUser, fetchData]);
+    const evaluations = data?.evaluations ?? [];
+    const students = data?.students ?? [];
+
+    const createMutation = useMutation({
+        mutationFn: async (payload: Record<string, unknown>) => api.post('/evaluations', payload),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['evaluations-data'] });
+            setIsModalOpen(false);
+            resetForm();
+        },
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: (id: string) => api.delete(`/evaluations/${id}`),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['evaluations-data'] }),
+    });
 
     const teacherStudents = useMemo(() => {
         if (!currentUser) return [];
@@ -80,25 +85,14 @@ export const Evaluations = () => {
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (isSubmitting) return;
-        setIsSubmitting(true);
-        try {
-            const payload = { ...formData, teacherId: currentUser?.id, teacherName: currentUser?.teacherName || currentUser?.name };
-            await api.post('/evaluations', payload);
-            setIsModalOpen(false);
-            resetForm();
-            fetchData();
-        } catch (error) {
-            console.error('Error submitting evaluation', error);
-        } finally {
-            setIsSubmitting(false);
-        }
+        if (createMutation.isPending) return;
+        const payload = { ...formData, teacherId: currentUser?.id, teacherName: currentUser?.teacherName || currentUser?.name };
+        createMutation.mutate(payload);
     };
 
     const handleDelete = async (id: string) => {
         if (!(await confirm({ title: 'حذف التقييم', description: 'هل أنت متأكد من حذف هذا التقييم؟ سيتم خصم النقاط من الطالب.', confirmText: 'حذف', cancelText: 'إلغاء' }))) return;
-        try { await api.delete(`/evaluations/${id}`); fetchData(); }
-        catch (error) { console.error('Error deleting evaluation', error); }
+        deleteMutation.mutate(id);
     };
 
     const sortedStudents = useMemo(() => {
@@ -230,7 +224,7 @@ export const Evaluations = () => {
                 </motion.div>
 
                 <EvaluationFormModal isOpen={isModalOpen} formData={formData} students={students}
-                    teacherStudents={teacherStudents} isSubmitting={isSubmitting}
+                    teacherStudents={teacherStudents} isSubmitting={createMutation.isPending}
                     onClose={() => { setIsModalOpen(false); resetForm(); }} onChange={setFormData} onSubmit={onSubmit} />
 
                 <EvaluationDrawer student={profileStudent} evaluations={evaluations}

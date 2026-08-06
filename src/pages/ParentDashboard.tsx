@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout, useAcademyName } from '../context/AppContext';
 import { format } from 'date-fns';
@@ -18,22 +19,15 @@ export const ParentDashboard = () => {
     const logout = useLogout();
     const navigate = useNavigate();
 
-    const [children, setChildren] = useState<Student[]>([]);
-    const [sessions, setSessions] = useState<Student[]>([]);
-    const [allPointLogs, setAllPointLogs] = useState<PointLogEntry[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [partialError, setPartialError] = useState<string | null>(null);
 
     const todayArabic = format(new Date(), 'eeee', { locale: ar });
 
-    const fetchAll = async (silent = false) => {
-        try {
-            if (!silent) setIsLoading(true);
-            setError(null);
+    const { data: parentData, isLoading, error, refetch } = useQuery({
+        queryKey: ['parent-dashboard', currentUser?.id],
+        queryFn: async () => {
             setPartialError(null);
             const students = await api.get<Student[]>('/parents/my-children');
-            setChildren(students);
 
             let failedChildren = 0;
             const sessionsPromises = students.map(async s => {
@@ -50,67 +44,51 @@ export const ParentDashboard = () => {
                 Promise.all(logsPromises)
             ]);
 
-            if (failedChildren > 0) setPartialError(`تعذر تحميل بيانات ${failedChildren} من الأبناء. 일부 البيانات قد تكون غير محدثة.`);
-            setSessions(allSessionsResults.flat());
+            if (failedChildren > 0) setPartialError(`تعذر تحميل بيانات ${failedChildren} من الأبناء. بعض البيانات قد تكون غير محدثة.`);
 
             const flattenedLogs = allLogsResults.map((logs, idx) =>
                 (Array.isArray(logs) ? logs : []).map((l: { id: string; date: string; status: string; timestamp?: string; points?: number }) => ({ ...l, studentName: students[idx].name }))
             ).flat();
 
-            setAllPointLogs(flattenedLogs.sort((a, b) => {
-                const timeA = a.timestamp ? new Date(a.timestamp).getTime() : 0;
-                const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
-                return timeB - timeA;
-            }));
-        } catch {
-            if (!silent) setError('فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.');
-        } finally {
-            if (!silent) setIsLoading(false);
-        }
-    };
+            return {
+                children: students,
+                sessions: allSessionsResults.flat(),
+                allPointLogs: flattenedLogs.sort((a, b) => {
+                    const timeA = a.timestamp ? new Date(a.timestamp).getTime() : 0;
+                    const timeB = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+                    return timeB - timeA;
+                }),
+            };
+        },
+        enabled: currentUser?.role === 'parent',
+    });
 
-    useEffect(() => {
-        fetchAll();
-    }, []);
+    const children = parentData?.children ?? [];
+    const sessions = parentData?.sessions ?? [];
+    const allPointLogs = parentData?.allPointLogs ?? [];
 
-    const [activeTimers, setActiveTimers] = useState<Student[]>([]);
+    const { data: activeTimers = [] } = useQuery({
+        queryKey: ['active-sessions'],
+        queryFn: () => api.get<Student[]>('/active-sessions/my'),
+        refetchInterval: 5000,
+    });
+
     const timerTickRef = useRef<ReturnType<typeof setInterval> | null>(null);
-    const pollIdRef = useRef(0);
     const [, setTimerTick] = useState(0);
 
     useEffect(() => {
-        const poll = async () => {
-            const id = ++pollIdRef.current;
-            try {
-                const data = await api.get<Student[]>('/active-sessions/my');
-                if (id !== pollIdRef.current) return;
-                setActiveTimers(data);
-
-                if (data.length > 0 && !timerTickRef.current) {
-                    timerTickRef.current = setInterval(() => setTimerTick(t => t + 1), 1000);
-                } else if (data.length === 0 && timerTickRef.current) {
-                    clearInterval(timerTickRef.current);
-                    timerTickRef.current = null;
-                }
-            } catch { /* polling error — will retry next cycle */ }
-        };
-        poll();
-        const interval = setInterval(poll, 5000);
+        if (activeTimers.length > 0 && !timerTickRef.current) {
+            timerTickRef.current = setInterval(() => setTimerTick(t => t + 1), 1000);
+        } else if (activeTimers.length === 0 && timerTickRef.current) {
+            clearInterval(timerTickRef.current);
+            timerTickRef.current = null;
+        }
         return () => {
-            clearInterval(interval);
-            if (timerTickRef.current) clearInterval(timerTickRef.current);
+            if (timerTickRef.current) {
+                clearInterval(timerTickRef.current);
+                timerTickRef.current = null;
+            }
         };
-    }, []);
-
-    useEffect(() => {
-        if (activeTimers.length === 0 || !children.length) return;
-        const fetchChildren = async () => {
-            try {
-                const students = await api.get<Student[]>('/parents/my-children');
-                setChildren(students);
-            } catch { void 0; }
-        };
-        fetchChildren();
     }, [activeTimers.length]);
 
     const formatTime = (startedAt: string | null | undefined) => {
@@ -173,8 +151,8 @@ export const ParentDashboard = () => {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center" dir="rtl">
                 <div className="text-center space-y-3 p-6">
-                    <p className="text-muted text-sm">{error}</p>
-                    <button onClick={() => fetchAll()} className="text-sm text-primary hover:underline">إعادة المحاولة</button>
+                    <p className="text-muted text-sm">فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.</p>
+                    <button onClick={() => refetch()} className="text-sm text-primary hover:underline">إعادة المحاولة</button>
                 </div>
             </div>
         );
@@ -189,7 +167,7 @@ export const ParentDashboard = () => {
         activeTimers,
         todayTasks,
         formatTime,
-        onRefresh: () => fetchAll(true),
+        onRefresh: () => refetch(),
     };
 
     return (

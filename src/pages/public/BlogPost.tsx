@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'react-router-dom';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -35,34 +36,36 @@ export const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
     const adminPhone = useSettingsStore(s => s.adminPhone);
     const whatsappNumber = adminPhone.replace(/\D/g, '');
-    const [post, setPost] = useState<BlogPostType | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [relatedPosts, setRelatedPosts] = useState<{ slug: string; title: string; excerpt: string; coverImage: string; date: string }[]>([]);
     const [buttonState, setButtonState] = useState<{ type: 'download' | 'watch'; phase: 'counting' | 'ready'; seconds?: number } | null>(null);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-    useEffect(() => {
-        const fetchPost = async () => {
+    const { data: post, isLoading: loading } = useQuery<BlogPostType | null>({
+        queryKey: ['blog-post', slug],
+        queryFn: async () => {
             try {
-                const data = await api.get<BlogPostType>(`/blog/${slug}`);
-                setPost(data);
-                try {
-                    const related = await api.get<{ slug: string; title: string; excerpt: string; coverImage: string; date: string }[]>(`/blog/${slug}/related`);
-                    setRelatedPosts(related);
-                } catch (e) { console.warn(e); }
+                return await api.get<BlogPostType>(`/blog/${slug}`);
             } catch (err) {
                 console.error('Failed to fetch blog post:', err);
-                const staticPost = staticPosts.find(p => p.slug === slug);
-                setPost(staticPost || null);
-            } finally {
-                setLoading(false);
+                return staticPosts.find(p => p.slug === slug) || null;
             }
-        };
-        fetchPost();
-        return () => {
-            if (timerRef.current) clearInterval(timerRef.current);
-        };
-    }, [slug]);
+        },
+        enabled: !!slug,
+    });
+
+    const { data: relatedPosts = [] } = useQuery<
+        { slug: string; title: string; excerpt: string; coverImage: string; date: string }[]
+    >({
+        queryKey: ['blog-post-related', slug],
+        queryFn: async () => {
+            try {
+                return await api.get<{ slug: string; title: string; excerpt: string; coverImage: string; date: string }[]>(`/blog/${slug}/related`);
+            } catch (e) {
+                console.warn(e);
+                return [];
+            }
+        },
+        enabled: !!slug,
+    });
 
     const handleButtonClick = (type: 'download' | 'watch', url: string, e: React.MouseEvent) => {
         e.preventDefault();

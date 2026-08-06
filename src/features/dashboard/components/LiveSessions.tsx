@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Radio, Users, Loader2, Plus, AlertCircle, RefreshCcw, ExternalLink, Copy, StopCircle, LinkIcon, Video, CheckCircle2, Pencil } from 'lucide-react';
 import { api } from '../../../lib/api';
 import { socketService } from '../../../lib/socket';
@@ -23,9 +24,7 @@ const PROVIDER_LABELS: Record<string, string> = {
 };
 
 export const LiveSessions = () => {
-    const [sessions, setSessions] = useState<LiveSession[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [starting, setStarting] = useState(false);
+    const queryClient = useQueryClient();
     const [error, setError] = useState<string | null>(null);
     const [copiedId, setCopiedId] = useState<string | null>(null);
     const currentUser = useCurrentUser();
@@ -40,73 +39,78 @@ export const LiveSessions = () => {
     const [editingSession, setEditingSession] = useState<LiveSession | null>(null);
     const [editProvider, setEditProvider] = useState('google_meet');
     const [editUrl, setEditUrl] = useState('');
-    const [editSaving, setEditSaving] = useState(false);
     const [editError, setEditError] = useState<string | null>(null);
 
-    const fetchSessions = useCallback(async () => {
-        try {
-            const data = await api.get<LiveSession[]>('/live/active');
-            if (Array.isArray(data)) setSessions(data);
-            setError(null);
-        } catch {
-            setError('تعذر تحميل بيانات البث المباشر');
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+    const { data: sessions = [], isLoading: loading, error: queryError, refetch } = useQuery({
+        queryKey: ['live-sessions'],
+        queryFn: () => api.get<LiveSession[]>('/live/active'),
+        select: (data) => Array.isArray(data) ? data : [],
+    });
 
     useEffect(() => {
-        fetchSessions();
         const socket = socketService.getSocket();
-        if (socket) {
-            socket.on(SOCKET_EVENTS.SESSION_INVITE, fetchSessions);
-            socket.on(SOCKET_EVENTS.SESSION_ENDED, fetchSessions);
-            socket.on(SOCKET_EVENTS.SESSION_LINK_UPDATED, fetchSessions);
-        }
+        if (!socket) return;
+        const invalidate = () => queryClient.invalidateQueries({ queryKey: ['live-sessions'] });
+        socket.on(SOCKET_EVENTS.SESSION_INVITE, invalidate);
+        socket.on(SOCKET_EVENTS.SESSION_ENDED, invalidate);
+        socket.on(SOCKET_EVENTS.SESSION_LINK_UPDATED, invalidate);
         return () => {
-            if (socket) {
-                socket.off(SOCKET_EVENTS.SESSION_INVITE, fetchSessions);
-                socket.off(SOCKET_EVENTS.SESSION_ENDED, fetchSessions);
-                socket.off(SOCKET_EVENTS.SESSION_LINK_UPDATED, fetchSessions);
-            }
+            socket.off(SOCKET_EVENTS.SESSION_INVITE, invalidate);
+            socket.off(SOCKET_EVENTS.SESSION_ENDED, invalidate);
+            socket.off(SOCKET_EVENTS.SESSION_LINK_UPDATED, invalidate);
         };
-    }, [fetchSessions]);
+    }, [queryClient]);
 
-    const startNewSession = async () => {
-        if (!meetingUrl.trim()) {
-            setDialogError('يرجى إدخال رابط الاجتماع');
-            return;
-        }
-        setStarting(true);
-        setDialogError(null);
-        try {
-            const res = await startLiveSession({
-                title: `حصة مباشرة: ${subject || currentUser?.name}`,
-                subject,
-                meetingProvider: meetingProvider as 'google_meet' | 'zoom' | 'custom',
-                meetingUrl: meetingUrl.trim(),
-            });
-            if (!res?.id) throw new Error('No session ID returned');
+    const startMutation = useMutation({
+        mutationFn: startLiveSession,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['live-sessions'] });
             setShowDialog(false);
             setMeetingUrl('');
             setSubject('');
             setMeetingProvider('google_meet');
-            await fetchSessions();
-        } catch (err: unknown) {
+        },
+        onError: (err: unknown) => {
             setDialogError(err instanceof Error ? err.message : 'فشل بدء الحصة');
-        } finally {
-            setStarting(false);
+        },
+    });
+
+    const endMutation = useMutation({
+        mutationFn: (id: string) => api.post(`/live/end/${id}`, {}),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['live-sessions'] }),
+        onError: () => setError('فشل إنهاء الحصة'),
+    });
+
+    const editMutation = useMutation({
+        mutationFn: updateLiveSession,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['live-sessions'] });
+            setShowEditDialog(false);
+            setEditingSession(null);
+            setEditUrl('');
+        },
+        onError: (err: unknown) => {
+            setEditError(err instanceof Error ? err.message : 'فشل تحديث الرابط');
+        },
+    });
+
+    const startNewSession = () => {
+        if (!meetingUrl.trim()) {
+            setDialogError('يرجى إدخال رابط الاجتماع');
+            return;
         }
+        setDialogError(null);
+        startMutation.mutate({
+            title: `حصة مباشرة: ${subject || currentUser?.name}`,
+            subject,
+            meetingProvider: meetingProvider as 'google_meet' | 'zoom' | 'custom',
+            meetingUrl: meetingUrl.trim(),
+        });
     };
 
     const endSession = async (sessionId: string) => {
         if (!(await confirm({ title: 'إنهاء الحصة المباشرة', description: 'هل أنت متأكد من إنهاء هذه الحصة المباشرة؟', confirmText: 'إنهاء', cancelText: 'إلغاء' }))) return;
-        try {
-            await api.post(`/live/end/${sessionId}`, {});
-            await fetchSessions();
-        } catch {
-            setError('فشل إنهاء الحصة');
-        }
+        endMutation.mutate(sessionId);
     };
 
     const copyLink = async (url: string, sessionId: string) => {
@@ -127,31 +131,21 @@ export const LiveSessions = () => {
         setShowEditDialog(true);
     };
 
-    const saveEditedLink = async () => {
+    const saveEditedLink = () => {
         if (!editingSession || !editUrl.trim()) {
             setEditError('يرجى إدخال رابط الاجتماع');
             return;
         }
-        setEditSaving(true);
         setEditError(null);
-        try {
-            await updateLiveSession({
-                sessionId: editingSession.id,
-                meetingProvider: editProvider as 'google_meet' | 'zoom' | 'custom',
-                meetingUrl: editUrl.trim(),
-            });
-            setShowEditDialog(false);
-            setEditingSession(null);
-            setEditUrl('');
-            await fetchSessions();
-        } catch (err: unknown) {
-            setEditError(err instanceof Error ? err.message : 'فشل تحديث الرابط');
-        } finally {
-            setEditSaving(false);
-        }
+        editMutation.mutate({
+            sessionId: editingSession.id,
+            meetingProvider: editProvider as 'google_meet' | 'zoom' | 'custom',
+            meetingUrl: editUrl.trim(),
+        });
     };
 
     const isTeacher = currentUser?.role === 'teacher' || currentUser?.role === 'admin';
+    const displayError = error || (queryError instanceof Error ? queryError.message : null);
 
     return (
         <div className="rounded-2xl bg-card border border-border p-5 font-dash" dir="rtl">
@@ -179,13 +173,13 @@ export const LiveSessions = () => {
             </div>
 
             {/* Error */}
-            {error && (
+            {displayError && (
                 <div className="flex items-center justify-between p-3 bg-error/10 border border-error/20 rounded-xl mb-3">
                     <div className="flex items-center gap-2">
                         <AlertCircle size={14} className="text-error shrink-0" />
-                        <span className="text-xs font-medium text-error">{error}</span>
+                        <span className="text-xs font-medium text-error">{displayError}</span>
                     </div>
-                    <button onClick={fetchSessions} className="flex items-center gap-1 px-2 py-1 text-[10px] font-bold text-error hover:bg-error/20 rounded-lg transition-colors">
+                    <button onClick={() => refetch()} className="flex items-center gap-1 px-2 py-1 text-[10px] font-bold text-error hover:bg-error/20 rounded-lg transition-colors">
                         <RefreshCcw size={11} /> إعادة
                     </button>
                 </div>
@@ -376,10 +370,10 @@ export const LiveSessions = () => {
                             </Button>
                             <Button
                                 onClick={startNewSession}
-                                disabled={starting}
+                                disabled={startMutation.isPending}
                                 className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary text-on-primary gap-2"
                             >
-                                {starting ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'بدء الحصة'}
+                                {startMutation.isPending ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'بدء الحصة'}
                             </Button>
                         </div>
                     </div>
@@ -464,10 +458,10 @@ export const LiveSessions = () => {
                             </Button>
                             <Button
                                 onClick={saveEditedLink}
-                                disabled={editSaving}
+                                disabled={editMutation.isPending}
                                 className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary text-on-primary gap-2"
                             >
-                                {editSaving ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'حفظ التعديل'}
+                                {editMutation.isPending ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'حفظ التعديل'}
                             </Button>
                         </div>
                     </div>

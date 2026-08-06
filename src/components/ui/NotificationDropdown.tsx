@@ -6,6 +6,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import { api } from '../../lib/api';
 import { cn } from '../../lib/utils';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface Notification {
     id: string;
@@ -23,64 +24,33 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
     const currentUser = useCurrentUser();
     const showNotification = useShowNotification();
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
     const [isOpen, setIsOpen] = useState(false);
-    const [notifications, setNotifications] = useState<Notification[]>([]);
     const lastNotifIdRef = useRef<string | null>(null);
 
-    // Fetch notifications from server
+    const { data: notifications = [] } = useQuery<Notification[]>({
+        queryKey: ['notifications', currentUser?.id],
+        queryFn: async () => {
+            const data = await api.get<Notification[]>(`/notifications?receiverId=${currentUser?.id}`);
+            return Array.isArray(data) ? data : [];
+        },
+        enabled: !!currentUser,
+        refetchInterval: 3000,
+        refetchIntervalInBackground: true,
+    });
+
+    // Detect NEW unread notifications to show toast
     useEffect(() => {
-        if (!currentUser) {
-            setNotifications([]);
-            return;
+        if (!notificationsEnabled || notifications.length === 0) return;
+
+        const latestNotif = notifications[0];
+        if (!latestNotif.read && latestNotif.id !== lastNotifIdRef.current) {
+            if (lastNotifIdRef.current !== null) {
+                showNotification(`إشعار جديد: ${latestNotif.title}`, 'info');
+            }
+            lastNotifIdRef.current = latestNotif.id;
         }
-
-        const fetchNotifications = async () => {
-            try {
-                const data = await api.get<Notification[]>(`/notifications?receiverId=${currentUser.id}`);
-
-                if (Array.isArray(data)) {
-                    // Detect NEW unread notifications to show toast
-                    if (data.length > 0) {
-                        const latestNotif = data[0];
-                        if (!latestNotif.read && latestNotif.id !== lastNotifIdRef.current) {
-                            // Only show toast if it's actually new and unread
-                            if (lastNotifIdRef.current !== null) {
-                                showNotification(`إشعار جديد: ${latestNotif.title}`, 'info');
-                            }
-                            lastNotifIdRef.current = latestNotif.id;
-                        }
-                    }
-                    setNotifications(data);
-                } else {
-                    setNotifications([]);
-                }
-            } catch (err) {
-                console.error('Failed to fetch notifications:', err);
-            }
-        };
-
-        const startPolling = () => window.setInterval(fetchNotifications, 3000);
-        const stopPolling = (id: number) => clearInterval(id);
-
-        fetchNotifications();
-        let intervalId = startPolling();
-
-        const onVisibilityChange = () => {
-            if (document.hidden) {
-                stopPolling(intervalId);
-            } else {
-                fetchNotifications();
-                intervalId = startPolling();
-            }
-        };
-
-        document.addEventListener('visibilitychange', onVisibilityChange);
-
-        return () => {
-            stopPolling(intervalId);
-            document.removeEventListener('visibilitychange', onVisibilityChange);
-        };
-    }, [currentUser, showNotification]);
+    }, [notifications, notificationsEnabled, showNotification]);
 
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -102,40 +72,38 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
 
     const unreadCount = Array.isArray(notifications) ? notifications.filter(n => !n.read).length : 0;
 
-    const markAsRead = async (id: string) => {
-        try {
-            await api.put(`/notifications/${id}`, { read: true });
-            setNotifications(prev =>
-                prev.map(n => n.id === id ? { ...n, read: true } : n)
-            );
-        } catch (err) {
-            console.error('Failed to mark notification as read:', err);
-        }
+    const markAsReadMutation = useMutation({
+        mutationFn: (id: string) => api.put(`/notifications/${id}`, { read: true }),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
+    });
+
+    const deleteMutation = useMutation({
+        mutationFn: (id: string) => api.delete(`/notifications/${id}`),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
+    });
+
+    const clearAllMutation = useMutation({
+        mutationFn: () => api.delete(`/notifications?receiverId=${currentUser?.id}`),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
+    });
+
+    const markAsRead = (id: string) => {
+        markAsReadMutation.mutate(id);
     };
 
-    const markAllAsRead = async () => {
+    const markAllAsRead = () => {
         if (!Array.isArray(notifications)) return;
         for (const n of notifications.filter(n => !n.read)) {
-            markAsRead(n.id);
+            markAsReadMutation.mutate(n.id);
         }
     };
 
-    const deleteNotification = async (id: string) => {
-        try {
-            await api.delete(`/notifications/${id}`);
-            setNotifications(prev => prev.filter(n => n.id !== id));
-        } catch (err) {
-            console.error('Failed to delete notification:', err);
-        }
+    const deleteNotification = (id: string) => {
+        deleteMutation.mutate(id);
     };
 
-    const clearAll = async () => {
-        try {
-            await api.delete(`/notifications?receiverId=${currentUser?.id}`);
-            setNotifications([]);
-        } catch (err) {
-            console.error('Failed to clear notifications:', err);
-        }
+    const clearAll = () => {
+        clearAllMutation.mutate();
     };
 
     const getIcon = (type: string) => {

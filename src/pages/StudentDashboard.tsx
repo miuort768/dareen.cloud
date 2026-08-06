@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext';
 import { Skeleton } from '../shared/components/ui';
@@ -11,35 +12,24 @@ export const StudentDashboard = () => {
     useEffect(() => { document.title = `لوحة تحكم الطالب | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const logout = useLogout();
+    const queryClient = useQueryClient();
 
-    const [studentData, setStudentData] = useState<StudentDashboardData | null>(null);
-    const [sessions, setSessions] = useState<Session[]>([]);
-    const [pointLogs, setPointLogs] = useState<PointLog[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    const fetchAll = async (silent = false) => {
-        try {
-            if (!silent) setIsLoading(true);
-            setError(null);
-            const [meRes, sessionsRes, logsRes] = await Promise.all([
+    const { data, isLoading, error } = useQuery<{ studentData: StudentDashboardData; sessions: Session[]; pointLogs: PointLog[] }>({
+        queryKey: ['student-dashboard', currentUser?.id],
+        queryFn: async () => {
+            const [me, sessions, pointLogs] = await Promise.all([
                 api.get<StudentDashboardData>('/student-portal/me'),
                 api.get<Session[]>('/student-portal/me/sessions'),
                 api.get<PointLog[]>('/student-portal/me/points-log'),
             ]);
-            setStudentData(meRes);
-            setSessions(sessionsRes);
-            setPointLogs(logsRes);
-        } catch {
-            if (!silent) setError('فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
+            return { studentData: me, sessions, pointLogs };
+        },
+        enabled: currentUser?.role === 'student',
+    });
 
-    useEffect(() => {
-        if (currentUser?.role === 'student') fetchAll();
-    }, [currentUser]);
+    const studentData = data?.studentData ?? null;
+    const sessions = data?.sessions ?? [];
+    const pointLogs = data?.pointLogs ?? [];
 
     if (isLoading) {
         return (
@@ -69,8 +59,8 @@ export const StudentDashboard = () => {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center" dir="rtl">
                 <div className="text-center space-y-3 p-6">
-                    <p className="text-muted text-sm">{error}</p>
-                    <button onClick={() => fetchAll()} className="text-sm text-primary hover:underline">إعادة المحاولة</button>
+                    <p className="text-muted text-sm">{error.message || 'فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.'}</p>
+                    <button onClick={() => queryClient.invalidateQueries({ queryKey: ['student-dashboard', currentUser?.id] })} className="text-sm text-primary hover:underline">إعادة المحاولة</button>
                 </div>
             </div>
         );
@@ -79,7 +69,7 @@ export const StudentDashboard = () => {
     return (
         <>
             <div className="hidden md:block">
-                <StudentDashboardDesktop studentData={studentData} sessions={sessions} pointLogs={pointLogs} onRefresh={() => fetchAll(true)} />
+                <StudentDashboardDesktop studentData={studentData} sessions={sessions} pointLogs={pointLogs} onRefresh={() => queryClient.invalidateQueries({ queryKey: ['student-dashboard', currentUser?.id] })} />
             </div>
             <div className="block md:hidden">
                 <StudentDashboardMobile
@@ -88,7 +78,7 @@ export const StudentDashboard = () => {
                     sessions={sessions}
                     pointLogs={pointLogs}
                     logout={logout}
-                    onRefresh={() => fetchAll(true)}
+                    onRefresh={() => queryClient.invalidateQueries({ queryKey: ['student-dashboard', currentUser?.id] })}
                 />
             </div>
         </>
