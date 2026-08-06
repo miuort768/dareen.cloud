@@ -61,3 +61,4 @@ export const SubjectAnalysis = React.memo(({ subjectAnalysis, reportCurrency = '
     );
 });
 SubjectAnalysis.displayName = 'SubjectAnalysis';
+export default SubjectAnalysis;

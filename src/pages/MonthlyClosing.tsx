@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     RefreshCw, TrendingUp, BarChart3, AlertCircle, Users, Receipt, Wallet,
@@ -12,16 +12,18 @@ import { cn } from '../lib/utils';
 import { api } from '../lib/api';
 import { CURRENCY_SYMBOL } from '@/config/constants';
 import { PageLoader } from '../components/ui/PageLoader';
+import { Skeleton } from '../shared/components/ui';
 
 import { KpiCard } from './monthly-closing/components/ClosingUI';
 import { SalarySlipModal } from './monthly-closing/components/SalarySlipModal';
 import { PayrollTable } from './monthly-closing/components/PayrollTable';
 import { CollectionsTable } from './monthly-closing/components/CollectionsTable';
 import { RenewalsCards } from './monthly-closing/components/RenewalsCards';
-import { SubjectAnalysis } from './monthly-closing/components/SubjectAnalysis';
 import { TeacherPerformance } from './monthly-closing/components/TeacherPerformance';
 import { CompensationTable } from './monthly-closing/components/CompensationTable';
 import { StrategicSummary } from './monthly-closing/components/StrategicSummary';
+
+const SubjectAnalysis = lazy(() => import('./monthly-closing/components/SubjectAnalysis'));
 
 type TabType = 'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation';
 
@@ -209,7 +211,11 @@ export const MonthlyClosing = () => {
                     {activeTab === 'payroll' && <PayrollTable payrollData={payrollData} teacherAdjustments={teacherAdjustments} handleTeacherAdjustment={handleTeacherAdjustment} setSelectedTeacherForSlip={setSelectedTeacherForSlip} startDate={startDate} endDate={endDate} />}
                     {activeTab === 'collections' && <CollectionsTable studentInvoices={studentInvoices} startDate={startDate} endDate={endDate} />}
                     {activeTab === 'renewals' && <RenewalsCards renewalsData={renewalsData} />}
-                    {activeTab === 'analysis' && <SubjectAnalysis subjectAnalysis={subjectAnalysis} reportCurrency={CURRENCY_SYMBOL} />}
+                    {activeTab === 'analysis' && (
+                        <Suspense fallback={<Skeleton className="h-64 rounded-2xl" />}>
+                            <SubjectAnalysis subjectAnalysis={subjectAnalysis} reportCurrency={CURRENCY_SYMBOL} />
+                        </Suspense>
+                    )}
                     {activeTab === 'teachers' && <TeacherPerformance teacherPerformance={teacherPerformance} />}
                     {activeTab === 'compensation' && <CompensationTable filteredSessions={filteredSessions} />}
                     {activeTab === 'summary' && <StrategicSummary netProjectedProfit={netProjectedProfit} totalProjectedIncome={totalProjectedIncome} totalActualCollections={totalActualCollections} totalTeacherPayout={totalTeacherPayout} reportCurrency={CURRENCY_SYMBOL} />}

@@ -1,16 +1,17 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, lazy, Suspense } from 'react';
 import { Award, CheckCircle2, DollarSign, Target, LayoutDashboard, Users, TrendingUp, Calendar, BarChart3, Plus, FileText, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Skeleton } from '../shared/components/ui';
 import { useReports } from '../features/reports/hooks/useReports';
 import { ReportsHeader } from '../features/reports/components/ReportsHeader';
-import { AcademicReport } from '../features/reports/components/AcademicReport';
-import { AttendanceReport } from '../features/reports/components/AttendanceReport';
 import { FinancialReport } from '../features/reports/components/FinancialReport';
 import type { ReportType } from '../features/reports/types';
 import { CURRENCY_SYMBOL } from '@/config/constants';
 import { useAcademyName } from '../context/AppContext';
 import { cn } from '../lib/utils';
+
+const AcademicReport = lazy(() => import('../features/reports/components/AcademicReport'));
+const AttendanceReport = lazy(() => import('../features/reports/components/AttendanceReport'));
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
     id: i, x: Math.random() * 100, y: Math.random() * 100,
@@ -244,14 +245,18 @@ export const Reports = () => {
                     )}
 
                     {state.activeReport === 'academic' && (
-                        <AcademicReport gradeBarData={state.gradeBarData} subjectPieData={state.subjectPieData}
-                            totalEnrollments={state.totalEnrollments} totalStudents={state.totalStudents}
-                            uniqueSubjects={uniqueSubjects} filteredStudentProgress={filtered.studentProgress}
-                            studentProgressTotal={state.studentProgressData.length} searchTerm={state.searchTerm} setSearchTerm={actions.setSearchTerm} />
+                        <Suspense fallback={<Skeleton className="h-64 rounded-2xl" />}>
+                            <AcademicReport gradeBarData={state.gradeBarData} subjectPieData={state.subjectPieData}
+                                totalEnrollments={state.totalEnrollments} totalStudents={state.totalStudents}
+                                uniqueSubjects={uniqueSubjects} filteredStudentProgress={filtered.studentProgress}
+                                studentProgressTotal={state.studentProgressData.length} searchTerm={state.searchTerm} setSearchTerm={actions.setSearchTerm} />
+                        </Suspense>
                     )}
 
                     {state.activeReport === 'attendance' && (
-                        <AttendanceReport monthlySessionsData={state.monthlySessionsData} teacherPerformanceData={state.teacherPerformanceData} />
+                        <Suspense fallback={<Skeleton className="h-64 rounded-2xl" />}>
+                            <AttendanceReport monthlySessionsData={state.monthlySessionsData} teacherPerformanceData={state.teacherPerformanceData} />
+                        </Suspense>
                     )}
 
                     {state.activeReport === 'financial' && (
@@ -261,10 +266,12 @@ export const Reports = () => {
                     )}
 
                     {state.activeReport === 'enrollment' && (
-                        <AcademicReport gradeBarData={state.gradeBarData} subjectPieData={state.subjectPieData}
-                            totalEnrollments={state.totalEnrollments} totalStudents={state.totalStudents}
-                            uniqueSubjects={uniqueSubjects} filteredStudentProgress={filtered.studentProgress}
-                            studentProgressTotal={state.studentProgressData.length} searchTerm={state.searchTerm} setSearchTerm={actions.setSearchTerm} />
+                        <Suspense fallback={<Skeleton className="h-64 rounded-2xl" />}>
+                            <AcademicReport gradeBarData={state.gradeBarData} subjectPieData={state.subjectPieData}
+                                totalEnrollments={state.totalEnrollments} totalStudents={state.totalStudents}
+                                uniqueSubjects={uniqueSubjects} filteredStudentProgress={filtered.studentProgress}
+                                studentProgressTotal={state.studentProgressData.length} searchTerm={state.searchTerm} setSearchTerm={actions.setSearchTerm} />
+                        </Suspense>
                     )}
                 </div>
             </div>

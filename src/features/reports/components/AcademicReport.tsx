@@ -151,3 +151,4 @@ export const AcademicReport = React.memo(({
     );
 });
 AcademicReport.displayName = 'AcademicReport';
+export default AcademicReport;

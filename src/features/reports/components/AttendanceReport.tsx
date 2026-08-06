@@ -237,3 +237,4 @@ export const AttendanceReport = React.memo(({
     );
 });
 AttendanceReport.displayName = 'AttendanceReport';
+export default AttendanceReport;
