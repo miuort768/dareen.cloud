@@ -5,7 +5,7 @@ import { api } from '../lib/api';
 import { PageLoader } from '../components/ui/PageLoader';
 import { ErrorBanner } from '../shared/components/ui/ErrorState';
 import { MobileAppointments } from '../features/appointments/components/MobileAppointments';
-import { AppointmentsHeader, AppointmentsFilters, DAYS_OF_WEEK, AppointmentScheduleGrid, AppointmentDetailPanel } from './appointments-page';
+import { AppointmentsFilters, DAYS_OF_WEEK, AppointmentScheduleGrid, AppointmentDetailPanel } from './appointments-page';
 import { Plus, Calendar, CheckCircle, Clock, Users, BarChart3, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
