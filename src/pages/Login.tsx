@@ -96,7 +96,7 @@ export const Login = () => {
                             <div className="w-48 h-48 mx-auto mb-4">
                                 <Image src="/bbook.webp" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-lg" />
                             </div>
-                            <h1 className="text-xl font-black text-main font-heading">{academyName}</h1>
+                            <h1 className="text-xl font-black text-warning-dark font-heading">أهلاً بعودتك شريك النجاح</h1>
                         </div>
 
                         <div className="mb-8">
