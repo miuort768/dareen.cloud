@@ -50,6 +50,7 @@ dev.db
 # Generated WebP/AVIF images (built by scripts/convert-webp.mjs)
 public/**/*.webp
 public/**/*.avif
+!public/bbook.webp
 
 # Runtime uploads (created by upload.js / ImageWorker)
 public/uploads/
