@@ -96,7 +96,7 @@ export const Login = () => {
 
             {/* Form — Centered on both */}
             <div className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-60px)] lg:min-h-screen px-4 py-8 lg:pt-24">
-                <div className="w-full max-w-sm lg:max-w-md mt-20 lg:mt-0">
+                <div className="w-full max-w-sm lg:max-w-md mt-32 lg:mt-0">
                     <div className="mb-8 lg:mb-10 text-center">
                         <h1 className="hidden lg:block text-2xl lg:text-3xl font-black text-black mb-2 font-heading">تسجيل الدخول</h1>
                         <p className="text-white/80 lg:text-black text-sm lg:text-base font-medium">أدخل بياناتك للوصول إلى حسابك</p>
