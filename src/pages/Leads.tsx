@@ -262,11 +262,11 @@ export const Leads = () => {
                         </div>
 
                         {/* Filter pills */}
-                        <div className="flex items-center gap-2 overflow-x-auto pb-0.5 scrollbar-none mt-3">
+                        <div className="grid grid-cols-3 sm:flex sm:items-center sm:gap-2 sm:overflow-x-auto sm:pb-0.5 sm:scrollbar-none mt-3 gap-2">
                             <button
                                 onClick={() => setFilterStatus('all')}
                                 className={cn(
-                                    'shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition-all',
+                                    'inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition-all',
                                     filterStatus === 'all'
                                         ? 'bg-primary text-on-primary border-primary shadow-sm shadow-primary/20'
                                         : 'bg-surface text-muted border-border hover:border-primary/30 hover:text-main'
@@ -287,7 +287,7 @@ export const Leads = () => {
                                         key={key}
                                         onClick={() => setFilterStatus(key)}
                                         className={cn(
-                                            'shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition-all',
+                                            'inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition-all',
                                             isActive
                                                 ? `${cfg.bg} ${cfg.color} border-current/20 shadow-sm`
                                                 : 'bg-surface text-muted border-border hover:border-primary/30 hover:text-main'
