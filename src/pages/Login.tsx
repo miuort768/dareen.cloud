@@ -78,11 +78,8 @@ export const Login = () => {
                 <div className="absolute inset-0 bg-gradient-to-l from-white via-white/95 to-white/60 dark:from-background dark:via-background/95 dark:to-background/60" />
             </div>
 
-            {/* Mobile: Solid Background */}
-            <div className="lg:hidden min-h-screen bg-white dark:bg-background" />
-
             {/* Form — Centered on both */}
-            <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-8">
+            <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-60px)] lg:min-h-screen px-4 py-8">
                 <div className="w-full max-w-sm lg:max-w-md">
                     <div className="mb-8 lg:mb-10 text-center">
                         <h1 className="text-2xl lg:text-3xl font-black text-main mb-2 font-heading">تسجيل الدخول</h1>
