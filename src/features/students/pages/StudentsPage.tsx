@@ -5,7 +5,7 @@ import { useShowNotification } from '../../../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
 import { AlertCircle, TrendingUp, Plus, Users, BookOpen, GraduationCap, Bell, Star, Filter } from 'lucide-react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { Skeleton } from '../../../shared/components/ui';
 import { SendNotificationModal } from '../../../shared/components/SendNotificationModal';
@@ -22,12 +22,24 @@ import type { Student, ScheduleSlot } from '../types';
 import { cn } from '../../../lib/utils';
 
 function AnimatedCounter({ value }: { value: number }) {
-    const motionValue = useMotionValue(0);
-    const spring = useSpring(motionValue, { stiffness: 80, damping: 20 });
-    const rounded = useTransform(spring, (v) => Math.round(v));
-    const displayValue = useTransform(rounded, (v) => v.toLocaleString('ar-EG'));
-    useEffect(() => { motionValue.set(value); }, [value, motionValue]);
-    return <motion.span className="text-2xl font-bold tabular-nums">{displayValue}</motion.span>;
+    const [display, setDisplay] = useState('0');
+    useEffect(() => {
+        let start = 0;
+        const end = value;
+        if (start === end) { setDisplay(end.toLocaleString('ar-EG')); return; }
+        const duration = 800;
+        const startTime = performance.now();
+        const animate = (now: number) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            start = Math.round(eased * end);
+            setDisplay(start.toLocaleString('ar-EG'));
+            if (progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+    }, [value]);
+    return <span className="text-2xl font-bold tabular-nums">{display}</span>;
 }
 
 const particles = Array.from({ length: 10 }, (_, i) => ({
