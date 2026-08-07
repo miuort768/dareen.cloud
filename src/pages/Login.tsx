@@ -65,10 +65,10 @@ export const Login = () => {
 
             <MobileHeader />
 
-            <div className="w-full max-w-sm px-4 pt-16 md:pt-0">
-                <div className="mb-8 text-center">
-                    <h1 className="text-2xl font-black text-main mb-2 font-heading">تسجيل الدخول</h1>
-                    <p className="text-muted text-sm font-medium">أدخل بياناتك للوصول إلى حسابك</p>
+            <div className="w-full max-w-sm lg:max-w-md px-4 pt-16 md:pt-0">
+                <div className="mb-8 lg:mb-10 text-center">
+                    <h1 className="text-2xl lg:text-3xl font-black text-main mb-2 font-heading">تسجيل الدخول</h1>
+                    <p className="text-muted text-sm lg:text-base font-medium">أدخل بياناتك للوصول إلى حسابك</p>
                 </div>
 
                 {error && (
@@ -77,9 +77,9 @@ export const Login = () => {
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-5">
                     <div>
-                        <label htmlFor="login-username" className="text-xs font-bold text-muted mb-1.5 block">اسم المستخدم</label>
+                        <label htmlFor="login-username" className="text-xs lg:text-sm font-bold text-muted mb-1.5 block">اسم المستخدم</label>
                         <div className="relative">
                             <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                             <input
@@ -89,13 +89,13 @@ export const Login = () => {
                                 onChange={(e) => setUsername(e.target.value)}
                                 placeholder="أدخل اسم المستخدم"
                                 required
-                                className="w-full h-12 bg-surface border border-border rounded-xl ps-12 pe-4 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                                className="w-full h-12 lg:h-14 bg-surface border border-border rounded-xl ps-12 pe-4 text-sm lg:text-base text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
                             />
                         </div>
                     </div>
 
                     <div>
-                        <label htmlFor="login-password" className="text-xs font-bold text-muted mb-1.5 block">كلمة المرور</label>
+                        <label htmlFor="login-password" className="text-xs lg:text-sm font-bold text-muted mb-1.5 block">كلمة المرور</label>
                         <div className="relative">
                             <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                             <input
@@ -105,7 +105,7 @@ export const Login = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="أدخل كلمة المرور"
                                 required
-                                className="w-full h-12 bg-surface border border-border rounded-xl ps-12 pe-12 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                                className="w-full h-12 lg:h-14 bg-surface border border-border rounded-xl ps-12 pe-12 text-sm lg:text-base text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
                                 style={{ fontVariantNumeric: showPassword ? 'normal' : 'tabular-nums' }}
                             />
                             <button
@@ -123,7 +123,7 @@ export const Login = () => {
                         type="submit"
                         disabled={loading}
                         className={cn(
-                            "w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300",
+                            "w-full h-12 lg:h-14 rounded-xl font-bold text-sm lg:text-base flex items-center justify-center gap-2 transition-all duration-300",
                             "bg-primary text-on-primary hover:bg-primary-hover active:scale-[0.98]",
                             "disabled:opacity-50 disabled:cursor-not-allowed",
                             "shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
@@ -140,10 +140,10 @@ export const Login = () => {
                     </button>
                 </form>
 
-                <div className="mt-6 flex flex-col items-center gap-3">
+                <div className="mt-6 lg:mt-8 flex flex-col items-center gap-3">
                     <Link
                         to="/"
-                        className="text-sm text-warning-dark hover:text-warning transition-colors flex items-center gap-2 font-bold"
+                        className="text-sm lg:text-base text-warning-dark hover:text-warning transition-colors flex items-center gap-2 font-bold"
                     >
                         <ArrowRight size={16} />
                         <span>العودة للرئيسية</span>
@@ -154,7 +154,7 @@ export const Login = () => {
                             href={`https://wa.me/${adminPhone}?text=أحتاج مساعدة في تسجيل الدخول`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full h-12 bg-success text-on-success rounded-xl font-bold flex items-center justify-center gap-2 transition-all hover:bg-success/90 active:scale-[0.98]"
+                            className="w-full h-12 lg:h-14 bg-success text-on-success rounded-xl font-bold flex items-center justify-center gap-2 transition-all hover:bg-success/90 active:scale-[0.98] text-sm lg:text-base"
                         >
                             <Headphones size={18} />
                             <span>الدعم الفني</span>
