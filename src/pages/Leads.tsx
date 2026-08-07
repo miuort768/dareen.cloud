@@ -27,22 +27,34 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
     }, [onCancel]);
 
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
-            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="bg-card w-full max-w-sm shadow-elevation-2 rounded-2xl overflow-hidden border border-border">
-                <div className="bg-error px-5 py-4 flex items-center justify-between">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-black/50 backdrop-blur-sm p-0 sm:p-4" dir="rtl">
+            <motion.div
+                initial={{ y: '100%', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: '100%', opacity: 0 }}
+                transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                className="bg-card w-full sm:max-w-sm shadow-elevation-3 rounded-t-3xl sm:rounded-2xl overflow-hidden border border-border"
+            >
+                <div className="w-10 h-1 bg-border/50 rounded-full mx-auto mt-3 sm:hidden" />
+                <div className="bg-gradient-to-l from-error to-error-hover px-5 py-5 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 flex items-center justify-center rounded-xl bg-white/15"><AlertTriangle size={18} className="text-on-error" /></div>
-                        <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
+                        <div className="w-10 h-10 flex items-center justify-center rounded-2xl bg-white/15 backdrop-blur-sm">
+                            <AlertTriangle size={18} className="text-on-error" />
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
+                            <p className="text-[10px] text-on-error/70 mt-0.5">لا يمكن التراجع عن هذا الإجراء</p>
+                        </div>
                     </div>
-                    <button onClick={onCancel} className="w-7 h-7 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-error rounded-lg transition-all" aria-label="إغلاق"><X size={14} /></button>
+                    <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-error rounded-xl transition-all" aria-label="إغلاق"><X size={14} /></button>
                 </div>
                 <div className="p-5">
                     <p className="text-sm font-bold text-main mb-1">هل أنت متأكد من حذف هذا العميل؟</p>
                     <p className="text-xs text-muted leading-relaxed">سيتم نقل العميل <span className="text-error font-bold">المفقود</span> إلى قائمة العملاء المفقودين ولن يظهر مرة أخرى.</p>
                 </div>
                 <div className="flex gap-2 p-5 pt-0">
-                    <button ref={cancelRef} type="button" onClick={onCancel} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
-                    <button onClick={onConfirm} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98]">تأكيد الحذف</button>
+                    <button ref={cancelRef} type="button" onClick={onCancel} className="flex-1 py-3.5 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                    <button onClick={onConfirm} className="flex-1 py-3.5 text-xs font-bold text-on-error bg-gradient-to-l from-error to-error-hover hover:from-error-hover hover:to-error rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-error/20">تأكيد الحذف</button>
                 </div>
             </motion.div>
         </motion.div>
@@ -167,70 +179,69 @@ export const Leads = () => {
         >
             <div className="relative z-10 mx-auto px-4 md:px-6 max-w-page">
                 {/* ===== HERO SECTION ===== */}
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary-deep mt-4 mb-6">
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6366f1] via-[#8b5cf6] to-[#a855f7] mt-4 mb-6">
+                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvc3ZnPg==')] opacity-40" />
                     <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
-                    <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+                    <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-[#a855f7]/15 rounded-full blur-3xl" />
 
-                    <div className="relative z-10 px-5 md:px-8 py-6 md:py-8">
+                    <div className="relative z-10 px-5 md:px-8 py-5 md:py-8">
                         {/* Top row */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                            <div>
-                                <h1 className="text-xl md:text-2xl font-bold font-outfit text-white mb-1">العملاء المتوقعون</h1>
-                                <p className="text-white/60 text-xs md:text-sm">تابع وأدر جميع العملاء المتوقعين وحوّلهم إلى عقود ناجحة</p>
-                            </div>
-                            <div className="flex items-center gap-2">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.4 }}
+                            >
+                                <h1 className="text-lg md:text-2xl font-bold font-outfit text-white mb-1 tracking-tight">العملاء المتوقعون</h1>
+                                <p className="text-white/60 text-[11px] md:text-sm">تابع وأدر جميع العملاء المتوقعين وحوّلهم إلى عقود ناجحة</p>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.4, delay: 0.1 }}
+                                className="flex items-center gap-2"
+                            >
                                 <button
                                     onClick={() => setShowLost(!showLost)}
                                     className={cn(
-                                        'h-9 px-3 flex items-center justify-center gap-1.5 text-xs font-bold transition-all rounded-xl border',
+                                        'h-9 px-3.5 flex items-center justify-center gap-1.5 text-[11px] font-bold transition-all duration-200 rounded-xl border backdrop-blur-sm',
                                         showLost
-                                            ? 'bg-white/20 text-white border-white/25'
-                                            : 'bg-white/10 text-white/80 border-white/15 hover:bg-white/15'
+                                            ? 'bg-white/20 text-white border-white/25 shadow-lg shadow-black/10'
+                                            : 'bg-white/8 text-white/70 border-white/10 hover:bg-white/15 hover:text-white'
                                     )}
                                 >
-                                    {showLost ? <Eye size={14} /> : <EyeOff size={14} />}
+                                    {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
                                     <span className="hidden sm:inline">{showLost ? 'النشطاء' : 'المفقودين'}</span>
                                 </button>
-                                <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 text-xs">
-                                    <Plus size={14} /> جديد
+                                <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 text-[11px] shadow-lg shadow-black/15">
+                                    <Plus size={13} /> جديد
                                 </PrimaryBtn>
-                            </div>
+                            </motion.div>
                         </div>
 
                         {/* KPI Stats */}
                         <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 md:gap-3">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3.5 md:p-4 border border-white/10">
-                                <div className="flex items-center gap-1 sm:gap-2 text-white/60 text-[9px] sm:text-[11px] md:text-xs mb-1 sm:mb-2">
-                                    <Users size={11} className="shrink-0" />
-                                    <span className="truncate">إجمالي العملاء</span>
-                                </div>
-                                <div className="text-sm sm:text-xl md:text-2xl font-bold font-outfit text-white">{stats?.total || 0}</div>
-                                <div className="text-white/50 text-[8px] sm:text-[10px] md:text-[11px] mt-0.5 sm:mt-1">{activeCount} نشط</div>
-                            </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3.5 md:p-4 border border-white/10">
-                                <div className="flex items-center gap-1 sm:gap-2 text-white/60 text-[9px] sm:text-[11px] md:text-xs mb-1 sm:mb-2">
-                                    <Activity size={11} className="shrink-0" />
-                                    <span className="truncate">عملاء جدد</span>
-                                </div>
-                                <div className="text-sm sm:text-xl md:text-2xl font-bold font-outfit text-white">{stats?.new || 0}</div>
-                                <div className="text-success text-[8px] sm:text-[10px] md:text-[11px] mt-0.5 sm:mt-1">هذا الشهر</div>
-                            </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3.5 md:p-4 border border-white/10">
-                                <div className="flex items-center gap-1 sm:gap-2 text-white/60 text-[9px] sm:text-[11px] md:text-xs mb-1 sm:mb-2">
-                                    <Phone size={11} className="shrink-0" />
-                                    <span className="truncate">تم التحويل</span>
-                                </div>
-                                <div className="text-sm sm:text-xl md:text-2xl font-bold font-outfit text-white">{stats?.converted || 0}</div>
-                                <div className="text-white/50 text-[8px] sm:text-[10px] md:text-[11px] mt-0.5 sm:mt-1">إلى مشتركين</div>
-                            </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3.5 md:p-4 border border-white/10">
-                                <div className="flex items-center gap-1 sm:gap-2 text-white/60 text-[9px] sm:text-[11px] md:text-xs mb-1 sm:mb-2">
-                                    <BarChart3 size={11} className="shrink-0" />
-                                    <span className="truncate">معدل التحويل</span>
-                                </div>
-                                <div className="text-sm sm:text-xl md:text-2xl font-bold font-outfit text-white">{(stats?.conversionRate ?? 0).toFixed(1)}%</div>
-                                <div className="text-success text-[8px] sm:text-[10px] md:text-[11px] mt-0.5 sm:mt-1">معدل النجاح</div>
-                            </div>
+                            {[
+                                { label: 'إجمالي العملاء', value: stats?.total || 0, sub: `${activeCount} نشط`, icon: Users, delay: 0.15 },
+                                { label: 'عملاء جدد', value: stats?.new || 0, sub: 'هذا الشهر', icon: Activity, delay: 0.2, accent: true },
+                                { label: 'تم التحويل', value: stats?.converted || 0, sub: 'إلى مشتركين', icon: Phone, delay: 0.25 },
+                                { label: 'معدل التحويل', value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`, sub: 'معدل النجاح', icon: BarChart3, delay: 0.3 },
+                            ].map((stat, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 15 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.4, delay: stat.delay }}
+                                    className="bg-white/[0.07] backdrop-blur-md rounded-xl p-2 sm:p-3 md:p-3.5 border border-white/[0.08] hover:bg-white/[0.1] transition-all duration-200"
+                                >
+                                    <div className="flex items-center gap-1 sm:gap-1.5 text-white/50 text-[8px] sm:text-[10px] md:text-[11px] mb-1 sm:mb-1.5">
+                                        <stat.icon size={10} className="shrink-0" />
+                                        <span className="truncate">{stat.label}</span>
+                                    </div>
+                                    <div className="text-sm sm:text-lg md:text-xl font-bold font-outfit text-white tabular-nums">{stat.value}</div>
+                                    <div className={cn('text-[7px] sm:text-[9px] md:text-[10px] mt-0.5', stat.accent ? 'text-[#34d399]' : 'text-white/40')}>{stat.sub}</div>
+                                </motion.div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -241,65 +252,67 @@ export const Leads = () => {
                     <div className="p-4 lg:p-5 border-b border-border">
                         <div className="flex items-center gap-3">
                             <div className="relative flex-1">
-                                <Search size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted" />
+                                <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted/50" />
                                 <input
                                     type="text"
                                     placeholder="ابحث بالاسم، الهاتف، المادة..."
                                     aria-label="بحث عن عميل"
-                                    className="w-full h-11 bg-surface border border-border rounded-xl pr-10 pl-10 text-sm text-main placeholder:text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                                    className="w-full h-11 bg-surface/80 border border-border rounded-xl pr-10 pl-10 text-[13px] text-main placeholder:text-muted/50 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all duration-200"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 {searchTerm && (
-                                    <button aria-label="مسح البحث" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted hover:text-main hover:bg-hover rounded-lg transition-all">
-                                        <X size={14} />
+                                    <button aria-label="مسح البحث" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted/50 hover:text-main hover:bg-hover rounded-lg transition-all">
+                                        <X size={13} />
                                     </button>
                                 )}
                             </div>
-                            <div className="shrink-0 bg-surface border border-border rounded-xl px-3 py-2.5">
-                                <span className="text-sm font-bold text-main">{filteredLeads.length}</span>
+                            <div className="shrink-0 bg-surface/80 border border-border rounded-xl px-3 py-2.5">
+                                <span className="text-[13px] font-bold text-main tabular-nums">{filteredLeads.length}</span>
                             </div>
                         </div>
 
                         {/* Filter pills */}
                         <div className="grid grid-cols-3 sm:flex sm:items-center sm:gap-2 sm:overflow-x-auto sm:pb-0.5 sm:scrollbar-none mt-3 gap-2">
-                            <button
+                            <motion.button
+                                whileTap={{ scale: 0.95 }}
                                 onClick={() => setFilterStatus('all')}
                                 className={cn(
-                                    'inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition-all',
+                                    'inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-[11px] font-bold rounded-xl border transition-all duration-200',
                                     filterStatus === 'all'
-                                        ? 'bg-primary text-on-primary border-primary shadow-sm shadow-primary/20'
+                                        ? 'bg-gradient-to-l from-[#6366f1] to-[#8b5cf6] text-white border-[#6366f1]/30 shadow-md shadow-[#6366f1]/15'
                                         : 'bg-surface text-muted border-border hover:border-primary/30 hover:text-main'
                                 )}
                             >
                                 الكل
                                 <span className={cn(
-                                    'text-[10px] px-1.5 py-0.5 rounded-lg min-w-[20px] text-center',
-                                    filterStatus === 'all' ? 'bg-white/20 text-on-primary' : 'bg-card text-muted border border-border'
+                                    'text-[9px] px-1.5 py-0.5 rounded-md min-w-[18px] text-center font-bold',
+                                    filterStatus === 'all' ? 'bg-white/20' : 'bg-card text-muted border border-border'
                                 )}>{statusCounts.all}</span>
-                            </button>
+                            </motion.button>
                             {StatusKeys.map((key) => {
                                 const cfg = statusColors[key];
                                 const Icon = statusIconComponents[key];
                                 const isActive = filterStatus === key;
                                 return (
-                                    <button
+                                    <motion.button
                                         key={key}
+                                        whileTap={{ scale: 0.95 }}
                                         onClick={() => setFilterStatus(key)}
                                         className={cn(
-                                            'inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition-all',
+                                            'inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-[11px] font-bold rounded-xl border transition-all duration-200',
                                             isActive
-                                                ? `${cfg.bg} ${cfg.color} border-current/20 shadow-sm`
+                                                ? `${cfg.bg} ${cfg.color} border-current/15 shadow-md shadow-current/10`
                                                 : 'bg-surface text-muted border-border hover:border-primary/30 hover:text-main'
                                         )}
                                     >
-                                        {Icon && <Icon size={12} />}
+                                        {Icon && <Icon size={11} />}
                                         {cfg.label}
                                         <span className={cn(
-                                            'text-[10px] px-1.5 py-0.5 rounded-lg min-w-[20px] text-center',
+                                            'text-[9px] px-1.5 py-0.5 rounded-md min-w-[18px] text-center font-bold',
                                             isActive ? 'bg-white/50 border border-current/10' : 'bg-card text-muted border border-border'
                                         )}>{statusCounts[key]}</span>
-                                    </button>
+                                    </motion.button>
                                 );
                             })}
                         </div>
@@ -315,9 +328,9 @@ export const Leads = () => {
                 {/* FAB */}
                 <motion.button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-primary text-on-primary rounded-xl shadow-xl shadow-primary/30 flex items-center justify-center hover:bg-primary-hover active:scale-95 transition-all"
+                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] text-white rounded-2xl shadow-xl shadow-[#6366f1]/30 flex items-center justify-center hover:from-[#818cf8] hover:to-[#a78bfa] active:scale-95 transition-all duration-200"
                     whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileTap={{ scale: 0.9 }}
                     aria-label="إضافة عميل"
                 >
                     <Plus size={22} />

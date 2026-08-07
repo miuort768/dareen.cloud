@@ -4,21 +4,21 @@ import { cn } from '../../../lib/utils';
 import type { LeadStatus, LeadPriority } from '../../../features/crm/types';
 
 const avatarGradients = [
-    'from-primary to-info',
-    'from-success to-info',
-    'from-warning to-error',
-    'from-info to-primary',
-    'from-error to-warning',
-    'from-primary to-success',
+    'from-[#6366f1] to-[#8b5cf6]',
+    'from-[#10b981] to-[#06b6d4]',
+    'from-[#f59e0b] to-[#ef4444]',
+    'from-[#06b6d4] to-[#6366f1]',
+    'from-[#ef4444] to-[#f59e0b]',
+    'from-[#8b5cf6] to-[#10b981]',
 ];
 const getGradient = (name: string) => avatarGradients[name.charCodeAt(0) % avatarGradients.length];
 
 export const GradientAvatar = ({ name, size = 'md' }: { name: string; size?: 'sm' | 'md' | 'lg' }) => {
     const gradient = getGradient(name);
-    const sizes = { sm: 'w-7 h-7 text-[11px]', md: 'w-9 h-9 text-sm', lg: 'w-11 h-11 text-base' };
+    const sizes = { sm: 'w-8 h-8 text-[11px]', md: 'w-10 h-10 text-sm', lg: 'w-12 h-12 text-base' };
     return (
         <div className={cn(
-            'shrink-0 rounded-xl flex items-center justify-center font-bold text-on-primary shadow-sm',
+            'shrink-0 rounded-[14px] flex items-center justify-center font-bold text-white shadow-lg shadow-black/10',
             `bg-gradient-to-br ${gradient}`,
             sizes[size],
         )}>
@@ -113,11 +113,11 @@ export const StatusChip = ({ status, size = 'sm' }: { status: LeadStatus; size?:
     const Icon = statusIconComponents[status];
     return (
         <span className={cn(
-            'inline-flex items-center gap-1 font-bold rounded-lg border border-current/10 transition-all',
-            size === 'sm' ? 'px-2 py-0.5 text-[10px]' : 'px-2.5 py-1 text-xs',
+            'inline-flex items-center gap-1.5 font-bold rounded-full border border-current/10 transition-all',
+            size === 'sm' ? 'px-2.5 py-1 text-[10px]' : 'px-3 py-1.5 text-xs',
             cfg.bg, cfg.color,
         )}>
-            <span className={cn('w-1.5 h-1.5 rounded-full', cfg.dot)} />
+            <span className={cn('w-1.5 h-1.5 rounded-full animate-pulse', cfg.dot)} />
             {Icon && <Icon size={10} />}
             {cfg.label}
         </span>
