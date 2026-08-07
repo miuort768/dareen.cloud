@@ -7,6 +7,7 @@ import { useAuthStore } from '../store/authStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { SEO } from '../components/SEO';
 import { MobileHeader } from '../components/public/MobileHeader';
+import { PublicNavbar } from '../components/public/PublicNavbar';
 import { cn } from '../lib/utils';
 
 export const Login = () => {
@@ -68,6 +69,11 @@ export const Login = () => {
                 <MobileHeader />
             </div>
 
+            {/* Desktop Navbar */}
+            <div className="hidden lg:block relative z-20">
+                <PublicNavbar />
+            </div>
+
             {/* Desktop: Full Background Image */}
             <div className="hidden lg:block fixed inset-0">
                 <img
@@ -75,7 +81,7 @@ export const Login = () => {
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-l from-white via-white/95 to-white/60 dark:from-background dark:via-background/95 dark:to-background/60" />
+                <div className="absolute inset-0 bg-gradient-to-l from-white/80 via-white/50 to-transparent dark:from-background/80 dark:via-background/50 dark:to-transparent" />
             </div>
 
             {/* Form — Centered on both */}
