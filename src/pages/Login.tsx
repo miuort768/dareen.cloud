@@ -89,8 +89,8 @@ export const Login = () => {
                 </div>
 
                 {/* ===== Form Section ===== */}
-                <div className="flex-1 flex flex-col justify-center items-center px-4 sm:px-8 lg:px-16 py-8 lg:py-0">
-                    <div className="w-full max-w-md">
+                <div className="flex-1 flex flex-col justify-center items-center px-4 sm:px-8 lg:px-20 py-8 lg:py-0">
+                    <div className="w-full max-w-sm">
                         {/* Mobile Logo */}
                         <div className="lg:hidden text-center mb-8">
                             <div className="w-24 h-24 mx-auto mb-4">
