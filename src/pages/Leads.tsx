@@ -258,7 +258,6 @@ export const Leads = () => {
                             </div>
                             <div className="shrink-0 bg-surface border border-border rounded-xl px-3 py-2.5">
                                 <span className="text-sm font-bold text-main">{filteredLeads.length}</span>
-                                <span className="text-xs text-muted me-1">عميل</span>
                             </div>
                         </div>
 
