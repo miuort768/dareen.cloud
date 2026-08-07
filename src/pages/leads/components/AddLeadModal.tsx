@@ -25,15 +25,17 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                         className="fixed inset-0 z-[200] bg-black/50 dark:bg-black/70 backdrop-blur-sm" onClick={() => setIsAddModalOpen(false)} />
                     <motion.div
                         initial={{ y: '100%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: '100%', opacity: 0 }}
-                        transition={{ type: 'spring', damping: 35, stiffness: 300 }}
-                        className="fixed inset-x-0 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 z-[210] sm:w-full sm:max-w-lg max-h-[90vh] sm:max-h-[85vh] bg-card dark:bg-[#0a0e27] sm:border sm:border-border dark:sm:border-white/[0.06] sm:shadow-2xl sm:rounded-2xl flex flex-col overflow-hidden"
+                        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                        className="fixed inset-x-0 bottom-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-[210] md:w-full md:max-w-lg max-h-[90vh] md:max-h-[85vh] bg-card dark:bg-[#0a0e27] md:border md:border-border dark:md:border-white/[0.06] md:shadow-2xl md:rounded-2xl flex flex-col overflow-hidden"
                         dir="rtl"
                     >
-                        <div className="sm:hidden flex justify-center pt-3 pb-1 shrink-0">
+                        {/* Drag handle — mobile only */}
+                        <div className="md:hidden flex justify-center pt-3 pb-1 shrink-0">
                             <div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full" />
                         </div>
 
-                        <div className="shrink-0 px-5 py-4 flex items-center justify-between relative overflow-hidden">
+                        {/* Header */}
+                        <div className="shrink-0 px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
                             <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-[#6366f1]/10 dark:to-[#8b5cf6]/5" />
                             <div className="relative z-10 flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-[#6366f1]/15">
@@ -49,6 +51,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                             </button>
                         </div>
 
+                        {/* Form */}
                         <form ref={formRef} className="flex-1 overflow-y-auto p-5 space-y-4" onSubmit={(e) => {
                             e.preventDefault();
                             const formData = new FormData(e.currentTarget);
