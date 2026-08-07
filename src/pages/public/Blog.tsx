@@ -254,7 +254,7 @@ export const Blog = () => {
                   </div>
                   <div className="relative shrink-0 w-24 h-24">
                     <div className="absolute inset-0 bg-white/10 rounded-full blur-xl" />
-                    <Image src="/bbook.png" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-lg" />
+                    <Image src="/bbook.webp" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-lg" />
                   </div>
                 </div>
               </div>

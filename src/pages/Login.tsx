@@ -90,7 +90,7 @@ export const Login = () => {
                         <div className="relative mb-10">
                             <div className="absolute inset-0 bg-white/20 rounded-full blur-3xl" />
                             <div className="relative w-64 h-64 xl:w-72 xl:h-72">
-                                <Image src="/bbook.png" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-2xl" />
+                                <Image src="/bbook.webp" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-2xl" />
                             </div>
                         </div>
 
@@ -109,7 +109,7 @@ export const Login = () => {
                         {/* Mobile Logo */}
                         <div className="lg:hidden text-center mb-8">
                             <div className="w-24 h-24 mx-auto mb-4">
-                                <Image src="/bbook.png" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-lg" />
+                                <Image src="/bbook.webp" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-lg" />
                             </div>
                             <h1 className="text-xl font-black text-main font-heading">{academyName}</h1>
                         </div>

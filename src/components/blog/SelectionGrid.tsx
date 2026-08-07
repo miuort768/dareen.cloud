@@ -62,7 +62,7 @@ export const SelectionGrid = ({
                     <picture>
                         <source srcSet="/bbook.webp" type="image/webp" />
                         <source srcSet="/bbook.avif" type="image/avif" />
-                        <img src="/bbook.png" alt="بوابة دارين التعليمية" loading="lazy" className="w-full max-w-[180px] mx-auto h-auto block" />
+                        <img src="/bbook.webp" alt="بوابة دارين التعليمية" loading="lazy" className="w-full max-w-[180px] mx-auto h-auto block" />
                     </picture>
                 </div>
 
@@ -137,7 +137,7 @@ export const SelectionGrid = ({
                     <picture>
                         <source srcSet="/bbook.webp" type="image/webp" />
                         <source srcSet="/bbook.avif" type="image/avif" />
-                        <img src="/bbook.png" alt="بوابة دارين التعليمية" loading="lazy" className="w-auto mx-auto h-auto block max-w-[280px]" />
+                        <img src="/bbook.webp" alt="بوابة دارين التعليمية" loading="lazy" className="w-auto mx-auto h-auto block max-w-[280px]" />
                     </picture>
                 </div>
 

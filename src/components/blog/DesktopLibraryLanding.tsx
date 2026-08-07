@@ -257,7 +257,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             <div className="absolute bottom-[-20%] left-[-10%] w-[70%] h-[60%] bg-success/5 blur-3xl rounded-full pointer-events-none" />
             <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[55%] bg-warning/5 blur-3xl rounded-full pointer-events-none" />
             <Image
-              src="/bbook.png"
+              src="/bbook.webp"
               alt={`بوابة ${academyName} التعليمية للكتب والمذكرات`}
               className="absolute inset-0"
               imgClassName="object-contain p-8 lg:p-10 drop-shadow-xl"
