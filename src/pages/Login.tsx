@@ -91,7 +91,7 @@ export const Login = () => {
                         <p className="text-primary font-bold text-sm lg:text-base mb-1">منصة دارين السابعة</p>
                         <h1 className="text-2xl lg:text-3xl font-black text-main mb-2 font-heading">تسجيل الدخول</h1>
                         <p className="text-muted text-sm lg:text-base font-medium">أدخل بياناتك للوصول إلى حسابك</p>
-                        <p className="text-muted/50 text-[10px] lg:text-xs mt-2 tracking-widest font-light italic">AHMED ABDULLAH</p>
+                        <p className="text-muted/60 text-[10px] lg:text-xs mt-2 tracking-widest font-light italic">AHMED ABDULLAH</p>
                     </div>
 
                     {error && (
