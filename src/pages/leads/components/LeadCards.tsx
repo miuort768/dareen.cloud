@@ -1,7 +1,7 @@
 import { cn } from '../../../lib/utils';
-import { Phone, MessageSquare, CheckCircle2, Trash2, Search, FileText, ChevronLeft } from 'lucide-react';
-import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
-import { GradientAvatar, StatusChip, getPriority, ActionBtn, statusColors } from './LeadsUI';
+import { Phone, MessageSquare, CheckCircle2, Trash2, Search, ChevronLeft } from 'lucide-react';
+import type { Lead, LeadStatus } from '../../../features/crm/types';
+import { GradientAvatar, StatusChip, getPriority, ActionBtn } from './LeadsUI';
 
 interface LeadCardsProps {
     filteredLeads: Lead[];

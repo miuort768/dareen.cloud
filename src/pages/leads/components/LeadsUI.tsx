@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { TrendingUp, TrendingDown, Users, UserPlus, CheckCircle2, Phone, Star, Target, XCircle, BarChart3, FileText, Search, AlertTriangle, MessageSquare } from 'lucide-react';
+import { TrendingUp, TrendingDown, UserPlus, CheckCircle2, Phone, Star, Target, XCircle, BarChart3 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { LeadStatus, LeadPriority } from '../../../features/crm/types';
 

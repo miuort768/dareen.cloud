@@ -76,7 +76,6 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
 
     const age = getLeadAge(lead.createdAt);
     const timeline = getTimelineEvents(lead);
-    const statusCfg = statusColors[lead.status as LeadStatus] || statusColors.new;
     const priority = getPriority(lead.priority as LeadPriority);
 
     const handleSave = () => {
