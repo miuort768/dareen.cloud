@@ -137,7 +137,7 @@ export const Dashboard = () => {
                     <div className="hidden md:block max-w-page mx-auto px-6 relative z-10">
 
                         {/* ── Hero ── */}
-                        <div className="pt-6 pb-4">
+                        <div className="pt-6 pb-4 max-w-5xl mx-auto">
                             <HeroSection currentUser={currentUser} stats={stats} />
                         </div>
 
