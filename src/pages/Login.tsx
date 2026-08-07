@@ -71,33 +71,18 @@ export const Login = () => {
             <div className="w-full min-h-screen flex flex-col md:flex-row items-center justify-center">
 
                 {/* ===== Hero Section (Desktop) ===== */}
-                <div className="hidden lg:flex lg:w-[45%] h-screen sticky top-0 bg-gradient-to-br from-primary via-primary-deep to-primary-hover relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-[0.06]">
-                        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <pattern id="hero-grid" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
-                                    <circle cx="2" cy="2" r="1" fill="white" />
-                                    <circle cx="18" cy="18" r="1" fill="white" opacity="0.5" />
-                                </pattern>
-                            </defs>
-                            <rect width="100%" height="100%" fill="url(#hero-grid)" />
-                        </svg>
-                    </div>
-                    <div className="absolute top-0 end-0 w-80 h-80 bg-white/5 rounded-full blur-3xl" />
-                    <div className="absolute bottom-0 start-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
-
-                    <div className="relative z-10 flex flex-col justify-center items-center w-full p-12 text-on-primary">
+                <div className="hidden lg:flex lg:w-[45%] h-screen sticky top-0 bg-white dark:bg-background relative overflow-hidden border-e border-border">
+                    <div className="relative z-10 flex flex-col justify-center items-center w-full p-12">
                         <div className="relative mb-10">
-                            <div className="absolute inset-0 bg-white/20 rounded-full blur-3xl" />
                             <div className="relative w-64 h-64 xl:w-72 xl:h-72">
-                                <Image src="/bbook.webp" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-2xl" />
+                                <Image src="/bbook.webp" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-xl" />
                             </div>
                         </div>
 
                         <h1 className="text-3xl xl:text-4xl font-black text-center leading-tight mb-3 font-heading">
-                            مرحباً بك في {academyName}
+                            مرحباً بك في <span className="text-primary">{academyName}</span>
                         </h1>
-                        <p className="text-on-primary/70 text-sm text-center max-w-sm leading-relaxed">
+                        <p className="text-muted text-sm text-center max-w-sm leading-relaxed">
                             منصة تعليمية متكاملة للطلاب والمعلمين وأولياء الأمور
                         </p>
                     </div>
