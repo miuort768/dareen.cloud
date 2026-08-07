@@ -95,7 +95,7 @@ export const KPICards = ({ stats }: KPICardsProps) => {
             trendValue: revenueGrowth,
             prefix: CURRENCY_SYMBOL,
             formatter: (val: number) => val.toLocaleString(),
-            size: 'lg',
+            size: 'sm',
         },
         {
             title: 'إجمالي الطلاب',
