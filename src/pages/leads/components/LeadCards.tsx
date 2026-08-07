@@ -80,17 +80,6 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                                         <ActionBtn onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }} icon={CheckCircle2} label="تم" color="info" />
                                         <ActionBtn onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }} icon={Trash2} label="حذف" color="error" />
                                     </div>
-                                    <select
-                                        className="px-2 py-1 text-[10px] font-bold border border-border outline-none cursor-pointer rounded-lg bg-surface transition-all text-main"
-                                        value={lead.status}
-                                        aria-label="حالة العميل"
-                                        onChange={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } }); }}
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
-                                            <option key={key} value={key}>{statusColors[key].label}</option>
-                                        ))}
-                                    </select>
                                 </div>
                             </div>
                         );
