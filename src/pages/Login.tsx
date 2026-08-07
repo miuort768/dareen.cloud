@@ -63,7 +63,7 @@ export const Login = () => {
         <div className="min-h-screen bg-white dark:bg-background font-sans flex items-center justify-center relative">
             <SEO title="تسجيل الدخول" description="تسجيل دخول الطلاب والمعلمين وأولياء الأمور إلى منصة دارين السابعة" url="https://dareen.cloud/login" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'تسجيل الدخول', item: '/login' }]} />
 
-            <MobileHeader hideThemeToggle />
+            <MobileHeader />
 
             <div className="w-full max-w-sm px-4 pt-16 md:pt-0">
                 <div className="mb-8 text-center">
