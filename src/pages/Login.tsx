@@ -71,7 +71,7 @@ export const Login = () => {
             <div className="w-full min-h-screen flex flex-col md:flex-row items-center justify-center">
 
                 {/* ===== Hero Section (Desktop) ===== */}
-                <div className="hidden lg:flex lg:w-[45%] h-screen sticky top-0 bg-white dark:bg-background relative overflow-hidden border-e border-border">
+                <div className="hidden lg:flex lg:w-[45%] h-screen sticky top-0 bg-white dark:bg-background relative overflow-hidden">
                     <div className="relative z-10 flex flex-col justify-center items-center w-full p-12">
                         <div className="relative mb-10">
                             <div className="relative w-64 h-64 xl:w-72 xl:h-72">
