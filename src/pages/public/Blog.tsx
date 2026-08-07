@@ -209,47 +209,52 @@ export const Blog = () => {
       <div className="md:hidden pb-0 px-3 relative bg-surface">
         {isHeroView ? (
           <div className="pb-6">
-            {/* Top Bar */}
-            <div className="flex items-center justify-between mb-4 mt-2">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-card rounded-xl border border-border">
-                <span className="text-[11px] font-extrabold text-main">7SCHOOL.ONLINE/BOOKS</span>
-                <div className="w-5 h-5 rounded-lg bg-primary flex items-center justify-center">
-                  <Download size={10} className="text-on-primary" />
-                </div>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
-                  target="_blank" rel="noopener noreferrer"
-                   className="w-9 h-9 rounded-xl bg-card border border-border flex items-center justify-center hover:border-success/40 transition-all"
-                   aria-label="واتساب">
-                  <MessageCircle size={15} className="text-success" />
-                </a>
-                <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
-                  target="_blank" rel="noopener noreferrer"
-                   className="w-9 h-9 rounded-xl bg-card border border-border flex items-center justify-center hover:border-info/40 transition-all"
-                   aria-label="تيليجرام">
-                    <Send size={15} className="text-info" />
-                </a>
-              </div>
-            </div>
-
             {/* Hero Banner */}
             <div className="relative bg-gradient-to-br from-primary via-primary-deep to-primary rounded-3xl overflow-hidden mb-5 border border-primary/30 shadow-lg shadow-primary/10">
-              <div className="flex items-center gap-4 p-5">
-                <div className="flex-1 min-w-0">
-                  <p className="text-lg font-black text-on-primary leading-tight mb-1">برامج <span className="text-on-primary/80">{academyName}</span></p>
-                  <p className="text-[11px] font-bold text-on-primary/80 mb-2">أفضل الكتب والملخصات</p>
-                  <p className="text-[10px] text-on-primary/60 leading-relaxed mb-3">أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.</p>
-                  <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
-                    target="_blank" rel="noopener noreferrer"
-                     className="inline-flex items-center justify-center bg-on-primary text-primary text-[11px] font-extrabold px-4 py-2 rounded-xl hover:bg-surface transition-all w-full">
-                    طلب حصة مجانية
-                  </a>
+              {/* Background glow */}
+              <div className="absolute top-0 end-0 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+
+              <div className="relative p-5">
+                {/* Top row: social icons */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/15 backdrop-blur-sm rounded-full">
+                    <BookOpen size={10} className="text-on-primary" />
+                    <span className="text-[10px] font-extrabold text-on-primary">المكتبة التعليمية</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
+                      target="_blank" rel="noopener noreferrer"
+                       className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center transition-all"
+                       aria-label="واتساب">
+                      <MessageCircle size={14} className="text-on-primary" />
+                    </a>
+                    <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
+                      target="_blank" rel="noopener noreferrer"
+                       className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center transition-all"
+                       aria-label="تيليجرام">
+                        <Send size={14} className="text-on-primary" />
+                    </a>
+                  </div>
                 </div>
-                <div className="relative shrink-0">
-                  <div className="absolute inset-0 bg-primary-light/30 rounded-full blur-xl" />
-                  <div className="relative w-[100px]">
-                    <Image src="/bbook.png" alt={`طفل يدرس على منصة ${academyName}`} className="w-full h-auto" imgClassName="object-contain drop-shadow-lg" />
+
+                {/* Content + Image */}
+                <div className="flex items-center gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h1 className="text-lg font-black text-on-primary leading-tight mb-1 font-heading">
+                      مكتبة <span className="text-on-primary/80">{academyName}</span>
+                    </h1>
+                    <p className="text-[11px] text-on-primary/70 leading-relaxed mb-3 font-medium">
+                      أفضل الكتب والمذكرات والملخصات لجميع المراحل
+                    </p>
+                    <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
+                      target="_blank" rel="noopener noreferrer"
+                       className="inline-flex items-center justify-center gap-2 bg-on-primary text-primary text-[11px] font-extrabold px-5 py-2.5 rounded-xl hover:bg-surface transition-all">
+                      طلب حصة مجانية
+                    </a>
+                  </div>
+                  <div className="relative shrink-0 w-24 h-24">
+                    <div className="absolute inset-0 bg-white/10 rounded-full blur-xl" />
+                    <Image src="/bbook.png" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-lg" />
                   </div>
                 </div>
               </div>
