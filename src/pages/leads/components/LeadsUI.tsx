@@ -77,12 +77,12 @@ export const statusIconComponents: Record<LeadStatus | 'all', React.ComponentTyp
     all: BarChart3, new: UserPlus, contacted: Phone, interested: Star, trial: Target, converted: CheckCircle2, lost: XCircle,
 };
 export const statusColors: Record<LeadStatus, { label: string; color: string; bg: string; dot: string; darkBg: string; darkText: string }> = {
-    new: { label: 'جديد', color: 'text-info', bg: 'bg-info/15', dot: 'bg-info', darkBg: 'bg-info/20', darkText: 'text-info' },
-    contacted: { label: 'تم الاتصال', color: 'text-warning', bg: 'bg-warning/15', dot: 'bg-warning', darkBg: 'bg-warning/20', darkText: 'text-warning' },
-    interested: { label: 'مهتم', color: 'text-success', bg: 'bg-success/15', dot: 'bg-success', darkBg: 'bg-success/20', darkText: 'text-success' },
-    trial: { label: 'حصة تجريبية', color: 'text-primary', bg: 'bg-primary/15', dot: 'bg-primary', darkBg: 'bg-primary/20', darkText: 'text-primary' },
-    converted: { label: 'محول', color: 'text-info', bg: 'bg-info/15', dot: 'bg-info', darkBg: 'bg-info/20', darkText: 'text-info' },
-    lost: { label: 'مفقود', color: 'text-error', bg: 'bg-error/15', dot: 'bg-error', darkBg: 'bg-error/20', darkText: 'text-error' },
+    new: { label: 'جديد', color: 'text-info', bg: 'bg-info/15', dot: 'bg-info', darkBg: 'dark:bg-info/20', darkText: 'dark:text-info' },
+    contacted: { label: 'تم الاتصال', color: 'text-warning', bg: 'bg-warning/15', dot: 'bg-warning', darkBg: 'dark:bg-warning/20', darkText: 'dark:text-warning' },
+    interested: { label: 'مهتم', color: 'text-success', bg: 'bg-success/15', dot: 'bg-success', darkBg: 'dark:bg-success/20', darkText: 'dark:text-success' },
+    trial: { label: 'حصة تجريبية', color: 'text-primary', bg: 'bg-primary/15', dot: 'bg-primary', darkBg: 'dark:bg-primary/20', darkText: 'dark:text-primary' },
+    converted: { label: 'محول', color: 'text-info', bg: 'bg-info/15', dot: 'bg-info', darkBg: 'dark:bg-info/20', darkText: 'dark:text-info' },
+    lost: { label: 'مفقود', color: 'text-error', bg: 'bg-error/15', dot: 'bg-error', darkBg: 'dark:bg-error/20', darkText: 'dark:text-error' },
 };
 
 export const StatusChip = ({ status, size = 'sm' }: { status: LeadStatus; size?: 'sm' | 'md' }) => {
@@ -101,9 +101,9 @@ export const StatusChip = ({ status, size = 'sm' }: { status: LeadStatus; size?:
 };
 
 export const priorityConfig: Record<LeadPriority, { label: string; color: string; bg: string; darkBg: string; darkText: string }> = {
-    high: { label: 'عالية', color: 'text-error', bg: 'bg-error/15', darkBg: 'bg-error/20', darkText: 'text-error' },
-    medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning/15', darkBg: 'bg-warning/20', darkText: 'text-warning' },
-    low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface dark:bg-white/5', darkBg: 'bg-white/5', darkText: 'text-muted' },
+    high: { label: 'عالية', color: 'text-error', bg: 'bg-error/15', darkBg: 'dark:bg-error/20', darkText: 'dark:text-error' },
+    medium: { label: 'متوسطة', color: 'text-warning', bg: 'bg-warning/15', darkBg: 'dark:bg-warning/20', darkText: 'dark:text-warning' },
+    low: { label: 'منخفضة', color: 'text-muted', bg: 'bg-surface', darkBg: 'dark:bg-white/5', darkText: 'dark:text-muted' },
 };
 export const getPriority = (p: LeadPriority | string) => priorityConfig[p as LeadPriority] || priorityConfig.low;
 

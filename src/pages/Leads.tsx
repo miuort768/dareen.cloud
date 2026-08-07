@@ -283,7 +283,7 @@ export const Leads = () => {
                                         className={cn(
                                             'inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-[11px] font-bold rounded-xl border transition-all duration-200',
                                             isActive
-                                                ? `${cfg.bg} ${cfg.color} dark:${cfg.darkBg} dark:${cfg.darkText} border-current/15 shadow-md shadow-current/10`
+                                                ? `${cfg.bg} ${cfg.color} ${cfg.darkBg} ${cfg.darkText} border-current/15 shadow-md shadow-current/10`
                                                 : 'bg-surface dark:bg-white/[0.04] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                                         )}>
                                         {Icon && <Icon size={11} />}
