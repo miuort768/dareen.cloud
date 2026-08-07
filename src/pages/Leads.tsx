@@ -260,18 +260,19 @@ export const Leads = () => {
                         </div>
 
                         {/* Filter pills */}
-                        <div className="grid grid-cols-3 sm:flex sm:items-center sm:gap-2 sm:overflow-x-auto sm:pb-0.5 sm:scrollbar-none mt-3 gap-2">
+                        <div className="bg-surface/50 dark:bg-white/[0.02] border border-border/50 dark:border-white/[0.04] rounded-xl p-2 mt-3 flex items-center gap-2">
+                            <div className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
                             <motion.button whileTap={{ scale: 0.95 }} onClick={() => setFilterStatus('all')}
                                 className={cn(
-                                    'inline-flex items-center justify-center gap-1.5 px-3 py-2 text-[10px] font-bold rounded-xl border transition-all duration-200',
+                                    'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                                     filterStatus === 'all'
                                         ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary border-primary/30 dark:border-[#6366f1]/30 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20'
-                                        : 'bg-surface dark:bg-white/[0.04] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                                        : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                                 )}>
                                 الكل
                                 <span className={cn(
                                     'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
-                                    filterStatus === 'all' ? 'bg-white/20' : 'bg-card dark:bg-white/5 text-muted dark:text-white/30 border border-border dark:border-white/[0.06]'
+                                    filterStatus === 'all' ? 'bg-white/20' : 'bg-surface dark:bg-white/5 text-muted dark:text-white/30 border border-border dark:border-white/[0.06]'
                                 )}>{statusCounts.all}</span>
                             </motion.button>
                             {StatusKeys.map((key) => {
@@ -281,7 +282,7 @@ export const Leads = () => {
                                 return (
                                     <motion.button key={key} whileTap={{ scale: 0.95 }} onClick={() => setFilterStatus(key)}
                                         className={cn(
-                                            'inline-flex items-center justify-center gap-1.5 px-3 py-2 text-[10px] font-bold rounded-xl border transition-all duration-200',
+                                            'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                                             isActive
                                                 ? `${cfg.bg} ${cfg.color} ${cfg.darkBg} ${cfg.darkText} border-current/15 shadow-md shadow-current/10`
                                                 : `${cfg.bg} ${cfg.color} ${cfg.darkBg} ${cfg.darkText} border-transparent opacity-60 hover:opacity-100`
@@ -295,6 +296,13 @@ export const Leads = () => {
                                     </motion.button>
                                 );
                             })}
+                            </div>
+                            {filterStatus !== 'all' && (
+                                <motion.button initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} whileTap={{ scale: 0.9 }} onClick={() => setFilterStatus('all')}
+                                    className="shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-error/10 dark:bg-error/15 text-error hover:bg-error/20 dark:hover:bg-error/25 transition-all">
+                                    <X size={13} />
+                                </motion.button>
+                            )}
                         </div>
                     </div>
 
