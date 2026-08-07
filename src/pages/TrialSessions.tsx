@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users } from 'lucide-react';
+import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -64,6 +64,13 @@ const itemVariants = {
   hidden: { opacity: 0, y: 12 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } }
 };
+
+const statusFilters = [
+  { key: 'pending', label: 'بانتظار', color: 'text-warning', bg: 'bg-warning/15', darkBg: 'dark:bg-warning/20', darkText: 'dark:text-warning', dot: 'bg-warning' },
+  { key: 'completed', label: 'تمت', color: 'text-success', bg: 'bg-success/15', darkBg: 'dark:bg-success/20', darkText: 'dark:text-success', dot: 'bg-success' },
+  { key: 'cancelled', label: 'ملغية', color: 'text-error', bg: 'bg-error/15', darkBg: 'dark:bg-error/20', darkText: 'dark:text-error', dot: 'bg-error' },
+  { key: 'converted', label: 'محولة', color: 'text-info', bg: 'bg-info/15', darkBg: 'dark:bg-info/20', darkText: 'dark:text-info', dot: 'bg-info' },
+];
 
 const TrialSessionsSkeleton = () => (
   <div className="bg-background min-h-screen pb-24" dir="rtl">
@@ -167,7 +174,7 @@ export const TrialSessions = () => {
   if (isTrialsError) {
     return (
       <div className="bg-background min-h-screen pb-24" dir="rtl">
-        <div className="pt-6 md:pt-10 px-4 md:px-6 max-w-7xl mx-auto">
+        <div className="pt-6 md:pt-10 px-4 md:px-6 max-w-page mx-auto">
           <ErrorBanner />
         </div>
       </div>
@@ -183,11 +190,8 @@ export const TrialSessions = () => {
       dir="rtl"
     >
       <div className="px-3 space-y-4 max-w-page mx-auto relative z-10">
-        {/* ════════════════════════════════════════
-            Hero Section
-           ════════════════════════════════════════ */}
-        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-dark/80 to-primary-dark mt-4">
-          {/* Decorative elements */}
+        {/* Hero Section */}
+        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-dark/80 to-primary-dark dark:from-[#1a1f4e] dark:via-[#1e2456] dark:to-[#131836] mt-4">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
           <div className="absolute inset-0 opacity-[0.06]">
@@ -202,112 +206,138 @@ export const TrialSessions = () => {
             </svg>
           </div>
 
-          {/* Hero content */}
           <div className="relative z-10 px-4 md:px-6 py-6">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center ring-2 ring-white/30 shrink-0">
                 <GraduationCap size={18} className="text-white" />
               </div>
               <div className="min-w-0">
+                <p className="text-white/60 dark:text-white/40 text-[11px] mb-0.5">مرحباً بك!</p>
                 <h1 className="text-lg md:text-xl font-bold font-outfit text-white">الحصص التجريبية</h1>
-                <p className="text-[11px] text-white/70">{stats?.total || 0} حصة مسجلة</p>
+                <p className="text-[11px] text-white/50">{stats?.total || 0} حصة مسجلة</p>
               </div>
             </div>
 
             {/* KPI Stats */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
-                  <BookOpen size={14} />
+                <div className="flex items-center gap-2 text-white/60 text-[11px] mb-1.5">
+                  <BookOpen size={13} />
                   <span>إجمالي الحصص</span>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-white"><Counter value={stats?.total || 0} /></div>
-                <div className="text-white/50 text-[11px] mt-1">جميع الحصص</div>
+                <div className="text-white/50 text-[10px] mt-1">جميع الحصص</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
-                  <CheckCircle2 size={14} />
+                <div className="flex items-center gap-2 text-white/60 text-[11px] mb-1.5">
+                  <CheckCircle2 size={13} />
                   <span>تمت بنجاح</span>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-white"><Counter value={stats?.completed || 0} /></div>
-                <div className="text-success text-[11px] mt-1">ناجحة</div>
+                <div className="text-success text-[10px] mt-1">ناجحة</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
-                  <Clock size={14} />
+                <div className="flex items-center gap-2 text-white/60 text-[11px] mb-1.5">
+                  <Clock size={13} />
                   <span>قيد الانتظار</span>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-white"><Counter value={stats?.pending || 0} /></div>
-                <div className="text-warning text-[11px] mt-1">بانتظار الموعد</div>
+                <div className="text-warning text-[10px] mt-1">بانتظار الموعد</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                <div className="flex items-center gap-2 text-white/60 text-xs mb-1.5">
-                  <TrendingUp size={14} />
+                <div className="flex items-center gap-2 text-white/60 text-[11px] mb-1.5">
+                  <TrendingUp size={13} />
                   <span>معدل التحويل</span>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-white">{conversionRate}%</div>
-                <div className="text-success text-[11px] mt-1">{stats?.converted || 0} تحويل</div>
+                <div className="text-success text-[10px] mt-1">{stats?.converted || 0} تحويل</div>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* ════════════════════════════════════════
-            Main Content Card
-           ════════════════════════════════════════ */}
-        <motion.div variants={itemVariants} className="bg-main rounded-2xl shadow-elevation-1 border border-border overflow-hidden">
+        {/* Main Content Card */}
+        <motion.div variants={itemVariants} className="bg-card dark:bg-[#131836]/80 rounded-2xl shadow-elevation-1 dark:shadow-none border border-border dark:border-white/[0.04] overflow-hidden">
           {/* Toolbar: search + filters */}
-          <div className="p-4 lg:p-5 border-b border-border">
-            <div className="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
-              <div className="relative flex-1 max-w-md">
-                <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted" />
+          <div className="p-4 lg:p-5 border-b border-border dark:border-white/[0.04]">
+            <div className="flex items-center gap-3">
+              <div className="relative flex-1">
+                <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted dark:text-white/25" />
                 <input
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="بحث باسم الطالب أو رقم الهاتف..."
                   aria-label="بحث عن حصة"
-                  className="w-full bg-surface border border-border rounded-xl pr-10 pl-3 py-2.5 text-xs text-main placeholder:text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                  className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-white placeholder:text-muted dark:placeholder:text-white/25 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                 />
-              </div>
-              <div className="flex items-center gap-2">
-                <select
-                  value={filterStatus}
-                  onChange={e => setFilterStatus(e.target.value)}
-                  aria-label="تصفية حسب الحالة"
-                  className="px-3 py-2.5 bg-surface border border-border rounded-xl text-xs font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none cursor-pointer"
-                >
-                  <option value="">كل الحالات</option>
-                  <option value="pending">قيد الانتظار</option>
-                  <option value="completed">تمت</option>
-                  <option value="cancelled">ملغية</option>
-                  <option value="converted">تم التحويل</option>
-                </select>
-                {subjects.length > 0 && (
-                  <select
-                    value={filterSubject}
-                    onChange={e => setFilterSubject(e.target.value)}
-                    aria-label="تصفية حسب المادة"
-                    className="px-3 py-2.5 bg-surface border border-border rounded-xl text-xs font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none cursor-pointer"
-                  >
-                    <option value="">كل المواد</option>
-                    {subjects.map(subj => (
-                      <option key={subj} value={subj}>{subj}</option>
-                    ))}
-                  </select>
+                {search && (
+                  <button aria-label="مسح البحث" onClick={() => setSearch('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-white/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
+                    <X size={13} />
+                  </button>
                 )}
-                <button
-                  onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }}
-                  className="h-9 px-4 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold rounded-xl transition-all active:scale-95 flex items-center gap-1.5"
-                >
-                  <Plus size={14} /> حصة جديدة
-                </button>
+              </div>
+              <div className="shrink-0 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl px-3 py-2.5">
+                <span className="text-[13px] font-bold text-main dark:text-white/60 tabular-nums">{filtered.length}</span>
               </div>
             </div>
-            <div className="flex items-center gap-2 mt-3">
-              <span className="text-xs text-muted">
-                <span className="font-bold text-main">{filtered.length}</span> حصة
-              </span>
+
+            {/* Filter pills */}
+            <div className="bg-surface/50 dark:bg-white/[0.02] border border-border/50 dark:border-white/[0.04] rounded-xl p-2 mt-3 flex items-center gap-2">
+              <div className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+                <motion.button whileTap={{ scale: 0.95 }} onClick={() => setFilterStatus('')}
+                  className={cn(
+                    'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
+                    !filterStatus
+                      ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary border-primary/30 dark:border-[#6366f1]/30 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                  )}>
+                  الكل
+                  <span className={cn(
+                    'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
+                    !filterStatus ? 'bg-white/20' : 'bg-surface dark:bg-white/5 text-muted dark:text-white/30 border border-border dark:border-white/[0.06]'
+                  )}>{trials.length}</span>
+                </motion.button>
+                {statusFilters.map((sf) => {
+                  const isActive = filterStatus === sf.key;
+                  return (
+                    <motion.button key={sf.key} whileTap={{ scale: 0.95 }} onClick={() => setFilterStatus(isActive ? '' : sf.key)}
+                      className={cn(
+                        'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
+                        isActive
+                          ? `${sf.bg} ${sf.color} ${sf.darkBg} ${sf.darkText} border-current/15 shadow-md shadow-current/10`
+                          : `${sf.bg} ${sf.color} ${sf.darkBg} ${sf.darkText} border-transparent opacity-60 hover:opacity-100`
+                      )}>
+                      <span className={cn('w-1.5 h-1.5 rounded-full', sf.dot)} />
+                      {sf.label}
+                    </motion.button>
+                  );
+                })}
+              </div>
+              {filterStatus && (
+                <motion.button initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} whileTap={{ scale: 0.9 }} onClick={() => setFilterStatus('')}
+                  className="shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-error/10 dark:bg-error/15 text-error hover:bg-error/20 dark:hover:bg-error/25 transition-all">
+                  <X size={13} />
+                </motion.button>
+              )}
             </div>
+
+            {/* Subject filter */}
+            {subjects.length > 0 && (
+              <div className="flex items-center gap-2 mt-3">
+                <CalendarDays size={12} className="text-muted dark:text-white/30" />
+                <select
+                  value={filterSubject}
+                  onChange={e => setFilterSubject(e.target.value)}
+                  aria-label="تصفية حسب المادة"
+                  className="px-3 py-1.5 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-lg text-[10px] font-bold text-main dark:text-white/60 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none cursor-pointer"
+                >
+                  <option value="">كل المواد</option>
+                  {subjects.map(subj => (
+                    <option key={subj} value={subj}>{subj}</option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
 
           {/* Cards List */}
@@ -317,10 +347,10 @@ export const TrialSessions = () => {
                 <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-4 ring-1 ring-primary/20">
                   <Users size={28} className="text-primary/40" />
                 </div>
-                <p className="text-sm font-bold text-muted mb-1">
+                <p className="text-sm font-bold text-main dark:text-white/60 mb-1">
                   {search || filterStatus || filterSubject ? 'لا توجد نتائج للبحث' : 'لا توجد حصص تجريبية'}
                 </p>
-                <p className="text-[11px] text-muted/60 mb-4">
+                <p className="text-[11px] text-muted dark:text-white/30 mb-4">
                   {search || filterStatus || filterSubject ? 'حاول تغيير معايير البحث' : 'ابدأ بإضافة أول حصة تجريبية'}
                 </p>
                 {!search && !filterStatus && !filterSubject && (
@@ -350,38 +380,33 @@ export const TrialSessions = () => {
           </div>
         </motion.div>
 
-        {/* ════════════════════════════════════════
-            FAB Button
-           ════════════════════════════════════════ */}
+        {/* FAB Button */}
         <motion.button
           onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }}
-          className="fixed bottom-8 left-8 z-40 w-14 h-14 bg-primary text-on-primary rounded-full shadow-xl shadow-primary/30 flex items-center justify-center hover:bg-primary-hover active:scale-95 transition-all"
+          className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-[#6366f1]/30 flex items-center justify-center active:scale-95 transition-all duration-200"
           whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          whileTap={{ scale: 0.9 }}
+          aria-label="إضافة حصة جديدة"
         >
-          <Plus size={24} />
+          <Plus size={22} />
         </motion.button>
 
-        {/* ════════════════════════════════════════
-            Add/Edit Modal
-           ════════════════════════════════════════ */}
+        {/* Add/Edit Modal */}
         <AnimatePresence>
-        {showModal && (
-          <TrialSessionFormModal
-            editingId={editingId}
-            form={form}
-            teachers={teachers}
-            isSaving={addMutation.isPending}
-            onChange={setForm}
-            onSubmit={(e) => { e.preventDefault(); addMutation.mutate(form); }}
-            onClose={() => { setShowModal(false); setEditingId(null); resetForm(); }}
-          />
-        )}
+          {showModal && (
+            <TrialSessionFormModal
+              editingId={editingId}
+              form={form}
+              teachers={teachers}
+              isSaving={addMutation.isPending}
+              onChange={setForm}
+              onSubmit={(e) => { e.preventDefault(); addMutation.mutate(form); }}
+              onClose={() => { setShowModal(false); setEditingId(null); resetForm(); }}
+            />
+          )}
         </AnimatePresence>
 
-        {/* ════════════════════════════════════════
-            Drawer
-           ════════════════════════════════════════ */}
+        {/* Drawer */}
         <TrialSessionDrawer
           session={drawerSession}
           onClose={() => setDrawerSession(null)}
@@ -392,29 +417,48 @@ export const TrialSessions = () => {
           isConverting={convertMutation.isPending}
         />
 
-        {/* ════════════════════════════════════════
-            Confirm Delete
-           ════════════════════════════════════════ */}
+        {/* Confirm Delete */}
         <AnimatePresence>
-        {confirmId && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
-            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="bg-card shadow-elevation-2 w-full max-w-sm border border-border rounded-2xl overflow-hidden">
-              <div className="bg-error px-5 py-4 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
-                  <AlertTriangle size={20} className="text-on-error" />
+          {confirmId && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end md:items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-0 md:p-4" dir="rtl">
+              {/* Mobile: bottom sheet */}
+              <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                className="md:hidden w-full bg-card dark:bg-[#0a0e27] rounded-t-3xl overflow-hidden">
+                <div className="flex justify-center pt-3 pb-1"><div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full" /></div>
+                <div className="bg-gradient-to-l from-error/90 to-error px-5 py-4 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
+                    <AlertTriangle size={20} className="text-on-error" />
+                  </div>
+                  <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
                 </div>
-                <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
-              </div>
-              <div className="p-5">
-                <p className="text-sm font-bold text-main">هل أنت متأكد من الحذف؟</p>
-              </div>
-              <div className="flex gap-2 px-5 pb-5">
-                <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
-                <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
-              </div>
+                <div className="p-5">
+                  <p className="text-sm font-bold text-main dark:text-white">هل أنت متأكد من حذف هذه الحصة؟</p>
+                  <p className="text-[11px] text-muted dark:text-white/40 mt-1">لا يمكن التراجع عن هذا الإجراء</p>
+                </div>
+                <div className="flex gap-2 px-5 pb-8">
+                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                  <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
+                </div>
+              </motion.div>
+              {/* Desktop: centered modal */}
+              <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+                className="hidden md:block bg-card dark:bg-[#0a0e27] shadow-elevation-2 w-full max-w-sm border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden">
+                <div className="bg-gradient-to-l from-error/90 to-error px-5 py-4 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
+                    <AlertTriangle size={20} className="text-on-error" />
+                  </div>
+                  <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
+                </div>
+                <div className="p-5">
+                  <p className="text-sm font-bold text-main dark:text-white">هل أنت متأكد من الحذف؟</p>
+                </div>
+                <div className="flex gap-2 px-5 pb-5">
+                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                  <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+          )}
         </AnimatePresence>
       </div>
     </motion.div>

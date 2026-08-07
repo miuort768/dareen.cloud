@@ -15,11 +15,11 @@ interface TrialSessionCardProps {
     isConverting: boolean;
 }
 
-const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string; border: string }> = {
-    pending: { label: 'بانتظار', dot: 'bg-warning', bg: 'bg-warning/10', text: 'text-warning', border: 'border-warning/20' },
-    completed: { label: 'تمت', dot: 'bg-success', bg: 'bg-success/10', text: 'text-success', border: 'border-success/20' },
-    cancelled: { label: 'ملغية', dot: 'bg-error', bg: 'bg-error/10', text: 'text-error', border: 'border-error/20' },
-    converted: { label: 'تم التحويل', dot: 'bg-info', bg: 'bg-info/10', text: 'text-info', border: 'border-info/20' },
+const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string; darkBg: string; darkText: string }> = {
+    pending: { label: 'بانتظار', dot: 'bg-warning', bg: 'bg-warning/15', text: 'text-warning', darkBg: 'dark:bg-warning/20', darkText: 'dark:text-warning' },
+    completed: { label: 'تمت', dot: 'bg-success', bg: 'bg-success/15', text: 'text-success', darkBg: 'dark:bg-success/20', darkText: 'dark:text-success' },
+    cancelled: { label: 'ملغية', dot: 'bg-error', bg: 'bg-error/15', text: 'text-error', darkBg: 'dark:bg-error/20', darkText: 'dark:text-error' },
+    converted: { label: 'محولة', dot: 'bg-info', bg: 'bg-info/15', text: 'text-info', darkBg: 'dark:bg-info/20', darkText: 'dark:text-info' },
 };
 
 const avatarGradients = [
@@ -69,7 +69,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -2 }}
             onClick={onCardClick}
-            className={cn("bg-card border border-border rounded-2xl overflow-hidden font-dash hover:shadow-elevation-2 transition-all duration-300 group", onCardClick && "cursor-pointer")}
+            className={cn("bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden font-dash hover:shadow-elevation-2 dark:hover:shadow-none transition-all duration-300 group", onCardClick && "cursor-pointer")}
         >
             {/* Clickable body — opens drawer */}
             <div className="p-4 pb-3 cursor-pointer">
@@ -80,8 +80,8 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                             <span className="text-sm font-bold text-white">{t.studentName?.charAt(0) || 'ط'}</span>
                         </div>
                         <div className="min-w-0">
-                            <h3 className="text-xs font-bold text-main leading-tight truncate">{t.studentName}</h3>
-                            <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-bold border mt-0.5", cfg.bg, cfg.text, cfg.border)}>
+                            <h3 className="text-[13px] font-bold text-main dark:text-white leading-tight truncate">{t.studentName}</h3>
+                            <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-bold mt-0.5", cfg.bg, cfg.text, cfg.darkBg, cfg.darkText)}>
                                 <span className={cn("w-1.5 h-1.5 rounded-full", cfg.dot)} />
                                 {cfg.label}
                             </span>
@@ -90,7 +90,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                 </div>
 
                 {/* Row 2: Subject · Date · Time */}
-                <div className="flex items-center gap-2.5 text-[11px] text-muted mb-1.5">
+                <div className="flex items-center gap-2.5 text-[11px] text-muted dark:text-white/40 mb-1.5">
                     {t.subject && (
                         <span className={cn("inline-flex items-center gap-1", getSubjectColor(t.subject))}>
                             <BookOpen size={11} />{t.subject}
@@ -107,12 +107,12 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                 </div>
 
                 {/* Row 3: Phone */}
-                <div className="flex items-center gap-1.5 text-[11px] text-muted mb-1.5">
+                <div className="flex items-center gap-1.5 text-[11px] text-muted dark:text-white/40 mb-1.5">
                     <Phone size={11} className="text-success shrink-0" />
                     <span dir="ltr" className="font-mono">{formatPhone(t.parentPhone)}</span>
                     {t.teacherName && (
                         <>
-                            <span className="text-muted/40 mx-1">·</span>
+                            <span className="text-muted/40 dark:text-white/20 mx-1">·</span>
                             <span>{t.teacherName}</span>
                         </>
                     )}
@@ -123,7 +123,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                     <div
                         className={cn(
                             "rounded-xl text-[11px] transition-all cursor-pointer",
-                            showNotes ? "bg-surface p-3" : ""
+                            showNotes ? "bg-surface dark:bg-white/[0.04] p-3" : ""
                         )}
                         onClick={(e) => { e.stopPropagation(); setShowNotes(!showNotes); }}
                     >
@@ -131,7 +131,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                             <div className="flex items-start gap-2">
                                 <MessageCircle size={13} className="text-warning shrink-0 mt-0.5" />
                                 <div className="min-w-0 flex-1">
-                                    <p className="text-muted leading-relaxed">{t.notes}</p>
+                                    <p className="text-muted dark:text-white/40 leading-relaxed">{t.notes}</p>
                                     <button onClick={(e) => { e.stopPropagation(); setShowNotes(false); }} className="text-[10px] font-bold text-warning mt-1 inline-flex items-center gap-1">
                                         <ChevronUp size={10} />أقل
                                     </button>
@@ -140,7 +140,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                         ) : (
                             <div className="flex items-center gap-1.5 text-warning">
                                 <MessageCircle size={12} />
-                                <span className="text-muted line-clamp-1">{t.notes}</span>
+                                <span className="text-muted dark:text-white/40 line-clamp-1">{t.notes}</span>
                                 <ChevronDown size={10} className="shrink-0" />
                             </div>
                         )}
@@ -149,7 +149,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
             </div>
 
             {/* Action buttons row */}
-            <div className="flex items-center gap-px bg-border/30 border-t border-border/50" role="toolbar" aria-label="إجراءات الحصة">
+            <div className="flex items-center gap-px bg-border/30 dark:bg-white/[0.02] border-t border-border/50 dark:border-white/[0.04]" role="toolbar" aria-label="إجراءات الحصة">
                 {onCall && (
                     <button onClick={(e) => { e.stopPropagation(); onCall(t.parentPhone); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-success hover:bg-success/10 transition-colors active:bg-success/20" aria-label="اتصال">
                         <Phone size={12} /> اتصال
@@ -165,7 +165,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                         <CheckCheck size={12} /> تم
                     </button>
                 )}
-                <button onClick={(e) => { e.stopPropagation(); onEdit(t); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-muted hover:bg-surface transition-colors active:bg-hover" aria-label="تعديل">
+                <button onClick={(e) => { e.stopPropagation(); onEdit(t); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-muted dark:text-white/40 hover:bg-surface dark:hover:bg-white/[0.04] transition-colors active:bg-hover" aria-label="تعديل">
                     <Pencil size={12} /> تعديل
                 </button>
                 <button onClick={(e) => { e.stopPropagation(); onDelete(t.id); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-error hover:bg-error/10 transition-colors active:bg-error/20" aria-label="حذف">

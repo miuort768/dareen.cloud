@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { X } from 'lucide-react';
+import { X, CalendarDays } from 'lucide-react';
 
 interface TrialSessionForm {
     studentName: string;
@@ -22,35 +22,92 @@ interface TrialSessionFormModalProps {
     onClose: () => void;
 }
 
+const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-white rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
+const labelClass = "text-[11px] font-bold text-muted dark:text-white/40 mb-1.5 block";
+
 export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onChange, onSubmit, onClose }: TrialSessionFormModalProps) => (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" dir="rtl">
-        <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="bg-card shadow-elevation-2 w-full max-w-lg border border-border rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
-            <div className="bg-gradient-to-l from-primary via-primary-dark/90 to-primary-dark px-5 py-4 flex items-center justify-between">
-                <h3 className="text-sm font-bold text-on-primary">{editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}</h3>
-                <button onClick={onClose} className="w-7 h-7 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary rounded-xl transition-all" aria-label="إغلاق"><X size={16} /></button>
+    <>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] bg-black/50 dark:bg-black/70 backdrop-blur-sm" onClick={onClose} />
+        <motion.div
+            initial={{ y: '100%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: '100%', opacity: 0 }}
+            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            className="fixed inset-x-0 bottom-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-[210] md:w-full md:max-w-lg max-h-[90vh] md:max-h-[85vh] bg-card dark:bg-[#0a0e27] md:border md:border-border dark:md:border-white/[0.06] md:shadow-2xl md:rounded-2xl flex flex-col overflow-hidden"
+            dir="rtl"
+        >
+            {/* Drag handle — mobile only */}
+            <div className="md:hidden flex justify-center pt-3 pb-1 shrink-0">
+                <div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full" />
             </div>
-            <form onSubmit={onSubmit} className="p-5 space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div><label className="text-xs text-muted mb-1 block">اسم الطالب</label><input required value={form.studentName} onChange={e => onChange({ ...form, studentName: e.target.value })} className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
-                    <div><label className="text-xs text-muted mb-1 block">رقم ولي الأمر</label><input required value={form.parentPhone} onChange={e => onChange({ ...form, parentPhone: e.target.value })} className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
-                    <div><label className="text-xs text-muted mb-1 block">المادة</label><input value={form.subject} onChange={e => onChange({ ...form, subject: e.target.value })} className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
-                    <div><label className="text-xs text-muted mb-1 block">المعلمة</label>
+
+            {/* Header */}
+            <div className="shrink-0 px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
+                <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-[#6366f1]/10 dark:to-[#8b5cf6]/5" />
+                <div className="relative z-10 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-[#6366f1]/15">
+                        <CalendarDays size={18} className="text-primary dark:text-[#a5b4fc]" />
+                    </div>
+                    <div>
+                        <h2 className="text-sm font-bold text-main dark:text-white">{editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}</h2>
+                        <p className="text-[10px] text-muted/60 dark:text-white/30 mt-0.5">أدخل بيانات الحصة التجريبية</p>
+                    </div>
+                </div>
+                <button onClick={onClose} className="relative z-10 w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="إغلاق">
+                    <X size={14} className="text-muted dark:text-white/50" />
+                </button>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={onSubmit} className="flex-1 overflow-y-auto p-5 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                        <label className={labelClass}>اسم الطالب</label>
+                        <input required value={form.studentName} onChange={e => onChange({ ...form, studentName: e.target.value })} className={inputClass} placeholder="مثال: أم أحمد" />
+                    </div>
+                    <div className="space-y-1">
+                        <label className={labelClass}>رقم ولي الأمر</label>
+                        <input required value={form.parentPhone} onChange={e => onChange({ ...form, parentPhone: e.target.value })} className={inputClass} placeholder="05XXXXXXXX" dir="ltr" style={{ textAlign: 'right' }} />
+                    </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                        <label className={labelClass}>المادة</label>
+                        <input value={form.subject} onChange={e => onChange({ ...form, subject: e.target.value })} className={inputClass} placeholder="مثال: رياضيات" />
+                    </div>
+                    <div className="space-y-1">
+                        <label className={labelClass}>المعلمة</label>
                         <select value={form.teacherName} onChange={e => {
                             const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
                             onChange({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
-                        }} aria-label="اختيار المعلمة" className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all appearance-none">
+                        }} aria-label="اختيار المعلمة" className={inputClass}>
                             <option value="">اختر معلمة</option>
                             {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => (
                                 <option key={t.id} value={t.name}>{t.name}</option>
                             ))}
                         </select>
                     </div>
-                    <div><label className="text-xs text-muted mb-1 block">التاريخ</label><input type="date" required value={form.date} onChange={e => onChange({ ...form, date: e.target.value })} className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
-                    <div><label className="text-xs text-muted mb-1 block">الوقت</label><input type="time" value={form.time} onChange={e => onChange({ ...form, time: e.target.value })} className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-xs text-main focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" /></div>
                 </div>
-                <div><label className="text-xs text-muted mb-1 block">ملاحظات</label><textarea value={form.notes} onChange={e => onChange({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-surface border border-border rounded-xl text-xs text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all resize-none" /></div>
-                <button type="submit" disabled={isSaving} className="w-full py-3 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">{isSaving ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}</button>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                        <label className={labelClass}>التاريخ</label>
+                        <input type="date" required value={form.date} onChange={e => onChange({ ...form, date: e.target.value })} className={inputClass} />
+                    </div>
+                    <div className="space-y-1">
+                        <label className={labelClass}>الوقت</label>
+                        <input type="time" value={form.time} onChange={e => onChange({ ...form, time: e.target.value })} className={inputClass} />
+                    </div>
+                </div>
+                <div className="space-y-1">
+                    <label className={labelClass}>ملاحظات</label>
+                    <textarea value={form.notes} onChange={e => onChange({ ...form, notes: e.target.value })} rows={2} className={inputClass + " resize-none"} placeholder="اكتب أي تفاصيل..." />
+                </div>
+                <div className="flex gap-3 pt-2 pb-4">
+                    <button type="submit" disabled={isSaving} className="flex-1 py-3.5 bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary text-[13px] font-bold rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20">
+                        {isSaving ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}
+                    </button>
+                    <button type="button" onClick={onClose} className="flex-1 py-3.5 text-[11px] font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                </div>
             </form>
         </motion.div>
-    </motion.div>
+    </>
 );
