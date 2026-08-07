@@ -7,7 +7,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost } from '../../data/blogPosts';
-import { MessageCircle, Send, Download, Zap, FileText } from 'lucide-react';
+import { MessageCircle, Send, Download, Zap, FileText, BookOpen } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
 import { useAcademyName } from '../../context/AppContext';
