@@ -6,6 +6,7 @@ import { useLogin, useAcademyName } from '../context/AppContext';
 import { useAuthStore } from '../store/authStore';
 import { useSettingsStore } from '../store/settingsStore';
 import { SEO } from '../components/SEO';
+import { MobileHeader } from '../components/public/MobileHeader';
 import { cn } from '../lib/utils';
 
 export const Login = () => {
@@ -59,10 +60,12 @@ export const Login = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-background font-sans flex items-center justify-center">
+        <div className="min-h-screen bg-white dark:bg-background font-sans flex items-center justify-center relative">
             <SEO title="تسجيل الدخول" description="تسجيل دخول الطلاب والمعلمين وأولياء الأمور إلى منصة دارين السابعة" url="https://dareen.cloud/login" image="/dareen_logo_new.jpg" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'تسجيل الدخول', item: '/login' }]} />
 
-            <div className="w-full max-w-sm px-4">
+            <MobileHeader hideThemeToggle />
+
+            <div className="w-full max-w-sm px-4 pt-16 md:pt-0">
                 <div className="mb-8 text-center">
                     <h1 className="text-2xl font-black text-main mb-2 font-heading">تسجيل الدخول</h1>
                     <p className="text-muted text-sm font-medium">أدخل بياناتك للوصول إلى حسابك</p>
