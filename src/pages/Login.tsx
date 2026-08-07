@@ -166,7 +166,7 @@ export const Login = () => {
                     <div className="mt-6 lg:mt-8 flex flex-col items-center gap-3">
                         <Link
                             to="/"
-                            className="text-sm lg:text-base text-warning-dark hover:text-warning transition-colors flex items-center gap-2 font-bold"
+                            className="text-sm lg:text-base text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-bold"
                         >
                             <ArrowRight size={16} />
                             <span>العودة للرئيسية</span>
@@ -182,6 +182,7 @@ export const Login = () => {
                                 <Headphones size={18} />
                                 <span>الدعم الفني</span>
                             </a>
+                            <p className="text-main text-xs lg:text-sm font-medium text-center mt-3">لديك مشكلة؟ تواصل مع الدعم</p>
                         </div>
                     </div>
                 </div>
