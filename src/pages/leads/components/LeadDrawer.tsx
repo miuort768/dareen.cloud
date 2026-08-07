@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, Phone, MessageSquare, CheckCircle2, Edit3, UserPlus, Tag, Calendar, AlertTriangle, Save } from 'lucide-react';
+import { X, Phone, MessageSquare, CheckCircle2, Edit3, UserPlus, Tag, Calendar, AlertTriangle, Save, Clock, ChevronLeft } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
@@ -47,8 +47,8 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
     return events.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
 
-const inputClass = "w-full bg-surface border border-border rounded-xl px-3 py-2 text-xs font-bold text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all";
-const labelClass = "text-[10px] font-bold text-muted mb-1 block";
+const inputClass = "w-full bg-surface border border-border rounded-xl px-3 py-2.5 text-sm font-bold text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all";
+const labelClass = "text-xs font-bold text-muted mb-1.5 block";
 
 export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawerProps) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -97,52 +97,65 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                         className="fixed inset-0 z-[600] flex items-center justify-center p-4 pointer-events-none"
                         dir="rtl"
                     >
-                        <div className="w-full max-w-lg max-h-[85vh] bg-card border border-border shadow-elevation-3 rounded-2xl flex flex-col pointer-events-auto">
+                        <div className="w-full max-w-lg max-h-[85vh] bg-card border border-border shadow-elevation-3 rounded-2xl flex flex-col pointer-events-auto overflow-hidden">
 
-                            {/* Header */}
-                            <div className="shrink-0 px-5 py-4 border-b border-border">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center gap-3">
-                                        <GradientAvatar name={lead.studentName || 'ع'} size="md" />
-                                        <div>
-                                            <h2 className="text-sm font-bold text-main">{lead.studentName || 'عميل بدون اسم'}</h2>
-                                            <div className="flex items-center gap-2 mt-0.5">
-                                                <span className={cn('text-[10px] font-medium', age.color)}>{age.text}</span>
-                                                {lead.source && (
-                                                    <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-0.5 rounded">{lead.source}</span>
-                                                )}
+                            {/* Header with gradient */}
+                            <div className="shrink-0 bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-5 relative overflow-hidden">
+                                <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
+                                <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-white/5 rounded-full blur-2xl" />
+
+                                <div className="relative z-10">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="ring-2 ring-white/20 rounded-2xl">
+                                                <GradientAvatar name={lead.studentName || 'ع'} size="lg" />
+                                            </div>
+                                            <div>
+                                                <h2 className="text-base font-bold text-white">{lead.studentName || 'عميل بدون اسم'}</h2>
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    <span className="flex items-center gap-1 text-[10px] font-medium text-white/60">
+                                                        <Clock size={10} />
+                                                        {age.text}
+                                                    </span>
+                                                    {lead.source && (
+                                                        <span className="text-[10px] font-medium text-white/80 bg-white/15 px-2 py-0.5 rounded-md">{lead.source}</span>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
+                                        <button ref={closeRef} onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl transition-all" aria-label="إغلاق">
+                                            <X size={16} className="text-white" />
+                                        </button>
                                     </div>
-                                    <button ref={closeRef} onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-error rounded-xl hover:bg-error-hover transition-all" aria-label="إغلاق">
-                                        <X size={16} className="text-on-error" />
-                                    </button>
-                                </div>
 
-                                <div className="flex items-center gap-2">
-                                    <select
-                                        className={cn('px-2.5 py-1 text-xs font-bold border-0 outline-none cursor-pointer rounded-lg', statusCfg.bg, statusCfg.color)}
-                                        value={lead.status}
-                                        aria-label="حالة العميل"
-                                        onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
-                                    >
-                                        {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
-                                             <option key={key} value={key}>{statusColors[key].label}</option>
-                                         ))}
-                                    </select>
-                                    <span className={cn('inline-flex items-center px-2.5 py-1 text-xs font-bold rounded-lg', priority.bg, priority.color)}>
-                                        {priority.label}
-                                    </span>
+                                    <div className="flex items-center gap-2">
+                                        <select
+                                            className={cn('px-2.5 py-1.5 text-xs font-bold border border-white/20 outline-none cursor-pointer rounded-lg bg-white/10 text-white backdrop-blur-sm')}
+                                            value={lead.status}
+                                            aria-label="حالة العميل"
+                                            onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
+                                        >
+                                            {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
+                                                <option key={key} value={key} className="text-main bg-card">{statusColors[key].label}</option>
+                                            ))}
+                                        </select>
+                                        <span className="inline-flex items-center px-2.5 py-1.5 text-xs font-bold rounded-lg bg-white/10 text-white border border-white/20">
+                                            {priority.label}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Content */}
                             <div className="flex-1 overflow-y-auto custom-scrollbar">
+                                {/* Data Section */}
                                 <div className="px-5 py-4 border-b border-border">
                                     <div className="flex items-center justify-between mb-3">
                                         <h3 className="text-xs font-bold text-muted">البيانات</h3>
                                         {!isEditing && (
-                                            <button onClick={() => setIsEditing(true)} className="text-[10px] font-bold text-primary hover:text-primary-hover transition-colors">تعديل</button>
+                                            <button onClick={() => setIsEditing(true)} className="flex items-center gap-1 text-[11px] font-bold text-primary hover:text-primary-hover transition-colors">
+                                                <Edit3 size={12} /> تعديل
+                                            </button>
                                         )}
                                     </div>
 
@@ -165,40 +178,62 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                                                 <textarea value={editData.notes} onChange={(e) => setEditData({ ...editData, notes: e.target.value })} rows={3} className={cn(inputClass, "resize-none")} />
                                             </div>
                                             <div className="flex gap-2 pt-1">
-                                                <button onClick={handleSave} className="flex items-center gap-1.5 px-4 py-2 bg-primary text-on-primary text-xs font-bold rounded-xl hover:bg-primary-hover transition-all">
+                                                <button onClick={handleSave} className="flex items-center gap-1.5 px-4 py-2.5 bg-primary text-on-primary text-xs font-bold rounded-xl hover:bg-primary-hover transition-all active:scale-95">
                                                     <Save size={14} /> حفظ
                                                 </button>
-                                                <button onClick={() => { setIsEditing(false); setEditData({ phone: lead.phone, subject: lead.subject, curriculum: lead.curriculum || '', notes: lead.notes || '' }); }} className="px-4 py-2 bg-surface text-muted text-xs font-bold rounded-xl hover:bg-hover transition-all">
+                                                <button onClick={() => { setIsEditing(false); setEditData({ phone: lead.phone, subject: lead.subject, curriculum: lead.curriculum || '', notes: lead.notes || '' }); }} className="px-4 py-2.5 bg-surface text-muted text-xs font-bold rounded-xl hover:bg-hover transition-all">
                                                     إلغاء
                                                 </button>
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="space-y-3">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center shrink-0 ring-1 ring-success/20"><Phone size={14} className="text-success" /></div>
-                                                <div className="min-w-0"><p className="text-[10px] text-muted">الهاتف</p><p onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="text-sm font-bold text-main font-mono hover:text-success cursor-pointer transition-colors">{lead.phone}</p></div>
+                                        <div className="space-y-2.5">
+                                            <div className="flex items-center gap-3 bg-surface border border-border rounded-xl p-3">
+                                                <div className="w-9 h-9 rounded-xl bg-success-soft flex items-center justify-center shrink-0">
+                                                    <Phone size={15} className="text-success" />
+                                                </div>
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="text-[10px] text-muted mb-0.5">الهاتف</p>
+                                                    <p onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="text-sm font-bold text-main font-mono hover:text-success cursor-pointer transition-colors">{lead.phone}</p>
+                                                </div>
+                                                <ChevronLeft size={14} className="text-muted/30" />
                                             </div>
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-xl bg-info-soft flex items-center justify-center shrink-0 ring-1 ring-info/20"><Tag size={14} className="text-info" /></div>
-                                                <div className="min-w-0"><p className="text-[10px] text-muted">المادة</p><p className="text-sm font-bold text-main">{lead.subject}</p></div>
+                                            <div className="flex items-center gap-3 bg-surface border border-border rounded-xl p-3">
+                                                <div className="w-9 h-9 rounded-xl bg-info-soft flex items-center justify-center shrink-0">
+                                                    <Tag size={15} className="text-info" />
+                                                </div>
+                                                <div className="min-w-0 flex-1">
+                                                    <p className="text-[10px] text-muted mb-0.5">المادة</p>
+                                                    <p className="text-sm font-bold text-main">{lead.subject}</p>
+                                                </div>
                                             </div>
                                             {lead.curriculum && (
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-xl bg-warning-soft flex items-center justify-center shrink-0 ring-1 ring-warning/20"><Tag size={14} className="text-warning" /></div>
-                                                    <div className="min-w-0"><p className="text-[10px] text-muted">المنهج</p><p className="text-sm font-bold text-main">{lead.curriculum}</p></div>
+                                                <div className="flex items-center gap-3 bg-surface border border-border rounded-xl p-3">
+                                                    <div className="w-9 h-9 rounded-xl bg-warning-soft flex items-center justify-center shrink-0">
+                                                        <Tag size={15} className="text-warning" />
+                                                    </div>
+                                                    <div className="min-w-0 flex-1">
+                                                        <p className="text-[10px] text-muted mb-0.5">المنهج</p>
+                                                        <p className="text-sm font-bold text-main">{lead.curriculum}</p>
+                                                    </div>
                                                 </div>
                                             )}
                                             {lead.parentName && (
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-xl bg-primary-soft flex items-center justify-center shrink-0 ring-1 ring-primary/20"><UserPlus size={14} className="text-primary" /></div>
-                                                    <div className="min-w-0"><p className="text-[10px] text-muted">ولي الأمر</p><p className="text-sm font-bold text-main">{lead.parentName}</p></div>
+                                                <div className="flex items-center gap-3 bg-surface border border-border rounded-xl p-3">
+                                                    <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center shrink-0">
+                                                        <UserPlus size={15} className="text-primary" />
+                                                    </div>
+                                                    <div className="min-w-0 flex-1">
+                                                        <p className="text-[10px] text-muted mb-0.5">ولي الأمر</p>
+                                                        <p className="text-sm font-bold text-main">{lead.parentName}</p>
+                                                    </div>
                                                 </div>
                                             )}
                                         </div>
                                     )}
                                 </div>
 
+                                {/* Notes */}
                                 {lead.notes && !isEditing && (
                                     <div className="px-5 py-4 border-b border-border">
                                         <h3 className="text-xs font-bold text-muted mb-2">ملاحظات</h3>
@@ -206,6 +241,7 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                                     </div>
                                 )}
 
+                                {/* Timeline */}
                                 <div className="px-5 py-4">
                                     <h3 className="text-xs font-bold text-muted mb-3">السجل</h3>
                                     <div className="space-y-0">
@@ -227,18 +263,18 @@ export const LeadDrawer = ({ lead, isOpen, onClose, updateMutation }: LeadDrawer
                             </div>
 
                             {/* Footer Actions */}
-                            <div className="shrink-0 border-t border-border px-5 py-3">
+                            <div className="shrink-0 border-t border-border px-4 py-3">
                                 <div className="grid grid-cols-4 gap-2">
-                                    <button onClick={() => window.open(`tel:${lead.phone}`)} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success/10 text-success hover:bg-success/20 transition-all">
+                                    <button onClick={() => window.open(`tel:${lead.phone}`)} className="flex flex-col items-center gap-1.5 py-2.5 rounded-xl bg-success/10 text-success hover:bg-success/20 border border-success/15 transition-all active:scale-95">
                                         <Phone size={16} /><span className="text-[10px] font-bold">اتصال</span>
                                     </button>
-                                    <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-success/10 text-success hover:bg-success/20 transition-all">
+                                    <button onClick={() => window.open(`https://wa.me/${lead.phone}`, '_blank')} className="flex flex-col items-center gap-1.5 py-2.5 rounded-xl bg-success/10 text-success hover:bg-success/20 border border-success/15 transition-all active:scale-95">
                                         <MessageSquare size={16} /><span className="text-[10px] font-bold">واتساب</span>
                                     </button>
-                                    <button onClick={() => { updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); onClose(); }} className="flex flex-col items-center gap-1 py-2 rounded-xl bg-info/10 text-info hover:bg-info/20 transition-all">
+                                    <button onClick={() => { updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); onClose(); }} className="flex flex-col items-center gap-1.5 py-2.5 rounded-xl bg-info/10 text-info hover:bg-info/20 border border-info/15 transition-all active:scale-95">
                                         <CheckCircle2 size={16} /><span className="text-[10px] font-bold">تحويل</span>
                                     </button>
-                                    <button onClick={() => setIsEditing(true)} className={cn("flex flex-col items-center gap-1 py-2 rounded-xl transition-all", isEditing ? "bg-primary/10 text-primary" : "bg-surface hover:bg-hover")}>
+                                    <button onClick={() => setIsEditing(true)} className={cn("flex flex-col items-center gap-1.5 py-2.5 rounded-xl border transition-all active:scale-95", isEditing ? "bg-primary/10 text-primary border-primary/15" : "bg-surface hover:bg-hover border-border")}>
                                         <Edit3 size={16} className={isEditing ? "text-primary" : "text-muted"} /><span className={cn("text-[10px] font-bold", isEditing ? "text-primary" : "text-muted")}>تعديل</span>
                                     </button>
                                 </div>
