@@ -81,7 +81,7 @@ export const Login = () => {
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-l from-white/80 via-white/50 to-transparent dark:from-background/80 dark:via-background/50 dark:to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-l from-white/95 via-white/80 to-white/20 dark:from-background/95 dark:via-background/80 dark:to-background/20" />
             </div>
 
             {/* Form — Centered on both */}
