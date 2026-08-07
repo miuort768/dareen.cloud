@@ -241,42 +241,42 @@ export const Leads = () => {
                     <div className="p-4 lg:p-5 border-b border-border">
                         <div className="flex items-center gap-3">
                             <div className="relative flex-1">
-                                <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted" />
+                                <Search size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted" />
                                 <input
                                     type="text"
                                     placeholder="ابحث بالاسم، الهاتف، المادة..."
                                     aria-label="بحث عن عميل"
-                                    className="w-full bg-surface border border-border rounded-xl pr-10 pl-3 py-2.5 text-xs text-main placeholder:text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                                    className="w-full h-11 bg-surface border border-border rounded-xl pr-10 pl-10 text-sm text-main placeholder:text-muted outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 {searchTerm && (
-                                    <button aria-label="مسح البحث" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted hover:text-main transition-colors">
+                                    <button aria-label="مسح البحث" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted hover:text-main hover:bg-hover rounded-lg transition-all">
                                         <X size={14} />
                                     </button>
                                 )}
                             </div>
-                            <div className="text-xs text-muted shrink-0">
-                                <span className="font-bold text-main">{filteredLeads.length}</span> عميل
+                            <div className="shrink-0 bg-surface border border-border rounded-xl px-3 py-2.5">
+                                <span className="text-sm font-bold text-main">{filteredLeads.length}</span>
+                                <span className="text-xs text-muted me-1">عميل</span>
                             </div>
                         </div>
 
                         {/* Filter pills */}
-                        <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-none mt-3">
+                        <div className="flex items-center gap-2 overflow-x-auto pb-0.5 scrollbar-none mt-3">
                             <button
                                 onClick={() => setFilterStatus('all')}
                                 className={cn(
-                                    'shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full border transition-all',
+                                    'shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition-all',
                                     filterStatus === 'all'
-                                        ? 'bg-primary text-on-primary border-primary'
-                                        : 'bg-card text-muted border-border hover:border-border hover:text-main'
+                                        ? 'bg-primary text-on-primary border-primary shadow-sm shadow-primary/20'
+                                        : 'bg-surface text-muted border-border hover:border-primary/30 hover:text-main'
                                 )}
                             >
-                                <BarChart3 size={12} />
                                 الكل
                                 <span className={cn(
-                                    'text-[10px] px-1.5 py-px rounded-full',
-                                    filterStatus === 'all' ? 'bg-white/15 text-on-primary' : 'bg-surface text-muted'
+                                    'text-[10px] px-1.5 py-0.5 rounded-lg min-w-[20px] text-center',
+                                    filterStatus === 'all' ? 'bg-white/20 text-on-primary' : 'bg-card text-muted border border-border'
                                 )}>{statusCounts.all}</span>
                             </button>
                             {StatusKeys.map((key) => {
@@ -288,17 +288,17 @@ export const Leads = () => {
                                         key={key}
                                         onClick={() => setFilterStatus(key)}
                                         className={cn(
-                                            'shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full border transition-all',
+                                            'shrink-0 inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl border transition-all',
                                             isActive
-                                                ? `${cfg.bg} ${cfg.color} border-current/30`
-                                                : 'bg-card text-muted border-border hover:border-border hover:text-main'
+                                                ? `${cfg.bg} ${cfg.color} border-current/20 shadow-sm`
+                                                : 'bg-surface text-muted border-border hover:border-primary/30 hover:text-main'
                                         )}
                                     >
                                         {Icon && <Icon size={12} />}
                                         {cfg.label}
                                         <span className={cn(
-                                            'text-[10px] px-1.5 py-px rounded-full',
-                                            isActive ? `${cfg.bg} border border-current/20` : 'bg-surface text-muted'
+                                            'text-[10px] px-1.5 py-0.5 rounded-lg min-w-[20px] text-center',
+                                            isActive ? 'bg-white/50 border border-current/10' : 'bg-card text-muted border border-border'
                                         )}>{statusCounts[key]}</span>
                                     </button>
                                 );

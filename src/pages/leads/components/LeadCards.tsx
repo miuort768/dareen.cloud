@@ -1,5 +1,5 @@
 import { cn } from '../../../lib/utils';
-import { Phone, MessageSquare, CheckCircle2, Trash2, Search, FileText } from 'lucide-react';
+import { Phone, MessageSquare, CheckCircle2, Trash2, Search, FileText, ChevronLeft } from 'lucide-react';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
 import { GradientAvatar, StatusChip, getPriority, ActionBtn, statusColors } from './LeadsUI';
 
@@ -27,47 +27,41 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                             <div
                                 key={lead.id}
                                 onClick={() => onLeadClick(lead)}
-                                className="bg-card border border-border rounded-2xl active:scale-[0.98] transition-all cursor-pointer overflow-hidden hover:shadow-sm"
+                                className="bg-card border border-border rounded-2xl active:scale-[0.98] transition-all cursor-pointer overflow-hidden hover:shadow-sm group"
                                 style={{ animationDelay: `${idx * 30}ms` }}
                             >
                                 {/* Header */}
-                                <div className="flex items-center justify-between px-4 pt-4 pb-2">
+                                <div className="flex items-center justify-between px-4 pt-4 pb-3">
                                     <div className="flex items-center gap-3 min-w-0 flex-1">
                                         <GradientAvatar name={lead.studentName || 'ع'} size="md" />
                                         <div className="min-w-0 flex-1">
                                             <h4 className="font-bold text-sm text-main leading-tight truncate">
                                                 {lead.studentName || 'عميل بدون اسم'}
                                             </h4>
-                                            <div className="flex items-center gap-1.5 mt-0.5">
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <span className="text-xs text-muted font-mono">{lead.phone}</span>
                                                 {lead.source && (
-                                                    <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-0.5 rounded">{lead.source}</span>
-                                                )}
-                                                {lead.notes && (
-                                                    <span className="shrink-0" title={lead.notes}>
-                                                        <FileText size={11} className="text-warning" />
-                                                    </span>
+                                                    <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-0.5 rounded-md">{lead.source}</span>
                                                 )}
                                             </div>
                                         </div>
                                     </div>
-                                    <StatusChip status={lead.status as LeadStatus} size="sm" />
+                                    <ChevronLeft size={16} className="text-muted/30 group-hover:text-muted transition-colors shrink-0" />
                                 </div>
 
-                                {/* Info row */}
-                                <div className="px-4 pb-3 flex items-center flex-wrap gap-x-3 gap-y-1 text-xs text-muted">
-                                    <span
-                                        onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }}
-                                        className="font-mono hover:text-success cursor-pointer transition-colors"
-                                    >
-                                        {lead.phone}
+                                {/* Info chips */}
+                                <div className="px-4 pb-3 flex items-center gap-2 flex-wrap">
+                                    <StatusChip status={lead.status as LeadStatus} size="sm" />
+                                    <span className={cn(
+                                        'inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold rounded-md border',
+                                        priority.bg, priority.color, 'border-current/10'
+                                    )}>
+                                        <span className={cn('w-1.5 h-1.5 rounded-full', lead.priority === 'high' ? 'bg-error' : lead.priority === 'medium' ? 'bg-warning' : 'bg-muted')} />
+                                        {priority.label}
                                     </span>
-                                    <span className="text-muted/30">·</span>
-                                    <span>{lead.subject}</span>
+                                    <span className="text-[11px] text-muted bg-surface border border-border px-2 py-0.5 rounded-md">{lead.subject}</span>
                                     {lead.curriculum && (
-                                        <>
-                                            <span className="text-muted/30">·</span>
-                                            <span>{lead.curriculum}</span>
-                                        </>
+                                        <span className="text-[11px] text-muted bg-surface border border-border px-2 py-0.5 rounded-md">{lead.curriculum}</span>
                                     )}
                                 </div>
 
@@ -78,33 +72,25 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                                     </div>
                                 )}
 
-                                {/* Footer */}
-                                <div className="border-t border-border px-4 py-3">
-                                    <div className="flex items-center justify-between gap-2">
-                                        <div className="flex items-center gap-1.5">
-                                            <span className={cn('inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold rounded-lg', priority.bg, priority.color)}>
-                                                {lead.priority === 'high' ? <span className="w-1.5 h-1.5 rounded-full bg-error inline-block" /> : lead.priority === 'medium' ? <span className="w-1.5 h-1.5 rounded-full bg-warning inline-block" /> : <span className="w-1.5 h-1.5 rounded-full bg-muted inline-block" />}
-                                                {priority.label}
-                                            </span>
-                                            <select
-                                                className="px-2 py-0.5 text-[10px] font-bold border-0 outline-none cursor-pointer rounded-lg bg-surface transition-all"
-                                                value={lead.status}
-                                                aria-label="حالة العميل"
-                                                onChange={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } }); }}
-                                                onClick={(e) => e.stopPropagation()}
-                                            >
-                                                {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
-                                                    <option key={key} value={key}>{statusColors[key].label}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div className="flex items-center gap-1">
-                                            <ActionBtn onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} icon={Phone} label="اتصال" color="success" />
-                                            <ActionBtn onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} icon={MessageSquare} label="واتساب" color="success" />
-                                            <ActionBtn onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }} icon={CheckCircle2} label="تم" color="info" />
-                                            <ActionBtn onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }} icon={Trash2} label="حذف" color="error" />
-                                        </div>
+                                {/* Actions footer */}
+                                <div className="border-t border-border px-3 py-2.5 flex items-center justify-between">
+                                    <div className="flex items-center gap-1">
+                                        <ActionBtn onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} icon={Phone} label="اتصال" color="success" />
+                                        <ActionBtn onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} icon={MessageSquare} label="واتساب" color="success" />
+                                        <ActionBtn onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }} icon={CheckCircle2} label="تم" color="info" />
+                                        <ActionBtn onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }} icon={Trash2} label="حذف" color="error" />
                                     </div>
+                                    <select
+                                        className="px-2 py-1 text-[10px] font-bold border border-border outline-none cursor-pointer rounded-lg bg-surface transition-all text-main"
+                                        value={lead.status}
+                                        aria-label="حالة العميل"
+                                        onChange={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } }); }}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
+                                            <option key={key} value={key}>{statusColors[key].label}</option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                         );

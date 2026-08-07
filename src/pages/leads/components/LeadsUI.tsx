@@ -113,9 +113,9 @@ export const StatusChip = ({ status, size = 'sm' }: { status: LeadStatus; size?:
     const Icon = statusIconComponents[status];
     return (
         <span className={cn(
-            'inline-flex items-center gap-1 font-bold rounded-full border transition-all',
-            size === 'sm' ? 'px-2 py-0.5 text-[10px]' : 'px-3 py-1 text-xs',
-            cfg.bg, cfg.color, 'border-current/15'
+            'inline-flex items-center gap-1 font-bold rounded-lg border border-current/10 transition-all',
+            size === 'sm' ? 'px-2 py-0.5 text-[10px]' : 'px-2.5 py-1 text-xs',
+            cfg.bg, cfg.color,
         )}>
             <span className={cn('w-1.5 h-1.5 rounded-full', cfg.dot)} />
             {Icon && <Icon size={10} />}
@@ -154,11 +154,11 @@ export const ActionBtn = ({ onClick, icon: Icon, label, color = 'success', title
     title?: string;
 }) => {
     const colorMap = {
-        success: 'bg-success/10 text-success hover:bg-success/20 active:bg-success/30',
-        error: 'bg-error/10 text-error hover:bg-error/20 active:bg-error/30',
-        info: 'bg-info/10 text-info hover:bg-info/20 active:bg-info/30',
-        warning: 'bg-warning/10 text-warning hover:bg-warning/20 active:bg-warning/30',
-        primary: 'bg-primary/10 text-primary hover:bg-primary/20 active:bg-primary/30',
+        success: 'bg-success/10 text-success hover:bg-success/20 border-success/20',
+        error: 'bg-error/10 text-error hover:bg-error/20 border-error/20',
+        info: 'bg-info/10 text-info hover:bg-info/20 border-info/20',
+        warning: 'bg-warning/10 text-warning hover:bg-warning/20 border-warning/20',
+        primary: 'bg-primary/10 text-primary hover:bg-primary/20 border-primary/20',
     };
     return (
         <button
@@ -166,8 +166,8 @@ export const ActionBtn = ({ onClick, icon: Icon, label, color = 'success', title
             title={title || label}
             aria-label={title || label}
             className={cn(
-                'inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[10px] font-bold rounded-lg transition-all',
-                'sm:opacity-70 sm:hover:opacity-100 active:scale-95',
+                'inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[10px] font-bold rounded-lg border transition-all',
+                'sm:opacity-60 sm:group-hover:opacity-100 active:scale-95',
                 colorMap[color],
             )}
         >
