@@ -263,14 +263,14 @@ export const Leads = () => {
                         <div className="grid grid-cols-3 sm:flex sm:items-center sm:gap-2 sm:overflow-x-auto sm:pb-0.5 sm:scrollbar-none mt-3 gap-2">
                             <motion.button whileTap={{ scale: 0.95 }} onClick={() => setFilterStatus('all')}
                                 className={cn(
-                                    'inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-[11px] font-bold rounded-xl border transition-all duration-200',
+                                    'inline-flex items-center justify-center gap-1.5 px-3 py-2 text-[10px] font-bold rounded-xl border transition-all duration-200',
                                     filterStatus === 'all'
                                         ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary border-primary/30 dark:border-[#6366f1]/30 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20'
                                         : 'bg-surface dark:bg-white/[0.04] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                                 )}>
                                 الكل
                                 <span className={cn(
-                                    'text-[9px] px-1.5 py-0.5 rounded-md min-w-[18px] text-center font-bold',
+                                    'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
                                     filterStatus === 'all' ? 'bg-white/20' : 'bg-card dark:bg-white/5 text-muted dark:text-white/30 border border-border dark:border-white/[0.06]'
                                 )}>{statusCounts.all}</span>
                             </motion.button>
@@ -281,16 +281,16 @@ export const Leads = () => {
                                 return (
                                     <motion.button key={key} whileTap={{ scale: 0.95 }} onClick={() => setFilterStatus(key)}
                                         className={cn(
-                                            'inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-[11px] font-bold rounded-xl border transition-all duration-200',
+                                            'inline-flex items-center justify-center gap-1.5 px-3 py-2 text-[10px] font-bold rounded-xl border transition-all duration-200',
                                             isActive
                                                 ? `${cfg.bg} ${cfg.color} ${cfg.darkBg} ${cfg.darkText} border-current/15 shadow-md shadow-current/10`
-                                                : 'bg-surface dark:bg-white/[0.04] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                                                : `${cfg.bg} ${cfg.color} ${cfg.darkBg} ${cfg.darkText} border-transparent opacity-60 hover:opacity-100`
                                         )}>
-                                        {Icon && <Icon size={11} />}
+                                        {Icon && <Icon size={10} />}
                                         {cfg.label}
                                         <span className={cn(
-                                            'text-[9px] px-1.5 py-0.5 rounded-md min-w-[18px] text-center font-bold',
-                                            isActive ? 'bg-white/50 dark:bg-white/10 border border-current/10' : 'bg-card dark:bg-white/5 text-muted dark:text-white/30 border border-border dark:border-white/[0.06]'
+                                            'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
+                                            isActive ? 'bg-white/50 dark:bg-white/10 border border-current/10' : 'bg-white/30 dark:bg-white/5 border border-current/10'
                                         )}>{statusCounts[key]}</span>
                                     </motion.button>
                                 );
