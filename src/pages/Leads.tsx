@@ -198,38 +198,38 @@ export const Leads = () => {
                         </div>
 
                         {/* KPI Stats */}
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 md:gap-3">
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 md:p-4 border border-white/10">
-                                <div className="flex items-center gap-2 text-white/60 text-[11px] md:text-xs mb-2">
-                                    <Users size={13} />
-                                    <span>إجمالي العملاء</span>
+                        <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 md:gap-3">
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3.5 md:p-4 border border-white/10">
+                                <div className="flex items-center gap-1 sm:gap-2 text-white/60 text-[9px] sm:text-[11px] md:text-xs mb-1 sm:mb-2">
+                                    <Users size={11} className="shrink-0" />
+                                    <span className="truncate">إجمالي العملاء</span>
                                 </div>
-                                <div className="text-xl md:text-2xl font-bold font-outfit text-white">{stats?.total || 0}</div>
-                                <div className="text-white/50 text-[10px] md:text-[11px] mt-1">{activeCount} نشط</div>
+                                <div className="text-sm sm:text-xl md:text-2xl font-bold font-outfit text-white">{stats?.total || 0}</div>
+                                <div className="text-white/50 text-[8px] sm:text-[10px] md:text-[11px] mt-0.5 sm:mt-1">{activeCount} نشط</div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 md:p-4 border border-white/10">
-                                <div className="flex items-center gap-2 text-white/60 text-[11px] md:text-xs mb-2">
-                                    <Activity size={13} />
-                                    <span>عملاء جدد</span>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3.5 md:p-4 border border-white/10">
+                                <div className="flex items-center gap-1 sm:gap-2 text-white/60 text-[9px] sm:text-[11px] md:text-xs mb-1 sm:mb-2">
+                                    <Activity size={11} className="shrink-0" />
+                                    <span className="truncate">عملاء جدد</span>
                                 </div>
-                                <div className="text-xl md:text-2xl font-bold font-outfit text-white">{stats?.new || 0}</div>
-                                <div className="text-success text-[10px] md:text-[11px] mt-1">هذا الشهر</div>
+                                <div className="text-sm sm:text-xl md:text-2xl font-bold font-outfit text-white">{stats?.new || 0}</div>
+                                <div className="text-success text-[8px] sm:text-[10px] md:text-[11px] mt-0.5 sm:mt-1">هذا الشهر</div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 md:p-4 border border-white/10">
-                                <div className="flex items-center gap-2 text-white/60 text-[11px] md:text-xs mb-2">
-                                    <Phone size={13} />
-                                    <span>تم التحويل</span>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3.5 md:p-4 border border-white/10">
+                                <div className="flex items-center gap-1 sm:gap-2 text-white/60 text-[9px] sm:text-[11px] md:text-xs mb-1 sm:mb-2">
+                                    <Phone size={11} className="shrink-0" />
+                                    <span className="truncate">تم التحويل</span>
                                 </div>
-                                <div className="text-xl md:text-2xl font-bold font-outfit text-white">{stats?.converted || 0}</div>
-                                <div className="text-white/50 text-[10px] md:text-[11px] mt-1">إلى مشتركين</div>
+                                <div className="text-sm sm:text-xl md:text-2xl font-bold font-outfit text-white">{stats?.converted || 0}</div>
+                                <div className="text-white/50 text-[8px] sm:text-[10px] md:text-[11px] mt-0.5 sm:mt-1">إلى مشتركين</div>
                             </div>
-                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3.5 md:p-4 border border-white/10">
-                                <div className="flex items-center gap-2 text-white/60 text-[11px] md:text-xs mb-2">
-                                    <BarChart3 size={13} />
-                                    <span>معدل التحويل</span>
+                            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2 sm:p-3.5 md:p-4 border border-white/10">
+                                <div className="flex items-center gap-1 sm:gap-2 text-white/60 text-[9px] sm:text-[11px] md:text-xs mb-1 sm:mb-2">
+                                    <BarChart3 size={11} className="shrink-0" />
+                                    <span className="truncate">معدل التحويل</span>
                                 </div>
-                                <div className="text-xl md:text-2xl font-bold font-outfit text-white">{(stats?.conversionRate ?? 0).toFixed(1)}%</div>
-                                <div className="text-success text-[10px] md:text-[11px] mt-1">معدل النجاح</div>
+                                <div className="text-sm sm:text-xl md:text-2xl font-bold font-outfit text-white">{(stats?.conversionRate ?? 0).toFixed(1)}%</div>
+                                <div className="text-success text-[8px] sm:text-[10px] md:text-[11px] mt-0.5 sm:mt-1">معدل النجاح</div>
                             </div>
                         </div>
                     </div>
