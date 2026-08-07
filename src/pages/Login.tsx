@@ -74,7 +74,7 @@ export const Login = () => {
                 <div className="hidden lg:flex lg:w-[45%] h-screen sticky top-0 bg-white dark:bg-background relative overflow-hidden">
                     <div className="relative z-10 flex flex-col justify-center items-center w-full p-12">
                         <div className="relative mb-10">
-                            <div className="relative w-64 h-64 xl:w-72 xl:h-72">
+                            <div className="relative w-[26rem] h-[26rem] xl:w-[30rem] xl:h-[30rem]">
                                 <Image src="/bbook.webp" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-xl" />
                             </div>
                         </div>
@@ -93,7 +93,7 @@ export const Login = () => {
                     <div className="w-full max-w-sm">
                         {/* Mobile Logo */}
                         <div className="lg:hidden text-center mb-8">
-                            <div className="w-24 h-24 mx-auto mb-4">
+                            <div className="w-48 h-48 mx-auto mb-4">
                                 <Image src="/bbook.webp" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-lg" />
                             </div>
                             <h1 className="text-xl font-black text-main font-heading">{academyName}</h1>
@@ -176,7 +176,7 @@ export const Login = () => {
                         <div className="mt-6 flex flex-col items-center gap-3">
                             <Link
                                 to="/"
-                                className="text-sm text-muted hover:text-primary transition-colors flex items-center gap-2 font-bold"
+                                className="text-sm text-warning-dark hover:text-warning transition-colors flex items-center gap-2 font-bold"
                             >
                                 <ArrowRight size={16} />
                                 <span>العودة للرئيسية</span>
