@@ -73,12 +73,6 @@ export const Login = () => {
                 {/* ===== Hero Section (Desktop) ===== */}
                 <div className="hidden lg:flex lg:w-[45%] h-screen sticky top-0 bg-white dark:bg-background relative overflow-hidden">
                     <div className="relative z-10 flex flex-col justify-center items-center w-full p-12">
-                        <div className="relative mb-10">
-                            <div className="relative w-[26rem] h-[26rem] xl:w-[30rem] xl:h-[30rem]">
-                                <Image src="/bbook.webp" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-xl" />
-                            </div>
-                        </div>
-
                         <h1 className="text-3xl xl:text-4xl font-black text-center leading-tight mb-3 font-heading">
                             مرحباً بك في <span className="text-primary">{academyName}</span>
                         </h1>
@@ -93,9 +87,6 @@ export const Login = () => {
                     <div className="w-full max-w-sm">
                         {/* Mobile Logo */}
                         <div className="lg:hidden text-center mb-8">
-                            <div className="w-48 h-48 mx-auto mb-4">
-                                <Image src="/bbook.webp" alt={academyName} className="w-full h-full" imgClassName="object-contain drop-shadow-lg" />
-                            </div>
                             <h1 className="text-xl font-black text-warning-dark font-heading">أهلاً بعودتك شريك النجاح</h1>
                         </div>
 
