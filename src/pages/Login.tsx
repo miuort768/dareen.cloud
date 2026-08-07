@@ -98,8 +98,8 @@ export const Login = () => {
             <div className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-60px)] lg:min-h-screen px-4 py-8 lg:pt-24">
                 <div className="w-full max-w-sm lg:max-w-md mt-auto lg:mt-0">
                     <div className="mb-8 lg:mb-10 text-center">
-                        <h1 className="text-2xl lg:text-3xl font-black text-white lg:text-main mb-2 font-heading">تسجيل الدخول</h1>
-                        <p className="text-white/80 lg:text-main text-sm lg:text-base font-medium">أدخل بياناتك للوصول إلى حسابك</p>
+                        <h1 className="text-2xl lg:text-3xl font-black text-white lg:text-black mb-2 font-heading">تسجيل الدخول</h1>
+                        <p className="text-white/80 lg:text-black text-sm lg:text-base font-medium">أدخل بياناتك للوصول إلى حسابك</p>
                     </div>
 
                     {error && (
@@ -110,7 +110,7 @@ export const Login = () => {
 
                     <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-5">
                         <div>
-                            <label htmlFor="login-username" className="text-xs lg:text-sm font-bold text-white/80 lg:text-main mb-1.5 block">اسم المستخدم</label>
+                            <label htmlFor="login-username" className="text-xs lg:text-sm font-bold text-white/80 lg:text-black mb-1.5 block">اسم المستخدم</label>
                             <div className="relative">
                                     <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                                 <input
@@ -126,7 +126,7 @@ export const Login = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="login-password" className="text-xs lg:text-sm font-bold text-white/80 lg:text-main mb-1.5 block">كلمة المرور</label>
+                            <label htmlFor="login-password" className="text-xs lg:text-sm font-bold text-white/80 lg:text-black mb-1.5 block">كلمة المرور</label>
                             <div className="relative">
                                     <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                                 <input
@@ -174,7 +174,7 @@ export const Login = () => {
                     <div className="mt-6 lg:mt-8 flex flex-col items-center gap-3">
                         <Link
                             to="/"
-                            className="text-sm lg:text-base text-warning hover:text-warning-dark transition-colors flex items-center gap-2 font-bold"
+                            className="text-sm lg:text-base text-white lg:text-warning hover:text-white/80 lg:hover:text-warning-dark transition-colors flex items-center gap-2 font-bold"
                         >
                             <ArrowRight size={16} />
                             <span>العودة للرئيسية</span>
@@ -190,7 +190,7 @@ export const Login = () => {
                                 <Headphones size={18} />
                                 <span>الدعم الفني</span>
                             </a>
-                            <p className="text-white/70 lg:text-main text-xs lg:text-sm font-medium text-center mt-3">لديك مشكلة؟ تواصل مع الدعم</p>
+                            <p className="text-white/70 lg:text-black text-xs lg:text-sm font-medium text-center mt-3">لديك مشكلة؟ تواصل مع الدعم</p>
                         </div>
                     </div>
                 </div>
