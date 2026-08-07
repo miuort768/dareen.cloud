@@ -90,8 +90,8 @@ export const Login = () => {
                     <div className="mb-8 lg:mb-10 text-center">
                         <p className="text-primary font-bold text-sm lg:text-base mb-1">منصة دارين السابعة</p>
                         <h1 className="text-2xl lg:text-3xl font-black text-main mb-2 font-heading">تسجيل الدخول</h1>
-                        <p className="text-muted text-sm lg:text-base font-medium">أدخل بياناتك للوصول إلى حسابك</p>
-                        <p className="text-muted/60 text-[10px] lg:text-xs mt-2 tracking-widest font-light italic">AHMED ABDULLAH</p>
+                        <p className="text-main text-sm lg:text-base font-medium">أدخل بياناتك للوصول إلى حسابك</p>
+                        <p className="text-main/60 text-[10px] lg:text-xs mt-2 tracking-widest font-light italic">AHMED ABDULLAH</p>
                     </div>
 
                     {error && (
@@ -102,9 +102,9 @@ export const Login = () => {
 
                     <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-5">
                         <div>
-                            <label htmlFor="login-username" className="text-xs lg:text-sm font-bold text-muted mb-1.5 block">اسم المستخدم</label>
+                            <label htmlFor="login-username" className="text-xs lg:text-sm font-bold text-main mb-1.5 block">اسم المستخدم</label>
                             <div className="relative">
-                                <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+                                    <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                                 <input
                                     id="login-username"
                                     type="text"
@@ -118,9 +118,9 @@ export const Login = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="login-password" className="text-xs lg:text-sm font-bold text-muted mb-1.5 block">كلمة المرور</label>
+                            <label htmlFor="login-password" className="text-xs lg:text-sm font-bold text-main mb-1.5 block">كلمة المرور</label>
                             <div className="relative">
-                                <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
+                                    <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                                 <input
                                     id="login-password"
                                     type={showPassword ? 'text' : 'password'}
@@ -134,7 +134,7 @@ export const Login = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute end-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-muted hover:text-main transition-colors rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                        className="absolute end-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-muted hover:text-main transition-colors rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                                     aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
                                 >
                                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
