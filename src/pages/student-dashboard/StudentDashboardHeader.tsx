@@ -4,6 +4,7 @@ import { useDarkMode } from '../../shared/hooks/useDarkMode';
 import { useCurrentUser } from '../../context/AppContext';
 import { confirm } from '../../lib/confirmDialog';
 import { cn } from '../../lib/utils';
+import { Image } from '../../shared/components/ui';
 
 interface StudentDashboardHeaderProps {
     logout: () => void;
@@ -28,19 +29,22 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
         <header className="sticky top-0 z-[100] bg-surface/90 backdrop-blur-xl border-b border-border">
             <div className="max-w-page mx-auto">
                 <div className="flex items-center justify-between px-4 md:px-5 h-16">
-                    <button
-                        onClick={() => navigate('/student-profile')}
-                        className="flex items-center gap-3 text-start"
-                        aria-label="الملف الشخصي"
-                    >
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center shadow-elevation-1">
-                            <span className="text-sm font-bold text-on-primary">{firstName.charAt(0)}</span>
-                        </div>
-                        <div className="hidden sm:block">
-                            <h1 className="text-sm font-bold text-main leading-tight">مرحباً {firstName}</h1>
-                            <p className="text-[11px] font-medium text-muted">لوحة تحكم الطالب</p>
-                        </div>
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <Image src="/dareen_logo_new.webp" alt="دارين" className="w-9 h-9 rounded-xl shrink-0" imgClassName="object-contain" />
+                        <button
+                            onClick={() => navigate('/student-profile')}
+                            className="flex items-center gap-3 text-start"
+                            aria-label="الملف الشخصي"
+                        >
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center shadow-elevation-1">
+                                <span className="text-sm font-bold text-on-primary">{firstName.charAt(0)}</span>
+                            </div>
+                            <div className="hidden sm:block">
+                                <h1 className="text-sm font-bold text-main leading-tight">مرحباً {firstName}</h1>
+                                <p className="text-[11px] font-medium text-muted">لوحة تحكم الطالب</p>
+                            </div>
+                        </button>
+                    </div>
 
                     <div className="flex items-center gap-1.5">
                         <button
