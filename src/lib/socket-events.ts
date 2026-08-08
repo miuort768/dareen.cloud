@@ -26,6 +26,8 @@ export const SOCKET_EVENTS = {
   // CRM
   TRIAL_SESSION_UPDATED: 'trial_session_updated',
   LEAD_UPDATED: 'lead_updated',
+  CONTACT_MESSAGE_RECEIVED: 'contact_message_received',
+  JOB_APPLICATION_RECEIVED: 'job_application_received',
 
   // Presence
   PRESENCE_UPDATE: 'presence_update',

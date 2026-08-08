@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
         if (!phone) {
             return res.status(400).json({ error: 'رقم الهاتف مطلوب' });
         }
-        await prisma.contactMessage.create({
+        const newMsg = await prisma.contactMessage.create({
             data: {
                 id: uuidv4(),
                 name: name || '',
@@ -25,6 +25,11 @@ router.post('/', async (req, res) => {
                 curriculum: curriculum || '',
             }
         });
+        // Emit socket event to admin room for real-time updates
+        try {
+            const io = req.app.get('socketio');
+            if (io) io.to('admin_room').emit('contact_message_received', newMsg);
+        } catch (_) { /* socket not available */ }
         res.status(201).json({ message: 'تم إرسال الرسالة بنجاح' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Submit contact message');

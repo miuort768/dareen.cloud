@@ -56,6 +56,11 @@ router.post('/', async (req, res) => {
                 subject: subject || '',
             }
         });
+        // Emit socket event for real-time admin updates
+        try {
+            const io = req.app.get('socketio');
+            if (io) io.to('admin_room').emit('job_application_received');
+        } catch (_) { /* socket not available */ }
         res.status(201).json({ message: 'تم تقديم الطلب بنجاح' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Submit job application');

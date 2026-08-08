@@ -1,12 +1,14 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked, BarChart3, Filter, Users } from 'lucide-react';
+import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked, Download, ChevronDown, Inbox } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
 import { SUBJECTS } from '../data/subjects';
-import { useAcademyName } from '../context/AppContext';
+import { useAcademyName, useIsLoading } from '../context/AppContext';
 import { cn } from '../lib/utils';
+import { socketService } from '../lib/socket';
+import { SOCKET_EVENTS } from '../lib/socket-events';
 
 interface JobApp {
     id: string;
@@ -21,7 +23,7 @@ interface JobApp {
     curriculums: string;
     subject: string;
     contacted: number;
-    created_at: string;
+    createdAt: string;
 }
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
@@ -29,18 +31,62 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
     size: Math.random() * 5 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
 }));
 
+function formatDateNumeric(dateStr: string) {
+    const d = new Date(dateStr);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function exportToCsv(apps: JobApp[]) {
+    const headers = ['الاسم', 'رقم الهاتف', 'المناهج', 'سنوات الخبرة'];
+    const rows = apps.map(a => [
+        a.name || '',
+        a.phone || '',
+        a.curriculums || '-',
+        a.onlineYears || '0',
+    ]);
+    const bom = '\uFEFF';
+    const csv = bom + [headers.join(','), ...rows.map(r => r.map(c => `"${c}"`).join(','))].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'job-applications.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
 export const AdminJobs = () => {
     const academyName = useAcademyName();
     useEffect(() => { document.title = `الوظائف | ${academyName}`; }, [academyName]);
     const queryClient = useQueryClient();
+    const authLoading = useIsLoading();
+
     const { data: apps = [], isLoading: loading } = useQuery<JobApp[]>({
         queryKey: ['jobs'],
         queryFn: () => api.get('/jobs'),
         select: (data) => safeArray<JobApp>(data).map(a => ({ ...a, contacted: a.contacted ? 1 : 0 })),
+        enabled: !authLoading,
+        retry: 1,
+        refetchInterval: 30000,
     });
+
     const [search, setSearch] = useState('');
     const [fabOpen, setFabOpen] = useState(false);
     const [subjectFilter, setSubjectFilter] = useState('');
+
+    // Real-time: listen for new job applications via socket
+    useEffect(() => {
+        const socket = socketService.connect();
+        if (!socket) return;
+        const handleNewJob = () => {
+            queryClient.invalidateQueries({ queryKey: ['jobs'] });
+        };
+        socket.on(SOCKET_EVENTS.JOB_APPLICATION_RECEIVED, handleNewJob);
+        return () => { socket.off(SOCKET_EVENTS.JOB_APPLICATION_RECEIVED, handleNewJob); };
+    }, [queryClient]);
 
     const handleDelete = async (id: string) => {
         const confirmed = await confirm('هل أنت متأكد من حذف طلب التوظيف هذا؟ لا يمكن التراجع عن هذا الإجراء.', {
@@ -59,6 +105,25 @@ export const AdminJobs = () => {
         }
     };
 
+    const handleDeleteAll = async () => {
+        const confirmed = await confirm('هل أنت متأكد من حذف جميع الطلبات؟ لا يمكن التراجع عن هذا الإجراء.', {
+            title: 'حذف جميع الطلبات',
+            confirmText: 'حذف الكل',
+            cancelText: 'تراجع',
+            isDestructive: true,
+            icon: <Trash2 size={28} />
+        });
+        if (!confirmed) return;
+        try {
+            for (const app of filtered) {
+                await api.delete(`/jobs/${app.id}`);
+            }
+            queryClient.invalidateQueries({ queryKey: ['jobs'] });
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     const handleContacted = async (id: string) => {
         try {
             await api.patch<{ contacted: boolean }>(`/jobs/${id}/contacted`);
@@ -68,42 +133,48 @@ export const AdminJobs = () => {
         }
     };
 
-    const filtered = apps.filter(a => {
-        const q = search.trim().toLowerCase();
-        if (!q && !subjectFilter) return true;
-        const matchesSearch = !q ||
-            a.name.toLowerCase().includes(q) ||
-            a.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
-            (a.whatsapp || '').replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
-            a.position.toLowerCase().includes(q);
-        const matchesSubject = !subjectFilter || a.subject === subjectFilter;
-        return matchesSearch && matchesSubject;
-    });
+    const filtered = useMemo(() => {
+        return apps.filter(a => {
+            const q = search.trim().toLowerCase();
+            if (!q && !subjectFilter) return true;
+            const matchesSearch = !q ||
+                a.name.toLowerCase().includes(q) ||
+                a.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
+                (a.whatsapp || '').replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
+                a.position.toLowerCase().includes(q);
+            const matchesSubject = !subjectFilter || a.subject === subjectFilter;
+            return matchesSearch && matchesSubject;
+        });
+    }, [apps, search, subjectFilter]);
 
     const pendingCount = useMemo(() => apps.filter(a => !a.contacted).length, [apps]);
     const contactedCount = useMemo(() => apps.filter(a => a.contacted).length, [apps]);
-
-    const uniquePositions = useMemo(() => new Set(apps.map(a => a.position).filter(Boolean)).size, [apps]);
-
     const uniqueSubjects = useMemo(() => new Set(apps.map(a => a.subject).filter(Boolean)).size, [apps]);
 
     const kpiCards = useMemo(() => [
         { label: 'إجمالي الطلبات', value: apps.length, icon: Briefcase, gradient: 'from-primary/20 to-primary/5', iconBg: 'bg-primary/10 text-primary', accent: 'bg-primary' },
-        { label: 'بانتظار التواصل', value: pendingCount, icon: Users, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
+        { label: 'بانتظار التواصل', value: pendingCount, icon: Inbox, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
         { label: 'تم التواصل', value: contactedCount, icon: CheckCircle2, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
         { label: 'المواد', value: uniqueSubjects, icon: BookOpen, gradient: 'from-info/20 to-info/5', iconBg: 'bg-info/10 text-info', accent: 'bg-info' },
     ], [apps, pendingCount, contactedCount, uniqueSubjects]);
 
     const fabActions = useMemo(() => [
-        { icon: Filter, label: 'تصفية', onClick: () => document.querySelector('[data-filters]')?.scrollIntoView({ behavior: 'smooth' }) },
-        { icon: BarChart3, label: 'إحصائيات', onClick: () => document.querySelector('[data-kpi]')?.scrollIntoView({ behavior: 'smooth' }) },
+        { icon: Trash2, label: 'حذف الكل', onClick: handleDeleteAll },
+        { icon: Download, label: 'تصدير Excel', onClick: () => exportToCsv(filtered) },
+    ], [handleDeleteAll, filtered]);
+
+    const subjectPills = useMemo(() => [
+        { key: '', label: 'الكل' },
+        ...SUBJECTS.map(s => ({ key: s, label: s })),
     ], []);
+
+    const emptySearch = !loading && filtered.length === 0 && apps.length > 0;
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-5xl mx-auto px-2">
+            <div className="max-w-5xl mx-auto px-2.5 sm:px-4">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8 mb-4">
+                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-[#1a1f4e] dark:via-[#1e2456] dark:to-[#131836] p-6 md:p-8 mb-4">
                     {particles.map(p => (
                         <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
                             style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
@@ -132,7 +203,7 @@ export const AdminJobs = () => {
                     </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} data-kpi>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                         {kpiCards.map((kpi, i) => {
                             const Icon = kpi.icon;
@@ -151,23 +222,26 @@ export const AdminJobs = () => {
                     </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} data-filters>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-                        <div className="relative">
-                            <BookMarked className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-                            <select value={subjectFilter} onChange={e => setSubjectFilter(e.target.value)}
-                                aria-label="تصفية حسب المادة"
-                                className="w-full bg-card border border-border rounded-xl py-3 ps-9 pe-3 text-xs font-bold text-main focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer">
-                                <option value="">كل المواد</option>
-                                {SUBJECTS.map(s => <option key={s} value={s}>{s}</option>)}
-                            </select>
-                        </div>
-                        <div className="relative">
-                            <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-                            <input type="text" aria-label="بحث" placeholder="ابحث بالاسم أو الهاتف..."
-                                value={search} onChange={e => setSearch(e.target.value)}
-                                className="w-full bg-card border border-border rounded-xl py-3 ps-9 pe-3 text-xs font-bold text-main placeholder:text-muted focus:outline-none focus:border-primary transition-all" />
-                        </div>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="mb-4">
+                    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none -mx-2.5 px-2.5">
+                        {subjectPills.map(pill => (
+                            <button key={pill.key} onClick={() => setSubjectFilter(pill.key)}
+                                className={cn("shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition-all",
+                                    subjectFilter === pill.key
+                                        ? 'bg-primary text-on-primary'
+                                        : 'bg-surface border border-border text-muted hover:border-primary/30')}>
+                                {pill.label}
+                            </button>
+                        ))}
+                    </div>
+                </motion.div>
+
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-4">
+                    <div className="relative">
+                        <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
+                        <input type="text" aria-label="بحث" placeholder="ابحث بالاسم أو الهاتف..."
+                            value={search} onChange={e => setSearch(e.target.value)}
+                            className="w-full bg-card border border-border rounded-xl py-3 ps-9 pe-3 text-xs font-bold text-main placeholder:text-muted focus:outline-none focus:border-primary transition-all" />
                     </div>
                 </motion.div>
 
@@ -177,7 +251,7 @@ export const AdminJobs = () => {
                             <div className="space-y-3">
                                 {[1, 2, 3].map(i => <div key={`skel-${i}`} className="bg-card h-32 animate-pulse border border-border rounded-2xl" />)}
                             </div>
-                        ) : filtered.length === 0 ? (
+                        ) : apps.length === 0 ? (
                             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
                                 className="bg-card border border-dashed border-border rounded-2xl p-8 text-center">
                                 <div className="w-14 h-14 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-3">
@@ -185,6 +259,15 @@ export const AdminJobs = () => {
                                 </div>
                                 <p className="text-base font-bold text-main">لا توجد طلبات</p>
                                 <p className="text-xs text-muted mt-1.5">سيتم عرض طلبات المتقدمين هنا</p>
+                            </motion.div>
+                        ) : emptySearch ? (
+                            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+                                className="bg-card border border-dashed border-border rounded-2xl p-8 text-center">
+                                <div className="w-14 h-14 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-3">
+                                    <Search size={22} className="text-primary" />
+                                </div>
+                                <p className="text-base font-bold text-main">لا توجد نتائج</p>
+                                <p className="text-xs text-muted mt-1.5">جرّب تغيير كلمات البحث أو الفلتر</p>
                             </motion.div>
                         ) : (
                             <AnimatePresence>
@@ -216,13 +299,13 @@ export const AdminJobs = () => {
                                                 <div className="flex items-center gap-1.5 shrink-0">
                                                     <button onClick={() => handleContacted(app.id)}
                                                         className={cn("p-2 rounded-xl border-2 transition-all", app.contacted
-                                                            ? 'border-success bg-success-light text-success'
-                                                            : 'border-success/30 bg-success/10 text-success hover:bg-success-light hover:border-success')}
+                                                            ? 'border-success bg-success/10 text-success'
+                                                            : 'border-success/30 bg-success/10 text-success hover:bg-success/20 hover:border-success')}
                                                         title="تم التواصل" aria-label="تم التواصل">
                                                         <CheckCircle2 size={16} />
                                                     </button>
                                                     <button onClick={() => handleDelete(app.id)}
-                                                        className="p-2 rounded-xl border-2 border-error/30 bg-error/10 text-error hover:bg-error-light hover:border-error transition-all"
+                                                        className="p-2 rounded-xl border-2 border-error/30 bg-error/10 text-error hover:bg-error/20 hover:border-error transition-all"
                                                         aria-label="حذف الطلب">
                                                         <Trash2 size={16} />
                                                     </button>
@@ -230,13 +313,14 @@ export const AdminJobs = () => {
                                             </div>
 
                                             <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2.5 text-xs border-t border-border pt-3">
-                                                <DetailRow icon={Phone} label="الهاتف" value={app.phone} contacted={!!app.contacted} />
-                                                <DetailRow icon={MessageCircle} label="واتساب" value={app.whatsapp || '-'} contacted={!!app.contacted} />
+                                                <DetailRow icon={Phone} label="الهاتف" value={app.phone} contacted={!!app.contacted} phoneLink />
+                                                <DetailRow icon={MessageCircle} label="واتساب" value={app.whatsapp || '-'} contacted={!!app.contacted} phoneLink={!!app.whatsapp} whatsappLink />
                                                 <DetailRow icon={GraduationCap} label="المؤهل" value={app.qualification} contacted={!!app.contacted} />
                                                 <DetailRow icon={Award} label="التقدير" value={app.grade || '-'} contacted={!!app.contacted} />
                                                 {app.subject && <DetailRow icon={BookMarked} label="المادة" value={app.subject} contacted={!!app.contacted} />}
                                                 <DetailRow icon={Calendar} label="سنة التخرج" value={app.graduationYear || '-'} contacted={!!app.contacted} />
                                                 <DetailRow icon={Globe} label="خبرة أون لاين" value={`${app.onlineYears || '0'} سنة`} contacted={!!app.contacted} />
+                                                <DetailRow icon={Calendar} label="التاريخ" value={formatDateNumeric(app.createdAt)} contacted={!!app.contacted} />
                                                 <div className="col-span-2 md:col-span-4 flex items-start gap-2.5 pt-3 border-t border-border mt-1">
                                                     <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 bg-primary-soft rounded-lg">
                                                         <BookOpen size={10} className={app.contacted ? 'text-muted' : 'text-primary'} />
@@ -261,16 +345,16 @@ export const AdminJobs = () => {
                     {fabOpen && fabActions.map((action, i) => (
                         <motion.div key={action.label} initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
-                            <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
+                            <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-xl shadow-sm whitespace-nowrap">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                className="w-10 h-10 rounded-xl bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
                 <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    className={cn("w-12 h-12 rounded-xl shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
                     <Briefcase size={22} />
                 </motion.button>
             </div>
@@ -278,14 +362,45 @@ export const AdminJobs = () => {
     );
 };
 
-const DetailRow = ({ icon: Icon, label, value, contacted }: { icon: React.FC<{ size?: number; className?: string }>; label: string; value: string; contacted?: boolean }) => (
-    <div className={cn("flex items-center gap-2", contacted && 'opacity-50')}>
-        <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-primary-soft rounded-lg">
-            <Icon size={10} className={contacted ? 'text-muted' : 'text-primary'} />
+const DetailRow = ({ icon: Icon, label, value, contacted, phoneLink, whatsappLink }: {
+    icon: React.FC<{ size?: number; className?: string }>;
+    label: string;
+    value: string;
+    contacted?: boolean;
+    phoneLink?: boolean;
+    whatsappLink?: boolean;
+}) => {
+    const cleanPhone = value.replace(/\s/g, '');
+    const content = (
+        <div className={cn("flex items-center gap-2", contacted && 'opacity-50')}>
+            <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-primary-soft rounded-lg">
+                <Icon size={10} className={contacted ? 'text-muted' : 'text-primary'} />
+            </div>
+            <div className="min-w-0">
+                <p className="text-[10px] font-bold text-muted">{label}</p>
+                <span className={cn("text-[10px] font-bold truncate block", contacted ? 'text-muted' : 'text-main')}>{value}</span>
+            </div>
         </div>
-        <div className="min-w-0">
-            <p className="text-[10px] font-bold text-muted">{label}</p>
-            <span className={cn("text-[10px] font-bold truncate block", contacted ? 'text-muted' : 'text-main')}>{value}</span>
-        </div>
-    </div>
-);
+    );
+
+    if (whatsappLink && value && value !== '-') {
+        return (
+            <div className="flex items-center gap-1.5">
+                <a href={`https://wa.me/${cleanPhone.replace(/^\+/, '')}`} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-1 text-[10px] font-bold text-success hover:underline">
+                    {content}
+                </a>
+            </div>
+        );
+    }
+
+    if (phoneLink && value && value !== '-') {
+        return (
+            <a href={`tel:${cleanPhone}`} className="flex items-center gap-1">
+                {content}
+            </a>
+        );
+    }
+
+    return content;
+};
