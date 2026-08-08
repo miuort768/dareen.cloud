@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks';
-import { confirm } from '../../lib/confirmDialog';
 import type { StudentDashboardData, Session, PointLog, Enrollment, DashboardStats, NextSession, TodayTask } from './types';
+import { StudentDashboardHeader } from './StudentDashboardHeader';
 import { HeroSection } from './HeroSection';
 import { NextSessionCard } from './NextSessionCard';
 import { TodayTasks } from './TodayTasks';
@@ -94,28 +94,7 @@ export const StudentDashboardDesktop = ({ studentData, sessions, pointLogs, onRe
 
     return (
         <div className="min-h-screen bg-background" dir="rtl">
-            <header className="sticky top-0 z-[100] bg-surface/80 backdrop-blur-xl border-b border-border">
-                <div className="max-w-page mx-auto px-6 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                            <span className="text-sm font-bold text-primary">{studentData?.name?.charAt(0) || 'ط'}</span>
-                        </div>
-                        <div>
-                            <p className="text-sm font-bold text-main">{studentData?.name || 'الطالب'}</p>
-                            <p className="text-[11px] text-muted">{studentData?.grade || ''} — {studentData?.curriculum || ''}</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <button onClick={() => navigate('/schedule')} className="px-4 py-2 rounded-xl text-xs font-bold text-primary bg-primary/10 hover:bg-primary/20 transition-colors">الجدول</button>
-                        <button onClick={() => navigate('/forum')} className="px-4 py-2 rounded-xl text-xs font-bold text-muted hover:bg-hover transition-colors">المنتدى</button>
-                        <button onClick={() => navigate('/chat')} className="px-4 py-2 rounded-xl text-xs font-bold text-muted hover:bg-hover transition-colors">الرسائل</button>
-                        <button onClick={onRefresh} className="w-10 h-10 rounded-xl border border-border flex items-center justify-center text-muted hover:bg-hover transition-colors" aria-label="تحديث">
-                            <RefreshCw size={16} />
-                        </button>
-                        <button onClick={async () => { if (await confirm({ title: 'تسجيل الخروج', description: 'هل أنت متأكد من تسجيل الخروج؟', confirmText: 'خروج', cancelText: 'إلغاء' })) logout(); }} className="px-4 py-2 rounded-xl text-xs font-bold text-error hover:bg-error/10 transition-colors">خروج</button>
-                    </div>
-                </div>
-            </header>
+            <StudentDashboardHeader logout={logout} />
 
             <main className="max-w-page mx-auto px-6 pt-6 pb-12 space-y-6">
                 <motion.div {...fadeUp(0)}>
