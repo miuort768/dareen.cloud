@@ -240,8 +240,14 @@ async function startServer() {
             await fsp.mkdir(dir, { recursive: true }).catch(() => {});
         }
 
-        // Database migrations are applied via `npx prisma migrate deploy`
-        // (locally: `npx prisma migrate dev`). No auto-sync on startup.
+        // Auto-apply pending migrations on startup
+        try {
+            const { execSync } = require('child_process');
+            execSync('npx prisma migrate deploy', { cwd: __dirname, stdio: 'pipe', timeout: 30000 });
+            console.log('✅ Prisma migrations applied');
+        } catch (migErr) {
+            console.error('⚠️ Migration error (non-fatal):', migErr.message);
+        }
 
         const { initQueueSystem } = require('./services');
         initQueueSystem().catch((err) => {
