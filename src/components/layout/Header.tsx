@@ -2,9 +2,10 @@ import { Sun, Moon, User, MessageSquare, Search } from 'lucide-react';
 import { useState, useEffect, memo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
-import { useCurrentUser } from '../../context/AppContext';
+import { useCurrentUser, useAcademyName } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { Button } from '../ui/button';
+import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 import { useUnreadStore } from '../../store/unreadStore';
 import { appTabBarHidden } from '../../shared/components/mobile';
@@ -48,6 +49,7 @@ export const Header = memo(() => {
     const [theme, setTheme] = useDarkMode();
     const location = useLocation();
     const currentUser = useCurrentUser();
+    const academyName = useAcademyName();
     const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
 
@@ -84,6 +86,7 @@ export const Header = memo(() => {
         )}>
             <div className="flex items-center justify-between h-full px-4 lg:px-8 max-w-page mx-auto">
                 <div className="flex items-center gap-4 flex-1 min-w-0">
+                    <Image src="/dareen_logo_new.webp" alt="دارين" className="w-9 h-9 rounded-xl shrink-0 hidden sm:block" imgClassName="object-contain" />
                     {meta && (
                         <div className="min-w-0">
                             <h1 className="text-sm lg:text-base font-extrabold text-main leading-tight truncate">
