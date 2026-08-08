@@ -26,29 +26,23 @@ const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border 
 const labelClass = "text-[11px] font-bold text-muted dark:text-white/40 mb-1.5 block";
 
 export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onChange, onSubmit, onClose }: TrialSessionFormModalProps) => (
-    <>
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-black/50 dark:bg-black/70 backdrop-blur-sm" onClick={onClose} />
-        <motion.div
-            initial={{ y: '100%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: '100%', opacity: 0 }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed inset-x-0 bottom-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-[210] md:w-full md:max-w-lg max-h-[90vh] md:max-h-[85vh] bg-card dark:bg-[#0a0e27] md:border md:border-border dark:md:border-white/[0.06] md:shadow-2xl md:rounded-2xl flex flex-col overflow-hidden"
-            dir="rtl"
-        >
-            {/* Drag handle — mobile only */}
-            <div className="md:hidden flex justify-center pt-3 pb-1 shrink-0">
-                <div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full" />
-            </div>
-
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        transition={{ duration: 0.3 }}
+        className="p-2.5 sm:p-4"
+    >
+        <div className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden" dir="rtl">
             {/* Header */}
-            <div className="shrink-0 px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
+            <div className="px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
                 <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-[#6366f1]/10 dark:to-[#8b5cf6]/5" />
                 <div className="relative z-10 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-[#6366f1]/15">
                         <CalendarDays size={18} className="text-primary dark:text-[#a5b4fc]" />
                     </div>
                     <div>
-                        <h2 className="text-sm font-bold text-main dark:text-white">{editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}</h2>
+                        <h2 className="text-[13px] font-bold text-main dark:text-white">{editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}</h2>
                         <p className="text-[10px] text-muted/60 dark:text-white/30 mt-0.5">أدخل بيانات الحصة التجريبية</p>
                     </div>
                 </div>
@@ -58,7 +52,7 @@ export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onC
             </div>
 
             {/* Form */}
-            <form onSubmit={onSubmit} className="flex-1 overflow-y-auto p-5 space-y-4">
+            <form onSubmit={onSubmit} className="p-5 space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div className="space-y-1">
                         <label className={labelClass}>اسم الطالب</label>
@@ -108,6 +102,6 @@ export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onC
                     <button type="button" onClick={onClose} className="flex-1 py-3.5 text-[11px] font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
                 </div>
             </form>
-        </motion.div>
-    </>
+        </div>
+    </motion.div>
 );

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays } from 'lucide-react';
+import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -35,6 +35,12 @@ interface StatsData {
   cancelled: number;
   converted?: number;
 }
+
+const PAID_STORAGE_KEY = 'paidTrialSessions';
+
+const getPaidIds = (): string[] => {
+  try { return JSON.parse(localStorage.getItem(PAID_STORAGE_KEY) || '[]'); } catch { return []; }
+};
 
 const Counter = ({ value, duration = 800 }: { value: number; duration?: number }) => {
   const [count, setCount] = useState(0);
@@ -86,7 +92,7 @@ const TrialSessionsSkeleton = () => (
 
 export const TrialSessions = () => {
   const academyName = useAcademyName();
-  useEffect(() => { document.title = `الجلسات التجريبية | ${academyName}`; }, [academyName]);
+  useEffect(() => { document.title = `جلسات المراجعة | ${academyName}`; }, [academyName]);
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('');
   const [filterSubject, setFilterSubject] = useState<string>('');
@@ -94,6 +100,8 @@ export const TrialSessions = () => {
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [drawerSession, setDrawerSession] = useState<TrialSession | null>(null);
+  const [showPaid, setShowPaid] = useState(false);
+  const [paidIds, setPaidIds] = useState<string[]>(() => getPaidIds());
   const [form, setForm] = useState({ studentName: '', parentPhone: '', subject: '', teacherId: '', teacherName: '', date: '', time: '', notes: '' });
   const queryClient = useQueryClient();
   const showNotification = useUIStore((s) => s.showNotification);
@@ -149,23 +157,39 @@ export const TrialSessions = () => {
     setEditingId(t.id); setShowModal(true);
   };
 
-  const handleCall = (phone: string) => {
-    window.open(`tel:${phone}`);
-  };
+  const handleCall = (phone: string) => { window.open(`tel:${phone}`); };
 
   const handleWhatsApp = (phone: string) => {
     const cleaned = phone.replace(/[^0-9]/g, '');
     window.open(`https://wa.me/${cleaned}`, '_blank');
   };
 
+  const handlePaid = (id: string) => {
+    const next = [...paidIds, id];
+    localStorage.setItem(PAID_STORAGE_KEY, JSON.stringify(next));
+    setPaidIds(next);
+    queryClient.invalidateQueries({ queryKey: ['trial-sessions'] });
+    showNotification('تم تحديد كمدفوع', 'success');
+  };
+
   const subjects = [...new Set(trials.map((t: TrialSession) => t.subject).filter(Boolean))] as string[];
 
   const filtered = trials.filter((t: TrialSession) => {
+    const isPaid = paidIds.includes(t.id);
+    const matchPaidFilter = showPaid ? isPaid : !isPaid;
     const matchSearch = !search || t.studentName.toLowerCase().includes(search.toLowerCase()) || t.parentPhone.includes(search);
     const matchStatus = !filterStatus || t.status === filterStatus;
     const matchSubject = !filterSubject || t.subject === filterSubject;
-    return matchSearch && matchStatus && matchSubject;
+    return matchPaidFilter && matchSearch && matchStatus && matchSubject;
   });
+
+  const groups = new Map<string, TrialSession[]>();
+  for (const t of filtered) {
+    const key = t.parentPhone || t.id;
+    const arr = groups.get(key) || [];
+    arr.push(t);
+    groups.set(key, arr);
+  }
 
   const conversionRate = stats?.total ? Math.round(((stats.completed + (stats.converted || 0)) / stats.total) * 100) : 0;
 
@@ -189,7 +213,7 @@ export const TrialSessions = () => {
       className="bg-background min-h-screen pb-24"
       dir="rtl"
     >
-      <div className="px-3 space-y-4 max-w-page mx-auto relative z-10">
+      <div className="px-2.5 sm:px-4 space-y-4 max-w-page mx-auto relative z-10">
         {/* Hero Section */}
         <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-dark/80 to-primary-dark dark:from-[#1a1f4e] dark:via-[#1e2456] dark:to-[#131836] mt-4">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
@@ -213,7 +237,7 @@ export const TrialSessions = () => {
               </div>
               <div className="min-w-0">
                 <p className="text-white/60 dark:text-white/40 text-[11px] mb-0.5">مرحباً بك!</p>
-                <h1 className="text-lg md:text-xl font-bold font-outfit text-white">الحصص التجريبية</h1>
+                <h1 className="text-lg md:text-xl font-bold font-outfit text-white">جلسات المراجعة</h1>
                 <p className="text-[11px] text-white/50">{stats?.total || 0} حصة مسجلة</p>
               </div>
             </div>
@@ -276,6 +300,20 @@ export const TrialSessions = () => {
                   </button>
                 )}
               </div>
+              {/* Paid toggle */}
+              <button
+                onClick={() => setShowPaid(!showPaid)}
+                className={cn(
+                  'h-9 px-3 flex items-center justify-center gap-1.5 text-[11px] font-bold rounded-xl border shrink-0 transition-all duration-200',
+                  showPaid
+                    ? 'bg-success/10 dark:bg-success/15 text-success border-success/20 dark:border-success/20'
+                    : 'bg-surface dark:bg-white/[0.04] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:bg-hover dark:hover:bg-white/[0.06]'
+                )}
+                aria-label={showPaid ? 'إظهار غير المدفوعة' : 'إظهار المدفوعة'}
+              >
+                {showPaid ? <Eye size={13} /> : <EyeOff size={13} />}
+                <span className="hidden sm:inline">{showPaid ? 'المدفوعة' : 'المدفوعة'}</span>
+              </button>
               <div className="shrink-0 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl px-3 py-2.5">
                 <span className="text-[13px] font-bold text-main dark:text-white/60 tabular-nums">{filtered.length}</span>
               </div>
@@ -340,20 +378,41 @@ export const TrialSessions = () => {
             )}
           </div>
 
-          {/* Cards List */}
-          <div className="p-4 lg:p-5">
-            {filtered.length === 0 ? (
+          {/* Cards List / Inline Modal / Inline Drawer */}
+          <div className="p-2.5 sm:p-4">
+            {showModal ? (
+              <TrialSessionFormModal
+                editingId={editingId}
+                form={form}
+                teachers={teachers}
+                isSaving={addMutation.isPending}
+                onChange={setForm}
+                onSubmit={(e) => { e.preventDefault(); addMutation.mutate(form); }}
+                onClose={() => { setShowModal(false); setEditingId(null); resetForm(); }}
+              />
+            ) : drawerSession ? (
+              <TrialSessionDrawer
+                session={drawerSession}
+                onClose={() => setDrawerSession(null)}
+                onCall={handleCall}
+                onWhatsApp={handleWhatsApp}
+                onConvert={(id) => { convertMutation.mutate(id); setDrawerSession(null); }}
+                onEdit={(s) => { setDrawerSession(null); openEdit(s); }}
+                onPaid={handlePaid}
+                isConverting={convertMutation.isPending}
+              />
+            ) : filtered.length === 0 ? (
               <div className="text-center py-14">
                 <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-4 ring-1 ring-primary/20">
                   <Users size={28} className="text-primary/40" />
                 </div>
                 <p className="text-sm font-bold text-main dark:text-white/60 mb-1">
-                  {search || filterStatus || filterSubject ? 'لا توجد نتائج للبحث' : 'لا توجد حصص تجريبية'}
+                  {search || filterStatus || filterSubject ? 'لا توجد نتائج للبحث' : showPaid ? 'لا توجد حصص مدفوعة' : 'لا توجد حصص تجريبية'}
                 </p>
                 <p className="text-[11px] text-muted dark:text-white/30 mb-4">
-                  {search || filterStatus || filterSubject ? 'حاول تغيير معايير البحث' : 'ابدأ بإضافة أول حصة تجريبية'}
+                  {search || filterStatus || filterSubject ? 'حاول تغيير معايير البحث' : showPaid ? 'لم تتم دفع أي حصة بعد' : 'ابدأ بإضافة أول حصة تجريبية'}
                 </p>
-                {!search && !filterStatus && !filterSubject && (
+                {!search && !filterStatus && !filterSubject && !showPaid && (
                   <button onClick={() => { resetForm(); setShowModal(true); }} className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold rounded-xl transition-all active:scale-[0.98]">
                     <Plus size={14} /> إضافة حصة
                   </button>
@@ -361,18 +420,32 @@ export const TrialSessions = () => {
               </div>
             ) : (
               <motion.div variants={containerVariants} className="space-y-3">
-                {filtered.map((t: TrialSession) => (
-                  <motion.div key={t.id} variants={itemVariants}>
-                    <TrialSessionCard
-                      session={t}
-                      onConvert={(id) => convertMutation.mutate(id)}
-                      onEdit={openEdit}
-                      onDelete={(id) => setConfirmId(id)}
-                      onCall={handleCall}
-                      onWhatsApp={handleWhatsApp}
-                      onCardClick={() => setDrawerSession(t)}
-                      isConverting={convertMutation.isPending}
-                    />
+                {Array.from(groups.entries()).map(([phone, sessions]) => (
+                  <motion.div key={phone} variants={itemVariants}>
+                    {sessions.length > 1 && (
+                      <div className="flex items-center gap-2 px-3 py-1.5 mb-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                        <span className="text-[11px] font-bold text-primary" dir="ltr">{phone}</span>
+                        <span className="text-[10px] text-muted dark:text-white/30">({sessions.length} حصص)</span>
+                      </div>
+                    )}
+                    <div className="space-y-3">
+                      {sessions.map((t) => (
+                        <TrialSessionCard
+                          key={t.id}
+                          session={t}
+                          onConvert={(id) => convertMutation.mutate(id)}
+                          onEdit={openEdit}
+                          onDelete={(id) => setConfirmId(id)}
+                          onCall={handleCall}
+                          onWhatsApp={handleWhatsApp}
+                          onCardClick={() => setDrawerSession(t)}
+                          onPaid={handlePaid}
+                          isPaid={paidIds.includes(t.id)}
+                          isConverting={convertMutation.isPending}
+                        />
+                      ))}
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -383,39 +456,13 @@ export const TrialSessions = () => {
         {/* FAB Button */}
         <motion.button
           onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }}
-          className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-[#6366f1]/30 flex items-center justify-center active:scale-95 transition-all duration-200"
+          className="hidden md:flex fixed bottom-8 left-8 z-40 w-14 h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary rounded-xl shadow-xl shadow-primary/30 dark:shadow-[#6366f1]/30 items-center justify-center active:scale-95 transition-all duration-200"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة حصة جديدة"
         >
           <Plus size={22} />
         </motion.button>
-
-        {/* Add/Edit Modal */}
-        <AnimatePresence>
-          {showModal && (
-            <TrialSessionFormModal
-              editingId={editingId}
-              form={form}
-              teachers={teachers}
-              isSaving={addMutation.isPending}
-              onChange={setForm}
-              onSubmit={(e) => { e.preventDefault(); addMutation.mutate(form); }}
-              onClose={() => { setShowModal(false); setEditingId(null); resetForm(); }}
-            />
-          )}
-        </AnimatePresence>
-
-        {/* Drawer */}
-        <TrialSessionDrawer
-          session={drawerSession}
-          onClose={() => setDrawerSession(null)}
-          onCall={handleCall}
-          onWhatsApp={handleWhatsApp}
-          onConvert={(id) => { convertMutation.mutate(id); setDrawerSession(null); }}
-          onEdit={(s) => { setDrawerSession(null); openEdit(s); }}
-          isConverting={convertMutation.isPending}
-        />
 
         {/* Confirm Delete */}
         <AnimatePresence>

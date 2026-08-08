@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, MessageSquare, CheckCheck, Pencil, Trash2, BookOpen, Calendar, Clock, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
+import { Phone, MessageSquare, CheckCheck, Pencil, Trash2, BookOpen, Calendar, Clock, MessageCircle, ChevronDown, ChevronUp, CircleDollarSign } from 'lucide-react';
 import { cn } from '../lib/utils';
 import type { TrialSession } from './TrialSessions';
 
@@ -12,6 +12,8 @@ interface TrialSessionCardProps {
     onCall?: (phone: string) => void;
     onWhatsApp?: (phone: string) => void;
     onCardClick?: () => void;
+    onPaid?: (id: string) => void;
+    isPaid?: boolean;
     isConverting: boolean;
 }
 
@@ -58,7 +60,7 @@ const formatPhone = (phone: string) => {
     return phone;
 };
 
-export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCall, onWhatsApp, onCardClick, isConverting }: TrialSessionCardProps) => {
+export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCall, onWhatsApp, onCardClick, onPaid, isPaid, isConverting }: TrialSessionCardProps) => {
     const [showNotes, setShowNotes] = useState(false);
     const cfg = statusConfig[t.status] || statusConfig.pending;
     const gradient = getAvatarGradient(t.studentName);
@@ -68,11 +70,10 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -2 }}
-            onClick={onCardClick}
             className={cn("bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden font-dash hover:shadow-elevation-2 dark:hover:shadow-none transition-all duration-300 group", onCardClick && "cursor-pointer")}
         >
             {/* Clickable body — opens drawer */}
-            <div className="p-4 pb-3 cursor-pointer">
+            <div className="p-4 pb-3 cursor-pointer" onClick={onCardClick}>
                 {/* Row 1: Avatar + Name + Status */}
                 <div className="flex items-center justify-between mb-2.5">
                     <div className="flex items-center gap-2.5 min-w-0">
@@ -87,6 +88,11 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                             </span>
                         </div>
                     </div>
+                    {isPaid && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-bold bg-success/15 dark:bg-success/20 text-success dark:text-success">
+                            مدفوعة
+                        </span>
+                    )}
                 </div>
 
                 {/* Row 2: Subject · Date · Time */}
@@ -149,7 +155,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
             </div>
 
             {/* Action buttons row */}
-            <div className="flex items-center gap-px bg-border/30 dark:bg-white/[0.02] border-t border-border/50 dark:border-white/[0.04]" role="toolbar" aria-label="إجراءات الحصة">
+            <div className="flex items-center gap-px bg-surface dark:bg-white/[0.02] border-t border-border/50 dark:border-white/[0.04]" role="toolbar" aria-label="إجراءات الحصة">
                 {onCall && (
                     <button onClick={(e) => { e.stopPropagation(); onCall(t.parentPhone); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-success hover:bg-success/10 transition-colors active:bg-success/20" aria-label="اتصال">
                         <Phone size={12} /> اتصال
@@ -165,11 +171,30 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                         <CheckCheck size={12} /> تم
                     </button>
                 )}
-                <button onClick={(e) => { e.stopPropagation(); onEdit(t); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-muted dark:text-white/40 hover:bg-surface dark:hover:bg-white/[0.04] transition-colors active:bg-hover" aria-label="تعديل">
+                <button onClick={(e) => { e.stopPropagation(); onEdit(t); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-muted dark:text-white/40 hover:bg-hover dark:hover:bg-white/[0.04] transition-colors active:bg-hover" aria-label="تعديل">
                     <Pencil size={12} /> تعديل
                 </button>
-                <button onClick={(e) => { e.stopPropagation(); onDelete(t.id); }} className="flex-1 flex items-center justify-center gap-1 py-2.5 text-[10px] font-bold text-error hover:bg-error/10 transition-colors active:bg-error/20" aria-label="حذف">
-                    <Trash2 size={12} /> حذف
+                {onPaid && (
+                    <button
+                        onClick={(e) => { e.stopPropagation(); onPaid(t.id); }}
+                        disabled={isPaid}
+                        className={cn(
+                            "w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 transition-all active:scale-90",
+                            isPaid
+                                ? "border-success/30 text-success/40 cursor-default"
+                                : "border-success text-success hover:bg-success/10 active:bg-success/20"
+                        )}
+                        aria-label="مدفوعة"
+                    >
+                        <CircleDollarSign size={13} />
+                    </button>
+                )}
+                <button
+                    onClick={(e) => { e.stopPropagation(); onDelete(t.id); }}
+                    className="w-8 h-8 rounded-full border-2 border-error text-error flex items-center justify-center shrink-0 hover:bg-error/10 active:bg-error/20 transition-all active:scale-90"
+                    aria-label="حذف"
+                >
+                    <Trash2 size={13} />
                 </button>
             </div>
         </motion.div>
