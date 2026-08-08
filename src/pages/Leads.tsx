@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Search, Plus, EyeOff, Eye, AlertTriangle, X, Activity, BarChart3, Phone, Users } from 'lucide-react';
+import { Search, Plus, EyeOff, Eye, AlertTriangle, X, Activity, BarChart3, Phone, Users, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { crmService } from '../features/crm/services/crmService';
@@ -10,7 +10,6 @@ import { ErrorBanner } from '../shared/components/ui/ErrorState';
 import { PrimaryBtn, statusColors, statusIconComponents } from './leads/components/LeadsUI';
 import { LeadTable } from './leads/components/LeadTable';
 import { LeadCards } from './leads/components/LeadCards';
-import { AddLeadModal } from './leads/components/AddLeadModal';
 import { LeadsSkeleton } from './leads/components/LeadsSkeleton';
 import { LeadDrawer } from './leads/components/LeadDrawer';
 import { useUIStore } from '../store/uiStore';
@@ -62,6 +61,46 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
 };
 
 const StatusKeys: LeadStatus[] = ['new', 'contacted', 'interested', 'trial', 'converted'];
+
+const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-white rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
+const labelClass = "text-[11px] font-bold text-muted dark:text-white/40 mb-1.5 block";
+
+const AddLeadModalInline = ({ formRef, addMutation, onClose }: { formRef: React.RefObject<HTMLFormElement | null>; addMutation: { mutate: (data: Record<string, unknown>) => void; isPending: boolean }; onClose: () => void }) => (
+    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="p-4">
+        <div className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden">
+            <div className="px-5 py-4 flex items-center justify-between border-b border-border/50 dark:border-white/[0.04]">
+                <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-primary/10 dark:bg-[#6366f1]/15">
+                        <UserPlus size={16} className="text-primary dark:text-[#a5b4fc]" />
+                    </div>
+                    <div>
+                        <h2 className="text-[13px] font-bold text-main dark:text-white">إضافة عميل جديد</h2>
+                        <p className="text-[10px] text-muted/60 dark:text-white/30">أدخل بيانات العميل</p>
+                    </div>
+                </div>
+                <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="إغلاق">
+                    <X size={14} className="text-muted dark:text-white/50" />
+                </button>
+            </div>
+            <form ref={formRef} className="p-5 space-y-3" onSubmit={(e) => { e.preventDefault(); const fd = new FormData(e.currentTarget); const g = (n: string) => (fd.get(n) as string) || ''; addMutation.mutate({ studentName: g('name'), phone: g('phone'), subject: g('subject'), curriculum: g('curriculum'), status: 'new', priority: g('priority'), notes: g('notes') }); }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div><label className={labelClass}>اسم الطالب (اختياري)</label><input name="name" className={inputClass} placeholder="مثال: أم أحمد" /></div>
+                    <div><label className={labelClass}>المنهج</label><input name="curriculum" required className={inputClass} placeholder="مثال: مصري" /></div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div><label className={labelClass}>رقم الهاتف</label><input name="phone" required className={inputClass} placeholder="05XXXXXXXX" dir="ltr" style={{ textAlign: 'right' }} /></div>
+                    <div><label className={labelClass}>المادة المهتم بها</label><input name="subject" required className={inputClass} placeholder="مثال: رياضيات" /></div>
+                </div>
+                <div><label className={labelClass}>الأولوية</label><select name="priority" aria-label="الأولوية" className={inputClass}><option value="low">منخفضة</option><option value="medium">متوسطة</option><option value="high">عالية</option></select></div>
+                <div><label className={labelClass}>ملاحظات</label><textarea name="notes" rows={2} className={inputClass + " resize-none"} placeholder="اكتب أي تفاصيل..." /></div>
+                <div className="flex gap-3 pt-1">
+                    <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-3">{addMutation.isPending ? 'جاري الحفظ...' : 'إضافة العميل'}</PrimaryBtn>
+                    <button type="button" onClick={onClose} className="flex-1 py-3 text-[11px] font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">إلغاء</button>
+                </div>
+            </form>
+        </div>
+    </motion.div>
+);
 
 export const Leads = () => {
     const academyName = useAcademyName();
@@ -160,7 +199,7 @@ export const Leads = () => {
     if (isLeadsError) {
         return (
             <div className="bg-background min-h-screen pb-24" dir="rtl">
-                <div className="relative z-10 mx-auto px-4 md:px-6 max-w-page">
+            <div className="relative z-10 mx-auto px-2.5 sm:px-4 md:px-6 max-w-page">
                     <ErrorBanner className="mt-6 md:mt-10" />
                 </div>
             </div>
@@ -308,8 +347,16 @@ export const Leads = () => {
 
                     {/* Content */}
                     <div>
-                        <LeadTable filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
-                        <LeadCards filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
+                        {isDrawerOpen && selectedLead ? (
+                            <LeadDrawer lead={selectedLead} onClose={() => { setIsDrawerOpen(false); setSelectedLead(null); }} updateMutation={updateMutation} />
+                        ) : isAddModalOpen ? (
+                            <AddLeadModalInline formRef={formRef} addMutation={addMutation} onClose={() => setIsAddModalOpen(false)} />
+                        ) : (
+                            <>
+                                <LeadTable filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
+                                <LeadCards filteredLeads={filteredLeads} updateMutation={updateMutation} handleMarkLost={handleMarkLost} onLeadClick={handleOpenDrawer} />
+                            </>
+                        )}
                     </div>
                 </div>
 
@@ -325,9 +372,6 @@ export const Leads = () => {
                 <AnimatePresence>
                     {confirmLeadId && <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={() => setConfirmLeadId(null)} />}
                 </AnimatePresence>
-
-                <AddLeadModal isAddModalOpen={isAddModalOpen} setIsAddModalOpen={setIsAddModalOpen} addMutation={addMutation} formRef={formRef} />
-                <LeadDrawer lead={selectedLead} isOpen={isDrawerOpen} onClose={() => { setIsDrawerOpen(false); setSelectedLead(null); }} updateMutation={updateMutation} />
             </div>
         </motion.div>
     );
