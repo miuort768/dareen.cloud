@@ -53,11 +53,16 @@ export const Schedule = () => {
     const fetchData = useCallback(async () => {
         try {
             setLoading(true);
-            const data = await api.get<Record<string, unknown>[]>('/students');
-            setStudents(Array.isArray(data) ? data : (data.data || []));
+            if (isStudent) {
+                const me = await api.get<Record<string, unknown>>('/student-portal/me');
+                setStudents([me] as unknown as Student[]);
+            } else {
+                const data = await api.get<Record<string, unknown>[]>('/students');
+                setStudents(Array.isArray(data) ? data : (data.data || []));
+            }
         } catch (error) { console.error('Error fetching data', error); }
         finally { setLoading(false); }
-    }, []);
+    }, [isStudent]);
 
     useEffect(() => { fetchData(); }, [fetchData]);
 

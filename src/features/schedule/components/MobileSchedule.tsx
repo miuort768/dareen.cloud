@@ -54,14 +54,21 @@ export const MobileSchedule = () => {
     const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
 
+    const isStudent = currentUser?.role === 'student';
+
     const fetchData = useCallback(async () => {
         try {
             setLoading(true);
-            const raw = await api.get<unknown>('/students');
-            if (mountedRef.current) setStudents(Array.isArray(raw) ? (raw as Student[]) : ((raw as { data?: Student[] } | null)?.data || []));
+            if (isStudent) {
+                const me = await api.get<unknown>('/student-portal/me');
+                if (mountedRef.current) setStudents([me] as unknown as Student[]);
+            } else {
+                const raw = await api.get<unknown>('/students');
+                if (mountedRef.current) setStudents(Array.isArray(raw) ? (raw as Student[]) : ((raw as { data?: Student[] } | null)?.data || []));
+            }
         } catch (error) { console.error('Error fetching data', error); }
         finally { if (mountedRef.current) setLoading(false); }
-    }, []);
+    }, [isStudent]);
 
     const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: fetchData });
 
