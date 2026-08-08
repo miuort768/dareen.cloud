@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Wallet, ArrowLeft, RefreshCw } from 'lucide-react';
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks';
+import { ParentDashboardHeader } from './ParentDashboardHeader';
 import { HeroSection } from './HeroSection';
 import { ChildrenCards } from './ChildrenCards';
 import { TodaySummary } from './TodaySummary';
@@ -31,10 +32,11 @@ interface ParentDashboardDesktopProps {
     activeTimers: Student[];
     todayTasks: { studentName: string; subject: string; teacher: string; time: string; period: string }[];
     formatTime: (startedAt: string | null | undefined) => string;
+    logout: () => void;
     onRefresh: () => void;
 }
 
-export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sessions, allPointLogs, activeTimers, todayTasks, formatTime, onRefresh }: ParentDashboardDesktopProps) => {
+export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sessions, allPointLogs, activeTimers, todayTasks, formatTime, logout, onRefresh }: ParentDashboardDesktopProps) => {
     const navigate = useNavigate();
 
     const stats = useMemo(() => {
@@ -57,24 +59,7 @@ export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sess
 
     return (
         <div className="min-h-screen bg-background" dir="rtl">
-            <header className="sticky top-0 z-[100] bg-surface/80 backdrop-blur-xl border-b border-border">
-                <div className="max-w-page mx-auto px-6 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                            <span className="text-sm font-bold text-primary">{currentUser?.name?.charAt(0) || 'و'}</span>
-                        </div>
-                        <div>
-                            <p className="text-sm font-bold text-main">{currentUser?.name || currentUser?.username || 'ولي الأمر'}</p>
-                            <p className="text-[11px] text-muted">{children.length} أبناء مسجلين</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <button onClick={onRefresh} className="w-10 h-10 rounded-xl border border-border flex items-center justify-center text-muted hover:bg-hover transition-colors" aria-label="تحديث">
-                            <RefreshCw size={16} />
-                        </button>
-                    </div>
-                </div>
-            </header>
+            <ParentDashboardHeader logout={logout} />
 
             <main className="max-w-page mx-auto px-6 pt-6 pb-12 space-y-6">
                 <motion.div {...fadeUp(0)}>

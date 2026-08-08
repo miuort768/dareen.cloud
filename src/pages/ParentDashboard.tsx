@@ -167,6 +167,7 @@ export const ParentDashboard = () => {
         activeTimers,
         todayTasks,
         formatTime,
+        logout,
         onRefresh: () => refetch(),
     };
 
@@ -181,7 +182,7 @@ export const ParentDashboard = () => {
                 <ParentDashboardDesktop {...sharedProps} />
             </div>
             <div className="block md:hidden">
-                <ParentDashboardMobile {...sharedProps} logout={logout} />
+                <ParentDashboardMobile {...sharedProps} />
             </div>
         </>
     );
