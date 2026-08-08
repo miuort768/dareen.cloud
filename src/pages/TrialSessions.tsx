@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays, Eye, EyeOff } from 'lucide-react';
+import { useState, useEffect, useRef, useMemo } from 'react';
+import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays, Eye, EyeOff, Download, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -37,6 +37,7 @@ interface StatsData {
 }
 
 const PAID_STORAGE_KEY = 'paidTrialSessions';
+const ITEMS_PER_PAGE = 10;
 
 const getPaidIds = (): string[] => {
   try { return JSON.parse(localStorage.getItem(PAID_STORAGE_KEY) || '[]'); } catch { return []; }
@@ -102,6 +103,7 @@ export const TrialSessions = () => {
   const [drawerSession, setDrawerSession] = useState<TrialSession | null>(null);
   const [showPaid, setShowPaid] = useState(false);
   const [paidIds, setPaidIds] = useState<string[]>(() => getPaidIds());
+  const [currentPage, setCurrentPage] = useState(1);
   const [form, setForm] = useState({ studentName: '', parentPhone: '', subject: '', teacherId: '', teacherName: '', date: '', time: '', notes: '' });
   const queryClient = useQueryClient();
   const showNotification = useUIStore((s) => s.showNotification);
@@ -175,22 +177,44 @@ export const TrialSessions = () => {
 
   const subjects = [...new Set(trials.map((t: TrialSession) => t.subject).filter(Boolean))] as string[];
 
-  const filtered = trials.filter((t: TrialSession) => {
+  const filtered = useMemo(() => trials.filter((t: TrialSession) => {
     const isPaid = paidIds.includes(t.id);
     const matchPaidFilter = showPaid ? isPaid : !isPaid;
     const matchSearch = !search || t.studentName.toLowerCase().includes(search.toLowerCase()) || t.parentPhone.includes(search);
     const matchStatus = !filterStatus || t.status === filterStatus;
     const matchSubject = !filterSubject || t.subject === filterSubject;
     return matchPaidFilter && matchSearch && matchStatus && matchSubject;
-  });
+  }), [trials, paidIds, showPaid, search, filterStatus, filterSubject]);
 
-  const groups = new Map<string, TrialSession[]>();
-  for (const t of filtered) {
-    const key = t.parentPhone || t.id;
-    const arr = groups.get(key) || [];
-    arr.push(t);
-    groups.set(key, arr);
-  }
+  const groups = useMemo(() => {
+    const g = new Map<string, TrialSession[]>();
+    for (const t of filtered) {
+      const key = t.parentPhone || t.id;
+      const arr = g.get(key) || [];
+      arr.push(t);
+      g.set(key, arr);
+    }
+    return g;
+  }, [filtered]);
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const paginatedFiltered = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filtered.slice(start, start + ITEMS_PER_PAGE);
+  }, [filtered, currentPage]);
+
+  const paginatedGroups = useMemo(() => {
+    const g = new Map<string, TrialSession[]>();
+    for (const t of paginatedFiltered) {
+      const key = t.parentPhone || t.id;
+      const arr = g.get(key) || [];
+      arr.push(t);
+      g.set(key, arr);
+    }
+    return g;
+  }, [paginatedFiltered]);
+
+  useEffect(() => { setCurrentPage(1); }, [search, filterStatus, filterSubject, showPaid]);
 
   const conversionRate = stats?.total ? Math.round(((stats.completed + (stats.converted || 0)) / stats.total) * 100) : 0;
 
@@ -216,7 +240,7 @@ export const TrialSessions = () => {
     >
       <div className="px-2.5 sm:px-4 space-y-4 max-w-page mx-auto relative z-10">
         {/* Hero Section */}
-        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-dark/80 to-primary-dark dark:from-[#1a1f4e] dark:via-[#1e2456] dark:to-[#131836] mt-4">
+        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6366f1] via-[#7c3aed] to-[#a855f7] dark:from-[#1a1f4e] dark:via-[#1e2456] dark:to-[#131836] mt-4">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
           <div className="absolute inset-0 opacity-[0.06]">
@@ -232,50 +256,67 @@ export const TrialSessions = () => {
           </div>
 
           <div className="relative z-10 px-4 md:px-6 py-6">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center ring-2 ring-white/30 shrink-0">
-                <GraduationCap size={18} className="text-white" />
+            {/* Top row: actions + title */}
+            <div className="flex items-start justify-between mb-5">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white text-[11px] font-bold rounded-xl border border-white/20 transition-all active:scale-[0.98]"
+                >
+                  <Plus size={14} /> جدولة класса جديدة
+                </button>
+                <button className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white text-[11px] font-bold rounded-xl border border-white/20 transition-all active:scale-[0.98]">
+                  <Download size={14} /> تحميل التقرير
+                </button>
               </div>
-              <div className="min-w-0">
-                <p className="text-white/60 dark:text-white/40 text-[11px] mb-0.5">مرحباً بك!</p>
+              <div className="text-left">
+                <p className="text-white/60 dark:text-white/40 text-[11px] mb-0.5">مرحباً بك! 👋</p>
                 <h1 className="text-lg md:text-xl font-bold font-outfit text-white">جلسات المراجعة</h1>
-                <p className="text-[11px] text-white/50">{stats?.total || 0} حصة مسجلة</p>
+                <p className="text-[11px] text-white/50">{stats?.total || 0} حصة مسجلة في النظام</p>
               </div>
             </div>
 
             {/* KPI Stats */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                <div className="flex items-center gap-2 text-white/60 text-[11px] mb-1.5">
-                  <BookOpen size={13} />
-                  <span>إجمالي الحصص</span>
+              <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-bold text-gray-500">معدل التحويل</span>
+                  <div className="w-8 h-8 rounded-lg bg-[#6366f1]/10 flex items-center justify-center">
+                    <TrendingUp size={14} className="text-[#6366f1]" />
+                  </div>
                 </div>
-                <div className="text-2xl font-bold font-outfit text-white"><Counter value={stats?.total || 0} /></div>
-                <div className="text-white/50 text-[10px] mt-1">جميع الحصص</div>
+                <div className="text-2xl font-bold font-outfit text-[#6366f1]">{conversionRate}%</div>
+                <div className="text-[10px] text-gray-400 mt-1">{stats?.converted || 0} تحويل</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                <div className="flex items-center gap-2 text-white/60 text-[11px] mb-1.5">
-                  <CheckCircle2 size={13} />
-                  <span>تمت بنجاح</span>
+              <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-bold text-gray-500">قيد الانتظار</span>
+                  <div className="w-8 h-8 rounded-lg bg-[#f59e0b]/10 flex items-center justify-center">
+                    <Clock size={14} className="text-[#f59e0b]" />
+                  </div>
                 </div>
-                <div className="text-2xl font-bold font-outfit text-white"><Counter value={stats?.completed || 0} /></div>
-                <div className="text-success text-[10px] mt-1">ناجحة</div>
+                <div className="text-2xl font-bold font-outfit text-[#f59e0b]"><Counter value={stats?.pending || 0} /></div>
+                <div className="text-[10px] text-gray-400 mt-1">بانتظار الموعد</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                <div className="flex items-center gap-2 text-white/60 text-[11px] mb-1.5">
-                  <Clock size={13} />
-                  <span>قيد الانتظار</span>
+              <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-bold text-gray-500">تمت بنجاح</span>
+                  <div className="w-8 h-8 rounded-lg bg-[#10b981]/10 flex items-center justify-center">
+                    <CheckCircle2 size={14} className="text-[#10b981]" />
+                  </div>
                 </div>
-                <div className="text-2xl font-bold font-outfit text-white"><Counter value={stats?.pending || 0} /></div>
-                <div className="text-warning text-[10px] mt-1">بانتظار الموعد</div>
+                <div className="text-2xl font-bold font-outfit text-[#10b981]"><Counter value={stats?.completed || 0} /></div>
+                <div className="text-[10px] text-gray-400 mt-1">حصة ناجحة</div>
               </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
-                <div className="flex items-center gap-2 text-white/60 text-[11px] mb-1.5">
-                  <TrendingUp size={13} />
-                  <span>معدل التحويل</span>
+              <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] font-bold text-gray-500">إجمالي الحصص</span>
+                  <div className="w-8 h-8 rounded-lg bg-[#8b5cf6]/10 flex items-center justify-center">
+                    <BookOpen size={14} className="text-[#8b5cf6]" />
+                  </div>
                 </div>
-                <div className="text-2xl font-bold font-outfit text-white">{conversionRate}%</div>
-                <div className="text-success text-[10px] mt-1">{stats?.converted || 0} تحويل</div>
+                <div className="text-2xl font-bold font-outfit text-[#8b5cf6]"><Counter value={stats?.total || 0} /></div>
+                <div className="text-[10px] text-gray-400 mt-1">جميع الحصص</div>
               </div>
             </div>
           </div>
@@ -313,22 +354,22 @@ export const TrialSessions = () => {
                 aria-label={showPaid ? 'إظهار غير المدفوعة' : 'إظهار المدفوعة'}
               >
                 {showPaid ? <Eye size={13} /> : <EyeOff size={13} />}
-                <span className="hidden sm:inline">{showPaid ? 'المدفوعة' : 'المدفوعة'}</span>
+                <span className="hidden sm:inline">المدفوعة</span>
               </button>
               <div className="shrink-0 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl px-3 py-2.5">
                 <span className="text-[13px] font-bold text-main dark:text-white/60 tabular-nums">{filtered.length}</span>
               </div>
             </div>
 
-            {/* Filter pills */}
+            {/* Status filter pills */}
             <div className="bg-surface/50 dark:bg-white/[0.02] border border-border/50 dark:border-white/[0.04] rounded-xl p-2 mt-3 flex items-center gap-2">
               <div className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
                 <motion.button whileTap={{ scale: 0.95 }} onClick={() => setFilterStatus('')}
                   className={cn(
                     'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                     !filterStatus
-                      ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary border-primary/30 dark:border-[#6366f1]/30 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20'
-                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                      ? 'bg-gradient-to-l from-[#6366f1] to-[#8b5cf6] text-white border-[#6366f1]/30 shadow-md shadow-[#6366f1]/20'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-[#6366f1]/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                   )}>
                   الكل
                   <span className={cn(
@@ -338,6 +379,7 @@ export const TrialSessions = () => {
                 </motion.button>
                 {statusFilters.map((sf) => {
                   const isActive = filterStatus === sf.key;
+                  const count = trials.filter((t: TrialSession) => t.status === sf.key).length;
                   return (
                     <motion.button key={sf.key} whileTap={{ scale: 0.95 }} onClick={() => setFilterStatus(isActive ? '' : sf.key)}
                       className={cn(
@@ -348,6 +390,10 @@ export const TrialSessions = () => {
                       )}>
                       <span className={cn('w-1.5 h-1.5 rounded-full', sf.dot)} />
                       {sf.label}
+                      <span className={cn(
+                        'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
+                        isActive ? 'bg-white/20 dark:bg-white/10' : 'bg-white/40 dark:bg-white/5'
+                      )}>{count}</span>
                     </motion.button>
                   );
                 })}
@@ -368,8 +414,8 @@ export const TrialSessions = () => {
                   className={cn(
                     'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                     !filterSubject
-                      ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary border-primary/30 dark:border-[#6366f1]/30 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20'
-                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                      ? 'bg-gradient-to-l from-[#6366f1] to-[#8b5cf6] text-white border-[#6366f1]/30 shadow-md shadow-[#6366f1]/20'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-[#6366f1]/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                   )}>
                   كل المواد
                 </motion.button>
@@ -380,8 +426,8 @@ export const TrialSessions = () => {
                       className={cn(
                         'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                         isActive
-                          ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary border-primary/30 dark:border-[#6366f1]/30 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20'
-                          : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                          ? 'bg-gradient-to-l from-[#6366f1] to-[#8b5cf6] text-white border-[#6366f1]/30 shadow-md shadow-[#6366f1]/20'
+                          : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-[#6366f1]/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                       )}>
                       {subj}
                     </motion.button>
@@ -433,7 +479,7 @@ export const TrialSessions = () => {
               </div>
             ) : (
               <motion.div variants={containerVariants} className="space-y-3">
-                {Array.from(groups.entries()).map(([phone, sessions]) => (
+                {Array.from(paginatedGroups.entries()).map(([phone, sessions]) => (
                   <motion.div key={phone} variants={itemVariants}>
                     {sessions.length > 1 && (
                       <div className="flex items-center gap-2 px-3 py-1.5 mb-2">
@@ -463,13 +509,49 @@ export const TrialSessions = () => {
                 ))}
               </motion.div>
             )}
+
+            {/* Pagination */}
+            {totalPages > 1 && filtered.length > 0 && (
+              <div className="flex items-center justify-center gap-2 mt-6 pt-4 border-t border-border/50 dark:border-white/[0.04]">
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="w-9 h-9 flex items-center justify-center rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-white/40 hover:bg-hover dark:hover:bg-white/[0.08] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                  aria-label="الصفحة التالية"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={cn(
+                      'w-9 h-9 flex items-center justify-center rounded-xl text-[12px] font-bold transition-all',
+                      page === currentPage
+                        ? 'bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] text-white shadow-md shadow-[#6366f1]/20'
+                        : 'bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-white/40 hover:bg-hover dark:hover:bg-white/[0.08]'
+                    )}
+                  >
+                    {page}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="w-9 h-9 flex items-center justify-center rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-white/40 hover:bg-hover dark:hover:bg-white/[0.08] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                  aria-label="الصفحة السابقة"
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            )}
           </div>
         </motion.div>
 
         {/* FAB Button */}
         <motion.button
           onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }}
-          className="hidden md:flex fixed bottom-8 left-8 z-40 w-14 h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary rounded-xl shadow-xl shadow-primary/30 dark:shadow-[#6366f1]/30 items-center justify-center active:scale-95 transition-all duration-200"
+          className="hidden md:flex fixed bottom-8 left-8 z-40 w-14 h-14 bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] text-white rounded-xl shadow-xl shadow-[#6366f1]/30 items-center justify-center active:scale-95 transition-all duration-200"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة حصة جديدة"

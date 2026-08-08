@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { X, Phone, MessageSquare, CheckCheck, Calendar, Clock, BookOpen, GraduationCap, MessageCircle, UserPlus, Pencil, CircleDollarSign } from 'lucide-react';
+import { X, Phone, MessageSquare, CheckCheck, Calendar, Clock, BookOpen, GraduationCap, MessageCircle, UserPlus, Pencil, CircleDollarSign, User } from 'lucide-react';
 import { cn } from '../lib/utils';
 import type { TrialSession } from './TrialSessions';
 
@@ -15,19 +15,19 @@ interface TrialSessionDrawerProps {
 }
 
 const statusConfig: Record<string, { label: string; dot: string; text: string; bg: string; darkBg: string; darkText: string }> = {
-    pending: { label: 'بانتظار', dot: 'bg-warning', text: 'text-warning', bg: 'bg-warning/15', darkBg: 'dark:bg-warning/20', darkText: 'dark:text-warning' },
-    completed: { label: 'تمت', dot: 'bg-success', text: 'text-success', bg: 'bg-success/15', darkBg: 'dark:bg-success/20', darkText: 'dark:text-success' },
-    cancelled: { label: 'ملغية', dot: 'bg-error', text: 'text-error', bg: 'bg-error/15', darkBg: 'dark:bg-error/20', darkText: 'dark:text-error' },
-    converted: { label: 'محولة', dot: 'bg-info', text: 'text-info', bg: 'bg-info/15', darkBg: 'dark:bg-info/20', darkText: 'dark:text-info' },
+    pending: { label: 'بانتظار', dot: 'bg-[#f59e0b]', text: 'text-[#f59e0b]', bg: 'bg-[#f59e0b]/15', darkBg: 'dark:bg-[#f59e0b]/20', darkText: 'dark:text-[#f59e0b]' },
+    completed: { label: 'تمت بنجاح', dot: 'bg-[#10b981]', text: 'text-[#10b981]', bg: 'bg-[#10b981]/15', darkBg: 'dark:bg-[#10b981]/20', darkText: 'dark:text-[#10b981]' },
+    cancelled: { label: 'ملغية', dot: 'bg-[#ef4444]', text: 'text-[#ef4444]', bg: 'bg-[#ef4444]/15', darkBg: 'dark:bg-[#ef4444]/20', darkText: 'dark:text-[#ef4444]' },
+    converted: { label: 'محولة', dot: 'bg-[#6366f1]', text: 'text-[#6366f1]', bg: 'bg-[#6366f1]/15', darkBg: 'dark:bg-[#6366f1]/20', darkText: 'dark:text-[#6366f1]' },
 };
 
 const avatarGradients = [
-    'from-primary to-primary-hover',
-    'from-success to-success-hover',
-    'from-info to-info-hover',
-    'from-warning to-warning-hover',
-    'from-error to-error-hover',
-    'from-accent to-accent-hover',
+    'from-[#6366f1] to-[#8b5cf6]',
+    'from-[#10b981] to-[#059669]',
+    'from-[#f59e0b] to-[#d97706]',
+    'from-[#ef4444] to-[#dc2626]',
+    'from-[#3b82f6] to-[#2563eb]',
+    'from-[#8b5cf6] to-[#7c3aed]',
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -57,9 +57,9 @@ const generateTimeline = (session: TrialSession) => {
 };
 
 const variantStyles: Record<string, { dot: string; iconBg: string; iconText: string; line: string }> = {
-    success: { dot: 'bg-success', iconBg: 'bg-success/10', iconText: 'text-success', line: 'bg-success/20' },
-    info: { dot: 'bg-info', iconBg: 'bg-info/10', iconText: 'text-info', line: 'bg-info/20' },
-    warning: { dot: 'bg-warning', iconBg: 'bg-warning/10', iconText: 'text-warning', line: 'bg-warning/20' },
+    success: { dot: 'bg-[#10b981]', iconBg: 'bg-[#10b981]/10', iconText: 'text-[#10b981]', line: 'bg-[#10b981]/20' },
+    info: { dot: 'bg-[#6366f1]', iconBg: 'bg-[#6366f1]/10', iconText: 'text-[#6366f1]', line: 'bg-[#6366f1]/20' },
+    warning: { dot: 'bg-[#f59e0b]', iconBg: 'bg-[#f59e0b]/10', iconText: 'text-[#f59e0b]', line: 'bg-[#f59e0b]/20' },
     muted: { dot: 'bg-muted', iconBg: 'bg-surface', iconText: 'text-muted', line: 'bg-border' },
 };
 
@@ -93,7 +93,7 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                     <div className="p-5 border-b border-border dark:border-white/[0.04]">
                         <div className="flex items-center gap-4">
                             <div className={cn("w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md", gradient)}>
-                                <span className="text-xl font-bold text-white">{session.studentName?.charAt(0) || 'ط'}</span>
+                                <User size={22} className="text-white" />
                             </div>
                             <div className="min-w-0">
                                 <h2 className="text-base font-bold text-main dark:text-white">{session.studentName}</h2>
@@ -179,9 +179,9 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                     {session.notes && (
                         <div className="p-5 border-b border-border dark:border-white/[0.04]">
                             <h3 className="text-[11px] font-bold text-muted dark:text-white/40 mb-3">الملاحظات</h3>
-                            <div className="p-4 rounded-xl bg-warning/[0.05] dark:bg-warning/[0.08] border border-warning/[0.15] dark:border-warning/[0.2]">
+                            <div className="p-4 rounded-xl bg-[#f59e0b]/[0.05] dark:bg-[#f59e0b]/[0.08] border border-[#f59e0b]/[0.15] dark:border-[#f59e0b]/[0.2]">
                                 <div className="flex items-start gap-2">
-                                    <MessageCircle size={14} className="text-warning shrink-0 mt-0.5" />
+                                    <MessageCircle size={14} className="text-[#f59e0b] shrink-0 mt-0.5" />
                                     <p className="text-xs text-muted dark:text-white/40 leading-relaxed">{session.notes}</p>
                                 </div>
                             </div>
@@ -192,21 +192,21 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                     <div className="p-5 space-y-2">
                         <h3 className="text-[11px] font-bold text-muted dark:text-white/40 mb-3">الإجراءات</h3>
                         <div className="grid grid-cols-2 gap-2">
-                            <button onClick={() => onCall(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 dark:bg-success/15 border border-success/20 dark:border-success/20 text-success text-xs font-bold hover:bg-success/20 dark:hover:bg-success/20 transition-all active:scale-[0.98]">
+                            <button onClick={() => onCall(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#10b981]/10 dark:bg-[#10b981]/15 border border-[#10b981]/20 dark:border-[#10b981]/20 text-[#10b981] text-xs font-bold hover:bg-[#10b981]/20 dark:hover:bg-[#10b981]/20 transition-all active:scale-[0.98]">
                                 <Phone size={14} /> اتصال
                             </button>
-                            <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 dark:bg-success/15 border border-success/20 dark:border-success/20 text-success text-xs font-bold hover:bg-success/20 dark:hover:bg-success/20 transition-all active:scale-[0.98]">
+                            <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#10b981]/10 dark:bg-[#10b981]/15 border border-[#10b981]/20 dark:border-[#10b981]/20 text-[#10b981] text-xs font-bold hover:bg-[#10b981]/20 dark:hover:bg-[#10b981]/20 transition-all active:scale-[0.98]">
                                 <MessageSquare size={14} /> واتساب
                             </button>
                             {session.status === 'pending' && (
-                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-info/10 dark:bg-info/15 border border-info/20 dark:border-info/20 text-info text-xs font-bold hover:bg-info/20 dark:hover:bg-info/20 transition-all active:scale-[0.98] disabled:opacity-50 col-span-2">
+                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#6366f1]/10 dark:bg-[#6366f1]/15 border border-[#6366f1]/20 dark:border-[#6366f1]/20 text-[#6366f1] text-xs font-bold hover:bg-[#6366f1]/20 dark:hover:bg-[#6366f1]/20 transition-all active:scale-[0.98] disabled:opacity-50 col-span-2">
                                     <UserPlus size={14} /> {isConverting ? 'جاري التحويل...' : 'تحويل إلى طالب'}
                                 </button>
                             )}
                             <button onClick={() => { onEdit(session); onClose(); }} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-white/40 text-xs font-bold hover:bg-hover dark:hover:bg-white/[0.08] transition-all active:scale-[0.98]">
                                 <Pencil size={14} /> تعديل
                             </button>
-                            <button onClick={() => onPaid(session.id)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 dark:bg-success/15 border border-success/20 dark:border-success/20 text-success text-xs font-bold hover:bg-success/20 dark:hover:bg-success/20 transition-all active:scale-[0.98]">
+                            <button onClick={() => onPaid(session.id)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#10b981]/10 dark:bg-[#10b981]/15 border border-[#10b981]/20 dark:border-[#10b981]/20 text-[#10b981] text-xs font-bold hover:bg-[#10b981]/20 dark:hover:bg-[#10b981]/20 transition-all active:scale-[0.98]">
                                 <CircleDollarSign size={14} /> مدفوعة
                             </button>
                         </div>
