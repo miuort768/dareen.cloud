@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { X, CalendarDays } from 'lucide-react';
+import { X, CalendarDays, ChevronDown } from 'lucide-react';
 
 interface TrialSessionForm {
     studentName: string;
@@ -24,6 +24,7 @@ interface TrialSessionFormModalProps {
 
 const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-white rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
 const labelClass = "text-[11px] font-bold text-muted dark:text-white/40 mb-1.5 block";
+const selectWrapperClass = "relative";
 
 export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onChange, onSubmit, onClose }: TrialSessionFormModalProps) => (
     <motion.div
@@ -70,15 +71,20 @@ export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onC
                     </div>
                     <div className="space-y-1">
                         <label className={labelClass}>المعلمة</label>
-                        <select value={form.teacherName} onChange={e => {
-                            const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
-                            onChange({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
-                        }} aria-label="اختيار المعلمة" className={inputClass}>
-                            <option value="">اختر معلمة</option>
-                            {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => (
-                                <option key={t.id} value={t.name}>{t.name}</option>
-                            ))}
-                        </select>
+                        <div className={selectWrapperClass}>
+                            <select value={form.teacherName} onChange={e => {
+                                const t = (Array.isArray(teachers) ? teachers : []).find((t: { id: string; name: string }) => t.name === e.target.value);
+                                onChange({ ...form, teacherName: e.target.value, teacherId: t?.id || '' });
+                            }} aria-label="اختيار المعلمة" className={inputClass + " appearance-none"}>
+                                <option value="">اختر معلمة</option>
+                                {(Array.isArray(teachers) ? teachers : []).map((t: { id: string; name: string }) => (
+                                    <option key={t.id} value={t.name}>{t.name}</option>
+                                ))}
+                            </select>
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted dark:text-white/40">
+                                <ChevronDown size={14} />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

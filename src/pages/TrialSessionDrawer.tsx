@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { X, Phone, MessageSquare, CheckCheck, Calendar, Clock, BookOpen, GraduationCap, MessageCircle, UserPlus, Pencil } from 'lucide-react';
+import { X, Phone, MessageSquare, CheckCheck, Calendar, Clock, BookOpen, GraduationCap, MessageCircle, UserPlus, Pencil, CircleDollarSign } from 'lucide-react';
 import { cn } from '../lib/utils';
 import type { TrialSession } from './TrialSessions';
 
@@ -205,6 +205,9 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                             )}
                             <button onClick={() => { onEdit(session); onClose(); }} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-white/40 text-xs font-bold hover:bg-hover dark:hover:bg-white/[0.08] transition-all active:scale-[0.98]">
                                 <Pencil size={14} /> تعديل
+                            </button>
+                            <button onClick={() => onPaid(session.id)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 dark:bg-success/15 border border-success/20 dark:border-success/20 text-success text-xs font-bold hover:bg-success/20 dark:hover:bg-success/20 transition-all active:scale-[0.98]">
+                                <CircleDollarSign size={14} /> مدفوعة
                             </button>
                         </div>
                     </div>

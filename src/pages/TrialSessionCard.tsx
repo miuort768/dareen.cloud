@@ -43,9 +43,9 @@ const subjectColors: Record<string, string> = {
 };
 
 const getSubjectColor = (subject?: string) => {
-    if (!subject) return 'text-muted';
+    if (!subject) return 'text-muted dark:text-white/40';
     const key = Object.keys(subjectColors).find(k => subject.includes(k) || k.includes(subject));
-    return key ? subjectColors[key] : 'text-muted';
+    return key ? subjectColors[key] : 'text-muted dark:text-white/40';
 };
 
 const getAvatarGradient = (name: string) => {

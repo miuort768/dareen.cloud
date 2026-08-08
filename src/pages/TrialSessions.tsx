@@ -108,7 +108,8 @@ export const TrialSessions = () => {
 
   const { data: trials = [], isLoading, isError: isTrialsError } = useQuery({
     queryKey: ['trial-sessions'],
-    queryFn: () => api.get<TrialSession[]>('/trial-sessions')
+    queryFn: () => api.get<TrialSession[]>('/trial-sessions'),
+    refetchInterval: 30000,
   });
 
   const { data: teachers = [] } = useQuery({
@@ -140,7 +141,7 @@ export const TrialSessions = () => {
   });
 
   useEffect(() => {
-    const socket = socketService.getSocket();
+    const socket = socketService.connect();
     if (!socket) return;
     const handleUpdate = () => {
       queryClient.invalidateQueries({ queryKey: ['trial-sessions'] });
@@ -359,21 +360,33 @@ export const TrialSessions = () => {
               )}
             </div>
 
-            {/* Subject filter */}
+            {/* Subject filter — horizontal scrollable pill bar */}
             {subjects.length > 0 && (
-              <div className="flex items-center gap-2 mt-3">
-                <CalendarDays size={12} className="text-muted dark:text-white/30" />
-                <select
-                  value={filterSubject}
-                  onChange={e => setFilterSubject(e.target.value)}
-                  aria-label="تصفية حسب المادة"
-                  className="px-3 py-1.5 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-lg text-[10px] font-bold text-main dark:text-white/60 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all appearance-none cursor-pointer"
-                >
-                  <option value="">كل المواد</option>
-                  {subjects.map(subj => (
-                    <option key={subj} value={subj}>{subj}</option>
-                  ))}
-                </select>
+              <div className="flex items-center gap-1.5 mt-3 overflow-x-auto scrollbar-none">
+                <CalendarDays size={12} className="text-muted dark:text-white/30 shrink-0" />
+                <motion.button whileTap={{ scale: 0.95 }} onClick={() => setFilterSubject('')}
+                  className={cn(
+                    'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
+                    !filterSubject
+                      ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary border-primary/30 dark:border-[#6366f1]/30 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                  )}>
+                  كل المواد
+                </motion.button>
+                {subjects.map(subj => {
+                  const isActive = filterSubject === subj;
+                  return (
+                    <motion.button key={subj} whileTap={{ scale: 0.95 }} onClick={() => setFilterSubject(isActive ? '' : subj)}
+                      className={cn(
+                        'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
+                        isActive
+                          ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary border-primary/30 dark:border-[#6366f1]/30 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20'
+                          : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                      )}>
+                      {subj}
+                    </motion.button>
+                  );
+                })}
               </div>
             )}
           </div>
