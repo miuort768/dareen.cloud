@@ -154,43 +154,48 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
                 )}
             </div>
 
-            {/* Action buttons row */}
-            <div className="flex items-center gap-px bg-surface dark:bg-white/[0.02] border-t border-border/50 dark:border-white/[0.04]" role="toolbar" aria-label="إجراءات الحصة">
-                {onCall && (
-                    <button onClick={(e) => { e.stopPropagation(); onCall(t.parentPhone); }} className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[11px] font-bold text-[#10b981] hover:bg-[#10b981]/10 transition-colors active:bg-[#10b981]/20" aria-label="اتصال">
-                        <Phone size={13} /> اتصال
+            {/* Action buttons row — styled as polished pills & circular buttons matching reference */}
+            <div className="flex items-center justify-between gap-2 px-4 py-3 bg-surface/50 dark:bg-white/[0.02] border-t border-border/50 dark:border-white/[0.04]" role="toolbar" aria-label="إجراءات الحصة">
+                <div className="flex items-center gap-2 flex-1">
+                    {onCall && (
+                        <button onClick={(e) => { e.stopPropagation(); onCall(t.parentPhone); }} className="flex items-center justify-center gap-1.5 px-3.5 py-2 text-[11px] font-bold rounded-xl bg-[#0ea5e9]/10 text-[#0ea5e9] hover:bg-[#0ea5e9]/20 transition-all active:scale-95" aria-label="اتصال">
+                            <Phone size={13} /> اتصال
+                        </button>
+                    )}
+                    {onWhatsApp && (
+                        <button onClick={(e) => { e.stopPropagation(); onWhatsApp(t.parentPhone); }} className="flex items-center justify-center gap-1.5 px-3.5 py-2 text-[11px] font-bold rounded-xl bg-[#10b981]/10 text-[#10b981] hover:bg-[#10b981]/20 transition-all active:scale-95" aria-label="واتساب">
+                            <MessageSquare size={13} /> واتساب
+                        </button>
+                    )}
+                    <button onClick={(e) => { e.stopPropagation(); onEdit(t); }} className="flex items-center justify-center gap-1.5 px-3.5 py-2 text-[11px] font-bold rounded-xl bg-surface dark:bg-white/[0.06] text-muted dark:text-white/60 hover:bg-hover dark:hover:bg-white/[0.1] transition-all active:scale-95" aria-label="تعديل">
+                        <Pencil size={13} /> تعديل
                     </button>
-                )}
-                {onWhatsApp && (
-                    <button onClick={(e) => { e.stopPropagation(); onWhatsApp(t.parentPhone); }} className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[11px] font-bold text-[#10b981] hover:bg-[#10b981]/10 transition-colors active:bg-[#10b981]/20" aria-label="واتساب">
-                        <MessageSquare size={13} /> واتساب
-                    </button>
-                )}
-                <button onClick={(e) => { e.stopPropagation(); onEdit(t); }} className="flex-1 flex items-center justify-center gap-1.5 py-2.5 text-[11px] font-bold text-muted dark:text-white/40 hover:bg-hover dark:hover:bg-white/[0.04] transition-colors active:bg-hover" aria-label="تعديل">
-                    <Pencil size={13} /> تعديل
-                </button>
-                {onPaid && (
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                    {onPaid && (
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onPaid(t.id); }}
+                            disabled={isPaid}
+                            className={cn(
+                                "w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all active:scale-90 shadow-sm",
+                                isPaid
+                                    ? "border-[#10b981]/30 text-[#10b981]/40 bg-[#10b981]/5 cursor-default"
+                                    : "border-[#10b981] text-[#10b981] bg-[#10b981]/10 hover:bg-[#10b981]/20"
+                            )}
+                            aria-label="مدفوعة"
+                        >
+                            <CircleDollarSign size={15} />
+                        </button>
+                    )}
                     <button
-                        onClick={(e) => { e.stopPropagation(); onPaid(t.id); }}
-                        disabled={isPaid}
-                        className={cn(
-                            "w-8 h-8 rounded-full border-2 flex items-center justify-center shrink-0 transition-all active:scale-90",
-                            isPaid
-                                ? "border-[#10b981]/30 text-[#10b981]/40 cursor-default"
-                                : "border-[#10b981] text-[#10b981] hover:bg-[#10b981]/10 active:bg-[#10b981]/20"
-                        )}
-                        aria-label="مدفوعة"
+                        onClick={(e) => { e.stopPropagation(); onDelete(t.id); }}
+                        className="w-9 h-9 rounded-full border-2 border-[#ef4444] text-[#ef4444] bg-[#ef4444]/10 flex items-center justify-center hover:bg-[#ef4444]/20 transition-all active:scale-90 shadow-sm"
+                        aria-label="حذف"
                     >
-                        <CircleDollarSign size={13} />
+                        <Trash2 size={15} />
                     </button>
-                )}
-                <button
-                    onClick={(e) => { e.stopPropagation(); onDelete(t.id); }}
-                    className="w-8 h-8 rounded-full border-2 border-[#ef4444] text-[#ef4444] flex items-center justify-center shrink-0 hover:bg-[#ef4444]/10 active:bg-[#ef4444]/20 transition-all active:scale-90"
-                    aria-label="حذف"
-                >
-                    <Trash2 size={13} />
-                </button>
+                </div>
             </div>
         </motion.div>
     );
