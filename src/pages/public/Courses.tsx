@@ -37,10 +37,10 @@ const StarRating = ({ rating }: { rating: number }) => (
       <Star
         key={star}
         size={10}
-        className={star <= Math.floor(rating) ? 'text-warning fill-warning' : 'text-dim dark:text-muted fill-none'}
+        className={star <= Math.floor(rating) ? 'text-warning dark:text-[#D4AF37] fill-warning dark:fill-[#D4AF37]' : 'text-dim dark:text-zinc-600 fill-none'}
       />
     ))}
-    <span className="text-micro font-black text-muted ms-1">{rating}</span>
+    <span className="text-micro font-black text-muted dark:text-zinc-400 ms-1">{rating}</span>
   </div>
 );
 
@@ -88,34 +88,34 @@ export const Courses = () => {
   }), [academyName]);
 
   return (
-    <div className="min-h-full bg-background font-sans text-main relative flex flex-col">
+    <div className="min-h-full bg-background dark:bg-black font-sans text-main relative flex flex-col transition-colors duration-500">
       <SEO title="الدورات التعليمية أونلاين" description="دورات تعليمية أونلاين للمناهج السعودية والكويتية والإماراتية والقطرية والعمانية والبحرينية. دروس خصوصية في الرياضيات والعلوم واللغة العربية والإنجليزية وقدرات وتحصيلي في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق. تأسيس أطفال، تحفيظ قرآن، مراجعات نهائية مع نخبة المعلمين الخبراء." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'الدورات', item: '/courses' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <MobileHeader />
 
       <main className="flex-grow md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 rounded-full blur-[120px]" />
-          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[var(--bg-primary)]/20 to-transparent" />
+          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 dark:from-[#D4AF37]/[0.05] dark:to-[#D4AF37]/[0.05] rounded-full blur-[140px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 dark:from-[#D4AF37]/[0.03] dark:to-[#D4AF37]/[0.03] rounded-full blur-[120px]" />
+          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[var(--bg-primary)]/20 dark:via-[#D4AF37]/20 to-transparent" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
                         <AnimateOnScroll animation="fadeUp">
                         <div className="text-center mb-4 md:mb-6">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/10 backdrop-blur-sm border border-primary dark:border-primary/20 rounded-full mb-2 md:mb-6">
-                                <Sparkles size={13} className="text-primary" />
-                                <span className="text-micro font-black text-primary">استكشف مسيرتك التعليمية</span>
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-[#D4AF37]/15 backdrop-blur-sm border border-primary dark:border-[#D4AF37]/30 rounded-full mb-2 md:mb-6">
+                                <Sparkles size={13} className="text-primary dark:text-[#D4AF37]" />
+                                <span className="text-micro font-black text-primary dark:text-[#D4AF37]">استكشف مسيرتك التعليمية</span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-main mb-2 md:mb-4 leading-tight tracking-tight">
-                                <span className="text-primary">
+                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-main dark:text-white mb-2 md:mb-4 leading-tight tracking-tight">
+                                <span className="text-primary dark:text-[#D4AF37]">
                                     دورات
                                 </span>{' '}
                                 {academyName}
                             </h1>
 
-                            <p className="text-sm sm:text-base text-muted max-w-2xl mx-auto leading-relaxed font-medium md:whitespace-nowrap">
+                            <p className="text-sm sm:text-base text-muted dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed font-medium md:whitespace-nowrap">
                                 برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
                             </p>
                         </div>
@@ -129,9 +129,9 @@ export const Courses = () => {
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 ps-12 py-4 rounded-card bg-card border border-border dark:border-border/50 shadow-lg shadow-sm/50 dark:shadow-black/20 focus:border-primary/50 focus:ring-4 focus:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-muted font-bold dark:focus:shadow-lg"
+                className="w-full px-5 ps-12 py-4 rounded-card bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/30 shadow-lg shadow-sm/50 dark:shadow-black/20 focus:border-primary/50 dark:focus:border-[#D4AF37]/50 focus:ring-4 focus:ring-primary/10 dark:focus:ring-[#D4AF37]/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-zinc-500 font-bold dark:focus:shadow-lg"
               />
-              <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim dark:text-muted w-5 h-5 group-focus-within:text-primary transition-colors" />
+              <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim dark:text-zinc-500 w-5 h-5 group-focus-within:text-primary dark:group-focus-within:text-[#D4AF37] transition-colors" />
             </div>
 
             <div className="flex flex-wrap justify-center gap-2 mt-6">
@@ -142,12 +142,12 @@ export const Courses = () => {
                   onClick={() => setActiveCategory(cat.value)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-card font-black text-xs transition-all duration-300 ${
                     activeCategory === cat.value
-                      ? 'bg-primary-active dark:bg-surface text-on-primary dark:text-main shadow-lg shadow-card/20 dark:shadow-lg'
-                      : 'bg-surface text-muted border border-border hover:border-border/20 hover:text-main'
+                      ? 'bg-primary-active dark:bg-[#D4AF37] text-on-primary dark:text-black shadow-lg shadow-card/20 dark:shadow-[#D4AF37]/20'
+                      : 'bg-surface dark:bg-[#121215] text-muted dark:text-zinc-400 border border-border dark:border-[#D4AF37]/20 hover:border-border/20 dark:hover:border-[#D4AF37]/40 hover:text-main dark:hover:text-white'
                   }`}
                 >
                   <span className="flex items-center gap-2">
-                    <cat.icon size={14} className={activeCategory === cat.value ? 'text-on-primary dark:text-main' : cat.color} />
+                    <cat.icon size={14} className={activeCategory === cat.value ? 'text-on-primary dark:text-black' : cat.color} />
                     <span>{cat.label}</span>
                   </span>
                 </button>
@@ -168,9 +168,9 @@ export const Courses = () => {
                 <motion.div
                   key={course.id}
                   variants={cardVariants}
-                   className="group relative bg-card border border-border dark:border-border/50 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-xl transition-all duration-500"
+                   className="group relative bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-[#D4AF37]/10 transition-all duration-500"
                 >
-                  <div className="relative h-44 overflow-hidden bg-background dark:bg-card">
+                  <div className="relative h-44 overflow-hidden bg-background dark:bg-[#0a0a0c]">
                     <Image
                       src={course.image}
                       alt={course.title}
@@ -178,7 +178,7 @@ export const Courses = () => {
                       imgClassName="object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
                     />
 
-                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-card to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-card dark:from-[#0d0d0f] to-transparent" />
 
                     <div className="absolute top-3 start-3 z-10">
                       <div className={`px-2.5 py-1 rounded-lg text-micro font-black text-on-primary shadow-lg bg-gradient-to-br ${course.color}`}>
@@ -187,33 +187,33 @@ export const Courses = () => {
                     </div>
 
                     <div className="absolute bottom-3 end-3 z-10">
-                      <div className="bg-surface/90 dark:bg-card backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
+                      <div className="bg-surface/90 dark:bg-[#0d0d0f]/90 backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
                         <StarRating rating={course.rating} />
                       </div>
                     </div>
                   </div>
 
                     <div className="p-3 pb-0 flex flex-col flex-1">
-                    <h2 className="text-lg md:text-xl font-heading font-black text-main leading-snug group-hover:text-primary dark:group-hover:text-primary transition-colors">
+                    <h2 className="text-lg md:text-xl font-heading font-black text-main dark:text-white leading-snug group-hover:text-primary dark:group-hover:text-[#D4AF37] transition-colors">
                       {course.title}
                     </h2>
 
-                    <p className="text-xs text-muted leading-relaxed line-clamp-2 mt-2 mb-4">
+                    <p className="text-xs text-muted dark:text-zinc-400 leading-relaxed line-clamp-2 mt-2 mb-4">
                       {course.desc}
                     </p>
 
-                    <div className="mt-auto flex items-center justify-between py-3 border-t border-border dark:border-border/50">
+                    <div className="mt-auto flex items-center justify-between py-3 border-t border-border dark:border-[#D4AF37]/15">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-lg bg-primary-soft dark:bg-primary/10 flex items-center justify-center">
-                          <Users size={12} className="text-primary" />
+                        <div className="w-7 h-7 rounded-lg bg-primary-soft dark:bg-[#D4AF37]/15 flex items-center justify-center">
+                          <Users size={12} className="text-primary dark:text-[#D4AF37]" />
                         </div>
                         <div>
-                          <span className="text-xs font-black text-main leading-none block">{course.students}</span>
-                          <span className="text-micro font-bold text-muted">طالب</span>
+                          <span className="text-xs font-black text-main dark:text-white leading-none block">{course.students}</span>
+                          <span className="text-micro font-bold text-muted dark:text-zinc-500">طالب</span>
                         </div>
                       </div>
 
-                      <span className="flex items-center gap-1.5 text-xs font-black text-success bg-success-light dark:bg-success/10 px-3 py-1.5 rounded-lg">
+                      <span className="flex items-center gap-1.5 text-xs font-black text-success bg-success-light dark:bg-[#D4AF37]/15 dark:text-[#D4AF37] px-3 py-1.5 rounded-lg">
                         <Sparkles size={10} />
                         تجربة مجانية
                       </span>
@@ -224,13 +224,12 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-primary-dark text-on-success dark:text-on-primary text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
+                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-[#D4AF37] dark:hover:bg-[#f59e0b] text-on-success dark:text-black text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-[#D4AF37]/20 active:scale-[0.97] dark:shadow-lg"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب
                   </a>
 
-                  {/* Hidden SEO keywords for this course */}
                   {course.seoKeywords && (
                     <div className="absolute opacity-0 pointer-events-none overflow-hidden h-0" aria-hidden="true">
                       <h2>الكلمات المفتاحية - {course.title}</h2>
@@ -249,11 +248,11 @@ export const Courses = () => {
               viewport={{ once: true }}
               className="text-center py-20"
             >
-              <div className="w-16 h-16 rounded-card bg-background dark:bg-card/50 flex items-center justify-center mx-auto mb-4 border border-border dark:border-border/50">
-                <Search size={28} className="text-dim dark:text-muted" />
+              <div className="w-16 h-16 rounded-card bg-background dark:bg-[#0d0d0f] flex items-center justify-center mx-auto mb-4 border border-border dark:border-[#D4AF37]/30">
+                <Search size={28} className="text-dim dark:text-zinc-500" />
               </div>
-              <h2 className="text-xl font-black text-main mb-1">لا توجد نتائج</h2>
-              <p className="text-sm text-muted font-medium">جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر</p>
+              <h2 className="text-xl font-black text-main dark:text-white mb-1">لا توجد نتائج</h2>
+              <p className="text-sm text-muted dark:text-zinc-400 font-medium">جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر</p>
             </motion.div>
           )}
         </div>
