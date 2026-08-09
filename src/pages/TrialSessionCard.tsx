@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, MessageSquare, CheckCheck, Pencil, Trash2, BookOpen, Calendar, Clock, MessageCircle, ChevronDown, ChevronUp, CircleDollarSign, User, GraduationCap } from 'lucide-react';
+import { Phone, MessageSquare, Pencil, Trash2, BookOpen, Calendar, Clock, MessageCircle, ChevronDown, ChevronUp, CircleDollarSign, User, GraduationCap } from 'lucide-react';
 import { cn } from '../lib/utils';
 import type { TrialSession } from './TrialSessions';
 
@@ -45,7 +45,7 @@ const formatPhone = (phone: string) => {
     return phone;
 };
 
-export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCall, onWhatsApp, onCardClick, onPaid, isPaid, isConverting }: TrialSessionCardProps) => {
+export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhatsApp, onCardClick, onPaid, isPaid }: TrialSessionCardProps) => {
     const [showNotes, setShowNotes] = useState(false);
     const cfg = statusConfig[t.status] || statusConfig.pending;
     const gradient = getAvatarGradient(t.studentName);
@@ -56,63 +56,79 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -2 }}
             className={cn(
-                "bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden font-dash hover:shadow-elevation-2 dark:hover:shadow-none transition-all duration-300 group",
+                "bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden font-dash hover:shadow-elevation-2 dark:hover:shadow-none transition-all duration-300 group text-right",
                 onCardClick && "cursor-pointer"
             )}
+            dir="rtl"
         >
             {/* Main content */}
             <div className="p-4 pb-3 cursor-pointer" onClick={onCardClick}>
-                {/* Row 1: Date + Time (top right in RTL) */}
-                <div className="flex items-center gap-2 text-[11px] text-muted dark:text-white/40 mb-3">
-                    <span className="inline-flex items-center gap-1">
-                        <Calendar size={11} />{t.date}
-                    </span>
-                    {t.time && (
-                        <>
-                            <span className="text-muted/30 dark:text-white/15">|</span>
-                            <span className="inline-flex items-center gap-1">
-                                <Clock size={11} />{t.time}
+                {/* Top Row: Avatar + Name + Status (Right) & Date + Time (Left) */}
+                <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                        <div className={cn("w-11 h-11 rounded-xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md", gradient)}>
+                            <User size={18} className="text-white" />
+                        </div>
+                        <div className="text-right">
+                            <h3 className="text-[14px] font-bold text-main dark:text-white leading-tight">{t.studentName}</h3>
+                            <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-bold mt-1", cfg.bg, cfg.text, cfg.darkBg, cfg.darkText)}>
+                                <span className={cn("w-1.5 h-1.5 rounded-full", cfg.dot)} />
+                                {cfg.label}
                             </span>
-                        </>
-                    )}
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 text-[11px] text-muted dark:text-white/40">
+                        <span className="inline-flex items-center gap-1">
+                            <Calendar size={11} />{t.date}
+                        </span>
+                        {t.time && (
+                            <>
+                                <span className="text-muted/30 dark:text-white/15">|</span>
+                                <span className="inline-flex items-center gap-1">
+                                    <Clock size={11} />{t.time}
+                                </span>
+                            </>
+                        )}
+                    </div>
                 </div>
 
-                {/* Row 2: Info grid (Subject · Teacher · Phone) */}
+                {/* Info grid (Subject · Teacher · Phone) */}
                 <div className="grid grid-cols-3 gap-3 mb-3">
                     <div className="text-right">
                         <p className="text-[10px] text-muted dark:text-white/30 mb-1">المادة التعليمية</p>
-                        <div className="flex items-center gap-1.5 justify-end">
-                            <span className="text-[12px] font-bold text-main dark:text-white">{t.subject || '—'}</span>
+                        <div className="flex items-center gap-1.5 justify-start">
                             <div className="w-7 h-7 rounded-lg bg-[#6366f1]/10 dark:bg-[#6366f1]/15 flex items-center justify-center shrink-0">
                                 <BookOpen size={13} className="text-[#6366f1]" />
                             </div>
+                            <span className="text-[12px] font-bold text-main dark:text-white">{t.subject || '—'}</span>
                         </div>
                     </div>
                     <div className="text-right">
                         <p className="text-[10px] text-muted dark:text-white/30 mb-1">التعلم المسؤول</p>
-                        <div className="flex items-center gap-1.5 justify-end">
-                            <span className="text-[12px] font-bold text-main dark:text-white truncate">{t.teacherName || '—'}</span>
+                        <div className="flex items-center gap-1.5 justify-start">
                             <div className="w-7 h-7 rounded-lg bg-[#10b981]/10 dark:bg-[#10b981]/15 flex items-center justify-center shrink-0">
                                 <GraduationCap size={13} className="text-[#10b981]" />
                             </div>
+                            <span className="text-[12px] font-bold text-main dark:text-white truncate">{t.teacherName || '—'}</span>
                         </div>
                     </div>
                     <div className="text-right">
                         <p className="text-[10px] text-muted dark:text-white/30 mb-1">رقم التواصل</p>
-                        <div className="flex items-center gap-1.5 justify-end">
-                            <span className="text-[12px] font-bold text-main dark:text-white font-mono" dir="ltr">{formatPhone(t.parentPhone)}</span>
+                        <div className="flex items-center gap-1.5 justify-start">
                             <div className="w-7 h-7 rounded-lg bg-[#f59e0b]/10 dark:bg-[#f59e0b]/15 flex items-center justify-center shrink-0">
                                 <Phone size={13} className="text-[#f59e0b]" />
                             </div>
+                            <span className="text-[12px] font-bold text-main dark:text-white font-mono" dir="ltr">{formatPhone(t.parentPhone)}</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Row 3: Notes (if present) */}
+                {/* Notes (if present) */}
                 {t.notes && (
                     <div
                         className={cn(
-                            "rounded-xl text-[11px] transition-all cursor-pointer mb-3",
+                            "rounded-xl text-[11px] transition-all cursor-pointer mb-2",
                             showNotes ? "bg-[#f59e0b]/5 dark:bg-[#f59e0b]/8 p-3 border border-[#f59e0b]/15" : ""
                         )}
                         onClick={(e) => { e.stopPropagation(); setShowNotes(!showNotes); }}
@@ -120,7 +136,7 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                         {showNotes ? (
                             <div className="flex items-start gap-2">
                                 <MessageCircle size={13} className="text-[#f59e0b] shrink-0 mt-0.5" />
-                                <div className="min-w-0 flex-1">
+                                <div className="min-w-0 flex-1 text-right">
                                     <p className="text-muted dark:text-white/40 leading-relaxed">{t.notes}</p>
                                     <button onClick={(e) => { e.stopPropagation(); setShowNotes(false); }} className="text-[10px] font-bold text-[#f59e0b] mt-1 inline-flex items-center gap-1">
                                         <ChevronUp size={10} />أقل
@@ -130,29 +146,12 @@ export const TrialSessionCard = ({ session: t, onConvert, onEdit, onDelete, onCa
                         ) : (
                             <div className="flex items-center gap-1.5 text-[#f59e0b] bg-[#f59e0b]/5 dark:bg-[#f59e0b]/8 rounded-lg px-3 py-2 border border-[#f59e0b]/10">
                                 <MessageCircle size={12} />
-                                <span className="text-muted dark:text-white/40 line-clamp-1 flex-1">{t.notes}</span>
+                                <span className="text-muted dark:text-white/40 line-clamp-1 flex-1 text-right">{t.notes}</span>
                                 <ChevronDown size={10} className="shrink-0" />
                             </div>
                         )}
                     </div>
                 )}
-
-                {/* Row 4: Name + Status + Avatar (bottom of card) */}
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="min-w-0">
-                            <h3 className="text-[14px] font-bold text-main dark:text-white leading-tight">{t.studentName}</h3>
-                            <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-bold mt-1", cfg.bg, cfg.text, cfg.darkBg, cfg.darkText)}>
-                                <span className={cn("w-1.5 h-1.5 rounded-full", cfg.dot)} />
-                                {cfg.label}
-                            </span>
-                        </div>
-                    </div>
-                    {/* Avatar */}
-                    <div className={cn("w-11 h-11 rounded-xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md", gradient)}>
-                        <User size={18} className="text-white" />
-                    </div>
-                </div>
             </div>
 
             {/* Action buttons row */}

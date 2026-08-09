@@ -269,7 +269,7 @@ export const TrialSessions = () => {
                   <Download size={14} /> تحميل التقرير
                 </button>
               </div>
-              <div className="text-left">
+              <div className="text-right">
                 <p className="text-white/60 dark:text-white/40 text-[11px] mb-0.5">مرحباً بك! 👋</p>
                 <h1 className="text-lg md:text-xl font-bold font-outfit text-white">جلسات المراجعة</h1>
                 <p className="text-[11px] text-white/50">{stats?.total || 0} حصة مسجلة في النظام</p>
