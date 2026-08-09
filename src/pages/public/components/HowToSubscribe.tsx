@@ -22,80 +22,70 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
             icon: Users,
             title: 'اختر المنهج',
             desc: 'حدد منهجك والمادة',
-            boxBg: 'bg-gradient-to-br from-primary to-primary-hover',
+            boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b]',
         },
         {
             num: '02',
             icon: Star,
             title: 'حصة مجانية',
             desc: 'حصة تجريبية مجانية لك',
-            boxBg: 'bg-success',
+            boxBg: 'bg-success dark:bg-[#D4AF37]',
         },
         {
             num: '03',
             icon: Sparkles,
             title: 'اشترك الآن',
             desc: 'تواصل لحجز مقعدك',
-            boxBg: 'bg-gradient-to-br from-primary to-primary-hover',
+            boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b]',
         },
     ];
 
     return (
-        <section className="relative overflow-hidden bg-surface dark:bg-card rounded-3xl shadow-inner">
-            {/* Soft glow background */}
-            <div className="absolute top-20 -start-20 w-60 h-60 bg-accent/10 dark:bg-accent/20 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-40 -end-20 w-72 h-72 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+        <section className="relative overflow-hidden bg-surface dark:bg-black rounded-3xl shadow-inner">
+            <div className="absolute top-20 -start-20 w-60 h-60 bg-accent/10 dark:bg-[#D4AF37]/[0.08] rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-40 -end-20 w-72 h-72 bg-primary/10 dark:bg-[#D4AF37]/[0.05] rounded-full blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 px-4 py-6">
-                {/* Status Bar */}
                 <div className="flex items-center justify-between mb-6 px-1">
                     <div className="flex items-center gap-3">
-                        <span className="text-sm font-black text-primary">{formatTime(time)}</span>
-                        <span className="text-micro font-bold text-muted">بتوقيت أم الدنيا</span>
+                        <span className="text-sm font-black text-primary dark:text-[#D4AF37]">{formatTime(time)}</span>
+                        <span className="text-micro font-bold text-muted dark:text-zinc-400">بتوقيت أم الدنيا</span>
                         <Heart className="w-4 h-4 text-error fill-error" />
                     </div>
                     <div className="flex items-center gap-1.5">
-                        <Signal size={14} className="text-muted" />
-                        <Wifi size={14} className="text-muted" />
-                        <Battery size={16} className="text-muted" />
+                        <Signal size={14} className="text-muted dark:text-zinc-400" />
+                        <Wifi size={14} className="text-muted dark:text-zinc-400" />
+                        <Battery size={16} className="text-muted dark:text-zinc-400" />
                     </div>
                 </div>
 
-                {/* Badge */}
-                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-l from-primary to-primary-hover rounded-full mb-4 shadow-sm">
-                    <Zap size={10} className="text-warning fill-warning" />
-                    <span className="text-micro font-black text-on-primary">ابدأ رحلتك</span>
+                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-l from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b] rounded-full mb-4 shadow-sm">
+                    <Zap size={10} className="text-warning dark:text-black fill-warning dark:fill-black" />
+                    <span className="text-micro font-black text-on-primary dark:text-black">ابدأ رحلتك</span>
                 </div>
 
-                {/* Title */}
-                <h2 className="text-xl font-black text-main leading-tight mb-1">
-                    كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary-hover">المعهد؟</span>
+                <h2 className="text-xl font-black text-main dark:text-white leading-tight mb-1">
+                    كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b]">المعهد؟</span>
                 </h2>
-                <p className="text-xs text-muted font-medium mb-5 leading-relaxed">
+                <p className="text-xs text-muted dark:text-zinc-400 font-medium mb-5 leading-relaxed">
                     اختر الطريقة التي تناسبك وابدأ رحلتك التعليمية معنا
                 </p>
 
-                {/* Steps Cards */}
                 <div className="grid grid-cols-3 gap-2.5 mb-6">
                     {steps.map((s, i) => (
-                        <div key={`step-${i}`} className="bg-card rounded-2xl border border-border shadow-sm p-3.5 flex flex-col items-center text-center relative">
-                            {/* Number Badge */}
-                            <div className="absolute -top-2 -start-2 w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow-md">
-                                <span className="text-micro font-black text-on-primary">{s.num}</span>
+                        <div key={`step-${i}`} className="bg-card dark:bg-[#0d0d0f] rounded-2xl border border-border dark:border-[#D4AF37]/30 shadow-sm p-3.5 flex flex-col items-center text-center relative">
+                            <div className="absolute -top-2 -start-2 w-5 h-5 rounded-full bg-primary dark:bg-[#D4AF37] flex items-center justify-center shadow-md">
+                                <span className="text-micro font-black text-on-primary dark:text-black">{s.num}</span>
                             </div>
-                            {/* Icon Box */}
                             <div className={`w-10 h-10 rounded-xl ${s.boxBg} flex items-center justify-center mb-2.5 shadow-md`}>
-                                <s.icon size={18} className="text-on-primary" />
+                                <s.icon size={18} className="text-on-primary dark:text-black" />
                             </div>
-                            {/* Title */}
-                            <h3 className="text-xs font-black text-main mb-0.5">{s.title}</h3>
-                            {/* Desc */}
-                            <p className="text-micro text-main font-medium leading-tight">{s.desc}</p>
+                            <h3 className="text-xs font-black text-main dark:text-white mb-0.5">{s.title}</h3>
+                            <p className="text-micro text-main dark:text-zinc-400 font-medium leading-tight">{s.desc}</p>
                         </div>
                     ))}
                 </div>
 
-                {/* Mobile perks list under cards */}
                 <div className="md:hidden space-y-3 mb-6 px-1">
                     {[
                         { icon: 'CreditCard', title: 'الدفع وتحصيل الاشتراك', desc: 'بوسائل دفع محلية مناسبة' },
@@ -103,30 +93,29 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                         { icon: 'Hash', title: 'عدد الحصص', desc: 'بالقدر المناسب لك' },
                     ].map((item, i) => (
                         <div key={`perk-${i}`} className="flex items-center gap-3">
-                            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary-hover flex items-center justify-center shadow-sm shrink-0">
-                                {item.icon === 'CreditCard' && <CreditCard size={12} className="text-on-primary" />}
-                                {item.icon === 'Clock' && <Clock size={12} className="text-on-primary" />}
-                                {item.icon === 'Hash' && <Hash size={12} className="text-on-primary" />}
+                            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b] flex items-center justify-center shadow-sm shrink-0">
+                                {item.icon === 'CreditCard' && <CreditCard size={12} className="text-on-primary dark:text-black" />}
+                                {item.icon === 'Clock' && <Clock size={12} className="text-on-primary dark:text-black" />}
+                                {item.icon === 'Hash' && <Hash size={12} className="text-on-primary dark:text-black" />}
                             </div>
                             <div>
-                                <span className="text-xs font-black text-main">{item.title}</span>
-                                <p className="text-micro text-muted">{item.desc}</p>
+                                <span className="text-xs font-black text-main dark:text-white">{item.title}</span>
+                                <p className="text-micro text-muted dark:text-zinc-400">{item.desc}</p>
                             </div>
                         </div>
                     ))}
                 </div>
 
-                {/* CTA Button */}
                 <a
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-primary to-primary-hover rounded-2xl shadow-lg dark:shadow-primary/20 hover:brightness-110 hover:-translate-y-0.5 transition-all group"
+                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b] rounded-2xl shadow-lg dark:shadow-[#D4AF37]/20 hover:brightness-110 hover:-translate-y-0.5 transition-all group"
                 >
-                    <Gift size={16} className="text-on-primary opacity-90" />
-                    <span className="text-on-primary text-sm font-black">احجز حصتك المجانية الآن</span>
-                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 transition-all">
-                        <ArrowLeft size={16} className="text-on-primary" />
+                    <Gift size={16} className="text-on-primary dark:text-black opacity-90" />
+                    <span className="text-on-primary dark:text-black text-sm font-black">احجز حصتك المجانية الآن</span>
+                    <div className="w-8 h-8 rounded-full bg-white/20 dark:bg-black/20 flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all">
+                        <ArrowLeft size={16} className="text-on-primary dark:text-black" />
                     </div>
                 </a>
             </div>

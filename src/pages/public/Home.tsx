@@ -76,7 +76,7 @@ export const Home = () => {
     }, [reviews.length]);
 
     return (
-        <div className="min-h-full bg-surface text-main relative overflow-x-hidden transition-colors duration-500">
+        <div className="min-h-full bg-surface dark:bg-black text-main dark:text-white relative overflow-x-hidden transition-colors duration-500">
             <SEO title="منصة تعليم عن بعد في الكويت والخليج"
                 description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن."
                 url="https://dareen.cloud/" image="/hero-child.png"
@@ -87,31 +87,31 @@ export const Home = () => {
                 <div className="flex gap-1.5 mt-2 mb-3">
                     <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
                         target="_blank" rel="noopener noreferrer"
-                        className="flex-1 bg-primary text-on-primary text-xs font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
+                        className="flex-1 bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black font-extrabold text-xs px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
                         <Headphones className="w-2.5 h-2.5 shrink-0" /> طلب حصة مجانية
                     </a>
                     <Link to="/books"
-                        className="flex-1 bg-primary text-on-primary text-xs font-bold px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
-                        <Play className="w-2.5 h-2.5 shrink-0" /> تحميل مذكرات مجانية
+                        className="flex-1 bg-primary dark:bg-white/10 dark:text-white text-on-primary text-xs font-bold px-1.5 py-2 rounded-full border dark:border-[#D4AF37]/30 flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
+                        <Play className="w-2.5 h-2.5 shrink-0 dark:text-[#D4AF37]" /> تحميل مذكرات مجانية
                     </Link>
                 </div>
-                <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-primary dark:via-primary dark:to-background rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-border">
+                <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[#09090b] dark:via-[#121215] dark:to-[#09090b] rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-[#D4AF37]/30">
                     {heroSlides.map((slide, i) => (
                         <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
                             <div className="flex items-center gap-4">
                                 <div className="flex-1">
-                                    <h1 className="text-lg font-black text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-success"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-success -mt-0.5" /></span>}</h1>
-                                    <p className="text-xs font-bold text-primary dark:text-warning mb-0.5">{slide.subtitle}</p>
-                                    <p className="text-micro text-muted leading-relaxed mb-3">{slide.desc}</p>
+                                    <h1 className="text-lg font-black text-main dark:text-white leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-[#D4AF37]"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-[#D4AF37] -mt-0.5" /></span>}</h1>
+                                    <p className="text-xs font-bold text-primary dark:text-[#f3d368] mb-0.5">{slide.subtitle}</p>
+                                    <p className="text-micro text-muted dark:text-zinc-300 leading-relaxed mb-3">{slide.desc}</p>
                                     <div className="flex flex-col gap-1.5">
-                                        <Link to="/courses" className="bg-surface text-main text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
-                                            <Play className="w-3 h-3 fill-main" /> تصفح الدورات
+                                        <Link to="/courses" className="bg-surface dark:bg-white/10 text-main dark:text-white border dark:border-[#D4AF37]/30 text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
+                                            <Play className="w-3 h-3 fill-main dark:fill-[#D4AF37] dark:text-[#D4AF37]" /> تصفح الدورات
                                         </Link>
-                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary text-on-primary text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-primary-hover transition-all w-full text-center">{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</Link>
+                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black font-extrabold text-xs px-4 py-2 rounded-full shadow-card transition-all w-full text-center">{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</Link>
                                     </div>
                                 </div>
                                 <div className="relative shrink-0">
-                                    <div className="absolute inset-0 bg-primary-light/50 dark:bg-primary-soft rounded-full blur-xl" />
+                                    <div className="absolute inset-0 bg-primary-light/50 dark:bg-[#D4AF37]/10 rounded-full blur-xl" />
                                     <div className="relative w-[90px]">
                                         {i === 0 ? (
                                             <picture>
@@ -125,7 +125,7 @@ export const Home = () => {
                                     <div className="flex justify-center gap-1 -mt-1">
                                         {[0, 1, 2].map((d) => (
                                             <button key={d} onClick={() => setHeroIndex(d)} aria-label={`الانتقال إلى الشريحة ${d + 1}`}
-                                                className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-primary w-3' : 'bg-muted'}`} />
+                                                className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-primary dark:bg-[#D4AF37] w-3' : 'bg-muted dark:bg-zinc-600'}`} />
                                         ))}
                                     </div>
                                 </div>
@@ -141,13 +141,13 @@ export const Home = () => {
                                 return (
                                     <motion.div key={`hero-${i}`} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.08 }}
-                                        className={`flex items-center gap-2 p-2 ${s.bg} rounded-card shadow-sm border border-border transition-all`}>
-                                        <div className={`w-10 h-10 rounded-card ${s.bg} flex items-center justify-center shrink-0`}>
-                                            <f.icon className={s.text} size={20} />
+                                        className={`flex items-center gap-2 p-2 ${s.bg} dark:bg-[#0d0d0f] rounded-card shadow-sm border border-border dark:border-[#D4AF37]/20 transition-all`}>
+                                        <div className={`w-10 h-10 rounded-card ${s.bg} dark:bg-[#D4AF37]/15 flex items-center justify-center shrink-0`}>
+                                            <f.icon className={`${s.text} dark:text-[#D4AF37]`} size={20} />
                                         </div>
                                         <div className="min-w-0">
-                                            <span className="text-micro font-black text-main block leading-tight mb-0">{f.label}</span>
-                                            <span className="text-micro text-main font-medium block leading-tight">{f.desc}</span>
+                                            <span className="text-micro font-black text-main dark:text-white block leading-tight mb-0">{f.label}</span>
+                                            <span className="text-micro text-main dark:text-zinc-300 font-medium block leading-tight">{f.desc}</span>
                                         </div>
                                     </motion.div>
                                 );
@@ -160,14 +160,14 @@ export const Home = () => {
                 </AnimateOnScroll>
                 <section className="px-1">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-black text-main">أحدث الدورات</h2>
-                        <Link to="/courses" className="text-sm font-bold text-primary flex items-center gap-1">عرض الكل <ChevronLeft className="w-3.5 h-3.5" /></Link>
+                        <h2 className="text-lg font-black text-main dark:text-white">أحدث الدورات</h2>
+                        <Link to="/courses" className="text-sm font-bold text-primary dark:text-[#D4AF37] flex items-center gap-1">عرض الكل <ChevronLeft className="w-3.5 h-3.5" /></Link>
                     </div>
                     <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                         {stages.map((cat) => (
                             <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
-                                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${activeCategory === cat.value ? 'bg-primary text-on-primary shadow-md shadow-black/20' : 'bg-surface text-muted border border-border'}`}>
-                                <cat.icon size={12} className={activeCategory === cat.value ? 'text-on-primary' : 'text-muted'} /> {cat.label}
+                                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${activeCategory === cat.value ? 'bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black shadow-md shadow-black/20' : 'bg-surface dark:bg-[#121215] text-muted dark:text-zinc-300 border border-border dark:border-[#D4AF37]/30'}`}>
+                                <cat.icon size={12} className={activeCategory === cat.value ? 'text-on-primary dark:text-black' : 'text-muted dark:text-[#D4AF37]'} /> {cat.label}
                             </button>
                         ))}
                     </div>
@@ -178,19 +178,19 @@ export const Home = () => {
                                 target="_blank" rel="noopener noreferrer"
                                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.35, delay: i * 0.08 }}
-                                className="min-w-[180px] w-[180px] bg-surface rounded-card shadow-sm border border-border overflow-hidden shrink-0 block">
-                                <div className="relative h-24 bg-surface overflow-hidden">
+                                className="min-w-[180px] w-[180px] bg-surface dark:bg-[#0d0d0f] rounded-card shadow-sm border border-border dark:border-[#D4AF37]/25 overflow-hidden shrink-0 block">
+                                <div className="relative h-24 bg-surface dark:bg-black overflow-hidden">
                                     <Image src={c.image} alt={c.title} className="h-24" />
-                                    <span className={`absolute top-2 start-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning text-on-warning' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary text-on-primary' : 'bg-error text-on-error'}`}>
+                                    <span className={`absolute top-2 start-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning dark:bg-[#D4AF37] text-on-warning dark:text-black' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black' : 'bg-error text-on-error'}`}>
                                         {stages.find(cat => cat.value === c.category)?.label || c.category}
                                     </span>
                                 </div>
                                 <div className="p-3">
-                                    <h3 className="text-xs font-black text-main mb-0.5">{c.title}</h3>
-                                    <p className="text-xs text-muted font-medium mb-2 line-clamp-1">{c.desc}</p>
+                                    <h3 className="text-xs font-black text-main dark:text-white mb-0.5">{c.title}</h3>
+                                    <p className="text-xs text-muted dark:text-zinc-400 font-medium mb-2 line-clamp-1">{c.desc}</p>
                                     <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-1"><Users className="w-3 h-3 text-dim" /><span className="text-xs font-bold text-muted">{c.students}</span></div>
-                                        <div className="flex items-center gap-0.5"><Star className="w-3 h-3 text-warning fill-warning" /><span className="text-xs font-bold text-main">{c.rating}</span></div>
+                                        <div className="flex items-center gap-1"><Users className="w-3 h-3 text-dim dark:text-zinc-400" /><span className="text-xs font-bold text-muted dark:text-zinc-300">{c.students}</span></div>
+                                        <div className="flex items-center gap-0.5"><Star className="w-3 h-3 text-warning dark:text-[#D4AF37] fill-warning dark:fill-[#D4AF37]" /><span className="text-xs font-bold text-main dark:text-white">{c.rating}</span></div>
                                     </div>
                                 </div>
                             </motion.a>
