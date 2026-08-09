@@ -256,23 +256,23 @@ export const TrialSessions = () => {
           </div>
 
           <div className="relative z-10 px-4 md:px-6 py-6">
-            {/* Top row: actions + title */}
-            <div className="flex items-start justify-between mb-5">
+            {/* Top row: title + actions */}
+            <div className="flex items-center justify-between mb-5">
+              <div className="text-right">
+                <p className="text-white/60 dark:text-white/40 text-[11px] mb-0.5">مرحباً بك! 👋</p>
+                <h1 className="text-lg md:text-xl font-bold font-outfit text-white">جلسات المراجعة</h1>
+                <p className="text-[11px] text-white/50">{stats?.total || 0} حصة مسجلة في النظام</p>
+              </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }}
                   className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white text-[11px] font-bold rounded-xl border border-white/20 transition-all active:scale-[0.98]"
                 >
-                  <Plus size={14} /> جدولة класса جديدة
+                  <Plus size={14} /> جدولة جلسة جديدة
                 </button>
                 <button className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white text-[11px] font-bold rounded-xl border border-white/20 transition-all active:scale-[0.98]">
                   <Download size={14} /> تحميل التقرير
                 </button>
-              </div>
-              <div className="text-right">
-                <p className="text-white/60 dark:text-white/40 text-[11px] mb-0.5">مرحباً بك! 👋</p>
-                <h1 className="text-lg md:text-xl font-bold font-outfit text-white">جلسات المراجعة</h1>
-                <p className="text-[11px] text-white/50">{stats?.total || 0} حصة مسجلة في النظام</p>
               </div>
             </div>
 
