@@ -42,11 +42,11 @@ export const Home = () => {
         } catch (e) { console.warn(e); return defaultNumber; }
     };
 
-    const requestFreeNumber = getNumber('Ўб» Ќ’… гћ«дн…');
-    const bookFreeNumber = getNumber('«Ќћ“ Ќ’ я «бгћ«дн… «б¬д');
-    const memorizingNumber = getNumber('«»ѕ√ «бЌЁў «б¬д');
-    const excellenceNumber = getNumber('«»ѕ√ —Ќб… «б гн“');
-    const signupNowNumber = getNumber('”ћб «б¬д');
+    const requestFreeNumber = getNumber('пњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљ');
+    const bookFreeNumber = getNumber('пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ');
+    const memorizingNumber = getNumber('пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљ');
+    const excellenceNumber = getNumber('пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ');
+    const signupNowNumber = getNumber('пњљпњљпњљ пњљпњљпњљпњљ');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [activeCategory, setActiveCategory] = useState('all');
     const [typewriterText, setTypewriterText] = useState("");
@@ -56,7 +56,7 @@ export const Home = () => {
     try { if (heroBanners) bannersArray = JSON.parse(heroBanners); } catch (e) { console.warn(e); }
 
     useEffect(() => {
-        const fullText = `гд’… ${academyName}`;
+        const fullText = `пњљпњљпњљпњљ ${academyName}`;
         let i = 0, isDeleting = false, typingSpeed = 150, timer: ReturnType<typeof setTimeout>;
         const type = () => {
             const currentText = isDeleting ? fullText.substring(0, i - 1) : fullText.substring(0, i + 1);
@@ -77,22 +77,22 @@ export const Home = () => {
 
     return (
         <div className="min-h-full bg-surface dark:bg-background text-main dark:text-main relative overflow-x-hidden transition-colors duration-500">
-            <SEO title="гд’…  Џбнг Џд »Џѕ Ён «бяжн  ж«бќбнћ"
-                description=" Џбнг Џд »Џѕ Ён «бяжн ° «б”Џжѕн…° ёЎ—° «б≈г«—« ° жЏг«д. ѕ—ж” ќ’ж’н…°  ЌЁнў ё—¬д° ж √”н” ббгд«ећ «бќбнћн… гЏ √Ё÷б «бгЏбгнд. «Ќћ“ Ќ’…  ћ—н»н… гћ«дн… «б¬д."
+            <SEO title="пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ"
+                description="пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљ ° пњљпњљпњљпњљпњљпњљпњљ…° пњљпњљ—° пњљпњљпњљпњљпњљпњљпњљ ° пњљпњљпњљпњљпњљ. пњљпњљпњљпњљ пњљпњљпњљпњљпњљ…° пњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ. пњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ."
                 url="https://dareen.cloud/" image="/hero-child.png"
-                breadcrumbs={[{ name: '«б—∆н”н…', item: '/' }]} />
+                breadcrumbs={[{ name: 'пњљпњљпњљпњљпњљпњљпњљпњљ', item: '/' }]} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
             <MobileHeader />
             <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative">
                 <div className="flex gap-1.5 mt-2 mb-3">
-                    <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`«б”б«г Џбняг° √—џ» Ён Ќћ“ Ќ’… гћ«дн… Ён ${academyName}`)}`}
+                    <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљ ${academyName}`)}`}
                         target="_blank" rel="noopener noreferrer"
                         className="flex-1 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
-                        <Headphones className="w-2.5 h-2.5 shrink-0" /> Ўб» Ќ’… гћ«дн…
+                        <Headphones className="w-2.5 h-2.5 shrink-0" /> пњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљ
                     </a>
                     <Link to="/books"
                         className="flex-1 bg-primary dark:bg-white/10 dark:text-main text-on-primary text-xs font-bold px-1.5 py-2 rounded-full border dark:border-primary/30 flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
-                        <Play className="w-2.5 h-2.5 shrink-0 dark:text-primary" />  Ќгнб г–я—«  гћ«дн…
+                        <Play className="w-2.5 h-2.5 shrink-0 dark:text-primary" /> пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ
                     </Link>
                 </div>
                 <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-surface dark:via-card dark:to-surface rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-primary/30">
@@ -100,14 +100,14 @@ export const Home = () => {
                         <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
                             <div className="flex items-center gap-4">
                                 <div className="flex-1">
-                                    <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-primary"> «б”«»Џ… <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-primary -mt-0.5" /></span>}</h1>
+                                    <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-primary"> пњљпњљпњљпњљпњљпњљпњљ <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-primary -mt-0.5" /></span>}</h1>
                                     <p className="text-xs font-bold text-primary dark:text-primary mb-0.5">{slide.subtitle}</p>
                                     <p className="text-micro text-muted dark:text-muted leading-relaxed mb-3">{slide.desc}</p>
                                     <div className="flex flex-col gap-1.5">
                                         <Link to="/courses" className="bg-surface dark:bg-white/10 text-main dark:text-main border dark:border-primary/30 text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
-                                            <Play className="w-3 h-3 fill-main dark:fill-primary dark:text-primary" />  ’ЁЌ «бѕж—« 
+                                            <Play className="w-3 h-3 fill-main dark:fill-primary dark:text-primary" /> пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ
                                         </Link>
-                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-4 py-2 rounded-full shadow-card transition-all w-full text-center">{isAuthenticated ? 'бжЌ… «б Ќяг' : ' ”ћнб «бѕќжб'}</Link>
+                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-4 py-2 rounded-full shadow-card transition-all w-full text-center">{isAuthenticated ? 'пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ' : 'пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ'}</Link>
                                     </div>
                                 </div>
                                 <div className="relative shrink-0">
@@ -124,8 +124,8 @@ export const Home = () => {
                                     </div>
                                     <div className="flex justify-center gap-1 -mt-1">
                                         {[0, 1, 2].map((d) => (
-                                            <button key={d} onClick={() => setHeroIndex(d)} aria-label={`«б«д ё«б ≈бм «б‘—нЌ… ${d + 1}`}
-                                                className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-primary dark:bg-primary w-3' : 'bg-muted dark:bg-zinc-600'}`} />
+                                            <button key={d} onClick={() => setHeroIndex(d)} aria-label={`пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ ${d + 1}`}
+                                                className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-primary dark:bg-primary w-3' : 'bg-muted dark:bg-dim'}`} />
                                         ))}
                                     </div>
                                 </div>
@@ -160,8 +160,8 @@ export const Home = () => {
                 </AnimateOnScroll>
                 <section className="px-1">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-black text-main dark:text-main">√ЌѕЋ «бѕж—« </h2>
-                        <Link to="/courses" className="text-sm font-bold text-primary dark:text-primary flex items-center gap-1">Џ—÷ «бяб <ChevronLeft className="w-3.5 h-3.5" /></Link>
+                        <h2 className="text-lg font-black text-main dark:text-main">пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ</h2>
+                        <Link to="/courses" className="text-sm font-bold text-primary dark:text-primary flex items-center gap-1">пњљпњљпњљ пњљпњљпњљпњљ <ChevronLeft className="w-3.5 h-3.5" /></Link>
                     </div>
                     <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                         {stages.map((cat) => (
@@ -174,7 +174,7 @@ export const Home = () => {
                     <div className="flex gap-3 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar mt-3">
                         {getFilteredCourses(activeCategory).slice(0, 6).map((c, i) => (
                             <motion.a key={c.id}
-                                href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`«б”б«г Џбняг° √—џ» Ён «б«” Ё”«— Џд ${c.title}`)}`}
+                                href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљ ${c.title}`)}`}
                                 target="_blank" rel="noopener noreferrer"
                                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.35, delay: i * 0.08 }}
@@ -218,10 +218,10 @@ export const Home = () => {
                 <div style={{ contentVisibility: 'auto' }}><AnimateOnScroll><FAQSection /></AnimateOnScroll></div>
             </div>
             <div className="absolute opacity-0 pointer-events-none overflow-hidden h-0" aria-hidden="true">
-                <h2>«бябг«  «бгЁ «Ќн… - «б’ЁЌ… «б—∆н”н… ѕ«—нд «б”«»Џ…</h2>
-                <p>гд’…  Џбнг Џд »Џѕ, √Ё÷б гд’…  Џбнгн…, гѕ—” ќ’ж’н √ждб«нд, ѕ—ж” ќ’ж’н… «бќбнћ, гд«ећ «бяжн , гд«ећ «б”Џжѕн…,  Џбнг Џд »Џѕ Ён «бяжн ,  Џбнг Џд »Џѕ Ён «б”Џжѕн…,  Џбнг √ждб«нд, Ќ’… гћ«дн…,  ћ—»… гћ«дн…, гѕ—” —н«÷н« , гѕ—” Џбжг, гѕ—” бџ… Џ—»н…, гѕ—” бџ… ≈дћбн“н…,  √”н” √ЎЁ«б,  ЌЁнў ё—¬д, ёѕ—«  ж Ќ’нбн, г—«ћЏ«  де«∆н…, д «∆ћ г÷гжд…,  Ёжё ѕ—«”н, г «»Џ… √”»жЏн…,  ё«—н— ѕж—н…, гд«ећ ќбнћн…, гЏбгнд дќ»…, Ё’жб  Ё«Џбн…,  Џбнг г»«‘—, √Ё÷б гѕ—”нд, ѕ—ж”  ёжн…,  Ќ”нд «бг” жм,  Џбнг Џд »Џѕ бб√ЎЁ«б,  Џбнг √ждб«нд ббЎб«», «бгѕ—”… «б«Ё —«÷н…, √Ё÷б гд’…  Џбнгн… Ён «бяжн , √Ё÷б гд’…  Џбнгн… Ён «б”Џжѕн…, √Ё÷б гд’…  Џбнгн… Ён «б≈г«—« , √Ё÷б гд’…  Џбнгн… Ён ёЎ—, √Ё÷б гд’…  Џбнгн… Ён Џг«д, √Ё÷б гд’…  Џбнгн… Ён «б»Ќ—нд,  Ў»нё  Џбнгн,  Ў»нё ѕ«—нд «б”«»Џ…,  Ќгнб «б Ў»нё, Ќгб «б Ў»нё «б¬д, ѕж—«  ѕ«—нд «б”«»Џ…, ѕж—«  «бгд«ећ «бќбнћн…, ѕж—«   ёжн… √ждб«нд, ѕ—ж” ќ’ж’н… Ён «б—н«÷н« , ѕ—ж” ќ’ж’н… Ён «бЏбжг, ѕ—ж” ќ’ж’н… Ён «ббџ… «бЏ—»н…, ѕ—ж” ќ’ж’н… Ён «ббџ… «б≈дћбн“н…,  ЌЁнў ё—¬д Џд »Џѕ,  √”н” ё—«Ѕ… жя «»…, ‘—Ќ «бгдећ «бяжн н, ‘—Ќ «бгдећ «б”Џжѕн, Ќб я » «бгдећ, г–я—«   Џбнгн…, «ќ »«—«   ћ—н»н…, Ќ’…  ћ—н»н… гћ«дн…, ж« ”«» ѕ«—нд, √—ё«г гѕ—”нд ќ’ж’ннд, гЏеѕ  Џбнгн, √я«ѕнгн…  Џбнгн…, √Ё÷б гѕ—” ќ’ж’н Ён «бќбнћ</p>
-                <h3>ябг«  гЁ «Ќн… Ўжнб… - «б’ЁЌ… «б—∆н”н…</h3>
-                <p>√Ё÷б гд’…  Џбнг Џд »Џѕ Ён «бяжн  ж«б”Џжѕн… ж«бќбнћ, гѕ—” ќ’ж’н √ждб«нд ббгд«ећ «бќбнћн…, ѕ—ж”  ёжн… Ён «б—н«÷н«  ж«бЏбжг ж«ббџ« , Ќ’…  ћ—н»н… гћ«дн… бяб «бгж«ѕ,  Ќ”нд «бг” жм «бѕ—«”н ббЎб«», г «»Џ… √”»жЏн… гЏ  ё«—н— ѕж—н…, ‘—Ќ «бгдећ «бяжн н ж«б”Џжѕн ж«б≈г«—« н,  ЌЁнў «бё—¬д «бя—нг Џд »Џѕ бб√ЎЁ«б,  √”н” «б√ЎЁ«б Ён «бё—«Ѕ… ж«бя «»… ж«бЌ”«», √Ё÷б «бгѕ—”нд «бќ’ж’ннд Ён «бќбнћ, ѕ—ж” ќ’ж’н… √ждб«нд »√”Џ«— гд«”»…, »«ё«  «‘ —«я ѕ—ж” ќ’ж’н… гќЁ÷…,  Ў»нё  Џбнгн ббгд«ећ «бќбнћн…,  ћ—»…  Џбнгн… г я«гб… гд √н гя«д, Ё’жб ѕ—«”н… «Ё —«÷н…  Ё«Џбн…, дќ»… гЏбгнд ббгд«ећ «бќбнћн…, д «∆ћ г÷гжд… ж Ќ”нд «бѕ—ћ« , ѕ—ж” ќ’ж’н… Ё—ѕн… √ждб«нд,  Џбнг Џд »Џѕ »ћжѕ… Џ«бн…, гд’…  Џбнгн… Џ—»н… ббгд«ећ «бЏ—»н…, ѕж—«   ёжн… Ён ћгнЏ «бгж«ѕ, г—«ћЏ«  де«∆н… ё»б «б«ќ »«—« , «ќ »«—«  ёѕ—«  ж Ќ’нбн, –«я— гд «б»н  »√Ё÷б «бгѕ—”нд,  Џбнг √ждб«нд Ён «бяжн  ж«б”Џжѕн… ж«б≈г«—«  жёЎ— жЏг«д ж«б»Ќ—нд, ж« ”«» ѕ«—нд «б”«»Џ… бб«” Ё”«— ж«б ”ћнб, «Ќћ“ Ќ’ я «бгћ«дн… «б¬д, ѕж—«  ѕ«—нд «б”«»Џ… «б Џбнгн…, ё’’ дћ«Ќ Ўб«» ѕ«—нд «б”«»Џ…</p>
+                <h2>пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ - пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ</h2>
+                <p>пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљ пњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ</p>
+                <h3>пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ - пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ</h3>
+                <p>пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљ пњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ, пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ, пњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ</p>
             </div>
             <footer><PublicFooter /></footer>
         </div>

@@ -19,26 +19,26 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 dark:bg-primary/10 border border-primary/50 dark:border-primary/40 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-primary dark:bg-primary animate-pulse"></span>
-                                <span className="text-primary dark:text-primary font-bold text-micro sm:text-xs">гд’…  Џбнг Џд »Џѕ —«∆ѕ… Ён «б”Џжѕн… ж«бяжн  ж«бќбнћ</span>
+                                <span className="text-primary dark:text-primary font-bold text-micro sm:text-xs">пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-main dark:text-main leading-none mb-0 relative">
-                                <span className="sr-only">ѕ«—нд «б”«»Џ… бб Џбнг ж«б ѕ—н» Џд »Џѕ - «бгд’… —ёг ж«Ќѕ ббѕ—ж” «бќ’ж’н… ж ЌЁнў «бё—¬д Ён «б”Џжѕн…° «бяжн ° «б«г«—« ° ёЎ—° ж”бЎд… Џг«д жггбя… «б»Ќ—нд - ѕ—ж” ќ’ж’н… Ён «бѕжЌ… ж«б—н«д жг”ёЎ ж’б«б… ж«бгд«г… ж«бгЌ—ё</span>
+                                <span className="sr-only">пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ - пњљпњљпњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљ…° пњљпњљпњљпњљпњљ ° пњљпњљпњљпњљпњљпњљпњљ ° пњљпњљ—° пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ - пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ</span>
                                 <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-s-4 border-primary dark:border-primary me-1 h-[0.9em] align-middle"></span></span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent dark:from-warning dark:to-accent block -mt-1 py-1 aria-hidden">
-                                    бб Џбнг ж«б ѕ—н» Џд »Џѕ
+                                    пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ
                                 </span>
                             </h1>
                             <p className="text-xs sm:text-xs text-muted dark:text-muted leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
-                                √Ё÷б гд’…  Џбнг Џд »Џѕ Ён «б”Џжѕн…° «бяжн ° «б≈г«—« ° ёЎ— жЏг«д ж«б»Ќ—нд.<br />ѕ—ж” ќ’ж’н…° ёѕ—«  ж Ќ’нбн°  ЌЁнў ё—¬д° ж √”н” ббгд«ећ «бќбнћн… гЏ дќ»… «бгЏбгнд.
+                                пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљ пњљпњљ пњљпњљпњљпњљпњљпњљпњљ…° пњљпњљпњљпњљпњљ ° пњљпњљпњљпњљпњљпњљпњљ ° пњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ.<br />пњљпњљпњљпњљ пњљпњљпњљпњљпњљ…° пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ пњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљ.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-gradient-to-r from-primary to-primary dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-base sm:text-lg shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
-                                    aria-label=" ’ЁЌ «бѕж—«  «б Џбнгн…"
+                                    aria-label="пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ"
                                 >
-                                    <span> ’ЁЌ «бѕж—« </span>
+                                    <span>пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <button
@@ -53,12 +53,12 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                         }
                                     }}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-surface dark:bg-white/5 text-main dark:text-main border border-border dark:border-primary/30 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group rounded-xl"
-                                    aria-label="‘«еѕ ѕбнб «б«” ќѕ«г"
+                                    aria-label="пњљпњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-primary-soft dark:bg-primary/20 flex items-center justify-center group-hover:scale-110 transition">
                                         <Play className="w-4 h-4 text-primary dark:text-primary fill-primary dark:fill-primary" />
                                     </div>
-                                    <span>ѕбнб «б«” ќѕ«гњ</span>
+                                    <span>пњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљпњљпњљ</span>
                                 </button>
                             </div>
                             <div className="mt-4 pt-4 border-t border-border dark:border-white/10 flex items-center justify-center gap-6">
@@ -81,7 +81,7 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                         4.9/5
                                         <Star className="w-4 h-4 text-warning dark:text-primary fill-warning dark:fill-primary" />
                                     </div>
-                                    <p className="text-xs text-muted dark:text-muted font-medium"> ённг «бЎб«» ж√жбн«Ѕ «б√гж—</p>
+                                    <p className="text-xs text-muted dark:text-muted font-medium">пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљ</p>
                                 </div>
                             </div>
                         </div>
@@ -90,13 +90,13 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                 <div className="absolute inset-[2%] border-[1px] border-dashed border-primary/40 dark:border-primary/40 rounded-full animate-spin-slow pointer-events-none"></div>
                                 <div className="absolute inset-[4%] border-[1px] border-dashed border-accent/20 dark:border-warning/30 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
 
-                                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 dark:from-primary/20 dark:to-yellow-500/10 rounded-[3rem] blur-2xl animate-pulse"></div>
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 dark:from-primary/20 dark:to-warning/10 rounded-[3rem] blur-2xl animate-pulse"></div>
                                     <picture>
                                         <source srcSet="/hero-child.webp" type="image/webp" />
                                         <source srcSet="/hero-child.avif" type="image/avif" />
                                         <img
                                             src="/hero-child.png"
-                                            alt="ЎЁб нѕ—” Џбм гд’… ѕ«—нд «б”«»Џ…"
+                                            alt="пњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљ пњљпњљпњљпњљ пњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљпњљпњљ"
                                             width="490"
                                             height="490"
                                             className="relative w-full h-auto lg:h-full object-contain filter drop-shadow-2xl z-20"
@@ -119,13 +119,13 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                 {text}
                             </p>
                             <a
-                                href={`https://wa.me/${signupNowNumber}?text=${encodeURIComponent('«б”б«г Џбняг° ' + text)}`}
+                                href={`https://wa.me/${signupNowNumber}?text=${encodeURIComponent('пњљпњљпњљпњљпњљпњљ пњљпњљпњљпњљпњљ ' + text)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label={`”ћб «б¬д: ${text}`}
+                                aria-label={`пњљпњљпњљ пњљпњљпњљпњљ: ${text}`}
                                 className="shrink-0 px-2.5 py-1 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-micro lg:text-micro rounded-xl hover:brightness-90 transition-all shadow-sm whitespace-nowrap"
                             >
-                                ”ћб «б¬д
+                                пњљпњљпњљ пњљпњљпњљпњљ
                             </a>
                         </div>
                     ) : null)}
