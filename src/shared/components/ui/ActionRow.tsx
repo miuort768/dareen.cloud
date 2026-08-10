@@ -3,7 +3,7 @@ import { cn } from '../../../lib/utils';
 import { triggerHaptic } from '../../../lib/haptics';
 
 export interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: React.ReactNode;
+  icon: React.ComponentType<{ size?: number }> | React.ReactNode;
   label: string;
   color?: 'success' | 'error' | 'info' | 'warning' | 'primary';
   tooltip?: string;
@@ -24,6 +24,8 @@ export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProp
       onClick?.(e);
     };
 
+    const isComponent = typeof icon === 'function' && 'prototype' in icon;
+
     return (
       <button
         ref={ref}
@@ -43,7 +45,7 @@ export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProp
         )}
         {...props}
       >
-        {icon}
+        {isComponent ? React.createElement(icon as React.ComponentType<{ size?: number }>, { size: 14 }) : icon}
       </button>
     );
   }

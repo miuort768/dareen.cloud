@@ -69,11 +69,11 @@ export const HeroSection = ({ name, grade, curriculum, points, rank, attendanceR
                             <circle cx="60" cy="60" r={radius} fill="none" stroke="rgba(255,255,255,0.15)" className="dark:stroke-primary/20" strokeWidth="8" />
                             <circle
                                 cx="60" cy="60" r={radius} fill="none"
-                                stroke="rgba(255,255,255,0.9)" className="dark:stroke-primary" strokeWidth="8"
+                                stroke="rgba(255,255,255,0.9)" strokeWidth="8"
                                 strokeLinecap="round"
                                 strokeDasharray={circumference}
                                 strokeDashoffset={offset}
-                                className="transition-all duration-1000 ease-out"
+                                className="dark:stroke-primary transition-all duration-1000 ease-out"
                             />
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
