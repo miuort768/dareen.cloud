@@ -19,7 +19,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled }: {
 }) => (
     <button disabled={disabled} onClick={onClick}
         className={cn('flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover',
-            'text-on-primary text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-sm active:scale-95',
+            'text-on-primary text-xs font-semibold px-4 py-2.5 rounded-lg transition-all duration-200 shadow-sm active:scale-95',
             'disabled:opacity-50 disabled:cursor-not-allowed', className)}>
         {children}
     </button>

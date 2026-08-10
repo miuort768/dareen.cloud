@@ -59,7 +59,7 @@ export const InvoicesCard = () => {
                 </div>
                 <button
                     onClick={() => navigate('/student-invoices')}
-                    className="text-primary dark:text-[#D4AF37] text-xs font-bold flex items-center gap-1"
+                    className="text-primary dark:text-[#D4AF37] text-xs font-semibold flex items-center gap-1 hover:underline transition-all"
                 >
                     عرض الكل <ArrowLeft size={10} />
                 </button>

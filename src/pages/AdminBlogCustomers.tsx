@@ -181,7 +181,7 @@ export const AdminBlogCustomers = () => {
                                 </div>
                                 <p className="text-xs font-bold text-error">{error}</p>
                                 <button type="button" onClick={() => window.location.reload()}
-                                    className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary text-on-primary text-[10px] font-bold hover:bg-primary-hover transition-colors min-h-[44px]">
+                                    className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-on-primary text-[10px] font-semibold hover:bg-primary-hover transition-all duration-200 min-h-[44px] active:scale-[0.97]">
                                     إعادة تحميل
                                 </button>
                             </motion.div>
@@ -228,7 +228,7 @@ export const AdminBlogCustomers = () => {
                                                             <MessageCircle size={13} />
                                                         </a>
                                                         <button type="button" onClick={() => handleDelete(cust.id)}
-                                                            className="inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl text-error bg-error-soft hover:bg-error-light transition-all text-[10px] font-bold min-h-[44px] active:scale-95"
+                                                            className="inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-lg text-error bg-error-soft hover:bg-error-light transition-all duration-200 text-[10px] font-semibold min-h-[44px] active:scale-95"
                                                             aria-label="حذف العميل">
                                                             <Trash2 size={13} />
                                                         </button>

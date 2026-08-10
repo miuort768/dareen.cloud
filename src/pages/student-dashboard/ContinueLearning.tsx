@@ -14,7 +14,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
     return (
         <div>
             <div className="flex items-center justify-between mb-3">
-                <button onClick={() => navigate('/schedule')} className="text-primary dark:text-[#D4AF37] text-xs font-bold">عرض الكل</button>
+                <button onClick={() => navigate('/schedule')} className="text-primary dark:text-[#D4AF37] text-xs font-semibold hover:underline transition-all">عرض الكل</button>
                 <h3 className="text-sm font-bold text-main dark:text-white">تابع تعلمك</h3>
             </div>
 
@@ -54,7 +54,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                                 <span className="text-micro text-muted">{progress}%</span>
                                 <button
                                     onClick={() => navigate('/schedule')}
-                                    className="text-primary text-micro font-bold flex items-center gap-1"
+                                    className="text-primary text-micro font-semibold flex items-center gap-1 hover:underline transition-all"
                                 >
                                     متابعة <ArrowLeft size={10} />
                                 </button>

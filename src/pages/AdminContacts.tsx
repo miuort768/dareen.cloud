@@ -251,10 +251,10 @@ export const AdminContacts = () => {
                         {readFilterPills.map(pill => (
                             <button key={pill.key} type="button" onClick={() => setFilterRead(pill.key)}
                                 className={cn(
-                                    "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold transition-all border",
+                                    "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-semibold transition-all duration-200 border active:scale-[0.97]",
                                     filterRead === pill.key
                                         ? "bg-primary/10 border-primary/30 text-primary dark:bg-primary/20 dark:border-primary/40"
-                                        : "bg-surface border-border text-muted hover:bg-hover dark:bg-white/[0.04] dark:border-white/[0.08] dark:text-white/50"
+                                        : "bg-card border-border text-muted hover:bg-hover dark:bg-white/[0.04] dark:border-white/[0.08] dark:text-white/50"
                                 )}>
                                 {pill.label}
                                 <span className={cn(
@@ -284,7 +284,7 @@ export const AdminContacts = () => {
                                 </div>
                                 <p className="text-xs font-bold text-error">{error}</p>
                                 <button type="button" onClick={() => window.location.reload()}
-                                    className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-primary text-on-primary text-[10px] font-bold hover:bg-primary-hover transition-colors min-h-[44px]">
+                                    className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-primary text-on-primary text-[10px] font-semibold hover:bg-primary-hover transition-all duration-200 min-h-[44px] active:scale-[0.97]">
                                     إعادة تحميل
                                 </button>
                             </motion.div>
@@ -344,7 +344,7 @@ export const AdminContacts = () => {
                                                         </a>
                                                         <button type="button" onClick={() => markAsRead(msg.id)}
                                                             className={cn(
-                                                                "inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl transition-all text-[10px] font-bold min-h-[44px] active:scale-95",
+                                                                "inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-lg transition-all duration-200 text-[10px] font-semibold min-h-[44px] active:scale-95",
                                                                 isMsgRead
                                                                     ? "text-success bg-success/10 hover:bg-success-light"
                                                                     : "text-muted bg-surface hover:bg-hover dark:bg-white/[0.04] dark:hover:bg-white/[0.08]"
@@ -353,7 +353,7 @@ export const AdminContacts = () => {
                                                             <MailOpen size={13} />
                                                         </button>
                                                         <button type="button" onClick={() => handleDelete(msg.id)}
-                                                            className="inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-xl text-error bg-error-soft hover:bg-error-light transition-all text-[10px] font-bold min-h-[44px] active:scale-95"
+                                                            className="inline-flex items-center justify-center gap-1 px-2.5 py-2 rounded-lg text-error bg-error-soft hover:bg-error-light transition-all duration-200 text-[10px] font-semibold min-h-[44px] active:scale-95"
                                                             aria-label="حذف الرسالة">
                                                             <Trash2 size={13} />
                                                         </button>
@@ -395,14 +395,14 @@ export const AdminContacts = () => {
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
                             <span className="bg-card dark:bg-surface border border-border dark:border-white/[0.08] text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap text-main dark:text-white">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-xl bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                className="w-10 h-10 rounded-lg bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all duration-200 flex items-center justify-center active:scale-95">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
                 <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-xl shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    className={cn("w-12 h-12 rounded-xl shadow-xl text-on-primary flex items-center justify-center transition-all duration-200", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
                     <Mail size={22} />
                 </motion.button>
             </div>

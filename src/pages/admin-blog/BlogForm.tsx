@@ -30,7 +30,7 @@ export const BlogForm = ({
         <div className="bg-card w-full overflow-hidden border border-border rounded-2xl">
             <div className="p-4 bg-primary text-on-primary flex items-center justify-between rounded-t-2xl">
                 <h2 className="font-bold text-sm">{currentPost.id ? 'تعديل مقال' : 'إضافة مقال جديد'}</h2>
-                <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-xl bg-white/10 hover:bg-error transition-all" aria-label="إغلاق"><X size={18} /></button>
+                <button onClick={() => setIsModalOpen(false)} className="p-1.5 rounded-lg bg-white/10 hover:bg-error transition-all duration-200 active:scale-95" aria-label="إغلاق"><X size={18} /></button>
             </div>
 
             <form onSubmit={handleSubmit} className="flex-grow overflow-y-auto p-4 space-y-4 custom-scrollbar">
@@ -160,7 +160,7 @@ export const BlogForm = ({
                             <div className="flex items-center justify-between p-3 bg-surface/50 rounded-xl border border-border">
                                 <span className="text-micro font-bold text-muted">إظهار أزرار التحميل والمشاهدة</span>
                                 <button type="button" onClick={() => set('showButtons', !currentPost.showButtons)}
-                                    className={`w-12 h-6 rounded-full transition-colors relative ${currentPost.showButtons ? 'bg-success' : 'bg-dim'}`}>
+                                    className={`w-12 h-6 rounded-full transition-all duration-200 relative ${currentPost.showButtons ? 'bg-success' : 'bg-dim'}`}>
                                     <span className={`absolute top-0.5 w-5 h-5 bg-background rounded-full transition-transform ${currentPost.showButtons ? 'end-0.5 translate-x-6' : 'end-0.5'}`} />
                                 </button>
                             </div>
@@ -209,9 +209,9 @@ export const BlogForm = ({
 
                 <div className="p-5 border-t border-border bg-surface/50 flex justify-end gap-3 rounded-xl">
                     <button type="button" onClick={() => setIsModalOpen(false)}
-                        className="px-5 py-2.5 font-bold text-muted hover:text-main transition-all rounded-xl">إلغاء</button>
+                        className="px-5 py-2.5 font-semibold text-muted hover:text-main transition-all duration-200 rounded-lg active:scale-95">إلغاء</button>
                     <button type="submit" disabled={submitting}
-                        className="flex items-center gap-2 px-6 py-2.5 bg-error text-on-error font-bold hover:bg-error-hover transition-all disabled:opacity-50 active:scale-95 rounded-xl">
+                        className="flex items-center gap-2 px-6 py-2.5 bg-error text-on-error font-semibold hover:bg-error-hover transition-all duration-200 disabled:opacity-50 active:scale-95 rounded-lg hover:shadow-sm">
                         {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save size={16} />}
                         <span className="text-xs">نشر المقال</span>
                     </button>

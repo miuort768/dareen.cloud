@@ -158,7 +158,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 </GlassCard>
                                 <GlassCard className="p-4">
                                     <button onClick={() => navigate('/teacher-payment-history')}
-                                        className="w-full flex items-center gap-3 py-1 text-start"
+                                        className="w-full flex items-center gap-3 py-1 text-start transition-all duration-200 hover:opacity-80 active:scale-[0.99]"
                                         aria-label="سجل الدفعات"
                                     >
                                         <div className="w-9 h-9 rounded-xl bg-success-soft flex items-center justify-center shrink-0">

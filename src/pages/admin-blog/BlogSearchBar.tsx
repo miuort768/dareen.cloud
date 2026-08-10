@@ -29,10 +29,10 @@ export const BlogSearchBar = ({ searchTerm, setSearchTerm, filterType, setFilter
             {filters.map(btn => (
                 <button key={btn.key} onClick={() => setFilterType(btn.key)}
                     className={cn(
-                        "px-4 py-2 text-xs font-bold rounded-xl transition-all active:scale-95",
+                        "px-3.5 py-2 text-xs font-semibold rounded-lg transition-all duration-200 active:scale-[0.97]",
                         filterType === btn.key
-                            ? "bg-error text-on-error"
-                            : "text-muted bg-surface hover:bg-hover"
+                            ? "bg-error text-on-error shadow-sm"
+                            : "text-muted bg-card border border-border hover:bg-hover"
                     )}>
                     {btn.label}
                 </button>

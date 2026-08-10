@@ -226,10 +226,10 @@ export const AdminJobs = () => {
                     <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none -mx-2.5 px-2.5">
                         {subjectPills.map(pill => (
                             <button key={pill.key} onClick={() => setSubjectFilter(pill.key)}
-                                className={cn("shrink-0 px-4 py-2 rounded-xl text-xs font-bold transition-all",
+                                className={cn("shrink-0 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all duration-200 active:scale-[0.97]",
                                     subjectFilter === pill.key
-                                        ? 'bg-primary text-on-primary'
-                                        : 'bg-surface border border-border text-muted hover:border-primary/30')}>
+                                        ? 'bg-primary text-on-primary shadow-sm'
+                                        : 'bg-card border border-border text-muted hover:border-primary/30 hover:bg-hover')}>
                                 {pill.label}
                             </button>
                         ))}
@@ -298,14 +298,14 @@ export const AdminJobs = () => {
                                                 </div>
                                                 <div className="flex items-center gap-1.5 shrink-0">
                                                     <button onClick={() => handleContacted(app.id)}
-                                                        className={cn("p-2 rounded-xl border-2 transition-all", app.contacted
+                                                        className={cn("p-2 rounded-lg border-2 transition-all duration-200 active:scale-95", app.contacted
                                                             ? 'border-success bg-success/10 text-success'
                                                             : 'border-success/30 bg-success/10 text-success hover:bg-success/20 hover:border-success')}
                                                         title="تم التواصل" aria-label="تم التواصل">
                                                         <CheckCircle2 size={16} />
                                                     </button>
                                                     <button onClick={() => handleDelete(app.id)}
-                                                        className="p-2 rounded-xl border-2 border-error/30 bg-error/10 text-error hover:bg-error/20 hover:border-error transition-all"
+                                                        className="p-2 rounded-lg border-2 border-error/30 bg-error/10 text-error hover:bg-error/20 hover:border-error transition-all duration-200 active:scale-95"
                                                         aria-label="حذف الطلب">
                                                         <Trash2 size={16} />
                                                     </button>
@@ -347,14 +347,14 @@ export const AdminJobs = () => {
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
                             <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-xl shadow-sm whitespace-nowrap">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-xl bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                className="w-10 h-10 rounded-lg bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all duration-200 flex items-center justify-center active:scale-95">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
                 <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-xl shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    className={cn("w-12 h-12 rounded-xl shadow-xl text-on-primary flex items-center justify-center transition-all duration-200", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
                     <Briefcase size={22} />
                 </motion.button>
             </div>

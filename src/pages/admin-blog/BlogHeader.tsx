@@ -33,11 +33,11 @@ export const BlogHeader = ({
                 <div className="flex items-center gap-1.5">
                     <button onClick={() => setShowSettings(s => !s)}
                         aria-label="إعدادات المكتبة"
-                        className="w-9 h-9 flex items-center justify-center bg-surface border border-border rounded-lg text-muted hover:text-main transition-all">
+                        className="w-9 h-9 flex items-center justify-center bg-card border border-border rounded-lg text-muted hover:text-main hover:bg-hover transition-all duration-200 active:scale-95">
                         <Settings size={13} />
                     </button>
                     <button onClick={handleOpenModal}
-                        className="flex items-center gap-1 h-9 px-3 bg-error text-on-error text-[11px] font-bold rounded-lg active:scale-95 transition-transform">
+                        className="flex items-center gap-1 h-9 px-3 bg-error text-on-error text-[11px] font-semibold rounded-lg active:scale-95 transition-all duration-200 hover:bg-error-hover hover:shadow-sm">
                         <Plus size={13} /> مقال
                     </button>
                 </div>
@@ -65,9 +65,9 @@ export const BlogHeader = ({
                 </div>
                 <div className="flex justify-end gap-2">
                     <button onClick={handleCancelSettings}
-                        className="px-3 py-1.5 font-bold text-muted hover:text-main transition-all rounded-lg text-[10px]">إلغاء</button>
+                        className="px-3 py-1.5 font-semibold text-muted hover:text-main transition-all duration-200 rounded-lg text-[10px] active:scale-95">إلغاء</button>
                     <button onClick={handleSaveSettings} disabled={savingSettings}
-                        className="px-4 py-1.5 bg-error text-on-error font-bold hover:bg-error-hover transition-all disabled:opacity-50 rounded-lg text-[10px]">
+                        className="px-4 py-1.5 bg-error text-on-error font-semibold hover:bg-error-hover transition-all duration-200 disabled:opacity-50 rounded-lg text-[10px] active:scale-95">
                         {savingSettings ? 'جاري الحفظ...' : 'حفظ'}
                     </button>
                 </div>

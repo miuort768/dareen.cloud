@@ -241,14 +241,14 @@ export const AdminBlog = () => {
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
                             <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-full bg-error text-white shadow-lg hover:shadow-xl hover:bg-error-hover transition-all flex items-center justify-center">
+                                className="w-10 h-10 rounded-lg bg-error text-on-error shadow-lg hover:shadow-xl hover:bg-error-hover transition-all duration-200 flex items-center justify-center active:scale-95">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
                 <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-full shadow-xl text-white flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-error")}>
+                    className={cn("w-12 h-12 rounded-xl shadow-xl text-on-error flex items-center justify-center transition-all duration-200", fabOpen ? "bg-error rotate-45" : "bg-error")}>
                     <Plus size={24} />
                 </motion.button>
             </div>

@@ -20,7 +20,7 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
     return (
         <div>
             <div className="flex items-center justify-between mb-3">
-                <button onClick={() => navigate('/schedule')} className="text-primary dark:text-[#D4AF37] text-[11px] font-bold">عرض الكل</button>
+                <button onClick={() => navigate('/schedule')} className="text-primary dark:text-[#D4AF37] text-[11px] font-semibold hover:underline transition-all">عرض الكل</button>
                 <h3 className="text-[13px] font-bold text-main dark:text-white">المواد</h3>
             </div>
 

@@ -50,22 +50,22 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
                         <button
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                             aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-                            className="w-10 h-10 rounded-xl bg-surface dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 flex items-center justify-center text-muted dark:text-[#D4AF37] transition-colors hover:bg-hover dark:hover:bg-[#D4AF37]/10"
+                            className="w-10 h-10 rounded-lg bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 flex items-center justify-center text-muted dark:text-[#D4AF37] transition-all duration-200 hover:bg-hover hover:text-main dark:hover:bg-[#D4AF37]/10 active:scale-95"
                         >
                             {theme === 'dark' ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
                         </button>
                         <button
                             onClick={() => navigate('/parent-announcements')}
                             aria-label="الإعلانات"
-                            className="relative w-10 h-10 rounded-xl bg-surface dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 flex items-center justify-center text-muted dark:text-zinc-400 transition-colors hover:bg-hover dark:hover:bg-[#D4AF37]/10"
+                            className="relative w-10 h-10 rounded-lg bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 flex items-center justify-center text-muted dark:text-zinc-400 transition-all duration-200 hover:bg-hover hover:text-main dark:hover:bg-[#D4AF37]/10 active:scale-95"
                         >
                             <Bell size={16} strokeWidth={1.5} />
-                            <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface dark:border-[#0d0d0f]" />
+                            <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-card dark:border-[#0d0d0f]" />
                         </button>
                         <button
                             onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
                             aria-label="تسجيل الخروج"
-                            className="w-10 h-10 rounded-xl bg-surface dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 flex items-center justify-center text-muted dark:text-zinc-400 transition-colors hover:bg-error/10 hover:text-error"
+                            className="w-10 h-10 rounded-lg bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 flex items-center justify-center text-muted dark:text-zinc-400 transition-all duration-200 hover:bg-error/10 hover:text-error active:scale-95"
                         >
                             <LogOut size={16} strokeWidth={1.5} />
                         </button>
@@ -81,10 +81,10 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
                                 key={tab.id}
                                 onClick={() => navigate(tab.path)}
                                 className={cn(
-                                    "flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-bold transition-all duration-200 relative",
+                                    "flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all duration-200 relative",
                                     isActive
                                         ? "text-primary dark:text-[#D4AF37] bg-background dark:bg-[#0d0d0f] border-t border-x border-border dark:border-[#D4AF37]/20"
-                                        : "text-muted dark:text-zinc-400 hover:text-main dark:hover:text-white hover:bg-accent/5 dark:hover:bg-[#D4AF37]/5"
+                                        : "text-muted dark:text-zinc-400 hover:text-main dark:hover:text-white hover:bg-accent/5 dark:hover:bg-[#D4AF37]/5 active:scale-[0.97]"
                                 )}
                             >
                                 <Icon size={15} strokeWidth={isActive ? 2 : 1.5} />

@@ -156,7 +156,7 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
                         </motion.div>
                         <motion.div {...fadeUp(0.3)}>
                             <button onClick={() => navigate('/parent-payment-history')}
-                                className="w-full bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-[#D4AF37]/5 transition-colors text-start"
+                                className="w-full bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-[#D4AF37]/5 transition-all duration-200 text-start hover:shadow-sm active:scale-[0.99]"
                                 aria-label="سجل الدفعات"
                             >
                                 <div className="w-10 h-10 rounded-xl bg-success-soft dark:bg-[#D4AF37]/15 flex items-center justify-center shrink-0">

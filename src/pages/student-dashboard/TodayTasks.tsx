@@ -46,10 +46,10 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
                         <button
                             key={task.id}
                             onClick={() => toggle(task.id)}
-                            className={`w-full flex items-center gap-3 p-3 min-h-11 rounded-xl border transition-all text-start ${
+                            className={`w-full flex items-center gap-3 p-3 min-h-11 rounded-lg border transition-all duration-200 text-start active:scale-[0.98] ${
                                 isDone
                                     ? 'bg-surface dark:bg-[#0a0a0c] border-border dark:border-[#D4AF37]/10 opacity-60'
-                                    : 'bg-card dark:bg-[#0d0d0f] border-border dark:border-[#D4AF37]/20 hover:border-primary/30 dark:hover:border-[#D4AF37]/40'
+                                    : 'bg-card dark:bg-[#0d0d0f] border-border dark:border-[#D4AF37]/20 hover:border-primary/30 dark:hover:border-[#D4AF37]/40 hover:shadow-sm'
                             }`}
                             aria-label={`${isDone ? 'إلغاء' : 'تحديد'} ${task.subject}`}
                             role="checkbox"

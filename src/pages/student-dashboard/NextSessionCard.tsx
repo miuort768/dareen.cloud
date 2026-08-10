@@ -52,7 +52,7 @@ export const NextSessionCard = ({ nextSession }: NextSessionCardProps) => {
 
                     <button
                         onClick={() => navigate('/chat')}
-                        className="flex items-center gap-1.5 bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black text-xs font-bold px-5 py-2.5 rounded-xl active:scale-95 transition-transform shrink-0 hover:bg-primary/90 dark:hover:bg-[#D4AF37]/90"
+                        className="flex items-center gap-1.5 bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black text-xs font-semibold px-5 py-2.5 rounded-lg active:scale-95 transition-all duration-200 shrink-0 hover:bg-primary-hover dark:hover:bg-[#D4AF37]/90 hover:shadow-md"
                         aria-label={`دخول حصة ${nextSession.subject}`}
                     >
                         دخول <ArrowLeft size={12} />
