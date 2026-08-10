@@ -22,8 +22,8 @@ interface TrialSessionFormModalProps {
     onClose: () => void;
 }
 
-const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-white rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
-const labelClass = "text-[11px] font-bold text-muted dark:text-white/40 mb-1.5 block";
+const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-main rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
+const labelClass = "text-[11px] font-bold text-muted dark:text-main/40 mb-1.5 block";
 const selectWrapperClass = "relative";
 
 export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onChange, onSubmit, onClose }: TrialSessionFormModalProps) => (
@@ -34,21 +34,21 @@ export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onC
         transition={{ duration: 0.3 }}
         className="p-2.5 sm:p-4"
     >
-        <div className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden" dir="rtl">
+        <div className="bg-card dark:bg-card/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden" dir="rtl">
             {/* Header */}
             <div className="px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
-                <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-[#D4AF37]/10 dark:to-[#D4AF37]/5" />
+                <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-primary/10 dark:to-[#D4AF37]/5" />
                 <div className="relative z-10 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-[#D4AF37]/15">
-                        <CalendarDays size={18} className="text-primary dark:text-[#D4AF37]" />
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-primary/15">
+                        <CalendarDays size={18} className="text-primary dark:text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-[13px] font-bold text-main dark:text-white">{editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}</h2>
-                        <p className="text-[10px] text-muted/60 dark:text-white/30 mt-0.5">أدخل بيانات الحصة التجريبية</p>
+                        <h2 className="text-[13px] font-bold text-main dark:text-main">{editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}</h2>
+                        <p className="text-[10px] text-muted/60 dark:text-main/30 mt-0.5">أدخل بيانات الحصة التجريبية</p>
                     </div>
                 </div>
                 <button onClick={onClose} className="relative z-10 w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="إغلاق">
-                    <X size={14} className="text-muted dark:text-white/50" />
+                    <X size={14} className="text-muted dark:text-main/50" />
                 </button>
             </div>
 
@@ -81,7 +81,7 @@ export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onC
                                     <option key={t.id} value={t.name}>{t.name}</option>
                                 ))}
                             </select>
-                            <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted dark:text-white/40">
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted dark:text-main/40">
                                 <ChevronDown size={14} />
                             </div>
                         </div>
@@ -105,7 +105,7 @@ export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onC
                     <button type="submit" disabled={isSaving} className="flex-1 py-3.5 bg-gradient-to-l from-primary to-primary-deep text-white text-[13px] font-bold rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 shadow-md shadow-primary/15 dark:shadow-primary/20">
                         {isSaving ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}
                     </button>
-                    <button type="button" onClick={onClose} className="flex-1 py-3.5 text-[11px] font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                    <button type="button" onClick={onClose} className="flex-1 py-3.5 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
                 </div>
             </form>
         </div>

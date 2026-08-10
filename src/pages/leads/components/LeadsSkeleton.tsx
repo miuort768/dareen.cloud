@@ -4,8 +4,8 @@ export const LeadsSkeleton = () => (
     <div className="bg-background min-h-screen pb-24" dir="rtl">
         <div className="relative z-10 mx-auto px-4 max-w-page">
             {/* Hero skeleton */}
-            <div className="rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] mt-4 mb-6 px-5 py-6 relative overflow-hidden border border-primary/10 dark:border-white/[0.04]">
-                <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-[#D4AF37]/10 rounded-full blur-3xl" />
+            <div className="rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-card dark:via-hover dark:to-card mt-4 mb-6 px-5 py-6 relative overflow-hidden border border-primary/10 dark:border-white/[0.04]">
+                <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-primary/10 rounded-full blur-3xl" />
                 <div className="relative z-10 flex items-center justify-between mb-5">
                     <div>
                         <Skeleton className="h-3 w-24 mb-1.5 bg-white/15 dark:bg-white/10 rounded-md" />
@@ -29,7 +29,7 @@ export const LeadsSkeleton = () => (
             </div>
 
             {/* Main content card skeleton */}
-            <div className="bg-card dark:bg-[#0d0d0f]/80 rounded-2xl border border-border dark:border-white/[0.04] overflow-hidden shadow-elevation-1 dark:shadow-none">
+            <div className="bg-card dark:bg-card/80 rounded-2xl border border-border dark:border-white/[0.04] overflow-hidden shadow-elevation-1 dark:shadow-none">
                 <div className="p-4 border-b border-border dark:border-white/[0.04]">
                     <div className="flex items-center gap-3">
                         <div className="flex-1"><Skeleton className="h-11 w-full rounded-xl" /></div>
@@ -45,7 +45,7 @@ export const LeadsSkeleton = () => (
                 {/* Cards skeleton (mobile) */}
                 <div className="lg:hidden p-3 space-y-2.5">
                     {Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl p-4 space-y-3">
+                        <div key={i} className="bg-card dark:bg-card/80 border border-border dark:border-white/[0.06] rounded-2xl p-4 space-y-3">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <Skeleton className="w-10 h-10 rounded-full shrink-0" />

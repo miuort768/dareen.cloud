@@ -13,8 +13,8 @@ interface AddLeadModalProps {
     formRef: React.RefObject<HTMLFormElement | null>;
 }
 
-const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-white rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
-const labelClass = "text-[11px] font-bold text-muted dark:text-white/40 mb-1.5 block";
+const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-main rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
+const labelClass = "text-[11px] font-bold text-muted dark:text-main/40 mb-1.5 block";
 
 export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, formRef }: AddLeadModalProps) => {
     return (
@@ -26,7 +26,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                     <motion.div
                         initial={{ y: '100%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: '100%', opacity: 0 }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="fixed inset-x-0 bottom-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-[210] md:w-full md:max-w-lg max-h-[90vh] md:max-h-[85vh] bg-card dark:bg-[#0a0a0c] md:border md:border-border dark:md:border-white/[0.06] md:shadow-2xl md:rounded-2xl flex flex-col overflow-hidden"
+                        className="fixed inset-x-0 bottom-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-[210] md:w-full md:max-w-lg max-h-[90vh] md:max-h-[85vh] bg-card dark:bg-surface md:border md:border-border dark:md:border-white/[0.06] md:shadow-2xl md:rounded-2xl flex flex-col overflow-hidden"
                         dir="rtl"
                     >
                         {/* Drag handle — mobile only */}
@@ -36,18 +36,18 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
 
                         {/* Header */}
                         <div className="shrink-0 px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
-                            <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-[#D4AF37]/10 dark:to-[#D4AF37]/5" />
+                            <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-primary/10 dark:to-[#D4AF37]/5" />
                             <div className="relative z-10 flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-[#D4AF37]/15">
-                                    <UserPlus size={18} className="text-primary dark:text-[#D4AF37]" />
+                                <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-primary/15">
+                                    <UserPlus size={18} className="text-primary dark:text-primary" />
                                 </div>
                                 <div>
-                                    <h2 className="text-sm font-bold text-main dark:text-white">إضافة عميل جديد</h2>
-                                    <p className="text-[10px] text-muted/60 dark:text-white/30 mt-0.5">أدخل بيانات العميل الجديد</p>
+                                    <h2 className="text-sm font-bold text-main dark:text-main">إضافة عميل جديد</h2>
+                                    <p className="text-[10px] text-muted/60 dark:text-main/30 mt-0.5">أدخل بيانات العميل الجديد</p>
                                 </div>
                             </div>
                             <button onClick={() => setIsAddModalOpen(false)} className="relative z-10 w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="إغلاق">
-                                <X size={14} className="text-muted dark:text-white/50" />
+                                <X size={14} className="text-muted dark:text-main/50" />
                             </button>
                         </div>
 
@@ -82,7 +82,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                                 <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-3.5">
                                     {addMutation.isPending ? 'جاري الحفظ...' : 'إضافة العميل'}
                                 </PrimaryBtn>
-                                <button type="button" onClick={() => setIsAddModalOpen(false)} className="flex-1 py-3.5 text-[11px] font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                                <button type="button" onClick={() => setIsAddModalOpen(false)} className="flex-1 py-3.5 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
                             </div>
                         </form>
                     </motion.div>

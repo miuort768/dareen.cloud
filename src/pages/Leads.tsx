@@ -32,7 +32,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: '100%', opacity: 0 }}
                 transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="bg-card dark:bg-[#0d0d0f] w-full sm:max-w-sm shadow-2xl rounded-t-3xl sm:rounded-2xl overflow-hidden border border-border dark:border-white/[0.06]"
+                className="bg-card dark:bg-card w-full sm:max-w-sm shadow-2xl rounded-t-3xl sm:rounded-2xl overflow-hidden border border-border dark:border-white/[0.06]"
             >
                 <div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full mx-auto mt-3 sm:hidden" />
                 <div className="bg-gradient-to-l from-error to-error-hover px-5 py-5 flex items-center justify-between">
@@ -62,24 +62,24 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
 
 const StatusKeys: LeadStatus[] = ['new', 'contacted', 'interested', 'trial', 'converted'];
 
-const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-white rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
-const labelClass = "text-[11px] font-bold text-muted dark:text-white/40 mb-1.5 block";
+const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-main rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
+const labelClass = "text-[11px] font-bold text-muted dark:text-main/40 mb-1.5 block";
 
 const AddLeadModalInline = ({ formRef, addMutation, onClose }: { formRef: React.RefObject<HTMLFormElement | null>; addMutation: { mutate: (data: Record<string, unknown>) => void; isPending: boolean }; onClose: () => void }) => (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="p-4">
-        <div className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden">
+        <div className="bg-card dark:bg-card/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden">
             <div className="px-5 py-4 flex items-center justify-between border-b border-border/50 dark:border-white/[0.04]">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-primary/10 dark:bg-[#D4AF37]/15">
-                        <UserPlus size={16} className="text-primary dark:text-[#D4AF37]" />
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-primary/10 dark:bg-primary/15">
+                        <UserPlus size={16} className="text-primary dark:text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-[13px] font-bold text-main dark:text-white">إضافة عميل جديد</h2>
-                        <p className="text-[10px] text-muted/60 dark:text-white/30">أدخل بيانات العميل</p>
+                        <h2 className="text-[13px] font-bold text-main dark:text-main">إضافة عميل جديد</h2>
+                        <p className="text-[10px] text-muted/60 dark:text-main/30">أدخل بيانات العميل</p>
                     </div>
                 </div>
                 <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="إغلاق">
-                    <X size={14} className="text-muted dark:text-white/50" />
+                    <X size={14} className="text-muted dark:text-main/50" />
                 </button>
             </div>
             <form ref={formRef} className="p-5 space-y-3" onSubmit={(e) => { e.preventDefault(); const fd = new FormData(e.currentTarget); const g = (n: string) => (fd.get(n) as string) || ''; addMutation.mutate({ studentName: g('name'), phone: g('phone'), subject: g('subject'), curriculum: g('curriculum'), status: 'new', priority: g('priority'), notes: g('notes') }); }}>
@@ -95,7 +95,7 @@ const AddLeadModalInline = ({ formRef, addMutation, onClose }: { formRef: React.
                 <div><label className={labelClass}>ملاحظات</label><textarea name="notes" rows={2} className={inputClass + " resize-none"} placeholder="اكتب أي تفاصيل..." /></div>
                 <div className="flex gap-3 pt-1">
                     <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-3">{addMutation.isPending ? 'جاري الحفظ...' : 'إضافة العميل'}</PrimaryBtn>
-                    <button type="button" onClick={onClose} className="flex-1 py-3 text-[11px] font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">إلغاء</button>
+                    <button type="button" onClick={onClose} className="flex-1 py-3 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">إلغاء</button>
                 </div>
             </form>
         </div>
@@ -218,18 +218,18 @@ export const Leads = () => {
         >
             <div className="relative z-10 mx-auto px-4 md:px-6 max-w-page">
                 {/* ===== HERO SECTION ===== */}
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] mt-4 mb-6 border border-primary/10 dark:border-white/[0.04]">
-                    <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-[#D4AF37]/10 rounded-full blur-3xl" />
-                    <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/5 dark:bg-[#D4AF37]/8 rounded-full blur-3xl" />
-                    <div className="absolute top-4 right-8 w-2 h-2 bg-white/20 dark:bg-[#D4AF37]/40 rounded-full" />
-                    <div className="absolute top-12 right-24 w-1.5 h-1.5 bg-white/15 dark:bg-[#D4AF37]/30 rounded-full" />
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-card dark:via-hover dark:to-card mt-4 mb-6 border border-primary/10 dark:border-white/[0.04]">
+                    <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-primary/10 rounded-full blur-3xl" />
+                    <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/5 dark:bg-primary/8 rounded-full blur-3xl" />
+                    <div className="absolute top-4 right-8 w-2 h-2 bg-white/20 dark:bg-primary/40 rounded-full" />
+                    <div className="absolute top-12 right-24 w-1.5 h-1.5 bg-white/15 dark:bg-primary/30 rounded-full" />
 
                     <div className="relative z-10 px-5 md:px-8 py-5 md:py-8">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
                             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
-                                <p className="text-white/60 dark:text-white/40 text-[11px] mb-1">مرحباً بك! 👋</p>
+                                <p className="text-white/60 dark:text-main/40 text-[11px] mb-1">مرحباً بك! 👋</p>
                                 <h1 className="text-lg md:text-2xl font-bold font-outfit text-white mb-1 tracking-tight">إدارة عملائك بسهولة</h1>
-                                <p className="text-white/50 dark:text-white/40 text-[11px] md:text-sm">تابع وأدر جميع العملاء المتوقعين وحوّلهم إلى عقود ناجحة</p>
+                                <p className="text-white/50 dark:text-main/40 text-[11px] md:text-sm">تابع وأدر جميع العملاء المتوقعين وحوّلهم إلى عقود ناجحة</p>
                             </motion.div>
                             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.1 }} className="flex items-center gap-2">
                                 <button
@@ -260,12 +260,12 @@ export const Leads = () => {
                             ].map((stat, i) => (
                                 <motion.div key={i} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: stat.delay }}
                                     className="bg-white/10 dark:bg-white/[0.04] backdrop-blur-sm rounded-xl p-2 sm:p-3 md:p-3.5 border border-white/10 dark:border-white/[0.04] hover:bg-white/15 dark:hover:bg-white/[0.07] transition-all duration-200">
-                                    <div className="flex items-center gap-1 sm:gap-1.5 text-white/50 dark:text-white/30 text-[8px] sm:text-[10px] md:text-[11px] mb-1 sm:mb-1.5">
+                                    <div className="flex items-center gap-1 sm:gap-1.5 text-white/50 dark:text-main/30 text-[8px] sm:text-[10px] md:text-[11px] mb-1 sm:mb-1.5">
                                         <stat.icon size={10} className="shrink-0" />
                                         <span className="truncate">{stat.label}</span>
                                     </div>
                                     <div className="text-sm sm:text-lg md:text-xl font-bold font-outfit text-white tabular-nums">{stat.value}</div>
-                                    <div className={cn('text-[7px] sm:text-[9px] md:text-[10px] mt-0.5', stat.accent ? 'text-[#34d399]' : 'text-white/40 dark:text-white/25')}>{stat.sub}</div>
+                                    <div className={cn('text-[7px] sm:text-[9px] md:text-[10px] mt-0.5', stat.accent ? 'text-[#34d399]' : 'text-white/40 dark:text-main/25')}>{stat.sub}</div>
                                 </motion.div>
                             ))}
                         </div>
@@ -273,28 +273,28 @@ export const Leads = () => {
                 </div>
 
                 {/* ===== MAIN CONTENT ===== */}
-                <div className="bg-card dark:bg-[#0d0d0f]/80 rounded-2xl shadow-elevation-1 dark:shadow-none border border-border dark:border-white/[0.04] overflow-hidden">
+                <div className="bg-card dark:bg-card/80 rounded-2xl shadow-elevation-1 dark:shadow-none border border-border dark:border-white/[0.04] overflow-hidden">
                     {/* Toolbar */}
                     <div className="p-4 lg:p-5 border-b border-border dark:border-white/[0.04]">
                         <div className="flex items-center gap-3">
                             <div className="relative flex-1">
-                                <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted dark:text-white/25" />
+                                <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted dark:text-main/25" />
                                 <input
                                     type="text"
                                     placeholder="ابحث بالاسم أو رقم الهاتف..."
                                     aria-label="بحث عن عميل"
-                                    className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-white placeholder:text-muted dark:placeholder:text-white/25 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all duration-200"
+                                    className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-main placeholder:text-muted dark:placeholder:text-white/25 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all duration-200"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 {searchTerm && (
-                                    <button aria-label="مسح البحث" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-white/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
+                                    <button aria-label="مسح البحث" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
                                         <X size={13} />
                                     </button>
                                 )}
                             </div>
                             <div className="shrink-0 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl px-3 py-2.5">
-                                <span className="text-[13px] font-bold text-main dark:text-white/60 tabular-nums">{filteredLeads.length}</span>
+                                <span className="text-[13px] font-bold text-main dark:text-main/60 tabular-nums">{filteredLeads.length}</span>
                             </div>
                         </div>
 
@@ -305,13 +305,13 @@ export const Leads = () => {
                                 className={cn(
                                     'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                                     filterStatus === 'all'
-                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary border-primary/30 dark:border-primary/30 shadow-md shadow-primary/15 dark:shadow-primary/20'
-                                        : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary border-primary/30 dark:border-primary/30 shadow-md shadow-primary/15 dark:shadow-primary/20'
+                                        : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                                 )}>
                                 الكل
                                 <span className={cn(
                                     'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
-                                    filterStatus === 'all' ? 'bg-white/20' : 'bg-surface dark:bg-white/5 text-muted dark:text-white/30 border border-border dark:border-white/[0.06]'
+                                    filterStatus === 'all' ? 'bg-white/20' : 'bg-surface dark:bg-white/5 text-muted dark:text-main/30 border border-border dark:border-white/[0.06]'
                                 )}>{statusCounts.all}</span>
                             </motion.button>
                             {StatusKeys.map((key) => {
@@ -363,7 +363,7 @@ export const Leads = () => {
                 {/* FAB */}
                 <motion.button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-primary/30 flex items-center justify-center active:scale-95 transition-all duration-200"
+                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-primary/30 flex items-center justify-center active:scale-95 transition-all duration-200"
                     whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} aria-label="إضافة عميل">
                     <Plus size={22} />
                 </motion.button>

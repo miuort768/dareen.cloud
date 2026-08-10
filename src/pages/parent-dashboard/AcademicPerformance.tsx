@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { CheckCircle2, BookOpen, BookMarked, Star } from 'lucide-react';
 import type { Student } from '../../types';
 
@@ -19,7 +19,7 @@ const ProgressBar = ({ value, color, label, icon: Icon, max }: { value: number; 
                     <div className={`w-7 h-7 rounded-lg ${color}/10 flex items-center justify-center`}>
                         <Icon size={13} className={color} />
                     </div>
-                    <span className="text-xs font-bold text-main dark:text-white">{label}</span>
+                    <span className="text-xs font-bold text-main dark:text-main">{label}</span>
                 </div>
                 <span className={`text-xs font-bold ${color}`}>{percent}%</span>
             </div>
@@ -52,8 +52,8 @@ export const AcademicPerformance = ({ sessions, children: kids, points, rank }: 
     const totalSubjects = kids.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0);
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 md:p-6 transition-all duration-300 hover:shadow-elevation-1">
-            <h3 className="text-base md:text-[22px] font-bold text-main dark:text-white mb-5">التقدم الأكاديمي</h3>
+        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 md:p-6 transition-all duration-300 hover:shadow-elevation-1">
+            <h3 className="text-base md:text-[22px] font-bold text-main dark:text-main mb-5">التقدم الأكاديمي</h3>
 
             <div className="space-y-4">
                 <ProgressBar
@@ -86,14 +86,14 @@ export const AcademicPerformance = ({ sessions, children: kids, points, rank }: 
                 />
             </div>
 
-            <div className="mt-5 p-4 rounded-xl bg-gradient-to-l from-warning/10 via-warning/[0.03] to-surface dark:from-[#D4AF37]/10 dark:via-[#D4AF37]/[0.03] dark:to-[#0d0d0f] border border-warning/20 dark:border-[#D4AF37]/20 flex items-center justify-between">
+            <div className="mt-5 p-4 rounded-xl bg-gradient-to-l from-warning/10 via-warning/[0.03] to-surface dark:from-primary/10 dark:via-primary/[0.03] dark:to-card border border-warning/20 dark:border-primary/20 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-warning/15 flex items-center justify-center">
                         <Star size={20} className="text-warning" />
                     </div>
                     <div>
-                        <p className="text-sm font-bold text-main dark:text-white">{rank.name}</p>
-                        <p className="text-xs text-muted dark:text-zinc-400 font-medium">{points} نقطة خبرة</p>
+                        <p className="text-sm font-bold text-main dark:text-main">{rank.name}</p>
+                        <p className="text-xs text-muted dark:text-muted font-medium">{points} نقطة خبرة</p>
                     </div>
                 </div>
                 <span className="text-lg font-bold text-warning bg-warning/10 px-3 py-1.5 rounded-xl">{points}</span>

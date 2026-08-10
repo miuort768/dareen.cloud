@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sparkles, ChevronDown, LogOut, GraduationCap, User } from 'lucide-react';
 import { useIsAuthenticated, useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext';
@@ -172,7 +172,7 @@ export const PublicNavbar = () => {
                         {/* Mobile Menu Toggle */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden p-2 text-primary dark:text-white hover:bg-primary-soft dark:hover:bg-white/10 rounded-full transition-all active:scale-90"
+                            className="md:hidden p-2 text-primary dark:text-main hover:bg-primary-soft dark:hover:bg-white/10 rounded-full transition-all active:scale-90"
                             aria-label={isMenuOpen ? 'إغلاق القائمة الجانبية' : 'فتح القائمة الجانبية'}
                         >
                             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -194,7 +194,7 @@ export const PublicNavbar = () => {
                                 onClick={() => setIsMenuOpen(false)}
                                 className={`flex items-center gap-3 px-6 py-4 rounded-full font-bold transition-all ${isActive(item.path)
                                     ? 'bg-primary text-on-primary shadow-lg'
-                                    : 'text-main hover:bg-surface dark:text-white dark:hover:bg-hover'
+                                    : 'text-main hover:bg-surface dark:text-main dark:hover:bg-hover'
                                     }`}
                             >
                                 <span className={`w-1.5 h-1.5 rounded-full ${isActive(item.path) ? 'bg-white' : 'bg-primary'}`}></span>

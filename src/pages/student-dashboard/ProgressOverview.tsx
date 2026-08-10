@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { CheckCircle2, BookOpen, BookMarked, Star } from 'lucide-react';
 import { RANK_ICON_MAP } from '../../shared/utils/ranks';
 import type { DashboardStats } from './types';
@@ -24,7 +24,7 @@ const ProgressBar = ({ value, max, color, label, icon: Icon }: { value: number; 
                 </div>
                 <span className={`text-xs font-bold ${color}`}>{percent}%</span>
             </div>
-            <div className="relative h-2.5 rounded-full bg-border dark:bg-[#1a1a1e] overflow-hidden">
+            <div className="relative h-2.5 rounded-full bg-border dark:bg-hover overflow-hidden">
                 <motion.div
                     className={`absolute inset-y-0 start-0 rounded-full ${color}`}
                     initial={{ width: 0 }}
@@ -42,8 +42,8 @@ export const ProgressOverview = ({ stats, points, rank, nextRank }: ProgressOver
     const RankIconComponent = RANK_ICON_MAP[rank.icon] || Star;
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 md:p-6 transition-all duration-300 hover:shadow-elevation-1">
-            <h3 className="text-base font-bold text-main dark:text-white mb-5">التقدم الأكاديمي</h3>
+        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 md:p-6 transition-all duration-300 hover:shadow-elevation-1">
+            <h3 className="text-base font-bold text-main dark:text-main mb-5">التقدم الأكاديمي</h3>
 
             <div className="space-y-4">
                 <ProgressBar value={stats.attendanceRate} max={100} color="text-success" label="الحضور" icon={CheckCircle2} />
@@ -52,19 +52,19 @@ export const ProgressOverview = ({ stats, points, rank, nextRank }: ProgressOver
                 <ProgressBar value={xpPercent} max={100} color="text-warning" label="XP" icon={Star} />
             </div>
 
-            <div className="mt-5 p-4 rounded-xl bg-gradient-to-l from-warning/10 via-warning/[0.03] to-surface dark:from-[#D4AF37]/10 dark:via-[#0d0d0f] dark:to-[#0a0a0c] border border-warning/20 dark:border-[#D4AF37]/20 flex items-center justify-between">
+            <div className="mt-5 p-4 rounded-xl bg-gradient-to-l from-warning/10 via-warning/[0.03] to-surface dark:from-primary/10 dark:via-card dark:to-surface border border-warning/20 dark:border-primary/20 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-warning/15 dark:bg-[#D4AF37]/15 flex items-center justify-center">
-                        <RankIconComponent size={20} className="text-warning dark:text-[#D4AF37]" />
+                    <div className="w-10 h-10 rounded-xl bg-warning/15 dark:bg-primary/15 flex items-center justify-center">
+                        <RankIconComponent size={20} className="text-warning dark:text-primary" />
                     </div>
                     <div>
-                        <p className="text-sm font-bold text-main dark:text-white">{rank.name}</p>
+                        <p className="text-sm font-bold text-main dark:text-main">{rank.name}</p>
                         {nextRank.next && (
-                            <p className="text-xs text-muted dark:text-zinc-400 font-medium">{nextRank.pointsNeeded} نقطة للرتبة التالية</p>
+                            <p className="text-xs text-muted dark:text-muted font-medium">{nextRank.pointsNeeded} نقطة للرتبة التالية</p>
                         )}
                     </div>
                 </div>
-                <span className="text-lg font-bold text-warning dark:text-[#D4AF37] bg-warning/10 dark:bg-[#D4AF37]/10 px-3 py-1.5 rounded-xl">{points}</span>
+                <span className="text-lg font-bold text-warning dark:text-primary bg-warning/10 dark:bg-primary/10 px-3 py-1.5 rounded-xl">{points}</span>
             </div>
         </div>
     );

@@ -57,7 +57,7 @@ export const StatCard = ({ title, value, icon: Icon, sparklineColor, trend }: {
         return () => clearInterval(timer);
     }, [numericValue]);
     return (
-        <div className="relative p-4 rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-white/[0.06] overflow-hidden group hover:shadow-sm transition-all">
+        <div className="relative p-4 rounded-2xl bg-card dark:bg-card border border-border dark:border-white/[0.06] overflow-hidden group hover:shadow-sm transition-all">
             <div className="flex items-start justify-between mb-2">
                 {Icon ? <Icon size={18} className="text-primary" /> : <BarChart3 size={18} className="text-primary" />}
                 {trend && (
@@ -139,7 +139,7 @@ export const ActionBtn = ({ onClick, icon: Icon, label, color = 'success', title
 };
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn('bg-card dark:bg-[#0d0d0f] border border-border dark:border-white/[0.06] rounded-2xl', className)}>{children}</div>
+    <div className={cn('bg-card dark:bg-card border border-border dark:border-white/[0.06] rounded-2xl', className)}>{children}</div>
 );
 
 export const PrimaryBtn = ({ onClick, children, className = '', disabled, type = 'button' }: {

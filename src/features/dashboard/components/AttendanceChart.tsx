@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+﻿import { useMemo } from 'react';
 import { ProgressBar } from '../../../shared/components/ui';
 
 interface AttendanceChartProps {
@@ -44,7 +44,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
 
     return (
         <div>
-            <h3 className="text-[13px] font-bold text-main dark:text-white mb-3">{label}</h3>
+            <h3 className="text-[13px] font-bold text-main dark:text-main mb-3">{label}</h3>
             <div className="flex flex-col items-center gap-4">
                 <div className="relative shrink-0">
                     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
@@ -66,17 +66,17 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
                     </svg>
                 </div>
                 <div className="text-center w-full space-y-2">
-                    <p className="text-sm font-bold text-main dark:text-white">
+                    <p className="text-sm font-bold text-main dark:text-main">
                         {status.label}
                     </p>
                     <ProgressBar value={rate} variant="attendance" />
-                    <p className="text-micro font-medium text-dim dark:text-zinc-500">
+                    <p className="text-micro font-medium text-dim dark:text-dim">
                         {status.hint}
                     </p>
                 </div>
 
-                <div className="w-full border-t border-border dark:border-[#D4AF37]/20 pt-3 mt-1">
-                    <p className="text-[10px] font-bold text-muted dark:text-zinc-400 mb-2 text-center">الحضور الأسبوعي</p>
+                <div className="w-full border-t border-border dark:border-primary/20 pt-3 mt-1">
+                    <p className="text-[10px] font-bold text-muted dark:text-muted mb-2 text-center">الحضور الأسبوعي</p>
                     <div className="flex items-end justify-between gap-1" dir="ltr">
                         {weeklyData.map((d, i) => (
                             <div key={i} className="flex flex-col items-center gap-1 flex-1">
@@ -88,7 +88,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
                                         opacity: 0.7 + (d.value / 100) * 0.3,
                                     }}
                                 />
-                                <span className="text-[9px] font-medium text-muted dark:text-zinc-400">{d.day}</span>
+                                <span className="text-[9px] font-medium text-muted dark:text-muted">{d.day}</span>
                             </div>
                         ))}
                     </div>

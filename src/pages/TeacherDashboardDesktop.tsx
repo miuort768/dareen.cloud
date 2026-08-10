@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+﻿import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { TeacherDashboardHeader } from './TeacherDashboardHeader';
 import { DashboardStats } from '../features/dashboard/components/DashboardStats';
@@ -55,11 +55,11 @@ export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceS
                         {nextSession && (
                             <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
                         )}
-                        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 transition-all duration-300 shadow-sm hover:shadow-md">
+                        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 transition-all duration-300 shadow-sm hover:shadow-md">
                             <QuickActions onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} sessionAvailable={!!nextSession} />
                         </div>
                     </div>
-                    <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 transition-all duration-300 shadow-sm hover:shadow-md">
+                    <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 transition-all duration-300 shadow-sm hover:shadow-md">
                         <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
                     </div>
                 </div>
@@ -73,34 +73,34 @@ export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceS
                 className="grid grid-cols-1 lg:grid-cols-12 gap-3 md:gap-4"
             >
                 <div className="lg:col-span-8 space-y-3 md:space-y-4">
-                    <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <LiveSessions />
                     </div>
-                    <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <ModernAnnouncements />
                     </div>
                     {timeline.length > 0 && (
-                        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                             <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
                         </div>
                     )}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                             <TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} />
                         </div>
-                        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                             <TasksAndRequests tasks={tasks} />
                         </div>
                     </div>
                 </div>
                 <div className="lg:col-span-4 space-y-3 md:space-y-4">
-                    <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <AttendanceChart rate={stats.attendanceRate} />
                     </div>
-                    <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
                     </div>
-                    <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <FinancialSnapshot monthNetProfit={stats.monthNetProfit} monthRevenue={stats.monthRevenue} expectedCollection={stats.expectedCollection} />
                     </div>
                 </div>

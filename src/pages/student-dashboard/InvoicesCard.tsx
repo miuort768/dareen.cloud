@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Receipt, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../lib/api';
@@ -46,27 +46,27 @@ export const InvoicesCard = () => {
     const totalPending = pending.reduce((sum, i) => sum + i.amount, 0);
 
     return (
-        <div className="bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 rounded-2xl p-5">
+        <div className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-info-soft dark:bg-[#D4AF37]/15 flex items-center justify-center">
-                        <Receipt size={14} className="text-info dark:text-[#D4AF37]" />
+                    <div className="w-8 h-8 rounded-xl bg-info-soft dark:bg-primary/15 flex items-center justify-center">
+                        <Receipt size={14} className="text-info dark:text-primary" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-main dark:text-white">الفواتير</h3>
-                        <p className="text-micro text-muted dark:text-zinc-400">{pending.length} فاتورة معلقة</p>
+                        <h3 className="text-sm font-bold text-main dark:text-main">الفواتير</h3>
+                        <p className="text-micro text-muted dark:text-muted">{pending.length} فاتورة معلقة</p>
                     </div>
                 </div>
                 <button
                     onClick={() => navigate('/student-invoices')}
-                    className="text-primary dark:text-[#D4AF37] text-xs font-semibold flex items-center gap-1 hover:underline transition-all"
+                    className="text-primary dark:text-primary text-xs font-semibold flex items-center gap-1 hover:underline transition-all"
                 >
                     عرض الكل <ArrowLeft size={10} />
                 </button>
             </div>
 
-            <div className="flex items-center justify-between p-3 bg-surface dark:bg-[#0a0a0c] rounded-xl">
-                <span className="text-micro text-muted dark:text-zinc-400">المبلغ المطلوب</span>
+            <div className="flex items-center justify-between p-3 bg-surface dark:bg-surface rounded-xl">
+                <span className="text-micro text-muted dark:text-muted">المبلغ المطلوب</span>
                 <span className="text-sm font-bold text-error">{totalPending.toFixed(3)} {CURRENCY_SYMBOL}</span>
             </div>
         </div>

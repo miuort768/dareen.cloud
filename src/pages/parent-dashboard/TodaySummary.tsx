@@ -1,4 +1,4 @@
-import { CheckCircle2, XCircle, BookOpen, CalendarDays } from 'lucide-react';
+﻿import { CheckCircle2, XCircle, BookOpen, CalendarDays } from 'lucide-react';
 import { format, startOfWeek } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import type { Student } from '../../types';
@@ -84,17 +84,17 @@ export const TodaySummary = ({ sessions, children: kids, todayTasks }: TodaySumm
                 return (
                     <div
                         key={card.key}
-                        className="group relative overflow-hidden rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-4 md:p-5 transition-all duration-300 hover:shadow-elevation-2 hover:-translate-y-0.5"
+                        className="group relative overflow-hidden rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-4 md:p-5 transition-all duration-300 hover:shadow-elevation-2 hover:-translate-y-0.5"
                     >
                         <div className="flex items-start justify-between mb-3">
-                            <div className={`w-10 h-10 rounded-xl ${card.bg} dark:bg-[#D4AF37]/10 ${card.ring} ring-1 flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}>
+                            <div className={`w-10 h-10 rounded-xl ${card.bg} dark:bg-primary/10 ${card.ring} ring-1 flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}>
                                 <Icon size={18} className={card.text} />
                             </div>
                         </div>
-                        <p className="text-2xl md:text-[28px] font-bold text-main dark:text-white leading-none tracking-tight mb-1">
+                        <p className="text-2xl md:text-[28px] font-bold text-main dark:text-main leading-none tracking-tight mb-1">
                             {val.value}
                         </p>
-                        <p className="text-[13px] font-medium text-muted dark:text-zinc-400">{card.label}</p>
+                        <p className="text-[13px] font-medium text-muted dark:text-muted">{card.label}</p>
                         {val.subtitle && (
                             <p className={`text-[11px] font-semibold mt-1.5 ${card.text}`}>{val.subtitle}</p>
                         )}

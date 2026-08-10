@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+﻿import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Home, Users, MessageSquare, User, MoreHorizontal } from 'lucide-react';
 import { cn } from '../../lib/utils';
@@ -18,7 +18,7 @@ export const MobileBottomNav = () => {
 
     return (
         <nav className="fixed bottom-0 end-0 start-0 z-50" aria-label="التنقل الرئيسي">
-            <div className="bg-card/95 dark:bg-[#0a0a0c]/95 backdrop-blur-xl border-t border-border dark:border-[#D4AF37]/15 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]">
+            <div className="bg-card/95 dark:bg-surface/95 backdrop-blur-xl border-t border-border dark:border-primary/15 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]">
                 <div className="flex items-end justify-around h-[72px] px-1 pt-1.5 pb-1">
                     {navItems.map((item) => {
                         const Icon = item.icon;
@@ -36,36 +36,36 @@ export const MobileBottomNav = () => {
                             >
                                 {isCenter ? (
                                     <>
-                                        <div className="absolute inset-0 bg-primary/10 dark:bg-[#D4AF37]/15 rounded-2xl blur-md scale-110" />
-                                        <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#f59e0b] flex items-center justify-center shadow-lg shadow-primary/25 dark:shadow-[#D4AF37]/25">
-                                            <Icon size={24} className="text-on-primary dark:text-black" strokeWidth={2.2} />
+                                        <div className="absolute inset-0 bg-primary/10 dark:bg-primary/15 rounded-2xl blur-md scale-110" />
+                                        <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-deep dark:from-primary dark:to-warning flex items-center justify-center shadow-lg shadow-primary/25 dark:shadow-primary/25">
+                                            <Icon size={24} className="text-on-primary dark:text-on-primary" strokeWidth={2.2} />
                                         </div>
                                     </>
                                 ) : (
                                     <>
                                         <div className={cn(
                                             "rounded-xl p-1.5 transition-all duration-200",
-                                            isActive ? "bg-primary/10 dark:bg-[#D4AF37]/15" : "bg-transparent"
+                                            isActive ? "bg-primary/10 dark:bg-primary/15" : "bg-transparent"
                                         )}>
                                             <Icon
                                                 size={20}
                                                 className={cn(
                                                     "transition-colors duration-200",
-                                                    isActive ? "text-primary dark:text-[#D4AF37]" : "text-muted dark:text-zinc-500"
+                                                    isActive ? "text-primary dark:text-primary" : "text-muted dark:text-dim"
                                                 )}
                                                 strokeWidth={isActive ? 2.2 : 1.5}
                                             />
                                         </div>
                                         <span className={cn(
                                             "text-[10px] font-bold transition-colors duration-200 mt-0.5",
-                                            isActive ? "text-primary dark:text-[#D4AF37]" : "text-muted dark:text-zinc-500"
+                                            isActive ? "text-primary dark:text-primary" : "text-muted dark:text-dim"
                                         )}>
                                             {item.label}
                                         </span>
                                         {isActive && (
                                             <motion.div
                                                 layoutId="parent-tab-dot"
-                                                className="absolute top-0 w-1 h-1 rounded-full bg-primary dark:bg-[#D4AF37]"
+                                                className="absolute top-0 w-1 h-1 rounded-full bg-primary dark:bg-primary"
                                             />
                                         )}
                                     </>

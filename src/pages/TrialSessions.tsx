@@ -240,7 +240,7 @@ export const TrialSessions = () => {
     >
       <div className="px-2.5 sm:px-4 space-y-4 max-w-page mx-auto relative z-10">
         {/* Hero Section */}
-        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6366f1] via-[#7c3aed] to-[#a855f7] dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] mt-4">
+        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6366f1] via-[#7c3aed] to-[#a855f7] dark:from-card dark:via-hover dark:to-card mt-4">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
           <div className="absolute inset-0 opacity-[0.06]">
@@ -259,7 +259,7 @@ export const TrialSessions = () => {
             {/* Top row: title + actions */}
             <div className="flex items-center justify-between mb-5">
               <div className="text-right">
-                <p className="text-white/60 dark:text-white/40 text-[11px] mb-0.5">مرحباً بك! 👋</p>
+                <p className="text-white/60 dark:text-main/40 text-[11px] mb-0.5">مرحباً بك! 👋</p>
                 <h1 className="text-lg md:text-xl font-bold font-outfit text-white">جلسات المراجعة</h1>
                 <p className="text-[11px] text-white/50">{stats?.total || 0} حصة مسجلة في النظام</p>
               </div>
@@ -323,21 +323,21 @@ export const TrialSessions = () => {
         </motion.div>
 
         {/* Main Content Card */}
-        <motion.div variants={itemVariants} className="bg-card dark:bg-[#0d0d0f]/80 rounded-2xl shadow-elevation-1 dark:shadow-none border border-border dark:border-white/[0.04] overflow-hidden">
+        <motion.div variants={itemVariants} className="bg-card dark:bg-card/80 rounded-2xl shadow-elevation-1 dark:shadow-none border border-border dark:border-white/[0.04] overflow-hidden">
           {/* Toolbar: search + filters */}
           <div className="p-4 lg:p-5 border-b border-border dark:border-white/[0.04]">
             <div className="flex items-center gap-3">
               <div className="relative flex-1">
-                <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted dark:text-white/25" />
+                <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted dark:text-main/25" />
                 <input
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="بحث باسم الطالب أو رقم الهاتف..."
                   aria-label="بحث عن حصة"
-                  className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-white placeholder:text-muted dark:placeholder:text-white/25 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                  className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-main placeholder:text-muted dark:placeholder:text-white/25 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                 />
                 {search && (
-                  <button aria-label="مسح البحث" onClick={() => setSearch('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-white/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
+                  <button aria-label="مسح البحث" onClick={() => setSearch('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
                     <X size={13} />
                   </button>
                 )}
@@ -349,7 +349,7 @@ export const TrialSessions = () => {
                   'h-9 px-3 flex items-center justify-center gap-1.5 text-[11px] font-bold rounded-xl border shrink-0 transition-all duration-200',
                   showPaid
                     ? 'bg-success/10 dark:bg-success/15 text-success border-success/20 dark:border-success/20'
-                    : 'bg-surface dark:bg-white/[0.04] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:bg-hover dark:hover:bg-white/[0.06]'
+                    : 'bg-surface dark:bg-white/[0.04] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:bg-hover dark:hover:bg-white/[0.06]'
                 )}
                 aria-label={showPaid ? 'إظهار غير المدفوعة' : 'إظهار المدفوعة'}
               >
@@ -357,7 +357,7 @@ export const TrialSessions = () => {
                 <span className="hidden sm:inline">المدفوعة</span>
               </button>
               <div className="shrink-0 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl px-3 py-2.5">
-                <span className="text-[13px] font-bold text-main dark:text-white/60 tabular-nums">{filtered.length}</span>
+                <span className="text-[13px] font-bold text-main dark:text-main/60 tabular-nums">{filtered.length}</span>
               </div>
             </div>
 
@@ -369,12 +369,12 @@ export const TrialSessions = () => {
                     'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                     !filterStatus
                       ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
-                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                   )}>
                   الكل
                   <span className={cn(
                     'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
-                    !filterStatus ? 'bg-white/20' : 'bg-surface dark:bg-white/5 text-muted dark:text-white/30 border border-border dark:border-white/[0.06]'
+                    !filterStatus ? 'bg-white/20' : 'bg-surface dark:bg-white/5 text-muted dark:text-main/30 border border-border dark:border-white/[0.06]'
                   )}>{trials.length}</span>
                 </motion.button>
                 {statusFilters.map((sf) => {
@@ -409,13 +409,13 @@ export const TrialSessions = () => {
             {/* Subject filter — horizontal scrollable pill bar */}
             {subjects.length > 0 && (
               <div className="flex items-center gap-1.5 mt-3 overflow-x-auto scrollbar-none">
-                <CalendarDays size={12} className="text-muted dark:text-white/30 shrink-0" />
+                <CalendarDays size={12} className="text-muted dark:text-main/30 shrink-0" />
                 <motion.button whileTap={{ scale: 0.95 }} onClick={() => setFilterSubject('')}
                   className={cn(
                     'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                     !filterSubject
                       ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
-                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                   )}>
                   كل المواد
                 </motion.button>
@@ -427,7 +427,7 @@ export const TrialSessions = () => {
                         'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                         isActive
                           ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
-                          : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                          : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                       )}>
                       {subj}
                     </motion.button>
@@ -465,10 +465,10 @@ export const TrialSessions = () => {
                 <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-4 ring-1 ring-primary/20">
                   <Users size={28} className="text-primary/40" />
                 </div>
-                <p className="text-sm font-bold text-main dark:text-white/60 mb-1">
+                <p className="text-sm font-bold text-main dark:text-main/60 mb-1">
                   {search || filterStatus || filterSubject ? 'لا توجد نتائج للبحث' : showPaid ? 'لا توجد حصص مدفوعة' : 'لا توجد حصص تجريبية'}
                 </p>
-                <p className="text-[11px] text-muted dark:text-white/30 mb-4">
+                <p className="text-[11px] text-muted dark:text-main/30 mb-4">
                   {search || filterStatus || filterSubject ? 'حاول تغيير معايير البحث' : showPaid ? 'لم تتم دفع أي حصة بعد' : 'ابدأ بإضافة أول حصة تجريبية'}
                 </p>
                 {!search && !filterStatus && !filterSubject && !showPaid && (
@@ -485,7 +485,7 @@ export const TrialSessions = () => {
                       <div className="flex items-center gap-2 px-3 py-1.5 mb-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                         <span className="text-[11px] font-bold text-primary" dir="ltr">{phone}</span>
-                        <span className="text-[10px] text-muted dark:text-white/30">({sessions.length} حصص)</span>
+                        <span className="text-[10px] text-muted dark:text-main/30">({sessions.length} حصص)</span>
                       </div>
                     )}
                     <div className="space-y-3">
@@ -516,7 +516,7 @@ export const TrialSessions = () => {
                 <button
                   onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
                   disabled={currentPage === totalPages}
-                  className="w-9 h-9 flex items-center justify-center rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-white/40 hover:bg-hover dark:hover:bg-white/[0.08] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="w-9 h-9 flex items-center justify-center rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-main/40 hover:bg-hover dark:hover:bg-white/[0.08] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                   aria-label="الصفحة التالية"
                 >
                   <ChevronLeft size={16} />
@@ -529,7 +529,7 @@ export const TrialSessions = () => {
                       'w-9 h-9 flex items-center justify-center rounded-xl text-[12px] font-bold transition-all',
                       page === currentPage
                         ? 'bg-gradient-to-br from-primary to-primary-deep text-white shadow-md shadow-primary/20'
-                        : 'bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-white/40 hover:bg-hover dark:hover:bg-white/[0.08]'
+                        : 'bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-main/40 hover:bg-hover dark:hover:bg-white/[0.08]'
                     )}
                   >
                     {page}
@@ -538,7 +538,7 @@ export const TrialSessions = () => {
                 <button
                   onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
                   disabled={currentPage === 1}
-                  className="w-9 h-9 flex items-center justify-center rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-white/40 hover:bg-hover dark:hover:bg-white/[0.08] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="w-9 h-9 flex items-center justify-center rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-main/40 hover:bg-hover dark:hover:bg-white/[0.08] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                   aria-label="الصفحة السابقة"
                 >
                   <ChevronRight size={16} />
@@ -565,7 +565,7 @@ export const TrialSessions = () => {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end md:items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-0 md:p-4" dir="rtl">
               {/* Mobile: bottom sheet */}
               <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="md:hidden w-full bg-card dark:bg-[#0a0a0c] rounded-t-3xl overflow-hidden">
+                className="md:hidden w-full bg-card dark:bg-surface rounded-t-3xl overflow-hidden">
                 <div className="flex justify-center pt-3 pb-1"><div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full" /></div>
                 <div className="bg-gradient-to-l from-error/90 to-error px-5 py-4 flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
@@ -574,17 +574,17 @@ export const TrialSessions = () => {
                   <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
                 </div>
                 <div className="p-5">
-                  <p className="text-sm font-bold text-main dark:text-white">هل أنت متأكد من حذف هذه الحصة؟</p>
-                  <p className="text-[11px] text-muted dark:text-white/40 mt-1">لا يمكن التراجع عن هذا الإجراء</p>
+                  <p className="text-sm font-bold text-main dark:text-main">هل أنت متأكد من حذف هذه الحصة؟</p>
+                  <p className="text-[11px] text-muted dark:text-main/40 mt-1">لا يمكن التراجع عن هذا الإجراء</p>
                 </div>
                 <div className="flex gap-2 px-5 pb-8">
-                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
                   <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
                 </div>
               </motion.div>
               {/* Desktop: centered modal */}
               <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
-                className="hidden md:block bg-card dark:bg-[#0a0a0c] shadow-elevation-2 w-full max-w-sm border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden">
+                className="hidden md:block bg-card dark:bg-surface shadow-elevation-2 w-full max-w-sm border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden">
                 <div className="bg-gradient-to-l from-error/90 to-error px-5 py-4 flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
                     <AlertTriangle size={20} className="text-on-error" />
@@ -592,10 +592,10 @@ export const TrialSessions = () => {
                   <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
                 </div>
                 <div className="p-5">
-                  <p className="text-sm font-bold text-main dark:text-white">هل أنت متأكد من الحذف؟</p>
+                  <p className="text-sm font-bold text-main dark:text-main">هل أنت متأكد من الحذف؟</p>
                 </div>
                 <div className="flex gap-2 px-5 pb-5">
-                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
                   <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
                 </div>
               </motion.div>

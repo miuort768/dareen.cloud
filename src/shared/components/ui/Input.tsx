@@ -38,6 +38,7 @@ const InputInner = React.forwardRef<HTMLInputElement, InputProps>(
             'focus:border-primary/60 focus:ring-2 focus:ring-primary/10 focus:shadow-sm',
             'hover:border-border-strong',
             'placeholder:text-dim/50',
+            'disabled:opacity-45 disabled:cursor-not-allowed disabled:pointer-events-none',
             sizeStyles[sz],
             leftIcon ? 'ps-10' : '',
             rightIcon ? 'pe-12' : '',

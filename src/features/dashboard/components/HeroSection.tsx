@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+﻿import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Bell, CalendarDays, Clock, TrendingUp, Users, Target, Sparkles } from 'lucide-react';
 import type { User } from '../../../types/auth';
@@ -63,7 +63,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-[#D4AF37] dark:via-[#b8962e] dark:to-[#f59e0b] p-6 md:p-8"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary dark:via-primary-deep dark:to-warning p-6 md:p-8"
             dir="rtl"
         >
             {/* Pattern */}
@@ -139,7 +139,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
                             aria-label="الإشعارات"
                         >
                             <Bell size={16} />
-                            <span className="absolute -top-0.5 -end-0.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-primary-deep dark:border-[#D4AF37]" />
+                            <span className="absolute -top-0.5 -end-0.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-primary-deep dark:border-primary" />
                         </motion.button>
                     </div>
                 </div>

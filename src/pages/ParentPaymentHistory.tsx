@@ -47,7 +47,7 @@ const STATUS_PILLS: { key: FilterStatus; label: string }[] = [
 ];
 
 const HeroSkeleton = () => (
-    <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background dark:from-[#0a0a0c] dark:via-[#1a1a1e] dark:to-[#0a0a0c] border-b border-border/60 dark:border-white/[0.06]">
+    <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background dark:from-surface dark:via-hover dark:to-surface border-b border-border/60 dark:border-white/[0.06]">
         <div className="max-w-page mx-auto px-2.5 sm:px-4 pt-4 pb-8">
             <div className="flex items-center gap-2.5 mb-6">
                 <Skeleton className="w-8 h-8 rounded-xl" />
@@ -73,7 +73,7 @@ const HeroSkeleton = () => (
 const KpiSkeleton = () => (
     <div className="grid grid-cols-3 gap-2.5">
         {[1, 2, 3].map(i => (
-            <div key={i} className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl shadow-sm p-3.5">
+            <div key={i} className="bg-card dark:bg-card/80 border border-border dark:border-white/[0.06] rounded-2xl shadow-sm p-3.5">
                 <div className="flex items-start gap-3">
                     <Skeleton className="w-8 h-8 rounded-xl shrink-0" />
                     <div className="flex-1 space-y-1.5">
@@ -90,7 +90,7 @@ const KpiSkeleton = () => (
 const ListSkeleton = () => (
     <div className="space-y-2.5">
         {[1, 2, 3].map(i => (
-            <div key={i} className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl p-4 shadow-sm">
+            <div key={i} className="bg-card dark:bg-card/80 border border-border dark:border-white/[0.06] rounded-2xl p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-3">
                     <Skeleton className="h-3 w-28 rounded-lg" />
                     <Skeleton className="h-5 w-14 rounded-lg" />
@@ -187,13 +187,13 @@ export const ParentPaymentHistory = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface dark:bg-[#0a0a0c]" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface dark:bg-surface" dir="rtl">
             <div className="hidden md:block">
                 <ParentDashboardHeader logout={logout} />
             </div>
 
             {/* Hero */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background dark:from-[#0a0a0c] dark:via-[#1a1a1e] dark:to-[#0a0a0c] border-b border-border/60 dark:border-white/[0.06]">
+            <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background dark:from-surface dark:via-hover dark:to-surface border-b border-border/60 dark:border-white/[0.06]">
                 <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
                     {PARTICLES.map(p => (
                         <motion.div
@@ -212,13 +212,13 @@ export const ParentPaymentHistory = () => {
                                 <Wallet size={16} />
                             </div>
                             <div>
-                                <h1 className="text-sm font-bold text-main dark:text-white">سجل الدفعات</h1>
-                                <p className="text-[8px] text-muted dark:text-white/40">فواتير أبنائك ومدفوعاتك</p>
+                                <h1 className="text-sm font-bold text-main dark:text-main">سجل الدفعات</h1>
+                                <p className="text-[8px] text-muted dark:text-main/40">فواتير أبنائك ومدفوعاتك</p>
                             </div>
                         </div>
                         <button
                             onClick={() => navigate(-1)}
-                            className="w-8 h-8 rounded-xl bg-card dark:bg-white/[0.06] border border-border dark:border-white/[0.06] flex items-center justify-center text-muted dark:text-white/40 hover:text-main dark:hover:text-white hover:bg-surface dark:hover:bg-white/[0.1] transition-all"
+                            className="w-8 h-8 rounded-xl bg-card dark:bg-white/[0.06] border border-border dark:border-white/[0.06] flex items-center justify-center text-muted dark:text-main/40 hover:text-main dark:hover:text-white hover:bg-surface dark:hover:bg-white/[0.1] transition-all"
                             aria-label="رجوع"
                         >
                             <ArrowLeft size={14} />
@@ -231,35 +231,35 @@ export const ParentPaymentHistory = () => {
                         transition={{ delay: 0.1 }}
                         className="text-center py-4"
                     >
-                        <p className="text-[9px] font-bold text-muted dark:text-white/40 mb-1">إجمالي الفواتير</p>
+                        <p className="text-[9px] font-bold text-muted dark:text-main/40 mb-1">إجمالي الفواتير</p>
                         <motion.p
                             initial={{ scale: 0.9 }}
                             animate={{ scale: 1 }}
                             transition={{ type: 'spring', stiffness: 200, damping: 12 }}
-                            className="text-3xl font-bold text-main dark:text-white tabular-nums tracking-tight"
+                            className="text-3xl font-bold text-main dark:text-main tabular-nums tracking-tight"
                         >
                             {stats.total.toLocaleString()}{' '}
-                            <span className="text-sm text-muted dark:text-white/40 font-bold me-1">{CURRENCY_SYMBOL}</span>
+                            <span className="text-sm text-muted dark:text-main/40 font-bold me-1">{CURRENCY_SYMBOL}</span>
                         </motion.p>
                         <div className="flex items-center justify-center gap-3 mt-3">
                             <div className="flex items-center gap-1">
                                 <CheckCircle size={10} className="text-success" />
-                                <span className="text-[8px] font-bold text-muted dark:text-white/40">
-                                    مدفوعة: <span className="text-main dark:text-white">{stats.paidCount}</span>
+                                <span className="text-[8px] font-bold text-muted dark:text-main/40">
+                                    مدفوعة: <span className="text-main dark:text-main">{stats.paidCount}</span>
                                 </span>
                             </div>
                             <div className="w-px h-3 bg-border/60 dark:bg-white/10" />
                             <div className="flex items-center gap-1">
                                 <Clock size={10} className="text-warning" />
-                                <span className="text-[8px] font-bold text-muted dark:text-white/40">
-                                    معلقة: <span className="text-main dark:text-white">{stats.pendingCount}</span>
+                                <span className="text-[8px] font-bold text-muted dark:text-main/40">
+                                    معلقة: <span className="text-main dark:text-main">{stats.pendingCount}</span>
                                 </span>
                             </div>
                             <div className="w-px h-3 bg-border/60 dark:bg-white/10" />
                             <div className="flex items-center gap-1">
                                 <AlertCircle size={10} className="text-error" />
-                                <span className="text-[8px] font-bold text-muted dark:text-white/40">
-                                    متأخرة: <span className="text-main dark:text-white">{stats.overdueCount}</span>
+                                <span className="text-[8px] font-bold text-muted dark:text-main/40">
+                                    متأخرة: <span className="text-main dark:text-main">{stats.overdueCount}</span>
                                 </span>
                             </div>
                         </div>
@@ -282,9 +282,9 @@ export const ParentPaymentHistory = () => {
                         { title: 'متأخرة', value: stats.overdue, count: stats.overdueCount, icon: AlertCircle, accent: 'error' as const },
                     ]).map(kpi => {
                         const gradients = {
-                            success: 'from-success/20 to-success/5 dark:from-[#0a0a0c] dark:to-transparent',
-                            warning: 'from-warning/20 to-warning/5 dark:from-[#2e2a0a] dark:to-transparent',
-                            error: 'from-error/20 to-error/5 dark:from-[#2e0a0a] dark:to-transparent',
+                            success: 'from-success/20 to-success/5 dark:from-surface dark:to-transparent',
+                            warning: 'from-warning/20 to-warning/5 dark:from-primary-soft dark:to-transparent',
+                            error: 'from-error/20 to-error/5 dark:from-error-soft dark:to-transparent',
                         };
                         const iconBg = {
                             success: 'bg-success/10 text-success dark:bg-success/15 dark:text-success',
@@ -296,7 +296,7 @@ export const ParentPaymentHistory = () => {
                             <motion.div
                                 key={kpi.title}
                                 whileHover={{ scale: 1.01, y: -1 }}
-                                className="relative overflow-hidden bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl shadow-sm hover:shadow-md transition-all p-3.5"
+                                className="relative overflow-hidden bg-card dark:bg-card/80 border border-border dark:border-white/[0.06] rounded-2xl shadow-sm hover:shadow-md transition-all p-3.5"
                             >
                                 <div className={`absolute inset-0 opacity-[0.03] bg-gradient-to-br ${gradients[kpi.accent]}`} />
                                 <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${gradients[kpi.accent]}`} />
@@ -305,12 +305,12 @@ export const ParentPaymentHistory = () => {
                                         <Icon size={14} />
                                     </div>
                                     <div className="min-w-0 flex-1">
-                                        <p className="text-[9px] font-bold text-muted dark:text-white/40">{kpi.title}</p>
-                                        <p className="text-sm font-bold text-main dark:text-white tabular-nums leading-none mt-0.5">
+                                        <p className="text-[9px] font-bold text-muted dark:text-main/40">{kpi.title}</p>
+                                        <p className="text-sm font-bold text-main dark:text-main tabular-nums leading-none mt-0.5">
                                             {kpi.value.toLocaleString()}{' '}
-                                            <span className="text-[8px] text-muted dark:text-white/40 font-bold">{CURRENCY_SYMBOL}</span>
+                                            <span className="text-[8px] text-muted dark:text-main/40 font-bold">{CURRENCY_SYMBOL}</span>
                                         </p>
-                                        <p className="text-[8px] font-bold text-muted dark:text-white/40 mt-1">{kpi.count} فاتورة</p>
+                                        <p className="text-[8px] font-bold text-muted dark:text-main/40 mt-1">{kpi.count} فاتورة</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -335,8 +335,8 @@ export const ParentPaymentHistory = () => {
                                     onClick={() => setFilterStatus(pill.key)}
                                     className={`px-3 py-1.5 rounded-xl text-[10px] font-bold transition-all ${
                                         active
-                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary shadow-sm'
-                                            : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
+                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary shadow-sm'
+                                            : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
                                     }`}
                                 >
                                     {pill.label}
@@ -353,8 +353,8 @@ export const ParentPaymentHistory = () => {
                                     onClick={() => setFilterChild('all')}
                                     className={`px-2.5 py-1.5 rounded-xl text-[10px] font-bold whitespace-nowrap transition-all ${
                                         filterChild === 'all'
-                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary shadow-sm'
-                                            : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
+                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary shadow-sm'
+                                            : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
                                     }`}
                                 >
                                     الكل
@@ -365,8 +365,8 @@ export const ParentPaymentHistory = () => {
                                         onClick={() => setFilterChild(c.id)}
                                         className={`px-2.5 py-1.5 rounded-xl text-[10px] font-bold whitespace-nowrap transition-all ${
                                             filterChild === c.id
-                                                ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary shadow-sm'
-                                                : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
+                                                ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary shadow-sm'
+                                                : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
                                         }`}
                                     >
                                         {c.name}
@@ -375,13 +375,13 @@ export const ParentPaymentHistory = () => {
                             </div>
                         )}
                         <div className="relative flex-1">
-                            <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted dark:text-white/40" size={12} />
+                            <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted dark:text-main/40" size={12} />
                             <input
                                 aria-label="بحث"
                                 placeholder="بحث..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full rounded-xl ps-8 pe-3 py-2 text-[10px] font-bold outline-none bg-card dark:bg-white/[0.06] border border-border dark:border-white/[0.06] text-main dark:text-white placeholder:text-muted dark:placeholder:text-white/30 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
+                                className="w-full rounded-xl ps-8 pe-3 py-2 text-[10px] font-bold outline-none bg-card dark:bg-white/[0.06] border border-border dark:border-white/[0.06] text-main dark:text-main placeholder:text-muted dark:placeholder:text-white/30 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                             />
                         </div>
                     </div>
@@ -392,17 +392,17 @@ export const ParentPaymentHistory = () => {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.25 }}
-                    className="hidden md:block bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden shadow-sm"
+                    className="hidden md:block bg-card dark:bg-card/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden shadow-sm"
                 >
                     <table className="w-full text-start border-collapse">
                         <thead>
                             <tr className="bg-surface dark:bg-white/[0.04] border-b border-border/40 dark:border-white/[0.06]">
-                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-white/40 text-start">الابن</th>
-                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-white/40 text-start">البيان</th>
-                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-white/40 text-center">المبلغ</th>
-                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-white/40 text-center">التاريخ</th>
-                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-white/40 text-center">الاستحقاق</th>
-                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-white/40 text-center">الحالة</th>
+                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-main/40 text-start">الابن</th>
+                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-main/40 text-start">البيان</th>
+                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-main/40 text-center">المبلغ</th>
+                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-main/40 text-center">التاريخ</th>
+                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-main/40 text-center">الاستحقاق</th>
+                                <th className="px-4 py-3 text-[8px] font-bold text-muted dark:text-main/40 text-center">الحالة</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border/40 dark:divide-white/[0.06]">
@@ -421,17 +421,17 @@ export const ParentPaymentHistory = () => {
                                                 className="hover:bg-surface/50 dark:hover:bg-white/[0.03] transition-colors"
                                             >
                                                 <td className="px-4 py-3">
-                                                    <span className="text-[10px] font-bold text-main dark:text-white">{inv.studentName}</span>
+                                                    <span className="text-[10px] font-bold text-main dark:text-main">{inv.studentName}</span>
                                                 </td>
                                                 <td className="px-4 py-3">
-                                                    <span className="text-[10px] font-bold text-main dark:text-white">{inv.description}</span>
+                                                    <span className="text-[10px] font-bold text-main dark:text-main">{inv.description}</span>
                                                 </td>
-                                                <td className="px-4 py-3 text-center font-mono text-[10px] font-bold text-main dark:text-white tabular-nums">
+                                                <td className="px-4 py-3 text-center font-mono text-[10px] font-bold text-main dark:text-main tabular-nums">
                                                     {inv.amount.toLocaleString()}{' '}
-                                                    <span className="text-[8px] text-muted dark:text-white/40">{CURRENCY_SYMBOL}</span>
+                                                    <span className="text-[8px] text-muted dark:text-main/40">{CURRENCY_SYMBOL}</span>
                                                 </td>
-                                                <td className="px-4 py-3 text-center text-[8px] text-muted dark:text-white/40">{inv.date}</td>
-                                                <td className="px-4 py-3 text-center text-[8px] text-muted dark:text-white/40">{inv.dueDate}</td>
+                                                <td className="px-4 py-3 text-center text-[8px] text-muted dark:text-main/40">{inv.date}</td>
+                                                <td className="px-4 py-3 text-center text-[8px] text-muted dark:text-main/40">{inv.dueDate}</td>
                                                 <td className="px-4 py-3 text-center">
                                                     <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[8px] font-bold border ${status.bgCls} ${status.textCls} ${status.borderCls}`}>
                                                         <StatusIcon size={9} />
@@ -447,7 +447,7 @@ export const ParentPaymentHistory = () => {
                                             <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-2">
                                                 <FileText size={18} />
                                             </div>
-                                            <p className="text-[10px] font-bold text-muted dark:text-white/40">
+                                            <p className="text-[10px] font-bold text-muted dark:text-main/40">
                                                 {noResults ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
                                             </p>
                                         </td>
@@ -472,7 +472,7 @@ export const ParentPaymentHistory = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -8 }}
                                         transition={{ delay: i * 0.04 }}
-                                        className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl p-3.5 shadow-sm"
+                                        className="bg-card dark:bg-card/80 border border-border dark:border-white/[0.06] rounded-2xl p-3.5 shadow-sm"
                                     >
                                         {/* Top Row */}
                                         <div className="flex items-center justify-between mb-2.5">
@@ -481,8 +481,8 @@ export const ParentPaymentHistory = () => {
                                                     <Wallet size={11} className="text-primary" />
                                                 </div>
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="text-[10px] font-bold text-main dark:text-white truncate">{inv.description}</p>
-                                                    <p className="text-[7px] text-muted dark:text-white/40 flex items-center gap-1">
+                                                    <p className="text-[10px] font-bold text-main dark:text-main truncate">{inv.description}</p>
+                                                    <p className="text-[7px] text-muted dark:text-main/40 flex items-center gap-1">
                                                         <Users size={8} />
                                                         {inv.studentName}
                                                     </p>
@@ -497,16 +497,16 @@ export const ParentPaymentHistory = () => {
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-3">
                                                 <div>
-                                                    <p className="text-[7px] font-bold text-muted dark:text-white/40 mb-0.5">المبلغ</p>
-                                                    <span className="font-mono text-xs font-bold text-main dark:text-white tabular-nums">
+                                                    <p className="text-[7px] font-bold text-muted dark:text-main/40 mb-0.5">المبلغ</p>
+                                                    <span className="font-mono text-xs font-bold text-main dark:text-main tabular-nums">
                                                         {inv.amount.toLocaleString()}{' '}
-                                                        <span className="text-[8px] text-muted dark:text-white/40">{CURRENCY_SYMBOL}</span>
+                                                        <span className="text-[8px] text-muted dark:text-main/40">{CURRENCY_SYMBOL}</span>
                                                     </span>
                                                 </div>
                                                 <div className="w-px h-5 bg-border/40 dark:bg-white/10" />
                                                 <div>
-                                                    <p className="text-[7px] font-bold text-muted dark:text-white/40 mb-0.5">الاستحقاق</p>
-                                                    <span className="text-[8px] text-muted dark:text-white/40">{inv.dueDate}</span>
+                                                    <p className="text-[7px] font-bold text-muted dark:text-main/40 mb-0.5">الاستحقاق</p>
+                                                    <span className="text-[8px] text-muted dark:text-main/40">{inv.dueDate}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -514,11 +514,11 @@ export const ParentPaymentHistory = () => {
                                 );
                             })
                         ) : (
-                            <div className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] border-dashed rounded-2xl py-16 text-center">
+                            <div className="bg-card dark:bg-card/80 border border-border dark:border-white/[0.06] border-dashed rounded-2xl py-16 text-center">
                                 <div className="w-10 h-10 rounded-xl bg-primary-soft dark:bg-primary/10 text-primary flex items-center justify-center mx-auto mb-2">
                                     <FileText size={18} />
                                 </div>
-                                <p className="text-[10px] font-bold text-muted dark:text-white/40">
+                                <p className="text-[10px] font-bold text-muted dark:text-main/40">
                                     {noResults ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
                                 </p>
                             </div>

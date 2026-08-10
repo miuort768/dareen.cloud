@@ -187,7 +187,7 @@ export const AdminContacts = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-page mx-auto px-2.5 sm:px-4">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] p-6 md:p-8 mb-4">
+                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-card dark:via-hover dark:to-card p-6 md:p-8 mb-4">
                     {particles.map(p => (
                         <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
                             style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
@@ -244,7 +244,7 @@ export const AdminContacts = () => {
                             aria-label="ابحث في الرسائل"
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            className="w-full bg-card dark:bg-surface border border-border rounded-xl py-3 ps-9 pe-3 text-xs font-bold text-main dark:text-white placeholder:text-muted dark:placeholder:text-white/40 focus:outline-none focus:border-primary transition-all"
+                            className="w-full bg-card dark:bg-surface border border-border rounded-xl py-3 ps-9 pe-3 text-xs font-bold text-main dark:text-main placeholder:text-muted dark:placeholder:text-white/40 focus:outline-none focus:border-primary transition-all"
                         />
                     </div>
                     <div className="flex flex-wrap gap-2 mb-4">
@@ -254,7 +254,7 @@ export const AdminContacts = () => {
                                     "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-semibold transition-all duration-200 border active:scale-[0.97]",
                                     filterRead === pill.key
                                         ? "bg-primary/10 border-primary/30 text-primary dark:bg-primary/20 dark:border-primary/40"
-                                        : "bg-card border-border text-muted hover:bg-hover dark:bg-white/[0.04] dark:border-white/[0.08] dark:text-white/50"
+                                        : "bg-card border-border text-muted hover:bg-hover dark:bg-white/[0.04] dark:border-white/[0.08] dark:text-main/50"
                                 )}>
                                 {pill.label}
                                 <span className={cn(
@@ -294,7 +294,7 @@ export const AdminContacts = () => {
                                 <div className="w-14 h-14 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-3">
                                     <Inbox size={22} className="text-primary" />
                                 </div>
-                                <p className="text-base font-bold text-main dark:text-white">
+                                <p className="text-base font-bold text-main dark:text-main">
                                     {messages.length === 0 ? 'لا توجد رسائل' : 'لا توجد نتائج'}
                                 </p>
                                 <p className="text-xs text-muted mt-1.5">
@@ -393,7 +393,7 @@ export const AdminContacts = () => {
                     {fabOpen && fabActions.map((action, i) => (
                         <motion.div key={action.label} initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
-                            <span className="bg-card dark:bg-surface border border-border dark:border-white/[0.08] text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap text-main dark:text-white">{action.label}</span>
+                            <span className="bg-card dark:bg-surface border border-border dark:border-white/[0.08] text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap text-main dark:text-main">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
                                 className="w-10 h-10 rounded-lg bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all duration-200 flex items-center justify-center active:scale-95">
                                 <action.icon size={18} />

@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { Loader2, Sparkles, LayoutDashboard, Zap, CalendarCheck, Wallet, BellRing, Activity, ShieldCheck } from 'lucide-react';
 import type { Session } from '../../../types';
 import type { User } from '../../../types/auth';
@@ -58,13 +58,13 @@ export const MobileDashboardView = ({
                 animate={{ height: isRefreshing ? 48 : pullDistance }}
                 className="overflow-hidden flex items-center justify-center"
             >
-                <div className="flex items-center gap-2.5 text-primary dark:text-[#D4AF37] font-bold text-xs">
+                <div className="flex items-center gap-2.5 text-primary dark:text-primary font-bold text-xs">
                     {isRefreshing ? (
                         <><Loader2 size={16} className="animate-spin" /><span>جاري التحديث...</span></>
                     ) : pullDistance > 45 ? (
                         <><Sparkles size={16} className="animate-pulse" /><span>أفلت للتحديث</span></>
                     ) : (
-                        <span className="text-muted dark:text-zinc-500">اسحب للتحديث</span>
+                        <span className="text-muted dark:text-dim">اسحب للتحديث</span>
                     )}
                 </div>
             </motion.div>

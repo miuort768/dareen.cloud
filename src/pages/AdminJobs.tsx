@@ -174,7 +174,7 @@ export const AdminJobs = () => {
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-5xl mx-auto px-2.5 sm:px-4">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] p-6 md:p-8 mb-4">
+                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-card dark:via-hover dark:to-card p-6 md:p-8 mb-4">
                     {particles.map(p => (
                         <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
                             style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}

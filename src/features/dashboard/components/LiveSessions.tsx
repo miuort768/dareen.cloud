@@ -148,7 +148,7 @@ export const LiveSessions = () => {
     const displayError = error || (queryError instanceof Error ? queryError.message : null);
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 font-dash" dir="rtl">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -156,15 +156,15 @@ export const LiveSessions = () => {
                         <Radio size={16} className="text-success" />
                     </div>
                     <div>
-                        <h3 className="text-[13px] font-bold text-main dark:text-white">الحصص المباشرة</h3>
-                        <p className="text-[11px] text-muted dark:text-zinc-400">روابط البث المباشر</p>
+                        <h3 className="text-[13px] font-bold text-main dark:text-main">الحصص المباشرة</h3>
+                        <p className="text-[11px] text-muted dark:text-muted">روابط البث المباشر</p>
                     </div>
                 </div>
                 {isTeacher && (
                     <Button
                         onClick={() => setShowDialog(true)}
                         size="sm"
-                        className="h-9 px-3.5 rounded-xl text-[11px] font-bold gap-1.5 bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black"
+                        className="h-9 px-3.5 rounded-xl text-[11px] font-bold gap-1.5 bg-primary dark:bg-primary text-on-primary dark:text-on-primary"
                     >
                         <Plus size={13} />
                         بدء حصة
@@ -192,13 +192,13 @@ export const LiveSessions = () => {
                 </div>
             ) : sessions.length === 0 ? (
                 <div className="text-center py-8">
-                    <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-primary-soft dark:bg-[#D4AF37]/10 flex items-center justify-center">
-                        <Video size={28} className="text-primary/30 dark:text-[#D4AF37]/30" />
+                    <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-primary-soft dark:bg-primary/10 flex items-center justify-center">
+                        <Video size={28} className="text-primary/30 dark:text-primary/30" />
                     </div>
-                    <p className="text-[13px] font-bold text-muted dark:text-zinc-400">لا توجد حصص مباشرة حالياً</p>
-                    <p className="text-[11px] text-muted/60 dark:text-zinc-500 mt-1">ابدأ حصتك بضغطة واحدة</p>
+                    <p className="text-[13px] font-bold text-muted dark:text-muted">لا توجد حصص مباشرة حالياً</p>
+                    <p className="text-[11px] text-muted/60 dark:text-dim mt-1">ابدأ حصتك بضغطة واحدة</p>
                     {isTeacher && (
-                        <Button onClick={() => setShowDialog(true)} size="sm" className="mt-3 h-9 px-5 rounded-xl text-[11px] font-bold gap-1.5 bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black">
+                        <Button onClick={() => setShowDialog(true)} size="sm" className="mt-3 h-9 px-5 rounded-xl text-[11px] font-bold gap-1.5 bg-primary dark:bg-primary text-on-primary dark:text-on-primary">
                             <Plus size={13} /> بدء حصة
                         </Button>
                     )}
@@ -208,7 +208,7 @@ export const LiveSessions = () => {
                     {sessions.map((session) => (
                         <div
                             key={session.id}
-                            className="p-4 flex items-center justify-between bg-surface dark:bg-[#1a1a1e] border border-border dark:border-[#D4AF37]/20 rounded-xl hover:bg-hover dark:hover:bg-[#D4AF37]/5 transition-colors"
+                            className="p-4 flex items-center justify-between bg-surface dark:bg-hover border border-border dark:border-primary/20 rounded-xl hover:bg-hover dark:hover:bg-primary/5 transition-colors"
                         >
                             <div className="flex items-center gap-3 min-w-0">
                                 <div className="relative shrink-0">
@@ -218,14 +218,14 @@ export const LiveSessions = () => {
                                     <span className="absolute -top-0.5 -left-0.5 w-2.5 h-2.5 bg-success rounded-full border-2 border-surface animate-pulse" />
                                 </div>
                                 <div className="min-w-0">
-                                    <h4 className="text-xs font-bold text-main dark:text-white truncate">{session.title}</h4>
+                                    <h4 className="text-xs font-bold text-main dark:text-main truncate">{session.title}</h4>
                                     <div className="flex items-center gap-1.5 mt-0.5">
-                                        <Users size={10} className="text-muted dark:text-zinc-400 shrink-0" />
-                                        <span className="text-[10px] font-medium text-muted dark:text-zinc-400 truncate">{session.teacherName}</span>
+                                        <Users size={10} className="text-muted dark:text-muted shrink-0" />
+                                        <span className="text-[10px] font-medium text-muted dark:text-muted truncate">{session.teacherName}</span>
                                         {session.subject && (
                                             <>
-                                                <span className="text-[10px] text-muted/40 dark:text-zinc-600">·</span>
-                                                <span className="text-[10px] text-muted dark:text-zinc-400 truncate">{session.subject}</span>
+                                                <span className="text-[10px] text-muted/40 dark:text-dim">·</span>
+                                                <span className="text-[10px] text-muted dark:text-muted truncate">{session.subject}</span>
                                             </>
                                         )}
                                     </div>
@@ -233,21 +233,21 @@ export const LiveSessions = () => {
                             </div>
 
                             <div className="flex items-center gap-1.5 shrink-0">
-                                <span className="text-[10px] font-bold text-muted dark:text-zinc-400 px-2 py-0.5 rounded-lg bg-surface dark:bg-[#1a1a1e]">
+                                <span className="text-[10px] font-bold text-muted dark:text-muted px-2 py-0.5 rounded-lg bg-surface dark:bg-hover">
                                     {PROVIDER_LABELS[session.meetingProvider] || session.meetingProvider}
                                 </span>
                                 <a
                                     href={session.meetingUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="h-8 px-3 rounded-xl bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black text-[11px] font-bold flex items-center gap-1.5 hover:bg-primary-hover dark:hover:bg-[#D4AF37]/90 transition-colors"
+                                    className="h-8 px-3 rounded-xl bg-primary dark:bg-primary text-on-primary dark:text-on-primary text-[11px] font-bold flex items-center gap-1.5 hover:bg-primary-hover dark:hover:bg-[#D4AF37]/90 transition-colors"
                                 >
                                     <ExternalLink size={11} />
                                     انضم
                                 </a>
                                 <button
                                     onClick={() => copyLink(session.meetingUrl || '', session.id)}
-                                    className="h-8 w-8 rounded-xl border border-border dark:border-[#D4AF37]/20 text-muted dark:text-zinc-400 hover:bg-surface dark:hover:bg-[#D4AF37]/5 transition-colors flex items-center justify-center"
+                                    className="h-8 w-8 rounded-xl border border-border dark:border-primary/20 text-muted dark:text-muted hover:bg-surface dark:hover:bg-primary/5 transition-colors flex items-center justify-center"
                                     title="نسخ الرابط"
                                     aria-label="نسخ رابط الحصة"
                                 >
@@ -256,7 +256,7 @@ export const LiveSessions = () => {
                                 {isTeacher && (
                                     <button
                                         onClick={() => openEditDialog(session)}
-                                        className="h-8 w-8 rounded-xl border border-border dark:border-[#D4AF37]/20 text-muted dark:text-zinc-400 hover:bg-surface dark:hover:bg-[#D4AF37]/5 transition-colors flex items-center justify-center"
+                                        className="h-8 w-8 rounded-xl border border-border dark:border-primary/20 text-muted dark:text-muted hover:bg-surface dark:hover:bg-primary/5 transition-colors flex items-center justify-center"
                                         title="تعديل الرابط"
                                         aria-label="تعديل رابط الحصة"
                                     >
@@ -290,25 +290,25 @@ export const LiveSessions = () => {
                     onKeyDown={(e) => { if (e.key === 'Escape') setShowDialog(false); }}
                 >
                     <div
-                        className="bg-card dark:bg-[#0d0d0f] rounded-2xl shadow-2xl border border-border dark:border-[#D4AF37]/20 p-6 max-w-md w-full space-y-5"
+                        className="bg-card dark:bg-card rounded-2xl shadow-2xl border border-border dark:border-primary/20 p-6 max-w-md w-full space-y-5"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h3 className="font-bold text-lg text-main dark:text-white text-center">بدء حصة مباشرة</h3>
+                        <h3 className="font-bold text-lg text-main dark:text-main text-center">بدء حصة مباشرة</h3>
 
                         <div>
-                            <label htmlFor="live-subject" className="block text-xs font-bold text-muted dark:text-zinc-400 mb-2">المادة</label>
+                            <label htmlFor="live-subject" className="block text-xs font-bold text-muted dark:text-muted mb-2">المادة</label>
                             <input
                                 id="live-subject"
                                 type="text"
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
                                 placeholder="الرياضيات"
-                                className="w-full px-4 py-3 text-sm font-medium bg-background dark:bg-[#0a0a0c] border border-border dark:border-[#D4AF37]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus"
+                                className="w-full px-4 py-3 text-sm font-medium bg-background dark:bg-surface border border-border dark:border-primary/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-xs font-bold text-muted dark:text-zinc-400 mb-2">نوع الاجتماع</label>
+                            <label className="block text-xs font-bold text-muted dark:text-muted mb-2">نوع الاجتماع</label>
                             <div className="flex gap-2">
                                 {PROVIDERS.map((p) => (
                                     <button
@@ -317,8 +317,8 @@ export const LiveSessions = () => {
                                         className={cn(
                                             "flex-1 py-3 px-2 text-[11px] font-bold rounded-xl border-2 transition-all",
                                             meetingProvider === p.value
-                                                ? "border-primary dark:border-[#D4AF37] bg-primary-soft dark:bg-[#D4AF37]/10 text-primary dark:text-[#D4AF37]"
-                                                : "border-border dark:border-[#D4AF37]/20 text-muted dark:text-zinc-400 hover:border-border dark:hover:border-[#D4AF37]/30"
+                                                ? "border-primary dark:border-primary bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary"
+                                                : "border-border dark:border-primary/20 text-muted dark:text-muted hover:border-border dark:hover:border-[#D4AF37]/30"
                                         )}
                                     >
                                         {p.label}
@@ -328,7 +328,7 @@ export const LiveSessions = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="live-meeting-url" className="block text-xs font-bold text-muted dark:text-zinc-400 mb-2">رابط الاجتماع</label>
+                            <label htmlFor="live-meeting-url" className="block text-xs font-bold text-muted dark:text-muted mb-2">رابط الاجتماع</label>
                             <div className="flex gap-2">
                                 <input
                                     id="live-meeting-url"
@@ -340,7 +340,7 @@ export const LiveSessions = () => {
                                         meetingProvider === 'zoom' ? 'https://zoom.us/j/1234567890' :
                                         'https://...'
                                     }
-                                    className="flex-1 px-4 py-3 text-sm font-medium bg-background dark:bg-[#0a0a0c] border border-border dark:border-[#D4AF37]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus"
+                                    className="flex-1 px-4 py-3 text-sm font-medium bg-background dark:bg-surface border border-border dark:border-primary/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus"
                                 />
                                 {meetingProvider === 'google_meet' && (
                                     <a
@@ -371,7 +371,7 @@ export const LiveSessions = () => {
                             <Button
                                 onClick={startNewSession}
                                 disabled={startMutation.isPending}
-                                className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black gap-2"
+                                className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary dark:bg-primary text-on-primary dark:text-on-primary gap-2"
                             >
                                 {startMutation.isPending ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'بدء الحصة'}
                             </Button>
@@ -390,13 +390,13 @@ export const LiveSessions = () => {
                     onKeyDown={(e) => { if (e.key === 'Escape') setShowEditDialog(false); }}
                 >
                     <div
-                        className="bg-card dark:bg-[#0d0d0f] rounded-2xl shadow-2xl border border-border dark:border-[#D4AF37]/20 p-6 max-w-md w-full space-y-5"
+                        className="bg-card dark:bg-card rounded-2xl shadow-2xl border border-border dark:border-primary/20 p-6 max-w-md w-full space-y-5"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h3 className="font-bold text-lg text-main dark:text-white text-center">تعديل رابط الحصة</h3>
+                        <h3 className="font-bold text-lg text-main dark:text-main text-center">تعديل رابط الحصة</h3>
 
                         <div>
-                            <label className="block text-xs font-bold text-muted dark:text-zinc-400 mb-2">نوع الاجتماع</label>
+                            <label className="block text-xs font-bold text-muted dark:text-muted mb-2">نوع الاجتماع</label>
                             <div className="flex gap-2">
                                 {PROVIDERS.map((p) => (
                                     <button
@@ -405,8 +405,8 @@ export const LiveSessions = () => {
                                         className={cn(
                                             "flex-1 py-3 px-2 text-[11px] font-bold rounded-xl border-2 transition-all",
                                             editProvider === p.value
-                                                ? "border-primary dark:border-[#D4AF37] bg-primary-soft dark:bg-[#D4AF37]/10 text-primary dark:text-[#D4AF37]"
-                                                : "border-border dark:border-[#D4AF37]/20 text-muted dark:text-zinc-400 hover:border-border dark:hover:border-[#D4AF37]/30"
+                                                ? "border-primary dark:border-primary bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary"
+                                                : "border-border dark:border-primary/20 text-muted dark:text-muted hover:border-border dark:hover:border-[#D4AF37]/30"
                                         )}
                                     >
                                         {p.label}
@@ -416,7 +416,7 @@ export const LiveSessions = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="edit-meeting-url" className="block text-xs font-bold text-muted dark:text-zinc-400 mb-2">رابط الاجتماع</label>
+                            <label htmlFor="edit-meeting-url" className="block text-xs font-bold text-muted dark:text-muted mb-2">رابط الاجتماع</label>
                             <div className="flex gap-2">
                                 <input
                                     id="edit-meeting-url"
@@ -428,7 +428,7 @@ export const LiveSessions = () => {
                                         editProvider === 'zoom' ? 'https://zoom.us/j/1234567890' :
                                         'https://...'
                                     }
-                                    className="flex-1 px-4 py-3 text-sm font-medium bg-background dark:bg-[#0a0a0c] border border-border dark:border-[#D4AF37]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus"
+                                    className="flex-1 px-4 py-3 text-sm font-medium bg-background dark:bg-surface border border-border dark:border-primary/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus"
                                 />
                                 {editProvider === 'google_meet' && (
                                     <a
@@ -459,7 +459,7 @@ export const LiveSessions = () => {
                             <Button
                                 onClick={saveEditedLink}
                                 disabled={editMutation.isPending}
-                                className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black gap-2"
+                                className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary dark:bg-primary text-on-primary dark:text-on-primary gap-2"
                             >
                                 {editMutation.isPending ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'حفظ التعديل'}
                             </Button>

@@ -71,7 +71,7 @@ export const ModernAnnouncements = () => {
     };
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 overflow-hidden font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 overflow-hidden font-dash" dir="rtl">
             <div className="flex flex-col md:flex-row items-stretch">
                 {/* Type Indicator */}
                 <div
@@ -102,7 +102,7 @@ export const ModernAnnouncements = () => {
                     aria-expanded={showAcknowledge}
                     className="flex-1 p-5 relative cursor-pointer group"
                 >
-                    <div className="absolute top-3 end-4 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface dark:bg-[#1a1a1e] text-[10px] font-semibold text-muted dark:text-zinc-400">
+                    <div className="absolute top-3 end-4 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface dark:bg-hover text-[10px] font-semibold text-muted dark:text-muted">
                         <span>{currentIndex + 1} / {announcements.length}</span>
                     </div>
 
@@ -112,10 +112,10 @@ export const ModernAnnouncements = () => {
                                 {current.date}
                             </Badge>
                         </div>
-                        <h4 className="text-main dark:text-white font-bold text-[13px] mb-1 leading-tight">
+                        <h4 className="text-main dark:text-main font-bold text-[13px] mb-1 leading-tight">
                             {current.title}
                         </h4>
-                        <p className="text-muted dark:text-zinc-400 text-[11px] leading-relaxed line-clamp-2">
+                        <p className="text-muted dark:text-muted text-[11px] leading-relaxed line-clamp-2">
                             {current.content}
                         </p>
                     </div>
@@ -134,7 +134,7 @@ export const ModernAnnouncements = () => {
             </div>
 
             {/* Progress Bar */}
-            <div className="relative h-1 bg-surface dark:bg-[#1a1a1e] w-full">
+            <div className="relative h-1 bg-surface dark:bg-hover w-full">
                 <div
                     className="absolute top-0 start-0 h-full bg-primary transition-all duration-500 rounded-full"
                     style={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
@@ -144,19 +144,19 @@ export const ModernAnnouncements = () => {
             {/* Acknowledgment Modal */}
             {showAcknowledge && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/60 dark:bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') setShowAcknowledge(false); }}>
-                    <div className="bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 shadow-xl p-5 max-w-lg w-full rounded-2xl">
+                    <div className="bg-card dark:bg-card border border-border dark:border-primary/20 shadow-xl p-5 max-w-lg w-full rounded-2xl">
                         <div className="flex items-center gap-3 mb-5">
                             <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", type.bg)}>
                                 <type.icon size={22} className={type.color} />
                             </div>
                             <div>
-                                <h3 className="text-base font-bold text-main dark:text-white leading-tight">تأكيد القراءة</h3>
-                                <p className="text-[11px] font-medium text-muted dark:text-zinc-400 mt-0.5">إشعار الامتثال</p>
+                                <h3 className="text-base font-bold text-main dark:text-main leading-tight">تأكيد القراءة</h3>
+                                <p className="text-[11px] font-medium text-muted dark:text-muted mt-0.5">إشعار الامتثال</p>
                             </div>
                         </div>
 
-                        <div className="bg-surface dark:bg-[#1a1a1e] p-4 mb-5 border-s-4 border-primary dark:border-[#D4AF37] rounded-xl">
-                            <p className="text-sm text-main dark:text-white leading-relaxed">
+                        <div className="bg-surface dark:bg-hover p-4 mb-5 border-s-4 border-primary dark:border-primary rounded-xl">
+                            <p className="text-sm text-main dark:text-main leading-relaxed">
                                 "{current.content}"
                             </p>
                         </div>

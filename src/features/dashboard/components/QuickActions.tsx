@@ -1,4 +1,4 @@
-import { UserPlus, FileText, CalendarDays, Megaphone, ArrowLeft, Play } from 'lucide-react';
+﻿import { UserPlus, FileText, CalendarDays, Megaphone, ArrowLeft, Play } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
@@ -46,7 +46,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 }}
                 className={cn(
                     "w-full p-4 rounded-2xl border-2 border-primary/30",
-                    "bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black font-bold text-sm",
+                    "bg-primary dark:bg-primary text-on-primary dark:text-on-primary font-bold text-sm",
                     "hover:bg-primary-hover hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20",
                     "active:bg-primary-active",
                     "transition-all duration-200",
@@ -59,7 +59,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 </span>
                 <span className="text-base">بدء الحصة الآن</span>
                 {sessionAvailable && (
-                    <span className="px-2 py-0.5 rounded-lg bg-success dark:bg-[#D4AF37] text-on-success dark:text-black text-[10px] font-bold animate-pulse">
+                    <span className="px-2 py-0.5 rounded-lg bg-success dark:bg-primary text-on-success dark:text-on-primary text-[10px] font-bold animate-pulse">
                         متاح
                     </span>
                 )}
@@ -72,7 +72,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                     return (
                         <Link key={`action-${i}`} to={action.href} className="block h-full">
                             <div className={cn(
-                                "group h-full p-4 sm:p-4 rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20",
+                                "group h-full p-4 sm:p-4 rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20",
                                 "hover:border-primary/30 dark:hover:border-[#D4AF37]/40 hover:shadow-sm transition-all duration-200",
                                 "active:scale-[0.97]"
                             )}>
@@ -84,7 +84,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                     )}>
                                         <Icon size={20} />
                                     </div>
-                                    <h3 className="font-bold text-[13px] text-main dark:text-white leading-tight">
+                                    <h3 className="font-bold text-[13px] text-main dark:text-main leading-tight">
                                         {action.title}
                                     </h3>
                                 </div>

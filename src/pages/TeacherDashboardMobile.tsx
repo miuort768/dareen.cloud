@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+﻿import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, Users, Award, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles, Wallet, ArrowLeft, Loader2, RefreshCw, User as UserIcon } from 'lucide-react';
@@ -40,7 +40,7 @@ const tabs = [
     { id: 'reports' as const, label: 'التقارير', icon: CheckSquare },
 ];
 
-    const glass = "bg-surface/80 dark:bg-[#0a0a0c]/90 backdrop-blur-xl border-b border-border dark:border-[#D4AF37]/20";
+    const glass = "bg-surface/80 dark:bg-surface/90 backdrop-blur-xl border-b border-border dark:border-primary/20";
 
 export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline, onRefresh }: TeacherDashboardMobileProps) => {
     const navigate = useNavigate();
@@ -108,32 +108,32 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                 <div className="px-5 pt-5 pb-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-11 h-11 rounded-xl bg-primary dark:bg-[#D4AF37] flex items-center justify-center">
-                                <UserIcon size={18} className="text-on-primary dark:text-black" />
+                            <div className="w-11 h-11 rounded-xl bg-primary dark:bg-primary flex items-center justify-center">
+                                <UserIcon size={18} className="text-on-primary dark:text-on-primary" />
                             </div>
                             <div>
-                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
-                                <p className="text-[11px] font-medium text-muted dark:text-zinc-400">معلم</p>
+                                <h1 className="text-base font-bold text-main dark:text-main leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
+                                <p className="text-[11px] font-medium text-muted dark:text-muted">معلم</p>
                             </div>
                         </div>
-                        <div className="w-9 h-9 rounded-xl bg-primary-soft dark:bg-[#D4AF37]/15 flex items-center justify-center relative">
-                            <Bell size={15} className="text-primary dark:text-[#D4AF37]" />
+                        <div className="w-9 h-9 rounded-xl bg-primary-soft dark:bg-primary/15 flex items-center justify-center relative">
+                            <Bell size={15} className="text-primary dark:text-primary" />
                             <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface" />
                         </div>
                     </div>
                     {/* Stats row */}
                     <div className="flex items-center gap-2 mt-3">
-                        <div className="flex-1 bg-primary-soft dark:bg-[#D4AF37]/10 rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20 dark:border-[#D4AF37]/20">
-                            <Clock size={13} className="text-primary dark:text-[#D4AF37] shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-white font-bold text-base">{stats.todaySessions || 0}</span><span className="text-muted dark:text-zinc-400 text-[11px] font-medium">حصص</span></div>
+                        <div className="flex-1 bg-primary-soft dark:bg-primary/10 rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20 dark:border-primary/20">
+                            <Clock size={13} className="text-primary dark:text-primary shrink-0" />
+                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-main font-bold text-base">{stats.todaySessions || 0}</span><span className="text-muted dark:text-muted text-[11px] font-medium">حصص</span></div>
                         </div>
-                        <div className="flex-1 bg-primary-soft dark:bg-[#D4AF37]/10 rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20 dark:border-[#D4AF37]/20">
-                            <Users size={13} className="text-info dark:text-[#D4AF37] shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-white font-bold text-base">{stats.studentsCount || 0}</span><span className="text-muted dark:text-zinc-400 text-[11px] font-medium">طلاب</span></div>
+                        <div className="flex-1 bg-primary-soft dark:bg-primary/10 rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20 dark:border-primary/20">
+                            <Users size={13} className="text-info dark:text-primary shrink-0" />
+                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-main font-bold text-base">{stats.studentsCount || 0}</span><span className="text-muted dark:text-muted text-[11px] font-medium">طلاب</span></div>
                         </div>
-                        <div className="flex-1 bg-primary-soft dark:bg-[#D4AF37]/10 rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20 dark:border-[#D4AF37]/20">
-                            <Award size={13} className="text-success dark:text-[#D4AF37] shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-white font-bold text-base">{(stats.attendanceRate || 0)}%</span><span className="text-muted dark:text-zinc-400 text-[11px] font-medium">حضور</span></div>
+                        <div className="flex-1 bg-primary-soft dark:bg-primary/10 rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20 dark:border-primary/20">
+                            <Award size={13} className="text-success dark:text-primary shrink-0" />
+                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-main font-bold text-base">{(stats.attendanceRate || 0)}%</span><span className="text-muted dark:text-muted text-[11px] font-medium">حضور</span></div>
                         </div>
                     </div>
                 </div>
@@ -248,7 +248,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
 
             {/* Bottom Tab Bar */}
             <div className="fixed bottom-0 inset-x-0 z-50">
-                <div className="bg-card/95 dark:bg-[#0a0a0c]/95 backdrop-blur-xl border-t border-border dark:border-[#D4AF37]/15 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]">
+                <div className="bg-card/95 dark:bg-surface/95 backdrop-blur-xl border-t border-border dark:border-primary/15 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]">
                     <div className="flex items-end justify-around h-[68px] px-1 pt-1.5 pb-1">
                         {tabs.map(tab => {
                             const isActive = activeTab === tab.id;
@@ -259,18 +259,18 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 >
                                     <div                                     className={cn(
                                         "rounded-xl p-1.5 transition-all duration-200",
-                                        isActive ? "bg-primary/10 dark:bg-[#D4AF37]/15" : "bg-transparent"
+                                        isActive ? "bg-primary/10 dark:bg-primary/15" : "bg-transparent"
                                     )}>
                                         <tab.icon size={20} strokeWidth={isActive ? 2.2 : 1.5}
-                                            className={cn("transition-colors duration-200", isActive ? "text-primary dark:text-[#D4AF37]" : "text-muted dark:text-zinc-500")}
+                                            className={cn("transition-colors duration-200", isActive ? "text-primary dark:text-primary" : "text-muted dark:text-dim")}
                                         />
                                     </div>
-                                    <span className={cn("text-[10px] font-bold transition-colors duration-200 mt-0.5", isActive ? "text-primary dark:text-[#D4AF37]" : "text-muted dark:text-zinc-500")}>
+                                    <span className={cn("text-[10px] font-bold transition-colors duration-200 mt-0.5", isActive ? "text-primary dark:text-primary" : "text-muted dark:text-dim")}>
                                         {tab.label}
                                     </span>
                                     {isActive && (
                                         <motion.div layoutId="teacher-tab-dot"
-                                            className="absolute top-0 w-1 h-1 rounded-full bg-primary dark:bg-[#D4AF37]"
+                                            className="absolute top-0 w-1 h-1 rounded-full bg-primary dark:bg-primary"
                                         />
                                     )}
                                 </motion.button>

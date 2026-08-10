@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+﻿import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Loader2, RefreshCw } from 'lucide-react';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks';
@@ -129,7 +129,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
                 animate={{ height: isRefreshing ? 44 : pullDistance }}
                 className="overflow-hidden flex items-center justify-center"
             >
-                <div className="flex items-center gap-2 text-primary dark:text-[#D4AF37] font-bold text-xs">
+                <div className="flex items-center gap-2 text-primary dark:text-primary font-bold text-xs">
                     {isRefreshing ? (
                         <><Loader2 size={16} className="animate-spin" /><span>جاري التحديث...</span></>
                     ) : pullDistance > 40 ? (

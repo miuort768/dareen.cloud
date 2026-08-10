@@ -30,12 +30,12 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
             {/* Header */}
             <div className="flex items-center justify-between mb-4 px-1">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-background dark:bg-[#0a0a0c] text-main dark:text-white rounded-none flex items-center justify-center border border-border dark:border-[#D4AF37]/20 shadow-soft">
-                        <Clock size={20} className="dark:text-[#D4AF37]" />
+                    <div className="w-10 h-10 bg-background dark:bg-surface text-main dark:text-main rounded-none flex items-center justify-center border border-border dark:border-primary/20 shadow-soft">
+                        <Clock size={20} className="dark:text-primary" />
                     </div>
                     <div>
-                        <h3 className="font-medium text-sm text-main dark:text-white uppercase tracking-tight">الجدول الزمني</h3>
-                        <p className="text-micro text-muted dark:text-zinc-400 font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
+                        <h3 className="font-medium text-sm text-main dark:text-main uppercase tracking-tight">الجدول الزمني</h3>
+                        <p className="text-micro text-muted dark:text-muted font-medium mt-0.5 uppercase tracking-tight">جدول الحصص اليومية المباشرة</p>
                     </div>
                 </div>
                 <Badge variant="secondary" className="hidden md:inline-flex items-center gap-2 px-3 py-1 bg-success text-on-success border border-success rounded-none">
@@ -64,7 +64,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                     ? "bg-success-soft dark:bg-success/10 border-success/30"
                                     : isCancelled
                                     ? "bg-error-soft dark:bg-error/10 border-error/30"
-                                    : "bg-card dark:bg-[#0d0d0f] border-border dark:border-[#D4AF37]/20 hover:border-primary/50 dark:hover:border-[#D4AF37]/40 hover:-translate-y-1"
+                                    : "bg-card dark:bg-card border-border dark:border-primary/20 hover:border-primary/50 dark:hover:border-[#D4AF37]/40 hover:-translate-y-1"
                             )}
                         >
                             {/* Time + status icon */}
@@ -75,7 +75,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                         ? "bg-success text-on-success border-success" 
                                         : isCancelled 
                                         ? "bg-error text-on-error border-error" 
-                                        : "bg-surface dark:bg-[#1a1a1e] text-main dark:text-white border-border dark:border-[#D4AF37]/20"
+                                        : "bg-surface dark:bg-hover text-main dark:text-main border-border dark:border-primary/20"
                                 )}>
                                     {session.time}
                                 </div>
@@ -85,7 +85,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                             </div>
 
                             {/* Student name */}
-                            <h4 className="text-xs font-medium text-main dark:text-white truncate mb-1 uppercase tracking-tight">
+                            <h4 className="text-xs font-medium text-main dark:text-main truncate mb-1 uppercase tracking-tight">
                                 {session.studentName}
                             </h4>
 
@@ -95,13 +95,13 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                     "w-1.5 h-1.5 rounded-none border border-border",
                                     isCompleted ? "bg-success" : isCancelled ? "bg-error" : "bg-primary"
                                 )} />
-                                <p className="text-micro font-normal text-muted dark:text-zinc-400 truncate uppercase">
+                                <p className="text-micro font-normal text-muted dark:text-muted truncate uppercase">
                                     {session.subject}
                                 </p>
                             </div>
 
                             {/* Status label */}
-                            <div className="mt-4 pt-3 border-t border-border dark:border-[#D4AF37]/20 flex justify-between items-center">
+                            <div className="mt-4 pt-3 border-t border-border dark:border-primary/20 flex justify-between items-center">
                                 <span className={cn(
                                     "text-micro font-medium uppercase",
                                     isCompleted ? "text-success" : isCancelled ? "text-error" : "text-primary"
@@ -113,8 +113,8 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
 
                             {/* Hover play overlay */}
                             {isOngoing && (
-                                <Button onClick={() => onSessionStart?.(session.id)} className="absolute inset-2 bg-primary/95 dark:bg-[#D4AF37]/95 text-on-primary dark:text-black rounded-none border border-primary dark:border-[#D4AF37] flex-col opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10">
-                                    <div className="w-9 h-9 bg-card dark:bg-[#0d0d0f] text-main dark:text-white rounded-none border border-border/20 dark:border-[#D4AF37]/20 flex items-center justify-center mb-2 shadow-soft">
+                                <Button onClick={() => onSessionStart?.(session.id)} className="absolute inset-2 bg-primary/95 dark:bg-primary/95 text-on-primary dark:text-on-primary rounded-none border border-primary dark:border-primary flex-col opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10">
+                                    <div className="w-9 h-9 bg-card dark:bg-card text-main dark:text-main rounded-none border border-border/20 dark:border-primary/20 flex items-center justify-center mb-2 shadow-soft">
                                         <Play size={18} className="fill-current translate-x-0.5" />
                                     </div>
                                     <span className="font-medium text-micro uppercase">بدء الحصة</span>

@@ -1,4 +1,4 @@
-import { ListTodo, Calendar, Clock } from 'lucide-react';
+﻿import { ListTodo, Calendar, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
 
@@ -47,15 +47,15 @@ export const ActivityTimeline = ({ sessions, tasks }: ActivityTimelineProps) => 
     };
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 shadow-elevation-1 p-5 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 shadow-elevation-1 p-5 font-dash" dir="rtl">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-xl bg-info-soft dark:bg-info/10 flex items-center justify-center">
                         <Clock size={16} className="text-info" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-main dark:text-white">سجل النشاطات</h3>
-                        <p className="text-[10px] text-muted dark:text-zinc-400">آخر العمليات المسجلة</p>
+                        <h3 className="text-sm font-bold text-main dark:text-main">سجل النشاطات</h3>
+                        <p className="text-[10px] text-muted dark:text-muted">آخر العمليات المسجلة</p>
                     </div>
                 </div>
                 {allItems.length > 0 && (
@@ -70,8 +70,8 @@ export const ActivityTimeline = ({ sessions, tasks }: ActivityTimelineProps) => 
                     <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-primary-soft flex items-center justify-center">
                         <Clock size={24} className="text-primary-200" />
                     </div>
-                    <p className="text-sm font-bold text-muted dark:text-zinc-400">لا توجد نشاطات مؤخراً</p>
-                    <p className="text-[11px] text-dim dark:text-zinc-500 mt-1">ستظهر الأنشطة عند تسجيلها</p>
+                    <p className="text-sm font-bold text-muted dark:text-muted">لا توجد نشاطات مؤخراً</p>
+                    <p className="text-[11px] text-dim dark:text-dim mt-1">ستظهر الأنشطة عند تسجيلها</p>
                 </div>
             ) : (
                 <div className="space-y-2">
@@ -82,7 +82,7 @@ export const ActivityTimeline = ({ sessions, tasks }: ActivityTimelineProps) => 
                         return (
                             <div
                                 key={item.id}
-                                className="flex items-center gap-3 p-3 rounded-xl bg-surface dark:bg-[#1a1a1e] hover:bg-hover dark:hover:bg-[#252529] transition-colors"
+                                className="flex items-center gap-3 p-3 rounded-xl bg-surface dark:bg-hover hover:bg-hover dark:hover:bg-[#252529] transition-colors"
                             >
                                 <div className="relative shrink-0">
                                     <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", v.iconBg)}>
@@ -90,10 +90,10 @@ export const ActivityTimeline = ({ sessions, tasks }: ActivityTimelineProps) => 
                                     </div>
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <h4 className="text-[11px] font-bold text-main dark:text-white truncate">{item.title}</h4>
+                                    <h4 className="text-[11px] font-bold text-main dark:text-main truncate">{item.title}</h4>
                                     <div className="flex items-center gap-1.5 mt-0.5">
-                                        <Clock size={9} className="text-muted dark:text-zinc-500 shrink-0" />
-                                        <span className="text-[10px] text-muted dark:text-zinc-400">{item.time}</span>
+                                        <Clock size={9} className="text-muted dark:text-dim shrink-0" />
+                                        <span className="text-[10px] text-muted dark:text-muted">{item.time}</span>
                                     </div>
                                 </div>
                                 <Badge variant="outline" className={cn("text-[9px] h-5 px-2 rounded-md shrink-0 border", v.badge)}>

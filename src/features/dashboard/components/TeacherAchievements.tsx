@@ -1,4 +1,4 @@
-import { Award, AlertCircle, Clock, Star, TrendingUp } from 'lucide-react';
+﻿import { Award, AlertCircle, Clock, Star, TrendingUp } from 'lucide-react';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types';
 import { getRankByPoints, TEACHER_RANKS } from '../../../shared/utils/ranks';
@@ -18,8 +18,8 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
     return (
         <div>
             <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-[13px] font-bold text-main dark:text-white flex items-center gap-2">
-                        <Star size={13} className="text-warning dark:text-[#D4AF37]" />
+                    <h3 className="text-[13px] font-bold text-main dark:text-main flex items-center gap-2">
+                        <Star size={13} className="text-warning dark:text-primary" />
                         {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
                     </h3>
                     {isTeacher && (
@@ -27,12 +27,12 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     )}
                 </div>
 
-                <div className="rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-soft dark:from-[#D4AF37] dark:via-[#b8962e] dark:to-[#f59e0b] p-5 mb-4 relative overflow-hidden">
+                <div className="rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-soft dark:from-primary dark:via-primary-deep dark:to-warning p-5 mb-4 relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.1)_0%,transparent_60%)]" />
                     <div className="relative z-10">
                         <div className="flex items-center gap-1.5 mb-2">
-                            <TrendingUp size={12} className="text-white/70 dark:text-white/80" />
-                            <span className="text-[11px] font-bold text-white/70 dark:text-white/80">
+                            <TrendingUp size={12} className="text-white/70 dark:text-main/80" />
+                            <span className="text-[11px] font-bold text-white/70 dark:text-main/80">
                                 {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
                             </span>
                         </div>
@@ -61,9 +61,9 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                             <p className="text-[11px] font-bold text-error/70">منتهي</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-xl bg-warning/10 dark:bg-[#D4AF37]/5 border border-warning/20 dark:border-[#D4AF37]/30">
+                    <div className="flex items-center gap-3 p-3 rounded-xl bg-warning/10 dark:bg-primary/5 border border-warning/20 dark:border-primary/30">
                         <div className="w-9 h-9 rounded-lg bg-warning/15 flex items-center justify-center">
-                            <Clock size={14} className="text-warning dark:text-[#D4AF37]" />
+                            <Clock size={14} className="text-warning dark:text-primary" />
                         </div>
                         <div>
                             <span className="text-lg font-bold text-warning tabular-nums">{lowCount}</span>

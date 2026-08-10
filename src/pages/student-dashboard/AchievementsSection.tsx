@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { Trophy, Star, Flame, BookOpen, Lock } from 'lucide-react';
 import type { Rank } from '../../shared/utils/ranks';
 
@@ -19,12 +19,12 @@ export const AchievementsSection = ({ points, rank, nextRank }: AchievementsSect
     ];
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 md:p-6">
+        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 md:p-6">
             <div className="flex items-center gap-2 mb-5">
-                <div className="w-8 h-8 rounded-xl bg-warning/15 dark:bg-[#D4AF37]/15 flex items-center justify-center">
-                    <Trophy size={16} className="text-warning dark:text-[#D4AF37]" />
+                <div className="w-8 h-8 rounded-xl bg-warning/15 dark:bg-primary/15 flex items-center justify-center">
+                    <Trophy size={16} className="text-warning dark:text-primary" />
                 </div>
-                <h3 className="text-base md:text-[22px] font-bold text-main dark:text-white">الإنجازات</h3>
+                <h3 className="text-base md:text-[22px] font-bold text-main dark:text-main">الإنجازات</h3>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -41,18 +41,18 @@ export const AchievementsSection = ({ points, rank, nextRank }: AchievementsSect
                             <div className={`w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center ${badge.unlocked ? badge.bg : 'bg-border/30'}`}>
                                 <Icon size={22} className={badge.unlocked ? badge.color : 'text-muted'} />
                             </div>
-                            <p className={`text-xs font-bold ${badge.unlocked ? 'text-main dark:text-white' : 'text-muted dark:text-zinc-500'}`}>{badge.label}</p>
-                            {!badge.unlocked && <p className="text-[10px] text-muted dark:text-zinc-500 mt-1">مقفل</p>}
+                            <p className={`text-xs font-bold ${badge.unlocked ? 'text-main dark:text-main' : 'text-muted dark:text-dim'}`}>{badge.label}</p>
+                            {!badge.unlocked && <p className="text-[10px] text-muted dark:text-dim mt-1">مقفل</p>}
                         </motion.div>
                     );
                 })}
             </div>
 
             {nextRank.next && (
-                <div className="mt-5 p-4 rounded-xl bg-surface dark:bg-[#0a0a0c] border border-border dark:border-[#D4AF37]/15">
+                <div className="mt-5 p-4 rounded-xl bg-surface dark:bg-surface border border-border dark:border-primary/15">
                     <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-medium text-muted dark:text-zinc-400">التقدم نحو {nextRank.next.name}</span>
-                        <span className="text-xs font-bold text-primary dark:text-[#D4AF37]">{xpPercent}%</span>
+                        <span className="text-xs font-medium text-muted dark:text-muted">التقدم نحو {nextRank.next.name}</span>
+                        <span className="text-xs font-bold text-primary dark:text-primary">{xpPercent}%</span>
                     </div>
                     <div className="relative h-2.5 rounded-full bg-border overflow-hidden">
                         <motion.div
