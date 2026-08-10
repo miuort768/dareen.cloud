@@ -73,6 +73,20 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teacher
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
   const [showAddProgram, setShowAddProgram] = useState(false);
 
+  const streakDays = useMemo(() => {
+    if (!student) return 0;
+    let streak = 0;
+    const d = new Date();
+    for (let i = 0; i < 30; i++) {
+      const dateStr = d.toISOString().split('T')[0];
+      if (sessions.some(s => s.date === dateStr && s.status === 'completed')) {
+        streak++;
+      } else if (i > 0) break;
+      d.setDate(d.getDate() - 1);
+    }
+    return streak;
+  }, [student, sessions]);
+
   if (!student) return null;
 
   const gradient = getAvatarGradient(student.name);
@@ -91,18 +105,6 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teacher
 
   const today = new Date().toISOString().split('T')[0];
   const todaySessions = sessions.filter(s => s.date === today);
-  const streakDays = useMemo(() => {
-    let streak = 0;
-    const d = new Date();
-    for (let i = 0; i < 30; i++) {
-      const dateStr = d.toISOString().split('T')[0];
-      if (sessions.some(s => s.date === dateStr && s.status === 'completed')) {
-        streak++;
-      } else if (i > 0) break;
-      d.setDate(d.getDate() - 1);
-    }
-    return streak;
-  }, [sessions]);
 
   return (
     <AnimatePresence>

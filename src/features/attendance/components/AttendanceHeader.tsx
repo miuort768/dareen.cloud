@@ -86,7 +86,7 @@ export const AttendanceHeader = ({ date, onDateChange, isTeacher, stats, teacher
                                 <Calendar size={12} className="text-white/70" />
                                 <input type="date" aria-label="التاريخ" value={date}
                                     onChange={(e) => onDateChange(e.target.value)}
-                                    className="bg-transparent border-none p-0 text-[10px] font-bold text-white outline-none focus:ring-0 cursor-pointer w-24" />
+                                    className="bg-transparent border-none p-0 text-[10px] font-bold text-white outline-none focus-visible:ring-0 cursor-pointer w-24" />
                             </div>
                         )}
                     </div>

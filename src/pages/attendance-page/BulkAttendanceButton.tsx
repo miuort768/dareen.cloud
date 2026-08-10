@@ -51,7 +51,7 @@ export const BulkAttendanceButton = ({ matchedEnrollments, allSessions, logDate,
     return (
         <div className="px-0 mb-2">
             <button onClick={handleBulk}
-                className="w-full flex items-center justify-center gap-2 bg-success hover:brightness-90 text-on-success text-xs font-semibold px-4 py-3.5 rounded-lg transition-all duration-200 shadow-sm active:scale-95">
+                className="w-full flex items-center justify-center gap-2 bg-success hover:bg-success-hover text-on-success text-xs font-semibold px-4 py-3.5 rounded-xl transition-all duration-200 shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
                 تسجيل حضور اليوم بالكامل <Users size={16} />
             </button>
         </div>

@@ -27,7 +27,7 @@ export const AttendanceHistoryView = ({
                 {(['today', 'week', 'month'] as PeriodFilter[]).map(p => (
                     <motion.button key={p} whileTap={{ scale: 0.95 }}
                         onClick={() => { triggerHaptic('light'); setPeriodFilter(p); }}
-                        className={cn("flex-1 py-2 rounded-xl text-micro font-bold transition-all",
+                        className={cn("flex-1 py-2 rounded-xl text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus",
                             periodFilter === p ? "bg-primary text-on-primary shadow-elevation-1" : "text-muted"
                         )}>
                         {p === 'today' ? 'اليوم' : p === 'week' ? 'الأسبوع' : 'الشهر'}
@@ -58,7 +58,8 @@ export const AttendanceHistoryView = ({
                         <span className="text-micro font-bold text-muted tabular-nums">{session.time}</span>
                         <motion.button whileTap={{ scale: 0.93 }}
                             onClick={() => onViewHistory(session.studentId, session.studentName, session.subject)}
-                            className="px-2 py-1 rounded-xl bg-surface text-muted text-micro font-bold">
+                            className="px-2 py-1 rounded-xl bg-surface text-muted text-micro font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                            aria-label="عرض السجل">
                             <History size={10} />
                         </motion.button>
                     </div>

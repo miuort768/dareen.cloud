@@ -142,17 +142,17 @@ export const AdminTeacherGroupList = ({ uniqueTeachers, filterTeacher, students,
                                         <div className="grid grid-cols-2 gap-2">
                                             <button onClick={() => onLogAttendance(student, enrollment)}
                                                 disabled={isLogging}
-                                                className="py-2.5 bg-success hover:brightness-90 disabled:opacity-50 disabled:cursor-not-allowed text-on-success font-semibold text-micro rounded-lg flex items-center justify-center transition-all duration-200 shadow-sm active:scale-95">
+                                                className="py-2.5 bg-success hover:bg-success-hover disabled:opacity-50 disabled:cursor-not-allowed text-on-success font-semibold text-micro rounded-xl flex items-center justify-center transition-all duration-200 shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
                                                 حضور
                                             </button>
                                             <button onClick={() => onLogAttendance(student, enrollment)}
                                                 disabled={isLogging}
-                                                className="py-2.5 bg-error hover:brightness-90 disabled:opacity-50 disabled:cursor-not-allowed text-on-error font-semibold text-micro rounded-lg flex items-center justify-center transition-all duration-200 shadow-sm active:scale-95">
+                                                className="py-2.5 bg-error hover:bg-error-hover disabled:opacity-50 disabled:cursor-not-allowed text-on-error font-semibold text-micro rounded-xl flex items-center justify-center transition-all duration-200 shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
                                                 غياب
                                             </button>
                                         </div>
                                         <button onClick={() => onViewHistory(student.id, student.name, student.grade, enrollment.subject)}
-                                            className="w-full py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-semibold text-micro rounded-lg transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95">
+                                            className="w-full py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-semibold text-micro rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
                                             <History size={14} /> سجل الطالب
                                         </button>
                                     </div>

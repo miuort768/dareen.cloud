@@ -265,7 +265,7 @@ export const Attendance = () => {
                                         <Search size={14} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" />
                                         <input type="text" aria-label="بحث" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
                                             placeholder="ابحث باسم الطالب أو المادة..."
-                                            className="w-full ps-10 pe-4 py-2 bg-surface border border-border rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all" />
+                                            className="w-full ps-10 pe-4 py-2 bg-surface border border-border rounded-xl text-xs font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10 transition-all" />
                                     </div>
                                 </div>
                                 <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -354,14 +354,14 @@ export const Attendance = () => {
                                 exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
                                 <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
                                 <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                    className="w-10 h-10 rounded-full bg-primary text-white shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                    className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all flex items-center justify-center">
                                     <action.icon size={18} />
                                 </button>
                             </motion.div>
                         ))}
                     </AnimatePresence>
                     <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                        className={cn("w-12 h-12 rounded-full shadow-xl text-white flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                        className={cn("w-12 h-12 rounded-full shadow-xl flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all", fabOpen ? "bg-error text-on-error rotate-45" : "bg-primary text-on-primary")}>
                         <Plus size={24} />
                     </motion.button>
                 </div>

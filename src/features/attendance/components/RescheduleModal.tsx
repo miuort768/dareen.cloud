@@ -59,14 +59,14 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
                                     type="date"
                                     value={date}
                                     onChange={(e) => setDate(e.target.value)}
-                                    className="w-full text-xs font-bold p-3 bg-surface border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+                                    className="w-full text-xs font-bold p-3 bg-surface border border-border rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10 transition-all"
                                 />
                                 <input
                                     type="text"
                                     placeholder="الساعة (مثلا 4 عصراً)"
                                     value={time}
                                     onChange={(e) => setTime(e.target.value)}
-                                    className="w-full text-xs font-bold p-3 bg-surface border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+                                    className="w-full text-xs font-bold p-3 bg-surface border border-border rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10 transition-all"
                                 />
                             </div>
                         </div>
@@ -77,7 +77,7 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
                                 value={reason}
                                 onChange={(e) => setReason(e.target.value)}
                                 placeholder="مثلاً: الطالب لديه امتحان في المدرسة..."
-                                    className="w-full text-xs font-bold p-3 bg-surface border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all min-h-[100px] resize-none"
+                                    className="w-full text-xs font-bold p-3 bg-surface border border-border rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10 transition-all min-h-[100px] resize-none"
                             />
                         </div>
 
@@ -93,14 +93,14 @@ export const RescheduleModal = ({ isOpen, onClose, onConfirm, studentName, subje
                 <div className="p-5 pt-0 flex gap-3">
                     <button
                         onClick={onClose}
-                        className="flex-1 py-3 bg-surface text-main border border-border font-bold text-xs rounded-xl hover:bg-background transition-all active:scale-95"
+                        className="flex-1 py-3 bg-surface text-main border border-border font-bold text-xs rounded-xl hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-all active:scale-95"
                     >
                         إلغاء
                     </button>
                     <button
                         onClick={() => onConfirm({ date, time, reason })}
                         disabled={!time || !reason}
-                        className="flex-[2] py-3 bg-primary hover:bg-primary-hover text-on-primary font-bold text-xs rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        className="flex-[2] py-3 bg-primary hover:bg-primary-hover text-on-primary font-bold text-xs rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     >
                         <Save size={16} />
                         إرسال الطلب الآن

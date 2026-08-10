@@ -57,11 +57,11 @@ export const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory
 
             <div className="flex gap-1.5">
                 <motion.button whileTap={{ scale: 0.93 }} onClick={onAttend}
-                    className="flex-1 py-2.5 bg-success text-on-success text-micro font-bold rounded-xl flex items-center justify-center gap-1">
+                    className="flex-1 py-2.5 bg-success text-on-success text-micro font-bold rounded-xl flex items-center justify-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
                     <CheckCircle2 size={12} strokeWidth={1.5} /> حضور
                 </motion.button>
                 <motion.button whileTap={{ scale: 0.93 }} onClick={onHistory}
-                    className="flex-1 py-2.5 bg-primary text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1">
+                    className="flex-1 py-2.5 bg-primary text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
                     <History size={12} strokeWidth={1.5} /> السجل
                 </motion.button>
             </div>

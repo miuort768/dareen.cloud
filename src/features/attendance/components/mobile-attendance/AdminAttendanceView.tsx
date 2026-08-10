@@ -100,12 +100,12 @@ export const AdminAttendanceView = ({ uniqueTeachers, filterTeacher, students, s
                                         <div className="flex gap-1.5">
                                             <motion.button whileTap={{ scale: 0.93 }}
                                                 onClick={() => { triggerHaptic('light'); onLog(student, enrollment); }}
-                                                className="flex-1 py-2 bg-success text-on-success text-micro font-bold rounded-xl flex items-center justify-center gap-1">
+                                                className="flex-1 py-2 bg-success text-on-success text-micro font-bold rounded-xl flex items-center justify-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
                                                 <CheckCircle2 size={11} /> حضور
                                             </motion.button>
                                             <motion.button whileTap={{ scale: 0.93 }}
                                                 onClick={() => onViewHistory(student.id, student.name, student.grade, enrollment.subject)}
-                                                className="flex-1 py-2 bg-primary text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1">
+                                                className="flex-1 py-2 bg-primary text-on-primary text-micro font-bold rounded-xl flex items-center justify-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
                                                 <History size={11} /> السجل
                                             </motion.button>
                                         </div>

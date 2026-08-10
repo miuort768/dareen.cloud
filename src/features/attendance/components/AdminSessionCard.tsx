@@ -81,7 +81,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     onClick={() => onUpdateStatus(session.id, 'completed')}
                     disabled={session.status === 'completed'}
                     className={cn(
-                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
+                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus",
                         session.status === 'completed'
                             ? 'bg-success text-on-success'
                             : 'bg-primary hover:bg-primary-hover text-on-primary'
@@ -93,7 +93,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                     onClick={() => onUpdateStatus(session.id, 'cancelled')}
                     disabled={session.status === 'cancelled'}
                     className={cn(
-                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 border active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed",
+                        "flex-1 py-2.5 font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 border active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus",
                         session.status === 'cancelled'
                             ? 'bg-error border-error text-on-error'
                             : 'bg-card border-border text-muted hover:text-error'
@@ -106,7 +106,7 @@ export const AdminSessionCard: React.FC<AdminSessionCardProps> = ({ session, sta
                 <div className="px-5 pb-5 pt-0">
                     <button
                         onClick={() => onViewHistory(session.studentId, session.studentName, studentGrade, session.subject)}
-                        className="w-full py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 active:scale-95"
+                        className="w-full py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-bold text-micro rounded-xl transition-all flex items-center justify-center gap-1.5 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     >
                         <History size={14} /> سجل الطالب
                     </button>

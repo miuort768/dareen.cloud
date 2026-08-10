@@ -52,7 +52,7 @@ export const AttendanceFilters = ({
                                     const isActive = periodFilter === key;
                                     return (
                                         <button key={key} onClick={() => onPeriodChange(key)}
-                                            className={`relative px-2.5 py-1 text-[9px] font-bold rounded-md transition-all whitespace-nowrap ${isActive ? 'text-on-primary' : 'text-muted hover:text-main'}`}>
+                                            className={`relative px-2.5 py-1 text-[9px] font-bold rounded-md transition-all whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${isActive ? 'text-on-primary' : 'text-muted hover:text-main'}`}>
                                             {isActive && (
                                                 <motion.div layoutId="period-pill-att"
                                                     className="absolute inset-0 bg-primary rounded-md"
@@ -67,7 +67,7 @@ export const AttendanceFilters = ({
                         )}
                         {hasActiveFilters && (
                             <button onClick={() => { onSearchChange(''); onStatusChange('all'); onTeacherChange('all'); }}
-                                className="flex items-center gap-1 px-2 py-1 text-[9px] font-bold rounded-lg transition-all bg-error-soft text-error">
+                                className="flex items-center gap-1 px-2 py-1 text-[9px] font-bold rounded-lg transition-all bg-error-soft text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
                                 <X size={10} /> مسح
                             </button>
                         )}
@@ -79,10 +79,10 @@ export const AttendanceFilters = ({
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="flex flex-wrap items-center gap-2 mb-3 pb-3 border-b border-border">
                         <span className="text-[9px] font-bold text-muted">من</span>
                         <input aria-label="تاريخ البداية" type="date" value={customStartDate || ''} onChange={e => onCustomStartChange?.(e.target.value)}
-                            className="px-2 py-1.5 bg-surface border border-border rounded-lg text-[9px] font-bold outline-none focus:border-primary transition-all" />
+                            className="px-2 py-1.5 bg-surface border border-border rounded-lg text-[9px] font-bold outline-none focus-visible:border-primary transition-all" />
                         <span className="text-[9px] font-bold text-muted">إلى</span>
                         <input aria-label="تاريخ النهاية" type="date" value={customEndDate || ''} onChange={e => onCustomEndChange?.(e.target.value)}
-                            className="px-2 py-1.5 bg-surface border border-border rounded-lg text-[9px] font-bold outline-none focus:border-primary transition-all" />
+                            className="px-2 py-1.5 bg-surface border border-border rounded-lg text-[9px] font-bold outline-none focus-visible:border-primary transition-all" />
                     </motion.div>
                 )}
 
@@ -93,7 +93,7 @@ export const AttendanceFilters = ({
                         <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
                         <input aria-label="بحث بالاسم أو المادة" type="text" placeholder="اسم الطالب، المادة..."
                             value={searchTerm} onChange={(e) => onSearchChange(e.target.value)}
-                            className="w-full ps-8 pe-3 py-2 bg-surface border border-border rounded-lg text-[10px] font-medium focus:outline-none focus:border-primary transition-all" />
+                            className="w-full ps-8 pe-3 py-2 bg-surface border border-border rounded-lg text-[10px] font-medium focus-visible:outline-none focus-visible:border-primary transition-all" />
                     </div>
 
                     {/* Status + Teacher in one row */}
@@ -101,7 +101,7 @@ export const AttendanceFilters = ({
                         <div className="relative">
                             <Filter size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                             <select value={filterStatus} onChange={(e) => onStatusChange(e.target.value)} aria-label="تصفية حسب الحالة"
-                                className="ps-8 pe-3 py-2 bg-surface border border-border rounded-lg text-[10px] font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer">
+                                className="ps-8 pe-3 py-2 bg-surface border border-border rounded-lg text-[10px] font-medium focus-visible:outline-none focus-visible:border-primary transition-all appearance-none cursor-pointer">
                                 <option value="all">جميع الحالات</option>
                                 <option value="scheduled">مجدولة</option>
                                 <option value="completed">حضور</option>
@@ -111,7 +111,7 @@ export const AttendanceFilters = ({
                         <div className="relative">
                             <GraduationCap size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                             <select value={filterTeacher} onChange={(e) => onTeacherChange(e.target.value)} aria-label="تصفية حسب المعلمة"
-                                className="ps-8 pe-3 py-2 bg-surface border border-border rounded-lg text-[10px] font-medium focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer">
+                                className="ps-8 pe-3 py-2 bg-surface border border-border rounded-lg text-[10px] font-medium focus-visible:outline-none focus-visible:border-primary transition-all appearance-none cursor-pointer">
                                 <option value="all">كافة المعلمات</option>
                                 {uniqueTeachers.map(t => <option key={t} value={t}>{t}</option>)}
                             </select>

@@ -229,14 +229,14 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                         value={notes}
                         onChange={(e) => { setNotes(e.target.value); triggerSave(e.target.value); }}
                         placeholder="وثقي ملاحظات الحصة القادمة..."
-                        className="w-full bg-transparent border-none focus:ring-0 text-micro font-bold text-main placeholder:text-warning resize-none min-h-[60px] p-0"
+                        className="w-full bg-transparent border-none focus-visible:ring-0 text-micro font-bold text-main placeholder:text-warning resize-none min-h-[60px] p-0"
                     />
                 </div>
 
                 {/* Live Stream Quick Start */}
                 <button 
                     onClick={startLiveStream}
-                    className="w-full bg-error hover:bg-error hover:text-on-error text-on-error py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-micro uppercase tracking-widest shadow-sm active:scale-95 group transition-all"
+                    className="w-full bg-error hover:bg-error-hover text-on-error py-3 rounded-xl flex items-center justify-center gap-2 font-bold text-micro uppercase tracking-widest shadow-sm active:scale-95 group transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                     <Radio size={14} className="animate-pulse" />
                     <span>بدء بث مباشر مع {student.name.split(' ')[0]}</span>
@@ -256,17 +256,17 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                             type="date" aria-label="التاريخ"
                             value={logDate} 
                             onChange={(e) => onDateChange(e.target.value)} 
-                            className="w-full px-2 py-2 bg-card border border-border text-micro font-bold rounded-xl outline-none focus:border-primary transition-all" 
+                            className="w-full px-2 py-2 bg-card border border-border text-micro font-bold rounded-xl outline-none focus-visible:border-primary transition-all" 
                         />
                         <button 
                             onClick={() => onViewHistory(student.id, student.name, student.grade, en.subject, student.curriculum)}
-                            className="w-full bg-error text-on-error px-1 py-2 font-bold text-micro rounded-xl hover:bg-error transition-all shadow-sm active:scale-95"
+                            className="w-full bg-error text-on-error px-1 py-2 font-bold text-micro rounded-xl hover:bg-error-hover transition-all shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                         >
                             السجل
                         </button>
                         <button 
                             onClick={() => onLogAttendance(student, en)} 
-                            className="w-full bg-success text-on-success px-2 py-2 font-bold text-micro rounded-xl hover:bg-success transition-all shadow-sm active:scale-95"
+                            className="w-full bg-success text-on-success px-2 py-2 font-bold text-micro rounded-xl hover:bg-success-hover transition-all shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                         >
                             تسجيل
                         </button>

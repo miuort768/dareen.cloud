@@ -130,7 +130,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                             </div>
                         </div>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/15 transition-colors rounded-xl" aria-label="إغلاق">
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors rounded-xl" aria-label="إغلاق">
                         <X size={20} />
                     </button>
                 </div>
@@ -160,13 +160,13 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                 type="date" aria-label="تاريخ الجلسة"
                                                 value={editingSession.date}
                                                 onChange={e => setEditingSession({ ...editingSession, date: e.target.value })}
-                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-surface focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10 transition-all"
                                             />
                                             <select
                                                 value={editingSession.status}
                                                 onChange={e => setEditingSession({ ...editingSession, status: e.target.value as 'completed' | 'cancelled' })}
                                                 aria-label="حالة الحضور"
-                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-surface focus:outline-none focus:ring-2 focus:ring-primary/10 transition-all"
+                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10 transition-all"
                                             >
                                                 <option value="completed">حضور</option>
                                                 <option value="cancelled">غياب</option>
@@ -174,15 +174,15 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                             <div className="flex gap-2 ms-auto">
                                                     <button
                                                         onClick={handleUpdate}
-                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-success-soft text-success"
-                                                        title="حفظ"
+                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-success-soft text-success focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                                        aria-label="حفظ"
                                                     >
                                                         <Save size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => setEditingSession(null)}
-                                                        className="p-2 rounded-xl transition-all bg-surface text-muted"
-                                                        title="إلغاء"
+                                                        className="p-2 rounded-xl transition-all bg-surface text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                                        aria-label="إلغاء"
                                                     >
                                                     <XSquare size={16} />
                                                 </button>
@@ -229,15 +229,15 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                 <div className="flex gap-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <button
                                                         onClick={() => setEditingSession(session)}
-                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-primary-soft text-primary"
-                                                        title="تعديل"
+                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-primary-soft text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                                        aria-label="تعديل"
                                                     >
                                                         <Edit2 size={14} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(session.id)}
-                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-error-soft text-error"
-                                                        title="حذف"
+                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-error-soft text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                                        aria-label="حذف"
                                                         disabled={deletingId === session.id}
                                                     >
                                                         {deletingId === session.id ? <div className="w-4 h-4 border-2 border-error border-t-transparent rounded-full animate-spin"></div> : <Trash2 size={14} />}
@@ -262,7 +262,7 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                 <div className="p-5 border-t border-border">
                     <button
                         onClick={onClose}
-                        className="w-full bg-primary hover:bg-primary-hover text-on-primary font-bold py-3 text-sm rounded-xl transition-all active:scale-95"
+                        className="w-full bg-primary hover:bg-primary-hover text-on-primary font-bold py-3 text-sm rounded-xl transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     >
                         إغلاق
                     </button>
