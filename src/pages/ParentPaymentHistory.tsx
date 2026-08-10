@@ -47,7 +47,7 @@ const STATUS_PILLS: { key: FilterStatus; label: string }[] = [
 ];
 
 const HeroSkeleton = () => (
-    <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background dark:from-[#0a2e1a] dark:via-[#0f3520] dark:to-[#131836] border-b border-border/60 dark:border-white/[0.06]">
+    <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background dark:from-[#0a0a0c] dark:via-[#1a1a1e] dark:to-[#0a0a0c] border-b border-border/60 dark:border-white/[0.06]">
         <div className="max-w-page mx-auto px-2.5 sm:px-4 pt-4 pb-8">
             <div className="flex items-center gap-2.5 mb-6">
                 <Skeleton className="w-8 h-8 rounded-xl" />
@@ -187,13 +187,13 @@ export const ParentPaymentHistory = () => {
     }
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface dark:bg-[#0d1117]" dir="rtl">
+        <div className="min-h-full pb-24 overflow-x-hidden relative font-sans bg-surface dark:bg-[#0a0a0c]" dir="rtl">
             <div className="hidden md:block">
                 <ParentDashboardHeader logout={logout} />
             </div>
 
             {/* Hero */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background dark:from-[#0a2e1a] dark:via-[#0f3520] dark:to-[#131836] border-b border-border/60 dark:border-white/[0.06]">
+            <div className="relative overflow-hidden bg-gradient-to-br from-success/10 via-success/[6%] to-background dark:from-[#0a0a0c] dark:via-[#1a1a1e] dark:to-[#0a0a0c] border-b border-border/60 dark:border-white/[0.06]">
                 <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
                     {PARTICLES.map(p => (
                         <motion.div
@@ -282,7 +282,7 @@ export const ParentPaymentHistory = () => {
                         { title: 'متأخرة', value: stats.overdue, count: stats.overdueCount, icon: AlertCircle, accent: 'error' as const },
                     ]).map(kpi => {
                         const gradients = {
-                            success: 'from-success/20 to-success/5 dark:from-[#0a2e1a] dark:to-transparent',
+                            success: 'from-success/20 to-success/5 dark:from-[#0a0a0c] dark:to-transparent',
                             warning: 'from-warning/20 to-warning/5 dark:from-[#2e2a0a] dark:to-transparent',
                             error: 'from-error/20 to-error/5 dark:from-[#2e0a0a] dark:to-transparent',
                         };
@@ -335,7 +335,7 @@ export const ParentPaymentHistory = () => {
                                     onClick={() => setFilterStatus(pill.key)}
                                     className={`px-3 py-1.5 rounded-xl text-[10px] font-bold transition-all ${
                                         active
-                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary shadow-sm'
+                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary shadow-sm'
                                             : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
                                     }`}
                                 >
@@ -353,7 +353,7 @@ export const ParentPaymentHistory = () => {
                                     onClick={() => setFilterChild('all')}
                                     className={`px-2.5 py-1.5 rounded-xl text-[10px] font-bold whitespace-nowrap transition-all ${
                                         filterChild === 'all'
-                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary shadow-sm'
+                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary shadow-sm'
                                             : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
                                     }`}
                                 >
@@ -365,7 +365,7 @@ export const ParentPaymentHistory = () => {
                                         onClick={() => setFilterChild(c.id)}
                                         className={`px-2.5 py-1.5 rounded-xl text-[10px] font-bold whitespace-nowrap transition-all ${
                                             filterChild === c.id
-                                                ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary shadow-sm'
+                                                ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary shadow-sm'
                                                 : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
                                         }`}
                                     >

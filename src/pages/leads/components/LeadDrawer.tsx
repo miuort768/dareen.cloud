@@ -153,7 +153,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                     <div className="flex items-center gap-2 flex-wrap">
                         {isEditing ? (
                             <>
-                                <button onClick={handleSave} className="flex-1 h-9 flex items-center justify-center gap-1.5 text-[11px] font-bold text-on-primary bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] rounded-xl transition-all active:scale-[0.98]">
+                                <button onClick={handleSave} className="flex-1 h-9 flex items-center justify-center gap-1.5 text-[11px] font-bold text-on-primary bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] rounded-xl transition-all active:scale-[0.98]">
                                     <Save size={12} /> حفظ
                                 </button>
                                 <button onClick={() => setIsEditing(false)} className="flex-1 h-9 flex items-center justify-center gap-1.5 text-[11px] font-bold text-muted dark:text-white/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">إلغاء</button>

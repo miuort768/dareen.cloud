@@ -18,14 +18,14 @@ interface TrialSessionCardProps {
 }
 
 const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string; darkBg: string; darkText: string }> = {
-    pending: { label: 'بانتظار', dot: 'bg-[#f59e0b]', bg: 'bg-[#f59e0b]/15', text: 'text-[#f59e0b]', darkBg: 'dark:bg-[#f59e0b]/20', darkText: 'dark:text-[#f59e0b]' },
-    completed: { label: 'تمت بنجاح', dot: 'bg-[#10b981]', bg: 'bg-[#10b981]/15', text: 'text-[#10b981]', darkBg: 'dark:bg-[#10b981]/20', darkText: 'dark:text-[#10b981]' },
-    cancelled: { label: 'ملغية', dot: 'bg-[#ef4444]', bg: 'bg-[#ef4444]/15', text: 'text-[#ef4444]', darkBg: 'dark:bg-[#ef4444]/20', darkText: 'dark:text-[#ef4444]' },
-    converted: { label: 'محولة', dot: 'bg-[#6366f1]', bg: 'bg-[#6366f1]/15', text: 'text-[#6366f1]', darkBg: 'dark:bg-[#D4AF37]/20', darkText: 'dark:text-[#D4AF37]' },
+    pending: { label: 'بانتظار', dot: 'bg-warning', bg: 'bg-warning/15', text: 'text-warning', darkBg: 'dark:bg-warning/20', darkText: 'dark:text-warning' },
+    completed: { label: 'تمت بنجاح', dot: 'bg-success', bg: 'bg-success/15', text: 'text-success', darkBg: 'dark:bg-success/20', darkText: 'dark:text-success' },
+    cancelled: { label: 'ملغية', dot: 'bg-error', bg: 'bg-error/15', text: 'text-error', darkBg: 'dark:bg-error/20', darkText: 'dark:text-error' },
+    converted: { label: 'محولة', dot: 'bg-primary', bg: 'bg-primary/15', text: 'text-primary', darkBg: 'dark:bg-[#D4AF37]/20', darkText: 'dark:text-[#D4AF37]' },
 };
 
 const avatarGradients = [
-    'from-[#6366f1] to-[#8b5cf6]',
+    'from-primary to-primary-deep',
     'from-[#10b981] to-[#059669]',
     'from-[#f59e0b] to-[#d97706]',
     'from-[#ef4444] to-[#dc2626]',
@@ -98,8 +98,8 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
                     <div className="text-right">
                         <p className="text-[10px] text-muted dark:text-white/30 mb-1">المادة التعليمية</p>
                         <div className="flex items-center gap-1.5 justify-start">
-                            <div className="w-7 h-7 rounded-lg bg-[#6366f1]/10 dark:bg-[#D4AF37]/15 flex items-center justify-center shrink-0">
-                                <BookOpen size={13} className="text-[#6366f1]" />
+                            <div className="w-7 h-7 rounded-lg bg-primary/10 dark:bg-[#D4AF37]/15 flex items-center justify-center shrink-0">
+                                <BookOpen size={13} className="text-primary" />
                             </div>
                             <span className="text-[12px] font-bold text-main dark:text-white">{t.subject || '—'}</span>
                         </div>
@@ -107,8 +107,8 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
                     <div className="text-right">
                         <p className="text-[10px] text-muted dark:text-white/30 mb-1">التعلم المسؤول</p>
                         <div className="flex items-center gap-1.5 justify-start">
-                            <div className="w-7 h-7 rounded-lg bg-[#10b981]/10 dark:bg-[#10b981]/15 flex items-center justify-center shrink-0">
-                                <GraduationCap size={13} className="text-[#10b981]" />
+                            <div className="w-7 h-7 rounded-lg bg-success/10 dark:bg-success/15 flex items-center justify-center shrink-0">
+                                <GraduationCap size={13} className="text-success" />
                             </div>
                             <span className="text-[12px] font-bold text-main dark:text-white truncate">{t.teacherName || '—'}</span>
                         </div>
@@ -116,8 +116,8 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
                     <div className="text-right">
                         <p className="text-[10px] text-muted dark:text-white/30 mb-1">رقم التواصل</p>
                         <div className="flex items-center gap-1.5 justify-start">
-                            <div className="w-7 h-7 rounded-lg bg-[#f59e0b]/10 dark:bg-[#f59e0b]/15 flex items-center justify-center shrink-0">
-                                <Phone size={13} className="text-[#f59e0b]" />
+                            <div className="w-7 h-7 rounded-lg bg-warning/10 dark:bg-warning/15 flex items-center justify-center shrink-0">
+                                <Phone size={13} className="text-warning" />
                             </div>
                             <span className="text-[12px] font-bold text-main dark:text-white font-mono" dir="ltr">{formatPhone(t.parentPhone)}</span>
                         </div>
@@ -129,22 +129,22 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
                     <div
                         className={cn(
                             "rounded-xl text-[11px] transition-all cursor-pointer mb-2",
-                            showNotes ? "bg-[#f59e0b]/5 dark:bg-[#f59e0b]/8 p-3 border border-[#f59e0b]/15" : ""
+                            showNotes ? "bg-warning/5 dark:bg-warning/8 p-3 border border-warning/15" : ""
                         )}
                         onClick={(e) => { e.stopPropagation(); setShowNotes(!showNotes); }}
                     >
                         {showNotes ? (
                             <div className="flex items-start gap-2">
-                                <MessageCircle size={13} className="text-[#f59e0b] shrink-0 mt-0.5" />
+                                <MessageCircle size={13} className="text-warning shrink-0 mt-0.5" />
                                 <div className="min-w-0 flex-1 text-right">
                                     <p className="text-muted dark:text-white/40 leading-relaxed">{t.notes}</p>
-                                    <button onClick={(e) => { e.stopPropagation(); setShowNotes(false); }} className="text-[10px] font-bold text-[#f59e0b] mt-1 inline-flex items-center gap-1">
+                                    <button onClick={(e) => { e.stopPropagation(); setShowNotes(false); }} className="text-[10px] font-bold text-warning mt-1 inline-flex items-center gap-1">
                                         <ChevronUp size={10} />أقل
                                     </button>
                                 </div>
                             </div>
                         ) : (
-                            <div className="flex items-center gap-1.5 text-[#f59e0b] bg-[#f59e0b]/5 dark:bg-[#f59e0b]/8 rounded-lg px-3 py-2 border border-[#f59e0b]/10">
+                            <div className="flex items-center gap-1.5 text-warning bg-warning/5 dark:bg-warning/8 rounded-lg px-3 py-2 border border-warning/10">
                                 <MessageCircle size={12} />
                                 <span className="text-muted dark:text-white/40 line-clamp-1 flex-1 text-right">{t.notes}</span>
                                 <ChevronDown size={10} className="shrink-0" />
@@ -163,7 +163,7 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
                         </button>
                     )}
                     {onWhatsApp && (
-                        <button onClick={(e) => { e.stopPropagation(); onWhatsApp(t.parentPhone); }} className="flex items-center justify-center gap-1.5 px-3.5 py-2 text-[11px] font-bold rounded-xl bg-[#10b981]/10 text-[#10b981] hover:bg-[#10b981]/20 transition-all active:scale-95" aria-label="واتساب">
+                        <button onClick={(e) => { e.stopPropagation(); onWhatsApp(t.parentPhone); }} className="flex items-center justify-center gap-1.5 px-3.5 py-2 text-[11px] font-bold rounded-xl bg-success/10 text-success hover:bg-success/20 transition-all active:scale-95" aria-label="واتساب">
                             <MessageSquare size={13} /> واتساب
                         </button>
                     )}
@@ -180,8 +180,8 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
                             className={cn(
                                 "w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all active:scale-90 shadow-sm",
                                 isPaid
-                                    ? "border-[#10b981]/30 text-[#10b981]/40 bg-[#10b981]/5 cursor-default"
-                                    : "border-[#10b981] text-[#10b981] bg-[#10b981]/10 hover:bg-[#10b981]/20"
+                                    ? "border-success/30 text-success/40 bg-success/5 cursor-default"
+                                    : "border-success text-success bg-success/10 hover:bg-success/20"
                             )}
                             aria-label="مدفوعة"
                         >
@@ -190,7 +190,7 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
                     )}
                     <button
                         onClick={(e) => { e.stopPropagation(); onDelete(t.id); }}
-                        className="w-9 h-9 rounded-full border-2 border-[#ef4444] text-[#ef4444] bg-[#ef4444]/10 flex items-center justify-center hover:bg-[#ef4444]/20 transition-all active:scale-90 shadow-sm"
+                        className="w-9 h-9 rounded-full border-2 border-error text-error bg-error/10 flex items-center justify-center hover:bg-error/20 transition-all active:scale-90 shadow-sm"
                         aria-label="حذف"
                     >
                         <Trash2 size={15} />

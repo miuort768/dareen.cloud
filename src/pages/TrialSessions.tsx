@@ -240,7 +240,7 @@ export const TrialSessions = () => {
     >
       <div className="px-2.5 sm:px-4 space-y-4 max-w-page mx-auto relative z-10">
         {/* Hero Section */}
-        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6366f1] via-[#7c3aed] to-[#a855f7] dark:from-[#1a1f4e] dark:via-[#1e2456] dark:to-[#131836] mt-4">
+        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6366f1] via-[#7c3aed] to-[#a855f7] dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] mt-4">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
           <div className="absolute inset-0 opacity-[0.06]">
@@ -281,41 +281,41 @@ export const TrialSessions = () => {
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-bold text-gray-500">معدل التحويل</span>
-                  <div className="w-8 h-8 rounded-lg bg-[#6366f1]/10 flex items-center justify-center">
-                    <TrendingUp size={14} className="text-[#6366f1]" />
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <TrendingUp size={14} className="text-primary" />
                   </div>
                 </div>
-                <div className="text-2xl font-bold font-outfit text-[#6366f1]">{conversionRate}%</div>
+                <div className="text-2xl font-bold font-outfit text-primary">{conversionRate}%</div>
                 <div className="text-[10px] text-gray-400 mt-1">{stats?.converted || 0} تحويل</div>
               </div>
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-bold text-gray-500">قيد الانتظار</span>
-                  <div className="w-8 h-8 rounded-lg bg-[#f59e0b]/10 flex items-center justify-center">
-                    <Clock size={14} className="text-[#f59e0b]" />
+                  <div className="w-8 h-8 rounded-lg bg-warning/10 flex items-center justify-center">
+                    <Clock size={14} className="text-warning" />
                   </div>
                 </div>
-                <div className="text-2xl font-bold font-outfit text-[#f59e0b]"><Counter value={stats?.pending || 0} /></div>
+                <div className="text-2xl font-bold font-outfit text-warning"><Counter value={stats?.pending || 0} /></div>
                 <div className="text-[10px] text-gray-400 mt-1">بانتظار الموعد</div>
               </div>
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-bold text-gray-500">تمت بنجاح</span>
-                  <div className="w-8 h-8 rounded-lg bg-[#10b981]/10 flex items-center justify-center">
-                    <CheckCircle2 size={14} className="text-[#10b981]" />
+                  <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
+                    <CheckCircle2 size={14} className="text-success" />
                   </div>
                 </div>
-                <div className="text-2xl font-bold font-outfit text-[#10b981]"><Counter value={stats?.completed || 0} /></div>
+                <div className="text-2xl font-bold font-outfit text-success"><Counter value={stats?.completed || 0} /></div>
                 <div className="text-[10px] text-gray-400 mt-1">حصة ناجحة</div>
               </div>
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] font-bold text-gray-500">إجمالي الحصص</span>
-                  <div className="w-8 h-8 rounded-lg bg-[#8b5cf6]/10 flex items-center justify-center">
-                    <BookOpen size={14} className="text-[#8b5cf6]" />
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <BookOpen size={14} className="text-primary" />
                   </div>
                 </div>
-                <div className="text-2xl font-bold font-outfit text-[#8b5cf6]"><Counter value={stats?.total || 0} /></div>
+                <div className="text-2xl font-bold font-outfit text-primary"><Counter value={stats?.total || 0} /></div>
                 <div className="text-[10px] text-gray-400 mt-1">جميع الحصص</div>
               </div>
             </div>
@@ -368,8 +368,8 @@ export const TrialSessions = () => {
                   className={cn(
                     'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                     !filterStatus
-                      ? 'bg-gradient-to-l from-[#6366f1] to-[#8b5cf6] text-white border-[#6366f1]/30 shadow-md shadow-[#6366f1]/20'
-                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-[#6366f1]/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                      ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                   )}>
                   الكل
                   <span className={cn(
@@ -414,8 +414,8 @@ export const TrialSessions = () => {
                   className={cn(
                     'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                     !filterSubject
-                      ? 'bg-gradient-to-l from-[#6366f1] to-[#8b5cf6] text-white border-[#6366f1]/30 shadow-md shadow-[#6366f1]/20'
-                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-[#6366f1]/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                      ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                   )}>
                   كل المواد
                 </motion.button>
@@ -426,8 +426,8 @@ export const TrialSessions = () => {
                       className={cn(
                         'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                         isActive
-                          ? 'bg-gradient-to-l from-[#6366f1] to-[#8b5cf6] text-white border-[#6366f1]/30 shadow-md shadow-[#6366f1]/20'
-                          : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-[#6366f1]/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                          ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
+                          : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                       )}>
                       {subj}
                     </motion.button>
@@ -528,7 +528,7 @@ export const TrialSessions = () => {
                     className={cn(
                       'w-9 h-9 flex items-center justify-center rounded-xl text-[12px] font-bold transition-all',
                       page === currentPage
-                        ? 'bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] text-white shadow-md shadow-[#6366f1]/20'
+                        ? 'bg-gradient-to-br from-primary to-primary-deep text-white shadow-md shadow-primary/20'
                         : 'bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-white/40 hover:bg-hover dark:hover:bg-white/[0.08]'
                     )}
                   >
@@ -551,7 +551,7 @@ export const TrialSessions = () => {
         {/* FAB Button */}
         <motion.button
           onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }}
-          className="hidden md:flex fixed bottom-8 left-8 z-40 w-14 h-14 bg-gradient-to-br from-[#6366f1] to-[#8b5cf6] text-white rounded-xl shadow-xl shadow-[#6366f1]/30 items-center justify-center active:scale-95 transition-all duration-200"
+          className="hidden md:flex fixed bottom-8 left-8 z-40 w-14 h-14 bg-gradient-to-br from-primary to-primary-deep text-white rounded-xl shadow-xl shadow-primary/30 items-center justify-center active:scale-95 transition-all duration-200"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة حصة جديدة"

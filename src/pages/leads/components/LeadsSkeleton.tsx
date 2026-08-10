@@ -4,7 +4,7 @@ export const LeadsSkeleton = () => (
     <div className="bg-background min-h-screen pb-24" dir="rtl">
         <div className="relative z-10 mx-auto px-4 max-w-page">
             {/* Hero skeleton */}
-            <div className="rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-[#1a1f4e] dark:via-[#1e2456] dark:to-[#131836] mt-4 mb-6 px-5 py-6 relative overflow-hidden border border-primary/10 dark:border-white/[0.04]">
+            <div className="rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] mt-4 mb-6 px-5 py-6 relative overflow-hidden border border-primary/10 dark:border-white/[0.04]">
                 <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-[#D4AF37]/10 rounded-full blur-3xl" />
                 <div className="relative z-10 flex items-center justify-between mb-5">
                     <div>

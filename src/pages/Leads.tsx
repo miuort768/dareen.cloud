@@ -218,11 +218,11 @@ export const Leads = () => {
         >
             <div className="relative z-10 mx-auto px-4 md:px-6 max-w-page">
                 {/* ===== HERO SECTION ===== */}
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-[#1a1f4e] dark:via-[#1e2456] dark:to-[#131836] mt-4 mb-6 border border-primary/10 dark:border-white/[0.04]">
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] mt-4 mb-6 border border-primary/10 dark:border-white/[0.04]">
                     <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-[#D4AF37]/10 rounded-full blur-3xl" />
-                    <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/5 dark:bg-[#8b5cf6]/8 rounded-full blur-3xl" />
+                    <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/5 dark:bg-[#D4AF37]/8 rounded-full blur-3xl" />
                     <div className="absolute top-4 right-8 w-2 h-2 bg-white/20 dark:bg-[#D4AF37]/40 rounded-full" />
-                    <div className="absolute top-12 right-24 w-1.5 h-1.5 bg-white/15 dark:bg-[#8b5cf6]/30 rounded-full" />
+                    <div className="absolute top-12 right-24 w-1.5 h-1.5 bg-white/15 dark:bg-[#D4AF37]/30 rounded-full" />
 
                     <div className="relative z-10 px-5 md:px-8 py-5 md:py-8">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
@@ -305,7 +305,7 @@ export const Leads = () => {
                                 className={cn(
                                     'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                                     filterStatus === 'all'
-                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary border-primary/30 dark:border-[#6366f1]/30 shadow-md shadow-primary/15 dark:shadow-[#6366f1]/20'
+                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary border-primary/30 dark:border-primary/30 shadow-md shadow-primary/15 dark:shadow-primary/20'
                                         : 'bg-card dark:bg-white/[0.06] text-muted dark:text-white/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                                 )}>
                                 الكل
@@ -363,7 +363,7 @@ export const Leads = () => {
                 {/* FAB */}
                 <motion.button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-[#6366f1] dark:to-[#8b5cf6] text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-[#6366f1]/30 flex items-center justify-center active:scale-95 transition-all duration-200"
+                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-primary/30 flex items-center justify-center active:scale-95 transition-all duration-200"
                     whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} aria-label="إضافة عميل">
                     <Plus size={22} />
                 </motion.button>

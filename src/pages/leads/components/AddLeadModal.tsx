@@ -36,7 +36,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
 
                         {/* Header */}
                         <div className="shrink-0 px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
-                            <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-[#6366f1]/10 dark:to-[#8b5cf6]/5" />
+                            <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-[#D4AF37]/10 dark:to-[#D4AF37]/5" />
                             <div className="relative z-10 flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-[#D4AF37]/15">
                                     <UserPlus size={18} className="text-primary dark:text-[#D4AF37]" />

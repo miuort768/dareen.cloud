@@ -4,7 +4,7 @@ import { cn } from '../../../lib/utils';
 import type { LeadStatus, LeadPriority } from '../../../features/crm/types';
 
 const avatarGradients = [
-    'from-[#6366f1] to-[#8b5cf6]',
+    'from-primary to-primary-deep',
     'from-[#10b981] to-[#06b6d4]',
     'from-[#f59e0b] to-[#ef4444]',
     'from-[#06b6d4] to-[#6366f1]',
@@ -146,7 +146,7 @@ export const PrimaryBtn = ({ onClick, children, className = '', disabled, type =
     onClick?: () => void; children: React.ReactNode; className?: string; disabled?: boolean; type?: 'button' | 'submit';
 }) => (
     <button type={type} disabled={disabled} onClick={onClick}
-        className={cn('inline-flex items-center justify-center gap-2 bg-gradient-to-l from-[#6366f1] to-[#8b5cf6] text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all active:scale-95 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed', className)}>
+        className={cn('inline-flex items-center justify-center gap-2 bg-gradient-to-l from-primary to-primary-deep text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all active:scale-95 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed', className)}>
         {children}
     </button>
 );
