@@ -6,9 +6,10 @@ import { useIsAuthenticated } from '../../context/useApp';
 export const AboutCTA = () => {
     const isAuthenticated = useIsAuthenticated();
     return (
-    <section className="py-6 md:py-8 relative overflow-hidden bg-gradient-to-br from-primary-active via-primary to-primary-active dark:from-surface dark:via-card dark:to-surface transition-colors duration-500">
-        <div className="absolute top-0 start-0 w-[600px] h-[600px] rounded-full pointer-events-none dark:bg-primary/[0.05]" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 8%, transparent) 0%, transparent 70%)' }} />
-        <div className="absolute bottom-0 end-0 w-[500px] h-[500px] rounded-full pointer-events-none dark:bg-primary/[0.03]" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 6%, transparent) 0%, transparent 70%)' }} />
+    <section className="py-6 md:py-8 relative overflow-hidden bg-gradient-to-br from-primary-active via-primary to-primary-active dark:from-[#0a0a0c] dark:via-[#0d0d0f] dark:to-[#0a0a0c] transition-colors duration-500">
+        {/* Decorative gold glow */}
+        <div className="absolute top-0 start-0 w-[600px] h-[600px] rounded-full pointer-events-none dark:bg-[#D4AF37]/[0.03]" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 8%, transparent) 0%, transparent 70%)' }} />
+        <div className="absolute bottom-0 end-0 w-[500px] h-[500px] rounded-full pointer-events-none dark:bg-[#D4AF37]/[0.02]" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-warning) 6%, transparent) 0%, transparent 70%)' }} />
         <div className="absolute top-1/2 start-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--bg-primary) 4%, transparent) 0%, transparent 70%)' }} />
 
         <div className="container mx-auto px-4 relative z-10">
@@ -16,34 +17,35 @@ export const AboutCTA = () => {
                 <AnimateOnScroll animation="fadeUp">
                     <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
                         <div className="absolute -inset-[2px] opacity-50 group-hover:opacity-80 transition-opacity duration-1000 rounded-3xl pointer-events-none" style={{ background: 'linear-gradient(135deg, color-mix(in srgb, var(--bg-warning) 40%, transparent), color-mix(in srgb, var(--bg-warning) 10%, transparent), color-mix(in srgb, var(--bg-primary) 30%, transparent), color-mix(in srgb, var(--bg-warning) 40%, transparent))' }} />
-                        
-                        <div className="relative rounded-3xl p-8 md:p-14 overflow-hidden bg-gradient-to-br from-primary-active to-primary-hover dark:from-card dark:to-hover dark:border dark:border-primary/30">
-                            <div className="absolute inset-0 opacity-[0.04] dark:opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0L60 30L30 60L0 30Z\' fill=\'none\' stroke=\'%23f59e0b\' stroke-width=\'0.5\'/%3E%3C/svg%3E")', backgroundSize: '60px 60px' }} />
+
+                        <div className="relative rounded-3xl p-8 md:p-14 overflow-hidden bg-gradient-to-br from-primary-active to-primary-hover dark:from-[#0d0d0f] dark:to-[#1a1a1e] dark:border dark:border-[#D4AF37]/20">
+                            {/* Gold grid pattern */}
+                            <div className="absolute inset-0 opacity-[0.04] dark:opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0L60 30L30 60L0 30Z\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'0.5\'/%3E%3C/svg%3E")', backgroundSize: '60px 60px' }} />
 
                             <div className="relative z-20 flex flex-col lg:flex-row items-stretch gap-10 lg:gap-16">
                                 <div className="w-full lg:w-[58%] text-center lg:text-start flex flex-col justify-center">
-                                    <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 lg:mb-8 mx-auto lg:mx-0 dark:bg-primary/15 dark:border dark:border-primary/30" style={{ background: 'color-mix(in srgb, var(--bg-warning) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--bg-warning) 25%, transparent)' }}>
-                                        <Sparkles size={14} className="text-accent dark:text-primary" />
-                                        <span className="text-xs font-black text-accent dark:text-primary tracking-wider">انضم إلى عائلتنا</span>
+                                    <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full mb-6 lg:mb-8 mx-auto lg:mx-0 dark:bg-[#D4AF37]/10 dark:border dark:border-[#D4AF37]/25" style={{ background: 'color-mix(in srgb, var(--bg-warning) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--bg-warning) 25%, transparent)' }}>
+                                        <Sparkles size={14} className="text-accent dark:text-[#D4AF37]" />
+                                        <span className="text-xs font-black text-accent dark:text-[#D4AF37] tracking-wider">انضم إلى عائلتنا</span>
                                     </div>
 
-                                    <h2 className="text-xl md:text-3xl lg:text-4xl font-black mb-4 leading-tight text-on-primary dark:text-main">
+                                    <h2 className="text-xl md:text-3xl lg:text-4xl font-black mb-4 leading-tight text-on-primary dark:text-white">
                                         هل أنت مستعد لتكون <br />
-                                        <span className="text-transparent bg-clip-text dark:from-primary dark:to-warning" style={{ backgroundImage: 'linear-gradient(135deg, var(--bg-warning), var(--text-warning), var(--text-warning-dark))' }}>جزءاً من حكايتنا؟</span>
+                                        <span className="text-transparent bg-clip-text dark:from-[#D4AF37] dark:to-[#F8F1D2]" style={{ backgroundImage: 'linear-gradient(135deg, var(--bg-warning), var(--text-warning), var(--text-warning-dark))' }}>جزءاً من حكايتنا؟</span>
                                     </h2>
 
-                                    <p className="text-sm md:text-base max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed font-medium text-on-primary/70 dark:text-muted">
+                                    <p className="text-sm md:text-base max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed font-medium text-on-primary/70 dark:text-white/50">
                                         انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز الحقيقي مع دارين السابعة. مستقبلك المشرق يبدأ بقرار واحد تتخذه الآن.
                                     </p>
 
                                     <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                                         <Link to="/courses" onClick={() => window.scrollTo(0, 0)}
-                                            className="group relative px-10 py-4 font-black text-base rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-3 bg-gradient-to-br from-warning to-[var(--text-warning)] dark:from-primary dark:to-warning text-on-primary dark:text-on-primary shadow-xl dark:shadow-primary/20">
+                                            className="group relative px-10 py-4 font-black text-base rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-1 flex items-center justify-center gap-3 bg-gradient-to-br from-warning to-[var(--text-warning)] dark:from-[#D4AF37] dark:to-[#b8960e] text-on-primary dark:text-[#0a0a0c] shadow-xl dark:shadow-[#D4AF37]/20">
                                             <span className="relative z-10">ابدأ رحلتك الآن</span>
                                             <ArrowLeft size={18} className="relative z-10 group-hover:-translate-x-1.5 transition-transform" />
                                         </Link>
                                         <Link to={isAuthenticated ? "/dashboard" : "/login"} onClick={() => window.scrollTo(0, 0)}
-                                            className="px-10 py-4 font-black text-base rounded-xl transition-all duration-500 flex items-center justify-center group border border-white/10 dark:border-primary/30 backdrop-blur-sm hover:-translate-y-1 text-on-primary/85 dark:text-primary bg-white/5 dark:bg-primary/10">
+                                            className="px-10 py-4 font-black text-base rounded-xl transition-all duration-500 flex items-center justify-center group border border-white/10 dark:border-[#D4AF37]/25 backdrop-blur-sm hover:-translate-y-1 text-on-primary/85 dark:text-[#D4AF37] bg-white/5 dark:bg-white/5">
                                             <span>{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</span>
                                         </Link>
                                     </div>
@@ -51,25 +53,25 @@ export const AboutCTA = () => {
 
                                 <div className="w-full lg:w-[42%] relative flex items-center">
                                     <div className="grid grid-cols-2 gap-3 w-full">
-                                        <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-1.5 transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm bg-white/5 dark:bg-primary/10 border border-white/10 dark:border-primary/25">
-                                            <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 dark:bg-primary/[0.05]" style={{ background: 'radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--bg-warning) 6%, transparent), transparent 70%)' }} />
+                                        <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transform hover:-translate-y-1.5 transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm bg-white/5 dark:bg-white/5 border border-white/10 dark:border-[#D4AF37]/15">
+                                            <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 dark:bg-[#D4AF37]/[0.03]" style={{ background: 'radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--bg-warning) 6%, transparent), transparent 70%)' }} />
                                             <div className="relative z-10">
-                                                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500 dark:bg-primary/20" style={{ background: 'color-mix(in srgb, var(--bg-warning) 15%, transparent)' }}>
-                                                    <Users size={22} className="text-accent dark:text-primary" />
+                                                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500 dark:bg-[#D4AF37]/15" style={{ background: 'color-mix(in srgb, var(--bg-warning) 15%, transparent)' }}>
+                                                    <Users size={22} className="text-accent dark:text-[#D4AF37]" />
                                                 </div>
-                                                <span className="text-3xl md:text-4xl font-black text-on-primary dark:text-main mb-1 block tracking-tight">5k+</span>
-                                                <span className="text-micro text-on-primary/90 dark:text-muted font-black">طالب فعال</span>
+                                                <span className="text-3xl md:text-4xl font-black text-on-primary dark:text-white mb-1 block tracking-tight">5k+</span>
+                                                <span className="text-micro text-on-primary/90 dark:text-white/40 font-black">طالب فعال</span>
                                             </div>
                                         </div>
 
-                                        <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm hover:-translate-y-1.5 bg-white/5 dark:bg-primary/10 border border-white/10 dark:border-primary/25">
-                                            <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 dark:bg-primary/[0.05]" style={{ background: 'radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--bg-primary) 6%, transparent), transparent 70%)' }} />
+                                        <div className="relative p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center transition-all duration-500 group/card overflow-hidden min-h-[180px] backdrop-blur-sm hover:-translate-y-1.5 bg-white/5 dark:bg-white/5 border border-white/10 dark:border-[#D4AF37]/15">
+                                            <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 dark:bg-[#D4AF37]/[0.03]" style={{ background: 'radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--bg-primary) 6%, transparent), transparent 70%)' }} />
                                             <div className="relative z-10">
-                                                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500 dark:bg-primary/25" style={{ background: 'color-mix(in srgb, var(--bg-warning) 20%, transparent)' }}>
-                                                    <Target size={22} className="text-warning dark:text-primary" />
+                                                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover/card:scale-110 transition-transform duration-500 dark:bg-[#D4AF37]/15" style={{ background: 'color-mix(in srgb, var(--bg-warning) 20%, transparent)' }}>
+                                                    <Target size={22} className="text-warning dark:text-[#D4AF37]" />
                                                 </div>
-                                                <span className="text-3xl md:text-4xl font-black text-on-primary dark:text-main mb-1 block tracking-tight">97.3%</span>
-                                                <span className="text-micro text-on-primary/90 dark:text-muted font-black">نسبة نجاح</span>
+                                                <span className="text-3xl md:text-4xl font-black text-on-primary dark:text-white mb-1 block tracking-tight">97.3%</span>
+                                                <span className="text-micro text-on-primary/90 dark:text-white/40 font-black">نسبة نجاح</span>
                                             </div>
                                         </div>
                                     </div>
