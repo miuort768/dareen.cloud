@@ -63,7 +63,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary-light dark:via-primary-deep dark:to-primary-soft p-6 md:p-8"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-[#D4AF37] dark:via-[#b8962e] dark:to-[#f59e0b] p-6 md:p-8"
             dir="rtl"
         >
             {/* Pattern */}
@@ -91,7 +91,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                            className="w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center shadow-lg shadow-black/10 ring-2 ring-white/30 backdrop-blur-sm"
+                            className="w-14 h-14 rounded-2xl bg-white/20 dark:bg-black/20 flex items-center justify-center shadow-lg shadow-black/10 ring-2 ring-white/30 dark:ring-black/20 backdrop-blur-sm"
                         >
                             <span className="text-xl font-bold text-white">{firstName.charAt(0)}</span>
                         </motion.div>
@@ -139,7 +139,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
                             aria-label="الإشعارات"
                         >
                             <Bell size={16} />
-                            <span className="absolute -top-0.5 -end-0.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-primary-deep" />
+                            <span className="absolute -top-0.5 -end-0.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-primary-deep dark:border-[#D4AF37]" />
                         </motion.button>
                     </div>
                 </div>

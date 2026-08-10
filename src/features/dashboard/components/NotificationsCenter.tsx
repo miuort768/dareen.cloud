@@ -134,26 +134,26 @@ export const NotificationsCenter = ({
     const criticalCount = smartAlerts.filter(a => a.priority === 'high').length;
 
     return (
-        <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 shadow-elevation-1 p-5 font-dash" dir="rtl">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-warning-soft flex items-center justify-center">
-                        <Bell size={16} className="text-warning" />
+                    <div className="w-9 h-9 rounded-xl bg-warning-soft dark:bg-[#D4AF37]/10 flex items-center justify-center">
+                        <Bell size={16} className="text-warning dark:text-[#D4AF37]" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-main">التنبيهات</h3>
-                        <p className="text-[10px] text-muted">مراقبة الأنظمة</p>
+                        <h3 className="text-sm font-bold text-main dark:text-white">التنبيهات</h3>
+                        <p className="text-[10px] text-muted dark:text-zinc-400">مراقبة الأنظمة</p>
                     </div>
                 </div>
-                <div className="flex p-0.5 rounded-lg bg-surface gap-0.5" role="tablist">
+                <div className="flex p-0.5 rounded-lg bg-surface dark:bg-[#1a1a1e] gap-0.5" role="tablist">
                     <button
                         role="tab"
                         aria-selected={activeTab === 'smart'}
                         onClick={() => setActiveTab('smart')}
                         className={cn(
                             "px-3 py-1.5 text-[10px] font-bold transition-colors flex items-center gap-1 rounded-md",
-                            activeTab === 'smart' ? "bg-primary text-on-primary" : "text-muted hover:text-main"
+                            activeTab === 'smart' ? "bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black" : "text-muted dark:text-zinc-400 hover:text-main dark:hover:text-white"
                         )}
                     >
                         <Zap size={10} />
@@ -165,7 +165,7 @@ export const NotificationsCenter = ({
                         onClick={() => setActiveTab('room')}
                         className={cn(
                             "px-3 py-1.5 text-[10px] font-bold transition-colors flex items-center gap-1 rounded-md",
-                            activeTab === 'room' ? "bg-primary text-on-primary" : "text-muted hover:text-main"
+                            activeTab === 'room' ? "bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black" : "text-muted dark:text-zinc-400 hover:text-main dark:hover:text-white"
                         )}
                     >
                         <Bell size={10} />
@@ -188,37 +188,37 @@ export const NotificationsCenter = ({
                             {smartAlerts.map((alert, idx) => (
                                 <div key={alert.id} className="flex gap-3 relative pb-3">
                                     <div className={cn(
-                                        "w-[30px] h-[30px] rounded-lg flex items-center justify-center shrink-0 ring-2 ring-card z-10",
-                                        alert.type === 'critical' ? "bg-error-soft text-error" : "bg-warning-soft text-warning"
+                                        "w-[30px] h-[30px] rounded-lg flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-[#0d0d0f] z-10",
+                                        alert.type === 'critical' ? "bg-error-soft text-error" : "bg-warning-soft dark:bg-[#D4AF37]/10 text-warning dark:text-[#D4AF37]"
                                     )}>
                                         {alert.type === 'critical' ? <AlertTriangle size={12} /> : <CheckCircle2 size={12} />}
                                     </div>
-                                    <div className="flex-1 min-w-0 p-3 rounded-xl border bg-card border-border hover:bg-surface transition-colors cursor-pointer"
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border bg-card dark:bg-[#0d0d0f] border-border dark:border-[#D4AF37]/20 hover:bg-surface dark:hover:bg-[#1a1a1e] transition-colors cursor-pointer"
                                         onClick={() => typeof alert.action === 'function' && alert.action()}
                                         role="button"
                                         tabIndex={0}
                                         onKeyDown={(e) => { if (e.key === 'Enter' && typeof alert.action === 'function') alert.action(); }}
                                     >
                                         <div className="flex items-center justify-between gap-2">
-                                            <h3 className="font-bold text-[11px] text-main">{alert.title}</h3>
-                                            <span className="text-[9px] text-muted shrink-0">{idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}</span>
+                                            <h3 className="font-bold text-[11px] text-main dark:text-white">{alert.title}</h3>
+                                            <span className="text-[9px] text-muted dark:text-zinc-500 shrink-0">{idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}</span>
                                         </div>
-                                        <p className="text-[10px] text-muted mt-0.5 line-clamp-1">{alert.desc}</p>
+                                        <p className="text-[10px] text-muted dark:text-zinc-400 mt-0.5 line-clamp-1">{alert.desc}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     ) : (
                         <div className="relative flex gap-3 py-2">
-                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card">
+                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-[#0d0d0f]">
                                 <CheckCircle2 size={14} className="text-success" />
                             </div>
-                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border bg-success-soft">
+                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-[#D4AF37]/20 bg-success-soft/50 dark:bg-success/5">
                                 <div className="flex items-center justify-between gap-2">
                                     <h3 className="font-bold text-[11px] text-success">كل الأنظمة تعمل</h3>
-                                    <span className="text-[9px] text-muted shrink-0">الآن</span>
+                                    <span className="text-[9px] text-muted dark:text-zinc-500 shrink-0">الآن</span>
                                 </div>
-                                <p className="text-[10px] text-muted mt-0.5">لا توجد مشاكل في النظام</p>
+                                <p className="text-[10px] text-muted dark:text-zinc-400 mt-0.5">لا توجد مشاكل في النظام</p>
                             </div>
                         </div>
                     )}
@@ -230,18 +230,18 @@ export const NotificationsCenter = ({
                 <div className="space-y-1 max-h-[320px] overflow-y-auto custom-scrollbar">
                     {roomAlerts.length > 0 ? (
                         <div className="relative">
-                            <div className="absolute start-[15px] top-2 bottom-2 w-px bg-divider" />
+                            <div className="absolute start-[15px] top-2 bottom-2 w-px bg-divider dark:bg-[#D4AF37]/20" />
                             {roomAlerts.map((alert, idx) => (
                                 <div key={alert.id} className="flex gap-3 relative pb-3">
-                                    <div className="w-[30px] h-[30px] rounded-lg bg-primary-soft flex items-center justify-center shrink-0 ring-2 ring-card z-10">
-                                        <alert.icon size={12} className="text-primary" />
+                                    <div className="w-[30px] h-[30px] rounded-lg bg-primary-soft dark:bg-[#D4AF37]/10 flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-[#0d0d0f] z-10">
+                                        <alert.icon size={12} className="text-primary dark:text-[#D4AF37]" />
                                     </div>
-                                    <div className="flex-1 min-w-0 p-3 rounded-xl border border-border bg-card hover:bg-surface transition-colors">
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-[#D4AF37]/20 bg-card dark:bg-[#0d0d0f] hover:bg-surface dark:hover:bg-[#1a1a1e] transition-colors">
                                         <div className="flex items-center justify-between gap-2 mb-1">
-                                            <h4 className="text-[11px] font-bold text-main truncate">{alert.title}</h4>
-                                            <span className="text-[9px] text-muted shrink-0">{idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}</span>
+                                            <h4 className="text-[11px] font-bold text-main dark:text-white truncate">{alert.title}</h4>
+                                            <span className="text-[9px] text-muted dark:text-zinc-500 shrink-0">{idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}</span>
                                         </div>
-                                        <p className="text-[10px] text-muted line-clamp-1">{alert.description}</p>
+                                        <p className="text-[10px] text-muted dark:text-zinc-400 line-clamp-1">{alert.description}</p>
                                         <div className="flex gap-1.5 mt-2">
                                             {alert.actionLabel === 'واتساب' ? (
                                                 <Button onClick={alert.action} size="sm" className="h-6 px-2.5 rounded-lg text-[9px] font-bold bg-success text-on-success">
@@ -259,15 +259,15 @@ export const NotificationsCenter = ({
                         </div>
                     ) : (
                         <div className="relative flex gap-3 py-2">
-                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card">
+                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-[#0d0d0f]">
                                 <Info size={14} className="text-success" />
                             </div>
-                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border bg-success-soft">
+                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-[#D4AF37]/20 bg-success-soft/50 dark:bg-success/5">
                                 <div className="flex items-center justify-between gap-2">
                                     <h3 className="font-bold text-[11px] text-success">كل الأنظمة تعمل</h3>
-                                    <span className="text-[9px] text-muted shrink-0">الآن</span>
+                                    <span className="text-[9px] text-muted dark:text-zinc-500 shrink-0">الآن</span>
                                 </div>
-                                <p className="text-[10px] text-muted mt-0.5">كافة الأنظمة تعمل بشكل طبيعي</p>
+                                <p className="text-[10px] text-muted dark:text-zinc-400 mt-0.5">كافة الأنظمة تعمل بشكل طبيعي</p>
                             </div>
                         </div>
                     )}

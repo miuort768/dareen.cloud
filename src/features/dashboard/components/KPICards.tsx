@@ -22,10 +22,10 @@ interface KPICardData {
 }
 
 const colorMap: Record<string, { bg: string; text: string; ring: string; accent: string }> = {
-    primary: { bg: 'bg-primary-soft', text: 'text-primary', ring: 'ring-border', accent: 'bg-primary' },
+    primary: { bg: 'bg-primary-soft dark:bg-[#D4AF37]/10', text: 'text-primary dark:text-[#D4AF37]', ring: 'ring-border dark:ring-[#D4AF37]/20', accent: 'bg-primary dark:bg-[#D4AF37]' },
     success: { bg: 'bg-success-soft', text: 'text-success', ring: 'ring-border', accent: 'bg-success' },
     info: { bg: 'bg-info-soft', text: 'text-info', ring: 'ring-border', accent: 'bg-info' },
-    warning: { bg: 'bg-warning-soft', text: 'text-warning', ring: 'ring-border', accent: 'bg-warning' },
+    warning: { bg: 'bg-warning-soft dark:bg-[#D4AF37]/5', text: 'text-warning dark:text-[#D4AF37]', ring: 'ring-border dark:ring-[#D4AF37]/20', accent: 'bg-warning dark:bg-[#D4AF37]' },
 };
 
 const KPICard = ({ item, index }: { item: KPICardData; index: number }) => {
@@ -39,7 +39,7 @@ const KPICard = ({ item, index }: { item: KPICardData; index: number }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 + index * 0.08, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
             className={cn(
-                "relative overflow-hidden rounded-2xl bg-card border border-border group hover:shadow-elevation-2 transition-all duration-300",
+                "relative overflow-hidden rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 group hover:shadow-elevation-2 transition-all duration-300",
                 isLarge ? "lg:col-span-2" : "lg:col-span-1"
             )}
         >
@@ -56,7 +56,7 @@ const KPICard = ({ item, index }: { item: KPICardData; index: number }) => {
                             "flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold",
                             item.trend === 'up' ? "bg-success-soft text-success" :
                             item.trend === 'down' ? "bg-error-soft text-error" :
-                            "bg-surface text-muted"
+                            "bg-surface dark:bg-[#1a1a1e] text-muted dark:text-zinc-400"
                         )}>
                             {item.trend === 'up' ? <TrendingUp size={10} /> : item.trend === 'down' ? <TrendingDown size={10} /> : null}
                             {item.trendValue}
@@ -65,13 +65,13 @@ const KPICard = ({ item, index }: { item: KPICardData; index: number }) => {
                 </div>
 
                 <div className="space-y-0.5">
-                    <p className={cn("font-bold tabular-nums text-main tracking-tight", isLarge ? "text-3xl" : "text-2xl")}>
+                    <p className={cn("font-bold tabular-nums text-main dark:text-white tracking-tight", isLarge ? "text-3xl" : "text-2xl")}>
                         {item.formatter && typeof item.value === 'number'
                             ? item.formatter(item.value)
                             : item.value}
                         {item.prefix && <span className="text-xs font-medium text-muted me-1">{item.prefix}</span>}
                     </p>
-                    <p className="text-xs text-muted font-medium">{item.title}</p>
+                    <p className="text-xs text-muted dark:text-zinc-400 font-medium">{item.title}</p>
                 </div>
             </div>
         </motion.div>

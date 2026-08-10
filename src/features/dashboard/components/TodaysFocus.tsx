@@ -31,15 +31,15 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
     const hasAnyData = todaySessions.length > 0 || tasks.length > 0 || lowBalanceCount > 0;
 
     return (
-        <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5" dir="rtl">
+        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 shadow-elevation-1 p-5" dir="rtl">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-warning-soft flex items-center justify-center">
-                        <CalendarCheck size={16} className="text-warning" />
+                    <div className="w-9 h-9 rounded-xl bg-warning-soft dark:bg-[#D4AF37]/10 flex items-center justify-center">
+                        <CalendarCheck size={16} className="text-warning dark:text-[#D4AF37]" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-main">الجلسات القادمة</h3>
-                        <p className="text-[10px] text-muted">جدول اليوم</p>
+                        <h3 className="text-sm font-bold text-main dark:text-white">الجلسات القادمة</h3>
+                        <p className="text-[10px] text-muted dark:text-zinc-400">جدول اليوم</p>
                     </div>
                 </div>
                 {hasAnyData && (
@@ -51,7 +51,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
 
             <div className="space-y-2">
                 {todaySessions.length > 0 && (
-                    <div className="p-3 rounded-xl bg-info-soft border border-border"> 
+                    <div className="p-3 rounded-xl bg-info-soft dark:bg-info/5 border border-border dark:border-[#D4AF37]/20"> 
                         <div className="flex items-center gap-2 mb-2">
                             <CalendarCheck size={12} className="text-info" />
                             <span className="text-[11px] font-bold text-info">{todaySessions.length} حصص اليوم</span>
@@ -65,9 +65,9 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                                             {subjectColor ? (
                                                 <span className={cn("w-2 h-2 rounded-full shrink-0", subjectColor.dot)} />
                                             ) : (
-                                                <CalendarCheck size={12} className="text-muted shrink-0" />
+                                                <CalendarCheck size={12} className="text-muted dark:text-zinc-500 shrink-0" />
                                             )}
-                                            <span className="text-xs font-bold text-main truncate">{s.studentName}</span>
+                                            <span className="text-xs font-bold text-main dark:text-white truncate">{s.studentName}</span>
                                             {s.subject && (
                                                 <span className={cn(
                                                     "text-[10px] font-medium px-1.5 py-0.5 rounded-md",
@@ -78,8 +78,8 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                                             )}
                                         </div>
                                         <div className="flex items-center gap-1.5 shrink-0">
-                                            <Clock size={10} className="text-muted" />
-                                            <span className="text-[10px] font-bold text-muted tabular-nums">{s.time}</span>
+                                            <Clock size={10} className="text-muted dark:text-zinc-500" />
+                                            <span className="text-[10px] font-bold text-muted dark:text-zinc-500 tabular-nums">{s.time}</span>
                                         </div>
                                     </div>
                                 );
@@ -89,7 +89,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                 )}
 
                 {tasks.length > 0 && (
-                    <div className="p-3 rounded-xl bg-warning-soft border border-border">
+                    <div className="p-3 rounded-xl bg-warning-soft dark:bg-[#D4AF37]/5 border border-border dark:border-[#D4AF37]/20">
                         <div className="flex items-center gap-2 mb-2">
                             <ListTodo size={12} className="text-warning" />
                             <span className="text-[11px] font-bold text-warning">{tasks.length} مهام نشطة</span>
@@ -97,7 +97,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                         <div className="space-y-1.5">
                             {tasks.slice(0, 3).map((t) => (
                                 <div key={t.id} className="flex items-center justify-between">
-                                    <span className="text-xs font-bold text-main truncate">{t.title}</span>
+                                    <span className="text-xs font-bold text-main dark:text-white truncate">{t.title}</span>
                                     <span className={cn(
                                         "text-[10px] font-bold px-2 py-0.5 rounded-lg shrink-0",
                                         t.priority === 'high' ? "bg-error-soft text-error" :
@@ -113,7 +113,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                 )}
 
                 {lowBalanceCount > 0 && (
-                    <div className="p-3 rounded-xl bg-error-soft border border-border">
+                    <div className="p-3 rounded-xl bg-error-soft dark:bg-error/5 border border-border dark:border-[#D4AF37]/20">
                         <div className="flex items-center gap-2">
                             <AlertTriangle size={12} className="text-error" />
                             <span className="text-[11px] font-bold text-error">{lowBalanceCount} تنبيه رصيد منخفض</span>
@@ -126,8 +126,8 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                         <div className="w-14 h-14 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-3">
                             <Calendar size={24} className="text-primary" />
                         </div>
-                        <p className="text-sm font-bold text-muted">لا توجد مهام اليوم</p>
-                        <p className="text-[11px] text-muted mt-1 flex items-center justify-center gap-1.5">
+                        <p className="text-sm font-bold text-muted dark:text-zinc-400">لا توجد مهام اليوم</p>
+                        <p className="text-[11px] text-muted dark:text-zinc-500 mt-1 flex items-center justify-center gap-1.5">
                             <Sun size={11} /> استمتع بيوم هادئ
                         </p>
                         <Link to="/tasks">

@@ -10,8 +10,8 @@ export const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
     <div
       ref={ref}
       className={cn(
-        "bg-white/70 dark:bg-white/[0.07] backdrop-blur-xl",
-        "border border-white/20 dark:border-white/10",
+        "bg-white/70 dark:bg-[#0d0d0f]/80 backdrop-blur-xl",
+        "border border-white/20 dark:border-[#D4AF37]/20",
         "rounded-2xl shadow-lg shadow-black/[0.03]",
         !noPadding && "p-5",
         "overflow-hidden",

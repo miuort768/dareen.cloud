@@ -15,15 +15,15 @@ interface FinanceOverviewProps {
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (!active || !payload?.length) return null;
     return (
-        <div className="bg-card border border-border shadow-lg px-4 py-3 min-w-[160px] rounded-xl" dir="rtl">
-            <p className="text-xs font-bold text-main mb-2">{label}</p>
+                    <div className="bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 shadow-lg px-4 py-3 min-w-[160px] rounded-xl" dir="rtl">
+                        <p className="text-xs font-bold text-main dark:text-white mb-2">{label}</p>
             {payload.map((entry, i) => (
                 <div key={i} className="flex items-center justify-between gap-4 py-0.5">
                     <div className="flex items-center gap-2">
                         <div className="w-2.5 h-2.5 rounded-md" style={{ backgroundColor: entry.color }} />
-                        <span className="text-[10px] font-medium text-muted">{entry.name}</span>
+                        <span className="text-[10px] font-medium text-muted dark:text-zinc-400">{entry.name}</span>
                     </div>
-                    <span className="text-xs font-bold text-main tabular-nums">
+                    <span className="text-xs font-bold text-main dark:text-white tabular-nums">
                         {Number(entry.value).toLocaleString()} {CURRENCY_SYMBOL}
                     </span>
                 </div>
@@ -45,16 +45,16 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
     };
 
     return (
-        <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 shadow-elevation-1 p-5 font-dash" dir="rtl">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">
-                        <BarChart3 size={16} className="text-primary" />
+                    <div className="w-9 h-9 rounded-xl bg-primary-soft dark:bg-[#D4AF37]/10 flex items-center justify-center">
+                        <BarChart3 size={16} className="text-primary dark:text-[#D4AF37]" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-main">نظرة مالية</h3>
-                        <p className="text-[10px] text-muted">الإيرادات والمصروفات</p>
+                        <h3 className="text-sm font-bold text-main dark:text-white">نظرة مالية</h3>
+                        <p className="text-[10px] text-muted dark:text-zinc-400">الإيرادات والمصروفات</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-1.5">
@@ -75,8 +75,8 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
                     <div className="w-16 h-16 rounded-2xl bg-primary-soft flex items-center justify-center mb-3">
                         <BarChart3 size={28} className="text-primary-200" />
                     </div>
-                    <p className="text-sm font-bold text-muted">لا توجد بيانات مالية بعد</p>
-                    <p className="text-[11px] text-dim mt-1">ابدأ بإضافة أول عملية مالية</p>
+                    <p className="text-sm font-bold text-muted dark:text-zinc-400">لا توجد بيانات مالية بعد</p>
+                    <p className="text-[11px] text-dim dark:text-zinc-500 mt-1">ابدأ بإضافة أول عملية مالية</p>
                     <Button onClick={() => navigate('/finance')} size="sm" className="mt-3 h-9 px-5 rounded-xl text-xs font-bold gap-1.5">
                         <Plus size={14} /> إضافة عملية
                     </Button>
@@ -108,14 +108,14 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
 
             {/* Summary */}
             {monthlyData.length > 0 && (
-                <div className="flex items-center justify-center gap-4 pt-3 border-t border-border">
+                <div className="flex items-center justify-center gap-4 pt-3 border-t border-border dark:border-[#D4AF37]/20">
                     <div className="flex items-center gap-1.5">
                         <div className="w-2.5 h-2.5 rounded-md" style={{ backgroundColor: chartColors.revenue }} />
-                        <span className="text-[10px] font-bold text-muted">الإيرادات</span>
+                        <span className="text-[10px] font-bold text-muted dark:text-zinc-400">الإيرادات</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                         <div className="w-2.5 h-2.5 rounded-md" style={{ backgroundColor: chartColors.expenses }} />
-                        <span className="text-[10px] font-bold text-muted">المصروفات</span>
+                        <span className="text-[10px] font-bold text-muted dark:text-zinc-400">المصروفات</span>
                     </div>
                     <div className={cn(
                         "flex items-center gap-1 px-2 py-0.5 rounded-lg",

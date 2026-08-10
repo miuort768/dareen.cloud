@@ -38,25 +38,25 @@ export const SystemHealth = ({ stats }: SystemHealthProps) => {
         <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5"
+            className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 shadow-elevation-1 p-5"
             dir="rtl"
         >
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     <div className={cn(
                         "w-9 h-9 rounded-xl flex items-center justify-center",
-                        allGood ? "bg-success-soft" : hasErrors ? "bg-error-soft" : "bg-warning-soft"
+                        allGood ? "bg-success-soft" : hasErrors ? "bg-error-soft" : "bg-warning-soft dark:bg-[#D4AF37]/10"
                     )}>
                         {allGood ? (
                             <CheckCircle2 size={16} className="text-success" />
                         ) : hasErrors ? (
                             <XCircle size={16} className="text-error" />
                         ) : (
-                            <AlertTriangle size={16} className="text-warning" />
+                            <AlertTriangle size={16} className="text-warning dark:text-[#D4AF37]" />
                         )}
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-main">حالة النظام</h3>
+                        <h3 className="text-sm font-bold text-main dark:text-white">حالة النظام</h3>
                         <p className={cn(
                             "text-[10px] font-medium",
                             allGood ? "text-success" : hasErrors ? "text-error" : "text-warning"
@@ -65,7 +65,7 @@ export const SystemHealth = ({ stats }: SystemHealthProps) => {
                         </p>
                     </div>
                 </div>
-                <div className="flex items-center gap-1.5 text-[10px] text-muted">
+                <div className="flex items-center gap-1.5 text-[10px] text-muted dark:text-zinc-500">
                     <RefreshCw size={10} />
                     <span>{timeAgo()}</span>
                 </div>
@@ -83,9 +83,9 @@ export const SystemHealth = ({ stats }: SystemHealthProps) => {
                         <div className="w-16 h-16 rounded-full bg-success-soft flex items-center justify-center mb-3">
                             <CheckCircle2 size={32} className="text-success" />
                         </div>
-                        <p className="text-sm font-bold text-main">كل الأنظمة تعمل</p>
-                        <p className="text-[11px] text-muted mt-1">لا توجد مشاكل في النظام</p>
-                        <div className="flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-lg bg-surface text-muted text-[10px] font-medium">
+                        <p className="text-sm font-bold text-main dark:text-white">كل الأنظمة تعمل</p>
+                        <p className="text-[11px] text-muted dark:text-zinc-400 mt-1">لا توجد مشاكل في النظام</p>
+                        <div className="flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-lg bg-surface dark:bg-[#1a1a1e] text-muted dark:text-zinc-400 text-[10px] font-medium">
                             <Activity size={10} className="text-success" />
                             آخر فحص: {timeAgo()}
                         </div>
@@ -102,8 +102,8 @@ export const SystemHealth = ({ stats }: SystemHealthProps) => {
                             <div
                                 key={i}
                                 className={cn(
-                                    "flex items-center gap-3 p-3 rounded-xl border border-border",
-                                    issue.severity === 'error' ? "bg-error-soft" : "bg-warning-soft"
+                                    "flex items-center gap-3 p-3 rounded-xl border border-border dark:border-[#D4AF37]/20",
+                                    issue.severity === 'error' ? "bg-error-soft dark:bg-error/5" : "bg-warning-soft dark:bg-[#D4AF37]/5"
                                 )}
                             >
                                 <div className={cn(
@@ -112,7 +112,7 @@ export const SystemHealth = ({ stats }: SystemHealthProps) => {
                                 )}>
                                     {issue.severity === 'error' ? <XCircle size={14} /> : <AlertTriangle size={14} />}
                                 </div>
-                                <p className="text-xs font-bold text-main">{issue.label}</p>
+                                <p className="text-xs font-bold text-main dark:text-white">{issue.label}</p>
                                 <span className={cn(
                                     "me-auto text-[10px] font-bold px-2 py-0.5 rounded-md",
                                     issue.severity === 'error' ? "bg-error-soft text-error" : "bg-warning-soft text-warning"
