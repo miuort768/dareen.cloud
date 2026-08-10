@@ -96,11 +96,11 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
             >
                 <div className="flex items-center gap-2 text-primary dark:text-primary font-bold text-xs">
                     {isRefreshing ? (
-                        <><Loader2 size={16} className="animate-spin" /><span>ฬวัํ วแสอฯํห...</span></>
+                        <><Loader2 size={16} className="animate-spin" /><span>ุฌุงุฑู ุงูุชุญุฏูุซ...</span></>
                     ) : pullDistance > 40 ? (
-                        <><RefreshCw size={16} className="animate-pulse" /><span>รÝแส แแสอฯํห</span></>
+                        <><RefreshCw size={16} className="animate-pulse" /><span>ุฃููุช ููุชุญุฏูุซ</span></>
                     ) : (
-                        <span className="text-muted">วำอศ แแสอฯํห</span>
+                        <span className="text-muted">ุงุณุญุจ ููุชุญุฏูุซ</span>
                     )}
                 </div>
             </motion.div>
@@ -110,7 +110,7 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
             <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
                 <motion.div {...fadeUp(0)}>
                     <HeroSection
-                        name={currentUser?.name || currentUser?.username || 'ๆแํ วแรใั'}
+                        name={currentUser?.name || currentUser?.username || 'ููู ุงูุฃู…ุฑ'}
                         children={children}
                         attendanceRate={stats.attendanceRate}
                         academicProgress={stats.academicProgress}
@@ -157,14 +157,14 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
                         <motion.div {...fadeUp(0.3)}>
                             <button onClick={() => navigate('/parent-payment-history')}
                                 className="w-full bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-primary/5 transition-all duration-200 text-start hover:shadow-sm active:scale-[0.99]"
-                                aria-label="ำฬแ วแฯÝฺวส"
+                                aria-label="ุณุฌู ุงูุฏูุนุงุช"
                             >
                                 <div className="w-10 h-10 rounded-xl bg-success-soft dark:bg-primary/15 flex items-center justify-center shrink-0">
                                     <Wallet size={18} className="text-success dark:text-primary" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-bold text-main dark:text-main">ำฬแ วแฯÝฺวส</p>
-                                    <p className="text-[11px] text-muted dark:text-muted">ฺัึ Ýๆวสํั รศไวฦ฿ ๆใฯÝๆฺวส฿</p>
+                                    <p className="text-sm font-bold text-main dark:text-white">ุณุฌู ุงูุฏูุนุงุช</p>
+                                    <p className="text-sm font-bold text-main dark:text-white">ุณุฌู ุงูุฏูุนุงุช</p>
                                 </div>
                                 <ArrowLeft size={16} className="text-muted dark:text-dim shrink-0" />
                             </button>

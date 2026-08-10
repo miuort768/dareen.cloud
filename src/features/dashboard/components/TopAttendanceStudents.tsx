@@ -1,4 +1,4 @@
-import { TrendingUp, User, Medal } from 'lucide-react';
+ï»¿import { TrendingUp, User, Medal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useMemo } from 'react';
 
@@ -14,7 +14,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
         const currentMonth = now.toISOString().slice(0, 7);
 
         sessions.forEach(s => {
-            const isCompleted = ['completed', 'ãßÊãáÉ', 'ÊãÊ'].includes(s.status?.toLowerCase());
+            const isCompleted = ['completed', 'Ù…ÙƒØªÙ…Ù„Ø©', 'ØªÙ…Øª'].includes(s.status?.toLowerCase());
             const isThisMonth = s.date?.startsWith(currentMonth);
 
             if (isCompleted && isThisMonth) {
@@ -34,7 +34,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
     const totalMonthSessions = useMemo(() => {
         const currentMonth = new Date().toISOString().slice(0, 7);
         return sessions.filter(s =>
-            ['completed', 'ãßÊãáÉ', 'ÊãÊ'].includes(s.status?.toLowerCase()) &&
+            ['completed', 'Ù…ÙƒØªÙ…Ù„Ø©', 'ØªÙ…Øª'].includes(s.status?.toLowerCase()) &&
             s.date?.startsWith(currentMonth)
         ).length;
     }, [sessions]);
@@ -44,7 +44,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
             <div className="flex items-center justify-between mb-2.5">
                 <h3 className="text-xs font-bold text-muted dark:text-muted flex items-center gap-1.5">
                     <Medal size={11} className="text-warning dark:text-primary" />
-                    ÇáÃßËÑ ÍÖæÑÇð
+                    Ø§Ù„Ø£ÙƒØ«Ø± Ø­Ø¶ÙˆØ±Ø§Ù‹
                 </h3>
                 <div className="w-6 h-6 rounded-lg bg-warning-soft dark:bg-primary/10 flex items-center justify-center">
                     <TrendingUp size={11} className="text-warning dark:text-primary" />
@@ -57,15 +57,15 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                         <div
                             key={`att-${i}`}
                             onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
-                            className="flex items-center justify-between p-2 rounded-xl bg-background dark:bg-surface border border-border dark:border-primary/20 hover:border-warning dark:hover:border-accent/40 transition-all cursor-pointer"
+                            className="flex items-center justify-between p-2 rounded-xl bg-background dark:bg-[#0a0a0c] border border-border dark:border-primary/20 hover:border-warning dark:hover:border-primary/40 transition-all cursor-pointer"
                         >
                             <div className="flex items-center gap-2">
                                 <div className={cn(
                                     "w-7 h-7 rounded-lg flex items-center justify-center text-micro font-semibold",
                                     i === 0 ? "bg-warning-soft dark:bg-primary/10 text-warning dark:text-primary" :
-                                    i === 1 ? "bg-surface dark:bg-hover text-main dark:text-main" :
+                                    i === 1 ? "bg-surface dark:bg-[#1a1a1e] text-main dark:text-main" :
                                     i === 2 ? "bg-warning-soft dark:bg-primary/10 text-warning dark:text-primary" :
-                                    "bg-surface dark:bg-hover text-muted dark:text-muted"
+                                    "bg-surface dark:bg-[#1a1a1e] text-muted dark:text-muted"
                                 )}>
                                     {i + 1}
                                 </div>
@@ -75,27 +75,27 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                             </div>
                             <div className="flex items-baseline gap-1">
                                 <span className="text-base font-bold text-main dark:text-main tabular-nums">{stu.count}</span>
-                                <span className="text-micro font-bold text-warning dark:text-primary">ÍÕÉ</span>
+                                <span className="text-micro font-bold text-warning dark:text-primary">Ø­ØµØ©</span>
                             </div>
                         </div>
                     ))
                 ) : (
                     <div className="flex flex-col items-center justify-center py-6 opacity-50">
-                        <div className="w-8 h-8 rounded-xl bg-surface dark:bg-hover flex items-center justify-center mb-1.5">
+                        <div className="w-8 h-8 rounded-xl bg-surface dark:bg-[#1a1a1e] flex items-center justify-center mb-1.5">
                             <User size={14} className="text-dim dark:text-dim" />
                         </div>
-                        <p className="text-micro font-bold text-muted dark:text-muted">áÇ ÊæÌÏ ÓÌáÇÊ ÍÇáíÇð</p>
+                        <p className="text-micro font-bold text-muted dark:text-muted">Ù„Ø§ ØªÙˆØ¬Ø¯ Ø³Ø¬Ù„Ø§Øª Ø­Ø§Ù„ÙŠØ§Ù‹</p>
                     </div>
                 )}
             </div>
 
             <div className="mt-2.5 bg-warning dark:bg-primary p-2.5 text-on-warning rounded-xl flex items-center justify-between">
                 <div>
-                    <p className="text-micro font-bold text-on-warning">ÅÌãÇáí ÍÕÕ ÇáÔåÑ</p>
+                    <p className="text-micro font-bold text-on-warning">Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø­ØµØµ Ø§Ù„Ø´Ù‡Ø±</p>
                     <p className="text-base font-bold tabular-nums">{totalMonthSessions}</p>
                 </div>
-                <div className="w-7 h-7 rounded-lg bg-white/15 dark:bg-background/20 backdrop-blur-sm flex items-center justify-center">
-                    <TrendingUp size={12} className="text-on-warning dark:text-on-primary" />
+                <div className="w-7 h-7 rounded-lg bg-white/15 dark:bg-black/20 backdrop-blur-sm flex items-center justify-center">
+                    <TrendingUp size={12} className="text-on-warning dark:text-black" />
                 </div>
             </div>
         </div>

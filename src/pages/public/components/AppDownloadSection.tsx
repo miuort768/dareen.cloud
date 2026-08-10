@@ -8,7 +8,7 @@ export const AppDownloadSection = () => {
     return (
         <>
             {/* Desktop */}
-            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-surface dark:bg-background transition-colors duration-500">
+            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-surface dark:bg-black transition-colors duration-500">
                 <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/[0.08] rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/[0.05] rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -16,13 +16,13 @@ export const AppDownloadSection = () => {
                         <div className="flex flex-col items-center justify-center p-6 md:p-10 text-center">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 dark:bg-primary/20 border border-primary/50 dark:border-primary/40 rounded-full mb-4 mx-auto">
                                 <Smartphone size={14} className="text-primary dark:text-primary" />
-                                <span className="text-primary dark:text-primary font-bold text-xs">สุศํÞ ฯวัํไ วแำวศฺษ</span>
+                                <span className="text-primary dark:text-primary font-bold text-xs">ุชุทุจูู ุฏุงุฑูู ุงูุณุงุจุนุฉ</span>
                             </div>
                             <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-2 text-main dark:text-main leading-tight font-heading">
-                                อใแ วแสุศํÞ วแยไ
+                                ุญู…ู ุงูุชุทุจูู ุงูุขู
                             </h2>
                             <p className="text-muted dark:text-muted text-xs lg:text-xs leading-relaxed mb-6 max-w-xl mx-auto font-medium">
-                                 รÝึแ ใฯัำษ วÝสัวึํษ. อใแ สุศํÞ ฯวัํไ วแำวศฺษ ฺแ์ ๅวสÝ฿ ๆวำสใสฺ ศสฬัศษ สฺแํใํษ ใส฿วใแษ ใไ รํ ใ฿วไ ๆÝํ รํ ๆÞส.
+                                 ุฃูุถู ู…ุฏุฑุณุฉ ุงูุชุฑุงุถูุฉ. ุญู…ู ุชุทุจูู ุฏุงุฑูู ุงูุณุงุจุนุฉ ุนูู ูุงุชูู ูุงุณุชู…ุชุน ุจุชุฌุฑุจุฉ ุชุนููู…ูุฉ ู…ุชูุงู…ูุฉ ู…ู ุฃู ู…ูุงู ููู ุฃู ููุช.
                             </p>
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                                 <a
@@ -45,17 +45,17 @@ export const AppDownloadSection = () => {
                             <div className="flex items-center justify-center gap-6 mt-6">
                                 <div className="flex items-center gap-1.5 text-muted dark:text-muted">
                                     <Download size={14} />
-                                    <span className="text-micro font-medium">ใฬวไํ</span>
+                                    <span className="text-micro font-medium">ู…ุฌุงูู</span>
                                 </div>
                                 <div className="w-px h-4 bg-border dark:bg-primary/30"></div>
                                 <div className="flex items-center gap-1.5 text-muted dark:text-muted">
                                     <Shield size={14} />
-                                    <span className="text-micro font-medium">ยใไ</span>
+                                    <span className="text-micro font-medium">ุขู…ู</span>
                                 </div>
                                 <div className="w-px h-4 bg-border dark:bg-primary/30"></div>
                                 <div className="flex items-center gap-1.5 text-muted dark:text-muted">
                                     <MonitorDown size={14} />
-                                    <span className="text-micro font-medium">ใสๆวÝÞ ใฺ ฬใํฺ วแรฬๅาษ</span>
+                                    <span className="text-micro font-medium">ู…ุชูุงูู ู…ุน ุฌู…ูุน ุงูุฃุฌูุฒุฉ</span>
                                 </div>
                             </div>
                         </div>
@@ -64,23 +64,23 @@ export const AppDownloadSection = () => {
             </section>
 
             {/* Mobile */}
-            <section className="block md:hidden relative overflow-hidden bg-surface dark:bg-background transition-colors duration-500 pt-2 pb-4">
+            <section className="block md:hidden relative overflow-hidden bg-surface dark:bg-black transition-colors duration-500 pt-2 pb-4">
                 <div className="absolute top-40 -end-20 w-64 h-64 bg-accent/10 dark:bg-primary/[0.08] rounded-full blur-[100px] pointer-events-none"></div>
                 <div className="absolute bottom-40 -start-20 w-80 h-80 bg-primary/10 dark:bg-primary/[0.05] rounded-full blur-[120px] pointer-events-none"></div>
                 <div className="relative z-10 px-5">
                     <div className="flex items-center justify-center mb-5 mt-2">
                         <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/80 dark:bg-primary/20 border border-primary/50 dark:border-primary/40 rounded-full shadow-sm">
                             <Smartphone size={14} className="text-primary dark:text-primary" />
-                            <span className="text-primary dark:text-primary font-bold text-xs tracking-wide">สุศํÞ ฯวัํไ วแำวศฺษ</span>
+                            <span className="text-primary dark:text-primary font-bold text-xs tracking-wide">ุชุทุจูู ุฏุงุฑูู ุงูุณุงุจุนุฉ</span>
                         </div>
                     </div>
                     <div className="text-center mb-2">
                         <h2 className="text-2xl leading-tight font-black text-main dark:text-main font-heading">
-                            อใแ วแสุศํÞ วแยไ
+                            ุญู…ู ุงูุชุทุจูู ุงูุขู
                         </h2>
                     </div>
                     <p className="text-muted dark:text-muted text-micro leading-tight text-center max-w-xs mx-auto mb-6 font-medium">
-                        รÝึแ ใฯัำษ วÝสัวึํษ. อใแ สุศํÞ ฯวัํไ วแำวศฺษ ฺแ์ ๅวสÝ฿ ๆวำสใสฺ ศสฬัศษ สฺแํใํษ ใส฿วใแษ ใไ รํ ใ฿วไ ๆÝํ รํ ๆÞส.
+                        ุฃูุถู ู…ุฏุฑุณุฉ ุงูุชุฑุงุถูุฉ. ุญู…ู ุชุทุจูู ุฏุงุฑูู ุงูุณุงุจุนุฉ ุนูู ูุงุชูู ูุงุณุชู…ุชุน ุจุชุฌุฑุจุฉ ุชุนููู…ูุฉ ู…ุชูุงู…ูุฉ ู…ู ุฃู ู…ูุงู ููู ุฃู ููุช.
                     </p>
                     <div className="flex flex-row items-center justify-center gap-4 mb-7">
                         <a
@@ -103,17 +103,17 @@ export const AppDownloadSection = () => {
                     <div className="flex items-center justify-center gap-6 mt-5">
                         <div className="flex items-center gap-1.5 text-muted dark:text-muted">
                             <Download size={14} />
-                            <span className="text-micro font-medium">ใฬวไํ</span>
+                            <span className="text-micro font-medium">ู…ุฌุงูู</span>
                         </div>
                         <div className="w-px h-4 bg-border dark:bg-primary/30"></div>
                         <div className="flex items-center gap-1.5 text-muted dark:text-muted">
                             <Shield size={14} />
-                            <span className="text-micro font-medium">ยใไ</span>
+                            <span className="text-micro font-medium">ุขู…ู</span>
                         </div>
                         <div className="w-px h-4 bg-border dark:bg-primary/30"></div>
                         <div className="flex items-center gap-1.5 text-muted dark:text-muted">
                             <MonitorDown size={14} />
-                            <span className="text-micro font-medium">ใสๆวÝÞ ใฺ ฬใํฺ วแรฬๅาษ</span>
+                            <span className="text-micro font-medium">ู…ุชูุงูู ู…ุน ุฌู…ูุน ุงูุฃุฌูุฒุฉ</span>
                         </div>
                     </div>
                 </div>

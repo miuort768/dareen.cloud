@@ -78,7 +78,7 @@ export const Agenda = () => {
                             studentGrade: student.grade,
                             teacherName: enrollment.teacher,
                             subject: enrollment.subject,
-                            time: `${slot.hour} ${slot.period === 'am' ? '������' : '�����'}`,
+                            time: `${slot.hour} ${slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
                             hour: slot.hour,
                             period: slot.period,
                             isDone,

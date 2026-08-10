@@ -18,10 +18,10 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                 <div className="text-center mb-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary dark:bg-primary/20 border dark:border-primary/40 text-on-primary dark:text-primary rounded-full mb-4 mx-auto scale-90">
                         <Zap size={12} className="text-warning dark:text-primary" />
-                        <span className="text-micro font-black">ÇÈÏÃ ÑÍáÊß</span>
+                        <span className="text-micro font-black">Ø§Ø¨Ø¯Ø£ Ø±Ø­Ù„ØªÙƒ</span>
                     </div>
                     <h2 className="text-xl md:text-5xl font-black text-main dark:text-main font-heading">
-                        ßíÝ ÊÔÊÑß Ýí <span className="text-primary dark:text-primary">ÇáãÚåÏ¿</span>
+                        <span className="text-micro font-black">Ø§Ø¨Ø¯Ø£ Ø±Ø­Ù„ØªÙƒ</span>
                     </h2>
                 </div>
                 
@@ -53,22 +53,22 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         {[
                             {
                                 id: '01',
-                                title: 'ÇÎÊÑ ÇáãäåÌ',
-                                desc: 'ÍÏÏ ãäåÌß æÇáãÇÏÉ',
+                                title: 'Ø§Ø®ØªØ± Ø§Ù„Ù…Ù†Ù‡Ø¬',
+                                desc: 'Ø­Ø¯Ø¯ Ù…Ù†Ù‡Ø¬Ùƒ ÙˆØ§Ù„Ù…Ø§Ø¯Ø©',
                                 icon: <Users className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-primary-active to-primary-active dark:from-primary dark:to-warning'
                             },
                             {
                                 id: '02',
-                                title: 'ÍÕÉ ãÌÇäíÉ',
-                                desc: 'ÍÕÉ ÊÌÑíÈíÉ ãÌÇäíÉ áß',
+                                title: 'Ø§Ø®ØªØ± Ø§Ù„Ù…Ù†Ù‡Ø¬',
+                                desc: 'Ø­Ø¯Ø¯ Ù…Ù†Ù‡Ø¬Ùƒ ÙˆØ§Ù„Ù…Ø§Ø¯Ø©',
                                 icon: <Star className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-success to-success dark:from-primary dark:to-warning'
                             },
                             {
                                 id: '03',
-                                title: 'ÇÔÊÑß ÇáÂä',
-                                desc: 'ÊæÇÕá áÍÌÒ ãÞÚÏß',
+                                title: 'Ø§Ø®ØªØ± Ø§Ù„Ù…Ù†Ù‡Ø¬',
+                                desc: 'Ø­Ø¯Ø¯ Ù…Ù†Ù‡Ø¬Ùƒ ÙˆØ§Ù„Ù…Ø§Ø¯Ø©',
                                 icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-primary to-primary dark:from-primary dark:to-warning'
                             }
@@ -102,7 +102,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
 
                     <div className="mt-10 flex justify-center">
                         <a
-                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('ÇáÓáÇã Úáíßã¡ ÃÑÛÈ Ýí ÇáÈÏÁ æÍÌÒ ÍÕÉ ÊÌÑíÈíÉ ãÌÇäíÉ')}`}
+                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Ø§Ù„Ø³Ù„Ø§Ù… Ø¹Ù„ÙŠÙƒÙ…ØŒ Ø£Ø±ØºØ¨ ÙÙŠ Ø§Ù„Ø¨Ø¯Ø¡ ÙˆØ­Ø¬Ø² Ø­ØµØ© ØªØ¬Ø±ÙŠØ¨ÙŠØ© Ù…Ø¬Ø§Ù†ÙŠØ©')}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group relative px-8 py-3.5 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-sm rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
@@ -110,7 +110,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary dark:from-primary dark:to-warning opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="relative flex items-center gap-2">
                                 <Gift size={16} />
-                                <span>ÇÍÌÒ ÍÕÊß ÇáãÌÇäíÉ ÇáÂä</span>
+                        <span className="text-micro font-black">Ø§Ø¨Ø¯Ø£ Ø±Ø­Ù„ØªÙƒ</span>
                                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                             </div>
                         </a>

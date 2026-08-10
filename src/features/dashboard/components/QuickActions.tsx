@@ -1,4 +1,4 @@
-import { UserPlus, FileText, CalendarDays, Megaphone, ArrowLeft, Play, Zap } from 'lucide-react';
+import { UserPlus, FileText, CalendarDays, Megaphone, ArrowLeft, Play } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
@@ -9,29 +9,25 @@ interface QuickActionsProps {
 
 const actions = [
     {
-        title: 'ÅÖÇÝÉ ØÇáÈ',
-        subtitle: 'ÊÓÌíá ÌÏíÏ',
+        title: 'Ø¥Ø¶Ø§ÙØ© Ø·Ø§Ù„Ø¨',
         icon: UserPlus,
         href: '/students?action=new',
         color: 'bg-primary-soft text-primary',
     },
     {
-        title: 'ÅÕÏÇÑ ÝÇÊæÑÉ',
-        subtitle: 'ÅäÔÇÁ ÝÇÊæÑÉ',
+        title: 'Ø¥ØµØ¯Ø§Ø± ÙØ§ØªÙˆØ±Ø©',
         icon: FileText,
         href: '/student-invoices?action=new',
         color: 'bg-success-soft text-success',
     },
     {
-        title: 'ÇáÌÏæá ÇáÃÓÈæÚí',
-        subtitle: 'ÚÑÖ ÇáÍÕÕ',
+        title: 'Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„Ø£Ø³Ø¨ÙˆØ¹ÙŠ',
         icon: CalendarDays,
         href: '/schedule',
         color: 'bg-info-soft text-info',
     },
     {
-        title: 'ÅÚáÇä ÚÇã',
-        subtitle: 'ÈË ÅÔÚÇÑ',
+        title: 'Ø¥Ø¹Ù„Ø§Ù† Ø¹Ø§Ù…',
         icon: Megaphone,
         href: '/announcements',
         color: 'bg-warning-soft text-warning',
@@ -49,24 +45,22 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                     else navigate('/schedule');
                 }}
                 className={cn(
-                    "w-full p-4 rounded-2xl",
-                    "bg-gradient-to-l from-primary via-primary to-primary-deep dark:from-primary dark:via-primary dark:to-warning",
-                    "text-on-primary dark:text-on-primary font-bold text-sm",
-                    "hover:shadow-lg hover:shadow-primary/25 dark:hover:shadow-primary/20",
-                    "active:scale-[0.98]",
+                    "w-full p-4 rounded-2xl border-2 border-primary/30",
+                    "bg-primary dark:bg-primary text-on-primary dark:text-black font-bold text-sm",
+                    "hover:bg-primary-hover hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20",
+                    "active:bg-primary-active",
                     "transition-all duration-200",
                     "flex items-center justify-center gap-3",
-                    "group relative overflow-hidden"
+                    "group"
                 )}
             >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.15)_0%,transparent_70%)]" />
-                <span className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 dark:bg-background/20 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-colors">
+                <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 dark:bg-black/20 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-colors">
                     <Play size={18} fill="currentColor" />
                 </span>
-                <span className="relative text-base">ÈÏÁ ÇáÍÕÉ ÇáÂä</span>
+                <span className="text-base">Ø¨Ø¯Ø¡ Ø§Ù„Ø­ØµØ© Ø§Ù„Ø¢Ù†</span>
                 {sessionAvailable && (
-                    <span className="relative px-2 py-0.5 rounded-lg bg-on-primary/20 text-on-primary text-[10px] font-bold animate-pulse">
-                        ãÊÇÍ
+                    <span className="px-2 py-0.5 rounded-lg bg-success dark:bg-primary text-on-success dark:text-black text-[10px] font-bold animate-pulse">
+                        Ù…ØªØ§Ø­
                     </span>
                 )}
             </button>
@@ -78,8 +72,8 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                     return (
                         <Link key={`action-${i}`} to={action.href} className="block h-full">
                             <div className={cn(
-                                "group h-full p-4 rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20",
-                                "hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-sm transition-all duration-200",
+                                "group h-full p-4 sm:p-4 rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20",
+                                "hover:border-primary/30 dark:hover:border-primary/40 hover:shadow-sm transition-all duration-200",
                                 "active:scale-[0.97]"
                             )}>
                                 <div className="flex flex-col items-center gap-2.5 text-center">
@@ -90,14 +84,9 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                     )}>
                                         <Icon size={20} />
                                     </div>
-                                    <div>
-                                        <h3 className="font-bold text-[13px] text-main dark:text-main leading-tight">
-                                            {action.title}
-                                        </h3>
-                                        <p className="text-[10px] text-muted dark:text-muted mt-0.5">
-                                            {action.subtitle}
-                                        </p>
-                                    </div>
+                                    <h3 className="font-bold text-[13px] text-main dark:text-main leading-tight">
+                                        {action.title}
+                                    </h3>
                                 </div>
                             </div>
                         </Link>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+ï»¿import { useState, useEffect, useMemo, useRef } from 'react';
 import { Search, Plus, EyeOff, Eye, AlertTriangle, X, Activity, BarChart3, Phone, Users, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -26,7 +26,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
     }, [onCancel]);
 
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-black/50 dark:bg-background/70 backdrop-blur-sm p-0 sm:p-4" dir="rtl">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-0 sm:p-4" dir="rtl">
             <motion.div
                 initial={{ y: '100%', opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -41,19 +41,19 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
                             <AlertTriangle size={18} className="text-on-error" />
                         </div>
                         <div>
-                            <h3 className="text-sm font-bold text-on-error">ÊÃßíÏ ÇáÍĞİ</h3>
-                            <p className="text-[10px] text-on-error/70 mt-0.5">áÇ íãßä ÇáÊÑÇÌÚ Úä åĞÇ ÇáÅÌÑÇÁ</p>
+                            <h3 className="text-sm font-bold text-on-error">ØªØ£ÙƒÙŠØ¯ Ø§Ù„Ø­Ø°Ù</h3>
+                            <p className="text-[10px] text-on-error/70 mt-0.5">Ù„Ø§ ÙŠÙ…ÙƒÙ† Ø§Ù„ØªØ±Ø§Ø¬Ø¹ Ø¹Ù† Ù‡Ø°Ø§ Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡</p>
                         </div>
                     </div>
-                    <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-error rounded-xl transition-all" aria-label="ÅÛáÇŞ"><X size={14} /></button>
+                    <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-error rounded-xl transition-all" aria-label="Ø¥ØºÙ„Ø§Ù‚"><X size={14} /></button>
                 </div>
                 <div className="p-5">
-                    <p className="text-sm font-bold text-main mb-1">åá ÃäÊ ãÊÃßÏ ãä ÍĞİ åĞÇ ÇáÚãíá¿</p>
-                    <p className="text-xs text-muted leading-relaxed">ÓíÊã äŞá ÇáÚãíá <span className="text-error font-bold">ÇáãİŞæÏ</span> Åáì ŞÇÆãÉ ÇáÚãáÇÁ ÇáãİŞæÏíä æáä íÙåÑ ãÑÉ ÃÎÑì.</p>
+                    <p className="text-sm font-bold text-main mb-1">Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø­Ø°Ù Ù‡Ø°Ø§ Ø§Ù„Ø¹Ù…ÙŠÙ„ØŸ</p>
+                    <p className="text-xs text-muted leading-relaxed">Ø³ÙŠØªÙ… Ù†Ù‚Ù„ Ø§Ù„Ø¹Ù…ÙŠÙ„ <span className="text-error font-bold">Ø§Ù„Ù…ÙÙ‚ÙˆØ¯</span> Ø¥Ù„Ù‰ Ù‚Ø§Ø¦Ù…Ø© Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡ Ø§Ù„Ù…ÙÙ‚ÙˆØ¯ÙŠÙ† ÙˆÙ„Ù† ÙŠØ¸Ù‡Ø± Ù…Ø±Ø© Ø£Ø®Ø±Ù‰.</p>
                 </div>
                 <div className="flex gap-2 p-5 pt-0">
-                    <button ref={cancelRef} type="button" onClick={onCancel} className="flex-1 py-3.5 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">ÅáÛÇÁ</button>
-                    <button onClick={onConfirm} className="flex-1 py-3.5 text-xs font-bold text-on-error bg-gradient-to-l from-error to-error-hover hover:from-error-hover hover:to-error rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-error/20">ÊÃßíÏ ÇáÍĞİ</button>
+                    <button ref={cancelRef} type="button" onClick={onCancel} className="flex-1 py-3.5 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">Ø¥Ù„ØºØ§Ø¡</button>
+                    <button onClick={onConfirm} className="flex-1 py-3.5 text-xs font-bold text-on-error bg-gradient-to-l from-error to-error-hover hover:from-error-hover hover:to-error rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-error/20">ØªØ£ÙƒÙŠØ¯ Ø§Ù„Ø­Ø°Ù</button>
                 </div>
             </motion.div>
         </motion.div>
@@ -62,7 +62,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
 
 const StatusKeys: LeadStatus[] = ['new', 'contacted', 'interested', 'trial', 'converted'];
 
-const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main dark:text-main rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
+const inputClass = "w-full bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.08] px-3.5 py-3 text-[13px] outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 text-main dark:text-main rounded-xl transition-all duration-200 placeholder:text-muted/40 dark:placeholder:text-white/20 font-bold";
 const labelClass = "text-[11px] font-bold text-muted dark:text-main/40 mb-1.5 block";
 
 const AddLeadModalInline = ({ formRef, addMutation, onClose }: { formRef: React.RefObject<HTMLFormElement | null>; addMutation: { mutate: (data: Record<string, unknown>) => void; isPending: boolean }; onClose: () => void }) => (
@@ -74,28 +74,28 @@ const AddLeadModalInline = ({ formRef, addMutation, onClose }: { formRef: React.
                         <UserPlus size={16} className="text-primary dark:text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-[13px] font-bold text-main dark:text-main">ÅÖÇİÉ Úãíá ÌÏíÏ</h2>
-                        <p className="text-[10px] text-muted/60 dark:text-main/30">ÃÏÎá ÈíÇäÇÊ ÇáÚãíá</p>
+                        <h2 className="text-[13px] font-bold text-main dark:text-main">Ø¥Ø¶Ø§ÙØ© Ø¹Ù…ÙŠÙ„ Ø¬Ø¯ÙŠØ¯</h2>
+                        <p className="text-[10px] text-muted/60 dark:text-main/30">Ø£Ø¯Ø®Ù„ Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø¹Ù…ÙŠÙ„</p>
                     </div>
                 </div>
-                <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="ÅÛáÇŞ">
+                <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="Ø¥ØºÙ„Ø§Ù‚">
                     <X size={14} className="text-muted dark:text-main/50" />
                 </button>
             </div>
             <form ref={formRef} className="p-5 space-y-3" onSubmit={(e) => { e.preventDefault(); const fd = new FormData(e.currentTarget); const g = (n: string) => (fd.get(n) as string) || ''; addMutation.mutate({ studentName: g('name'), phone: g('phone'), subject: g('subject'), curriculum: g('curriculum'), status: 'new', priority: g('priority'), notes: g('notes') }); }}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div><label className={labelClass}>ÇÓã ÇáØÇáÈ (ÇÎÊíÇÑí)</label><input name="name" className={inputClass} placeholder="ãËÇá: Ãã ÃÍãÏ" /></div>
-                    <div><label className={labelClass}>ÇáãäåÌ</label><input name="curriculum" required className={inputClass} placeholder="ãËÇá: ãÕÑí" /></div>
+                    <div><label className={labelClass}>Ø§Ø³Ù… Ø§Ù„Ø·Ø§Ù„Ø¨ (Ø§Ø®ØªÙŠØ§Ø±ÙŠ)</label><input name="name" className={inputClass} placeholder="Ù…Ø«Ø§Ù„: Ø£Ù… Ø£Ø­Ù…Ø¯" /></div>
+                    <div><label className={labelClass}>Ø§Ù„Ù…Ù†Ù‡Ø¬</label><input name="curriculum" required className={inputClass} placeholder="Ù…Ø«Ø§Ù„: Ù…ØµØ±ÙŠ" /></div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div><label className={labelClass}>ÑŞã ÇáåÇÊİ</label><input name="phone" required className={inputClass} placeholder="05XXXXXXXX" dir="ltr" style={{ textAlign: 'right' }} /></div>
-                    <div><label className={labelClass}>ÇáãÇÏÉ ÇáãåÊã ÈåÇ</label><input name="subject" required className={inputClass} placeholder="ãËÇá: ÑíÇÖíÇÊ" /></div>
+                    <div><label className={labelClass}>Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ</label><input name="phone" required className={inputClass} placeholder="05XXXXXXXX" dir="ltr" style={{ textAlign: 'right' }} /></div>
+                    <div><label className={labelClass}>Ø§Ù„Ù…Ø§Ø¯Ø© Ø§Ù„Ù…Ù‡ØªÙ… Ø¨Ù‡Ø§</label><input name="subject" required className={inputClass} placeholder="Ù…Ø«Ø§Ù„: Ø±ÙŠØ§Ø¶ÙŠØ§Øª" /></div>
                 </div>
-                <div><label className={labelClass}>ÇáÃæáæíÉ</label><select name="priority" aria-label="ÇáÃæáæíÉ" className={inputClass}><option value="low">ãäÎİÖÉ</option><option value="medium">ãÊæÓØÉ</option><option value="high">ÚÇáíÉ</option></select></div>
-                <div><label className={labelClass}>ãáÇÍÙÇÊ</label><textarea name="notes" rows={2} className={inputClass + " resize-none"} placeholder="ÇßÊÈ Ãí ÊİÇÕíá..." /></div>
+                <div><label className={labelClass}>Ø§Ù„Ø£ÙˆÙ„ÙˆÙŠØ©</label><select name="priority" aria-label="Ø§Ù„Ø£ÙˆÙ„ÙˆÙŠØ©" className={inputClass}><option value="low">Ù…Ù†Ø®ÙØ¶Ø©</option><option value="medium">Ù…ØªÙˆØ³Ø·Ø©</option><option value="high">Ø¹Ø§Ù„ÙŠØ©</option></select></div>
+                <div><label className={labelClass}>Ù…Ù„Ø§Ø­Ø¸Ø§Øª</label><textarea name="notes" rows={2} className={inputClass + " resize-none"} placeholder="Ø§ÙƒØªØ¨ Ø£ÙŠ ØªÙØ§ØµÙŠÙ„..." /></div>
                 <div className="flex gap-3 pt-1">
-                    <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-3">{addMutation.isPending ? 'ÌÇÑí ÇáÍİÙ...' : 'ÅÖÇİÉ ÇáÚãíá'}</PrimaryBtn>
-                    <button type="button" onClick={onClose} className="flex-1 py-3 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">ÅáÛÇÁ</button>
+                    <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-3">{addMutation.isPending ? 'Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø­ÙØ¸...' : 'Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ø¹Ù…ÙŠÙ„'}</PrimaryBtn>
+                    <button type="button" onClick={onClose} className="flex-1 py-3 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">Ø¥Ù„ØºØ§Ø¡</button>
                 </div>
             </form>
         </div>
@@ -104,7 +104,7 @@ const AddLeadModalInline = ({ formRef, addMutation, onClose }: { formRef: React.
 
 export const Leads = () => {
     const academyName = useAcademyName();
-    useEffect(() => { document.title = `ÇáÚãáÇÁ ÇáãÍÊãáæä | ${academyName} ááÊÚáíã æÇáÊÏÑíÈ`; }, [academyName]);
+    useEffect(() => { document.title = `Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡ Ø§Ù„Ù…Ø­ØªÙ…Ù„ÙˆÙ† | ${academyName} Ù„Ù„ØªØ¹Ù„ÙŠÙ… ÙˆØ§Ù„ØªØ¯Ø±ÙŠØ¨`; }, [academyName]);
     const queryClient = useQueryClient();
     const showNotification = useUIStore((s) => s.showNotification);
 
@@ -138,7 +138,7 @@ export const Leads = () => {
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
             setIsAddModalOpen(false);
             formRef.current?.reset();
-            showNotification('ÊãÊ ÅÖÇİÉ ÇáÚãíá ÈäÌÇÍ', 'success');
+            showNotification('ØªÙ…Øª Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ø¹Ù…ÙŠÙ„ Ø¨Ù†Ø¬Ø§Ø­', 'success');
         },
         onError: (err: Error & { response?: { data?: { error?: string } } }) => { showNotification(err?.response?.data?.error || err.message, 'error'); }
     });
@@ -148,7 +148,7 @@ export const Leads = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
-            showNotification('Êã ÊÍÏíË ÇáÚãíá ÈäÌÇÍ', 'success');
+            showNotification('ØªÙ… ØªØ­Ø¯ÙŠØ« Ø§Ù„Ø¹Ù…ÙŠÙ„ Ø¨Ù†Ø¬Ø§Ø­', 'success');
         },
         onError: (err: Error) => { showNotification(err.message, 'error'); }
     });
@@ -158,7 +158,7 @@ export const Leads = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
-            showNotification('Êã ÍĞİ ÇáÚãíá', 'success');
+            showNotification('ØªÙ… Ø­Ø°Ù Ø§Ù„Ø¹Ù…ÙŠÙ„', 'success');
         },
         onError: (err: Error) => { showNotification(err.message, 'error'); }
     });
@@ -218,7 +218,7 @@ export const Leads = () => {
         >
             <div className="relative z-10 mx-auto px-4 md:px-6 max-w-page">
                 {/* ===== HERO SECTION ===== */}
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-card dark:via-hover dark:to-card mt-4 mb-6 border border-primary/10 dark:border-white/[0.04]">
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] mt-4 mb-6 border border-primary/10 dark:border-white/[0.04]">
                     <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-primary/10 rounded-full blur-3xl" />
                     <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/5 dark:bg-primary/8 rounded-full blur-3xl" />
                     <div className="absolute top-4 right-8 w-2 h-2 bg-white/20 dark:bg-primary/40 rounded-full" />
@@ -227,9 +227,9 @@ export const Leads = () => {
                     <div className="relative z-10 px-5 md:px-8 py-5 md:py-8">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
                             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
-                                <p className="text-white/60 dark:text-main/40 text-[11px] mb-1">ãÑÍÈÇğ Èß! ??</p>
-                                <h1 className="text-lg md:text-2xl font-bold font-outfit text-white mb-1 tracking-tight">ÅÏÇÑÉ ÚãáÇÆß ÈÓåæáÉ</h1>
-                                <p className="text-white/50 dark:text-main/40 text-[11px] md:text-sm">ÊÇÈÚ æÃÏÑ ÌãíÚ ÇáÚãáÇÁ ÇáãÊæŞÚíä æÍæøáåã Åáì ÚŞæÏ äÇÌÍÉ</p>
+                                <p className="text-white/60 dark:text-main/40 text-[11px] mb-1">Ù…Ø±Ø­Ø¨Ø§Ù‹ Ø¨Ùƒ! ğŸ‘‹</p>
+                                <h1 className="text-lg md:text-2xl font-bold font-outfit text-white mb-1 tracking-tight">Ø¥Ø¯Ø§Ø±Ø© Ø¹Ù…Ù„Ø§Ø¦Ùƒ Ø¨Ø³Ù‡ÙˆÙ„Ø©</h1>
+                                <p className="text-white/50 dark:text-main/40 text-[11px] md:text-sm">ØªØ§Ø¨Ø¹ ÙˆØ£Ø¯Ø± Ø¬Ù…ÙŠØ¹ Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡ Ø§Ù„Ù…ØªÙˆÙ‚Ø¹ÙŠÙ† ÙˆØ­ÙˆÙ‘Ù„Ù‡Ù… Ø¥Ù„Ù‰ Ø¹Ù‚ÙˆØ¯ Ù†Ø§Ø¬Ø­Ø©</p>
                             </motion.div>
                             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.1 }} className="flex items-center gap-2">
                                 <button
@@ -242,10 +242,10 @@ export const Leads = () => {
                                     )}
                                 >
                                     {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
-                                    <span className="hidden sm:inline">{showLost ? 'ÇáäÔØÇÁ' : 'ÇáãİŞæÏíä'}</span>
+                                    <span className="hidden sm:inline">{showLost ? 'Ø§Ù„Ù†Ø´Ø·Ø§Ø¡' : 'Ø§Ù„Ù…ÙÙ‚ÙˆØ¯ÙŠÙ†'}</span>
                                 </button>
                                 <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 text-[11px]">
-                                    <Plus size={13} /> ÌÏíÏ
+                                    <Plus size={13} /> Ø¬Ø¯ÙŠØ¯
                                 </PrimaryBtn>
                             </motion.div>
                         </div>
@@ -253,10 +253,10 @@ export const Leads = () => {
                         {/* KPI Stats */}
                         <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 md:gap-3">
                             {[
-                                { label: 'ÅÌãÇáí ÇáÚãáÇÁ', value: stats?.total || 0, sub: `${activeCount} äÔØ`, icon: Users, delay: 0.15 },
-                                { label: 'ÚãáÇÁ ÌÏÏ', value: stats?.new || 0, sub: 'åĞÇ ÇáÔåÑ', icon: Activity, delay: 0.2, accent: true },
-                                { label: 'Êã ÇáÊÍæíá', value: stats?.converted || 0, sub: 'Åáì ãÔÊÑßíä', icon: Phone, delay: 0.25 },
-                                { label: 'ãÚÏá ÇáÊÍæíá', value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`, sub: 'ãÚÏá ÇáäÌÇÍ', icon: BarChart3, delay: 0.3 },
+                                { label: 'Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø¹Ù…Ù„Ø§Ø¡', value: stats?.total || 0, sub: `${activeCount} Ù†Ø´Ø·`, icon: Users, delay: 0.15 },
+                                { label: 'Ø¹Ù…Ù„Ø§Ø¡ Ø¬Ø¯Ø¯', value: stats?.new || 0, sub: 'Ù‡Ø°Ø§ Ø§Ù„Ø´Ù‡Ø±', icon: Activity, delay: 0.2, accent: true },
+                                { label: 'ØªÙ… Ø§Ù„ØªØ­ÙˆÙŠÙ„', value: stats?.converted || 0, sub: 'Ø¥Ù„Ù‰ Ù…Ø´ØªØ±ÙƒÙŠÙ†', icon: Phone, delay: 0.25 },
+                                { label: 'Ù…Ø¹Ø¯Ù„ Ø§Ù„ØªØ­ÙˆÙŠÙ„', value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`, sub: 'Ù…Ø¹Ø¯Ù„ Ø§Ù„Ù†Ø¬Ø§Ø­', icon: BarChart3, delay: 0.3 },
                             ].map((stat, i) => (
                                 <motion.div key={i} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: stat.delay }}
                                     className="bg-white/10 dark:bg-white/[0.04] backdrop-blur-sm rounded-xl p-2 sm:p-3 md:p-3.5 border border-white/10 dark:border-white/[0.04] hover:bg-white/15 dark:hover:bg-white/[0.07] transition-all duration-200">
@@ -265,7 +265,7 @@ export const Leads = () => {
                                         <span className="truncate">{stat.label}</span>
                                     </div>
                                     <div className="text-sm sm:text-lg md:text-xl font-bold font-outfit text-white tabular-nums">{stat.value}</div>
-                                    <div className={cn('text-[7px] sm:text-[9px] md:text-[10px] mt-0.5', stat.accent ? 'text-success' : 'text-white/40 dark:text-main/25')}>{stat.sub}</div>
+                                    <div className={cn('text-[7px] sm:text-[9px] md:text-[10px] mt-0.5', stat.accent ? 'text-[#34d399]' : 'text-white/40 dark:text-main/25')}>{stat.sub}</div>
                                 </motion.div>
                             ))}
                         </div>
@@ -281,14 +281,14 @@ export const Leads = () => {
                                 <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted dark:text-main/25" />
                                 <input
                                     type="text"
-                                    placeholder="ÇÈÍË ÈÇáÇÓã Ãæ ÑŞã ÇáåÇÊİ..."
-                                    aria-label="ÈÍË Úä Úãíá"
-                                    className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-main placeholder:text-muted dark:placeholder:text-white/25 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all duration-200"
+                                    placeholder="Ø§Ø¨Ø­Ø« Ø¨Ø§Ù„Ø§Ø³Ù… Ø£Ùˆ Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ..."
+                                    aria-label="Ø¨Ø­Ø« Ø¹Ù† Ø¹Ù…ÙŠÙ„"
+                                    className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-main placeholder:text-muted dark:placeholder:text-white/25 outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 transition-all duration-200"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 {searchTerm && (
-                                    <button aria-label="ãÓÍ ÇáÈÍË" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
+                                    <button aria-label="Ù…Ø³Ø­ Ø§Ù„Ø¨Ø­Ø«" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
                                         <X size={13} />
                                     </button>
                                 )}
@@ -305,10 +305,10 @@ export const Leads = () => {
                                 className={cn(
                                     'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                                     filterStatus === 'all'
-                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-accent text-on-primary border-primary/30 dark:border-primary/30 shadow-md shadow-primary/15 dark:shadow-primary/20'
+                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary border-primary/30 dark:border-primary/30 shadow-md shadow-primary/15 dark:shadow-primary/20'
                                         : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                                 )}>
-                                Çáßá
+                                Ø§Ù„ÙƒÙ„
                                 <span className={cn(
                                     'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
                                     filterStatus === 'all' ? 'bg-white/20' : 'bg-surface dark:bg-white/5 text-muted dark:text-main/30 border border-border dark:border-white/[0.06]'
@@ -363,8 +363,8 @@ export const Leads = () => {
                 {/* FAB */}
                 <motion.button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-primary dark:to-accent text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-primary/30 flex items-center justify-center active:scale-95 transition-all duration-200"
-                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} aria-label="ÅÖÇİÉ Úãíá">
+                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-primary/30 flex items-center justify-center active:scale-95 transition-all duration-200"
+                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} aria-label="Ø¥Ø¶Ø§ÙØ© Ø¹Ù…ÙŠÙ„">
                     <Plus size={22} />
                 </motion.button>
 

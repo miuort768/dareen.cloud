@@ -17,7 +17,7 @@ import { StudentDashboardHeader } from './StudentDashboardHeader';
 import { MobileBottomNav } from './MobileBottomNav';
 import type { User } from '../../types/auth';
 
-const ARABIC_DAYS = ['วแรอฯ', 'วแลหไํไ', 'วแหแวหวม', 'วแรัศฺวม', 'วแฮใํำ', 'วแฬใฺษ', 'วแำศส'];
+const ARABIC_DAYS = ['ุงูุฃุญุฏ', 'ุงูุฅุซููู', 'ุงูุซูุงุซุงุก', 'ุงูุฃุฑุจุนุงุก', 'ุงูุฎู…ูุณ', 'ุงูุฌู…ุนุฉ', 'ุงูุณุจุช'];
 
 const fadeUp = (delay: number) => ({
     initial: { opacity: 0, y: 16 },
@@ -74,7 +74,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
                     const diff = ((h || 0) * 60 + (m || 0)) - nowMinutes;
                     if (diff > 0 && diff < minDiff) {
                         minDiff = diff;
-                        closest = { subject: en.subject || 'ฯๆัษ', teacher: en.teacherName || en.teacher || '', time: slot.hour || '', hour: slot.hour || '', day: slot.day, enrollment: en };
+                        closest = { subject: en.subject || 'ุฏูุฑุฉ', teacher: en.teacherName || en.teacher || '', time: slot.hour || '', hour: slot.hour || '', day: slot.day, enrollment: en };
                     }
                 }
             });
@@ -131,11 +131,11 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
             >
                 <div className="flex items-center gap-2 text-primary dark:text-primary font-bold text-xs">
                     {isRefreshing ? (
-                        <><Loader2 size={16} className="animate-spin" /><span>ฬวัํ วแสอฯํห...</span></>
+                        <><Loader2 size={16} className="animate-spin" /><span>ุฌุงุฑู ุงูุชุญุฏูุซ...</span></>
                     ) : pullDistance > 40 ? (
-                        <><RefreshCw size={16} className="animate-pulse" /><span>รÝแส แแสอฯํห</span></>
+                        <><RefreshCw size={16} className="animate-pulse" /><span>ุฃููุช ููุชุญุฏูุซ</span></>
                     ) : (
-                        <span className="text-muted">วำอศ แแสอฯํห</span>
+                        <span className="text-muted">ุงุณุญุจ ููุชุญุฏูุซ</span>
                     )}
                 </div>
             </motion.div>
@@ -145,7 +145,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
             <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
                 <motion.div {...fadeUp(0)}>
                     <HeroSection
-                        name={studentData?.name || 'วแุวแศ'}
+                        name={studentData?.name || 'ุงูุทุงูุจ'}
                         grade={studentData?.grade || ''}
                         curriculum={studentData?.curriculum || ''}
                         points={points}

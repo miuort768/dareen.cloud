@@ -24,30 +24,30 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
     const academyName = useAcademyName();
 
     return (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-background/50 dark:bg-background/70" dir="rtl">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-background/50 dark:bg-black/70" dir="rtl">
             <div className="bg-card dark:bg-card border-2 border-border dark:border-primary/20 w-full max-w-2xl rounded-none shadow-[16px_16px_0px_0px_black] flex flex-col max-h-[95vh] overflow-hidden relative">
                 
                 <div className="flex-1 overflow-y-auto p-10 pb-6 custom-scrollbar relative z-10">
                     {/* Brand / Logo */}
                     <div className="flex flex-col items-center justify-center text-center space-y-6 mb-12">
-                        <div className="w-16 h-16 bg-primary dark:bg-primary text-on-primary dark:text-on-primary rounded-none flex items-center justify-center border-2 border-border dark:border-primary/20 shadow-[6px_6px_0px_0px_black]">
+                        <div className="w-16 h-16 bg-primary dark:bg-primary text-on-primary dark:text-black rounded-none flex items-center justify-center border-2 border-border dark:border-primary/20 shadow-[6px_6px_0px_0px_black]">
                             <Award size={32} />
                         </div>
                         <div>
-                            <h3 className="text-xl font-medium text-main dark:text-main uppercase tracking-tight italic">ÊŞÑíÑ ÇáÊãíÒ ÇáÃßÇÏíãí</h3>
-                            <p className="text-micro font-medium text-muted dark:text-muted uppercase mt-1">ãäÕÉ {academyName} ÇáÊÚáíãíÉ — {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
+                            <h3 className="text-xl font-medium text-main dark:text-main uppercase tracking-tight italic">ØªÙ‚Ø±ÙŠØ± Ø§Ù„ØªÙ…ÙŠØ² Ø§Ù„Ø£ÙƒØ§Ø¯ÙŠÙ…ÙŠ</h3>
+                            <p className="text-micro font-medium text-muted dark:text-muted uppercase mt-1">Ù…Ù†ØµØ© {academyName} Ø§Ù„ØªØ¹Ù„ÙŠÙ…ÙŠØ© â€” {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</p>
                         </div>
                     </div>
 
                     <div className="space-y-8">
                         {/* Student Signature Header */}
-                        <div className="flex items-center justify-between p-6 bg-background dark:bg-surface border-2 border-border dark:border-primary/20 rounded-none">
+                        <div className="flex items-center justify-between p-6 bg-background dark:bg-[#0a0a0c] border-2 border-border dark:border-primary/20 rounded-none">
                             <div className="space-y-1 text-start">
-                                <p className="text-micro font-medium text-primary dark:text-primary uppercase">äÌãÉ ÃßÇÏíãíÉ</p>
+                                <p className="text-micro font-medium text-primary dark:text-primary uppercase">Ù†Ø¬Ù…Ø© Ø£ÙƒØ§Ø¯ÙŠÙ…ÙŠØ©</p>
                                 <h4 className="text-2xl font-medium text-main dark:text-main uppercase tracking-tight">{student.name}</h4>
                             </div>
                             <div className="text-end bg-card dark:bg-card px-4 py-2 border-2 border-border dark:border-primary/20 rounded-none">
-                                <p className="text-micro font-medium text-muted dark:text-muted uppercase mb-0.5">ÇáãÓÊæì / ÇáãÇÏÉ</p>
+                                <p className="text-micro font-medium text-muted dark:text-muted uppercase mb-0.5">Ø§Ù„Ù…Ø³ØªÙˆÙ‰ / Ø§Ù„Ù…Ø§Ø¯Ø©</p>
                                 <p className="text-xs font-medium text-primary dark:text-primary uppercase">{student.grade} - {student.subject}</p>
                             </div>
                         </div>
@@ -55,9 +55,9 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         {/* Quantitative Metrics Grid */}
                         <div className="grid grid-cols-3 gap-4">
                             {[
-                                { label: 'ÇáÍÖæÑ', value: `${student.attendance}%`, icon: ShieldCheck, color: 'bg-success', onColor: 'text-on-success' },
-                                { label: 'ÅÌãÇáí ÇáäŞÇØ', value: student.points, icon: Star, color: 'bg-warning', onColor: 'text-on-warning' },
-                                { label: 'ÇáÌáÓÇÊ', value: student.sessionsCompleted, icon: Calendar, color: 'bg-primary', onColor: 'text-on-primary' }
+                                { label: 'Ø§Ù„Ø­Ø¶ÙˆØ±', value: `${student.attendance}%`, icon: ShieldCheck, color: 'bg-success', onColor: 'text-on-success' },
+                                { label: 'Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ù†Ù‚Ø§Ø·', value: student.points, icon: Star, color: 'bg-warning', onColor: 'text-on-warning' },
+                                { label: 'Ø§Ù„Ø¬Ù„Ø³Ø§Øª', value: student.sessionsCompleted, icon: Calendar, color: 'bg-primary', onColor: 'text-on-primary' }
                             ].map((item, idx) => (
                                 <div key={idx} className="bg-card dark:bg-card p-5 border-2 border-border dark:border-primary/20 rounded-none text-center shadow-md transition-transform hover:translate-y-[-2px]">
                                     <div className={cn("w-10 h-10 rounded-none border-2 border-border flex items-center justify-center mx-auto mb-3", item.onColor, item.color)}>
@@ -70,10 +70,10 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         </div>
 
                         {/* Qualitative Feedback */}
-                        <div className="space-y-4 bg-background dark:bg-surface p-6 border-2 border-border dark:border-primary/20 rounded-none">
+                        <div className="space-y-4 bg-background dark:bg-[#0a0a0c] p-6 border-2 border-border dark:border-primary/20 rounded-none">
                             <p className="text-micro font-medium text-muted dark:text-muted uppercase flex items-center gap-2">
                                 <CheckCircle2 size={14} className="text-primary dark:text-primary" />
-                                ÇáÊæÕíÇÊ ÇáÃßÇÏíãíÉ æãÓÇÑÇÊ ÇáÊØæíÑ
+                                Ø§Ù„ØªÙˆØµÙŠØ§Øª Ø§Ù„Ø£ÙƒØ§Ø¯ÙŠÙ…ÙŠØ© ÙˆÙ…Ø³Ø§Ø±Ø§Øª Ø§Ù„ØªØ·ÙˆÙŠØ±
                             </p>
                             <div className="space-y-3">
                                 {student.lastNotes.map((note, idx) => (
@@ -86,20 +86,20 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         </div>
 
                         {/* Footer Message */}
-                        <div className="p-6 bg-background dark:bg-surface text-main dark:text-main rounded-none border-2 border-border dark:border-primary/20 text-center shadow-[6px_6px_0px_0px_var(--bg-primary)]">
-                            <p className="text-micro font-medium uppercase italic">äÍä İÎæÑæä ÈÊŞÏãß ÇáãÓÊãÑ íÇ ÈØá! ÇÓÊãÑ İí ÇáÊÃáŞ.</p>
+                        <div className="p-6 bg-background dark:bg-[#0a0a0c] text-main dark:text-main rounded-none border-2 border-border dark:border-primary/20 text-center shadow-[6px_6px_0px_0px_var(--bg-primary)]">
+                            <p className="text-micro font-medium uppercase italic">Ù†Ø­Ù† ÙØ®ÙˆØ±ÙˆÙ† Ø¨ØªÙ‚Ø¯Ù…Ùƒ Ø§Ù„Ù…Ø³ØªÙ…Ø± ÙŠØ§ Ø¨Ø·Ù„! Ø§Ø³ØªÙ…Ø± ÙÙŠ Ø§Ù„ØªØ£Ù„Ù‚.</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Footer Actions */}
-                <div className="p-10 bg-background dark:bg-surface border-t-2 border-border dark:border-primary/20 flex gap-4 pt-6">
+                <div className="p-10 bg-background dark:bg-[#0a0a0c] border-t-2 border-border dark:border-primary/20 flex gap-4 pt-6">
                     <Button
                         onClick={() => onShare('whatsapp')}
                         className="flex-1 h-14 bg-success text-on-success rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
                     >
                         <Share2 size={18} />
-                        ÅÑÓÇá áæáí ÇáÃãÑ
+                        Ø¥Ø±Ø³Ø§Ù„ Ù„ÙˆÙ„ÙŠ Ø§Ù„Ø£Ù…Ø±
                     </Button>
                     <Button
                         onClick={() => window.print()}
@@ -107,13 +107,13 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         className="flex-1 h-14 rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
                     >
                         <FileDown size={18} />
-                        ÊÍãíá PDF
+                        ØªØ­Ù…ÙŠÙ„ PDF
                     </Button>
                     <Button
                         onClick={onClose}
                         variant="ghost"
                         className="w-14 h-14 rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:bg-error hover:text-on-error"
-                        aria-label="ÅÛáÇŞ"
+                        aria-label="Ø¥ØºÙ„Ø§Ù‚"
                     >
                         <X size={24} />
                     </Button>

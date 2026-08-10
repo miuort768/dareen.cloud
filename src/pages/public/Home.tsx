@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
@@ -42,11 +42,11 @@ export const Home = () => {
         } catch (e) { console.warn(e); return defaultNumber; }
     };
 
-    const requestFreeNumber = getNumber('��� ��� ������');
-    const bookFreeNumber = getNumber('���� ���� �������� ����');
-    const memorizingNumber = getNumber('���� ����� ����');
-    const excellenceNumber = getNumber('���� ���� ������');
-    const signupNowNumber = getNumber('��� ����');
+    const requestFreeNumber = getNumber('طلب حصة مجانية');
+    const bookFreeNumber = getNumber('احجز حصتك المجانية الآن');
+    const memorizingNumber = getNumber('ابدأ الحفظ الآن');
+    const excellenceNumber = getNumber('ابدأ رحلة التميز');
+    const signupNowNumber = getNumber('سجل الآن');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [activeCategory, setActiveCategory] = useState('all');
     const [typewriterText, setTypewriterText] = useState("");
@@ -56,7 +56,7 @@ export const Home = () => {
     try { if (heroBanners) bannersArray = JSON.parse(heroBanners); } catch (e) { console.warn(e); }
 
     useEffect(() => {
-        const fullText = `���� ${academyName}`;
+        const fullText = `منصة ${academyName}`;
         let i = 0, isDeleting = false, typingSpeed = 150, timer: ReturnType<typeof setTimeout>;
         const type = () => {
             const currentText = isDeleting ? fullText.substring(0, i - 1) : fullText.substring(0, i + 1);
@@ -76,38 +76,38 @@ export const Home = () => {
     }, [reviews.length]);
 
     return (
-        <div className="min-h-full bg-surface dark:bg-background text-main dark:text-main relative overflow-x-hidden transition-colors duration-500">
-            <SEO title="���� ����� �� ��� �� ������ �������"
-                description="����� �� ��� �� �����ʡ �������ɡ ��ѡ �������ʡ �����. ���� �����ɡ ����� ���� ������ ������� �������� �� ���� ��������. ���� ��� ������� ������ ����."
+        <div className="min-h-full bg-surface dark:bg-black text-main dark:text-main relative overflow-x-hidden transition-colors duration-500">
+            <SEO title="منصة تعليم عن بعد في الكويت والخليج"
+                description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن."
                 url="https://dareen.cloud/" image="/hero-child.png"
-                breadcrumbs={[{ name: '��������', item: '/' }]} />
+                breadcrumbs={[{ name: 'الرئيسية', item: '/' }]} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
             <MobileHeader />
             <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative">
                 <div className="flex gap-1.5 mt-2 mb-3">
-                    <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`������ ����� ���� �� ��� ��� ������ �� ${academyName}`)}`}
+                    <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
                         target="_blank" rel="noopener noreferrer"
-                        className="flex-1 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
-                        <Headphones className="w-2.5 h-2.5 shrink-0" /> ��� ��� ������
+                        className="flex-1 bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black font-extrabold text-xs px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
+                        <Headphones className="w-2.5 h-2.5 shrink-0" /> طلب حصة مجانية
                     </a>
                     <Link to="/books"
                         className="flex-1 bg-primary dark:bg-white/10 dark:text-main text-on-primary text-xs font-bold px-1.5 py-2 rounded-full border dark:border-primary/30 flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
-                        <Play className="w-2.5 h-2.5 shrink-0 dark:text-primary" /> ����� ������ ������
+                        <Play className="w-2.5 h-2.5 shrink-0 dark:text-primary" /> تحميل مذكرات مجانية
                     </Link>
                 </div>
-                <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-surface dark:via-card dark:to-surface rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-primary/30">
+                <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[#09090b] dark:via-[#121215] dark:to-[#09090b] rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-primary/30">
                     {heroSlides.map((slide, i) => (
                         <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
                             <div className="flex items-center gap-4">
                                 <div className="flex-1">
-                                    <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-primary"> ������� <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-primary -mt-0.5" /></span>}</h1>
-                                    <p className="text-xs font-bold text-primary dark:text-primary mb-0.5">{slide.subtitle}</p>
-                                    <p className="text-micro text-muted dark:text-muted leading-relaxed mb-3">{slide.desc}</p>
+                                    <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-primary"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-primary -mt-0.5" /></span>}</h1>
+                                    <p className="text-xs font-bold text-primary dark:text-[#f3d368] mb-0.5">{slide.subtitle}</p>
+                                    <p className="text-micro text-muted dark:text-soft leading-relaxed mb-3">{slide.desc}</p>
                                     <div className="flex flex-col gap-1.5">
                                         <Link to="/courses" className="bg-surface dark:bg-white/10 text-main dark:text-main border dark:border-primary/30 text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
-                                            <Play className="w-3 h-3 fill-main dark:fill-primary dark:text-primary" /> ���� �������
+                                            <Play className="w-3 h-3 fill-main dark:fill-[#D4AF37] dark:text-primary" /> تصفح الدورات
                                         </Link>
-                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-4 py-2 rounded-full shadow-card transition-all w-full text-center">{isAuthenticated ? '���� ������' : '����� ������'}</Link>
+                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black font-extrabold text-xs px-4 py-2 rounded-full shadow-card transition-all w-full text-center">{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</Link>
                                     </div>
                                 </div>
                                 <div className="relative shrink-0">
@@ -124,8 +124,8 @@ export const Home = () => {
                                     </div>
                                     <div className="flex justify-center gap-1 -mt-1">
                                         {[0, 1, 2].map((d) => (
-                                            <button key={d} onClick={() => setHeroIndex(d)} aria-label={`�������� ��� ������� ${d + 1}`}
-                                                className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-primary dark:bg-primary w-3' : 'bg-muted dark:bg-dim'}`} />
+                                            <button key={d} onClick={() => setHeroIndex(d)} aria-label={`الانتقال إلى الشريحة ${d + 1}`}
+                                                className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-primary dark:bg-primary w-3' : 'bg-muted dark:bg-zinc-600'}`} />
                                         ))}
                                     </div>
                                 </div>
@@ -147,7 +147,7 @@ export const Home = () => {
                                         </div>
                                         <div className="min-w-0">
                                             <span className="text-micro font-black text-main dark:text-main block leading-tight mb-0">{f.label}</span>
-                                            <span className="text-micro text-main dark:text-muted font-medium block leading-tight">{f.desc}</span>
+                                            <span className="text-micro text-main dark:text-soft font-medium block leading-tight">{f.desc}</span>
                                         </div>
                                     </motion.div>
                                 );
@@ -160,28 +160,28 @@ export const Home = () => {
                 </AnimateOnScroll>
                 <section className="px-1">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-black text-main dark:text-main">���� �������</h2>
-                        <Link to="/courses" className="text-sm font-bold text-primary dark:text-primary flex items-center gap-1">��� ���� <ChevronLeft className="w-3.5 h-3.5" /></Link>
+                        <h2 className="text-lg font-black text-main dark:text-main">أحدث الدورات</h2>
+                        <Link to="/courses" className="text-sm font-bold text-primary dark:text-primary flex items-center gap-1">عرض الكل <ChevronLeft className="w-3.5 h-3.5" /></Link>
                     </div>
                     <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                         {stages.map((cat) => (
                             <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
-                                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${activeCategory === cat.value ? 'bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary shadow-md shadow-black/20' : 'bg-surface dark:bg-hover text-muted dark:text-muted border border-border dark:border-primary/30'}`}>
-                                <cat.icon size={12} className={activeCategory === cat.value ? 'text-on-primary dark:text-on-primary' : 'text-muted dark:text-primary'} /> {cat.label}
+                                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${activeCategory === cat.value ? 'bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black shadow-md shadow-black/20' : 'bg-surface dark:bg-[#1a1a1e] text-muted dark:text-soft border border-border dark:border-primary/30'}`}>
+                                <cat.icon size={12} className={activeCategory === cat.value ? 'text-on-primary dark:text-black' : 'text-muted dark:text-primary'} /> {cat.label}
                             </button>
                         ))}
                     </div>
                     <div className="flex gap-3 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar mt-3">
                         {getFilteredCourses(activeCategory).slice(0, 6).map((c, i) => (
                             <motion.a key={c.id}
-                                href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`������ ����� ���� �� ��������� �� ${c.title}`)}`}
+                                href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${c.title}`)}`}
                                 target="_blank" rel="noopener noreferrer"
                                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.35, delay: i * 0.08 }}
                                 className="min-w-[180px] w-[180px] bg-surface dark:bg-card rounded-card shadow-sm border border-border dark:border-primary/25 overflow-hidden shrink-0 block">
-                                <div className="relative h-24 bg-surface dark:bg-background overflow-hidden">
+                                <div className="relative h-24 bg-surface dark:bg-black overflow-hidden">
                                     <Image src={c.image} alt={c.title} className="h-24" />
-                                    <span className={`absolute top-2 start-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning dark:bg-primary text-on-warning dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary dark:bg-primary text-on-primary dark:text-on-primary' : 'bg-error text-on-error'}`}>
+                                    <span className={`absolute top-2 start-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning dark:bg-primary text-on-warning dark:text-black' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary dark:bg-primary text-on-primary dark:text-black' : 'bg-error text-on-error'}`}>
                                         {stages.find(cat => cat.value === c.category)?.label || c.category}
                                     </span>
                                 </div>
@@ -189,8 +189,8 @@ export const Home = () => {
                                     <h3 className="text-xs font-black text-main dark:text-main mb-0.5">{c.title}</h3>
                                     <p className="text-xs text-muted dark:text-muted font-medium mb-2 line-clamp-1">{c.desc}</p>
                                     <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-1"><Users className="w-3 h-3 text-dim dark:text-muted" /><span className="text-xs font-bold text-muted dark:text-muted">{c.students}</span></div>
-                                        <div className="flex items-center gap-0.5"><Star className="w-3 h-3 text-warning dark:text-primary fill-warning dark:fill-primary" /><span className="text-xs font-bold text-main dark:text-main">{c.rating}</span></div>
+                                        <div className="flex items-center gap-1"><Users className="w-3 h-3 text-dim dark:text-muted" /><span className="text-xs font-bold text-muted dark:text-soft">{c.students}</span></div>
+                                        <div className="flex items-center gap-0.5"><Star className="w-3 h-3 text-warning dark:text-primary fill-warning dark:fill-[#D4AF37]" /><span className="text-xs font-bold text-main dark:text-main">{c.rating}</span></div>
                                     </div>
                                 </div>
                             </motion.a>
@@ -218,10 +218,10 @@ export const Home = () => {
                 <div style={{ contentVisibility: 'auto' }}><AnimateOnScroll><FAQSection /></AnimateOnScroll></div>
             </div>
             <div className="absolute opacity-0 pointer-events-none overflow-hidden h-0" aria-hidden="true">
-                <h2>������� ��������� - ������ �������� ����� �������</h2>
-                <p>���� ����� �� ���, ���� ���� �������, ���� ����� �������, ���� ������ ������, ����� ������, ����� ��������, ����� �� ��� �� ������, ����� �� ��� �� ��������, ����� �������, ��� ������, ����� ������, ���� �������, ���� ����, ���� ��� �����, ���� ��� ��������, ����� �����, ����� ����, ����� �������, ������� ������, ����� ������, ���� �����, ������ �������, ������ �����, ����� ������, ������ ����, ���� �������, ����� �����, ���� ������, ���� �����, ����� �������, ����� �� ��� �������, ����� ������� ������, ������� ����������, ���� ���� ������� �� ������, ���� ���� ������� �� ��������, ���� ���� ������� �� ��������, ���� ���� ������� �� ���, ���� ���� ������� �� ����, ���� ���� ������� �� �������, ����� ������, ����� ����� �������, ����� �������, ��� ������� ����, ����� ����� �������, ����� ������� ��������, ����� ����� �������, ���� ������ �� ���������, ���� ������ �� ������, ���� ������ �� ����� �������, ���� ������ �� ����� ����������, ����� ���� �� ���, ����� ����� ������, ��� ������ �������, ��� ������ �������, �� ��� ������, ������ �������, �������� �������, ��� ������� ������, ������ �����, ����� ������ �������, ���� ������, �������� �������, ���� ���� ����� �� ������</p>
-                <h3>����� ������� ����� - ������ ��������</h3>
-                <p>���� ���� ����� �� ��� �� ������ ��������� �������, ���� ����� ������� ������� ��������, ���� ����� �� ��������� ������� �������, ��� ������� ������ ��� ������, ����� ������� ������� ������, ������ ������� �� ������ �����, ��� ������ ������� �������� ����������, ����� ������ ������ �� ��� �������, ����� ������� �� ������� �������� �������, ���� �������� ��������� �� ������, ���� ������ ������� ������ ������, ����� ������ ���� ������ �����, ����� ������ ������� ��������, ����� ������� ������� �� �� ����, ���� ������ �������� �������, ���� ������ ������� ��������, ����� ������ ������ �������, ���� ������ ����� �������, ����� �� ��� ����� �����, ���� ������� ����� ������� �������, ����� ����� �� ���� ������, ������� ������ ��� ����������, �������� ����� �������, ���� �� ����� ����� ��������, ����� ������� �� ������ ��������� ��������� ���� ����� ��������, ������ ����� ������� ��������� ��������, ���� ���� �������� ����, ����� ����� ������� ���������, ��� ���� ���� ����� �������</p>
+                <h2>الكلمات المفتاحية - الصفحة الرئيسية دارين السابعة</h2>
+                <p>منصة تعليم عن بعد, أفضل منصة تعليمية, مدرس خصوصي أونلاين, دروس خصوصية الخليج, مناهج الكويت, مناهج السعودية, تعليم عن بعد في الكويت, تعليم عن بعد في السعودية, تعليم أونلاين, حصة مجانية, تجربة مجانية, مدرس رياضيات, مدرس علوم, مدرس لغة عربية, مدرس لغة إنجليزية, تأسيس أطفال, تحفيظ قرآن, قدرات وتحصيلي, مراجعات نهائية, نتائج مضمونة, تفوق دراسي, متابعة أسبوعية, تقارير دورية, مناهج خليجية, معلمين نخبة, فصول تفاعلية, تعليم مباشر, أفضل مدرسين, دروس تقوية, تحسين المستوى, تعليم عن بعد للأطفال, تعليم أونلاين للطلاب, المدرسة الافتراضية, أفضل منصة تعليمية في الكويت, أفضل منصة تعليمية في السعودية, أفضل منصة تعليمية في الإمارات, أفضل منصة تعليمية في قطر, أفضل منصة تعليمية في عمان, أفضل منصة تعليمية في البحرين, تطبيق تعليمي, تطبيق دارين السابعة, تحميل التطبيق, حمل التطبيق الآن, دورات دارين السابعة, دورات المناهج الخليجية, دورات تقوية أونلاين, دروس خصوصية في الرياضيات, دروس خصوصية في العلوم, دروس خصوصية في اللغة العربية, دروس خصوصية في اللغة الإنجليزية, تحفيظ قرآن عن بعد, تأسيس قراءة وكتابة, شرح المنهج الكويتي, شرح المنهج السعودي, حل كتب المنهج, مذكرات تعليمية, اختبارات تجريبية, حصة تجريبية مجانية, واتساب دارين, أرقام مدرسين خصوصيين, معهد تعليمي, أكاديمية تعليمية, أفضل مدرس خصوصي في الخليج</p>
+                <h3>كلمات مفتاحية طويلة - الصفحة الرئيسية</h3>
+                <p>أفضل منصة تعليم عن بعد في الكويت والسعودية والخليج, مدرس خصوصي أونلاين للمناهج الخليجية, دروس تقوية في الرياضيات والعلوم واللغات, حصة تجريبية مجانية لكل المواد, تحسين المستوى الدراسي للطلاب, متابعة أسبوعية مع تقارير دورية, شرح المنهج الكويتي والسعودي والإماراتي, تحفيظ القرآن الكريم عن بعد للأطفال, تأسيس الأطفال في القراءة والكتابة والحساب, أفضل المدرسين الخصوصيين في الخليج, دروس خصوصية أونلاين بأسعار مناسبة, باقات اشتراك دروس خصوصية مخفضة, تطبيق تعليمي للمناهج الخليجية, تجربة تعليمية متكاملة من أي مكان, فصول دراسية افتراضية تفاعلية, نخبة معلمين للمناهج الخليجية, نتائج مضمونة وتحسين الدرجات, دروس خصوصية فردية أونلاين, تعليم عن بعد بجودة عالية, منصة تعليمية عربية للمناهج العربية, دورات تقوية في جميع المواد, مراجعات نهائية قبل الاختبارات, اختبارات قدرات وتحصيلي, ذاكر من البيت بأفضل المدرسين, تعليم أونلاين في الكويت والسعودية والإمارات وقطر وعمان والبحرين, واتساب دارين السابعة للاستفسار والتسجيل, احجز حصتك المجانية الآن, دورات دارين السابعة التعليمية, قصص نجاح طلاب دارين السابعة</p>
             </div>
             <footer><PublicFooter /></footer>
         </div>

@@ -13,7 +13,7 @@ import type { PointLogEntry } from './parent-dashboard/types';
 
 export const ParentDashboard = () => {
     const academyName = useAcademyName();
-    useEffect(() => { document.title = `แๆอษ สอ฿ใ ๆแํ วแรใั | ${academyName}`; }, [academyName]);
+    useEffect(() => { document.title = `ููุญุฉ ุชุญูู… ููู ุงูุฃู…ุฑ | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const adminPhone = useAdminPhone();
     const logout = useLogout();
@@ -44,7 +44,7 @@ export const ParentDashboard = () => {
                 Promise.all(logsPromises)
             ]);
 
-            if (failedChildren > 0) setPartialError(`สฺะั สอใํแ ศํวไวส ${failedChildren} ใไ วแรศไวม. ศฺึ วแศํวไวส Þฯ ส฿ๆไ Ûํั ใอฯหษ.`);
+            if (failedChildren > 0) setPartialError(`ุชุนุฐุฑ ุชุญู…ูู ุจูุงูุงุช ${failedChildren} ู…ู ุงูุฃุจูุงุก. ุจุนุถ ุงูุจูุงูุงุช ูุฏ ุชููู ุบูุฑ ู…ุญุฏุซุฉ.`);
 
             const flattenedLogs = allLogsResults.map((logs, idx) =>
                 (Array.isArray(logs) ? logs : []).map((l: { id: string; date: string; status: string; timestamp?: string; points?: number }) => ({ ...l, studentName: students[idx].name }))
@@ -151,8 +151,8 @@ export const ParentDashboard = () => {
         return (
             <div className="min-h-screen bg-background dark:bg-background flex items-center justify-center" dir="rtl">
                 <div className="text-center space-y-3 p-6">
-                    <p className="text-muted dark:text-muted text-sm">Ýิแ สอใํแ วแศํวไวส. สอÞÞ ใไ วสีวแ฿ ศวแลไสัไส.</p>
-                    <button onClick={() => refetch()} className="text-sm text-primary dark:text-primary hover:underline">ลฺวฯษ วแใอวๆแษ</button>
+                    <p className="text-muted dark:text-zinc-400 text-sm">ูุดู ุชุญู…ูู ุงูุจูุงูุงุช. ุชุญูู ู…ู ุงุชุตุงูู ุจุงูุฅูุชุฑูุช.</p>
+                    <button onClick={() => refetch()} className="text-sm text-primary dark:text-[#D4AF37] hover:underline">ุฅุนุงุฏุฉ ุงูู…ุญุงููุฉ</button>
                 </div>
             </div>
         );

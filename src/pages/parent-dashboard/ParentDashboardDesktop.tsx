@@ -64,7 +64,7 @@ export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sess
             <main className="max-w-page mx-auto px-6 pt-6 pb-12 space-y-6">
                 <motion.div {...fadeUp(0)}>
                     <HeroSection
-                        name={currentUser?.name || currentUser?.username || 'æáí ÇáÃãÑ'}
+                        name={currentUser?.name || currentUser?.username || 'ÙˆÙ„ÙŠ Ø§Ù„Ø£Ù…Ø±'}
                         children={children}
                         attendanceRate={stats.attendanceRate}
                         academicProgress={stats.academicProgress}
@@ -111,14 +111,14 @@ export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sess
                         <motion.div {...fadeUp(0.3)}>
                             <button onClick={() => navigate('/parent-payment-history')}
                                 className="w-full bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-primary/5 transition-all duration-200 text-start hover:shadow-sm active:scale-[0.99]"
-                                aria-label="ÓÌá ÇáÏİÚÇÊ"
+                                aria-label="Ø³Ø¬Ù„ Ø§Ù„Ø¯ÙØ¹Ø§Øª"
                             >
                                 <div className="w-10 h-10 rounded-xl bg-success-soft dark:bg-primary/15 flex items-center justify-center shrink-0">
                                     <Wallet size={18} className="text-success dark:text-primary" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-bold text-main dark:text-main">ÓÌá ÇáÏİÚÇÊ</p>
-                                    <p className="text-[11px] text-muted dark:text-muted">ÚÑÖ İæÇÊíÑ ÃÈäÇÆß æãÏİæÚÇÊß</p>
+                                    <p className="text-sm font-bold text-main dark:text-white">Ø³Ø¬Ù„ Ø§Ù„Ø¯ÙØ¹Ø§Øª</p>
+                                    <p className="text-sm font-bold text-main dark:text-white">Ø³Ø¬Ù„ Ø§Ù„Ø¯ÙØ¹Ø§Øª</p>
                                 </div>
                                 <ArrowLeft size={16} className="text-muted dark:text-dim shrink-0" />
                             </button>

@@ -1,4 +1,4 @@
-import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react';
+ï»¿import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 
@@ -34,23 +34,23 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
     if (!isOpen || !student) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/40 dark:bg-background/70" dir="rtl">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/40 dark:bg-black/70" dir="rtl">
             <div className="bg-card dark:bg-card border-2 border-border dark:border-primary/20 w-full max-w-xl rounded-none shadow-[12px_12px_0px_0px_black] flex flex-col max-h-[90vh] overflow-hidden">
                 
                 {/* Header Section */}
-                <div className="p-6 border-b-2 border-border dark:border-primary/20 bg-background dark:bg-surface">
+                <div className="p-6 border-b-2 border-border dark:border-primary/20 bg-background dark:bg-[#0a0a0c]">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-5">
-                            <div className="w-16 h-16 bg-background dark:bg-hover text-main dark:text-main rounded-none flex items-center justify-center border-2 border-border dark:border-primary/20 shadow-md shrink-0">
+                            <div className="w-16 h-16 bg-background dark:bg-[#1a1a1e] text-main dark:text-main rounded-none flex items-center justify-center border-2 border-border dark:border-primary/20 shadow-md shrink-0">
                                 <User size={32} />
                             </div>
                             <div>
                                 <h3 className="text-xl font-medium text-main dark:text-main uppercase tracking-tight">{student.name}</h3>
                                 <div className="flex items-center gap-2 mt-2">
-                                    <span className="px-2 py-0.5 bg-background dark:bg-hover text-main dark:text-main text-micro font-medium uppercase">{student.grade}</span>
-                                    <span className="px-2 py-0.5 bg-warning dark:bg-primary text-on-warning dark:text-on-primary border-2 border-border dark:border-primary/20 text-micro font-medium uppercase flex items-center gap-1">
-                                        <Star size={10} className="fill-warning dark:fill-primary" />
-                                        {student.totalPoints || 0} ÇáäÞÇØ
+                                    <span className="px-2 py-0.5 bg-background dark:bg-[#1a1a1e] text-main dark:text-main text-micro font-medium uppercase">{student.grade}</span>
+                                    <span className="px-2 py-0.5 bg-warning dark:bg-primary text-on-warning dark:text-black border-2 border-border dark:border-primary/20 text-micro font-medium uppercase flex items-center gap-1">
+                                        <Star size={10} className="fill-warning dark:fill-[#D4AF37]" />
+                                        {student.totalPoints || 0} Ø§Ù„Ù†Ù‚Ø§Ø·
                                     </span>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                             onClick={onClose}
                             variant="ghost"
                             className="w-8 h-8 rounded-none border-2 border-border dark:border-primary/20 hover:bg-error hover:text-on-error"
-                            aria-label="ÅÛáÇÞ"
+                            aria-label="Ø¥ØºÙ„Ø§Ù‚"
                         >
                             <X size={18} />
                         </Button>
@@ -74,7 +74,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                              <div className="absolute top-2 end-2">
                                 <Sparkles size={16} className="text-warning/30" />
                              </div>
-                             <p className="text-micro font-medium text-warning dark:text-primary uppercase mb-2">ÊÍÖíÑ ÇáÌáÓÉ ÇáÞÇÏãÉ</p>
+                             <p className="text-micro font-medium text-warning dark:text-primary uppercase mb-2">ØªØ­Ø¶ÙŠØ± Ø§Ù„Ø¬Ù„Ø³Ø© Ø§Ù„Ù‚Ø§Ø¯Ù…Ø©</p>
                              <p className="text-sm font-normal text-warning dark:text-primary/80 leading-tight">"{enrollment.nextSessionNotes}"</p>
                         </div>
                     )}
@@ -83,10 +83,10 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                     <div className="space-y-3">
                         <div className="flex items-center gap-2 text-muted dark:text-muted">
                             <MessageSquare size={14} className="text-primary dark:text-primary" />
-                            <h4 className="text-micro font-medium uppercase">ÓíÇÞ æáí ÇáÃãÑ</h4>
+                            <h4 className="text-micro font-medium uppercase">Ø³ÙŠØ§Ù‚ ÙˆÙ„ÙŠ Ø§Ù„Ø£Ù…Ø±</h4>
                         </div>
-                        <div className="text-sm font-normal text-main dark:text-main leading-relaxed bg-background dark:bg-surface p-5 border-2 border-border dark:border-primary/20 rounded-none">
-                            {student.notes || 'áÇ ÊæÌÏ ãáÇÍÙÇÊ ãä æáí ÇáÃãÑ áåÐÇ ÇáØÇáÈ.'}
+                        <div className="text-sm font-normal text-main dark:text-main leading-relaxed bg-background dark:bg-[#0a0a0c] p-5 border-2 border-border dark:border-primary/20 rounded-none">
+                            {student.notes || 'Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ù„Ø§Ø­Ø¸Ø§Øª Ù…Ù† ÙˆÙ„ÙŠ Ø§Ù„Ø£Ù…Ø± Ù„Ù‡Ø°Ø§ Ø§Ù„Ø·Ø§Ù„Ø¨.'}
                         </div>
                     </div>
 
@@ -94,29 +94,29 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                     <div className="space-y-4">
                         <div className="flex items-center gap-2 text-muted dark:text-muted">
                             <TrendingUp size={14} className="text-success" />
-                            <h4 className="text-micro font-medium uppercase">ãÓÇÑ ÇáÊÚáã ÇáÃÎíÑ</h4>
+                            <h4 className="text-micro font-medium uppercase">Ù…Ø³Ø§Ø± Ø§Ù„ØªØ¹Ù„Ù… Ø§Ù„Ø£Ø®ÙŠØ±</h4>
                         </div>
 
                         <div className="space-y-2">
                             {recentSessions.length > 0 ? recentSessions.map((sess, idx) => (
-                                <div key={idx} className="p-4 bg-card dark:bg-card border-2 border-border/10 dark:border-primary/10 hover:border-border dark:hover:border-accent/30 transition-all rounded-none flex items-center justify-between group">
+                                <div key={idx} className="p-4 bg-card dark:bg-card border-2 border-border/10 dark:border-primary/10 hover:border-border dark:hover:border-primary/30 transition-all rounded-none flex items-center justify-between group">
                                     <div className="min-w-0">
                                         <p className="text-micro font-medium text-muted dark:text-muted uppercase mb-1">{sess.date}</p>
                                         <p className="text-sm font-medium text-main dark:text-main truncate uppercase tracking-tight">{sess.topics}</p>
                                         <div className="flex items-center gap-2 mt-1.5">
                                             <div className="w-1.5 h-1.5 rounded-none bg-success border border-border/20"></div>
                                             <p className="text-micro font-medium text-success uppercase">
-                                                ÇáÃÏÇÁ: {sess.rating}
+                                                Ø§Ù„Ø£Ø¯Ø§Ø¡: {sess.rating}
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="w-10 h-10 rounded-none border-2 border-border dark:border-primary/20 flex items-center justify-center bg-background dark:bg-hover text-muted dark:text-muted">
+                                    <div className="w-10 h-10 rounded-none border-2 border-border dark:border-primary/20 flex items-center justify-center bg-background dark:bg-[#1a1a1e] text-muted dark:text-muted">
                                         <Award size={20} />
                                     </div>
                                 </div>
                             )) : (
-                                <div className="py-12 text-center border-2 border-dashed border-border dark:border-primary/20 rounded-none bg-background dark:bg-surface">
-                                    <p className="text-micro text-muted dark:text-muted font-medium uppercase">ãÑÍáÉ ÇáÈÏÁ</p>
+                                <div className="py-12 text-center border-2 border-dashed border-border dark:border-primary/20 rounded-none bg-background dark:bg-[#0a0a0c]">
+                                    <p className="text-micro text-muted dark:text-muted font-medium uppercase">Ù…Ø±Ø­Ù„Ø© Ø§Ù„Ø¨Ø¯Ø¡</p>
                                 </div>
                             )}
                         </div>
@@ -124,20 +124,20 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                 </div>
 
                 {/* Footer Actions */}
-                <div className="p-6 bg-background dark:bg-surface border-t-2 border-border dark:border-primary/20 flex gap-4">
+                <div className="p-6 bg-background dark:bg-[#0a0a0c] border-t-2 border-border dark:border-primary/20 flex gap-4">
                     <Button
                         onClick={() => onGenerateReport?.(student)}
                         className="flex-1 h-12 bg-success text-on-success rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
                     >
                         <Sparkles size={16} />
-                        ÅÕÏÇÑ ÊÞÑíÑ ÔåÑí
+                        Ø¥ØµØ¯Ø§Ø± ØªÙ‚Ø±ÙŠØ± Ø´Ù‡Ø±ÙŠ
                     </Button>
                     <Button
                         onClick={onClose}
                         variant="outline"
                         className="px-8 h-12 rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
                     >
-                        ÅÛáÇÞ
+                        Ø¥ØºÙ„Ø§Ù‚
                     </Button>
                 </div>
             </div>

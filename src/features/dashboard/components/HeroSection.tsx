@@ -10,10 +10,10 @@ interface HeroSectionProps {
 }
 
 const roleLabels: Record<string, string> = {
-    admin: 'ÇáãÏíÑ ÇáÊäÝíÐí',
-    teacher: 'ãÚáã',
-    parent: 'æáí ÃãÑ',
-    student: 'ØÇáÈ',
+    admin: 'Ø§Ù„Ù…Ø¯ÙŠØ± Ø§Ù„ØªÙ†ÙÙŠØ°ÙŠ',
+    teacher: 'Ù…Ø¹Ù„Ù…',
+    parent: 'ÙˆÙ„ÙŠ Ø£Ù…Ø±',
+    student: 'Ø·Ø§Ù„Ø¨',
 };
 
 export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
@@ -24,14 +24,14 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
     }, []);
 
     const hour = new Date().getHours();
-    const greeting = hour < 12 ? 'ÕÈÇÍ ÇáÎíÑ' : 'ãÓÇÁ ÇáÎíÑ';
+    const greeting = hour < 12 ? 'ØµØ¨Ø§Ø­ Ø§Ù„Ø®ÙŠØ±' : 'Ù…Ø³Ø§Ø¡ Ø§Ù„Ø®ÙŠØ±';
 
     const dateStr = useMemo(() => new Intl.DateTimeFormat('ar-EG', {
         weekday: 'long', day: 'numeric', month: 'long',
     }).format(new Date()), []);
 
-    const firstName = (currentUser?.name || 'ÇáãÓÊÎÏã').split(' ')[0];
-    const roleLabel = roleLabels[currentUser?.role || ''] || 'ãÓÊÎÏã';
+    const firstName = (currentUser?.name || 'Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…').split(' ')[0];
+    const roleLabel = roleLabels[currentUser?.role || ''] || 'Ù…Ø³ØªØ®Ø¯Ù…';
 
     const performanceScore = stats?.attendanceRate
         ? Math.round((stats.attendanceRate * 0.4) + ((stats.totalNetProfit || 0) > 0 ? 30 : 10) + (stats.studentsCount > 0 ? 20 : 0) + (stats.monthCompletedSessions > 0 ? 10 : 0))
@@ -41,19 +41,19 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
         {
             icon: TrendingUp,
             value: `+${Math.max(0, stats?.monthCompletedSessions || 0)}`,
-            label: 'äãæ åÐÇ ÇáÃÓÈæÚ',
+            label: 'Ù†Ù…Ùˆ Ù‡Ø°Ø§ Ø§Ù„Ø£Ø³Ø¨ÙˆØ¹',
             trend: 'up',
         },
         {
             icon: Users,
             value: stats?.studentsCount || 0,
-            label: 'ØÇáÈ äÔØ',
+            label: 'Ø·Ø§Ù„Ø¨ Ù†Ø´Ø·',
             trend: 'up',
         },
         {
             icon: Target,
             value: `${Math.min(100, performanceScore)}%`,
-            label: 'ãÄÔÑ ÇáÃÏÇÁ',
+            label: 'Ù…Ø¤Ø´Ø± Ø§Ù„Ø£Ø¯Ø§Ø¡',
             trend: performanceScore > 60 ? 'up' : 'down',
         },
     ];
@@ -63,7 +63,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary dark:via-primary-deep dark:to-warning p-6 md:p-8"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-[#D4AF37] dark:via-[#b8962e] dark:to-[#f59e0b] p-6 md:p-8"
             dir="rtl"
         >
             {/* Pattern */}
@@ -91,7 +91,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                            className="w-14 h-14 rounded-2xl bg-white/20 dark:bg-background/20 flex items-center justify-center shadow-lg shadow-black/10 ring-2 ring-white/30 dark:ring-black/20 backdrop-blur-sm"
+                            className="w-14 h-14 rounded-2xl bg-white/20 dark:bg-black/20 flex items-center justify-center shadow-lg shadow-black/10 ring-2 ring-white/30 dark:ring-black/20 backdrop-blur-sm"
                         >
                             <span className="text-xl font-bold text-white">{firstName.charAt(0)}</span>
                         </motion.div>
@@ -102,7 +102,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
                                 transition={{ delay: 0.25, duration: 0.4 }}
                                 className="text-lg md:text-2xl font-bold text-white leading-tight"
                             >
-                                {greeting}¡ {firstName}
+                                {greeting}ØŒ {firstName}
                             </motion.h1>
                             <motion.div
                                 initial={{ opacity: 0 }}
@@ -136,7 +136,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.45, duration: 0.3 }}
                             className="relative w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-white/80 hover:bg-white/25 transition-colors backdrop-blur-sm"
-                            aria-label="ÇáÅÔÚÇÑÇÊ"
+                            aria-label="Ø§Ù„Ø¥Ø´Ø¹Ø§Ø±Ø§Øª"
                         >
                             <Bell size={16} />
                             <span className="absolute -top-0.5 -end-0.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-primary-deep dark:border-primary" />
