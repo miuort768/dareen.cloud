@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, X, CheckCircle2, XCircle, Lock, BookOpen, Star } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { Button } from '../components/ui/Button';
 
 interface SecureAttendanceModalProps {
     isOpen: boolean;
@@ -50,81 +51,93 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-x-hidden overflow-y-auto" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
             <div
-                className="fixed inset-0 bg-background/60 backdrop-blur-sm"
+                className="fixed inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-card border border-border shadow-2xl w-full max-w-md overflow-hidden rounded-none">
-                <div className="bg-primary p-4 text-on-primary flex justify-between items-center">
-                    <div className="flex items-center gap-2 font-bold">
-                        <ShieldCheck size={20} />
-                        <span>تسجيل حضور مؤكد</span>
-                    </div>
-                    <button onClick={onClose} className="text-on-primary/80 hover:text-on-primary" aria-label="إغلاق">
-                        <X size={20} />
-                    </button>
-                </div>
+            <div className="relative bg-card dark:bg-card border border-border shadow-elevation-3 w-full max-w-md overflow-hidden rounded-2xl animate-in zoom-in-95 duration-200">
+                {/* Accent bar */}
+                <div className="h-1 w-full bg-primary"></div>
 
-                <div className="p-6 space-y-6">
-                    <div className="text-center">
-                        <p className="text-sm text-muted font-bold mb-1">تسجيل للطالب</p>
-                        <h3 className="text-lg font-bold text-main">{studentName}</h3>
-                        <p className="text-xs text-primary font-bold mt-1 bg-primary-soft inline-block px-2 py-1 rounded-none dark:bg-primary/20">
+                <div className="p-6">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-5">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-primary/10 dark:bg-primary/15 flex items-center justify-center">
+                                <ShieldCheck size={20} className="text-primary" />
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-bold text-main">تسجيل حضور مؤكد</h3>
+                                <p className="text-[11px] text-muted">كلمة مرور المشرف مطلوبة</p>
+                            </div>
+                        </div>
+                        <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg text-muted hover:bg-hover hover:text-main transition-all" aria-label="إغلاق">
+                            <X size={16} />
+                        </button>
+                    </div>
+
+                    {/* Student info */}
+                    <div className="text-center mb-5 p-4 bg-surface dark:bg-hover rounded-xl">
+                        <p className="text-[11px] text-muted font-medium mb-1">تسجيل للطالب</p>
+                        <h4 className="text-base font-bold text-main">{studentName}</h4>
+                        <span className="text-[11px] text-primary font-bold mt-1 inline-block bg-primary/10 px-2.5 py-1 rounded-lg">
                             بتاريخ: {date}
-                        </p>
+                        </span>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    {/* Status toggle */}
+                    <div className="grid grid-cols-2 gap-2.5 mb-5">
                         <button
                             onClick={() => setStatus('completed')}
                             className={cn(
-                                "flex flex-col items-center gap-2 p-3 rounded-none border-2",
+                                "flex flex-col items-center gap-2 p-3.5 rounded-xl border-2 transition-all",
                                 status === 'completed'
-                                    ? "border-success bg-success-light text-success dark:bg-success/20"
-                                    : "border-border bg-white text-muted hover:border-success dark:bg-card dark:border-border"
+                                    ? "border-success bg-success/10 text-success"
+                                    : "border-border bg-surface text-muted hover:border-success/50"
                             )}
                         >
-                            <CheckCircle2 size={24} className={status === 'completed' ? "text-success" : "text-dim"} />
-                            <span className="font-bold text-sm">حضور</span>
+                            <CheckCircle2 size={22} className={status === 'completed' ? "text-success" : "text-dim"} />
+                            <span className="font-bold text-xs">حضور</span>
                         </button>
                         <button
                             onClick={() => setStatus('cancelled')}
                             className={cn(
-                                "flex flex-col items-center gap-2 p-3 rounded-none border-2",
+                                "flex flex-col items-center gap-2 p-3.5 rounded-xl border-2 transition-all",
                                 status === 'cancelled'
-                                    ? "border-error bg-error-light text-error dark:bg-error/20"
-                                    : "border-border bg-white text-muted hover:border-error dark:bg-card dark:border-border"
+                                    ? "border-error bg-error/10 text-error"
+                                    : "border-border bg-surface text-muted hover:border-error/50"
                             )}
                         >
-                            <XCircle size={24} className={status === 'cancelled' ? "text-error" : "text-dim"} />
-                            <span className="font-bold text-sm">غياب</span>
+                            <XCircle size={22} className={status === 'cancelled' ? "text-error" : "text-dim"} />
+                            <span className="font-bold text-xs">غياب</span>
                         </button>
                     </div>
 
+                    {/* Completed fields */}
                     {status === 'completed' && (
-                        <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
-                            <div className="space-y-2">
-                                <label htmlFor="attendance-topics" className="text-micro font-semibold text-muted uppercase tracking-widest flex items-center gap-2">
+                        <div className="space-y-3.5 mb-5 animate-in fade-in slide-in-from-top-2 duration-200">
+                            <div className="space-y-1.5">
+                                <label htmlFor="attendance-topics" className="text-[11px] font-bold text-muted flex items-center gap-1.5">
                                     <BookOpen size={12} className="text-success" /> ما تم إنجازه في الحصة
                                 </label>
-                                <textarea 
+                                <textarea
                                     id="attendance-topics"
                                     placeholder="مثلاً: مراجعة سورة البقرة، أول 10 آيات..."
-                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-success focus:bg-white transition-all text-xs font-bold leading-relaxed dark:bg-card dark:text-main"
+                                    className="w-full p-3 bg-surface dark:bg-hover border border-border rounded-xl focus:border-success focus:ring-1 focus:ring-success/20 transition-all text-xs font-medium leading-relaxed dark:text-main resize-none"
                                     rows={2}
                                     value={topics}
                                     onChange={(e) => setTopics(e.target.value)}
                                 />
                             </div>
-                            <div className="space-y-2">
-                                <label htmlFor="attendance-homework" className="text-micro font-semibold text-muted uppercase tracking-widest flex items-center gap-2">
+                            <div className="space-y-1.5">
+                                <label htmlFor="attendance-homework" className="text-[11px] font-bold text-muted flex items-center gap-1.5">
                                     <Star size={12} className="text-warning" /> الواجب المطلوب
                                 </label>
-                                <input 
+                                <input
                                     id="attendance-homework"
                                     type="text"
                                     placeholder="مثلاً: حفظ الجزء الثاني من الصفحة..."
-                                    className="w-full p-4 bg-background border-2 border-border rounded-none focus:border-warning focus:bg-white transition-all text-xs font-bold dark:bg-card dark:text-main"
+                                    className="w-full p-3 bg-surface dark:bg-hover border border-border rounded-xl focus:border-warning focus:ring-1 focus:ring-warning/20 transition-all text-xs font-medium dark:text-main"
                                     value={homework}
                                     onChange={(e) => setHomework(e.target.value)}
                                 />
@@ -132,25 +145,27 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                         </div>
                     )}
 
+                    {/* Cancelled checkbox */}
                     {status === 'cancelled' && (
-                        <div className="animate-in fade-in slide-in-from-top-4 duration-300">
-                            <label className="flex items-center gap-3 p-4 bg-error-light border-2 border-error cursor-pointer hover:bg-error-light/50 transition-colors">
-                                <input 
+                        <div className="mb-5 animate-in fade-in slide-in-from-top-2 duration-200">
+                            <label className="flex items-center gap-3 p-3.5 bg-error/5 border border-error/20 rounded-xl cursor-pointer hover:bg-error/10 transition-colors">
+                                <input
                                     type="checkbox"
                                     checked={needsCompensation}
                                     onChange={(e) => setNeedsCompensation(e.target.checked)}
-                                    className="w-5 h-5 rounded-none accent-error cursor-pointer"
+                                    className="w-4 h-4 rounded accent-error cursor-pointer"
                                 />
                                 <div>
-                                    <p className="text-sm font-semibold text-error uppercase tracking-tighter">تحتاج لحصة تعويض؟</p>
-                                    <p className="text-micro font-bold text-error">سيتم إضافتها لقائمة الانتظار لجدولتها لاحقاً</p>
+                                    <p className="text-xs font-bold text-main">تحتاج لحصة تعويض؟</p>
+                                    <p className="text-[10px] text-muted">سيتم إضافتها لقائمة الانتظار لجدولتها لاحقاً</p>
                                 </div>
                             </label>
                         </div>
                     )}
 
-                    <div className="space-y-2">
-                        <label htmlFor="attendance-password" className="text-xs font-bold text-muted dark:text-dim flex items-center gap-1">
+                    {/* Password */}
+                    <div className="space-y-1.5 mb-5">
+                        <label htmlFor="attendance-password" className="text-[11px] font-bold text-muted flex items-center gap-1.5">
                             <Lock size={12} /> كلمة المرور للتأكيد
                         </label>
                         <input
@@ -163,20 +178,23 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                             }}
                             placeholder="أدخل كلمة المرور..."
                             className={cn(
-                                "w-full p-3 bg-background border rounded-none outline-none focus:ring-0 focus:border-primary dark:bg-card dark:text-main text-center font-mono tracking-widest",
-                                error ? "border-error" : "border-border"
+                                "w-full p-3 bg-surface dark:bg-hover border rounded-xl outline-none focus:ring-1 transition-all text-xs font-medium text-center font-mono tracking-widest dark:text-main",
+                                error ? "border-error focus:ring-error/20" : "border-border focus:border-primary focus:ring-primary/20"
                             )}
                             autoFocus
                         />
-                        {error && <p className="text-xs text-error font-bold text-center">{error}</p>}
+                        {error && <p className="text-[11px] text-error font-bold text-center">{error}</p>}
                     </div>
 
-                    <button
+                    {/* Submit */}
+                    <Button
                         onClick={handleConfirm}
-                        className="w-full bg-primary text-on-primary py-3 rounded-none font-bold shadow-lg shadow-primary/20 hover:bg-primary-hover flex items-center justify-center gap-2"
+                        variant="primary"
+                        size="lg"
+                        className="w-full"
                     >
                         تأكيد التسجيل
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>

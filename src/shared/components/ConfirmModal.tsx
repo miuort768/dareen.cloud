@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import { AlertCircle, X, Trash2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { Button } from '../components/ui/Button';
 
 interface ConfirmModalProps {
     isOpen: boolean;
@@ -54,68 +55,66 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     return (
         <div ref={containerRef} className="fixed inset-0 z-[100] flex items-center justify-center p-4" dir="rtl" onKeyDown={handleKeyDown} role="dialog" aria-modal="true" aria-label={title}>
             <div
-                className="fixed inset-0 bg-background/60 backdrop-blur-md animate-in fade-in duration-300"
+                className="fixed inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-surface border border-border shadow-broad w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
+            <div className="relative bg-card dark:bg-card border border-border shadow-elevation-3 w-full max-w-md overflow-hidden rounded-2xl animate-in zoom-in-95 duration-200">
+                {/* Accent bar */}
                 <div className={cn(
-                    "h-1.5 w-full",
-                    isDestructive ? "bg-error" : "bg-[var(--primary-color,var(--bg-primary))]"
+                    "h-1 w-full",
+                    isDestructive ? "bg-error" : "bg-primary"
                 )}></div>
 
-                <div className="absolute top-0 start-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-
-                <div className="p-10 relative z-10">
+                <div className="p-6 relative">
+                    {/* Close button */}
                     <button
                         onClick={onClose}
-                        className="absolute top-4 start-4 p-2 text-muted hover:text-main transition-colors"
+                        className="absolute top-4 start-4 w-8 h-8 flex items-center justify-center rounded-lg text-muted hover:bg-hover hover:text-main transition-all"
                         aria-label="إغلاق"
                     >
-                        <X size={18} />
+                        <X size={16} />
                     </button>
 
-                    <div className="flex flex-col items-center text-center">
+                    <div className="flex flex-col items-center text-center pt-2">
+                        {/* Icon */}
                         <div className={cn(
-                            "w-20 h-20 rounded-none flex items-center justify-center mb-8 border-2 rotate-3 shadow-xl",
+                            "w-16 h-16 rounded-2xl flex items-center justify-center mb-5",
                             isDestructive
-                                ? "bg-error-light text-error border-error dark:bg-error/20 dark:border-error/30"
-                                : "bg-primary-soft text-[var(--primary-color,var(--bg-primary))] border-primary dark:bg-card dark:border-border"
+                                ? "bg-error/10 text-error dark:bg-error/15"
+                                : "bg-primary/10 text-primary dark:bg-primary/15"
                         )}>
-                            <div className="-rotate-3">
-                                {isDestructive ? <Trash2 size={36} strokeWidth={1.5} /> : <AlertCircle size={36} strokeWidth={1.5} />}
-                            </div>
+                            {isDestructive ? <Trash2 size={28} strokeWidth={1.5} /> : <AlertCircle size={28} strokeWidth={1.5} />}
                         </div>
 
-                        <h3 className="text-2xl font-bold text-main mb-4 uppercase tracking-tighter italic">
+                        {/* Title */}
+                        <h3 className="text-lg font-bold text-main mb-2">
                             {title}
                         </h3>
 
-                        <p className="text-muted font-bold text-xs leading-relaxed mb-10 text-center max-w-[280px]">
+                        {/* Message */}
+                        <p className="text-muted text-sm leading-relaxed mb-6 max-w-[280px]">
                             {message}
                         </p>
 
-                        <div className="flex flex-col gap-3 w-full">
-                            <button
-                                onClick={() => {
-                                    onConfirm();
-                                    onClose();
-                                }}
-                                className={cn(
-                                    "px-6 h-14 text-on-primary font-bold text-xs uppercase tracking-label shadow-xl transition-all active:scale-95 rounded-none",
-                                    isDestructive
-                                        ? "bg-error hover:bg-error shadow-error/20"
-                                        : "bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 shadow-primary/20"
-                                )}
+                        {/* Buttons */}
+                        <div className="flex flex-col gap-2.5 w-full">
+                            <Button
+                                onClick={() => { onConfirm(); onClose(); }}
+                                variant={isDestructive ? 'destructive' : 'primary'}
+                                size="lg"
+                                className="w-full"
                             >
                                 {confirmText}
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                                 onClick={onClose}
-                                className="px-6 h-12 bg-background text-muted font-medium text-micro uppercase tracking-widest hover:bg-surface transition-all rounded-none"
+                                variant="secondary"
+                                size="lg"
+                                className="w-full"
                             >
                                 {cancelText}
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>

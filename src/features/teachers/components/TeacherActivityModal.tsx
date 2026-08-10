@@ -17,51 +17,56 @@ export const TeacherActivityModal = ({ isOpen, onClose, teacherName, sessions, i
         <AnimatePresence>
         {isOpen && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center p-4 lg:p-12" dir="rtl" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
-            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose}></div>
-            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} className="relative bg-card border border-border shadow-elevation-2 w-full max-w-4xl h-full max-h-[85vh] flex flex-col overflow-hidden rounded-2xl">
-                <div className="bg-primary px-5 py-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/15">
-                            <Clock size={20} className="text-on-primary" />
+            <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose}></div>
+            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }} transition={{ type: 'spring', damping: 25, stiffness: 300 }} className="relative bg-card dark:bg-card border border-border shadow-elevation-3 w-full max-w-4xl h-full max-h-[85vh] flex flex-col overflow-hidden rounded-2xl">
+                {/* Header */}
+                <div className="shrink-0 bg-gradient-to-l from-primary via-primary-hover to-primary p-5">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="w-11 h-11 rounded-xl flex items-center justify-center bg-white/15">
+                                <Clock size={20} className="text-on-primary" />
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-bold text-on-primary">سجل نشاطات المعلمة</h3>
+                                <p className="text-xs text-on-primary/70">{teacherName}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 className="text-sm font-bold text-on-primary">سجل نشاطات المعلمة</h3>
-                            <p className="text-xs text-on-primary/70">{teacherName}</p>
-                        </div>
+                        <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 rounded-xl transition-all" aria-label="إغلاق">
+                            <X size={18} className="text-on-primary" />
+                        </button>
                     </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 rounded-xl transition-all" aria-label="إغلاق">
-                        <X size={18} className="text-on-primary" />
-                    </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-4">
+                {/* Content */}
+                <div className="flex-1 overflow-y-auto p-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                         {sessions.map(session => (
-                            <div key={session.id} className="bg-surface border border-border p-3 rounded-2xl hover:-translate-y-0.5 transition-all relative overflow-hidden">
+                            <div key={session.id} className="bg-surface dark:bg-hover border border-border p-3.5 rounded-xl hover:shadow-md hover:-translate-y-0.5 transition-all relative overflow-hidden group">
+                                {/* Status indicator */}
                                 <div className={cn(
                                     "absolute top-0 start-0 w-1 h-full rounded-s-full",
                                     session.status === 'completed' ? "bg-success" : "bg-error"
                                 )} />
 
                                 <div className="flex justify-between items-start mb-3">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-primary-soft text-primary">
-                                            <Calendar size={12} />
+                                    <div className="flex items-center gap-2.5">
+                                        <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-primary/10 dark:bg-primary/15">
+                                            <Calendar size={14} className="text-primary" />
                                         </div>
                                         <div className="min-w-0">
-                                            <p className="text-xs text-main truncate">{session.studentName}</p>
+                                            <p className="text-xs font-bold text-main truncate">{session.studentName}</p>
                                             <p className="text-[10px] text-muted">{session.date}</p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-between pt-3 border-t border-border">
-                                    <div className="flex items-center gap-1.5 text-xs text-muted">
-                                        <Clock size={8} /> {session.time}
+                                <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                                    <div className="flex items-center gap-1.5 text-[11px] text-muted">
+                                        <Clock size={10} /> {session.time}
                                     </div>
                                     {!isTeacherView && (
-                                        <button onClick={() => onDeleteSession(session.id)} className="min-w-[24px] min-h-[24px] w-6 h-6 flex items-center justify-center text-muted hover:text-error rounded transition-colors" aria-label="حذف">
-                                            <Trash2 size={10} />
+                                        <button onClick={() => onDeleteSession(session.id)} className="min-w-[24px] min-h-[24px] w-6 h-6 flex items-center justify-center text-muted hover:text-error opacity-0 group-hover:opacity-100 rounded-lg hover:bg-error/10 transition-all" aria-label="حذف">
+                                            <Trash2 size={12} />
                                         </button>
                                     )}
                                 </div>
@@ -69,9 +74,11 @@ export const TeacherActivityModal = ({ isOpen, onClose, teacherName, sessions, i
                         ))}
                     </div>
                     {sessions.length === 0 && (
-                        <div className="h-full flex flex-col items-center justify-center opacity-20 py-20">
-                            <Clock size={48} className="mb-4" />
-                            <p className="text-xs">لا توجد نشاطات مسجلة</p>
+                        <div className="h-full flex flex-col items-center justify-center py-20">
+                            <div className="w-16 h-16 rounded-2xl bg-surface dark:bg-hover flex items-center justify-center mb-4">
+                                <Clock size={28} className="text-muted/30" />
+                            </div>
+                            <p className="text-sm font-bold text-muted">لا توجد نشاطات مسجلة</p>
                         </div>
                     )}
                 </div>

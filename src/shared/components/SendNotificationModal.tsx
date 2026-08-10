@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Send, Bell } from 'lucide-react';
+import { Button } from '../components/ui/Button';
 
 interface SendNotificationModalProps {
     isOpen: boolean;
@@ -30,75 +31,69 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" dir="rtl" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') onClose(); }}>
             <div
-                className="fixed inset-0 bg-background/60 backdrop-blur-md animate-in fade-in duration-300"
+                className="fixed inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-white dark:bg-surface border border-border shadow-broad w-full max-w-md overflow-hidden rounded-none animate-in zoom-in-95 duration-200">
-                {/* Visual Header Accent */}
-                <div className="h-1.5 w-full bg-[var(--primary-color,var(--bg-primary))]"></div>
+            <div className="relative bg-card dark:bg-card border border-border shadow-elevation-3 w-full max-w-md overflow-hidden rounded-2xl animate-in zoom-in-95 duration-200">
+                {/* Accent bar */}
+                <div className="h-1 w-full bg-primary"></div>
 
-                {/* Decorative Geometric Background */}
-                <div className="absolute top-0 start-0 w-32 h-32 bg-background dark:bg-white/5 -rotate-45 translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-
-                <div className="p-10 relative z-10">
-                    <button
-                        onClick={onClose}
-                        className="absolute top-4 start-4 p-2 text-muted hover:text-main transition-colors"
-                        aria-label="إغلاق"
-                    >
-                        <X size={18} />
-                    </button>
-
-                    <div className="flex flex-col items-center text-center">
-                        <div className="w-20 h-20 bg-primary-soft text-[var(--primary-color,var(--bg-primary))] border-2 border-primary dark:bg-card dark:border-border flex items-center justify-center mb-6 shadow-xl rotate-3">
-                            <div className="-rotate-3">
-                                <Bell size={36} strokeWidth={1.5} />
+                <div className="p-6">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-5">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-primary/10 dark:bg-primary/15 flex items-center justify-center">
+                                <Bell size={20} className="text-primary" />
+                            </div>
+                            <div>
+                                <h3 className="text-sm font-bold text-main">بث إشعار فوري</h3>
+                                <p className="text-[11px] text-muted">إلى: <span className="text-primary font-bold">{recipientName}</span></p>
                             </div>
                         </div>
-
-                        <h3 className="text-2xl font-bold text-main mb-1 uppercase tracking-tighter italic">
-                            بث إشعار فوري
-                        </h3>
-                        <p className="text-muted font-bold text-micro mb-8 uppercase tracking-widest">
-                            إلى: <span className="text-[var(--primary-color,var(--bg-primary))]">{recipientName}</span>
-                        </p>
-
-                        <form onSubmit={handleSubmit} className="w-full space-y-6 text-start">
-                            <div className="space-y-2">
-                                <label htmlFor="notification-message" className="text-micro font-semibold text-muted uppercase tracking-label ms-1">محتوى التنبيه</label>
-                                <textarea
-                                    id="notification-message"
-                                    required
-                                    autoFocus
-                                    value={message}
-                                    onChange={(e) => setMessage(e.target.value)}
-                                    placeholder="اكتب رسالتك هنا..."
-                                    className="w-full h-32 p-4 bg-background border border-border rounded-none focus:outline-none focus:border-[var(--primary-color,var(--bg-primary))] text-xs font-normal resize-none leading-relaxed transition-all"
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-3 w-full">
-                                <button
-                                    type="submit"
-                                    disabled={!message.trim()}
-                                    className="px-6 h-14 bg-[var(--primary-color,var(--bg-primary))] hover:opacity-90 text-on-primary font-bold text-xs uppercase tracking-label shadow-xl shadow-primary/10 rounded-none disabled:opacity-30 transition-all active:scale-95"
-                                >
-                                    <div className="flex items-center justify-center gap-3">
-                                        <span>إرسال التنبيه الآن</span>
-                                        <Send size={16} />
-                                    </div>
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={onClose}
-                                    className="px-6 h-12 bg-background text-muted font-medium text-micro uppercase tracking-widest hover:bg-surface transition-all rounded-none"
-                                >
-                                    إلغاء العملية
-                                </button>
-                            </div>
-                        </form>
+                        <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg text-muted hover:bg-hover hover:text-main transition-all" aria-label="إغلاق">
+                            <X size={16} />
+                        </button>
                     </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        {/* Message */}
+                        <div className="space-y-1.5">
+                            <label htmlFor="notification-message" className="text-[11px] font-bold text-muted">محتوى التنبيه</label>
+                            <textarea
+                                id="notification-message"
+                                required
+                                autoFocus
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                placeholder="اكتب رسالتك هنا..."
+                                className="w-full h-28 p-3 bg-surface dark:bg-hover border border-border rounded-xl focus:border-primary focus:ring-1 focus:ring-primary/20 text-xs font-medium resize-none leading-relaxed transition-all outline-none dark:text-main"
+                            />
+                        </div>
+
+                        {/* Buttons */}
+                        <div className="flex flex-col gap-2.5">
+                            <Button
+                                type="submit"
+                                variant="primary"
+                                size="lg"
+                                className="w-full"
+                                disabled={!message.trim()}
+                                rightIcon={<Send size={16} />}
+                            >
+                                إرسال التنبيه الآن
+                            </Button>
+                            <Button
+                                type="button"
+                                variant="secondary"
+                                size="lg"
+                                className="w-full"
+                                onClick={onClose}
+                            >
+                                إلغاء
+                            </Button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
