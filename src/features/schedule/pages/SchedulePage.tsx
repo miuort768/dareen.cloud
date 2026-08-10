@@ -85,7 +85,7 @@ export const Schedule = () => {
                 .flatMap(enrollment =>
                     (enrollment.schedule || []).map(slot => {
                         const normalizedPeriod = (slot.period || '').trim().toLowerCase();
-                        const isAM = ['am', 'صباحاً', 'صباحا', 'ص'].includes(normalizedPeriod);
+                        const isAM = ['am', 'صباحاً', 'صباحا', 'ص', 'am.', 'a.m', 'a.m.'].includes(normalizedPeriod) || normalizedPeriod.startsWith('صباح');
                         const sId = student.id;
                         return {
                             id: `${sId}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,

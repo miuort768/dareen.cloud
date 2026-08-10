@@ -51,8 +51,25 @@ const getSubjectColor = (subject: string) => {
     return SUBJECT_COLORS[normalized] || FALLBACK_COLORS[Math.abs(normalized.length) % FALLBACK_COLORS.length];
 };
 
-const EventCard = ({ event, onSelect }: { event: ScheduleEvent; onSelect: () => void }) => {
+const EventCard = ({ event, onSelect, compact }: { event: ScheduleEvent; onSelect: () => void; compact?: boolean }) => {
     const c = getSubjectColor(event.subject);
+    if (compact) {
+        return (
+            <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={onSelect}
+                className={`relative rounded cursor-pointer transition-all border ${c.border} ${c.lightBg} hover:shadow-md hover:z-10`}
+            >
+                <div className={`absolute top-0 start-0 w-full h-0.5 ${c.bg} rounded-t`} />
+                <div className="px-1 py-0.5 flex items-center gap-1">
+                    <div className={`w-1 h-1 rounded-full ${c.bg} shrink-0`} />
+                    <span className="text-[6px] font-bold text-main truncate">{event.studentName}</span>
+                    <span className={`text-[5px] font-bold ${c.text} me-auto shrink-0`}>{event.subject}</span>
+                </div>
+            </motion.div>
+        );
+    }
     return (
         <motion.div
             whileHover={{ scale: 1.02 }}
@@ -107,8 +124,6 @@ interface ScheduleGridProps {
     onSelectEvent: (event: ScheduleEvent) => void;
 }
 
-const areEventsOverlapping = (events: ScheduleEvent[]) => events.length > 1;
-
 export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: ScheduleGridProps) => {
     const isToday = useCallback((day: string) => new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day, []);
     const getDayEvents = (events: ScheduleEvent[], day: string) => events.filter(e => e.day === day);
@@ -148,17 +163,15 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                                 {/* Day cells */}
                                 {DAYS_OF_WEEK.map((day) => {
                                     const dayEvents = getDayEvents(currentTimeSlots, day);
-                                    const overlapping = areEventsOverlapping(dayEvents);
-                                    const displayedEvents = overlapping ? dayEvents.slice(0, 2) : dayEvents;
-                                    const extraCount = overlapping ? dayEvents.length - 2 : 0;
+                                    const count = dayEvents.length;
+                                    const showCompact = count > 2;
 
                                     return (
                                         <div key={`${day}-${slot.hour}`}
                                             className={`relative border-e border-border/40 last:border-e-0 border-b border-border/40 min-h-[80px] p-0.5 transition-colors
                                                 ${isToday(day) ? 'bg-primary/[2%]' : ''}
                                                 group`}>
-                                            {/* Empty cell with + add button */}
-                                            {dayEvents.length === 0 ? (
+                                            {count === 0 ? (
                                                 <div className="h-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
                                                     <div className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center">
                                                         <Plus size={10} className="text-primary" />
@@ -167,15 +180,20 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                                                 </div>
                                             ) : (
                                                 <div className="space-y-0.5 p-0.5 h-full">
-                                                    {/* Cards */}
-                                                    {displayedEvents.map(event => (
-                                                        <EventCard key={event.id} event={event} onSelect={() => onSelectEvent(event)} />
+                                                    {dayEvents.map((event, eIdx) => (
+                                                        <EventCard
+                                                            key={event.id}
+                                                            event={event}
+                                                            onSelect={() => onSelectEvent(event)}
+                                                            compact={showCompact && eIdx >= 1}
+                                                        />
                                                     ))}
-                                                    {extraCount > 0 && (
-                                                        <button onClick={() => onSelectEvent(dayEvents[0])}
-                                                            className="w-full py-0.5 text-[7px] font-bold text-primary bg-primary/[6%] hover:bg-primary/[10%] rounded transition-colors">
-                                                            +{extraCount} أخرى
-                                                        </button>
+                                                    {count > 3 && (
+                                                        <div className="text-center">
+                                                            <span className="text-[5px] font-bold text-primary bg-primary/[6%] px-1.5 py-0.5 rounded-full">
+                                                                +{count - 1} أخرى
+                                                            </span>
+                                                        </div>
                                                     )}
                                                 </div>
                                             )}
