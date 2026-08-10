@@ -2,6 +2,7 @@
 import { X, Phone, CheckCircle2, Edit3, UserPlus, Tag, Calendar, AlertTriangle, Save, Clock, Trash2, Edit, MessageSquare } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from '../../../shared/components/ui/Button';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
 import { GradientAvatar, getLeadAge, statusColors, getPriority } from './LeadsUI';
 
@@ -153,26 +154,28 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                     <div className="flex items-center gap-2 flex-wrap">
                         {isEditing ? (
                             <>
-                                <button onClick={handleSave} className="flex-1 h-9 flex items-center justify-center gap-1.5 text-[11px] font-bold text-on-primary bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] rounded-xl transition-all active:scale-[0.98]">
+                                <Button onClick={handleSave} variant="primary" size="sm" className="flex-1">
                                     <Save size={12} /> حفظ
-                                </button>
-                                <button onClick={() => setIsEditing(false)} className="flex-1 h-9 flex items-center justify-center gap-1.5 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">إلغاء</button>
+                                </Button>
+                                <Button onClick={() => setIsEditing(false)} variant="secondary" size="sm" className="flex-1">
+                                    إلغاء
+                                </Button>
                             </>
                         ) : (
                             <>
-                                <button onClick={() => window.open(`tel:${lead.phone}`)} className="h-9 px-3 flex items-center justify-center gap-1.5 text-[11px] font-bold text-success bg-success/10 dark:bg-success/15 hover:bg-success/20 rounded-xl transition-all">
+                                <Button onClick={() => window.open(`tel:${lead.phone}`)} variant="success" size="sm">
                                     <Phone size={12} /> اتصال
-                                </button>
-                                <button onClick={() => window.open(`https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}`, '_blank')} className="h-9 px-3 flex items-center justify-center gap-1.5 text-[11px] font-bold text-success bg-success/10 dark:bg-success/15 hover:bg-success/20 rounded-xl transition-all">
+                                </Button>
+                                <Button onClick={() => window.open(`https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}`, '_blank')} variant="success" size="sm">
                                     <MessageSquare size={12} /> واتساب
-                                </button>
-                                <button onClick={() => setIsEditing(true)} className="h-9 px-3 flex items-center justify-center gap-1.5 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">
+                                </Button>
+                                <Button onClick={() => setIsEditing(true)} variant="secondary" size="sm">
                                     <Edit size={12} /> تعديل
-                                </button>
+                                </Button>
                                 {lead.status !== 'converted' && (
-                                    <button onClick={() => updateMutation.mutate({ id: lead.id, updates: { status: 'converted' as LeadStatus } })} className="h-9 px-3 flex items-center justify-center gap-1.5 text-[11px] font-bold text-info bg-info/10 dark:bg-info/15 hover:bg-info/20 rounded-xl transition-all">
+                                    <Button onClick={() => updateMutation.mutate({ id: lead.id, updates: { status: 'converted' as LeadStatus } })} variant="outline" size="sm">
                                         <CheckCircle2 size={12} /> تحويل
-                                    </button>
+                                    </Button>
                                 )}
                             </>
                         )}

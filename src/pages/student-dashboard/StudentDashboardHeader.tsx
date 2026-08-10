@@ -5,6 +5,7 @@ import { useCurrentUser } from '../../context/AppContext';
 import { confirm } from '../../lib/confirmDialog';
 import { cn } from '../../lib/utils';
 import { Image } from '../../shared/components/ui';
+import { IconButton } from '../../shared/components/ui/IconButton';
 
 interface StudentDashboardHeaderProps {
     logout: () => void;
@@ -47,28 +48,27 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
                     </div>
 
                     <div className="flex items-center gap-1.5">
-                        <button
+                        <IconButton
+                            icon={theme === 'dark' ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
+                            label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                            aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-                            className="w-10 h-10 rounded-lg bg-card dark:bg-card border border-border dark:border-primary/20 flex items-center justify-center text-muted dark:text-primary transition-all duration-200 hover:bg-hover hover:text-main dark:hover:bg-primary/10 active:scale-95"
-                        >
-                            {theme === 'dark' ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
-                        </button>
-                        <button
+                        />
+                        <IconButton
+                            icon={
+                                <span className="relative">
+                                    <Bell size={16} strokeWidth={1.5} />
+                                    <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-card dark:border-card" />
+                                </span>
+                            }
+                            label="الإعلانات"
                             onClick={() => navigate('/parent-announcements')}
-                            aria-label="الإعلانات"
-                            className="relative w-10 h-10 rounded-lg bg-card dark:bg-card border border-border dark:border-primary/20 flex items-center justify-center text-muted dark:text-muted transition-all duration-200 hover:bg-hover hover:text-main dark:hover:bg-primary/10 active:scale-95"
-                        >
-                            <Bell size={16} strokeWidth={1.5} />
-                            <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-card dark:border-card" />
-                        </button>
-                        <button
+                        />
+                        <IconButton
+                            icon={<LogOut size={16} strokeWidth={1.5} />}
+                            label="تسجيل الخروج"
+                            variant="error"
                             onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
-                            aria-label="تسجيل الخروج"
-                            className="w-10 h-10 rounded-lg bg-card dark:bg-card border border-border dark:border-primary/20 flex items-center justify-center text-muted dark:text-muted transition-all duration-200 hover:bg-error/10 hover:text-error active:scale-95"
-                        >
-                            <LogOut size={16} strokeWidth={1.5} />
-                        </button>
+                        />
                     </div>
                 </div>
 

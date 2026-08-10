@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useState, useRef } from 'react';
 import { TrendingUp, TrendingDown, UserPlus, CheckCircle2, Phone, Star, Target, XCircle, BarChart3 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { ActionButton } from '../../../shared/components/ui/ActionRow';
 import type { LeadStatus, LeadPriority } from '../../../features/crm/types';
 
 const avatarGradients = [
@@ -119,24 +120,7 @@ export const getLeadAge = (createdAt: string) => {
     return { text: created.toLocaleDateString('ar-SA'), color: 'text-muted' };
 };
 
-export const ActionBtn = ({ onClick, icon: Icon, label, color = 'success', title }: {
-    onClick: (e: React.MouseEvent) => void; icon: React.ComponentType<{ size?: number }>; label: string;
-    color?: 'success' | 'error' | 'info' | 'warning' | 'primary'; title?: string;
-}) => {
-    const colorMap = {
-        success: 'bg-success/10 text-success hover:bg-success/20 border-success/20 dark:bg-success/15 dark:text-success dark:border-success/15',
-        error: 'bg-error/10 text-error hover:bg-error/20 border-error/20 dark:bg-error/15 dark:text-error dark:border-error/15',
-        info: 'bg-info/10 text-info hover:bg-info/20 border-info/20 dark:bg-info/15 dark:text-info dark:border-info/15',
-        warning: 'bg-warning/10 text-warning hover:bg-warning/20 border-warning/20 dark:bg-warning/15 dark:text-warning dark:border-warning/15',
-        primary: 'bg-primary/10 text-primary hover:bg-primary/20 border-primary/20 dark:bg-primary/15 dark:text-primary dark:border-primary/15',
-    };
-    return (
-        <button onClick={onClick} title={title || label} aria-label={title || label}
-            className={cn('inline-flex items-center justify-center w-8 h-8 text-[10px] font-bold rounded-xl border transition-all active:scale-95', colorMap[color])}>
-            <Icon size={14} />
-        </button>
-    );
-};
+export { ActionButton as ActionBtn };
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
     <div className={cn('bg-card dark:bg-card border border-border dark:border-white/[0.06] rounded-2xl', className)}>{children}</div>
