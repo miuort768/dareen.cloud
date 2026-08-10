@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { TrendingUp, TrendingDown, UserPlus, CheckCircle2, Phone, Star, Target, XCircle, BarChart3 } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { ActionButton } from '../../../shared/components/ui/ActionRow';
@@ -109,7 +109,9 @@ export const priorityConfig: Record<LeadPriority, { label: string; color: string
 export const getPriority = (p: LeadPriority | string) => priorityConfig[p as LeadPriority] || priorityConfig.low;
 
 export const getLeadAge = (createdAt: string) => {
+    if (!createdAt) return { text: 'غير محدد', color: 'text-muted' };
     const now = new Date(); const created = new Date(createdAt);
+    if (isNaN(created.getTime())) return { text: 'غير محدد', color: 'text-muted' };
     const diffMs = now.getTime() - created.getTime();
     const diffMins = Math.floor(diffMs / 60000); const diffHours = Math.floor(diffMins / 60); const diffDays = Math.floor(diffHours / 24);
     if (diffMins < 1) return { text: 'الآن', color: 'text-success' };

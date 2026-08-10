@@ -71,7 +71,7 @@ class CleanupWorker {
     }
 
     async cleanupActiveSessions(metrics, config, dryRun) {
-        const { prisma } = getPrisma();
+        const prisma = getPrisma();
         const cutoff = new Date(Date.now() - config.sessionMaxAgeHours * 60 * 60 * 1000).toISOString();
 
         const oldSessions = await prisma.activeSession.findMany({
@@ -143,7 +143,7 @@ class CleanupWorker {
     }
 
     async cleanupPushSubscriptions(metrics, dryRun) {
-        const { prisma } = getPrisma();
+        const prisma = getPrisma();
         const duplicates = await prisma.$queryRawUnsafe(`
             SELECT userId, subscription, COUNT(*) as cnt, MIN(id) as keepId
             FROM push_subscriptions
@@ -183,7 +183,7 @@ class CleanupWorker {
     }
 
     async cleanupOldNotifications(metrics, config, dryRun) {
-        const { prisma } = getPrisma();
+        const prisma = getPrisma();
         const retentionMs = config.notificationRetentionDays * 24 * 60 * 60 * 1000;
         const cutoff = new Date(Date.now() - retentionMs).toISOString();
 
