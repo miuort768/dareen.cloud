@@ -1,4 +1,4 @@
-ï»¿import { UserPlus, FileText, CalendarDays, Megaphone, ArrowLeft, Play, Zap } from 'lucide-react';
+import { UserPlus, FileText, CalendarDays, Megaphone, ArrowLeft, Play, Zap } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
@@ -9,29 +9,29 @@ interface QuickActionsProps {
 
 const actions = [
     {
-        title: 'Ø¥Ø¶Ø§ÙØ© Ø·Ø§Ù„Ø¨',
-        subtitle: 'ØªØ³Ø¬ÙŠÙ„ Ø¬Ø¯ÙŠØ¯',
+        title: 'ÅÖÇÝÉ ØÇáÈ',
+        subtitle: 'ÊÓÌíá ÌÏíÏ',
         icon: UserPlus,
         href: '/students?action=new',
         color: 'bg-primary-soft text-primary',
     },
     {
-        title: 'Ø¥ØµØ¯Ø§Ø± ÙØ§ØªÙˆØ±Ø©',
-        subtitle: 'Ø¥Ù†Ø´Ø§Ø¡ ÙØ§ØªÙˆØ±Ø©',
+        title: 'ÅÕÏÇÑ ÝÇÊæÑÉ',
+        subtitle: 'ÅäÔÇÁ ÝÇÊæÑÉ',
         icon: FileText,
         href: '/student-invoices?action=new',
         color: 'bg-success-soft text-success',
     },
     {
-        title: 'Ø§Ù„Ø¬Ø¯ÙˆÙ„ Ø§Ù„Ø£Ø³Ø¨ÙˆØ¹ÙŠ',
-        subtitle: 'Ø¹Ø±Ø¶ Ø§Ù„Ø­ØµØµ',
+        title: 'ÇáÌÏæá ÇáÃÓÈæÚí',
+        subtitle: 'ÚÑÖ ÇáÍÕÕ',
         icon: CalendarDays,
         href: '/schedule',
         color: 'bg-info-soft text-info',
     },
     {
-        title: 'Ø¥Ø¹Ù„Ø§Ù† Ø¹Ø§Ù…',
-        subtitle: 'Ø¨Ø« Ø¥Ø´Ø¹Ø§Ø±',
+        title: 'ÅÚáÇä ÚÇã',
+        subtitle: 'ÈË ÅÔÚÇÑ',
         icon: Megaphone,
         href: '/announcements',
         color: 'bg-warning-soft text-warning',
@@ -60,13 +60,13 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 )}
             >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.15)_0%,transparent_70%)]" />
-                <span className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 dark:bg-black/20 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-colors">
+                <span className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 dark:bg-background/20 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-colors">
                     <Play size={18} fill="currentColor" />
                 </span>
-                <span className="relative text-base">Ø¨Ø¯Ø¡ Ø§Ù„Ø­ØµØ© Ø§Ù„Ø¢Ù†</span>
+                <span className="relative text-base">ÈÏÁ ÇáÍÕÉ ÇáÂä</span>
                 {sessionAvailable && (
                     <span className="relative px-2 py-0.5 rounded-lg bg-on-primary/20 text-on-primary text-[10px] font-bold animate-pulse">
-                        Ù…ØªØ§Ø­
+                        ãÊÇÍ
                     </span>
                 )}
             </button>

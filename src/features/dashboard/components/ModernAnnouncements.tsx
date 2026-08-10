@@ -1,4 +1,4 @@
-Ôªøimport { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Megaphone, ChevronLeft, ChevronRight, AlertTriangle, Calendar, Info, X, Check } from 'lucide-react';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
@@ -53,10 +53,10 @@ export const ModernAnnouncements = () => {
 
     const getTypeDetails = (type: string) => {
         switch (type) {
-            case 'urgent': return { icon: AlertTriangle, color: 'text-error', bg: 'bg-error-soft', label: 'ÿ™ŸÜÿ®ŸäŸá ÿπÿßÿ¨ŸÑ' };
-            case 'holiday': return { icon: Calendar, color: 'text-warning', bg: 'bg-warning-soft', label: 'ÿ•ÿ¨ÿßÿ≤ÿ© ÿ±ÿ≥ŸÖŸäÿ©' };
-            case 'event': return { icon: Megaphone, color: 'text-primary', bg: 'bg-primary-soft', label: 'ŸÅÿπÿßŸÑŸäÿ© ŸÇÿßÿØŸÖÿ©' };
-            default: return { icon: Info, color: 'text-success', bg: 'bg-success-soft', label: 'ÿ•ÿπŸÑÿßŸÜ ÿπÿßŸÖ' };
+            case 'urgent': return { icon: AlertTriangle, color: 'text-error', bg: 'bg-error-soft', label: ' ‰»ÌÂ ⁄«Ã·' };
+            case 'holiday': return { icon: Calendar, color: 'text-warning', bg: 'bg-warning-soft', label: '≈Ã«“… —”„Ì…' };
+            case 'event': return { icon: Megaphone, color: 'text-primary', bg: 'bg-primary-soft', label: '›⁄«·Ì… ﬁ«œ„…' };
+            default: return { icon: Info, color: 'text-success', bg: 'bg-success-soft', label: '≈⁄·«‰ ⁄«„' };
         }
     };
 
@@ -122,10 +122,10 @@ export const ModernAnnouncements = () => {
 
                     {announcements.length > 1 && (
                         <div className="absolute bottom-3 end-4 flex gap-1.5" onClick={e => e.stopPropagation()}>
-                            <Button variant="outline" size="icon" onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} aria-label="ÿßŸÑÿ≥ÿßÿ®ŸÇ" className="h-8 w-8 rounded-lg">
+                            <Button variant="outline" size="icon" onClick={() => setCurrentIndex(prev => (prev - 1 + announcements.length) % announcements.length)} aria-label="«·”«»ﬁ" className="h-8 w-8 rounded-lg">
                                 <ChevronRight size={13} />
                             </Button>
-                            <Button variant="outline" size="icon" onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} aria-label="ÿßŸÑÿ™ÿßŸÑŸä" className="h-8 w-8 rounded-lg">
+                            <Button variant="outline" size="icon" onClick={() => setCurrentIndex(prev => (prev + 1) % announcements.length)} aria-label="«· «·Ì" className="h-8 w-8 rounded-lg">
                                 <ChevronLeft size={13} />
                             </Button>
                         </div>
@@ -143,15 +143,15 @@ export const ModernAnnouncements = () => {
 
             {/* Acknowledgment Modal */}
             {showAcknowledge && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/60 dark:bg-black/70 backdrop-blur-sm" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') setShowAcknowledge(false); }}>
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/60 dark:bg-background/70 backdrop-blur-sm" role="dialog" aria-modal="true" onKeyDown={(e) => { if (e.key === 'Escape') setShowAcknowledge(false); }}>
                     <div className="bg-card dark:bg-card border border-border dark:border-primary/20 shadow-xl p-5 max-w-lg w-full rounded-2xl">
                         <div className="flex items-center gap-3 mb-5">
                             <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", type.bg)}>
                                 <type.icon size={22} className={type.color} />
                             </div>
                             <div>
-                                <h3 className="text-base font-bold text-main dark:text-main leading-tight">ÿ™ÿ£ŸÉŸäÿØ ÿßŸÑŸÇÿ±ÿßÿ°ÿ©</h3>
-                                <p className="text-[11px] font-medium text-muted dark:text-muted mt-0.5">ÿ•ÿ¥ÿπÿßÿ± ÿßŸÑÿßŸÖÿ™ÿ´ÿßŸÑ</p>
+                                <h3 className="text-base font-bold text-main dark:text-main leading-tight"> √ﬂÌœ «·ﬁ—«¡…</h3>
+                                <p className="text-[11px] font-medium text-muted dark:text-muted mt-0.5">≈‘⁄«— «·«„ À«·</p>
                             </div>
                         </div>
 
@@ -164,11 +164,11 @@ export const ModernAnnouncements = () => {
                         <div className="grid grid-cols-2 gap-3">
                             <Button onClick={handleDismiss} className="h-10 gap-1.5 text-xs rounded-xl font-bold">
                                 <Check size={14} />
-                                ŸÖŸàÿßŸÅŸÇÿå ÿ™ŸÖ ÿßŸÑÿßÿ∑ŸÑÿßÿπ
+                                „Ê«›ﬁ°  „ «·«ÿ·«⁄
                             </Button>
                             <Button onClick={() => setShowAcknowledge(false)} variant="outline" className="h-10 gap-1.5 text-xs rounded-xl font-bold">
                                 <X size={14} />
-                                ÿ•ÿ∫ŸÑÿßŸÇ
+                                ≈€·«ﬁ
                             </Button>
                         </div>
                     </div>

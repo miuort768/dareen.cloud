@@ -1,4 +1,4 @@
-ï»¿import { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, Users, Award, Bell, LayoutDashboard, Calendar, CheckSquare, Sparkles, Wallet, ArrowLeft, Loader2, RefreshCw, User as UserIcon } from 'lucide-react';
@@ -36,9 +36,9 @@ interface TeacherDashboardMobileProps {
 }
 
 const tabs = [
-    { id: 'home', label: 'Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©', icon: LayoutDashboard, path: '' },
-    { id: 'schedule', label: 'Ø§Ù„Ø¬Ø¯ÙˆÙ„', icon: Calendar, path: '' },
-    { id: 'reports', label: 'Ø§Ù„ØªÙ‚Ø§Ø±ÙŠØ±', icon: CheckSquare, path: '' },
+    { id: 'home', label: 'ÇáÑÆíÓíÉ', icon: LayoutDashboard, path: '' },
+    { id: 'schedule', label: 'ÇáÌÏæá', icon: Calendar, path: '' },
+    { id: 'reports', label: 'ÇáÊŞÇÑíÑ', icon: CheckSquare, path: '' },
 ];
 
     const glass = "bg-surface/80 dark:bg-surface/90 backdrop-blur-xl border-b border-border dark:border-primary/20";
@@ -82,7 +82,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
     return (
         <div
             ref={containerRef}
-            className="min-h-full pb-28 relative bg-background dark:bg-black font-sans overflow-x-hidden transition-colors duration-500"
+            className="min-h-full pb-28 relative bg-background dark:bg-background font-sans overflow-x-hidden transition-colors duration-500"
             dir="rtl"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -95,11 +95,11 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
             >
                 <div className="flex items-center gap-2 text-primary font-bold text-xs">
                     {isRefreshing ? (
-                        <><Loader2 size={16} className="animate-spin" /><span>Ø¬Ø§Ø±ÙŠ Ø§Ù„ØªØ­Ø¯ÙŠØ«...</span></>
+                        <><Loader2 size={16} className="animate-spin" /><span>ÌÇÑí ÇáÊÍÏíË...</span></>
                     ) : pullDistance > 40 ? (
-                        <><RefreshCw size={16} className="animate-pulse" /><span>Ø£ÙÙ„Øª Ù„Ù„ØªØ­Ø¯ÙŠØ«</span></>
+                        <><RefreshCw size={16} className="animate-pulse" /><span>ÃİáÊ ááÊÍÏíË</span></>
                     ) : (
-                        <span className="text-muted">Ø§Ø³Ø­Ø¨ Ù„Ù„ØªØ­Ø¯ÙŠØ«</span>
+                        <span className="text-muted">ÇÓÍÈ ááÊÍÏíË</span>
                     )}
                 </div>
             </motion.div>
@@ -113,8 +113,8 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 <UserIcon size={18} className="text-on-primary dark:text-on-primary" />
                             </div>
                             <div>
-                                <h1 className="text-base font-bold text-main dark:text-main leading-tight">{(currentUser?.name || currentUser?.username || 'Ø§Ù„Ù…Ø¹Ù„Ù…').split(' ')[0]}</h1>
-                                <p className="text-[11px] font-medium text-muted dark:text-muted">Ù…Ø¹Ù„Ù…</p>
+                                <h1 className="text-base font-bold text-main dark:text-main leading-tight">{(currentUser?.name || currentUser?.username || 'ÇáãÚáã').split(' ')[0]}</h1>
+                                <p className="text-[11px] font-medium text-muted dark:text-muted">ãÚáã</p>
                             </div>
                         </div>
                         <div className="w-9 h-9 rounded-xl bg-primary-soft dark:bg-primary/15 flex items-center justify-center relative">
@@ -126,15 +126,15 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                     <div className="flex items-center gap-2 mt-3">
                         <div className="flex-1 bg-primary-soft dark:bg-primary/10 rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20 dark:border-primary/20">
                             <Clock size={13} className="text-primary dark:text-primary shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-main font-bold text-base">{stats.todaySessions || 0}</span><span className="text-muted dark:text-muted text-[11px] font-medium">Ø­ØµØµ</span></div>
+                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-main font-bold text-base">{stats.todaySessions || 0}</span><span className="text-muted dark:text-muted text-[11px] font-medium">ÍÕÕ</span></div>
                         </div>
                         <div className="flex-1 bg-primary-soft dark:bg-primary/10 rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20 dark:border-primary/20">
                             <Users size={13} className="text-info dark:text-primary shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-main font-bold text-base">{stats.studentsCount || 0}</span><span className="text-muted dark:text-muted text-[11px] font-medium">Ø·Ù„Ø§Ø¨</span></div>
+                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-main font-bold text-base">{stats.studentsCount || 0}</span><span className="text-muted dark:text-muted text-[11px] font-medium">ØáÇÈ</span></div>
                         </div>
                         <div className="flex-1 bg-primary-soft dark:bg-primary/10 rounded-xl py-2.5 px-3 flex items-center gap-2 border border-primary/20 dark:border-primary/20">
                             <Award size={13} className="text-success dark:text-primary shrink-0" />
-                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-main font-bold text-base">{(stats.attendanceRate || 0)}%</span><span className="text-muted dark:text-muted text-[11px] font-medium">Ø­Ø¶ÙˆØ±</span></div>
+                            <div className="flex items-baseline gap-1"><span className="text-main dark:text-main font-bold text-base">{(stats.attendanceRate || 0)}%</span><span className="text-muted dark:text-muted text-[11px] font-medium">ÍÖæÑ</span></div>
                         </div>
                     </div>
                 </div>
@@ -160,14 +160,14 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 <GlassCard className="p-4">
                                     <button onClick={() => navigate('/teacher-payment-history')}
                                         className="w-full flex items-center gap-3 py-1 text-start transition-all duration-200 hover:opacity-80 active:scale-[0.99]"
-                                        aria-label="Ø³Ø¬Ù„ Ø§Ù„Ø¯ÙØ¹Ø§Øª"
+                                        aria-label="ÓÌá ÇáÏİÚÇÊ"
                                     >
                                         <div className="w-9 h-9 rounded-xl bg-success-soft flex items-center justify-center shrink-0">
                                             <Wallet size={16} className="text-success" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-xs font-bold text-main">Ø³Ø¬Ù„ Ø§Ù„Ø¯ÙØ¹Ø§Øª</p>
-                                            <p className="text-[10px] text-muted">Ø¹Ø±Ø¶ Ø§Ù„Ù…Ø¯ÙÙˆØ¹Ø§Øª ÙˆØ§Ù„Ù…Ø³ØªØ­Ù‚Ø§Øª</p>
+                                            <p className="text-xs font-bold text-main">ÓÌá ÇáÏİÚÇÊ</p>
+                                            <p className="text-[10px] text-muted">ÚÑÖ ÇáãÏİæÚÇÊ æÇáãÓÊÍŞÇÊ</p>
                                         </div>
                                         <ArrowLeft size={14} className="text-muted shrink-0" />
                                     </button>
@@ -175,14 +175,14 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-primary" />
-                                        <h2 className="text-[13px] font-bold text-main">Ø§Ù„Ø¨Ø« Ø§Ù„Ù…Ø¨Ø§Ø´Ø±</h2>
+                                        <h2 className="text-[13px] font-bold text-main">ÇáÈË ÇáãÈÇÔÑ</h2>
                                     </div>
                                     <Card><div className="p-3.5"><LiveSessions /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-warning" />
-                                        <h2 className="text-[13px] font-bold text-main">Ø§Ù„Ø¥Ø¹Ù„Ø§Ù†Ø§Øª</h2>
+                                        <h2 className="text-[13px] font-bold text-main">ÇáÅÚáÇäÇÊ</h2>
                                     </div>
                                     <Card><div className="p-3.5"><ModernAnnouncements /></div></Card>
                                 </section>
@@ -194,7 +194,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                     <section>
                                         <div className="flex items-center gap-2 mb-3 px-1">
                                             <Sparkles size={14} className="text-info" />
-                                            <h2 className="text-[13px] font-bold text-main">Ø­ØµØµ Ø§Ù„ÙŠÙˆÙ…</h2>
+                                            <h2 className="text-[13px] font-bold text-main">ÍÕÕ Çáíæã</h2>
                                         </div>
                                         <GlassCard className="p-4">
                                             <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
@@ -203,8 +203,8 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 ) : (
                                     <EmptyState
                                     icon={Calendar}
-                                    title="Ù„Ø§ ØªÙˆØ¬Ø¯ Ø­ØµØµ Ø§Ù„ÙŠÙˆÙ…"
-                                    subtitle="Ø§Ø³ØªÙ…ØªØ¹ Ø¨ÙŠÙˆÙ…Ùƒ!"
+                                    title="áÇ ÊæÌÏ ÍÕÕ Çáíæã"
+                                    subtitle="ÇÓÊãÊÚ Èíæãß!"
                                     compact
                                 />
                                 )}
@@ -223,21 +223,21 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-success" />
-                                        <h2 className="text-[13px] font-bold text-main">Ø§Ù„Ø¥Ù†Ø¬Ø§Ø²Ø§Øª</h2>
+                                        <h2 className="text-[13px] font-bold text-main">ÇáÅäÌÇÒÇÊ</h2>
                                     </div>
                                     <Card><div className="p-3.5"><TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-error" />
-                                        <h2 className="text-[13px] font-bold text-main">Ø§Ù„Ù…Ù‡Ø§Ù… ÙˆØ§Ù„Ø·Ù„Ø¨Ø§Øª</h2>
+                                        <h2 className="text-[13px] font-bold text-main">ÇáãåÇã æÇáØáÈÇÊ</h2>
                                     </div>
                                     <Card><div className="p-3.5"><TasksAndRequests tasks={tasks} /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-warning" />
-                                        <h2 className="text-[13px] font-bold text-main">Ø£Ø¹Ù„Ù‰ Ø­Ø¶ÙˆØ±</h2>
+                                        <h2 className="text-[13px] font-bold text-main">ÃÚáì ÍÖæÑ</h2>
                                     </div>
                                     <Card><div className="p-3.5"><TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} /></div></Card>
                                 </section>
@@ -263,11 +263,11 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                         const total = studentSessions.filter((s: Record<string, unknown>) => s.status === 'completed' || s.status === 'cancelled').length;
                         setSelectedStudentForReport({
                             id: student.id, name: student.name, grade: student.grade,
-                            subject: student.curriculum || 'Ù…Ø§Ø¯Ø© Ø¹Ø§Ù…Ø©',
+                            subject: student.curriculum || 'ãÇÏÉ ÚÇãÉ',
                             points: student.totalPoints || 0,
                             attendance: total > 0 ? Math.round((completed / total) * 100) : 0,
                             sessionsCompleted: completed,
-                            lastNotes: [student.notes || 'ØªÙ‚Ø¯Ù… Ù…Ù…ØªØ§Ø² ÙÙŠ Ø§Ù„Ù…Ø§Ø¯Ø©']
+                            lastNotes: [student.notes || 'ÊŞÏã ããÊÇÒ İí ÇáãÇÏÉ']
                         });
                         setBriefingStudent(null);
                     }}

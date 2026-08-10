@@ -19,7 +19,7 @@ interface StatCardData {
 }
 
 const colorMap: Record<string, { bg: string; text: string; light: string; ring: string }> = {
-    primary: { bg: 'bg-primary/10 dark:bg-primary/10', text: 'text-primary dark:text-primary', light: 'bg-primary/[0.04] dark:bg-primary/[0.04]', ring: 'ring-primary/20 dark:ring-[#D4AF37]/20' },
+    primary: { bg: 'bg-primary/10 dark:bg-primary/10', text: 'text-primary dark:text-primary', light: 'bg-primary/[0.04] dark:bg-primary/[0.04]', ring: 'ring-primary/20 dark:ring-accent/20' },
     success: { bg: 'bg-success/10', text: 'text-success', light: 'bg-success/[0.04]', ring: 'ring-success/20' },
     info: { bg: 'bg-info/10', text: 'text-info', light: 'bg-info/[0.04]', ring: 'ring-info/20' },
     warning: { bg: 'bg-warning/10', text: 'text-warning', light: 'bg-warning/[0.04]', ring: 'ring-warning/20' },

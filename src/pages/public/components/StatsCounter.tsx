@@ -36,7 +36,7 @@ export const StatsCounter = () => {
     ];
 
     return (
-        <section className="pt-0 pb-4 md:pt-0 md:pb-3 relative overflow-hidden bg-surface dark:bg-black transition-colors duration-500">
+        <section className="pt-0 pb-4 md:pt-0 md:pb-3 relative overflow-hidden bg-surface dark:bg-background transition-colors duration-500">
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-6xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">

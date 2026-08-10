@@ -1,4 +1,4 @@
-๏ปฟimport { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Zap, Users, Star, Sparkles, ArrowLeft, Wifi, Battery, Signal, Heart, Gift, CreditCard, Clock, Hash } from 'lucide-react';
 
 interface HowToSubscribeProps {
@@ -20,28 +20,28 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
         {
             num: '01',
             icon: Users,
-            title: 'ุงุฎุชุฑ ุงูู…ููุฌ',
-            desc: 'ุญุฏุฏ ู…ููุฌู ูุงูู…ุงุฏุฉ',
+            title: 'วฮสั วแใไๅฬ',
+            desc: 'อฯฯ ใไๅฬ฿ ๆวแใวฯษ',
             boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning',
         },
         {
             num: '02',
             icon: Star,
-            title: 'ุญุตุฉ ู…ุฌุงููุฉ',
-            desc: 'ุญุตุฉ ุชุฌุฑูุจูุฉ ู…ุฌุงููุฉ ูู',
+            title: 'อีษ ใฬวไํษ',
+            desc: 'อีษ สฬัํศํษ ใฬวไํษ แ฿',
             boxBg: 'bg-success dark:bg-primary',
         },
         {
             num: '03',
             icon: Sparkles,
-            title: 'ุงุดุชุฑู ุงูุขู',
-            desc: 'ุชูุงุตู ูุญุฌุฒ ู…ูุนุฏู',
+            title: 'วิสั฿ วแยไ',
+            desc: 'สๆวีแ แอฬา ใÞฺฯ฿',
             boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning',
         },
     ];
 
     return (
-        <section className="relative overflow-hidden bg-surface dark:bg-black rounded-3xl shadow-inner">
+        <section className="relative overflow-hidden bg-surface dark:bg-background rounded-3xl shadow-inner">
             <div className="absolute top-20 -start-20 w-60 h-60 bg-accent/10 dark:bg-primary/[0.08] rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-40 -end-20 w-72 h-72 bg-primary/10 dark:bg-primary/[0.05] rounded-full blur-[120px] pointer-events-none" />
 
@@ -49,7 +49,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                 <div className="flex items-center justify-between mb-6 px-1">
                     <div className="flex items-center gap-3">
                         <span className="text-sm font-black text-primary dark:text-primary">{formatTime(time)}</span>
-                        <span className="text-micro font-bold text-muted dark:text-muted">ุจุชูููุช ุฃู… ุงูุฏููุง</span>
+                        <span className="text-micro font-bold text-muted dark:text-muted">ศสๆÞํส รใ วแฯไํว</span>
                         <Heart className="w-4 h-4 text-error fill-error" />
                     </div>
                     <div className="flex items-center gap-1.5">
@@ -61,14 +61,14 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
 
                 <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-warning rounded-full mb-4 shadow-sm">
                     <Zap size={10} className="text-warning dark:text-on-primary fill-warning dark:fill-black" />
-                    <span className="text-micro font-black text-on-primary dark:text-on-primary">ุงุจุฏุฃ ุฑุญูุชู</span>
+                    <span className="text-micro font-black text-on-primary dark:text-on-primary">วศฯร ัอแส฿</span>
                 </div>
 
                 <h2 className="text-xl font-black text-main dark:text-main leading-tight mb-1">
-                    ููู ุชุดุชุฑู ูู <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-warning">ุงูู…ุนูุฏุ</span>
+                    ฿ํÝ สิสั฿ Ýํ <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-warning">วแใฺๅฯฟ</span>
                 </h2>
                 <p className="text-xs text-muted dark:text-muted font-medium mb-5 leading-relaxed">
-                    ุงุฎุชุฑ ุงูุทุฑููุฉ ุงูุชู ุชูุงุณุจู ูุงุจุฏุฃ ุฑุญูุชู ุงูุชุนููู…ูุฉ ู…ุนูุง
+                    วฮสั วแุัํÞษ วแสํ สไวำศ฿ ๆวศฯร ัอแส฿ วแสฺแํใํษ ใฺไว
                 </p>
 
                 <div className="grid grid-cols-3 gap-2.5 mb-6">
@@ -88,9 +88,9 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
 
                 <div className="md:hidden space-y-3 mb-6 px-1">
                     {[
-                        { icon: 'CreditCard', title: 'ุงูุฏูุน ูุชุญุตูู ุงูุงุดุชุฑุงู', desc: 'ุจูุณุงุฆู ุฏูุน ู…ุญููุฉ ู…ูุงุณุจุฉ' },
-                        { icon: 'Clock', title: 'ู…ูุงุนูุฏ ู…ุฑูุฉ', desc: 'ูู ุงูููุช ุงูู…ูุงุณุจ ูู' },
-                        { icon: 'Hash', title: 'ุนุฏุฏ ุงูุญุตุต', desc: 'ุจุงููุฏุฑ ุงูู…ูุงุณุจ ูู' },
+                        { icon: 'CreditCard', title: 'วแฯÝฺ ๆสอีํแ วแวิสัว฿', desc: 'ศๆำวฦแ ฯÝฺ ใอแํษ ใไวำศษ' },
+                        { icon: 'Clock', title: 'ใๆวฺํฯ ใัไษ', desc: 'Ýํ วแๆÞส วแใไวำศ แ฿' },
+                        { icon: 'Hash', title: 'ฺฯฯ วแอีี', desc: 'ศวแÞฯั วแใไวำศ แ฿' },
                     ].map((item, i) => (
                         <div key={`perk-${i}`} className="flex items-center gap-3">
                             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning flex items-center justify-center shadow-sm shrink-0">
@@ -107,14 +107,14 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                 </div>
 
                 <a
-                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('ุงูุณูุงู… ุนูููู…ุ ุฃุฑุบุจ ูู ุญุฌุฒ ุญุตุฉ ุชุฌุฑูุจูุฉ ู…ุฌุงููุฉ')}`}
+                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('วแำแวใ ฺแํ฿ใก รัÛศ Ýํ อฬา อีษ สฬัํศํษ ใฬวไํษ')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-warning rounded-2xl shadow-lg dark:shadow-primary/20 hover:brightness-110 hover:-translate-y-0.5 transition-all group"
                 >
                     <Gift size={16} className="text-on-primary dark:text-on-primary opacity-90" />
-                    <span className="text-on-primary dark:text-on-primary text-sm font-black">ุงุญุฌุฒ ุญุตุชู ุงูู…ุฌุงููุฉ ุงูุขู</span>
-                    <div className="w-8 h-8 rounded-full bg-white/20 dark:bg-black/20 flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all">
+                    <span className="text-on-primary dark:text-on-primary text-sm font-black">วอฬา อีส฿ วแใฬวไํษ วแยไ</span>
+                    <div className="w-8 h-8 rounded-full bg-white/20 dark:bg-background/20 flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all">
                         <ArrowLeft size={16} className="text-on-primary dark:text-on-primary" />
                     </div>
                 </a>

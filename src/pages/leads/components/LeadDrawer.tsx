@@ -83,7 +83,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                 <div className="px-4 py-3 flex items-center justify-between border-b border-border/50 dark:border-white/[0.04]">
                     <div className="flex items-center gap-3">
                         <div className="relative">
-                            <div className={cn('rounded-full ring-2 ring-offset-2 ring-offset-card dark:ring-offset-[#131836]', statusRingColor[lead.status as LeadStatus])}>
+                            <div className={cn('rounded-full ring-2 ring-offset-2 ring-offset-card dark:ring-offset-ring-offset', statusRingColor[lead.status as LeadStatus])}>
                                 <GradientAvatar name={lead.studentName || 'ع'} size="md" />
                             </div>
                         </div>

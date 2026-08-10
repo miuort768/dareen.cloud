@@ -45,7 +45,7 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                                 <div className="flex items-start justify-between px-4 pt-4 pb-2">
                                     <div className="flex items-center gap-3 min-w-0 flex-1">
                                         <div className="relative">
-                                            <div className={cn('rounded-full ring-2 ring-offset-2 ring-offset-card dark:ring-offset-[#131836]', statusRingColor[lead.status as LeadStatus])}>
+                                            <div className={cn('rounded-full ring-2 ring-offset-2 ring-offset-card dark:ring-offset-ring-offset', statusRingColor[lead.status as LeadStatus])}>
                                                 <GradientAvatar name={lead.studentName || 'ع'} size="md" />
                                             </div>
                                         </div>
@@ -97,19 +97,19 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                                 {/* Actions footer */}
                                 <div className="border-t border-border dark:border-white/[0.04] px-4 py-2.5 flex items-center justify-between bg-surface/30 dark:bg-transparent">
                                     <div className="flex items-center gap-2">
-                                        <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }}
-                                            className="flex items-center justify-center w-8 h-8 rounded-xl bg-success/10 dark:bg-white/5 hover:bg-success/20 dark:hover:bg-white/10 text-success dark:text-main/50 hover:text-success dark:hover:text-[#34d399] transition-all active:scale-95">
+                                        <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} aria-label="اتصال هاتفي"
+                                            className="flex items-center justify-center w-8 h-8 rounded-xl bg-success/10 dark:bg-white/5 hover:bg-success/20 dark:hover:bg-white/10 text-success dark:text-main/50 hover:text-success dark:hover:text-success transition-all active:scale-95">
                                             <Phone size={14} />
                                         </button>
-                                        <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }}
-                                            className="flex items-center justify-center w-8 h-8 rounded-xl bg-success/10 dark:bg-white/5 hover:bg-success/20 dark:hover:bg-white/10 text-success dark:text-main/50 hover:text-[#25d366] transition-all active:scale-95">
+                                        <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} aria-label="رسالة واتساب"
+                                            className="flex items-center justify-center w-8 h-8 rounded-xl bg-success/10 dark:bg-white/5 hover:bg-success/20 dark:hover:bg-white/10 text-success dark:text-main/50 hover:text-success transition-all active:scale-95">
                                             <MessageSquare size={14} />
                                         </button>
-                                        <button onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }}
+                                        <button onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }} aria-label="تحويل العميل"
                                             className="flex items-center justify-center w-8 h-8 rounded-xl bg-info/10 dark:bg-white/5 hover:bg-info/20 dark:hover:bg-white/10 text-info dark:text-main/50 hover:text-info transition-all active:scale-95">
                                             <Calendar size={14} />
                                         </button>
-                                        <button onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }}
+                                        <button onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }} aria-label="حذف العميل"
                                             className="flex items-center justify-center w-8 h-8 rounded-xl bg-error/10 dark:bg-white/5 hover:bg-error/20 dark:hover:bg-white/10 text-error dark:text-main/50 hover:text-error transition-all active:scale-95">
                                             <Trash2 size={14} />
                                         </button>

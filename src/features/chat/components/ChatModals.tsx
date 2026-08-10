@@ -245,7 +245,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                                     onClick={handleCreateConversation}
                                     disabled={!groupName.trim() || isDeleting}
                                     className={cn(
-                                        "w-full bg-success text-on-success py-4 rounded-none font-normal uppercase tracking-widest transition-all active:scale-95 shadow-sm flex items-center justify-center gap-3",
+                                        "w-full bg-success text-on-success py-4 rounded-xl font-normal uppercase tracking-widest transition-all active:scale-95 shadow-sm flex items-center justify-center gap-3",
                                         (!groupName.trim() || isDeleting) && "opacity-50 grayscale cursor-not-allowed"
                                     )}
                                 >

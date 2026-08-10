@@ -1,10 +1,10 @@
-Ôªøimport { useState } from 'react';
+import { useState } from 'react';
 import { HelpCircle, ChevronDown, Star, Heart } from 'lucide-react';
 
 export const FAQSection = () => {
     const [openIdx, setOpenIdx] = useState<number | null>(null);
     return (
-        <section className="py-4 md:py-6 bg-surface dark:bg-black relative overflow-hidden transition-colors duration-500" id="faq">
+        <section className="py-4 md:py-6 bg-surface dark:bg-background relative overflow-hidden transition-colors duration-500" id="faq">
             <div className="absolute top-0 end-0 w-64 h-64 bg-primary/5 dark:bg-primary/[0.08] rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-0 start-0 w-48 h-48 bg-success/5 dark:bg-primary/[0.05] rounded-full blur-[80px] pointer-events-none" />
             <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.04] dark:opacity-[0.02]">
@@ -37,55 +37,55 @@ export const FAQSection = () => {
                 <div className="text-center mb-4 md:mb-8">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/50 dark:bg-primary/20 backdrop-blur-sm border border-border dark:border-primary/40 rounded-full mb-2 mx-auto shadow-sm">
                         <HelpCircle size={12} className="text-primary dark:text-primary" />
-                        <span className="text-micro font-black text-muted dark:text-muted">ŸÑÿØŸäŸÉ ÿßÿ≥ÿ™ŸÅÿ≥ÿßÿ±ÿü</span>
+                        <span className="text-micro font-black text-muted dark:text-muted">·œÌﬂ «” ›”«—ø</span>
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-main dark:text-main mb-3 font-heading">
-                        ÿßŸÑÿ£ÿ≥ÿ¶ŸÑÿ© <span className="text-primary dark:text-primary">ÿßŸÑÿ¥ÿßÿ¶ÿπÿ©</span>
+                        «·√”∆·… <span className="text-primary dark:text-primary">«·‘«∆⁄…</span>
                     </h2>
                     <div className="h-1 w-16 bg-warning dark:bg-primary mx-auto rounded-full"></div>
                 </div>
                 <div className="max-w-2xl mx-auto space-y-3">
                     {[
                         {
-                            q: "ŸÉŸäŸÅ Ÿäÿ™ŸÖ ÿßŸÑÿØÿ±ÿßÿ≥ÿ© ŸÅŸä ÿßŸÑŸÖÿπŸáÿØ ÿü",
-                            a: "ÿßŸÑÿØÿ±ÿßÿ≥ÿ© ÿ™ÿ™ŸÖ ÿπŸÜ ÿ®ÿπÿØ ÿπÿ®ÿ± ŸÅÿµŸàŸÑ ÿßŸÅÿ™ÿ±ÿßÿ∂Ÿäÿ© ÿ™ŸÅÿßÿπŸÑŸäÿ© ŸÖÿ®ÿßÿ¥ÿ±ÿ© (ŸÑÿßŸäŸÅ) ÿ®ŸäŸÜ ÿßŸÑŸÖÿπŸÑŸÖ ŸàÿßŸÑÿ∑ÿßŸÑÿ®ÿå ÿ®ÿßÿ≥ÿ™ÿÆÿØÿßŸÖ ÿ£ÿ≠ÿØÿ´ ÿßŸÑÿ™ŸÇŸÜŸäÿßÿ™ ŸÑÿ∂ŸÖÿßŸÜ ÿ¨ŸàÿØÿ© ÿßŸÑÿµŸàÿ™ ŸàÿßŸÑÿµŸàÿ±ÿ©."
+                            q: "ﬂÌ› Ì „ «·œ—«”… ›Ì «·„⁄Âœ ø",
+                            a: "«·œ—«”…   „ ⁄‰ »⁄œ ⁄»— ›’Ê· «› —«÷Ì…  ›«⁄·Ì… „»«‘—… (·«Ì›) »Ì‰ «·„⁄·„ Ê«·ÿ«·»° »«” Œœ«„ √ÕœÀ «· ﬁ‰Ì«  ·÷„«‰ ÃÊœ… «·’Ê  Ê«·’Ê—…."
                         },
                         {
-                            q: "ŸáŸÑ ÿßŸÑŸÖŸÜÿßŸáÿ¨ ŸÖÿπÿ™ŸÖÿØÿ© ÿü",
-                            a: "ŸÜÿπŸÖÿå ŸÜŸÑÿ™ÿ≤ŸÖ ÿ®ÿ™ÿØÿ±Ÿäÿ≥ ÿßŸÑŸÖŸÜÿßŸáÿ¨ ÿßŸÑÿ≠ŸÉŸàŸÖŸäÿ© ÿßŸÑŸÖÿπÿ™ŸÖÿØÿ© ŸÅŸä ÿßŸÑŸÉŸàŸäÿ™ ŸàÿØŸàŸÑ ÿßŸÑÿÆŸÑŸäÿ¨ÿå ÿ®ÿßŸÑÿ•ÿ∂ÿßŸÅÿ© ÿ•ŸÑŸâ ŸÖŸÜÿßŸáÿ¨ŸÜÿß ÿßŸÑÿÆÿßÿµÿ© ŸÅŸä ÿßŸÑÿ™ÿ£ÿ≥Ÿäÿ≥ ŸàÿßŸÑŸÑÿ∫ÿßÿ™."
+                            q: "Â· «·„‰«ÂÃ „⁄ „œ… ø",
+                            a: "‰⁄„° ‰· “„ » œ—Ì” «·„‰«ÂÃ «·ÕﬂÊ„Ì… «·„⁄ „œ… ›Ì «·ﬂÊÌ  ÊœÊ· «·Œ·ÌÃ° »«·≈÷«›… ≈·Ï „‰«ÂÃ‰« «·Œ«’… ›Ì «· √”Ì” Ê«··€« ."
                         },
                         {
-                            q: "ŸÉŸäŸÅ ŸäŸÖŸÉŸÜŸÜŸä ŸÖÿ™ÿßÿ®ÿπÿ© ŸÖÿ≥ÿ™ŸàŸâ ÿßÿ®ŸÜŸä ÿü",
-                            a: "ŸÜŸÇŸàŸÖ ÿ®ÿ•ÿ±ÿ≥ÿßŸÑ ÿ™ŸÇÿßÿ±Ÿäÿ± ÿØŸàÿ±Ÿäÿ© ŸàŸÖŸÅÿµŸÑÿ© ŸÑŸàŸÑŸä ÿßŸÑÿ£ŸÖÿ± ÿπÿ®ÿ± ÿßŸÑŸàÿßÿ™ÿ≥ÿßÿ®ÿå ÿ™ÿ¥ŸÖŸÑ ŸÖÿ≥ÿ™ŸàŸâ ÿßŸÑÿ∑ÿßŸÑÿ®ÿå ÿßŸÑÿ≠ÿ∂Ÿàÿ± ŸàÿßŸÑÿ∫Ÿäÿßÿ®ÿå ŸàŸÖŸÑÿßÿ≠ÿ∏ÿßÿ™ ÿßŸÑŸÖÿπŸÑŸÖ."
+                            q: "ﬂÌ› Ì„ﬂ‰‰Ì „ «»⁄… „” ÊÏ «»‰Ì ø",
+                            a: "‰ﬁÊ„ »≈—”«·  ﬁ«—Ì— œÊ—Ì… Ê„›’·… ·Ê·Ì «·√„— ⁄»— «·Ê« ”«»°  ‘„· „” ÊÏ «·ÿ«·»° «·Õ÷Ê— Ê«·€Ì«»° Ê„·«ÕŸ«  «·„⁄·„."
                         },
                         {
-                            q: "ŸáŸÑ ÿ™Ÿàÿ¨ÿØ ÿ≠ÿµÿµ ÿ™ÿ¨ÿ±Ÿäÿ®Ÿäÿ© ÿü",
-                            a: "ŸÜÿπŸÖÿå ŸÜŸÇÿØŸÖ ÿ≠ÿµÿ© ÿ™ÿ¨ÿ±Ÿäÿ®Ÿäÿ© ŸÖÿ¨ÿßŸÜŸäÿ© ŸÑÿ™ŸÇŸäŸäŸÖ ŸÖÿ≥ÿ™ŸàŸâ ÿßŸÑÿ∑ÿßŸÑÿ® ŸàÿßŸÑÿ™ÿπÿ±ŸÅ ÿπŸÑŸâ ÿ∑ÿ±ŸäŸÇÿ© ÿßŸÑÿ™ÿØÿ±Ÿäÿ≥ ŸÇÿ®ŸÑ ÿßŸÑÿßÿ¥ÿ™ÿ±ÿßŸÉ ÿßŸÑŸÅÿπŸÑŸä."
+                            q: "Â·  ÊÃœ Õ’’  Ã—Ì»Ì… ø",
+                            a: "‰⁄„° ‰ﬁœ„ Õ’…  Ã—Ì»Ì… „Ã«‰Ì… · ﬁÌÌ„ „” ÊÏ «·ÿ«·» Ê«· ⁄—› ⁄·Ï ÿ—Ìﬁ… «· œ—Ì” ﬁ»· «·«‘ —«ﬂ «·›⁄·Ì."
                         },
                         {
-                            q: "ŸÖÿß ŸáŸä ÿßŸÑŸÖŸàÿßÿØ ÿßŸÑÿ™Ÿä ÿ™ŸÇÿØŸëŸÖŸàŸÜ ŸÅŸäŸáÿß ÿØÿ±Ÿàÿ≥ÿßŸã ÿÆÿµŸàÿµŸäÿ©ÿü",
-                            a: "ŸÜŸÇÿØŸÖ ÿØÿ±Ÿàÿ≥ÿßŸã ÿÆÿµŸàÿµŸäÿ© ŸÅŸä ÿ¨ŸÖŸäÿπ ÿßŸÑŸÖŸàÿßÿØ ÿßŸÑÿ£ÿ≥ÿßÿ≥Ÿäÿ©: ÿßŸÑÿ±Ÿäÿßÿ∂Ÿäÿßÿ™ÿå ÿßŸÑÿπŸÑŸàŸÖÿå ÿßŸÑŸÅŸäÿ≤Ÿäÿßÿ°ÿå ÿßŸÑŸÉŸäŸÖŸäÿßÿ°ÿå ÿßŸÑÿ£ÿ≠Ÿäÿßÿ°ÿå ÿßŸÑŸÑÿ∫ÿ© ÿßŸÑÿπÿ±ÿ®Ÿäÿ©ÿå ÿßŸÑŸÑÿ∫ÿ© ÿßŸÑÿ•ŸÜÿ¨ŸÑŸäÿ≤Ÿäÿ©ÿå ŸàÿßŸÑÿ™ÿ±ÿ®Ÿäÿ© ÿßŸÑÿ•ÿ≥ŸÑÿßŸÖŸäÿ©. ÿ¨ŸÖŸäÿπ ÿßŸÑÿØÿ±Ÿàÿ≥ ÿ™ŸÇÿØŸÖ ÿ£ŸàŸÜŸÑÿßŸäŸÜ ŸàŸÅŸÇ ÿßŸÑŸÖŸÜÿßŸáÿ¨ ÿßŸÑÿ≥ÿπŸàÿØŸäÿ© ŸàÿßŸÑŸÉŸàŸäÿ™Ÿäÿ© ŸàÿßŸÑÿ•ŸÖÿßÿ±ÿßÿ™Ÿäÿ© ŸàÿßŸÑŸÇÿ∑ÿ±Ÿäÿ© ŸàÿßŸÑÿπŸÖÿßŸÜŸäÿ© ŸàÿßŸÑÿ®ÿ≠ÿ±ŸäŸÜŸäÿ©."
+                            q: "„« ÂÌ «·„Ê«œ «· Ì  ﬁœ¯„Ê‰ ›ÌÂ« œ—Ê”« Œ’Ê’Ì…ø",
+                            a: "‰ﬁœ„ œ—Ê”« Œ’Ê’Ì… ›Ì Ã„Ì⁄ «·„Ê«œ «·√”«”Ì…: «·—Ì«÷Ì« ° «·⁄·Ê„° «·›Ì“Ì«¡° «·ﬂÌ„Ì«¡° «·√ÕÌ«¡° «··€… «·⁄—»Ì…° «··€… «·≈‰Ã·Ì“Ì…° Ê«· —»Ì… «·≈”·«„Ì…. Ã„Ì⁄ «·œ—Ê”  ﬁœ„ √Ê‰·«Ì‰ Ê›ﬁ «·„‰«ÂÃ «·”⁄ÊœÌ… Ê«·ﬂÊÌ Ì… Ê«·≈„«—« Ì… Ê«·ﬁÿ—Ì… Ê«·⁄„«‰Ì… Ê«·»Õ—Ì‰Ì…."
                         },
                         {
-                            q: "ŸáŸÑ ÿ™ŸÜÿßÿ≥ÿ®ŸÉŸÖ ÿ¨ŸÖŸäÿπ ÿßŸÑŸÖÿ±ÿßÿ≠ŸÑ ÿßŸÑÿØÿ±ÿßÿ≥Ÿäÿ©ÿü",
-                            a: "ŸÜÿπŸÖÿå ÿ®ÿ±ÿßŸÖÿ¨ŸÜÿß ŸÖÿµŸÖŸÖÿ© ŸÑÿ¨ŸÖŸäÿπ ÿßŸÑŸÖÿ±ÿßÿ≠ŸÑ: ÿßŸÑÿßÿ®ÿ™ÿØÿßÿ¶Ÿä (ÿ™ÿ£ÿ≥Ÿäÿ≥ ŸÅŸä ÿßŸÑŸÇÿ±ÿßÿ°ÿ© ŸàÿßŸÑŸÉÿ™ÿßÿ®ÿ© ŸàÿßŸÑÿ≠ÿ≥ÿßÿ®)ÿå ÿßŸÑŸÖÿ™Ÿàÿ≥ÿ∑ (ÿ™ŸÇŸàŸäÿ© ŸÅŸä ÿ¨ŸÖŸäÿπ ÿßŸÑŸÖŸàÿßÿØ)ÿå ŸàÿßŸÑÿ´ÿßŸÜŸàŸä (ŸÖÿ±ÿßÿ¨ÿπÿßÿ™ ŸàÿßÿÆÿ™ÿ®ÿßÿ±ÿßÿ™ ŸÇÿØÿ±ÿßÿ™ Ÿàÿ™ÿ≠ÿµŸäŸÑŸä). ŸÑÿØŸäŸÜÿß ŸÖÿπŸÑŸÖŸàŸÜ ŸÖÿ™ÿÆÿµÿµŸàŸÜ ŸÑŸÉŸÑ ŸÖÿ±ÿ≠ŸÑÿ© ÿØÿ±ÿßÿ≥Ÿäÿ©."
+                            q: "Â·  ‰«”»ﬂ„ Ã„Ì⁄ «·„—«Õ· «·œ—«”Ì…ø",
+                            a: "‰⁄„° »—«„Ã‰« „’„„… ·Ã„Ì⁄ «·„—«Õ·: «·«» œ«∆Ì ( √”Ì” ›Ì «·ﬁ—«¡… Ê«·ﬂ «»… Ê«·Õ”«»)° «·„ Ê”ÿ ( ﬁÊÌ… ›Ì Ã„Ì⁄ «·„Ê«œ)° Ê«·À«‰ÊÌ („—«Ã⁄«  Ê«Œ »«—«  ﬁœ—«  Ê Õ’Ì·Ì). ·œÌ‰« „⁄·„Ê‰ „ Œ’’Ê‰ ·ﬂ· „—Õ·… œ—«”Ì…."
                         },
                         {
-                            q: "ŸÖÿß ŸáŸä ÿßŸÑÿØŸàŸÑ ÿßŸÑÿ™Ÿä ÿ™ÿ∫ÿ∑ŸäŸáÿß ÿÆÿØŸÖÿßÿ™ŸÉŸÖ ÿßŸÑÿ™ÿπŸÑŸäŸÖŸäÿ©ÿü",
-                            a: "ŸÜÿÆÿØŸÖ ÿ∑ŸÑÿßÿ®ŸÜÿß ŸÅŸä ÿßŸÑŸÖŸÖŸÑŸÉÿ© ÿßŸÑÿπÿ±ÿ®Ÿäÿ© ÿßŸÑÿ≥ÿπŸàÿØŸäÿ©ÿå ÿßŸÑŸÉŸàŸäÿ™ÿå ÿßŸÑÿ•ŸÖÿßÿ±ÿßÿ™ÿå ŸÇÿ∑ÿ±ÿå ÿ≥ŸÑÿ∑ŸÜÿ© ÿπŸÖÿßŸÜÿå ŸàŸÖŸÖŸÑŸÉÿ© ÿßŸÑÿ®ÿ≠ÿ±ŸäŸÜ. ŸÉŸÖÿß ŸÜŸÇÿØŸÖ ÿÆÿØŸÖÿßÿ™ŸÜÿß ŸÑŸÑÿ∑ŸÑÿßÿ® ŸÅŸä ÿßŸÑÿ£ÿ±ÿØŸÜ ŸàŸÖÿµÿ±. ÿ¨ŸÖŸäÿπ ŸÖÿπŸÑŸÖŸäŸÜÿß ÿπŸÑŸâ ÿØÿ±ÿßŸäÿ© ŸÉÿßŸÖŸÑÿ© ÿ®ÿßŸÑŸÖŸÜÿßŸáÿ¨ ÿßŸÑÿØÿ±ÿßÿ≥Ÿäÿ© ŸÅŸä ŸÉŸÑ ÿØŸàŸÑÿ©."
+                            q: "„« ÂÌ «·œÊ· «· Ì  €ÿÌÂ« Œœ„« ﬂ„ «· ⁄·Ì„Ì…ø",
+                            a: "‰Œœ„ ÿ·«»‰« ›Ì «·„„·ﬂ… «·⁄—»Ì… «·”⁄ÊœÌ…° «·ﬂÊÌ ° «·≈„«—« ° ﬁÿ—° ”·ÿ‰… ⁄„«‰° Ê„„·ﬂ… «·»Õ—Ì‰. ﬂ„« ‰ﬁœ„ Œœ„« ‰« ··ÿ·«» ›Ì «·√—œ‰ Ê„’—. Ã„Ì⁄ „⁄·„Ì‰« ⁄·Ï œ—«Ì… ﬂ«„·… »«·„‰«ÂÃ «·œ—«”Ì… ›Ì ﬂ· œÊ·…."
                         }
                     ].map((item, idx) => {
                         const icons = [<HelpCircle size={80} />, <Star size={80} />, <Heart size={80} />, <HelpCircle size={80} />];
                         const isOpen = openIdx === idx;
                         return (
-                            <div key={idx} className="relative bg-surface dark:bg-card border border-border dark:border-primary/30 rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-[#D4AF37]/50 transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-[#D4AF37]/20">
+                            <div key={idx} className="relative bg-surface dark:bg-card border border-border dark:border-primary/30 rounded-2xl overflow-hidden group hover:border-primary dark:hover:border-accent/50 transition-all duration-500 hover:shadow-md hover:shadow-primary/5 dark:hover:shadow-accent/20">
                                 <div className="absolute -bottom-4 -end-4 text-muted opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.06] group-hover:rotate-12 transition-all duration-700 pointer-events-none dark:text-primary">
                                     {icons[idx % icons.length]}
                                 </div>
                                 <div className="absolute top-0 start-0 w-24 h-24 bg-primary/5 dark:bg-primary/10 opacity-0 group-hover:opacity-100 blur-2xl transition-opacity pointer-events-none"></div>
                                 <div className="relative z-10">
                                     <button type="button" onClick={() => setOpenIdx(isOpen ? null : idx)} className="flex items-center justify-between w-full p-4 cursor-pointer text-start" aria-expanded={isOpen}>
-                                        <h3 className="text-xs md:text-sm font-black text-main dark:text-main group-hover:text-primary dark:group-hover:text-[#D4AF37] transition-colors">
+                                        <h3 className="text-xs md:text-sm font-black text-main dark:text-main group-hover:text-primary dark:group-hover:text-accent transition-colors">
                                             {item.q}
                                         </h3>
                                         <span className={`w-6 h-6 rounded-full bg-primary-soft border border-border dark:bg-primary/20 dark:border-primary/40 flex items-center justify-center transition-all duration-300 ${isOpen ? 'rotate-180' : ''}`}>

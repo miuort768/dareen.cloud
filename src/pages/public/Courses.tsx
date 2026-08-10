@@ -1,4 +1,4 @@
-๏ปฟimport { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -57,7 +57,7 @@ export const Courses = () => {
     } catch (e) { console.warn(e); return adminPhone.replace(/\D/g, ''); }
   };
 
-  const whatsappNumber = getNumber('ุชูุงุตู ุนุจุฑ ูุงุชุณุงุจ');
+  const whatsappNumber = getNumber('สๆวีแ ฺศั ๆวสำวศ');
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -88,15 +88,15 @@ export const Courses = () => {
   }), [academyName]);
 
   return (
-    <div className="min-h-full bg-background dark:bg-black font-sans text-main relative flex flex-col transition-colors duration-500">
-      <SEO title="ุงูุฏูุฑุงุช ุงูุชุนููู…ูุฉ ุฃูููุงูู" description="ุฏูุฑุงุช ุชุนููู…ูุฉ ุฃูููุงูู ููู…ูุงูุฌ ุงูุณุนูุฏูุฉ ูุงููููุชูุฉ ูุงูุฅู…ุงุฑุงุชูุฉ ูุงููุทุฑูุฉ ูุงูุนู…ุงููุฉ ูุงูุจุญุฑูููุฉ. ุฏุฑูุณ ุฎุตูุตูุฉ ูู ุงูุฑูุงุถูุงุช ูุงูุนููู… ูุงููุบุฉ ุงูุนุฑุจูุฉ ูุงูุฅูุฌููุฒูุฉ ููุฏุฑุงุช ูุชุญุตููู ูู ุงูุฑูุงุถ ูุฌุฏุฉ ูุงููููุช ูุฏุจู ูุงูุฏูุญุฉ ูุงูุฑูุงู ูู…ุณูุท ูุตูุงูุฉ ูุงูู…ูุงู…ุฉ ูุงูู…ุญุฑู. ุชุฃุณูุณ ุฃุทูุงูุ ุชุญููุธ ูุฑุขูุ ู…ุฑุงุฌุนุงุช ููุงุฆูุฉ ู…ุน ูุฎุจุฉ ุงูู…ุนูู…ูู ุงูุฎุจุฑุงุก." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'ุงูุฑุฆูุณูุฉ', item: '/' }, { name: 'ุงูุฏูุฑุงุช', item: '/courses' }]} />
+    <div className="min-h-full bg-background dark:bg-background font-sans text-main relative flex flex-col transition-colors duration-500">
+      <SEO title="วแฯๆัวส วแสฺแํใํษ รๆไแวํไ" description="ฯๆัวส สฺแํใํษ รๆไแวํไ แแใไวๅฬ วแำฺๆฯํษ ๆวแ฿ๆํสํษ ๆวแลใวัวสํษ ๆวแÞุัํษ ๆวแฺใวไํษ ๆวแศอัํไํษ. ฯัๆำ ฮีๆีํษ Ýํ วแัํวึํวส ๆวแฺแๆใ ๆวแแÛษ วแฺัศํษ ๆวแลไฬแําํษ ๆÞฯัวส ๆสอีํแํ Ýํ วแัํวึ ๆฬฯษ ๆวแ฿ๆํส ๆฯศํ ๆวแฯๆอษ ๆวแัํวไ ๆใำÞุ ๆีแวแษ ๆวแใไวใษ ๆวแใอัÞ. สรำํำ รุÝวแก สอÝํู Þัยไก ใัวฬฺวส ไๅวฦํษ ใฺ ไฮศษ วแใฺแใํไ วแฮศัวม." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'วแัฦํำํษ', item: '/' }, { name: 'วแฯๆัวส', item: '/courses' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <MobileHeader />
 
       <main className="flex-grow md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 dark:from-primary/[0.05] dark:to-[#D4AF37]/[0.05] rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 dark:from-primary/[0.03] dark:to-[#D4AF37]/[0.03] rounded-full blur-[120px]" />
+          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 dark:from-primary/[0.05] dark:to-accent/[0.05] rounded-full blur-[140px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 dark:from-primary/[0.03] dark:to-accent/[0.03] rounded-full blur-[120px]" />
           <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[var(--bg-primary)]/20 dark:via-primary/20 to-transparent" />
         </div>
 
@@ -105,18 +105,18 @@ export const Courses = () => {
                         <div className="text-center mb-4 md:mb-6">
                             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/15 backdrop-blur-sm border border-primary dark:border-primary/30 rounded-full mb-2 md:mb-6">
                                 <Sparkles size={13} className="text-primary dark:text-primary" />
-                                <span className="text-micro font-black text-primary dark:text-primary">ุงุณุชูุดู ู…ุณูุฑุชู ุงูุชุนููู…ูุฉ</span>
+                                <span className="text-micro font-black text-primary dark:text-primary">วำส฿ิÝ ใำํัส฿ วแสฺแํใํษ</span>
                             </div>
 
                             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-main dark:text-main mb-2 md:mb-4 leading-tight tracking-tight">
                                 <span className="text-primary dark:text-primary">
-                                    ุฏูุฑุงุช
+                                    ฯๆัวส
                                 </span>{' '}
                                 {academyName}
                             </h1>
 
                             <p className="text-sm sm:text-base text-muted dark:text-muted max-w-2xl mx-auto leading-relaxed font-medium md:whitespace-nowrap">
-                                ุจุฑุงู…ุฌ ุชุนููู…ูุฉ ู…ุตู…ู…ุฉ ุจุนูุงูุฉ ูุชููุงุณุจ ุฌู…ูุน ุงูู…ุฑุงุญู ูุงูู…ุณุชููุงุช โ€” ุจุฃุณููุจ ุชูุงุนูู ูุฌุนู ุงูุชุนูู‘ู… ุชุฌุฑุจุฉ ู…ู…ุชุนุฉ
+                                ศัวใฬ สฺแํใํษ ใีใใษ ศฺไวํษ แส๕ไวำศ ฬใํฺ วแใัวอแ ๆวแใำสๆํวส — ศรำแๆศ สÝวฺแํ ํฬฺแ วแสฺแ๘ใ สฬัศษ ใใสฺษ
                             </p>
                         </div>
                         </AnimateOnScroll>
@@ -125,13 +125,13 @@ export const Courses = () => {
             <div className="relative group">
               <input
                 type="text"
-                aria-label="ุงุจุญุซ ุนู ุฏูุฑุชู ุงูู…ูุถูุฉ"
-                placeholder="ุงุจุญุซ ุนู ุฏูุฑุชู ุงูู…ูุถูุฉ..."
+                aria-label="วศอห ฺไ ฯๆัส฿ วแใÝึแษ"
+                placeholder="วศอห ฺไ ฯๆัส฿ วแใÝึแษ..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 ps-12 py-4 rounded-card bg-card dark:bg-card border border-border dark:border-primary/30 shadow-lg shadow-sm/50 dark:shadow-black/20 focus:border-primary/50 dark:focus:border-[#D4AF37]/50 focus:ring-4 focus:ring-primary/10 dark:focus:ring-[#D4AF37]/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-dim font-bold dark:focus:shadow-lg"
+                className="w-full px-5 ps-12 py-4 rounded-card bg-card dark:bg-card border border-border dark:border-primary/30 shadow-lg shadow-sm/50 dark:shadow-black/20 focus:border-primary/50 dark:focus:border-accent/50 focus:ring-4 focus:ring-primary/10 dark:focus:ring-accent/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-dim font-bold dark:focus:shadow-lg"
               />
-              <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim dark:text-dim w-5 h-5 group-focus-within:text-primary dark:group-focus-within:text-[#D4AF37] transition-colors" />
+              <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim dark:text-dim w-5 h-5 group-focus-within:text-primary dark:group-focus-within:text-accent transition-colors" />
             </div>
 
             <div className="flex flex-wrap justify-center gap-2 mt-6">
@@ -143,7 +143,7 @@ export const Courses = () => {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-card font-black text-xs transition-all duration-300 ${
                     activeCategory === cat.value
                       ? 'bg-primary-active dark:bg-primary text-on-primary dark:text-on-primary shadow-lg shadow-card/20 dark:shadow-primary/20'
-                      : 'bg-surface dark:bg-hover text-muted dark:text-muted border border-border dark:border-primary/20 hover:border-border/20 dark:hover:border-[#D4AF37]/40 hover:text-main dark:hover:text-white'
+                      : 'bg-surface dark:bg-hover text-muted dark:text-muted border border-border dark:border-primary/20 hover:border-border/20 dark:hover:border-accent/40 hover:text-main dark:hover:text-white'
                   }`}
                 >
                   <span className="flex items-center gap-2">
@@ -168,7 +168,7 @@ export const Courses = () => {
                 <motion.div
                   key={course.id}
                   variants={cardVariants}
-                   className="group relative bg-card dark:bg-card border border-border dark:border-primary/20 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-[#D4AF37]/10 transition-all duration-500"
+                   className="group relative bg-card dark:bg-card border border-border dark:border-primary/20 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-accent/10 transition-all duration-500"
                 >
                   <div className="relative h-44 overflow-hidden bg-background dark:bg-surface">
                     <Image
@@ -194,7 +194,7 @@ export const Courses = () => {
                   </div>
 
                     <div className="p-3 pb-0 flex flex-col flex-1">
-                    <h2 className="text-lg md:text-xl font-heading font-black text-main dark:text-main leading-snug group-hover:text-primary dark:group-hover:text-[#D4AF37] transition-colors">
+                    <h2 className="text-lg md:text-xl font-heading font-black text-main dark:text-main leading-snug group-hover:text-primary dark:group-hover:text-accent transition-colors">
                       {course.title}
                     </h2>
 
@@ -209,32 +209,32 @@ export const Courses = () => {
                         </div>
                         <div>
                           <span className="text-xs font-black text-main dark:text-main leading-none block">{course.students}</span>
-                          <span className="text-micro font-bold text-muted dark:text-dim">ุทุงูุจ</span>
+                          <span className="text-micro font-bold text-muted dark:text-dim">ุวแศ</span>
                         </div>
                       </div>
 
                       <span className="flex items-center gap-1.5 text-xs font-black text-success bg-success-light dark:bg-primary/15 dark:text-primary px-3 py-1.5 rounded-lg">
                         <Sparkles size={10} />
-                        ุชุฌุฑุจุฉ ู…ุฌุงููุฉ
+                        สฬัศษ ใฬวไํษ
                       </span>
                     </div>
                   </div>
 
                   <a
-                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`ุงูุณูุงู… ุนูููู…ุ ุฃุฑุบุจ ูู ุงูุงุณุชูุณุงุฑ ุนู ${course.title}`)}`}
+                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`วแำแวใ ฺแํ฿ใก รัÛศ Ýํ วแวำสÝำวั ฺไ ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-[#f59e0b] text-on-success dark:text-on-primary text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
+                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-warning text-on-success dark:text-on-primary text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
                   >
                     <MessageCircle size={14} />
-                    ุชูุงุตู ุนุจุฑ ูุงุชุณุงุจ
+                    สๆวีแ ฺศั ๆวสำวศ
                   </a>
 
                   {course.seoKeywords && (
                     <div className="absolute opacity-0 pointer-events-none overflow-hidden h-0" aria-hidden="true">
-                      <h2>ุงูููู…ุงุช ุงูู…ูุชุงุญูุฉ - {course.title}</h2>
+                      <h2>วแ฿แใวส วแใÝสวอํษ - {course.title}</h2>
                       <p>{course.seoKeywords.short}</p>
-                      <h3>ููู…ุงุช ู…ูุชุงุญูุฉ ุทูููุฉ - {course.title}</h3>
+                      <h3>฿แใวส ใÝสวอํษ ุๆํแษ - {course.title}</h3>
                       <p>{course.seoKeywords.long}</p>
                     </div>
                   )}
@@ -251,8 +251,8 @@ export const Courses = () => {
               <div className="w-16 h-16 rounded-card bg-background dark:bg-card flex items-center justify-center mx-auto mb-4 border border-border dark:border-primary/30">
                 <Search size={28} className="text-dim dark:text-dim" />
               </div>
-              <h2 className="text-xl font-black text-main dark:text-main mb-1">ูุง ุชูุฌุฏ ูุชุงุฆุฌ</h2>
-              <p className="text-sm text-muted dark:text-muted font-medium">ุฌุฑู‘ุจ ููู…ุงุช ุจุญุซ ู…ุฎุชููุฉ ุฃู ุงุฎุชุฑ ุชุตูููุงู ุขุฎุฑ</p>
+              <h2 className="text-xl font-black text-main dark:text-main mb-1">แว สๆฬฯ ไสวฦฬ</h2>
+              <p className="text-sm text-muted dark:text-muted font-medium">ฬั๘ศ ฿แใวส ศอห ใฮสแÝษ รๆ วฮสั สีไํÝว๐ ยฮั</p>
             </motion.div>
           )}
         </div>

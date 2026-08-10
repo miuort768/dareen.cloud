@@ -22,10 +22,10 @@ interface KPICardData {
 }
 
 const colorMap: Record<string, { bg: string; text: string; ring: string; accent: string }> = {
-    primary: { bg: 'bg-primary-soft dark:bg-primary/10', text: 'text-primary dark:text-primary', ring: 'ring-border dark:ring-[#D4AF37]/20', accent: 'bg-primary dark:bg-primary' },
+    primary: { bg: 'bg-primary-soft dark:bg-primary/10', text: 'text-primary dark:text-primary', ring: 'ring-border dark:ring-accent/20', accent: 'bg-primary dark:bg-primary' },
     success: { bg: 'bg-success-soft', text: 'text-success', ring: 'ring-border', accent: 'bg-success' },
     info: { bg: 'bg-info-soft', text: 'text-info', ring: 'ring-border', accent: 'bg-info' },
-    warning: { bg: 'bg-warning-soft dark:bg-primary/5', text: 'text-warning dark:text-primary', ring: 'ring-border dark:ring-[#D4AF37]/20', accent: 'bg-warning dark:bg-primary' },
+    warning: { bg: 'bg-warning-soft dark:bg-primary/5', text: 'text-warning dark:text-primary', ring: 'ring-border dark:ring-accent/20', accent: 'bg-warning dark:bg-primary' },
 };
 
 const KPICard = ({ item, index }: { item: KPICardData; index: number }) => {

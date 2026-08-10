@@ -335,7 +335,7 @@ export const ParentPaymentHistory = () => {
                                     onClick={() => setFilterStatus(pill.key)}
                                     className={`px-3 py-1.5 rounded-xl text-[10px] font-bold transition-all ${
                                         active
-                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary shadow-sm'
+                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-accent text-on-primary shadow-sm'
                                             : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
                                     }`}
                                 >
@@ -353,7 +353,7 @@ export const ParentPaymentHistory = () => {
                                     onClick={() => setFilterChild('all')}
                                     className={`px-2.5 py-1.5 rounded-xl text-[10px] font-bold whitespace-nowrap transition-all ${
                                         filterChild === 'all'
-                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary shadow-sm'
+                                            ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-accent text-on-primary shadow-sm'
                                             : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
                                     }`}
                                 >
@@ -365,7 +365,7 @@ export const ParentPaymentHistory = () => {
                                         onClick={() => setFilterChild(c.id)}
                                         className={`px-2.5 py-1.5 rounded-xl text-[10px] font-bold whitespace-nowrap transition-all ${
                                             filterChild === c.id
-                                                ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary shadow-sm'
+                                                ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-accent text-on-primary shadow-sm'
                                                 : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border border-border dark:border-white/[0.06] hover:bg-surface dark:hover:bg-white/[0.1]'
                                         }`}
                                     >

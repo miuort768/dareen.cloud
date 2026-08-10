@@ -49,7 +49,7 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
                             className={`w-full flex items-center gap-3 p-3 min-h-11 rounded-lg border transition-all duration-200 text-start active:scale-[0.98] ${
                                 isDone
                                     ? 'bg-surface dark:bg-surface border-border dark:border-primary/10 opacity-60'
-                                    : 'bg-card dark:bg-card border-border dark:border-primary/20 hover:border-primary/30 dark:hover:border-[#D4AF37]/40 hover:shadow-sm'
+                                    : 'bg-card dark:bg-card border-border dark:border-primary/20 hover:border-primary/30 dark:hover:border-accent/40 hover:shadow-sm'
                             }`}
                             aria-label={`${isDone ? 'إلغاء' : 'تحديد'} ${task.subject}`}
                             role="checkbox"

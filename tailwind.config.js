@@ -51,6 +51,19 @@ module.exports = {
           hover: '#B8860B',
           glow: 'rgba(212, 175, 55, 0.4)',
         },
+        avatar: {
+          1: '#10b981',
+          2: '#059669',
+          3: '#f59e0b',
+          4: '#d97706',
+          5: '#ef4444',
+          6: '#dc2626',
+          7: '#3b82f6',
+          8: '#2563eb',
+          9: '#8b5cf6',
+          10: '#7c3aed',
+          11: '#06b6d4',
+        },
         premium: {
           rose: '#e11d48',
           crimson: '#9f1239',
@@ -90,6 +103,8 @@ module.exports = {
         'primary-200': 'var(--bg-primary-soft)',
         'primary-400': 'var(--bg-primary-light)',
         focus: 'var(--ring-focus)',
+        'ring-offset': 'var(--ring-offset)',
+        page: 'var(--background)',
         chart: {
           1: 'var(--chart-1)',
           2: 'var(--chart-2)',

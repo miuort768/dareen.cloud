@@ -1,4 +1,4 @@
-๏ปฟimport { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Play, ArrowLeft, Star } from 'lucide-react';
 import { Image } from '../../../shared/components/ui';
 
@@ -10,7 +10,7 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: HeroSectionProps) => {
     return (
-        <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-surface dark:bg-black transition-colors duration-500">
+        <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-surface dark:bg-background transition-colors duration-500">
             <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
             <div className="container mx-auto px-4">
@@ -19,26 +19,26 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 dark:bg-primary/10 border border-primary/50 dark:border-primary/40 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-primary dark:bg-primary animate-pulse"></span>
-                                <span className="text-primary dark:text-primary font-bold text-micro sm:text-xs">ู…ูุตุฉ ุชุนููู… ุนู ุจุนุฏ ุฑุงุฆุฏุฉ ูู ุงูุณุนูุฏูุฉ ูุงููููุช ูุงูุฎููุฌ</span>
+                                <span className="text-primary dark:text-primary font-bold text-micro sm:text-xs">ใไีษ สฺแํใ ฺไ ศฺฯ ัวฦฯษ Ýํ วแำฺๆฯํษ ๆวแ฿ๆํส ๆวแฮแํฬ</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-main dark:text-main leading-none mb-0 relative">
-                                <span className="sr-only">ุฏุงุฑูู ุงูุณุงุจุนุฉ ููุชุนููู… ูุงูุชุฏุฑูุจ ุนู ุจุนุฏ - ุงูู…ูุตุฉ ุฑูู… ูุงุญุฏ ููุฏุฑูุณ ุงูุฎุตูุตูุฉ ูุชุญููุธ ุงููุฑุขู ูู ุงูุณุนูุฏูุฉุ ุงููููุชุ ุงูุงู…ุงุฑุงุชุ ูุทุฑุ ูุณูุทูุฉ ุนู…ุงู ูู…ู…ููุฉ ุงูุจุญุฑูู - ุฏุฑูุณ ุฎุตูุตูุฉ ูู ุงูุฏูุญุฉ ูุงูุฑูุงู ูู…ุณูุท ูุตูุงูุฉ ูุงูู…ูุงู…ุฉ ูุงูู…ุญุฑู</span>
+                                <span className="sr-only">ฯวัํไ วแำวศฺษ แแสฺแํใ ๆวแสฯัํศ ฺไ ศฺฯ - วแใไีษ ัÞใ ๆวอฯ แแฯัๆำ วแฮีๆีํษ ๆสอÝํู วแÞัยไ Ýํ วแำฺๆฯํษก วแ฿ๆํสก วแวใวัวสก Þุัก ๆำแุไษ ฺใวไ ๆใใแ฿ษ วแศอัํไ - ฯัๆำ ฮีๆีํษ Ýํ วแฯๆอษ ๆวแัํวไ ๆใำÞุ ๆีแวแษ ๆวแใไวใษ ๆวแใอัÞ</span>
                                 <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-s-4 border-primary dark:border-primary me-1 h-[0.9em] align-middle"></span></span>
-                                <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent dark:from-warning dark:to-[#D4AF37] block -mt-1 py-1 aria-hidden">
-                                    ููุชุนููู… ูุงูุชุฏุฑูุจ ุนู ุจุนุฏ
+                                <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent dark:from-warning dark:to-accent block -mt-1 py-1 aria-hidden">
+                                    แแสฺแํใ ๆวแสฯัํศ ฺไ ศฺฯ
                                 </span>
                             </h1>
                             <p className="text-xs sm:text-xs text-muted dark:text-muted leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
-                                ุฃูุถู ู…ูุตุฉ ุชุนููู… ุนู ุจุนุฏ ูู ุงูุณุนูุฏูุฉุ ุงููููุชุ ุงูุฅู…ุงุฑุงุชุ ูุทุฑ ูุนู…ุงู ูุงูุจุญุฑูู.<br />ุฏุฑูุณ ุฎุตูุตูุฉุ ูุฏุฑุงุช ูุชุญุตูููุ ุชุญููุธ ูุฑุขูุ ูุชุฃุณูุณ ููู…ูุงูุฌ ุงูุฎููุฌูุฉ ู…ุน ูุฎุจุฉ ุงูู…ุนูู…ูู.
+                                รÝึแ ใไีษ สฺแํใ ฺไ ศฺฯ Ýํ วแำฺๆฯํษก วแ฿ๆํสก วแลใวัวสก Þุั ๆฺใวไ ๆวแศอัํไ.<br />ฯัๆำ ฮีๆีํษก Þฯัวส ๆสอีํแํก สอÝํู Þัยไก ๆสรำํำ แแใไวๅฬ วแฮแํฬํษ ใฺ ไฮศษ วแใฺแใํไ.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-gradient-to-r from-primary to-primary dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-base sm:text-lg shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
-                                    aria-label="ุชุตูุญ ุงูุฏูุฑุงุช ุงูุชุนููู…ูุฉ"
+                                    aria-label="สีÝอ วแฯๆัวส วแสฺแํใํษ"
                                 >
-                                    <span>ุชุตูุญ ุงูุฏูุฑุงุช</span>
+                                    <span>สีÝอ วแฯๆัวส</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <button
@@ -53,12 +53,12 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                         }
                                     }}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-surface dark:bg-white/5 text-main dark:text-main border border-border dark:border-primary/30 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group rounded-xl"
-                                    aria-label="ุดุงูุฏ ุฏููู ุงูุงุณุชุฎุฏุงู…"
+                                    aria-label="ิวๅฯ ฯแํแ วแวำสฮฯวใ"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-primary-soft dark:bg-primary/20 flex items-center justify-center group-hover:scale-110 transition">
                                         <Play className="w-4 h-4 text-primary dark:text-primary fill-primary dark:fill-primary" />
                                     </div>
-                                    <span>ุฏููู ุงูุงุณุชุฎุฏุงู…ุ</span>
+                                    <span>ฯแํแ วแวำสฮฯวใฟ</span>
                                 </button>
                             </div>
                             <div className="mt-4 pt-4 border-t border-border dark:border-white/10 flex items-center justify-center gap-6">
@@ -72,7 +72,7 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                             imgClassName="rounded-full"
                                         />
                                     ))}
-                                    <div className="w-10 h-10 rounded-full border-2 border-border dark:border-primary/40 bg-surface dark:bg-black flex items-center justify-center text-xs font-bold text-muted dark:text-muted">
+                                    <div className="w-10 h-10 rounded-full border-2 border-border dark:border-primary/40 bg-surface dark:bg-background flex items-center justify-center text-xs font-bold text-muted dark:text-muted">
                                         +2k
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                         4.9/5
                                         <Star className="w-4 h-4 text-warning dark:text-primary fill-warning dark:fill-primary" />
                                     </div>
-                                    <p className="text-xs text-muted dark:text-muted font-medium">ุชูููู… ุงูุทูุงุจ ูุฃูููุงุก ุงูุฃู…ูุฑ</p>
+                                    <p className="text-xs text-muted dark:text-muted font-medium">สÞํํใ วแุแวศ ๆรๆแํวม วแรใๆั</p>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                         <source srcSet="/hero-child.avif" type="image/avif" />
                                         <img
                                             src="/hero-child.png"
-                                            alt="ุทูู ูุฏุฑุณ ุนูู ู…ูุตุฉ ุฏุงุฑูู ุงูุณุงุจุนุฉ"
+                                            alt="ุÝแ ํฯัำ ฺแ์ ใไีษ ฯวัํไ วแำวศฺษ"
                                             width="490"
                                             height="490"
                                             className="relative w-full h-auto lg:h-full object-contain filter drop-shadow-2xl z-20"
@@ -119,13 +119,13 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                 {text}
                             </p>
                             <a
-                                href={`https://wa.me/${signupNowNumber}?text=${encodeURIComponent('ุงูุณูุงู… ุนูููู…ุ ' + text)}`}
+                                href={`https://wa.me/${signupNowNumber}?text=${encodeURIComponent('วแำแวใ ฺแํ฿ใก ' + text)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label={`ุณุฌู ุงูุขู: ${text}`}
+                                aria-label={`ำฬแ วแยไ: ${text}`}
                                 className="shrink-0 px-2.5 py-1 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-micro lg:text-micro rounded-xl hover:brightness-90 transition-all shadow-sm whitespace-nowrap"
                             >
-                                ุณุฌู ุงูุขู
+                                ำฬแ วแยไ
                             </a>
                         </div>
                     ) : null)}

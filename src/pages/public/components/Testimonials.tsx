@@ -1,4 +1,4 @@
-ï»¿import { Star, Quote } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface Review {
@@ -15,7 +15,7 @@ interface TestimonialsProps {
 
 export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
     return (
-        <section className="py-4 md:py-6 bg-surface dark:bg-black relative overflow-hidden transition-colors duration-500">
+        <section className="py-4 md:py-6 bg-surface dark:bg-background relative overflow-hidden transition-colors duration-500">
 
             <div className="absolute top-0 end-0 w-64 h-64 bg-primary/5 dark:bg-primary/[0.08] rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-0 start-0 w-48 h-48 bg-success/5 dark:bg-primary/[0.05] rounded-full blur-[80px] pointer-events-none" />
@@ -24,10 +24,10 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                 <div className="text-center mb-4 md:mb-6">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-soft border border-primary/20 dark:bg-primary/20 dark:border-primary/40 rounded-full mb-3 mx-auto">
                         <Quote size={12} className="text-primary dark:text-primary" />
-                        <span className="text-micro font-black text-primary dark:text-primary">Ø¢Ø±Ø§Ø¡ ÙŠØ¹ØªØ² Ø¨Ù‡Ø§</span>
+                        <span className="text-micro font-black text-primary dark:text-primary">ÂÑÇÁ íÚÊÒ ÈåÇ</span>
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-main dark:text-main mb-3 font-heading leading-tight">
-                        Ù…Ø§Ø°Ø§ ÙŠÙ‚ÙˆÙ„ <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary dark:from-primary dark:to-warning">Ø£ÙˆÙ„ÙŠØ§Ø¡ Ø§Ù„Ø£Ù…ÙˆØ±ØŸ</span>
+                        ãÇÐÇ íÞæá <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary dark:from-primary dark:to-warning">ÃæáíÇÁ ÇáÃãæÑ¿</span>
                     </h2>
                 </div>
 
@@ -75,13 +75,13 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                 >
                                     <Quote size={isLarge ? 60 : 30} className={cn(
                                         'absolute -top-2 -end-2 transition-all duration-700',
-                                        isLarge ? 'text-on-success opacity-10 dark:text-on-primary/10' : 'text-primary dark:text-primary opacity-5 group-hover:text-primary/15 dark:group-hover:text-[#D4AF37]/15'
+                                        isLarge ? 'text-on-success opacity-10 dark:text-on-primary/10' : 'text-primary dark:text-primary opacity-5 group-hover:text-primary/15 dark:group-hover:text-accent/15'
                                     )} />
                                     
                                     <div className="flex items-center justify-between mb-4">
                                         <div className={cn(
                                             'px-4 py-1.5 rounded-full text-xs font-black shadow-sm transition-transform group-hover:scale-105',
-                                            isLarge ? 'bg-on-success text-success-dark dark:bg-black dark:text-primary' : 'bg-success-dark text-on-success dark:bg-primary dark:text-on-primary'
+                                            isLarge ? 'bg-on-success text-success-dark dark:bg-background dark:text-primary' : 'bg-success-dark text-on-success dark:bg-primary dark:text-on-primary'
                                         )}>
                                             {review.name}
                                         </div>
@@ -99,7 +99,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                                         </p>
                                     </div>
 
-                                    {!isLarge && <div className="absolute bottom-0 end-0 w-8 h-8 border-b-2 border-e-2 border-transparent group-hover:border-primary/20 dark:group-hover:border-[#D4AF37]/30 transition-all duration-700"></div>}
+                                    {!isLarge && <div className="absolute bottom-0 end-0 w-8 h-8 border-b-2 border-e-2 border-transparent group-hover:border-primary/20 dark:group-hover:border-accent/30 transition-all duration-700"></div>}
                                 </div>
                             );
                         })}

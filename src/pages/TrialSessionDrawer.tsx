@@ -23,11 +23,11 @@ const statusConfig: Record<string, { label: string; dot: string; text: string; b
 
 const avatarGradients = [
     'from-primary to-primary-deep',
-    'from-[#10b981] to-[#059669]',
-    'from-[#f59e0b] to-[#d97706]',
-    'from-[#ef4444] to-[#dc2626]',
-    'from-[#3b82f6] to-[#2563eb]',
-    'from-[#8b5cf6] to-[#7c3aed]',
+    'from-success to-success-dark',
+    'from-warning to-warning-dark',
+    'from-error to-error-dark',
+    'from-info to-info-dark',
+    'from-chart-4 to-chart-4/80',
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -160,7 +160,7 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                                 return (
                                     <div key={idx} className="flex gap-3 pb-4 last:pb-0">
                                         <div className="flex flex-col items-center">
-                                            <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center ring-2 ring-card dark:ring-[#131836] z-10", v.iconBg)}>
+                                            <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center ring-2 ring-card dark:ring-ring-offset z-10", v.iconBg)}>
                                                 <Icon size={13} className={v.iconText} />
                                             </div>
                                             {!isLast && <div className={cn("w-px flex-1 min-h-[8px]", v.line)} />}

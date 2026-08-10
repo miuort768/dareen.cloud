@@ -1,4 +1,4 @@
-ï»¿import React from 'react';
+import React from 'react';
 import { X, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PrimaryBtn } from './LeadsUI';
@@ -22,31 +22,31 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
             {isAddModalOpen && (
                 <>
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] bg-black/50 dark:bg-black/70 backdrop-blur-sm" onClick={() => setIsAddModalOpen(false)} />
+                        className="fixed inset-0 z-[200] bg-black/50 dark:bg-background/70 backdrop-blur-sm" onClick={() => setIsAddModalOpen(false)} />
                     <motion.div
                         initial={{ y: '100%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: '100%', opacity: 0 }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
                         className="fixed inset-x-0 bottom-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-[210] md:w-full md:max-w-lg max-h-[90vh] md:max-h-[85vh] bg-card dark:bg-surface md:border md:border-border dark:md:border-white/[0.06] md:shadow-2xl md:rounded-2xl flex flex-col overflow-hidden"
                         dir="rtl"
                     >
-                        {/* Drag handle â€” mobile only */}
+                        {/* Drag handle — mobile only */}
                         <div className="md:hidden flex justify-center pt-3 pb-1 shrink-0">
                             <div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full" />
                         </div>
 
                         {/* Header */}
                         <div className="shrink-0 px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
-                            <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-primary/10 dark:to-[#D4AF37]/5" />
+                            <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-primary/10 dark:to-accent/5" />
                             <div className="relative z-10 flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-primary/15">
                                     <UserPlus size={18} className="text-primary dark:text-primary" />
                                 </div>
                                 <div>
-                                    <h2 className="text-sm font-bold text-main dark:text-main">Ø¥Ø¶Ø§ÙØ© Ø¹Ù…ÙŠÙ„ Ø¬Ø¯ÙŠØ¯</h2>
-                                    <p className="text-[10px] text-muted/60 dark:text-main/30 mt-0.5">Ø£Ø¯Ø®Ù„ Ø¨ÙŠØ§Ù†Ø§Øª Ø§Ù„Ø¹Ù…ÙŠÙ„ Ø§Ù„Ø¬Ø¯ÙŠØ¯</p>
+                                    <h2 className="text-sm font-bold text-main dark:text-main">ÅÖÇİÉ Úãíá ÌÏíÏ</h2>
+                                    <p className="text-[10px] text-muted/60 dark:text-main/30 mt-0.5">ÃÏÎá ÈíÇäÇÊ ÇáÚãíá ÇáÌÏíÏ</p>
                                 </div>
                             </div>
-                            <button onClick={() => setIsAddModalOpen(false)} className="relative z-10 w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="Ø¥ØºÙ„Ø§Ù‚">
+                            <button onClick={() => setIsAddModalOpen(false)} className="relative z-10 w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="ÅÛáÇŞ">
                                 <X size={14} className="text-muted dark:text-main/50" />
                             </button>
                         </div>
@@ -62,27 +62,27 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                             });
                         }}>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div className="space-y-1"><label className={labelClass}>Ø§Ø³Ù… Ø§Ù„Ø·Ø§Ù„Ø¨ (Ø§Ø®ØªÙŠØ§Ø±ÙŠ)</label><input name="name" className={inputClass} placeholder="Ù…Ø«Ø§Ù„: Ø£Ù… Ø£Ø­Ù…Ø¯" /></div>
-                                <div className="space-y-1"><label className={labelClass}>Ø§Ù„Ù…Ù†Ù‡Ø¬</label><input name="curriculum" required className={inputClass} placeholder="Ù…Ø«Ø§Ù„: Ù…ØµØ±ÙŠ" /></div>
+                                <div className="space-y-1"><label className={labelClass}>ÇÓã ÇáØÇáÈ (ÇÎÊíÇÑí)</label><input name="name" className={inputClass} placeholder="ãËÇá: Ãã ÃÍãÏ" /></div>
+                                <div className="space-y-1"><label className={labelClass}>ÇáãäåÌ</label><input name="curriculum" required className={inputClass} placeholder="ãËÇá: ãÕÑí" /></div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div className="space-y-1"><label className={labelClass}>Ø±Ù‚Ù… Ø§Ù„Ù‡Ø§ØªÙ</label><input name="phone" required className={inputClass} placeholder="05XXXXXXXX" dir="ltr" style={{ textAlign: 'right' }} /></div>
-                                <div className="space-y-1"><label className={labelClass}>Ø§Ù„Ù…Ø§Ø¯Ø© Ø§Ù„Ù…Ù‡ØªÙ… Ø¨Ù‡Ø§</label><input name="subject" required className={inputClass} placeholder="Ù…Ø«Ø§Ù„: Ø±ÙŠØ§Ø¶ÙŠØ§Øª" /></div>
+                                <div className="space-y-1"><label className={labelClass}>ÑŞã ÇáåÇÊİ</label><input name="phone" required className={inputClass} placeholder="05XXXXXXXX" dir="ltr" style={{ textAlign: 'right' }} /></div>
+                                <div className="space-y-1"><label className={labelClass}>ÇáãÇÏÉ ÇáãåÊã ÈåÇ</label><input name="subject" required className={inputClass} placeholder="ãËÇá: ÑíÇÖíÇÊ" /></div>
                             </div>
                             <div className="space-y-1">
-                                <label className={labelClass}>Ø§Ù„Ø£ÙˆÙ„ÙˆÙŠØ©</label>
-                                <select name="priority" aria-label="Ø§Ù„Ø£ÙˆÙ„ÙˆÙŠØ©" className={inputClass}>
-                                    <option value="low">Ù…Ù†Ø®ÙØ¶Ø©</option>
-                                    <option value="medium">Ù…ØªÙˆØ³Ø·Ø©</option>
-                                    <option value="high">Ø¹Ø§Ù„ÙŠØ©</option>
+                                <label className={labelClass}>ÇáÃæáæíÉ</label>
+                                <select name="priority" aria-label="ÇáÃæáæíÉ" className={inputClass}>
+                                    <option value="low">ãäÎİÖÉ</option>
+                                    <option value="medium">ãÊæÓØÉ</option>
+                                    <option value="high">ÚÇáíÉ</option>
                                 </select>
                             </div>
-                            <div className="space-y-1"><label className={labelClass}>Ù…Ù„Ø§Ø­Ø¸Ø§Øª</label><textarea name="notes" rows={2} className={inputClass + " resize-none"} placeholder="Ø§ÙƒØªØ¨ Ø£ÙŠ ØªÙØ§ØµÙŠÙ„..." /></div>
+                            <div className="space-y-1"><label className={labelClass}>ãáÇÍÙÇÊ</label><textarea name="notes" rows={2} className={inputClass + " resize-none"} placeholder="ÇßÊÈ Ãí ÊİÇÕíá..." /></div>
                             <div className="flex gap-3 pt-2 pb-4">
                                 <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-3.5">
-                                    {addMutation.isPending ? 'Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø­ÙØ¸...' : 'Ø¥Ø¶Ø§ÙØ© Ø§Ù„Ø¹Ù…ÙŠÙ„'}
+                                    {addMutation.isPending ? 'ÌÇÑí ÇáÍİÙ...' : 'ÅÖÇİÉ ÇáÚãíá'}
                                 </PrimaryBtn>
-                                <button type="button" onClick={() => setIsAddModalOpen(false)} className="flex-1 py-3.5 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">Ø¥Ù„ØºØ§Ø¡</button>
+                                <button type="button" onClick={() => setIsAddModalOpen(false)} className="flex-1 py-3.5 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">ÅáÛÇÁ</button>
                             </div>
                         </form>
                     </motion.div>

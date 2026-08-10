@@ -1,4 +1,4 @@
-ï»¿import { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Wallet, ArrowLeft, Loader2, RefreshCw } from 'lucide-react';
@@ -84,7 +84,7 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
 
     return (
         <div
-            className="min-h-screen bg-background dark:bg-black overflow-x-hidden transition-colors duration-500"
+            className="min-h-screen bg-background dark:bg-background overflow-x-hidden transition-colors duration-500"
             dir="rtl"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -96,11 +96,11 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
             >
                 <div className="flex items-center gap-2 text-primary dark:text-primary font-bold text-xs">
                     {isRefreshing ? (
-                        <><Loader2 size={16} className="animate-spin" /><span>Ø¬Ø§Ø±ÙŠ Ø§Ù„ØªØ­Ø¯ÙŠØ«...</span></>
+                        <><Loader2 size={16} className="animate-spin" /><span>ÌÇÑí ÇáÊÍÏíË...</span></>
                     ) : pullDistance > 40 ? (
-                        <><RefreshCw size={16} className="animate-pulse" /><span>Ø£ÙÙ„Øª Ù„Ù„ØªØ­Ø¯ÙŠØ«</span></>
+                        <><RefreshCw size={16} className="animate-pulse" /><span>ÃİáÊ ááÊÍÏíË</span></>
                     ) : (
-                        <span className="text-muted">Ø§Ø³Ø­Ø¨ Ù„Ù„ØªØ­Ø¯ÙŠØ«</span>
+                        <span className="text-muted">ÇÓÍÈ ááÊÍÏíË</span>
                     )}
                 </div>
             </motion.div>
@@ -110,7 +110,7 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
             <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
                 <motion.div {...fadeUp(0)}>
                     <HeroSection
-                        name={currentUser?.name || currentUser?.username || 'ÙˆÙ„ÙŠ Ø§Ù„Ø£Ù…Ø±'}
+                        name={currentUser?.name || currentUser?.username || 'æáí ÇáÃãÑ'}
                         children={children}
                         attendanceRate={stats.attendanceRate}
                         academicProgress={stats.academicProgress}
@@ -157,14 +157,14 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
                         <motion.div {...fadeUp(0.3)}>
                             <button onClick={() => navigate('/parent-payment-history')}
                                 className="w-full bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-primary/5 transition-all duration-200 text-start hover:shadow-sm active:scale-[0.99]"
-                                aria-label="Ø³Ø¬Ù„ Ø§Ù„Ø¯ÙØ¹Ø§Øª"
+                                aria-label="ÓÌá ÇáÏİÚÇÊ"
                             >
                                 <div className="w-10 h-10 rounded-xl bg-success-soft dark:bg-primary/15 flex items-center justify-center shrink-0">
                                     <Wallet size={18} className="text-success dark:text-primary" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-bold text-main dark:text-main">Ø³Ø¬Ù„ Ø§Ù„Ø¯ÙØ¹Ø§Øª</p>
-                                    <p className="text-[11px] text-muted dark:text-muted">Ø¹Ø±Ø¶ ÙÙˆØ§ØªÙŠØ± Ø£Ø¨Ù†Ø§Ø¦Ùƒ ÙˆÙ…Ø¯ÙÙˆØ¹Ø§ØªÙƒ</p>
+                                    <p className="text-sm font-bold text-main dark:text-main">ÓÌá ÇáÏİÚÇÊ</p>
+                                    <p className="text-[11px] text-muted dark:text-muted">ÚÑÖ İæÇÊíÑ ÃÈäÇÆß æãÏİæÚÇÊß</p>
                                 </div>
                                 <ArrowLeft size={16} className="text-muted dark:text-dim shrink-0" />
                             </button>

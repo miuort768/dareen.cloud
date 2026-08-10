@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays, Eye, EyeOff, Download, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
@@ -73,10 +73,10 @@ const itemVariants = {
 };
 
 const statusFilters = [
-  { key: 'pending', label: 'بانتظار', color: 'text-warning', bg: 'bg-warning/15', darkBg: 'dark:bg-warning/20', darkText: 'dark:text-warning', dot: 'bg-warning' },
-  { key: 'completed', label: 'تمت', color: 'text-success', bg: 'bg-success/15', darkBg: 'dark:bg-success/20', darkText: 'dark:text-success', dot: 'bg-success' },
-  { key: 'cancelled', label: 'ملغية', color: 'text-error', bg: 'bg-error/15', darkBg: 'dark:bg-error/20', darkText: 'dark:text-error', dot: 'bg-error' },
-  { key: 'converted', label: 'محولة', color: 'text-info', bg: 'bg-info/15', darkBg: 'dark:bg-info/20', darkText: 'dark:text-info', dot: 'bg-info' },
+  { key: 'pending', label: '�������', color: 'text-warning', bg: 'bg-warning/15', darkBg: 'dark:bg-warning/20', darkText: 'dark:text-warning', dot: 'bg-warning' },
+  { key: 'completed', label: '���', color: 'text-success', bg: 'bg-success/15', darkBg: 'dark:bg-success/20', darkText: 'dark:text-success', dot: 'bg-success' },
+  { key: 'cancelled', label: '�����', color: 'text-error', bg: 'bg-error/15', darkBg: 'dark:bg-error/20', darkText: 'dark:text-error', dot: 'bg-error' },
+  { key: 'converted', label: '�����', color: 'text-info', bg: 'bg-info/15', darkBg: 'dark:bg-info/20', darkText: 'dark:text-info', dot: 'bg-info' },
 ];
 
 const TrialSessionsSkeleton = () => (
@@ -93,7 +93,7 @@ const TrialSessionsSkeleton = () => (
 
 export const TrialSessions = () => {
   const academyName = useAcademyName();
-  useEffect(() => { document.title = `جلسات المراجعة | ${academyName}`; }, [academyName]);
+  useEffect(() => { document.title = `����� �������� | ${academyName}`; }, [academyName]);
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('');
   const [filterSubject, setFilterSubject] = useState<string>('');
@@ -126,20 +126,20 @@ export const TrialSessions = () => {
 
   const addMutation = useMutation({
     mutationFn: (data: Record<string, unknown>) => editingId ? api.put(`/trial-sessions/${editingId}`, data) : api.post('/trial-sessions', data),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setShowModal(false); setEditingId(null); resetForm(); showNotification(editingId ? 'تم تحديث الحصة' : 'تمت إضافة الحصة', 'success'); },
-    onError: (err: Error) => showNotification('حدث خطأ: ' + err.message, 'error')
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setShowModal(false); setEditingId(null); resetForm(); showNotification(editingId ? '�� ����� �����' : '��� ����� �����', 'success'); },
+    onError: (err: Error) => showNotification('��� ���: ' + err.message, 'error')
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => api.delete(`/trial-sessions/${id}`),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setConfirmId(null); showNotification('تم حذف الحصة', 'success'); },
-    onError: (err: Error) => showNotification('حدث خطأ: ' + err.message, 'error')
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setConfirmId(null); showNotification('�� ��� �����', 'success'); },
+    onError: (err: Error) => showNotification('��� ���: ' + err.message, 'error')
   });
 
   const convertMutation = useMutation({
     mutationFn: (id: string) => api.post(`/trial-sessions/${id}/convert`),
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); queryClient.invalidateQueries({ queryKey: ['students'] }); showNotification('تم تحويل العميل إلى طالب', 'success'); },
-    onError: (err: Error) => showNotification('حدث خطأ: ' + err.message, 'error')
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); queryClient.invalidateQueries({ queryKey: ['students'] }); showNotification('�� ����� ������ ��� ����', 'success'); },
+    onError: (err: Error) => showNotification('��� ���: ' + err.message, 'error')
   });
 
   useEffect(() => {
@@ -172,7 +172,7 @@ export const TrialSessions = () => {
     localStorage.setItem(PAID_STORAGE_KEY, JSON.stringify(next));
     setPaidIds(next);
     queryClient.invalidateQueries({ queryKey: ['trial-sessions'] });
-    showNotification('تم تحديد كمدفوع', 'success');
+    showNotification('�� ����� ������', 'success');
   };
 
   const subjects = [...new Set(trials.map((t: TrialSession) => t.subject).filter(Boolean))] as string[];
@@ -240,7 +240,7 @@ export const TrialSessions = () => {
     >
       <div className="px-2.5 sm:px-4 space-y-4 max-w-page mx-auto relative z-10">
         {/* Hero Section */}
-        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6366f1] via-[#7c3aed] to-[#a855f7] dark:from-card dark:via-hover dark:to-card mt-4">
+        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary/80 to-primary/60 dark:from-card dark:via-hover dark:to-card mt-4">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
           <div className="absolute inset-0 opacity-[0.06]">
@@ -259,19 +259,19 @@ export const TrialSessions = () => {
             {/* Top row: title + actions */}
             <div className="flex items-center justify-between mb-5">
               <div className="text-right">
-                <p className="text-white/60 dark:text-main/40 text-[11px] mb-0.5">مرحباً بك! 👋</p>
-                <h1 className="text-lg md:text-xl font-bold font-outfit text-white">جلسات المراجعة</h1>
-                <p className="text-[11px] text-white/50">{stats?.total || 0} حصة مسجلة في النظام</p>
+                <p className="text-white/60 dark:text-main/40 text-[11px] mb-0.5">������ ��! ??</p>
+                <h1 className="text-lg md:text-xl font-bold font-outfit text-white">����� ��������</h1>
+                <p className="text-[11px] text-white/50">{stats?.total || 0} ��� ����� �� ������</p>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }}
                   className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white text-[11px] font-bold rounded-xl border border-white/20 transition-all active:scale-[0.98]"
                 >
-                  <Plus size={14} /> جدولة جلسة جديدة
+                  <Plus size={14} /> ����� ���� �����
                 </button>
                 <button className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white/15 hover:bg-white/25 backdrop-blur-sm text-white text-[11px] font-bold rounded-xl border border-white/20 transition-all active:scale-[0.98]">
-                  <Download size={14} /> تحميل التقرير
+                  <Download size={14} /> ����� �������
                 </button>
               </div>
             </div>
@@ -280,43 +280,43 @@ export const TrialSessions = () => {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-gray-500">معدل التحويل</span>
+                  <span className="text-[11px] font-bold text-muted">���� �������</span>
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                     <TrendingUp size={14} className="text-primary" />
                   </div>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-primary">{conversionRate}%</div>
-                <div className="text-[10px] text-gray-400 mt-1">{stats?.converted || 0} تحويل</div>
+                <div className="text-[10px] text-dim mt-1">{stats?.converted || 0} �����</div>
               </div>
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-gray-500">قيد الانتظار</span>
+                  <span className="text-[11px] font-bold text-muted">��� ��������</span>
                   <div className="w-8 h-8 rounded-lg bg-warning/10 flex items-center justify-center">
                     <Clock size={14} className="text-warning" />
                   </div>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-warning"><Counter value={stats?.pending || 0} /></div>
-                <div className="text-[10px] text-gray-400 mt-1">بانتظار الموعد</div>
+                <div className="text-[10px] text-dim mt-1">������� ������</div>
               </div>
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-gray-500">تمت بنجاح</span>
+                  <span className="text-[11px] font-bold text-muted">��� �����</span>
                   <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
                     <CheckCircle2 size={14} className="text-success" />
                   </div>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-success"><Counter value={stats?.completed || 0} /></div>
-                <div className="text-[10px] text-gray-400 mt-1">حصة ناجحة</div>
+                <div className="text-[10px] text-dim mt-1">��� �����</div>
               </div>
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-gray-500">إجمالي الحصص</span>
+                  <span className="text-[11px] font-bold text-muted">������ �����</span>
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                     <BookOpen size={14} className="text-primary" />
                   </div>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-primary"><Counter value={stats?.total || 0} /></div>
-                <div className="text-[10px] text-gray-400 mt-1">جميع الحصص</div>
+                <div className="text-[10px] text-dim mt-1">���� �����</div>
               </div>
             </div>
           </div>
@@ -332,12 +332,12 @@ export const TrialSessions = () => {
                 <input
                   value={search}
                   onChange={e => setSearch(e.target.value)}
-                  placeholder="بحث باسم الطالب أو رقم الهاتف..."
-                  aria-label="بحث عن حصة"
+                  placeholder="��� ���� ������ �� ��� ������..."
+                  aria-label="��� �� ���"
                   className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-main placeholder:text-muted dark:placeholder:text-white/25 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
                 />
                 {search && (
-                  <button aria-label="مسح البحث" onClick={() => setSearch('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
+                  <button aria-label="��� �����" onClick={() => setSearch('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
                     <X size={13} />
                   </button>
                 )}
@@ -351,10 +351,10 @@ export const TrialSessions = () => {
                     ? 'bg-success/10 dark:bg-success/15 text-success border-success/20 dark:border-success/20'
                     : 'bg-surface dark:bg-white/[0.04] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:bg-hover dark:hover:bg-white/[0.06]'
                 )}
-                aria-label={showPaid ? 'إظهار غير المدفوعة' : 'إظهار المدفوعة'}
+                aria-label={showPaid ? '����� ��� ��������' : '����� ��������'}
               >
                 {showPaid ? <Eye size={13} /> : <EyeOff size={13} />}
-                <span className="hidden sm:inline">المدفوعة</span>
+                <span className="hidden sm:inline">��������</span>
               </button>
               <div className="shrink-0 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl px-3 py-2.5">
                 <span className="text-[13px] font-bold text-main dark:text-main/60 tabular-nums">{filtered.length}</span>
@@ -371,7 +371,7 @@ export const TrialSessions = () => {
                       ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
                       : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                   )}>
-                  الكل
+                  ����
                   <span className={cn(
                     'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
                     !filterStatus ? 'bg-white/20' : 'bg-surface dark:bg-white/5 text-muted dark:text-main/30 border border-border dark:border-white/[0.06]'
@@ -406,7 +406,7 @@ export const TrialSessions = () => {
               )}
             </div>
 
-            {/* Subject filter — horizontal scrollable pill bar */}
+            {/* Subject filter � horizontal scrollable pill bar */}
             {subjects.length > 0 && (
               <div className="flex items-center gap-1.5 mt-3 overflow-x-auto scrollbar-none">
                 <CalendarDays size={12} className="text-muted dark:text-main/30 shrink-0" />
@@ -417,7 +417,7 @@ export const TrialSessions = () => {
                       ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
                       : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                   )}>
-                  كل المواد
+                  �� ������
                 </motion.button>
                 {subjects.map(subj => {
                   const isActive = filterSubject === subj;
@@ -466,14 +466,14 @@ export const TrialSessions = () => {
                   <Users size={28} className="text-primary/40" />
                 </div>
                 <p className="text-sm font-bold text-main dark:text-main/60 mb-1">
-                  {search || filterStatus || filterSubject ? 'لا توجد نتائج للبحث' : showPaid ? 'لا توجد حصص مدفوعة' : 'لا توجد حصص تجريبية'}
+                  {search || filterStatus || filterSubject ? '�� ���� ����� �����' : showPaid ? '�� ���� ��� ������' : '�� ���� ��� �������'}
                 </p>
                 <p className="text-[11px] text-muted dark:text-main/30 mb-4">
-                  {search || filterStatus || filterSubject ? 'حاول تغيير معايير البحث' : showPaid ? 'لم تتم دفع أي حصة بعد' : 'ابدأ بإضافة أول حصة تجريبية'}
+                  {search || filterStatus || filterSubject ? '���� ����� ������ �����' : showPaid ? '�� ��� ��� �� ��� ���' : '���� ������ ��� ��� �������'}
                 </p>
                 {!search && !filterStatus && !filterSubject && !showPaid && (
                   <button onClick={() => { resetForm(); setShowModal(true); }} className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold rounded-xl transition-all active:scale-[0.98]">
-                    <Plus size={14} /> إضافة حصة
+                    <Plus size={14} /> ����� ���
                   </button>
                 )}
               </div>
@@ -485,7 +485,7 @@ export const TrialSessions = () => {
                       <div className="flex items-center gap-2 px-3 py-1.5 mb-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary" />
                         <span className="text-[11px] font-bold text-primary" dir="ltr">{phone}</span>
-                        <span className="text-[10px] text-muted dark:text-main/30">({sessions.length} حصص)</span>
+                        <span className="text-[10px] text-muted dark:text-main/30">({sessions.length} ���)</span>
                       </div>
                     )}
                     <div className="space-y-3">
@@ -517,7 +517,7 @@ export const TrialSessions = () => {
                   onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
                   disabled={currentPage === totalPages}
                   className="w-9 h-9 flex items-center justify-center rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-main/40 hover:bg-hover dark:hover:bg-white/[0.08] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-                  aria-label="الصفحة التالية"
+                  aria-label="������ �������"
                 >
                   <ChevronLeft size={16} />
                 </button>
@@ -539,7 +539,7 @@ export const TrialSessions = () => {
                   onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
                   disabled={currentPage === 1}
                   className="w-9 h-9 flex items-center justify-center rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-main/40 hover:bg-hover dark:hover:bg-white/[0.08] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-                  aria-label="الصفحة السابقة"
+                  aria-label="������ �������"
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -554,7 +554,7 @@ export const TrialSessions = () => {
           className="hidden md:flex fixed bottom-8 left-8 z-40 w-14 h-14 bg-gradient-to-br from-primary to-primary-deep text-white rounded-xl shadow-xl shadow-primary/30 items-center justify-center active:scale-95 transition-all duration-200"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
-          aria-label="إضافة حصة جديدة"
+          aria-label="����� ��� �����"
         >
           <Plus size={22} />
         </motion.button>
@@ -562,7 +562,7 @@ export const TrialSessions = () => {
         {/* Confirm Delete */}
         <AnimatePresence>
           {confirmId && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end md:items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-0 md:p-4" dir="rtl">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end md:items-center justify-center bg-black/50 dark:bg-background/70 backdrop-blur-sm p-0 md:p-4" dir="rtl">
               {/* Mobile: bottom sheet */}
               <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 300 }}
                 className="md:hidden w-full bg-card dark:bg-surface rounded-t-3xl overflow-hidden">
@@ -571,15 +571,15 @@ export const TrialSessions = () => {
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
                     <AlertTriangle size={20} className="text-on-error" />
                   </div>
-                  <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
+                  <h3 className="text-sm font-bold text-on-error">����� �����</h3>
                 </div>
                 <div className="p-5">
-                  <p className="text-sm font-bold text-main dark:text-main">هل أنت متأكد من حذف هذه الحصة؟</p>
-                  <p className="text-[11px] text-muted dark:text-main/40 mt-1">لا يمكن التراجع عن هذا الإجراء</p>
+                  <p className="text-sm font-bold text-main dark:text-main">�� ��� ����� �� ��� ��� ����ɿ</p>
+                  <p className="text-[11px] text-muted dark:text-main/40 mt-1">�� ���� ������� �� ��� �������</p>
                 </div>
                 <div className="flex gap-2 px-5 pb-8">
-                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
-                  <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
+                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">�����</button>
+                  <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? '���� �����...' : '���'}</button>
                 </div>
               </motion.div>
               {/* Desktop: centered modal */}
@@ -589,14 +589,14 @@ export const TrialSessions = () => {
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
                     <AlertTriangle size={20} className="text-on-error" />
                   </div>
-                  <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
+                  <h3 className="text-sm font-bold text-on-error">����� �����</h3>
                 </div>
                 <div className="p-5">
-                  <p className="text-sm font-bold text-main dark:text-main">هل أنت متأكد من الحذف؟</p>
+                  <p className="text-sm font-bold text-main dark:text-main">�� ��� ����� �� ����ݿ</p>
                 </div>
                 <div className="flex gap-2 px-5 pb-5">
-                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
-                  <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
+                  <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all active:scale-[0.98]">�����</button>
+                  <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? '���� �����...' : '���'}</button>
                 </div>
               </motion.div>
             </motion.div>

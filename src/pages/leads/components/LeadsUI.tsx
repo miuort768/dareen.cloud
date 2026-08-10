@@ -6,11 +6,11 @@ import type { LeadStatus, LeadPriority } from '../../../features/crm/types';
 
 const avatarGradients = [
     'from-primary to-primary-deep',
-    'from-[#10b981] to-[#06b6d4]',
-    'from-[#f59e0b] to-[#ef4444]',
-    'from-[#06b6d4] to-[#6366f1]',
-    'from-[#ef4444] to-[#f59e0b]',
-    'from-[#8b5cf6] to-[#10b981]',
+    'from-success to-info',
+    'from-warning to-error',
+    'from-info to-primary',
+    'from-error to-warning',
+    'from-chart-4 to-success',
 ];
 const getGradient = (name: string) => avatarGradients[name.charCodeAt(0) % avatarGradients.length];
 

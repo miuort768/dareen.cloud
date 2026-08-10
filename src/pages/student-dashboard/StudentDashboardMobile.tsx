@@ -1,4 +1,4 @@
-ï»¿import { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Loader2, RefreshCw } from 'lucide-react';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks';
@@ -17,7 +17,7 @@ import { StudentDashboardHeader } from './StudentDashboardHeader';
 import { MobileBottomNav } from './MobileBottomNav';
 import type { User } from '../../types/auth';
 
-const ARABIC_DAYS = ['Ø§Ù„Ø£Ø­Ø¯', 'Ø§Ù„Ø¥Ø«Ù†ÙŠÙ†', 'Ø§Ù„Ø«Ù„Ø§Ø«Ø§Ø¡', 'Ø§Ù„Ø£Ø±Ø¨Ø¹Ø§Ø¡', 'Ø§Ù„Ø®Ù…ÙŠØ³', 'Ø§Ù„Ø¬Ù…Ø¹Ø©', 'Ø§Ù„Ø³Ø¨Øª'];
+const ARABIC_DAYS = ['ÇáÃÍÏ', 'ÇáÅËäíä', 'ÇáËáÇËÇÁ', 'ÇáÃÑÈÚÇÁ', 'ÇáÎãíÓ', 'ÇáÌãÚÉ', 'ÇáÓÈÊ'];
 
 const fadeUp = (delay: number) => ({
     initial: { opacity: 0, y: 16 },
@@ -74,7 +74,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
                     const diff = ((h || 0) * 60 + (m || 0)) - nowMinutes;
                     if (diff > 0 && diff < minDiff) {
                         minDiff = diff;
-                        closest = { subject: en.subject || 'Ø¯ÙˆØ±Ø©', teacher: en.teacherName || en.teacher || '', time: slot.hour || '', hour: slot.hour || '', day: slot.day, enrollment: en };
+                        closest = { subject: en.subject || 'ÏæÑÉ', teacher: en.teacherName || en.teacher || '', time: slot.hour || '', hour: slot.hour || '', day: slot.day, enrollment: en };
                     }
                 }
             });
@@ -119,7 +119,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
 
     return (
         <div
-            className="min-h-screen bg-background dark:bg-black overflow-x-hidden transition-colors duration-500"
+            className="min-h-screen bg-background dark:bg-background overflow-x-hidden transition-colors duration-500"
             dir="rtl"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -131,11 +131,11 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
             >
                 <div className="flex items-center gap-2 text-primary dark:text-primary font-bold text-xs">
                     {isRefreshing ? (
-                        <><Loader2 size={16} className="animate-spin" /><span>Ø¬Ø§Ø±ÙŠ Ø§Ù„ØªØ­Ø¯ÙŠØ«...</span></>
+                        <><Loader2 size={16} className="animate-spin" /><span>ÌÇÑí ÇáÊÍÏíË...</span></>
                     ) : pullDistance > 40 ? (
-                        <><RefreshCw size={16} className="animate-pulse" /><span>Ø£ÙÙ„Øª Ù„Ù„ØªØ­Ø¯ÙŠØ«</span></>
+                        <><RefreshCw size={16} className="animate-pulse" /><span>ÃİáÊ ááÊÍÏíË</span></>
                     ) : (
-                        <span className="text-muted">Ø§Ø³Ø­Ø¨ Ù„Ù„ØªØ­Ø¯ÙŠØ«</span>
+                        <span className="text-muted">ÇÓÍÈ ááÊÍÏíË</span>
                     )}
                 </div>
             </motion.div>
@@ -145,7 +145,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
             <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
                 <motion.div {...fadeUp(0)}>
                     <HeroSection
-                        name={studentData?.name || 'Ø§Ù„Ø·Ø§Ù„Ø¨'}
+                        name={studentData?.name || 'ÇáØÇáÈ'}
                         grade={studentData?.grade || ''}
                         curriculum={studentData?.curriculum || ''}
                         points={points}

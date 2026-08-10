@@ -1,4 +1,4 @@
-๏ปฟimport { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
@@ -42,11 +42,11 @@ export const Home = () => {
         } catch (e) { console.warn(e); return defaultNumber; }
     };
 
-    const requestFreeNumber = getNumber('ุทูุจ ุญุตุฉ ู…ุฌุงููุฉ');
-    const bookFreeNumber = getNumber('ุงุญุฌุฒ ุญุตุชู ุงูู…ุฌุงููุฉ ุงูุขู');
-    const memorizingNumber = getNumber('ุงุจุฏุฃ ุงูุญูุธ ุงูุขู');
-    const excellenceNumber = getNumber('ุงุจุฏุฃ ุฑุญูุฉ ุงูุชู…ูุฒ');
-    const signupNowNumber = getNumber('ุณุฌู ุงูุขู');
+    const requestFreeNumber = getNumber('ุแศ อีษ ใฬวไํษ');
+    const bookFreeNumber = getNumber('วอฬา อีส฿ วแใฬวไํษ วแยไ');
+    const memorizingNumber = getNumber('วศฯร วแอÝู วแยไ');
+    const excellenceNumber = getNumber('วศฯร ัอแษ วแสใํา');
+    const signupNowNumber = getNumber('ำฬแ วแยไ');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [activeCategory, setActiveCategory] = useState('all');
     const [typewriterText, setTypewriterText] = useState("");
@@ -56,7 +56,7 @@ export const Home = () => {
     try { if (heroBanners) bannersArray = JSON.parse(heroBanners); } catch (e) { console.warn(e); }
 
     useEffect(() => {
-        const fullText = `ู…ูุตุฉ ${academyName}`;
+        const fullText = `ใไีษ ${academyName}`;
         let i = 0, isDeleting = false, typingSpeed = 150, timer: ReturnType<typeof setTimeout>;
         const type = () => {
             const currentText = isDeleting ? fullText.substring(0, i - 1) : fullText.substring(0, i + 1);
@@ -76,23 +76,23 @@ export const Home = () => {
     }, [reviews.length]);
 
     return (
-        <div className="min-h-full bg-surface dark:bg-black text-main dark:text-main relative overflow-x-hidden transition-colors duration-500">
-            <SEO title="ู…ูุตุฉ ุชุนููู… ุนู ุจุนุฏ ูู ุงููููุช ูุงูุฎููุฌ"
-                description="ุชุนููู… ุนู ุจุนุฏ ูู ุงููููุชุ ุงูุณุนูุฏูุฉุ ูุทุฑุ ุงูุฅู…ุงุฑุงุชุ ูุนู…ุงู. ุฏุฑูุณ ุฎุตูุตูุฉุ ุชุญููุธ ูุฑุขูุ ูุชุฃุณูุณ ููู…ูุงูุฌ ุงูุฎููุฌูุฉ ู…ุน ุฃูุถู ุงูู…ุนูู…ูู. ุงุญุฌุฒ ุญุตุฉ ุชุฌุฑูุจูุฉ ู…ุฌุงููุฉ ุงูุขู."
+        <div className="min-h-full bg-surface dark:bg-background text-main dark:text-main relative overflow-x-hidden transition-colors duration-500">
+            <SEO title="ใไีษ สฺแํใ ฺไ ศฺฯ Ýํ วแ฿ๆํส ๆวแฮแํฬ"
+                description="สฺแํใ ฺไ ศฺฯ Ýํ วแ฿ๆํสก วแำฺๆฯํษก Þุัก วแลใวัวสก ๆฺใวไ. ฯัๆำ ฮีๆีํษก สอÝํู Þัยไก ๆสรำํำ แแใไวๅฬ วแฮแํฬํษ ใฺ รÝึแ วแใฺแใํไ. วอฬา อีษ สฬัํศํษ ใฬวไํษ วแยไ."
                 url="https://dareen.cloud/" image="/hero-child.png"
-                breadcrumbs={[{ name: 'ุงูุฑุฆูุณูุฉ', item: '/' }]} />
+                breadcrumbs={[{ name: 'วแัฦํำํษ', item: '/' }]} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }} />
             <MobileHeader />
             <main className="md:hidden pb-4 px-2 max-w-lg mx-auto relative">
                 <div className="flex gap-1.5 mt-2 mb-3">
-                    <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`ุงูุณูุงู… ุนูููู…ุ ุฃุฑุบุจ ูู ุญุฌุฒ ุญุตุฉ ู…ุฌุงููุฉ ูู ${academyName}`)}`}
+                    <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`วแำแวใ ฺแํ฿ใก รัÛศ Ýํ อฬา อีษ ใฬวไํษ Ýํ ${academyName}`)}`}
                         target="_blank" rel="noopener noreferrer"
                         className="flex-1 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
-                        <Headphones className="w-2.5 h-2.5 shrink-0" /> ุทูุจ ุญุตุฉ ู…ุฌุงููุฉ
+                        <Headphones className="w-2.5 h-2.5 shrink-0" /> ุแศ อีษ ใฬวไํษ
                     </a>
                     <Link to="/books"
                         className="flex-1 bg-primary dark:bg-white/10 dark:text-main text-on-primary text-xs font-bold px-1.5 py-2 rounded-full border dark:border-primary/30 flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
-                        <Play className="w-2.5 h-2.5 shrink-0 dark:text-primary" /> ุชุญู…ูู ู…ุฐูุฑุงุช ู…ุฌุงููุฉ
+                        <Play className="w-2.5 h-2.5 shrink-0 dark:text-primary" /> สอใํแ ใะ฿ัวส ใฬวไํษ
                     </Link>
                 </div>
                 <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-surface dark:via-card dark:to-surface rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-primary/30">
@@ -100,14 +100,14 @@ export const Home = () => {
                         <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
                             <div className="flex items-center gap-4">
                                 <div className="flex-1">
-                                    <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-primary"> ุงูุณุงุจุนุฉ <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-primary -mt-0.5" /></span>}</h1>
+                                    <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-primary"> วแำวศฺษ <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-primary -mt-0.5" /></span>}</h1>
                                     <p className="text-xs font-bold text-primary dark:text-primary mb-0.5">{slide.subtitle}</p>
                                     <p className="text-micro text-muted dark:text-muted leading-relaxed mb-3">{slide.desc}</p>
                                     <div className="flex flex-col gap-1.5">
                                         <Link to="/courses" className="bg-surface dark:bg-white/10 text-main dark:text-main border dark:border-primary/30 text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
-                                            <Play className="w-3 h-3 fill-main dark:fill-primary dark:text-primary" /> ุชุตูุญ ุงูุฏูุฑุงุช
+                                            <Play className="w-3 h-3 fill-main dark:fill-primary dark:text-primary" /> สีÝอ วแฯๆัวส
                                         </Link>
-                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-4 py-2 rounded-full shadow-card transition-all w-full text-center">{isAuthenticated ? 'ููุญุฉ ุงูุชุญูู…' : 'ุชุณุฌูู ุงูุฏุฎูู'}</Link>
+                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-4 py-2 rounded-full shadow-card transition-all w-full text-center">{isAuthenticated ? 'แๆอษ วแสอ฿ใ' : 'สำฬํแ วแฯฮๆแ'}</Link>
                                     </div>
                                 </div>
                                 <div className="relative shrink-0">
@@ -124,7 +124,7 @@ export const Home = () => {
                                     </div>
                                     <div className="flex justify-center gap-1 -mt-1">
                                         {[0, 1, 2].map((d) => (
-                                            <button key={d} onClick={() => setHeroIndex(d)} aria-label={`ุงูุงูุชูุงู ุฅูู ุงูุดุฑูุญุฉ ${d + 1}`}
+                                            <button key={d} onClick={() => setHeroIndex(d)} aria-label={`วแวไสÞวแ ลแ์ วแิัํอษ ${d + 1}`}
                                                 className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-primary dark:bg-primary w-3' : 'bg-muted dark:bg-zinc-600'}`} />
                                         ))}
                                     </div>
@@ -160,8 +160,8 @@ export const Home = () => {
                 </AnimateOnScroll>
                 <section className="px-1">
                     <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-lg font-black text-main dark:text-main">ุฃุญุฏุซ ุงูุฏูุฑุงุช</h2>
-                        <Link to="/courses" className="text-sm font-bold text-primary dark:text-primary flex items-center gap-1">ุนุฑุถ ุงููู <ChevronLeft className="w-3.5 h-3.5" /></Link>
+                        <h2 className="text-lg font-black text-main dark:text-main">รอฯห วแฯๆัวส</h2>
+                        <Link to="/courses" className="text-sm font-bold text-primary dark:text-primary flex items-center gap-1">ฺัึ วแ฿แ <ChevronLeft className="w-3.5 h-3.5" /></Link>
                     </div>
                     <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                         {stages.map((cat) => (
@@ -174,12 +174,12 @@ export const Home = () => {
                     <div className="flex gap-3 overflow-x-auto pb-1 -mx-1 px-1 no-scrollbar mt-3">
                         {getFilteredCourses(activeCategory).slice(0, 6).map((c, i) => (
                             <motion.a key={c.id}
-                                href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`ุงูุณูุงู… ุนูููู…ุ ุฃุฑุบุจ ูู ุงูุงุณุชูุณุงุฑ ุนู ${c.title}`)}`}
+                                href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`วแำแวใ ฺแํ฿ใก รัÛศ Ýํ วแวำสÝำวั ฺไ ${c.title}`)}`}
                                 target="_blank" rel="noopener noreferrer"
                                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.35, delay: i * 0.08 }}
                                 className="min-w-[180px] w-[180px] bg-surface dark:bg-card rounded-card shadow-sm border border-border dark:border-primary/25 overflow-hidden shrink-0 block">
-                                <div className="relative h-24 bg-surface dark:bg-black overflow-hidden">
+                                <div className="relative h-24 bg-surface dark:bg-background overflow-hidden">
                                     <Image src={c.image} alt={c.title} className="h-24" />
                                     <span className={`absolute top-2 start-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning dark:bg-primary text-on-warning dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary dark:bg-primary text-on-primary dark:text-on-primary' : 'bg-error text-on-error'}`}>
                                         {stages.find(cat => cat.value === c.category)?.label || c.category}
@@ -218,10 +218,10 @@ export const Home = () => {
                 <div style={{ contentVisibility: 'auto' }}><AnimateOnScroll><FAQSection /></AnimateOnScroll></div>
             </div>
             <div className="absolute opacity-0 pointer-events-none overflow-hidden h-0" aria-hidden="true">
-                <h2>ุงูููู…ุงุช ุงูู…ูุชุงุญูุฉ - ุงูุตูุญุฉ ุงูุฑุฆูุณูุฉ ุฏุงุฑูู ุงูุณุงุจุนุฉ</h2>
-                <p>ู…ูุตุฉ ุชุนููู… ุนู ุจุนุฏ, ุฃูุถู ู…ูุตุฉ ุชุนููู…ูุฉ, ู…ุฏุฑุณ ุฎุตูุตู ุฃูููุงูู, ุฏุฑูุณ ุฎุตูุตูุฉ ุงูุฎููุฌ, ู…ูุงูุฌ ุงููููุช, ู…ูุงูุฌ ุงูุณุนูุฏูุฉ, ุชุนููู… ุนู ุจุนุฏ ูู ุงููููุช, ุชุนููู… ุนู ุจุนุฏ ูู ุงูุณุนูุฏูุฉ, ุชุนููู… ุฃูููุงูู, ุญุตุฉ ู…ุฌุงููุฉ, ุชุฌุฑุจุฉ ู…ุฌุงููุฉ, ู…ุฏุฑุณ ุฑูุงุถูุงุช, ู…ุฏุฑุณ ุนููู…, ู…ุฏุฑุณ ูุบุฉ ุนุฑุจูุฉ, ู…ุฏุฑุณ ูุบุฉ ุฅูุฌููุฒูุฉ, ุชุฃุณูุณ ุฃุทูุงู, ุชุญููุธ ูุฑุขู, ูุฏุฑุงุช ูุชุญุตููู, ู…ุฑุงุฌุนุงุช ููุงุฆูุฉ, ูุชุงุฆุฌ ู…ุถู…ููุฉ, ุชููู ุฏุฑุงุณู, ู…ุชุงุจุนุฉ ุฃุณุจูุนูุฉ, ุชูุงุฑูุฑ ุฏูุฑูุฉ, ู…ูุงูุฌ ุฎููุฌูุฉ, ู…ุนูู…ูู ูุฎุจุฉ, ูุตูู ุชูุงุนููุฉ, ุชุนููู… ู…ุจุงุดุฑ, ุฃูุถู ู…ุฏุฑุณูู, ุฏุฑูุณ ุชูููุฉ, ุชุญุณูู ุงูู…ุณุชูู, ุชุนููู… ุนู ุจุนุฏ ููุฃุทูุงู, ุชุนููู… ุฃูููุงูู ููุทูุงุจ, ุงูู…ุฏุฑุณุฉ ุงูุงูุชุฑุงุถูุฉ, ุฃูุถู ู…ูุตุฉ ุชุนููู…ูุฉ ูู ุงููููุช, ุฃูุถู ู…ูุตุฉ ุชุนููู…ูุฉ ูู ุงูุณุนูุฏูุฉ, ุฃูุถู ู…ูุตุฉ ุชุนููู…ูุฉ ูู ุงูุฅู…ุงุฑุงุช, ุฃูุถู ู…ูุตุฉ ุชุนููู…ูุฉ ูู ูุทุฑ, ุฃูุถู ู…ูุตุฉ ุชุนููู…ูุฉ ูู ุนู…ุงู, ุฃูุถู ู…ูุตุฉ ุชุนููู…ูุฉ ูู ุงูุจุญุฑูู, ุชุทุจูู ุชุนููู…ู, ุชุทุจูู ุฏุงุฑูู ุงูุณุงุจุนุฉ, ุชุญู…ูู ุงูุชุทุจูู, ุญู…ู ุงูุชุทุจูู ุงูุขู, ุฏูุฑุงุช ุฏุงุฑูู ุงูุณุงุจุนุฉ, ุฏูุฑุงุช ุงูู…ูุงูุฌ ุงูุฎููุฌูุฉ, ุฏูุฑุงุช ุชูููุฉ ุฃูููุงูู, ุฏุฑูุณ ุฎุตูุตูุฉ ูู ุงูุฑูุงุถูุงุช, ุฏุฑูุณ ุฎุตูุตูุฉ ูู ุงูุนููู…, ุฏุฑูุณ ุฎุตูุตูุฉ ูู ุงููุบุฉ ุงูุนุฑุจูุฉ, ุฏุฑูุณ ุฎุตูุตูุฉ ูู ุงููุบุฉ ุงูุฅูุฌููุฒูุฉ, ุชุญููุธ ูุฑุขู ุนู ุจุนุฏ, ุชุฃุณูุณ ูุฑุงุกุฉ ููุชุงุจุฉ, ุดุฑุญ ุงูู…ููุฌ ุงููููุชู, ุดุฑุญ ุงูู…ููุฌ ุงูุณุนูุฏู, ุญู ูุชุจ ุงูู…ููุฌ, ู…ุฐูุฑุงุช ุชุนููู…ูุฉ, ุงุฎุชุจุงุฑุงุช ุชุฌุฑูุจูุฉ, ุญุตุฉ ุชุฌุฑูุจูุฉ ู…ุฌุงููุฉ, ูุงุชุณุงุจ ุฏุงุฑูู, ุฃุฑูุงู… ู…ุฏุฑุณูู ุฎุตูุตููู, ู…ุนูุฏ ุชุนููู…ู, ุฃูุงุฏูู…ูุฉ ุชุนููู…ูุฉ, ุฃูุถู ู…ุฏุฑุณ ุฎุตูุตู ูู ุงูุฎููุฌ</p>
-                <h3>ููู…ุงุช ู…ูุชุงุญูุฉ ุทูููุฉ - ุงูุตูุญุฉ ุงูุฑุฆูุณูุฉ</h3>
-                <p>ุฃูุถู ู…ูุตุฉ ุชุนููู… ุนู ุจุนุฏ ูู ุงููููุช ูุงูุณุนูุฏูุฉ ูุงูุฎููุฌ, ู…ุฏุฑุณ ุฎุตูุตู ุฃูููุงูู ููู…ูุงูุฌ ุงูุฎููุฌูุฉ, ุฏุฑูุณ ุชูููุฉ ูู ุงูุฑูุงุถูุงุช ูุงูุนููู… ูุงููุบุงุช, ุญุตุฉ ุชุฌุฑูุจูุฉ ู…ุฌุงููุฉ ููู ุงูู…ูุงุฏ, ุชุญุณูู ุงูู…ุณุชูู ุงูุฏุฑุงุณู ููุทูุงุจ, ู…ุชุงุจุนุฉ ุฃุณุจูุนูุฉ ู…ุน ุชูุงุฑูุฑ ุฏูุฑูุฉ, ุดุฑุญ ุงูู…ููุฌ ุงููููุชู ูุงูุณุนูุฏู ูุงูุฅู…ุงุฑุงุชู, ุชุญููุธ ุงููุฑุขู ุงููุฑูู… ุนู ุจุนุฏ ููุฃุทูุงู, ุชุฃุณูุณ ุงูุฃุทูุงู ูู ุงููุฑุงุกุฉ ูุงููุชุงุจุฉ ูุงูุญุณุงุจ, ุฃูุถู ุงูู…ุฏุฑุณูู ุงูุฎุตูุตููู ูู ุงูุฎููุฌ, ุฏุฑูุณ ุฎุตูุตูุฉ ุฃูููุงูู ุจุฃุณุนุงุฑ ู…ูุงุณุจุฉ, ุจุงูุงุช ุงุดุชุฑุงู ุฏุฑูุณ ุฎุตูุตูุฉ ู…ุฎูุถุฉ, ุชุทุจูู ุชุนููู…ู ููู…ูุงูุฌ ุงูุฎููุฌูุฉ, ุชุฌุฑุจุฉ ุชุนููู…ูุฉ ู…ุชูุงู…ูุฉ ู…ู ุฃู ู…ูุงู, ูุตูู ุฏุฑุงุณูุฉ ุงูุชุฑุงุถูุฉ ุชูุงุนููุฉ, ูุฎุจุฉ ู…ุนูู…ูู ููู…ูุงูุฌ ุงูุฎููุฌูุฉ, ูุชุงุฆุฌ ู…ุถู…ููุฉ ูุชุญุณูู ุงูุฏุฑุฌุงุช, ุฏุฑูุณ ุฎุตูุตูุฉ ูุฑุฏูุฉ ุฃูููุงูู, ุชุนููู… ุนู ุจุนุฏ ุจุฌูุฏุฉ ุนุงููุฉ, ู…ูุตุฉ ุชุนููู…ูุฉ ุนุฑุจูุฉ ููู…ูุงูุฌ ุงูุนุฑุจูุฉ, ุฏูุฑุงุช ุชูููุฉ ูู ุฌู…ูุน ุงูู…ูุงุฏ, ู…ุฑุงุฌุนุงุช ููุงุฆูุฉ ูุจู ุงูุงุฎุชุจุงุฑุงุช, ุงุฎุชุจุงุฑุงุช ูุฏุฑุงุช ูุชุญุตููู, ุฐุงูุฑ ู…ู ุงูุจูุช ุจุฃูุถู ุงูู…ุฏุฑุณูู, ุชุนููู… ุฃูููุงูู ูู ุงููููุช ูุงูุณุนูุฏูุฉ ูุงูุฅู…ุงุฑุงุช ููุทุฑ ูุนู…ุงู ูุงูุจุญุฑูู, ูุงุชุณุงุจ ุฏุงุฑูู ุงูุณุงุจุนุฉ ููุงุณุชูุณุงุฑ ูุงูุชุณุฌูู, ุงุญุฌุฒ ุญุตุชู ุงูู…ุฌุงููุฉ ุงูุขู, ุฏูุฑุงุช ุฏุงุฑูู ุงูุณุงุจุนุฉ ุงูุชุนููู…ูุฉ, ูุตุต ูุฌุงุญ ุทูุงุจ ุฏุงุฑูู ุงูุณุงุจุนุฉ</p>
+                <h2>วแ฿แใวส วแใÝสวอํษ - วแีÝอษ วแัฦํำํษ ฯวัํไ วแำวศฺษ</h2>
+                <p>ใไีษ สฺแํใ ฺไ ศฺฯ, รÝึแ ใไีษ สฺแํใํษ, ใฯัำ ฮีๆีํ รๆไแวํไ, ฯัๆำ ฮีๆีํษ วแฮแํฬ, ใไวๅฬ วแ฿ๆํส, ใไวๅฬ วแำฺๆฯํษ, สฺแํใ ฺไ ศฺฯ Ýํ วแ฿ๆํส, สฺแํใ ฺไ ศฺฯ Ýํ วแำฺๆฯํษ, สฺแํใ รๆไแวํไ, อีษ ใฬวไํษ, สฬัศษ ใฬวไํษ, ใฯัำ ัํวึํวส, ใฯัำ ฺแๆใ, ใฯัำ แÛษ ฺัศํษ, ใฯัำ แÛษ ลไฬแําํษ, สรำํำ รุÝวแ, สอÝํู Þัยไ, Þฯัวส ๆสอีํแํ, ใัวฬฺวส ไๅวฦํษ, ไสวฦฬ ใึใๆไษ, สÝๆÞ ฯัวำํ, ใสวศฺษ รำศๆฺํษ, สÞวัํั ฯๆัํษ, ใไวๅฬ ฮแํฬํษ, ใฺแใํไ ไฮศษ, Ýีๆแ สÝวฺแํษ, สฺแํใ ใศวิั, รÝึแ ใฯัำํไ, ฯัๆำ สÞๆํษ, สอำํไ วแใำสๆ์, สฺแํใ ฺไ ศฺฯ แแรุÝวแ, สฺแํใ รๆไแวํไ แแุแวศ, วแใฯัำษ วแวÝสัวึํษ, รÝึแ ใไีษ สฺแํใํษ Ýํ วแ฿ๆํส, รÝึแ ใไีษ สฺแํใํษ Ýํ วแำฺๆฯํษ, รÝึแ ใไีษ สฺแํใํษ Ýํ วแลใวัวส, รÝึแ ใไีษ สฺแํใํษ Ýํ Þุั, รÝึแ ใไีษ สฺแํใํษ Ýํ ฺใวไ, รÝึแ ใไีษ สฺแํใํษ Ýํ วแศอัํไ, สุศํÞ สฺแํใํ, สุศํÞ ฯวัํไ วแำวศฺษ, สอใํแ วแสุศํÞ, อใแ วแสุศํÞ วแยไ, ฯๆัวส ฯวัํไ วแำวศฺษ, ฯๆัวส วแใไวๅฬ วแฮแํฬํษ, ฯๆัวส สÞๆํษ รๆไแวํไ, ฯัๆำ ฮีๆีํษ Ýํ วแัํวึํวส, ฯัๆำ ฮีๆีํษ Ýํ วแฺแๆใ, ฯัๆำ ฮีๆีํษ Ýํ วแแÛษ วแฺัศํษ, ฯัๆำ ฮีๆีํษ Ýํ วแแÛษ วแลไฬแําํษ, สอÝํู Þัยไ ฺไ ศฺฯ, สรำํำ Þัวมษ ๆ฿สวศษ, ิัอ วแใไๅฬ วแ฿ๆํสํ, ิัอ วแใไๅฬ วแำฺๆฯํ, อแ ฿สศ วแใไๅฬ, ใะ฿ัวส สฺแํใํษ, วฮสศวัวส สฬัํศํษ, อีษ สฬัํศํษ ใฬวไํษ, ๆวสำวศ ฯวัํไ, รัÞวใ ใฯัำํไ ฮีๆีํํไ, ใฺๅฯ สฺแํใํ, ร฿วฯํใํษ สฺแํใํษ, รÝึแ ใฯัำ ฮีๆีํ Ýํ วแฮแํฬ</p>
+                <h3>฿แใวส ใÝสวอํษ ุๆํแษ - วแีÝอษ วแัฦํำํษ</h3>
+                <p>รÝึแ ใไีษ สฺแํใ ฺไ ศฺฯ Ýํ วแ฿ๆํส ๆวแำฺๆฯํษ ๆวแฮแํฬ, ใฯัำ ฮีๆีํ รๆไแวํไ แแใไวๅฬ วแฮแํฬํษ, ฯัๆำ สÞๆํษ Ýํ วแัํวึํวส ๆวแฺแๆใ ๆวแแÛวส, อีษ สฬัํศํษ ใฬวไํษ แ฿แ วแใๆวฯ, สอำํไ วแใำสๆ์ วแฯัวำํ แแุแวศ, ใสวศฺษ รำศๆฺํษ ใฺ สÞวัํั ฯๆัํษ, ิัอ วแใไๅฬ วแ฿ๆํสํ ๆวแำฺๆฯํ ๆวแลใวัวสํ, สอÝํู วแÞัยไ วแ฿ัํใ ฺไ ศฺฯ แแรุÝวแ, สรำํำ วแรุÝวแ Ýํ วแÞัวมษ ๆวแ฿สวศษ ๆวแอำวศ, รÝึแ วแใฯัำํไ วแฮีๆีํํไ Ýํ วแฮแํฬ, ฯัๆำ ฮีๆีํษ รๆไแวํไ ศรำฺวั ใไวำศษ, ศวÞวส วิสัว฿ ฯัๆำ ฮีๆีํษ ใฮÝึษ, สุศํÞ สฺแํใํ แแใไวๅฬ วแฮแํฬํษ, สฬัศษ สฺแํใํษ ใส฿วใแษ ใไ รํ ใ฿วไ, Ýีๆแ ฯัวำํษ วÝสัวึํษ สÝวฺแํษ, ไฮศษ ใฺแใํไ แแใไวๅฬ วแฮแํฬํษ, ไสวฦฬ ใึใๆไษ ๆสอำํไ วแฯัฬวส, ฯัๆำ ฮีๆีํษ Ýัฯํษ รๆไแวํไ, สฺแํใ ฺไ ศฺฯ ศฬๆฯษ ฺวแํษ, ใไีษ สฺแํใํษ ฺัศํษ แแใไวๅฬ วแฺัศํษ, ฯๆัวส สÞๆํษ Ýํ ฬใํฺ วแใๆวฯ, ใัวฬฺวส ไๅวฦํษ Þศแ วแวฮสศวัวส, วฮสศวัวส Þฯัวส ๆสอีํแํ, ะว฿ั ใไ วแศํส ศรÝึแ วแใฯัำํไ, สฺแํใ รๆไแวํไ Ýํ วแ฿ๆํส ๆวแำฺๆฯํษ ๆวแลใวัวส ๆÞุั ๆฺใวไ ๆวแศอัํไ, ๆวสำวศ ฯวัํไ วแำวศฺษ แแวำสÝำวั ๆวแสำฬํแ, วอฬา อีส฿ วแใฬวไํษ วแยไ, ฯๆัวส ฯวัํไ วแำวศฺษ วแสฺแํใํษ, Þีี ไฬวอ ุแวศ ฯวัํไ วแำวศฺษ</p>
             </div>
             <footer><PublicFooter /></footer>
         </div>

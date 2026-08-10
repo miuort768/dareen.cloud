@@ -201,7 +201,7 @@ export const Chat = () => {
                         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")', backgroundSize: '400px' }} />
                         
                         <div className="z-10 text-center">
-                            <div className="w-20 h-20 bg-surface border border-border flex items-center justify-center mx-auto mb-8 shadow-sm rounded-none">
+                            <div className="w-20 h-20 bg-surface border border-border flex items-center justify-center mx-auto mb-8 shadow-sm rounded-xl">
                                 <Image src="/logo.png" alt={academyName} className="w-12 h-12" imgClassName="object-contain" />
                             </div>
                             <h2 className="text-3xl font-medium text-main mb-3 tracking-tighter uppercase">واتساب {academyName} للكمبيوتر</h2>

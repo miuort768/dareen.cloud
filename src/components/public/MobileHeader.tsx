@@ -1,4 +1,4 @@
-ï»¿import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, GraduationCap, LogIn, Sun, Bed, Home, BookOpen, Book, Info, Phone, LayoutDashboard } from 'lucide-react';
 import { PublicNavbar } from './PublicNavbar';
@@ -13,11 +13,11 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
   const academyName = useAcademyName();
 
   const navItems = [
-    { label: 'Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©', path: '/', icon: Home },
-    { label: 'Ø§Ù„Ø¯ÙˆØ±Ø§Øª', path: '/courses', icon: BookOpen },
-    { label: 'Ø§Ù„Ù…ÙƒØªØ¨Ø©', path: '/books', icon: Book },
-    { label: 'Ù…Ù† Ù†Ø­Ù†', path: '/about', icon: Info },
-    { label: 'Ø§ØªØµÙ„ Ø¨Ù†Ø§', path: '/contact', icon: Phone },
+    { label: 'ÇáÑÆíÓíÉ', path: '/', icon: Home },
+    { label: 'ÇáÏæÑÇÊ', path: '/courses', icon: BookOpen },
+    { label: 'ÇáãßÊÈÉ', path: '/books', icon: Book },
+    { label: 'ãä äÍä', path: '/about', icon: Info },
+    { label: 'ÇÊÕá ÈäÇ', path: '/contact', icon: Phone },
   ];
 
   return (
@@ -25,7 +25,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
       <div className="hidden md:block">
         <PublicNavbar />
       </div>
-      <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2 bg-surface dark:bg-black">
+      <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2 bg-surface dark:bg-background">
         <div className="flex items-center gap-1">
           <Link to="/" className="flex items-center gap-2">
           <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-primary to-primary dark:from-primary dark:to-warning flex items-center justify-center shadow-lg shadow-primary/20 dark:shadow-primary/20 relative overflow-hidden">
@@ -34,23 +34,23 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
           </div>
           <div>
                             <p className="text-base font-black text-main dark:text-main leading-tight">{academyName}</p>
-                            <p className="text-micro font-bold leading-tight text-main dark:text-muted">Ø£ÙØ¶Ù„ Ù…Ø¯Ø±Ø³Ø© Ø§ÙØªØ±Ø§Ø¶ÙŠØ©</p>
+                            <p className="text-micro font-bold leading-tight text-main dark:text-muted">ÃİÖá ãÏÑÓÉ ÇİÊÑÇÖíÉ</p>
                             <p className="text-micro text-main dark:text-muted leading-tight mt-0.5">Dareen for Education & Online Learning</p>
           </div>
         </Link>
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'Ø§Ù„ÙˆØ¶Ø¹ Ø§Ù„Ù†Ù‡Ø§Ø±ÙŠ' : 'Ø§Ù„ÙˆØ¶Ø¹ Ø§Ù„Ù„ÙŠÙ„ÙŠ'} className={`w-10 h-10 rounded-full bg-surface dark:bg-card shadow-sm border border-border dark:border-primary/30 flex items-center justify-center shrink-0 ${hideThemeToggle ? 'hidden' : ''}`}>
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-[#D4AF37]" /> : <Bed className="w-4 h-4 text-primary" />}
+          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'ÇáæÖÚ ÇáäåÇÑí' : 'ÇáæÖÚ Çááíáí'} className={`w-10 h-10 rounded-full bg-surface dark:bg-card shadow-sm border border-border dark:border-primary/30 flex items-center justify-center shrink-0 ${hideThemeToggle ? 'hidden' : ''}`}>
+            {theme === 'dark' ? <Sun className="w-4 h-4 text-accent" /> : <Bed className="w-4 h-4 text-primary" />}
           </button>
           <div className="relative">
-          <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Ø¥ØºÙ„Ø§Ù‚ Ø§Ù„Ù‚Ø§Ø¦Ù…Ø©' : 'ÙØªØ­ Ø§Ù„Ù‚Ø§Ø¦Ù…Ø©'} className="w-10 h-10 rounded-full bg-surface dark:bg-card shadow-sm border border-border dark:border-primary/30 flex items-center justify-center">
+          <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'ÅÛáÇŞ ÇáŞÇÆãÉ' : 'İÊÍ ÇáŞÇÆãÉ'} className="w-10 h-10 rounded-full bg-surface dark:bg-card shadow-sm border border-border dark:border-primary/30 flex items-center justify-center">
             {menuOpen ? <X className="w-5 h-5 text-muted dark:text-primary" /> : <Menu className="w-5 h-5 text-muted dark:text-primary" />}
           </button>
           {menuOpen && (
             <div className="absolute top-12 end-0 bg-surface dark:bg-surface rounded-2xl shadow-2xl border border-border dark:border-primary/30 z-50 min-w-[180px]">
               {navItems.map((item) => (
-                <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-main dark:text-main hover:bg-primary-soft dark:hover:bg-primary/10 hover:text-primary dark:hover:text-[#D4AF37] transition-colors border-b border-border dark:border-primary/20 last:border-0 whitespace-nowrap">
+                <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-main dark:text-main hover:bg-primary-soft dark:hover:bg-primary/10 hover:text-primary dark:hover:text-accent transition-colors border-b border-border dark:border-primary/20 last:border-0 whitespace-nowrap">
                   <item.icon size={16} className="shrink-0 dark:text-primary" />
                   {item.label}
                 </Link>
@@ -58,12 +58,12 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
               {isAuthenticated ? (
                 <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-primary dark:text-primary hover:bg-info-light dark:hover:bg-primary/10 transition-colors border-t border-border dark:border-primary/20">
                   <LayoutDashboard size={14} />
-                  Ù„ÙˆØ­Ø© Ø§Ù„ØªØ­ÙƒÙ…
+                  áæÍÉ ÇáÊÍßã
                 </Link>
               ) : (
                 <Link to="/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-primary dark:text-primary hover:bg-info-light dark:hover:bg-primary/10 transition-colors border-t border-border dark:border-primary/20">
                   <LogIn size={14} />
-                  ØªØ³Ø¬ÙŠÙ„ Ø§Ù„Ø¯Ø®ÙˆÙ„
+                  ÊÓÌíá ÇáÏÎæá
                 </Link>
               )}
             </div>

@@ -188,12 +188,12 @@ export const NotificationsCenter = ({
                             {smartAlerts.map((alert, idx) => (
                                 <div key={alert.id} className="flex gap-3 relative pb-3">
                                     <div className={cn(
-                                        "w-[30px] h-[30px] rounded-lg flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-[#0d0d0f] z-10",
+                                        "w-[30px] h-[30px] rounded-lg flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-card z-10",
                                         alert.type === 'critical' ? "bg-error-soft text-error" : "bg-warning-soft dark:bg-primary/10 text-warning dark:text-primary"
                                     )}>
                                         {alert.type === 'critical' ? <AlertTriangle size={12} /> : <CheckCircle2 size={12} />}
                                     </div>
-                                    <div className="flex-1 min-w-0 p-3 rounded-xl border bg-card dark:bg-card border-border dark:border-primary/20 hover:bg-surface dark:hover:bg-[#1a1a1e] transition-colors cursor-pointer"
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border bg-card dark:bg-card border-border dark:border-primary/20 hover:bg-surface dark:hover:bg-hover transition-colors cursor-pointer"
                                         onClick={() => typeof alert.action === 'function' && alert.action()}
                                         role="button"
                                         tabIndex={0}
@@ -210,7 +210,7 @@ export const NotificationsCenter = ({
                         </div>
                     ) : (
                         <div className="relative flex gap-3 py-2">
-                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-[#0d0d0f]">
+                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-card">
                                 <CheckCircle2 size={14} className="text-success" />
                             </div>
                             <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-primary/20 bg-success-soft/50 dark:bg-success/5">
@@ -233,10 +233,10 @@ export const NotificationsCenter = ({
                             <div className="absolute start-[15px] top-2 bottom-2 w-px bg-divider dark:bg-primary/20" />
                             {roomAlerts.map((alert, idx) => (
                                 <div key={alert.id} className="flex gap-3 relative pb-3">
-                                    <div className="w-[30px] h-[30px] rounded-lg bg-primary-soft dark:bg-primary/10 flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-[#0d0d0f] z-10">
+                                    <div className="w-[30px] h-[30px] rounded-lg bg-primary-soft dark:bg-primary/10 flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-card z-10">
                                         <alert.icon size={12} className="text-primary dark:text-primary" />
                                     </div>
-                                    <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-primary/20 bg-card dark:bg-card hover:bg-surface dark:hover:bg-[#1a1a1e] transition-colors">
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-primary/20 bg-card dark:bg-card hover:bg-surface dark:hover:bg-hover transition-colors">
                                         <div className="flex items-center justify-between gap-2 mb-1">
                                             <h4 className="text-[11px] font-bold text-main dark:text-main truncate">{alert.title}</h4>
                                             <span className="text-[9px] text-muted dark:text-dim shrink-0">{idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}</span>
@@ -259,7 +259,7 @@ export const NotificationsCenter = ({
                         </div>
                     ) : (
                         <div className="relative flex gap-3 py-2">
-                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-[#0d0d0f]">
+                            <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-card">
                                 <Info size={14} className="text-success" />
                             </div>
                             <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-primary/20 bg-success-soft/50 dark:bg-success/5">

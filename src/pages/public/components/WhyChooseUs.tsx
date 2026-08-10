@@ -1,20 +1,20 @@
-๏ปฟimport { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ShieldCheck, Lightbulb, Heart, Star, Users, Award, ArrowLeft, Zap } from 'lucide-react';
 
 const features = [
   {
-    title: 'ูุชุงุฆุฌ ู…ุถู…ููุฉ',
-    desc: 'ู…ุชุงุจุนุฉ ุฏูููุฉ ู…ุน ุชูุงุฑูุฑ ุฃุณุจูุนูุฉ ูุชุญุณูู ู…ุณุชูู ุงูุทุงูุจ.',
+    title: 'ไสวฦฬ ใึใๆไษ',
+    desc: 'ใสวศฺษ ฯÞํÞษ ใฺ สÞวัํั รำศๆฺํษ แสอำํไ ใำสๆ์ วแุวแศ.',
     variant: 'success' as const,
   },
   {
-    title: 'ุทุฑู ุชุนููู… ู…ุจุชูุฑุฉ',
-    desc: 'ุฏุฑูุณ ุฎุตูุตูุฉ ุชูุงุนููุฉ ููู…ูุงูุฌ ุงูุฎููุฌูุฉ ุชูู…ู ู…ูุงุฑุงุช ุงูููู… ูุงูุชูููุฑ ุงูุฅุจุฏุงุนู.',
+    title: 'ุัÞ สฺแํใ ใศส฿ัษ',
+    desc: 'ฯัๆำ ฮีๆีํษ สÝวฺแํษ แแใไวๅฬ วแฮแํฬํษ สไใํ ใๅวัวส วแÝๅใ ๆวแสÝ฿ํั วแลศฯวฺํ.',
     variant: 'primary' as const,
   },
   {
-    title: 'ุจูุฆุฉ ุขู…ูุฉ ูู…ุญูุฒุฉ',
-    desc: 'ูุตูู ุงูุชุฑุงุถูุฉ ุขู…ูุฉ ูุฏุฑูุณ ุงูุชูููุฉ ุฃูููุงูู ู…ุน ูุฎุจุฉ ู…ุนูู…ู ุงูุฑูุงุถูุงุช ูุงูุนููู… ูุงููุบุฉ ุงูุนุฑุจูุฉ.',
+    title: 'ศํฦษ ยใไษ ๆใอÝาษ',
+    desc: 'Ýีๆแ วÝสัวึํษ ยใไษ แฯัๆำ วแสÞๆํษ รๆไแวํไ ใฺ ไฮศษ ใฺแใํ วแัํวึํวส ๆวแฺแๆใ ๆวแแÛษ วแฺัศํษ.',
     variant: 'accent' as const,
     ribbon: true,
   },
@@ -34,7 +34,7 @@ interface WhyChooseUsProps {
 
 export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProps) => {
   return (
-    <section className="relative overflow-hidden bg-surface dark:bg-black pt-4 md:pt-10 pb-0 transition-colors duration-500">
+    <section className="relative overflow-hidden bg-surface dark:bg-background pt-4 md:pt-10 pb-0 transition-colors duration-500">
       {/* Neon glow decorations */}
       <div className="absolute -top-40 -start-40 w-80 h-80 bg-accent/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute -bottom-40 -end-40 w-80 h-80 bg-primary/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
@@ -45,18 +45,18 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
         <div className="text-center mb-4 md:mb-6">
           <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4 flex items-center justify-center gap-2 text-main dark:text-main">
             <Zap className="w-5 h-5 text-warning dark:text-primary fill-warning dark:fill-primary md:hidden" />
-            <span>ูู…ุงุฐุง{' '}</span>
+            <span>แใวะว{' '}</span>
             <span className="px-4 py-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xl md:text-4xl inline-block">
-              ุชุฎุชุงุฑูุงุ
+              สฮสวัไวฟ
             </span>
           </h2>
           <p className="text-muted dark:text-muted text-sm md:text-base lg:text-xs max-w-4xl mx-auto leading-relaxed font-medium">
-            <span className="hidden md:inline">ุฃูุถู ู…ูุตุฉ ุชุนููู… ุนู ุจุนุฏ ูู ุงูุณุนูุฏูุฉุ ุงููููุชุ ุงูุฅู…ุงุฑุงุชุ ูุทุฑ ูุนู…ุงู ูุงูุจุญุฑูู.<br />ุฏุฑูุณ ุฎุตูุตูุฉุ ูุฏุฑุงุช ูุชุญุตูููุ ุชุญููุธ ูุฑุขูุ ูุชุฃุณูุณ ููู…ูุงูุฌ ุงูุฎููุฌูุฉ ู…ุน ูุฎุจุฉ ุงูู…ุนูู…ูู.</span>
-            <span className="md:hidden">ุฃูุถู ู…ูุตุฉ ุชุนููู… ุนู ุจุนุฏ ูู ุงูุณุนูุฏูุฉุ ุงููููุชุ ุงูุฅู…ุงุฑุงุชุ ูุทุฑ ูุนู…ุงู ูุงูุจุญุฑูู. ุฏุฑูุณ ุฎุตูุตูุฉุ ูุฏุฑุงุช ูุชุญุตูููุ ุชุญููุธ ูุฑุขูุ ูุชุฃุณูุณ ููู…ูุงูุฌ ุงูุฎููุฌูุฉ ู…ุน ูุฎุจุฉ ุงูู…ุนูู…ูู.</span>
+            <span className="hidden md:inline">รÝึแ ใไีษ สฺแํใ ฺไ ศฺฯ Ýํ วแำฺๆฯํษก วแ฿ๆํสก วแลใวัวสก Þุั ๆฺใวไ ๆวแศอัํไ.<br />ฯัๆำ ฮีๆีํษก Þฯัวส ๆสอีํแํก สอÝํู Þัยไก ๆสรำํำ แแใไวๅฬ วแฮแํฬํษ ใฺ ไฮศษ วแใฺแใํไ.</span>
+            <span className="md:hidden">รÝึแ ใไีษ สฺแํใ ฺไ ศฺฯ Ýํ วแำฺๆฯํษก วแ฿ๆํสก วแลใวัวสก Þุั ๆฺใวไ ๆวแศอัํไ. ฯัๆำ ฮีๆีํษก Þฯัวส ๆสอีํแํก สอÝํู Þัยไก ๆสรำํำ แแใไวๅฬ วแฮแํฬํษ ใฺ ไฮศษ วแใฺแใํไ.</span>
           </p>
         </div>
 
-        {/* โ”€โ”€โ”€ Mobile Layout โ”€โ”€โ”€ */}
+        {/* ??? Mobile Layout ??? */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="md:hidden space-y-4">
           {features.map((f, i) => {
             const Icon = featureIcons[i];
@@ -66,7 +66,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 {f.ribbon && (
                   <div className="absolute -top-2 -end-2 bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning text-on-primary dark:text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning dark:fill-black text-warning dark:text-on-primary" />
-                    ุงูุฃูุซุฑ ุชู…ูุฒุงู
+                    วแร฿หั สใําว๐
                   </div>
                 )}
                 <div className={`w-12 h-12 rounded-2xl ${vc.bg} flex items-center justify-center shrink-0`}>
@@ -86,19 +86,19 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             <div className="relative z-10 text-center">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 dark:bg-primary/20 border border-white/10 dark:border-primary/30 rounded-full mb-3">
                 <Star size={12} className="text-warning dark:text-primary" />
-                <span className="text-micro font-bold text-on-primary dark:text-primary opacity-90">ุงูุชู…ูุฒ ุงูุชุนููู…ู</span>
+                <span className="text-micro font-bold text-on-primary dark:text-primary opacity-90">วแสใํา วแสฺแํใํ</span>
               </div>
-              <h3 className="text-lg font-black text-on-primary dark:text-main font-heading mb-2">ุจูุฆุฉ ุชุนููู…ูุฉ ู…ุชุทูุฑุฉ</h3>
+              <h3 className="text-lg font-black text-on-primary dark:text-main font-heading mb-2">ศํฦษ สฺแํใํษ ใสุๆัษ</h3>
               <p className="text-micro text-on-primary dark:text-muted opacity-90 leading-relaxed mb-4 max-w-xs mx-auto font-medium">
-                ูุฎุจุฉ ู…ู ุงูู…ุนูู…ูู ุงูู…ุชุฎุตุตูู ูู ุชุฏุฑูุณ ุงูู…ูุงูุฌ ุงููููุชูุฉ ูุงูุฎููุฌูุฉ ูุถู…ุงู ุชููู ุทููู ูู ุงูุฑูุงุถูุงุช ูุงูุนููู… ูุงููุบุงุช.
+                ไฮศษ ใไ วแใฺแใํไ วแใสฮีีํไ Ýํ สฯัํำ วแใไวๅฬ วแ฿ๆํสํษ ๆวแฮแํฬํษ แึใวไ สÝๆÞ ุÝแ฿ Ýํ วแัํวึํวส ๆวแฺแๆใ ๆวแแÛวส.
               </p>
               <a
-                href={`https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent('ุงูุณูุงู… ุนูููู…ุ ุฃุฑุบุจ ูู ุงูุจุฏุก ุจุฑุญูุฉ ุงูุชู…ูุฒ ุงูุชุนููู…ูุฉ')}`}
+                href={`https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent('วแำแวใ ฺแํ฿ใก รัÛศ Ýํ วแศฯม ศัอแษ วแสใํา วแสฺแํใํษ')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full flex items-center justify-center gap-2 bg-white/15 dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-lg hover:bg-white/25 transition-all active:scale-[0.98]"
               >
-                ุงุจุฏุฃ ุฑุญูุฉ ุงูุชู…ูุฒ ุงูุขู
+                วศฯร ัอแษ วแสใํา วแยไ
                 <ArrowLeft size={14} />
               </a>
             </div>
@@ -106,18 +106,18 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
               <div className="p-3 bg-white/5 dark:bg-primary/10 border border-white/10 dark:border-primary/20 rounded-xl text-center">
                 <Star size={16} className="text-warning dark:text-primary mx-auto mb-1" />
                 <div className="text-lg font-black text-on-primary dark:text-main">10+</div>
-                <div className="text-micro text-on-primary dark:text-muted font-bold">ุณููุงุช ุฎุจุฑุฉ</div>
+                <div className="text-micro text-on-primary dark:text-muted font-bold">ำไๆวส ฮศัษ</div>
               </div>
               <div className="p-3 bg-white/5 dark:bg-primary/10 border border-white/10 dark:border-primary/20 rounded-xl text-center">
                 <Users size={16} className="text-info dark:text-primary mx-auto mb-1" />
                 <div className="text-lg font-black text-on-primary dark:text-main">70+</div>
-                <div className="text-micro text-on-primary dark:text-muted font-bold">ู…ุนูู… ุฎุจูุฑ</div>
+                <div className="text-micro text-on-primary dark:text-muted font-bold">ใฺแใ ฮศํั</div>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* โ”€โ”€โ”€ Desktop Layout โ”€โ”€โ”€ */}
+        {/* ??? Desktop Layout ??? */}
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-60px' }} variants={{ visible: { transition: { staggerChildren: 0.12 } } }} className="hidden md:grid grid-cols-3 gap-4 max-w-6xl mx-auto pb-4 md:pb-6">
           {features.map((f, i) => {
             const Icon = featureIcons[i];
@@ -127,7 +127,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 {f.ribbon && (
                   <div className="absolute -top-2 -end-2 bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning text-on-primary dark:text-on-primary text-micro font-black px-2 py-0.5 rounded-full flex items-center gap-1 shadow-lg">
                     <Star size={8} className="fill-warning dark:fill-black text-warning dark:text-on-primary" />
-                    ุงูุฃูุซุฑ ุชู…ูุฒุงู
+                    วแร฿หั สใําว๐
                   </div>
                 )}
                 <div className={`w-14 h-14 rounded-2xl ${vc.bg} flex items-center justify-center shrink-0`}>
@@ -148,21 +148,21 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
               <div className="flex-1 text-center lg:text-start">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 dark:bg-primary/20 border border-white/20 dark:border-primary/30 rounded-full mb-3 mx-auto lg:mx-0">
                   <Award size={16} className="text-warning dark:text-primary" />
-                  <span className="text-xs font-bold text-on-primary dark:text-primary">ุงูุชู…ูุฒ ุงูุชุนููู…ู</span>
+                  <span className="text-xs font-bold text-on-primary dark:text-primary">วแสใํา วแสฺแํใํ</span>
                 </div>
-                <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-on-primary dark:text-main">ุจูุฆุฉ ุชุนููู…ูุฉ ู…ุชุทูุฑุฉ</h3>
-                <p className="text-on-primary dark:text-muted text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">ูุฎุจุฉ ู…ู ุงูู…ุนูู…ูู ุงูู…ุจุฏุนูู ูุชุฏุฑูุณ ุงูู…ูุงูุฌ ุงููููุชูุฉ ูุงูุฎููุฌูุฉ. ุชุนููู… ุนู ุจุนุฏุ ุชุญููุธ ูุฑุขูุ ูุชุฃุณูุณ ูู ุงูุฑูุงุถูุงุช ูุงูุนููู… ูุงููุบุฉ ุงูุนุฑุจูุฉ ูุงูุฅูุฌููุฒูุฉ.</p>
+                <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-on-primary dark:text-main">ศํฦษ สฺแํใํษ ใสุๆัษ</h3>
+                <p className="text-on-primary dark:text-muted text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">ไฮศษ ใไ วแใฺแใํไ วแใศฯฺํไ แสฯัํำ วแใไวๅฬ วแ฿ๆํสํษ ๆวแฮแํฬํษ. สฺแํใ ฺไ ศฺฯก สอÝํู Þัยไก ๆสรำํำ Ýํ วแัํวึํวส ๆวแฺแๆใ ๆวแแÛษ วแฺัศํษ ๆวแลไฬแําํษ.</p>
               </div>
               <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto shrink-0">
-                <div className="p-6 bg-white/10 dark:bg-primary/10 border border-white/10 dark:border-primary/20 rounded-2xl text-center group-hover:bg-white/15 dark:group-hover:bg-[#D4AF37]/20 transition-all duration-300">
+                <div className="p-6 bg-white/10 dark:bg-primary/10 border border-white/10 dark:border-primary/20 rounded-2xl text-center group-hover:bg-white/15 dark:group-hover:bg-accent/20 transition-all duration-300">
                   <Users className="w-8 h-8 text-info dark:text-primary mx-auto mb-3" />
                   <div className="text-3xl font-black text-on-primary dark:text-main">+70</div>
-                  <div className="text-xs text-on-primary dark:text-muted font-bold">ู…ุนูู… ุฎุจูุฑ</div>
+                  <div className="text-xs text-on-primary dark:text-muted font-bold">ใฺแใ ฮศํั</div>
                 </div>
-                <div className="p-6 bg-white/10 dark:bg-primary/10 border border-white/10 dark:border-primary/20 rounded-2xl text-center group-hover:bg-white/15 dark:group-hover:bg-[#D4AF37]/20 transition-all duration-300">
+                <div className="p-6 bg-white/10 dark:bg-primary/10 border border-white/10 dark:border-primary/20 rounded-2xl text-center group-hover:bg-white/15 dark:group-hover:bg-accent/20 transition-all duration-300">
                   <Star className="w-8 h-8 text-warning dark:text-primary mx-auto mb-3" />
                   <div className="text-3xl font-black text-on-primary dark:text-main">+10</div>
-                  <div className="text-xs text-on-primary dark:text-muted font-bold">ุณููุงุช ุฎุจุฑุฉ</div>
+                  <div className="text-xs text-on-primary dark:text-muted font-bold">ำไๆวส ฮศัษ</div>
                 </div>
               </div>
             </div>

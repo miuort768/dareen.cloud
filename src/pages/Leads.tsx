@@ -1,4 +1,4 @@
-๏ปฟimport { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Search, Plus, EyeOff, Eye, AlertTriangle, X, Activity, BarChart3, Phone, Users, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -26,7 +26,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
     }, [onCancel]);
 
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-0 sm:p-4" dir="rtl">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-black/50 dark:bg-background/70 backdrop-blur-sm p-0 sm:p-4" dir="rtl">
             <motion.div
                 initial={{ y: '100%', opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -41,19 +41,19 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
                             <AlertTriangle size={18} className="text-on-error" />
                         </div>
                         <div>
-                            <h3 className="text-sm font-bold text-on-error">ุชุฃููุฏ ุงูุญุฐู</h3>
-                            <p className="text-[10px] text-on-error/70 mt-0.5">ูุง ูู…ูู ุงูุชุฑุงุฌุน ุนู ูุฐุง ุงูุฅุฌุฑุงุก</p>
+                            <h3 className="text-sm font-bold text-on-error">สร฿ํฯ วแอะÝ</h3>
+                            <p className="text-[10px] text-on-error/70 mt-0.5">แว ํใ฿ไ วแสัวฬฺ ฺไ ๅะว วแลฬัวม</p>
                         </div>
                     </div>
-                    <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-error rounded-xl transition-all" aria-label="ุฅุบูุงู"><X size={14} /></button>
+                    <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-error rounded-xl transition-all" aria-label="ลÛแวÞ"><X size={14} /></button>
                 </div>
                 <div className="p-5">
-                    <p className="text-sm font-bold text-main mb-1">ูู ุฃูุช ู…ุชุฃูุฏ ู…ู ุญุฐู ูุฐุง ุงูุนู…ููุ</p>
-                    <p className="text-xs text-muted leading-relaxed">ุณูุชู… ููู ุงูุนู…ูู <span className="text-error font-bold">ุงูู…ูููุฏ</span> ุฅูู ูุงุฆู…ุฉ ุงูุนู…ูุงุก ุงูู…ูููุฏูู ููู ูุธูุฑ ู…ุฑุฉ ุฃุฎุฑู.</p>
+                    <p className="text-sm font-bold text-main mb-1">ๅแ รไส ใสร฿ฯ ใไ อะÝ ๅะว วแฺใํแฟ</p>
+                    <p className="text-xs text-muted leading-relaxed">ำํสใ ไÞแ วแฺใํแ <span className="text-error font-bold">วแใÝÞๆฯ</span> ลแ์ Þวฦใษ วแฺใแวม วแใÝÞๆฯํไ ๆแไ ํูๅั ใัษ รฮั์.</p>
                 </div>
                 <div className="flex gap-2 p-5 pt-0">
-                    <button ref={cancelRef} type="button" onClick={onCancel} className="flex-1 py-3.5 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">ุฅูุบุงุก</button>
-                    <button onClick={onConfirm} className="flex-1 py-3.5 text-xs font-bold text-on-error bg-gradient-to-l from-error to-error-hover hover:from-error-hover hover:to-error rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-error/20">ุชุฃููุฏ ุงูุญุฐู</button>
+                    <button ref={cancelRef} type="button" onClick={onCancel} className="flex-1 py-3.5 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">ลแÛวม</button>
+                    <button onClick={onConfirm} className="flex-1 py-3.5 text-xs font-bold text-on-error bg-gradient-to-l from-error to-error-hover hover:from-error-hover hover:to-error rounded-xl transition-all active:scale-[0.98] shadow-lg shadow-error/20">สร฿ํฯ วแอะÝ</button>
                 </div>
             </motion.div>
         </motion.div>
@@ -74,28 +74,28 @@ const AddLeadModalInline = ({ formRef, addMutation, onClose }: { formRef: React.
                         <UserPlus size={16} className="text-primary dark:text-primary" />
                     </div>
                     <div>
-                        <h2 className="text-[13px] font-bold text-main dark:text-main">ุฅุถุงูุฉ ุนู…ูู ุฌุฏูุฏ</h2>
-                        <p className="text-[10px] text-muted/60 dark:text-main/30">ุฃุฏุฎู ุจูุงูุงุช ุงูุนู…ูู</p>
+                        <h2 className="text-[13px] font-bold text-main dark:text-main">ลึวÝษ ฺใํแ ฬฯํฯ</h2>
+                        <p className="text-[10px] text-muted/60 dark:text-main/30">รฯฮแ ศํวไวส วแฺใํแ</p>
                     </div>
                 </div>
-                <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="ุฅุบูุงู">
+                <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="ลÛแวÞ">
                     <X size={14} className="text-muted dark:text-main/50" />
                 </button>
             </div>
             <form ref={formRef} className="p-5 space-y-3" onSubmit={(e) => { e.preventDefault(); const fd = new FormData(e.currentTarget); const g = (n: string) => (fd.get(n) as string) || ''; addMutation.mutate({ studentName: g('name'), phone: g('phone'), subject: g('subject'), curriculum: g('curriculum'), status: 'new', priority: g('priority'), notes: g('notes') }); }}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div><label className={labelClass}>ุงุณู… ุงูุทุงูุจ (ุงุฎุชูุงุฑู)</label><input name="name" className={inputClass} placeholder="ู…ุซุงู: ุฃู… ุฃุญู…ุฏ" /></div>
-                    <div><label className={labelClass}>ุงูู…ููุฌ</label><input name="curriculum" required className={inputClass} placeholder="ู…ุซุงู: ู…ุตุฑู" /></div>
+                    <div><label className={labelClass}>วำใ วแุวแศ (วฮสํวัํ)</label><input name="name" className={inputClass} placeholder="ใหวแ: รใ รอใฯ" /></div>
+                    <div><label className={labelClass}>วแใไๅฬ</label><input name="curriculum" required className={inputClass} placeholder="ใหวแ: ใีัํ" /></div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div><label className={labelClass}>ุฑูู… ุงููุงุชู</label><input name="phone" required className={inputClass} placeholder="05XXXXXXXX" dir="ltr" style={{ textAlign: 'right' }} /></div>
-                    <div><label className={labelClass}>ุงูู…ุงุฏุฉ ุงูู…ูุชู… ุจูุง</label><input name="subject" required className={inputClass} placeholder="ู…ุซุงู: ุฑูุงุถูุงุช" /></div>
+                    <div><label className={labelClass}>ัÞใ วแๅวสÝ</label><input name="phone" required className={inputClass} placeholder="05XXXXXXXX" dir="ltr" style={{ textAlign: 'right' }} /></div>
+                    <div><label className={labelClass}>วแใวฯษ วแใๅสใ ศๅว</label><input name="subject" required className={inputClass} placeholder="ใหวแ: ัํวึํวส" /></div>
                 </div>
-                <div><label className={labelClass}>ุงูุฃููููุฉ</label><select name="priority" aria-label="ุงูุฃููููุฉ" className={inputClass}><option value="low">ู…ูุฎูุถุฉ</option><option value="medium">ู…ุชูุณุทุฉ</option><option value="high">ุนุงููุฉ</option></select></div>
-                <div><label className={labelClass}>ู…ูุงุญุธุงุช</label><textarea name="notes" rows={2} className={inputClass + " resize-none"} placeholder="ุงูุชุจ ุฃู ุชูุงุตูู..." /></div>
+                <div><label className={labelClass}>วแรๆแๆํษ</label><select name="priority" aria-label="วแรๆแๆํษ" className={inputClass}><option value="low">ใไฮÝึษ</option><option value="medium">ใสๆำุษ</option><option value="high">ฺวแํษ</option></select></div>
+                <div><label className={labelClass}>ใแวอูวส</label><textarea name="notes" rows={2} className={inputClass + " resize-none"} placeholder="ว฿สศ รํ สÝวีํแ..." /></div>
                 <div className="flex gap-3 pt-1">
-                    <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-3">{addMutation.isPending ? 'ุฌุงุฑู ุงูุญูุธ...' : 'ุฅุถุงูุฉ ุงูุนู…ูู'}</PrimaryBtn>
-                    <button type="button" onClick={onClose} className="flex-1 py-3 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">ุฅูุบุงุก</button>
+                    <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-3">{addMutation.isPending ? 'ฬวัํ วแอÝู...' : 'ลึวÝษ วแฺใํแ'}</PrimaryBtn>
+                    <button type="button" onClick={onClose} className="flex-1 py-3 text-[11px] font-bold text-muted dark:text-main/40 bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all">ลแÛวม</button>
                 </div>
             </form>
         </div>
@@ -104,7 +104,7 @@ const AddLeadModalInline = ({ formRef, addMutation, onClose }: { formRef: React.
 
 export const Leads = () => {
     const academyName = useAcademyName();
-    useEffect(() => { document.title = `ุงูุนู…ูุงุก ุงูู…ุญุชู…ููู | ${academyName} ููุชุนููู… ูุงูุชุฏุฑูุจ`; }, [academyName]);
+    useEffect(() => { document.title = `วแฺใแวม วแใอสใแๆไ | ${academyName} แแสฺแํใ ๆวแสฯัํศ`; }, [academyName]);
     const queryClient = useQueryClient();
     const showNotification = useUIStore((s) => s.showNotification);
 
@@ -138,7 +138,7 @@ export const Leads = () => {
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
             setIsAddModalOpen(false);
             formRef.current?.reset();
-            showNotification('ุชู…ุช ุฅุถุงูุฉ ุงูุนู…ูู ุจูุฌุงุญ', 'success');
+            showNotification('สใส ลึวÝษ วแฺใํแ ศไฬวอ', 'success');
         },
         onError: (err: Error & { response?: { data?: { error?: string } } }) => { showNotification(err?.response?.data?.error || err.message, 'error'); }
     });
@@ -148,7 +148,7 @@ export const Leads = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
-            showNotification('ุชู… ุชุญุฏูุซ ุงูุนู…ูู ุจูุฌุงุญ', 'success');
+            showNotification('สใ สอฯํห วแฺใํแ ศไฬวอ', 'success');
         },
         onError: (err: Error) => { showNotification(err.message, 'error'); }
     });
@@ -158,7 +158,7 @@ export const Leads = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
-            showNotification('ุชู… ุญุฐู ุงูุนู…ูู', 'success');
+            showNotification('สใ อะÝ วแฺใํแ', 'success');
         },
         onError: (err: Error) => { showNotification(err.message, 'error'); }
     });
@@ -227,9 +227,9 @@ export const Leads = () => {
                     <div className="relative z-10 px-5 md:px-8 py-5 md:py-8">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
                             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
-                                <p className="text-white/60 dark:text-main/40 text-[11px] mb-1">ู…ุฑุญุจุงู ุจู! ๐‘</p>
-                                <h1 className="text-lg md:text-2xl font-bold font-outfit text-white mb-1 tracking-tight">ุฅุฏุงุฑุฉ ุนู…ูุงุฆู ุจุณูููุฉ</h1>
-                                <p className="text-white/50 dark:text-main/40 text-[11px] md:text-sm">ุชุงุจุน ูุฃุฏุฑ ุฌู…ูุน ุงูุนู…ูุงุก ุงูู…ุชููุนูู ูุญูู‘ููู… ุฅูู ุนููุฏ ูุงุฌุญุฉ</p>
+                                <p className="text-white/60 dark:text-main/40 text-[11px] mb-1">ใัอศว๐ ศ฿! ??</p>
+                                <h1 className="text-lg md:text-2xl font-bold font-outfit text-white mb-1 tracking-tight">ลฯวัษ ฺใแวฦ฿ ศำๅๆแษ</h1>
+                                <p className="text-white/50 dark:text-main/40 text-[11px] md:text-sm">สวศฺ ๆรฯั ฬใํฺ วแฺใแวม วแใสๆÞฺํไ ๆอๆ๘แๅใ ลแ์ ฺÞๆฯ ไวฬอษ</p>
                             </motion.div>
                             <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.1 }} className="flex items-center gap-2">
                                 <button
@@ -242,10 +242,10 @@ export const Leads = () => {
                                     )}
                                 >
                                     {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
-                                    <span className="hidden sm:inline">{showLost ? 'ุงููุดุทุงุก' : 'ุงูู…ูููุฏูู'}</span>
+                                    <span className="hidden sm:inline">{showLost ? 'วแไิุวม' : 'วแใÝÞๆฯํไ'}</span>
                                 </button>
                                 <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 text-[11px]">
-                                    <Plus size={13} /> ุฌุฏูุฏ
+                                    <Plus size={13} /> ฬฯํฯ
                                 </PrimaryBtn>
                             </motion.div>
                         </div>
@@ -253,10 +253,10 @@ export const Leads = () => {
                         {/* KPI Stats */}
                         <div className="grid grid-cols-4 gap-1.5 sm:gap-2.5 md:gap-3">
                             {[
-                                { label: 'ุฅุฌู…ุงูู ุงูุนู…ูุงุก', value: stats?.total || 0, sub: `${activeCount} ูุดุท`, icon: Users, delay: 0.15 },
-                                { label: 'ุนู…ูุงุก ุฌุฏุฏ', value: stats?.new || 0, sub: 'ูุฐุง ุงูุดูุฑ', icon: Activity, delay: 0.2, accent: true },
-                                { label: 'ุชู… ุงูุชุญููู', value: stats?.converted || 0, sub: 'ุฅูู ู…ุดุชุฑููู', icon: Phone, delay: 0.25 },
-                                { label: 'ู…ุนุฏู ุงูุชุญููู', value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`, sub: 'ู…ุนุฏู ุงููุฌุงุญ', icon: BarChart3, delay: 0.3 },
+                                { label: 'ลฬใวแํ วแฺใแวม', value: stats?.total || 0, sub: `${activeCount} ไิุ`, icon: Users, delay: 0.15 },
+                                { label: 'ฺใแวม ฬฯฯ', value: stats?.new || 0, sub: 'ๅะว วแิๅั', icon: Activity, delay: 0.2, accent: true },
+                                { label: 'สใ วแสอๆํแ', value: stats?.converted || 0, sub: 'ลแ์ ใิสั฿ํไ', icon: Phone, delay: 0.25 },
+                                { label: 'ใฺฯแ วแสอๆํแ', value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`, sub: 'ใฺฯแ วแไฬวอ', icon: BarChart3, delay: 0.3 },
                             ].map((stat, i) => (
                                 <motion.div key={i} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: stat.delay }}
                                     className="bg-white/10 dark:bg-white/[0.04] backdrop-blur-sm rounded-xl p-2 sm:p-3 md:p-3.5 border border-white/10 dark:border-white/[0.04] hover:bg-white/15 dark:hover:bg-white/[0.07] transition-all duration-200">
@@ -265,7 +265,7 @@ export const Leads = () => {
                                         <span className="truncate">{stat.label}</span>
                                     </div>
                                     <div className="text-sm sm:text-lg md:text-xl font-bold font-outfit text-white tabular-nums">{stat.value}</div>
-                                    <div className={cn('text-[7px] sm:text-[9px] md:text-[10px] mt-0.5', stat.accent ? 'text-[#34d399]' : 'text-white/40 dark:text-main/25')}>{stat.sub}</div>
+                                    <div className={cn('text-[7px] sm:text-[9px] md:text-[10px] mt-0.5', stat.accent ? 'text-success' : 'text-white/40 dark:text-main/25')}>{stat.sub}</div>
                                 </motion.div>
                             ))}
                         </div>
@@ -281,14 +281,14 @@ export const Leads = () => {
                                 <Search size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted dark:text-main/25" />
                                 <input
                                     type="text"
-                                    placeholder="ุงุจุญุซ ุจุงูุงุณู… ุฃู ุฑูู… ุงููุงุชู..."
-                                    aria-label="ุจุญุซ ุนู ุนู…ูู"
+                                    placeholder="วศอห ศวแวำใ รๆ ัÞใ วแๅวสÝ..."
+                                    aria-label="ศอห ฺไ ฺใํแ"
                                     className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-main placeholder:text-muted dark:placeholder:text-white/25 outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all duration-200"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 {searchTerm && (
-                                    <button aria-label="ู…ุณุญ ุงูุจุญุซ" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
+                                    <button aria-label="ใำอ วแศอห" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
                                         <X size={13} />
                                     </button>
                                 )}
@@ -305,10 +305,10 @@ export const Leads = () => {
                                 className={cn(
                                     'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                                     filterStatus === 'all'
-                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary border-primary/30 dark:border-primary/30 shadow-md shadow-primary/15 dark:shadow-primary/20'
+                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-accent text-on-primary border-primary/30 dark:border-primary/30 shadow-md shadow-primary/15 dark:shadow-primary/20'
                                         : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
                                 )}>
-                                ุงููู
+                                วแ฿แ
                                 <span className={cn(
                                     'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
                                     filterStatus === 'all' ? 'bg-white/20' : 'bg-surface dark:bg-white/5 text-muted dark:text-main/30 border border-border dark:border-white/[0.06]'
@@ -363,8 +363,8 @@ export const Leads = () => {
                 {/* FAB */}
                 <motion.button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-primary dark:to-[#D4AF37] text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-primary/30 flex items-center justify-center active:scale-95 transition-all duration-200"
-                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} aria-label="ุฅุถุงูุฉ ุนู…ูู">
+                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-primary dark:to-accent text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-primary/30 flex items-center justify-center active:scale-95 transition-all duration-200"
+                    whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} aria-label="ลึวÝษ ฺใํแ">
                     <Plus size={22} />
                 </motion.button>
 

@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Download, FileText, ArrowLeft, MessageCircle, Shield, BadgeCheck, Headphones } from 'lucide-react';
 import { useSettingsStore } from '../../store/settingsStore';
 
@@ -8,7 +8,7 @@ export const MasarSection = () => {
     const contactUsNumber = (() => {
         try {
             const entries = JSON.parse(whatsappNumbers);
-            const found = entries.find((e: { label: string; phone: string }) => e.label === 'تواصل معانا');
+            const found = entries.find((e: { label: string; phone: string }) => e.label === '����� �����');
             return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
         } catch (e) {
             console.warn(e);
@@ -18,8 +18,8 @@ export const MasarSection = () => {
 
     return (
         <>
-            {/* ─── Desktop version ─── */}
-            <section className="hidden md:block py-4 bg-surface dark:bg-black relative overflow-hidden transition-colors duration-500">
+            {/* ??? Desktop version ??? */}
+            <section className="hidden md:block py-4 bg-surface dark:bg-background relative overflow-hidden transition-colors duration-500">
                 <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/[0.08] rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/[0.05] rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 relative z-10">
@@ -36,7 +36,7 @@ export const MasarSection = () => {
                                     <picture>
                                         <source srcSet="/dareen_books_portal_v3.webp" type="image/webp" />
                                         <source srcSet="/dareen_books_portal_v3.avif" type="image/avif" />
-                                        <img src="/dareen_books_portal_v3.png" alt="بوابة الكتب والملخصات - دارين" width="680" height="680" loading="lazy" decoding="async" className="w-full max-w-[280px] lg:max-w-[340px] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-700" />
+                                        <img src="/dareen_books_portal_v3.png" alt="����� ����� ��������� - �����" width="680" height="680" loading="lazy" decoding="async" className="w-full max-w-[280px] lg:max-w-[340px] h-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-700" />
                                     </picture>
                                 </div>
                             </div>
@@ -44,32 +44,32 @@ export const MasarSection = () => {
                                 <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
                                     <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 dark:bg-primary/20 border border-white/20 dark:border-primary/40 rounded-full backdrop-blur-md">
                                         <Download className="w-3.5 h-3.5 text-warning dark:text-primary animate-pulse" />
-                                        <span className="text-xs font-black text-on-primary dark:text-primary uppercase tracking-widest">بوابة الكتب والملخصات</span>
+                                        <span className="text-xs font-black text-on-primary dark:text-primary uppercase tracking-widest">����� ����� ���������</span>
                                     </div>
                                 </div>
                                 <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black mb-3 font-heading leading-tight">
-                                    <span className="text-on-primary dark:text-main">مركز</span>
-                                    <span className="text-on-primary dark:text-on-primary bg-primary dark:bg-primary px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-lg text-shadow-none whitespace-nowrap">دارين</span>
-                                    <span className="text-on-primary dark:text-main">للمذكرات التعليمية</span>
+                                    <span className="text-on-primary dark:text-main">����</span>
+                                    <span className="text-on-primary dark:text-on-primary bg-primary dark:bg-primary px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-lg text-shadow-none whitespace-nowrap">�����</span>
+                                    <span className="text-on-primary dark:text-main">�������� ���������</span>
                                 </h2>
                                 <p className="text-on-primary dark:text-muted text-micro sm:text-xs md:text-sm lg:text-base leading-relaxed mb-4 max-w-2xl mx-auto lg:mx-0 font-medium">
-                                    حصرياً في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
+                                    ������ �� ���� ����� ���� �� ���� �������� ��������� ��������� ������� ����� ������� �������ɡ ���� ������ �� ��� ���� �� �������� ����� ����� �������.
                                 </p>
                                 <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-5">
-                                    <span className="px-3 py-1 bg-white/10 dark:bg-primary/15 border border-white/20 dark:border-primary/30 rounded-full text-micro font-bold text-on-primary dark:text-primary">الكويت</span>
-                                    <span className="px-3 py-1 bg-white/10 dark:bg-primary/15 border border-white/20 dark:border-primary/30 rounded-full text-micro font-bold text-on-primary dark:text-primary">السعودية</span>
-                                    <span className="px-3 py-1 bg-white/10 dark:bg-primary/15 border border-white/20 dark:border-primary/30 rounded-full text-micro font-bold text-on-primary dark:text-primary">الإمارات</span>
-                                    <span className="px-3 py-1 bg-white/10 dark:bg-primary/15 border border-white/20 dark:border-primary/30 rounded-full text-micro font-bold text-on-primary dark:text-primary">قطر</span>
+                                    <span className="px-3 py-1 bg-white/10 dark:bg-primary/15 border border-white/20 dark:border-primary/30 rounded-full text-micro font-bold text-on-primary dark:text-primary">������</span>
+                                    <span className="px-3 py-1 bg-white/10 dark:bg-primary/15 border border-white/20 dark:border-primary/30 rounded-full text-micro font-bold text-on-primary dark:text-primary">��������</span>
+                                    <span className="px-3 py-1 bg-white/10 dark:bg-primary/15 border border-white/20 dark:border-primary/30 rounded-full text-micro font-bold text-on-primary dark:text-primary">��������</span>
+                                    <span className="px-3 py-1 bg-white/10 dark:bg-primary/15 border border-white/20 dark:border-primary/30 rounded-full text-micro font-bold text-on-primary dark:text-primary">���</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                    <Link to="/books" className="px-10 py-4 bg-primary dark:bg-primary hover:bg-primary-hover dark:hover:bg-[#f59e0b] text-on-primary dark:text-on-primary rounded-xl font-black text-lg shadow-2xl shadow-primary/20 dark:shadow-primary/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group">
+                                    <Link to="/books" className="px-10 py-4 bg-primary dark:bg-primary hover:bg-primary-hover dark:hover:bg-warning text-on-primary dark:text-on-primary rounded-xl font-black text-lg shadow-2xl shadow-primary/20 dark:shadow-primary/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group">
                                         <FileText className="w-6 h-6 transition-transform group-hover:scale-110" />
-                                        <span>تحميل مذكرة</span>
+                                        <span>����� �����</span>
                                         <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                                     </Link>
-                                    <a href={`https://wa.me/${contactUsNumber}`} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-white/5 dark:bg-primary/10 hover:bg-white/10 dark:hover:bg-[#D4AF37]/20 border border-white/20 dark:border-primary/30 text-on-primary dark:text-primary rounded-xl font-black text-lg backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-3 hover:border-white/40 dark:hover:border-[#D4AF37]/50">
+                                    <a href={`https://wa.me/${contactUsNumber}`} target="_blank" rel="noopener noreferrer" className="px-10 py-4 bg-white/5 dark:bg-primary/10 hover:bg-white/10 dark:hover:bg-accent/20 border border-white/20 dark:border-primary/30 text-on-primary dark:text-primary rounded-xl font-black text-lg backdrop-blur-sm transition-all duration-300 flex items-center justify-center gap-3 hover:border-white/40 dark:hover:border-accent/50">
                                         <MessageCircle className="w-6 h-6" />
-                                        <span>تواصل معنا</span>
+                                        <span>����� ����</span>
                                     </a>
                                 </div>
                             </div>
@@ -78,8 +78,8 @@ export const MasarSection = () => {
                 </div>
             </section>
 
-            {/* ─── Mobile version ─── */}
-            <section className="block md:hidden relative overflow-hidden bg-surface dark:bg-black pt-3 pb-4 transition-colors duration-500">
+            {/* ??? Mobile version ??? */}
+            <section className="block md:hidden relative overflow-hidden bg-surface dark:bg-background pt-3 pb-4 transition-colors duration-500">
                 <div className="absolute top-20 -start-20 w-60 h-60 bg-accent/10 dark:bg-primary/[0.08] rounded-full blur-[100px] pointer-events-none"></div>
                 <div className="absolute bottom-40 -end-20 w-72 h-72 bg-primary/10 dark:bg-primary/[0.05] rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -89,7 +89,7 @@ export const MasarSection = () => {
                         <picture>
                             <source srcSet="/dareen_books_portal_v3.webp" type="image/webp" />
                             <source srcSet="/dareen_books_portal_v3.avif" type="image/avif" />
-                            <img src="/dareen_books_portal_v3.png" alt="بوابة الكتب والملخصات" width="400" height="300" loading="lazy" className="w-full h-auto object-cover" />
+                            <img src="/dareen_books_portal_v3.png" alt="����� ����� ���������" width="400" height="300" loading="lazy" className="w-full h-auto object-cover" />
                         </picture>
                     </div>
 
@@ -98,8 +98,8 @@ export const MasarSection = () => {
                             <Download size={20} className="text-primary dark:text-primary" />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <h2 className="text-main dark:text-main text-base font-black leading-tight">بوابة الكتب والملخصات</h2>
-                            <p className="text-muted dark:text-muted text-micro font-medium mt-0.5">جميع المذكرات في مكان واحد</p>
+                            <h2 className="text-main dark:text-main text-base font-black leading-tight">����� ����� ���������</h2>
+                            <p className="text-muted dark:text-muted text-micro font-medium mt-0.5">���� �������� �� ���� ����</p>
                         </div>
                         <div className="w-2 h-2 rounded-full bg-success animate-pulse shrink-0"></div>
                     </div>
@@ -115,16 +115,16 @@ export const MasarSection = () => {
                         <div className="relative z-10 mb-5">
                             {/* Badge row */}
                             <div className="flex items-center gap-2 mb-3">
-                                <div className="inline-flex items-center gap-1.5 bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-black/30 px-3 py-1.5 rounded-full">
+                                <div className="inline-flex items-center gap-1.5 bg-white/20 dark:bg-background/20 backdrop-blur-sm border border-white/30 dark:border-black/30 px-3 py-1.5 rounded-full">
                                     <div className="w-1.5 h-1.5 bg-on-primary rounded-full animate-pulse"></div>
-                                    <span className="text-on-primary dark:text-on-primary text-micro font-bold">حصريًا</span>
+                                    <span className="text-on-primary dark:text-on-primary text-micro font-bold">������</span>
                                 </div>
                             </div>
 
                             {/* Title */}
                             <div className="flex items-baseline gap-2 flex-wrap">
-                                <span className="text-on-primary dark:text-on-primary font-black text-xl leading-tight">مركز دارين</span>
-                                <span className="text-on-primary/70 dark:text-on-primary/70 font-bold text-sm">للمذكرات التعليمية</span>
+                                <span className="text-on-primary dark:text-on-primary font-black text-xl leading-tight">���� �����</span>
+                                <span className="text-on-primary/70 dark:text-on-primary/70 font-bold text-sm">�������� ���������</span>
                             </div>
 
                             {/* Accent line */}
@@ -137,7 +137,7 @@ export const MasarSection = () => {
 
                         {/* Description */}
                         <p className="relative z-10 text-on-primary dark:text-on-primary/85 text-micro leading-relaxed mb-6 font-medium">
-                            حصريًا في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
+                            ������ �� ���� ����� ���� �� ���� �������� ��������� ��������� ������� ����� ������� �������ɡ ���� ������ �� ��� ���� �� �������� ����� ����� �������.
                         </p>
 
                         {/* CTA Buttons */}
@@ -147,17 +147,17 @@ export const MasarSection = () => {
                                 className="w-full py-4 bg-on-primary text-primary dark:bg-on-primary dark:text-primary font-black text-base shadow-lg shadow-black/20 hover:shadow-black/30 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 rounded-2xl group"
                             >
                                 <FileText size={20} />
-                                <span>تحميل مذكرة</span>
+                                <span>����� �����</span>
                                 <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
                             </Link>
                             <a
                                 href={`https://wa.me/${contactUsNumber}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-full py-3.5 bg-white/10 dark:bg-black/15 backdrop-blur-sm border border-on-primary/20 dark:border-on-primary/20 text-on-primary dark:text-on-primary font-bold text-sm hover:bg-white/20 dark:hover:bg-black/25 transition-all flex items-center justify-center gap-3 rounded-2xl"
+                                className="w-full py-3.5 bg-white/10 dark:bg-background/15 backdrop-blur-sm border border-on-primary/20 dark:border-on-primary/20 text-on-primary dark:text-on-primary font-bold text-sm hover:bg-white/20 dark:hover:bg-black/25 transition-all flex items-center justify-center gap-3 rounded-2xl"
                             >
                                 <MessageCircle size={18} />
-                                <span>تواصل معنا</span>
+                                <span>����� ����</span>
                             </a>
                         </div>
                     </div>
@@ -167,19 +167,19 @@ export const MasarSection = () => {
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-primary-soft dark:bg-primary/15 flex items-center justify-center">
                                 <Shield size={20} className="text-primary dark:text-primary" />
                             </div>
-                            <span className="text-main dark:text-main text-xs font-bold leading-tight block">جودة مضمونة</span>
+                            <span className="text-main dark:text-main text-xs font-bold leading-tight block">���� ������</span>
                         </div>
                         <div className="text-center bg-surface dark:bg-card rounded-2xl shadow-sm border border-border/80 dark:border-primary/20 p-4">
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-success-light dark:bg-primary/15 flex items-center justify-center">
                                 <BadgeCheck size={20} className="text-success dark:text-primary" />
                             </div>
-                            <span className="text-main dark:text-main text-xs font-bold leading-tight block">محتوى موثوق</span>
+                            <span className="text-main dark:text-main text-xs font-bold leading-tight block">����� �����</span>
                         </div>
                         <div className="text-center bg-surface dark:bg-card rounded-2xl shadow-sm border border-border/80 dark:border-primary/20 p-4">
                             <div className="w-12 h-12 mx-auto mb-2.5 rounded-2xl bg-warning-light dark:bg-primary/15 flex items-center justify-center">
                                 <Headphones size={20} className="text-warning dark:text-primary" />
                             </div>
-                            <span className="text-main dark:text-main text-xs font-bold leading-tight block">دعم مستمر طوال اليوم</span>
+                            <span className="text-main dark:text-main text-xs font-bold leading-tight block">��� ����� ���� �����</span>
                         </div>
                     </div>
                 </div>

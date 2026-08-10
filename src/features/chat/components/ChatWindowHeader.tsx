@@ -57,7 +57,7 @@ export const ChatWindowHeader = ({
 
             {currentUser?.role === 'admin' && (
                 <div className="flex items-center gap-5 text-muted">
-                    <div className={cn("flex items-center bg-white/10 dark:bg-black/20 rounded-full px-3 py-1 transition-all", showSearchBar ? "w-40 md:w-64 opacity-100" : "w-0 opacity-0 overflow-hidden p-0")}>
+                    <div className={cn("flex items-center bg-white/10 dark:bg-background/20 rounded-full px-3 py-1 transition-all", showSearchBar ? "w-40 md:w-64 opacity-100" : "w-0 opacity-0 overflow-hidden p-0")}>
                         {showSearchBar && (
                             <input type="text" placeholder="بحث..." aria-label="بحث في الرسائل" value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}

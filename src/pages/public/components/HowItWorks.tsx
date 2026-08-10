@@ -1,4 +1,4 @@
-๏ปฟimport { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Users, Star, Zap, ArrowLeft, Gift } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
@@ -8,7 +8,7 @@ interface HowItWorksProps {
 
 export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
     return (
-        <section id="how-it-works" className="py-4 relative overflow-hidden transition-colors duration-500 bg-surface dark:bg-black scroll-mt-32">
+        <section id="how-it-works" className="py-4 relative overflow-hidden transition-colors duration-500 bg-surface dark:bg-background scroll-mt-32">
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-primary/[0.05] dark:bg-primary/[0.08] blur-[100px] rounded-full animate-pulse"></div>
                 <div className="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-success/[0.03] dark:bg-primary/[0.05] blur-[100px] rounded-full"></div>
@@ -18,10 +18,10 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                 <div className="text-center mb-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary dark:bg-primary/20 border dark:border-primary/40 text-on-primary dark:text-primary rounded-full mb-4 mx-auto scale-90">
                         <Zap size={12} className="text-warning dark:text-primary" />
-                        <span className="text-micro font-black">ุงุจุฏุฃ ุฑุญูุชู</span>
+                        <span className="text-micro font-black">วศฯร ัอแส฿</span>
                     </div>
                     <h2 className="text-xl md:text-5xl font-black text-main dark:text-main font-heading">
-                        ููู ุชุดุชุฑู ูู <span className="text-primary dark:text-primary">ุงูู…ุนูุฏุ</span>
+                        ฿ํÝ สิสั฿ Ýํ <span className="text-primary dark:text-primary">วแใฺๅฯฟ</span>
                     </h2>
                 </div>
                 
@@ -53,22 +53,22 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         {[
                             {
                                 id: '01',
-                                title: 'ุงุฎุชุฑ ุงูู…ููุฌ',
-                                desc: 'ุญุฏุฏ ู…ููุฌู ูุงูู…ุงุฏุฉ',
+                                title: 'วฮสั วแใไๅฬ',
+                                desc: 'อฯฯ ใไๅฬ฿ ๆวแใวฯษ',
                                 icon: <Users className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-primary-active to-primary-active dark:from-primary dark:to-warning'
                             },
                             {
                                 id: '02',
-                                title: 'ุญุตุฉ ู…ุฌุงููุฉ',
-                                desc: 'ุญุตุฉ ุชุฌุฑูุจูุฉ ู…ุฌุงููุฉ ูู',
+                                title: 'อีษ ใฬวไํษ',
+                                desc: 'อีษ สฬัํศํษ ใฬวไํษ แ฿',
                                 icon: <Star className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-success to-success dark:from-primary dark:to-warning'
                             },
                             {
                                 id: '03',
-                                title: 'ุงุดุชุฑู ุงูุขู',
-                                desc: 'ุชูุงุตู ูุญุฌุฒ ู…ูุนุฏู',
+                                title: 'วิสั฿ วแยไ',
+                                desc: 'สๆวีแ แอฬา ใÞฺฯ฿',
                                 icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-primary to-primary dark:from-primary dark:to-warning'
                             }
@@ -81,13 +81,13 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                                     <div className="scale-75 md:scale-100">
                                         {step.icon}
                                     </div>
-                                    <span className="absolute -top-1 -start-1 md:-top-2 md:-start-2 w-4 h-4 md:w-6 md:h-6 bg-surface dark:bg-black text-main dark:text-primary rounded-full flex items-center justify-center text-micro md:text-micro font-black shadow-lg border border-border dark:border-primary/50">
+                                    <span className="absolute -top-1 -start-1 md:-top-2 md:-start-2 w-4 h-4 md:w-6 md:h-6 bg-surface dark:bg-background text-main dark:text-primary rounded-full flex items-center justify-center text-micro md:text-micro font-black shadow-lg border border-border dark:border-primary/50">
                                         {step.id}
                                     </span>
                                 </div>
 
                                 <div className="text-center px-1 md:px-4 w-full">
-                                    <div className="text-xs md:text-sm font-black text-main dark:text-main mb-1 group-hover:text-primary dark:group-hover:text-[#D4AF37] transition-colors">
+                                    <div className="text-xs md:text-sm font-black text-main dark:text-main mb-1 group-hover:text-primary dark:group-hover:text-accent transition-colors">
                                         {step.title}
                                     </div>
                                     <p className="hidden sm:block text-micro md:text-micro text-main dark:text-muted leading-tight font-bold">
@@ -102,7 +102,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
 
                     <div className="mt-10 flex justify-center">
                         <a
-                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('ุงูุณูุงู… ุนูููู…ุ ุฃุฑุบุจ ูู ุงูุจุฏุก ูุญุฌุฒ ุญุตุฉ ุชุฌุฑูุจูุฉ ู…ุฌุงููุฉ')}`}
+                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('วแำแวใ ฺแํ฿ใก รัÛศ Ýํ วแศฯม ๆอฬา อีษ สฬัํศํษ ใฬวไํษ')}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group relative px-8 py-3.5 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-sm rounded-xl overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl"
@@ -110,7 +110,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary dark:from-primary dark:to-warning opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="relative flex items-center gap-2">
                                 <Gift size={16} />
-                                <span>ุงุญุฌุฒ ุญุตุชู ุงูู…ุฌุงููุฉ ุงูุขู</span>
+                                <span>วอฬา อีส฿ วแใฬวไํษ วแยไ</span>
                                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                             </div>
                         </a>

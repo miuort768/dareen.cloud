@@ -240,7 +240,7 @@ export const LiveSessions = () => {
                                     href={session.meetingUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="h-8 px-3 rounded-xl bg-primary dark:bg-primary text-on-primary dark:text-on-primary text-[11px] font-bold flex items-center gap-1.5 hover:bg-primary-hover dark:hover:bg-[#D4AF37]/90 transition-colors"
+                                    className="h-8 px-3 rounded-xl bg-primary dark:bg-primary text-on-primary dark:text-on-primary text-[11px] font-bold flex items-center gap-1.5 hover:bg-primary-hover dark:hover:bg-accent/90 transition-colors"
                                 >
                                     <ExternalLink size={11} />
                                     انضم
@@ -318,7 +318,7 @@ export const LiveSessions = () => {
                                             "flex-1 py-3 px-2 text-[11px] font-bold rounded-xl border-2 transition-all",
                                             meetingProvider === p.value
                                                 ? "border-primary dark:border-primary bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary"
-                                                : "border-border dark:border-primary/20 text-muted dark:text-muted hover:border-border dark:hover:border-[#D4AF37]/30"
+                                                : "border-border dark:border-primary/20 text-muted dark:text-muted hover:border-border dark:hover:border-accent/30"
                                         )}
                                     >
                                         {p.label}
@@ -406,7 +406,7 @@ export const LiveSessions = () => {
                                             "flex-1 py-3 px-2 text-[11px] font-bold rounded-xl border-2 transition-all",
                                             editProvider === p.value
                                                 ? "border-primary dark:border-primary bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary"
-                                                : "border-border dark:border-primary/20 text-muted dark:text-muted hover:border-border dark:hover:border-[#D4AF37]/30"
+                                                : "border-border dark:border-primary/20 text-muted dark:text-muted hover:border-border dark:hover:border-accent/30"
                                         )}
                                     >
                                         {p.label}

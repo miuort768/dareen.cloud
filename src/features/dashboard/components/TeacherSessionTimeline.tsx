@@ -64,7 +64,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                     ? "bg-success-soft dark:bg-success/10 border-success/30"
                                     : isCancelled
                                     ? "bg-error-soft dark:bg-error/10 border-error/30"
-                                    : "bg-card dark:bg-card border-border dark:border-primary/20 hover:border-primary/50 dark:hover:border-[#D4AF37]/40 hover:-translate-y-1"
+                                    : "bg-card dark:bg-card border-border dark:border-primary/20 hover:border-primary/50 dark:hover:border-accent/40 hover:-translate-y-1"
                             )}
                         >
                             {/* Time + status icon */}

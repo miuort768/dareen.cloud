@@ -27,7 +27,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                     return (
                     <div
                         key={en.id || idx}
-                        className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 min-w-[200px] snap-start shrink-0 hover:border-primary/30 dark:hover:border-[#D4AF37]/40 transition-colors"
+                        className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 min-w-[200px] snap-start shrink-0 hover:border-primary/30 dark:hover:border-accent/40 transition-colors"
                     >
                             <div className="flex items-center gap-2 mb-3">
                                 <div className="w-10 h-10 rounded-xl bg-primary-soft dark:bg-primary/10 flex items-center justify-center shrink-0">

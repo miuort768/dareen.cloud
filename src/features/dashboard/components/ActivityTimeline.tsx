@@ -82,7 +82,7 @@ export const ActivityTimeline = ({ sessions, tasks }: ActivityTimelineProps) => 
                         return (
                             <div
                                 key={item.id}
-                                className="flex items-center gap-3 p-3 rounded-xl bg-surface dark:bg-hover hover:bg-hover dark:hover:bg-[#252529] transition-colors"
+                                className="flex items-center gap-3 p-3 rounded-xl bg-surface dark:bg-hover hover:bg-hover dark:hover:bg-hover transition-colors"
                             >
                                 <div className="relative shrink-0">
                                     <div className={cn("w-8 h-8 rounded-lg flex items-center justify-center", v.iconBg)}>

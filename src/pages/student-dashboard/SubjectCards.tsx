@@ -34,7 +34,7 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
                     return (
                     <div
                         key={en.id || idx}
-                        className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 hover:border-primary/30 dark:hover:border-[#D4AF37]/40 transition-colors"
+                        className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 hover:border-primary/30 dark:hover:border-accent/40 transition-colors"
                     >
                             <div className="flex items-center gap-3 mb-3">
                                 <div className={`w-10 h-10 rounded-xl ${color.bg} dark:bg-primary/10 flex items-center justify-center shrink-0`}>

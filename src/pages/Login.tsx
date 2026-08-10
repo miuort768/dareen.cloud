@@ -76,7 +76,7 @@ export const Login = () => {
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1a56db]/90 via-[#1a56db]/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
             </div>
 
             {/* Desktop Navbar */}

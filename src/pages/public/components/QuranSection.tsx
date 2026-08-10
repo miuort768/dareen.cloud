@@ -1,4 +1,4 @@
-๏ปฟimport { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, ClipboardCheck, Mic, Sparkles, Star } from 'lucide-react';
 import { Image } from '../../../shared/components/ui';
@@ -30,7 +30,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
     return (
         <>
             {/* Desktop version */}
-            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-surface dark:bg-black transition-colors duration-500">
+            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-surface dark:bg-background transition-colors duration-500">
                 <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -39,27 +39,27 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             <div className="w-full lg:w-1/2 text-center">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 dark:bg-primary/15 border border-success/50 dark:border-primary/40 rounded-full mb-4 mx-auto">
                                     <span className="w-2 h-2 rounded-full bg-success dark:bg-primary animate-pulse"></span>
-                                    <span className="text-success-dark dark:text-primary font-bold text-xs">ุจุฑุงู…ุฌ ุชุญููุธ ู…ุชู…ูุฒุฉ</span>
+                                    <span className="text-success-dark dark:text-primary font-bold text-xs">ศัวใฬ สอÝํู ใสใําษ</span>
                                 </div>
                                 <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-4 text-main dark:text-main leading-tight font-heading">
-                                    ุฑุญูุชู ู…ุน <span className="text-success dark:text-primary relative inline-block">
-                                        ูุชุงุจ ุงููู
+                                    ัอแส฿ ใฺ <span className="text-success dark:text-primary relative inline-block">
+                                        ฿สวศ วแแๅ
                                         <svg className="absolute -bottom-2 end-0 w-full h-3" viewBox="0 0 100 10" preserveAspectRatio="none">
                                             <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="4" fill="none" className="text-success dark:text-primary opacity-40" />
                                         </svg>
-                                    </span> ุชุจุฏุฃ ุจุฎุทูุฉ
+                                    </span> สศฯร ศฮุๆษ
                                 </h2>
                                 <p className="text-muted dark:text-muted text-xs lg:text-sm leading-relaxed mb-6 max-w-xl mx-auto font-medium">
-                                    ู…ููุฌูุฉ ูุฑูุฏุฉ ุชุฌู…ุน ุจูู ุฃุตุงูุฉ ุงูุชููู ูุชูููุงุช ุงูุชุนููู… ุงูุญุฏูุซุฉ. ููุฏู… ุญููุงุช ูุฑุฏูุฉ ูู…ุฌู…ูุนุงุช ุตุบูุฑุฉ ู…ุน ูุฎุจุฉ ู…ู ุงูู…ูุฑุฆูู ุงูู…ุฌุงุฒูู.
+                                    ใไๅฬํษ Ýัํฯษ สฬใฺ ศํไ รีวแษ วแสแÞํ ๆสÞไํวส วแสฺแํใ วแอฯํหษ. ไÞฯใ อแÞวส Ýัฯํษ ๆใฬใๆฺวส ีÛํัษ ใฺ ไฮศษ ใไ วแใÞัฦํไ วแใฬวาํไ.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-3 justify-center mb-5">
                                     <a
-                                        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('ุงูุณูุงู… ุนูููู…ุ ุฃุฑุบุจ ูู ุงูุจุฏุก ุจุญูุธ ุงููุฑุขู ุงููุฑูู… ูู ุฏุงุฑูู ุงูุณุงุจุนุฉ')}`}
+                                        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('วแำแวใ ฺแํ฿ใก รัÛศ Ýํ วแศฯม ศอÝู วแÞัยไ วแ฿ัํใ Ýํ ฯวัํไ วแำวศฺษ')}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="px-8 py-3.5 bg-success dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-success dark:text-on-primary font-extrabold text-sm shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
                                     >
-                                        <span>ุงุจุฏุฃ ุงูุญูุธ ุงูุขู</span>
+                                        <span>วศฯร วแอÝู วแยไ</span>
                                         <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
                                     </a>
                                     <Link
@@ -68,17 +68,17 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                         className="px-8 py-3.5 bg-card dark:bg-white/5 text-muted dark:text-main border border-border dark:border-primary/30 font-bold text-sm hover:border-success hover:text-success transition-all flex items-center justify-center rounded-xl"
                                     >
                                         <Sparkles size={16} className="me-2 dark:text-primary" />
-                                        ุชุตูุญ ุงูู…ุฒูุฏ
+                                        สีÝอ วแใาํฯ
                                     </Link>
                                 </div>
                                 <div className="items-center justify-center gap-4 inline-flex">
                                     <div className="flex -space-x-3 space-x-reverse">
                                         {[1, 2, 3].map(i => (
-                                            <div key={`avatar-${i}`} className="w-10 h-10 rounded-full border-2 border-card dark:border-primary/40 bg-success-soft dark:bg-black overflow-hidden shadow-sm">
+                                            <div key={`avatar-${i}`} className="w-10 h-10 rounded-full border-2 border-card dark:border-primary/40 bg-success-soft dark:bg-background overflow-hidden shadow-sm">
                                                 <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" className="w-10 h-10" />
                                             </div>
                                         ))}
-                                        <div className="w-10 h-10 rounded-full border-2 border-card dark:border-primary/40 bg-surface dark:bg-black flex items-center justify-center text-xs font-bold text-muted dark:text-muted shadow-sm">+5k</div>
+                                        <div className="w-10 h-10 rounded-full border-2 border-card dark:border-primary/40 bg-surface dark:bg-background flex items-center justify-center text-xs font-bold text-muted dark:text-muted shadow-sm">+5k</div>
                                     </div>
                                     <div className="h-8 w-px bg-success dark:bg-primary opacity-40"></div>
                                     <div className="text-start">
@@ -86,7 +86,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                             4.9/5
                                             <Star className="w-4 h-4 text-warning dark:text-primary fill-warning dark:fill-primary" />
                                         </div>
-                                        <div className="text-xs text-muted dark:text-muted font-medium">ู…ู ูุจู ุขูุงู ุงูุทูุงุจ</div>
+                                        <div className="text-xs text-muted dark:text-muted font-medium">ใไ Þศแ ยแวÝ วแุแวศ</div>
                                     </div>
                                 </div>
                             </div>
@@ -96,30 +96,30 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                         <div className="w-11 h-11 bg-surface dark:bg-primary/15 text-primary dark:text-primary flex items-center justify-center mb-3 rounded-xl">
                                             <Clock className="w-5 h-5" />
                                         </div>
-                                        <h3 className="font-black text-main dark:text-main text-xs mb-1">ุฃููุงุช ู…ุฑูุฉ</h3>
-                                        <p className="text-micro text-muted dark:text-muted leading-tight font-medium">ุงุฎุชุฑ ู…ูุงุนูุฏู ุงูู…ูุถูุฉ</p>
+                                        <h3 className="font-black text-main dark:text-main text-xs mb-1">รๆÞวส ใัไษ</h3>
+                                        <p className="text-micro text-muted dark:text-muted leading-tight font-medium">วฮสั ใๆวฺํฯ฿ วแใÝึแษ</p>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-hover border border-border dark:border-primary/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-warning-soft dark:bg-primary/15 text-warning dark:text-primary flex items-center justify-center mb-3 rounded-xl">
                                             <ClipboardCheck className="w-5 h-5" />
                                         </div>
-                                        <h3 className="font-black text-main dark:text-main text-xs mb-1">ู…ุชุงุจุนุฉ ุฏูููุฉ</h3>
-                                        <p className="text-micro text-muted dark:text-muted leading-tight font-medium">ุชูุงุฑูุฑ ุฅูุฌุงุฒ ุฃุณุจูุนูุฉ</p>
+                                        <h3 className="font-black text-main dark:text-main text-xs mb-1">ใสวศฺษ ฯÞํÞษ</h3>
+                                        <p className="text-micro text-muted dark:text-muted leading-tight font-medium">สÞวัํั ลไฬวา รำศๆฺํษ</p>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-hover border border-border dark:border-primary/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-success-soft dark:bg-primary/15 text-success dark:text-primary flex items-center justify-center mb-3 rounded-xl">
                                             <Mic className="w-5 h-5" />
                                         </div>
-                                        <h3 className="font-black text-main dark:text-main text-xs mb-1">ู…ุนูู…ูู ู…ุฌุงุฒูู</h3>
-                                        <p className="text-micro text-muted dark:text-muted leading-tight font-medium">ูุฎุจุฉ ุงูุญูุงุธ ุงูู…ุจุฏุนูู</p>
+                                        <h3 className="font-black text-main dark:text-main text-xs mb-1">ใฺแใๆไ ใฬวาๆไ</h3>
+                                        <p className="text-micro text-muted dark:text-muted leading-tight font-medium">ไฮศษ วแอÝวู วแใศฯฺๆไ</p>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }}>
                                         <Link to="/contact" className="p-4 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning rounded-2xl shadow-lg text-on-primary dark:text-on-primary flex flex-col items-center text-center transition-all hover:brightness-90 cursor-pointer">
-                                            <div className="w-11 h-11 bg-white/20 dark:bg-black/20 text-on-primary dark:text-on-primary flex items-center justify-center mb-3 backdrop-blur-sm rounded-xl">
+                                            <div className="w-11 h-11 bg-white/20 dark:bg-background/20 text-on-primary dark:text-on-primary flex items-center justify-center mb-3 backdrop-blur-sm rounded-xl">
                                                 <Sparkles className="w-5 h-5" />
                                             </div>
-                                            <h3 className="font-black text-on-primary dark:text-on-primary text-xs mb-1">ุฌุฑุจ ู…ุฌุงูุงู</h3>
-                                            <p className="text-on-primary dark:text-on-primary opacity-80 text-micro leading-tight font-extrabold">ุญุตุฉ ุชุฌุฑูุจูุฉ ููู…ุดุชุฑููู</p>
+                                            <h3 className="font-black text-on-primary dark:text-on-primary text-xs mb-1">ฬัศ ใฬวไว๐</h3>
+                                            <p className="text-on-primary dark:text-on-primary opacity-80 text-micro leading-tight font-extrabold">อีษ สฬัํศํษ แแใิสั฿ํไ</p>
                                         </Link>
                                     </motion.div>
                                 </motion.div>
@@ -130,7 +130,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             </section>
 
             {/* Mobile version */}
-            <section className="block md:hidden relative overflow-hidden bg-surface dark:bg-black transition-colors duration-500 pt-2 pb-4">
+            <section className="block md:hidden relative overflow-hidden bg-surface dark:bg-background transition-colors duration-500 pt-2 pb-4">
                 <LeafDecoration />
 
                 <div className="absolute top-40 -end-20 w-64 h-64 bg-accent/10 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
@@ -140,36 +140,36 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="flex items-center justify-center mb-5 mt-2">
                         <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/80 dark:bg-primary/15 border border-success dark:border-primary/40 rounded-full shadow-sm">
                             <span className="w-2 h-2 rounded-full bg-success dark:bg-primary animate-pulse"></span>
-                            <span className="text-success-dark dark:text-primary font-bold text-xs tracking-wide">ุจุฑุงู…ุฌ ุญูุธ ู…ุชู…ูุฒุฉ</span>
+                            <span className="text-success-dark dark:text-primary font-bold text-xs tracking-wide">ศัวใฬ อÝู ใสใําษ</span>
                         </div>
                     </div>
 
                     <div className="text-center mb-5">
                         <h2 className="text-2xl leading-tight font-black text-main dark:text-main font-heading">
-                            ุฑุญูุชู ู…ุน{" "}
+                            ัอแส฿ ใฺ{" "}
                             <span className="text-success dark:text-primary relative inline-block">
-                                ูุชุงุจ ุงููู
+                                ฿สวศ วแแๅ
                                 <svg className="absolute -bottom-1.5 end-0 w-full h-3" viewBox="0 0 120 12" preserveAspectRatio="none">
                                     <path d="M2 8 Q 30 0 60 8 Q 90 12 118 4" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" className="text-success dark:text-primary opacity-40" />
                                 </svg>
                             </span>
                             <br />
-                            ุชุจุฏุฃ ุจุฎุทูุฉ
+                            สศฯร ศฮุๆษ
                         </h2>
                     </div>
 
                     <p className="text-muted dark:text-muted text-xs leading-relaxed text-center max-w-xs mx-auto mb-6 font-medium">
-                        ู…ููุฌูุฉ ูุฑูุฏุฉ ุชุฌู…ุน ุจูู ุฃุตุงูุฉ ุงูุชููู ูุชูููุงุช ุงูุชุนููู… ุงูุญุฏูุซุฉ. ููุฏู… ุญููุงุช ูุฑุฏูุฉ ูู…ุฌู…ูุนุงุช ุตุบูุฑุฉ ู…ุน ูุฎุจุฉ ู…ู ุงูู…ูุฑุฆูู ุงูู…ุฌุงุฒูู.
+                        ใไๅฬํษ Ýัํฯษ สฬใฺ ศํไ รีวแษ วแสแÞํ ๆสÞไํวส วแสฺแํใ วแอฯํหษ. ไÞฯใ อแÞวส Ýัฯํษ ๆใฬใๆฺวส ีÛํัษ ใฺ ไฮศษ ใไ วแใÞัฦํไ วแใฬวาํไ.
                     </p>
 
                     <div className="flex flex-col gap-3 items-center mb-7">
                         <a
-                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('ุงูุณูุงู… ุนูููู…ุ ุฃุฑุบุจ ูู ุงูุจุฏุก ุจุญูุธ ุงููุฑุขู ุงููุฑูู… ูู ุฏุงุฑูู ุงูุณุงุจุนุฉ')}`}
+                            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('วแำแวใ ฺแํ฿ใก รัÛศ Ýํ วแศฯม ศอÝู วแÞัยไ วแ฿ัํใ Ýํ ฯวัํไ วแำวศฺษ')}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="w-full max-w-[320px] py-4 bg-success dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-success dark:text-on-primary font-extrabold text-base shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-2xl"
                         >
-                            <span>ุงุจุฏุฃ ุงูุญูุธ ุงูุขู</span>
+                            <span>วศฯร วแอÝู วแยไ</span>
                             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
                         </a>
                         <Link
@@ -178,7 +178,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             className="w-full max-w-[320px] py-3.5 bg-card dark:bg-white/5 text-success dark:text-main border border-border dark:border-primary/30 font-bold text-sm transition-all flex items-center justify-center gap-2 rounded-2xl shadow-sm"
                         >
                             <Sparkles size={16} className="dark:text-primary" />
-                            ุชุตูุญ ุงูู…ุฒูุฏ
+                            สีÝอ วแใาํฯ
                         </Link>
                     </div>
 
@@ -189,12 +189,12 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <span className="text-sm font-bold text-muted dark:text-muted">/5</span>
                                 <Star size={14} className="text-warning dark:text-primary fill-warning dark:fill-primary" />
                             </div>
-                            <div className="text-xs text-muted dark:text-muted font-medium mt-0.5">ู…ู ูุจู ุขูุงู ุงูุทูุงุจ</div>
+                            <div className="text-xs text-muted dark:text-muted font-medium mt-0.5">ใไ Þศแ ยแวÝ วแุแวศ</div>
                         </div>
                         <div className="h-10 w-px bg-success dark:bg-primary opacity-40"></div>
                         <div className="flex -space-x-2.5 space-x-reverse">
                             {[1, 2, 3].map(i => (
-                                <div key={`avatar-${i}`} className="w-9 h-9 rounded-full border-2 border-card dark:border-primary/40 bg-surface dark:bg-black overflow-hidden shadow-sm">
+                                <div key={`avatar-${i}`} className="w-9 h-9 rounded-full border-2 border-card dark:border-primary/40 bg-surface dark:bg-background overflow-hidden shadow-sm">
                                     <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" className="w-full h-full" />
                                 </div>
                             ))}
@@ -207,29 +207,29 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             <div className="w-11 h-11 bg-warning-soft dark:bg-primary/15 rounded-2xl flex items-center justify-center mb-3">
                                 <ClipboardCheck size={22} className="text-warning dark:text-primary" />
                             </div>
-                            <h3 className="font-black text-main dark:text-main text-sm mb-1">ู…ุชุงุจุนุฉ ุฏูููุฉ</h3>
-                            <p className="text-muted dark:text-muted text-micro leading-relaxed">ุชูุงุฑูุฑ ุฅูุฌุงุฒ ุฃุณุจูุนูุฉ</p>
+                            <h3 className="font-black text-main dark:text-main text-sm mb-1">ใสวศฺษ ฯÞํÞษ</h3>
+                            <p className="text-muted dark:text-muted text-micro leading-relaxed">สÞวัํั ลไฬวา รำศๆฺํษ</p>
                         </motion.div>
                         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-hover border border-border dark:border-primary/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-primary-soft dark:bg-primary/15 rounded-2xl flex items-center justify-center mb-3">
                                 <Clock size={22} className="text-primary dark:text-primary" />
                             </div>
-                            <h3 className="font-black text-main dark:text-main text-sm mb-1">ุฃููุงุช ู…ุฑูุฉ</h3>
-                            <p className="text-muted dark:text-muted text-micro leading-relaxed">ุงุฎุชุฑ ู…ูุงุนูุฏู ุงูู…ูุถูุฉ</p>
+                            <h3 className="font-black text-main dark:text-main text-sm mb-1">รๆÞวส ใัไษ</h3>
+                            <p className="text-muted dark:text-muted text-micro leading-relaxed">วฮสั ใๆวฺํฯ฿ วแใÝึแษ</p>
                         </motion.div>
                         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning border-0 rounded-2xl p-4 shadow-lg flex flex-col items-center text-center">
-                            <div className="w-11 h-11 bg-white/20 dark:bg-black/20 rounded-2xl flex items-center justify-center mb-3 backdrop-blur-sm">
+                            <div className="w-11 h-11 bg-white/20 dark:bg-background/20 rounded-2xl flex items-center justify-center mb-3 backdrop-blur-sm">
                                 <Sparkles size={22} className="text-on-primary dark:text-on-primary" />
                             </div>
-                            <h3 className="font-black text-on-primary dark:text-on-primary text-sm mb-1">ุฌุฑุจ ู…ุฌุงููุง</h3>
-                            <p className="text-on-primary dark:text-on-primary opacity-80 text-micro leading-relaxed font-bold">ุญุตุฉ ุชุฌุฑูุจูุฉ ููู…ุดุชุฑููู</p>
+                            <h3 className="font-black text-on-primary dark:text-on-primary text-sm mb-1">ฬัศ ใฬวไ๐ว</h3>
+                            <p className="text-on-primary dark:text-on-primary opacity-80 text-micro leading-relaxed font-bold">อีษ สฬัํศํษ แแใิสั฿ํไ</p>
                         </motion.div>
                         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-hover border border-border dark:border-primary/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-success-soft dark:bg-primary/15 rounded-2xl flex items-center justify-center mb-3">
                                 <Mic size={22} className="text-success dark:text-primary" />
                             </div>
-                            <h3 className="font-black text-main dark:text-main text-sm mb-1">ู…ุนูู…ูู ู…ุฌุงุฒูู</h3>
-                            <p className="text-muted dark:text-muted text-micro leading-relaxed">ูุฎุจุฉ ุงูุญูุงุธ ุงูู…ุจุฏุนูู</p>
+                            <h3 className="font-black text-main dark:text-main text-sm mb-1">ใฺแใๆไ ใฬวาๆไ</h3>
+                            <p className="text-muted dark:text-muted text-micro leading-relaxed">ไฮศษ วแอÝวู วแใศฯฺๆไ</p>
                         </motion.div>
                     </motion.div>
 

@@ -37,7 +37,7 @@ export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onC
         <div className="bg-card dark:bg-card/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden" dir="rtl">
             {/* Header */}
             <div className="px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
-                <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-primary/10 dark:to-[#D4AF37]/5" />
+                <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-primary/10 dark:to-accent/5" />
                 <div className="relative z-10 flex items-center gap-3">
                     <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-primary/15">
                         <CalendarDays size={18} className="text-primary dark:text-primary" />

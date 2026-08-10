@@ -26,11 +26,11 @@ const statusConfig: Record<string, { label: string; dot: string; bg: string; tex
 
 const avatarGradients = [
     'from-primary to-primary-deep',
-    'from-[#10b981] to-[#059669]',
-    'from-[#f59e0b] to-[#d97706]',
-    'from-[#ef4444] to-[#dc2626]',
-    'from-[#3b82f6] to-[#2563eb]',
-    'from-[#8b5cf6] to-[#7c3aed]',
+    'from-success to-success-dark',
+    'from-warning to-warning-dark',
+    'from-error to-error-dark',
+    'from-info to-info-dark',
+    'from-chart-4 to-chart-4/80',
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -158,7 +158,7 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
             <div className="flex items-center justify-between gap-2 px-4 py-3 bg-surface/50 dark:bg-white/[0.02] border-t border-border/50 dark:border-white/[0.04]" role="toolbar" aria-label="إجراءات الحصة">
                 <div className="flex items-center gap-2 flex-1">
                     {onCall && (
-                        <button onClick={(e) => { e.stopPropagation(); onCall(t.parentPhone); }} className="flex items-center justify-center gap-1.5 px-3.5 py-2 text-[11px] font-bold rounded-xl bg-[#0ea5e9]/10 text-[#0ea5e9] hover:bg-[#0ea5e9]/20 transition-all active:scale-95" aria-label="اتصال">
+                        <button onClick={(e) => { e.stopPropagation(); onCall(t.parentPhone); }} className="flex items-center justify-center gap-1.5 px-3.5 py-2 text-[11px] font-bold rounded-xl bg-info/10 text-info hover:bg-info/20 transition-all active:scale-95" aria-label="اتصال">
                             <Phone size={13} /> اتصال
                         </button>
                     )}

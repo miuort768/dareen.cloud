@@ -1,4 +1,4 @@
-ï»¿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Clock, Play, GraduationCap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -61,11 +61,11 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
             <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-3">
                     <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-                    <span className="text-white/70 dark:text-on-primary/70 text-micro font-bold">Ø§Ù„Ø­ØµØ© Ø§Ù„Ù‚Ø§Ø¯Ù…Ø©</span>
+                    <span className="text-white/70 dark:text-on-primary/70 text-micro font-bold">ÇáÍÕÉ ÇáÞÇÏãÉ</span>
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-white/15 dark:bg-black/20 flex items-center justify-center shrink-0">
+                    <div className="w-14 h-14 rounded-2xl bg-white/15 dark:bg-background/20 flex items-center justify-center shrink-0">
                         <GraduationCap size={24} className="text-white dark:text-on-primary" />
                     </div>
 
@@ -79,12 +79,12 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/15 dark:bg-black/20">
+                        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/15 dark:bg-background/20">
                             <Clock size={15} className="text-white/80 dark:text-on-primary/70" />
                             <span className={cn(
                                 "text-xl font-bold tabular-nums tracking-wider text-white",
                             )}>
-                                {isNow ? "Ø§Ù„Ø¢Ù†" : timeLeft}
+                                {isNow ? "ÇáÂä" : timeLeft}
                             </span>
                         </div>
                     </div>
@@ -94,11 +94,11 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                     <span className="text-sm text-white/60 dark:text-on-primary/60 font-medium">{nextSession.time}</span>
                     <Button
                         onClick={() => onStart(nextSession.id)}
-                        className="bg-white/20 dark:bg-black/20 hover:bg-white/30 dark:hover:bg-black/30 text-white dark:text-on-primary border-0 gap-2"
+                        className="bg-white/20 dark:bg-background/20 hover:bg-white/30 dark:hover:bg-black/30 text-white dark:text-on-primary border-0 gap-2"
                         size="sm"
                     >
                         <Play size={14} fill="currentColor" />
-                        Ø¨Ø¯Ø¡ Ø§Ù„Ø­ØµØ©
+                        ÈÏÁ ÇáÍÕÉ
                     </Button>
                 </div>
             </div>

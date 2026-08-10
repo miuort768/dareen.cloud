@@ -93,7 +93,7 @@ const InfoRow = ({ icon, label, value, onEdit }: { icon: React.ReactNode; label:
             <p className="text-xs font-bold text-main truncate">{value || '—'}</p>
         </div>
         {onEdit && (
-            <button onClick={onEdit} className="w-7 h-7 rounded-lg hover:bg-border/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all">
+            <button onClick={onEdit} className="w-7 h-7 rounded-lg hover:bg-border/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all" aria-label="تعديل">
                 <Edit3 size={11} className="text-muted" />
             </button>
         )}
