@@ -38,3 +38,5 @@ export { FAB } from './FAB';
 export type { FABProps } from './FAB';
 export { ActionButton, ActionRow } from './ActionRow';
 export type { ActionButtonProps, ActionRowProps } from './ActionRow';
+export { MobileBottomNav } from './MobileBottomNav';
+export type { MobileBottomNavItem, MobileBottomNavProps } from './MobileBottomNav';

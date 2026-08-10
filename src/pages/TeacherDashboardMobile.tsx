@@ -7,6 +7,7 @@ import { EmptyState } from '../shared/components/ui/EmptyState';
 import { cn } from '../lib/utils';
 import { Card } from '@/components/ui/card';
 import { GlassCard } from '@/shared/components/ui';
+import { MobileBottomNav } from '../shared/components/ui/MobileBottomNav';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests';
 import { ModernAnnouncements } from '../features/dashboard/components/ModernAnnouncements';
@@ -35,9 +36,9 @@ interface TeacherDashboardMobileProps {
 }
 
 const tabs = [
-    { id: 'home' as const, label: 'الرئيسية', icon: LayoutDashboard },
-    { id: 'schedule' as const, label: 'الجدول', icon: Calendar },
-    { id: 'reports' as const, label: 'التقارير', icon: CheckSquare },
+    { id: 'home', label: 'الرئيسية', icon: LayoutDashboard, path: '' },
+    { id: 'schedule', label: 'الجدول', icon: Calendar, path: '' },
+    { id: 'reports', label: 'التقارير', icon: CheckSquare, path: '' },
 ];
 
     const glass = "bg-surface/80 dark:bg-surface/90 backdrop-blur-xl border-b border-border dark:border-primary/20";
@@ -247,38 +248,12 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
             </div>
 
             {/* Bottom Tab Bar */}
-            <div className="fixed bottom-0 inset-x-0 z-50">
-                <div className="bg-card/95 dark:bg-surface/95 backdrop-blur-xl border-t border-border dark:border-primary/15 shadow-[0_-4px_20px_rgba(0,0,0,0.06)] pb-[env(safe-area-inset-bottom)]">
-                    <div className="flex items-end justify-around h-[68px] px-1 pt-1.5 pb-1">
-                        {tabs.map(tab => {
-                            const isActive = activeTab === tab.id;
-                            return (
-                                <motion.button key={tab.id} whileTap={{ scale: 0.85 }}
-                                    onClick={() => handleTabChange(tab.id)}
-                                    className="relative flex flex-col items-center justify-center flex-1 h-full pt-1.5 pb-1"
-                                >
-                                    <div                                     className={cn(
-                                        "rounded-xl p-1.5 transition-all duration-200",
-                                        isActive ? "bg-primary/10 dark:bg-primary/15" : "bg-transparent"
-                                    )}>
-                                        <tab.icon size={20} strokeWidth={isActive ? 2.2 : 1.5}
-                                            className={cn("transition-colors duration-200", isActive ? "text-primary dark:text-primary" : "text-muted dark:text-dim")}
-                                        />
-                                    </div>
-                                    <span className={cn("text-[10px] font-bold transition-colors duration-200 mt-0.5", isActive ? "text-primary dark:text-primary" : "text-muted dark:text-dim")}>
-                                        {tab.label}
-                                    </span>
-                                    {isActive && (
-                                        <motion.div layoutId="teacher-tab-dot"
-                                            className="absolute top-0 w-1 h-1 rounded-full bg-primary dark:bg-primary"
-                                        />
-                                    )}
-                                </motion.button>
-                            );
-                        })}
-                    </div>
-                </div>
-            </div>
+            <MobileBottomNav
+                items={tabs}
+                activeTab={activeTab}
+                onTabChange={(id) => handleTabChange(id as 'home' | 'schedule' | 'reports')}
+                layoutId="teacher-tab-dot"
+            />
 
             {briefingStudent && (
                 <StudentQuickBrief isOpen={!!briefingStudent} onClose={() => setBriefingStudent(null)}
