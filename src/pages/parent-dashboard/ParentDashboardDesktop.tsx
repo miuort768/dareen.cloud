@@ -58,7 +58,7 @@ export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sess
     const rank = getRankByPoints(points, STUDENT_RANKS);
 
     return (
-        <div className="min-h-screen bg-background" dir="rtl">
+        <div className="min-h-screen bg-background dark:bg-black transition-colors duration-500" dir="rtl">
             <ParentDashboardHeader logout={logout} />
 
             <main className="max-w-page mx-auto px-6 pt-6 pb-12 space-y-6">
@@ -110,17 +110,17 @@ export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sess
                         </motion.div>
                         <motion.div {...fadeUp(0.3)}>
                             <button onClick={() => navigate('/parent-payment-history')}
-                                className="w-full bg-card border border-border rounded-2xl p-4 flex items-center gap-3 hover:bg-hover transition-colors text-start"
+                                className="w-full bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-[#D4AF37]/5 transition-colors text-start"
                                 aria-label="سجل الدفعات"
                             >
-                                <div className="w-10 h-10 rounded-xl bg-success-soft flex items-center justify-center shrink-0">
-                                    <Wallet size={18} className="text-success" />
+                                <div className="w-10 h-10 rounded-xl bg-success-soft dark:bg-[#D4AF37]/15 flex items-center justify-center shrink-0">
+                                    <Wallet size={18} className="text-success dark:text-[#D4AF37]" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-bold text-main">سجل الدفعات</p>
-                                    <p className="text-[11px] text-muted">عرض فواتير أبنائك ومدفوعاتك</p>
+                                    <p className="text-sm font-bold text-main dark:text-white">سجل الدفعات</p>
+                                    <p className="text-[11px] text-muted dark:text-zinc-400">عرض فواتير أبنائك ومدفوعاتك</p>
                                 </div>
-                                <ArrowLeft size={16} className="text-muted shrink-0" />
+                                <ArrowLeft size={16} className="text-muted dark:text-zinc-500 shrink-0" />
                             </button>
                         </motion.div>
                     </div>

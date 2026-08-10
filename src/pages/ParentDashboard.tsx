@@ -121,8 +121,8 @@ export const ParentDashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-background" dir="rtl">
-                <div className="sticky top-0 z-[100] bg-surface border-b border-border">
+            <div className="min-h-screen bg-background dark:bg-black" dir="rtl">
+                <div className="sticky top-0 z-[100] bg-surface dark:bg-[#0a0a0c] border-b border-border dark:border-[#D4AF37]/20">
                     <div className="max-w-page mx-auto px-5 pt-4 pb-3 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <Skeleton className="w-10 h-10 rounded-xl" />
@@ -149,10 +149,10 @@ export const ParentDashboard = () => {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-background flex items-center justify-center" dir="rtl">
+            <div className="min-h-screen bg-background dark:bg-black flex items-center justify-center" dir="rtl">
                 <div className="text-center space-y-3 p-6">
-                    <p className="text-muted text-sm">فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.</p>
-                    <button onClick={() => refetch()} className="text-sm text-primary hover:underline">إعادة المحاولة</button>
+                    <p className="text-muted dark:text-zinc-400 text-sm">فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.</p>
+                    <button onClick={() => refetch()} className="text-sm text-primary dark:text-[#D4AF37] hover:underline">إعادة المحاولة</button>
                 </div>
             </div>
         );

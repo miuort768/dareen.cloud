@@ -28,12 +28,12 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
     const completedCount = tasks.filter(t => completedIds.has(t.id)).length;
 
     return (
-        <div className="bg-card border border-border rounded-2xl p-5">
+        <div className="bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-3">
-                <span className="text-micro font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-lg">
+                <span className="text-micro font-bold text-primary dark:text-[#D4AF37] bg-primary-soft dark:bg-[#D4AF37]/10 px-2 py-0.5 rounded-lg">
                     {completedCount}/{tasks.length}
                 </span>
-                <h3 className="text-sm font-bold text-main">مهام اليوم</h3>
+                <h3 className="text-sm font-bold text-main dark:text-white">مهام اليوم</h3>
             </div>
 
             <div className="space-y-2">
@@ -48,8 +48,8 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
                             onClick={() => toggle(task.id)}
                             className={`w-full flex items-center gap-3 p-3 min-h-11 rounded-xl border transition-all text-start ${
                                 isDone
-                                    ? 'bg-surface border-border opacity-60'
-                                    : 'bg-card border-border hover:border-primary/30'
+                                    ? 'bg-surface dark:bg-[#0a0a0c] border-border dark:border-[#D4AF37]/10 opacity-60'
+                                    : 'bg-card dark:bg-[#0d0d0f] border-border dark:border-[#D4AF37]/20 hover:border-primary/30 dark:hover:border-[#D4AF37]/40'
                             }`}
                             aria-label={`${isDone ? 'إلغاء' : 'تحديد'} ${task.subject}`}
                             role="checkbox"
@@ -61,11 +61,11 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
                                 <Circle size={18} className="text-border shrink-0" />
                             )}
                             <div className="flex-1 min-w-0">
-                                <p className={`text-xs font-bold ${isDone ? 'text-muted line-through' : 'text-main'}`}>
+                                <p className={`text-xs font-bold ${isDone ? 'text-muted dark:text-zinc-500 line-through' : 'text-main dark:text-white'}`}>
                                     {task.subject}
                                 </p>
                                 {task.time && (
-                                    <p className="text-micro text-muted">{task.time}</p>
+                                    <p className="text-micro text-muted dark:text-zinc-400">{task.time}</p>
                                 )}
                             </div>
                             <span className={`text-micro font-bold px-2 py-0.5 rounded-lg shrink-0 ${config.color}`}>

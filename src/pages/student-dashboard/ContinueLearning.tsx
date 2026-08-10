@@ -14,8 +14,8 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
     return (
         <div>
             <div className="flex items-center justify-between mb-3">
-                <button onClick={() => navigate('/schedule')} className="text-primary text-xs font-bold">عرض الكل</button>
-                <h3 className="text-sm font-bold text-main">تابع تعلمك</h3>
+                <button onClick={() => navigate('/schedule')} className="text-primary dark:text-[#D4AF37] text-xs font-bold">عرض الكل</button>
+                <h3 className="text-sm font-bold text-main dark:text-white">تابع تعلمك</h3>
             </div>
 
             <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide" role="region" aria-label="المتابعة التعلم" tabIndex={0}>
@@ -27,16 +27,16 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                     return (
                     <div
                         key={en.id || idx}
-                        className="bg-card border border-border rounded-2xl p-4 min-w-[200px] snap-start shrink-0 hover:border-primary/30 transition-colors"
+                        className="bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 rounded-2xl p-4 min-w-[200px] snap-start shrink-0 hover:border-primary/30 dark:hover:border-[#D4AF37]/40 transition-colors"
                     >
                             <div className="flex items-center gap-2 mb-3">
-                                <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center shrink-0">
-                                    <BookOpen size={16} className="text-primary" />
+                                <div className="w-10 h-10 rounded-xl bg-primary-soft dark:bg-[#D4AF37]/10 flex items-center justify-center shrink-0">
+                                    <BookOpen size={16} className="text-primary dark:text-[#D4AF37]" />
                                 </div>
                                 <div className="min-w-0">
-                                    <h4 className="text-xs font-bold text-main truncate">{en.subject || 'دورة'}</h4>
+                                    <h4 className="text-xs font-bold text-main dark:text-white truncate">{en.subject || 'دورة'}</h4>
                                     {en.teacherName && (
-                                        <p className="text-micro text-muted truncate">{en.teacherName}</p>
+                                        <p className="text-micro text-muted dark:text-zinc-400 truncate">{en.teacherName}</p>
                                     )}
                                 </div>
                             </div>

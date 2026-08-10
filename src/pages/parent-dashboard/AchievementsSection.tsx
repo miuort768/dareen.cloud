@@ -14,12 +14,12 @@ export const AchievementsSection = ({ points, rank }: AchievementsSectionProps) 
         { icon: Lock, label: 'أكمل 10 واجبات', unlocked: points >= 1000, color: 'text-muted', bg: 'bg-surface', ring: 'ring-border' },
     ];
     return (
-        <div className="rounded-2xl bg-card border border-border p-5 md:p-6">
+        <div className="rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 md:p-6">
             <div className="flex items-center gap-2 mb-5">
-                <div className="w-8 h-8 rounded-xl bg-warning/15 flex items-center justify-center">
-                    <Trophy size={16} className="text-warning" />
+                <div className="w-8 h-8 rounded-xl bg-warning/15 dark:bg-[#D4AF37]/15 flex items-center justify-center">
+                    <Trophy size={16} className="text-warning dark:text-[#D4AF37]" />
                 </div>
-                <h3 className="text-base md:text-[22px] font-bold text-main">الإنجازات</h3>
+                <h3 className="text-base md:text-[22px] font-bold text-main dark:text-white">الإنجازات</h3>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -36,7 +36,7 @@ export const AchievementsSection = ({ points, rank }: AchievementsSectionProps) 
                             <div className={`w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center ${badge.unlocked ? badge.bg : 'bg-border/30'}`}>
                                 <Icon size={22} className={badge.unlocked ? badge.color : 'text-muted'} />
                             </div>
-                            <p className={`text-xs font-bold ${badge.unlocked ? 'text-main' : 'text-muted'}`}>
+                            <p className={`text-xs font-bold ${badge.unlocked ? 'text-main dark:text-white' : 'text-muted dark:text-zinc-500'}`}>
                                 {badge.label}
                             </p>
                             {!badge.unlocked && (

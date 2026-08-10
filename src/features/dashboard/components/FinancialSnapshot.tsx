@@ -17,8 +17,8 @@ export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollec
 
     return (
         <div>
-            <h3 className="text-[13px] font-bold text-main mb-3 flex items-center gap-2">
-                <Wallet size={13} className="text-success" />
+            <h3 className="text-[13px] font-bold text-main dark:text-white mb-3 flex items-center gap-2">
+                <Wallet size={13} className="text-success dark:text-[#D4AF37]" />
                 الملخص المالي
             </h3>
             <div className="space-y-2.5">
@@ -28,7 +28,7 @@ export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollec
                             <item.icon size={15} className={item.color} />
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-[11px] font-bold text-muted">{item.label}</p>
+                            <p className="text-[11px] font-bold text-muted dark:text-zinc-400">{item.label}</p>
                         </div>
                         <span className={cn("text-sm font-semibold tabular-nums", item.valueColor)}>
                             {item.value.toLocaleString('ar-EG')} <span className="text-[11px] font-bold">{CURRENCY_SYMBOL}</span>

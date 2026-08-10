@@ -77,7 +77,7 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
 
     return (
         <div>
-            <h3 className="text-[13px] font-bold text-main mb-3 flex items-center gap-2">
+            <h3 className="text-[13px] font-bold text-main dark:text-white mb-3 flex items-center gap-2">
                 <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", expired.length > 0 ? 'bg-error' : low.length > 0 ? 'bg-warning' : 'bg-success')} />
                 مركز التنبيهات
                 {urgencyLabel && (
@@ -95,15 +95,15 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
                         "relative flex items-start gap-3 p-3.5 rounded-xl border overflow-hidden group cursor-pointer transition-all duration-200 hover:shadow-sm",
                         alert.bg, alert.border
                     )}>
-                        <div className={cn("absolute start-0 top-0 bottom-0 w-0.5", alert.accent)} />
-                        <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center shrink-0", alert.bg.replace('/0.04', '/0.08'))}>
+                        <div className={cn("absolute start-0 top-0 bottom-0 w-0.5", alert.accent, "dark:bg-[#D4AF37]/60")} />
+                        <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center shrink-0", alert.bg.replace('/0.04', '/0.08'), "dark:bg-[#D4AF37]/5")}>
                             <alert.icon size={16} className={alert.iconColor} />
                         </div>
                         <div className="min-w-0 flex-1">
                             <p className={cn("text-[13px] font-bold mb-0.5", alert.text)}>{alert.title}</p>
-                            <p className="text-[11px] font-medium text-muted line-clamp-2 leading-relaxed">{alert.desc}</p>
+                            <p className="text-[11px] font-medium text-muted dark:text-zinc-400 line-clamp-2 leading-relaxed">{alert.desc}</p>
                         </div>
-                        <ChevronLeft size={14} className="text-muted shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ChevronLeft size={14} className="text-muted dark:text-zinc-400 shrink-0 mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                 ))}
             </div>

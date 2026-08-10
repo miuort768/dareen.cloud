@@ -12,12 +12,12 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
     if (kids.length === 0) return null;
 
     return (
-        <div className="bg-card border border-border rounded-2xl p-5">
+        <div className="bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-[13px] font-bold text-main">الأبناء</h3>
+                <h3 className="text-[13px] font-bold text-main dark:text-white">الأبناء</h3>
                 <button
                     onClick={() => navigate('/parent-students')}
-                    className="text-[11px] font-bold text-primary flex items-center gap-1 hover:underline"
+                    className="text-[11px] font-bold text-primary dark:text-[#D4AF37] flex items-center gap-1 hover:underline"
                 >
                     عرض الكل <ChevronLeft size={12} />
                 </button>
@@ -33,16 +33,16 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
                         <button
                             key={child.id}
                             onClick={() => navigate('/parent-students')}
-                            className="w-full flex items-center gap-3 p-3 bg-surface rounded-xl border border-border text-end transition-all hover:bg-hover active:scale-[0.98]"
+                            className="w-full flex items-center gap-3 p-3 bg-surface dark:bg-[#0a0a0c] rounded-xl border border-border dark:border-[#D4AF37]/20 text-end transition-all hover:bg-hover dark:hover:bg-[#D4AF37]/5 active:scale-[0.98]"
                         >
-                            <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center shrink-0">
-                                <span className="text-sm font-bold text-primary">
+                            <div className="w-10 h-10 rounded-xl bg-primary-soft dark:bg-[#D4AF37]/15 flex items-center justify-center shrink-0">
+                                <span className="text-sm font-bold text-primary dark:text-[#D4AF37]">
                                     {(child.name || 'ط').charAt(0)}
                                 </span>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-[13px] font-bold text-main truncate">{child.name}</p>
-                                <div className="flex items-center gap-2 text-[11px] text-muted mt-0.5">
+                                <p className="text-[13px] font-bold text-main dark:text-white truncate">{child.name}</p>
+                                <div className="flex items-center gap-2 text-[11px] text-muted dark:text-zinc-400 mt-0.5">
                                     {child.grade && (
                                         <span className="inline-flex items-center gap-1">
                                             <BookOpen size={9} /> {child.grade}
@@ -56,16 +56,16 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
                             <div className="shrink-0 flex flex-col items-center">
                                 <div className="relative w-9 h-9">
                                     <svg className="w-9 h-9 -rotate-90" viewBox="0 0 36 36">
-                                        <circle cx="18" cy="18" r="15" fill="none" stroke="var(--border)" strokeWidth="3" />
-                                        <circle
-                                            cx="18" cy="18" r="15" fill="none"
-                                            stroke="var(--bg-primary)" strokeWidth="3"
+                                         <circle cx="18" cy="18" r="15" fill="none" stroke="var(--border)" strokeWidth="3" className="dark:stroke-[#D4AF37]/20" />
+                                         <circle
+                                             cx="18" cy="18" r="15" fill="none"
+                                             stroke="var(--bg-primary)" strokeWidth="3" className="dark:stroke-[#D4AF37]"
                                             strokeLinecap="round"
                                             strokeDasharray={`${(progress / 100) * 94.2} 94.2`}
                                         />
                                     </svg>
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <span className="text-[11px] font-bold text-main">{progress}%</span>
+                                         <span className="text-[11px] font-bold text-main dark:text-white">{progress}%</span>
                                     </div>
                                 </div>
                             </div>

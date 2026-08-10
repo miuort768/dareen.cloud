@@ -93,7 +93,7 @@ export const StudentDashboardDesktop = ({ studentData, sessions, pointLogs, onRe
     })();
 
     return (
-        <div className="min-h-screen bg-background" dir="rtl">
+        <div className="min-h-screen bg-background dark:bg-black transition-colors duration-500" dir="rtl">
             <StudentDashboardHeader logout={logout} />
 
             <main className="max-w-page mx-auto px-6 pt-6 pb-12 space-y-6">

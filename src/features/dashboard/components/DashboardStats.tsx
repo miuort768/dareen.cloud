@@ -19,7 +19,7 @@ interface StatCardData {
 }
 
 const colorMap: Record<string, { bg: string; text: string; light: string; ring: string }> = {
-    primary: { bg: 'bg-primary/10', text: 'text-primary', light: 'bg-primary/[0.04]', ring: 'ring-primary/20' },
+    primary: { bg: 'bg-primary/10 dark:bg-[#D4AF37]/10', text: 'text-primary dark:text-[#D4AF37]', light: 'bg-primary/[0.04] dark:bg-[#D4AF37]/[0.04]', ring: 'ring-primary/20 dark:ring-[#D4AF37]/20' },
     success: { bg: 'bg-success/10', text: 'text-success', light: 'bg-success/[0.04]', ring: 'ring-success/20' },
     info: { bg: 'bg-info/10', text: 'text-info', light: 'bg-info/[0.04]', ring: 'ring-info/20' },
     warning: { bg: 'bg-warning/10', text: 'text-warning', light: 'bg-warning/[0.04]', ring: 'ring-warning/20' },
@@ -35,7 +35,7 @@ const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: index * 0.05, ease: [0.25, 0.1, 0.25, 1] }}
-            className="group relative overflow-hidden rounded-2xl bg-card border border-border p-5 transition-all duration-300 hover:shadow-elevation-2 hover:-translate-y-0.5"
+            className="group relative overflow-hidden rounded-2xl bg-card dark:bg-[#0d0d0f] border border-border dark:border-[#D4AF37]/20 p-5 transition-all duration-300 hover:shadow-elevation-2 hover:-translate-y-0.5"
         >
             <div className="flex items-start justify-between mb-3">
                 <div className={`w-10 h-10 rounded-xl ring-1 ${c.ring} ${c.bg} flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}>
@@ -49,13 +49,13 @@ const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
                 )}
             </div>
 
-            <p className="text-2xl md:text-[28px] font-bold tabular-nums text-main leading-none tracking-tight mb-1">
+            <p className="text-2xl md:text-[28px] font-bold tabular-nums text-main dark:text-white leading-none tracking-tight mb-1">
                 {item.formatter && typeof item.value === 'number'
                     ? item.formatter(item.value)
                     : item.value}
                 {item.prefix && <span className="text-xs font-medium text-muted me-1">{item.prefix}</span>}
             </p>
-            <p className="text-[13px] text-muted font-medium">{item.title}</p>
+            <p className="text-[13px] text-muted dark:text-zinc-400 font-medium">{item.title}</p>
         </motion.div>
     );
 };

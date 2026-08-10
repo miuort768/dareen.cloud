@@ -119,7 +119,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
 
     return (
         <div
-            className="min-h-screen bg-background overflow-x-hidden"
+            className="min-h-screen bg-background dark:bg-black overflow-x-hidden transition-colors duration-500"
             dir="rtl"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -129,7 +129,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
                 animate={{ height: isRefreshing ? 44 : pullDistance }}
                 className="overflow-hidden flex items-center justify-center"
             >
-                <div className="flex items-center gap-2 text-primary font-bold text-xs">
+                <div className="flex items-center gap-2 text-primary dark:text-[#D4AF37] font-bold text-xs">
                     {isRefreshing ? (
                         <><Loader2 size={16} className="animate-spin" /><span>جاري التحديث...</span></>
                     ) : pullDistance > 40 ? (
