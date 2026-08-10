@@ -1,5 +1,5 @@
 ﻿import { Home, User, Library, MessageCircle } from 'lucide-react';
-import { MobileBottomNav } from '../../shared/components/ui/MobileBottomNav';
+import { MobileBottomNav as SharedBottomNav } from '../../shared/components/ui/MobileBottomNav';
 
 const navItems = [
     { id: 'chat', label: 'الرسائل', icon: MessageCircle, path: '/chat' },
@@ -9,5 +9,5 @@ const navItems = [
 ];
 
 export const MobileBottomNav = () => (
-    <MobileBottomNav items={navItems} layoutId="student-tab-dot" />
+    <SharedBottomNav items={navItems} layoutId="student-tab-dot" />
 );

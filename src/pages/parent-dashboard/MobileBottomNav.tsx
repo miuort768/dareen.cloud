@@ -1,5 +1,5 @@
 ﻿import { Home, Users, MessageSquare, User, MoreHorizontal } from 'lucide-react';
-import { MobileBottomNav } from '../../shared/components/ui/MobileBottomNav';
+import { MobileBottomNav as SharedBottomNav } from '../../shared/components/ui/MobileBottomNav';
 
 const navItems = [
     { id: 'more', label: 'المزيد', icon: MoreHorizontal, path: '/parent-announcements' },
@@ -10,5 +10,5 @@ const navItems = [
 ];
 
 export const MobileBottomNav = () => (
-    <MobileBottomNav items={navItems} layoutId="parent-tab-dot" />
+    <SharedBottomNav items={navItems} layoutId="parent-tab-dot" />
 );
