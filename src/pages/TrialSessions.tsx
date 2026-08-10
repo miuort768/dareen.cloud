@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+﻿import { useState, useEffect, useRef, useMemo } from 'react';
 import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays, Eye, EyeOff, Download, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
@@ -323,7 +323,7 @@ export const TrialSessions = () => {
         </motion.div>
 
         {/* Main Content Card */}
-        <motion.div variants={itemVariants} className="bg-card dark:bg-[#131836]/80 rounded-2xl shadow-elevation-1 dark:shadow-none border border-border dark:border-white/[0.04] overflow-hidden">
+        <motion.div variants={itemVariants} className="bg-card dark:bg-[#0d0d0f]/80 rounded-2xl shadow-elevation-1 dark:shadow-none border border-border dark:border-white/[0.04] overflow-hidden">
           {/* Toolbar: search + filters */}
           <div className="p-4 lg:p-5 border-b border-border dark:border-white/[0.04]">
             <div className="flex items-center gap-3">
@@ -565,7 +565,7 @@ export const TrialSessions = () => {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end md:items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-0 md:p-4" dir="rtl">
               {/* Mobile: bottom sheet */}
               <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="md:hidden w-full bg-card dark:bg-[#0a0e27] rounded-t-3xl overflow-hidden">
+                className="md:hidden w-full bg-card dark:bg-[#0a0a0c] rounded-t-3xl overflow-hidden">
                 <div className="flex justify-center pt-3 pb-1"><div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full" /></div>
                 <div className="bg-gradient-to-l from-error/90 to-error px-5 py-4 flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
@@ -584,7 +584,7 @@ export const TrialSessions = () => {
               </motion.div>
               {/* Desktop: centered modal */}
               <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
-                className="hidden md:block bg-card dark:bg-[#0a0e27] shadow-elevation-2 w-full max-w-sm border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden">
+                className="hidden md:block bg-card dark:bg-[#0a0a0c] shadow-elevation-2 w-full max-w-sm border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden">
                 <div className="bg-gradient-to-l from-error/90 to-error px-5 py-4 flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
                     <AlertTriangle size={20} className="text-on-error" />

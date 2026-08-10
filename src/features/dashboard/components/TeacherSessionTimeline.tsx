@@ -1,4 +1,4 @@
-import { Clock, Play, CheckCircle2, AlertCircle } from 'lucide-react';
+﻿import { Clock, Play, CheckCircle2, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -75,7 +75,7 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                         ? "bg-success text-on-success border-success" 
                                         : isCancelled 
                                         ? "bg-error text-on-error border-error" 
-                                        : "bg-surface dark:bg-[#1a1a1f] text-main dark:text-white border-border dark:border-[#D4AF37]/20"
+                                        : "bg-surface dark:bg-[#1a1a1e] text-main dark:text-white border-border dark:border-[#D4AF37]/20"
                                 )}>
                                     {session.time}
                                 </div>

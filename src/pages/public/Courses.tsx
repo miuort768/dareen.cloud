@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+﻿import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
@@ -143,7 +143,7 @@ export const Courses = () => {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-card font-black text-xs transition-all duration-300 ${
                     activeCategory === cat.value
                       ? 'bg-primary-active dark:bg-[#D4AF37] text-on-primary dark:text-black shadow-lg shadow-card/20 dark:shadow-[#D4AF37]/20'
-                      : 'bg-surface dark:bg-[#121215] text-muted dark:text-zinc-400 border border-border dark:border-[#D4AF37]/20 hover:border-border/20 dark:hover:border-[#D4AF37]/40 hover:text-main dark:hover:text-white'
+                      : 'bg-surface dark:bg-[#1a1a1e] text-muted dark:text-zinc-400 border border-border dark:border-[#D4AF37]/20 hover:border-border/20 dark:hover:border-[#D4AF37]/40 hover:text-main dark:hover:text-white'
                   }`}
                 >
                   <span className="flex items-center gap-2">

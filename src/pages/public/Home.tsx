@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
@@ -166,7 +166,7 @@ export const Home = () => {
                     <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                         {stages.map((cat) => (
                             <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
-                                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${activeCategory === cat.value ? 'bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black shadow-md shadow-black/20' : 'bg-surface dark:bg-[#121215] text-muted dark:text-zinc-300 border border-border dark:border-[#D4AF37]/30'}`}>
+                                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${activeCategory === cat.value ? 'bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black shadow-md shadow-black/20' : 'bg-surface dark:bg-[#1a1a1e] text-muted dark:text-zinc-300 border border-border dark:border-[#D4AF37]/30'}`}>
                                 <cat.icon size={12} className={activeCategory === cat.value ? 'text-on-primary dark:text-black' : 'text-muted dark:text-[#D4AF37]'} /> {cat.label}
                             </button>
                         ))}

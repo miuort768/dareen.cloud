@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Megaphone, ChevronLeft, ChevronRight, AlertTriangle, Calendar, Info, X, Check } from 'lucide-react';
 import { api } from '@/lib/api';
 import { cn } from '@/lib/utils';
@@ -102,7 +102,7 @@ export const ModernAnnouncements = () => {
                     aria-expanded={showAcknowledge}
                     className="flex-1 p-5 relative cursor-pointer group"
                 >
-                    <div className="absolute top-3 end-4 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface dark:bg-[#1a1a1f] text-[10px] font-semibold text-muted dark:text-zinc-400">
+                    <div className="absolute top-3 end-4 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface dark:bg-[#1a1a1e] text-[10px] font-semibold text-muted dark:text-zinc-400">
                         <span>{currentIndex + 1} / {announcements.length}</span>
                     </div>
 
@@ -134,7 +134,7 @@ export const ModernAnnouncements = () => {
             </div>
 
             {/* Progress Bar */}
-            <div className="relative h-1 bg-surface dark:bg-[#1a1a1f] w-full">
+            <div className="relative h-1 bg-surface dark:bg-[#1a1a1e] w-full">
                 <div
                     className="absolute top-0 start-0 h-full bg-primary transition-all duration-500 rounded-full"
                     style={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
@@ -155,7 +155,7 @@ export const ModernAnnouncements = () => {
                             </div>
                         </div>
 
-                        <div className="bg-surface dark:bg-[#1a1a1f] p-4 mb-5 border-s-4 border-primary dark:border-[#D4AF37] rounded-xl">
+                        <div className="bg-surface dark:bg-[#1a1a1e] p-4 mb-5 border-s-4 border-primary dark:border-[#D4AF37] rounded-xl">
                             <p className="text-sm text-main dark:text-white leading-relaxed">
                                 "{current.content}"
                             </p>

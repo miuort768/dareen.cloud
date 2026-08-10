@@ -1,4 +1,4 @@
-import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react';
+﻿import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 
@@ -41,13 +41,13 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                 <div className="p-6 border-b-2 border-border dark:border-[#D4AF37]/20 bg-background dark:bg-[#0a0a0c]">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-5">
-                            <div className="w-16 h-16 bg-background dark:bg-[#1a1a1f] text-main dark:text-white rounded-none flex items-center justify-center border-2 border-border dark:border-[#D4AF37]/20 shadow-md shrink-0">
+                            <div className="w-16 h-16 bg-background dark:bg-[#1a1a1e] text-main dark:text-white rounded-none flex items-center justify-center border-2 border-border dark:border-[#D4AF37]/20 shadow-md shrink-0">
                                 <User size={32} />
                             </div>
                             <div>
                                 <h3 className="text-xl font-medium text-main dark:text-white uppercase tracking-tight">{student.name}</h3>
                                 <div className="flex items-center gap-2 mt-2">
-                                    <span className="px-2 py-0.5 bg-background dark:bg-[#1a1a1f] text-main dark:text-white text-micro font-medium uppercase">{student.grade}</span>
+                                    <span className="px-2 py-0.5 bg-background dark:bg-[#1a1a1e] text-main dark:text-white text-micro font-medium uppercase">{student.grade}</span>
                                     <span className="px-2 py-0.5 bg-warning dark:bg-[#D4AF37] text-on-warning dark:text-black border-2 border-border dark:border-[#D4AF37]/20 text-micro font-medium uppercase flex items-center gap-1">
                                         <Star size={10} className="fill-warning dark:fill-[#D4AF37]" />
                                         {student.totalPoints || 0} النقاط
@@ -110,7 +110,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="w-10 h-10 rounded-none border-2 border-border dark:border-[#D4AF37]/20 flex items-center justify-center bg-background dark:bg-[#1a1a1f] text-muted dark:text-zinc-400">
+                                    <div className="w-10 h-10 rounded-none border-2 border-border dark:border-[#D4AF37]/20 flex items-center justify-center bg-background dark:bg-[#1a1a1e] text-muted dark:text-zinc-400">
                                         <Award size={20} />
                                     </div>
                                 </div>

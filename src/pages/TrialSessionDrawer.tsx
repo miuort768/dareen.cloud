@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { X, Phone, MessageSquare, CheckCheck, Calendar, Clock, BookOpen, GraduationCap, MessageCircle, UserPlus, Pencil, CircleDollarSign, User } from 'lucide-react';
 import { cn } from '../lib/utils';
 import type { TrialSession } from './TrialSessions';
@@ -18,7 +18,7 @@ const statusConfig: Record<string, { label: string; dot: string; text: string; b
     pending: { label: 'بانتظار', dot: 'bg-[#f59e0b]', text: 'text-[#f59e0b]', bg: 'bg-[#f59e0b]/15', darkBg: 'dark:bg-[#f59e0b]/20', darkText: 'dark:text-[#f59e0b]' },
     completed: { label: 'تمت بنجاح', dot: 'bg-[#10b981]', text: 'text-[#10b981]', bg: 'bg-[#10b981]/15', darkBg: 'dark:bg-[#10b981]/20', darkText: 'dark:text-[#10b981]' },
     cancelled: { label: 'ملغية', dot: 'bg-[#ef4444]', text: 'text-[#ef4444]', bg: 'bg-[#ef4444]/15', darkBg: 'dark:bg-[#ef4444]/20', darkText: 'dark:text-[#ef4444]' },
-    converted: { label: 'محولة', dot: 'bg-[#6366f1]', text: 'text-[#6366f1]', bg: 'bg-[#6366f1]/15', darkBg: 'dark:bg-[#6366f1]/20', darkText: 'dark:text-[#6366f1]' },
+    converted: { label: 'محولة', dot: 'bg-[#6366f1]', text: 'text-[#6366f1]', bg: 'bg-[#6366f1]/15', darkBg: 'dark:bg-[#D4AF37]/20', darkText: 'dark:text-[#D4AF37]' },
 };
 
 const avatarGradients = [
@@ -78,7 +78,7 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
             transition={{ duration: 0.3 }}
             className="p-2.5 sm:p-4"
         >
-            <div className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden" dir="rtl">
+            <div className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden" dir="rtl">
                 {/* Header */}
                 <div className="shrink-0 px-5 py-4 flex items-center justify-between border-b border-border/50 dark:border-white/[0.04]">
                     <span className="text-[13px] font-bold text-main dark:text-white">تفاصيل الحصة</span>
@@ -199,7 +199,7 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                                 <MessageSquare size={14} /> واتساب
                             </button>
                             {session.status === 'pending' && (
-                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#6366f1]/10 dark:bg-[#6366f1]/15 border border-[#6366f1]/20 dark:border-[#6366f1]/20 text-[#6366f1] text-xs font-bold hover:bg-[#6366f1]/20 dark:hover:bg-[#6366f1]/20 transition-all active:scale-[0.98] disabled:opacity-50 col-span-2">
+                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#6366f1]/10 dark:bg-[#D4AF37]/15 border border-[#6366f1]/20 dark:border-[#6366f1]/20 text-[#6366f1] text-xs font-bold hover:bg-[#6366f1]/20 dark:hover:bg-[#6366f1]/20 transition-all active:scale-[0.98] disabled:opacity-50 col-span-2">
                                     <UserPlus size={14} /> {isConverting ? 'جاري التحويل...' : 'تحويل إلى طالب'}
                                 </button>
                             )}

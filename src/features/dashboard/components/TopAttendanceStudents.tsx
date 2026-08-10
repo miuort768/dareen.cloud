@@ -1,4 +1,4 @@
-import { TrendingUp, User, Medal } from 'lucide-react';
+﻿import { TrendingUp, User, Medal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useMemo } from 'react';
 
@@ -63,9 +63,9 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                                 <div className={cn(
                                     "w-7 h-7 rounded-lg flex items-center justify-center text-micro font-semibold",
                                     i === 0 ? "bg-warning-soft dark:bg-[#D4AF37]/10 text-warning dark:text-[#D4AF37]" :
-                                    i === 1 ? "bg-surface dark:bg-[#1a1a1f] text-main dark:text-white" :
+                                    i === 1 ? "bg-surface dark:bg-[#1a1a1e] text-main dark:text-white" :
                                     i === 2 ? "bg-warning-soft dark:bg-[#D4AF37]/10 text-warning dark:text-[#D4AF37]" :
-                                    "bg-surface dark:bg-[#1a1a1f] text-muted dark:text-zinc-400"
+                                    "bg-surface dark:bg-[#1a1a1e] text-muted dark:text-zinc-400"
                                 )}>
                                     {i + 1}
                                 </div>
@@ -81,7 +81,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                     ))
                 ) : (
                     <div className="flex flex-col items-center justify-center py-6 opacity-50">
-                        <div className="w-8 h-8 rounded-xl bg-surface dark:bg-[#1a1a1f] flex items-center justify-center mb-1.5">
+                        <div className="w-8 h-8 rounded-xl bg-surface dark:bg-[#1a1a1e] flex items-center justify-center mb-1.5">
                             <User size={14} className="text-dim dark:text-zinc-500" />
                         </div>
                         <p className="text-micro font-bold text-muted dark:text-zinc-400">لا توجد سجلات حالياً</p>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Radio, Users, Loader2, Plus, AlertCircle, RefreshCcw, ExternalLink, Copy, StopCircle, LinkIcon, Video, CheckCircle2, Pencil } from 'lucide-react';
 import { api } from '../../../lib/api';
@@ -208,7 +208,7 @@ export const LiveSessions = () => {
                     {sessions.map((session) => (
                         <div
                             key={session.id}
-                            className="p-4 flex items-center justify-between bg-surface dark:bg-[#1a1a1f] border border-border dark:border-[#D4AF37]/20 rounded-xl hover:bg-hover dark:hover:bg-[#D4AF37]/5 transition-colors"
+                            className="p-4 flex items-center justify-between bg-surface dark:bg-[#1a1a1e] border border-border dark:border-[#D4AF37]/20 rounded-xl hover:bg-hover dark:hover:bg-[#D4AF37]/5 transition-colors"
                         >
                             <div className="flex items-center gap-3 min-w-0">
                                 <div className="relative shrink-0">
@@ -233,14 +233,14 @@ export const LiveSessions = () => {
                             </div>
 
                             <div className="flex items-center gap-1.5 shrink-0">
-                                <span className="text-[10px] font-bold text-muted dark:text-zinc-400 px-2 py-0.5 rounded-lg bg-surface dark:bg-[#1a1a1f]">
+                                <span className="text-[10px] font-bold text-muted dark:text-zinc-400 px-2 py-0.5 rounded-lg bg-surface dark:bg-[#1a1a1e]">
                                     {PROVIDER_LABELS[session.meetingProvider] || session.meetingProvider}
                                 </span>
                                 <a
                                     href={session.meetingUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="h-8 px-3 rounded-xl bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black text-[11px] font-bold flex items-center gap-1.5 hover:bg-primary-hover dark:hover:bg-[#b8962e] transition-colors"
+                                    className="h-8 px-3 rounded-xl bg-primary dark:bg-[#D4AF37] text-on-primary dark:text-black text-[11px] font-bold flex items-center gap-1.5 hover:bg-primary-hover dark:hover:bg-[#D4AF37]/90 transition-colors"
                                 >
                                     <ExternalLink size={11} />
                                     انضم

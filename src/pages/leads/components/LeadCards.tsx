@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { Phone, MessageSquare, Trash2, Search, Clock, Calendar } from 'lucide-react';
 import type { Lead, LeadStatus } from '../../../features/crm/types';
 import { GradientAvatar, StatusChip, getPriority, getLeadAge } from './LeadsUI';
@@ -39,7 +39,7 @@ export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLea
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.04, duration: 0.3 }}
                                 onClick={() => onLeadClick(lead)}
-                                className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl active:scale-[0.98] transition-all duration-200 cursor-pointer overflow-hidden shadow-sm dark:shadow-none"
+                                className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl active:scale-[0.98] transition-all duration-200 cursor-pointer overflow-hidden shadow-sm dark:shadow-none"
                             >
                                 {/* Header */}
                                 <div className="flex items-start justify-between px-4 pt-4 pb-2">

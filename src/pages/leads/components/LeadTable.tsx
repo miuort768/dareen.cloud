@@ -1,4 +1,4 @@
-import { memo } from 'react';
+﻿import { memo } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { Phone, MessageSquare, CheckCircle2, Trash2, Search } from 'lucide-react';
 import type { Lead, LeadStatus } from '../../../features/crm/types';
@@ -50,7 +50,7 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                 <div className="min-w-0">
                                     <h4 className="font-bold text-xs text-main dark:text-white truncate">{lead.studentName || 'عميل بدون اسم'}</h4>
                                     {lead.source && (
-                                        <span className="text-[10px] font-medium text-info dark:text-[#818cf8] bg-info-soft dark:bg-[#818cf8]/10 px-1.5 py-px rounded mt-0.5 inline-block">{lead.source}</span>
+                                        <span className="text-[10px] font-medium text-info dark:text-[#D4AF37] bg-info-soft dark:bg-[#D4AF37]/10 px-1.5 py-px rounded mt-0.5 inline-block">{lead.source}</span>
                                     )}
                                 </div>
                             </div>
@@ -69,7 +69,7 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                     onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
                                     onClick={(e) => e.stopPropagation()}>
                                     {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
-                                        <option key={key} value={key} className="bg-card dark:bg-[#131836] text-main dark:text-white">{statusColors[key].label}</option>
+                                        <option key={key} value={key} className="bg-card dark:bg-[#0d0d0f] text-main dark:text-white">{statusColors[key].label}</option>
                                     ))}
                                 </select>
                             </div>

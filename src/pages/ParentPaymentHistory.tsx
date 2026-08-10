@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+﻿import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CheckCircle, Clock, AlertCircle, FileText, ArrowLeft, Wallet, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -73,7 +73,7 @@ const HeroSkeleton = () => (
 const KpiSkeleton = () => (
     <div className="grid grid-cols-3 gap-2.5">
         {[1, 2, 3].map(i => (
-            <div key={i} className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl shadow-sm p-3.5">
+            <div key={i} className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl shadow-sm p-3.5">
                 <div className="flex items-start gap-3">
                     <Skeleton className="w-8 h-8 rounded-xl shrink-0" />
                     <div className="flex-1 space-y-1.5">
@@ -90,7 +90,7 @@ const KpiSkeleton = () => (
 const ListSkeleton = () => (
     <div className="space-y-2.5">
         {[1, 2, 3].map(i => (
-            <div key={i} className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl p-4 shadow-sm">
+            <div key={i} className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl p-4 shadow-sm">
                 <div className="flex items-center justify-between mb-3">
                     <Skeleton className="h-3 w-28 rounded-lg" />
                     <Skeleton className="h-5 w-14 rounded-lg" />
@@ -296,7 +296,7 @@ export const ParentPaymentHistory = () => {
                             <motion.div
                                 key={kpi.title}
                                 whileHover={{ scale: 1.01, y: -1 }}
-                                className="relative overflow-hidden bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl shadow-sm hover:shadow-md transition-all p-3.5"
+                                className="relative overflow-hidden bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl shadow-sm hover:shadow-md transition-all p-3.5"
                             >
                                 <div className={`absolute inset-0 opacity-[0.03] bg-gradient-to-br ${gradients[kpi.accent]}`} />
                                 <div className={`absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r ${gradients[kpi.accent]}`} />
@@ -392,7 +392,7 @@ export const ParentPaymentHistory = () => {
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.25 }}
-                    className="hidden md:block bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden shadow-sm"
+                    className="hidden md:block bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden shadow-sm"
                 >
                     <table className="w-full text-start border-collapse">
                         <thead>
@@ -472,7 +472,7 @@ export const ParentPaymentHistory = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -8 }}
                                         transition={{ delay: i * 0.04 }}
-                                        className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl p-3.5 shadow-sm"
+                                        className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl p-3.5 shadow-sm"
                                     >
                                         {/* Top Row */}
                                         <div className="flex items-center justify-between mb-2.5">
@@ -514,7 +514,7 @@ export const ParentPaymentHistory = () => {
                                 );
                             })
                         ) : (
-                            <div className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] border-dashed rounded-2xl py-16 text-center">
+                            <div className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] border-dashed rounded-2xl py-16 text-center">
                                 <div className="w-10 h-10 rounded-xl bg-primary-soft dark:bg-primary/10 text-primary flex items-center justify-center mx-auto mb-2">
                                     <FileText size={18} />
                                 </div>

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 import { ListTodo, ChevronLeft, Clock, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { DashboardTask as Task } from '../types';
@@ -54,7 +54,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                     ))
                 ) : (
                     <div className="flex flex-col items-center justify-center py-10 opacity-50">
-                        <div className="w-10 h-10 rounded-xl bg-surface dark:bg-[#1a1a1f] flex items-center justify-center mb-2">
+                        <div className="w-10 h-10 rounded-xl bg-surface dark:bg-[#1a1a1e] flex items-center justify-center mb-2">
                             <ListTodo size={18} className="text-dim dark:text-zinc-500" />
                         </div>
                         <p className="text-[11px] font-bold text-muted dark:text-zinc-400">لا توجد مهام نشطة حالياً</p>

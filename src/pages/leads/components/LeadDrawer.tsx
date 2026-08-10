@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { X, Phone, CheckCircle2, Edit3, UserPlus, Tag, Calendar, AlertTriangle, Save, Clock, Trash2, Edit, MessageSquare } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -77,7 +77,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
             className="p-2.5 sm:p-4"
             dir="rtl"
         >
-            <div className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden">
+            <div className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden">
                 {/* Header */}
                 <div className="px-4 py-3 flex items-center justify-between border-b border-border/50 dark:border-white/[0.04]">
                     <div className="flex items-center gap-3">

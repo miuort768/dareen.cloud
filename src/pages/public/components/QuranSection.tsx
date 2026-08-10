@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clock, ClipboardCheck, Mic, Sparkles, Star } from 'lucide-react';
 import { Image } from '../../../shared/components/ui';
@@ -92,21 +92,21 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             </div>
                             <div className="w-full lg:w-1/2 flex justify-center py-4 lg:py-0">
                                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="grid grid-cols-2 gap-3 w-full max-w-[400px]">
-                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-[#121215] border border-border dark:border-[#D4AF37]/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-[#1a1a1e] border border-border dark:border-[#D4AF37]/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-surface dark:bg-[#D4AF37]/15 text-primary dark:text-[#D4AF37] flex items-center justify-center mb-3 rounded-xl">
                                             <Clock className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-main dark:text-white text-xs mb-1">أوقات مرنة</h3>
                                         <p className="text-micro text-muted dark:text-zinc-400 leading-tight font-medium">اختر مواعيدك المفضلة</p>
                                     </motion.div>
-                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-[#121215] border border-border dark:border-[#D4AF37]/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-[#1a1a1e] border border-border dark:border-[#D4AF37]/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-warning-soft dark:bg-[#D4AF37]/15 text-warning dark:text-[#D4AF37] flex items-center justify-center mb-3 rounded-xl">
                                             <ClipboardCheck className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-main dark:text-white text-xs mb-1">متابعة دقيقة</h3>
                                         <p className="text-micro text-muted dark:text-zinc-400 leading-tight font-medium">تقارير إنجاز أسبوعية</p>
                                     </motion.div>
-                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-[#121215] border border-border dark:border-[#D4AF37]/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-[#1a1a1e] border border-border dark:border-[#D4AF37]/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-success-soft dark:bg-[#D4AF37]/15 text-success dark:text-[#D4AF37] flex items-center justify-center mb-3 rounded-xl">
                                             <Mic className="w-5 h-5" />
                                         </div>
@@ -203,14 +203,14 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     </div>
 
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }} className="grid grid-cols-2 gap-3 mb-8 max-w-[360px] mx-auto">
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-[#121215] border border-border dark:border-[#D4AF37]/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-[#1a1a1e] border border-border dark:border-[#D4AF37]/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-warning-soft dark:bg-[#D4AF37]/15 rounded-2xl flex items-center justify-center mb-3">
                                 <ClipboardCheck size={22} className="text-warning dark:text-[#D4AF37]" />
                             </div>
                             <h3 className="font-black text-main dark:text-white text-sm mb-1">متابعة دقيقة</h3>
                             <p className="text-muted dark:text-zinc-400 text-micro leading-relaxed">تقارير إنجاز أسبوعية</p>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-[#121215] border border-border dark:border-[#D4AF37]/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-[#1a1a1e] border border-border dark:border-[#D4AF37]/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-primary-soft dark:bg-[#D4AF37]/15 rounded-2xl flex items-center justify-center mb-3">
                                 <Clock size={22} className="text-primary dark:text-[#D4AF37]" />
                             </div>
@@ -224,7 +224,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             <h3 className="font-black text-on-primary dark:text-black text-sm mb-1">جرب مجانًا</h3>
                             <p className="text-on-primary dark:text-black opacity-80 text-micro leading-relaxed font-bold">حصة تجريبية للمشتركين</p>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-[#121215] border border-border dark:border-[#D4AF37]/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-[#1a1a1e] border border-border dark:border-[#D4AF37]/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-success-soft dark:bg-[#D4AF37]/15 rounded-2xl flex items-center justify-center mb-3">
                                 <Mic size={22} className="text-success dark:text-[#D4AF37]" />
                             </div>

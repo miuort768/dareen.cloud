@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+﻿import { useState, useEffect, useMemo, useRef } from 'react';
 import { Search, Plus, EyeOff, Eye, AlertTriangle, X, Activity, BarChart3, Phone, Users, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -32,7 +32,7 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: '100%', opacity: 0 }}
                 transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="bg-card dark:bg-[#131836] w-full sm:max-w-sm shadow-2xl rounded-t-3xl sm:rounded-2xl overflow-hidden border border-border dark:border-white/[0.06]"
+                className="bg-card dark:bg-[#0d0d0f] w-full sm:max-w-sm shadow-2xl rounded-t-3xl sm:rounded-2xl overflow-hidden border border-border dark:border-white/[0.06]"
             >
                 <div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full mx-auto mt-3 sm:hidden" />
                 <div className="bg-gradient-to-l from-error to-error-hover px-5 py-5 flex items-center justify-between">
@@ -67,11 +67,11 @@ const labelClass = "text-[11px] font-bold text-muted dark:text-white/40 mb-1.5 b
 
 const AddLeadModalInline = ({ formRef, addMutation, onClose }: { formRef: React.RefObject<HTMLFormElement | null>; addMutation: { mutate: (data: Record<string, unknown>) => void; isPending: boolean }; onClose: () => void }) => (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="p-4">
-        <div className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden">
+        <div className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden">
             <div className="px-5 py-4 flex items-center justify-between border-b border-border/50 dark:border-white/[0.04]">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-primary/10 dark:bg-[#6366f1]/15">
-                        <UserPlus size={16} className="text-primary dark:text-[#a5b4fc]" />
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-primary/10 dark:bg-[#D4AF37]/15">
+                        <UserPlus size={16} className="text-primary dark:text-[#D4AF37]" />
                     </div>
                     <div>
                         <h2 className="text-[13px] font-bold text-main dark:text-white">إضافة عميل جديد</h2>
@@ -219,9 +219,9 @@ export const Leads = () => {
             <div className="relative z-10 mx-auto px-4 md:px-6 max-w-page">
                 {/* ===== HERO SECTION ===== */}
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-[#1a1f4e] dark:via-[#1e2456] dark:to-[#131836] mt-4 mb-6 border border-primary/10 dark:border-white/[0.04]">
-                    <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-[#6366f1]/10 rounded-full blur-3xl" />
+                    <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-[#D4AF37]/10 rounded-full blur-3xl" />
                     <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/5 dark:bg-[#8b5cf6]/8 rounded-full blur-3xl" />
-                    <div className="absolute top-4 right-8 w-2 h-2 bg-white/20 dark:bg-[#6366f1]/40 rounded-full" />
+                    <div className="absolute top-4 right-8 w-2 h-2 bg-white/20 dark:bg-[#D4AF37]/40 rounded-full" />
                     <div className="absolute top-12 right-24 w-1.5 h-1.5 bg-white/15 dark:bg-[#8b5cf6]/30 rounded-full" />
 
                     <div className="relative z-10 px-5 md:px-8 py-5 md:py-8">
@@ -273,7 +273,7 @@ export const Leads = () => {
                 </div>
 
                 {/* ===== MAIN CONTENT ===== */}
-                <div className="bg-card dark:bg-[#131836]/80 rounded-2xl shadow-elevation-1 dark:shadow-none border border-border dark:border-white/[0.04] overflow-hidden">
+                <div className="bg-card dark:bg-[#0d0d0f]/80 rounded-2xl shadow-elevation-1 dark:shadow-none border border-border dark:border-white/[0.04] overflow-hidden">
                     {/* Toolbar */}
                     <div className="p-4 lg:p-5 border-b border-border dark:border-white/[0.04]">
                         <div className="flex items-center gap-3">

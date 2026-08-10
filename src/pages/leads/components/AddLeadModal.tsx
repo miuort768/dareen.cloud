@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { X, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PrimaryBtn } from './LeadsUI';
@@ -26,7 +26,7 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                     <motion.div
                         initial={{ y: '100%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: '100%', opacity: 0 }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="fixed inset-x-0 bottom-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-[210] md:w-full md:max-w-lg max-h-[90vh] md:max-h-[85vh] bg-card dark:bg-[#0a0e27] md:border md:border-border dark:md:border-white/[0.06] md:shadow-2xl md:rounded-2xl flex flex-col overflow-hidden"
+                        className="fixed inset-x-0 bottom-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-[210] md:w-full md:max-w-lg max-h-[90vh] md:max-h-[85vh] bg-card dark:bg-[#0a0a0c] md:border md:border-border dark:md:border-white/[0.06] md:shadow-2xl md:rounded-2xl flex flex-col overflow-hidden"
                         dir="rtl"
                     >
                         {/* Drag handle — mobile only */}
@@ -38,8 +38,8 @@ export const AddLeadModal = ({ isAddModalOpen, setIsAddModalOpen, addMutation, f
                         <div className="shrink-0 px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
                             <div className="absolute inset-0 bg-primary/5 dark:bg-gradient-to-l dark:from-[#6366f1]/10 dark:to-[#8b5cf6]/5" />
                             <div className="relative z-10 flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-[#6366f1]/15">
-                                    <UserPlus size={18} className="text-primary dark:text-[#a5b4fc]" />
+                                <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-primary/10 dark:bg-[#D4AF37]/15">
+                                    <UserPlus size={18} className="text-primary dark:text-[#D4AF37]" />
                                 </div>
                                 <div>
                                     <h2 className="text-sm font-bold text-main dark:text-white">إضافة عميل جديد</h2>

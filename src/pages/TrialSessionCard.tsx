@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, MessageSquare, Pencil, Trash2, BookOpen, Calendar, Clock, MessageCircle, ChevronDown, ChevronUp, CircleDollarSign, User, GraduationCap } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -21,7 +21,7 @@ const statusConfig: Record<string, { label: string; dot: string; bg: string; tex
     pending: { label: 'بانتظار', dot: 'bg-[#f59e0b]', bg: 'bg-[#f59e0b]/15', text: 'text-[#f59e0b]', darkBg: 'dark:bg-[#f59e0b]/20', darkText: 'dark:text-[#f59e0b]' },
     completed: { label: 'تمت بنجاح', dot: 'bg-[#10b981]', bg: 'bg-[#10b981]/15', text: 'text-[#10b981]', darkBg: 'dark:bg-[#10b981]/20', darkText: 'dark:text-[#10b981]' },
     cancelled: { label: 'ملغية', dot: 'bg-[#ef4444]', bg: 'bg-[#ef4444]/15', text: 'text-[#ef4444]', darkBg: 'dark:bg-[#ef4444]/20', darkText: 'dark:text-[#ef4444]' },
-    converted: { label: 'محولة', dot: 'bg-[#6366f1]', bg: 'bg-[#6366f1]/15', text: 'text-[#6366f1]', darkBg: 'dark:bg-[#6366f1]/20', darkText: 'dark:text-[#6366f1]' },
+    converted: { label: 'محولة', dot: 'bg-[#6366f1]', bg: 'bg-[#6366f1]/15', text: 'text-[#6366f1]', darkBg: 'dark:bg-[#D4AF37]/20', darkText: 'dark:text-[#D4AF37]' },
 };
 
 const avatarGradients = [
@@ -56,7 +56,7 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -2 }}
             className={cn(
-                "bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden font-dash hover:shadow-elevation-2 dark:hover:shadow-none transition-all duration-300 group text-right",
+                "bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden font-dash hover:shadow-elevation-2 dark:hover:shadow-none transition-all duration-300 group text-right",
                 onCardClick && "cursor-pointer"
             )}
             dir="rtl"
@@ -98,7 +98,7 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
                     <div className="text-right">
                         <p className="text-[10px] text-muted dark:text-white/30 mb-1">المادة التعليمية</p>
                         <div className="flex items-center gap-1.5 justify-start">
-                            <div className="w-7 h-7 rounded-lg bg-[#6366f1]/10 dark:bg-[#6366f1]/15 flex items-center justify-center shrink-0">
+                            <div className="w-7 h-7 rounded-lg bg-[#6366f1]/10 dark:bg-[#D4AF37]/15 flex items-center justify-center shrink-0">
                                 <BookOpen size={13} className="text-[#6366f1]" />
                             </div>
                             <span className="text-[12px] font-bold text-main dark:text-white">{t.subject || '—'}</span>

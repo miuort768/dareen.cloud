@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { X, CalendarDays, ChevronDown } from 'lucide-react';
 
 interface TrialSessionForm {
@@ -34,13 +34,13 @@ export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onC
         transition={{ duration: 0.3 }}
         className="p-2.5 sm:p-4"
     >
-        <div className="bg-card dark:bg-[#131836]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden" dir="rtl">
+        <div className="bg-card dark:bg-[#0d0d0f]/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden" dir="rtl">
             {/* Header */}
             <div className="px-5 py-4 flex items-center justify-between relative overflow-hidden border-b border-border/50 dark:border-white/[0.04]">
                 <div className="absolute inset-0 bg-[#6366f1]/5 dark:bg-gradient-to-l dark:from-[#6366f1]/10 dark:to-[#8b5cf6]/5" />
                 <div className="relative z-10 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-[#6366f1]/10 dark:bg-[#6366f1]/15">
-                        <CalendarDays size={18} className="text-[#6366f1] dark:text-[#a5b4fc]" />
+                    <div className="w-10 h-10 rounded-2xl flex items-center justify-center bg-[#6366f1]/10 dark:bg-[#D4AF37]/15">
+                        <CalendarDays size={18} className="text-[#6366f1] dark:text-[#D4AF37]" />
                     </div>
                     <div>
                         <h2 className="text-[13px] font-bold text-main dark:text-white">{editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}</h2>
