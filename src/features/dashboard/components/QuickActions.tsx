@@ -59,7 +59,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 </span>
                 <span className="text-base">بدء الحصة الآن</span>
                 {sessionAvailable && (
-                    <span className="px-2 py-0.5 rounded-lg bg-success dark:bg-primary text-on-success dark:text-black text-[10px] font-bold animate-pulse">
+                    <span className="px-2 py-0.5 rounded-lg bg-success dark:bg-primary text-on-success dark:text-on-primary text-[10px] font-bold animate-pulse">
                         متاح
                     </span>
                 )}
