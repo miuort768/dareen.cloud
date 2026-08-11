@@ -50,7 +50,7 @@ interface FoundationCardProps {
 export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButtonClick, i }: FoundationCardProps) => {
     return (
         <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
-            <div className="group bg-card border border-border rounded-2xl transition-all duration-300 h-full flex flex-col relative overflow-hidden hover:shadow-elevation-2 hover:-translate-y-0.5">
+            <div className="group bg-card border border-border rounded-2xl transition-all duration-300 h-full flex flex-col relative overflow-hidden hover:shadow-elevation-1 hover:-translate-y-0.5">
                 {/* Accent Bar */}
                 <div className={`absolute start-0 top-0 bottom-0 w-1 bg-gradient-to-b ${cardStyle.gradient}`} />
 
@@ -129,7 +129,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
     return (
         <div className="animate-in zoom-in-95 duration-500" style={{ animationDelay: `${i * 60}ms` }}>
             <Link to={`/books/${post.slug}`} onClick={() => window.scrollTo(0, 0)}
-                className="group block bg-card border border-border rounded-2xl overflow-hidden hover:shadow-elevation-2 hover:-translate-y-0.5 transition-all duration-300 h-full flex flex-col">
+                className="group block bg-card border border-border rounded-2xl overflow-hidden hover:shadow-elevation-1 hover:-translate-y-0.5 transition-all duration-300 h-full flex flex-col">
                 {/* Cover Image */}
                 <div className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-surface`}>
                     <Image src={post.coverImage || 'https://via.placeholder.com/400x200'} alt={post.title} className="w-full h-full" imgClassName={`transition-transform duration-500 ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'group-hover:scale-105'}`} />

@@ -204,12 +204,12 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
 
       {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden rounded-3xl bg-card border border-border shadow-elevation-2">
+      <section className="relative overflow-hidden rounded-3xl bg-card border border-border shadow-elevation-1">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 pointer-events-none" />
-        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] lg:min-h-[440px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] lg:min-h-[420px]">
           <div className="relative z-10 p-8 lg:p-12 flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-primary-soft border border-primary/20 rounded-2xl mb-6 w-fit">
-              <div className="w-7 h-7 rounded-xl bg-primary flex items-center justify-center">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-primary-soft border border-primary/15 rounded-xl mb-6 w-fit">
+              <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
                 <BookOpen size={13} className="text-on-primary" />
               </div>
               <span className="text-xs font-extrabold text-primary">المكتبة التعليمية</span>
@@ -234,7 +234,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                     onClick={() => goToType(t.id)}
                     className={cn(
                       'group flex items-center gap-3 rounded-2xl border bg-card p-4 text-start transition-all duration-300',
-                      'hover:-translate-y-0.5 hover:shadow-elevation-2',
+                      'hover:-translate-y-0.5 hover:shadow-elevation-1',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
                       s.cardBorder
                     )}
@@ -260,7 +260,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
               src="/bbook.webp"
               alt={`بوابة ${academyName} التعليمية للكتب والمذكرات`}
               className="absolute inset-0"
-              imgClassName="object-contain p-8 lg:p-10 drop-shadow-xl"
+              imgClassName="object-contain p-8 lg:p-10 drop-shadow-lg"
               withSkeleton
             />
           </div>
@@ -287,7 +287,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 onClick={() => goToType(t.id)}
                 className={cn(
                   'group relative overflow-hidden rounded-2xl border bg-card p-5 text-start transition-all duration-300',
-                  'hover:-translate-y-0.5 hover:shadow-elevation-2',
+                  'hover:-translate-y-0.5 hover:shadow-elevation-1',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
                   s.cardBorder
                 )}

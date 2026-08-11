@@ -206,33 +206,33 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* Mobile */}
-      <div className="md:hidden pb-0 px-3 relative bg-surface">
+      <div className="md:hidden pb-0 px-4 relative bg-background">
         {isHeroView ? (
           <div className="pb-6">
             {/* Hero Banner */}
-            <div className="relative bg-gradient-to-br from-primary via-primary-deep to-primary rounded-3xl overflow-hidden mb-5 border border-primary/30 shadow-lg shadow-primary/10">
-              {/* Background glow */}
-              <div className="absolute top-0 end-0 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+            <div className="relative bg-card rounded-[1.5rem] overflow-hidden mb-5 border border-border shadow-elevation-1">
+              {/* Subtle gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
 
               <div className="relative p-5">
-                {/* Top row: social icons */}
+                {/* Top row: badge + social */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/15 backdrop-blur-sm rounded-full">
-                    <BookOpen size={10} className="text-on-primary" />
-                    <span className="text-[10px] font-extrabold text-on-primary">المكتبة التعليمية</span>
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-soft border border-primary/15 rounded-xl">
+                    <BookOpen size={12} className="text-primary" />
+                    <span className="text-[11px] font-extrabold text-primary">المكتبة التعليمية</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
                       target="_blank" rel="noopener noreferrer"
-                       className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center transition-all"
+                       className="w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center transition-all hover:border-primary/30 hover:bg-primary-soft"
                        aria-label="واتساب">
-                      <MessageCircle size={14} className="text-on-primary" />
+                      <MessageCircle size={14} className="text-muted" />
                     </a>
                     <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
                       target="_blank" rel="noopener noreferrer"
-                       className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center transition-all"
+                       className="w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center transition-all hover:border-primary/30 hover:bg-primary-soft"
                        aria-label="تيليجرام">
-                        <Send size={14} className="text-on-primary" />
+                        <Send size={14} className="text-muted" />
                     </a>
                   </div>
                 </div>
@@ -240,21 +240,21 @@ export const Blog = () => {
                 {/* Content + Image */}
                 <div className="flex items-center gap-4">
                   <div className="flex-1 min-w-0">
-                    <h1 className="text-lg font-black text-on-primary leading-tight mb-1 font-heading">
-                      مكتبة <span className="text-on-primary/80">{academyName}</span>
+                    <h1 className="text-xl font-black text-main leading-tight mb-1.5 font-heading">
+                      مكتبة <span className="text-primary">{academyName}</span>
                     </h1>
-                    <p className="text-[11px] text-on-primary/70 leading-relaxed mb-3 font-medium">
+                    <p className="text-xs text-muted leading-relaxed mb-4 font-medium">
                       أفضل الكتب والمذكرات والملخصات لجميع المراحل
                     </p>
                     <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                       target="_blank" rel="noopener noreferrer"
-                       className="inline-flex items-center justify-center gap-2 bg-on-primary text-primary text-[11px] font-extrabold px-5 py-2.5 rounded-xl hover:bg-surface transition-all">
+                       className="inline-flex items-center justify-center gap-2 bg-primary text-on-primary text-xs font-extrabold px-5 py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm shadow-primary/20 active:scale-[0.98]">
                       طلب حصة مجانية
                     </a>
                   </div>
                   <div className="relative shrink-0 w-24 h-24">
-                    <div className="absolute inset-0 bg-white/10 rounded-full blur-xl" />
-                    <Image src="/bbook.webp" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-lg" />
+                    <div className="absolute inset-0 bg-primary/10 rounded-full blur-2xl" />
+                    <Image src="/bbook.webp" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-md" />
                   </div>
                 </div>
               </div>
