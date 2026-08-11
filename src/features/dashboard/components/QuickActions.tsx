@@ -63,7 +63,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                     "group"
                 )}
             >
-                <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/20 dark:bg-black/20 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-colors">
+                <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-on-primary/15 dark:bg-on-primary/15 group-hover:bg-on-primary/20 dark:group-hover:bg-on-primary/20 transition-colors">
                     <Play size={18} fill="currentColor" />
                 </span>
                 <span className="text-base">بدء الحصة الآن</span>
@@ -96,15 +96,15 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                             {/* Header */}
                             <div className="flex items-center justify-between px-5 py-4 border-b border-border/50 dark:border-white/[0.06]">
                                 <div>
-                                    <h2 className="text-lg font-bold text-main dark:text-white">الإجراءات السريعة</h2>
-                                    <p className="text-xs text-muted dark:text-white/40 mt-0.5">اختر الإجراء المطلوب</p>
+                                    <h2 className="text-lg font-bold text-main dark:text-main">الإجراءات السريعة</h2>
+                                    <p className="text-xs text-muted dark:text-muted mt-0.5">اختر الإجراء المطلوب</p>
                                 </div>
                                 <button
                                     onClick={() => setIsOpen(false)}
-                                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 transition-all active:scale-95"
+                                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-surface dark:bg-surface hover:bg-hover dark:hover:bg-hover transition-all active:scale-95"
                                     aria-label="إغلاق"
                                 >
-                                    <X size={18} className="text-muted dark:text-white/50" />
+                                    <X size={18} className="text-muted dark:text-muted" />
                                 </button>
                             </div>
 
@@ -119,7 +119,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                     }}
                                     className={cn(
                                         "w-full p-5 rounded-2xl",
-                                        "bg-gradient-to-l from-primary via-primary to-primary-deep dark:from-primary dark:via-[#b8962e] dark:to-[#8a6d1a]",
+                                        "bg-primary dark:bg-primary",
                                         "text-on-primary dark:text-on-primary font-bold",
                                         "hover:shadow-lg hover:shadow-primary/25",
                                         "active:scale-[0.98]",
@@ -128,7 +128,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                         "group shadow-md shadow-primary/15"
                                     )}
                                 >
-                                    <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/20 dark:bg-black/20 group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-colors shrink-0">
+                                    <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-on-primary/15 dark:bg-on-primary/15 group-hover:bg-on-primary/20 dark:group-hover:bg-on-primary/20 transition-colors shrink-0">
                                         <Play size={22} fill="currentColor" />
                                     </span>
                                     <div className="flex-1 text-right">
@@ -161,8 +161,8 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                                     transition={{ delay: i * 0.06, duration: 0.3 }}
                                                     className={cn(
                                                         "flex flex-col items-center gap-3 p-4 rounded-2xl text-center h-full",
-                                                        "bg-card dark:bg-white/[0.04] border border-border/50 dark:border-white/[0.06]",
-                                                        "hover:border-primary/30 dark:hover:border-primary/20 hover:shadow-sm",
+                                                        "bg-card dark:bg-card border border-border/50 dark:border-border",
+                                                        "hover:border-primary/30 dark:hover:border-border hover:shadow-sm",
                                                         "active:scale-[0.97]",
                                                         "transition-all duration-200 group"
                                                     )}
@@ -175,8 +175,8 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                                         <Icon size={22} className={action.color.split(' ')[1]} />
                                                     </div>
                                                     <div>
-                                                        <h3 className="font-bold text-[13px] text-main dark:text-white leading-tight">{action.title}</h3>
-                                                        <p className="text-[10px] text-muted dark:text-white/40 mt-1">{action.subtitle}</p>
+                                                        <h3 className="font-bold text-[13px] text-main dark:text-main leading-tight">{action.title}</h3>
+                                                        <p className="text-[10px] text-muted dark:text-muted mt-1">{action.subtitle}</p>
                                                     </div>
                                                 </motion.div>
                                             </Link>

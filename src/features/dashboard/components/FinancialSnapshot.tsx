@@ -10,9 +10,9 @@ interface FinancialSnapshotProps {
 
 export const FinancialSnapshot = ({ monthNetProfit, monthRevenue, expectedCollection }: FinancialSnapshotProps) => {
     const items = [
-        { label: 'أرباح هذا الشهر', value: monthNetProfit, icon: TrendingUp, color: 'text-success', bg: 'bg-success-soft', border: 'border-success/50 dark:border-success/20', valueColor: 'text-success' },
-        { label: 'المستحق لك', value: expectedCollection, icon: DollarSign, color: 'text-primary', bg: 'bg-primary-soft', border: 'border-primary/50 dark:border-primary/20', valueColor: 'text-primary' },
-        { label: 'الإيرادات', value: monthRevenue, icon: Wallet, color: 'text-primary', bg: 'bg-primary-soft', border: 'border-primary/50 dark:border-primary/20', valueColor: 'text-primary' },
+        { label: 'أرباح هذا الشهر', value: monthNetProfit, icon: TrendingUp, color: 'text-success', bg: 'bg-success-soft', border: 'border-success/50 dark:border-border', valueColor: 'text-success' },
+        { label: 'المستحق لك', value: expectedCollection, icon: DollarSign, color: 'text-primary', bg: 'bg-primary-soft', border: 'border-primary/50 dark:border-border', valueColor: 'text-primary' },
+        { label: 'الإيرادات', value: monthRevenue, icon: Wallet, color: 'text-primary', bg: 'bg-primary-soft', border: 'border-primary/50 dark:border-border', valueColor: 'text-primary' },
     ];
 
     return (

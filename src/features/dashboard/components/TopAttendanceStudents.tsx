@@ -57,7 +57,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                         <div
                             key={`att-${i}`}
                             onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
-                            className="flex items-center justify-between p-2 rounded-xl bg-background dark:bg-card border border-border dark:border-primary/20 hover:border-warning dark:hover:border-primary/40 transition-all cursor-pointer"
+                            className="flex items-center justify-between p-2 rounded-xl bg-background dark:bg-card border border-border dark:border-border hover:border-warning dark:hover:border-border transition-all cursor-pointer"
                         >
                             <div className="flex items-center gap-2">
                                 <div className={cn(

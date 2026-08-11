@@ -148,7 +148,7 @@ export const LiveSessions = () => {
     const displayError = error || (queryError instanceof Error ? queryError.message : null);
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 font-dash" dir="rtl">
+        <div className="font-dash" dir="rtl">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">

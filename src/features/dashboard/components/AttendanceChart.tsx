@@ -75,7 +75,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
                     </p>
                 </div>
 
-                <div className="w-full border-t border-border dark:border-primary/20 pt-3 mt-1">
+                <div className="w-full border-t border-border dark:border-border pt-3 mt-1">
                     <p className="text-[10px] font-bold text-muted dark:text-muted mb-2 text-center">الحضور الأسبوعي</p>
                     <div className="flex items-end justify-between gap-1" dir="ltr">
                         {weeklyData.map((d, i) => (

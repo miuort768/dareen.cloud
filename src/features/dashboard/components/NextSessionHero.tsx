@@ -54,7 +54,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
     if (!nextSession) return null;
 
     return (
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-soft dark:from-primary dark:via-primary dark:to-warning p-5">
+        <div className="relative overflow-hidden rounded-2xl bg-primary dark:bg-primary p-5">
             <div className="absolute top-0 start-0 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 end-0 w-32 h-32 bg-white/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -65,7 +65,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-white/15 dark:bg-black/20 flex items-center justify-center shrink-0">
+                    <div className="w-14 h-14 rounded-2xl bg-on-primary/15 dark:bg-on-primary/15 flex items-center justify-center shrink-0">
                         <GraduationCap size={24} className="text-white dark:text-on-primary" />
                     </div>
 
@@ -79,7 +79,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/15 dark:bg-black/20">
+                        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-on-primary/15 dark:bg-on-primary/15">
                             <Clock size={15} className="text-white/80 dark:text-on-primary/70" />
                             <span className={cn(
                                 "text-xl font-bold tabular-nums tracking-wider text-white",

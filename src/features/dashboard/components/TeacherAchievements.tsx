@@ -27,7 +27,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                     )}
                 </div>
 
-                <div className="rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-soft dark:from-primary dark:via-primary-deep dark:to-warning p-5 mb-4 relative overflow-hidden">
+                <div className="rounded-2xl bg-primary dark:bg-primary p-5 mb-4 relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.1)_0%,transparent_60%)]" />
                     <div className="relative z-10">
                         <div className="flex items-center gap-1.5 mb-2">
@@ -43,7 +43,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                             <span className="text-[11px] font-bold text-white/70">{CURRENCY_SYMBOL}</span>
                         </div>
                         {isTeacher && (
-                            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/15 backdrop-blur-sm rounded-xl text-[11px] font-bold text-white">
+                            <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-on-primary/15 backdrop-blur-sm rounded-xl text-[11px] font-bold text-white">
                                 <Award size={10} />
                                 {stats.teacherPoints || 0} XP
                             </div>

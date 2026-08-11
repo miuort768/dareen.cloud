@@ -36,7 +36,7 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
                         className="flex items-center gap-3 text-start rounded-lg p-1 -m-1 hover:bg-hover transition-all duration-200 active:scale-[0.98]"
                         aria-label="الملف الشخصي"
                     >
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-deep dark:from-primary dark:to-warning flex items-center justify-center shadow-elevation-1">
+                        <div className="w-10 h-10 rounded-xl bg-primary dark:bg-primary flex items-center justify-center shadow-elevation-1">
                             <span className="text-sm font-bold text-on-primary dark:text-on-primary">{firstName.charAt(0)}</span>
                         </div>
                         <div className="hidden sm:block">
@@ -76,8 +76,8 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
                                 className={cn(
                                     "flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all duration-200 relative",
                                     isActive
-                                        ? "text-primary dark:text-primary bg-background dark:bg-card border-t border-x border-border dark:border-primary/20"
-                                        : "text-muted dark:text-muted hover:text-main dark:hover:text-white hover:bg-accent/5 dark:hover:bg-primary/5 active:scale-[0.97]"
+                                        ? "text-primary dark:text-primary bg-background dark:bg-card border-t border-x border-border dark:border-border"
+                                        : "text-muted dark:text-muted hover:text-main dark:hover:text-main hover:bg-accent/5 dark:hover:bg-primary/5 active:scale-[0.97]"
                                 )}
                             >
                                 <Icon size={15} strokeWidth={isActive ? 2 : 1.5} />

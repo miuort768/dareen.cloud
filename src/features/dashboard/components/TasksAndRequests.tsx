@@ -31,7 +31,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                             "flex items-center gap-2.5 p-2.5 rounded-xl border transition-all",
                             task.priority === 'high' ? "bg-error-soft border-error" :
                             task.priority === 'medium' ? "bg-warning-soft border-warning" :
-                            "bg-background dark:bg-surface border-border dark:border-primary/20"
+                            "bg-background dark:bg-surface border-border dark:border-border"
                         )}>
                             <div className={cn(
                                 "w-8 h-8 rounded-lg flex items-center justify-center shrink-0",
