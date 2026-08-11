@@ -46,7 +46,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 }}
                 className={cn(
                     "w-full p-4 rounded-2xl border-2 border-primary/30",
-                    "bg-primary dark:bg-primary text-on-primary dark:text-black font-bold text-sm",
+                    "bg-primary dark:bg-primary text-on-primary dark:text-on-primary font-bold text-sm",
                     "hover:bg-primary-hover hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20",
                     "active:bg-primary-active",
                     "transition-all duration-200",

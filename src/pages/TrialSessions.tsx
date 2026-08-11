@@ -280,43 +280,43 @@ export const TrialSessions = () => {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-gray-500">معدل التحويل</span>
+                  <span className="text-[11px] font-bold text-dim">معدل التحويل</span>
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                     <TrendingUp size={14} className="text-primary" />
                   </div>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-primary">{conversionRate}%</div>
-                <div className="text-[10px] text-gray-400 mt-1">{stats?.converted || 0} تحويل</div>
+                <div className="text-[10px] text-muted mt-1">{stats?.converted || 0} تحويل</div>
               </div>
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-gray-500">قيد الانتظار</span>
+                  <span className="text-[11px] font-bold text-dim">قيد الانتظار</span>
                   <div className="w-8 h-8 rounded-lg bg-warning/10 flex items-center justify-center">
                     <Clock size={14} className="text-warning" />
                   </div>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-warning"><Counter value={stats?.pending || 0} /></div>
-                <div className="text-[10px] text-gray-400 mt-1">بانتظار الموعد</div>
+                <div className="text-[10px] text-muted mt-1">بانتظار الموعد</div>
               </div>
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-gray-500">تمت بنجاح</span>
+                  <span className="text-[11px] font-bold text-dim">تمت بنجاح</span>
                   <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
                     <CheckCircle2 size={14} className="text-success" />
                   </div>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-success"><Counter value={stats?.completed || 0} /></div>
-                <div className="text-[10px] text-gray-400 mt-1">حصة ناجحة</div>
+                <div className="text-[10px] text-muted mt-1">حصة ناجحة</div>
               </div>
               <div className="bg-white rounded-xl p-4 border border-white/80 shadow-sm">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] font-bold text-gray-500">إجمالي الحصص</span>
+                  <span className="text-[11px] font-bold text-dim">إجمالي الحصص</span>
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                     <BookOpen size={14} className="text-primary" />
                   </div>
                 </div>
                 <div className="text-2xl font-bold font-outfit text-primary"><Counter value={stats?.total || 0} /></div>
-                <div className="text-[10px] text-gray-400 mt-1">جميع الحصص</div>
+                <div className="text-[10px] text-muted mt-1">جميع الحصص</div>
               </div>
             </div>
           </div>

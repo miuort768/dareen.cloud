@@ -37,7 +37,7 @@ const StarRating = ({ rating }: { rating: number }) => (
       <Star
         key={star}
         size={10}
-        className={star <= Math.floor(rating) ? 'text-warning dark:text-primary fill-warning dark:fill-primary' : 'text-dim dark:text-zinc-600 fill-none'}
+        className={star <= Math.floor(rating) ? 'text-warning dark:text-primary fill-warning dark:fill-primary' : 'text-dim dark:text-dim fill-none'}
       />
     ))}
     <span className="text-micro font-black text-muted dark:text-muted ms-1">{rating}</span>
@@ -129,7 +129,7 @@ export const Courses = () => {
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 ps-12 py-4 rounded-card bg-card dark:bg-card border border-border dark:border-primary/30 shadow-lg shadow-sm/50 dark:shadow-black/20 focus-visible:border-primary/50 dark:focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:focus-visible:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-zinc-500 font-bold dark:focus-visible:shadow-lg"
+                className="w-full px-5 ps-12 py-4 rounded-card bg-card dark:bg-card border border-border dark:border-primary/30 shadow-lg shadow-sm/50 dark:shadow-black/20 focus-visible:border-primary/50 dark:focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:focus-visible:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-dim font-bold dark:focus-visible:shadow-lg"
               />
               <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim dark:text-dim w-5 h-5 group-focus-within:text-primary dark:group-focus-within:text-primary transition-colors" />
             </div>
