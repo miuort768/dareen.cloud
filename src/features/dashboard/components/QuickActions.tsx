@@ -144,8 +144,8 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                     )}
                                 </button>
 
-                                {/* Action cards */}
-                                <div className="space-y-3">
+                                {/* Action cards — 2-column grid */}
+                                <div className="grid grid-cols-2 gap-3">
                                     {actions.map((action, i) => {
                                         const Icon = action.icon;
                                         return (
@@ -160,10 +160,10 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                                     animate={{ opacity: 1, y: 0 }}
                                                     transition={{ delay: i * 0.06, duration: 0.3 }}
                                                     className={cn(
-                                                        "flex items-center gap-4 p-4 rounded-2xl",
+                                                        "flex flex-col items-center gap-3 p-4 rounded-2xl text-center h-full",
                                                         "bg-card dark:bg-white/[0.04] border border-border/50 dark:border-white/[0.06]",
                                                         "hover:border-primary/30 dark:hover:border-primary/20 hover:shadow-sm",
-                                                        "active:scale-[0.98]",
+                                                        "active:scale-[0.97]",
                                                         "transition-all duration-200 group"
                                                     )}
                                                 >
@@ -174,14 +174,9 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                                     )}>
                                                         <Icon size={22} className={action.color.split(' ')[1]} />
                                                     </div>
-                                                    <div className="flex-1 min-w-0">
-                                                        <h3 className="font-bold text-sm text-main dark:text-white">{action.title}</h3>
-                                                        <p className="text-[11px] text-muted dark:text-white/40 mt-0.5">{action.subtitle}</p>
-                                                    </div>
-                                                    <div className="text-muted/30 dark:text-white/20">
-                                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="rtl:rotate-180">
-                                                            <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                                                        </svg>
+                                                    <div>
+                                                        <h3 className="font-bold text-[13px] text-main dark:text-white leading-tight">{action.title}</h3>
+                                                        <p className="text-[10px] text-muted dark:text-white/40 mt-1">{action.subtitle}</p>
                                                     </div>
                                                 </motion.div>
                                             </Link>
