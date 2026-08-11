@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Receipt, CheckCircle, Clock, AlertCircle, FileText, TrendingUp, ArrowDownRight, Printer, DollarSign } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Search, Receipt, CheckCircle, Clock, AlertCircle, FileText, Printer, DollarSign, X } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAcademyName } from '../context/AppContext';
 import { Skeleton } from '../shared/components/ui';
@@ -22,15 +22,10 @@ interface StudentInvoice {
 }
 
 const statusConfig = {
-    paid: { label: 'مدفوعة', icon: CheckCircle, cls: 'bg-success/10 text-success border-success/30' },
-    pending: { label: 'معلقة', icon: Clock, cls: 'bg-warning/10 text-warning border-warning/30' },
-    overdue: { label: 'متأخرة', icon: AlertCircle, cls: 'bg-error/10 text-error border-error/30' },
+    paid: { label: 'مدفوعة', icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
+    pending: { label: 'معلقة', icon: Clock, color: 'text-warning', bg: 'bg-warning/10' },
+    overdue: { label: 'متأخرة', icon: AlertCircle, color: 'text-error', bg: 'bg-error/10' },
 } as const;
-
-const particles = Array.from({ length: 8 }, (_, i) => ({
-    id: i, x: Math.random() * 100, y: Math.random() * 100,
-    size: Math.random() * 5 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
-}));
 
 export const StudentInvoices = () => {
     const academyName = useAcademyName();
@@ -38,7 +33,6 @@ export const StudentInvoices = () => {
     const currentUser = useCurrentUser();
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<'all' | 'paid' | 'pending' | 'overdue'>('all');
-    const [fabOpen, setFabOpen] = useState(false);
 
     const { data: invoices = [], isLoading: loading } = useQuery<StudentInvoice[]>({
         queryKey: ['student-invoices'],
@@ -66,91 +60,85 @@ export const StudentInvoices = () => {
         overdueCount: invoices.filter(i => i.status === 'overdue').length,
     }), [invoices]);
 
+    const kpiCards = useMemo(() => [
+        { label: 'مدفوعة', value: stats.paid, count: stats.paidCount, icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
+        { label: 'معلقة', value: stats.pending, count: stats.pendingCount, icon: Clock, color: 'text-warning', bg: 'bg-warning/10' },
+        { label: 'متأخرة', value: stats.overdue, count: stats.overdueCount, icon: AlertCircle, color: 'text-error', bg: 'bg-error/10' },
+    ], [stats]);
+
     if (loading) {
         return (
-            <div className="min-h-full pb-24 overflow-x-hidden" dir="rtl">
-                <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
-                    <Skeleton className="h-28 rounded-2xl" />
-                    <div className="grid grid-cols-3 gap-3">
-                        {[...Array(3)].map((_, i) => <Skeleton key={i} className="h-24 rounded-2xl" />)}
+            <div className="min-h-full pb-8" dir="rtl">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-6 space-y-4">
+                    <div className="flex items-center gap-3"><Skeleton className="w-11 h-11 rounded-xl" /><div className="space-y-2"><Skeleton className="h-5 w-32 rounded-lg" /><Skeleton className="h-3 w-48 rounded-lg" /></div></div>
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+                        {[1, 2, 3].map(i => <Skeleton key={i} className="h-24 rounded-xl" />)}
                     </div>
-                    <Skeleton className="h-10 rounded-xl" />
-                    <Skeleton className="h-64 rounded-2xl" />
+                    <Skeleton className="h-12 rounded-xl" />
+                    <Skeleton className="h-64 rounded-xl" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-full pb-28 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-page mx-auto px-2">
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-success to-success-hover p-6 md:p-8 mb-4">
-                    {particles.map(p => (
-                        <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
-                            style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-                            animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }} />
-                    ))}
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                        <div>
-                            <div className="flex items-center gap-2 mb-2">
-                                <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><Receipt className="text-white" size={20} /></div>
-                                <span className="text-white/70 text-xs font-medium">المالية</span>
+        <div className="min-h-full pb-8" dir="rtl">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6">
+
+                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pt-6 pb-5">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <Receipt size={20} className="text-primary" />
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">فواتيري</h1>
-                            <p className="text-white/70 text-sm">متابعة الرسوم والمدفوعات الدراسية</p>
-                        </div>
-                        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
-                            <div className="text-center">
-                                <p className="text-white/60 text-xs mb-1">الإجمالي</p>
-                                <p className="text-2xl font-bold text-white tabular-nums">{stats.total.toLocaleString()} <span className="text-sm text-white/60">{CURRENCY_SYMBOL}</span></p>
-                            </div>
-                            <div className="w-px h-10 bg-white/10" />
-                            <div className="text-center">
-                                <p className="text-white/60 text-xs mb-1">الفواتير</p>
-                                <p className="text-lg font-bold text-white">{invoices.length}</p>
+                            <div>
+                                <h1 className="text-xl font-bold text-main">فواتيري</h1>
+                                <p className="text-xs text-muted mt-0.5">متابعة الرسوم والمدفوعات الدراسية</p>
                             </div>
                         </div>
+                        <button onClick={() => window.print()}
+                            className="flex items-center gap-2 px-4 py-2.5 bg-card border border-border rounded-xl text-xs font-bold text-muted hover:bg-hover hover:border-primary/20 transition-all duration-200 active:scale-[0.98]">
+                            <Printer size={14} />
+                            <span className="hidden sm:inline">طباعة</span>
+                        </button>
                     </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-                    <div className="grid grid-cols-3 gap-3 mb-4">
-                        {([
-                            { label: 'مدفوعة', value: stats.paid, count: stats.paidCount, icon: CheckCircle, accent: 'success' as const },
-                            { label: 'معلقة', value: stats.pending, count: stats.pendingCount, icon: Clock, accent: 'warning' as const },
-                            { label: 'متأخرة', value: stats.overdue, count: stats.overdueCount, icon: AlertCircle, accent: 'error' as const },
-                        ]).map((kpi, i) => {
-                            const gradientMap = { success: 'from-success/20 to-success/5', warning: 'from-warning/20 to-warning/5', error: 'from-error/20 to-error/5' };
-                            const iconBgMap = { success: 'bg-success/10 text-success', warning: 'bg-warning/10 text-warning', error: 'bg-error/10 text-error' };
-                            const barMap = { success: 'bg-success', warning: 'bg-warning', error: 'bg-error' };
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-5">
+                        {kpiCards.map((kpi, i) => {
+                            const Icon = kpi.icon;
                             return (
-                                <motion.div key={kpi.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
-                                    whileHover={{ scale: 1.02, y: -2 }}
-                                    className={cn("relative overflow-hidden rounded-xl bg-gradient-to-br border border-border/50 p-4", gradientMap[kpi.accent])}>
+                                <motion.div key={kpi.label} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 + i * 0.04 }}
+                                    whileHover={{ y: -2 }} className="bg-card border border-border rounded-xl p-4 hover:shadow-elevation-1 transition-all duration-200">
                                     <div className="flex items-center justify-between mb-3">
-                                        <div className={cn("p-2 rounded-lg", iconBgMap[kpi.accent])}><kpi.icon size={16} /></div>
-                                        <div className={cn("h-1 w-12 rounded-full", barMap[kpi.accent])} />
+                                        <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center", kpi.bg)}>
+                                            <Icon size={16} className={kpi.color} />
+                                        </div>
                                     </div>
-                                    <p className="text-xs text-muted mb-1">{kpi.label}</p>
-                                    <p className="text-lg font-bold text-main tabular-nums">{kpi.value.toLocaleString()} <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span></p>
-                                    <p className="text-[10px] text-muted mt-1">{kpi.count} فاتورة</p>
+                                    <p className="text-2xl font-bold text-main tabular-nums">{kpi.value.toLocaleString()} <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span></p>
+                                    <p className="text-[11px] text-muted mt-1">{kpi.label} · {kpi.count} فاتورة</p>
                                 </motion.div>
                             );
                         })}
                     </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                    <div className="flex gap-3 items-center mb-4">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mb-5">
+                    <div className="flex gap-3 items-center">
                         <div className="relative flex-1">
-                            <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
+                            <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" size={15} />
                             <input aria-label="بحث في الفواتير" placeholder="بحث بالبيان..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full rounded-xl ps-9 pe-3.5 py-2.5 text-xs font-bold outline-none bg-card border border-border/30 text-main placeholder:text-muted/60 focus:border-primary focus:ring-2 focus:ring-focus/30 transition-all" />
+                                className="w-full rounded-xl ps-10 pe-4 py-3 text-xs font-bold outline-none bg-card border border-border text-main placeholder:text-muted/60 focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all duration-200" />
+                            {searchTerm && (
+                                <button onClick={() => setSearchTerm('')} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted hover:text-main transition-colors" aria-label="مسح البحث">
+                                    <X size={14} />
+                                </button>
+                            )}
                         </div>
                         <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
                             aria-label="تصفية حسب الحالة"
-                            className="rounded-xl px-3.5 py-2.5 text-xs font-bold outline-none bg-card border border-border/30 text-main focus:border-primary focus:ring-2 focus:ring-focus/30 transition-all appearance-none cursor-pointer">
+                            className="rounded-xl px-4 py-3 text-xs font-bold outline-none bg-card border border-border text-main focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all duration-200 appearance-none cursor-pointer">
                             <option value="all">الكل</option>
                             <option value="paid">مدفوعة</option>
                             <option value="pending">معلقة</option>
@@ -159,19 +147,20 @@ export const StudentInvoices = () => {
                     </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
-                    className="hidden md:block bg-card border border-border/30 rounded-2xl overflow-hidden shadow-sm">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+                    className="hidden md:block bg-card border border-border rounded-xl overflow-hidden">
                     <table className="w-full text-start border-collapse">
                         <thead>
-                            <tr className="bg-surface border-b border-border/30">
+                            <tr className="bg-surface border-b border-border">
                                 {['البيان', 'المبلغ', 'التاريخ', 'الاستحقاق', 'الحالة'].map(h => (
-                                    <th key={h} className={`px-4 py-3 text-xs font-bold text-muted ${h === 'البيان' ? 'text-start' : 'text-center'}`}>{h}</th>
+                                    <th key={h} className={`px-4 py-3 text-[11px] font-bold text-muted ${h === 'البيان' ? 'text-start' : 'text-center'}`}>{h}</th>
                                 ))}
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-border/30">
+                        <tbody className="divide-y divide-border">
                             {filteredInvoices.length > 0 ? filteredInvoices.map((inv, i) => {
                                 const status = statusConfig[inv.status];
+                                const Icon = status.icon;
                                 return (
                                     <motion.tr key={inv.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.03 }}
                                         className="hover:bg-surface/50 transition-colors">
@@ -180,8 +169,8 @@ export const StudentInvoices = () => {
                                         <td className="px-4 py-3 text-center text-xs text-muted">{inv.date}</td>
                                         <td className="px-4 py-3 text-center text-xs text-muted">{inv.dueDate}</td>
                                         <td className="px-4 py-3 text-center">
-                                            <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold border ${status.cls}`}>
-                                                <status.icon size={12} />
+                                            <span className={cn("inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold", status.bg, status.color)}>
+                                                <Icon size={12} />
                                                 {status.label}
                                             </span>
                                         </td>
@@ -190,7 +179,7 @@ export const StudentInvoices = () => {
                             }) : (
                                 <tr>
                                     <td colSpan={5} className="py-16 text-center">
-                                        <div className="w-12 h-12 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-3"><FileText size={20} /></div>
+                                        <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3"><FileText size={20} /></div>
                                         <p className="text-sm font-bold text-muted">{searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}</p>
                                     </td>
                                 </tr>
@@ -202,55 +191,37 @@ export const StudentInvoices = () => {
                 <div className="md:hidden space-y-3">
                     {filteredInvoices.length > 0 ? filteredInvoices.map((inv, i) => {
                         const status = statusConfig[inv.status];
+                        const Icon = status.icon;
                         return (
                             <motion.div key={inv.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
-                                className="bg-card border border-border/30 rounded-2xl p-4 shadow-sm">
+                                className="bg-card border border-border rounded-xl p-4 hover:shadow-elevation-1 transition-all duration-200">
                                 <div className="flex items-center justify-between mb-3">
-                                    <p className="text-sm font-bold text-main">{inv.description}</p>
-                                    <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold border ${status.cls}`}>
-                                        <status.icon size={11} />
+                                    <p className="text-sm font-bold text-main truncate">{inv.description}</p>
+                                    <span className={cn("inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0", status.bg, status.color)}>
+                                        <Icon size={11} />
                                         {status.label}
                                     </span>
                                 </div>
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-4">
-                                        <div>
-                                            <p className="text-xs text-muted mb-0.5">المبلغ</p>
-                                            <span className="font-mono text-sm font-bold text-main tabular-nums">{inv.amount.toLocaleString()} <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span></span>
-                                        </div>
-                                        <div className="w-px h-8 bg-border/30" />
-                                        <div>
-                                            <p className="text-xs text-muted mb-0.5">الاستحقاق</p>
-                                            <span className="text-xs text-muted">{inv.dueDate}</span>
-                                        </div>
+                                <div className="flex items-center gap-4">
+                                    <div>
+                                        <p className="text-[10px] text-muted mb-0.5">المبلغ</p>
+                                        <span className="font-mono text-sm font-bold text-main tabular-nums">{inv.amount.toLocaleString()} <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span></span>
+                                    </div>
+                                    <div className="w-px h-8 bg-border" />
+                                    <div>
+                                        <p className="text-[10px] text-muted mb-0.5">الاستحقاق</p>
+                                        <span className="text-xs text-muted">{inv.dueDate}</span>
                                     </div>
                                 </div>
                             </motion.div>
                         );
                     }) : (
-                        <div className="bg-card border border-border/30 border-dashed rounded-2xl py-16 text-center">
-                            <div className="w-12 h-12 rounded-xl bg-primary-soft text-primary flex items-center justify-center mx-auto mb-3"><FileText size={20} /></div>
+                        <div className="bg-card border border-dashed border-border rounded-xl py-16 text-center">
+                            <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mx-auto mb-3"><FileText size={20} /></div>
                             <p className="text-sm font-bold text-muted">{searchTerm || filterStatus !== 'all' ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}</p>
                         </div>
                     )}
                 </div>
-            </div>
-
-            <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
-                <AnimatePresence>
-                    <motion.div key="print" initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.3, y: 20 }} className="flex items-center gap-2">
-                        <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">طباعة</span>
-                        <button onClick={() => window.print()}
-                            className="w-10 h-10 rounded-full bg-success text-on-primary shadow-lg hover:shadow-xl hover:bg-success-hover transition-all flex items-center justify-center">
-                            <Printer size={18} />
-                        </button>
-                    </motion.div>
-                </AnimatePresence>
-                <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-success")}>
-                    <DollarSign size={22} />
-                </motion.button>
             </div>
         </div>
     );
