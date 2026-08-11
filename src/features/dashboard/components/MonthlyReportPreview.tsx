@@ -30,7 +30,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                 <div className="flex-1 overflow-y-auto p-10 pb-6 custom-scrollbar relative z-10">
                     {/* Brand / Logo */}
                     <div className="flex flex-col items-center justify-center text-center space-y-6 mb-12">
-                        <div className="w-16 h-16 bg-primary dark:bg-primary text-on-primary dark:text-black rounded-none flex items-center justify-center border-2 border-border dark:border-primary/20 shadow-[6px_6px_0px_0px_black]">
+                        <div className="w-16 h-16 bg-primary dark:bg-primary text-on-primary dark:text-on-primary rounded-none flex items-center justify-center border-2 border-border dark:border-primary/20 shadow-[6px_6px_0px_0px_black]">
                             <Award size={32} />
                         </div>
                         <div>
@@ -41,7 +41,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
 
                     <div className="space-y-8">
                         {/* Student Signature Header */}
-                        <div className="flex items-center justify-between p-6 bg-background dark:bg-[#0a0a0c] border-2 border-border dark:border-primary/20 rounded-none">
+                        <div className="flex items-center justify-between p-6 bg-background dark:bg-card border-2 border-border dark:border-primary/20 rounded-none">
                             <div className="space-y-1 text-start">
                                 <p className="text-micro font-medium text-primary dark:text-primary uppercase">نجمة أكاديمية</p>
                                 <h4 className="text-2xl font-medium text-main dark:text-main uppercase tracking-tight">{student.name}</h4>
@@ -70,7 +70,7 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         </div>
 
                         {/* Qualitative Feedback */}
-                        <div className="space-y-4 bg-background dark:bg-[#0a0a0c] p-6 border-2 border-border dark:border-primary/20 rounded-none">
+                        <div className="space-y-4 bg-background dark:bg-card p-6 border-2 border-border dark:border-primary/20 rounded-none">
                             <p className="text-micro font-medium text-muted dark:text-muted uppercase flex items-center gap-2">
                                 <CheckCircle2 size={14} className="text-primary dark:text-primary" />
                                 التوصيات الأكاديمية ومسارات التطوير
@@ -86,14 +86,14 @@ export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: Mont
                         </div>
 
                         {/* Footer Message */}
-                        <div className="p-6 bg-background dark:bg-[#0a0a0c] text-main dark:text-main rounded-none border-2 border-border dark:border-primary/20 text-center shadow-[6px_6px_0px_0px_var(--bg-primary)]">
+                        <div className="p-6 bg-background dark:bg-card text-main dark:text-main rounded-none border-2 border-border dark:border-primary/20 text-center shadow-[6px_6px_0px_0px_var(--bg-primary)]">
                             <p className="text-micro font-medium uppercase italic">نحن فخورون بتقدمك المستمر يا بطل! استمر في التألق.</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Footer Actions */}
-                <div className="p-10 bg-background dark:bg-[#0a0a0c] border-t-2 border-border dark:border-primary/20 flex gap-4 pt-6">
+                <div className="p-10 bg-background dark:bg-card border-t-2 border-border dark:border-primary/20 flex gap-4 pt-6">
                     <Button
                         onClick={() => onShare('whatsapp')}
                         className="flex-1 h-14 bg-success text-on-success rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"

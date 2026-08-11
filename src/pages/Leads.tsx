@@ -218,7 +218,7 @@ export const Leads = () => {
         >
             <div className="relative z-10 mx-auto px-4 md:px-6 max-w-page">
                 {/* ===== HERO SECTION ===== */}
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] mt-4 mb-6 border border-primary/10 dark:border-white/[0.04]">
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/90 via-primary to-primary-deep dark:from-card dark:via-surface dark:to-card mt-4 mb-6 border border-primary/10 dark:border-white/[0.04]">
                     <div className="absolute -top-16 -right-16 w-48 h-48 bg-white/10 dark:bg-primary/10 rounded-full blur-3xl" />
                     <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white/5 dark:bg-primary/8 rounded-full blur-3xl" />
                     <div className="absolute top-4 right-8 w-2 h-2 bg-white/20 dark:bg-primary/40 rounded-full" />
@@ -288,7 +288,7 @@ export const Leads = () => {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 {searchTerm && (
-                                    <button aria-label="مسح البحث" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
+                                    <button aria-label="مسح البحث" onClick={() => setSearchTerm('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-main/60 rounded-lg transition-all">
                                         <X size={13} />
                                     </button>
                                 )}
@@ -305,8 +305,8 @@ export const Leads = () => {
                                 className={cn(
                                     'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                                     filterStatus === 'all'
-                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary border-primary/30 dark:border-primary/30 shadow-md shadow-primary/15 dark:shadow-primary/20'
-                                        : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                                        ? 'bg-gradient-to-l from-primary to-primary-deep dark:from-primary dark:to-primary text-on-primary border-primary/30 dark:border-primary/30 shadow-md shadow-primary/15 dark:shadow-primary/20'
+                                        : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-main/60'
                                 )}>
                                 الكل
                                 <span className={cn(
@@ -363,7 +363,7 @@ export const Leads = () => {
                 {/* FAB */}
                 <motion.button
                     onClick={() => setIsAddModalOpen(true)}
-                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-[#D4AF37] dark:to-[#D4AF37] text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-primary/30 flex items-center justify-center active:scale-95 transition-all duration-200"
+                    className="fixed bottom-6 left-6 md:bottom-8 md:left-8 z-40 w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-primary-deep dark:from-primary dark:to-primary text-on-primary rounded-2xl shadow-xl shadow-primary/30 dark:shadow-primary/30 flex items-center justify-center active:scale-95 transition-all duration-200"
                     whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.9 }} aria-label="إضافة عميل">
                     <Plus size={22} />
                 </motion.button>

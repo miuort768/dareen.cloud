@@ -37,7 +37,7 @@ const StarRating = ({ rating }: { rating: number }) => (
       <Star
         key={star}
         size={10}
-        className={star <= Math.floor(rating) ? 'text-warning dark:text-primary fill-warning dark:fill-[#D4AF37]' : 'text-dim dark:text-zinc-600 fill-none'}
+        className={star <= Math.floor(rating) ? 'text-warning dark:text-primary fill-warning dark:fill-primary' : 'text-dim dark:text-zinc-600 fill-none'}
       />
     ))}
     <span className="text-micro font-black text-muted dark:text-muted ms-1">{rating}</span>
@@ -95,9 +95,9 @@ export const Courses = () => {
 
       <main className="flex-grow md:pt-32 pb-16 md:pb-24 relative overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 dark:from-[#D4AF37]/[0.05] dark:to-[#D4AF37]/[0.05] rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 dark:from-[#D4AF37]/[0.03] dark:to-[#D4AF37]/[0.03] rounded-full blur-[120px]" />
-          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[var(--bg-primary)]/20 dark:via-[#D4AF37]/20 to-transparent" />
+          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 dark:from-primary/[0.05] dark:to-primary/[0.05] rounded-full blur-[140px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 dark:from-primary/[0.03] dark:to-primary/[0.03] rounded-full blur-[120px]" />
+          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[var(--bg-primary)]/20 dark:via-primary/20 to-transparent" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
@@ -142,12 +142,12 @@ export const Courses = () => {
                   onClick={() => setActiveCategory(cat.value)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-card font-black text-xs transition-all duration-300 ${
                     activeCategory === cat.value
-                      ? 'bg-primary-active dark:bg-primary text-on-primary dark:text-black shadow-lg shadow-card/20 dark:shadow-[#D4AF37]/20'
-                      : 'bg-surface dark:bg-[#1a1a1e] text-muted dark:text-muted border border-border dark:border-primary/20 hover:border-border/20 dark:hover:border-primary/40 hover:text-main dark:hover:text-white'
+                      ? 'bg-primary-active dark:bg-primary text-on-primary dark:text-on-primary shadow-lg shadow-card/20 dark:shadow-primary/20'
+                      : 'bg-surface dark:bg-surface text-muted dark:text-muted border border-border dark:border-primary/20 hover:border-border/20 dark:hover:border-primary/40 hover:text-main dark:hover:text-main'
                   }`}
                 >
                   <span className="flex items-center gap-2">
-                    <cat.icon size={14} className={activeCategory === cat.value ? 'text-on-primary dark:text-black' : cat.color} />
+                    <cat.icon size={14} className={activeCategory === cat.value ? 'text-on-primary dark:text-on-primary' : cat.color} />
                     <span>{cat.label}</span>
                   </span>
                 </button>
@@ -170,7 +170,7 @@ export const Courses = () => {
                   variants={cardVariants}
                    className="group relative bg-card dark:bg-card border border-border dark:border-primary/20 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-[#D4AF37]/10 transition-all duration-500"
                 >
-                  <div className="relative h-44 overflow-hidden bg-background dark:bg-[#0a0a0c]">
+                  <div className="relative h-44 overflow-hidden bg-background dark:bg-card">
                     <Image
                       src={course.image}
                       alt={course.title}
@@ -178,7 +178,7 @@ export const Courses = () => {
                       imgClassName="object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
                     />
 
-                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-card dark:from-[#0d0d0f] to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-card dark:from-card to-transparent" />
 
                     <div className="absolute top-3 start-3 z-10">
                       <div className={`px-2.5 py-1 rounded-lg text-micro font-black text-on-primary shadow-lg bg-gradient-to-br ${course.color}`}>
@@ -224,7 +224,7 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-[#f59e0b] text-on-success dark:text-black text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-[#D4AF37]/20 active:scale-[0.97] dark:shadow-lg"
+                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-[#f59e0b] text-on-success dark:text-on-primary text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب

@@ -38,18 +38,18 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
             <div className="bg-card dark:bg-card border-2 border-border dark:border-primary/20 w-full max-w-xl rounded-none shadow-[12px_12px_0px_0px_black] flex flex-col max-h-[90vh] overflow-hidden">
                 
                 {/* Header Section */}
-                <div className="p-6 border-b-2 border-border dark:border-primary/20 bg-background dark:bg-[#0a0a0c]">
+                <div className="p-6 border-b-2 border-border dark:border-primary/20 bg-background dark:bg-card">
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-5">
-                            <div className="w-16 h-16 bg-background dark:bg-[#1a1a1e] text-main dark:text-main rounded-none flex items-center justify-center border-2 border-border dark:border-primary/20 shadow-md shrink-0">
+                            <div className="w-16 h-16 bg-background dark:bg-surface text-main dark:text-main rounded-none flex items-center justify-center border-2 border-border dark:border-primary/20 shadow-md shrink-0">
                                 <User size={32} />
                             </div>
                             <div>
                                 <h3 className="text-xl font-medium text-main dark:text-main uppercase tracking-tight">{student.name}</h3>
                                 <div className="flex items-center gap-2 mt-2">
-                                    <span className="px-2 py-0.5 bg-background dark:bg-[#1a1a1e] text-main dark:text-main text-micro font-medium uppercase">{student.grade}</span>
-                                    <span className="px-2 py-0.5 bg-warning dark:bg-primary text-on-warning dark:text-black border-2 border-border dark:border-primary/20 text-micro font-medium uppercase flex items-center gap-1">
-                                        <Star size={10} className="fill-warning dark:fill-[#D4AF37]" />
+                                    <span className="px-2 py-0.5 bg-background dark:bg-surface text-main dark:text-main text-micro font-medium uppercase">{student.grade}</span>
+                                    <span className="px-2 py-0.5 bg-warning dark:bg-primary text-on-warning dark:text-on-primary border-2 border-border dark:border-primary/20 text-micro font-medium uppercase flex items-center gap-1">
+                                        <Star size={10} className="fill-warning dark:fill-primary" />
                                         {student.totalPoints || 0} النقاط
                                     </span>
                                 </div>
@@ -85,7 +85,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                             <MessageSquare size={14} className="text-primary dark:text-primary" />
                             <h4 className="text-micro font-medium uppercase">سياق ولي الأمر</h4>
                         </div>
-                        <div className="text-sm font-normal text-main dark:text-main leading-relaxed bg-background dark:bg-[#0a0a0c] p-5 border-2 border-border dark:border-primary/20 rounded-none">
+                        <div className="text-sm font-normal text-main dark:text-main leading-relaxed bg-background dark:bg-card p-5 border-2 border-border dark:border-primary/20 rounded-none">
                             {student.notes || 'لا توجد ملاحظات من ولي الأمر لهذا الطالب.'}
                         </div>
                     </div>
@@ -110,12 +110,12 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="w-10 h-10 rounded-none border-2 border-border dark:border-primary/20 flex items-center justify-center bg-background dark:bg-[#1a1a1e] text-muted dark:text-muted">
+                                    <div className="w-10 h-10 rounded-none border-2 border-border dark:border-primary/20 flex items-center justify-center bg-background dark:bg-surface text-muted dark:text-muted">
                                         <Award size={20} />
                                     </div>
                                 </div>
                             )) : (
-                                <div className="py-12 text-center border-2 border-dashed border-border dark:border-primary/20 rounded-none bg-background dark:bg-[#0a0a0c]">
+                                <div className="py-12 text-center border-2 border-dashed border-border dark:border-primary/20 rounded-none bg-background dark:bg-card">
                                     <p className="text-micro text-muted dark:text-muted font-medium uppercase">مرحلة البدء</p>
                                 </div>
                             )}
@@ -124,7 +124,7 @@ export const StudentQuickBrief = ({ isOpen, onClose, onGenerateReport, student, 
                 </div>
 
                 {/* Footer Actions */}
-                <div className="p-6 bg-background dark:bg-[#0a0a0c] border-t-2 border-border dark:border-primary/20 flex gap-4">
+                <div className="p-6 bg-background dark:bg-card border-t-2 border-border dark:border-primary/20 flex gap-4">
                     <Button
                         onClick={() => onGenerateReport?.(student)}
                         className="flex-1 h-12 bg-success text-on-success rounded-none border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"

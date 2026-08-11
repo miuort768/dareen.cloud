@@ -22,7 +22,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
             icon: Users,
             title: 'اختر المنهج',
             desc: 'حدد منهجك والمادة',
-            boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b]',
+            boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning',
         },
         {
             num: '02',
@@ -36,7 +36,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
             icon: Sparkles,
             title: 'اشترك الآن',
             desc: 'تواصل لحجز مقعدك',
-            boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b]',
+            boxBg: 'bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning',
         },
     ];
 
@@ -59,13 +59,13 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                     </div>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-l from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b] rounded-full mb-4 shadow-sm">
-                    <Zap size={10} className="text-warning dark:text-black fill-warning dark:fill-black" />
-                    <span className="text-micro font-black text-on-primary dark:text-black">ابدأ رحلتك</span>
+                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-warning rounded-full mb-4 shadow-sm">
+                    <Zap size={10} className="text-warning dark:text-on-primary fill-warning dark:fill-black" />
+                    <span className="text-micro font-black text-on-primary dark:text-on-primary">ابدأ رحلتك</span>
                 </div>
 
                 <h2 className="text-xl font-black text-main dark:text-main leading-tight mb-1">
-                    كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b]">المعهد؟</span>
+                    كيف تشترك في <span className="text-transparent bg-clip-text bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-warning">المعهد؟</span>
                 </h2>
                 <p className="text-xs text-muted dark:text-muted font-medium mb-5 leading-relaxed">
                     اختر الطريقة التي تناسبك وابدأ رحلتك التعليمية معنا
@@ -75,10 +75,10 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                     {steps.map((s, i) => (
                         <div key={`step-${i}`} className="bg-card dark:bg-card rounded-2xl border border-border dark:border-primary/30 shadow-sm p-3.5 flex flex-col items-center text-center relative">
                             <div className="absolute -top-2 -start-2 w-5 h-5 rounded-full bg-primary dark:bg-primary flex items-center justify-center shadow-md">
-                                <span className="text-micro font-black text-on-primary dark:text-black">{s.num}</span>
+                                <span className="text-micro font-black text-on-primary dark:text-on-primary">{s.num}</span>
                             </div>
                             <div className={`w-10 h-10 rounded-xl ${s.boxBg} flex items-center justify-center mb-2.5 shadow-md`}>
-                                <s.icon size={18} className="text-on-primary dark:text-black" />
+                                <s.icon size={18} className="text-on-primary dark:text-on-primary" />
                             </div>
                             <h3 className="text-xs font-black text-main dark:text-main mb-0.5">{s.title}</h3>
                             <p className="text-micro text-main dark:text-muted font-medium leading-tight">{s.desc}</p>
@@ -93,10 +93,10 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                         { icon: 'Hash', title: 'عدد الحصص', desc: 'بالقدر المناسب لك' },
                     ].map((item, i) => (
                         <div key={`perk-${i}`} className="flex items-center gap-3">
-                            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b] flex items-center justify-center shadow-sm shrink-0">
-                                {item.icon === 'CreditCard' && <CreditCard size={12} className="text-on-primary dark:text-black" />}
-                                {item.icon === 'Clock' && <Clock size={12} className="text-on-primary dark:text-black" />}
-                                {item.icon === 'Hash' && <Hash size={12} className="text-on-primary dark:text-black" />}
+                            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-primary-hover dark:from-primary dark:to-warning flex items-center justify-center shadow-sm shrink-0">
+                                {item.icon === 'CreditCard' && <CreditCard size={12} className="text-on-primary dark:text-on-primary" />}
+                                {item.icon === 'Clock' && <Clock size={12} className="text-on-primary dark:text-on-primary" />}
+                                {item.icon === 'Hash' && <Hash size={12} className="text-on-primary dark:text-on-primary" />}
                             </div>
                             <div>
                                 <span className="text-xs font-black text-main dark:text-main">{item.title}</span>
@@ -110,12 +110,12 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-primary to-primary-hover dark:from-[#D4AF37] dark:to-[#f59e0b] rounded-2xl shadow-lg dark:shadow-[#D4AF37]/20 hover:brightness-110 hover:-translate-y-0.5 transition-all group"
+                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-warning rounded-2xl shadow-lg dark:shadow-primary/20 hover:brightness-110 hover:-translate-y-0.5 transition-all group"
                 >
-                    <Gift size={16} className="text-on-primary dark:text-black opacity-90" />
-                    <span className="text-on-primary dark:text-black text-sm font-black">احجز حصتك المجانية الآن</span>
+                    <Gift size={16} className="text-on-primary dark:text-on-primary opacity-90" />
+                    <span className="text-on-primary dark:text-on-primary text-sm font-black">احجز حصتك المجانية الآن</span>
                     <div className="w-8 h-8 rounded-full bg-white/20 dark:bg-black/20 flex items-center justify-center backdrop-blur-sm group-hover:bg-white/30 dark:group-hover:bg-black/30 transition-all">
-                        <ArrowLeft size={16} className="text-on-primary dark:text-black" />
+                        <ArrowLeft size={16} className="text-on-primary dark:text-on-primary" />
                     </div>
                 </a>
             </div>

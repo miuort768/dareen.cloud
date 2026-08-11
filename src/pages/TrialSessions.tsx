@@ -240,7 +240,7 @@ export const TrialSessions = () => {
     >
       <div className="px-2.5 sm:px-4 space-y-4 max-w-page mx-auto relative z-10">
         {/* Hero Section */}
-        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6366f1] via-[#7c3aed] to-[#a855f7] dark:from-[#0d0d0f] dark:via-[#1a1a1e] dark:to-[#0d0d0f] mt-4">
+        <motion.div variants={itemVariants} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6366f1] via-[#7c3aed] to-[#a855f7] dark:from-card dark:via-surface dark:to-card mt-4">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
           <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
           <div className="absolute inset-0 opacity-[0.06]">
@@ -337,7 +337,7 @@ export const TrialSessions = () => {
                   className="w-full h-11 bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] rounded-xl pr-10 pl-10 text-[13px] text-main dark:text-main placeholder:text-muted dark:placeholder:text-white/25 outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 transition-all"
                 />
                 {search && (
-                  <button aria-label="مسح البحث" onClick={() => setSearch('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-white/60 rounded-lg transition-all">
+                  <button aria-label="مسح البحث" onClick={() => setSearch('')} className="absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center text-muted dark:text-main/25 hover:text-main dark:hover:text-main/60 rounded-lg transition-all">
                     <X size={13} />
                   </button>
                 )}
@@ -369,7 +369,7 @@ export const TrialSessions = () => {
                     'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                     !filterStatus
                       ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
-                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-main/60'
                   )}>
                   الكل
                   <span className={cn(
@@ -415,7 +415,7 @@ export const TrialSessions = () => {
                     'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                     !filterSubject
                       ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
-                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                      : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-main/60'
                   )}>
                   كل المواد
                 </motion.button>
@@ -427,7 +427,7 @@ export const TrialSessions = () => {
                         'inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                         isActive
                           ? 'bg-gradient-to-l from-primary to-primary-deep text-white border-primary/30 shadow-md shadow-primary/20'
-                          : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-white/60'
+                          : 'bg-card dark:bg-white/[0.06] text-muted dark:text-main/40 border-border dark:border-white/[0.06] hover:border-primary/30 dark:hover:border-white/10 hover:text-main dark:hover:text-main/60'
                       )}>
                       {subj}
                     </motion.button>
@@ -565,7 +565,7 @@ export const TrialSessions = () => {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end md:items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-0 md:p-4" dir="rtl">
               {/* Mobile: bottom sheet */}
               <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }} transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="md:hidden w-full bg-card dark:bg-[#0a0a0c] rounded-t-3xl overflow-hidden">
+                className="md:hidden w-full bg-card dark:bg-card rounded-t-3xl overflow-hidden">
                 <div className="flex justify-center pt-3 pb-1"><div className="w-10 h-1 bg-border dark:bg-white/10 rounded-full" /></div>
                 <div className="bg-gradient-to-l from-error/90 to-error px-5 py-4 flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
@@ -584,7 +584,7 @@ export const TrialSessions = () => {
               </motion.div>
               {/* Desktop: centered modal */}
               <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
-                className="hidden md:block bg-card dark:bg-[#0a0a0c] shadow-elevation-2 w-full max-w-sm border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden">
+                className="hidden md:block bg-card dark:bg-card shadow-elevation-2 w-full max-w-sm border border-border dark:border-white/[0.06] rounded-2xl overflow-hidden">
                 <div className="bg-gradient-to-l from-error/90 to-error px-5 py-4 flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-white/15">
                     <AlertTriangle size={20} className="text-on-error" />

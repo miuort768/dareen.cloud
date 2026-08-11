@@ -34,12 +34,12 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                 <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
-                    <div className="max-w-6xl mx-auto bg-success-soft dark:bg-[#0a0a0c] border border-success dark:border-primary/40 rounded-2xl shadow-sm overflow-hidden">
+                    <div className="max-w-6xl mx-auto bg-success-soft dark:bg-card border border-success dark:border-primary/40 rounded-2xl shadow-sm overflow-hidden">
                         <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-16 justify-center p-6 md:p-10">
                             <div className="w-full lg:w-1/2 text-center">
                                 <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 dark:bg-primary/15 border border-success/50 dark:border-primary/40 rounded-full mb-4 mx-auto">
                                     <span className="w-2 h-2 rounded-full bg-success dark:bg-primary animate-pulse"></span>
-                                    <span className="text-success-dark dark:text-[#f3d368] font-bold text-xs">برامج تحفيظ متميزة</span>
+                                    <span className="text-success-dark dark:text-primary font-bold text-xs">برامج تحفيظ متميزة</span>
                                 </div>
                                 <h2 className="text-lg sm:text-2xl lg:text-3xl font-black mb-4 text-main dark:text-main leading-tight font-heading">
                                     رحلتك مع <span className="text-success dark:text-primary relative inline-block">
@@ -57,7 +57,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                         href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="px-8 py-3.5 bg-success dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-success dark:text-black font-extrabold text-sm shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
+                                        className="px-8 py-3.5 bg-success dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-success dark:text-on-primary font-extrabold text-sm shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
                                     >
                                         <span>ابدأ الحفظ الآن</span>
                                         <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
@@ -84,7 +84,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     <div className="text-start">
                                         <div className="text-sm font-bold text-main dark:text-main flex items-center gap-1">
                                             4.9/5
-                                            <Star className="w-4 h-4 text-warning dark:text-primary fill-warning dark:fill-[#D4AF37]" />
+                                            <Star className="w-4 h-4 text-warning dark:text-primary fill-warning dark:fill-primary" />
                                         </div>
                                         <div className="text-xs text-muted dark:text-muted font-medium">من قبل آلاف الطلاب</div>
                                     </div>
@@ -92,21 +92,21 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             </div>
                             <div className="w-full lg:w-1/2 flex justify-center py-4 lg:py-0">
                                 <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }} variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="grid grid-cols-2 gap-3 w-full max-w-[400px]">
-                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-[#1a1a1e] border border-border dark:border-primary/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-surface border border-border dark:border-primary/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-surface dark:bg-primary/15 text-primary dark:text-primary flex items-center justify-center mb-3 rounded-xl">
                                             <Clock className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-main dark:text-main text-xs mb-1">أوقات مرنة</h3>
                                         <p className="text-micro text-muted dark:text-muted leading-tight font-medium">اختر مواعيدك المفضلة</p>
                                     </motion.div>
-                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-[#1a1a1e] border border-border dark:border-primary/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-surface border border-border dark:border-primary/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-warning-soft dark:bg-primary/15 text-warning dark:text-primary flex items-center justify-center mb-3 rounded-xl">
                                             <ClipboardCheck className="w-5 h-5" />
                                         </div>
                                         <h3 className="font-black text-main dark:text-main text-xs mb-1">متابعة دقيقة</h3>
                                         <p className="text-micro text-muted dark:text-muted leading-tight font-medium">تقارير إنجاز أسبوعية</p>
                                     </motion.div>
-                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-[#1a1a1e] border border-border dark:border-primary/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
+                                    <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="p-4 bg-card dark:bg-surface border border-border dark:border-primary/25 rounded-2xl shadow-sm flex flex-col items-center text-center">
                                         <div className="w-11 h-11 bg-success-soft dark:bg-primary/15 text-success dark:text-primary flex items-center justify-center mb-3 rounded-xl">
                                             <Mic className="w-5 h-5" />
                                         </div>
@@ -114,12 +114,12 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                         <p className="text-micro text-muted dark:text-muted leading-tight font-medium">نخبة الحفاظ المبدعون</p>
                                     </motion.div>
                                     <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }}>
-                                        <Link to="/contact" className="p-4 bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] rounded-2xl shadow-lg text-on-primary dark:text-black flex flex-col items-center text-center transition-all hover:brightness-90 cursor-pointer">
-                                            <div className="w-11 h-11 bg-white/20 dark:bg-black/20 text-on-primary dark:text-black flex items-center justify-center mb-3 backdrop-blur-sm rounded-xl">
+                                        <Link to="/contact" className="p-4 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning rounded-2xl shadow-lg text-on-primary dark:text-on-primary flex flex-col items-center text-center transition-all hover:brightness-90 cursor-pointer">
+                                            <div className="w-11 h-11 bg-white/20 dark:bg-black/20 text-on-primary dark:text-on-primary flex items-center justify-center mb-3 backdrop-blur-sm rounded-xl">
                                                 <Sparkles className="w-5 h-5" />
                                             </div>
-                                            <h3 className="font-black text-on-primary dark:text-black text-xs mb-1">جرب مجاناً</h3>
-                                            <p className="text-on-primary dark:text-black opacity-80 text-micro leading-tight font-extrabold">حصة تجريبية للمشتركين</p>
+                                            <h3 className="font-black text-on-primary dark:text-on-primary text-xs mb-1">جرب مجاناً</h3>
+                                            <p className="text-on-primary dark:text-on-primary opacity-80 text-micro leading-tight font-extrabold">حصة تجريبية للمشتركين</p>
                                         </Link>
                                     </motion.div>
                                 </motion.div>
@@ -140,7 +140,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     <div className="flex items-center justify-center mb-5 mt-2">
                         <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/80 dark:bg-primary/15 border border-success dark:border-primary/40 rounded-full shadow-sm">
                             <span className="w-2 h-2 rounded-full bg-success dark:bg-primary animate-pulse"></span>
-                            <span className="text-success-dark dark:text-[#f3d368] font-bold text-xs tracking-wide">برامج حفظ متميزة</span>
+                            <span className="text-success-dark dark:text-primary font-bold text-xs tracking-wide">برامج حفظ متميزة</span>
                         </div>
                     </div>
 
@@ -167,7 +167,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-full max-w-[320px] py-4 bg-success dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-success dark:text-black font-extrabold text-base shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-2xl"
+                            className="w-full max-w-[320px] py-4 bg-success dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-success dark:text-on-primary font-extrabold text-base shadow-lg hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-2xl"
                         >
                             <span>ابدأ الحفظ الآن</span>
                             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
@@ -187,7 +187,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                             <div className="flex items-center gap-1.5">
                                 <span className="text-lg font-black text-main dark:text-main">4.9</span>
                                 <span className="text-sm font-bold text-muted dark:text-muted">/5</span>
-                                <Star size={14} className="text-warning dark:text-primary fill-warning dark:fill-[#D4AF37]" />
+                                <Star size={14} className="text-warning dark:text-primary fill-warning dark:fill-primary" />
                             </div>
                             <div className="text-xs text-muted dark:text-muted font-medium mt-0.5">من قبل آلاف الطلاب</div>
                         </div>
@@ -198,33 +198,33 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                     <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" className="w-full h-full" />
                                 </div>
                             ))}
-                            <div className="w-9 h-9 rounded-full border-2 border-card dark:border-primary/40 bg-success dark:bg-primary flex items-center justify-center text-micro font-black text-on-success dark:text-black shadow-sm">5K+</div>
+                            <div className="w-9 h-9 rounded-full border-2 border-card dark:border-primary/40 bg-success dark:bg-primary flex items-center justify-center text-micro font-black text-on-success dark:text-on-primary shadow-sm">5K+</div>
                         </div>
                     </div>
 
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={{ visible: { transition: { staggerChildren: 0.08 } } }} className="grid grid-cols-2 gap-3 mb-8 max-w-[360px] mx-auto">
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-[#1a1a1e] border border-border dark:border-primary/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-surface border border-border dark:border-primary/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-warning-soft dark:bg-primary/15 rounded-2xl flex items-center justify-center mb-3">
                                 <ClipboardCheck size={22} className="text-warning dark:text-primary" />
                             </div>
                             <h3 className="font-black text-main dark:text-main text-sm mb-1">متابعة دقيقة</h3>
                             <p className="text-muted dark:text-muted text-micro leading-relaxed">تقارير إنجاز أسبوعية</p>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-[#1a1a1e] border border-border dark:border-primary/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-surface border border-border dark:border-primary/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-primary-soft dark:bg-primary/15 rounded-2xl flex items-center justify-center mb-3">
                                 <Clock size={22} className="text-primary dark:text-primary" />
                             </div>
                             <h3 className="font-black text-main dark:text-main text-sm mb-1">أوقات مرنة</h3>
                             <p className="text-muted dark:text-muted text-micro leading-relaxed">اختر مواعيدك المفضلة</p>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] border-0 rounded-2xl p-4 shadow-lg flex flex-col items-center text-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning border-0 rounded-2xl p-4 shadow-lg flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-white/20 dark:bg-black/20 rounded-2xl flex items-center justify-center mb-3 backdrop-blur-sm">
-                                <Sparkles size={22} className="text-on-primary dark:text-black" />
+                                <Sparkles size={22} className="text-on-primary dark:text-on-primary" />
                             </div>
-                            <h3 className="font-black text-on-primary dark:text-black text-sm mb-1">جرب مجانًا</h3>
-                            <p className="text-on-primary dark:text-black opacity-80 text-micro leading-relaxed font-bold">حصة تجريبية للمشتركين</p>
+                            <h3 className="font-black text-on-primary dark:text-on-primary text-sm mb-1">جرب مجانًا</h3>
+                            <p className="text-on-primary dark:text-on-primary opacity-80 text-micro leading-relaxed font-bold">حصة تجريبية للمشتركين</p>
                         </motion.div>
-                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-[#1a1a1e] border border-border dark:border-primary/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
+                        <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} transition={{ duration: 0.4 }} className="bg-card dark:bg-surface border border-border dark:border-primary/25 rounded-2xl p-4 shadow-sm flex flex-col items-center text-center">
                             <div className="w-11 h-11 bg-success-soft dark:bg-primary/15 rounded-2xl flex items-center justify-center mb-3">
                                 <Mic size={22} className="text-success dark:text-primary" />
                             </div>

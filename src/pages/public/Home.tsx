@@ -87,7 +87,7 @@ export const Home = () => {
                 <div className="flex gap-1.5 mt-2 mb-3">
                     <a href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
                         target="_blank" rel="noopener noreferrer"
-                        className="flex-1 bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black font-extrabold text-xs px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
+                        className="flex-1 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-1.5 py-2 rounded-full flex items-center justify-center gap-1 transition-all hover:brightness-110 active:scale-[0.97] shadow-lg shadow-black/20">
                         <Headphones className="w-2.5 h-2.5 shrink-0" /> طلب حصة مجانية
                     </a>
                     <Link to="/books"
@@ -95,19 +95,19 @@ export const Home = () => {
                         <Play className="w-2.5 h-2.5 shrink-0 dark:text-primary" /> تحميل مذكرات مجانية
                     </Link>
                 </div>
-                <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[#09090b] dark:via-[#121215] dark:to-[#09090b] rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-primary/30">
+                <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[#09090b] dark:via-surface dark:to-[#09090b] rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-primary/30">
                     {heroSlides.map((slide, i) => (
                         <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
                             <div className="flex items-center gap-4">
                                 <div className="flex-1">
                                     <h1 className="text-lg font-black text-main dark:text-main leading-tight mb-0.5">{slide.title}{heroIndex === 0 && <span className="text-success-dark dark:text-primary"> السابعة <BadgeCheck className="w-4 h-4 inline-block text-success-dark dark:text-primary -mt-0.5" /></span>}</h1>
-                                    <p className="text-xs font-bold text-primary dark:text-[#f3d368] mb-0.5">{slide.subtitle}</p>
+                                    <p className="text-xs font-bold text-primary dark:text-primary mb-0.5">{slide.subtitle}</p>
                                     <p className="text-micro text-muted dark:text-soft leading-relaxed mb-3">{slide.desc}</p>
                                     <div className="flex flex-col gap-1.5">
                                         <Link to="/courses" className="bg-surface dark:bg-white/10 text-main dark:text-main border dark:border-primary/30 text-xs font-bold px-4 py-2 rounded-full shadow-card hover:bg-hover transition-all flex items-center justify-center gap-1 w-full">
-                                            <Play className="w-3 h-3 fill-main dark:fill-[#D4AF37] dark:text-primary" /> تصفح الدورات
+                                            <Play className="w-3 h-3 fill-main dark:fill-primary dark:text-primary" /> تصفح الدورات
                                         </Link>
-                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black font-extrabold text-xs px-4 py-2 rounded-full shadow-card transition-all w-full text-center">{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</Link>
+                                        <Link to={isAuthenticated ? "/dashboard" : "/login"} className="bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-xs px-4 py-2 rounded-full shadow-card transition-all w-full text-center">{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</Link>
                                     </div>
                                 </div>
                                 <div className="relative shrink-0">
@@ -125,7 +125,7 @@ export const Home = () => {
                                     <div className="flex justify-center gap-1 -mt-1">
                                         {[0, 1, 2].map((d) => (
                                             <button key={d} onClick={() => setHeroIndex(d)} aria-label={`الانتقال إلى الشريحة ${d + 1}`}
-                                                className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-primary dark:bg-primary w-3' : 'bg-muted dark:bg-zinc-600'}`} />
+                                                className={`w-1.5 h-1.5 rounded-full transition-all ${heroIndex === d ? 'bg-primary dark:bg-primary w-3' : 'bg-muted dark:bg-surface'}`} />
                                         ))}
                                     </div>
                                 </div>
@@ -166,8 +166,8 @@ export const Home = () => {
                     <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                         {stages.map((cat) => (
                             <button key={cat.value} onClick={() => setActiveCategory(cat.value)}
-                                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${activeCategory === cat.value ? 'bg-primary dark:bg-gradient-to-r dark:from-[#D4AF37] dark:to-[#f59e0b] text-on-primary dark:text-black shadow-md shadow-black/20' : 'bg-surface dark:bg-[#1a1a1e] text-muted dark:text-soft border border-border dark:border-primary/30'}`}>
-                                <cat.icon size={12} className={activeCategory === cat.value ? 'text-on-primary dark:text-black' : 'text-muted dark:text-primary'} /> {cat.label}
+                                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${activeCategory === cat.value ? 'bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary shadow-md shadow-black/20' : 'bg-surface dark:bg-surface text-muted dark:text-soft border border-border dark:border-primary/30'}`}>
+                                <cat.icon size={12} className={activeCategory === cat.value ? 'text-on-primary dark:text-on-primary' : 'text-muted dark:text-primary'} /> {cat.label}
                             </button>
                         ))}
                     </div>
@@ -181,7 +181,7 @@ export const Home = () => {
                                 className="min-w-[180px] w-[180px] bg-surface dark:bg-card rounded-card shadow-sm border border-border dark:border-primary/25 overflow-hidden shrink-0 block">
                                 <div className="relative h-24 bg-surface dark:bg-black overflow-hidden">
                                     <Image src={c.image} alt={c.title} className="h-24" />
-                                    <span className={`absolute top-2 start-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning dark:bg-primary text-on-warning dark:text-black' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary dark:bg-primary text-on-primary dark:text-black' : 'bg-error text-on-error'}`}>
+                                    <span className={`absolute top-2 start-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning dark:bg-primary text-on-warning dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary dark:bg-primary text-on-primary dark:text-on-primary' : 'bg-error text-on-error'}`}>
                                         {stages.find(cat => cat.value === c.category)?.label || c.category}
                                     </span>
                                 </div>
@@ -190,7 +190,7 @@ export const Home = () => {
                                     <p className="text-xs text-muted dark:text-muted font-medium mb-2 line-clamp-1">{c.desc}</p>
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-1"><Users className="w-3 h-3 text-dim dark:text-muted" /><span className="text-xs font-bold text-muted dark:text-soft">{c.students}</span></div>
-                                        <div className="flex items-center gap-0.5"><Star className="w-3 h-3 text-warning dark:text-primary fill-warning dark:fill-[#D4AF37]" /><span className="text-xs font-bold text-main dark:text-main">{c.rating}</span></div>
+                                        <div className="flex items-center gap-0.5"><Star className="w-3 h-3 text-warning dark:text-primary fill-warning dark:fill-primary" /><span className="text-xs font-bold text-main dark:text-main">{c.rating}</span></div>
                                     </div>
                                 </div>
                             </motion.a>

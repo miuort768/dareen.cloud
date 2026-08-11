@@ -63,7 +63,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-[#D4AF37] dark:via-[#b8962e] dark:to-[#f59e0b] p-6 md:p-8"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary dark:via-primary dark:to-warning p-6 md:p-8"
             dir="rtl"
         >
             {/* Pattern */}

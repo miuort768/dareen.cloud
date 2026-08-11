@@ -28,9 +28,9 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
       <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2 bg-surface dark:bg-black">
         <div className="flex items-center gap-1">
           <Link to="/" className="flex items-center gap-2">
-          <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-primary to-primary dark:from-[#D4AF37] dark:to-[#f59e0b] flex items-center justify-center shadow-lg shadow-primary/20 dark:shadow-[#D4AF37]/20 relative overflow-hidden">
+          <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-primary to-primary dark:from-primary dark:to-warning flex items-center justify-center shadow-lg shadow-primary/20 dark:shadow-primary/20 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
-            <GraduationCap className="w-6 h-6 text-on-primary dark:text-black relative z-10" />
+            <GraduationCap className="w-6 h-6 text-on-primary dark:text-on-primary relative z-10" />
           </div>
           <div>
                             <p className="text-base font-black text-main dark:text-main leading-tight">{academyName}</p>
@@ -48,7 +48,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
             {menuOpen ? <X className="w-5 h-5 text-muted dark:text-primary" /> : <Menu className="w-5 h-5 text-muted dark:text-primary" />}
           </button>
           {menuOpen && (
-            <div className="absolute top-12 end-0 bg-surface dark:bg-[#0a0a0c] rounded-2xl shadow-2xl border border-border dark:border-primary/30 z-50 min-w-[180px]">
+            <div className="absolute top-12 end-0 bg-surface dark:bg-card rounded-2xl shadow-2xl border border-border dark:border-primary/30 z-50 min-w-[180px]">
               {navItems.map((item) => (
                 <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-main dark:text-main hover:bg-primary-soft dark:hover:bg-primary/10 hover:text-primary dark:hover:text-primary transition-colors border-b border-border dark:border-primary/20 last:border-0 whitespace-nowrap">
                   <item.icon size={16} className="shrink-0 dark:text-primary" />

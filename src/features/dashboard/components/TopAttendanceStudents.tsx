@@ -57,15 +57,15 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                         <div
                             key={`att-${i}`}
                             onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
-                            className="flex items-center justify-between p-2 rounded-xl bg-background dark:bg-[#0a0a0c] border border-border dark:border-primary/20 hover:border-warning dark:hover:border-primary/40 transition-all cursor-pointer"
+                            className="flex items-center justify-between p-2 rounded-xl bg-background dark:bg-card border border-border dark:border-primary/20 hover:border-warning dark:hover:border-primary/40 transition-all cursor-pointer"
                         >
                             <div className="flex items-center gap-2">
                                 <div className={cn(
                                     "w-7 h-7 rounded-lg flex items-center justify-center text-micro font-semibold",
                                     i === 0 ? "bg-warning-soft dark:bg-primary/10 text-warning dark:text-primary" :
-                                    i === 1 ? "bg-surface dark:bg-[#1a1a1e] text-main dark:text-main" :
+                                    i === 1 ? "bg-surface dark:bg-surface text-main dark:text-main" :
                                     i === 2 ? "bg-warning-soft dark:bg-primary/10 text-warning dark:text-primary" :
-                                    "bg-surface dark:bg-[#1a1a1e] text-muted dark:text-muted"
+                                    "bg-surface dark:bg-surface text-muted dark:text-muted"
                                 )}>
                                     {i + 1}
                                 </div>
@@ -81,7 +81,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                     ))
                 ) : (
                     <div className="flex flex-col items-center justify-center py-6 opacity-50">
-                        <div className="w-8 h-8 rounded-xl bg-surface dark:bg-[#1a1a1e] flex items-center justify-center mb-1.5">
+                        <div className="w-8 h-8 rounded-xl bg-surface dark:bg-surface flex items-center justify-center mb-1.5">
                             <User size={14} className="text-dim dark:text-dim" />
                         </div>
                         <p className="text-micro font-bold text-muted dark:text-muted">لا توجد سجلات حالياً</p>
@@ -95,7 +95,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
                     <p className="text-base font-bold tabular-nums">{totalMonthSessions}</p>
                 </div>
                 <div className="w-7 h-7 rounded-lg bg-white/15 dark:bg-black/20 backdrop-blur-sm flex items-center justify-center">
-                    <TrendingUp size={12} className="text-on-warning dark:text-black" />
+                    <TrendingUp size={12} className="text-on-warning dark:text-on-primary" />
                 </div>
             </div>
         </div>
