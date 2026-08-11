@@ -21,6 +21,7 @@ interface ParentDrawerProps {
     onDelete?: (id: string) => void;
     onWhatsApp?: (phone: string) => void;
     onCall?: (phone: string) => void;
+    inline?: boolean;
 }
 
 type TabKey = 'overview' | 'schedule';
@@ -40,7 +41,7 @@ const getAvatarGradient = (name: string) => {
     return avatarGradients[Math.abs(hash) % avatarGradients.length];
 };
 
-export const ParentDrawer = ({ parent, details, onClose, onEdit, onDelete, onWhatsApp, onCall }: ParentDrawerProps) => {
+export const ParentDrawer = ({ parent, details, onClose, onEdit, onDelete, onWhatsApp, onCall, inline = false }: ParentDrawerProps) => {
     const [tab, setTab] = useState<TabKey>('overview');
 
     if (!parent) return null;
@@ -178,7 +179,61 @@ export const ParentDrawer = ({ parent, details, onClose, onEdit, onDelete, onWha
                                             const total = (child.enrollments || []).reduce((s, en) => s + en.sessionsTotal, 0);
                                             const used = (child.enrollments || []).reduce((s, en) => s + en.sessionsUsed, 0);
                                             const progress = total > 0 ? Math.round((used / total) * 100) : 0;
-                                            return (
+    if (inline) {
+        return (
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
+                className="bg-card border border-border rounded-2xl overflow-hidden shadow-elevation-1 flex flex-col max-h-[80vh]"
+                dir="rtl"
+            >
+                {/* Inline content */}
+                <div className="overflow-y-auto flex-1">
+                    <div className="p-4 border-b border-border">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center text-lg font-bold text-white ring-2 ring-white/30 shadow-lg shrink-0", `bg-gradient-to-br ${getAvatarGradient(parent.name)}`)}>
+                                    {(parent.name || '?').charAt(0)}
+                                </div>
+                                <div>
+                                    <h2 className="text-sm font-bold text-main">{parent.name}</h2>
+                                    <p className="text-[10px] text-muted mt-0.5">{parent.phone}</p>
+                                </div>
+                            </div>
+                            <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface hover:bg-hover rounded-xl transition-all" aria-label="إغلاق">
+                                <X size={14} className="text-muted" />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="p-4 space-y-4">
+                        {/* Children */}
+                        {children.length > 0 && (
+                            <div>
+                                <h3 className="text-xs font-bold text-muted mb-2">الأبناء ({children.length})</h3>
+                                <div className="space-y-2">
+                                    {children.map((child) => (
+                                        <div key={child.id} className="flex items-center gap-3 p-3 bg-surface rounded-xl">
+                                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xs font-bold">{child.name.charAt(0)}</div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-xs font-bold text-main truncate">{child.name}</p>
+                                                <p className="text-[10px] text-muted">{child.grade} - {child.curriculum}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        {/* Actions */}
+                        <div className="flex gap-2">
+                            {onCall && <button onClick={() => onCall(parent.phone)} className="flex-1 py-2.5 bg-success/10 text-success text-xs font-bold rounded-xl">اتصال</button>}
+                            {onWhatsApp && <button onClick={() => onWhatsApp(parent.phone)} className="flex-1 py-2.5 bg-success/10 text-success text-xs font-bold rounded-xl">واتساب</button>}
+                            {onEdit && <button onClick={() => onEdit(parent)} className="flex-1 py-2.5 bg-primary/10 text-primary text-xs font-bold rounded-xl">تعديل</button>}
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        );
+    }
+
+    return (
                                                 <div key={child.id} className="p-3 bg-card border border-border rounded-xl hover:border-primary/20 transition-all">
                                                     <div className="flex items-center justify-between mb-2">
                                                         <div className="flex items-center gap-2.5 min-w-0">

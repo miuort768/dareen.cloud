@@ -14,7 +14,6 @@ import { TeacherToolbar } from '../components/TeacherToolbar';
 import { TeacherForm } from '../components/TeacherForm';
 import { TeacherTable } from '../components/TeacherTable';
 import { TeacherDetails } from '../components/TeacherDetails';
-import { TeacherDrawer } from '../components/TeacherDrawer';
 import type { Teacher, Session, Student, Enrollment } from '../../../types';
 import { TeachersPageHeader, TeachersPageModals } from './teachers-page';
 
@@ -48,7 +47,7 @@ export const Teachers = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [drawerTeacher, setDrawerTeacher] = useState<Teacher | null>(null);
+
   const [editId, setEditId] = useState<string | null>(null);
   const [logDate] = useState(new Date().toISOString().split('T')[0]);
   const [secureModalData, setSecureModalData] = useState<{ student: Student, enrollment: Enrollment } | null>(null);
@@ -165,7 +164,7 @@ export const Teachers = () => {
   const handleCall = (phone: string) => { window.open(`tel:${phone}`); };
   const handleWhatsApp = (phone: string) => { window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}`, '_blank'); };
 
-  const handleRowSelect = (teacher: Teacher) => { setDrawerTeacher(teacher); };
+  const handleRowSelect = (teacher: Teacher) => { setSelectedTeacher(teacher); setShowDetails(true); };
 
   const unenrollMutation = useMutation({
     mutationFn: async ({ student, teacherName, teacherId }: { student: Student, teacherName: string, teacherId?: string }) => {
@@ -236,7 +235,7 @@ export const Teachers = () => {
             <TeacherTable teachers={filteredTeachers} onEdit={handleEditTeacher}
               onDelete={setDeletingTeacherId} onSelect={handleRowSelect}
               onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
-              onNotify={(t) => setNotifyingTeacher(t)} selectedId={drawerTeacher?.id} studentCounts={studentCounts} />
+              onNotify={(t) => setNotifyingTeacher(t)} selectedId={selectedTeacher?.id} studentCounts={studentCounts} />
           </motion.div>
         ) : (
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
@@ -258,20 +257,7 @@ export const Teachers = () => {
           onNotifySend={handleSendTeacherNotification} notifyName={notifyingTeacher?.name || ''}
           successData={successModalData} onSuccessClose={() => setSuccessModalData({ ...successModalData, isOpen: false })} />
 
-        {/* Teacher Drawer */}
-        <TeacherDrawer
-          teacher={drawerTeacher}
-          onClose={() => setDrawerTeacher(null)}
-          onEdit={(t) => { handleEditTeacher(t); }}
-          onDelete={(id) => { setDeletingTeacherId(id); }}
-          onNotify={(t) => setNotifyingTeacher(t)}
-          onChat={(id) => navigate('/chat', { state: { startChatWith: id } })}
-          onCall={handleCall}
-          onWhatsApp={handleWhatsApp}
-          studentCount={drawerTeacher ? studentCounts[drawerTeacher.name] || 0 : 0}
-          totalRevenue={drawerTeacher ? getTeacherRevenue(drawerTeacher.name) : 0}
-          recentSessions={drawerTeacher ? getTeacherRecentSessions(drawerTeacher.name) : []}
-        />
+        {/* Teacher Details inline — no overlay drawer */}
       </div>
     </motion.div>
   );

@@ -356,24 +356,31 @@ export const Students = () => {
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}>
-                    <StudentTable
-                        students={students}
-                        onEdit={handleEditStudent}
-                        onDelete={(id) => setDeletingId(id)}
-                        onSelect={(student) => setDrawerStudent(student)}
-                        onNotify={(student) => setNotifyingStudent(student)}
-                        selectedId={drawerStudent?.id}
-                    />
+                    {!drawerStudent ? (
+                        <StudentTable
+                            students={students}
+                            onEdit={handleEditStudent}
+                            onDelete={(id) => setDeletingId(id)}
+                            onSelect={(student) => setDrawerStudent(student)}
+                            onNotify={(student) => setNotifyingStudent(student)}
+                            selectedId={drawerStudent?.id}
+                        />
+                    ) : (
+                        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}>
+                            <StudentDrawer
+                                student={drawerStudent}
+                                onClose={() => setDrawerStudent(null)}
+                                teachers={teachers}
+                                isAddingProgram={isAddingEnrollment}
+                                onAddProgram={(data) => drawerStudent && handleAddEnrollment(drawerStudent, data)}
+                                inline
+                            />
+                        </motion.div>
+                    )}
                 </motion.div>
             </div>
 
-            <StudentDrawer
-                student={drawerStudent}
-                onClose={() => setDrawerStudent(null)}
-                teachers={teachers}
-                isAddingProgram={isAddingEnrollment}
-                onAddProgram={(data) => drawerStudent && handleAddEnrollment(drawerStudent, data)}
-            />
+            {/* Student details now render inline above */}
 
             <SendNotificationModal
                 isOpen={!!notifyingStudent}

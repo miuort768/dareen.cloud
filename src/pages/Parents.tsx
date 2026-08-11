@@ -133,17 +133,22 @@ export const Parents = () => {
                     </AnimatePresence>
 
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-                        <ParentsTable parents={filteredParents} students={state.students} selectedParentId={state.selectedParent?.id || null}
-                            showDetails={state.showDetails} onSelectParent={(parent) => { actions.setSelectedParent(parent); actions.setShowDetails(true); }}
-                            onEdit={actions.handleEditParent} onDelete={actions.handleDeleteParent}
-                            onViewParent={(parent) => { actions.setSelectedParent(parent); actions.setShowDetails(true); }} />
+                        {!state.showDetails ? (
+                            <ParentsTable parents={filteredParents} students={state.students} selectedParentId={state.selectedParent?.id || null}
+                                showDetails={state.showDetails} onSelectParent={(parent) => { actions.setSelectedParent(parent); actions.setShowDetails(true); }}
+                                onEdit={actions.handleEditParent} onDelete={actions.handleDeleteParent}
+                                onViewParent={(parent) => { actions.setSelectedParent(parent); actions.setShowDetails(true); }} />
+                        ) : (
+                            <ParentDrawer parent={state.selectedParent} details={state.selectedParentData} onClose={() => actions.setShowDetails(false)}
+                                onEdit={actions.handleEditParent} onDelete={actions.handleDeleteParent}
+                                onCall={(phone) => window.open(`tel:${phone}`)}
+                                onWhatsApp={(phone) => window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}`, '_blank')}
+                                inline />
+                        )}
                     </motion.div>
                 </div>
 
-                <ParentDrawer parent={state.selectedParent} details={state.selectedParentData} onClose={() => actions.setShowDetails(false)}
-                    onEdit={actions.handleEditParent} onDelete={actions.handleDeleteParent}
-                    onCall={(phone) => window.open(`tel:${phone}`)}
-                    onWhatsApp={(phone) => window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}`, '_blank')} />
+                {/* Parent details now render inline above */}
 
                 <AnimatePresence>
                     {state.confirmModal.show && (

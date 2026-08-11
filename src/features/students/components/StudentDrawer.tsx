@@ -13,6 +13,7 @@ interface StudentDrawerProps {
   sessions?: { date: string; status: string; subject: string }[];
   teachers?: Teacher[];
   isAddingProgram?: boolean;
+  inline?: boolean;
   onAddProgram?: (data: {
     teacherId?: string;
     teacher: string;
@@ -69,7 +70,7 @@ const tabs: { key: TabKey; label: string; icon: React.ComponentType<{ size?: num
   { key: 'timeline', label: 'النشاطات', icon: Clock },
 ];
 
-export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teachers = [], isAddingProgram = false, onAddProgram }: StudentDrawerProps) => {
+export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teachers = [], isAddingProgram = false, inline = false, onAddProgram }: StudentDrawerProps) => {
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
   const [showAddProgram, setShowAddProgram] = useState(false);
 
@@ -481,7 +482,28 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teacher
                       const isCompleted = s.status === 'completed';
                       const isCancelled = s.status === 'cancelled';
                       const isLast = idx === Math.min(sessions.length - 1, 19);
-                      return (
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className={cn(
+          inline ? "relative rounded-2xl overflow-hidden shadow-elevation-1 border border-border" : "fixed inset-0 z-[300] bg-black/40 backdrop-blur-sm"
+        )}
+        onClick={inline ? undefined : onClose}
+      >
+        <motion.div
+          initial={inline ? { opacity: 0, y: 10 } : { x: '100%' }}
+          animate={inline ? { opacity: 1, y: 0 } : { x: 0 }}
+          exit={inline ? { opacity: 0, y: 10 } : { x: '100%' }}
+          transition={{ type: 'spring', damping: 25, stiffness: 250 }}
+          onClick={(e) => e.stopPropagation()}
+          className={cn(
+            inline ? "w-full bg-card overflow-y-auto max-h-[80vh]" : "absolute end-0 top-0 bottom-0 w-full max-w-lg bg-card border-s border-border shadow-elevation-3 overflow-y-auto"
+          )}
+          dir="rtl"
+        >
                         <div key={idx} className="flex gap-3 pb-4 last:pb-0">
                           <div className="flex flex-col items-center">
                             <div className={cn(
