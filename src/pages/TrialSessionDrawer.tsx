@@ -14,11 +14,11 @@ interface TrialSessionDrawerProps {
     isConverting: boolean;
 }
 
-const statusConfig: Record<string, { label: string; dot: string; text: string; bg: string; darkBg: string; darkText: string }> = {
-    pending: { label: 'بانتظار', dot: 'bg-warning', text: 'text-warning', bg: 'bg-warning/15', darkBg: 'dark:bg-warning/20', darkText: 'dark:text-warning' },
-    completed: { label: 'تمت بنجاح', dot: 'bg-success', text: 'text-success', bg: 'bg-success/15', darkBg: 'dark:bg-success/20', darkText: 'dark:text-success' },
-    cancelled: { label: 'ملغية', dot: 'bg-error', text: 'text-error', bg: 'bg-error/15', darkBg: 'dark:bg-error/20', darkText: 'dark:text-error' },
-    converted: { label: 'محولة', dot: 'bg-primary', text: 'text-primary', bg: 'bg-primary/15', darkBg: 'dark:bg-primary/20', darkText: 'dark:text-primary' },
+const statusConfig: Record<string, { label: string; dot: string; text: string; bg: string }> = {
+    pending: { label: 'بانتظار', dot: 'bg-warning', text: 'text-warning', bg: 'bg-warning/15' },
+    completed: { label: 'تمت بنجاح', dot: 'bg-success', text: 'text-success', bg: 'bg-success/15' },
+    cancelled: { label: 'ملغية', dot: 'bg-error', text: 'text-error', bg: 'bg-error/15' },
+    converted: { label: 'محولة', dot: 'bg-primary', text: 'text-primary', bg: 'bg-primary/15' },
 };
 
 const avatarGradients = [
@@ -78,27 +78,24 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
             transition={{ duration: 0.3 }}
             className="p-2.5 sm:p-4"
         >
-            <div className="bg-card dark:bg-card/80 border border-border dark:border-white/[0.04] rounded-2xl overflow-hidden" dir="rtl">
-                {/* Header */}
-                <div className="shrink-0 px-5 py-4 flex items-center justify-between border-b border-border/50 dark:border-white/[0.04]">
-                    <span className="text-[13px] font-bold text-main dark:text-main">تفاصيل الحصة</span>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface dark:bg-white/5 hover:bg-hover dark:hover:bg-white/10 rounded-xl transition-all" aria-label="إغلاق">
-                        <X size={14} className="text-muted dark:text-main/50" />
+            <div className="bg-card border border-border rounded-2xl overflow-hidden" dir="rtl">
+                <div className="shrink-0 px-5 py-4 flex items-center justify-between border-b border-border/50">
+                    <span className="text-[13px] font-bold text-main">تفاصيل الحصة</span>
+                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface hover:bg-hover rounded-xl transition-all" aria-label="إغلاق">
+                        <X size={14} className="text-muted" />
                     </button>
                 </div>
 
-                {/* Content */}
                 <div className="overflow-y-auto">
-                    {/* Profile */}
-                    <div className="p-5 border-b border-border dark:border-white/[0.04]">
+                    <div className="p-5 border-b border-border">
                         <div className="flex items-center gap-4">
                             <div className={cn("w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md", gradient)}>
                                 <User size={22} className="text-white" />
                             </div>
                             <div className="min-w-0">
-                                <h2 className="text-base font-bold text-main dark:text-main">{session.studentName}</h2>
+                                <h2 className="text-base font-bold text-main">{session.studentName}</h2>
                                 <div className="flex items-center gap-2 mt-1">
-                                    <span className={cn("inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold", cfg.bg, cfg.text, cfg.darkBg, cfg.darkText)}>
+                                    <span className={cn("inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold", cfg.bg, cfg.text)}>
                                         <span className={cn("w-1.5 h-1.5 rounded-full", cfg.dot)} />
                                         {cfg.label}
                                     </span>
@@ -107,51 +104,49 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                         </div>
                     </div>
 
-                    {/* Details grid */}
-                    <div className="p-5 border-b border-border dark:border-white/[0.04]">
-                        <h3 className="text-[11px] font-bold text-muted dark:text-main/40 mb-3">معلومات الحصة</h3>
+                    <div className="p-5 border-b border-border">
+                        <h3 className="text-[11px] font-bold text-muted mb-3">معلومات الحصة</h3>
                         <div className="grid grid-cols-2 gap-3">
-                            <div className="p-3 rounded-xl bg-surface dark:bg-white/[0.04]">
-                                <div className="flex items-center gap-1.5 text-[10px] text-muted dark:text-main/30 mb-1">
+                            <div className="p-3 rounded-xl bg-surface">
+                                <div className="flex items-center gap-1.5 text-[10px] text-muted mb-1">
                                     <BookOpen size={11} />
                                     <span>المادة</span>
                                 </div>
-                                <p className="text-xs font-bold text-main dark:text-main">{session.subject || '—'}</p>
+                                <p className="text-xs font-bold text-main">{session.subject || '—'}</p>
                             </div>
-                            <div className="p-3 rounded-xl bg-surface dark:bg-white/[0.04]">
-                                <div className="flex items-center gap-1.5 text-[10px] text-muted dark:text-main/30 mb-1">
+                            <div className="p-3 rounded-xl bg-surface">
+                                <div className="flex items-center gap-1.5 text-[10px] text-muted mb-1">
                                     <GraduationCap size={11} />
                                     <span>المعلمة</span>
                                 </div>
-                                <p className="text-xs font-bold text-main dark:text-main">{session.teacherName || '—'}</p>
+                                <p className="text-xs font-bold text-main">{session.teacherName || '—'}</p>
                             </div>
-                            <div className="p-3 rounded-xl bg-surface dark:bg-white/[0.04]">
-                                <div className="flex items-center gap-1.5 text-[10px] text-muted dark:text-main/30 mb-1">
+                            <div className="p-3 rounded-xl bg-surface">
+                                <div className="flex items-center gap-1.5 text-[10px] text-muted mb-1">
                                     <Calendar size={11} />
                                     <span>التاريخ</span>
                                 </div>
-                                <p className="text-xs font-bold text-main dark:text-main">{session.date}</p>
+                                <p className="text-xs font-bold text-main">{session.date}</p>
                             </div>
-                            <div className="p-3 rounded-xl bg-surface dark:bg-white/[0.04]">
-                                <div className="flex items-center gap-1.5 text-[10px] text-muted dark:text-main/30 mb-1">
+                            <div className="p-3 rounded-xl bg-surface">
+                                <div className="flex items-center gap-1.5 text-[10px] text-muted mb-1">
                                     <Clock size={11} />
                                     <span>الوقت</span>
                                 </div>
-                                <p className="text-xs font-bold text-main dark:text-main">{session.time || '—'}</p>
+                                <p className="text-xs font-bold text-main">{session.time || '—'}</p>
                             </div>
-                            <div className="col-span-2 p-3 rounded-xl bg-surface dark:bg-white/[0.04]">
-                                <div className="flex items-center gap-1.5 text-[10px] text-muted dark:text-main/30 mb-1">
+                            <div className="col-span-2 p-3 rounded-xl bg-surface">
+                                <div className="flex items-center gap-1.5 text-[10px] text-muted mb-1">
                                     <Phone size={11} />
                                     <span>رقم ولي الأمر</span>
                                 </div>
-                                <p className="text-xs font-bold text-main dark:text-main font-mono" dir="ltr">{session.parentPhone}</p>
+                                <p className="text-xs font-bold text-main font-mono" dir="ltr">{session.parentPhone}</p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Timeline */}
-                    <div className="p-5 border-b border-border dark:border-white/[0.04]">
-                        <h3 className="text-[11px] font-bold text-muted dark:text-main/40 mb-3">النشاطات</h3>
+                    <div className="p-5 border-b border-border">
+                        <h3 className="text-[11px] font-bold text-muted mb-3">النشاطات</h3>
                         <div className="relative">
                             {timeline.map((item, idx) => {
                                 const v = variantStyles[item.variant] || variantStyles.muted;
@@ -160,14 +155,14 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                                 return (
                                     <div key={idx} className="flex gap-3 pb-4 last:pb-0">
                                         <div className="flex flex-col items-center">
-                                            <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center ring-2 ring-card dark:ring-ring-offset z-10", v.iconBg)}>
+                                            <div className={cn("w-8 h-8 rounded-xl flex items-center justify-center ring-2 ring-card z-10", v.iconBg)}>
                                                 <Icon size={13} className={v.iconText} />
                                             </div>
                                             {!isLast && <div className={cn("w-px flex-1 min-h-[8px]", v.line)} />}
                                         </div>
                                         <div className="flex-1 min-w-0 pt-0.5">
-                                            <p className="text-xs font-bold text-main dark:text-main">{item.label}</p>
-                                            <p className="text-[10px] text-muted dark:text-main/30 mt-0.5">{item.time}</p>
+                                            <p className="text-xs font-bold text-main">{item.label}</p>
+                                            <p className="text-[10px] text-muted mt-0.5">{item.time}</p>
                                         </div>
                                     </div>
                                 );
@@ -175,38 +170,36 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                         </div>
                     </div>
 
-                    {/* Notes */}
                     {session.notes && (
-                        <div className="p-5 border-b border-border dark:border-white/[0.04]">
-                            <h3 className="text-[11px] font-bold text-muted dark:text-main/40 mb-3">الملاحظات</h3>
-                            <div className="p-4 rounded-xl bg-warning/[0.05] dark:bg-warning/[0.08] border border-warning/[0.15] dark:border-warning/[0.2]">
+                        <div className="p-5 border-b border-border">
+                            <h3 className="text-[11px] font-bold text-muted mb-3">الملاحظات</h3>
+                            <div className="p-4 rounded-xl bg-warning/5 border border-warning/15">
                                 <div className="flex items-start gap-2">
                                     <MessageCircle size={14} className="text-warning shrink-0 mt-0.5" />
-                                    <p className="text-xs text-muted dark:text-main/40 leading-relaxed">{session.notes}</p>
+                                    <p className="text-xs text-muted leading-relaxed">{session.notes}</p>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {/* Actions */}
                     <div className="p-5 space-y-2">
-                        <h3 className="text-[11px] font-bold text-muted dark:text-main/40 mb-3">الإجراءات</h3>
+                        <h3 className="text-[11px] font-bold text-muted mb-3">الإجراءات</h3>
                         <div className="grid grid-cols-2 gap-2">
-                            <button onClick={() => onCall(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 dark:bg-success/15 border border-success/20 dark:border-success/20 text-success text-xs font-bold hover:bg-success/20 dark:hover:bg-success/20 transition-all active:scale-[0.98]">
+                            <button onClick={() => onCall(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 border border-success/20 text-success text-xs font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
                                 <Phone size={14} /> اتصال
                             </button>
-                            <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 dark:bg-success/15 border border-success/20 dark:border-success/20 text-success text-xs font-bold hover:bg-success/20 dark:hover:bg-success/20 transition-all active:scale-[0.98]">
+                            <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 border border-success/20 text-success text-xs font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
                                 <MessageSquare size={14} /> واتساب
                             </button>
                             {session.status === 'pending' && (
-                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-primary/10 dark:bg-primary/15 border border-primary/20 dark:border-primary/20 text-primary text-xs font-bold hover:bg-primary/20 dark:hover:bg-primary/20 transition-all active:scale-[0.98] disabled:opacity-50 col-span-2">
+                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-primary/10 border border-primary/20 text-primary text-xs font-bold hover:bg-primary/20 transition-all active:scale-[0.98] disabled:opacity-50 col-span-2">
                                     <UserPlus size={14} /> {isConverting ? 'جاري التحويل...' : 'تحويل إلى طالب'}
                                 </button>
                             )}
-                            <button onClick={() => { onEdit(session); onClose(); }} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-surface dark:bg-white/[0.04] border border-border dark:border-white/[0.06] text-muted dark:text-main/40 text-xs font-bold hover:bg-hover dark:hover:bg-white/[0.08] transition-all active:scale-[0.98]">
+                            <button onClick={() => { onEdit(session); onClose(); }} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-surface border border-border text-muted text-xs font-bold hover:bg-hover transition-all active:scale-[0.98]">
                                 <Pencil size={14} /> تعديل
                             </button>
-                            <button onClick={() => onPaid(session.id)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 dark:bg-success/15 border border-success/20 dark:border-success/20 text-success text-xs font-bold hover:bg-success/20 dark:hover:bg-success/20 transition-all active:scale-[0.98]">
+                            <button onClick={() => onPaid(session.id)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 border border-success/20 text-success text-xs font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
                                 <CircleDollarSign size={14} /> مدفوعة
                             </button>
                         </div>
