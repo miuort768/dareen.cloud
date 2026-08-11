@@ -27,17 +27,17 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
     const firstName = (currentUser?.name || currentUser?.username || 'الطالب').split(' ')[0];
 
     return (
-        <header className="sticky top-0 z-[100] bg-surface/90 dark:bg-surface/90 backdrop-blur-xl border-b border-border dark:border-primary/20 transition-colors duration-500">
+        <header className="sticky top-0 z-[100] bg-surface/95 dark:bg-card/95 backdrop-blur-xl border-b border-border dark:border-border transition-colors duration-300">
             <div className="max-w-page mx-auto">
-                <div className="flex items-center justify-between px-4 md:px-5 h-16">
+                <div className="flex items-center justify-between px-4 md:px-6 h-16">
                     <div className="flex items-center gap-3">
                         <Image src="/dareen_logo_new.webp" alt="دارين" className="w-9 h-9 rounded-xl shrink-0" imgClassName="object-contain" />
                         <button
                             onClick={() => navigate('/student-profile')}
-                            className="flex items-center gap-3 text-start rounded-lg p-1 -m-1 hover:bg-hover transition-all duration-200 active:scale-[0.98]"
+                            className="flex items-center gap-3 text-start rounded-xl p-1.5 -m-1.5 hover:bg-hover dark:hover:bg-hover transition-all duration-200 active:scale-[0.98]"
                             aria-label="الملف الشخصي"
                         >
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-deep dark:from-primary dark:to-warning flex items-center justify-center shadow-elevation-1">
+                            <div className="w-10 h-10 rounded-xl bg-primary dark:bg-primary flex items-center justify-center">
                                 <span className="text-sm font-bold text-on-primary dark:text-on-primary">{firstName.charAt(0)}</span>
                             </div>
                             <div className="hidden sm:block">
@@ -57,7 +57,7 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
                             icon={
                                 <span className="relative">
                                     <Bell size={16} strokeWidth={1.5} />
-                                    <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-card dark:border-card" />
+                                    <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface dark:border-card" />
                                 </span>
                             }
                             label="الإعلانات"
@@ -83,8 +83,8 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
                                 className={cn(
                                     "flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all duration-200 relative",
                                     isActive
-                                        ? "text-primary dark:text-primary bg-background dark:bg-card border-t border-x border-border dark:border-primary/20"
-                                        : "text-muted dark:text-muted hover:text-main dark:hover:text-white hover:bg-accent/5 dark:hover:bg-primary/5 active:scale-[0.97]"
+                                        ? "text-primary dark:text-primary bg-background dark:bg-background border-t border-x border-border dark:border-border"
+                                        : "text-muted dark:text-muted hover:text-main dark:hover:text-main hover:bg-hover dark:hover:bg-hover active:scale-[0.97]"
                                 )}
                             >
                                 <Icon size={15} strokeWidth={isActive ? 2 : 1.5} />

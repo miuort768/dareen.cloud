@@ -119,7 +119,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
 
     return (
         <div
-            className="min-h-screen bg-background dark:bg-background overflow-x-hidden transition-colors duration-500"
+            className="min-h-screen bg-background dark:bg-background overflow-x-hidden transition-colors duration-300"
             dir="rtl"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -142,7 +142,7 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
 
             <StudentDashboardHeader logout={logout} />
 
-            <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
+            <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-4">
                 <motion.div {...fadeUp(0)}>
                     <HeroSection
                         name={studentData?.name || 'الطالب'}
@@ -154,48 +154,44 @@ export const StudentDashboardMobile = ({ currentUser, studentData, sessions, poi
                     />
                 </motion.div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4">
-                    <div className="lg:col-span-2 space-y-3 md:space-y-4">
-                        <motion.div {...fadeUp(0.04)}>
-                            <NextSessionCard nextSession={nextSession} />
+                <div className="space-y-4">
+                    <motion.div {...fadeUp(0.04)}>
+                        <NextSessionCard nextSession={nextSession} />
+                    </motion.div>
+
+                    {todayTasks.length > 0 && (
+                        <motion.div {...fadeUp(0.08)}>
+                            <TodayTasks tasks={todayTasks} />
                         </motion.div>
+                    )}
 
-                        {todayTasks.length > 0 && (
-                            <motion.div {...fadeUp(0.08)}>
-                                <TodayTasks tasks={todayTasks} />
-                            </motion.div>
-                        )}
-
-                        {enrollments.length > 0 && (
-                            <motion.div {...fadeUp(0.14)}>
-                                <SubjectCards enrollments={enrollments} />
-                            </motion.div>
-                        )}
-
-                        <motion.div {...fadeUp(0.18)}>
-                            <ContinueLearning enrollments={enrollments} />
+                    {enrollments.length > 0 && (
+                        <motion.div {...fadeUp(0.14)}>
+                            <SubjectCards enrollments={enrollments} />
                         </motion.div>
+                    )}
 
-                        {pointLogs.length > 0 && (
-                            <motion.div {...fadeUp(0.22)}>
-                                <RecentActivity pointLogs={pointLogs} />
-                            </motion.div>
-                        )}
-                    </div>
+                    <motion.div {...fadeUp(0.18)}>
+                        <ContinueLearning enrollments={enrollments} />
+                    </motion.div>
 
-                    <div className="space-y-3 md:space-y-4">
-                        <motion.div {...fadeUp(0.06)}>
-                            <ProgressOverview stats={stats} points={points} rank={rank} nextRank={nextRank} />
+                    <motion.div {...fadeUp(0.2)}>
+                        <ProgressOverview stats={stats} points={points} rank={rank} nextRank={nextRank} />
+                    </motion.div>
+
+                    <motion.div {...fadeUp(0.22)}>
+                        <AchievementsSection points={points} rank={rank} nextRank={nextRank} />
+                    </motion.div>
+
+                    {pointLogs.length > 0 && (
+                        <motion.div {...fadeUp(0.26)}>
+                            <RecentActivity pointLogs={pointLogs} />
                         </motion.div>
+                    )}
 
-                        <motion.div {...fadeUp(0.12)}>
-                            <AchievementsSection points={points} rank={rank} nextRank={nextRank} />
-                        </motion.div>
-
-                        <motion.div {...fadeUp(0.2)}>
-                            <InvoicesCard />
-                        </motion.div>
-                    </div>
+                    <motion.div {...fadeUp(0.3)}>
+                        <InvoicesCard />
+                    </motion.div>
                 </div>
             </main>
 

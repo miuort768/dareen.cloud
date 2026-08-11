@@ -33,23 +33,23 @@ export const StudentDashboard = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-background" dir="rtl">
-                <div className="sticky top-0 z-[100] bg-surface border-b border-border">
-                    <div className="px-5 pt-4 pb-3 flex items-center justify-between">
+            <div className="min-h-screen bg-background dark:bg-background" dir="rtl">
+                <div className="sticky top-0 z-[100] bg-surface dark:bg-card border-b border-border dark:border-border">
+                    <div className="px-4 md:px-6 pt-4 pb-3 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <Skeleton className="w-10 h-10 rounded-xl" />
+                            <Skeleton className="w-9 h-9 rounded-xl" />
                             <div className="space-y-1.5"><Skeleton className="h-4 w-20" /><Skeleton className="h-3 w-12" /></div>
                         </div>
                         <Skeleton className="w-8 h-8 rounded-xl" />
                     </div>
                 </div>
-                <div className="max-w-page mx-auto px-4 pt-4 space-y-3">
-                    <Skeleton className="h-36 rounded-3xl" />
-                    <Skeleton className="h-24 rounded-2xl" />
-                    <div className="grid grid-cols-2 gap-3">
-                        <Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" />
+                <div className="max-w-page mx-auto px-4 pt-6 space-y-6">
+                    <Skeleton className="h-44 rounded-2xl" />
+                    <Skeleton className="h-32 rounded-2xl" />
+                    <div className="grid grid-cols-2 gap-4">
+                        <Skeleton className="h-32 rounded-2xl" /><Skeleton className="h-32 rounded-2xl" />
                     </div>
-                    <Skeleton className="h-40 rounded-2xl" />
+                    <Skeleton className="h-48 rounded-2xl" />
                 </div>
             </div>
         );
@@ -57,10 +57,10 @@ export const StudentDashboard = () => {
 
     if (error) {
         return (
-            <div className="min-h-screen bg-background flex items-center justify-center" dir="rtl">
-                <div className="text-center space-y-3 p-6">
-                    <p className="text-muted text-sm">{error.message || 'فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.'}</p>
-                    <button onClick={() => queryClient.invalidateQueries({ queryKey: ['student-dashboard', currentUser?.id] })} className="text-sm text-primary hover:underline">إعادة المحاولة</button>
+            <div className="min-h-screen bg-background dark:bg-background flex items-center justify-center" dir="rtl">
+                <div className="text-center space-y-4 p-8 bg-surface dark:bg-card border border-border dark:border-border rounded-2xl max-w-sm">
+                    <p className="text-muted dark:text-muted text-sm">{error.message || 'فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.'}</p>
+                    <button onClick={() => queryClient.invalidateQueries({ queryKey: ['student-dashboard', currentUser?.id] })} className="text-sm font-semibold text-primary hover:underline">إعادة المحاولة</button>
                 </div>
             </div>
         );

@@ -6,11 +6,11 @@ interface TodayTasksProps {
     tasks: TodayTask[];
 }
 
-const typeConfig: Record<string, { icon: typeof BookOpen; label: string; color: string }> = {
-    homework: { icon: FileText, label: 'واجب', color: 'text-warning bg-warning-soft' },
-    review: { icon: ClipboardList, label: 'مراجعة', color: 'text-info bg-info-soft' },
-    quiz: { icon: ClipboardList, label: 'اختبار', color: 'text-error bg-error-soft' },
-    session: { icon: BookOpen, label: 'حصة', color: 'text-primary bg-primary-soft' },
+const typeConfig: Record<string, { icon: typeof BookOpen; label: string; color: string; bg: string }> = {
+    homework: { icon: FileText, label: 'واجب', color: 'text-warning', bg: 'bg-warning-soft dark:bg-warning/10' },
+    review: { icon: ClipboardList, label: 'مراجعة', color: 'text-info', bg: 'bg-info-soft dark:bg-info/10' },
+    quiz: { icon: ClipboardList, label: 'اختبار', color: 'text-error', bg: 'bg-error-soft dark:bg-error/10' },
+    session: { icon: BookOpen, label: 'حصة', color: 'text-primary', bg: 'bg-primary-soft dark:bg-primary/10' },
 };
 
 export const TodayTasks = ({ tasks }: TodayTasksProps) => {
@@ -28,9 +28,9 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
     const completedCount = tasks.filter(t => completedIds.has(t.id)).length;
 
     return (
-        <div className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-5">
-            <div className="flex items-center justify-between mb-3">
-                <span className="text-micro font-bold text-primary dark:text-primary bg-primary-soft dark:bg-primary/10 px-2 py-0.5 rounded-lg">
+        <div className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-5 transition-colors duration-300">
+            <div className="flex items-center justify-between mb-4">
+                <span className="text-[11px] font-bold text-primary dark:text-primary bg-primary-soft dark:bg-primary/10 px-2.5 py-1 rounded-lg">
                     {completedCount}/{tasks.length}
                 </span>
                 <h3 className="text-sm font-bold text-main dark:text-main">مهام اليوم</h3>
@@ -46,10 +46,10 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
                         <button
                             key={task.id}
                             onClick={() => toggle(task.id)}
-                            className={`w-full flex items-center gap-3 p-3 min-h-11 rounded-lg border transition-all duration-200 text-start active:scale-[0.98] ${
+                            className={`w-full flex items-center gap-3 p-3 min-h-12 rounded-xl border transition-all duration-200 text-start active:scale-[0.98] ${
                                 isDone
-                                    ? 'bg-surface dark:bg-surface border-border dark:border-primary/10 opacity-60'
-                                    : 'bg-card dark:bg-card border-border dark:border-primary/20 hover:border-primary/30 dark:hover:border-accent/40 hover:shadow-sm'
+                                    ? 'bg-surface dark:bg-surface border-border dark:border-border opacity-60'
+                                    : 'bg-surface dark:bg-surface border-border dark:border-border hover:border-primary/30 dark:hover:border-primary/30 hover:shadow-sm'
                             }`}
                             aria-label={`${isDone ? 'إلغاء' : 'تحديد'} ${task.subject}`}
                             role="checkbox"
@@ -58,17 +58,17 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
                             {isDone ? (
                                 <CheckCircle size={18} className="text-success shrink-0" />
                             ) : (
-                                <Circle size={18} className="text-border shrink-0" />
+                                <Circle size={18} className="text-border dark:text-border shrink-0" />
                             )}
                             <div className="flex-1 min-w-0">
-                                <p className={`text-xs font-bold ${isDone ? 'text-muted dark:text-dim line-through' : 'text-main dark:text-main'}`}>
+                                <p className={`text-xs font-bold ${isDone ? 'text-muted dark:text-muted line-through' : 'text-main dark:text-main'}`}>
                                     {task.subject}
                                 </p>
                                 {task.time && (
-                                    <p className="text-micro text-muted dark:text-muted">{task.time}</p>
+                                    <p className="text-[11px] text-muted dark:text-muted mt-0.5">{task.time}</p>
                                 )}
                             </div>
-                            <span className={`text-micro font-bold px-2 py-0.5 rounded-lg shrink-0 ${config.color}`}>
+                            <span className={`text-[11px] font-bold px-2 py-0.5 rounded-lg shrink-0 ${config.bg} ${config.color}`}>
                                 {config.label}
                             </span>
                         </button>

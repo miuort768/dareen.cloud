@@ -46,15 +46,15 @@ export const InvoicesCard = () => {
     const totalPending = pending.reduce((sum, i) => sum + i.amount, 0);
 
     return (
-        <div className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-5">
+        <div className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-5 transition-colors duration-300">
             <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-info-soft dark:bg-primary/15 flex items-center justify-center">
-                        <Receipt size={14} className="text-info dark:text-primary" />
+                    <div className="w-8 h-8 rounded-lg bg-primary-soft dark:bg-primary/10 flex items-center justify-center">
+                        <Receipt size={14} className="text-primary dark:text-primary" />
                     </div>
                     <div>
                         <h3 className="text-sm font-bold text-main dark:text-main">الفواتير</h3>
-                        <p className="text-micro text-muted dark:text-muted">{pending.length} فاتورة معلقة</p>
+                        <p className="text-[11px] text-muted dark:text-muted">{pending.length} فاتورة معلقة</p>
                     </div>
                 </div>
                 <button
@@ -65,9 +65,9 @@ export const InvoicesCard = () => {
                 </button>
             </div>
 
-            <div className="flex items-center justify-between p-3 bg-surface dark:bg-surface rounded-xl">
-                <span className="text-micro text-muted dark:text-muted">المبلغ المطلوب</span>
-                <span className="text-sm font-bold text-error">{totalPending.toFixed(3)} {CURRENCY_SYMBOL}</span>
+            <div className="flex items-center justify-between p-3 bg-primary-soft dark:bg-primary/5 rounded-xl border border-primary/10 dark:border-primary/10">
+                <span className="text-[11px] text-muted dark:text-muted font-medium">المبلغ المطلوب</span>
+                <span className="text-sm font-bold text-primary dark:text-primary">{totalPending.toFixed(3)} {CURRENCY_SYMBOL}</span>
             </div>
         </div>
     );

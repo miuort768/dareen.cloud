@@ -13,7 +13,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
 
     return (
         <div>
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-4">
                 <button onClick={() => navigate('/schedule')} className="text-primary dark:text-primary text-xs font-semibold hover:underline transition-all">عرض الكل</button>
                 <h3 className="text-sm font-bold text-main dark:text-main">تابع تعلمك</h3>
             </div>
@@ -27,7 +27,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                     return (
                     <div
                         key={en.id || idx}
-                        className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 min-w-[200px] snap-start shrink-0 hover:border-primary/30 dark:hover:border-accent/40 transition-colors"
+                        className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-4 min-w-[200px] snap-start shrink-0 hover:shadow-elevation-1 transition-all duration-200"
                     >
                             <div className="flex items-center gap-2 mb-3">
                                 <div className="w-10 h-10 rounded-xl bg-primary-soft dark:bg-primary/10 flex items-center justify-center shrink-0">
@@ -36,25 +36,25 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                                 <div className="min-w-0">
                                     <h4 className="text-xs font-bold text-main dark:text-main truncate">{en.subject || 'دورة'}</h4>
                                     {en.teacherName && (
-                                        <p className="text-micro text-muted dark:text-muted truncate">{en.teacherName}</p>
+                                        <p className="text-[11px] text-muted dark:text-muted truncate">{en.teacherName}</p>
                                     )}
                                 </div>
                             </div>
 
                             <div className="mb-2">
-                                <div className="h-1.5 bg-hover rounded-full overflow-hidden">
+                                <div className="h-1.5 bg-border dark:bg-border rounded-full overflow-hidden">
                                     <div
-                                        className="h-full rounded-full bg-primary transition-all duration-500"
+                                        className="h-full rounded-full bg-primary dark:bg-primary transition-all duration-500"
                                         style={{ width: `${progress}%` }}
                                     />
                                 </div>
                             </div>
 
                             <div className="flex items-center justify-between">
-                                <span className="text-micro text-muted">{progress}%</span>
+                                <span className="text-[11px] text-muted dark:text-muted">{progress}%</span>
                                 <button
                                     onClick={() => navigate('/schedule')}
-                                    className="text-primary text-micro font-semibold flex items-center gap-1 hover:underline transition-all"
+                                    className="text-primary text-[11px] font-semibold flex items-center gap-1 hover:underline transition-all"
                                 >
                                     متابعة <ArrowLeft size={10} />
                                 </button>

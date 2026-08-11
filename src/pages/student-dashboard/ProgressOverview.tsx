@@ -14,17 +14,17 @@ const ProgressBar = ({ value, max, color, label, icon: Icon }: { value: number; 
     const percent = max > 0 ? Math.min(Math.round((value / max) * 100), 100) : 0;
 
     return (
-        <div className="space-y-1.5">
+        <div className="space-y-2">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <div className={`w-7 h-7 rounded-lg ${color}/10 flex items-center justify-center`}>
+                    <div className={`w-7 h-7 rounded-lg ${color}-soft dark:${color}-soft flex items-center justify-center`}>
                         <Icon size={13} className={color} />
                     </div>
-                    <span className="text-xs font-bold text-main">{label}</span>
+                    <span className="text-xs font-bold text-main dark:text-main">{label}</span>
                 </div>
                 <span className={`text-xs font-bold ${color}`}>{percent}%</span>
             </div>
-            <div className="relative h-2.5 rounded-full bg-border dark:bg-hover overflow-hidden">
+            <div className="relative h-2 rounded-full bg-border dark:bg-border overflow-hidden">
                 <motion.div
                     className={`absolute inset-y-0 start-0 rounded-full ${color}`}
                     initial={{ width: 0 }}
@@ -42,7 +42,7 @@ export const ProgressOverview = ({ stats, points, rank, nextRank }: ProgressOver
     const RankIconComponent = RANK_ICON_MAP[rank.icon] || Star;
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 md:p-6 transition-all duration-300 hover:shadow-elevation-1">
+        <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 md:p-6 transition-colors duration-300">
             <h3 className="text-base font-bold text-main dark:text-main mb-5">التقدم الأكاديمي</h3>
 
             <div className="space-y-4">
@@ -52,10 +52,10 @@ export const ProgressOverview = ({ stats, points, rank, nextRank }: ProgressOver
                 <ProgressBar value={xpPercent} max={100} color="text-warning" label="XP" icon={Star} />
             </div>
 
-            <div className="mt-5 p-4 rounded-xl bg-gradient-to-l from-warning/10 via-warning/[0.03] to-surface dark:from-primary/10 dark:via-card dark:to-surface border border-warning/20 dark:border-primary/20 flex items-center justify-between">
+            <div className="mt-5 p-4 rounded-xl bg-primary-soft dark:bg-primary/5 border border-primary/10 dark:border-primary/10 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-warning/15 dark:bg-primary/15 flex items-center justify-center">
-                        <RankIconComponent size={20} className="text-warning dark:text-primary" />
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 dark:bg-primary/10 flex items-center justify-center">
+                        <RankIconComponent size={20} className="text-primary dark:text-primary" />
                     </div>
                     <div>
                         <p className="text-sm font-bold text-main dark:text-main">{rank.name}</p>
@@ -64,7 +64,7 @@ export const ProgressOverview = ({ stats, points, rank, nextRank }: ProgressOver
                         )}
                     </div>
                 </div>
-                <span className="text-lg font-bold text-warning dark:text-primary bg-warning/10 dark:bg-primary/10 px-3 py-1.5 rounded-xl">{points}</span>
+                <span className="text-lg font-bold text-primary dark:text-primary bg-primary/10 dark:bg-primary/10 px-3 py-1.5 rounded-xl">{points}</span>
             </div>
         </div>
     );

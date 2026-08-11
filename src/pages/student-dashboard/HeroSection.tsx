@@ -1,4 +1,4 @@
-﻿import { GraduationCap, Sparkles, TrendingUp } from 'lucide-react';
+﻿import { GraduationCap, Sparkles, TrendingUp, Calendar } from 'lucide-react';
 import { RANK_ICON_MAP } from '../../shared/utils/ranks';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
@@ -33,70 +33,63 @@ export const HeroSection = ({ name, grade, curriculum, points, rank, attendanceR
     const offset = circumference - (attendanceRate / 100) * circumference;
 
     return (
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary dark:via-primary-deep dark:to-warning p-6 md:p-8">
-            {/* Decorative elements */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(212,175,55,0.15)_0%,transparent_70%)]" />
-            <div className="absolute -top-10 -end-10 w-40 h-40 rounded-full bg-white/5 dark:bg-primary/10 blur-3xl" />
-            <div className="absolute -bottom-10 -start-10 w-40 h-40 rounded-full bg-white/5 dark:bg-primary/10 blur-3xl" />
+        <div className="relative overflow-hidden rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-6 md:p-8 transition-colors duration-300">
+            <div className="absolute -top-20 -end-20 w-60 h-60 rounded-full bg-primary/5 dark:bg-primary/5 blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-20 -start-20 w-60 h-60 rounded-full bg-primary/5 dark:bg-primary/5 blur-3xl pointer-events-none" />
 
             <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6">
-                {/* Left: Info */}
                 <div className="flex-1 min-w-0">
-                    <p className="text-sm font-bold text-white/80 dark:text-main/90 mb-1">
+                    <p className="text-sm font-medium text-muted dark:text-muted mb-2">
                         {getGreeting()}، {firstName}
-                        <span className="inline-flex items-center justify-center w-5 h-5 rounded bg-white/15 dark:bg-white/20 align-middle me-1.5">
-                            <RankIconComponent size={12} className="text-white dark:text-primary" />
-                        </span>
                     </p>
-                    <h1 className="text-2xl md:text-[30px] font-bold text-white leading-tight mb-2">
+                    <h1 className="text-2xl md:text-[30px] font-bold text-main dark:text-main leading-tight mb-4">
                         {firstName}
                     </h1>
                     <div className="flex flex-wrap items-center gap-2">
                         {grade && (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/15 dark:bg-primary/20 text-white dark:text-main text-xs font-semibold">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary text-xs font-semibold">
                                 <GraduationCap size={12} /> {grade}
                             </span>
                         )}
                         {curriculum && (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 dark:bg-white/10 text-white/80 dark:text-muted text-xs font-medium">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface dark:bg-surface text-muted dark:text-muted text-xs font-medium border border-border dark:border-border">
                                 {curriculum}
                             </span>
                         )}
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 dark:bg-white/10 text-white/80 dark:text-muted text-xs font-medium">
-                            {getDayName()}
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface dark:bg-surface text-muted dark:text-muted text-xs font-medium border border-border dark:border-border">
+                            <Calendar size={11} /> {getDayName()}
                         </span>
                     </div>
                 </div>
 
-                {/* Right: Attendance ring + XP */}
                 <div className="flex items-center gap-4">
                     <div className="relative shrink-0">
                         <svg className="w-[120px] h-[120px] -rotate-90" viewBox="0 0 120 120">
-                            <circle cx="60" cy="60" r={radius} fill="none" stroke="rgba(255,255,255,0.15)" className="dark:stroke-primary/20" strokeWidth="8" />
+                            <circle cx="60" cy="60" r={radius} fill="none" stroke="currentColor" className="text-border dark:text-border" strokeWidth="8" />
                             <circle
                                 cx="60" cy="60" r={radius} fill="none"
-                                stroke="rgba(255,255,255,0.9)" strokeWidth="8"
+                                stroke="currentColor" strokeWidth="8"
                                 strokeLinecap="round"
                                 strokeDasharray={circumference}
                                 strokeDashoffset={offset}
-                                className="dark:stroke-primary transition-all duration-1000 ease-out"
+                                className="text-primary dark:text-primary transition-all duration-1000 ease-out"
                             />
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center">
-                            <span className="text-2xl font-bold text-white dark:text-primary">{attendanceRate}%</span>
-                            <span className="text-[11px] font-semibold text-white/70 dark:text-muted">حضور</span>
+                            <span className="text-2xl font-bold text-main dark:text-main">{attendanceRate}%</span>
+                            <span className="text-[11px] font-medium text-muted dark:text-muted">حضور</span>
                         </div>
                     </div>
-                    <div className="hidden sm:flex flex-col gap-1.5">
-                        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/10 dark:bg-white/10">
-                            <Sparkles size={14} className="text-white/80 dark:text-primary" />
-                            <span className="text-white/80 dark:text-muted text-xs font-medium">النقاط</span>
-                            <span className="text-white dark:text-main font-bold text-sm">{points}</span>
+                    <div className="hidden sm:flex flex-col gap-2">
+                        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface dark:bg-surface border border-border dark:border-border">
+                            <Sparkles size={14} className="text-primary dark:text-primary" />
+                            <span className="text-muted dark:text-muted text-xs font-medium">النقاط</span>
+                            <span className="text-main dark:text-main font-bold text-sm">{points}</span>
                         </div>
-                        <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/10 dark:bg-white/10">
-                            <TrendingUp size={14} className="text-white/80 dark:text-primary" />
-                            <span className="text-white/80 dark:text-muted text-xs font-medium">الرتبة</span>
-                            <span className="text-white dark:text-main font-bold text-xs">{rank.name}</span>
+                        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface dark:bg-surface border border-border dark:border-border">
+                            <TrendingUp size={14} className="text-primary dark:text-primary" />
+                            <span className="text-muted dark:text-muted text-xs font-medium">الرتبة</span>
+                            <span className="text-main dark:text-main font-bold text-xs">{rank.name}</span>
                         </div>
                     </div>
                 </div>

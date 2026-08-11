@@ -1,6 +1,4 @@
 import { motion } from 'framer-motion';
-import { RefreshCw } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks';
 import type { StudentDashboardData, Session, PointLog, Enrollment, DashboardStats, NextSession, TodayTask } from './types';
 import { StudentDashboardHeader } from './StudentDashboardHeader';
@@ -32,7 +30,6 @@ interface StudentDashboardDesktopProps {
 
 export const StudentDashboardDesktop = ({ studentData, sessions, pointLogs, onRefresh }: StudentDashboardDesktopProps) => {
     const logout = useLogout();
-    const navigate = useNavigate();
 
     const enrollments = studentData?.enrollments || [];
     const points = studentData?.totalPoints || 0;
@@ -93,10 +90,10 @@ export const StudentDashboardDesktop = ({ studentData, sessions, pointLogs, onRe
     })();
 
     return (
-        <div className="min-h-screen bg-background dark:bg-background transition-colors duration-500" dir="rtl">
+        <div className="min-h-screen bg-background dark:bg-background transition-colors duration-300" dir="rtl">
             <StudentDashboardHeader logout={logout} />
 
-            <main className="max-w-page mx-auto px-6 pt-6 pb-12 space-y-6">
+            <main className="max-w-page mx-auto px-4 md:px-6 pt-6 pb-12 space-y-6">
                 <motion.div {...fadeUp(0)}>
                     <HeroSection name={studentData?.name || 'الطالب'} grade={studentData?.grade || ''} curriculum={studentData?.curriculum || ''} points={points} rank={rank} attendanceRate={stats.attendanceRate} />
                 </motion.div>
