@@ -16,41 +16,29 @@ const cards = [
         key: 'present',
         icon: CheckCircle2,
         label: 'حاضر',
-        color: 'success',
-        bg: 'bg-success/10',
-        ring: 'ring-success/20',
-        text: 'text-success',
-        grow: true,
+        color: 'text-success',
+        bg: 'bg-success-soft dark:bg-success/10',
     },
     {
         key: 'absent',
         icon: XCircle,
         label: 'غائب',
-        color: 'error',
-        bg: 'bg-error/10',
-        ring: 'ring-error/20',
-        text: 'text-error',
-        grow: true,
+        color: 'text-error',
+        bg: 'bg-error-soft dark:bg-error/10',
     },
     {
         key: 'lessons',
         icon: BookOpen,
         label: 'الدروس',
-        color: 'info',
-        bg: 'bg-info/10',
-        ring: 'ring-info/20',
-        text: 'text-info',
-        grow: false,
+        color: 'text-info',
+        bg: 'bg-info-soft dark:bg-info/10',
     },
     {
         key: 'day',
         icon: CalendarDays,
         label: 'اليوم',
-        color: 'warning',
-        bg: 'bg-warning/10',
-        ring: 'ring-warning/20',
-        text: 'text-warning',
-        grow: false,
+        color: 'text-primary',
+        bg: 'bg-primary-soft dark:bg-primary/10',
     },
 ];
 
@@ -84,11 +72,11 @@ export const TodaySummary = ({ sessions, children: kids, todayTasks }: TodaySumm
                 return (
                     <div
                         key={card.key}
-                        className="group relative overflow-hidden rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-4 md:p-5 transition-all duration-300 hover:shadow-elevation-2 hover:-translate-y-0.5"
+                        className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-4 md:p-5 transition-all duration-300 hover:shadow-elevation-1"
                     >
                         <div className="flex items-start justify-between mb-3">
-                            <div className={`w-10 h-10 rounded-xl ${card.bg} dark:bg-primary/10 ${card.ring} ring-1 flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}>
-                                <Icon size={18} className={card.text} />
+                            <div className={`w-10 h-10 rounded-xl ${card.bg} flex items-center justify-center`}>
+                                <Icon size={18} className={card.color} />
                             </div>
                         </div>
                         <p className="text-2xl md:text-[28px] font-bold text-main dark:text-main leading-none tracking-tight mb-1">
@@ -96,7 +84,7 @@ export const TodaySummary = ({ sessions, children: kids, todayTasks }: TodaySumm
                         </p>
                         <p className="text-[13px] font-medium text-muted dark:text-muted">{card.label}</p>
                         {val.subtitle && (
-                            <p className={`text-[11px] font-semibold mt-1.5 ${card.text}`}>{val.subtitle}</p>
+                            <p className={`text-[11px] font-semibold mt-1.5 ${card.color}`}>{val.subtitle}</p>
                         )}
                     </div>
                 );

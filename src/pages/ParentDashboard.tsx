@@ -1,5 +1,4 @@
 ﻿import { useState, useEffect, useMemo, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { useCurrentUser, useAdminPhone, useLogout, useAcademyName } from '../context/AppContext';
@@ -17,7 +16,6 @@ export const ParentDashboard = () => {
     const currentUser = useCurrentUser();
     const adminPhone = useAdminPhone();
     const logout = useLogout();
-    const navigate = useNavigate();
 
     const [partialError, setPartialError] = useState<string | null>(null);
 
@@ -122,10 +120,10 @@ export const ParentDashboard = () => {
     if (isLoading) {
         return (
             <div className="min-h-screen bg-background dark:bg-background" dir="rtl">
-                <div className="sticky top-0 z-[100] bg-surface dark:bg-surface border-b border-border dark:border-primary/20">
-                    <div className="max-w-page mx-auto px-5 pt-4 pb-3 flex items-center justify-between">
+                <div className="sticky top-0 z-[100] bg-surface dark:bg-card border-b border-border dark:border-border">
+                    <div className="max-w-page mx-auto px-4 md:px-6 pt-4 pb-3 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <Skeleton className="w-10 h-10 rounded-xl" />
+                            <Skeleton className="w-9 h-9 rounded-xl" />
                             <div className="space-y-1.5"><Skeleton className="h-4 w-24" /><Skeleton className="h-3 w-16" /></div>
                         </div>
                         <div className="flex items-center gap-2">
@@ -135,13 +133,13 @@ export const ParentDashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div className="max-w-page mx-auto px-4 pt-4 space-y-3">
-                    <Skeleton className="h-36 rounded-3xl" />
-                    <div className="grid grid-cols-2 gap-3">
-                        <Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" />
+                <div className="max-w-page mx-auto px-4 pt-6 space-y-6">
+                    <Skeleton className="h-44 rounded-2xl" />
+                    <div className="grid grid-cols-2 gap-4">
+                        <Skeleton className="h-32 rounded-2xl" /><Skeleton className="h-32 rounded-2xl" />
                     </div>
-                    <Skeleton className="h-24 rounded-2xl" />
-                    <Skeleton className="h-40 rounded-2xl" />
+                    <Skeleton className="h-32 rounded-2xl" />
+                    <Skeleton className="h-48 rounded-2xl" />
                 </div>
             </div>
         );
@@ -150,9 +148,9 @@ export const ParentDashboard = () => {
     if (error) {
         return (
             <div className="min-h-screen bg-background dark:bg-background flex items-center justify-center" dir="rtl">
-                <div className="text-center space-y-3 p-6">
+                <div className="text-center space-y-4 p-8 bg-surface dark:bg-card border border-border dark:border-border rounded-2xl max-w-sm">
                     <p className="text-muted dark:text-muted text-sm">فشل تحويل الأبناء. تحقق من اتصالك بالإنترنت.</p>
-                    <button onClick={() => refetch()} className="text-sm text-primary dark:text-primary hover:underline">إعادة المحاولة</button>
+                    <button onClick={() => refetch()} className="text-sm font-semibold text-primary hover:underline">إعادة المحاولة</button>
                 </div>
             </div>
         );
@@ -174,7 +172,7 @@ export const ParentDashboard = () => {
     return (
         <>
             {partialError && (
-                <div className="bg-warning/10 border-b border-warning/20 px-4 py-2 text-center">
+                <div className="bg-warning-soft border-b border-warning/20 px-4 py-2 text-center">
                     <p className="text-xs font-medium text-warning">{partialError}</p>
                 </div>
             )}

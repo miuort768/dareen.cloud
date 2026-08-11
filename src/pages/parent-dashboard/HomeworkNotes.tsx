@@ -1,4 +1,4 @@
-﻿import { FileText, ChevronLeft } from 'lucide-react';
+﻿import { FileText } from 'lucide-react';
 import type { Student } from '../../types';
 
 interface HomeworkNotesProps {
@@ -10,10 +10,10 @@ export const HomeworkNotes = ({ children: kids }: HomeworkNotesProps) => {
     if (!hasNotes) return null;
 
     return (
-        <div className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-5">
+        <div className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-5 transition-colors duration-300">
             <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-xl bg-warning-soft dark:bg-primary/15 flex items-center justify-center">
-                    <FileText size={13} className="text-warning dark:text-primary" />
+                <div className="w-7 h-7 rounded-lg bg-warning-soft dark:bg-warning/10 flex items-center justify-center">
+                    <FileText size={13} className="text-warning dark:text-warning" />
                 </div>
                 <h3 className="text-sm font-bold text-main dark:text-main">الواجبات والملاحظات</h3>
             </div>
@@ -26,12 +26,12 @@ export const HomeworkNotes = ({ children: kids }: HomeworkNotesProps) => {
                         </div>
                         <div className="space-y-2 ms-4">
                             {child.enrollments.filter((en) => en.nextSessionNotes).map((en, idx) => (
-                                <div key={`note-${child.id}-${idx}`} className="bg-warning/10 dark:bg-primary/10 p-3 rounded-xl border border-warning/30 dark:border-primary/20">
+                                <div key={`note-${child.id}-${idx}`} className="bg-primary-soft dark:bg-primary/5 p-3 rounded-xl border border-primary/10 dark:border-primary/10">
                                     <div className="flex justify-between items-center mb-1">
-                                        <span className="text-xs font-bold text-warning dark:text-primary">{en.subject}</span>
-                                        <span className="text-micro text-muted dark:text-dim">{en.teacher || en.teacherName}</span>
+                                        <span className="text-xs font-bold text-primary dark:text-primary">{en.subject}</span>
+                                        <span className="text-[11px] text-muted dark:text-muted">{en.teacher || en.teacherName}</span>
                                     </div>
-                                    <p className="text-micro text-main dark:text-muted leading-relaxed">{en.nextSessionNotes}</p>
+                                    <p className="text-[11px] text-main dark:text-main leading-relaxed">{en.nextSessionNotes}</p>
                                 </div>
                             ))}
                         </div>

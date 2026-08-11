@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Wallet, ArrowLeft, RefreshCw } from 'lucide-react';
+import { Wallet, ArrowLeft } from 'lucide-react';
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks';
 import { ParentDashboardHeader } from './ParentDashboardHeader';
 import { HeroSection } from './HeroSection';
@@ -58,10 +58,10 @@ export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sess
     const rank = getRankByPoints(points, STUDENT_RANKS);
 
     return (
-        <div className="min-h-screen bg-background dark:bg-background transition-colors duration-500" dir="rtl">
+        <div className="min-h-screen bg-background dark:bg-background transition-colors duration-300" dir="rtl">
             <ParentDashboardHeader logout={logout} />
 
-            <main className="max-w-page mx-auto px-6 pt-6 pb-12 space-y-6">
+            <main className="max-w-page mx-auto px-4 md:px-6 pt-6 pb-12 space-y-6">
                 <motion.div {...fadeUp(0)}>
                     <HeroSection
                         name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
@@ -110,17 +110,16 @@ export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sess
                         </motion.div>
                         <motion.div {...fadeUp(0.3)}>
                             <button onClick={() => navigate('/parent-payment-history')}
-                                className="w-full bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-primary/5 transition-all duration-200 text-start hover:shadow-sm active:scale-[0.99]"
+                                className="w-full bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-hover transition-all duration-200 text-start hover:shadow-sm active:scale-[0.99]"
                                 aria-label="سجل الدفعات"
                             >
-                                <div className="w-10 h-10 rounded-xl bg-success-soft dark:bg-primary/15 flex items-center justify-center shrink-0">
-                                    <Wallet size={18} className="text-success dark:text-primary" />
+                                <div className="w-10 h-10 rounded-xl bg-success-soft dark:bg-success/10 flex items-center justify-center shrink-0">
+                                    <Wallet size={18} className="text-success dark:text-success" />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-bold text-main dark:text-white">سجل الدفعات</p>
-                                    <p className="text-sm font-bold text-main dark:text-white">سجل الدفعات</p>
+                                    <p className="text-sm font-bold text-main dark:text-main">سجل الدفعات</p>
                                 </div>
-                                <ArrowLeft size={16} className="text-muted dark:text-dim shrink-0" />
+                                <ArrowLeft size={16} className="text-muted dark:text-muted shrink-0" />
                             </button>
                         </motion.div>
                     </div>

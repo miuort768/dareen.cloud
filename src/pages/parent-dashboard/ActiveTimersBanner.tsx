@@ -15,15 +15,15 @@ export const ActiveTimersBanner = ({ activeTimers, children: kids, formatTime }:
             {activeTimers.map((session) => {
                 const child = kids.find(c => c.id === session.studentId);
                 return (
-                    <div key={session.id} className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4">
+                    <div key={session.id} className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-4 transition-colors duration-300">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-warning-soft dark:bg-primary/15 flex items-center justify-center ring-1 ring-warning/20 dark:ring-primary/30 animate-pulse">
-                                    <Clock size={18} className="text-warning dark:text-primary" />
+                                <div className="w-10 h-10 rounded-xl bg-warning-soft dark:bg-warning/10 flex items-center justify-center animate-pulse">
+                                    <Clock size={18} className="text-warning dark:text-warning" />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-xs text-main dark:text-main">حصة جارية الآن</h3>
-                                    <p className="text-micro font-medium text-muted dark:text-muted">
+                                    <p className="text-[11px] font-medium text-muted dark:text-muted">
                                         {child?.name || 'ابن'} — {session.subject}
                                     </p>
                                 </div>

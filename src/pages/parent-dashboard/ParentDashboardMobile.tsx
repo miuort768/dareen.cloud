@@ -84,7 +84,7 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
 
     return (
         <div
-            className="min-h-screen bg-background dark:bg-background overflow-x-hidden transition-colors duration-500"
+            className="min-h-screen bg-background dark:bg-background overflow-x-hidden transition-colors duration-300"
             dir="rtl"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -107,7 +107,7 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
 
             <ParentDashboardHeader logout={logout} />
 
-            <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-3 md:space-y-4">
+            <main className="max-w-page mx-auto px-4 pt-4 pb-28 space-y-4">
                 <motion.div {...fadeUp(0)}>
                     <HeroSection
                         name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
@@ -121,55 +121,54 @@ export const ParentDashboardMobile = ({ currentUser, adminPhone, children, sessi
                     <TodaySummary sessions={sessions} children={children} todayTasks={todayTasks} />
                 </motion.div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4">
-                    <div className="lg:col-span-2 space-y-3 md:space-y-4">
-                        {activeTimers.length > 0 && (
-                            <motion.div {...fadeUp(0.1)}>
-                                <ActiveTimersBanner activeTimers={activeTimers} children={children} formatTime={formatTime} />
-                            </motion.div>
-                        )}
-                        <motion.div {...fadeUp(0.12)}>
-                            <NextSessionBanner todayTasks={todayTasks} />
+                <div className="space-y-4">
+                    {activeTimers.length > 0 && (
+                        <motion.div {...fadeUp(0.1)}>
+                            <ActiveTimersBanner activeTimers={activeTimers} children={children} formatTime={formatTime} />
                         </motion.div>
-                        <motion.div {...fadeUp(0.16)}>
-                            <ChildrenCards children={children} />
-                        </motion.div>
-                        <motion.div {...fadeUp(0.2)}>
-                            <HomeworkNotes children={children} />
-                        </motion.div>
-                        {allPointLogs.length > 0 && (
-                            <motion.div {...fadeUp(0.24)}>
-                                <RecentActivity allPointLogs={allPointLogs} />
-                            </motion.div>
-                        )}
-                    </div>
+                    )}
+                    <motion.div {...fadeUp(0.12)}>
+                        <NextSessionBanner todayTasks={todayTasks} />
+                    </motion.div>
+                    <motion.div {...fadeUp(0.16)}>
+                        <ChildrenCards children={children} />
+                    </motion.div>
+                    <motion.div {...fadeUp(0.2)}>
+                        <HomeworkNotes children={children} />
+                    </motion.div>
 
-                    <div className="space-y-3 md:space-y-4">
-                        <motion.div {...fadeUp(0.14)}>
-                            <AcademicPerformance sessions={sessions} children={children} points={points} rank={rank} />
+                    <motion.div {...fadeUp(0.22)}>
+                        <AcademicPerformance sessions={sessions} children={children} points={points} rank={rank} />
+                    </motion.div>
+
+                    <motion.div {...fadeUp(0.24)}>
+                        <AchievementsSection points={points} rank={rank} />
+                    </motion.div>
+
+                    {allPointLogs.length > 0 && (
+                        <motion.div {...fadeUp(0.26)}>
+                            <RecentActivity allPointLogs={allPointLogs} />
                         </motion.div>
-                        <motion.div {...fadeUp(0.18)}>
-                            <AchievementsSection points={points} rank={rank} />
-                        </motion.div>
-                        <motion.div {...fadeUp(0.28)}>
-                            <SupportBanner adminPhone={adminPhone} />
-                        </motion.div>
-                        <motion.div {...fadeUp(0.3)}>
-                            <button onClick={() => navigate('/parent-payment-history')}
-                                className="w-full bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-primary/5 transition-all duration-200 text-start hover:shadow-sm active:scale-[0.99]"
-                                aria-label="سجل الدفعات"
-                            >
-                                <div className="w-10 h-10 rounded-xl bg-success-soft dark:bg-primary/15 flex items-center justify-center shrink-0">
-                                    <Wallet size={18} className="text-success dark:text-primary" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-bold text-main dark:text-white">سجل الدفعات</p>
-                                    <p className="text-sm font-bold text-main dark:text-white">سجل الدفعات</p>
-                                </div>
-                                <ArrowLeft size={16} className="text-muted dark:text-dim shrink-0" />
-                            </button>
-                        </motion.div>
-                    </div>
+                    )}
+
+                    <motion.div {...fadeUp(0.28)}>
+                        <SupportBanner adminPhone={adminPhone} />
+                    </motion.div>
+
+                    <motion.div {...fadeUp(0.3)}>
+                        <button onClick={() => navigate('/parent-payment-history')}
+                            className="w-full bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-4 flex items-center gap-3 hover:bg-hover dark:hover:bg-hover transition-all duration-200 text-start hover:shadow-sm active:scale-[0.99]"
+                            aria-label="سجل الدفعات"
+                        >
+                            <div className="w-10 h-10 rounded-xl bg-success-soft dark:bg-success/10 flex items-center justify-center shrink-0">
+                                <Wallet size={18} className="text-success dark:text-success" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm font-bold text-main dark:text-main">سجل الدفعات</p>
+                            </div>
+                            <ArrowLeft size={16} className="text-muted dark:text-muted shrink-0" />
+                        </button>
+                    </motion.div>
                 </div>
             </main>
 

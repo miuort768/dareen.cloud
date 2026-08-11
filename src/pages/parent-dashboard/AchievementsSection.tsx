@@ -8,18 +8,18 @@ interface AchievementsSectionProps {
 
 export const AchievementsSection = ({ points, rank }: AchievementsSectionProps) => {
     const badges = [
-        { icon: Star, label: 'طالب نشيط', unlocked: points >= 100, color: 'text-warning', bg: 'bg-warning/10', ring: 'ring-warning/20' },
-        { icon: Flame, label: '7 أيام متتالية', unlocked: points >= 200, color: 'text-error', bg: 'bg-error/10', ring: 'ring-error/20' },
-        { icon: BookOpen, label: 'أنهيت أول مادة', unlocked: points >= 500, color: 'text-info', bg: 'bg-info/10', ring: 'ring-info/20' },
-        { icon: Lock, label: 'أكمل 10 واجبات', unlocked: points >= 1000, color: 'text-muted', bg: 'bg-surface', ring: 'ring-border' },
+        { icon: Star, label: 'طالب نشيط', unlocked: points >= 100, color: 'text-warning', bg: 'bg-warning-soft dark:bg-warning/10' },
+        { icon: Flame, label: '7 أيام متتالية', unlocked: points >= 200, color: 'text-error', bg: 'bg-error-soft dark:bg-error/10' },
+        { icon: BookOpen, label: 'أنهيت أول مادة', unlocked: points >= 500, color: 'text-info', bg: 'bg-info-soft dark:bg-info/10' },
+        { icon: Lock, label: 'أكمل 10 واجبات', unlocked: points >= 1000, color: 'text-muted', bg: 'bg-border/30 dark:bg-surface' },
     ];
     return (
-        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 p-5 md:p-6">
+        <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 md:p-6 transition-colors duration-300">
             <div className="flex items-center gap-2 mb-5">
-                <div className="w-8 h-8 rounded-xl bg-warning/15 dark:bg-primary/15 flex items-center justify-center">
-                    <Trophy size={16} className="text-warning dark:text-primary" />
+                <div className="w-8 h-8 rounded-lg bg-warning-soft dark:bg-warning/10 flex items-center justify-center">
+                    <Trophy size={16} className="text-warning dark:text-warning" />
                 </div>
-                <h3 className="text-base md:text-[22px] font-bold text-main dark:text-main">الإنجازات</h3>
+                <h3 className="text-base md:text-lg font-bold text-main dark:text-main">الإنجازات</h3>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -31,16 +31,16 @@ export const AchievementsSection = ({ points, rank }: AchievementsSectionProps) 
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 + i * 0.06 }}
-                            className={`relative rounded-2xl p-4 ${badge.bg} ${badge.ring} ring-1 text-center transition-all duration-300 ${badge.unlocked ? 'hover:shadow-elevation-2 hover:-translate-y-0.5' : ''}`}
+                            className={`relative rounded-2xl p-4 ${badge.bg} text-center transition-all duration-300 ${badge.unlocked ? 'hover:shadow-elevation-1 hover:-translate-y-0.5' : ''}`}
                         >
-                            <div className={`w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center ${badge.unlocked ? badge.bg : 'bg-border/30'}`}>
+                            <div className={`w-12 h-12 rounded-xl mx-auto mb-3 flex items-center justify-center ${badge.unlocked ? badge.bg : 'bg-border/30 dark:bg-surface'}`}>
                                 <Icon size={22} className={badge.unlocked ? badge.color : 'text-muted'} />
                             </div>
-                            <p className={`text-xs font-bold ${badge.unlocked ? 'text-main dark:text-main' : 'text-muted dark:text-dim'}`}>
+                            <p className={`text-xs font-bold ${badge.unlocked ? 'text-main dark:text-main' : 'text-muted dark:text-muted'}`}>
                                 {badge.label}
                             </p>
                             {!badge.unlocked && (
-                                <p className="text-[10px] text-muted mt-1">مقفل</p>
+                                <p className="text-[10px] text-muted dark:text-muted mt-1">مقفل</p>
                             )}
                         </motion.div>
                     );

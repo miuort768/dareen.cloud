@@ -12,11 +12,11 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
     if (kids.length === 0) return null;
 
     return (
-        <div className="bg-card dark:bg-card border border-border dark:border-primary/20 rounded-2xl p-5">
+        <div className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-5 transition-colors duration-300">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-primary/10 dark:bg-primary/15 flex items-center justify-center">
-                        <Users size={16} className="text-primary" />
+                    <div className="w-9 h-9 rounded-lg bg-primary-soft dark:bg-primary/10 flex items-center justify-center">
+                        <Users size={16} className="text-primary dark:text-primary" />
                     </div>
                     <div>
                         <h3 className="text-[13px] font-bold text-main dark:text-main">الأبناء</h3>
@@ -41,9 +41,9 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
                         <button
                             key={child.id}
                             onClick={() => navigate('/parent-students')}
-                            className="w-full flex items-center gap-3 p-3.5 bg-surface dark:bg-hover rounded-xl border border-border dark:border-primary/10 text-end transition-all duration-200 hover:bg-hover dark:hover:bg-primary/5 active:scale-[0.98] hover:shadow-sm group"
+                            className="w-full flex items-center gap-3 p-3.5 bg-surface dark:bg-surface rounded-xl border border-border dark:border-border text-end transition-all duration-200 hover:bg-hover dark:hover:bg-hover active:scale-[0.98] hover:shadow-sm group"
                         >
-                            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-primary-deep dark:from-primary dark:to-warning flex items-center justify-center shrink-0 shadow-sm">
+                            <div className="w-11 h-11 rounded-xl bg-primary dark:bg-primary flex items-center justify-center shrink-0">
                                 <span className="text-sm font-bold text-on-primary dark:text-on-primary">
                                     {(child.name || 'ط').charAt(0)}
                                 </span>
@@ -64,10 +64,10 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
                             <div className="shrink-0 flex flex-col items-center gap-1">
                                 <div className="relative w-10 h-10">
                                     <svg className="w-10 h-10 -rotate-90" viewBox="0 0 36 36">
-                                         <circle cx="18" cy="18" r="15" fill="none" stroke="var(--border)" strokeWidth="3" className="dark:stroke-primary/20" />
+                                         <circle cx="18" cy="18" r="15" fill="none" stroke="currentColor" className="text-border dark:text-border" strokeWidth="3" />
                                          <circle
                                              cx="18" cy="18" r="15" fill="none"
-                                             stroke="var(--bg-primary)" strokeWidth="3" className="dark:stroke-primary"
+                                             stroke="currentColor" strokeWidth="3" className="text-primary dark:text-primary"
                                             strokeLinecap="round"
                                             strokeDasharray={`${(progress / 100) * 94.2} 94.2`}
                                         />
