@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked, Download, ChevronDown, Inbox } from 'lucide-react';
+import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked, Download, ChevronDown, Inbox, Filter, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';
@@ -25,11 +25,6 @@ interface JobApp {
     contacted: number;
     createdAt: string;
 }
-
-const particles = Array.from({ length: 8 }, (_, i) => ({
-    id: i, x: Math.random() * 100, y: Math.random() * 100,
-    size: Math.random() * 5 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
-}));
 
 function formatDateNumeric(dateStr: string) {
     const d = new Date(dateStr);
@@ -74,10 +69,8 @@ export const AdminJobs = () => {
     });
 
     const [search, setSearch] = useState('');
-    const [fabOpen, setFabOpen] = useState(false);
     const [subjectFilter, setSubjectFilter] = useState('');
 
-    // Real-time: listen for new job applications via socket
     useEffect(() => {
         const socket = socketService.connect();
         if (!socket) return;
@@ -152,16 +145,11 @@ export const AdminJobs = () => {
     const uniqueSubjects = useMemo(() => new Set(apps.map(a => a.subject).filter(Boolean)).size, [apps]);
 
     const kpiCards = useMemo(() => [
-        { label: 'إجمالي الطلبات', value: apps.length, icon: Briefcase, gradient: 'from-primary/20 to-primary/5', iconBg: 'bg-primary/10 text-primary', accent: 'bg-primary' },
-        { label: 'بانتظار التواصل', value: pendingCount, icon: Inbox, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
-        { label: 'تم التواصل', value: contactedCount, icon: CheckCircle2, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
-        { label: 'المواد', value: uniqueSubjects, icon: BookOpen, gradient: 'from-info/20 to-info/5', iconBg: 'bg-info/10 text-info', accent: 'bg-info' },
+        { label: 'إجمالي الطلبات', value: apps.length, icon: Briefcase, color: 'text-primary', bg: 'bg-primary/10' },
+        { label: 'بانتظار التواصل', value: pendingCount, icon: Inbox, color: 'text-warning', bg: 'bg-warning/10' },
+        { label: 'تم التواصل', value: contactedCount, icon: CheckCircle2, color: 'text-success', bg: 'bg-success/10' },
+        { label: 'المواد', value: uniqueSubjects, icon: BookOpen, color: 'text-info', bg: 'bg-info/10' },
     ], [apps, pendingCount, contactedCount, uniqueSubjects]);
-
-    const fabActions = useMemo(() => [
-        { icon: Trash2, label: 'حذف الكل', onClick: handleDeleteAll },
-        { icon: Download, label: 'تصدير Excel', onClick: () => exportToCsv(filtered) },
-    ], [handleDeleteAll, filtered]);
 
     const subjectPills = useMemo(() => [
         { key: '', label: 'الكل' },
@@ -171,123 +159,135 @@ export const AdminJobs = () => {
     const emptySearch = !loading && filtered.length === 0 && apps.length > 0;
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-5xl mx-auto px-2.5 sm:px-4">
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-card dark:via-hover dark:to-card p-6 md:p-8 mb-4">
-                    {particles.map(p => (
-                        <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
-                            style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-                            animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }} transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }} />
-                    ))}
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                        <div>
-                            <div className="flex items-center gap-2 mb-2">
-                                <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><Briefcase className="text-white" size={20} /></div>
-                                <span className="text-white/70 text-xs font-medium">الإدارة</span>
+        <div className="min-h-full pb-8" dir="rtl">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6">
+
+                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pt-6 pb-5">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <Briefcase size={20} className="text-primary" />
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">طلبات التوظيف</h1>
-                            <p className="text-white/70 text-sm">إدارة طلبات المتقدمين للوظائف</p>
+                            <div>
+                                <h1 className="text-xl font-bold text-main">طلبات التوظيف</h1>
+                                <p className="text-xs text-muted mt-0.5">إدارة طلبات المتقدمين للوظائف</p>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
-                            <div className="text-center">
-                                <p className="text-white/60 text-xs mb-1">الإجمالي</p>
-                                <p className="text-2xl font-bold text-white">{apps.length}</p>
-                            </div>
-                            <div className="w-px h-10 bg-white/10" />
-                            <div className="text-center">
-                                <p className="text-white/60 text-xs mb-1">بانتظار</p>
-                                <p className="text-2xl font-bold text-white">{pendingCount}</p>
-                            </div>
+                        <div className="flex items-center gap-2">
+                            <button onClick={() => exportToCsv(filtered)}
+                                className="flex items-center gap-2 px-4 py-2.5 bg-card border border-border rounded-xl text-xs font-bold text-muted hover:bg-hover hover:border-primary/20 transition-all duration-200 active:scale-[0.98]">
+                                <Download size={14} />
+                                <span className="hidden sm:inline">تصدير</span>
+                            </button>
+                            <button onClick={handleDeleteAll}
+                                className="flex items-center gap-2 px-4 py-2.5 bg-card border border-border rounded-xl text-xs font-bold text-error hover:bg-error/5 hover:border-error/30 transition-all duration-200 active:scale-[0.98]">
+                                <Trash2 size={14} />
+                                <span className="hidden sm:inline">حذف الكل</span>
+                            </button>
                         </div>
                     </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
                         {kpiCards.map((kpi, i) => {
                             const Icon = kpi.icon;
                             return (
-                                <motion.div key={kpi.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
-                                    whileHover={{ scale: 1.02, y: -2 }} className={cn("relative overflow-hidden rounded-xl bg-gradient-to-br border border-border/50 p-4", kpi.gradient)}>
+                                <motion.div key={kpi.label} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 + i * 0.04 }}
+                                    whileHover={{ y: -2 }} className="bg-card border border-border rounded-xl p-4 hover:shadow-elevation-1 transition-all duration-200">
                                     <div className="flex items-center justify-between mb-3">
-                                        <div className={cn("p-2 rounded-lg", kpi.iconBg)}><Icon size={16} /></div>
-                                        <div className={cn("h-1 w-12 rounded-full", kpi.accent)} />
+                                        <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center", kpi.bg)}>
+                                            <Icon size={16} className={kpi.color} />
+                                        </div>
                                     </div>
-                                    <p className="text-xs text-muted mb-1">{kpi.label}</p>
                                     <p className="text-2xl font-bold text-main">{kpi.value}</p>
+                                    <p className="text-[11px] text-muted mt-1">{kpi.label}</p>
                                 </motion.div>
                             );
                         })}
                     </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="mb-4">
-                    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none -mx-2.5 px-2.5">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mb-4">
+                    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
                         {subjectPills.map(pill => (
                             <button key={pill.key} onClick={() => setSubjectFilter(pill.key)}
-                                className={cn("shrink-0 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all duration-200 active:scale-[0.97]",
+                                className={cn("shrink-0 px-3.5 py-2 rounded-lg text-[11px] font-bold transition-all duration-200 active:scale-[0.97]",
                                     subjectFilter === pill.key
                                         ? 'bg-primary text-on-primary shadow-sm'
-                                        : 'bg-card border border-border text-muted hover:border-primary/30 hover:bg-hover')}>
+                                        : 'bg-card border border-border text-muted hover:border-primary/30 hover:text-main')}>
                                 {pill.label}
                             </button>
                         ))}
                     </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-4">
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="mb-5">
                     <div className="relative">
-                        <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-                        <input type="text" aria-label="بحث" placeholder="ابحث بالاسم أو الهاتف..."
+                        <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" size={15} />
+                        <input type="text" aria-label="بحث" placeholder="ابحث بالاسم أو الهاتف أو المنصب..."
                             value={search} onChange={e => setSearch(e.target.value)}
-                            className="w-full bg-card border border-border rounded-xl py-3 ps-9 pe-3 text-xs font-bold text-main placeholder:text-muted focus:outline-none focus:border-primary transition-all" />
+                            className="w-full bg-card border border-border rounded-xl py-3 ps-10 pe-4 text-xs font-bold text-main placeholder:text-muted/60 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all duration-200" />
+                        {search && (
+                            <button onClick={() => setSearch('')} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted hover:text-main transition-colors" aria-label="مسح البحث">
+                                <X size={14} />
+                            </button>
+                        )}
                     </div>
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
                     <div className="space-y-3">
                         {loading ? (
                             <div className="space-y-3">
-                                {[1, 2, 3].map(i => <div key={`skel-${i}`} className="bg-card h-32 animate-pulse border border-border rounded-2xl" />)}
+                                {[1, 2, 3].map(i => (
+                                    <div key={`skel-${i}`} className="bg-card border border-border rounded-xl p-5 animate-pulse">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="w-10 h-10 rounded-xl bg-surface" />
+                                            <div className="space-y-2 flex-1">
+                                                <div className="h-3 bg-surface rounded-lg w-1/3" />
+                                                <div className="h-2.5 bg-surface rounded-lg w-1/4" />
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                            {[1, 2, 3, 4].map(j => <div key={j} className="h-8 bg-surface rounded-lg" />)}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         ) : apps.length === 0 ? (
-                            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-                                className="bg-card border border-dashed border-border rounded-2xl p-8 text-center">
-                                <div className="w-14 h-14 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-3">
-                                    <Briefcase size={22} className="text-primary" />
+                            <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}
+                                className="bg-card border border-dashed border-border rounded-xl p-10 text-center">
+                                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                                    <Briefcase size={24} className="text-primary" />
                                 </div>
-                                <p className="text-base font-bold text-main">لا توجد طلبات</p>
-                                <p className="text-xs text-muted mt-1.5">سيتم عرض طلبات المتقدمين هنا</p>
+                                <p className="text-sm font-bold text-main mb-1">لا توجد طلبات</p>
+                                <p className="text-xs text-muted">سيتم عرض طلبات المتقدمين هنا</p>
                             </motion.div>
                         ) : emptySearch ? (
-                            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-                                className="bg-card border border-dashed border-border rounded-2xl p-8 text-center">
-                                <div className="w-14 h-14 rounded-2xl bg-primary-soft flex items-center justify-center mx-auto mb-3">
-                                    <Search size={22} className="text-primary" />
+                            <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}
+                                className="bg-card border border-dashed border-border rounded-xl p-10 text-center">
+                                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                                    <Search size={24} className="text-primary" />
                                 </div>
-                                <p className="text-base font-bold text-main">لا توجد نتائج</p>
-                                <p className="text-xs text-muted mt-1.5">جرّب تغيير كلمات البحث أو الفلتر</p>
+                                <p className="text-sm font-bold text-main mb-1">لا توجد نتائج</p>
+                                <p className="text-xs text-muted">جرّب تغيير كلمات البحث أو الفلتر</p>
                             </motion.div>
                         ) : (
                             <AnimatePresence>
                                 {filtered.map((app, index) => (
                                     <motion.div key={app.id} layout
-                                        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -12, transition: { duration: 0.15 } }}
-                                        transition={{ duration: 0.2, delay: index * 0.03 }}
-                                        className={cn("group bg-card border border-border/30 hover:border-primary/20 transition-all duration-200 overflow-hidden rounded-2xl shadow-sm hover:shadow-md relative",
+                                        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10, transition: { duration: 0.15 } }}
+                                        transition={{ duration: 0.2, delay: index * 0.02 }}
+                                        className={cn("bg-card border border-border rounded-xl overflow-hidden hover:shadow-elevation-1 transition-all duration-200",
                                             app.contacted && 'opacity-50')}>
-                                        <div className={cn("h-0.5 w-full transition-colors duration-300", app.contacted ? 'bg-border' : 'bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20')} />
-                                        {!app.contacted && (
-                                            <div className="absolute top-0 end-0 w-32 h-32 bg-primary/5 -me-8 -mt-8 rotate-45 pointer-events-none border border-primary/10 rounded-3xl" />
-                                        )}
-                                        <div className={cn("p-4 md:p-5 relative z-10", app.contacted && 'opacity-60')}>
+                                        <div className="p-4 sm:p-5">
                                             <div className="flex items-start justify-between gap-3 mb-4">
-                                                <div className="flex items-center gap-3">
+                                                <div className="flex items-center gap-3 min-w-0">
                                                     <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
-                                                        app.contacted ? 'bg-surface border border-border' : 'bg-primary')}>
-                                                        <span className={cn("text-sm font-bold", app.contacted ? 'text-muted' : 'text-on-primary')}>
+                                                        app.contacted ? 'bg-surface border border-border' : 'bg-primary/10')}>
+                                                        <span className={cn("text-sm font-bold", app.contacted ? 'text-muted' : 'text-primary')}>
                                                             {app.name.charAt(0)}
                                                         </span>
                                                     </div>
@@ -298,21 +298,22 @@ export const AdminJobs = () => {
                                                 </div>
                                                 <div className="flex items-center gap-1.5 shrink-0">
                                                     <button onClick={() => handleContacted(app.id)}
-                                                        className={cn("p-2 rounded-lg border-2 transition-all duration-200 active:scale-95", app.contacted
-                                                            ? 'border-success bg-success/10 text-success'
-                                                            : 'border-success/30 bg-success/10 text-success hover:bg-success/20 hover:border-success')}
+                                                        className={cn("w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 active:scale-95",
+                                                            app.contacted
+                                                                ? 'bg-success/10 text-success'
+                                                                : 'bg-success/10 text-success hover:bg-success/20')}
                                                         title="تم التواصل" aria-label="تم التواصل">
-                                                        <CheckCircle2 size={16} />
+                                                        <CheckCircle2 size={15} />
                                                     </button>
                                                     <button onClick={() => handleDelete(app.id)}
-                                                        className="p-2 rounded-lg border-2 border-error/30 bg-error/10 text-error hover:bg-error/20 hover:border-error transition-all duration-200 active:scale-95"
+                                                        className="w-8 h-8 rounded-lg bg-error/10 text-error flex items-center justify-center hover:bg-error/20 transition-all duration-200 active:scale-95"
                                                         aria-label="حذف الطلب">
-                                                        <Trash2 size={16} />
+                                                        <Trash2 size={15} />
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2.5 text-xs border-t border-border pt-3">
+                                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2.5 text-xs border-t border-border pt-3">
                                                 <DetailRow icon={Phone} label="الهاتف" value={app.phone} contacted={!!app.contacted} phoneLink />
                                                 <DetailRow icon={MessageCircle} label="واتساب" value={app.whatsapp || '-'} contacted={!!app.contacted} phoneLink={!!app.whatsapp} whatsappLink />
                                                 <DetailRow icon={GraduationCap} label="المؤهل" value={app.qualification} contacted={!!app.contacted} />
@@ -321,8 +322,8 @@ export const AdminJobs = () => {
                                                 <DetailRow icon={Calendar} label="سنة التخرج" value={app.graduationYear || '-'} contacted={!!app.contacted} />
                                                 <DetailRow icon={Globe} label="خبرة أون لاين" value={`${app.onlineYears || '0'} سنة`} contacted={!!app.contacted} />
                                                 <DetailRow icon={Calendar} label="التاريخ" value={formatDateNumeric(app.createdAt)} contacted={!!app.contacted} />
-                                                <div className="col-span-2 md:col-span-4 flex items-start gap-2.5 pt-3 border-t border-border mt-1">
-                                                    <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 bg-primary-soft rounded-lg">
+                                                <div className="col-span-2 sm:col-span-4 flex items-start gap-2.5 pt-3 border-t border-border mt-1">
+                                                    <div className="w-5 h-5 flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 rounded-lg">
                                                         <BookOpen size={10} className={app.contacted ? 'text-muted' : 'text-primary'} />
                                                     </div>
                                                     <div className="min-w-0">
@@ -339,25 +340,6 @@ export const AdminJobs = () => {
                     </div>
                 </motion.div>
             </div>
-
-            <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
-                <AnimatePresence>
-                    {fabOpen && fabActions.map((action, i) => (
-                        <motion.div key={action.label} initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
-                            <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-xl shadow-sm whitespace-nowrap">{action.label}</span>
-                            <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-lg bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all duration-200 flex items-center justify-center active:scale-95">
-                                <action.icon size={18} />
-                            </button>
-                        </motion.div>
-                    ))}
-                </AnimatePresence>
-                <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-xl shadow-xl text-on-primary flex items-center justify-center transition-all duration-200", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
-                    <Briefcase size={22} />
-                </motion.button>
-            </div>
         </div>
     );
 };
@@ -373,7 +355,7 @@ const DetailRow = ({ icon: Icon, label, value, contacted, phoneLink, whatsappLin
     const cleanPhone = value.replace(/\s/g, '');
     const content = (
         <div className={cn("flex items-center gap-2", contacted && 'opacity-50')}>
-            <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-primary-soft rounded-lg">
+            <div className="w-5 h-5 flex items-center justify-center shrink-0 bg-primary/10 rounded-lg">
                 <Icon size={10} className={contacted ? 'text-muted' : 'text-primary'} />
             </div>
             <div className="min-w-0">
