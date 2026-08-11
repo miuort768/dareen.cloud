@@ -22,11 +22,10 @@ interface TypeStyle {
   iconWrap: string;
   iconColor: string;
   dot: string;
-  gradient: string;
   linkColor: string;
   countColor: string;
-  cardBg: string;
   cardBorder: string;
+  hoverBorder: string;
 }
 
 const TYPE_ICONS: Record<TypeId, LucideIcon> = {
@@ -40,69 +39,64 @@ const TYPE_STYLES: Record<TypeId, TypeStyle> = {
   notes: {
     desc: 'مذكرات وملخصات جاهزة للتحميل المباشر',
     miniDesc: 'ملخصات منظمة للمذاكرة',
-    badge: 'bg-info text-on-info',
+    badge: 'bg-info-soft text-info',
     iconWrap: 'bg-info-soft',
     iconColor: 'text-info',
     dot: 'bg-info',
-    gradient: 'from-info/5 to-transparent',
     linkColor: 'text-info',
     countColor: 'text-info',
-    cardBg: 'bg-card',
-    cardBorder: 'border-border hover:border-info/40',
+    cardBorder: 'border-border',
+    hoverBorder: 'hover:border-info/40',
   },
   solutions: {
     desc: 'حلول كاملة وموثوقة لكتب المناهج',
     miniDesc: 'حلول معتمدة لجميع الكتب',
-    badge: 'bg-success text-on-success',
+    badge: 'bg-success-soft text-success',
     iconWrap: 'bg-success-soft',
     iconColor: 'text-success',
     dot: 'bg-success',
-    gradient: 'from-success/5 to-transparent',
     linkColor: 'text-success',
     countColor: 'text-success',
-    cardBg: 'bg-card',
-    cardBorder: 'border-border hover:border-success/40',
+    cardBorder: 'border-border',
+    hoverBorder: 'hover:border-success/40',
   },
   more: {
     desc: 'مزيد من الموارد والأدوات التعليمية المتنوعة',
     miniDesc: 'موارد تعليمية إضافية',
-    badge: 'bg-primary text-on-primary',
+    badge: 'bg-primary-soft text-primary',
     iconWrap: 'bg-primary-soft',
     iconColor: 'text-primary',
     dot: 'bg-primary',
-    gradient: 'from-primary/5 to-transparent',
     linkColor: 'text-primary',
     countColor: 'text-primary',
-    cardBg: 'bg-card',
-    cardBorder: 'border-border hover:border-primary/40',
+    cardBorder: 'border-border',
+    hoverBorder: 'hover:border-primary/40',
   },
   foundation: {
     desc: 'ملفات تأسيسية شاملة لجميع المراحل الدراسية',
     miniDesc: 'تأسيس قوي للطلاب',
-    badge: 'bg-warning text-on-warning',
+    badge: 'bg-warning-soft text-warning',
     iconWrap: 'bg-warning-soft',
     iconColor: 'text-warning',
     dot: 'bg-warning',
-    gradient: 'from-warning/5 to-transparent',
     linkColor: 'text-warning',
     countColor: 'text-warning',
-    cardBg: 'bg-card',
-    cardBorder: 'border-border hover:border-warning/40',
+    cardBorder: 'border-border',
+    hoverBorder: 'hover:border-warning/40',
   },
 };
 
 const FALLBACK_STYLE: TypeStyle = {
   desc: '',
   miniDesc: '',
-  badge: 'bg-primary text-on-primary',
+  badge: 'bg-primary-soft text-primary',
   iconWrap: 'bg-primary-soft',
   iconColor: 'text-primary',
   dot: 'bg-primary',
-  gradient: 'from-primary/5 to-transparent',
   linkColor: 'text-primary',
   countColor: 'text-primary',
-  cardBg: 'bg-card',
-  cardBorder: 'border-border hover:border-primary/40',
+  cardBorder: 'border-border',
+  hoverBorder: 'hover:border-primary/40',
 };
 
 const getStyleFor = (post: BlogPost) => {
@@ -204,79 +198,58 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
 
       {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden rounded-3xl bg-card border border-border shadow-elevation-1">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3 pointer-events-none" />
-        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] lg:min-h-[420px]">
-          <div className="relative z-10 p-8 lg:p-12 flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-primary-soft border border-primary/15 rounded-xl mb-6 w-fit">
-              <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-                <BookOpen size={13} className="text-on-primary" />
+      <section className="relative rounded-2xl bg-card border border-border overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] lg:min-h-[380px]">
+          <div className="relative z-10 p-8 lg:p-10 flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-primary-soft border border-primary/15 rounded-xl mb-5 w-fit">
+              <div className="w-6 h-6 rounded-lg bg-primary flex items-center justify-center">
+                <BookOpen size={12} className="text-on-primary" />
               </div>
-              <span className="text-xs font-extrabold text-primary">المكتبة التعليمية</span>
+              <span className="text-[11px] font-extrabold text-primary">المكتبة التعليمية</span>
             </div>
 
-            <h1 className="text-4xl xl:text-5xl 2xl:text-6xl font-heading font-black text-main leading-[1.15] mb-4">
-              مدونة <span className="text-primary">دارين</span> التعليمية
+            <h1 className="text-3xl xl:text-4xl 2xl:text-5xl font-heading font-black text-main leading-[1.15] mb-3">
+              مدونة <span className="text-primary">{academyName}</span> التعليمية
             </h1>
 
-            <p className="text-base lg:text-lg text-muted font-medium leading-relaxed mb-8 max-w-xl">
+            <p className="text-sm lg:text-base text-muted font-medium leading-relaxed mb-7 max-w-lg">
               دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل
               في الكويت وقطر والإمارات والسعودية.
             </p>
 
-            <div className="grid grid-cols-2 gap-3 max-w-xl">
-              {types.map(t => {
-                const s = TYPE_STYLES[t.id as TypeId];
-                return (
-                  <button
-                    key={t.id}
-                    type="button"
-                    onClick={() => goToType(t.id)}
-                    className={cn(
-                      'group flex items-center gap-3 rounded-2xl border bg-card p-4 text-start transition-all duration-300',
-                      'hover:-translate-y-0.5 hover:shadow-elevation-1',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
-                      s.cardBorder
-                    )}
-                  >
-                    <span className={cn('w-11 h-11 shrink-0 rounded-xl flex items-center justify-center transition-colors duration-300', s.iconWrap)}>
-                      <t.icon size={18} className={cn('transition-colors duration-300', s.iconColor)} />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-sm font-extrabold text-main group-hover:text-primary transition-colors duration-300">{t.name}</span>
-                      <span className="block text-[11px] text-muted font-medium mt-0.5 leading-relaxed">{s.miniDesc}</span>
-                    </span>
-                  </button>
-                );
-              })}
+            <div className="flex items-center gap-3">
+              <a href="#library-categories"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-on-primary text-sm font-extrabold transition-all duration-200 hover:bg-primary-hover hover:shadow-sm active:scale-[0.98]">
+                تصفح المحتوى
+                <ArrowLeft size={14} />
+              </a>
+              <span className="text-xs text-muted font-bold">{posts.length} مقال متاح</span>
             </div>
           </div>
 
-          <div className="relative min-h-[280px] lg:min-h-full overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/3 to-transparent" />
-            <div className="absolute bottom-[-20%] left-[-10%] w-[70%] h-[60%] bg-success/5 blur-3xl rounded-full pointer-events-none" />
-            <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[55%] bg-warning/5 blur-3xl rounded-full pointer-events-none" />
+          <div className="relative min-h-[220px] lg:min-h-full overflow-hidden bg-surface">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/3 to-transparent" />
             <Image
               src="/bbook.webp"
               alt={`بوابة ${academyName} التعليمية للكتب والمذكرات`}
               className="absolute inset-0"
-              imgClassName="object-contain p-8 lg:p-10 drop-shadow-lg"
+              imgClassName="object-contain p-8 lg:p-10"
               withSkeleton
             />
           </div>
         </div>
       </section>
 
-      {/* ===== CATEGORIES ===== */}
-      <section id="library-categories" className="mt-12">
-        <div className="flex items-end justify-between gap-4 mb-7">
+      {/* ===== TYPE CARDS ===== */}
+      <section id="library-categories" className="mt-10">
+        <div className="flex items-end justify-between gap-4 mb-6">
           <div>
-            <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">الفئات الأكثر قراءة</h2>
-            <p className="text-sm text-muted font-medium mt-1.5">اختر القسم الذي يناسب احتياجك التعليمي</p>
+            <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">الفئات التعليمية</h2>
+            <p className="text-sm text-muted font-medium mt-1.5">اختر القسم الذي يناسب احتياجك</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           {types.map(t => {
             const s = TYPE_STYLES[t.id as TypeId];
             const count = categoryCounts[t.id] || 0;
@@ -286,31 +259,26 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 type="button"
                 onClick={() => goToType(t.id)}
                 className={cn(
-                  'group relative overflow-hidden rounded-2xl border bg-card p-5 text-start transition-all duration-300',
-                  'hover:-translate-y-0.5 hover:shadow-elevation-1',
+                  'group relative bg-card border rounded-2xl p-5 text-start transition-all duration-200',
+                  'hover:-translate-y-0.5 hover:shadow-sm',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
-                  s.cardBorder
+                  s.cardBorder, s.hoverBorder
                 )}
               >
-                <div className={cn('absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300', s.gradient)} />
-                <div className="relative z-10 flex items-start gap-4">
-                  <span className={cn('w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center', s.iconWrap)}>
-                    <t.icon size={22} className={s.iconColor} />
+                <div className="flex items-center justify-between mb-4">
+                  <span className={cn('w-11 h-11 shrink-0 rounded-xl flex items-center justify-center', s.iconWrap)}>
+                    <t.icon size={20} className={s.iconColor} />
                   </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2 mb-1">
-                      <h3 className="text-sm font-extrabold text-main group-hover:text-primary transition-colors duration-300 truncate">{t.name}</h3>
-                      <span className={cn('shrink-0 text-[11px] font-extrabold rounded-lg px-2 py-0.5', s.badge)}>
-                        {count}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-muted font-medium leading-relaxed">{s.miniDesc}</p>
-                    <span className={cn('inline-flex items-center gap-1 mt-2.5 text-xs font-extrabold transition-colors duration-300', s.linkColor)}>
-                      تصفح
-                      <ArrowLeft size={12} className="transition-transform duration-300 group-hover:-translate-x-1" />
-                    </span>
-                  </div>
+                  <span className={cn('text-xs font-extrabold rounded-lg px-2.5 py-1', s.badge)}>
+                    {count}
+                  </span>
                 </div>
+                <h3 className="text-sm font-extrabold text-main mb-1 group-hover:text-primary transition-colors">{t.name}</h3>
+                <p className="text-[11px] text-muted font-medium leading-relaxed mb-3">{s.miniDesc}</p>
+                <span className={cn('inline-flex items-center gap-1 text-xs font-extrabold transition-colors', s.linkColor)}>
+                  تصفح
+                  <ArrowLeft size={12} className="transition-transform group-hover:-translate-x-1" />
+                </span>
               </button>
             );
           })}
@@ -318,10 +286,10 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
       </section>
 
       {/* ===== SIDEBAR + ARTICLES ===== */}
-      <section className="mt-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 items-start">
-        <aside className="lg:sticky lg:top-24 space-y-5">
+      <section className="mt-10 grid grid-cols-[300px_1fr] gap-8 items-start">
+        <aside className="sticky top-24 space-y-5">
           {/* Search */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
+          <div className="rounded-2xl border border-border bg-card p-5">
             <h3 className="flex items-center gap-2.5 text-sm font-extrabold text-main mb-4">
               <span className="w-8 h-8 rounded-xl bg-primary-soft text-primary flex items-center justify-center">
                 <Search size={15} />
@@ -342,12 +310,12 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
           </div>
 
           {/* Popular Categories */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
+          <div className="rounded-2xl border border-border bg-card p-5">
             <h3 className="flex items-center gap-2.5 text-sm font-extrabold text-main mb-4">
               <span className="w-8 h-8 rounded-xl bg-primary-soft text-primary flex items-center justify-center">
                 <BookMarked size={15} />
               </span>
-              الفئات الأكثر قراءة
+              الأقسام
             </h3>
             <ul className="space-y-0.5">
               {types.map(t => {
@@ -375,13 +343,13 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
           </div>
 
           {/* Newsletter */}
-          <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 via-card to-success/5 p-5 shadow-elevation-1">
+          <div className="rounded-2xl border border-primary/15 bg-card p-5">
             <span className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mb-3">
               <Mail size={18} />
             </span>
-            <h3 className="text-sm font-extrabold text-main mb-1">اشترك في نشرتنا البريدية</h3>
+            <h3 className="text-sm font-extrabold text-main mb-1">اشترك في النشرة البريدية</h3>
             <p className="text-xs text-muted font-medium leading-relaxed mb-4">
-              اختر دولتك وسجّل رقم هاتفك ليصلك جديد الكتب والمذكرات.
+              سجّل رقم هاتفك ليصلك جديد الكتب والمذكرات.
             </p>
             {subscribed ? (
               <div className="flex items-center gap-2 rounded-xl bg-success-soft border border-success/30 px-4 py-3">
@@ -432,7 +400,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-extrabold text-on-primary transition-all duration-300 hover:bg-primary-hover hover:shadow-elevation-1 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-extrabold text-on-primary transition-all duration-200 hover:bg-primary-hover hover:shadow-sm disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                 >
                   {submitting ? 'جارٍ الإرسال...' : 'اشترك الآن'}
                   {!submitting && <Send size={13} />}
@@ -451,14 +419,10 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 {searchQuery ? `نتائج البحث عن «${search.trim()}»` : 'آخر ما نُشر في المكتبة التعليمية'}
               </p>
             </div>
-            <span className="hidden sm:inline-flex items-center gap-2 text-sm font-bold text-muted">
-              <GraduationCap size={16} className="text-primary" />
-              {posts.length} مقال
-            </span>
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-2 gap-5">
               {[1, 2, 3, 4].map(i => (
                 <div key={i} className="rounded-2xl border border-border bg-card overflow-hidden">
                   <div className="aspect-[16/10] animate-pulse bg-surface" />
@@ -471,7 +435,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
               ))}
             </div>
           ) : articles.length === 0 ? (
-            <div className="rounded-2xl border border-border bg-card p-14 text-center shadow-elevation-1">
+            <div className="rounded-2xl border border-border bg-card p-14 text-center">
               <span className="w-14 h-14 mx-auto rounded-2xl bg-primary-soft text-primary flex items-center justify-center mb-4">
                 <Search size={24} />
               </span>
@@ -479,14 +443,14 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
               <p className="text-sm text-muted font-medium">جرّب كلمات بحث مختلفة أو تصفح الأقسام بالأسفل.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-2 gap-5">
               {articles.map(post => {
                 const { style, label, icon: Icon } = getStyleFor(post);
                 return (
                   <Link
                     key={post.id}
                     to={`/books/${post.slug}`}
-                    className="group flex gap-4 rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+                    className="group flex gap-4 rounded-2xl border border-border bg-card p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                   >
                     <div className="relative w-28 h-28 shrink-0 rounded-xl overflow-hidden bg-surface">
                       <Image
@@ -502,7 +466,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                       </span>
                     </div>
                     <div className="flex-1 min-w-0 flex flex-col">
-                      <h3 className="text-sm font-extrabold text-main leading-snug mb-1.5 line-clamp-2 group-hover:text-primary transition-colors duration-300">
+                      <h3 className="text-sm font-extrabold text-main leading-snug mb-1.5 line-clamp-2 group-hover:text-primary transition-colors">
                         {post.title}
                       </h3>
                       <p className="text-[11px] text-muted font-medium leading-relaxed line-clamp-3 mb-3">{post.excerpt}</p>
@@ -511,9 +475,9 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                           <Clock size={11} />
                           {formatDate(post.date)}
                         </span>
-                        <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-on-primary text-[11px] font-extrabold transition-all duration-300 hover:bg-primary-hover group-hover:shadow-md">
+                        <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-on-primary text-[11px] font-extrabold transition-all duration-200 hover:bg-primary-hover active:scale-[0.97]">
                           اقرأ المقال
-                          <ArrowLeft size={11} className="transition-transform duration-300 group-hover:-translate-x-0.5" />
+                          <ArrowLeft size={11} className="transition-transform group-hover:-translate-x-0.5" />
                         </span>
                       </div>
                     </div>

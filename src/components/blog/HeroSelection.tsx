@@ -72,9 +72,9 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
 export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
         <div className="w-full lg:w-[55%] text-center lg:text-start">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-soft border border-primary/20 rounded-2xl mb-5">
-                <BookOpen size={13} className="text-primary" />
-                <span className="text-xs font-extrabold text-primary">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary-soft border border-primary/15 rounded-xl mb-5">
+                <BookOpen size={12} className="text-primary" />
+                <span className="text-[11px] font-extrabold text-primary">
                     {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
                 </span>
             </div>
@@ -96,7 +96,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                     : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
             </p>
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
-                {gridItems.map((item: GridItem, i: number) => (
+                {gridItems.map((item: GridItem) => (
                     <div key={item.id}>
                         <button onClick={() => {
                             setSearchParams(prev => {
@@ -112,7 +112,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                                 return next;
                             });
                         }}
-                            className="relative w-full py-5 px-4 flex flex-col items-center justify-center gap-2 rounded-2xl bg-card border border-border text-main overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elevation-2 hover:border-primary/30 active:scale-[0.97]">
+                            className="relative w-full py-5 px-4 flex flex-col items-center justify-center gap-2 rounded-2xl bg-card border border-border text-main overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:border-primary/30 active:scale-[0.97]">
                             <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
                                 <item.icon size={18} className="text-primary" />
                             </div>
@@ -125,14 +125,12 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
         </div>
         <div className="hidden lg:flex w-full lg:w-[45%] justify-center">
             <div className="relative w-full max-w-[420px] aspect-[3/4] flex items-center justify-center">
-                <div className="absolute inset-[12%] border-[1.5px] border-dashed border-primary/30 rounded-full animate-spin-slow pointer-events-none"></div>
-                <div className="absolute inset-[17%] border-[1.5px] border-dashed border-accent/20 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-primary/10 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+                <div className="absolute inset-0 bg-primary/3 rounded-full pointer-events-none" />
                 <picture className="w-full h-full flex items-center justify-center">
                     <source srcSet="/book3.webp" type="image/webp" />
                     <source srcSet="/book3.avif" type="image/avif" />
                     <img src="/book3.png" alt="بوابة دارين التعليمية" width="380" height="380" loading="lazy"
-                        className="relative z-10 w-4/5 h-4/5 object-contain drop-shadow-lg" />
+                        className="relative z-10 w-4/5 h-4/5 object-contain" />
                 </picture>
             </div>
         </div>

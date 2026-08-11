@@ -280,11 +280,7 @@ export const Blog = () => {
       </div>
 
       {/* Desktop */}
-      <main id="main-content" className="hidden md:block pt-24 md:pt-32 pb-0 relative overflow-hidden bg-surface">
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-primary/5 to-transparent rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-info/3 to-transparent rounded-full blur-[120px]" />
-        </div>
+      <main id="main-content" className="hidden md:block pt-24 md:pt-32 pb-0 relative bg-background">
         {view === 'types' ? (
           <DesktopLibraryLanding posts={posts} loading={loading} setSearchParams={setSearchParams} />
         ) : (
