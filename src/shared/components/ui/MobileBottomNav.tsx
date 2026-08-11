@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 import { triggerHaptic } from '../../../lib/haptics';
@@ -22,10 +23,10 @@ export const MobileBottomNav = ({ items, activeTab, onTabChange, layoutId = 'bot
   const navigate = useNavigate();
   const location = useLocation();
 
-  return (
+  return createPortal(
     <nav className="fixed bottom-0 end-0 start-0 z-50 md:hidden" aria-label="التنقل الرئيسي">
       <div className="relative px-3 pb-2 pt-0.5" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
-        <div className="relative rounded-[1.25rem] bg-card/80 dark:bg-[#0e0e12]/80 backdrop-blur-2xl border border-border/40 dark:border-white/[0.06] shadow-[0_-4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.4)] overflow-hidden">
+        <div className="relative rounded-[1.25rem] bg-card/80 dark:bg-[#0e0e12]/80 backdrop-blur-2xl border border-border/40 dark:border-white/[0.06] shadow-[0_-4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.4)]">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent dark:via-white/[0.08] pointer-events-none" />
 
           <div className="relative flex items-center justify-around h-[72px] px-2 pt-2 pb-1">
@@ -100,6 +101,7 @@ export const MobileBottomNav = ({ items, activeTab, onTabChange, layoutId = 'bot
           </div>
         </div>
       </div>
-    </nav>
+    </nav>,
+    document.body
   );
 };
