@@ -23,7 +23,7 @@ export const MasarSection = () => {
                 <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/[0.08] rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/[0.05] rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 relative z-10">
-                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-primary via-primary-hover to-primary dark:from-[#1a1a1a] dark:via-card dark:to-[#1a1a1a] shadow-2xl overflow-hidden border border-white/5 dark:border-primary/30 relative rounded-2xl">
+                    <div className="max-w-6xl mx-auto bg-gradient-to-br from-primary via-primary-hover to-primary dark:from-surface dark:via-card dark:to-surface shadow-2xl overflow-hidden border border-white/5 dark:border-primary/30 relative rounded-2xl">
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
                             <div className="absolute start-0 top-0 w-80 h-80 bg-primary/20 dark:bg-primary/10 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
                             <div className="absolute end-0 bottom-0 w-80 h-80 bg-primary/10 dark:bg-primary/5 rounded-full blur-[120px] -translate-x-1/2 translate-y-1/2"></div>
@@ -62,7 +62,7 @@ export const MasarSection = () => {
                                     <span className="px-3 py-1 bg-white/10 dark:bg-primary/15 border border-white/20 dark:border-primary/30 rounded-full text-micro font-bold text-on-primary dark:text-primary">قطر</span>
                                 </div>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                                    <Link to="/books" className="px-10 py-4 bg-primary dark:bg-primary hover:bg-primary-hover dark:hover:bg-[#f59e0b] text-on-primary dark:text-on-primary rounded-xl font-black text-lg shadow-2xl shadow-primary/20 dark:shadow-primary/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group">
+                                    <Link to="/books" className="px-10 py-4 bg-primary dark:bg-primary hover:bg-primary-hover dark:hover:bg-warning text-on-primary dark:text-on-primary rounded-xl font-black text-lg shadow-2xl shadow-primary/20 dark:shadow-primary/20 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 group">
                                         <FileText className="w-6 h-6 transition-transform group-hover:scale-110" />
                                         <span>تحميل مذكرة</span>
                                         <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
@@ -103,7 +103,7 @@ export const MasarSection = () => {
                         </div>
                     </div>
 
-                    <div className="bg-gradient-to-br from-primary via-primary-hover to-primary dark:from-primary dark:via-[#f59e0b] dark:to-primary rounded-3xl p-6 shadow-lg shadow-primary/20 dark:shadow-primary/20 mb-5">
+                    <div className="bg-gradient-to-br from-primary via-primary-hover to-primary dark:from-primary dark:via-warning dark:to-primary rounded-3xl p-6 shadow-lg shadow-primary/20 dark:shadow-primary/20 mb-5">
                         <div className="flex items-center gap-4 mb-4">
                             <div className="relative">
                                 <span className="text-on-primary dark:text-on-primary font-black text-sm">مركز دارين السابعة</span>

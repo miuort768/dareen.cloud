@@ -178,7 +178,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
         const cat = (p.category || '').toLowerCase();
         if (cat.includes('حل')) counts.solutions += 1;
         else if (cat.includes('مذكر')) counts.notes += 1;
-        else if (cat.includes('网小编')) counts.foundation += 1;
+        else if (cat.includes('تأسيس')) counts.foundation += 1;
         else counts.more += 1;
       }
     });

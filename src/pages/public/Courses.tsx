@@ -129,7 +129,7 @@ export const Courses = () => {
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 ps-12 py-4 rounded-card bg-card dark:bg-card border border-border dark:border-primary/30 shadow-lg shadow-sm/50 dark:shadow-black/20 focus-visible:border-primary/50 dark:focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:focus-visible:ring-[#D4AF37]/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-zinc-500 font-bold dark:focus-visible:shadow-lg"
+                className="w-full px-5 ps-12 py-4 rounded-card bg-card dark:bg-card border border-border dark:border-primary/30 shadow-lg shadow-sm/50 dark:shadow-black/20 focus-visible:border-primary/50 dark:focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:focus-visible:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-zinc-500 font-bold dark:focus-visible:shadow-lg"
               />
               <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim dark:text-dim w-5 h-5 group-focus-within:text-primary dark:group-focus-within:text-primary transition-colors" />
             </div>
@@ -168,7 +168,7 @@ export const Courses = () => {
                 <motion.div
                   key={course.id}
                   variants={cardVariants}
-                   className="group relative bg-card dark:bg-card border border-border dark:border-primary/20 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-[#D4AF37]/10 transition-all duration-500"
+                   className="group relative bg-card dark:bg-card border border-border dark:border-primary/20 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/10 transition-all duration-500"
                 >
                   <div className="relative h-44 overflow-hidden bg-background dark:bg-card">
                     <Image
@@ -224,7 +224,7 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-[#f59e0b] text-on-success dark:text-on-primary text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
+                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-warning text-on-success dark:text-on-primary text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب

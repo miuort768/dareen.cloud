@@ -265,7 +265,7 @@ export const Leads = () => {
                                         <span className="truncate">{stat.label}</span>
                                     </div>
                                     <div className="text-sm sm:text-lg md:text-xl font-bold font-outfit text-white tabular-nums">{stat.value}</div>
-                                    <div className={cn('text-[7px] sm:text-[9px] md:text-[10px] mt-0.5', stat.accent ? 'text-[#34d399]' : 'text-white/40 dark:text-main/25')}>{stat.sub}</div>
+                                    <div className={cn('text-[7px] sm:text-[9px] md:text-[10px] mt-0.5', stat.accent ? 'text-success' : 'text-white/40 dark:text-main/25')}>{stat.sub}</div>
                                 </motion.div>
                             ))}
                         </div>

@@ -152,7 +152,7 @@ export const ParentDashboard = () => {
             <div className="min-h-screen bg-background dark:bg-background flex items-center justify-center" dir="rtl">
                 <div className="text-center space-y-3 p-6">
                     <p className="text-muted dark:text-zinc-400 text-sm">فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.</p>
-                    <button onClick={() => refetch()} className="text-sm text-primary dark:text-[#D4AF37] hover:underline">إعادة المحاولة</button>
+                    <button onClick={() => refetch()} className="text-sm text-primary dark:text-primary hover:underline">إعادة المحاولة</button>
                 </div>
             </div>
         );

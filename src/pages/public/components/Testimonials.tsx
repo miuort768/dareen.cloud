@@ -24,10 +24,10 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                 <div className="text-center mb-4 md:mb-6">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-soft border border-primary/20 dark:bg-primary/20 dark:border-primary/40 rounded-full mb-3 mx-auto">
                         <Quote size={12} className="text-primary dark:text-primary" />
-                        <span className="text-micro font-black text-primary dark:text-[#f3d368]">آراء يعتز بها</span>
+                        <span className="text-micro font-black text-primary dark:text-primary">آراء يعتز بها</span>
                     </div>
                     <h2 className="text-2xl md:text-3xl font-black text-main dark:text-main mb-3 font-heading leading-tight">
-                        <span className="text-micro font-black text-primary dark:text-[#f3d368]">آراء يعتز بها</span>
+                        <span className="text-micro font-black text-primary dark:text-primary">آراء يعتز بها</span>
                     </h2>
                 </div>
 

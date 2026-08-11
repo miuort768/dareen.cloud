@@ -95,7 +95,7 @@ export const Home = () => {
                         <Play className="w-2.5 h-2.5 shrink-0 dark:text-primary" /> تحميل مذكرات مجانية
                     </Link>
                 </div>
-                <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-[#09090b] dark:via-surface dark:to-[#09090b] rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-primary/30">
+                <section className="relative bg-gradient-to-br from-primary-light via-primary-soft to-card dark:from-card dark:via-surface dark:to-card rounded-card overflow-hidden mb-4 shadow-sm border border-border/50 dark:border-primary/30">
                     {heroSlides.map((slide, i) => (
                         <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
                             <div className="flex items-center gap-4">
