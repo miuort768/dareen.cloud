@@ -134,7 +134,7 @@ export const NotificationsCenter = ({
     const criticalCount = smartAlerts.filter(a => a.priority === 'high').length;
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 shadow-elevation-1 p-5 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-border shadow-sm p-5 font-dash" dir="rtl">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -153,7 +153,7 @@ export const NotificationsCenter = ({
                         onClick={() => setActiveTab('smart')}
                         className={cn(
                             "px-3 py-1.5 text-[10px] font-bold transition-colors flex items-center gap-1 rounded-md",
-                            activeTab === 'smart' ? "bg-primary dark:bg-primary text-on-primary dark:text-on-primary" : "text-muted dark:text-muted hover:text-main dark:hover:text-white"
+                            activeTab === 'smart' ? "bg-primary dark:bg-primary text-on-primary dark:text-on-primary" : "text-muted dark:text-muted hover:text-main dark:hover:text-main"
                         )}
                     >
                         <Zap size={10} />
@@ -165,7 +165,7 @@ export const NotificationsCenter = ({
                         onClick={() => setActiveTab('room')}
                         className={cn(
                             "px-3 py-1.5 text-[10px] font-bold transition-colors flex items-center gap-1 rounded-md",
-                            activeTab === 'room' ? "bg-primary dark:bg-primary text-on-primary dark:text-on-primary" : "text-muted dark:text-muted hover:text-main dark:hover:text-white"
+                            activeTab === 'room' ? "bg-primary dark:bg-primary text-on-primary dark:text-on-primary" : "text-muted dark:text-muted hover:text-main dark:hover:text-main"
                         )}
                     >
                         <Bell size={10} />
@@ -193,7 +193,7 @@ export const NotificationsCenter = ({
                                     )}>
                                         {alert.type === 'critical' ? <AlertTriangle size={12} /> : <CheckCircle2 size={12} />}
                                     </div>
-                                    <div className="flex-1 min-w-0 p-3 rounded-xl border bg-card dark:bg-card border-border dark:border-primary/20 hover:bg-surface dark:hover:bg-hover transition-colors cursor-pointer"
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border bg-card dark:bg-card border-border dark:border-border hover:bg-surface dark:hover:bg-hover transition-colors cursor-pointer"
                                         onClick={() => typeof alert.action === 'function' && alert.action()}
                                         role="button"
                                         tabIndex={0}
@@ -213,7 +213,7 @@ export const NotificationsCenter = ({
                             <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-card">
                                 <CheckCircle2 size={14} className="text-success" />
                             </div>
-                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-primary/20 bg-success-soft/50 dark:bg-success/5">
+                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-border bg-success-soft/50 dark:bg-success/5">
                                 <div className="flex items-center justify-between gap-2">
                                     <h3 className="font-bold text-[11px] text-success">كل الأنظمة تعمل</h3>
                                     <span className="text-[9px] text-muted dark:text-dim shrink-0">الآن</span>
@@ -236,7 +236,7 @@ export const NotificationsCenter = ({
                                     <div className="w-[30px] h-[30px] rounded-lg bg-primary-soft dark:bg-primary/10 flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-card z-10">
                                         <alert.icon size={12} className="text-primary dark:text-primary" />
                                     </div>
-                                    <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-primary/20 bg-card dark:bg-card hover:bg-surface dark:hover:bg-hover transition-colors">
+                                    <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-border bg-card dark:bg-card hover:bg-surface dark:hover:bg-hover transition-colors">
                                         <div className="flex items-center justify-between gap-2 mb-1">
                                             <h4 className="text-[11px] font-bold text-main dark:text-main truncate">{alert.title}</h4>
                                             <span className="text-[9px] text-muted dark:text-dim shrink-0">{idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}</span>
@@ -262,7 +262,7 @@ export const NotificationsCenter = ({
                             <div className="w-[30px] h-[30px] rounded-lg bg-success-soft flex items-center justify-center shrink-0 ring-2 ring-card dark:ring-card">
                                 <Info size={14} className="text-success" />
                             </div>
-                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-primary/20 bg-success-soft/50 dark:bg-success/5">
+                            <div className="flex-1 min-w-0 p-3 rounded-xl border border-border dark:border-border bg-success-soft/50 dark:bg-success/5">
                                 <div className="flex items-center justify-between gap-2">
                                     <h3 className="font-bold text-[11px] text-success">كل الأنظمة تعمل</h3>
                                     <span className="text-[9px] text-muted dark:text-dim shrink-0">الآن</span>

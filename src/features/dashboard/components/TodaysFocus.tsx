@@ -31,7 +31,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
     const hasAnyData = todaySessions.length > 0 || tasks.length > 0 || lowBalanceCount > 0;
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 shadow-elevation-1 p-5" dir="rtl">
+        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-border shadow-sm p-5" dir="rtl">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-xl bg-warning-soft dark:bg-primary/10 flex items-center justify-center">
@@ -51,7 +51,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
 
             <div className="space-y-2">
                 {todaySessions.length > 0 && (
-                    <div className="p-3 rounded-xl bg-info-soft dark:bg-info/5 border border-border dark:border-primary/20"> 
+                    <div className="p-3 rounded-xl bg-info-soft dark:bg-info/5 border border-border dark:border-border"> 
                         <div className="flex items-center gap-2 mb-2">
                             <CalendarCheck size={12} className="text-info" />
                             <span className="text-[11px] font-bold text-info">{todaySessions.length} حصص اليوم</span>
@@ -89,7 +89,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                 )}
 
                 {tasks.length > 0 && (
-                    <div className="p-3 rounded-xl bg-warning-soft dark:bg-primary/5 border border-border dark:border-primary/20">
+                    <div className="p-3 rounded-xl bg-warning-soft dark:bg-primary/5 border border-border dark:border-border">
                         <div className="flex items-center gap-2 mb-2">
                             <ListTodo size={12} className="text-warning" />
                             <span className="text-[11px] font-bold text-warning">{tasks.length} مهام نشطة</span>
@@ -113,7 +113,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
                 )}
 
                 {lowBalanceCount > 0 && (
-                    <div className="p-3 rounded-xl bg-error-soft dark:bg-error/5 border border-border dark:border-primary/20">
+                    <div className="p-3 rounded-xl bg-error-soft dark:bg-error/5 border border-border dark:border-border">
                         <div className="flex items-center gap-2">
                             <AlertTriangle size={12} className="text-error" />
                             <span className="text-[11px] font-bold text-error">{lowBalanceCount} تنبيه رصيد منخفض</span>

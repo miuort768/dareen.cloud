@@ -145,7 +145,7 @@ export const Dashboard = () => {
                         {currentUser.permissions?.includes('*') && (
                             <div className="flex items-center justify-between mb-6">
                                 <div />
-                                <div className="inline-flex items-center bg-card border border-border rounded-xl p-1 gap-1 shadow-elevation-1" role="tablist" aria-label="اختيار طريقة العرض">
+                                <div className="inline-flex items-center bg-card border border-border rounded-xl p-1 gap-1 shadow-sm" role="tablist" aria-label="اختيار طريقة العرض">
                                     <button
                                         role="tab"
                                         aria-selected={view === 'standard'}
@@ -260,7 +260,7 @@ export const Dashboard = () => {
                                     <SectionLabel label="صحة النظام" hint="الحالة الفنية والأداء" />
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                                         <SystemHealth stats={stats} />
-                                        <div className="rounded-2xl bg-card border border-border shadow-elevation-1 p-5">
+                                        <div className="rounded-2xl bg-card border border-border shadow-sm p-5">
                                             <div className="flex items-center justify-between mb-4">
                                                 <div className="flex items-center gap-3">
                                                     <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center">

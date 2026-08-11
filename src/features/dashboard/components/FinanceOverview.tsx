@@ -15,7 +15,7 @@ interface FinanceOverviewProps {
 const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
     if (!active || !payload?.length) return null;
     return (
-                    <div className="bg-card dark:bg-card border border-border dark:border-primary/20 shadow-lg px-4 py-3 min-w-[160px] rounded-xl" dir="rtl">
+                    <div className="bg-card dark:bg-card border border-border dark:border-border shadow-lg px-4 py-3 min-w-[160px] rounded-xl" dir="rtl">
                         <p className="text-xs font-bold text-main dark:text-main mb-2">{label}</p>
             {payload.map((entry, i) => (
                 <div key={i} className="flex items-center justify-between gap-4 py-0.5">
@@ -45,7 +45,7 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
     };
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 shadow-elevation-1 p-5 font-dash" dir="rtl">
+        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-border shadow-sm p-5" dir="rtl">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
@@ -108,7 +108,7 @@ export const FinanceOverview = React.memo(({ monthlyData }: FinanceOverviewProps
 
             {/* Summary */}
             {monthlyData.length > 0 && (
-                <div className="flex items-center justify-center gap-4 pt-3 border-t border-border dark:border-primary/20">
+                <div className="flex items-center justify-center gap-4 pt-3 border-t border-border dark:border-border">
                     <div className="flex items-center gap-1.5">
                         <div className="w-2.5 h-2.5 rounded-md" style={{ backgroundColor: chartColors.revenue }} />
                         <span className="text-[10px] font-bold text-muted dark:text-muted">الإيرادات</span>

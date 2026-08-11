@@ -39,7 +39,7 @@ const KPICard = ({ item, index }: { item: KPICardData; index: number }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 + index * 0.08, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
             className={cn(
-                "relative overflow-hidden rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 group hover:shadow-elevation-2 transition-all duration-300",
+                "relative overflow-hidden rounded-2xl bg-card dark:bg-card border border-border dark:border-border group hover:shadow-sm transition-all duration-300",
                 isLarge ? "lg:col-span-2" : "lg:col-span-1"
             )}
         >

@@ -38,7 +38,7 @@ export const SystemHealth = ({ stats }: SystemHealthProps) => {
         <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 shadow-elevation-1 p-5"
+            className="rounded-2xl bg-card dark:bg-card border border-border dark:border-border shadow-sm p-5"
             dir="rtl"
         >
             <div className="flex items-center justify-between mb-4">
@@ -102,7 +102,7 @@ export const SystemHealth = ({ stats }: SystemHealthProps) => {
                             <div
                                 key={i}
                                 className={cn(
-                                    "flex items-center gap-3 p-3 rounded-xl border border-border dark:border-primary/20",
+                                    "flex items-center gap-3 p-3 rounded-xl border border-border dark:border-border",
                                     issue.severity === 'error' ? "bg-error-soft dark:bg-error/5" : "bg-warning-soft dark:bg-primary/5"
                                 )}
                             >
