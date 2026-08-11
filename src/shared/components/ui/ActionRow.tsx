@@ -24,7 +24,7 @@ export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProp
       onClick?.(e);
     };
 
-    const isComponent = typeof icon === 'function' && 'prototype' in icon;
+    const isComponent = typeof icon === 'function' || (typeof icon === 'object' && icon !== null && '$$typeof' in icon && !React.isValidElement(icon));
 
     return (
       <button
