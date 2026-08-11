@@ -41,7 +41,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
     ];
 
     return (
-        <section className="relative overflow-hidden bg-surface dark:bg-black rounded-3xl shadow-inner">
+        <section className="relative overflow-hidden bg-surface dark:bg-background rounded-3xl shadow-inner">
             <div className="absolute top-20 -start-20 w-60 h-60 bg-accent/10 dark:bg-primary/[0.08] rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-40 -end-20 w-72 h-72 bg-primary/10 dark:bg-primary/[0.05] rounded-full blur-[120px] pointer-events-none" />
 

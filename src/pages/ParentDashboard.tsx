@@ -13,7 +13,7 @@ import type { PointLogEntry } from './parent-dashboard/types';
 
 export const ParentDashboard = () => {
     const academyName = useAcademyName();
-    useEffect(() => { document.title = `ظ„ظˆط­ط© طھط­ظƒظ… ظˆظ„ظٹ ط§ظ„ط£ظ…ط± | ${academyName}`; }, [academyName]);
+    useEffect(() => { document.title = `لوحة تحكم ولي الأمر | ${academyName}`; }, [academyName]);
     const currentUser = useCurrentUser();
     const adminPhone = useAdminPhone();
     const logout = useLogout();
@@ -44,7 +44,7 @@ export const ParentDashboard = () => {
                 Promise.all(logsPromises)
             ]);
 
-            if (failedChildren > 0) setPartialError(`طھط¹ط°ط± طھط­ظ…ظٹظ„ ط¨ظٹط§ظ†ط§طھ ${failedChildren} ظ…ظ† ط§ظ„ط£ط¨ظ†ط§ط،. ط¨ط¹ط¶ ط§ظ„ط¨ظٹط§ظ†ط§طھ ظ‚ط¯ طھظƒظˆظ† ط؛ظٹط± ظ…ط­ط¯ط«ط©.`);
+            if (failedChildren > 0) setPartialError(`حدث تحويل بعض الأبناء. بعض الأبناء قد تكون غير محدثة.`);
 
             const flattenedLogs = allLogsResults.map((logs, idx) =>
                 (Array.isArray(logs) ? logs : []).map((l: { id: string; date: string; status: string; timestamp?: string; points?: number }) => ({ ...l, studentName: students[idx].name }))
@@ -151,8 +151,8 @@ export const ParentDashboard = () => {
         return (
             <div className="min-h-screen bg-background dark:bg-background flex items-center justify-center" dir="rtl">
                 <div className="text-center space-y-3 p-6">
-                    <p className="text-muted dark:text-muted text-sm">ظپط´ظ„ طھط­ظ…ظٹظ„ ط§ظ„ط¨ظٹط§ظ†ط§طھ. طھط­ظ‚ظ‚ ظ…ظ† ط§طھطµط§ظ„ظƒ ط¨ط§ظ„ط¥ظ†طھط±ظ†طھ.</p>
-                    <button onClick={() => refetch()} className="text-sm text-primary dark:text-primary hover:underline">ط¥ط¹ط§ط¯ط© ط§ظ„ظ…ط­ط§ظˆظ„ط©</button>
+                    <p className="text-muted dark:text-muted text-sm">فشل تحويل الأبناء. تحقق من اتصالك بالإنترنت.</p>
+                    <button onClick={() => refetch()} className="text-sm text-primary dark:text-primary hover:underline">إعادة المحاولة</button>
                 </div>
             </div>
         );

@@ -88,7 +88,7 @@ export const Courses = () => {
   }), [academyName]);
 
   return (
-    <div className="min-h-full bg-background dark:bg-black font-sans text-main relative flex flex-col transition-colors duration-500">
+    <div className="min-h-full bg-background dark:bg-background font-sans text-main relative flex flex-col transition-colors duration-500">
       <SEO title="الدورات التعليمية أونلاين" description="دورات تعليمية أونلاين للمناهج السعودية والكويتية والإماراتية والقطرية والعمانية والبحرينية. دروس خصوصية في الرياضيات والعلوم واللغة العربية والإنجليزية وقدرات وتحصيلي في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق. تأسيس أطفال، تحفيظ قرآن، مراجعات نهائية مع نخبة المعلمين الخبراء." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'الدورات', item: '/courses' }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       <MobileHeader />

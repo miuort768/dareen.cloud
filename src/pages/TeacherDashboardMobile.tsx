@@ -36,9 +36,9 @@ interface TeacherDashboardMobileProps {
 }
 
 const tabs = [
-    { id: 'home' as const, label: 'ط§ظ„ط±ط¦ظٹط³ظٹط©', icon: LayoutDashboard },
-    { id: 'schedule' as const, label: 'ط§ظ„ط¬ط¯ظˆظ„', icon: Calendar },
-    { id: 'reports' as const, label: 'ط§ظ„طھظ‚ط§ط±ظٹط±', icon: CheckSquare },
+    { id: 'home' as const, label: 'الرئيسية', icon: LayoutDashboard },
+    { id: 'schedule' as const, label: 'الجدول', icon: Calendar },
+    { id: 'reports' as const, label: 'التقارير', icon: CheckSquare },
 ];
 
     const glass = "bg-surface/80 dark:bg-surface/90 backdrop-blur-xl border-b border-border dark:border-primary/20";
@@ -95,7 +95,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
             >
                 <div className="flex items-center gap-2 text-primary font-bold text-xs">
                     {isRefreshing ? (
-                        <><Loader2 size={16} className="animate-spin" /><span>ط¬ط§ط±ظٹ ط§ظ„طھط­ط¯ظٹط«...</span></>
+                        <><Loader2 size={16} className="animate-spin" /><span>جاري التحميل...</span></>
                     ) : pullDistance > 40 ? (
                         <><RefreshCw size={16} className="animate-pulse" /><span>ط£ظپظ„طھ ظ„ظ„طھط­ط¯ظٹط«</span></>
                     ) : (
@@ -113,8 +113,8 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 <UserIcon size={18} className="text-on-primary dark:text-on-primary" />
                             </div>
                             <div>
-                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'ط§ظ„ظ…ط¹ظ„ظ…').split(' ')[0]}</h1>
-                                <p className="text-[11px] font-medium text-muted dark:text-muted">ظ…ط¹ظ„ظ…</p>
+                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
+                                <p className="text-[11px] font-medium text-muted dark:text-muted">معلم</p>
                             </div>
                         </div>
                         <div className="w-9 h-9 rounded-xl bg-primary-soft dark:bg-primary/15 flex items-center justify-center relative">
@@ -160,14 +160,14 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 <GlassCard className="p-4">
                                     <button onClick={() => navigate('/teacher-payment-history')}
                                         className="w-full flex items-center gap-3 py-1 text-start transition-all duration-200 hover:opacity-80 active:scale-[0.99]"
-                                        aria-label="ط³ط¬ظ„ ط§ظ„ط¯ظپط¹ط§طھ"
+                                        aria-label="سجل الدفعات"
                                     >
                                         <div className="w-9 h-9 rounded-xl bg-success-soft flex items-center justify-center shrink-0">
                                             <Wallet size={16} className="text-success" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                <p className="text-[11px] font-medium text-muted dark:text-muted">ظ…ط¹ظ„ظ…</p>
-                                <p className="text-[11px] font-medium text-muted dark:text-muted">ظ…ط¹ظ„ظ…</p>
+                                <p className="text-[11px] font-medium text-muted dark:text-muted">معلم</p>
+                                <p className="text-[11px] font-medium text-muted dark:text-muted">معلم</p>
                                         </div>
                                         <ArrowLeft size={14} className="text-muted shrink-0" />
                                     </button>
@@ -175,14 +175,14 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-primary" />
-                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'ط§ظ„ظ…ط¹ظ„ظ…').split(' ')[0]}</h1>
+                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
                                     </div>
                                     <Card><div className="p-3.5"><LiveSessions /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-warning" />
-                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'ط§ظ„ظ…ط¹ظ„ظ…').split(' ')[0]}</h1>
+                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
                                     </div>
                                     <Card><div className="p-3.5"><ModernAnnouncements /></div></Card>
                                 </section>
@@ -194,7 +194,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                     <section>
                                         <div className="flex items-center gap-2 mb-3 px-1">
                                             <Sparkles size={14} className="text-info" />
-                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'ط§ظ„ظ…ط¹ظ„ظ…').split(' ')[0]}</h1>
+                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
                                         </div>
                                         <GlassCard className="p-4">
                                             <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
@@ -223,21 +223,21 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-success" />
-                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'ط§ظ„ظ…ط¹ظ„ظ…').split(' ')[0]}</h1>
+                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
                                     </div>
                                     <Card><div className="p-3.5"><TeacherAchievements stats={stats} lowBalanceStudents={lowBalanceStudents} isTeacher={true} /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-error" />
-                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'ط§ظ„ظ…ط¹ظ„ظ…').split(' ')[0]}</h1>
+                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
                                     </div>
                                     <Card><div className="p-3.5"><TasksAndRequests tasks={tasks} /></div></Card>
                                 </section>
                                 <section>
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-warning" />
-                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'ط§ظ„ظ…ط¹ظ„ظ…').split(' ')[0]}</h1>
+                                <h1 className="text-base font-bold text-main dark:text-white leading-tight">{(currentUser?.name || currentUser?.username || 'المعلم').split(' ')[0]}</h1>
                                     </div>
                                     <Card><div className="p-3.5"><TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} /></div></Card>
                                 </section>
@@ -267,7 +267,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                             points: student.totalPoints || 0,
                             attendance: total > 0 ? Math.round((completed / total) * 100) : 0,
                             sessionsCompleted: completed,
-                            lastNotes: [student.notes || 'طھظ‚ط¯ظ… ظ…ظ…طھط§ط² ظپظٹ ط§ظ„ظ…ط§ط¯ط©']
+                            lastNotes: [student.notes || 'تمام ممتاز في المادة']
                         });
                         setBriefingStudent(null);
                     }}

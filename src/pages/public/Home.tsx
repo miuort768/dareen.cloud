@@ -76,7 +76,7 @@ export const Home = () => {
     }, [reviews.length]);
 
     return (
-        <div className="min-h-full bg-surface dark:bg-black text-main dark:text-main relative overflow-x-hidden transition-colors duration-500">
+        <div className="min-h-full bg-surface dark:bg-background text-main dark:text-main relative overflow-x-hidden transition-colors duration-500">
             <SEO title="منصة تعليم عن بعد في الكويت والخليج"
                 description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن."
                 url="https://dareen.cloud/" image="/hero-child.png"
@@ -179,7 +179,7 @@ export const Home = () => {
                                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.35, delay: i * 0.08 }}
                                 className="min-w-[180px] w-[180px] bg-surface dark:bg-card rounded-card shadow-sm border border-border dark:border-primary/25 overflow-hidden shrink-0 block">
-                                <div className="relative h-24 bg-surface dark:bg-black overflow-hidden">
+                                <div className="relative h-24 bg-surface dark:bg-background overflow-hidden">
                                     <Image src={c.image} alt={c.title} className="h-24" />
                                     <span className={`absolute top-2 start-2 text-micro font-black px-2 py-0.5 rounded-full shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning dark:bg-primary text-on-warning dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary dark:bg-primary text-on-primary dark:text-on-primary' : 'bg-error text-on-error'}`}>
                                         {stages.find(cat => cat.value === c.category)?.label || c.category}

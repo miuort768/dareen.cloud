@@ -10,7 +10,7 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: HeroSectionProps) => {
     return (
-        <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-surface dark:bg-black transition-colors duration-500">
+        <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-surface dark:bg-background transition-colors duration-500">
             <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
             <div className="container mx-auto px-4">
@@ -19,26 +19,26 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                         <div className="lg:w-[60%] text-center z-10">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/80 dark:bg-primary/10 border border-primary/50 dark:border-primary/40 rounded-full mb-4 mx-auto mt-4 lg:mt-0">
                                 <span className="w-2 h-2 rounded-full bg-primary dark:bg-primary animate-pulse"></span>
-                                <span className="text-primary dark:text-primary font-bold text-micro sm:text-xs">ظ…ظ†طµط© طھط¹ظ„ظٹظ… ط¹ظ† ط¨ط¹ط¯ ط±ط§ط¦ط¯ط© ظپظٹ ط§ظ„ط³ط¹ظˆط¯ظٹط© ظˆط§ظ„ظƒظˆظٹطھ ظˆط§ظ„ط®ظ„ظٹط¬</span>
+                                <span className="text-primary dark:text-primary font-bold text-micro sm:text-xs">منصة تعليم عن بعد رائدة في الكويت والخليج</span>
                             </div>
                             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-heading font-black text-main dark:text-main leading-none mb-0 relative">
-                                <span className="sr-only">ط¯ط§ط±ظٹظ† ط§ظ„ط³ط§ط¨ط¹ط© ظ„ظ„طھط¹ظ„ظٹظ… ظˆط§ظ„طھط¯ط±ظٹط¨ ط¹ظ† ط¨ط¹ط¯ - ط§ظ„ظ…ظ†طµط© ط±ظ‚ظ… ظˆط§ط­ط¯ ظ„ظ„ط¯ط±ظˆط³ ط§ظ„ط®طµظˆطµظٹط© ظˆطھط­ظپظٹط¸ ط§ظ„ظ‚ط±ط¢ظ† ظپظٹ ط§ظ„ط³ط¹ظˆط¯ظٹط©طŒ ط§ظ„ظƒظˆظٹطھطŒ ط§ظ„ط§ظ…ط§ط±ط§طھطŒ ظ‚ط·ط±طŒ ظˆط³ظ„ط·ظ†ط© ط¹ظ…ط§ظ† ظˆظ…ظ…ظ„ظƒط© ط§ظ„ط¨ط­ط±ظٹظ† - ط¯ط±ظˆط³ ط®طµظˆطµظٹط© ظپظٹ ط§ظ„ط¯ظˆط­ط© ظˆط§ظ„ط±ظٹط§ظ† ظˆظ…ط³ظ‚ط· ظˆطµظ„ط§ظ„ط© ظˆط§ظ„ظ…ظ†ط§ظ…ط© ظˆط§ظ„ظ…ط­ط±ظ‚</span>
+                                <span className="sr-only">دارين السابعة للتعليم والتدريب عن بعد - المنصة رقم 1 للدروس الخصوصية وتحفيظ القرآن في الكويت، الكويت، الإمارات، قطر وسلطنة عمان ومملكة البحرين - دروس خصوصية في الدوحة والرياض ومسقط وصلالة ومنامة ومملكة البحرين</span>
                                 <span className="block mb-0 min-h-[1.1em] aria-hidden">{typewriterText || '\u00A0'}<span className="inline-block animate-pulse border-s-4 border-primary dark:border-primary me-1 h-[0.9em] align-middle"></span></span>
                                 <span className="text-xl sm:text-2xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent dark:from-warning dark:to-primary block -mt-1 py-1 aria-hidden">
-                                    ظ„ظ„طھط¹ظ„ظٹظ… ظˆط§ظ„طھط¯ط±ظٹط¨ ط¹ظ† ط¨ط¹ط¯
+                                    للتعليم والتدريب عن بعد
                                 </span>
                             </h1>
                             <p className="text-xs sm:text-xs text-muted dark:text-soft leading-normal mb-5 max-w-[320px] sm:max-w-full mx-auto px-0 font-medium">
-                                ط£ظپط¶ظ„ ظ…ظ†طµط© طھط¹ظ„ظٹظ… ط¹ظ† ط¨ط¹ط¯ ظپظٹ ط§ظ„ط³ط¹ظˆط¯ظٹط©طŒ ط§ظ„ظƒظˆظٹطھطŒ ط§ظ„ط¥ظ…ط§ط±ط§طھطŒ ظ‚ط·ط± ظˆط¹ظ…ط§ظ† ظˆط§ظ„ط¨ط­ط±ظٹظ†.<br />ط¯ط±ظˆط³ ط®طµظˆطµظٹط©طŒ ظ‚ط¯ط±ط§طھ ظˆطھط­طµظٹظ„ظٹطŒ طھط­ظپظٹط¸ ظ‚ط±ط¢ظ†طŒ ظˆطھط£ط³ظٹط³ ظ„ظ„ظ…ظ†ط§ظ‡ط¬ ط§ظ„ط®ظ„ظٹط¬ظٹط© ظ…ط¹ ظ†ط®ط¨ط© ط§ظ„ظ…ط¹ظ„ظ…ظٹظ†.
+                                أفضل منصة تعليم عن بعد في الكويت، الكويت، الإمارات، قطر وعمان والبحرين.<br />دروس خصوصية، قدرات وتحصيلي، تحفيظ القرآن، وتأسيس للمناهج الخليجية مع نخبة المعلمين.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <Link
                                     to="/courses"
                                     onClick={() => window.scrollTo(0, 0)}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-gradient-to-r from-primary to-primary dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-base sm:text-lg shadow-lg dark:shadow-primary/20 hover:brightness-90 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group rounded-xl"
-                                    aria-label="طھطµظپط­ ط§ظ„ط¯ظˆط±ط§طھ ط§ظ„طھط¹ظ„ظٹظ…ظٹط©"
+                                    aria-label="تصفح الدورات التعليمية"
                                 >
-                                    <span>طھطµظپط­ ط§ظ„ط¯ظˆط±ط§طھ</span>
+                                    <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <button
@@ -53,12 +53,12 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                         }
                                     }}
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-surface dark:bg-white/5 text-main dark:text-main border border-border dark:border-primary/30 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group rounded-xl"
-                                    aria-label="ط´ط§ظ‡ط¯ ط¯ظ„ظٹظ„ ط§ظ„ط§ط³طھط®ط¯ط§ظ…"
+                                    aria-label="شاهد المزيد عن الاشتراك"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-primary-soft dark:bg-primary/20 flex items-center justify-center group-hover:scale-110 transition">
                                         <Play className="w-4 h-4 text-primary dark:text-primary fill-primary dark:fill-primary" />
                                     </div>
-                                    <span>ط¯ظ„ظٹظ„ ط§ظ„ط§ط³طھط®ط¯ط§ظ…طں</span>
+                                    <span>للاشتراك،</span>
                                 </button>
                             </div>
                             <div className="mt-4 pt-4 border-t border-border dark:border-white/10 flex items-center justify-center gap-6">
@@ -72,7 +72,7 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                             imgClassName="rounded-full"
                                         />
                                     ))}
-                                    <div className="w-10 h-10 rounded-full border-2 border-border dark:border-primary/40 bg-surface dark:bg-black flex items-center justify-center text-xs font-bold text-muted dark:text-soft">
+                                    <div className="w-10 h-10 rounded-full border-2 border-border dark:border-primary/40 bg-surface dark:bg-background flex items-center justify-center text-xs font-bold text-muted dark:text-soft">
                                         +2k
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                         4.9/5
                                         <Star className="w-4 h-4 text-warning dark:text-primary fill-warning dark:fill-primary" />
                                     </div>
-                                    <p className="text-xs text-muted dark:text-muted font-medium">طھظ‚ظٹظٹظ… ط§ظ„ط·ظ„ط§ط¨ ظˆط£ظˆظ„ظٹط§ط، ط§ظ„ط£ظ…ظˆط±</p>
+                                    <p className="text-xs text-muted dark:text-muted font-medium">تقييم الطلاب وأولياء الأمور</p>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                         <source srcSet="/hero-child.avif" type="image/avif" />
                                         <img
                                             src="/hero-child.png"
-                                            alt="ط·ظپظ„ ظٹط¯ط±ط³ ط¹ظ„ظ‰ ظ…ظ†طµط© ط¯ط§ط±ظٹظ† ط§ظ„ط³ط§ط¨ط¹ط©"
+                                            alt="طفل يدرس على منصة دارين السابعة"
                                             width="490"
                                             height="490"
                                             className="relative w-full h-auto lg:h-full object-contain filter drop-shadow-2xl z-20"
@@ -119,13 +119,13 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                 {text}
                             </p>
                             <a
-                                href={`https://wa.me/${signupNowNumber}?text=${encodeURIComponent('ط§ظ„ط³ظ„ط§ظ… ط¹ظ„ظٹظƒظ…طŒ ' + text)}`}
+                                href={`https://wa.me/${signupNowNumber}?text=${encodeURIComponent('السلام عليكم، ' + text)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label={`ط³ط¬ظ„ ط§ظ„ط¢ظ†: ${text}`}
+                                aria-label={`سجل الآن: ${text}`}
                                 className="shrink-0 px-2.5 py-1 bg-primary dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-primary dark:text-on-primary font-extrabold text-micro lg:text-micro rounded-xl hover:brightness-90 transition-all shadow-sm whitespace-nowrap"
                             >
-                                ط³ط¬ظ„ ط§ظ„ط¢ظ†
+                                سجل الآن
                             </a>
                         </div>
                     ) : null)}

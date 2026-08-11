@@ -30,7 +30,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
     return (
         <>
             {/* Desktop version */}
-            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-surface dark:bg-black transition-colors duration-500">
+            <section className="hidden md:block pt-4 md:pt-6 pb-6 relative overflow-hidden bg-surface dark:bg-background transition-colors duration-500">
                 <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
                 <div className="absolute bottom-0 start-0 w-48 h-48 bg-primary/5 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
                 <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -74,11 +74,11 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                                 <div className="items-center justify-center gap-4 inline-flex">
                                     <div className="flex -space-x-3 space-x-reverse">
                                         {[1, 2, 3].map(i => (
-                                            <div key={`avatar-${i}`} className="w-10 h-10 rounded-full border-2 border-card dark:border-primary/40 bg-success-soft dark:bg-black overflow-hidden shadow-sm">
+                                            <div key={`avatar-${i}`} className="w-10 h-10 rounded-full border-2 border-card dark:border-primary/40 bg-success-soft dark:bg-background overflow-hidden shadow-sm">
                                                 <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" className="w-10 h-10" />
                                             </div>
                                         ))}
-                                        <div className="w-10 h-10 rounded-full border-2 border-card dark:border-primary/40 bg-surface dark:bg-black flex items-center justify-center text-xs font-bold text-muted dark:text-soft shadow-sm">+5k</div>
+                                        <div className="w-10 h-10 rounded-full border-2 border-card dark:border-primary/40 bg-surface dark:bg-background flex items-center justify-center text-xs font-bold text-muted dark:text-soft shadow-sm">+5k</div>
                                     </div>
                                     <div className="h-8 w-px bg-success dark:bg-primary opacity-40"></div>
                                     <div className="text-start">
@@ -130,7 +130,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             </section>
 
             {/* Mobile version */}
-            <section className="block md:hidden relative overflow-hidden bg-surface dark:bg-black transition-colors duration-500 pt-2 pb-4">
+            <section className="block md:hidden relative overflow-hidden bg-surface dark:bg-background transition-colors duration-500 pt-2 pb-4">
                 <LeafDecoration />
 
                 <div className="absolute top-40 -end-20 w-64 h-64 bg-accent/10 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
@@ -194,7 +194,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                         <div className="h-10 w-px bg-success dark:bg-primary opacity-40"></div>
                         <div className="flex -space-x-2.5 space-x-reverse">
                             {[1, 2, 3].map(i => (
-                                <div key={`avatar-${i}`} className="w-9 h-9 rounded-full border-2 border-card dark:border-primary/40 bg-surface dark:bg-black overflow-hidden shadow-sm">
+                                <div key={`avatar-${i}`} className="w-9 h-9 rounded-full border-2 border-card dark:border-primary/40 bg-surface dark:bg-background overflow-hidden shadow-sm">
                                     <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="" className="w-full h-full" />
                                 </div>
                             ))}
