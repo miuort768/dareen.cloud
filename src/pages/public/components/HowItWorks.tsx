@@ -21,7 +21,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                         <span className="text-micro font-black">ابدأ رحلتك</span>
                     </div>
                     <h2 className="text-xl md:text-5xl font-black text-main dark:text-main font-heading">
-                        <span className="text-micro font-black">ابدأ رحلتك</span>
+                        كيف تشترك في <span className="text-primary dark:text-primary">المعهد؟</span>
                     </h2>
                 </div>
                 

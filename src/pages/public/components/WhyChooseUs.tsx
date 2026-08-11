@@ -90,7 +90,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
               </div>
               <h3 className="text-lg font-black text-on-primary dark:text-white font-heading mb-2">بنينا معاً مجدداً</h3>
               <p className="text-micro text-on-primary dark:text-white/40 opacity-90 leading-relaxed mb-4 max-w-xs mx-auto font-medium">
-                كل يوم نتعلم ونكبر معاً لتقدم لكم أفضل خدمة تعليمية ممكنة. رؤيتكم هي fuel نجاحنا و扳机 تطورنا.
+                كل يوم نتعلم ونكبر معاً لتقدم لكم أفضل خدمة تعليمية ممكنة. رؤيتكم هي محرّك نجاحنا ومحفّز تطورنا.
               </p>
               <a
                 href={`https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent('مرحباً، أرغب في الاستفسار عن خدماتكم التعليمية')}`}
@@ -152,7 +152,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                   <span className="text-xs font-bold text-on-primary dark:text-[#D4AF37]">البصمة المميزة</span>
                 </div>
                 <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-on-primary dark:text-white">بنينا معاً مجدداً</h3>
-                <p className="text-on-primary dark:text-white/40 text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">كل يوم نتعلم ونكبر معاً لتقدم لكم أفضل خدمة تعليمية ممكنة. رؤيتكم هي fuel نجاحنا و扳机 تطورنا.</p>
+                <p className="text-on-primary dark:text-white/40 text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">كل يوم نتعلم ونكبر معاً لتقدم لكم أفضل خدمة تعليمية ممكنة. رؤيتكم هي محرّك نجاحنا ومحفّز تطورنا.</p>
               </div>
               <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto shrink-0">
                 <div className="p-6 bg-white/10 dark:bg-white/5 border border-white/10 dark:border-[#D4AF37]/10 rounded-2xl text-center group-hover:bg-white/15 dark:group-hover:bg-[#D4AF37]/[0.06] transition-all duration-300">
