@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
 const { authMiddleware, checkRole } = require('../../middleware/auth');
 const ResponseHandler = require('../../utils/responseHandler');
 const { sanitizeInput } = require('../../middleware/advanced');
@@ -42,7 +41,6 @@ router.post('/', subscribeLimiter, async (req, res) => {
         }
         await prisma.blogCustomer.create({
             data: {
-                id: uuidv4(),
                 country,
                 phone: normalizedPhone,
             }
