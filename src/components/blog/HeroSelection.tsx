@@ -15,23 +15,23 @@ interface HeroSelectionProps {
 export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="pb-6">
         {/* Hero Card */}
-        <div className="bg-card rounded-[1.5rem] px-5 pt-5 pb-4 mb-4 border border-border shadow-elevation-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-soft dark:bg-primary/15 border border-primary/15 rounded-xl mb-3">
-                <BookOpen size={12} className="text-primary" />
-                <span className="text-[11px] font-extrabold text-primary">
+        <div className="bg-gradient-to-br from-primary via-primary-deep to-primary rounded-3xl px-5 pt-5 pb-4 mb-4 border border-primary/30 shadow-lg shadow-primary/10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 backdrop-blur-sm rounded-full mb-3">
+                <BookOpen size={10} className="text-on-primary" />
+                <span className="text-[10px] font-extrabold text-on-primary">
                     {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? currentTypeName : currentCurriculumName}
                 </span>
             </div>
-            <h2 className="text-xl font-black text-main leading-tight mb-1.5">
+            <h2 className="text-xl font-black text-on-primary leading-tight mb-1">
                 {view === 'types' ? (
-                    <>تحميل مجاني <span className="text-primary">بدون إعلانات</span></>
+                    <>تحميل مجاني بدون إعلانات</>
                 ) : view === 'curriculums' ? (
-                    <>اختر <span className="text-primary">المنهج</span></>
+                    <>اختر <span className="text-on-primary/80">المنهج</span></>
                 ) : (
-                    <>اختر <span className="text-primary">المرحلة</span></>
+                    <>اختر <span className="text-on-primary/80">المرحلة</span></>
                 )}
             </h2>
-            <p className="text-xs text-muted dark:text-white/70 font-medium leading-relaxed">
+            <p className="text-xs text-on-primary/70 font-medium leading-relaxed">
                 {view === 'types'
                     ? 'اختر ما تريد من كتب أو مذكرات مجاناً'
                     : view === 'curriculums'
@@ -57,12 +57,12 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
                         return next;
                     });
                 }}
-                    className="relative flex flex-col items-center justify-center gap-2.5 p-5 rounded-2xl bg-card border border-border text-main overflow-hidden shadow-sm active:scale-[0.97] transition-all duration-200 hover:shadow-elevation-1 hover:border-primary/20">
+                    className="relative flex flex-col items-center justify-center gap-2.5 p-5 rounded-2xl bg-card border border-border text-main overflow-hidden shadow-sm active:scale-[0.97] transition-all duration-200 hover:shadow-md hover:border-primary/30">
                     <div className="w-11 h-11 rounded-xl bg-primary-soft flex items-center justify-center">
                         <item.icon size={20} className="text-primary" />
                     </div>
                     <span className="text-sm font-extrabold text-center leading-tight">{item.name}</span>
-                    {item.sub && <span className="text-[10px] text-muted dark:text-white/60 font-bold">{item.sub}</span>}
+                    {item.sub && <span className="text-[10px] text-muted font-bold">{item.sub}</span>}
                 </button>
             ))}
         </div>
@@ -72,9 +72,9 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
 export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
         <div className="w-full lg:w-[55%] text-center lg:text-start">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary-soft dark:bg-primary/15 border border-primary/15 rounded-xl mb-5">
-                <BookOpen size={12} className="text-primary" />
-                <span className="text-[11px] font-extrabold text-primary">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-soft border border-primary/20 rounded-2xl mb-5">
+                <BookOpen size={13} className="text-primary" />
+                <span className="text-xs font-extrabold text-primary">
                     {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
                 </span>
             </div>
@@ -88,7 +88,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                     <>اختر <span className="text-primary">المرحلة</span></>
                 )}
             </h1>
-            <p className="text-sm sm:text-base text-muted dark:text-white/70 leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium">
+            <p className="text-sm sm:text-base text-muted leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium">
                 {view === 'types'
                     ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في مناهج الكويت وقطر والإمارات والسعودية'
                     : view === 'curriculums'
@@ -96,7 +96,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                     : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
             </p>
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto lg:mx-0">
-                {gridItems.map((item: GridItem) => (
+                {gridItems.map((item: GridItem, i: number) => (
                     <div key={item.id}>
                         <button onClick={() => {
                             setSearchParams(prev => {
@@ -112,12 +112,12 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                                 return next;
                             });
                         }}
-                            className="relative w-full py-5 px-4 flex flex-col items-center justify-center gap-2 rounded-2xl bg-card border border-border text-main overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:border-primary/30 active:scale-[0.97]">
+                            className="relative w-full py-5 px-4 flex flex-col items-center justify-center gap-2 rounded-2xl bg-card border border-border text-main overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elevation-2 hover:border-primary/30 active:scale-[0.97]">
                             <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
                                 <item.icon size={18} className="text-primary" />
                             </div>
                             <span className="text-sm font-extrabold text-center leading-tight">{item.name}</span>
-                            {item.sub && <span className="text-[11px] text-muted dark:text-white/60 font-medium">{item.sub}</span>}
+                            {item.sub && <span className="text-[11px] text-muted font-medium">{item.sub}</span>}
                         </button>
                     </div>
                 ))}
@@ -125,12 +125,14 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
         </div>
         <div className="hidden lg:flex w-full lg:w-[45%] justify-center">
             <div className="relative w-full max-w-[420px] aspect-[3/4] flex items-center justify-center">
-                <div className="absolute inset-0 bg-primary/3 rounded-full pointer-events-none" />
+                <div className="absolute inset-[12%] border-[1.5px] border-dashed border-primary/30 rounded-full animate-spin-slow pointer-events-none"></div>
+                <div className="absolute inset-[17%] border-[1.5px] border-dashed border-accent/20 rounded-full animate-reverse-spin-slow pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-primary/10 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
                 <picture className="w-full h-full flex items-center justify-center">
                     <source srcSet="/book3.webp" type="image/webp" />
                     <source srcSet="/book3.avif" type="image/avif" />
                     <img src="/book3.png" alt="بوابة دارين التعليمية" width="380" height="380" loading="lazy"
-                        className="relative z-10 w-4/5 h-4/5 object-contain" />
+                        className="relative z-10 w-4/5 h-4/5 object-contain drop-shadow-lg" />
                 </picture>
             </div>
         </div>

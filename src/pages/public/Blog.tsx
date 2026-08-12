@@ -7,7 +7,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost } from '../../data/blogPosts';
-import { MessageCircle, Send, Download, Zap, FileText, BookOpen, Rocket } from 'lucide-react';
+import { MessageCircle, Send, Download, Zap, FileText, BookOpen } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
 import { useAcademyName } from '../../context/AppContext';
@@ -158,9 +158,17 @@ export const Blog = () => {
     } catch (e) { console.warn(e); } finally { setLoadingMore(false); }
   };
 
+  const [libraryTheme] = useState(() => {
+    try { return localStorage.getItem('library-theme') || 'light'; } catch (e) { console.warn(e); return 'light'; }
+  });
+  useEffect(() => {
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(libraryTheme);
+  }, [libraryTheme]);
+
   const breadcrumbItems = [
     { label: 'الرئيسية', onClick: () => setView('types') },
-    ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? setView('types') : setView('curriculums') }] : []),
+    ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? () => setView('types') : () => setView('curriculums') }] : []),
     ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
     ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
     ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
@@ -198,33 +206,33 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* Mobile */}
-      <div className="md:hidden pb-4 px-4 relative bg-background">
+      <div className="md:hidden pb-0 px-3 relative bg-surface">
         {isHeroView ? (
           <div className="pb-6">
             {/* Hero Banner */}
-            <div className="relative bg-card rounded-[1.5rem] overflow-hidden mb-5 border border-border shadow-elevation-1">
-              {/* Subtle gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+            <div className="relative bg-gradient-to-br from-primary via-primary-deep to-primary rounded-3xl overflow-hidden mb-5 border border-primary/30 shadow-lg shadow-primary/10">
+              {/* Background glow */}
+              <div className="absolute top-0 end-0 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
 
               <div className="relative p-5">
-                {/* Top row: badge + social */}
+                {/* Top row: social icons */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-soft dark:bg-primary/15 border border-primary/15 rounded-xl">
-                    <Rocket size={12} className="text-primary" />
-                    <span className="text-[11px] font-extrabold text-primary">برعاية منصة دارين السابعة</span>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/15 backdrop-blur-sm rounded-full">
+                    <BookOpen size={10} className="text-on-primary" />
+                    <span className="text-[10px] font-extrabold text-on-primary">المكتبة التعليمية</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
                       target="_blank" rel="noopener noreferrer"
-                       className="w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center transition-all hover:border-primary/30 hover:bg-primary-soft"
+                       className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center transition-all"
                        aria-label="واتساب">
-                      <MessageCircle size={14} className="text-muted" />
+                      <MessageCircle size={14} className="text-on-primary" />
                     </a>
                     <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
                       target="_blank" rel="noopener noreferrer"
-                       className="w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center transition-all hover:border-primary/30 hover:bg-primary-soft"
+                       className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center transition-all"
                        aria-label="تيليجرام">
-                        <Send size={14} className="text-muted" />
+                        <Send size={14} className="text-on-primary" />
                     </a>
                   </div>
                 </div>
@@ -232,21 +240,21 @@ export const Blog = () => {
                 {/* Content + Image */}
                 <div className="flex items-center gap-4">
                   <div className="flex-1 min-w-0">
-                    <h1 className="text-xl font-black text-main leading-tight mb-1.5 font-heading">
-                      مكتبة <span className="text-primary">{academyName}</span>
+                    <h1 className="text-lg font-black text-on-primary leading-tight mb-1 font-heading">
+                      مكتبة <span className="text-on-primary/80">{academyName}</span>
                     </h1>
-                    <p className="text-xs text-muted dark:text-white/70 leading-relaxed mb-4 font-medium">
-                      أفضل الكتب والمذكرات والملخصات لجميع المراحل بطرق تدريس أكاديمية
+                    <p className="text-[11px] text-on-primary/70 leading-relaxed mb-3 font-medium">
+                      أفضل الكتب والمذكرات والملخصات لجميع المراحل
                     </p>
                     <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                       target="_blank" rel="noopener noreferrer"
-                       className="inline-flex items-center justify-center gap-2 bg-primary text-on-primary text-xs font-extrabold px-5 py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm shadow-primary/20 active:scale-[0.98]">
-                      طلب حصة مجانية فردية
+                       className="inline-flex items-center justify-center gap-2 bg-on-primary text-primary text-[11px] font-extrabold px-5 py-2.5 rounded-xl hover:bg-surface transition-all">
+                      طلب حصة مجانية
                     </a>
                   </div>
                   <div className="relative shrink-0 w-24 h-24">
-                    <div className="absolute inset-0 bg-primary/10 rounded-full blur-2xl" />
-                    <Image src="/bbook.webp" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-md" />
+                    <div className="absolute inset-0 bg-white/10 rounded-full blur-xl" />
+                    <Image src="/bbook.webp" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-lg" />
                   </div>
                 </div>
               </div>
@@ -272,7 +280,11 @@ export const Blog = () => {
       </div>
 
       {/* Desktop */}
-      <main id="main-content" className="hidden md:block pt-24 md:pt-32 pb-0 relative bg-background">
+      <main id="main-content" className="hidden md:block pt-24 md:pt-32 pb-0 relative overflow-hidden bg-surface">
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-primary/5 to-transparent rounded-full blur-[140px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-info/3 to-transparent rounded-full blur-[120px]" />
+        </div>
         {view === 'types' ? (
           <DesktopLibraryLanding posts={posts} loading={loading} setSearchParams={setSearchParams} />
         ) : (
