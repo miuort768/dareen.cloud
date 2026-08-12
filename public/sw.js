@@ -1,4 +1,4 @@
-const CACHE = 'dareen-v13';
+const CACHE = 'dareen-v14';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
