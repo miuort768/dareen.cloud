@@ -347,9 +347,12 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
       </section>
 
       {/* ===== CATEGORIES ===== */}
-      <section id="library-categories" className="mt-12">
-        <div className="flex items-end justify-between gap-4 mb-7">
+      <section id="library-categories" className="mt-14">
+        <div className="flex items-end justify-between gap-4 mb-8">
           <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-soft border border-primary/10 rounded-full mb-3">
+              <span className="text-[10px] font-extrabold text-primary">تصفح حسب القسم</span>
+            </div>
             <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">الفئات الأكثر قراءة</h2>
             <p className="text-sm text-muted font-medium mt-1.5">اختر القسم الذي يناسب احتياجك التعليمي</p>
           </div>
@@ -366,30 +369,28 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 onClick={() => goToType(t.id)}
                 className={cn(
                   'group relative overflow-hidden rounded-2xl border bg-card p-5 text-start transition-all duration-300',
-                  'hover:-translate-y-0.5 hover:shadow-elevation-2',
+                  'hover:-translate-y-1 hover:shadow-elevation-3',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
                   s.cardBorder
                 )}
               >
                 <div className={cn('absolute top-0 bottom-0 end-0 w-1 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300', s.dot)} />
                 <div className={cn('absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300', s.gradient)} />
-                <div className="relative z-10 flex items-start gap-4">
-                  <span className={cn('w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110', s.iconWrap)}>
-                    <t.icon size={22} className={s.iconColor} />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between gap-2 mb-1">
-                      <h3 className="text-sm font-extrabold text-main group-hover:text-primary transition-colors duration-300 truncate">{t.name}</h3>
-                      <span className={cn('shrink-0 text-[11px] font-extrabold rounded-lg px-2 py-0.5', s.badge)}>
-                        {count}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-muted font-medium leading-relaxed">{s.miniDesc}</p>
-                    <span className={cn('inline-flex items-center gap-1 mt-2.5 text-xs font-extrabold transition-all duration-300 group-hover:gap-1.5', s.linkColor)}>
-                      تصفح
-                      <ArrowLeft size={12} className="transition-transform duration-300 group-hover:-translate-x-1" />
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className={cn('w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg', s.iconWrap)}>
+                      <t.icon size={22} className={s.iconColor} />
+                    </span>
+                    <span className={cn('text-[11px] font-extrabold rounded-lg px-2.5 py-1', s.badge)}>
+                      {count} مقال
                     </span>
                   </div>
+                  <h3 className="text-base font-extrabold text-main group-hover:text-primary transition-colors duration-300 mb-1">{t.name}</h3>
+                  <p className="text-[11px] text-muted font-medium leading-relaxed mb-3">{s.miniDesc}</p>
+                  <span className={cn('inline-flex items-center gap-1.5 text-xs font-extrabold transition-all duration-300 group-hover:gap-2.5', s.linkColor)}>
+                    تصفح المقالات
+                    <ArrowLeft size={12} className="transition-transform duration-300 group-hover:-translate-x-1" />
+                  </span>
                 </div>
               </button>
             );
@@ -398,7 +399,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
       </section>
 
       {/* ===== SIDEBAR + ARTICLES ===== */}
-      <section className="mt-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 items-start">
+      <section className="mt-14 grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 items-start">
         <aside className="lg:sticky lg:top-24 space-y-5">
           {/* Search */}
           <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
@@ -427,9 +428,9 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
               <span className="w-8 h-8 rounded-xl bg-primary-soft text-primary flex items-center justify-center">
                 <BookMarked size={15} />
               </span>
-              الفئات الأكثر قراءة
+              الأقسام
             </h3>
-            <ul className="space-y-0.5">
+            <ul className="space-y-1">
               {types.map(t => {
                 const s = TYPE_STYLES[t.id as TypeId];
                 const count = categoryCounts[t.id] || 0;
@@ -438,13 +439,13 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                     <button
                       type="button"
                       onClick={() => goToType(t.id)}
-                      className="w-full flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                      className="w-full flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-surface group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     >
                       <span className="flex items-center gap-2.5 min-w-0">
-                        <span className={cn('w-2 h-2 shrink-0 rounded-full', s.dot)} />
-                        <span className="text-sm font-bold text-main truncate">{t.name}</span>
+                        <span className={cn('w-2 h-2 shrink-0 rounded-full transition-transform duration-200 group-hover:scale-125', s.dot)} />
+                        <span className="text-sm font-bold text-main group-hover:text-primary transition-colors truncate">{t.name}</span>
                       </span>
-                      <span className={cn('shrink-0 text-xs font-extrabold rounded-lg bg-surface px-2.5 py-0.5', s.countColor)}>
+                      <span className={cn('shrink-0 text-[11px] font-extrabold rounded-lg bg-surface px-2 py-0.5 transition-colors', s.countColor)}>
                         {count}
                       </span>
                     </button>
@@ -454,72 +455,78 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             </ul>
           </div>
 
-          {/* Newsletter */}
-          <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 via-card to-success/5 p-5 shadow-elevation-1 relative overflow-hidden">
-            <div className="absolute top-0 start-0 w-16 h-16 bg-primary/10 rounded-full blur-2xl pointer-events-none" />
-            <span className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mb-3">
-              <Mail size={18} />
-            </span>
-            <h3 className="text-sm font-extrabold text-main mb-1">اشترك في نشرتنا البريدية</h3>
-            <p className="text-xs text-muted font-medium leading-relaxed mb-4">
-              اختر دولتك وسجّل رقم هاتفك ليصلك جديد الكتب والمذكرات.
-            </p>
-            {subscribed ? (
-              <div className="flex items-center gap-2 rounded-xl bg-success-soft border border-success/30 px-4 py-3">
-                <CheckCircle2 size={15} className="text-success shrink-0" />
-                <span className="text-xs font-bold text-success">تم التسجيل بنجاح!</span>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} className="space-y-2.5">
-                <div>
-                  <label className="block text-[11px] font-bold text-muted mb-1" htmlFor="newsletter-country">الدولة</label>
-                  <div className="relative">
-                    <Globe size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
-                    <select
-                      id="newsletter-country"
-                      required
-                      value={country}
-                      onChange={e => setCountry(e.target.value)}
-                      className="w-full appearance-none rounded-xl border border-border bg-surface ps-9 pe-9 py-2.5 text-sm text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
-                    >
-                      <option value="" disabled>اختر الدولة</option>
-                      {BLOG_COUNTRIES.map(c => (
-                        <option key={c} value={c}>{c}</option>
-                      ))}
-                    </select>
-                    <ChevronDown size={14} className="absolute end-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
-                  </div>
+          {/* Newsletter — Premium dark card */}
+          <div className="rounded-2xl overflow-hidden relative">
+            {/* Background */}
+            <div className="absolute inset-0 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep pointer-events-none" />
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+              style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
+            <div className="relative p-5">
+              <span className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center mb-3">
+                <Mail size={18} />
+              </span>
+              <h3 className="text-sm font-extrabold text-white mb-1">اشترك في النشرة التعليمية</h3>
+              <p className="text-[11px] text-white/50 font-medium leading-relaxed mb-4">
+                ليصلك جديد الكتب والمذكرات مباشرة على هاتفك.
+              </p>
+              {subscribed ? (
+                <div className="flex items-center gap-2 rounded-xl bg-white/10 border border-white/10 px-4 py-3">
+                  <CheckCircle2 size={15} className="text-success shrink-0" />
+                  <span className="text-xs font-bold text-white">تم التسجيل بنجاح!</span>
                 </div>
-                <div>
-                  <label className="block text-[11px] font-bold text-muted mb-1" htmlFor="newsletter-phone">رقم الهاتف</label>
-                  <div className="relative">
-                    <Phone size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
-                    <input
-                      id="newsletter-phone"
-                      type="tel"
-                      required
-                      dir="ltr"
-                      inputMode="tel"
-                      value={phone}
-                      onChange={e => setPhone(normalizePhoneInput(e.target.value))}
-                      placeholder="5xxxxxxxx"
-                      className="w-full rounded-xl border border-border bg-surface ps-9 pe-4 py-2.5 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
-                    />
+              ) : (
+                <form onSubmit={handleSubscribe} className="space-y-2.5">
+                  <div>
+                    <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-country-d">الدولة</label>
+                    <div className="relative">
+                      <Globe size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                      <select
+                        id="newsletter-country-d"
+                        required
+                        value={country}
+                        onChange={e => setCountry(e.target.value)}
+                        className="w-full appearance-none rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-9 py-2.5 text-sm text-white outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30 placeholder:text-white/30"
+                      >
+                        <option value="" disabled className="text-main">اختر الدولة</option>
+                        {BLOG_COUNTRIES.map(c => (
+                          <option key={c} value={c} className="text-main">{c}</option>
+                        ))}
+                      </select>
+                      <ChevronDown size={13} className="absolute end-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                    </div>
                   </div>
-                </div>
-                {subscribeError && (
-                  <p className="text-xs font-bold text-error">{subscribeError}</p>
-                )}
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-sm font-extrabold text-on-primary transition-all duration-300 hover:bg-primary-hover hover:shadow-elevation-1 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
-                >
-                  {submitting ? 'جارٍ الإرسال...' : 'اشترك الآن'}
-                  {!submitting && <Send size={13} />}
-                </button>
-              </form>
-            )}
+                  <div>
+                    <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-phone-d">رقم الهاتف</label>
+                    <div className="relative">
+                      <Phone size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                      <input
+                        id="newsletter-phone-d"
+                        type="tel"
+                        required
+                        dir="ltr"
+                        inputMode="tel"
+                        value={phone}
+                        onChange={e => setPhone(normalizePhoneInput(e.target.value))}
+                        placeholder="5xxxxxxxx"
+                        className="w-full rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30"
+                      />
+                    </div>
+                  </div>
+                  {subscribeError && (
+                    <p className="text-xs font-bold text-error">{subscribeError}</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-extrabold text-primary-deep transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep"
+                  >
+                    {submitting ? 'جارٍ الإرسال...' : 'اشترك الآن'}
+                    {!submitting && <Send size={13} />}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </aside>
 
@@ -527,9 +534,12 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
         <div className="min-w-0">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-soft border border-primary/10 rounded-full mb-3">
+                <span className="text-[10px] font-extrabold text-primary">آخر ما نُشر</span>
+              </div>
               <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">أحدث المقالات</h2>
               <p className="text-sm text-muted font-medium mt-1.5">
-                {searchQuery ? `نتائج البحث عن «${search.trim()}»` : 'آخر ما نُشر في المكتبة التعليمية'}
+                {searchQuery ? `نتائج البحث عن «${search.trim()}»` : 'تصفح أحدث ما نُشر في المكتبة التعليمية'}
               </p>
             </div>
             <span className="hidden sm:inline-flex items-center gap-2 text-sm font-bold text-muted">
@@ -567,7 +577,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                   <Link
                     key={post.id}
                     to={`/books/${post.slug}`}
-                    className="group relative flex gap-4 rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 overflow-hidden"
+                    className="group relative flex gap-4 rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 overflow-hidden"
                   >
                     <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-l from-transparent via-primary/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative w-28 h-28 shrink-0 rounded-xl overflow-hidden bg-surface">
