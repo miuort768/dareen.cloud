@@ -153,6 +153,8 @@ app.use(express.static(path.join(__dirname, '../dist'), {
     setHeaders: (res, filePath) => {
         if (filePath.endsWith('.html')) {
             res.setHeader('Cache-Control', 'no-cache');
+        } else if (filePath.endsWith('sw.js')) {
+            res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
         } else if (filePath.match(/\.(js|css|woff2?|png|jpg|jpeg|gif|svg|webp|avif)$/)) {
             res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
         }
