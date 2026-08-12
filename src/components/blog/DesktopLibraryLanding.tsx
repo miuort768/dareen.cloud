@@ -248,7 +248,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
               {types.map(t => {
                 const s = TYPE_STYLES[t.id as TypeId];
                 return (
-<button type="button" 
+                  <button
                     key={t.id}
                     type="button"
                     onClick={() => goToType(t.id)}
@@ -436,7 +436,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 const count = categoryCounts[t.id] || 0;
                 return (
                   <li key={t.id}>
-  <button type="button" 
+                    <button
                       type="button"
                       onClick={() => goToType(t.id)}
                       className="w-full flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all duration-200 hover:bg-surface group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
@@ -516,7 +516,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                   {subscribeError && (
                     <p className="text-xs font-bold text-error">{subscribeError}</p>
                   )}
-<button type="button" 
+                  <button
                     type="submit"
                     disabled={submitting}
                     className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-extrabold text-primary-deep transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep"
