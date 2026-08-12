@@ -60,15 +60,15 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             },
                             {
                                 id: '02',
-                                title: 'اختر المنهج',
-                                desc: 'حدد منهجك والمادة',
+                                title: 'حصة مجانية',
+                                desc: 'حصة تجريبية مجانية لك',
                                 icon: <Star className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-success to-success dark:from-primary dark:to-warning'
                             },
                             {
                                 id: '03',
-                                title: 'اختر المنهج',
-                                desc: 'حدد منهجك والمادة',
+                                title: 'اشترك الآن',
+                                desc: 'تواصل لحجز مقعدك',
                                 icon: <Zap className="w-5 h-5 md:w-6 md:h-6" />,
                                 color: 'from-primary to-primary dark:from-primary dark:to-warning'
                             }

@@ -116,6 +116,7 @@ module.exports = {
         success: {
           DEFAULT: 'var(--bg-success)',
           dark: 'var(--bg-success-dark)',
+          hover: 'var(--bg-success-hover, var(--bg-success-dark))',
           soft: 'var(--bg-success-soft)',
           light: 'var(--bg-success-light)',
         },

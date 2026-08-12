@@ -53,7 +53,7 @@ export const Login = () => {
             if (err instanceof Error && (err.message.includes('Failed to fetch') || err.message.includes('Network Error'))) {
                 setError('تعذر الاتصال بالخادم. تأكد من اتصال الإنترنت.');
             } else {
-                setError(`حدث خطأ: ${err.message || 'غير معروف'}`);
+                setError(`حدث خطأ: ${err instanceof Error ? err.message : 'غير معروف'}`);
             }
         } finally {
             setLoading(false);
@@ -182,7 +182,7 @@ export const Login = () => {
 
                         <div className="pt-4 border-t border-gray-200 dark:border-gray-200 w-full">
                             <a
-                                href={`https://wa.me/${adminPhone}?text=أحتاج مساعدة في تسجيل الدخول`}
+                                href={`https://wa.me/${adminPhone.replace(/\D/g, '')}?text=أحتاج مساعدة في تسجيل الدخول`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-full h-12 lg:h-14 bg-success text-on-success rounded-xl font-bold flex items-center justify-center gap-2 transition-all hover:bg-success/90 active:scale-[0.98] text-sm lg:text-base"

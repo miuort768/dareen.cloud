@@ -112,11 +112,11 @@ export const AAbdullah = () => {
                             <div
                                 className="w-10 h-10 rounded-xl flex items-center justify-center backdrop-blur-sm bg-accent-soft/80"
                             >
-                                <VTargetArrow size={20} className="text-accent" />
+                                <VTargetArrow size={20} className="text-accent dark:text-on-primary" />
                             </div>
-                            <h2 className="text-lg font-semibold text-accent">الرؤية</h2>
+                            <h2 className="text-lg font-semibold text-accent dark:text-on-primary">الرؤية</h2>
                         </div>
-                        <p className="text-sm leading-relaxed text-white">
+                        <p className="text-sm leading-relaxed text-on-primary">
                             "دارين السابعة مو مجرد منصة، هي أداة تساعد الطلاب وأولياء الأمور.
                             {' '}هدفنا إنا نصير أكبر منصة تعليمية عربية نقدم محتوى مفيد وممتع،
                             {' '}وتساعد في بناء جيل واعي ومتعلم."
@@ -217,13 +217,13 @@ export const AAbdullah = () => {
                     />
                     <div className="relative z-10 space-y-5">
                         <div
-                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide bg-accent/15 text-accent border border-accent/30"
+                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold tracking-wide bg-accent/15 text-accent dark:text-on-primary border border-accent/30"
                         >
-                            <VHeart size={14} className="fill-current text-accent" />
+                            <VHeart size={14} className="fill-current text-accent dark:text-on-primary" />
                             <span>رسالتي لكم</span>
-                            <VHeart size={14} className="fill-current text-accent" />
+                            <VHeart size={14} className="fill-current text-accent dark:text-on-primary" />
                         </div>
-                        <div className="space-y-4 text-sm leading-relaxed text-white">
+                        <div className="space-y-4 text-sm leading-relaxed text-on-primary">
                             <p>
                                 كن إيجابيًا، واجعل الاجتهاد طريقك إلى النجاح.
                             </p>
@@ -236,7 +236,7 @@ export const AAbdullah = () => {
                             <p>
                                 ابدأ يومك بابتسامة، واعمل بإصرار، وتحلَّ بالصبر، فكل جهد تبذله اليوم سيكون ثمرةً تفتخر بها غدًا.
                             </p>
-                            <p className="font-bold text-main">
+                            <p className="font-bold text-main dark:text-on-primary">
                                 تذكّر دائمًا: الإيجابية تصنع العقلية، والاجتهاد يصنع الإنجاز، والاستمرار يصنع النجاح.
                             </p>
                         </div>

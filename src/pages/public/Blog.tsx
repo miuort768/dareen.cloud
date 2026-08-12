@@ -158,17 +158,9 @@ export const Blog = () => {
     } catch (e) { console.warn(e); } finally { setLoadingMore(false); }
   };
 
-  const [libraryTheme] = useState(() => {
-    try { return localStorage.getItem('library-theme') || 'light'; } catch (e) { console.warn(e); return 'light'; }
-  });
-  useEffect(() => {
-    document.documentElement.classList.remove('light', 'dark');
-    document.documentElement.classList.add(libraryTheme);
-  }, [libraryTheme]);
-
   const breadcrumbItems = [
     { label: 'الرئيسية', onClick: () => setView('types') },
-    ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? () => setView('types') : () => setView('curriculums') }] : []),
+    ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? setView('types') : setView('curriculums') }] : []),
     ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
     ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
     ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),

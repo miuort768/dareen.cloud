@@ -16,7 +16,7 @@ export const quickFeatures: { icon: typeof Gift; label: string; desc: string; va
     { icon: Gift, label: 'حصة مجانية تجريبية', desc: 'لك حصة مجانية في كل مادة تريد تسجيلها', variant: 'primary' },
     { icon: Trophy, label: 'مناهج خليجية', desc: 'كويتي، سعودي، إماراتي، قطري وعماني', variant: 'info' },
     { icon: Video, label: 'تحفيظ قرآن', desc: 'تجويد وإتقان مع قراء مجازين وخبرة', variant: 'success' },
-    { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية و اختبارات لمتابعة المستوي', variant: 'warning' },
+    { icon: Star, label: 'متابعة دورية', desc: 'تقارير أسبوعية و اختبارات لمتابعة المستوى', variant: 'warning' },
 ];
 
 export const getFilteredCourses = (category: string) =>
