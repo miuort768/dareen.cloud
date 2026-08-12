@@ -22,6 +22,9 @@ FROM node:22-alpine
 
 WORKDIR /app
 
+# تثبيت أدوات البناء لـ sqlite3 (python3, make, g++)
+RUN apk add --no-cache python3 make g++
+
 # نسخ ملفات الحزم وتثبيت التبعيات
 COPY server/package*.json ./server/
 RUN cd server && npm install
