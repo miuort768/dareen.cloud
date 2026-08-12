@@ -208,6 +208,17 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
   return (
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
 
+      {/* ===== TOP HEADING ===== */}
+      <section className="mb-10 text-center">
+        <h1 className="text-3xl lg:text-4xl font-heading font-black text-main mb-3">
+          مركز ملفات <span className="text-primary">{academyName}</span> السابعة
+        </h1>
+        <p className="text-sm lg:text-base text-muted font-medium max-w-2xl mx-auto leading-relaxed">
+          دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل
+          في الكويت وقطر والإمارات والسعودية.
+        </p>
+      </section>
+
       {/* ===== MOST READ FILES ===== */}
       <section className="mb-14">
         <div className="flex items-end justify-between gap-4 mb-6">
@@ -231,7 +242,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 type="button"
                 onClick={() => goToType(t.id)}
                 className={cn(
-                  'group relative overflow-hidden rounded-2xl border bg-card p-5 text-start transition-all duration-300',
+                  'group relative overflow-hidden rounded-2xl lg:rounded-none border bg-card p-5 text-start transition-all duration-300',
                   'hover:-translate-y-1 hover:shadow-elevation-3',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
                   s.cardBorder
@@ -261,18 +272,14 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
         </div>
       </section>
 
-      {/* ===== SEARCH + NEWSLETTER + ARTICLES ===== */}
-      <section className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 items-start">
-        <aside className="lg:sticky lg:top-24 space-y-5">
-          {/* Search */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
-            <h3 className="flex items-center gap-2.5 text-sm font-extrabold text-main mb-4">
-              <span className="w-8 h-8 rounded-xl bg-primary-soft text-primary flex items-center justify-center">
-                <Search size={15} />
-              </span>
-              البحث في المكتبة
-            </h3>
-            <div className="relative">
+      {/* ===== SEARCH BAR ===== */}
+      <section className="mb-10">
+        <div className="rounded-2xl lg:rounded-none border border-border bg-card p-5 shadow-elevation-1">
+          <div className="flex items-center gap-4">
+            <span className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center shrink-0">
+              <Search size={18} />
+            </span>
+            <div className="relative flex-1">
               <Search size={15} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
               <input
                 type="search"
@@ -280,13 +287,18 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 onChange={e => setSearch(e.target.value)}
                 placeholder="ابحث عن مادة، كتاب، أو ملزمة..."
                 aria-label="البحث في المقالات"
-                className="w-full rounded-xl border border-border bg-surface ps-10 pe-4 py-2.5 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                className="w-full rounded-xl border border-border bg-surface ps-10 pe-4 py-3 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
               />
             </div>
           </div>
+        </div>
+      </section>
 
+      {/* ===== ARTICLES + SIDEBAR ===== */}
+      <section className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 items-start">
+        <aside className="lg:sticky lg:top-24 space-y-5">
           {/* Popular Categories */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
+          <div className="rounded-2xl lg:rounded-none border border-border bg-card p-5 shadow-elevation-1">
             <h3 className="flex items-center gap-2.5 text-sm font-extrabold text-main mb-4">
               <span className="w-8 h-8 rounded-xl bg-primary-soft text-primary flex items-center justify-center">
                 <BookMarked size={15} />
@@ -316,79 +328,6 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 );
               })}
             </ul>
-          </div>
-
-          {/* Newsletter */}
-          <div className="rounded-2xl overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep pointer-events-none" />
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
-              style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-
-            <div className="relative p-5">
-              <span className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center mb-3">
-                <Mail size={18} />
-              </span>
-              <h3 className="text-sm font-extrabold text-white mb-1">اشترك في النشرة التعليمية</h3>
-              <p className="text-[11px] text-white/50 font-medium leading-relaxed mb-4">
-                ليصلك جديد الكتب والمذكرات مباشرة على هاتفك.
-              </p>
-              {subscribed ? (
-                <div className="flex items-center gap-2 rounded-xl bg-white/10 border border-white/10 px-4 py-3">
-                  <CheckCircle2 size={15} className="text-success shrink-0" />
-                  <span className="text-xs font-bold text-white">تم التسجيل بنجاح!</span>
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="space-y-2.5">
-                  <div>
-                    <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-country-d">الدولة</label>
-                    <div className="relative">
-                      <Globe size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
-                      <select
-                        id="newsletter-country-d"
-                        required
-                        value={country}
-                        onChange={e => setCountry(e.target.value)}
-                        className="w-full appearance-none rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-9 py-2.5 text-sm text-white outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30 placeholder:text-white/30"
-                      >
-                        <option value="" disabled className="text-main">اختر الدولة</option>
-                        {BLOG_COUNTRIES.map(c => (
-                          <option key={c} value={c} className="text-main">{c}</option>
-                        ))}
-                      </select>
-                      <ChevronDown size={13} className="absolute end-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-phone-d">رقم الهاتف</label>
-                    <div className="relative">
-                      <Phone size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
-                      <input
-                        id="newsletter-phone-d"
-                        type="tel"
-                        required
-                        dir="ltr"
-                        inputMode="tel"
-                        value={phone}
-                        onChange={e => setPhone(normalizePhoneInput(e.target.value))}
-                        placeholder="5xxxxxxxx"
-                        className="w-full rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30"
-                      />
-                    </div>
-                  </div>
-                  {subscribeError && (
-                    <p className="text-xs font-bold text-error">{subscribeError}</p>
-                  )}
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-extrabold text-primary-deep transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep"
-                  >
-                    {submitting ? 'جارٍ الإرسال...' : 'انضم مجاناً'}
-                    {!submitting && <Send size={13} />}
-                  </button>
-                </form>
-              )}
-            </div>
           </div>
         </aside>
 
@@ -439,7 +378,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                   <Link
                     key={post.id}
                     to={`/books/${post.slug}`}
-                    className="group relative flex gap-4 rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 overflow-hidden"
+                    className="group relative flex gap-4 rounded-2xl lg:rounded-none border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 overflow-hidden"
                   >
                     <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-l from-transparent via-primary/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative w-28 h-28 shrink-0 rounded-xl overflow-hidden bg-surface">
@@ -479,6 +418,87 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
         </div>
       </section>
 
+      {/* ===== NEWSLETTER ===== */}
+      <section className="mt-14">
+        <div className="rounded-2xl lg:rounded-none overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card pointer-events-none" />
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
+          <div className="relative p-8 lg:p-10 flex flex-col lg:flex-row items-center gap-8">
+            <div className="flex-1 text-center lg:text-start">
+              <span className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center mb-3 mx-auto lg:mx-0">
+                <Mail size={20} />
+              </span>
+              <h3 className="text-lg font-extrabold text-white mb-2">اشترك في النشرة التعليمية</h3>
+              <p className="text-sm text-white/50 font-medium leading-relaxed max-w-md">
+                ليصلك جديد الكتب والمذكرات مباشرة على هاتفك. اختر الدولة ورقم الهاتف وانضم مجاناً.
+              </p>
+            </div>
+            <div className="w-full lg:w-auto lg:min-w-[340px]">
+              {subscribed ? (
+                <div className="flex items-center gap-3 rounded-xl bg-white/10 border border-white/10 px-6 py-4">
+                  <CheckCircle2 size={18} className="text-success shrink-0" />
+                  <span className="text-sm font-bold text-white">تم التسجيل بنجاح! شكراً لك.</span>
+                </div>
+              ) : (
+                <form onSubmit={handleSubscribe} className="space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-country-d">الدولة</label>
+                      <div className="relative">
+                        <Globe size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                        <select
+                          id="newsletter-country-d"
+                          required
+                          value={country}
+                          onChange={e => setCountry(e.target.value)}
+                          className="w-full appearance-none rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-9 py-2.5 text-sm text-white outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30 placeholder:text-white/30"
+                        >
+                          <option value="" disabled className="text-main">اختر الدولة</option>
+                          {BLOG_COUNTRIES.map(c => (
+                            <option key={c} value={c} className="text-main">{c}</option>
+                          ))}
+                        </select>
+                        <ChevronDown size={13} className="absolute end-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-phone-d">رقم الهاتف</label>
+                      <div className="relative">
+                        <Phone size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                        <input
+                          id="newsletter-phone-d"
+                          type="tel"
+                          required
+                          dir="ltr"
+                          inputMode="tel"
+                          value={phone}
+                          onChange={e => setPhone(normalizePhoneInput(e.target.value))}
+                          placeholder="5xxxxxxxx"
+                          className="w-full rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {subscribeError && (
+                    <p className="text-xs font-bold text-error">{subscribeError}</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-2.5 text-sm font-extrabold text-on-accent transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                  >
+                    {submitting ? 'جارٍ الإرسال...' : 'انضم مجاناً'}
+                    {!submitting && <Send size={13} />}
+                  </button>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ===== LANGUAGE SECTIONS ===== */}
       <section className="mt-14">
         <div className="flex items-end justify-between gap-4 mb-8">
@@ -507,7 +527,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                   return next;
                 });
               }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 hover:border-warning/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+              className="group relative overflow-hidden rounded-2xl lg:rounded-none border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 hover:border-warning/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
             >
               <div className="absolute top-0 bottom-0 end-0 w-1 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-warning" />
               <div className="absolute inset-0 bg-gradient-to-br from-warning/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -556,7 +576,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                   return next;
                 });
               }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+              className="group relative overflow-hidden rounded-2xl lg:rounded-none border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
             >
               <div className="absolute top-0 bottom-0 end-0 w-1 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary" />
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

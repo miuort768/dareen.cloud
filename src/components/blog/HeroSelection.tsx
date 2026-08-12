@@ -25,12 +25,10 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
         return (
             <div className="pb-6">
                 {/* Hero Banner */}
-                <div className="relative rounded-[1.75rem] overflow-hidden mb-5 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep">
+                <div className="relative rounded-[1.75rem] overflow-hidden mb-4 bg-primary-deep dark:bg-card border border-border/20">
                     <div className="absolute inset-0 pointer-events-none overflow-hidden">
                         <div className="absolute top-[-50%] start-[-30%] w-[80%] h-[120%] bg-gradient-to-br from-white/[0.04] to-transparent rounded-full blur-[60px]" />
                         <div className="absolute bottom-[-30%] end-[-20%] w-[70%] h-[100%] bg-gradient-to-tl from-accent/8 to-transparent rounded-full blur-[50px]" />
-                        <div className="absolute inset-0 opacity-[0.03]"
-                            style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
                     </div>
 
                     <div className="relative p-5">
@@ -59,31 +57,31 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
                             </div>
                         </div>
 
-                        {/* Content + Image */}
-                        <div className="flex items-end gap-4">
-                            <div className="flex-1 min-w-0">
-                                <h1 className="text-xl font-black text-white leading-tight mb-1.5 font-heading">
-                                    مكتبة <span className="text-accent">{academyName}</span>
-                                </h1>
-                                <p className="text-[11px] text-white/50 leading-relaxed mb-4 font-medium">
-                                    دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل في الكويت وقطر والإمارات والسعودية.
-                                </p>
+                        {/* Content */}
+                        <div className="min-w-0">
+                            <h1 className="text-xl font-black text-white leading-tight mb-1.5 font-heading">
+                                مكتبة <span className="text-accent">{academyName}</span>
+                            </h1>
+                            <p className="text-[11px] text-white/50 leading-relaxed mb-4 font-medium">
+                                دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل في الكويت وقطر والإمارات والسعودية.
+                            </p>
+                            <div className="flex items-center gap-2">
                                 <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                                     target="_blank" rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-2 bg-accent text-primary-deep text-[11px] font-extrabold px-5 py-2.5 rounded-xl hover:bg-accent-hover transition-all active:scale-[0.97] shadow-[0_4px_20px_rgba(212,175,55,0.3)]">
+                                    className="flex-1 inline-flex items-center justify-center gap-2 bg-accent text-on-accent text-[11px] font-extrabold px-5 py-2.5 rounded-xl hover:bg-accent-hover transition-all active:scale-[0.97] shadow-[0_4px_20px_rgba(212,175,55,0.3)]">
                                     طلب حصة مجانية فردية
                                 </a>
-                            </div>
-                            <div className="relative shrink-0 w-20 h-20">
-                                <div className="absolute inset-0 bg-white/5 rounded-full blur-xl pointer-events-none" />
-                                <Image src="/bbook.webp" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]" />
+                                <a href="#mobile-categories"
+                                    className="flex-1 inline-flex items-center justify-center gap-2 bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/10 text-white text-[11px] font-extrabold px-5 py-2.5 rounded-xl hover:bg-white/15 transition-all active:scale-[0.97]">
+                                    تصفح الدورات
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Free download card */}
-                <div className="rounded-2xl bg-card border border-border p-4 mb-5 shadow-elevation-1">
+                <div className="rounded-2xl bg-card border border-border p-4 mb-3 shadow-elevation-1">
                     <div className="flex items-center gap-2 mb-3">
                         <div className="w-8 h-8 rounded-xl bg-success-soft flex items-center justify-center">
                             <CheckCircle size={15} className="text-success" />
@@ -110,7 +108,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
                 </div>
 
                 {/* Category buttons */}
-                <div className="grid grid-cols-2 gap-2.5 mb-5">
+                <div id="mobile-categories" className="grid grid-cols-2 gap-2.5 mb-3">
                     {gridItems.map((item: GridItem) => (
                         <button type="button" key={item.id} onClick={() => {
                             setSearchParams(prev => {
@@ -143,7 +141,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
     // For other views (curriculums, grades, languages), show selection grid
     return (
         <div className="pb-6">
-            <div className="bg-gradient-to-br from-primary via-primary-deep to-primary rounded-3xl px-5 pt-5 pb-4 mb-4 border border-primary/30 shadow-lg shadow-primary/10">
+            <div className="bg-gradient-to-br from-primary via-primary-deep to-primary dark:from-card dark:via-card dark:to-card rounded-3xl px-5 pt-5 pb-4 mb-4 border border-primary/30 dark:border-border shadow-lg shadow-primary/10">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 backdrop-blur-sm rounded-full mb-3">
                     <BookOpen size={10} className="text-on-primary" />
                     <span className="text-[10px] font-extrabold text-on-primary">
@@ -201,7 +199,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
         return (
             <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
                 {/* Hero Section */}
-                <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-bl from-primary-deep via-primary to-primary-deep min-h-[420px]">
+                <section className="relative overflow-hidden rounded-2xl lg:rounded-none bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card min-h-[420px] border border-border/20">
                     <div className="absolute inset-0 pointer-events-none overflow-hidden">
                         <div className="absolute top-[-40%] start-[-15%] w-[70%] h-[120%] bg-gradient-to-br from-white/[0.04] to-transparent rounded-full blur-[100px] animate-[pulse_8s_ease-in-out_infinite]" />
                         <div className="absolute bottom-[-30%] end-[-10%] w-[60%] h-[100%] bg-gradient-to-tl from-accent/10 to-transparent rounded-full blur-[80px] animate-[pulse_6s_ease-in-out_infinite_1s]" />
@@ -217,16 +215,16 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
                                     <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
                                 </span>
-                                <span className="text-[11px] font-extrabold text-white/90 tracking-wide">مركز ملتقى {academyName}</span>
+                                <span className="text-[11px] font-extrabold text-white/90 tracking-wide">مركز ملفات {academyName}</span>
                             </div>
 
                             <h1 className="text-4xl xl:text-5xl 2xl:text-[3.5rem] font-heading font-black text-white leading-[1.1] mb-5 max-w-xl">
-                                ملتقى
+                                مركز ملفات
                                 <span className="relative inline-block mx-3">
                                     <span className="relative z-10 text-accent">{academyName}</span>
                                     <span className="absolute -bottom-1 inset-x-0 h-3 bg-accent/20 rounded-full -z-0 blur-[2px]" />
                                 </span>
-                                <br />التعليمي
+                                <br />السابعة
                             </h1>
 
                             <p className="text-base lg:text-lg text-white/60 font-medium leading-relaxed mb-8 max-w-md">
@@ -238,11 +236,11 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                             <div className="flex items-center gap-3 mb-8">
                                 <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                                     target="_blank" rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-2 bg-accent text-primary-deep text-sm font-extrabold px-6 py-3 rounded-xl hover:bg-accent-hover transition-all active:scale-[0.97] shadow-[0_4px_20px_rgba(212,175,55,0.3)]">
+                                    className="inline-flex items-center justify-center gap-2 bg-accent text-on-accent text-sm font-extrabold px-6 py-3 rounded-xl hover:bg-accent-hover transition-all active:scale-[0.97] shadow-[0_4px_20px_rgba(212,175,55,0.3)]">
                                     طلب حصة مجانية
                                 </a>
                                 <a href="#library-categories"
-                                    className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border border-white/10 text-white text-sm font-extrabold px-6 py-3 rounded-xl hover:bg-white/15 transition-all active:scale-[0.97]">
+                                    className="inline-flex items-center justify-center gap-2 bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/10 text-white text-sm font-extrabold px-6 py-3 rounded-xl hover:bg-white/15 transition-all active:scale-[0.97]">
                                     تصفح الدورات
                                 </a>
                             </div>
@@ -313,7 +311,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                     {/* Bottom text */}
                     <div className="relative border-t border-white/10 px-8 py-4">
                         <p className="text-center text-[11px] text-white/40 font-medium">
-                            نقدم تجربة تعليمية تناسب التقدم التكنولوجي والعلمي الحديث | يسعدنا انضمامك إلى العائلة
+                            نقدم تجربة تعليمية متكاملة تناسب المناهج الخليجية المختلفة | يسعدنا انضمامك إلى العائلة
                         </p>
                     </div>
                 </section>
@@ -348,7 +346,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                                         return next;
                                     });
                                 }}
-                                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+                                className="group relative overflow-hidden rounded-2xl lg:rounded-none border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                             >
                                 <div className="flex items-center justify-between mb-3">
                                     <span className="w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center bg-primary-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
