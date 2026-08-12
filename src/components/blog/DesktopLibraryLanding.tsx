@@ -170,7 +170,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
           .filter(Boolean).join(' ').toLowerCase();
         return haystack.includes(searchQuery);
       })
-      .slice(0, 8);
+      .slice(0, 6);
   }, [posts, latestPosts, searchQuery]);
 
   const categoryCounts = useMemo(() => {
