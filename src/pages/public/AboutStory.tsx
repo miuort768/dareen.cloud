@@ -40,7 +40,7 @@ export const AboutStory = () => (
                     </div>
                     <h2 className="text-2xl md:text-4xl font-black text-main mb-6 font-heading leading-tight md:leading-tight">
                         ريادة في التعليم،<br />
-                        <span className="text-primary">نهضة في الفكر</span>
+                        <span className="text-primary mt-2 block">نهضة في الفكر</span>
                     </h2>
                     <p className="text-muted text-sm md:text-base leading-relaxed font-medium mb-8 max-w-xl">
                         بدأ دارين السابعة كحلم صغير لتقديم تعليم يختلف عن المألوف، واليوم أصبحنا منارة تعليمية يثق بها الآلاف. نعتمد على استراتيجيات التعلم النشط ونركز على تمكين الطالب من أدوات البحث والابتكار، ليواجه تحديات المستقبل بذكاء وثقة.
