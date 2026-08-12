@@ -148,9 +148,9 @@
   --sidebar-border: #27272a;
   --sidebar-ring: #D4AF37;
 
-  --bg-surface: #0a0a0c;
-  --bg-background: #0d0d0f;
-  --bg-card: #0d0d0f;
+  --bg-surface: #1a1a1e;
+  --bg-background: #131316;
+  --bg-card: #18181b;
   --bg-hover: #1a1a1e;
 
   --bg-primary: #D4AF37;
@@ -171,15 +171,15 @@
   --border-accent: #D4AF37;
 
   --text-main: #f1f5f9;
-  --text-muted: #71717a;
-  --text-dim: #52525b;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
   --text-inverse: #000000;
 
   --ring-focus: #D4AF37;
 
-  --border: #27272a;
-  --border-strong: #3f3f46;
-  --divider: #27272a;
+  --border: #3f3f46;
+  --border-strong: #52525b;
+  --divider: #3f3f46;
 
   --bg-success: #059669;
   --bg-success-dark: #065f46;

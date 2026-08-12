@@ -201,7 +201,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
 
       {/* ===== HERO — Gradient Hero ===== */}
-      <section className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary via-primary-hover to-primary dark:from-card dark:via-surface dark:to-card">
+      <section className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary via-primary-hover to-primary dark:from-[#1a1510] dark:via-card dark:to-[#1a1510]">
         {/* Decorative blurs */}
         <div className="absolute top-0 end-0 w-64 h-64 bg-white/10 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="absolute bottom-0 start-0 w-48 h-48 bg-white/10 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
@@ -209,7 +209,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
 
         <div className="relative z-10 flex flex-col lg:flex-row items-center gap-6 lg:gap-10 p-8 lg:p-12">
           {/* Text side */}
-          <div className="lg:w-[60%] text-center lg:text-start">
+          <div className="lg:w-[60%] text-center lg:text-start lg:pe-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white/15 dark:bg-primary/20 border border-white/20 dark:border-primary/30 rounded-full mb-5">
               <BookMarked size={13} className="text-warning dark:text-primary" />
               <span className="text-[11px] font-extrabold text-on-primary dark:text-primary">بوابتك التعليمية</span>
@@ -218,10 +218,10 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             <h1 className="text-3xl xl:text-4xl 2xl:text-5xl font-heading font-black text-on-primary dark:text-main leading-[1.15] mb-3">
               مكتبة <span className="text-warning dark:text-primary">{academyName}</span>
               <br />
-              <span className="text-white/80 dark:text-muted">للكتب والمذكرات</span>
+              <span className="text-white/80 dark:text-white/70">للكتب والمذكرات</span>
             </h1>
 
-            <p className="text-sm lg:text-base text-on-primary/80 dark:text-muted font-medium leading-relaxed mb-7 max-w-lg mx-auto lg:mx-0">
+            <p className="text-sm lg:text-base text-on-primary/80 dark:text-white/70 font-medium leading-relaxed mb-7 max-w-lg mx-auto lg:mx-0">
               أفضل الكتب والمذكرات والملخصات لجميع المراحل بطرق تدريس أكاديمية
               — في الكويت وقطر والإمارات والسعودية.
             </p>
@@ -240,17 +240,17 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             <div className="flex items-center gap-6 mt-6 pt-5 border-t border-white/15 dark:border-border max-w-lg mx-auto lg:mx-0">
               <div className="text-center">
                 <div className="text-lg font-black text-warning dark:text-primary">500+</div>
-                <div className="text-[10px] text-on-primary/70 dark:text-muted font-bold">مذكرة</div>
+                <div className="text-[10px] text-on-primary/70 dark:text-white/60 font-bold">مذكرة</div>
               </div>
               <div className="w-px h-8 bg-white/20 dark:bg-border" />
               <div className="text-center">
                 <div className="text-lg font-black text-warning dark:text-primary">4</div>
-                <div className="text-[10px] text-on-primary/70 dark:text-muted font-bold">مناهج خليجية</div>
+                <div className="text-[10px] text-on-primary/70 dark:text-white/60 font-bold">مناهج خليجية</div>
               </div>
               <div className="w-px h-8 bg-white/20 dark:bg-border" />
               <div className="text-center">
                 <div className="text-lg font-black text-warning dark:text-primary">100%</div>
-                <div className="text-[10px] text-on-primary/70 dark:text-muted font-bold">مجاني</div>
+                <div className="text-[10px] text-on-primary/70 dark:text-white/60 font-bold">مجاني</div>
               </div>
             </div>
           </div>
@@ -305,7 +305,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                   </span>
                 </div>
                 <h3 className="text-sm font-extrabold text-main mb-1.5 group-hover:text-primary transition-colors">{t.name}</h3>
-                <p className="text-[11px] text-muted font-medium leading-relaxed mb-3">{s.miniDesc}</p>
+                <p className="text-[11px] text-muted dark:text-white/60 font-medium leading-relaxed mb-3">{s.miniDesc}</p>
                 <span className={cn('inline-flex items-center gap-1 text-xs font-extrabold transition-colors', s.linkColor)}>
                   تصفح المقالات
                   <ArrowLeft size={12} className="transition-transform group-hover:-translate-x-1" />
@@ -520,7 +520,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                       <h3 className="text-sm font-extrabold text-main leading-snug mb-1.5 line-clamp-2 group-hover:text-primary transition-colors">
                         {post.title}
                       </h3>
-                      <p className="text-[11px] text-muted font-medium leading-relaxed line-clamp-3 mb-3">{post.excerpt}</p>
+                      <p className="text-[11px] text-muted dark:text-white/60 font-medium leading-relaxed line-clamp-3 mb-3">{post.excerpt}</p>
                       <div className="mt-auto flex items-center justify-between">
                         <span className="flex items-center gap-1.5 text-[10px] text-muted font-bold">
                           <Clock size={11} />

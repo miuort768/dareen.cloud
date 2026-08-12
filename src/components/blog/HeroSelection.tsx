@@ -16,7 +16,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
     <div className="pb-6">
         {/* Hero Card */}
         <div className="bg-card rounded-[1.5rem] px-5 pt-5 pb-4 mb-4 border border-border shadow-elevation-1">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-soft border border-primary/15 rounded-xl mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-soft dark:bg-primary/15 border border-primary/15 rounded-xl mb-3">
                 <BookOpen size={12} className="text-primary" />
                 <span className="text-[11px] font-extrabold text-primary">
                     {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? currentTypeName : currentCurriculumName}
@@ -31,7 +31,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
                     <>اختر <span className="text-primary">المرحلة</span></>
                 )}
             </h2>
-            <p className="text-xs text-muted font-medium leading-relaxed">
+            <p className="text-xs text-muted dark:text-white/70 font-medium leading-relaxed">
                 {view === 'types'
                     ? 'اختر ما تريد من كتب أو مذكرات مجاناً'
                     : view === 'curriculums'
@@ -62,7 +62,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
                         <item.icon size={20} className="text-primary" />
                     </div>
                     <span className="text-sm font-extrabold text-center leading-tight">{item.name}</span>
-                    {item.sub && <span className="text-[10px] text-muted font-bold">{item.sub}</span>}
+                    {item.sub && <span className="text-[10px] text-muted dark:text-white/60 font-bold">{item.sub}</span>}
                 </button>
             ))}
         </div>
@@ -72,7 +72,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
 export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculumName, setSearchParams }: HeroSelectionProps) => (
     <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 max-w-5xl mx-auto">
         <div className="w-full lg:w-[55%] text-center lg:text-start">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary-soft border border-primary/15 rounded-xl mb-5">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary-soft dark:bg-primary/15 border border-primary/15 rounded-xl mb-5">
                 <BookOpen size={12} className="text-primary" />
                 <span className="text-[11px] font-extrabold text-primary">
                     {view === 'types' ? 'المعرفة بين يديك' : view === 'curriculums' ? `تحميل ${currentTypeName}` : currentCurriculumName}
@@ -88,7 +88,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                     <>اختر <span className="text-primary">المرحلة</span></>
                 )}
             </h1>
-            <p className="text-sm sm:text-base text-muted leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium">
+            <p className="text-sm sm:text-base text-muted dark:text-white/70 leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0 font-medium">
                 {view === 'types'
                     ? 'دليلك الشامل للتفوق الدراسي — أحدث المناهج، ملخصات، وحلول الكتب لجميع المراحل في مناهج الكويت وقطر والإمارات والسعودية'
                     : view === 'curriculums'
@@ -117,7 +117,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                                 <item.icon size={18} className="text-primary" />
                             </div>
                             <span className="text-sm font-extrabold text-center leading-tight">{item.name}</span>
-                            {item.sub && <span className="text-[11px] text-muted font-medium">{item.sub}</span>}
+                            {item.sub && <span className="text-[11px] text-muted dark:text-white/60 font-medium">{item.sub}</span>}
                         </button>
                     </div>
                 ))}

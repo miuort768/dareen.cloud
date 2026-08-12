@@ -209,7 +209,7 @@ export const Blog = () => {
               <div className="relative p-5">
                 {/* Top row: badge + social */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-soft border border-primary/15 rounded-xl">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-soft dark:bg-primary/15 border border-primary/15 rounded-xl">
                     <Rocket size={12} className="text-primary" />
                     <span className="text-[11px] font-extrabold text-primary">برعاية منصة دارين السابعة</span>
                   </div>
@@ -235,7 +235,7 @@ export const Blog = () => {
                     <h1 className="text-xl font-black text-main leading-tight mb-1.5 font-heading">
                       مكتبة <span className="text-primary">{academyName}</span>
                     </h1>
-                    <p className="text-xs text-muted leading-relaxed mb-4 font-medium">
+                    <p className="text-xs text-muted dark:text-white/70 leading-relaxed mb-4 font-medium">
                       أفضل الكتب والمذكرات والملخصات لجميع المراحل بطرق تدريس أكاديمية
                     </p>
                     <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
