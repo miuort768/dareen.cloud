@@ -213,9 +213,8 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
         <h1 className="text-3xl lg:text-4xl font-heading font-black text-main mb-3">
           مركز ملفات <span className="text-primary">{academyName}</span> السابعة
         </h1>
-        <p className="text-sm lg:text-base text-muted font-medium max-w-2xl mx-auto leading-relaxed">
-          دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل
-          في الكويت وقطر والإمارات والسعودية.
+        <p className="text-sm lg:text-base text-muted font-medium max-w-lg mx-auto leading-relaxed">
+          دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل في الكويت وقطر والإمارات والسعودية.
         </p>
       </section>
 
