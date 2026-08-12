@@ -61,7 +61,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
 
                 <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-warning rounded-full mb-4 shadow-sm">
                     <Zap size={10} className="text-warning dark:text-on-primary fill-warning dark:fill-black" />
-                    <span className="text-micro font-black text-on-primary dark:text-on-primary">ابدأ رحلتك</span>
+                    <span className="text-micro font-black text-on-primary dark:text-on-primary">حصتك المجانية بانتظارك</span>
                 </div>
 
                 <h2 className="text-xl font-black text-main dark:text-main leading-tight mb-1">

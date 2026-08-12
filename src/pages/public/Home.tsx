@@ -208,7 +208,7 @@ export const Home = () => {
                 </div>
             </main>
             <div className="hidden md:block">
-                <AnimateOnScroll animation="scaleIn" duration={0.7}><HeroSection typewriterText={typewriterText} signupNowNumber={signupNowNumber} bannersArray={bannersArray} /></AnimateOnScroll>
+                <AnimateOnScroll animation="scaleIn" duration={0.7}><HeroSection typewriterText={typewriterText} signupNowNumber={signupNowNumber} requestFreeNumber={requestFreeNumber} bannersArray={bannersArray} /></AnimateOnScroll>
                 <AnimateOnScroll><StatsCounter /></AnimateOnScroll>
                 <div style={{ contentVisibility: 'auto' }}><AnimateOnScroll><WhyChooseUs whatsappNumber={excellenceNumber} /></AnimateOnScroll></div>
                 <div style={{ contentVisibility: 'auto' }}><AnimateOnScroll><QuranSection whatsappNumber={memorizingNumber} /></AnimateOnScroll></div>

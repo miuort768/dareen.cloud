@@ -18,7 +18,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                 <div className="text-center mb-4">
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary dark:bg-primary/20 border dark:border-primary/40 text-on-primary dark:text-primary rounded-full mb-4 mx-auto scale-90">
                         <Zap size={12} className="text-warning dark:text-primary" />
-                        <span className="text-micro font-black">ابدأ رحلتك</span>
+                        <span className="text-micro font-black">حصتك المجانية بانتظارك</span>
                     </div>
                     <h2 className="text-xl md:text-5xl font-black text-main dark:text-main font-heading">
                         كيف تشترك في <span className="text-primary dark:text-primary">المعهد؟</span>
@@ -110,7 +110,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
                             <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary dark:from-primary dark:to-warning opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="relative flex items-center gap-2">
                                 <Gift size={16} />
-                        <span className="text-micro font-black">ابدأ رحلتك</span>
+                        <span className="text-micro font-black">حصتك المجانية بانتظارك</span>
                                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
                             </div>
                         </a>

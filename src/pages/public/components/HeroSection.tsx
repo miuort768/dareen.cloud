@@ -1,14 +1,15 @@
 ﻿import { Link } from 'react-router-dom';
-import { Play, ArrowLeft, Star } from 'lucide-react';
+import { Play, ArrowLeft, Star, MessageCircle, Users } from 'lucide-react';
 import { Image } from '../../../shared/components/ui';
 
 interface HeroSectionProps {
     typewriterText: string;
     signupNowNumber: string;
+    requestFreeNumber: string;
     bannersArray: string[];
 }
 
-export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: HeroSectionProps) => {
+export const HeroSection = ({ typewriterText, signupNowNumber, requestFreeNumber, bannersArray }: HeroSectionProps) => {
     return (
         <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-surface dark:bg-background transition-colors duration-500">
             <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
@@ -41,39 +42,25 @@ export const HeroSection = ({ typewriterText, signupNowNumber, bannersArray }: H
                                     <span>تصفح الدورات</span>
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
-                                <button
-                                    onClick={() => {
-                                        const el = document.getElementById('how-it-works');
-                                        if (el) {
-                                            el.scrollIntoView({ behavior: 'smooth' });
-                                        } else {
-                                            setTimeout(() => {
-                                                document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
-                                            }, 300);
-                                        }
-                                    }}
-                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-surface dark:bg-white/5 text-main dark:text-main border border-border dark:border-primary/30 font-bold text-base sm:text-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-3 group rounded-xl"
-                                    aria-label="شاهد المزيد عن الاشتراك"
+                                <a
+                                    href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في ' + 'دارين السابعة')}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-6 py-3 sm:px-10 sm:py-4 bg-success hover:bg-success-dark dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-success dark:text-on-primary font-extrabold text-base sm:text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 group rounded-xl active:scale-[0.97]"
+                                    aria-label="حجز حصة مجانية عبر واتساب"
                                 >
-                                    <div className="w-8 h-8 rounded-full bg-primary-soft dark:bg-primary/20 flex items-center justify-center group-hover:scale-110 transition">
-                                        <Play className="w-4 h-4 text-primary dark:text-primary fill-primary dark:fill-primary" />
-                                    </div>
-                                    <span>للاشتراك،</span>
-                                </button>
+                                    <MessageCircle className="w-5 h-5" />
+                                    <span>حجز حصة مجانية</span>
+                                    <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
+                                </a>
                             </div>
                             <div className="mt-4 pt-4 border-t border-border dark:border-white/10 flex items-center justify-center gap-6">
-                                <div className="flex -space-x-3 space-x-reverse">
-                                    {[1, 2, 3].map((i) => (
-                                        <Image
-                                            key={`hero-${i}`}
-                                            src={`https://i.pravatar.cc/100?img=${i + 10}`}
-                                            alt=""
-                                            className="w-10 h-10 rounded-full border-2 border-border dark:border-primary/40 shadow-sm"
-                                            imgClassName="rounded-full"
-                                        />
-                                    ))}
-                                    <div className="w-10 h-10 rounded-full border-2 border-border dark:border-primary/40 bg-surface dark:bg-background flex items-center justify-center text-xs font-bold text-muted dark:text-soft">
-                                        +2k
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-full bg-primary-soft dark:bg-primary/20 flex items-center justify-center">
+                                        <Users className="w-5 h-5 text-primary dark:text-primary" />
+                                    </div>
+                                    <div className="w-10 h-10 rounded-full bg-success-light dark:bg-primary/20 flex items-center justify-center -ms-4 border-2 border-surface dark:border-background">
+                                        <span className="text-xs font-black text-success dark:text-primary">+2k</span>
                                     </div>
                                 </div>
                                 <div className="text-start">

@@ -30,7 +30,7 @@ export const PublicFooter = () => {
                                 {academyName}
                             </span>
                         </div>
-                        <p className="text-muted dark:text-main/50 text-sm lg:text-xs leading-relaxed border-s-2 border-border dark:border-primary/30 ps-4">
+                        <p className="text-muted dark:text-warning/60 text-sm lg:text-xs leading-relaxed border-s-2 border-border dark:border-primary/30 ps-4">
                             نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعليم.
                         </p>
                     </div>
