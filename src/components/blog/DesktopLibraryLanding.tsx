@@ -204,40 +204,47 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
 
       {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden rounded-3xl border border-border bg-card">
-        {/* Background layers */}
-        <div className="absolute inset-0 bg-gradient-to-bl from-primary/5 via-card to-accent/3 pointer-events-none" />
-        <div className="absolute inset-0 opacity-[0.015] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+      <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-bl from-primary-deep via-primary to-primary-deep min-h-[520px]">
+        {/* Animated mesh background */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-[-40%] start-[-15%] w-[70%] h-[120%] bg-gradient-to-br from-white/[0.04] to-transparent rounded-full blur-[100px] animate-[pulse_8s_ease-in-out_infinite]" />
+          <div className="absolute bottom-[-30%] end-[-10%] w-[60%] h-[100%] bg-gradient-to-tl from-accent/10 to-transparent rounded-full blur-[80px] animate-[pulse_6s_ease-in-out_infinite_1s]" />
+          <div className="absolute top-[20%] end-[20%] w-64 h-64 bg-white/[0.02] rounded-full blur-[60px] animate-[pulse_10s_ease-in-out_infinite_2s]" />
+          {/* Grid pattern */}
+          <div className="absolute inset-0 opacity-[0.04]"
+            style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+        </div>
 
-        <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_420px] min-h-[480px]">
+        <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_400px] min-h-[520px]">
           {/* Left content */}
-          <div className="relative z-10 p-8 lg:p-14 lg:pe-8 flex flex-col justify-center">
+          <div className="relative z-10 p-8 lg:p-16 lg:pe-10 flex flex-col justify-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-primary-soft border border-primary/15 rounded-full mb-6 w-fit">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full mb-7 w-fit">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
               </span>
-              <span className="text-[11px] font-extrabold text-primary tracking-wide">المكتبة التعليمية</span>
+              <span className="text-[11px] font-extrabold text-white/90 tracking-wide">المكتبة التعليمية</span>
             </div>
 
             {/* Heading */}
-            <h1 className="text-4xl xl:text-5xl 2xl:text-[3.4rem] font-heading font-black text-main leading-[1.12] mb-5 max-w-lg">
-              مدونة <span className="relative inline-block">
-                <span className="relative z-10 text-primary">دارين</span>
-                <span className="absolute bottom-1 inset-x-0 h-3 bg-primary/10 rounded-full -z-0" />
-              </span> التعليمية
+            <h1 className="text-5xl xl:text-6xl 2xl:text-[4rem] font-heading font-black text-white leading-[1.08] mb-6 max-w-xl">
+              مدونة
+              <span className="relative inline-block mx-3">
+                <span className="relative z-10 text-accent">دارين</span>
+                <span className="absolute -bottom-1 inset-x-0 h-3 bg-accent/20 rounded-full -z-0 blur-[2px]" />
+              </span>
+              <br />التعليمية
             </h1>
 
             {/* Description */}
-            <p className="text-base lg:text-lg text-muted font-medium leading-relaxed mb-8 max-w-md">
+            <p className="text-base lg:text-lg text-white/60 font-medium leading-relaxed mb-10 max-w-md">
               دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل
               في الكويت وقطر والإمارات والسعودية.
             </p>
 
-            {/* Category buttons - 2x2 grid */}
-            <div className="grid grid-cols-2 gap-3 max-w-lg">
+            {/* Category buttons - premium glass cards */}
+            <div className="grid grid-cols-2 gap-3.5 max-w-lg">
               {types.map(t => {
                 const s = TYPE_STYLES[t.id as TypeId];
                 return (
@@ -245,83 +252,94 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                     key={t.id}
                     type="button"
                     onClick={() => goToType(t.id)}
-                    className={cn(
-                      'group relative flex items-center gap-3 rounded-2xl border bg-surface/50 p-3.5 text-start transition-all duration-300',
-                      'hover:bg-card hover:-translate-y-0.5 hover:shadow-elevation-2',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
-                      s.cardBorder
-                    )}
+                    className="group relative flex items-center gap-3.5 rounded-2xl bg-white/[0.07] backdrop-blur-sm border border-white/[0.08] p-4 text-start transition-all duration-300 hover:bg-white/[0.12] hover:border-white/[0.15] hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep"
                   >
-                    <span className={cn('w-10 h-10 shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110', s.iconWrap)}>
-                      <t.icon size={17} className={cn('transition-colors duration-300', s.iconColor)} />
+                    <span className={cn('w-11 h-11 shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg', s.iconWrap)}>
+                      <t.icon size={18} className={cn('transition-colors duration-300', s.iconColor)} />
                     </span>
                     <span className="min-w-0">
-                      <span className="block text-sm font-extrabold text-main group-hover:text-primary transition-colors duration-300">{t.name}</span>
-                      <span className="block text-[10px] text-muted font-medium mt-0.5 leading-relaxed">{s.miniDesc}</span>
+                      <span className="block text-sm font-extrabold text-white group-hover:text-accent transition-colors duration-300">{t.name}</span>
+                      <span className="block text-[10px] text-white/45 font-medium mt-0.5 leading-relaxed">{s.miniDesc}</span>
                     </span>
                   </button>
                 );
               })}
             </div>
 
-            {/* Stats inline */}
-            <div className="flex items-center gap-6 mt-8 pt-6 border-t border-border/50">
+            {/* Stats row */}
+            <div className="flex items-center gap-8 mt-10">
               {[
-                { label: 'مادة', value: `${posts.length}+`, color: 'bg-primary' },
-                { label: 'منهج', value: `${curriculums.length}`, color: 'bg-info' },
-                { label: 'دولة', value: '٤', color: 'bg-success' },
+                { label: 'مادة تعليمية', value: `${posts.length}+` },
+                { label: 'منهج خليجي', value: `${curriculums.length}` },
+                { label: 'دولة مستهدفة', value: '٤' },
               ].map((stat, i) => (
-                <div key={i} className="flex items-center gap-2.5">
-                  <span className={cn('w-8 h-8 rounded-lg flex items-center justify-center text-on-primary text-xs font-black', stat.color)}>
-                    {stat.value}
-                  </span>
-                  <span className="text-xs font-bold text-muted">{stat.label}</span>
+                <div key={i} className="flex items-center gap-3">
+                  <span className="text-2xl font-black font-heading text-accent">{stat.value}</span>
+                  <span className="text-[11px] font-bold text-white/40 leading-tight max-w-[60px]">{stat.label}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right image */}
+          {/* Right image area */}
           <div className="relative min-h-[300px] lg:min-h-full overflow-hidden">
-            {/* Decorative orbs */}
-            <div className="absolute inset-0 bg-gradient-to-bl from-primary/8 via-primary/3 to-transparent pointer-events-none" />
-            <div className="absolute top-[10%] end-[5%] w-48 h-48 bg-primary/8 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-[15%] start-[10%] w-36 h-36 bg-success/6 rounded-full blur-3xl pointer-events-none" />
+            {/* Glow effects */}
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/[0.03] to-white/[0.06] pointer-events-none" />
+            <div className="absolute top-[15%] end-[10%] w-56 h-56 bg-accent/10 rounded-full blur-[80px] pointer-events-none animate-[pulse_7s_ease-in-out_infinite]" />
+            <div className="absolute bottom-[20%] start-[5%] w-40 h-40 bg-white/5 rounded-full blur-[60px] pointer-events-none" />
 
             {/* Spinning rings */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[300px] h-[300px] lg:w-[360px] lg:h-[360px] rounded-full border border-dashed border-primary/10 animate-[spin_25s_linear_infinite]" />
-              <div className="absolute w-[240px] h-[240px] lg:w-[290px] lg:h-[290px] rounded-full border border-dashed border-primary/5 animate-[spin_18s_linear_infinite_reverse]" />
+              <div className="w-[320px] h-[320px] lg:w-[380px] lg:h-[380px] rounded-full border border-dashed border-white/[0.06] animate-[spin_30s_linear_infinite]" />
+              <div className="absolute w-[260px] h-[260px] lg:w-[310px] lg:h-[310px] rounded-full border border-dashed border-accent/[0.08] animate-[spin_22s_linear_infinite_reverse]" />
+              <div className="absolute w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-full border border-white/[0.04] animate-[spin_15s_linear_infinite]" />
             </div>
 
             {/* Book image */}
-            <div className="absolute inset-0 flex items-center justify-center p-8 lg:p-10">
-              <div className="relative w-full h-full max-w-[320px]">
+            <div className="absolute inset-0 flex items-center justify-center p-8 lg:p-12">
+              <div className="relative w-full h-full max-w-[340px]">
                 <Image
                   src="/bbook.webp"
                   alt={`بوابة ${academyName} التعليمية للكتب والمذكرات`}
                   className="absolute inset-0"
-                  imgClassName="object-contain drop-shadow-2xl"
+                  imgClassName="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
                   withSkeleton
                 />
               </div>
             </div>
 
-            {/* Floating mini cards */}
-            <div className="absolute top-[12%] start-[8%] bg-card border border-border rounded-xl px-3 py-2 shadow-elevation-1 animate-[bounce_4s_ease-in-out_infinite] pointer-events-none">
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg bg-success-soft flex items-center justify-center">
-                  <CheckCircle size={11} className="text-success" />
+            {/* Floating premium cards */}
+            <div className="absolute top-[10%] start-[5%] bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] animate-[float_6s_ease-in-out_infinite] pointer-events-none">
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-xl bg-success/20 flex items-center justify-center">
+                  <CheckCircle size={14} className="text-success" />
                 </span>
-                <span className="text-[10px] font-extrabold text-main">حلول معتمدة</span>
+                <div>
+                  <span className="block text-[11px] font-extrabold text-white">حلول معتمدة</span>
+                  <span className="block text-[9px] text-white/40">١٠٠+ كتاب</span>
+                </div>
               </div>
             </div>
-            <div className="absolute bottom-[18%] end-[5%] bg-card border border-border rounded-xl px-3 py-2 shadow-elevation-1 animate-[bounce_5s_ease-in-out_infinite_0.5s] pointer-events-none">
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg bg-info-soft flex items-center justify-center">
-                  <Download size={11} className="text-info" />
+            <div className="absolute bottom-[15%] end-[3%] bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] animate-[float_7s_ease-in-out_infinite_1s] pointer-events-none">
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-xl bg-info/20 flex items-center justify-center">
+                  <Download size={14} className="text-info" />
                 </span>
-                <span className="text-[10px] font-extrabold text-main">تحميل مجاني</span>
+                <div>
+                  <span className="block text-[11px] font-extrabold text-white">تحميل مجاني</span>
+                  <span className="block text-[9px] text-white/40">بدون اشتراك</span>
+                </div>
+              </div>
+            </div>
+            <div className="absolute top-[45%] end-[8%] bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] animate-[float_5s_ease-in-out_infinite_0.5s] pointer-events-none">
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-xl bg-warning/20 flex items-center justify-center">
+                  <GraduationCap size={14} className="text-warning" />
+                </span>
+                <div>
+                  <span className="block text-[11px] font-extrabold text-white">٤ دول خليجية</span>
+                  <span className="block text-[9px] text-white/40">كويت · قطر · إمارات · سعودي</span>
+                </div>
               </div>
             </div>
           </div>

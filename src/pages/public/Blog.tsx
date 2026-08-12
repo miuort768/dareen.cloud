@@ -209,86 +209,85 @@ export const Blog = () => {
       <div className="md:hidden pb-0 px-3 relative bg-surface">
         {isHeroView ? (
           <div className="pb-6">
-            {/* Hero Banner */}
-            <div className="relative rounded-3xl overflow-hidden mb-5 border border-border bg-card">
-              {/* Background */}
-              <div className="absolute inset-0 bg-gradient-to-bl from-primary/5 via-card to-accent/3 pointer-events-none" />
-              <div className="absolute top-0 end-0 w-32 h-32 bg-primary/8 rounded-full blur-2xl pointer-events-none" />
-              <div className="absolute bottom-0 start-0 w-24 h-24 bg-success/6 rounded-full blur-2xl pointer-events-none" />
+            {/* Hero Banner — Premium dark gradient */}
+            <div className="relative rounded-[1.75rem] overflow-hidden mb-5 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep">
+              {/* Background layers */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[-50%] start-[-30%] w-[80%] h-[120%] bg-gradient-to-br from-white/[0.04] to-transparent rounded-full blur-[60px]" />
+                <div className="absolute bottom-[-30%] end-[-20%] w-[70%] h-[100%] bg-gradient-to-tl from-accent/8 to-transparent rounded-full blur-[50px]" />
+                <div className="absolute inset-0 opacity-[0.03]"
+                  style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+              </div>
 
               <div className="relative p-5">
                 {/* Top row */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-soft border border-primary/15 rounded-full">
+                <div className="flex items-center justify-between mb-5">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full">
                     <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent"></span>
                     </span>
-                    <span className="text-[10px] font-extrabold text-primary">المكتبة التعليمية</span>
+                    <span className="text-[10px] font-extrabold text-white/90">المكتبة التعليمية</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
                       target="_blank" rel="noopener noreferrer"
-                       className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center transition-all active:scale-95"
+                       className="w-8 h-8 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center transition-all active:scale-95"
                        aria-label="واتساب">
-                      <MessageCircle size={13} className="text-success" />
+                      <MessageCircle size={13} className="text-white/70" />
                     </a>
                     <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
                       target="_blank" rel="noopener noreferrer"
-                       className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center transition-all active:scale-95"
+                       className="w-8 h-8 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center transition-all active:scale-95"
                        aria-label="تيليجرام">
-                        <Send size={13} className="text-info" />
+                        <Send size={13} className="text-white/70" />
                     </a>
                   </div>
                 </div>
 
                 {/* Content + Image */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-end gap-4">
                   <div className="flex-1 min-w-0">
-                    <h1 className="text-lg font-black text-main leading-tight mb-1 font-heading">
-                      مكتبة <span className="text-primary">{academyName}</span>
+                    <h1 className="text-xl font-black text-white leading-tight mb-1.5 font-heading">
+                      مكتبة <span className="text-accent">{academyName}</span>
                     </h1>
-                    <p className="text-[11px] text-muted leading-relaxed mb-3 font-medium">
+                    <p className="text-[11px] text-white/50 leading-relaxed mb-4 font-medium">
                       أفضل الكتب والمذكرات والملخصات لجميع المراحل
                     </p>
 
-                    {/* Inline stats */}
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-primary">
-                        <span className="w-5 h-5 rounded-md bg-primary-soft flex items-center justify-center text-[9px]">{posts.length}+</span>
-                        مادة
-                      </span>
-                      <span className="w-px h-3 bg-border" />
-                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-info">
-                        <span className="w-5 h-5 rounded-md bg-info-soft flex items-center justify-center text-[9px]">٤</span>
-                        منهج
-                      </span>
-                      <span className="w-px h-3 bg-border" />
-                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-success">
-                        <span className="w-5 h-5 rounded-md bg-success-soft flex items-center justify-center text-[9px]">٤</span>
-                        دولة
-                      </span>
+                    {/* Stats */}
+                    <div className="flex items-center gap-4 mb-4">
+                      {[
+                        { value: `${posts.length}+`, label: 'مادة' },
+                        { value: '٤', label: 'منهج' },
+                        { value: '٤', label: 'دولة' },
+                      ].map((s, i) => (
+                        <div key={i} className="flex items-center gap-1.5">
+                          <span className="text-sm font-black text-accent">{s.value}</span>
+                          <span className="text-[9px] text-white/40 font-bold">{s.label}</span>
+                        </div>
+                      ))}
                     </div>
 
                     <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                       target="_blank" rel="noopener noreferrer"
-                       className="inline-flex items-center justify-center gap-2 bg-primary text-on-primary text-[11px] font-extrabold px-5 py-2.5 rounded-xl hover:bg-primary-hover transition-all active:scale-[0.97]">
+                       className="inline-flex items-center justify-center gap-2 bg-accent text-primary-deep text-[11px] font-extrabold px-5 py-2.5 rounded-xl hover:bg-accent-hover transition-all active:scale-[0.97] shadow-[0_4px_20px_rgba(212,175,55,0.3)]">
                       طلب حصة مجانية
                     </a>
                   </div>
-                  <div className="relative shrink-0 w-24 h-24">
-                    <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl pointer-events-none" />
-                    <Image src="/bbook.webp" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-lg" />
+                  <div className="relative shrink-0 w-20 h-20">
+                    <div className="absolute inset-0 bg-white/5 rounded-full blur-xl pointer-events-none" />
+                    <Image src="/bbook.webp" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]" />
                   </div>
                 </div>
 
-                {/* Floating mini cards */}
-                <div className="absolute top-[15%] end-[12%] bg-card border border-border rounded-lg px-2 py-1 shadow-elevation-1 pointer-events-none">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-4 h-4 rounded bg-success-soft flex items-center justify-center">
-                      <CheckCircle size={8} className="text-success" />
+                {/* Floating card */}
+                <div className="absolute top-[18%] end-[10%] bg-white/10 backdrop-blur-md border border-white/10 rounded-xl px-3 py-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] pointer-events-none">
+                  <div className="flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-lg bg-success/20 flex items-center justify-center">
+                      <CheckCircle size={10} className="text-success" />
                     </span>
-                    <span className="text-[8px] font-extrabold text-main">حلول معتمدة</span>
+                    <span className="text-[9px] font-extrabold text-white/80">حلول معتمدة</span>
                   </div>
                 </div>
               </div>
