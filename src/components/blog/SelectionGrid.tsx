@@ -1,4 +1,3 @@
-import { cn } from '../../lib/utils';
 import { ArrowLeft, GraduationCap, BookOpen } from 'lucide-react';
 import { gradeNames } from './LibraryConfig';
 import type { ViewType } from './LibraryConfig';
@@ -6,7 +5,7 @@ import type { ViewType } from './LibraryConfig';
 interface SelectionGridProps {
     view: ViewType;
     currentClassrooms: string[];
-    currentSubjects: { id: string; name: string; gradient: string }[];
+    currentSubjects: { id: string; name: string }[];
     selectedGrade: string;
     termLabel: string;
     currentCurriculumName: string;
@@ -69,7 +68,7 @@ export const SelectionGrid = ({
                 {/* Grid */}
                 <div className="grid grid-cols-2 gap-2.5">
                     {view === 'classrooms' && currentClassrooms.map((cls) => (
-                        <button key={cls} onClick={() => onSelectGrade(cls)}
+                        <button type="button" key={cls} onClick={() => onSelectGrade(cls)}
                             className="flex flex-col items-center justify-center gap-2.5 p-4 rounded-2xl bg-card border border-border text-main active:scale-[0.97] transition-all duration-200 hover:shadow-elevation-1 hover:border-primary/20">
                             <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
                                 <GraduationCap size={18} className="text-primary" />
@@ -80,14 +79,14 @@ export const SelectionGrid = ({
 
                     {view === 'terms' && (
                         <>
-                            <button onClick={() => onSelectTerm('1')}
+                            <button type="button" onClick={() => onSelectTerm('1')}
                                 className="flex flex-col items-center justify-center gap-2.5 p-4 rounded-2xl bg-card border border-border text-main active:scale-[0.97] transition-all duration-200 hover:shadow-elevation-1 hover:border-primary/20">
                                 <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
                                     <BookOpen size={18} className="text-primary" />
                                 </div>
                                 <span className="text-xs font-extrabold">ترم أول</span>
                             </button>
-                            <button onClick={() => onSelectTerm('2')}
+                            <button type="button" onClick={() => onSelectTerm('2')}
                                 className="flex flex-col items-center justify-center gap-2.5 p-4 rounded-2xl bg-card border border-border text-main active:scale-[0.97] transition-all duration-200 hover:shadow-elevation-1 hover:border-primary/20">
                                 <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
                                     <BookOpen size={18} className="text-primary" />
@@ -98,7 +97,7 @@ export const SelectionGrid = ({
                     )}
 
                     {view === 'subjects' && currentSubjects.map((subj) => (
-                        <button key={subj.id} onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
+                        <button type="button" key={subj.id} onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
                             className="flex flex-col items-center justify-center gap-2.5 p-4 rounded-2xl bg-card border border-border text-main active:scale-[0.97] transition-all duration-200 hover:shadow-elevation-1 hover:border-primary/20">
                             <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center">
                                 <BookOpen size={18} className="text-primary" />
@@ -107,7 +106,7 @@ export const SelectionGrid = ({
                         </button>
                     ))}
 
-                    <button onClick={goBack}
+                    <button type="button" onClick={goBack}
                         className="flex flex-row items-center justify-center gap-2 p-3 rounded-2xl bg-surface border border-border text-muted hover:text-main hover:border-primary/20 active:scale-[0.97] transition-all duration-200">
                         <ArrowLeft size={14} />
                         <span className="text-xs font-extrabold">العودة</span>
@@ -145,7 +144,7 @@ export const SelectionGrid = ({
                 <div className="max-w-4xl mx-auto">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
                         {view === 'classrooms' && currentClassrooms.map((cls) => (
-                            <button key={cls} onClick={() => onSelectGrade(cls)}
+                            <button type="button" key={cls} onClick={() => onSelectGrade(cls)}
                                 className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-card border border-border text-main hover:shadow-elevation-1 hover:border-primary/20 active:scale-[0.97] transition-all duration-200">
                                 <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center">
                                     <GraduationCap size={22} className="text-primary" />
@@ -156,14 +155,14 @@ export const SelectionGrid = ({
 
                         {view === 'terms' && (
                             <>
-                                <button onClick={() => onSelectTerm('1')}
+                                <button type="button" onClick={() => onSelectTerm('1')}
                                     className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-card border border-border text-main hover:shadow-elevation-1 hover:border-primary/20 active:scale-[0.97] transition-all duration-200">
                                     <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center">
                                         <BookOpen size={22} className="text-primary" />
                                     </div>
                                     <span className="text-sm font-extrabold">ترم أول</span>
                                 </button>
-                                <button onClick={() => onSelectTerm('2')}
+                                <button type="button" onClick={() => onSelectTerm('2')}
                                     className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-card border border-border text-main hover:shadow-elevation-1 hover:border-primary/20 active:scale-[0.97] transition-all duration-200">
                                     <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center">
                                         <BookOpen size={22} className="text-primary" />
@@ -174,7 +173,7 @@ export const SelectionGrid = ({
                         )}
 
                         {view === 'subjects' && currentSubjects.map((subj) => (
-                            <button key={subj.id} onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
+                            <button type="button" key={subj.id} onClick={() => { onSelectSubject(subj.id); window.scrollTo(0, 0); }}
                                 className="w-full py-6 px-3 flex flex-col items-center justify-center gap-3 rounded-2xl bg-card border border-border text-main hover:shadow-elevation-1 hover:border-primary/20 active:scale-[0.97] transition-all duration-200">
                                 <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center">
                                     <BookOpen size={22} className="text-primary" />
@@ -183,7 +182,7 @@ export const SelectionGrid = ({
                             </button>
                         ))}
 
-                        <button onClick={goBack}
+                        <button type="button" onClick={goBack}
                             className="w-full py-5 px-3 flex flex-row items-center justify-center gap-3 rounded-2xl bg-surface border border-border text-muted hover:text-main hover:border-primary/20 active:scale-[0.97] transition-all duration-200">
                             <ArrowLeft size={16} />
                             <span className="text-sm font-extrabold">العودة</span>

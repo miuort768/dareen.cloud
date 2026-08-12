@@ -7,76 +7,76 @@ export const gradeNames: Record<string, string> = {
 };
 
 export const types = [
-  { id: 'foundation', name: 'التأسيس', gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]', icon: Zap },
-  { id: 'solutions', name: 'حل الكتب', gradient: 'from-[var(--bg-success)] to-[var(--bg-info)]', icon: CheckCircle },
-  { id: 'notes', name: 'المذكرات', gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]', icon: FileText },
-  { id: 'more', name: 'المزيد', gradient: 'from-[var(--bg-error)] to-[var(--bg-primary)]', icon: AlignLeft },
+  { id: 'foundation', name: 'التأسيس', icon: Zap },
+  { id: 'solutions', name: 'حل الكتب', icon: CheckCircle },
+  { id: 'notes', name: 'المذكرات', icon: FileText },
+  { id: 'more', name: 'المزيد', icon: AlignLeft },
 ];
 
 export const curriculums = [
-  { id: 'kuwait', name: 'منهج كويتي', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]', icon: Building2 },
-  { id: 'qatar', name: 'منهج قطري', gradient: 'from-[var(--bg-error)] to-[var(--bg-error)]', icon: Anchor },
-  { id: 'uae', name: 'منهج إماراتي', gradient: 'from-[var(--bg-success)] to-[var(--bg-success)]', icon: Building },
-  { id: 'saudi', name: 'منهج سعودي', gradient: 'from-[var(--bg-success)] to-[var(--bg-success)]', icon: Palmtree },
+  { id: 'kuwait', name: 'منهج كويتي', icon: Building2 },
+  { id: 'qatar', name: 'منهج قطري', icon: Anchor },
+  { id: 'uae', name: 'منهج إماراتي', icon: Building },
+  { id: 'saudi', name: 'منهج سعودي', icon: Palmtree },
 ];
 
-export const gradesMap: Record<string, { id: string; name: string; sub: string; gradient: string; icon: React.ElementType }[]> = {
+export const gradesMap: Record<string, { id: string; name: string; sub: string; icon: React.ElementType }[]> = {
   kuwait: [
-    { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]', icon: School },
-    { id: 'middle', name: 'متوسط', sub: 'الصف ٦ - ٩', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]', icon: GraduationCap },
-    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', gradient: 'from-[var(--bg-info)] to-[var(--bg-primary)]', icon: GraduationCap },
+    { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', icon: School },
+    { id: 'middle', name: 'متوسط', sub: 'الصف ٦ - ٩', icon: GraduationCap },
+    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', icon: GraduationCap },
   ],
   qatar: [
-    { id: 'basic', name: 'أساسي', sub: 'الصف ١ - ٩', gradient: 'from-[var(--bg-error)] to-[var(--bg-error)]', icon: School },
-    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', gradient: 'from-[var(--bg-error)] to-[var(--bg-error)]', icon: GraduationCap },
+    { id: 'basic', name: 'أساسي', sub: 'الصف ١ - ٩', icon: School },
+    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', icon: GraduationCap },
   ],
   uae: [
-    { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', gradient: 'from-[var(--bg-success)] to-[var(--bg-success)]', icon: School },
-    { id: 'preparatory', name: 'إعدادي', sub: 'الصف ٦ - ٩', gradient: 'from-[var(--bg-success)] to-[var(--bg-success)]', icon: School },
-    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', gradient: 'from-[var(--bg-success)] to-[var(--bg-info)]', icon: GraduationCap },
+    { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٥', icon: School },
+    { id: 'preparatory', name: 'إعدادي', sub: 'الصف ٦ - ٩', icon: School },
+    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', icon: GraduationCap },
   ],
   saudi: [
-    { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', gradient: 'from-[var(--bg-success)] to-[var(--bg-success)]', icon: School },
-    { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', gradient: 'from-[var(--bg-success)] to-[var(--bg-success)]', icon: School },
-    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', gradient: 'from-[var(--bg-success)] to-[var(--bg-info)]', icon: GraduationCap },
+    { id: 'primary', name: 'ابتدائي', sub: 'الصف ١ - ٦', icon: School },
+    { id: 'middle', name: 'متوسط', sub: 'الصف ٧ - ٩', icon: School },
+    { id: 'secondary', name: 'ثانوي', sub: 'الصف ١٠ - ١٢', icon: GraduationCap },
   ],
 };
 
-export const subjectsMap: Record<string, { id: string; name: string; gradient: string }[]> = {
+export const subjectsMap: Record<string, { id: string; name: string }[]> = {
   primary: [
-    { id: 'islamic', name: 'إسلامية', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]' },
-    { id: 'arabic', name: 'عربي', gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]' },
-    { id: 'math', name: 'رياضيات', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]' },
-    { id: 'science', name: 'علوم', gradient: 'from-[var(--bg-success)] to-[var(--bg-success)]' },
-    { id: 'english', name: 'إنجليزي', gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { id: 'social', name: 'اجتماعيات', gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]' },
+    { id: 'islamic', name: 'إسلامية' },
+    { id: 'arabic', name: 'عربي' },
+    { id: 'math', name: 'رياضيات' },
+    { id: 'science', name: 'علوم' },
+    { id: 'english', name: 'إنجليزي' },
+    { id: 'social', name: 'اجتماعيات' },
   ],
   middle: [
-    { id: 'islamic', name: 'إسلامية', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]' },
-    { id: 'arabic', name: 'عربي', gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]' },
-    { id: 'math', name: 'رياضيات', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]' },
-    { id: 'physics', name: 'فيزياء', gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]' },
-    { id: 'chemistry', name: 'كيمياء', gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { id: 'biology', name: 'أحياء', gradient: 'from-[var(--bg-success)] to-[var(--bg-success)]' },
-    { id: 'english', name: 'إنجليزي', gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { id: 'history', name: 'تاريخ', gradient: 'from-[var(--bg-error)] to-[var(--bg-warning)]' },
-    { id: 'geography', name: 'جغرافيا', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]' },
+    { id: 'islamic', name: 'إسلامية' },
+    { id: 'arabic', name: 'عربي' },
+    { id: 'math', name: 'رياضيات' },
+    { id: 'physics', name: 'فيزياء' },
+    { id: 'chemistry', name: 'كيمياء' },
+    { id: 'biology', name: 'أحياء' },
+    { id: 'english', name: 'إنجليزي' },
+    { id: 'history', name: 'تاريخ' },
+    { id: 'geography', name: 'جغرافيا' },
   ],
   secondary: [
-    { id: 'islamic', name: 'إسلامية', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]' },
-    { id: 'arabic', name: 'عربي', gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]' },
-    { id: 'math', name: 'رياضيات', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]' },
-    { id: 'physics', name: 'فيزياء', gradient: 'from-[var(--bg-warning)] to-[var(--bg-warning)]' },
-    { id: 'chemistry', name: 'كيمياء', gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { id: 'biology', name: 'أحياء', gradient: 'from-[var(--bg-success)] to-[var(--bg-success)]' },
-    { id: 'english', name: 'إنجليزي', gradient: 'from-[var(--bg-primary)] to-[var(--bg-primary)]' },
-    { id: 'computer', name: 'حاسب آلي', gradient: 'from-[var(--bg-info)] to-[var(--bg-primary)]' },
-    { id: 'stats', name: 'إحصاء', gradient: 'from-[var(--bg-error)] to-[var(--bg-error)]' },
-    { id: 'history', name: 'تاريخ', gradient: 'from-[var(--bg-error)] to-[var(--bg-warning)]' },
-    { id: 'geography', name: 'جغرافيا', gradient: 'from-[var(--bg-info)] to-[var(--bg-info)]' },
+    { id: 'islamic', name: 'إسلامية' },
+    { id: 'arabic', name: 'عربي' },
+    { id: 'math', name: 'رياضيات' },
+    { id: 'physics', name: 'فيزياء' },
+    { id: 'chemistry', name: 'كيمياء' },
+    { id: 'biology', name: 'أحياء' },
+    { id: 'english', name: 'إنجليزي' },
+    { id: 'computer', name: 'حاسب آلي' },
+    { id: 'stats', name: 'إحصاء' },
+    { id: 'history', name: 'تاريخ' },
+    { id: 'geography', name: 'جغرافيا' },
   ],
-  basic: [] as { id: string; name: string; gradient: string }[],
-  preparatory: [] as { id: string; name: string; gradient: string }[],
+  basic: [] as { id: string; name: string }[],
+  preparatory: [] as { id: string; name: string }[],
 };
 subjectsMap.basic = subjectsMap.middle;
 subjectsMap.preparatory = subjectsMap.middle;
@@ -100,7 +100,6 @@ export type ViewType = 'types' | 'curriculums' | 'grades' | 'classrooms' | 'term
 export interface GridItem {
     id: string;
     name: string;
-    gradient?: string;
     sub?: string;
     icon: React.ElementType;
     [key: string]: unknown;

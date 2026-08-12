@@ -87,7 +87,7 @@ export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButt
                     <div className="flex flex-col gap-2">
                         <div className="flex gap-2">
                             {post.downloadLink && (
-                                <button onClick={(e) => handleButtonClick('download', post.downloadLink, post.id, e)}
+                                <button type="button" onClick={(e) => handleButtonClick('download', post.downloadLink, post.id, e)}
                                     disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'download')}
                                     className="flex-1 inline-flex items-center justify-center gap-2 bg-warning text-on-warning hover:bg-warning-hover text-[11px] font-extrabold py-2.5 rounded-xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
                                     <Download size={13} />
@@ -95,7 +95,7 @@ export const FoundationCard = ({ post, cardStyle, foundationBtnState, handleButt
                                 </button>
                             )}
                             {post.watchLink && (
-                                <button onClick={(e) => handleButtonClick('watch', post.watchLink, post.id, e)}
+                                <button type="button" onClick={(e) => handleButtonClick('watch', post.watchLink, post.id, e)}
                                     disabled={foundationBtnState !== null && (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'watch')}
                                     className="flex-1 inline-flex items-center justify-center gap-2 bg-primary text-on-primary hover:bg-primary-hover text-[11px] font-extrabold py-2.5 rounded-xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap active:scale-[0.98]">
                                     <Eye size={13} />
