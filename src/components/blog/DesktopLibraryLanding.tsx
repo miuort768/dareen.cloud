@@ -2,7 +2,7 @@ import { useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Zap, CheckCircle, FileText, AlignLeft, Search, Clock,
-  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, Globe, Phone, ChevronDown, Rocket, MessageCircle,
+  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, Globe, Phone, ChevronDown, MessageCircle,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
@@ -200,46 +200,73 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
   return (
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
 
-      {/* ===== HERO — D1: Centered ===== */}
-      <section className="relative rounded-2xl bg-card border border-border overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] lg:min-h-[380px]">
-          <div className="relative z-10 p-8 lg:p-12 flex flex-col items-center text-center lg:items-start lg:text-start">
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-primary-soft border border-primary/15 rounded-xl mb-5">
-              <div className="w-6 h-6 rounded-lg bg-primary flex items-center justify-center">
-                <Rocket size={12} className="text-on-primary" />
-              </div>
-              <span className="text-[11px] font-extrabold text-primary">برعاية منصة دارين السابعة</span>
+      {/* ===== HERO — Gradient Hero ===== */}
+      <section className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary via-primary-hover to-primary dark:from-card dark:via-surface dark:to-card">
+        {/* Decorative blurs */}
+        <div className="absolute top-0 end-0 w-64 h-64 bg-white/10 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 start-0 w-48 h-48 bg-white/10 dark:bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNENEFGMzciIGZpbGwtb3BhY2l0eT0iMC4wNCI+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMiIvPjwvZz48L2c+PC9zdmc+')] pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col lg:flex-row items-center gap-6 lg:gap-10 p-8 lg:p-12">
+          {/* Text side */}
+          <div className="lg:w-[60%] text-center lg:text-start">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white/15 dark:bg-primary/20 border border-white/20 dark:border-primary/30 rounded-full mb-5">
+              <BookMarked size={13} className="text-warning dark:text-primary" />
+              <span className="text-[11px] font-extrabold text-on-primary dark:text-primary">بوابتك التعليمية</span>
             </div>
 
-            <h1 className="text-3xl xl:text-4xl 2xl:text-5xl font-heading font-black text-main leading-[1.15] mb-3">
-              مدونة <span className="text-primary">{academyName}</span> التعليمية
+            <h1 className="text-3xl xl:text-4xl 2xl:text-5xl font-heading font-black text-on-primary dark:text-main leading-[1.15] mb-3">
+              مكتبة <span className="text-warning dark:text-primary">{academyName}</span>
+              <br />
+              <span className="text-white/80 dark:text-muted">للكتب والمذكرات</span>
             </h1>
 
-            <p className="text-sm lg:text-base text-muted font-medium leading-relaxed mb-7 max-w-lg">
+            <p className="text-sm lg:text-base text-on-primary/80 dark:text-muted font-medium leading-relaxed mb-7 max-w-lg mx-auto lg:mx-0">
               أفضل الكتب والمذكرات والملخصات لجميع المراحل بطرق تدريس أكاديمية
               — في الكويت وقطر والإمارات والسعودية.
             </p>
 
-            {/* D3: WhatsApp button instead of "تصفح المحتوى" + count */}
             <a
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية فردية')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-success text-on-success text-sm font-extrabold transition-all duration-200 hover:bg-success-hover hover:shadow-sm active:scale-[0.98]"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white dark:bg-primary text-primary dark:text-on-primary text-sm font-extrabold transition-all duration-200 hover:bg-white/90 dark:hover:bg-primary-hover hover:shadow-sm active:scale-[0.98]"
             >
               <MessageCircle size={16} />
               طلب حصة مجانية فردية الآن
             </a>
+
+            {/* Stats strip */}
+            <div className="flex items-center gap-6 mt-6 pt-5 border-t border-white/15 dark:border-border max-w-lg mx-auto lg:mx-0">
+              <div className="text-center">
+                <div className="text-lg font-black text-warning dark:text-primary">500+</div>
+                <div className="text-[10px] text-on-primary/70 dark:text-muted font-bold">مذكرة</div>
+              </div>
+              <div className="w-px h-8 bg-white/20 dark:bg-border" />
+              <div className="text-center">
+                <div className="text-lg font-black text-warning dark:text-primary">4</div>
+                <div className="text-[10px] text-on-primary/70 dark:text-muted font-bold">مناهج خليجية</div>
+              </div>
+              <div className="w-px h-8 bg-white/20 dark:bg-border" />
+              <div className="text-center">
+                <div className="text-lg font-black text-warning dark:text-primary">100%</div>
+                <div className="text-[10px] text-on-primary/70 dark:text-muted font-bold">مجاني</div>
+              </div>
+            </div>
           </div>
 
-          <div className="relative min-h-[200px] lg:min-h-full lg:w-[320px] xl:w-[380px] overflow-hidden bg-surface flex items-center justify-center">
-            <Image
-              src="/bbook.webp"
-              alt={`بوابة ${academyName} التعليمية للكتب والمذكرات`}
-              className="relative w-full h-full"
-              imgClassName="object-contain p-8"
-              withSkeleton
-            />
+          {/* Image side */}
+          <div className="hidden lg:flex lg:w-[40%] items-center justify-center relative">
+            <div className="relative w-full max-w-[380px]">
+              <div className="absolute inset-0 bg-white/10 dark:bg-primary/10 rounded-full blur-[60px] pointer-events-none" />
+              <Image
+                src="/bbook.webp"
+                alt={`بوابة ${academyName} التعليمية للكتب والمذكرات`}
+                className="relative z-10 w-full h-auto"
+                imgClassName="object-contain drop-shadow-2xl"
+                withSkeleton
+              />
+            </div>
           </div>
         </div>
       </section>

@@ -52,7 +52,7 @@ export const MasarSection = () => {
                                     <span className="text-on-primary dark:text-on-primary bg-primary dark:bg-primary px-3 py-1 md:px-5 md:py-1 inline-block transform -rotate-1 shadow-lg text-shadow-none whitespace-nowrap">دارين</span>
                                     <span className="text-on-primary dark:text-main">للمذكرات التعليمية</span>
                                 </h2>
-                                <p className="text-on-primary dark:text-warning/60 text-micro sm:text-xs md:text-sm lg:text-base leading-relaxed mb-4 max-w-2xl mx-auto lg:mx-0 font-medium">
+                                <p className="text-on-primary dark:text-white/90 text-micro sm:text-xs md:text-sm lg:text-base leading-relaxed mb-4 max-w-2xl mx-auto lg:mx-0 font-medium">
                                     حصرياً في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                                 </p>
                                 <div className="flex flex-wrap gap-2 justify-center lg:justify-start mb-5">
@@ -112,7 +112,7 @@ export const MasarSection = () => {
                             <span className="bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-white/30 dark:border-black/30 text-on-primary dark:text-on-primary text-micro font-bold px-3 py-1 rounded-[4px]">للمذكرات التعليمية</span>
                         </div>
 
-                        <p className="text-on-primary dark:text-warning/60 text-micro leading-relaxed mb-6 font-medium">
+                        <p className="text-on-primary dark:text-white/90 text-micro leading-relaxed mb-6 font-medium">
                             حصريًا في مركز دارين، نوفر لك أقوى المذكرات التعليمية والملخصات الشاملة لجميع المراحل الدراسية، معدة بعناية من قبل نخبة من المعلمين لضمان تفوقك الدراسي.
                         </p>
 

@@ -21,9 +21,9 @@ const features = [
 ];
 
 const variantClasses: Record<string, { icon: string; bg: string; card: string }> = {
-  success: { icon: 'text-on-success dark:text-warning', bg: 'bg-white/10 dark:bg-primary/10', card: 'bg-success dark:bg-card dark:border dark:border-primary/20' },
-  primary: { icon: 'text-on-primary dark:text-warning', bg: 'bg-white/10 dark:bg-primary/10', card: 'bg-primary dark:bg-card dark:border dark:border-primary/20' },
-  accent: { icon: 'text-on-accent dark:text-warning', bg: 'bg-white/10 dark:bg-primary/10', card: 'bg-accent dark:bg-card dark:border dark:border-primary/30' },
+  success: { icon: 'text-on-success dark:text-white', bg: 'bg-white/10 dark:bg-primary/10', card: 'bg-success dark:bg-card dark:border dark:border-primary/20' },
+  primary: { icon: 'text-on-primary dark:text-white', bg: 'bg-white/10 dark:bg-primary/10', card: 'bg-primary dark:bg-card dark:border dark:border-primary/20' },
+  accent: { icon: 'text-on-accent dark:text-white', bg: 'bg-white/10 dark:bg-primary/10', card: 'bg-accent dark:bg-card dark:border dark:border-primary/30' },
 };
 
 const featureIcons = [ShieldCheck, Lightbulb, Heart];
@@ -43,14 +43,14 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
       <div className="relative z-10 container mx-auto px-4 md:px-8">
         {/* Section Header */}
         <div className="text-center mb-4 md:mb-6">
-          <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4 flex items-center justify-center gap-2 text-main dark:text-warning">
+          <h2 className="text-2xl md:text-5xl font-heading font-black mb-3 md:mb-4 flex items-center justify-center gap-2 text-main dark:text-white">
             <Zap className="w-5 h-5 text-warning dark:text-primary fill-warning dark:fill-primary md:hidden" />
             <span>لماذا{' '}</span>
             <span className="px-4 py-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover dark:from-primary dark:to-primary text-on-primary dark:text-card font-extrabold text-xl md:text-4xl inline-block">
               تختارنا؟
             </span>
           </h2>
-          <p className="text-muted dark:text-warning/70 text-sm md:text-base lg:text-xs max-w-4xl mx-auto leading-relaxed font-medium">
+          <p className="text-muted dark:text-white/80 text-sm md:text-base lg:text-xs max-w-4xl mx-auto leading-relaxed font-medium">
             <span className="hidden md:inline">في دارين السابعة، لا نكتفي بالتعليم فقط — نصنع تجربة متكاملة تجمع بين الجودة والدعم والتقدير.<br />نعمل بشغف لنحول الفراغ إلى مسار مهني ناجح يلبي طموحاتك ويتخطى توقعاتك.</span>
             <span className="md:hidden">في دارين السابعة، لا نكتفي بالتعليم فقط — نصنع تجربة متكاملة تجمع بين الجودة والدعم والتقدير. نعمل بشغف لنحول الفراغ إلى مسار مهني ناجح.</span>
           </p>
@@ -73,8 +73,8 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                   <Icon className={vc.icon} size={22} />
                 </div>
                 <div>
-                  <h3 className={`text-sm font-black ${vc.icon}`}>{f.title}</h3>
-                  <p className={`text-micro ${vc.icon} dark:text-warning/60 opacity-90 font-medium leading-relaxed mt-0.5`}>{f.desc}</p>
+                  <h3 className={`text-sm font-black ${vc.icon} dark:text-white`}>{f.title}</h3>
+                  <p className={`text-micro ${vc.icon} dark:text-white/70 opacity-90 font-medium leading-relaxed mt-0.5`}>{f.desc}</p>
                 </div>
               </motion.div>
             );
@@ -86,10 +86,10 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
             <div className="relative z-10 text-center">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 dark:bg-primary/10 border border-white/10 dark:border-primary/20 rounded-full mb-3">
                 <Star size={12} className="text-warning dark:text-primary" />
-                <span className="text-micro font-bold text-on-primary dark:text-warning opacity-90">البصمة المميزة</span>
+                <span className="text-micro font-bold text-on-primary dark:text-white/90 opacity-90">البصمة المميزة</span>
               </div>
-              <h3 className="text-lg font-black text-on-primary dark:text-warning font-heading mb-2">بنينا معاً مجدداً</h3>
-              <p className="text-micro text-on-primary dark:text-warning/60 opacity-90 leading-relaxed mb-4 max-w-xs mx-auto font-medium">
+              <h3 className="text-lg font-black text-on-primary dark:text-white font-heading mb-2">بنينا معاً مجدداً</h3>
+              <p className="text-micro text-on-primary dark:text-white/80 opacity-90 leading-relaxed mb-4 max-w-xs mx-auto font-medium">
                 كل يوم نتعلم ونكبر معاً لتقدم لكم أفضل خدمة تعليمية ممكنة. رؤيتكم هي محرّك نجاحنا ومحفّز تطورنا.
               </p>
               <a
@@ -106,12 +106,12 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 <div className="p-3 bg-white/5 dark:bg-white/5 border border-white/10 dark:border-primary/10 rounded-xl text-center">
                  <Star size={16} className="text-warning dark:text-warning mx-auto mb-1" />
                  <div className="text-lg font-black text-on-primary dark:text-warning">10+</div>
-                 <div className="text-micro text-on-primary dark:text-warning/60 font-bold">سنوات خبرة</div>
+                 <div className="text-micro text-on-primary dark:text-white/60 font-bold">سنوات خبرة</div>
                </div>
                <div className="p-3 bg-white/5 dark:bg-white/5 border border-white/10 dark:border-primary/10 rounded-xl text-center">
                  <Users size={16} className="text-info dark:text-warning mx-auto mb-1" />
                  <div className="text-lg font-black text-on-primary dark:text-warning">70+</div>
-                 <div className="text-micro text-on-primary dark:text-warning/60 font-bold">معلم خبير</div>
+                 <div className="text-micro text-on-primary dark:text-white/60 font-bold">معلم خبير</div>
                </div>
             </div>
           </div>
@@ -134,8 +134,8 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                   <Icon className={vc.icon} size={24} />
                 </div>
                 <div>
-                  <h3 className={`text-base font-black ${vc.icon} mb-1`}>{f.title}</h3>
-                  <p className={`text-xs ${vc.icon} dark:text-warning/60 leading-relaxed font-medium`}>{f.desc}</p>
+                  <h3 className={`text-base font-black ${vc.icon} dark:text-white mb-1`}>{f.title}</h3>
+                  <p className={`text-xs ${vc.icon} dark:text-white/70 leading-relaxed font-medium`}>{f.desc}</p>
                 </div>
               </motion.div>
             );
@@ -149,21 +149,21 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
               <div className="flex-1 text-center lg:text-start">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/15 dark:bg-primary/10 border border-white/20 dark:border-primary/20 rounded-full mb-3 mx-auto lg:mx-0">
                   <Award size={16} className="text-warning dark:text-primary" />
-                  <span className="text-xs font-bold text-on-primary dark:text-warning">البصمة المميزة</span>
+                  <span className="text-xs font-bold text-on-primary dark:text-white/90">البصمة المميزة</span>
                 </div>
-                <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-on-primary dark:text-warning">بنينا معاً مجدداً</h3>
-                <p className="text-on-primary dark:text-warning/60 text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">كل يوم نتعلم ونكبر معاً لتقدم لكم أفضل خدمة تعليمية ممكنة. رؤيتكم هي محرّك نجاحنا ومحفّز تطورنا.</p>
+                <h3 className="text-xl md:text-2xl font-black mb-2 font-heading text-on-primary dark:text-white">بنينا معاً مجدداً</h3>
+                <p className="text-on-primary dark:text-white/80 text-xs md:text-sm leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">كل يوم نتعلم ونكبر معاً لتقدم لكم أفضل خدمة تعليمية ممكنة. رؤيتكم هي محرّك نجاحنا ومحفّز تطورنا.</p>
               </div>
               <div className="grid grid-cols-2 gap-4 sm:gap-6 w-full lg:w-auto shrink-0">
                 <div className="p-6 bg-white/10 dark:bg-white/5 border border-white/10 dark:border-primary/10 rounded-2xl text-center group-hover:bg-white/15 dark:group-hover:bg-primary/[0.06] transition-all duration-300">
                    <Users className="w-8 h-8 text-info dark:text-warning mx-auto mb-3" />
-                   <div className="text-3xl font-black text-on-primary dark:text-warning">+70</div>
-                   <div className="text-xs text-on-primary dark:text-warning/60 font-bold">معلم خبير</div>
+                    <div className="text-3xl font-black text-on-primary dark:text-warning">+70</div>
+                    <div className="text-xs text-on-primary dark:text-white/60 font-bold">معلم خبير</div>
                  </div>
                  <div className="p-6 bg-white/10 dark:bg-white/5 border border-white/10 dark:border-primary/10 rounded-2xl text-center group-hover:bg-white/15 dark:group-hover:bg-primary/[0.06] transition-all duration-300">
                    <Star className="w-8 h-8 text-warning dark:text-warning mx-auto mb-3" />
                    <div className="text-3xl font-black text-on-primary dark:text-warning">+10</div>
-                   <div className="text-xs text-on-primary dark:text-warning/60 font-bold">سنوات خبرة</div>
+                   <div className="text-xs text-on-primary dark:text-white/60 font-bold">سنوات خبرة</div>
                  </div>
               </div>
             </div>
