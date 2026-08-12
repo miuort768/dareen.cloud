@@ -273,7 +273,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
 
       {/* ===== SEARCH BAR ===== */}
       <section className="mb-6">
-        <div className="rounded-2xl lg:rounded-none border border-border bg-card p-5 shadow-elevation-1">
+        <div className="rounded-2xl lg:rounded-none border border-border dark:border-white/15 bg-card dark:bg-[#181b20] p-5 shadow-elevation-1">
           <div className="flex items-center gap-4">
             <span className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center shrink-0">
               <Search size={18} />
@@ -286,7 +286,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 onChange={e => setSearch(e.target.value)}
                 placeholder="ابحث عن مادة، كتاب، أو ملزمة..."
                 aria-label="البحث في المقالات"
-                className="w-full rounded-xl border border-border bg-surface ps-10 pe-4 py-3 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                className="w-full rounded-xl border border-border dark:border-white/20 bg-surface dark:bg-white/5 ps-10 pe-4 py-3 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
               />
             </div>
           </div>
