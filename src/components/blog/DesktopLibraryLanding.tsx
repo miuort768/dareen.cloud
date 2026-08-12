@@ -209,7 +209,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
 
       {/* ===== TOP HEADING ===== */}
-      <section className="mb-10 text-center">
+      <section className="mb-5 text-center">
         <h1 className="text-3xl lg:text-4xl font-heading font-black text-main mb-3">
           مركز ملفات <span className="text-primary">{academyName}</span> السابعة
         </h1>
@@ -219,7 +219,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
       </section>
 
       {/* ===== MOST READ FILES ===== */}
-      <section className="mb-14">
+      <section className="mb-8">
         <div className="flex items-end justify-between gap-4 mb-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-soft border border-primary/10 rounded-full mb-3">
@@ -272,7 +272,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
       </section>
 
       {/* ===== SEARCH BAR ===== */}
-      <section className="mb-10">
+      <section className="mb-6">
         <div className="rounded-2xl lg:rounded-none border border-border bg-card p-5 shadow-elevation-1">
           <div className="flex items-center gap-4">
             <span className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center shrink-0">
@@ -405,7 +405,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
 
         {/* Articles */}
         <div className="min-w-0">
-          <div className="flex items-end justify-between gap-4 mb-6">
+        <div className="flex items-end justify-between gap-4 mb-4">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-soft border border-primary/10 rounded-full mb-3">
                 <span className="text-[10px] font-extrabold text-primary">آخر ما نُشر</span>
