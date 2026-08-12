@@ -33,6 +33,21 @@ router.post('/', subscribeLimiter, async (req, res) => {
         if (!normalizedPhone || normalizedPhone.replace(/\D/g, '').length < 8) {
             return res.status(400).json({ error: 'يرجى إدخال رقم هاتف صحيح' });
         }
+        try {
+            await prisma.$executeRawUnsafe(`
+                CREATE TABLE IF NOT EXISTS "blog_customers" (
+                    "id" TEXT NOT NULL,
+                    "country" TEXT NOT NULL,
+                    "phone" TEXT NOT NULL,
+                    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    CONSTRAINT "blog_customers_pkey" PRIMARY KEY ("id")
+                )
+            `);
+            await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "blog_customers_country_idx" ON "blog_customers"("country")`);
+            await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "blog_customers_created_at_idx" ON "blog_customers"("created_at")`);
+        } catch (tableErr) {
+            console.error('BlogCustomers: table ensure failed:', tableErr.message);
+        }
         const existing = await prisma.blogCustomer.findFirst({
             where: { phone: normalizedPhone }
         });
@@ -47,6 +62,7 @@ router.post('/', subscribeLimiter, async (req, res) => {
         });
         res.status(201).json({ message: 'تم تسجيل بياناتك بنجاح' });
     } catch (err) {
+        console.error('BlogCustomers POST error:', err.message, err.stack);
         ResponseHandler.serverError(res, err, 'Subscribe blog customer');
     }
 });
