@@ -171,8 +171,8 @@ export const RefundPolicy = () => {
                         <div className="absolute bottom-0 end-0 w-32 h-32 bg-white/10 rounded-full -me-16 -mb-16 blur-3xl"></div>
 
                         <div className="relative z-10 text-center">
-                            <h2 className="text-2xl font-black text-on-primary mb-2">تحتاج مساعدة بخصوص طلبك؟</h2>
-                            <p className="text-micro md:text-base text-on-primary mb-8 max-w-md mx-auto whitespace-nowrap md:whitespace-normal">فريق الحسابات متاح للرد على استفساراتكم المالية فوراً</p>
+                            <h2 className="text-2xl font-black text-on-primary dark:text-primary mb-2">تحتاج مساعدة بخصوص طلبك؟</h2>
+                            <p className="text-micro md:text-base text-on-primary dark:text-primary mb-8 max-w-md mx-auto whitespace-nowrap md:whitespace-normal">فريق الحسابات متاح للرد على استفساراتكم المالية فوراً</p>
 
                             <a
                                 href={`https://wa.me/${whatsappNumber}`}
