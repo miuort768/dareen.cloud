@@ -296,7 +296,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
 
       {/* ===== ARTICLES + SIDEBAR ===== */}
       <section className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 items-start">
-        <aside className="lg:sticky lg:top-24 space-y-5">
+        <aside className="space-y-5">
           {/* Popular Categories */}
           <div className="rounded-2xl lg:rounded-none border border-border bg-card p-5 shadow-elevation-1">
             <h3 className="flex items-center gap-2.5 text-sm font-extrabold text-main mb-4">
@@ -328,6 +328,79 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 );
               })}
             </ul>
+          </div>
+
+          {/* Newsletter */}
+          <div className="rounded-2xl lg:rounded-none overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card pointer-events-none" />
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+              style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
+            <div className="relative p-5">
+              <span className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center mb-3">
+                <Mail size={18} />
+              </span>
+              <h3 className="text-sm font-extrabold text-white mb-1">اشترك في النشرة التعليمية</h3>
+              <p className="text-[11px] text-white/50 font-medium leading-relaxed mb-4">
+                ليصلك جديد الكتب والمذكرات مباشرة على هاتفك.
+              </p>
+              {subscribed ? (
+                <div className="flex items-center gap-2 rounded-xl bg-white/10 border border-white/10 px-4 py-3">
+                  <CheckCircle2 size={15} className="text-success shrink-0" />
+                  <span className="text-xs font-bold text-white">تم التسجيل بنجاح!</span>
+                </div>
+              ) : (
+                <form onSubmit={handleSubscribe} className="space-y-2.5">
+                  <div>
+                    <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-country-d">الدولة</label>
+                    <div className="relative">
+                      <Globe size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                      <select
+                        id="newsletter-country-d"
+                        required
+                        value={country}
+                        onChange={e => setCountry(e.target.value)}
+                        className="w-full appearance-none rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-9 py-2.5 text-sm text-white outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30 placeholder:text-white/30"
+                      >
+                        <option value="" disabled className="text-main">اختر الدولة</option>
+                        {BLOG_COUNTRIES.map(c => (
+                          <option key={c} value={c} className="text-main">{c}</option>
+                        ))}
+                      </select>
+                      <ChevronDown size={13} className="absolute end-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-phone-d">رقم الهاتف</label>
+                    <div className="relative">
+                      <Phone size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                      <input
+                        id="newsletter-phone-d"
+                        type="tel"
+                        required
+                        dir="ltr"
+                        inputMode="tel"
+                        value={phone}
+                        onChange={e => setPhone(normalizePhoneInput(e.target.value))}
+                        placeholder="5xxxxxxxx"
+                        className="w-full rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30"
+                      />
+                    </div>
+                  </div>
+                  {subscribeError && (
+                    <p className="text-xs font-bold text-error">{subscribeError}</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-extrabold text-on-accent transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep"
+                  >
+                    {submitting ? 'جارٍ الإرسال...' : 'انضم مجاناً'}
+                    {!submitting && <Send size={13} />}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </aside>
 
@@ -415,87 +488,6 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
               })}
             </div>
           )}
-        </div>
-      </section>
-
-      {/* ===== NEWSLETTER ===== */}
-      <section className="mt-14">
-        <div className="rounded-2xl lg:rounded-none overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card pointer-events-none" />
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
-            style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-
-          <div className="relative p-8 lg:p-10 flex flex-col lg:flex-row items-center gap-8">
-            <div className="flex-1 text-center lg:text-start">
-              <span className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center mb-3 mx-auto lg:mx-0">
-                <Mail size={20} />
-              </span>
-              <h3 className="text-lg font-extrabold text-white mb-2">اشترك في النشرة التعليمية</h3>
-              <p className="text-sm text-white/50 font-medium leading-relaxed max-w-md">
-                ليصلك جديد الكتب والمذكرات مباشرة على هاتفك. اختر الدولة ورقم الهاتف وانضم مجاناً.
-              </p>
-            </div>
-            <div className="w-full lg:w-auto lg:min-w-[340px]">
-              {subscribed ? (
-                <div className="flex items-center gap-3 rounded-xl bg-white/10 border border-white/10 px-6 py-4">
-                  <CheckCircle2 size={18} className="text-success shrink-0" />
-                  <span className="text-sm font-bold text-white">تم التسجيل بنجاح! شكراً لك.</span>
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="space-y-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-country-d">الدولة</label>
-                      <div className="relative">
-                        <Globe size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
-                        <select
-                          id="newsletter-country-d"
-                          required
-                          value={country}
-                          onChange={e => setCountry(e.target.value)}
-                          className="w-full appearance-none rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-9 py-2.5 text-sm text-white outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30 placeholder:text-white/30"
-                        >
-                          <option value="" disabled className="text-main">اختر الدولة</option>
-                          {BLOG_COUNTRIES.map(c => (
-                            <option key={c} value={c} className="text-main">{c}</option>
-                          ))}
-                        </select>
-                        <ChevronDown size={13} className="absolute end-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-bold text-white/40 mb-1" htmlFor="newsletter-phone-d">رقم الهاتف</label>
-                      <div className="relative">
-                        <Phone size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
-                        <input
-                          id="newsletter-phone-d"
-                          type="tel"
-                          required
-                          dir="ltr"
-                          inputMode="tel"
-                          value={phone}
-                          onChange={e => setPhone(normalizePhoneInput(e.target.value))}
-                          placeholder="5xxxxxxxx"
-                          className="w-full rounded-xl border border-white/10 bg-white/[0.07] ps-8 pe-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/30"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  {subscribeError && (
-                    <p className="text-xs font-bold text-error">{subscribeError}</p>
-                  )}
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-2.5 text-sm font-extrabold text-on-accent transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-                  >
-                    {submitting ? 'جارٍ الإرسال...' : 'انضم مجاناً'}
-                    {!submitting && <Send size={13} />}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
         </div>
       </section>
 
