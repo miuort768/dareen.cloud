@@ -1,14 +1,15 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  BookOpen, Zap, CheckCircle, FileText, AlignLeft, Search, Eye, Clock,
-  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, GraduationCap, Globe, Phone, ChevronDown,
+  Zap, CheckCircle, FileText, AlignLeft, Search, Clock,
+  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, Globe, Phone, ChevronDown, Rocket, MessageCircle,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 import { api } from '../../lib/api';
 import { useAcademyName } from '../../context/AppContext';
+import { useSettingsStore } from '../../store/settingsStore';
 import { types, directTypes } from './LibraryConfig';
 import { BLOG_COUNTRIES, normalizePhoneInput } from './blogCustomers';
 import type { BlogPost } from '../../data/blogPosts';
@@ -38,7 +39,7 @@ const TYPE_ICONS: Record<TypeId, LucideIcon> = {
 const TYPE_STYLES: Record<TypeId, TypeStyle> = {
   notes: {
     desc: 'مذكرات وملخصات جاهزة للتحميل المباشر',
-    miniDesc: 'ملخصات منظمة للمذاكرة',
+    miniDesc: 'ملخصات منظمة للمذاكرة — جاهزة للتحميل',
     badge: 'bg-info-soft text-info',
     iconWrap: 'bg-info-soft',
     iconColor: 'text-info',
@@ -50,7 +51,7 @@ const TYPE_STYLES: Record<TypeId, TypeStyle> = {
   },
   solutions: {
     desc: 'حلول كاملة وموثوقة لكتب المناهج',
-    miniDesc: 'حلول معتمدة لجميع الكتب',
+    miniDesc: 'حلول معتمدة لجميع كتب المنهج',
     badge: 'bg-success-soft text-success',
     iconWrap: 'bg-success-soft',
     iconColor: 'text-success',
@@ -62,7 +63,7 @@ const TYPE_STYLES: Record<TypeId, TypeStyle> = {
   },
   more: {
     desc: 'مزيد من الموارد والأدوات التعليمية المتنوعة',
-    miniDesc: 'موارد تعليمية إضافية',
+    miniDesc: 'موارد تعليمية متنوعة وإضافية',
     badge: 'bg-primary-soft text-primary',
     iconWrap: 'bg-primary-soft',
     iconColor: 'text-primary',
@@ -74,7 +75,7 @@ const TYPE_STYLES: Record<TypeId, TypeStyle> = {
   },
   foundation: {
     desc: 'ملفات تأسيسية شاملة لجميع المراحل الدراسية',
-    miniDesc: 'تأسيس قوي للطلاب',
+    miniDesc: 'تأسيس قوي وشامل للطلاب',
     badge: 'bg-warning-soft text-warning',
     iconWrap: 'bg-warning-soft',
     iconColor: 'text-warning',
@@ -121,6 +122,8 @@ interface DesktopLibraryLandingProps {
 
 export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: DesktopLibraryLandingProps) => {
   const academyName = useAcademyName();
+  const adminPhone = useSettingsStore(s => s.adminPhone);
+  const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [search, setSearch] = useState('');
   const [country, setCountry] = useState('');
   const [phone, setPhone] = useState('');
@@ -197,15 +200,15 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
   return (
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
 
-      {/* ===== HERO ===== */}
+      {/* ===== HERO — D1: Centered ===== */}
       <section className="relative rounded-2xl bg-card border border-border overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] lg:min-h-[380px]">
-          <div className="relative z-10 p-8 lg:p-10 flex flex-col justify-center">
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-primary-soft border border-primary/15 rounded-xl mb-5 w-fit">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] lg:min-h-[380px]">
+          <div className="relative z-10 p-8 lg:p-12 flex flex-col items-center text-center lg:items-start lg:text-start">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-primary-soft border border-primary/15 rounded-xl mb-5">
               <div className="w-6 h-6 rounded-lg bg-primary flex items-center justify-center">
-                <BookOpen size={12} className="text-on-primary" />
+                <Rocket size={12} className="text-on-primary" />
               </div>
-              <span className="text-[11px] font-extrabold text-primary">المكتبة التعليمية</span>
+              <span className="text-[11px] font-extrabold text-primary">برعاية منصة دارين السابعة</span>
             </div>
 
             <h1 className="text-3xl xl:text-4xl 2xl:text-5xl font-heading font-black text-main leading-[1.15] mb-3">
@@ -213,43 +216,44 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             </h1>
 
             <p className="text-sm lg:text-base text-muted font-medium leading-relaxed mb-7 max-w-lg">
-              دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل
-              في الكويت وقطر والإمارات والسعودية.
+              أفضل الكتب والمذكرات والملخصات لجميع المراحل بطرق تدريس أكاديمية
+              — في الكويت وقطر والإمارات والسعودية.
             </p>
 
-            <div className="flex items-center gap-3">
-              <a href="#library-categories"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-on-primary text-sm font-extrabold transition-all duration-200 hover:bg-primary-hover hover:shadow-sm active:scale-[0.98]">
-                تصفح المحتوى
-                <ArrowLeft size={14} />
-              </a>
-              <span className="text-xs text-muted font-bold">{posts.length} مقال متاح</span>
-            </div>
+            {/* D3: WhatsApp button instead of "تصفح المحتوى" + count */}
+            <a
+              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية فردية')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-success text-on-success text-sm font-extrabold transition-all duration-200 hover:bg-success-hover hover:shadow-sm active:scale-[0.98]"
+            >
+              <MessageCircle size={16} />
+              طلب حصة مجانية فردية الآن
+            </a>
           </div>
 
-          <div className="relative min-h-[220px] lg:min-h-full overflow-hidden bg-surface">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/3 to-transparent" />
+          <div className="relative min-h-[200px] lg:min-h-full lg:w-[320px] xl:w-[380px] overflow-hidden bg-surface flex items-center justify-center">
             <Image
               src="/bbook.webp"
               alt={`بوابة ${academyName} التعليمية للكتب والمذكرات`}
-              className="absolute inset-0"
-              imgClassName="object-contain p-8 lg:p-10"
+              className="relative w-full h-full"
+              imgClassName="object-contain p-8"
               withSkeleton
             />
           </div>
         </div>
       </section>
 
-      {/* ===== TYPE CARDS ===== */}
+      {/* ===== TYPE CARDS — D4: Improved ===== */}
       <section id="library-categories" className="mt-10">
         <div className="flex items-end justify-between gap-4 mb-6">
           <div>
             <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">الفئات التعليمية</h2>
-            <p className="text-sm text-muted font-medium mt-1.5">اختر القسم الذي يناسب احتياجك</p>
+            <p className="text-sm text-muted font-medium mt-1.5">اختر القسم الذي يناسب احتياجك التعليمي</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {types.map(t => {
             const s = TYPE_STYLES[t.id as TypeId];
             const count = categoryCounts[t.id] || 0;
@@ -265,18 +269,18 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                   s.cardBorder, s.hoverBorder
                 )}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <span className={cn('w-11 h-11 shrink-0 rounded-xl flex items-center justify-center', s.iconWrap)}>
-                    <t.icon size={20} className={s.iconColor} />
+                <div className="flex items-center justify-between mb-3">
+                  <span className={cn('w-11 h-11 shrink-0 rounded-xl flex items-center justify-center transition-colors', s.iconWrap)}>
+                    <t.icon size={20} className={cn('transition-colors', s.iconColor)} />
                   </span>
-                  <span className={cn('text-xs font-extrabold rounded-lg px-2.5 py-1', s.badge)}>
-                    {count}
+                  <span className={cn('text-[11px] font-extrabold rounded-lg px-2.5 py-1', s.badge)}>
+                    {count} مقال
                   </span>
                 </div>
-                <h3 className="text-sm font-extrabold text-main mb-1 group-hover:text-primary transition-colors">{t.name}</h3>
+                <h3 className="text-sm font-extrabold text-main mb-1.5 group-hover:text-primary transition-colors">{t.name}</h3>
                 <p className="text-[11px] text-muted font-medium leading-relaxed mb-3">{s.miniDesc}</p>
                 <span className={cn('inline-flex items-center gap-1 text-xs font-extrabold transition-colors', s.linkColor)}>
-                  تصفح
+                  تصفح المقالات
                   <ArrowLeft size={12} className="transition-transform group-hover:-translate-x-1" />
                 </span>
               </button>
@@ -288,7 +292,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
       {/* ===== SIDEBAR + ARTICLES ===== */}
       <section className="mt-10 grid grid-cols-[300px_1fr] gap-8 items-start">
         <aside className="sticky top-24 space-y-5">
-          {/* Search */}
+          {/* D5: Search — properly working */}
           <div className="rounded-2xl border border-border bg-card p-5">
             <h3 className="flex items-center gap-2.5 text-sm font-extrabold text-main mb-4">
               <span className="w-8 h-8 rounded-xl bg-primary-soft text-primary flex items-center justify-center">
@@ -306,10 +310,20 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 aria-label="البحث في المقالات"
                 className="w-full rounded-xl border border-border bg-surface ps-10 pe-4 py-2.5 text-sm text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
               />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch('')}
+                  className="absolute end-3 top-1/2 -translate-y-1/2 text-muted hover:text-main transition-colors"
+                  aria-label="مسح البحث"
+                >
+                  ✕
+                </button>
+              )}
             </div>
           </div>
 
-          {/* Popular Categories */}
+          {/* Categories list */}
           <div className="rounded-2xl border border-border bg-card p-5">
             <h3 className="flex items-center gap-2.5 text-sm font-extrabold text-main mb-4">
               <span className="w-8 h-8 rounded-xl bg-primary-soft text-primary flex items-center justify-center">
@@ -342,7 +356,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             </ul>
           </div>
 
-          {/* Newsletter */}
+          {/* D6: Newsletter — linked to blog-customers API */}
           <div className="rounded-2xl border border-primary/15 bg-card p-5">
             <span className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center mb-3">
               <Mail size={18} />
@@ -359,11 +373,11 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             ) : (
               <form onSubmit={handleSubscribe} className="space-y-2.5">
                 <div>
-                  <label className="block text-[11px] font-bold text-muted mb-1" htmlFor="newsletter-country">الدولة</label>
+                  <label className="block text-[11px] font-bold text-muted mb-1" htmlFor="newsletter-country-desktop">الدولة</label>
                   <div className="relative">
                     <Globe size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                     <select
-                      id="newsletter-country"
+                      id="newsletter-country-desktop"
                       required
                       value={country}
                       onChange={e => setCountry(e.target.value)}
@@ -378,11 +392,11 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-muted mb-1" htmlFor="newsletter-phone">رقم الهاتف</label>
+                  <label className="block text-[11px] font-bold text-muted mb-1" htmlFor="newsletter-phone-desktop">رقم الهاتف</label>
                   <div className="relative">
                     <Phone size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
                     <input
-                      id="newsletter-phone"
+                      id="newsletter-phone-desktop"
                       type="tel"
                       required
                       dir="ltr"
@@ -410,7 +424,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
           </div>
         </aside>
 
-        {/* Articles */}
+        {/* D7 + D8: Articles — fixed "اقرأ المقال" + dark mode colors */}
         <div className="min-w-0">
           <div className="flex items-end justify-between gap-4 mb-6">
             <div>
@@ -419,6 +433,15 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                 {searchQuery ? `نتائج البحث عن «${search.trim()}»` : 'آخر ما نُشر في المكتبة التعليمية'}
               </p>
             </div>
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearch('')}
+                className="text-xs font-bold text-primary hover:text-primary-hover transition-colors"
+              >
+                مسح البحث
+              </button>
+            )}
           </div>
 
           {loading ? (
@@ -443,13 +466,14 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
               <p className="text-sm text-muted font-medium">جرّب كلمات بحث مختلفة أو تصفح الأقسام بالأسفل.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {articles.map(post => {
                 const { style, label, icon: Icon } = getStyleFor(post);
                 return (
                   <Link
                     key={post.id}
                     to={`/books/${post.slug}`}
+                    onClick={() => window.scrollTo(0, 0)}
                     className="group flex gap-4 rounded-2xl border border-border bg-card p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
                   >
                     <div className="relative w-28 h-28 shrink-0 rounded-xl overflow-hidden bg-surface">
@@ -475,9 +499,9 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                           <Clock size={11} />
                           {formatDate(post.date)}
                         </span>
-                        <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-on-primary text-[11px] font-extrabold transition-all duration-200 hover:bg-primary-hover active:scale-[0.97]">
+                        <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary text-on-primary text-[11px] font-extrabold transition-all duration-200 hover:bg-primary-hover pointer-events-none">
                           اقرأ المقال
-                          <ArrowLeft size={11} className="transition-transform group-hover:-translate-x-0.5" />
+                          <ArrowLeft size={11} />
                         </span>
                       </div>
                     </div>

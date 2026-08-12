@@ -7,7 +7,7 @@ import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost } from '../../data/blogPosts';
-import { MessageCircle, Send, Download, Zap, FileText, BookOpen } from 'lucide-react';
+import { MessageCircle, Send, Download, Zap, FileText, BookOpen, Rocket } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useSettingsStore } from '../../store/settingsStore';
 import { useAcademyName } from '../../context/AppContext';
@@ -206,7 +206,7 @@ export const Blog = () => {
       <MobileHeader />
 
       {/* Mobile */}
-      <div className="md:hidden pb-0 px-4 relative bg-background">
+      <div className="md:hidden pb-4 px-4 relative bg-background">
         {isHeroView ? (
           <div className="pb-6">
             {/* Hero Banner */}
@@ -218,8 +218,8 @@ export const Blog = () => {
                 {/* Top row: badge + social */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary-soft border border-primary/15 rounded-xl">
-                    <BookOpen size={12} className="text-primary" />
-                    <span className="text-[11px] font-extrabold text-primary">المكتبة التعليمية</span>
+                    <Rocket size={12} className="text-primary" />
+                    <span className="text-[11px] font-extrabold text-primary">برعاية منصة دارين السابعة</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
@@ -244,12 +244,12 @@ export const Blog = () => {
                       مكتبة <span className="text-primary">{academyName}</span>
                     </h1>
                     <p className="text-xs text-muted leading-relaxed mb-4 font-medium">
-                      أفضل الكتب والمذكرات والملخصات لجميع المراحل
+                      أفضل الكتب والمذكرات والملخصات لجميع المراحل بطرق تدريس أكاديمية
                     </p>
                     <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                       target="_blank" rel="noopener noreferrer"
                        className="inline-flex items-center justify-center gap-2 bg-primary text-on-primary text-xs font-extrabold px-5 py-2.5 rounded-xl hover:bg-primary-hover transition-all shadow-sm shadow-primary/20 active:scale-[0.98]">
-                      طلب حصة مجانية
+                      طلب حصة مجانية فردية
                     </a>
                   </div>
                   <div className="relative shrink-0 w-24 h-24">
