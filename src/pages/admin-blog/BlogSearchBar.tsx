@@ -10,7 +10,7 @@ interface BlogSearchBarProps {
 
 const filters = [
     { key: '', label: 'الكل' },
-    { key: 'foundation', label: 'التأسيس' },
+    { key: 'foundation', label: 'تعلم اللغة' },
     { key: 'solutions', label: 'حل الكتب' },
     { key: 'notes', label: 'المذكرات' },
     { key: 'more', label: 'المزيد' },

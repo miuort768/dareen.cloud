@@ -2,16 +2,13 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { Image } from '../../shared/components/ui';
 import { MobileHeader } from '../../components/public/MobileHeader';
 import { PublicFooter } from '../../components/public/PublicFooter';
 import { SEO } from '../../components/SEO';
 import { blogPosts as staticPosts, type BlogPost } from '../../data/blogPosts';
-import { MessageCircle, Send, Zap, FileText, CheckCircle } from 'lucide-react';
+import { Zap, FileText } from 'lucide-react';
 import { api } from '../../lib/api';
-import { useSettingsStore } from '../../store/settingsStore';
-import { useAcademyName } from '../../context/AppContext';
-import { types, curriculums, gradesMap, subjectsMap, classroomsMap, directTypes } from '../../components/blog/LibraryConfig';
+import { types, curriculums, gradesMap, subjectsMap, classroomsMap, directTypes, languages } from '../../components/blog/LibraryConfig';
 import type { ViewType } from '../../components/blog/LibraryConfig';
 import { FoundationCard, RegularCard } from '../../components/blog/BlogCard';
 import { BlogBreadcrumb } from '../../components/blog/BlogBreadcrumb';
@@ -24,11 +21,6 @@ import { PageLoader } from '../../components/ui/PageLoader';
 
 export const Blog = () => {
   const navigate = useNavigate();
-  const adminPhone = useSettingsStore(s => s.adminPhone);
-  const libraryWhatsapp = useSettingsStore(s => s.libraryWhatsapp);
-  const libraryTelegram = useSettingsStore(s => s.libraryTelegram);
-  const academyName = useAcademyName();
-  const whatsappNumber = adminPhone.replace(/\D/g, '');
   const [searchParams, setSearchParams] = useSearchParams();
   const view = (searchParams.get('view') as ViewType) || 'types';
   const selectedType = searchParams.get('type') || '';
@@ -37,6 +29,7 @@ export const Blog = () => {
   const selectedGrade = searchParams.get('grade') || '';
   const selectedTerm = searchParams.get('term') || '';
   const selectedSubject = searchParams.get('subject') || '';
+  const selectedLanguage = searchParams.get('language') || '';
   const [showSplash, setShowSplash] = useState(true);
   const [foundationBtnState, setFoundationBtnState] = useState<{ type: 'download' | 'watch'; phase: 'counting' | 'ready'; seconds?: number; postId: string } | null>(null);
   const foundationTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -98,11 +91,13 @@ export const Blog = () => {
     setSearchParams(prev => {
       const next = new URLSearchParams(prev);
       next.set('view', v);
-      if (v === 'types') { ['type','curriculum','level','grade','term','subject'].forEach(k => next.delete(k)); }
+      if (v === 'types') { ['type','curriculum','level','grade','term','subject','language'].forEach(k => next.delete(k)); }
       else if (v === 'curriculums') { ['level','grade','term','subject'].forEach(k => next.delete(k)); }
       else if (v === 'grades') { ['grade','term','subject'].forEach(k => next.delete(k)); }
       else if (v === 'classrooms') { ['term','subject'].forEach(k => next.delete(k)); }
       else if (v === 'terms') { next.delete('subject'); }
+      else if (v === 'languages') { ['curriculum','level','grade','term','subject','language'].forEach(k => next.delete(k)); }
+      else if (v === 'language-sections') { ['curriculum','level','grade','term','subject'].forEach(k => next.delete(k)); }
       return next;
     });
   }, [setSearchParams]);
@@ -121,13 +116,14 @@ export const Blog = () => {
   const currentSubjects = subjectsMap[selectedLevel] || subjectsMap.middle;
   const termLabel = selectedTerm === '1' ? 'ترم أول' : selectedTerm === '2' ? 'ترم ثاني' : 'الكل';
 
-  const filteredPosts = view === 'results' ? posts.filter(p => {
+  const filteredPosts = view === 'results' || view === 'language-sections' ? posts.filter(p => {
     if (selectedType && p.contentType && p.contentType !== selectedType) return false;
     if (selectedCurriculum && p.curriculum !== selectedCurriculum) return false;
     if (selectedLevel && p.level !== selectedLevel) return false;
     if (selectedGrade && p.grade !== selectedGrade) return false;
     if (selectedTerm && p.term && p.term !== selectedTerm) return false;
     if (selectedSubject && p.subject !== selectedSubject) return false;
+    if (selectedLanguage && p.category && !p.category.toLowerCase().includes(selectedLanguage)) return false;
     return true;
   }) : posts;
 
@@ -140,11 +136,13 @@ export const Blog = () => {
     else if (view === 'classrooms') setView('grades');
     else if (view === 'grades') setView('curriculums');
     else if (view === 'curriculums') setView('types');
+    else if (view === 'languages') setView('types');
+    else if (view === 'language-sections') setView('types');
     else navigate('/');
   };
 
-  const isHeroView = view === 'types' || view === 'curriculums' || view === 'grades';
-  const gridItems = view === 'types' ? types : view === 'curriculums' ? curriculums : currentGrades;
+  const isHeroView = view === 'types' || view === 'curriculums' || view === 'grades' || view === 'languages';
+  const gridItems = view === 'types' ? types : view === 'curriculums' ? curriculums : view === 'languages' ? languages.map(l => ({ ...l, icon: l.icon })) : currentGrades;
 
   const loadMore = async () => {
     if (loadingMore || page >= totalPages) return;
@@ -166,12 +164,15 @@ export const Blog = () => {
     document.documentElement.classList.add(libraryTheme);
   }, [libraryTheme]);
 
+  const currentLanguageName = languages.find(l => l.id === selectedLanguage)?.name || '';
+
   const breadcrumbItems = [
     { label: 'الرئيسية', onClick: () => setView('types') },
     ...(currentTypeName ? [{ label: currentTypeName, onClick: () => isDirectType ? () => setView('types') : () => setView('curriculums') }] : []),
     ...(currentCurriculumName ? [{ label: currentCurriculumName, onClick: () => setView('grades') }] : []),
     ...(currentLevelName ? [{ label: currentLevelName, onClick: () => setView('classrooms') }] : []),
     ...(selectedGrade ? [{ label: `الصف ${selectedGrade}`, onClick: () => setView('terms') }] : []),
+    ...(currentLanguageName ? [{ label: currentLanguageName, onClick: () => setView('types') }] : []),
   ];
 
   const renderPostCard = (post: typeof staticPosts[0], i: number) => {
@@ -209,93 +210,9 @@ export const Blog = () => {
       <div className="md:hidden pb-0 px-3 relative bg-surface">
         {isHeroView ? (
           <div className="pb-6">
-            {/* Hero Banner — Premium dark gradient */}
-            <div className="relative rounded-[1.75rem] overflow-hidden mb-5 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep">
-              {/* Background layers */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[-50%] start-[-30%] w-[80%] h-[120%] bg-gradient-to-br from-white/[0.04] to-transparent rounded-full blur-[60px]" />
-                <div className="absolute bottom-[-30%] end-[-20%] w-[70%] h-[100%] bg-gradient-to-tl from-accent/8 to-transparent rounded-full blur-[50px]" />
-                <div className="absolute inset-0 opacity-[0.03]"
-                  style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-              </div>
-
-              <div className="relative p-5">
-                {/* Top row */}
-                <div className="flex items-center justify-between mb-5">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent"></span>
-                    </span>
-                    <span className="text-[10px] font-extrabold text-white/90">المكتبة التعليمية</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <a href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن المكتبة التعليمية')}`}
-                      target="_blank" rel="noopener noreferrer"
-                       className="w-8 h-8 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center transition-all active:scale-95"
-                       aria-label="واتساب">
-                      <MessageCircle size={13} className="text-white/70" />
-                    </a>
-                    <a href={libraryTelegram.startsWith('http') ? libraryTelegram : `https://t.me/${libraryTelegram}`}
-                      target="_blank" rel="noopener noreferrer"
-                       className="w-8 h-8 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center transition-all active:scale-95"
-                       aria-label="تيليجرام">
-                        <Send size={13} className="text-white/70" />
-                    </a>
-                  </div>
-                </div>
-
-                {/* Content + Image */}
-                <div className="flex items-end gap-4">
-                  <div className="flex-1 min-w-0">
-                    <h1 className="text-xl font-black text-white leading-tight mb-1.5 font-heading">
-                      مكتبة <span className="text-accent">{academyName}</span>
-                    </h1>
-                    <p className="text-[11px] text-white/50 leading-relaxed mb-4 font-medium">
-                      أفضل الكتب والمذكرات والملخصات لجميع المراحل
-                    </p>
-
-                    {/* Stats */}
-                    <div className="flex items-center gap-4 mb-4">
-                      {[
-                        { value: `${posts.length}+`, label: 'مادة' },
-                        { value: '٤', label: 'منهج' },
-                        { value: '٤', label: 'دولة' },
-                      ].map((s, i) => (
-                        <div key={i} className="flex items-center gap-1.5">
-                          <span className="text-sm font-black text-accent">{s.value}</span>
-                          <span className="text-[9px] text-white/40 font-bold">{s.label}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
-                      target="_blank" rel="noopener noreferrer"
-                       className="inline-flex items-center justify-center gap-2 bg-accent text-primary-deep text-[11px] font-extrabold px-5 py-2.5 rounded-xl hover:bg-accent-hover transition-all active:scale-[0.97] shadow-[0_4px_20px_rgba(212,175,55,0.3)]">
-                      طلب حصة مجانية
-                    </a>
-                  </div>
-                  <div className="relative shrink-0 w-20 h-20">
-                    <div className="absolute inset-0 bg-white/5 rounded-full blur-xl pointer-events-none" />
-                    <Image src="/bbook.webp" alt={`بوابة ${academyName}`} className="relative w-full h-full" imgClassName="object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.3)]" />
-                  </div>
-                </div>
-
-                {/* Floating card */}
-                <div className="absolute top-[18%] end-[10%] bg-white/10 backdrop-blur-md border border-white/10 rounded-xl px-3 py-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] pointer-events-none">
-                  <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-lg bg-success/20 flex items-center justify-center">
-                      <CheckCircle size={10} className="text-success" />
-                    </span>
-                    <span className="text-[9px] font-extrabold text-white/80">حلول معتمدة</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <MobileHero view={view} gridItems={gridItems} currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} setSearchParams={setSearchParams} />
           </div>
-        ) : view === 'results' ? (
+        ) : view === 'results' || view === 'language-sections' ? (
           <div className="pb-6">
             <BlogBreadcrumb items={breadcrumbItems} currentName={currentSubjectName} onBack={goBack} onHome={() => setView('types')} showChangeButton={!isDirectType} isMobile />
             {loading ? <LoadingState /> : filteredPosts.length === 0 ? <EmptyState /> : (
@@ -320,11 +237,11 @@ export const Blog = () => {
         </div>
         {view === 'types' ? (
           <DesktopLibraryLanding posts={posts} loading={loading} setSearchParams={setSearchParams} />
-        ) : (
+        ) : isHeroView ? (
           <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
-            {isHeroView ? (
-              <DesktopHero view={view} gridItems={gridItems} currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} setSearchParams={setSearchParams} />
-            ) : view === 'results' ? (
+            <DesktopHero view={view} gridItems={gridItems} currentTypeName={currentTypeName} currentCurriculumName={currentCurriculumName} setSearchParams={setSearchParams} />
+          </div>
+        ) : view === 'results' || view === 'language-sections' ? (
               <div className="max-w-6xl mx-auto">
                 <BlogBreadcrumb items={breadcrumbItems} currentName={currentSubjectName} onBack={goBack} onHome={() => setView('types')} showChangeButton={!isDirectType} />
                 {loading ? <LoadingState /> : filteredPosts.length === 0 ? <EmptyState /> : (
@@ -343,8 +260,6 @@ export const Blog = () => {
                 filteredCount={filteredPosts.length} goBack={goBack}
                 onSelectGrade={setSelectedGrade} onSelectTerm={setSelectedTerm} onSelectSubject={setSelectedSubject} />
             )}
-          </div>
-        )}
       </main>
       <PublicFooter />
     </div>

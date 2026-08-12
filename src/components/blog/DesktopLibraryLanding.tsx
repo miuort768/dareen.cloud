@@ -1,15 +1,16 @@
 import { useMemo, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Zap, CheckCircle, FileText, AlignLeft, Search, Clock,
-  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, GraduationCap, Globe, Phone, ChevronDown, Download,
+  CheckCircle, FileText, AlignLeft, Search, Clock,
+  Mail, Send, ArrowLeft, BookMarked, CheckCircle2, GraduationCap, Globe, Phone, ChevronDown,
+  Languages,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 import { api } from '../../lib/api';
 import { useAcademyName } from '../../context/AppContext';
-import { types, directTypes, curriculums } from './LibraryConfig';
+import { types, directTypes, curriculums, languages } from './LibraryConfig';
 import { BLOG_COUNTRIES, normalizePhoneInput } from './blogCustomers';
 import type { BlogPost } from '../../data/blogPosts';
 
@@ -30,25 +31,25 @@ interface TypeStyle {
 }
 
 const TYPE_ICONS: Record<TypeId, LucideIcon> = {
-  foundation: Zap,
+  foundation: Languages,
   solutions: CheckCircle,
   notes: FileText,
   more: AlignLeft,
 };
 
 const TYPE_STYLES: Record<TypeId, TypeStyle> = {
-  notes: {
-    desc: 'مذكرات وملخصات جاهزة للتحميل المباشر',
-    miniDesc: 'ملخصات منظمة للمذاكرة',
-    badge: 'bg-info text-on-info',
-    iconWrap: 'bg-info-soft',
-    iconColor: 'text-info',
-    dot: 'bg-info',
-    gradient: 'from-info/5 to-transparent',
-    linkColor: 'text-info',
-    countColor: 'text-info',
+  foundation: {
+    desc: 'تعلم اللغات بأساليب متنوعة وتفاعلية',
+    miniDesc: 'لغات متعددة للتعلم الذاتي',
+    badge: 'bg-warning text-on-warning',
+    iconWrap: 'bg-warning-soft',
+    iconColor: 'text-warning',
+    dot: 'bg-warning',
+    gradient: 'from-warning/5 to-transparent',
+    linkColor: 'text-warning',
+    countColor: 'text-warning',
     cardBg: 'bg-card',
-    cardBorder: 'border-border hover:border-info/40',
+    cardBorder: 'border-border hover:border-warning/40',
   },
   solutions: {
     desc: 'حلول كاملة وموثوقة لكتب المناهج',
@@ -63,6 +64,19 @@ const TYPE_STYLES: Record<TypeId, TypeStyle> = {
     cardBg: 'bg-card',
     cardBorder: 'border-border hover:border-success/40',
   },
+  notes: {
+    desc: 'مذكرات وملخصات جاهزة للتحميل المباشر',
+    miniDesc: 'ملخصات منظمة للمذاكرة',
+    badge: 'bg-info text-on-info',
+    iconWrap: 'bg-info-soft',
+    iconColor: 'text-info',
+    dot: 'bg-info',
+    gradient: 'from-info/5 to-transparent',
+    linkColor: 'text-info',
+    countColor: 'text-info',
+    cardBg: 'bg-card',
+    cardBorder: 'border-border hover:border-info/40',
+  },
   more: {
     desc: 'مزيد من الموارد والأدوات التعليمية المتنوعة',
     miniDesc: 'موارد تعليمية إضافية',
@@ -75,19 +89,6 @@ const TYPE_STYLES: Record<TypeId, TypeStyle> = {
     countColor: 'text-primary',
     cardBg: 'bg-card',
     cardBorder: 'border-border hover:border-primary/40',
-  },
-  foundation: {
-    desc: 'ملفات تأسيسية شاملة لجميع المراحل الدراسية',
-    miniDesc: 'تأسيس قوي للطلاب',
-    badge: 'bg-warning text-on-warning',
-    iconWrap: 'bg-warning-soft',
-    iconColor: 'text-warning',
-    dot: 'bg-warning',
-    gradient: 'from-warning/5 to-transparent',
-    linkColor: 'text-warning',
-    countColor: 'text-warning',
-    cardBg: 'bg-card',
-    cardBorder: 'border-border hover:border-warning/40',
   },
 };
 
@@ -137,7 +138,11 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
   const goToType = (id: string) => {
     setSearchParams(prev => {
       const next = new URLSearchParams(prev);
-      if (directTypes.includes(id)) {
+      if (id === 'foundation') {
+        next.set('type', id);
+        next.set('view', 'languages');
+        ['curriculum', 'level', 'grade', 'term', 'subject'].forEach(k => next.delete(k));
+      } else if (directTypes.includes(id)) {
         next.set('type', id);
         next.set('view', 'results');
         ['curriculum', 'level', 'grade', 'term', 'subject'].forEach(k => next.delete(k));
@@ -203,161 +208,19 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
   return (
     <div className="relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10 py-8 lg:py-10">
 
-      {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden rounded-[2rem] bg-gradient-to-bl from-primary-deep via-primary to-primary-deep min-h-[520px]">
-        {/* Animated mesh background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-40%] start-[-15%] w-[70%] h-[120%] bg-gradient-to-br from-white/[0.04] to-transparent rounded-full blur-[100px] animate-[pulse_8s_ease-in-out_infinite]" />
-          <div className="absolute bottom-[-30%] end-[-10%] w-[60%] h-[100%] bg-gradient-to-tl from-accent/10 to-transparent rounded-full blur-[80px] animate-[pulse_6s_ease-in-out_infinite_1s]" />
-          <div className="absolute top-[20%] end-[20%] w-64 h-64 bg-white/[0.02] rounded-full blur-[60px] animate-[pulse_10s_ease-in-out_infinite_2s]" />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-[0.04]"
-            style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        </div>
-
-        <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_400px] min-h-[520px]">
-          {/* Left content */}
-          <div className="relative z-10 p-8 lg:p-16 lg:pe-10 flex flex-col justify-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 rounded-full mb-7 w-fit">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
-              </span>
-              <span className="text-[11px] font-extrabold text-white/90 tracking-wide">المكتبة التعليمية</span>
-            </div>
-
-            {/* Heading */}
-            <h1 className="text-5xl xl:text-6xl 2xl:text-[4rem] font-heading font-black text-white leading-[1.08] mb-6 max-w-xl">
-              مدونة
-              <span className="relative inline-block mx-3">
-                <span className="relative z-10 text-accent">دارين</span>
-                <span className="absolute -bottom-1 inset-x-0 h-3 bg-accent/20 rounded-full -z-0 blur-[2px]" />
-              </span>
-              <br />التعليمية
-            </h1>
-
-            {/* Description */}
-            <p className="text-base lg:text-lg text-white/60 font-medium leading-relaxed mb-10 max-w-md">
-              دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل
-              في الكويت وقطر والإمارات والسعودية.
-            </p>
-
-            {/* Category buttons - premium glass cards */}
-            <div className="grid grid-cols-2 gap-3.5 max-w-lg">
-              {types.map(t => {
-                const s = TYPE_STYLES[t.id as TypeId];
-                return (
-                  <button
-                    key={t.id}
-                    type="button"
-                    onClick={() => goToType(t.id)}
-                    className="group relative flex items-center gap-3.5 rounded-2xl bg-white/[0.07] backdrop-blur-sm border border-white/[0.08] p-4 text-start transition-all duration-300 hover:bg-white/[0.12] hover:border-white/[0.15] hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep"
-                  >
-                    <span className={cn('w-11 h-11 shrink-0 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg', s.iconWrap)}>
-                      <t.icon size={18} className={cn('transition-colors duration-300', s.iconColor)} />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-sm font-extrabold text-white group-hover:text-accent transition-colors duration-300">{t.name}</span>
-                      <span className="block text-[10px] text-white/45 font-medium mt-0.5 leading-relaxed">{s.miniDesc}</span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Stats row */}
-            <div className="flex items-center gap-8 mt-10">
-              {[
-                { label: 'مادة تعليمية', value: `${posts.length}+` },
-                { label: 'منهج خليجي', value: `${curriculums.length}` },
-                { label: 'دولة مستهدفة', value: '٤' },
-              ].map((stat, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <span className="text-2xl font-black font-heading text-accent">{stat.value}</span>
-                  <span className="text-[11px] font-bold text-white/40 leading-tight max-w-[60px]">{stat.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right image area */}
-          <div className="relative min-h-[300px] lg:min-h-full overflow-hidden">
-            {/* Glow effects */}
-            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-white/[0.03] to-white/[0.06] pointer-events-none" />
-            <div className="absolute top-[15%] end-[10%] w-56 h-56 bg-accent/10 rounded-full blur-[80px] pointer-events-none animate-[pulse_7s_ease-in-out_infinite]" />
-            <div className="absolute bottom-[20%] start-[5%] w-40 h-40 bg-white/5 rounded-full blur-[60px] pointer-events-none" />
-
-            {/* Spinning rings */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[320px] h-[320px] lg:w-[380px] lg:h-[380px] rounded-full border border-dashed border-white/[0.06] animate-[spin_30s_linear_infinite]" />
-              <div className="absolute w-[260px] h-[260px] lg:w-[310px] lg:h-[310px] rounded-full border border-dashed border-accent/[0.08] animate-[spin_22s_linear_infinite_reverse]" />
-              <div className="absolute w-[200px] h-[200px] lg:w-[240px] lg:h-[240px] rounded-full border border-white/[0.04] animate-[spin_15s_linear_infinite]" />
-            </div>
-
-            {/* Book image */}
-            <div className="absolute inset-0 flex items-center justify-center p-8 lg:p-12">
-              <div className="relative w-full h-full max-w-[340px]">
-                <Image
-                  src="/bbook.webp"
-                  alt={`بوابة ${academyName} التعليمية للكتب والمذكرات`}
-                  className="absolute inset-0"
-                  imgClassName="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
-                  withSkeleton
-                />
-              </div>
-            </div>
-
-            {/* Floating premium cards */}
-            <div className="absolute top-[10%] start-[5%] bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] animate-[float_6s_ease-in-out_infinite] pointer-events-none">
-              <div className="flex items-center gap-2.5">
-                <span className="w-8 h-8 rounded-xl bg-success/20 flex items-center justify-center">
-                  <CheckCircle size={14} className="text-success" />
-                </span>
-                <div>
-                  <span className="block text-[11px] font-extrabold text-white">حلول معتمدة</span>
-                  <span className="block text-[9px] text-white/40">١٠٠+ كتاب</span>
-                </div>
-              </div>
-            </div>
-            <div className="absolute bottom-[15%] end-[3%] bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] animate-[float_7s_ease-in-out_infinite_1s] pointer-events-none">
-              <div className="flex items-center gap-2.5">
-                <span className="w-8 h-8 rounded-xl bg-info/20 flex items-center justify-center">
-                  <Download size={14} className="text-info" />
-                </span>
-                <div>
-                  <span className="block text-[11px] font-extrabold text-white">تحميل مجاني</span>
-                  <span className="block text-[9px] text-white/40">بدون اشتراك</span>
-                </div>
-              </div>
-            </div>
-            <div className="absolute top-[45%] end-[8%] bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] animate-[float_5s_ease-in-out_infinite_0.5s] pointer-events-none">
-              <div className="flex items-center gap-2.5">
-                <span className="w-8 h-8 rounded-xl bg-warning/20 flex items-center justify-center">
-                  <GraduationCap size={14} className="text-warning" />
-                </span>
-                <div>
-                  <span className="block text-[11px] font-extrabold text-white">٤ دول خليجية</span>
-                  <span className="block text-[9px] text-white/40">كويت · قطر · إمارات · سعودي</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== CATEGORIES ===== */}
-      <section id="library-categories" className="mt-14">
-        <div className="flex items-end justify-between gap-4 mb-8">
+      {/* ===== MOST READ FILES ===== */}
+      <section className="mb-14">
+        <div className="flex items-end justify-between gap-4 mb-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-soft border border-primary/10 rounded-full mb-3">
-              <span className="text-[10px] font-extrabold text-primary">تصفح حسب القسم</span>
+              <span className="text-[10px] font-extrabold text-primary">الأكثر قراءة</span>
             </div>
-            <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">الفئات الأكثر قراءة</h2>
+            <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">الملفات الأكثر قراءة</h2>
             <p className="text-sm text-muted font-medium mt-1.5">اختر القسم الذي يناسب احتياجك التعليمي</p>
           </div>
         </div>
 
+        {/* Category cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
           {types.map(t => {
             const s = TYPE_STYLES[t.id as TypeId];
@@ -398,8 +261,8 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
         </div>
       </section>
 
-      {/* ===== SIDEBAR + ARTICLES ===== */}
-      <section className="mt-14 grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 items-start">
+      {/* ===== SEARCH + NEWSLETTER + ARTICLES ===== */}
+      <section className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 items-start">
         <aside className="lg:sticky lg:top-24 space-y-5">
           {/* Search */}
           <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
@@ -455,9 +318,8 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
             </ul>
           </div>
 
-          {/* Newsletter — Premium dark card */}
+          {/* Newsletter */}
           <div className="rounded-2xl overflow-hidden relative">
-            {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep pointer-events-none" />
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
               style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
@@ -521,7 +383,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
                     disabled={submitting}
                     className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-extrabold text-primary-deep transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary-deep"
                   >
-                    {submitting ? 'جارٍ الإرسال...' : 'اشترك الآن'}
+                    {submitting ? 'جارٍ الإرسال...' : 'انضم مجاناً'}
                     {!submitting && <Send size={13} />}
                   </button>
                 </form>
@@ -614,6 +476,112 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
               })}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ===== LANGUAGE SECTIONS ===== */}
+      <section className="mt-14">
+        <div className="flex items-end justify-between gap-4 mb-8">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-warning-soft border border-warning/10 rounded-full mb-3">
+              <Languages size={12} className="text-warning" />
+              <span className="text-[10px] font-extrabold text-warning">تعلم بمفردك</span>
+            </div>
+            <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">أقسام تعلم اللغة</h2>
+            <p className="text-sm text-muted font-medium mt-1.5">اختر اللغة التي تريد تعلمها</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          {languages.map(lang => (
+            <button
+              key={lang.id}
+              type="button"
+              onClick={() => {
+                setSearchParams(prev => {
+                  const next = new URLSearchParams(prev);
+                  next.set('type', 'foundation');
+                  next.set('language', lang.id);
+                  next.set('view', 'language-sections');
+                  ['curriculum', 'level', 'grade', 'term', 'subject'].forEach(k => next.delete(k));
+                  return next;
+                });
+              }}
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 hover:border-warning/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+            >
+              <div className="absolute top-0 bottom-0 end-0 w-1 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-warning" />
+              <div className="absolute inset-0 bg-gradient-to-br from-warning/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center bg-warning-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
+                    <Globe size={22} className="text-warning" />
+                  </span>
+                </div>
+                <h3 className="text-base font-extrabold text-main group-hover:text-warning transition-colors duration-300 mb-1">{lang.name}</h3>
+                <p className="text-[11px] text-muted font-medium leading-relaxed mb-3">{lang.sub}</p>
+                <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-warning transition-all duration-300 group-hover:gap-2.5">
+                  تصفح المحتوى
+                  <ArrowLeft size={12} className="transition-transform duration-300 group-hover:-translate-x-1" />
+                </span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== BOOK SOLUTIONS & NOTES BY CURRICULUM ===== */}
+      <section className="mt-14">
+        <div className="flex items-end justify-between gap-4 mb-8">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-success-soft border border-success/10 rounded-full mb-3">
+              <CheckCircle size={12} className="text-success" />
+              <span className="text-[10px] font-extrabold text-success">حلول الكتب والمذكرات</span>
+            </div>
+            <h2 className="text-2xl lg:text-3xl font-heading font-black text-main">حسب المنهج الدراسي</h2>
+            <p className="text-sm text-muted font-medium mt-1.5">اختر المنهج الخاص بك للوصول للمحتوى</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {curriculums.map(curr => (
+            <button
+              key={curr.id}
+              type="button"
+              onClick={() => {
+                setSearchParams(prev => {
+                  const next = new URLSearchParams(prev);
+                  next.set('curriculum', curr.id);
+                  next.set('view', 'grades');
+                  ['grade', 'term', 'subject'].forEach(k => next.delete(k));
+                  return next;
+                });
+              }}
+              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2"
+            >
+              <div className="absolute top-0 bottom-0 end-0 w-1 rounded-l-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-primary" />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center bg-primary-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
+                    <curr.icon size={22} className="text-primary" />
+                  </span>
+                </div>
+                <h3 className="text-base font-extrabold text-main group-hover:text-primary transition-colors duration-300 mb-1">{curr.name}</h3>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-success-soft text-success text-[10px] font-extrabold">
+                    حلول الكتب
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-info-soft text-info text-[10px] font-extrabold">
+                    المذكرات
+                  </span>
+                </div>
+                <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-primary mt-3 transition-all duration-300 group-hover:gap-2.5">
+                  تصفح المحتوى
+                  <ArrowLeft size={12} className="transition-transform duration-300 group-hover:-translate-x-1" />
+                </span>
+              </div>
+            </button>
+          ))}
         </div>
       </section>
     </div>

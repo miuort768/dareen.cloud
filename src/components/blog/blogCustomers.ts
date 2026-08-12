@@ -1,4 +1,4 @@
-export const BLOG_COUNTRIES = ['الكويت', 'السعودية', 'قطر', 'الإمارات', 'عمان'] as const;
+export const BLOG_COUNTRIES = ['الكويت', 'السعودية', 'قطر', 'الإمارات', 'عمان', 'الأردن'] as const;
 
 export const COUNTRY_CURRICULUM: Record<string, string> = {
   'الكويت': 'منهج كويتي',
@@ -6,6 +6,7 @@ export const COUNTRY_CURRICULUM: Record<string, string> = {
   'قطر': 'منهج قطري',
   'الإمارات': 'منهج إماراتي',
   'عمان': 'منهج عماني',
+  'الأردن': 'منهج أردني',
 };
 
 export interface BlogCustomer {

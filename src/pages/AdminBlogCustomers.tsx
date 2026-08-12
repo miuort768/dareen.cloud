@@ -22,6 +22,7 @@ const COUNTRY_STYLES: Record<string, CountryStyle> = {
     'قطر': { badge: 'bg-warning-soft text-warning', iconBg: 'bg-warning-soft', iconColor: 'text-warning', dot: 'bg-warning' },
     'الإمارات': { badge: 'bg-error-soft text-error', iconBg: 'bg-error-soft', iconColor: 'text-error', dot: 'bg-error' },
     'عمان': { badge: 'bg-primary-soft text-primary', iconBg: 'bg-primary-soft', iconColor: 'text-primary', dot: 'bg-primary' },
+    'الأردن': { badge: 'bg-info-soft text-info-dark', iconBg: 'bg-info-soft', iconColor: 'text-info-dark', dot: 'bg-info' },
 };
 
 const FALLBACK_STYLE: CountryStyle = { badge: 'bg-primary-soft text-primary', iconBg: 'bg-primary-soft', iconColor: 'text-primary', dot: 'bg-primary' };
