@@ -98,21 +98,21 @@ export const Login = () => {
             <div className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-60px)] lg:min-h-screen px-4 py-8 lg:pt-24">
                 <div className="w-full max-w-sm lg:max-w-md xl:max-w-lg mt-32 lg:mt-0 dark:bg-white dark:rounded-2xl dark:shadow-2xl dark:p-8">
                     <div className="mb-8 lg:mb-10 text-center">
-                        <h1 className="hidden lg:block text-2xl lg:text-3xl font-black text-main mb-2 font-heading dark:text-gray-900">تسجيل الدخول</h1>
-                        <p className="text-white/80 lg:text-main text-sm lg:text-base font-medium dark:text-gray-500">أدخل بياناتك للوصول إلى حسابك</p>
+                        <h1 className="hidden lg:block text-2xl lg:text-3xl font-black text-main mb-2 font-heading dark:text-main">تسجيل الدخول</h1>
+                        <p className="text-white/80 lg:text-main text-sm lg:text-base font-medium dark:text-muted">أدخل بياناتك للوصول إلى حسابك</p>
                     </div>
 
                     {error && (
-                        <div className="mb-4 p-4 bg-error-soft border border-error/20 rounded-xl dark:bg-red-50 dark:border-red-200">
-                            <p className="text-sm font-bold text-error dark:text-red-600">{error}</p>
+                        <div className="mb-4 p-4 bg-error-soft border border-error/20 rounded-xl dark:bg-error/10 dark:border-error/20">
+                            <p className="text-sm font-bold text-error dark:text-error">{error}</p>
                         </div>
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-5">
                         <div>
-                            <label htmlFor="login-username" className="text-xs lg:text-sm font-bold text-white/80 lg:text-main mb-1.5 block dark:text-gray-700">اسم المستخدم</label>
+                            <label htmlFor="login-username" className="text-xs lg:text-sm font-bold text-white/80 lg:text-main mb-1.5 block dark:text-main">اسم المستخدم</label>
                             <div className="relative">
-                                    <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none dark:text-gray-400" />
+                                    <User size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none dark:text-muted" />
                                 <input
                                     id="login-username"
                                     type="text"
@@ -120,15 +120,15 @@ export const Login = () => {
                                     onChange={(e) => setUsername(e.target.value)}
                                     placeholder="أدخل اسم المستخدم"
                                     required
-                                    className="w-full h-12 lg:h-14 bg-white border border-gray-200 rounded-xl ps-12 pe-4 text-sm lg:text-base text-gray-900 placeholder:text-gray-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus dark:bg-gray-50 dark:border-gray-200 dark:text-gray-900 dark:placeholder:text-gray-400"
+                                    className="w-full h-12 lg:h-14 bg-card border border-border rounded-xl ps-12 pe-4 text-sm lg:text-base text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus dark:bg-card dark:border-border dark:text-main dark:placeholder:text-muted"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label htmlFor="login-password" className="text-xs lg:text-sm font-bold text-white/80 lg:text-main mb-1.5 block dark:text-gray-700">كلمة المرور</label>
+                            <label htmlFor="login-password" className="text-xs lg:text-sm font-bold text-white/80 lg:text-main mb-1.5 block dark:text-main">كلمة المرور</label>
                             <div className="relative">
-                                    <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none dark:text-gray-400" />
+                                    <Lock size={18} className="absolute start-4 top-1/2 -translate-y-1/2 text-muted pointer-events-none dark:text-muted" />
                                 <input
                                     id="login-password"
                                     type={showPassword ? 'text' : 'password'}
@@ -136,13 +136,13 @@ export const Login = () => {
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="أدخل كلمة المرور"
                                     required
-                                    className="w-full h-12 lg:h-14 bg-white border border-gray-200 rounded-xl ps-12 pe-12 text-sm lg:text-base text-gray-900 placeholder:text-gray-400 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus dark:bg-gray-50 dark:border-gray-200 dark:text-gray-900 dark:placeholder:text-gray-400"
+                                    className="w-full h-12 lg:h-14 bg-card border border-border rounded-xl ps-12 pe-12 text-sm lg:text-base text-main placeholder:text-muted outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus dark:bg-card dark:border-border dark:text-main dark:placeholder:text-muted"
                                     style={{ fontVariantNumeric: showPassword ? 'normal' : 'tabular-nums' }}
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute end-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                        className="absolute end-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-muted hover:text-main transition-colors rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                                     aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
                                 >
                                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -180,7 +180,7 @@ export const Login = () => {
                             <span>العودة للرئيسية</span>
                         </Link>
 
-                        <div className="pt-4 border-t border-gray-200 dark:border-gray-200 w-full">
+                        <div className="pt-4 border-t border-border dark:border-border w-full">
                             <a
                                 href={`https://wa.me/${adminPhone.replace(/\D/g, '')}?text=أحتاج مساعدة في تسجيل الدخول`}
                                 target="_blank"
@@ -190,7 +190,7 @@ export const Login = () => {
                                 <Headphones size={18} />
                                 <span>الدعم الفني</span>
                             </a>
-                            <p className="text-white/70 lg:text-main text-xs lg:text-sm font-medium text-center mt-3 dark:text-gray-500">لديك مشكلة؟ تواصل مع الدعم</p>
+                            <p className="text-white/70 lg:text-main text-xs lg:text-sm font-medium text-center mt-3 dark:text-muted">لديك مشكلة؟ تواصل مع الدعم</p>
                         </div>
                     </div>
                 </div>

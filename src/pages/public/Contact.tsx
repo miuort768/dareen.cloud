@@ -118,7 +118,7 @@ export const Contact = () => {
                         <div className="h-1.5 bg-gradient-to-r from-primary via-primary to-warning" />
 
                         {formState === 'success' ? (
-                            <div className="py-20 text-center px-6">
+                            <div className="py-20 text-center px-6" role="status" aria-live="polite">
                                 <div className="w-20 h-20 bg-success-light rounded-none flex items-center justify-center mx-auto mb-5 text-success">
                                     <CheckCircle2 size={44} />
                                 </div>
@@ -140,7 +140,7 @@ export const Contact = () => {
 
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     {formState === 'error' && (
-                                        <div className="bg-error-light dark:bg-error/10 border border-error dark:border-error/20 p-4 text-center">
+                                        <div className="bg-error-light dark:bg-error/10 border border-error dark:border-error/20 p-4 text-center" role="alert" aria-live="assertive">
                                             <p className="text-micro font-black text-error">عذراً، حدث خطأ في الإرسال. الرجاء المحاولة مرة أخرى أو التواصل عبر واتساب.</p>
                                             {errorDetail && (
                                                 <p className="text-micro text-error mt-2 opacity-70">{errorDetail}</p>
