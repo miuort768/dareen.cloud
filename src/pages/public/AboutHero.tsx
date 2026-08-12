@@ -3,7 +3,7 @@ import { Sparkles, Award, Users, Heart } from 'lucide-react';
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
 
 export const AboutHero = () => (
-    <section className="relative pb-8 md:pt-32 md:pb-12 overflow-hidden bg-white dark:bg-background">
+    <section className="relative pb-8 md:pt-32 md:pb-12 overflow-hidden bg-background dark:bg-background">
         <div className="absolute top-0 start-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none hidden md:block"></div>
         <div className="absolute bottom-0 end-0 w-80 h-80 bg-primary/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none hidden md:block"></div>
         <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/simple-dashed.png')]"></div>

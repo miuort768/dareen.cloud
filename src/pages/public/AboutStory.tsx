@@ -10,7 +10,7 @@ export const AboutStory = () => (
             <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20 max-w-6xl mx-auto">
                 <div className="w-full lg:w-1/2 order-2 lg:order-1">
                     <div className="relative">
-                        <div className="absolute top-0 start-0 w-full h-full bg-gradient-to-br from-[var(--bg-primary)]/10 to-[var(--bg-warning)]/10 rounded-[3rem] -rotate-3 scale-105 blur-xl"></div>
+                        <div className="absolute top-0 start-0 w-full h-full bg-gradient-to-br from-primary/5 to-warning/5 rounded-[3rem] -rotate-3 scale-105 blur-xl"></div>
                         <div className="relative grid grid-cols-2 gap-4">
                             <div className="pt-8 space-y-4">
                                 <div className="h-64 rounded-[2rem] overflow-hidden shadow-2xl">

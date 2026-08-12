@@ -95,9 +95,9 @@ export const Courses = () => {
 
       <main className="flex-grow md:pt-32 pb-6 md:pb-10 relative overflow-x-clip">
         <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[var(--bg-primary)]/8 to-[var(--bg-primary)]/8 dark:from-primary/[0.05] dark:to-primary/[0.05] rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-[var(--bg-info)]/5 to-[var(--bg-primary)]/5 dark:from-primary/[0.03] dark:to-primary/[0.03] rounded-full blur-[120px]" />
-          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[var(--bg-primary)]/20 dark:via-primary/20 to-transparent" />
+          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-primary/5 to-primary/5 dark:from-primary/[0.05] dark:to-primary/[0.05] rounded-full blur-[140px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-info/3 to-primary/3 dark:from-primary/[0.03] dark:to-primary/[0.03] rounded-full blur-[120px]" />
+          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-primary/10 dark:via-primary/20 to-transparent" />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
@@ -115,7 +115,7 @@ export const Courses = () => {
                                 {academyName}
                             </h1>
 
-                            <p className="text-sm sm:text-base text-muted dark:text-muted max-w-2xl mx-auto leading-relaxed font-medium md:whitespace-nowrap">
+                            <p className="text-sm sm:text-base text-muted dark:text-muted max-w-2xl mx-auto leading-relaxed font-medium">
                                 برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
                             </p>
                         </div>

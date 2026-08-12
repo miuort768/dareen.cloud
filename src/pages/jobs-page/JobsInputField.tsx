@@ -24,7 +24,7 @@ export const JobsInputField = forwardRef<HTMLInputElement, InputFieldProps>(({ i
         <input ref={ref} type={type} name={name} value={value} onChange={onChange}
             placeholder={placeholder} required={required} inputMode={inputMode}
             autoComplete={autoComplete}
-            className="w-full bg-card border border-border/60 rounded-xl py-3 px-4 text-sm text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted touch-manipulation" />
+            className="w-full bg-card border border-border/60 rounded-xl py-3 px-4 text-sm text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-focus transition-all placeholder:text-muted touch-manipulation" />
     </div>
 ));
 JobsInputField.displayName = 'JobsInputField';

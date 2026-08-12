@@ -6,10 +6,11 @@ interface HeroSectionProps {
     typewriterText: string;
     signupNowNumber: string;
     requestFreeNumber: string;
+    academyName: string;
     bannersArray: string[];
 }
 
-export const HeroSection = ({ typewriterText, signupNowNumber, requestFreeNumber, bannersArray }: HeroSectionProps) => {
+export const HeroSection = ({ typewriterText, signupNowNumber, requestFreeNumber, academyName, bannersArray }: HeroSectionProps) => {
     return (
         <section className="relative pt-20 md:pt-28 pb-4 md:pb-4 overflow-hidden bg-surface dark:bg-background transition-colors duration-500">
             <div className="absolute top-0 end-0 w-64 h-64 bg-accent/5 dark:bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
@@ -43,7 +44,7 @@ export const HeroSection = ({ typewriterText, signupNowNumber, requestFreeNumber
                                     <ArrowLeft className="w-5 h-5 group-hover:translate-x-[-4px] transition-transform" />
                                 </Link>
                                 <a
-                                    href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في ' + 'دارين السابعة')}`}
+                                    href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في ' + academyName)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="px-6 py-3 sm:px-10 sm:py-4 bg-success hover:bg-success-dark dark:bg-gradient-to-r dark:from-primary dark:to-warning text-on-success dark:text-on-primary font-extrabold text-base sm:text-lg shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3 group rounded-xl active:scale-[0.97]"

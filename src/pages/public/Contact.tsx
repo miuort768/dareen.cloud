@@ -154,6 +154,7 @@ export const Contact = () => {
                                             <input
                                                 id="contact-name"
                                                 type="text"
+                                                required
                                                 value={formData.name}
                                                 onChange={e => setFormData(p => ({ ...p, name: e.target.value }))}
                                                 className="w-full bg-background dark:bg-card border border-border rounded-none px-4 py-3 text-sm font-bold text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-dim dark:placeholder:text-muted"
@@ -220,6 +221,7 @@ export const Contact = () => {
                                         <textarea
                                             id="contact-message"
                                             rows={4}
+                                            required
                                             value={formData.message}
                                             onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
                                             className="w-full bg-background dark:bg-card border border-border rounded-none px-4 py-3 text-sm font-bold text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all resize-none placeholder:text-dim"

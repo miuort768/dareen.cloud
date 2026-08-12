@@ -35,13 +35,6 @@ export const Jobs = () => {
     const inputRefs = useRef<Record<string, HTMLInputElement | HTMLTextAreaElement | null>>({});
     const totalSteps = steps.length;
 
-    useEffect(() => {
-        const html = document.documentElement;
-        const wasDark = html.classList.contains('dark');
-        if (wasDark) html.classList.remove('dark');
-        return () => { if (wasDark) html.classList.add('dark'); };
-    }, []);
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         if ((name === 'phone' || name === 'whatsapp' || name === 'graduationYear' || name === 'onlineYears') && value !== '' && !/^[\d+]+$/.test(value)) return;
@@ -70,7 +63,7 @@ export const Jobs = () => {
     }, [step]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (step < totalSteps) nextStep(); }
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (step < totalSteps) nextStep(); else handleSubmit(e); }
     };
 
     const handleSubmit = async (e: React.FormEvent | React.MouseEvent) => {
