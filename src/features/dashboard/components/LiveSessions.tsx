@@ -9,7 +9,7 @@ import { startLiveSession, updateLiveSession } from '../../../services/liveSessi
 import { cn } from '@/lib/utils';
 import { confirm } from '../../../lib/confirmDialog';
 import { Button } from '@/components/ui/button';
-import type { LiveSession } from '../../../types';
+import type { LiveSession, Student } from '../../../types';
 
 const PROVIDERS = [
     { value: 'google_meet', label: 'Google Meet' },
@@ -34,6 +34,7 @@ export const LiveSessions = () => {
     const [meetingProvider, setMeetingProvider] = useState('google_meet');
     const [meetingUrl, setMeetingUrl] = useState('');
     const [subject, setSubject] = useState('');
+    const [targetStudentId, setTargetStudentId] = useState('');
 
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [editingSession, setEditingSession] = useState<LiveSession | null>(null);
@@ -45,6 +46,14 @@ export const LiveSessions = () => {
         queryKey: ['live-sessions'],
         queryFn: () => api.get<LiveSession[]>('/live/active'),
         select: (data) => Array.isArray(data) ? data : [],
+    });
+
+    const { data: students = [], isLoading: loadingStudents } = useQuery<Student[]>({
+        queryKey: ['students'],
+        queryFn: async () => {
+            const data = await api.get<{ data: Student[] } | Student[]>('/students');
+            return Array.isArray(data) ? data : (data.data || []);
+        },
     });
 
     useEffect(() => {
@@ -69,6 +78,7 @@ export const LiveSessions = () => {
             setMeetingUrl('');
             setSubject('');
             setMeetingProvider('google_meet');
+            setTargetStudentId('');
         },
         onError: (err: unknown) => {
             setDialogError(err instanceof Error ? err.message : 'فشل بدء الحصة');
@@ -95,6 +105,10 @@ export const LiveSessions = () => {
     });
 
     const startNewSession = () => {
+        if (!targetStudentId) {
+            setDialogError('يرجى اختيار الطالب قبل بدء الحصة');
+            return;
+        }
         if (!meetingUrl.trim()) {
             setDialogError('يرجى إدخال رابط الاجتماع');
             return;
@@ -105,6 +119,7 @@ export const LiveSessions = () => {
             subject,
             meetingProvider: meetingProvider as 'google_meet' | 'zoom' | 'custom',
             meetingUrl: meetingUrl.trim(),
+            targetStudentId,
         });
     };
 
@@ -296,6 +311,25 @@ export const LiveSessions = () => {
                         <h3 className="font-bold text-lg text-main dark:text-main text-center">بدء حصة مباشرة</h3>
 
                         <div>
+                            <label htmlFor="live-student" className="block text-xs font-bold text-muted dark:text-muted mb-2">الطالب <span className="text-error">*</span></label>
+                            <select
+                                id="live-student"
+                                value={targetStudentId}
+                                onChange={(e) => setTargetStudentId(e.target.value)}
+                                className="w-full px-4 py-3 text-sm font-medium bg-background dark:bg-surface border border-border dark:border-primary/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus appearance-none"
+                            >
+                                <option value="">— اختر الطالب —</option>
+                                {loadingStudents && <option value="" disabled>جاري تحميل الطلاب...</option>}
+                                {students.map((s) => (
+                                    <option key={s.id} value={s.id}>{s.name}</option>
+                                ))}
+                            </select>
+                            {!loadingStudents && students.length === 0 && (
+                                <p className="text-[11px] font-bold text-muted dark:text-dim mt-1">لا يوجد طلاب مضافون لك حالياً.</p>
+                            )}
+                        </div>
+
+                        <div>
                             <label htmlFor="live-subject" className="block text-xs font-bold text-muted dark:text-muted mb-2">المادة</label>
                             <input
                                 id="live-subject"
@@ -363,14 +397,14 @@ export const LiveSessions = () => {
                         <div className="flex gap-3 pt-2">
                             <Button
                                 variant="outline"
-                                onClick={() => { setShowDialog(false); setDialogError(null); }}
+                                onClick={() => { setShowDialog(false); setDialogError(null); setTargetStudentId(''); }}
                                 className="flex-1 h-11 rounded-xl text-xs font-bold"
                             >
                                 إلغاء
                             </Button>
                             <Button
                                 onClick={startNewSession}
-                                disabled={startMutation.isPending}
+                                disabled={startMutation.isPending || !targetStudentId}
                                 className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary dark:bg-primary text-on-primary dark:text-on-primary gap-2"
                             >
                                 {startMutation.isPending ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'بدء الحصة'}
