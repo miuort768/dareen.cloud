@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays, Eye, EyeOff, Download, ChevronLeft, ChevronRight, FileText } from 'lucide-react';
+import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays, Eye, EyeOff, Download, ChevronLeft, ChevronRight, FileText, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -160,6 +160,8 @@ export const TrialSessions = () => {
   const [filterSubject, setFilterSubject] = useState<string>('');
   const [showModal, setShowModal] = useState(false);
   const [confirmId, setConfirmId] = useState<string | null>(null);
+  const [confirmDeleteAll, setConfirmDeleteAll] = useState(false);
+  const [deleteAllTyped, setDeleteAllTyped] = useState('');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [drawerSession, setDrawerSession] = useState<TrialSession | null>(null);
   const [showPaid, setShowPaid] = useState(false);
@@ -194,6 +196,12 @@ export const TrialSessions = () => {
   const deleteMutation = useMutation({
     mutationFn: (id: string) => api.delete(`/trial-sessions/${id}`),
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setConfirmId(null); showNotification('تم حذف الحصة', 'success'); },
+    onError: (err: Error) => showNotification('حدث خطأ: ' + err.message, 'error')
+  });
+
+  const deleteAllMutation = useMutation({
+    mutationFn: () => api.delete('/trial-sessions/all'),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['trial-sessions'] }); queryClient.invalidateQueries({ queryKey: ['trial-sessions-stats'] }); setConfirmDeleteAll(false); showNotification('تم حذف جميع الحصص', 'success'); },
     onError: (err: Error) => showNotification('حدث خطأ: ' + err.message, 'error')
   });
 
@@ -314,6 +322,13 @@ export const TrialSessions = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              <button
+                onClick={() => { setConfirmDeleteAll(true); setDeleteAllTyped(''); }}
+                className="inline-flex items-center gap-1.5 h-9 px-3.5 bg-error-soft text-error text-[11px] font-bold rounded-xl border border-error/20 transition-all duration-200 hover:bg-error/20 active:scale-95"
+                title="حذف جميع الحصص"
+              >
+                <Trash2 size={13} /> حذف الكل
+              </button>
               <button
                 onClick={() => { setEditingId(null); resetForm(); setShowModal(true); }}
                 className="inline-flex items-center gap-1.5 h-9 px-4 bg-primary text-on-primary text-[11px] font-bold rounded-xl transition-all duration-200 hover:bg-primary-hover active:scale-95 shadow-sm shadow-primary/10"
@@ -623,6 +638,46 @@ export const TrialSessions = () => {
                 <div className="flex gap-2 px-5 pb-5">
                   <button type="button" onClick={() => setConfirmId(null)} className="flex-1 py-3 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
                   <button type="button" onClick={() => { if (confirmId) deleteMutation.mutate(confirmId); }} disabled={deleteMutation.isPending} className="flex-1 py-3 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] disabled:opacity-50">{deleteMutation.isPending ? 'جاري الحذف...' : 'حذف'}</button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+          {confirmDeleteAll && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end md:items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-0 md:p-4" dir="rtl">
+              <motion.div initial={{ y: '100%', opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: '100%', opacity: 0 }} transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                className="bg-card w-full md:max-w-sm shadow-2xl rounded-t-3xl md:rounded-2xl overflow-hidden border border-border">
+                <div className="w-10 h-1 bg-border rounded-full mx-auto mt-3 md:hidden" />
+                <div className="bg-error px-5 py-5 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 flex items-center justify-center rounded-2xl bg-white/15">
+                      <Trash2 size={18} className="text-on-error" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-on-error">حذف جميع الحصص</h3>
+                      <p className="text-[10px] text-on-error/70 mt-0.5">لا يمكن التراجع عن هذا الإجراء</p>
+                    </div>
+                  </div>
+                  <button onClick={() => setConfirmDeleteAll(false)} className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-error rounded-xl transition-all" aria-label="إغلاق"><X size={14} /></button>
+                </div>
+                <div className="p-5">
+                  <p className="text-sm font-bold text-main mb-1">هل أنت متأكد من حذف جميع الحصص؟</p>
+                  <p className="text-xs text-muted leading-relaxed">سيتم <span className="text-error font-bold">حذف جميع جلسات المراجعة نهائيًا</span> ولن يمكن استعادتها.</p>
+                  <div className="mt-4">
+                    <label className="text-[11px] font-bold text-muted mb-1.5 block">اكتب <span dir="ltr" className="text-error font-black">dareen</span> للتأكيد</label>
+                    <input
+                      dir="ltr"
+                      value={deleteAllTyped}
+                      onChange={(e) => setDeleteAllTyped(e.target.value)}
+                      placeholder="dareen"
+                      className="w-full text-center bg-surface border border-border px-3.5 py-3 text-[13px] font-black tracking-widest outline-none focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted/40"
+                      onKeyDown={(e) => { if (e.key === 'Enter' && deleteAllTyped.trim().toLowerCase() === 'dareen') deleteAllMutation.mutate(); }}
+                      aria-label="اكتب dareen للتأكيد"
+                    />
+                  </div>
+                </div>
+                <div className="flex gap-2 p-5 pt-0">
+                  <button type="button" onClick={() => setConfirmDeleteAll(false)} className="flex-1 py-3.5 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                  <button type="button" onClick={() => deleteAllMutation.mutate()} disabled={deleteAllMutation.isPending || deleteAllTyped.trim().toLowerCase() !== 'dareen'} className="flex-1 py-3.5 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] shadow-sm shadow-error/20 disabled:opacity-50 disabled:cursor-not-allowed">{deleteAllMutation.isPending ? 'جاري الحذف...' : 'حذف الكل'}</button>
                 </div>
               </motion.div>
             </motion.div>

@@ -84,6 +84,16 @@ router.put('/:id', checkRole(['admin']), validate(updateTrialSessionSchema), asy
     }
 });
 
+router.delete('/all', checkRole(['admin']), async (req, res) => {
+    try {
+        const deleted = await prisma.trialSession.deleteMany();
+        emitTrialUpdate(req);
+        res.json({ success: true, deleted: deleted.count });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 router.delete('/:id', checkRole(['admin']), async (req, res) => {
     try {
         await prisma.trialSession.delete({ where: { id: req.params.id } });
