@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { createPortal } from 'react-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 import { triggerHaptic } from '../../../lib/haptics';
 
@@ -19,17 +19,18 @@ interface MobileBottomNavProps {
   layoutId?: string;
 }
 
-export const MobileBottomNav = ({ items, activeTab, onTabChange, layoutId = 'bottom-nav-dot' }: MobileBottomNavProps) => {
+export const MobileBottomNav = ({ items, activeTab, onTabChange, layoutId = 'bottom-nav-active-pill' }: MobileBottomNavProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
   return createPortal(
-    <nav className="fixed bottom-0 end-0 start-0 z-50 md:hidden" aria-label="التنقل الرئيسي">
-      <div className="relative px-3 pb-2 pt-0.5" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
-        <div className="relative rounded-[1.25rem] bg-card/80 dark:bg-[#0e0e12]/80 backdrop-blur-2xl border border-border/40 dark:border-white/[0.06] shadow-[0_-4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.4)]">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent dark:via-white/[0.08] pointer-events-none" />
+    <nav className="fixed bottom-0 end-0 start-0 z-50 md:hidden" aria-label="التنقل الرئيسي للهاتف">
+      <div className="px-4 pt-1" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+        {/* حاوية الشريط الخلفية الزجاجية الفاخرة */}
+        <div className="relative rounded-[24px] bg-card/75 dark:bg-[#0e0e12]/70 backdrop-blur-xl border border-border/30 dark:border-white/[0.04] shadow-elevation-3">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent dark:via-white/[0.05] pointer-events-none" />
 
-          <div className="relative flex items-center justify-around h-[72px] px-2 pt-2 pb-1">
+          <div className="relative flex items-center justify-around h-[68px] px-2">
             {items.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab
@@ -40,7 +41,7 @@ export const MobileBottomNav = ({ items, activeTab, onTabChange, layoutId = 'bot
               return (
                 <motion.button
                   key={item.id}
-                  whileTap={{ scale: 0.88 }}
+                  whileTap={{ scale: 0.92 }}
                   onClick={() => {
                     triggerHaptic('light');
                     if (onTabChange) {
@@ -50,50 +51,53 @@ export const MobileBottomNav = ({ items, activeTab, onTabChange, layoutId = 'bot
                     }
                   }}
                   className={cn(
-                    "flex items-center justify-center relative touch-manipulation outline-none",
-                    isCenter ? "w-[72px] h-[72px] -mt-6" : "flex-1 h-full"
+                    "relative touch-manipulation outline-none flex items-center justify-center transition-all duration-300 focus-visible:ring-2 focus-visible:ring-focus rounded-full",
+                    isCenter ? "w-[62px] h-[62px] -mt-5" : "flex-1 h-full py-1"
                   )}
                 >
                   {isCenter ? (
                     <>
+                      {/* الزر الدائري المركزي الخاص بالبث المباشر الفوري */}
                       <div className="absolute -top-1 inset-x-0 flex justify-center pointer-events-none">
-                        <div className="w-[64px] h-[64px] rounded-[22px] bg-primary/20 dark:bg-primary/25 blur-xl scale-110" />
+                        <div className="w-[56px] h-[56px] rounded-full bg-primary/25 blur-lg scale-110" />
                       </div>
-                      <div className="relative w-[56px] h-[56px] rounded-[18px] bg-gradient-to-b from-primary via-primary to-primary-deep dark:from-primary dark:via-[#b8962e] dark:to-[#8a6d1a] flex items-center justify-center shadow-[0_6px_24px_rgba(var(--primary-rgb,212,175,55),0.3)] dark:shadow-[0_6px_24px_rgba(212,175,55,0.25)] transition-transform duration-300 active:scale-95">
-                        <div className="absolute inset-0 rounded-[18px] bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
-                        <Icon size={24} className="text-on-primary dark:text-on-primary relative z-10" strokeWidth={2.2} />
+                      <div className="relative w-[50px] h-[50px] rounded-full bg-gradient-to-b from-primary to-primary-hover flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+                        <Icon size={22} className="text-on-primary" strokeWidth={2.5} />
                       </div>
                     </>
                   ) : (
-                    <motion.div
-                      layoutId={layoutId}
-                      className={cn(
-                        "flex items-center gap-2 px-3.5 py-2 rounded-2xl transition-all duration-300",
-                        isActive
-                          ? "bg-primary/10 dark:bg-primary/15"
-                          : "bg-transparent"
-                      )}
-                      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                    >
-                      <Icon
-                        size={21}
-                        className={cn(
-                          "transition-all duration-300 shrink-0",
-                          isActive
-                            ? "text-primary dark:text-primary"
-                            : "text-muted dark:text-white/40"
+                    <div className="relative flex items-center justify-center h-full w-full">
+                      <AnimatePresence initial={false}>
+                        {isActive ? (
+                          /* التبويب النشط: مستطيل دائري خفيف يحتوي الأيقونة والاسم */
+                          <motion.div
+                            layoutId={layoutId}
+                            className="flex items-center gap-2 px-3.5 py-2 bg-primary/10 dark:bg-primary/15 text-primary rounded-[14px] border border-primary/10"
+                            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                          >
+                            <Icon size={18} strokeWidth={2.2} className="text-primary shrink-0" />
+                            <motion.span
+                              initial={{ opacity: 0, width: 0 }}
+                              animate={{ opacity: 1, width: 'auto' }}
+                              exit={{ opacity: 0, width: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="text-[10px] font-extrabold leading-none whitespace-nowrap text-primary"
+                            >
+                              {item.label}
+                            </motion.span>
+                          </motion.div>
+                        ) : (
+                          /* التبويب غير النشط: أيقونة فقط شفافة */
+                          <motion.div
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 0.6 }}
+                            className="p-2 text-muted"
+                          >
+                            <Icon size={20} strokeWidth={1.8} className="text-muted" />
+                          </motion.div>
                         )}
-                        strokeWidth={isActive ? 2.2 : 1.5}
-                      />
-                      <span className={cn(
-                        "text-[11px] font-bold transition-all duration-300 leading-none whitespace-nowrap",
-                        isActive
-                          ? "text-primary dark:text-primary"
-                          : "text-muted dark:text-white/40"
-                      )}>
-                        {item.label}
-                      </span>
-                    </motion.div>
+                      </AnimatePresence>
+                    </div>
                   )}
                 </motion.button>
               );
