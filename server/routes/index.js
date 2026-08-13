@@ -58,7 +58,8 @@ router.get('/system/public-settings', async (req, res) => {
             'whatsapp_numbers', 'whatsapp_auto_notify', 'default_session_price', 'default_teacher_price',
             'currency_symbol', 'semester_name', 'semesters', 'whatsapp_template',
             'balance_warning_threshold', 'backdate_lock_enabled', 'teacher_commission_type',
-            'auto_freeze_threshold', 'telegram_handle'];
+            'auto_freeze_threshold', 'telegram_handle', 'academic_year', 'semester_start_date',
+            'semester_end_date', 'footer_description', 'footer_address', 'footer_instagram'];
         const settingsMap = await cache.wrap('system:public-settings', 60000, async () => {
             const settings = await prisma.systemSetting.findMany({
                 where: { key: { in: keys } }

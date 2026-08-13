@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Coins, Plus, Trash2, RefreshCw } from 'lucide-react';
+import { Coins, Plus, Trash2, CheckCircle2 } from 'lucide-react';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
-import { SectionCard, SectionTitle, InputField, PrimaryBtn } from './SettingsUI';
+import { SectionCard, SectionTitle, InputField, PrimaryBtn, ALLOWED_CURRENCIES, ALLOWED_CURRENCY_CODES } from './SettingsUI';
 import { settingsService } from '../services/settingsService';
 import type { Currency, ExchangeRate } from '../services/settingsService';
 import { cn } from '../../../lib/utils';
@@ -15,9 +15,6 @@ export const CurrenciesSection = ({
     const [currencies, setCurrencies] = useState<Currency[]>([]);
     const [rates, setRates] = useState<ExchangeRate[]>([]);
     const [loading, setLoading] = useState(true);
-    const [newCode, setNewCode] = useState('');
-    const [newName, setNewName] = useState('');
-    const [newSymbol, setNewSymbol] = useState('');
     const [newRate, setNewRate] = useState({ fromCurrency: '', toCurrency: '', buyRate: '', sellRate: '', notes: '' });
     const [activeTab, setActiveTab] = useState<'currencies' | 'rates'>('currencies');
 
@@ -37,23 +34,7 @@ export const CurrenciesSection = ({
         fetchData();
     }, []);
 
-    const addCurrency = async () => {
-        if (!newCode || !newName) return;
-        try {
-            await settingsService.createCurrency({ code: newCode.toUpperCase(), name: newName, symbol: newSymbol });
-            setNewCode(''); setNewName(''); setNewSymbol('');
-            showNotify('تم إضافة العملة');
-            fetchData();
-        } catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ'); }
-    };
-
-    const removeCurrency = async (code: string) => {
-        try {
-            await settingsService.deleteCurrency(code);
-            showNotify('تم حذف العملة');
-            fetchData();
-        } catch (e: unknown) { showNotify(e instanceof Error ? e.message : 'خطأ'); }
-    };
+    const visibleCurrencies = currencies.filter(c => ALLOWED_CURRENCY_CODES.includes(c.code));
 
     const addRate = async () => {
         if (!newRate.fromCurrency || !newRate.toCurrency || !newRate.buyRate) return;
@@ -97,11 +78,8 @@ export const CurrenciesSection = ({
 
             {activeTab === 'currencies' && (
                 <>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mb-5 p-4 bg-background border border-border/20 rounded-xl">
-                        <InputField value={newCode} onChange={e => setNewCode(e.target.value)} placeholder="رمز العملة (USD)" />
-                        <InputField value={newName} onChange={e => setNewName(e.target.value)} placeholder="الاسم (دولار)" />
-                        <InputField value={newSymbol} onChange={e => setNewSymbol(e.target.value)} placeholder="الرمز ($)" />
-                        <PrimaryBtn onClick={addCurrency}><Plus size={14} /> إضافة</PrimaryBtn>
+                    <div className="mb-5 p-4 bg-primary-soft border border-primary/20 rounded-xl text-[11px] font-bold text-primary">
+                        العملات المدعومة في المنصة ثابتة (جنيه مصري، دولار، دينار كويتي، بحريني، أردني، ريال سعودي، قطري، عماني، درهم إماراتي).
                     </div>
 
                     <div className="overflow-x-auto rounded-xl border border-border/20">
@@ -112,11 +90,11 @@ export const CurrenciesSection = ({
                                     <th className="text-start py-3 px-4 text-muted font-bold">الاسم</th>
                                     <th className="text-start py-3 px-4 text-muted font-bold">الرمز</th>
                                     <th className="text-start py-3 px-4 text-muted font-bold">الحالة</th>
-                                    <th className="text-end py-3 px-4 text-muted font-bold"></th>
+                                    <th className="text-end py-3 px-4 text-muted font-bold">الافتراضية</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {currencies.map(c => (
+                                {visibleCurrencies.map(c => (
                                     <tr key={c.code} className="border-b border-border/10 hover:bg-background transition-colors">
                                         <td className="py-3 px-4 font-bold text-main">{c.code}</td>
                                         <td className="py-3 px-4 text-muted">{c.name}</td>
@@ -127,28 +105,27 @@ export const CurrenciesSection = ({
                                             </span>
                                         </td>
                                         <td className="py-3 px-4 text-end">
-                                            <div className="flex items-center gap-1 justify-end">
-                                                {localCurrency !== c.code && (
-                                                    <button onClick={() => setAsDefault(c.code)} className="p-2 rounded-lg hover:bg-info-soft text-info transition-all" title="تعيين كافتراضي">
-                                                        <RefreshCw size={13} />
-                                                    </button>
-                                                )}
-                                                <button onClick={() => removeCurrency(c.code)} className="p-2 rounded-lg hover:bg-error-soft text-error transition-all" title="حذف">
-                                                    <Trash2 size={13} />
+                                            {localCurrency === c.code ? (
+                                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-primary-soft text-primary text-[11px] font-bold">
+                                                    <CheckCircle2 size={12} /> الافتراضية
+                                                </span>
+                                            ) : (
+                                                <button onClick={() => setAsDefault(c.code)} className="px-3 py-1.5 rounded-lg bg-info-soft text-info text-[11px] font-bold hover:brightness-95 transition-all" title="تعيين كافتراضي">
+                                                    تعيين افتراضي
                                                 </button>
-                                            </div>
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
-                                {currencies.length === 0 && (
-                                    <tr><td colSpan={5} className="text-center py-10 text-muted">لا توجد عملات مضافة</td></tr>
+                                {visibleCurrencies.length === 0 && (
+                                    <tr><td colSpan={5} className="text-center py-10 text-muted">لا توجد عملات</td></tr>
                                 )}
                             </tbody>
                         </table>
                     </div>
 
-                    <div className="mt-4 p-4 bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/10 rounded-xl">
-                        <p className="text-xs font-bold text-primary">العملة الافتراضية: {localCurrency || CURRENCY_SYMBOL}</p>
+                    <div className="mt-4 p-4 bg-primary-soft border border-primary/10 rounded-xl">
+                        <p className="text-xs font-bold text-primary">العملة الافتراضية: {ALLOWED_CURRENCIES.find(c => c.code === localCurrency)?.name || localCurrency || CURRENCY_SYMBOL}</p>
                     </div>
                 </>
             )}

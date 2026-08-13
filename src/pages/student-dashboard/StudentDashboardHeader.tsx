@@ -1,7 +1,7 @@
-﻿import { LogOut, Sun, Moon, Bell, Home, Calendar, MessageSquare, User, MessageCircle } from 'lucide-react';
+﻿import { LogOut, Sun, Moon, Bell, Home, Calendar, MessageSquare, User, MessageCircle, CalendarDays } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
-import { useCurrentUser } from '../../context/AppContext';
+import { useCurrentUser, useAcademicYear } from '../../context/AppContext';
 import { confirm } from '../../lib/confirmDialog';
 import { cn } from '../../lib/utils';
 import { Image } from '../../shared/components/ui';
@@ -23,6 +23,7 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
     const navigate = useNavigate();
     const location = useLocation();
     const currentUser = useCurrentUser();
+    const academicYear = useAcademicYear();
     const [theme, setTheme] = useDarkMode();
     const firstName = (currentUser?.name || currentUser?.username || 'الطالب').split(' ')[0];
 
@@ -41,11 +42,18 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
                                 <span className="text-sm font-bold text-on-primary dark:text-on-primary">{firstName.charAt(0)}</span>
                             </div>
                             <div className="hidden sm:block">
-                                <h1 className="text-sm font-bold text-main dark:text-main leading-tight">مرحباً {firstName}</h1>
-                                <p className="text-[11px] font-medium text-muted dark:text-muted">لوحة تحكم الطالب</p>
+                                <h1 className="text-sm font-bold text-main dark:text-main leading-tight">ꩥ��� {firstName}</h1>
+                                <p className="text-[11px] font-medium text-muted dark:text-muted">���� ���� ����</p>
                             </div>
                         </button>
                     </div>
+
+                    {academicYear && (
+                        <span className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-primary-soft text-primary text-[11px] font-bold rounded-lg">
+                            <CalendarDays size={13} />
+                            {academicYear}
+                        </span>
+                    )}
 
                     <div className="flex items-center gap-1.5">
                         <IconButton

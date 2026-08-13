@@ -16,8 +16,9 @@ import type { DashboardTask } from '../types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, TrendingUp, RefreshCw, AlertCircle } from 'lucide-react';
+import { LayoutDashboard, TrendingUp, RefreshCw, AlertCircle, CalendarDays } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { useAcademicYear } from '../../../context/useApp';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -49,6 +50,7 @@ const asTimelineSessions = (list: unknown[]) =>
 export const Dashboard = () => {
     useEffect(() => { document.title = 'لوحة التحكم | دارين السابعة للتعليم والتدريب'; }, []);
     const currentUser = useAuthStore(s => s.currentUser);
+    const academicYear = useAcademicYear();
 
     const {
         stats,
@@ -139,6 +141,14 @@ export const Dashboard = () => {
                         {/* ── Hero ── */}
                         <div className="pt-6 pb-4 max-w-5xl mx-auto">
                             <HeroSection currentUser={currentUser} stats={stats} />
+                            {academicYear && (
+                                <div className="flex justify-end mt-3">
+                                    <span className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-soft text-primary text-[11px] font-bold rounded-lg">
+                                        <CalendarDays size={13} />
+                                        السنة الدراسية: {academicYear}
+                                    </span>
+                                </div>
+                            )}
                         </div>
 
                         {/* ── View Toggle ── */}

@@ -2,15 +2,64 @@ import type { LucideIcon } from 'lucide-react';
 import { RefreshCw } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
+export const ALLOWED_CURRENCIES = [
+    { code: 'EGP', name: 'جنيه مصري', symbol: 'ج.م' },
+    { code: 'USD', name: 'دولار أمريكي', symbol: '$' },
+    { code: 'KWD', name: 'دينار كويتي', symbol: 'د.ك' },
+    { code: 'SAR', name: 'ريال سعودي', symbol: 'ر.س' },
+    { code: 'AED', name: 'درهم إماراتي', symbol: 'د.إ' },
+    { code: 'QAR', name: 'ريال قطري', symbol: 'ر.ق' },
+    { code: 'OMR', name: 'ريال عماني', symbol: 'ر.ع' },
+    { code: 'BHD', name: 'دينار بحريني', symbol: 'د.ب' },
+    { code: 'JOD', name: 'دينار أردني', symbol: 'د.أ' },
+];
+
+export const ALLOWED_CURRENCY_CODES = ALLOWED_CURRENCIES.map(c => c.code);
+
 export const AVAILABLE_PERMISSIONS = [
-    { id: '*', label: 'وصول كامل (Admin)' },
-    { id: 'view_students', label: 'عرض الطلاب' },
-    { id: 'manage_students', label: 'إدارة الطلاب' },
-    { id: 'view_teachers', label: 'عرض المعلمين' },
-    { id: 'manage_teachers', label: 'إدارة المعلمين' },
-    { id: 'view_finance', label: 'عرض المالية' },
-    { id: 'manage_finance', label: 'إدارة المالية' },
-    { id: 'manage_system', label: 'إدارة النظام' }
+    { id: '*', label: 'وصول كامل (Admin)', group: 'عام' },
+    { id: 'dashboard', label: 'لوحة التحكم', group: 'الصفحات' },
+    { id: 'students', label: 'إدارة الطلاب', group: 'الصفحات' },
+    { id: 'teachers', label: 'إدارة المعلمين', group: 'الصفحات' },
+    { id: 'evaluations', label: 'التقييمات والنقاط', group: 'الصفحات' },
+    { id: 'parents', label: 'أولياء الأمور', group: 'الصفحات' },
+    { id: 'monthly_closing', label: 'تقفيل الشهر', group: 'الصفحات' },
+    { id: 'attendance', label: 'الحضور والغياب', group: 'الصفحات' },
+    { id: 'schedule', label: 'الجداول الدراسية', group: 'الصفحات' },
+    { id: 'appointments', label: 'المواعيد', group: 'الصفحات' },
+    { id: 'finance', label: 'المالية', group: 'الصفحات' },
+    { id: 'leads', label: 'العملاء والمهتمين', group: 'الصفحات' },
+    { id: 'trial_sessions', label: 'جلسات المراجعة', group: 'الصفحات' },
+    { id: 'student_invoices', label: 'فواتير الطلاب', group: 'الصفحات' },
+    { id: 'teacher_invoices', label: 'فواتير المعلمات', group: 'الصفحات' },
+    { id: 'tasks', label: 'المهام والطلبات', group: 'الصفحات' },
+    { id: 'chat', label: 'الدردشة', group: 'الصفحات' },
+    { id: 'reports', label: 'التقارير', group: 'الصفحات' },
+    { id: 'announcements', label: 'إدارة الإعلانات', group: 'الصفحات' },
+    { id: 'forum', label: 'المنتدى', group: 'الصفحات' },
+    { id: 'settings', label: 'الإعدادات', group: 'الصفحات' },
+    { id: 'admin', label: 'إدارة متقدمة (أدوار/مراقبة)', group: 'الصفحات' },
+    { id: 'admin_contacts', label: 'رسائل الاتصال', group: 'الصفحات' },
+    { id: 'admin_jobs', label: 'طلبات التوظيف', group: 'الصفحات' },
+    { id: 'parent_dashboard', label: 'بوابة المتابعة (ولي أمر)', group: 'لوحات مخصصة' },
+    { id: 'parent_students', label: 'الأبناء', group: 'لوحات مخصصة' },
+    { id: 'parent_announcements', label: 'إعلانات ولي الأمر', group: 'لوحات مخصصة' },
+    { id: 'student_dashboard', label: 'حساب الطالب', group: 'لوحات مخصصة' },
+    { id: 'students.create', label: 'إضافة طالب', group: 'أذونات تفصيلية' },
+    { id: 'students.edit', label: 'تعديل طالب', group: 'أذونات تفصيلية' },
+    { id: 'students.delete', label: 'حذف طالب', group: 'أذونات تفصيلية' },
+    { id: 'teachers.create', label: 'إضافة معلم', group: 'أذونات تفصيلية' },
+    { id: 'teachers.edit', label: 'تعديل معلم', group: 'أذونات تفصيلية' },
+    { id: 'teachers.delete', label: 'حذف معلم', group: 'أذونات تفصيلية' },
+    { id: 'sessions.create', label: 'إضافة جلسة', group: 'أذونات تفصيلية' },
+    { id: 'sessions.edit', label: 'تعديل جلسة', group: 'أذونات تفصيلية' },
+    { id: 'finance.transactions.create', label: 'إضافة معاملة مالية', group: 'أذونات تفصيلية' },
+    { id: 'finance.transactions.delete', label: 'حذف معاملة مالية', group: 'أذونات تفصيلية' },
+    { id: 'finance.invoices.edit', label: 'تعديل الفواتير', group: 'أذونات تفصيلية' },
+    { id: 'finance.reports', label: 'التقارير المالية', group: 'أذونات تفصيلية' },
+    { id: 'system.users', label: 'إدارة المستخدمين', group: 'أذونات تفصيلية' },
+    { id: 'system.backup', label: 'النسخ الاحتياطي', group: 'أذونات تفصيلية' },
+    { id: 'system.audit', label: 'سجل التدقيق', group: 'أذونات تفصيلية' },
 ];
 
 export const SectionCard = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (

@@ -1,33 +1,27 @@
-import { useState, useEffect } from 'react';
-import { Calendar, Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { Calendar, Plus, Trash2, Info } from 'lucide-react';
 import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn, SecondaryBtn, DangerBtn } from './SettingsUI';
-import { settingsService } from '../services/settingsService';
-import { safeGet } from '../../../lib/api';
+import { useSettingsStore } from '../../../store/settingsStore';
 
 export const AcademicYearSection = ({
     localSemesterName, setLocalSemesterName,
     localSemesters, setLocalSemesters,
     setSemesterName, setSemesters,
+    localAcademicYear, setLocalAcademicYear,
+    localSemesterStart, setLocalSemesterStart,
+    localSemesterEnd, setLocalSemesterEnd,
     showNotify,
 }: {
     localSemesterName: string; setLocalSemesterName: (v: string) => void;
     localSemesters: string; setLocalSemesters: (v: string) => void;
     setSemesterName: (v: string) => void; setSemesters: (v: string) => void;
+    localAcademicYear: string; setLocalAcademicYear: (v: string) => void;
+    localSemesterStart: string; setLocalSemesterStart: (v: string) => void;
+    localSemesterEnd: string; setLocalSemesterEnd: (v: string) => void;
     showNotify: (msg: string) => void;
 }) => {
-    const [currentAcademicYear, setCurrentAcademicYear] = useState('');
-    const [semesterStart, setSemesterStart] = useState('');
-    const [semesterEnd, setSemesterEnd] = useState('');
+    const setSetting = useSettingsStore(s => s.setSetting);
     const [isSaving, setIsSaving] = useState(false);
-
-    useEffect(() => {
-        settingsService.getSettingsBatch().then(data => {
-            const sys = safeGet<Record<string, string>>(data, 'system') || {};
-            setCurrentAcademicYear(sys.academic_year || '2024-2025');
-            setSemesterStart(sys.semester_start_date || '');
-            setSemesterEnd(sys.semester_end_date || '');
-        }).catch((e) => console.warn(e));
-    }, []);
 
     const semesterList = localSemesters.split(',').filter(Boolean).map((s, i) => ({ id: i, name: s.trim() }));
 
@@ -53,11 +47,9 @@ export const AcademicYearSection = ({
             await Promise.all([
                 setSemesterName(localSemesterName),
                 setSemesters(localSemesters),
-                settingsService.saveSettingsBatch([
-                    { key: 'academic_year', value: currentAcademicYear },
-                    { key: 'semester_start_date', value: semesterStart },
-                    { key: 'semester_end_date', value: semesterEnd },
-                ]),
+                setSetting('academicYear', localAcademicYear),
+                setSetting('semesterStartDate', localSemesterStart),
+                setSetting('semesterEndDate', localSemesterEnd),
             ]);
             showNotify('تم حفظ السنة الدراسية');
         } catch (e) { console.error(e); showNotify('خطأ في الحفظ'); }
@@ -71,7 +63,7 @@ export const AcademicYearSection = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                     <FieldLabel>السنة الدراسية الحالية</FieldLabel>
-                    <InputField value={currentAcademicYear} onChange={e => setCurrentAcademicYear(e.target.value)} placeholder="مثال: 2024-2025" />
+                    <InputField value={localAcademicYear} onChange={e => setLocalAcademicYear(e.target.value)} placeholder="مثال: 2024-2025" />
                 </div>
                 <div>
                     <FieldLabel>مسمى الفصل</FieldLabel>
@@ -79,12 +71,17 @@ export const AcademicYearSection = ({
                 </div>
                 <div>
                     <FieldLabel>تاريخ بداية الفصل</FieldLabel>
-                    <InputField type="date" value={semesterStart} onChange={e => setSemesterStart(e.target.value)} />
+                    <InputField type="date" value={localSemesterStart} onChange={e => setLocalSemesterStart(e.target.value)} />
                 </div>
                 <div>
                     <FieldLabel>تاريخ نهاية الفصل</FieldLabel>
-                    <InputField type="date" value={semesterEnd} onChange={e => setSemesterEnd(e.target.value)} />
+                    <InputField type="date" value={localSemesterEnd} onChange={e => setLocalSemesterEnd(e.target.value)} />
                 </div>
+            </div>
+
+            <div className="mt-5 flex items-center gap-2 text-[11px] font-bold text-info-dark bg-info-soft px-4 py-3 rounded-lg">
+                <Info size={13} className="shrink-0" />
+                تظهر السنة الدراسية الحالية في لوحات التحكم والقائمة الجانبية لجميع المستخدمين.
             </div>
 
             <div className="mt-6">

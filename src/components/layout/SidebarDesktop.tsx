@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { PanelLeftClose, PanelLeftOpen, LogOut } from 'lucide-react';
+import { PanelLeftClose, PanelLeftOpen, LogOut, CalendarDays } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { Badge } from '../ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar';
@@ -17,6 +17,7 @@ interface SidebarDesktopProps {
     collapsed: boolean;
     totalUnreadCount: number;
     user: UserData | null;
+    academicYear?: string;
     onToggleCollapse: () => void;
     onLogout: () => void;
 }
@@ -69,7 +70,7 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
     </NavLink>
 );
 
-export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, onToggleCollapse, onLogout }: SidebarDesktopProps) => (
+export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, academicYear, onToggleCollapse, onLogout }: SidebarDesktopProps) => (
     <div className={cn(
         "hidden lg:flex bg-card h-screen border-e border-border transition-all duration-300 flex-col fixed top-0 start-0 z-50 shrink-0",
         collapsed ? "w-16" : "w-56"
@@ -93,6 +94,17 @@ export const SidebarDesktop = ({ sections, collapsed, totalUnreadCount, user, on
                     دارين السابعة
                 </span>
             </div>
+            {academicYear && (
+                <span className={cn(
+                    "transition-all duration-300 overflow-hidden shrink-0",
+                    collapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+                )}>
+                    <span className="flex items-center gap-1 px-2 py-1 bg-primary-soft text-primary text-[10px] font-bold rounded-lg whitespace-nowrap">
+                        <CalendarDays size={11} />
+                        {academicYear}
+                    </span>
+                </span>
+            )}
         </div>
 
         {/* Navigation */}

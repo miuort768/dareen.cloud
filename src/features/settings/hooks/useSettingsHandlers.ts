@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useAcademyName, useAcademyLogo, useAcademyTagline, useAdminPhone, useThemeColor, useNotificationsEnabled, useMaintenanceMode, useWhatsappAutoNotify, useWhatsappTemplate, useDefaultSessionPrice, useDefaultTeacherPrice, useCurrencySymbol, useSemesterName, useSemesters, useBalanceWarningThreshold, useBackdateLockEnabled, useTeacherCommissionType, useAutoFreezeThreshold, useTelegramHandle, useHeroBanners, useReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser, useAcademyAddress, useWhatsappNumbers, useSetSetting } from '../../../context/AppContext';
+import { useAcademyName, useAcademyLogo, useAcademyTagline, useAdminPhone, useThemeColor, useNotificationsEnabled, useMaintenanceMode, useWhatsappAutoNotify, useWhatsappTemplate, useDefaultSessionPrice, useDefaultTeacherPrice, useCurrencySymbol, useSemesterName, useSemesters, useBalanceWarningThreshold, useBackdateLockEnabled, useTeacherCommissionType, useAutoFreezeThreshold, useTelegramHandle, useHeroBanners, useReminderMinutesBefore, useCurrentUser, useUsers, useAddUser, useEditUser, useDeleteUser, useAcademyAddress, useWhatsappNumbers, useSetSetting, useLibraryTelegram, useAcademicYear, useSemesterStartDate, useSemesterEndDate, useFooterDescription, useFooterAddress, useFooterInstagram } from '../../../context/AppContext';
 import { confirm } from '../../../lib/confirmDialog';
 import { settingsService } from '../services/settingsService';
 import type { TabId } from '../pages/settings-page';
@@ -28,6 +28,13 @@ export const useSettingsHandlers = () => {
     const heroBanners = useHeroBanners();
     const reminderMinutesBefore = useReminderMinutesBefore();
     const whatsappNumbers = useWhatsappNumbers();
+    const libraryTelegram = useLibraryTelegram();
+    const academicYear = useAcademicYear();
+    const semesterStartDate = useSemesterStartDate();
+    const semesterEndDate = useSemesterEndDate();
+    const footerDescription = useFooterDescription();
+    const footerAddress = useFooterAddress();
+    const footerInstagram = useFooterInstagram();
     const currentUser = useCurrentUser();
     const user = currentUser || { id: 'guest', name: 'ضيف', username: 'guest' };
     const users = useUsers();
@@ -59,6 +66,13 @@ export const useSettingsHandlers = () => {
     const setHeroBanners = (v: string) => setSetting('heroBanners', v);
     const setReminderMinutesBefore = (v: string) => setSetting('reminderMinutesBefore', Number(v));
     const setWhatsappNumbers = (v: string) => setSetting('whatsappNumbers', v);
+    const setLibraryTelegram = (v: string) => setSetting('libraryTelegram', v);
+    const setAcademicYear = (v: string) => setSetting('academicYear', v);
+    const setSemesterStartDate = (v: string) => setSetting('semesterStartDate', v);
+    const setSemesterEndDate = (v: string) => setSetting('semesterEndDate', v);
+    const setFooterDescription = (v: string) => setSetting('footerDescription', v);
+    const setFooterAddress = (v: string) => setSetting('footerAddress', v);
+    const setFooterInstagram = (v: string) => setSetting('footerInstagram', v);
 
     const [activeTab, setActiveTab] = useState<TabId>('general');
     const [loading, setLoading] = useState(true);
@@ -83,6 +97,13 @@ export const useSettingsHandlers = () => {
     const [localThreshold, setLocalThreshold] = useState(balanceWarningThreshold);
     const [localBackdateLock, setLocalBackdateLock] = useState(backdateLockEnabled);
     const [localAutoFreeze, setLocalAutoFreeze] = useState(autoFreezeThreshold);
+    const [localLibraryTelegram, setLocalLibraryTelegram] = useState(libraryTelegram);
+    const [localAcademicYear, setLocalAcademicYear] = useState(academicYear);
+    const [localSemesterStart, setLocalSemesterStart] = useState(semesterStartDate);
+    const [localSemesterEnd, setLocalSemesterEnd] = useState(semesterEndDate);
+    const [localFooterDescription, setLocalFooterDescription] = useState(footerDescription);
+    const [localFooterAddress, setLocalFooterAddress] = useState(footerAddress);
+    const [localFooterInstagram, setLocalFooterInstagram] = useState(footerInstagram);
     const [newUser, setNewUser] = useState({ username: '', password: '', permissions: [] as string[] });
     const [editingUserId, setEditingUserId] = useState<string | null>(null);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean | { id: string; username: string }>(false);
@@ -92,10 +113,14 @@ export const useSettingsHandlers = () => {
     } | null>(null);
     const [secureInput, setSecureInput] = useState('');
     const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
+    const [maintenanceTarget, setMaintenanceTarget] = useState(false);
+    const [showBackdateModal, setShowBackdateModal] = useState(false);
+    const [backdateTarget, setBackdateTarget] = useState(false);
+    const [backdateVerifying, setBackdateVerifying] = useState(false);
     const [notificationMessage, setNotificationMessage] = useState('');
     const notifyTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
-    const showNotify = (msg: string) => { clearTimeout(notifyTimeoutRef.current); setNotificationMessage(msg); setShowSuccess(true); notifyTimeoutRef.current = setTimeout(() => setShowSuccess(false), 3000); };
+    const showNotify = (msg: string) => { clearTimeout(notifyTimeoutRef.current); setNotificationMessage(msg); setShowSuccess(true); notifyTimeoutRef.current = setTimeout(() => setShowSuccess(false), 4000); };
 
     useEffect(() => () => clearTimeout(notifyTimeoutRef.current), []);
 
@@ -119,6 +144,13 @@ export const useSettingsHandlers = () => {
                 setSetting('balanceWarningThreshold', Number(localThreshold)),
                 setSetting('backdateLockEnabled', localBackdateLock),
                 setSetting('autoFreezeThreshold', Number(localAutoFreeze)),
+                setSetting('libraryTelegram', localLibraryTelegram),
+                setSetting('academicYear', localAcademicYear),
+                setSetting('semesterStartDate', localSemesterStart),
+                setSetting('semesterEndDate', localSemesterEnd),
+                setSetting('footerDescription', localFooterDescription),
+                setSetting('footerAddress', localFooterAddress),
+                setSetting('footerInstagram', localFooterInstagram),
             ]);
             showNotify('تم حفظ الإعدادات بنجاح');
         } catch (e) { console.error('Save error:', e); showNotify('خطأ في الحفظ'); }
@@ -184,13 +216,38 @@ export const useSettingsHandlers = () => {
         });
     };
 
-    const handleUserAction = () => {
+    const handleUserAction = async () => {
         if (!newUser.username) return;
-        if (editingUserId) {
-            editUser(editingUserId, { username: newUser.username, name: newUser.username, permissions: newUser.permissions, password: newUser.password || undefined });
+        setIsSaving(true);
+        try {
+            if (editingUserId) {
+                await editUser(editingUserId, { username: newUser.username, name: newUser.username, permissions: newUser.permissions, password: newUser.password || undefined });
+                showNotify('تم تعديل الحساب بنجاح');
+            } else {
+                await addUser({ ...newUser, name: newUser.username, role: 'admin' });
+                showNotify('تم إنشاء الحساب بنجاح');
+            }
             setEditingUserId(null);
-        } else { addUser({ ...newUser, name: newUser.username, role: 'admin' }); }
-        setNewUser({ username: '', password: '', permissions: [] });
+            setNewUser({ username: '', password: '', permissions: [] });
+        } catch (e) {
+            showNotify('خطأ في حفظ الحساب: ' + (e instanceof Error ? e.message : 'خطأ غير متوقع'));
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    const confirmBackdateToggle = async (password: string) => {
+        setBackdateVerifying(true);
+        try {
+            await settingsService.verifyPassword(password);
+            setLocalBackdateLock(backdateTarget);
+            showNotify(backdateTarget ? 'تم تفعيل قفل تعديل الحصص القديمة' : 'تم إلغاء قفل تعديل الحصص القديمة');
+            setShowBackdateModal(false);
+        } catch (e) {
+            showNotify(e instanceof Error ? e.message : 'كلمة المرور غير صحيحة');
+        } finally {
+            setBackdateVerifying(false);
+        }
     };
 
     useEffect(() => {
@@ -206,7 +263,10 @@ export const useSettingsHandlers = () => {
         setLocalCurrency(currencySymbol); setLocalThreshold(balanceWarningThreshold);
         setLocalTelegramHandle(telegramHandle);
         setLocalBackdateLock(backdateLockEnabled); setLocalAutoFreeze(autoFreezeThreshold);
-    }, [academyName, academyLogo, academyTagline, adminPhone, semesterName, semesters, defaultSessionPrice, defaultTeacherPrice, currencySymbol, balanceWarningThreshold, telegramHandle, backdateLockEnabled, autoFreezeThreshold]);
+        setLocalLibraryTelegram(libraryTelegram);
+        setLocalAcademicYear(academicYear); setLocalSemesterStart(semesterStartDate); setLocalSemesterEnd(semesterEndDate);
+        setLocalFooterDescription(footerDescription); setLocalFooterAddress(footerAddress); setLocalFooterInstagram(footerInstagram);
+    }, [academyName, academyLogo, academyTagline, adminPhone, semesterName, semesters, defaultSessionPrice, defaultTeacherPrice, currencySymbol, balanceWarningThreshold, telegramHandle, backdateLockEnabled, autoFreezeThreshold, libraryTelegram, academicYear, semesterStartDate, semesterEndDate, footerDescription, footerAddress, footerInstagram]);
 
     useEffect(() => {
         try { setLocalHeroBanners(JSON.parse(heroBanners)); } catch (e) { console.warn('Failed to parse heroBanners:', e); }
@@ -237,7 +297,15 @@ export const useSettingsHandlers = () => {
         newUser, setNewUser, editingUserId, setEditingUserId,
         showDeleteModal, setShowDeleteModal, secureAction, setSecureAction,
         secureInput, setSecureInput, showMaintenanceModal, setShowMaintenanceModal,
+        maintenanceTarget, setMaintenanceTarget, showBackdateModal, setShowBackdateModal,
+        backdateTarget, setBackdateTarget, backdateVerifying, confirmBackdateToggle,
         notificationMessage, showNotify, handleSaveGeneral, handleExportBackup,
-        handleImportBackup, triggerReset, triggerArchive, handleUserAction, fetchLogs
+        handleImportBackup, triggerReset, triggerArchive, handleUserAction, fetchLogs,
+        localLibraryTelegram, setLocalLibraryTelegram,
+        localAcademicYear, setLocalAcademicYear, localSemesterStart, setLocalSemesterStart,
+        localSemesterEnd, setLocalSemesterEnd,
+        localFooterDescription, setLocalFooterDescription,
+        localFooterAddress, setLocalFooterAddress,
+        localFooterInstagram, setLocalFooterInstagram,
     };
 };

@@ -1,119 +1,139 @@
-import { Building2, Wallet, Monitor, Lock, CheckCircle2 } from 'lucide-react';
-import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn, ToggleRow } from './SettingsUI';
+import { Building2, Wallet, Monitor, Lock, Snowflake, CheckCircle2 } from 'lucide-react';
+import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn, ToggleRow, ALLOWED_CURRENCIES } from './SettingsUI';
+import { cn } from '../../../lib/utils';
 
 interface GeneralSettingsProps {
     localAcademyName: string; setLocalAcademyName: (v: string) => void;
-    localAcademyLogo: string; setLocalAcademyLogo: (v: string) => void;
-    localAcademyTagline: string; setLocalAcademyTagline: (v: string) => void;
     localAdminPhone: string; setLocalAdminPhone: (v: string) => void;
     localTelegramHandle: string; setLocalTelegramHandle: (v: string) => void;
-    maintenanceMode: boolean; setMaintenanceMode: (v: boolean) => Promise<void>;
-    showNotify: (msg: string) => void;
+    localLibraryTelegram: string; setLocalLibraryTelegram: (v: string) => void;
+    maintenanceMode: boolean;
+    setMaintenanceTarget: (v: boolean) => void;
+    setShowMaintenanceModal: (v: boolean) => void;
     localSemesterName: string; setLocalSemesterName: (v: string) => void;
     localPrice: number; setLocalPrice: (v: number) => void;
     localTeacherPrice: number; setLocalTeacherPrice: (v: number) => void;
     localCurrency: string; setLocalCurrency: (v: string) => void;
     localThreshold: number; setLocalThreshold: (v: number) => void;
     localAutoFreeze: number; setLocalAutoFreeze: (v: number) => void;
-    localBackdateLock: boolean; setLocalBackdateLock: (v: boolean) => void;
-    setShowMaintenanceModal: (v: boolean) => void;
+    localBackdateLock: boolean;
+    setBackdateTarget: (v: boolean) => void;
+    setShowBackdateModal: (v: boolean) => void;
     handleSaveGeneral: () => void; isSaving: boolean;
+    showNotify: (msg: string) => void;
 }
 
 export const GeneralSettings = ({
-    localAcademyName, setLocalAcademyName, localAcademyLogo, setLocalAcademyLogo,
-    localAcademyTagline, setLocalAcademyTagline, localAdminPhone, setLocalAdminPhone,
-    localTelegramHandle, setLocalTelegramHandle, maintenanceMode, setMaintenanceMode,
-    showNotify, localSemesterName, setLocalSemesterName, localPrice, setLocalPrice,
+    localAcademyName, setLocalAcademyName,
+    localAdminPhone, setLocalAdminPhone,
+    localTelegramHandle, setLocalTelegramHandle,
+    localLibraryTelegram, setLocalLibraryTelegram,
+    maintenanceMode, setMaintenanceTarget, setShowMaintenanceModal,
+    localSemesterName, setLocalSemesterName, localPrice, setLocalPrice,
     localTeacherPrice, setLocalTeacherPrice, localCurrency, setLocalCurrency,
     localThreshold, setLocalThreshold, localAutoFreeze, setLocalAutoFreeze,
-    localBackdateLock, setLocalBackdateLock, setShowMaintenanceModal, handleSaveGeneral, isSaving
-}: GeneralSettingsProps) => (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <SectionCard>
-            <SectionTitle icon={Building2} label="الهوية الأساسية" sub="بيانات الأكاديمية الأساسية" />
-            <div className="space-y-3">
-                <div>
-                    <FieldLabel>اسم الأكاديمية</FieldLabel>
-                    <InputField value={localAcademyName} onChange={e => setLocalAcademyName(e.target.value)} />
-                </div>
-                <div>
-                    <FieldLabel>رابط الشعار (URL)</FieldLabel>
-                    <InputField value={localAcademyLogo} onChange={e => setLocalAcademyLogo(e.target.value)} placeholder="رابط الموقع..." dir="ltr" className="font-mono text-xs" />
-                </div>
-                <div>
-                    <FieldLabel>الشعار اللفظي</FieldLabel>
-                    <InputField value={localAcademyTagline} onChange={e => setLocalAcademyTagline(e.target.value)} />
-                </div>
-                <div>
-                    <FieldLabel>رقم هاتف المسؤول</FieldLabel>
-                    <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} dir="ltr" className="font-mono tracking-wider" />
-                </div>
-                <div>
-                    <FieldLabel>قناة تليجرام</FieldLabel>
-                    <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="تطبيق دارين" dir="ltr" className="font-mono" />
-                </div>
-                <ToggleRow
-                    icon={Monitor} label="وضع الصيانة"
-                    sub="تعطيل وصول المستخدمين العاديين"
-                    checked={maintenanceMode}
-                    onChange={() => {
-                        if (!maintenanceMode) setShowMaintenanceModal(true);
-                        else setMaintenanceMode(false).then(() => showNotify('تم إيقاف وضع الصيانة'));
-                    }}
-                />
-            </div>
-        </SectionCard>
+    localBackdateLock, setBackdateTarget, setShowBackdateModal,
+    handleSaveGeneral, isSaving
+}: GeneralSettingsProps) => {
+    const currentCurrency = ALLOWED_CURRENCIES.find(c => c.code === localCurrency);
 
-        <SectionCard>
-            <SectionTitle icon={Wallet} label="الإعدادات المالية والأكاديمية" sub="أسعار وفصول وقواعد" />
-            <div className="space-y-3">
-                <div>
-                    <FieldLabel>تسمية الفصل الدراسي</FieldLabel>
-                    <InputField value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} placeholder="الفصل الأول 2024" />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                    <div>
-                        <FieldLabel>سعر الطالب</FieldLabel>
-                        <InputField type="number" value={localPrice} onChange={e => setLocalPrice(Number(e.target.value))} />
-                    </div>
-                    <div>
-                        <FieldLabel>سعر المعلم</FieldLabel>
-                        <InputField type="number" value={localTeacherPrice} onChange={e => setLocalTeacherPrice(Number(e.target.value))} />
-                    </div>
-                    <div>
-                        <FieldLabel>رمز العملة</FieldLabel>
-                        <InputField value={localCurrency} onChange={e => setLocalCurrency(e.target.value)} className="text-center" />
-                    </div>
-                    <div>
-                        <FieldLabel>تنبيه الرصيد</FieldLabel>
-                        <InputField type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="text-center text-error" />
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                    <div className="p-4 bg-background border border-border/20 rounded-xl">
-                        <FieldLabel>عدد أيام التجميد</FieldLabel>
-                        <InputField type="number" value={localAutoFreeze} onChange={e => setLocalAutoFreeze(Number(e.target.value))} />
-                        <p className="text-[11px] font-bold text-muted mt-1.5">تجميد حساب الطالب تلقائياً بعد غياب متواصل</p>
-                    </div>
-                    <div className="p-4 bg-background border border-border/20 rounded-xl">
+    return (
+        <div className="space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <SectionCard>
+                    <SectionTitle icon={Building2} label="الهوية الأساسية" sub="بيانات الأكاديمية الأساسية" />
+                    <div className="space-y-3">
+                        <div>
+                            <FieldLabel>اسم الأكاديمية</FieldLabel>
+                            <InputField value={localAcademyName} onChange={e => setLocalAcademyName(e.target.value)} />
+                        </div>
+                        <div>
+                            <FieldLabel>رقم هاتف المسؤول</FieldLabel>
+                            <InputField value={localAdminPhone} onChange={e => setLocalAdminPhone(e.target.value)} dir="ltr" className="font-mono tracking-wider" />
+                        </div>
+                        <div>
+                            <FieldLabel>قناة تليجرام</FieldLabel>
+                            <InputField value={localTelegramHandle} onChange={e => setLocalTelegramHandle(e.target.value)} placeholder="تطبيق دارين" dir="ltr" className="font-mono" />
+                        </div>
+                        <div>
+                            <FieldLabel>قناة تليجرام المكتبة</FieldLabel>
+                            <InputField value={localLibraryTelegram} onChange={e => setLocalLibraryTelegram(e.target.value)} placeholder="https://t.me/..." dir="ltr" className="font-mono" />
+                        </div>
                         <ToggleRow
-                            icon={Lock} label="قفل التاريخ القديم"
-                            sub="منع تسجيل حصص بتواريخ سابقة"
-                            checked={localBackdateLock} onChange={() => setLocalBackdateLock(!localBackdateLock)}
+                            icon={Monitor} label="وضع الصيانة"
+                            sub="تعطيل وصول المستخدمين العاديين"
+                            checked={maintenanceMode}
+                            onChange={() => { setMaintenanceTarget(!maintenanceMode); setShowMaintenanceModal(true); }}
                         />
                     </div>
-                </div>
+                </SectionCard>
 
-                <div className="flex items-center gap-2 text-[11px] font-bold text-warning-dark bg-warning-soft px-4 py-3 border-s-2 border-warning rounded-lg">
-                    القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
-                </div>
+                <SectionCard>
+                    <SectionTitle icon={Wallet} label="الإعدادات المالية والأكاديمية" sub="أسعار وفصول وقواعد" />
+                    <div className="space-y-3">
+                        <div>
+                            <FieldLabel>تسمية الفصل الدراسي</FieldLabel>
+                            <InputField value={localSemesterName} onChange={e => setLocalSemesterName(e.target.value)} placeholder="الفصل الأول 2024" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                            <div>
+                                <FieldLabel>سعر الطالب</FieldLabel>
+                                <InputField type="number" value={localPrice} onChange={e => setLocalPrice(Number(e.target.value))} />
+                            </div>
+                            <div>
+                                <FieldLabel>سعر المعلم</FieldLabel>
+                                <InputField type="number" value={localTeacherPrice} onChange={e => setLocalTeacherPrice(Number(e.target.value))} />
+                            </div>
+                            <div>
+                                <FieldLabel>العملة</FieldLabel>
+                                <select
+                                    value={localCurrency}
+                                    onChange={e => setLocalCurrency(e.target.value)}
+                                    className="w-full bg-background border border-border/30 px-3 py-3 text-sm font-bold text-main focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all duration-200 rounded-xl"
+                                >
+                                    {ALLOWED_CURRENCIES.map(c => (
+                                        <option key={c.code} value={c.code}>{c.name} ({c.symbol})</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div>
+                                <FieldLabel>تنبيه الرصيد</FieldLabel>
+                                <InputField type="number" value={localThreshold} onChange={e => setLocalThreshold(Number(e.target.value))} className="text-center text-error" />
+                            </div>
+                        </div>
 
-                <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2">
-                    <CheckCircle2 size={14} /> حفظ الإعدادات الأساسية
-                </PrimaryBtn>
+                        <div className="p-4 bg-background border border-border/20 rounded-xl">
+                            <ToggleRow
+                                icon={Lock} label="قفل التاريخ القديم"
+                                sub="منع تسجيل حصص بتواريخ سابقة"
+                                checked={localBackdateLock}
+                                onChange={() => { setBackdateTarget(!localBackdateLock); setShowBackdateModal(true); }}
+                            />
+                        </div>
+
+                        <div className="flex items-center gap-2 text-[11px] font-bold text-warning-dark bg-warning-soft px-4 py-3 border-s-2 border-warning rounded-lg">
+                            القيم تُطبَّق تلقائياً عند تسجيل طالب أو معلم جديد.
+                        </div>
+
+                        <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving} className="w-full mt-2">
+                            <CheckCircle2 size={14} /> حفظ الإعدادات الأساسية
+                        </PrimaryBtn>
+                    </div>
+                </SectionCard>
             </div>
-        </SectionCard>
-    </div>
-);
+
+            <SectionCard>
+                <SectionTitle icon={Snowflake} label="أيام التجميد" sub="تجميد حساب الطالب تلقائياً عند الغياب المتواصل" />
+                <div className="flex flex-col md:flex-row md:items-end gap-4">
+                    <div className="max-w-xs">
+                        <FieldLabel>عدد أيام التجميد</FieldLabel>
+                        <InputField type="number" value={localAutoFreeze} onChange={e => setLocalAutoFreeze(Number(e.target.value))} className="text-center" />
+                    </div>
+                    <p className={cn('flex-1 text-[11px] font-bold text-muted md:pb-2')}>
+                        يتم تجميد حساب الطالب تلقائياً بعد غياب متواصل عن الحصص لمدة هذا العدد من الأيام، ويُرسل تنبيه لولي الأمر قبل التجميد.
+                    </p>
+                </div>
+            </SectionCard>
+        </div>
+    );
+};

@@ -6,6 +6,7 @@ import { cn } from '../../../lib/utils';
 import { SecureActionModal } from '../components/SecureActionModal';
 import { DeleteUserModal } from '../components/DeleteUserModal';
 import { MaintenanceModal } from '../components/MaintenanceModal';
+import { PasswordConfirmModal } from '../components/PasswordConfirmModal';
 import { SuccessToast } from '../components/SuccessToast';
 import { TABS, SettingsTabContent } from './settings-page';
 import { useSettingsHandlers } from '../hooks/useSettingsHandlers';
@@ -104,7 +105,7 @@ export const Settings = () => {
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
                     <div className="bg-card border border-border rounded-2xl p-2 mb-4">
-                        <div className="flex overflow-x-auto no-scrollbar gap-1">
+                        <div className="flex flex-wrap gap-1">
                             {tabGroups.map((group, gi) => (
                                 <div key={group.label} className={cn("flex items-center gap-1", gi > 0 && 'me-2 pe-2 border-s border-border/30')}>
                                     {group.items.map(tabId => {
@@ -144,6 +145,15 @@ export const Settings = () => {
                             setLocalPrice={h.setLocalPrice} setLocalTeacherPrice={h.setLocalTeacherPrice}
                             setLocalCurrency={h.setLocalCurrency} setLocalThreshold={h.setLocalThreshold}
                             setLocalAutoFreeze={h.setLocalAutoFreeze} setLocalBackdateLock={h.setLocalBackdateLock}
+                            setMaintenanceTarget={h.setMaintenanceTarget}
+                            setShowBackdateModal={h.setShowBackdateModal} setBackdateTarget={h.setBackdateTarget}
+                            localLibraryTelegram={h.localLibraryTelegram} setLocalLibraryTelegram={h.setLocalLibraryTelegram}
+                            localAcademicYear={h.localAcademicYear} setLocalAcademicYear={h.setLocalAcademicYear}
+                            localSemesterStart={h.localSemesterStart} setLocalSemesterStart={h.setLocalSemesterStart}
+                            localSemesterEnd={h.localSemesterEnd} setLocalSemesterEnd={h.setLocalSemesterEnd}
+                            localFooterDescription={h.localFooterDescription} setLocalFooterDescription={h.setLocalFooterDescription}
+                            localFooterAddress={h.localFooterAddress} setLocalFooterAddress={h.setLocalFooterAddress}
+                            localFooterInstagram={h.localFooterInstagram} setLocalFooterInstagram={h.setLocalFooterInstagram}
                             academyAddress={h.academyAddress} setAcademyAddress={h.setAcademyAddress}
                             academyEmail={h.academyEmail} setAcademyEmail={h.setAcademyEmail}
                             localHeroBanners={h.localHeroBanners} setLocalHeroBanners={h.setLocalHeroBanners}
@@ -178,7 +188,15 @@ export const Settings = () => {
 
             <SecureActionModal secureAction={h.secureAction} secureInput={h.secureInput} setSecureInput={h.setSecureInput} setSecureAction={h.setSecureAction} />
             <DeleteUserModal showDeleteModal={h.showDeleteModal} setShowDeleteModal={h.setShowDeleteModal} deleteUser={h.deleteUser} showNotify={h.showNotify} />
-            <MaintenanceModal showMaintenanceModal={h.showMaintenanceModal} setShowMaintenanceModal={h.setShowMaintenanceModal} setMaintenanceMode={h.setMaintenanceMode} showNotify={h.showNotify} />
+            <MaintenanceModal showMaintenanceModal={h.showMaintenanceModal} setShowMaintenanceModal={h.setShowMaintenanceModal} maintenanceTarget={h.maintenanceTarget} setMaintenanceTarget={h.setMaintenanceTarget} setMaintenanceMode={h.setMaintenanceMode} showNotify={h.showNotify} />
+            <PasswordConfirmModal
+                show={h.showBackdateModal}
+                title={h.backdateTarget ? 'تفعيل قفل تعديل الحصص القديمة' : 'إلغاء قفل تعديل الحصص القديمة'}
+                description="منع أو السماح بتسجيل حصص بتواريخ سابقة. هذا الإجراء حساس ولا يمكن تنفيذه إلا بكلمة مرور المسؤول."
+                confirmLabel={h.backdateTarget ? 'تفعيل القفل' : 'إلغاء القفل'}
+                onConfirm={h.confirmBackdateToggle}
+                onClose={() => h.setShowBackdateModal(false)}
+            />
             <SuccessToast showSuccess={h.showSuccess} message={h.notificationMessage} />
         </div>
     );

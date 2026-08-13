@@ -124,4 +124,8 @@ export const settingsService = {
     async getBackupHistory(page = 1, limit = 20) {
         return api.get<{ data: unknown[]; total: number; page: number; limit: number; totalPages: number }>(`/system/backup-history?page=${page}&limit=${limit}`);
     },
+
+    async verifyPassword(password: string) {
+        return api.post<{ valid: boolean }>('/system/verify-password', { password });
+    },
 };

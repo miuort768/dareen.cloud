@@ -323,8 +323,32 @@ async function deactivateBulkAccounts(entityType) {
   }
 }
 
+// Verify a raw password against the current account (accounts/dual mode)
+// or the legacy entity password (legacy mode).
+async function verifyAccountPassword(userId, role, password) {
+  if (!password || typeof password !== 'string') return false;
+  try {
+    const account = await prisma.account.findFirst({
+      where: { accountType: role.toUpperCase(), entityId: userId },
+    }).catch(() => null);
+    if (account && account.passwordHash) {
+      return await bcrypt.compare(password, account.passwordHash);
+    }
+
+    const userData = await prisma.user.findUnique({ where: { id: userId } }).catch(() => null);
+    if (userData && userData.password && userData.password.startsWith('$2b$')) {
+      return await bcrypt.compare(password, userData.password);
+    }
+
+    return false;
+  } catch (error) {
+    return false;
+  }
+}
+
 module.exports = {
   authenticate,
+  verifyAccountPassword,
   findAccountByIdentity,
   syncPassword,
   incrementTokenVersion,

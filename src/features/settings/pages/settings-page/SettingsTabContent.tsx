@@ -31,6 +31,16 @@ interface SettingsTabContentProps {
     setLocalPrice: (v: string) => void; setLocalTeacherPrice: (v: string) => void;
     setLocalCurrency: (v: string) => void; setLocalThreshold: (v: string) => void;
     setLocalAutoFreeze: (v: string) => void; setLocalBackdateLock: (v: boolean) => void;
+    setMaintenanceTarget: (v: boolean) => void;
+    setShowBackdateModal: (v: boolean) => void;
+    setBackdateTarget: (v: boolean) => void;
+    localLibraryTelegram: string; setLocalLibraryTelegram: (v: string) => void;
+    localAcademicYear: string; setLocalAcademicYear: (v: string) => void;
+    localSemesterStart: string; setLocalSemesterStart: (v: string) => void;
+    localSemesterEnd: string; setLocalSemesterEnd: (v: string) => void;
+    localFooterDescription: string; setLocalFooterDescription: (v: string) => void;
+    localFooterAddress: string; setLocalFooterAddress: (v: string) => void;
+    localFooterInstagram: string; setLocalFooterInstagram: (v: string) => void;
     academyAddress: string; setAcademyAddress: (v: string) => void;
     academyEmail: string; setAcademyEmail: (v: string) => void;
     localHeroBanners: string[]; setLocalHeroBanners: (v: string[]) => void;
@@ -75,10 +85,9 @@ export const SettingsTabContent = (props: SettingsTabContentProps) => {
         case 'general':
             return <GeneralSettings
                 localAcademyName={props.localAcademyName} setLocalAcademyName={props.setLocalAcademyName}
-                localAcademyLogo={props.localAcademyLogo} setLocalAcademyLogo={props.setLocalAcademyLogo}
-                localAcademyTagline={props.localAcademyTagline} setLocalAcademyTagline={props.setLocalAcademyTagline}
                 localAdminPhone={props.localAdminPhone} setLocalAdminPhone={props.setLocalAdminPhone}
                 localTelegramHandle={props.localTelegramHandle} setLocalTelegramHandle={props.setLocalTelegramHandle}
+                localLibraryTelegram={props.localLibraryTelegram} setLocalLibraryTelegram={props.setLocalLibraryTelegram}
                 localSemesterName={props.localSemesterName} setLocalSemesterName={props.setLocalSemesterName}
                 localPrice={props.localPrice} localTeacherPrice={props.localTeacherPrice}
                 localCurrency={props.localCurrency} localThreshold={props.localThreshold}
@@ -86,24 +95,28 @@ export const SettingsTabContent = (props: SettingsTabContentProps) => {
                 setLocalPrice={props.setLocalPrice} setLocalTeacherPrice={props.setLocalTeacherPrice}
                 setLocalCurrency={props.setLocalCurrency} setLocalThreshold={props.setLocalThreshold}
                 setLocalAutoFreeze={props.setLocalAutoFreeze} setLocalBackdateLock={props.setLocalBackdateLock}
-                maintenanceMode={props.maintenanceMode} setShowMaintenanceModal={props.setShowMaintenanceModal}
-                setMaintenanceMode={props.setMaintenanceMode} showNotify={props.showNotify}
+                maintenanceMode={props.maintenanceMode} setMaintenanceTarget={props.setMaintenanceTarget}
+                setShowMaintenanceModal={props.setShowMaintenanceModal}
+                setShowBackdateModal={props.setShowBackdateModal} setBackdateTarget={props.setBackdateTarget}
                 isSaving={props.isSaving} handleSaveGeneral={props.handleSaveGeneral} />;
         case 'academy':
             return <AcademyInfoSection
                 localAcademyName={props.localAcademyName} setLocalAcademyName={props.setLocalAcademyName}
-                localAcademyLogo={props.localAcademyLogo} setLocalAcademyLogo={props.setLocalAcademyLogo}
-                localAcademyTagline={props.localAcademyTagline} setLocalAcademyTagline={props.setLocalAcademyTagline}
                 localAdminPhone={props.localAdminPhone} setLocalAdminPhone={props.setLocalAdminPhone}
                 localTelegramHandle={props.localTelegramHandle} setLocalTelegramHandle={props.setLocalTelegramHandle}
-                academyAddress={props.academyAddress} setAcademyAddress={props.setAcademyAddress}
-                academyEmail={props.academyEmail} setAcademyEmail={props.setAcademyEmail}
+                localLibraryTelegram={props.localLibraryTelegram} setLocalLibraryTelegram={props.setLocalLibraryTelegram}
+                localFooterDescription={props.localFooterDescription} setLocalFooterDescription={props.setLocalFooterDescription}
+                localFooterAddress={props.localFooterAddress} setLocalFooterAddress={props.setLocalFooterAddress}
+                localFooterInstagram={props.localFooterInstagram} setLocalFooterInstagram={props.setLocalFooterInstagram}
                 handleSaveGeneral={props.handleSaveGeneral} isSaving={props.isSaving} />;
         case 'academic-year':
             return <AcademicYearSection
                 localSemesterName={props.localSemesterName} setLocalSemesterName={props.setLocalSemesterName}
                 localSemesters={props.localSemesters} setLocalSemesters={props.setLocalSemesters}
                 setSemesterName={props.setSemesterName} setSemesters={props.setSemesters}
+                localAcademicYear={props.localAcademicYear} setLocalAcademicYear={props.setLocalAcademicYear}
+                localSemesterStart={props.localSemesterStart} setLocalSemesterStart={props.setLocalSemesterStart}
+                localSemesterEnd={props.localSemesterEnd} setLocalSemesterEnd={props.setLocalSemesterEnd}
                 showNotify={props.showNotify} />;
         case 'currencies':
             return <CurrenciesSection localCurrency={props.localCurrency} setLocalCurrency={props.setLocalCurrency} showNotify={props.showNotify} />;

@@ -10,7 +10,7 @@ import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { cn } from '../../lib/utils';
 import { confirm } from '../../lib/confirmDialog';
-import { useAcademyName, useLogout, useCurrentUser, useSidebarCollapsed, useSetSidebarCollapsed } from '../../context/AppContext';
+import { useAcademyName, useLogout, useCurrentUser, useSidebarCollapsed, useSetSidebarCollapsed, useAcademicYear } from '../../context/AppContext';
 import { useUnreadStore } from '../../store/unreadStore';
 import { SessionCallAlert } from '../ui/SessionCallAlert';
 import { ActiveSessionBanner } from '../ui/ActiveSessionBanner';
@@ -32,6 +32,7 @@ export interface NavSection {
 
 export const Sidebar = memo(() => {
     const academyName = useAcademyName();
+    const academicYear = useAcademicYear();
     const logout = useLogout();
     const currentUser = useCurrentUser();
     const collapsed = useSidebarCollapsed();
@@ -146,6 +147,7 @@ export const Sidebar = memo(() => {
                 collapsed={collapsed}
                 totalUnreadCount={totalUnreadCount}
                 user={currentUser ? { name: currentUser.name, avatar: currentUser.avatar, role: currentUser.role ?? '' } : null}
+                academicYear={academicYear}
                 onToggleCollapse={() => setCollapsed(!collapsed)}
                 onLogout={handleLogout}
             />
@@ -154,6 +156,7 @@ export const Sidebar = memo(() => {
                 mobileMenuOpen={mobileMenuOpen}
                 totalUnreadCount={totalUnreadCount}
                 academyName={academyName}
+                academicYear={academicYear}
                 onCloseMenu={() => setMobileMenuOpen(false)}
                 onLogout={handleLogout}
             />

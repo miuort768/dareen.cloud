@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LogOut } from 'lucide-react';
+import { LogOut, CalendarDays } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Image } from '../../shared/components/ui';
 import { Button } from '../ui/button';
@@ -25,11 +25,12 @@ interface SidebarMobileProps {
     mobileMenuOpen: boolean;
     totalUnreadCount: number;
     academyName: string;
+    academicYear?: string;
     onCloseMenu: () => void;
     onLogout: () => void;
 }
 
-export const SidebarMobile = ({ navigation, mobileMenuOpen, totalUnreadCount, academyName, onCloseMenu, onLogout }: SidebarMobileProps) => (
+export const SidebarMobile = ({ navigation, mobileMenuOpen, totalUnreadCount, academyName, academicYear, onCloseMenu, onLogout }: SidebarMobileProps) => (
     <>
         <Sheet open={mobileMenuOpen} onOpenChange={(open) => !open && onCloseMenu()}>
             <SheetContent side="right" className="w-[85vw] sm:w-[350px] p-0 overflow-y-auto">
@@ -40,6 +41,12 @@ export const SidebarMobile = ({ navigation, mobileMenuOpen, totalUnreadCount, ac
                             <SheetTitle className="text-base text-start">{academyName}</SheetTitle>
                             <SheetDescription className="text-micro text-start">قائمة الوصول السريع</SheetDescription>
                         </div>
+                        {academicYear && (
+                            <span className="flex items-center gap-1 ms-auto px-2 py-1 bg-primary-soft text-primary text-[10px] font-bold rounded-lg whitespace-nowrap">
+                                <CalendarDays size={11} />
+                                {academicYear}
+                            </span>
+                        )}
                     </div>
                 </SheetHeader>
 

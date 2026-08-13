@@ -17,14 +17,15 @@ if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('postgresql'
 }
 
 const currencies = [
-  { code: 'KWD', name: 'دينار كويتي', symbol: 'د.ك', isActive: 1, sortOrder: 1 },
-  { code: 'SAR', name: 'ريال سعودي', symbol: '﷼', isActive: 1, sortOrder: 2 },
-  { code: 'AED', name: 'درهم إماراتي', symbol: 'د.إ', isActive: 1, sortOrder: 3 },
-  { code: 'QAR', name: 'ريال قطري', symbol: '﷼', isActive: 1, sortOrder: 4 },
-  { code: 'OMR', name: 'ريال عماني', symbol: '﷼', isActive: 1, sortOrder: 5 },
-  { code: 'BHD', name: 'دينار بحريني', symbol: 'د.ب', isActive: 1, sortOrder: 6 },
-  { code: 'EGP', name: 'جنيه مصري', symbol: 'ج.م', isActive: 1, sortOrder: 7 },
-  { code: 'USD', name: 'دولار أمريكي', symbol: '$', isActive: 1, sortOrder: 8 },
+  { code: 'EGP', name: 'جنيه مصري', symbol: 'ج.م', isActive: 1, sortOrder: 1 },
+  { code: 'USD', name: 'دولار أمريكي', symbol: '$', isActive: 1, sortOrder: 2 },
+  { code: 'KWD', name: 'دينار كويتي', symbol: 'د.ك', isActive: 1, sortOrder: 3 },
+  { code: 'SAR', name: 'ريال سعودي', symbol: '﷼', isActive: 1, sortOrder: 4 },
+  { code: 'AED', name: 'درهم إماراتي', symbol: 'د.إ', isActive: 1, sortOrder: 5 },
+  { code: 'QAR', name: 'ريال قطري', symbol: '﷼', isActive: 1, sortOrder: 6 },
+  { code: 'OMR', name: 'ريال عماني', symbol: '﷼', isActive: 1, sortOrder: 7 },
+  { code: 'BHD', name: 'دينار بحريني', symbol: 'د.ب', isActive: 1, sortOrder: 8 },
+  { code: 'JOD', name: 'دينار أردني', symbol: 'د.أ', isActive: 1, sortOrder: 9 },
 ];
 
 const financialSettings = [

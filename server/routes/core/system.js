@@ -9,7 +9,7 @@ const { prisma } = require('../../utils/prisma');
 const { audit } = require('../../services/auditService');
 const { createBackup, getBackupHistory } = require('../../services/backupService');
 const { getMetrics } = require('../../middleware/monitoring');
-const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccount } = require('../../services/authAccounts');
+const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccount, verifyAccountPassword } = require('../../services/authAccounts');
 
 // `dismissedNotifications` uses notifications.is_dismissed; reset helper.
 async function clearDismissedNotifications(tx) {
@@ -18,6 +18,25 @@ async function clearDismissedNotifications(tx) {
 
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
+
+// POST /api/system/verify-password — confirm the current admin's password
+// before performing sensitive actions (e.g. disabling backdate lock).
+router.post('/verify-password', async (req, res) => {
+    try {
+        const { password } = req.body || {};
+        if (!password || typeof password !== 'string') {
+            return ResponseHandler.badRequest(res, 'كلمة المرور مطلوبة');
+        }
+        const ok = await verifyAccountPassword(req.user.id, req.user.role, password);
+        if (!ok) {
+            return ResponseHandler.forbidden(res, 'كلمة المرور غير صحيحة');
+        }
+        return ResponseHandler.success(res, { valid: true });
+    } catch (error) {
+        logger.error('verify-password error:', error);
+        return ResponseHandler.serverError(res, error, 'verify-password');
+    }
+});
 
 // GET /api/system/settings-batch — returns all settings grouped
 router.get('/settings-batch', async (req, res) => {

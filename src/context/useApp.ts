@@ -33,8 +33,15 @@ export const useBackdateLockEnabled = () => useSettingsStore(s => s.backdateLock
 export const useTeacherCommissionType = () => useSettingsStore(s => s.teacherCommissionType);
 export const useAutoFreezeThreshold = () => useSettingsStore(s => s.autoFreezeThreshold);
 export const useTelegramHandle = () => useSettingsStore(s => s.telegramHandle);
+export const useLibraryTelegram = () => useSettingsStore(s => s.libraryTelegram);
 export const useHeroBanners = () => useSettingsStore(s => s.heroBanners);
 export const useReminderMinutesBefore = () => useSettingsStore(s => s.reminderMinutesBefore);
 export const useWhatsappNumbers = () => useSettingsStore(s => s.whatsappNumbers);
 export const useIsSettingsLoading = () => useSettingsStore(s => s.isSettingsLoading);
 export const useSetSetting = () => useSettingsStore(s => s.setSetting);
+export const useAcademicYear = () => useSettingsStore(s => s.academicYear);
+export const useSemesterStartDate = () => useSettingsStore(s => s.semesterStartDate);
+export const useSemesterEndDate = () => useSettingsStore(s => s.semesterEndDate);
+export const useFooterDescription = () => useSettingsStore(s => s.footerDescription);
+export const useFooterAddress = () => useSettingsStore(s => s.footerAddress);
+export const useFooterInstagram = () => useSettingsStore(s => s.footerInstagram);

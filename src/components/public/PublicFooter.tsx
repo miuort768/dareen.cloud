@@ -7,6 +7,11 @@ export const PublicFooter = () => {
     const navigate = useNavigate();
     const academyName = useAcademyName();
     const adminPhone = useSettingsStore(s => s.adminPhone);
+    const footerDescription = useSettingsStore(s => s.footerDescription);
+    const footerAddress = useSettingsStore(s => s.footerAddress);
+    const footerInstagram = useSettingsStore(s => s.footerInstagram);
+
+    const instagramHandle = (footerInstagram || 'daren_school').replace(/^@/, '');
 
     return (
         <footer className="relative bg-surface dark:bg-card text-main overflow-hidden pt-4 pb-6 md:pt-6 md:pb-6 transition-colors duration-500 min-h-[300px] border-t border-border dark:border-primary/20">
@@ -31,7 +36,7 @@ export const PublicFooter = () => {
                             </span>
                         </div>
                         <p className="text-muted dark:text-warning/60 text-sm lg:text-xs leading-relaxed border-s-2 border-border dark:border-primary/30 ps-4">
-                            نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعليم.
+                            {footerDescription || 'نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعليم.'}
                         </p>
                     </div>
 
@@ -68,7 +73,7 @@ export const PublicFooter = () => {
                         <ul className="space-y-4">
                             <li className="flex items-start gap-3 text-sm text-muted dark:text-main/60">
                                 <MapPin className="w-5 h-5 text-accent dark:text-primary shrink-0" />
-                                <span>بني سويف - مصر</span>
+                                <span>{footerAddress || 'بني سويف - مصر'}</span>
                             </li>
                             <li className="flex items-center gap-3 text-sm text-muted dark:text-main/60">
                                 <Phone className="w-5 h-5 text-accent dark:text-primary shrink-0" />
@@ -85,12 +90,12 @@ export const PublicFooter = () => {
                             <li className="flex items-center gap-3 text-sm text-muted dark:text-main/60">
                                 <Instagram className="w-5 h-5 text-accent dark:text-primary shrink-0" />
                                 <a
-                                    href="https://www.instagram.com/daren_school/?hl=ar"
+                                    href={`https://www.instagram.com/${instagramHandle}/`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="hover:text-accent dark:hover:text-primary transition-colors"
                                 >
-                                    @daren_school
+                                    @{instagramHandle}
                                 </a>
                             </li>
                         </ul>

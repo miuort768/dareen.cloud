@@ -30,6 +30,12 @@ interface SettingsState {
     whatsappNumbers: string;
     googlePlayUrl: string;
     appStoreUrl: string;
+    academicYear: string;
+    semesterStartDate: string;
+    semesterEndDate: string;
+    footerDescription: string;
+    footerAddress: string;
+    footerInstagram: string;
     isSettingsLoading: boolean;
 
     fetchSettings: () => Promise<void>;
@@ -64,8 +70,14 @@ const SETTING_META: Record<string, { apiKey: string; coerce?: 'boolean' | 'numbe
     libraryWhatsapp:          { apiKey: 'library_whatsapp' },
     libraryTelegram:          { apiKey: 'library_telegram' },
     whatsappNumbers:          { apiKey: 'whatsapp_numbers',          coerce: 'json' },
-    googlePlayUrl:            { apiKey: 'google_play_url' },
-    appStoreUrl:              { apiKey: 'app_store_url' },
+    googlePlayUrl:              { apiKey: 'google_play_url' },
+    appStoreUrl:                { apiKey: 'app_store_url' },
+    academicYear:               { apiKey: 'academic_year' },
+    semesterStartDate:          { apiKey: 'semester_start_date' },
+    semesterEndDate:            { apiKey: 'semester_end_date' },
+    footerDescription:          { apiKey: 'footer_description' },
+    footerAddress:              { apiKey: 'footer_address' },
+    footerInstagram:            { apiKey: 'footer_instagram' },
 };
 
 // Global CSS Theme injector
@@ -170,6 +182,12 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
     ]),
     googlePlayUrl: '',
     appStoreUrl: '',
+    academicYear: '',
+    semesterStartDate: '',
+    semesterEndDate: '',
+    footerDescription: '',
+    footerAddress: '',
+    footerInstagram: '',
     isSettingsLoading: true,
 
     fetchSettings: async () => {
