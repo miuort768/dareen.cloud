@@ -29,6 +29,11 @@ export const crmService = {
         await api.delete(`/leads/${id}`);
     },
 
+    deleteAll: async (): Promise<{ success: boolean; deleted?: number }> => {
+        const res = await api.delete<{ success: boolean; deleted?: number }>('/leads/all');
+        return res;
+    },
+
     getStats: async (): Promise<LeadStats> => {
         const res = await api.get<LeadStats | { data: LeadStats }>('/leads/stats');
         return (res as { data: LeadStats }).data ?? (res as LeadStats);

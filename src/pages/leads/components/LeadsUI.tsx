@@ -5,22 +5,22 @@ import { ActionButton } from '../../../shared/components/ui/ActionRow';
 import type { LeadStatus, LeadPriority } from '../../../features/crm/types';
 
 const avatarColors = [
-    'from-primary to-primary-deep',
-    'from-info to-info-deep',
-    'from-success to-success-deep',
-    'from-warning to-warning-deep',
-    'from-error to-error-deep',
-    'from-accent to-accent-deep',
+    'bg-primary',
+    'bg-info',
+    'bg-success',
+    'bg-warning',
+    'bg-error',
+    'bg-accent',
 ];
-const getGradient = (name: string) => avatarColors[name.charCodeAt(0) % avatarColors.length];
+const getAvatarColor = (name: string) => avatarColors[name.charCodeAt(0) % avatarColors.length];
 
 export const GradientAvatar = ({ name, size = 'md', ring }: { name: string; size?: 'sm' | 'md' | 'lg'; ring?: string }) => {
-    const gradient = getGradient(name);
+    const bg = getAvatarColor(name);
     const sizes = { sm: 'w-8 h-8 text-[11px]', md: 'w-10 h-10 text-sm', lg: 'w-12 h-12 text-base' };
     return (
         <div className={cn(
             'shrink-0 rounded-full flex items-center justify-center font-bold text-on-primary',
-            `bg-gradient-to-br ${gradient}`,
+            bg,
             ring,
             sizes[size],
         )}>

@@ -83,6 +83,16 @@ router.put('/:id', authMiddleware, checkRole(['admin']), validate(updateLeadSche
     }
 });
 
+router.delete('/all', authMiddleware, checkRole(['admin']), async (req, res) => {
+    try {
+        const deleted = await prisma.lead.deleteMany();
+        emitLeadUpdate(req);
+        res.json({ success: true, deleted: deleted.count });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Delete all leads');
+    }
+});
+
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         await prisma.lead.delete({ where: { id: req.params.id } });

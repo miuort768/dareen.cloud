@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useMemo, useRef } from 'react';
-import { Search, Plus, EyeOff, Eye, AlertTriangle, X, Activity, BarChart3, Phone, Users, UserPlus } from 'lucide-react';
+import { Search, Plus, EyeOff, Eye, AlertTriangle, X, Activity, BarChart3, Phone, Users, UserPlus, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { crmService } from '../features/crm/services/crmService';
@@ -60,6 +60,42 @@ const ConfirmDeleteModal = ({ onConfirm, onCancel }: { onConfirm: () => void; on
     );
 };
 
+const ConfirmDeleteAllModal = ({ onConfirm, onCancel, isLoading }: { onConfirm: () => void; onCancel: () => void; isLoading?: boolean }) => (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-black/50 dark:bg-black/70 backdrop-blur-sm p-0 sm:p-4" dir="rtl">
+        <motion.div
+            initial={{ y: '100%', opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: '100%', opacity: 0 }}
+            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            className="bg-card w-full sm:max-w-sm shadow-2xl rounded-t-3xl sm:rounded-2xl overflow-hidden border border-border"
+        >
+            <div className="w-10 h-1 bg-border rounded-full mx-auto mt-3 sm:hidden" />
+            <div className="bg-error px-5 py-5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 flex items-center justify-center rounded-2xl bg-white/15">
+                        <Trash2 size={18} className="text-on-error" />
+                    </div>
+                    <div>
+                        <h3 className="text-sm font-bold text-on-error">حذف جميع العملاء</h3>
+                        <p className="text-[10px] text-on-error/70 mt-0.5">لا يمكن التراجع عن هذا الإجراء</p>
+                    </div>
+                </div>
+                <button onClick={onCancel} className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-error rounded-xl transition-all" aria-label="إغلاق"><X size={14} /></button>
+            </div>
+            <div className="p-5">
+                <p className="text-sm font-bold text-main mb-1">هل أنت متأكد من حذف جميع العملاء؟</p>
+                <p className="text-xs text-muted leading-relaxed">سيتم <span className="text-error font-bold">حذف جميع العملاء نهائيًا</span> بما فيهم المفقودون، ولن يمكن استعادتهم.</p>
+            </div>
+            <div className="flex gap-2 p-5 pt-0">
+                <button type="button" onClick={onCancel} className="flex-1 py-3.5 text-xs font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">إلغاء</button>
+                <button onClick={onConfirm} disabled={isLoading} className="flex-1 py-3.5 text-xs font-bold text-on-error bg-error hover:bg-error-hover rounded-xl transition-all active:scale-[0.98] shadow-sm shadow-error/20 disabled:opacity-60 disabled:cursor-not-allowed">
+                    {isLoading ? 'جاري الحذف...' : 'حذف الكل'}
+                </button>
+            </div>
+        </motion.div>
+    </motion.div>
+);
+
 const StatusKeys: LeadStatus[] = ['new', 'contacted', 'interested', 'trial', 'converted'];
 
 const inputClass = "w-full bg-surface border border-border px-3.5 py-3 text-[13px] outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted/60 font-bold";
@@ -113,6 +149,7 @@ export const Leads = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [showLost, setShowLost] = useState(false);
     const [confirmLeadId, setConfirmLeadId] = useState<string | null>(null);
+    const [confirmDeleteAll, setConfirmDeleteAll] = useState(false);
     const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
@@ -159,6 +196,17 @@ export const Leads = () => {
             queryClient.invalidateQueries({ queryKey: ['leads'] });
             queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
             showNotification('تم حذف العميل', 'success');
+        },
+        onError: (err: Error) => { showNotification(err.message, 'error'); }
+    });
+
+    const deleteAllMutation = useMutation({
+        mutationFn: crmService.deleteAll,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['leads'] });
+            queryClient.invalidateQueries({ queryKey: ['lead-stats'] });
+            setConfirmDeleteAll(false);
+            showNotification('تم حذف جميع العملاء', 'success');
         },
         onError: (err: Error) => { showNotification(err.message, 'error'); }
     });
@@ -243,6 +291,14 @@ export const Leads = () => {
                             >
                                 {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
                                 <span className="hidden sm:inline">{showLost ? 'النشطاء' : 'المفقودين'}</span>
+                            </button>
+                            <button
+                                onClick={() => setConfirmDeleteAll(true)}
+                                className="h-9 px-3.5 flex items-center justify-center gap-1.5 text-[11px] font-bold transition-all duration-200 rounded-xl border bg-error-soft text-error border-error/20 hover:bg-error/20 hover:text-error"
+                                title="حذف جميع العملاء"
+                            >
+                                <Trash2 size={13} />
+                                <span className="hidden sm:inline">حذف الكل</span>
                             </button>
                             <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 text-[11px]">
                                 <Plus size={13} /> جديد
@@ -370,6 +426,7 @@ export const Leads = () => {
                 {/* Modals */}
                 <AnimatePresence>
                     {confirmLeadId && <ConfirmDeleteModal onConfirm={handleConfirmDelete} onCancel={() => setConfirmLeadId(null)} />}
+                    {confirmDeleteAll && <ConfirmDeleteAllModal onConfirm={() => deleteAllMutation.mutate()} onCancel={() => setConfirmDeleteAll(false)} isLoading={deleteAllMutation.isPending} />}
                 </AnimatePresence>
             </div>
         </motion.div>
