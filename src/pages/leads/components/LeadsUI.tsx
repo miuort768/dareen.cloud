@@ -79,13 +79,13 @@ export const StatCard = ({ title, value, icon: Icon, sparklineColor, trend }: {
 export const statusIconComponents: Record<LeadStatus | 'all', React.ComponentType<{ size?: number; className?: string }>> = {
     all: BarChart3, new: UserPlus, contacted: Phone, interested: Star, trial: Target, converted: CheckCircle2, lost: XCircle,
 };
-export const statusColors: Record<LeadStatus, { label: string; color: string; bg: string; dot: string; darkBg: string; darkText: string }> = {
-    new: { label: 'جديد', color: 'text-info', bg: 'bg-info/10', dot: 'bg-info', darkBg: 'dark:bg-info/15', darkText: 'dark:text-info' },
-    contacted: { label: 'تم الاتصال', color: 'text-warning', bg: 'bg-warning/10', dot: 'bg-warning', darkBg: 'dark:bg-warning/15', darkText: 'dark:text-warning' },
-    interested: { label: 'مهتم', color: 'text-success', bg: 'bg-success/10', dot: 'bg-success', darkBg: 'dark:bg-success/15', darkText: 'dark:text-success' },
-    trial: { label: 'حصة تجريبية', color: 'text-primary', bg: 'bg-primary/10', dot: 'bg-primary', darkBg: 'dark:bg-primary/15', darkText: 'dark:text-primary' },
-    converted: { label: 'محول', color: 'text-info', bg: 'bg-info/10', dot: 'bg-info', darkBg: 'dark:bg-info/15', darkText: 'dark:text-info' },
-    lost: { label: 'مفقود', color: 'text-error', bg: 'bg-error/10', dot: 'bg-error', darkBg: 'dark:bg-error/15', darkText: 'dark:text-error' },
+export const statusColors: Record<LeadStatus, { label: string; color: string; bg: string; activeBg: string; activeText: string; dot: string; darkBg: string; darkText: string }> = {
+    new: { label: 'جديد', color: 'text-info', bg: 'bg-info-soft', activeBg: 'bg-info', activeText: 'text-on-info', dot: 'bg-info', darkBg: '', darkText: '' },
+    contacted: { label: 'تم الاتصال', color: 'text-warning', bg: 'bg-warning-soft', activeBg: 'bg-warning', activeText: 'text-on-warning', dot: 'bg-warning', darkBg: '', darkText: '' },
+    interested: { label: 'مهتم', color: 'text-success', bg: 'bg-success-soft', activeBg: 'bg-success', activeText: 'text-on-success', dot: 'bg-success', darkBg: '', darkText: '' },
+    trial: { label: 'حصة تجريبية', color: 'text-primary', bg: 'bg-primary-soft', activeBg: 'bg-primary', activeText: 'text-on-primary', dot: 'bg-primary', darkBg: '', darkText: '' },
+    converted: { label: 'محول', color: 'text-info', bg: 'bg-info-soft', activeBg: 'bg-info', activeText: 'text-on-info', dot: 'bg-info', darkBg: '', darkText: '' },
+    lost: { label: 'مفقود', color: 'text-error', bg: 'bg-error-soft', activeBg: 'bg-error', activeText: 'text-on-error', dot: 'bg-error', darkBg: '', darkText: '' },
 };
 
 export const StatusChip = ({ status, size = 'sm' }: { status: LeadStatus; size?: 'sm' | 'md' }) => {

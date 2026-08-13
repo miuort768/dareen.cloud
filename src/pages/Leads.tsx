@@ -323,21 +323,21 @@ export const Leads = () => {
                                         className={cn(
                                             'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                                             isActive
-                                                ? `${cfg.bg} ${cfg.color} ${cfg.darkBg} ${cfg.darkText} border-current/15 shadow-sm shadow-current/5`
-                                                : `${cfg.bg} ${cfg.color} ${cfg.darkBg} ${cfg.darkText} border-transparent opacity-60 hover:opacity-100`
+                                                ? `${cfg.activeBg} ${cfg.activeText} border-current/20 shadow-sm`
+                                                : `${cfg.bg} ${cfg.color} border border-border/60 hover:border-current/40`
                                         )}>
                                         {Icon && <Icon size={10} />}
                                         {cfg.label}
                                         <span className={cn(
                                             'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
-                                            isActive ? 'bg-white/50 dark:bg-white/10 border border-current/10' : 'bg-white/30 dark:bg-white/5 border border-current/10'
+                                            isActive ? 'bg-white/20' : 'bg-surface text-muted border border-border/60'
                                         )}>{statusCounts[key]}</span>
                                     </motion.button>
                                 );
                             })}
                             {filterStatus !== 'all' && (
                                 <motion.button initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} whileTap={{ scale: 0.9 }} onClick={() => setFilterStatus('all')}
-                                    className="shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-error/10 text-error hover:bg-error/20 transition-all">
+                                    className="shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-error-soft text-error hover:bg-error/20 transition-all">
                                     <X size={13} />
                                 </motion.button>
                             )}
