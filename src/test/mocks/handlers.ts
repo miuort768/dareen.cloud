@@ -43,7 +43,7 @@ export const handlers = [
         HttpResponse.json({
             academyName: 'دارين السابعة',
             themeColor: 'var(--bg-primary)',
-            currency: 'SAR',
+            currency: 'EGP',
         }),
     ),
 

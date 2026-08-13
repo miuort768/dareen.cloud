@@ -28,7 +28,7 @@ const currencies = [
 ];
 
 const financialSettings = [
-  { key: 'reportCurrency', value: 'KWD' },
+  { key: 'reportCurrency', value: 'EGP' },
   { key: 'decimalPlaces', value: '3' },
   { key: 'roundingMode', value: 'HALF_UP' },
   { key: 'autoUpdateRates', value: 'false' },

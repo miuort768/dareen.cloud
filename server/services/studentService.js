@@ -114,7 +114,7 @@ async function createStudent(data, user) {
     await tx.student.create({
       data: {
         id: newId, name, grade, parentPhone, studentPhone, curriculum, notes,
-        sessionPrice: sessionPrice || 0, currency: currency || 'KWD',
+        sessionPrice: sessionPrice || 0, currency: currency || 'EGP',
         username: dbUsername, password: hashed,
       },
     });
@@ -164,7 +164,7 @@ async function updateStudent(id, data, user) {
   const student = await prisma.$transaction(async (tx) => {
     const updateData = {
       name, grade, parentPhone, studentPhone, curriculum, notes,
-      sessionPrice: sessionPrice || 0, currency: currency || 'KWD',
+      sessionPrice: sessionPrice || 0, currency: currency || 'EGP',
     };
     if (dbUsername) updateData.username = dbUsername;
     if (newPasswordHash) updateData.password = newPasswordHash;

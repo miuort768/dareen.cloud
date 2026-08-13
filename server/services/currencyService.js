@@ -9,7 +9,7 @@ const SETTINGS_CACHE_TTL = 600;
 async function getReportCurrency() {
   return cache.remember(CACHE_KEYS.EXCHANGE_RATES + ':reportCurrency', SETTINGS_CACHE_TTL, async () => {
     const setting = await prisma.financialSetting.findUnique({ where: { key: 'reportCurrency' } });
-    return setting?.value || 'KWD';
+    return setting?.value || 'EGP';
   });
 }
 

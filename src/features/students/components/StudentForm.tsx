@@ -11,7 +11,7 @@ interface StudentFormProps {
 
 const GRADE_OPTIONS = ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس', 'السابع', 'الثامن', 'التاسع', 'العاشر', 'الحادي عشر', 'الثاني عشر'];
 const CURRICULUM_OPTIONS = ['المنهج السعودي', 'المنهج المصري', 'المنهج السوري', 'المنهج الكويتي', 'المنهج الإماراتي', 'المنهج الفلسطيني', 'منهج دبلوما', 'منهج أمريكي', 'منهج بريطاني', 'أخرى'];
-const CURRENCY_OPTIONS = ['KWD', 'SAR', 'AED', 'QAR', 'OMR', 'BHD', 'EGP', 'USD'];
+const CURRENCY_OPTIONS = ['EGP', 'KWD', 'SAR', 'AED', 'QAR', 'OMR', 'BHD', 'USD'];
 
 export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProps) => {
     const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
         curriculum: '',
         notes: '',
         sessionPrice: '',
-        currency: 'SAR',
+        currency: 'EGP',
         username: '',
         password: ''
     });

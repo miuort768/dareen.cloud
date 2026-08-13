@@ -28,7 +28,7 @@ export const FinancialReport = ({
     totalExpenses,
     monthExpenses,
     completedSessions,
-    reportCurrency = 'SAR'
+    reportCurrency = 'EGP'
 }: FinancialReportProps) => {
     const netProfit = totalRevenue - totalExpenses;
     const monthNetProfit = monthRevenue - monthExpenses;

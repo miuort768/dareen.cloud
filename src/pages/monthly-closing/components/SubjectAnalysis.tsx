@@ -16,7 +16,7 @@ interface SubjectAnalysisProps {
     reportCurrency?: string;
 }
 
-export const SubjectAnalysis = React.memo(({ subjectAnalysis, reportCurrency = 'SAR' }: SubjectAnalysisProps) => {
+export const SubjectAnalysis = React.memo(({ subjectAnalysis, reportCurrency = 'EGP' }: SubjectAnalysisProps) => {
     return (
         <div className="space-y-6">
             <SectionCard className="p-6">

@@ -3,7 +3,7 @@ import { Plus, X, Loader2 } from 'lucide-react';
 import type { Teacher } from '../../teachers/types';
 import type { ScheduleSlot } from '../types';
 
-export const CURRENCIES = ['KWD', 'SAR', 'EGP', 'AED', 'QAR', 'OMR', 'BHD', 'USD'];
+export const CURRENCIES = ['EGP', 'KWD', 'SAR', 'AED', 'QAR', 'OMR', 'BHD', 'USD'];
 
 interface EnrollmentFormProps {
     teachers: Teacher[];
@@ -24,7 +24,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading, defaultCurrency 
     const [form, setForm] = useState({
         teacherId: '',
         subject: '',
-        curr: defaultCurrency || 'KWD',
+        curr: defaultCurrency || 'EGP',
         curriculum: '',
         totalSessions: ''
     });
@@ -54,7 +54,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading, defaultCurrency 
             totalSessions: Number(form.totalSessions) || 0,
             schedule
         });
-        setForm({ teacherId: '', subject: '', curr: defaultCurrency || 'KWD', curriculum: '', totalSessions: '' });
+        setForm({ teacherId: '', subject: '', curr: defaultCurrency || 'EGP', curriculum: '', totalSessions: '' });
         setSchedule([]);
     };
 

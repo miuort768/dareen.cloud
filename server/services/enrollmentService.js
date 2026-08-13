@@ -154,7 +154,7 @@ async function createEnrollment(data, user) {
         : null;
       const studentPrice = student.sessionPrice ?? 0;
       const teacherPrice = teacherRow ? teacherRow.price : 0;
-      const studentCurrency = curr || student.currency || 'KWD';
+      const studentCurrency = curr || student.currency || 'EGP';
       const teacherCurrency = (teacherRow && teacherRow.currency) || 'EGP';
 
       let exchangeRateFrom = null;

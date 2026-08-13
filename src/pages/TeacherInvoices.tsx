@@ -30,7 +30,7 @@ export const TeacherInvoices = () => {
     const [formData, setFormData] = useState<TeacherInvoiceFormData>({
         teacherId: '', teacher: '', specialization: '', amount: '',
         paymentMethod: '', status: INVOICE_STATUS.PROCESSING,
-        personalExpenses: '', currency: 'SAR'
+        personalExpenses: '', currency: 'EGP'
     });
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<string>('all');
@@ -141,7 +141,7 @@ export const TeacherInvoices = () => {
 
     const handleCancel = useCallback(() => {
         setEditingId(null);
-        setFormData({ teacherId: '', teacher: '', specialization: '', amount: '', paymentMethod: '', status: INVOICE_STATUS.PROCESSING, personalExpenses: '', currency: 'SAR' });
+        setFormData({ teacherId: '', teacher: '', specialization: '', amount: '', paymentMethod: '', status: INVOICE_STATUS.PROCESSING, personalExpenses: '', currency: 'EGP' });
         setShowForm(false);
     }, []);
 
@@ -213,7 +213,7 @@ export const TeacherInvoices = () => {
                             const totalAmount = teacherSessions.reduce((sum, sess) => sum + (sess.teacherPrice || t.price || 0), 0);
                             return api.post('/invoices/teacher', {
                                 teacherId: t.id || null, teacher: t.name, specialization: t.subject || '', amount: totalAmount,
-                                paymentMethod: 'نقدي', status: INVOICE_STATUS.PROCESSING, personalExpenses: 0, currency: 'SAR',
+                                paymentMethod: 'نقدي', status: INVOICE_STATUS.PROCESSING, personalExpenses: 0, currency: 'EGP',
                                 date: new Date().toISOString().split('T')[0]
                             });
                         }));

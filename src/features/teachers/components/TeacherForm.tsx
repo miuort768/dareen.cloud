@@ -17,7 +17,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
         phone2: '',
         subject: '',
         price: '',
-        currency: 'SAR',
+        currency: 'EGP',
         username: '',
         password: ''
     });

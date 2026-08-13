@@ -171,7 +171,7 @@ router.post('/', authMiddleware, checkRole(['admin', 'teacher']), validate(creat
             if (teacherRow) teacherPrice = teacherRow.price;
 
             // Phase 2B: Currency snapshot
-            const studentCurrency = body.currency || (student ? student.currency : null) || 'KWD';
+            const studentCurrency = body.currency || (student ? student.currency : null) || 'EGP';
             const teacherCurrency = body.teacherCurrency || (teacherRow ? teacherRow.currency : null) || 'EGP';
 
             let exchangeRateFrom = null;

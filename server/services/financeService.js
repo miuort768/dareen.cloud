@@ -204,16 +204,16 @@ async function getStats() {
       }),
     ]);
 
-    const sessionIncome = await sumGroupedByCurrency(sessionByCurrency, 'price', 'studentCurrency', 'KWD', reportCurrency);
-    const manualIncomeTotal = await sumGroupedByCurrency(incomeByCurrency, 'amount', 'currency', 'KWD', reportCurrency);
+    const sessionIncome = await sumGroupedByCurrency(sessionByCurrency, 'price', 'studentCurrency', 'EGP', reportCurrency);
+    const manualIncomeTotal = await sumGroupedByCurrency(incomeByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
     const invoiceExpense = await sumGroupedByCurrency(invoiceByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
-    const manualExpenseTotal = await sumGroupedByCurrency(expenseByCurrency, 'amount', 'currency', 'KWD', reportCurrency);
-    const fixedExpenseTotal = await convertItems(fixedExpenses, 'amount', 'currency', 'KWD', reportCurrency);
+    const manualExpenseTotal = await sumGroupedByCurrency(expenseByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
+    const fixedExpenseTotal = await convertItems(fixedExpenses, 'amount', 'currency', 'EGP', reportCurrency);
 
-    const mSessionIncome = await sumGroupedByCurrency(monthSessionByCurrency, 'price', 'studentCurrency', 'KWD', reportCurrency);
-    const mManualIncomeTotal = await sumGroupedByCurrency(monthIncomeByCurrency, 'amount', 'currency', 'KWD', reportCurrency);
+    const mSessionIncome = await sumGroupedByCurrency(monthSessionByCurrency, 'price', 'studentCurrency', 'EGP', reportCurrency);
+    const mManualIncomeTotal = await sumGroupedByCurrency(monthIncomeByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
     const mInvoiceExpense = await sumGroupedByCurrency(monthInvoiceByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
-    const mManualExpenseTotal = await sumGroupedByCurrency(monthExpenseByCurrency, 'amount', 'currency', 'KWD', reportCurrency);
+    const mManualExpenseTotal = await sumGroupedByCurrency(monthExpenseByCurrency, 'amount', 'currency', 'EGP', reportCurrency);
 
     const [recentSessions, recentIncomes, recentInvoices, recentExpenses] = await Promise.all([
       prisma.session.findMany({
@@ -246,10 +246,10 @@ async function getStats() {
       const mExpenses = recentExpenses.filter(t => t.date && t.date.startsWith(mStr));
 
       const [mSessConv, mIncConv, mInvConv, mExpConv] = await Promise.all([
-        convertItems(mSessions, 'price', 'studentCurrency', 'KWD', reportCurrency),
-        convertItems(mIncomes, 'amount', 'currency', 'KWD', reportCurrency),
+        convertItems(mSessions, 'price', 'studentCurrency', 'EGP', reportCurrency),
+        convertItems(mIncomes, 'amount', 'currency', 'EGP', reportCurrency),
         convertItems(mInvoices, 'amount', 'currency', 'EGP', reportCurrency),
-        convertItems(mExpenses, 'amount', 'currency', 'KWD', reportCurrency),
+        convertItems(mExpenses, 'amount', 'currency', 'EGP', reportCurrency),
       ]);
 
       monthlyData.push({ month: mLabel, income: mSessConv + mIncConv, expense: mInvConv + mExpConv });
@@ -260,7 +260,7 @@ async function getStats() {
       const cat = row.category || 'أخرى';
       const amount = row._sum.amount || 0;
       if (amount === 0) continue;
-      const currency = row.currency || 'KWD';
+      const currency = row.currency || 'EGP';
       const converted = await currencyService.convert(amount, currency, reportCurrency);
       catMap[cat] = (catMap[cat] || 0) + converted;
     }
