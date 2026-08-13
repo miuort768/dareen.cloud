@@ -73,10 +73,10 @@ const itemVariants = {
 };
 
 const statusFilters = [
-  { key: 'pending', label: 'بانتظار', color: 'text-warning', bg: 'bg-warning/10', darkBg: 'dark:bg-warning/15', darkText: 'dark:text-warning', dot: 'bg-warning' },
-  { key: 'completed', label: 'تمت', color: 'text-success', bg: 'bg-success/10', darkBg: 'dark:bg-success/15', darkText: 'dark:text-success', dot: 'bg-success' },
-  { key: 'cancelled', label: 'ملغية', color: 'text-error', bg: 'bg-error/10', darkBg: 'dark:bg-error/15', darkText: 'dark:text-error', dot: 'bg-error' },
-  { key: 'converted', label: 'محولة', color: 'text-info', bg: 'bg-info/10', darkBg: 'dark:bg-info/15', darkText: 'dark:text-info', dot: 'bg-info' },
+  { key: 'pending', label: 'بانتظار', color: 'text-warning', bg: 'bg-warning-soft', activeBg: 'bg-warning', activeText: 'text-on-warning', dot: 'bg-warning' },
+  { key: 'completed', label: 'تمت', color: 'text-success', bg: 'bg-success-soft', activeBg: 'bg-success', activeText: 'text-on-success', dot: 'bg-success' },
+  { key: 'cancelled', label: 'ملغية', color: 'text-error', bg: 'bg-error-soft', activeBg: 'bg-error', activeText: 'text-on-error', dot: 'bg-error' },
+  { key: 'converted', label: 'محولة', color: 'text-info', bg: 'bg-info-soft', activeBg: 'bg-info', activeText: 'text-on-info', dot: 'bg-info' },
 ];
 
 const TrialSessionsSkeleton = () => (
@@ -396,12 +396,12 @@ export const TrialSessions = () => {
                   'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                   !filterStatus
                     ? 'bg-primary text-on-primary border-primary shadow-sm shadow-primary/10'
-                    : 'bg-surface text-muted border-border hover:border-primary/20 hover:text-main'
+                    : 'bg-primary-soft text-primary border border-border/60 hover:border-current/40'
                 )}>
                 الكل
                 <span className={cn(
                   'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
-                  !filterStatus ? 'bg-white/20' : 'bg-card text-muted border border-border'
+                  !filterStatus ? 'bg-white/20' : 'bg-surface text-muted border border-border/60'
                 )}>{trials.length}</span>
               </motion.button>
               {statusFilters.map((sf) => {
@@ -412,21 +412,21 @@ export const TrialSessions = () => {
                     className={cn(
                       'inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-[10px] font-bold rounded-lg border transition-all duration-200 shrink-0',
                       isActive
-                        ? `${sf.bg} ${sf.color} ${sf.darkBg} ${sf.darkText} border-current/15 shadow-sm shadow-current/5`
-                        : `${sf.bg} ${sf.color} ${sf.darkBg} ${sf.darkText} border-transparent opacity-60 hover:opacity-100`
+                        ? `${sf.activeBg} ${sf.activeText} border-current/20 shadow-sm`
+                        : `${sf.bg} ${sf.color} border border-border/60 hover:border-current/40`
                     )}>
                     <span className={cn('w-1.5 h-1.5 rounded-full', sf.dot)} />
                     {sf.label}
                     <span className={cn(
                       'text-[9px] px-1.5 py-0.5 rounded-md min-w-[16px] text-center font-bold',
-                      isActive ? 'bg-white/50 dark:bg-white/10 border border-current/10' : 'bg-white/30 dark:bg-white/5 border border-current/10'
+                      isActive ? 'bg-white/20' : 'bg-surface text-muted border border-border/60'
                     )}>{count}</span>
                   </motion.button>
                 );
               })}
               {filterStatus && (
                 <motion.button initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} whileTap={{ scale: 0.9 }} onClick={() => setFilterStatus('')}
-                  className="shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-error/10 text-error hover:bg-error/20 transition-all">
+                  className="shrink-0 w-7 h-7 flex items-center justify-center rounded-lg bg-error-soft text-error hover:bg-error/20 transition-all">
                   <X size={13} />
                 </motion.button>
               )}
