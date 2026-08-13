@@ -61,9 +61,9 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string, date
 
     const updateSchedule = async (student: Student, enrollmentIndex: number, newSchedule: ScheduleSlot[]) => {
         try {
-            const updatedStudent = { ...student };
-            updatedStudent.enrollments[enrollmentIndex]!.schedule = newSchedule;
-            await attendanceService.updateStudent(updatedStudent);
+            const enrollment = student.enrollments?.[enrollmentIndex];
+            if (!enrollment?.id) return false;
+            await attendanceService.updateSchedule(student.id, enrollment.id, newSchedule);
             fetchAll();
             return true;
         } catch (error) {
@@ -76,19 +76,16 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string, date
         try {
             const student = students.find(s => s.id === studentId);
             if (!student) return false;
-            
-            const enrollmentIndex = student.enrollments.findIndex(e => e.subject === subject);
-            if (enrollmentIndex === -1) return false;
 
-            const updatedStudent = { ...student };
-            const updatedEnrollments = student.enrollments.map((e) => 
-                e.subject === subject ? { ...e, nextSessionNotes: notes } : e
-            );
-            updatedStudent.enrollments = updatedEnrollments;
+            const enrollment = student.enrollments.find(e => e.subject === subject);
+            if (!enrollment?.id) return false;
 
-            await attendanceService.updateStudent(updatedStudent);
+            await attendanceService.updateEnrollmentNotes(studentId, enrollment.id, notes);
             // Deep update state to ensure re-render
-            setStudents(prev => [...prev.map(s => s.id === studentId ? { ...updatedStudent } : s)]);
+            setStudents(prev => prev.map(s => s.id === studentId ? {
+                ...s,
+                enrollments: s.enrollments.map(e => e.subject === subject ? { ...e, nextSessionNotes: notes } : e),
+            } : s));
             return true;
         } catch (error) {
             console.error("Error updating enrollment notes", error);

@@ -179,6 +179,19 @@ const createEnrollmentSchema = z.object({
 });
 
 const updateEnrollmentSchema = createEnrollmentSchema.partial();
+
+const updateEnrollmentScheduleSchema = z.object({
+    schedule: z.array(z.object({
+        day: z.string(),
+        hour: z.string(),
+        period: z.string().optional()
+    })).optional().default([])
+});
+
+const updateEnrollmentNotesSchema = z.object({
+    notes: z.string().max(1000).nullable().optional()
+});
+
 const createLeadSchema = z.object({
     id: z.string().optional(),
     studentName: z.string().min(1, "Student name is required").trim(),
@@ -214,6 +227,8 @@ module.exports = {
     updateTeacherInvoiceSchema: createTeacherInvoiceSchema.partial(),
     createEnrollmentSchema,
     updateEnrollmentSchema,
+    updateEnrollmentScheduleSchema,
+    updateEnrollmentNotesSchema,
 
     createLeadSchema,
     updateLeadSchema

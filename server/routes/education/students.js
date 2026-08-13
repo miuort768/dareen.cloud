@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { authMiddleware, checkRole } = require('../../middleware/auth');
 const validate = require('../../middleware/validation');
-const { createStudentSchema, updateStudentSchema } = require('../../utils/validators');
+const { createStudentSchema, updateStudentSchema, updateEnrollmentScheduleSchema, updateEnrollmentNotesSchema } = require('../../utils/validators');
 const studentService = require('../../services/studentService');
 const logger = require('../../utils/logger');
 
@@ -68,6 +68,32 @@ router.patch('/:studentId/enrollments/:enrollmentId/freeze', authMiddleware, che
     res.json(updated);
   } catch (err) {
     logger.error('Error updating freeze status', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.patch('/:studentId/enrollments/:enrollmentId/schedule', authMiddleware, checkRole(['admin', 'teacher']), validate(updateEnrollmentScheduleSchema), async (req, res) => {
+  try {
+    const updated = await studentService.updateEnrollmentSchedule(req.params.studentId, req.params.enrollmentId, req.body.schedule, req.user);
+    res.json(updated);
+  } catch (err) {
+    if (err.statusCode) {
+      return res.status(err.statusCode).json({ error: err.message });
+    }
+    logger.error('Error updating enrollment schedule', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.patch('/:studentId/enrollments/:enrollmentId/notes', authMiddleware, checkRole(['admin', 'teacher']), validate(updateEnrollmentNotesSchema), async (req, res) => {
+  try {
+    const updated = await studentService.updateEnrollmentNotes(req.params.studentId, req.params.enrollmentId, req.body.notes, req.user);
+    res.json(updated);
+  } catch (err) {
+    if (err.statusCode) {
+      return res.status(err.statusCode).json({ error: err.message });
+    }
+    logger.error('Error updating enrollment notes', err);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

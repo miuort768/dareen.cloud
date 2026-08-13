@@ -2,7 +2,9 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const { prisma } = require('../utils/prisma');
 const { AUDIT_ACTIONS } = require('../constants/auditActions');
+const { CACHE_KEYS } = require('../constants/cacheKeys');
 const { audit } = require('./auditService');
+const cache = require('./cacheService');
 const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccount, deactivateBulkAccounts } = require('./authAccounts');
 
 const studentInclude = {
@@ -260,6 +262,55 @@ async function freezeEnrollment(studentId, enrollmentId, data, user) {
   return updated;
 }
 
+async function assertEnrollmentAccess(studentId, enrollmentId, user) {
+  const where = { id: parseInt(enrollmentId), studentId };
+  if (user && user.role === 'teacher') {
+    const teacherName = user.teacherName || user.name;
+    const or = [{ teacherId: user.id }];
+    if (teacherName) or.push({ teacherFallback: { equals: teacherName, mode: 'insensitive' } });
+    where.OR = or;
+  }
+  const enrollment = await prisma.enrollment.findFirst({
+    where,
+    select: { id: true, teacherId: true, teacherFallback: true },
+  });
+  if (!enrollment) {
+    const err = new Error('الاشتراك غير موجود أو غير تابع لك');
+    err.statusCode = user && user.role === 'teacher' ? 403 : 404;
+    throw err;
+  }
+  return enrollment;
+}
+
+async function invalidateEnrollmentCaches(enrollmentId, studentId, teacherId) {
+  const keys = [CACHE_KEYS.enrollments.byId(enrollmentId), CACHE_KEYS.enrollments.list()];
+  if (studentId) keys.push(CACHE_KEYS.enrollments.byStudent(studentId));
+  if (teacherId) keys.push(CACHE_KEYS.enrollments.byTeacher(teacherId));
+  await Promise.all(keys.map(k => cache.del(k)));
+}
+
+async function updateEnrollmentSchedule(studentId, enrollmentId, schedule, user) {
+  const enrollment = await assertEnrollmentAccess(studentId, enrollmentId, user);
+  const updated = await prisma.enrollment.update({
+    where: { id: parseInt(enrollmentId), studentId },
+    data: { schedule: schedule && schedule.length > 0 ? JSON.stringify(schedule) : null },
+  });
+  await audit(user.id, user.username, AUDIT_ACTIONS.STUDENT_UPDATED, { studentId, schedule: true }, 'enrollment', enrollmentId);
+  await invalidateEnrollmentCaches(enrollmentId, studentId, enrollment.teacherId);
+  return mapEnrollment(updated);
+}
+
+async function updateEnrollmentNotes(studentId, enrollmentId, notes, user) {
+  const enrollment = await assertEnrollmentAccess(studentId, enrollmentId, user);
+  const updated = await prisma.enrollment.update({
+    where: { id: parseInt(enrollmentId), studentId },
+    data: { nextSessionNotes: notes || null },
+  });
+  await audit(user.id, user.username, AUDIT_ACTIONS.STUDENT_UPDATED, { studentId, notes: true }, 'enrollment', enrollmentId);
+  await invalidateEnrollmentCaches(enrollmentId, studentId, enrollment.teacherId);
+  return mapEnrollment(updated);
+}
+
 module.exports = {
   getStudents,
   createStudent,
@@ -267,4 +318,6 @@ module.exports = {
   deleteStudent,
   deleteAllStudents,
   freezeEnrollment,
+  updateEnrollmentSchedule,
+  updateEnrollmentNotes,
 };

@@ -1,5 +1,5 @@
 import { api } from '../../../lib/api';
-import type { Session, Student } from '../types';
+import type { Session, Student, ScheduleSlot } from '../types';
 
 export const attendanceService = {
     getSessions: async (): Promise<Session[]> => {
@@ -20,7 +20,11 @@ export const attendanceService = {
         return api.post<Session>('/sessions', session);
     },
 
-    updateStudent: async (student: Student): Promise<void> => {
-        await api.put(`/students/${student.id}`, student);
+    updateSchedule: async (studentId: string, enrollmentId: string | number, schedule: ScheduleSlot[]): Promise<void> => {
+        await api.patch(`/students/${studentId}/enrollments/${enrollmentId}/schedule`, { schedule });
+    },
+
+    updateEnrollmentNotes: async (studentId: string, enrollmentId: string | number, notes: string): Promise<void> => {
+        await api.patch(`/students/${studentId}/enrollments/${enrollmentId}/notes`, { notes });
     }
 };
