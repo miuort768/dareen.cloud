@@ -9,6 +9,9 @@ export interface Teacher {
     currency?: string;
     username?: string;
     password?: string;
+    points?: number;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 export interface Session {

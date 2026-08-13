@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Bell, MessageCircle, Clock } from 'lucide-react';
+import { X, Bell, MessageCircle, Clock, CreditCard } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Teacher, Session } from '../types';
 import type { Student, Enrollment } from '../../../types';
@@ -37,9 +37,10 @@ export const TeacherDetails = ({
     const [showActivityModal, setShowActivityModal] = useState(false);
 
     const enrolledStudents = students.filter(s =>
-        s.enrollments?.some((e: Enrollment) =>
-            (e.teacherId && e.teacherId === teacher.id) || e.teacher === teacher.name
-        )
+        s.enrollments?.some((e: Enrollment) => {
+            const name = typeof e.teacher === 'string' ? e.teacher : e.teacher && typeof e.teacher === 'object' ? e.teacher.name : e.teacherFallback;
+            return (e.teacherId && e.teacherId === teacher.id) || (name && name === teacher.name) || (e.teacherFallback && e.teacherFallback === teacher.name);
+        })
     );
 
     const teacherSessions = sessions
@@ -78,7 +79,7 @@ export const TeacherDetails = ({
                         </div>
                         <div className="min-w-0">
                             <h3 className="text-sm font-bold text-on-primary truncate">{teacher.name}</h3>
-                            <span className="text-[10px] text-on-error bg-error-soft px-2 py-0.5 rounded-lg">{teacher.subject}</span>
+                            <span className="text-[10px] text-error bg-error-soft px-2 py-0.5 rounded-lg">{teacher.subject}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -98,7 +99,22 @@ export const TeacherDetails = ({
 
                 <TeacherEnrollmentList enrolledStudents={enrolledStudents} teacherId={teacher.id} teacherName={teacher.name} onLogAttendance={onLogAttendance} onUnenroll={onUnenroll} isTeacherView={isTeacherView} />
 
-                <div className="pt-4">
+                <div className="pt-4 space-y-3">
+                    <button
+                        onClick={() => setShowCard(true)}
+                        className="w-full py-4 bg-surface border border-border rounded-2xl flex items-center justify-between px-6 hover:border-primary transition-all group"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center group-hover:bg-primary-hover transition-all">
+                                <CreditCard size={18} className="text-on-primary" />
+                            </div>
+                            <div className="text-start">
+                                <p className="text-sm text-main group-hover:text-primary transition-all">بطاقة هوية المعلمة</p>
+                                <p className="text-xs text-muted mt-0.5">عرض بيانات التعريف والرواتب</p>
+                            </div>
+                        </div>
+                        <CreditCard size={16} className="text-muted group-hover:text-primary" />
+                    </button>
                     <button
                         onClick={() => setShowActivityModal(true)}
                         className="w-full py-4 bg-primary-soft border border-primary/20 rounded-2xl flex items-center justify-between px-6 hover:border-primary transition-all group"

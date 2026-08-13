@@ -52,6 +52,7 @@ interface EnrollmentFormData {
     teacher: string;
     subject: string;
     curr: string;
+    curriculum?: string;
     totalSessions: number;
     schedule: ScheduleSlot[];
 }
@@ -149,6 +150,7 @@ export const Students = () => {
                 teacher: enrollData.teacher,
                 subject: enrollData.subject,
                 curr: enrollData.curr,
+                curriculum: enrollData.curriculum || '',
                 sessionsTotal: enrollData.totalSessions,
                 schedule: enrollData.schedule,
                 sessions: generateSessionDates(enrollData.schedule, enrollData.totalSessions).map(info => ({

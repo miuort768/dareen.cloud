@@ -10,6 +10,7 @@ import { StudentCard } from './StudentCard';
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../../shared/utils/ranks';
 import { RankBadge } from '../../../shared/components/RankBadge';
 import { ProgressBar } from '../../../shared/components/ui';
+import { enrollmentTeacherName } from '../utils/enrollmentUtils';
 
 interface StudentDetailsProps {
     student: Student;
@@ -160,7 +161,7 @@ export const StudentDetails = ({
                                                     <div className="w-4 h-4 bg-hover flex items-center justify-center rounded">
                                                      <User size={8} className="text-muted" />
                                                 </div>
-                                                <span className="text-micro font-normal text-muted">{en.teacher}</span>
+                                                <span className="text-micro font-normal text-muted">{enrollmentTeacherName(en) || '—'}</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1">
@@ -258,7 +259,7 @@ export const StudentDetails = ({
                                     <h4 className="font-medium text-xs text-main uppercase tracking-tighter">إدراج مسار أكاديمي</h4>
                                 </div>
                             </div>
-                            <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} isLoading={isAddingEnrollment} />
+                            <EnrollmentForm teachers={teachers} onSubmit={onAddEnrollment} isLoading={isAddingEnrollment} defaultCurrency={student.currency} />
                         </div>
                     </div>
                 </div>

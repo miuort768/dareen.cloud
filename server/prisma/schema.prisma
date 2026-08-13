@@ -111,6 +111,7 @@ model Enrollment {
   teacherFallback  String?  @map("teacher")
   subject          String?
   curr             String?
+  curriculum       String?
   sessionsTotal    Int      @default(0) @map("sessions_total")
   sessionsUsed     Int      @default(0) @map("sessions_used")
   schedule         String?

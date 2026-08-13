@@ -3,10 +3,12 @@
 
 export interface Enrollment {
     id?: string;
-    teacher: string;
+    teacher: string | { id: string; name: string; subject?: string } | null;
     teacherId?: string;
+    teacherFallback?: string;
     subject: string;
     curr: string;
+    curriculum?: string;
     sessionsTotal: number;
     sessionsUsed: number;
     schedule: ScheduleSlot[];

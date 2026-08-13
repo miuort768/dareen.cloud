@@ -5,6 +5,7 @@ import { cn } from '../../../lib/utils';
 import type { Student, Enrollment, ScheduleSlot } from '../types';
 import type { Teacher } from '../../teachers/types';
 import { EnrollmentForm } from './EnrollmentForm';
+import { enrollmentTeacherName } from '../utils/enrollmentUtils';
 
 interface StudentDrawerProps {
   student: Student | null;
@@ -19,6 +20,7 @@ interface StudentDrawerProps {
     teacher: string;
     subject: string;
     curr: string;
+    curriculum?: string;
     totalSessions: number;
     schedule: ScheduleSlot[];
   }) => void;
@@ -373,7 +375,12 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teacher
                             </div>
                             <div>
                               <h4 className="text-xs font-bold text-main">{en.subject}</h4>
-                              <p className="text-[9px] text-muted">{en.teacher}</p>
+                              <p className="text-[9px] text-muted">{enrollmentTeacherName(en) || '—'}</p>
+                              {en.curriculum ? (
+                                <span className="inline-flex items-center gap-0.5 mt-1 px-1.5 py-0.5 rounded text-[8px] font-bold bg-primary-soft text-primary ring-1 ring-primary/20">
+                                  <BookOpen size={8} /> {en.curriculum}
+                                </span>
+                              ) : null}
                             </div>
                           </div>
                           {isLow && (
@@ -459,6 +466,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teacher
                       teachers={teachers}
                       onSubmit={(data) => onAddProgram?.(data)}
                       isLoading={isAddingProgram}
+                      defaultCurrency={student.currency}
                     />
                   </div>
                 ) : (

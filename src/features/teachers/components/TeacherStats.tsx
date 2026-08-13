@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, UserPlus, BookOpen, DollarSign, TrendingUp, TrendingDown } from 'lucide-react';
+import { Users, UserPlus, BookOpen, DollarSign } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
 
@@ -9,8 +9,6 @@ interface TeacherStatsProps {
   totalStudents: number;
   uniqueSubjects: number;
   averagePrice: number;
-  previousTeachers?: number;
-  previousStudents?: number;
 }
 
 const Counter = ({ value, duration = 600 }: { value: number; duration?: number }) => {
@@ -32,24 +30,10 @@ const Counter = ({ value, duration = 600 }: { value: number; duration?: number }
   return <>{count}</>;
 };
 
-const Sparkline = ({ data, color }: { data: number[]; color: string }) => {
-  if (data.length < 2) return null;
-  const w = 48; const h = 20;
-  const min = Math.min(...data); const max = Math.max(...data);
-  const range = max - min || 1;
-  const points = data.map((v, i) => `${(i / (data.length - 1)) * w},${h - ((v - min) / range) * h}`).join(' ');
-  return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} className="shrink-0">
-      <polyline fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" points={points} />
-    </svg>
-  );
-};
-
 const primaryStat = {
   label: 'المعلمات',
   icon: Users,
   value: (p: TeacherStatsProps) => p.totalTeachers,
-  prev: (p: TeacherStatsProps) => p.previousTeachers ?? Math.max(0, p.totalTeachers - 1),
   bg: 'bg-gradient-to-br from-primary via-primary-deep to-primary-hover',
   text: 'text-on-primary',
   iconBg: 'bg-white/15',
@@ -59,30 +43,22 @@ const secondaryStats = [
   {
     label: 'الطلاب', icon: UserPlus,
     value: (p: TeacherStatsProps) => p.totalStudents,
-    prev: (p: TeacherStatsProps) => p.previousStudents ?? Math.max(0, p.totalStudents - 3),
     bg: 'bg-success-soft', text: 'text-success', iconBg: 'bg-success/10', ring: 'ring-success/20',
   },
   {
     label: 'التخصصات', icon: BookOpen,
     value: (p: TeacherStatsProps) => p.uniqueSubjects,
-    prev: () => 0,
     bg: 'bg-info-soft', text: 'text-info', iconBg: 'bg-info/10', ring: 'ring-info/20',
   },
   {
     label: 'متوسط السعر', icon: DollarSign,
     value: (p: TeacherStatsProps) => `${p.averagePrice} ${CURRENCY_SYMBOL}`,
-    prev: () => 0,
     bg: 'bg-warning-soft', text: 'text-warning', iconBg: 'bg-warning/10', ring: 'ring-warning/20',
   },
 ];
 
 export const TeacherStats = (props: TeacherStatsProps) => {
   const pVal = primaryStat.value(props);
-  const pPrev = primaryStat.prev(props);
-  const pTrend = pPrev > 0 ? ((pVal - pPrev) / pPrev) * 100 : 0;
-  const isTrendUp = pTrend >= 0;
-
-  const sparkDataPrimary = [pPrev, pVal];
 
   return (
     <div className="space-y-2">
@@ -114,13 +90,6 @@ export const TeacherStats = (props: TeacherStatsProps) => {
               </p>
               <p className={cn("text-[10px] mt-1 opacity-70", primaryStat.text)}>{primaryStat.label}</p>
             </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Sparkline data={sparkDataPrimary} color="rgba(255,255,255,0.5)" />
-            <span className={cn("inline-flex items-center gap-0.5 text-[10px] font-bold", isTrendUp ? 'text-success' : 'text-error')}>
-              {isTrendUp ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
-              {Math.abs(pTrend).toFixed(0)}%
-            </span>
           </div>
         </div>
       </motion.div>

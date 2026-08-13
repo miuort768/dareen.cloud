@@ -108,7 +108,7 @@ async function getTeacherEnrollments(teacherId) {
 }
 
 async function createEnrollment(data, user) {
-  const { studentId, teacherId, teacher, subject, curr, sessionsTotal, schedule, sessions, nextSessionNotes } = data;
+  const { studentId, teacherId, teacher, subject, curr, curriculum, sessionsTotal, schedule, sessions, nextSessionNotes } = data;
 
   if (!studentId || !subject) {
     throw Object.assign(new Error('studentId and subject are required'), { statusCode: 400 });
@@ -119,8 +119,9 @@ async function createEnrollment(data, user) {
     throw Object.assign(new Error('Student not found'), { statusCode: 404 });
   }
 
+  let teacherRecord = null;
   if (teacherId) {
-    const teacherRecord = await prisma.teacher.findUnique({ where: { id: teacherId } });
+    teacherRecord = await prisma.teacher.findUnique({ where: { id: teacherId } });
     if (!teacherRecord || teacherRecord.deletedAt) {
       throw Object.assign(new Error('Teacher not found'), { statusCode: 404 });
     }
@@ -139,6 +140,7 @@ async function createEnrollment(data, user) {
         studentId, teacherId: teacherId || null,
         teacherFallback: teacher || null,
         subject, curr: curr || student.currency || null,
+        curriculum: curriculum || null,
         sessionsTotal: sessionsTotal || 0,
         schedule: schedule && schedule.length > 0 ? JSON.stringify(schedule) : null,
         nextSessionNotes: nextSessionNotes || null,
@@ -147,9 +149,30 @@ async function createEnrollment(data, user) {
     });
 
     if (sessions && sessions.length > 0) {
-      const price = teacherId
-        ? (await tx.teacher.findUnique({ where: { id: teacherId }, select: { price: true } }))?.price || 0
-        : 0;
+      const teacherRow = teacherId
+        ? await tx.teacher.findUnique({ where: { id: teacherId }, select: { id: true, price: true, currency: true } })
+        : null;
+      const studentPrice = student.sessionPrice ?? 0;
+      const teacherPrice = teacherRow ? teacherRow.price : 0;
+      const studentCurrency = curr || student.currency || 'KWD';
+      const teacherCurrency = (teacherRow && teacherRow.currency) || 'EGP';
+
+      let exchangeRateFrom = null;
+      let exchangeRateTo = null;
+      let exchangeRateValue = null;
+
+      if (studentCurrency !== teacherCurrency) {
+        const rate = await tx.exchangeRate.findFirst({
+          where: { fromCurrency: studentCurrency, toCurrency: teacherCurrency },
+          orderBy: { effectiveDate: 'desc' },
+        });
+        if (rate) {
+          exchangeRateFrom = studentCurrency;
+          exchangeRateTo = teacherCurrency;
+          exchangeRateValue = rate.buyRate;
+        }
+      }
+
       for (const s of sessions) {
         await tx.session.create({
           data: {
@@ -161,8 +184,14 @@ async function createEnrollment(data, user) {
             date: s.date,
             day: s.day || null,
             time: s.time || null,
-            status: 'pending',
-            price,
+            status: 'scheduled',
+            price: studentPrice,
+            teacherPrice,
+            studentCurrency,
+            teacherCurrency,
+            exchangeRateFrom,
+            exchangeRateTo,
+            exchangeRateValue,
           },
         });
       }
@@ -184,7 +213,7 @@ async function updateEnrollment(id, data, user) {
     throw Object.assign(new Error('Enrollment not found'), { statusCode: 404 });
   }
 
-  const { teacherId, teacher, subject, curr, sessionsTotal, schedule, nextSessionNotes } = data;
+  const { teacherId, teacher, subject, curr, curriculum, sessionsTotal, schedule, nextSessionNotes } = data;
 
   if (teacherId && teacherId !== enrollment.teacherId) {
     const teacherRecord = await prisma.teacher.findUnique({ where: { id: teacherId } });
@@ -198,6 +227,7 @@ async function updateEnrollment(id, data, user) {
   if (teacher !== undefined) updateData.teacherFallback = teacher || null;
   if (subject !== undefined) updateData.subject = subject;
   if (curr !== undefined) updateData.curr = curr;
+  if (curriculum !== undefined) updateData.curriculum = curriculum;
   if (sessionsTotal !== undefined) updateData.sessionsTotal = sessionsTotal;
   if (schedule !== undefined) updateData.schedule = JSON.stringify(schedule);
   if (nextSessionNotes !== undefined) updateData.nextSessionNotes = nextSessionNotes;

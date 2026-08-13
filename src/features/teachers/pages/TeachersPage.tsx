@@ -56,11 +56,40 @@ export const Teachers = () => {
   const [successModalData, setSuccessModalData] = useState<{ isOpen: boolean; title: string; message: string }>({ isOpen: false, title: '', message: '' });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const enrollmentTeacherName = (en: Enrollment): string | undefined => {
+    if (typeof en.teacher === 'string') return en.teacher;
+    if (en.teacher && typeof en.teacher === 'object') return (en.teacher as { name?: string }).name;
+    return en.teacherFallback;
+  };
+
+  const matchesTeacher = (en: Enrollment, t: Teacher): boolean => {
+    const name = enrollmentTeacherName(en);
+    return Boolean((en.teacherId && t.id && en.teacherId === t.id) || (name && t.name && name === t.name));
+  };
+
   const uniqueSubjects = useMemo(() => [...new Set(teachers.map(t => t.subject))].filter(Boolean), [teachers]);
   const subjectsList = useMemo(() => uniqueSubjects as string[], [uniqueSubjects]);
   const averagePrice = useMemo(() => teachers.length > 0 ? Math.round(teachers.reduce((sum, t) => sum + Number(t.price), 0) / teachers.length) : 0, [teachers]);
-  const totalStudentsCount = useMemo(() => new Set(students.flatMap(s => (s.enrollments || []).map((e: Enrollment) => ({ student: s.id, teacher: e.teacher }))).filter(e => teachers.some(t => t.name === e.teacher)).map(e => e.student)).size, [students, teachers]);
-  const studentCounts = useMemo(() => teachers.reduce((acc, t) => { acc[t.name] = students.filter(s => s.enrollments?.some((e: Enrollment) => e.teacher === t.name)).length; return acc; }, {} as Record<string, number>), [teachers, students]);
+  const totalStudentsCount = useMemo(() => {
+    const matched = new Set<string>();
+    for (const s of students) {
+      for (const en of s.enrollments || []) {
+        if (teachers.some(t => matchesTeacher(en, t))) { matched.add(s.id); break; }
+      }
+    }
+    return matched.size;
+  }, [students, teachers]);
+  const studentCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const t of teachers) counts[t.name] = 0;
+    for (const s of students) {
+      for (const en of s.enrollments || []) {
+        const t = teachers.find(t => matchesTeacher(en, t));
+        if (t) counts[t.name] = (counts[t.name] || 0) + 1;
+      }
+    }
+    return counts;
+  }, [students, teachers]);
 
   const computeStatus = (teacher: Teacher): string => {
     const count = studentCounts[teacher.name] || 0;
@@ -73,14 +102,6 @@ export const Teachers = () => {
     const matchStatus = !filterStatus || computeStatus(t) === filterStatus;
     return matchSearch && matchSubject && matchStatus;
   }), [teachers, searchTerm, filterSubject, filterStatus]);
-
-  const getTeacherRevenue = (teacherName: string) => {
-    return sessions.filter(s => s.teacherName === teacherName && s.status === 'completed').reduce((sum, s) => sum + (Number(s.price) || 0), 0);
-  };
-
-  const getTeacherRecentSessions = (teacherName: string) => {
-    return sessions.filter(s => s.teacherName === teacherName).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5);
-  };
 
   const handleAddTeacher = async (data: Omit<Teacher, 'id'>) => {
     try {
@@ -168,7 +189,10 @@ export const Teachers = () => {
 
   const unenrollMutation = useMutation({
     mutationFn: async ({ student, teacherName, teacherId }: { student: Student, teacherName: string, teacherId?: string }) => {
-      const updatedEnrollments = (student.enrollments || []).filter((en: Enrollment) => (en.teacherId && en.teacherId === teacherId) || en.teacher !== teacherName);
+      const updatedEnrollments = (student.enrollments || []).filter((en: Enrollment) => {
+        const name = typeof en.teacher === 'string' ? en.teacher : en.teacher && typeof en.teacher === 'object' ? (en.teacher as { name?: string }).name : en.teacherFallback;
+        return !((teacherId && en.teacherId && en.teacherId === teacherId) || (name && name === teacherName) || (en.teacherFallback && en.teacherFallback === teacherName));
+      });
       await api.put(`/students/${student.id}`, { ...student, enrollments: updatedEnrollments });
     },
     onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['students'] }); queryClient.invalidateQueries({ queryKey: ['sessions'] }); showNotification('تم إزالة الطالب بنجاح', 'success'); }
@@ -205,8 +229,6 @@ export const Teachers = () => {
           totalStudents={totalStudentsCount}
           uniqueSubjects={subjectsList.length}
           averagePrice={averagePrice}
-          previousTeachers={Math.max(0, teachers.length - 1)}
-          previousStudents={Math.max(0, totalStudentsCount - 3)}
         />
         <TeacherToolbar
           searchTerm={searchTerm}

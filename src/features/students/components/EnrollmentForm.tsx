@@ -3,6 +3,8 @@ import { Plus, X, Loader2 } from 'lucide-react';
 import type { Teacher } from '../../teachers/types';
 import type { ScheduleSlot } from '../types';
 
+export const CURRENCIES = ['KWD', 'SAR', 'EGP', 'AED', 'QAR', 'OMR', 'BHD', 'USD'];
+
 interface EnrollmentFormProps {
     teachers: Teacher[];
     onSubmit: (data: {
@@ -10,17 +12,20 @@ interface EnrollmentFormProps {
         teacher: string;
         subject: string;
         curr: string;
+        curriculum?: string;
         totalSessions: number;
         schedule: ScheduleSlot[];
     }) => void;
     isLoading?: boolean;
+    defaultCurrency?: string;
 }
 
-export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentFormProps) => {
+export const EnrollmentForm = ({ teachers, onSubmit, isLoading, defaultCurrency }: EnrollmentFormProps) => {
     const [form, setForm] = useState({
         teacherId: '',
         subject: '',
-        curr: '',
+        curr: defaultCurrency || 'KWD',
+        curriculum: '',
         totalSessions: ''
     });
     const [schedule, setSchedule] = useState<ScheduleSlot[]>([]);
@@ -45,10 +50,11 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
             teacher: selectedTeacher?.name || '',
             subject: form.subject,
             curr: form.curr,
+            curriculum: form.curriculum,
             totalSessions: Number(form.totalSessions) || 0,
             schedule
         });
-        setForm({ teacherId: '', subject: '', curr: '', totalSessions: '' });
+        setForm({ teacherId: '', subject: '', curr: defaultCurrency || 'KWD', curriculum: '', totalSessions: '' });
         setSchedule([]);
     };
 
@@ -77,24 +83,32 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading }: EnrollmentForm
                     />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                    <input
+                    <select
                         required
-                        placeholder="المنهج"
-                        aria-label="المنهج"
                         value={form.curr}
                         onChange={e => setForm({ ...form, curr: e.target.value })}
+                        aria-label="العملة"
                         className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main rounded-xl"
-                    />
+                    >
+                        {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
                     <input
-                        required
-                        type="number"
-                        placeholder="عدد الحصص"
-                        aria-label="عدد الحصص"
-                        value={form.totalSessions}
-                        onChange={e => setForm({ ...form, totalSessions: e.target.value })}
+                        placeholder="المنهج"
+                        aria-label="المنهج"
+                        value={form.curriculum}
+                        onChange={e => setForm({ ...form, curriculum: e.target.value })}
                         className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main rounded-xl"
                     />
                 </div>
+                <input
+                    required
+                    type="number"
+                    placeholder="عدد الحصص"
+                    aria-label="عدد الحصص"
+                    value={form.totalSessions}
+                    onChange={e => setForm({ ...form, totalSessions: e.target.value })}
+                    className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main rounded-xl"
+                />
 
                 <div className="bg-primary-soft p-3 space-y-3 rounded-xl">
                     <p className="text-micro font-medium text-primary uppercase">المواعيد</p>

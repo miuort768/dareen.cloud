@@ -119,15 +119,16 @@ async function createStudent(data, user) {
 
     if (enrollments && enrollments.length > 0) {
       for (const e of enrollments) {
-        let finalTeacherId = e.teacherId || null;
-        if (!finalTeacherId && e.teacher) {
-          const teacher = await tx.teacher.findFirst({ where: { name: e.teacher } });
+        const teacherRef = typeof e.teacher === 'string' ? e.teacher : e.teacher?.name || null;
+        let finalTeacherId = e.teacherId || (e.teacher && typeof e.teacher === 'object' && e.teacher.id ? e.teacher.id : null) || null;
+        if (!finalTeacherId && teacherRef) {
+          const teacher = await tx.teacher.findFirst({ where: { name: { equals: teacherRef.trim(), mode: 'insensitive' } } });
           if (teacher) finalTeacherId = teacher.id;
         }
         await tx.enrollment.create({
           data: {
-            studentId: newId, teacher: e.teacher, teacherId: finalTeacherId,
-            subject: e.subject, curr: e.curr,
+            studentId: newId, teacherFallback: teacherRef, teacherId: finalTeacherId,
+            subject: e.subject, curr: e.curr, curriculum: e.curriculum || null,
             sessionsTotal: e.sessionsTotal || 0, sessionsUsed: e.sessionsUsed || 0,
             schedule: JSON.stringify(e.schedule || []), nextSessionNotes: e.nextSessionNotes || null,
           },
@@ -184,9 +185,10 @@ async function updateStudent(id, data, user) {
       }
 
       for (const e of enrollments) {
-        let finalTeacherId = e.teacherId || null;
-        if (!finalTeacherId && e.teacher) {
-          const teacher = await tx.teacher.findFirst({ where: { name: { equals: e.teacher.trim(), mode: 'insensitive' } } });
+        const teacherRef = typeof e.teacher === 'string' ? e.teacher : e.teacher?.name || null;
+        let finalTeacherId = e.teacherId || (e.teacher && typeof e.teacher === 'object' && e.teacher.id ? e.teacher.id : null) || null;
+        if (!finalTeacherId && teacherRef) {
+          const teacher = await tx.teacher.findFirst({ where: { name: { equals: teacherRef.trim(), mode: 'insensitive' } } });
           if (teacher) finalTeacherId = teacher.id;
         }
 
@@ -194,8 +196,8 @@ async function updateStudent(id, data, user) {
           await tx.enrollment.update({
             where: { id: parseInt(e.id) },
             data: {
-              teacher: e.teacher, teacherId: finalTeacherId,
-              subject: e.subject, curr: e.curr,
+              teacherFallback: teacherRef, teacherId: finalTeacherId,
+              subject: e.subject, curr: e.curr, curriculum: e.curriculum || null,
               sessionsTotal: e.sessionsTotal || 0,
               schedule: JSON.stringify(e.schedule || []),
               nextSessionNotes: e.nextSessionNotes || null,
@@ -204,8 +206,8 @@ async function updateStudent(id, data, user) {
         } else {
           await tx.enrollment.create({
             data: {
-              studentId: id, teacher: e.teacher, teacherId: finalTeacherId,
-              subject: e.subject, curr: e.curr,
+              studentId: id, teacherFallback: teacherRef, teacherId: finalTeacherId,
+              subject: e.subject, curr: e.curr, curriculum: e.curriculum || null,
               sessionsTotal: e.sessionsTotal || 0, sessionsUsed: e.sessionsUsed || 0,
               schedule: JSON.stringify(e.schedule || []), nextSessionNotes: e.nextSessionNotes || null,
             },

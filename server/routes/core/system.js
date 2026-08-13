@@ -524,6 +524,19 @@ router.post('/system-reset', async (req, res) => {
             await tx.whatsAppTemplate.deleteMany();
             await clearDismissedNotifications(tx);
             await tx.user.deleteMany({ where: { NOT: { role: { in: ['admin', 'supervisor'] } } } });
+            await tx.account.deleteMany();
+            await tx.chatProfile.deleteMany();
+            await tx.message.deleteMany();
+            await tx.conversationMember.deleteMany();
+            await tx.conversation.deleteMany();
+            await tx.teacherPaymentSetting.deleteMany();
+            await tx.pushSubscription.deleteMany();
+            await tx.passwordResetToken.deleteMany();
+            await tx.liveSession.deleteMany();
+            await tx.activeSession.deleteMany();
+            await tx.evaluation.deleteMany();
+            await tx.trialSession.deleteMany();
+            await tx.teacherAvailability.deleteMany();
             await tx.systemSetting.deleteMany();
 
             const defaultSettings = [

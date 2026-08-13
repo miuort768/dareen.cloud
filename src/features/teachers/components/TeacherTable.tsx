@@ -38,6 +38,22 @@ const getSubjectStyle = (subject?: string) => {
   return key ? subjectColorMap[key] : 'text-info bg-info-soft ring-info/20';
 };
 
+const currencySymbolMap: Record<string, string> = {
+  KWD: 'د.ك',
+  SAR: 'ر.س',
+  EGP: 'ج.م',
+  AED: 'د.إ',
+  QAR: 'ر.ق',
+  OMR: 'ر.ع',
+  BHD: 'د.ب',
+  USD: '$',
+};
+
+const getCurrencySymbol = (currency?: string) => {
+  if (!currency) return CURRENCY_SYMBOL;
+  return currencySymbolMap[currency.toUpperCase()] || `${currency} `;
+};
+
 const Tooltip = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="relative group">
     {children}
@@ -186,7 +202,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                     <td className="px-5 py-4 text-center">
                       <div className="inline-flex items-center gap-1">
                         <span className="text-sm font-bold text-success">{teacher.price}</span>
-                        <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span>
+                        <span className="text-[9px] text-muted">{getCurrencySymbol(teacher.currency)}</span>
                       </div>
                     </td>
                     <td className="px-5 py-4">
@@ -266,7 +282,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                 </div>
                 <div className="text-end shrink-0 ms-2">
                   <span className="text-sm font-bold text-success">{teacher.price}</span>
-                  <span className="text-[9px] text-muted block">{CURRENCY_SYMBOL} / حصة</span>
+                  <span className="text-[9px] text-muted block">{getCurrencySymbol(teacher.currency)} / حصة</span>
                 </div>
               </div>
               <div className="flex items-center gap-1.5">

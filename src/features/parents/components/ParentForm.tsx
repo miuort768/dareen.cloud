@@ -59,10 +59,12 @@ export const ParentForm: React.FC<ParentFormProps> = ({
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, phone: e.target.value })} />
                         <InputField label="البريد الإلكتروني" icon={User} type="email" value={formData.email}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, email: e.target.value })} />
-                        {!isEdit && <InputField label="اسم المستخدم" icon={User} type="text" value={formData.username || ''}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, username: e.target.value })} />}
-                        {!isEdit && <InputField label="كلمة المرور" icon={User} type="password" placeholder="إنشاء كلمة مرور"
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, password: e.target.value })} />}
+                        <InputField label="اسم المستخدم" icon={User} type="text" value={formData.username || ''} readOnly={isEdit}
+                            placeholder={isEdit ? 'لا يمكن تغيير اسم المستخدم' : ''}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, username: e.target.value })} />
+                        <InputField label={isEdit ? 'كلمة مرور جديدة (اختياري)' : 'كلمة المرور'} icon={User} type="password"
+                            placeholder={isEdit ? 'اتركها فارغة للإبقاء على الحالية' : 'إنشاء كلمة مرور'}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange({ ...formData, password: e.target.value })} />
                     </div>
 
                     <div className="pt-6 border-t border-border flex justify-end">

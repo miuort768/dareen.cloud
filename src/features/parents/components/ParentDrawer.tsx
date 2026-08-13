@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Phone, Mail, MessageCircle, Edit, Trash2, Users, GraduationCap, BookOpen, Calendar, TrendingUp, Clock, AlertCircle, Star, AlertTriangle } from 'lucide-react';
+import { X, Phone, Mail, MessageCircle, Edit, Trash2, Users, GraduationCap, BookOpen, Calendar, TrendingUp, Clock, AlertCircle, Star, AlertTriangle, KeyRound } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { ProgressBar } from '../../../shared/components/ui';
 import type { Parent, Student } from '../../../types';
@@ -143,6 +143,17 @@ export const ParentDrawer = ({ parent, details, onClose, onEdit, onDelete, onWha
                                                 <div>
                                                     <p className="text-[9px] text-muted">البريد الإلكتروني</p>
                                                     <p className="text-[11px] font-bold text-main truncate">{parent.email}</p>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {parent.username && (
+                                            <div className="flex items-center gap-2.5 px-3 py-2.5 bg-primary-soft/30 border border-primary/10 rounded-xl">
+                                                <div className="w-7 h-7 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
+                                                    <KeyRound size={11} className="text-primary" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9px] text-muted">اسم المستخدم</p>
+                                                    <p className="text-[11px] font-bold text-main font-mono" dir="ltr">{parent.username}</p>
                                                 </div>
                                             </div>
                                         )}
