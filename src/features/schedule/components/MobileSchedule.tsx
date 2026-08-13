@@ -31,13 +31,13 @@ const TIME_SLOTS = [
 ];
 
 const TEACHER_STYLES = [
-    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary/10', border: 'border-e-primary' },
-    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/10', border: 'border-e-success' },
-    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/10', border: 'border-e-warning' },
-    { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error/10', border: 'border-e-error' },
-    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success/10', border: 'border-e-success' },
-    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary/10', border: 'border-e-primary' },
-    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning/10', border: 'border-e-warning' },
+    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary-soft', border: 'border-e-primary' },
+    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success-soft', border: 'border-e-success' },
+    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning-soft', border: 'border-e-warning' },
+    { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error-soft', border: 'border-e-error' },
+    { text: 'text-success', bg: 'bg-success', bgLight: 'bg-success-soft', border: 'border-e-success' },
+    { text: 'text-primary', bg: 'bg-primary', bgLight: 'bg-primary-soft', border: 'border-e-primary' },
+    { text: 'text-warning', bg: 'bg-warning', bgLight: 'bg-warning-soft', border: 'border-e-warning' },
 ];
 
 const fadeUp = { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.35, ease: 'easeOut' as const } };
