@@ -109,8 +109,30 @@ export const useParents = () => {
         });
     };
 
+    const ARABIC_DIGITS: Record<string, string> = {
+        '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
+        '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9',
+    };
+    const KNOWN_COUNTRY_CODES = ['966', '965', '971', '974', '968', '973', '20'];
+    const normalizePhone = (phone: string): string => {
+        let digits = String(phone || '')
+            .replace(/[٠-٩]/g, d => ARABIC_DIGITS[d])
+            .replace(/\D/g, '');
+        if (!digits) return '';
+        digits = digits.replace(/^00/, '').replace(/^\+/, '');
+        for (const cc of KNOWN_COUNTRY_CODES) {
+            if (digits.startsWith(cc)) {
+                const rest = digits.slice(cc.length);
+                if (rest.length >= 8 && rest.length <= 10) {
+                    return `0${rest}`;
+                }
+            }
+        }
+        return digits;
+    };
+
     const handleImportParents = async () => {
-        const existingPhones = new Set(parents.map(p => p.phone));
+        const existingPhones = new Set(parents.map(p => normalizePhone(p.phone)).filter(Boolean));
         const newParentsList: Omit<Parent, 'id'>[] = [];
         const seenPhones = new Set();
 
@@ -139,14 +161,15 @@ export const useParents = () => {
             return match ? parseInt(match[0]) : -1;
         };
 
-        // Group students by parent phone
+        // Group students by normalized parent phone
         const studentsByPhone: Record<string, typeof students> = {};
         for (const s of students) {
-            if (s.parentPhone && !existingPhones.has(s.parentPhone)) {
-                if (!studentsByPhone[s.parentPhone]) {
-                    studentsByPhone[s.parentPhone] = [];
+            const canonical = normalizePhone(s.parentPhone || '');
+            if (canonical && !existingPhones.has(canonical)) {
+                if (!studentsByPhone[canonical]) {
+                    studentsByPhone[canonical] = [];
                 }
-                studentsByPhone[s.parentPhone].push(s);
+                studentsByPhone[canonical].push(s);
             }
         }
 
@@ -184,15 +207,21 @@ export const useParents = () => {
             confirmText: 'بدء الاستيراد',
             variant: 'primary',
             action: async () => {
-                const { successCount, failCount } = await parentsService.importParents(newParentsList);
+                const { successCount, failCount, errors } = await parentsService.importParents(newParentsList);
                 queryClient.invalidateQueries({ queryKey: ['parents'] });
+                queryClient.invalidateQueries({ queryKey: ['students'] });
 
                 setTimeout(() => {
+                    let message = failCount === 0
+                        ? `تم استيراد ${successCount} ولي أمر بنجاح.`
+                        : `تم استيراد ${successCount} ولي أمر، وفشل استيراد ${failCount}.`;
+                    if (failCount > 0 && errors.length > 0) {
+                        const firstErrors = Array.from(new Set(errors)).slice(0, 3);
+                        message += `\nالأسباب: ${firstErrors.join(' | ')}`;
+                    }
                     setConfirmModal({
                         show: true,
-                        message: failCount === 0
-                            ? `تم استيراد ${successCount} ولي أمر بنجاح.`
-                            : `تم استيراد ${successCount} ولي أمر، وفشل استيراد ${failCount}.`,
+                        message,
                         confirmText: 'إغلاق',
                         variant: 'primary',
                         action: null

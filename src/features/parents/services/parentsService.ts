@@ -25,6 +25,7 @@ export const parentsService = {
     async importParents(newParents: Omit<Parent, 'id'>[]) {
         let successCount = 0;
         let failCount = 0;
+        const errors: string[] = [];
 
         for (const p of newParents) {
             try {
@@ -32,10 +33,12 @@ export const parentsService = {
                 successCount++;
             } catch (error) {
                 failCount++;
+                const message = error?.response?.data?.error || error?.message || 'خطأ غير معروف';
+                errors.push(message);
                 console.error("Error importing parent", error);
             }
         }
 
-        return { successCount, failCount };
+        return { successCount, failCount, errors };
     }
 };
