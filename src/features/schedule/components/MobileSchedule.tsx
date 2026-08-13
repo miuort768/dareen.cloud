@@ -11,7 +11,7 @@ import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/co
 import { MobileScheduleDayChips, MobileScheduleDetailsSheet } from './mobile-schedule';
 
 interface Student { id: string; name: string; grade: string; enrollments: Enrollment[]; }
-interface Enrollment { teacher: string; subject: string; curr: string; schedule: ScheduleSlot[]; }
+interface Enrollment { teacher: string; subject: string; curr: string; schedule: ScheduleSlot[]; teacherId?: string | number; }
 interface ScheduleSlot { day: string; hour: string; period: string; }
 interface ScheduleEvent {
     id: string; studentId: string; studentName: string; studentGrade: string;
@@ -78,7 +78,7 @@ export const MobileSchedule = () => {
     const allEvents: ScheduleEvent[] = useMemo(() => {
         return students.flatMap(student =>
             (student.enrollments || [])
-                .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch)
+                .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch || enrollment.teacherId === currentUser.id)
                 .flatMap(enrollment =>
                     (enrollment.schedule || []).map(slot => {
                         const normalizedPeriod = (slot.period || '').trim().toLowerCase();

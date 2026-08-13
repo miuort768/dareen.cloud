@@ -13,7 +13,7 @@ import { StudentDashboardHeader } from '../../../pages/student-dashboard/Student
 import { cn } from '../../../lib/utils';
 
 interface Student { id: string; name: string; grade: string; parentPhone: string; enrollments: Enrollment[]; totalPoints?: number; }
-interface Enrollment { teacher: string; subject: string; curr: string; sessionsTotal: number; sessionsUsed: number; schedule: ScheduleSlot[]; }
+interface Enrollment { teacher: string; subject: string; curr: string; sessionsTotal: number; sessionsUsed: number; schedule: ScheduleSlot[]; teacherId?: string | number; }
 interface ScheduleSlot { day: string; hour: string; period: string; }
 interface ScheduleEvent {
     id: string; studentId: string; studentName: string; studentGrade: string;
@@ -81,7 +81,7 @@ export const Schedule = () => {
     const allEvents: ScheduleEvent[] = useMemo(() => {
         return students.flatMap(student =>
             (student.enrollments || [])
-                .filter(enrollment => !isTeacher || (enrollment.teacher || '').trim() === teacherToMatch)
+                .filter(enrollment => !isTeacher || (enrollment.teacher || '').trim() === teacherToMatch || enrollment.teacherId === currentUser.id)
                 .flatMap(enrollment =>
                     (enrollment.schedule || []).map(slot => {
                         const normalizedPeriod = (slot.period || '').trim().toLowerCase();
