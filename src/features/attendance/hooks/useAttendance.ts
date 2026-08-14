@@ -131,7 +131,8 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string, date
             todayCancelled: todaySessions.filter(s => s.status === 'cancelled').length,
             todayScheduled: todaySessions.filter(s => s.status === 'scheduled').length,
             todayTotal: todaySessions.length,
-            totalCompleted: allSessions.filter(s => s.status === 'completed').length
+            totalCompleted: allSessions.filter(s => s.status === 'completed').length,
+            totalCancelled: allSessions.filter(s => s.status === 'cancelled').length
         };
     }, [allSessions, date]);
 
@@ -141,11 +142,23 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string, date
         const rangeSessions = allSessions.filter(s => {
             return s.date >= start && s.date <= end;
         });
+        const startDate = new Date(`${start}T00:00:00`);
+        const endDate = new Date(`${end}T00:00:00`);
+        const lengthDays = Math.max(Math.round((endDate.getTime() - startDate.getTime()) / 86400000) + 1, 1);
+        const prevEnd = new Date(startDate);
+        prevEnd.setDate(startDate.getDate() - 1);
+        const prevStart = new Date(startDate);
+        prevStart.setDate(startDate.getDate() - lengthDays);
+        const prevStartStr = prevStart.toLocaleDateString('en-CA');
+        const prevEndStr = prevEnd.toLocaleDateString('en-CA');
+        const prevSessions = allSessions.filter(s => s.date >= prevStartStr && s.date <= prevEndStr);
         return {
             completed: rangeSessions.filter(s => s.status === 'completed').length,
             cancelled: rangeSessions.filter(s => s.status === 'cancelled').length,
             scheduled: rangeSessions.filter(s => s.status === 'scheduled').length,
-            total: rangeSessions.length
+            total: rangeSessions.length,
+            prevCompleted: prevSessions.filter(s => s.status === 'completed').length,
+            prevCancelled: prevSessions.filter(s => s.status === 'cancelled').length
         };
     }, [allSessions, dateRange]);
 

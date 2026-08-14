@@ -4,6 +4,7 @@ import { cn } from '../../../lib/utils';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
 import { SectionCard } from './InvoiceUI';
 import { Badge } from '../../../shared/components/ui';
+import { INVOICE_STATUS_LABEL, normalizeInvoiceStatus } from '../../../types/invoice';
 
 interface TeacherInvoice {
     id: string;
@@ -23,9 +24,10 @@ interface InvoiceTableProps {
     isTeacher: boolean;
 }
 
-const statusVariant: Record<string, 'success' | 'warning' | 'error'> = {
-  'مدفوعة': 'success',
-  'قيد المعالجة': 'warning',
+const statusVariant: Record<string, 'success' | 'warning' | 'error' | 'info'> = {
+  'paid': 'success',
+  'pending': 'warning',
+  'reviewed': 'info',
 };
 
 const AvatarLetter = ({ name }: { name: string }) => (
@@ -81,8 +83,8 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex justify-center">
-                      <Badge variant={statusVariant[inv.status] || 'error'} size="sm">
-                        {inv.status}
+                      <Badge variant={statusVariant[normalizeInvoiceStatus(inv.status)] || 'error'} size="sm">
+                        {INVOICE_STATUS_LABEL[normalizeInvoiceStatus(inv.status)]}
                       </Badge>
                     </div>
                   </td>
@@ -134,8 +136,8 @@ export const InvoiceTable = memo(({ filteredInvoices, handleEdit, handleDelete, 
                     <span className="text-xs font-bold text-success-dark">{(inv.amount - (inv.personalExpenses || 0)).toLocaleString()} {CURRENCY_SYMBOL}</span>
                   </div>
                 </div>
-                <Badge variant={statusVariant[inv.status] || 'error'} size="sm">
-                  {inv.status}
+                <Badge variant={statusVariant[normalizeInvoiceStatus(inv.status)] || 'error'} size="sm">
+                  {INVOICE_STATUS_LABEL[normalizeInvoiceStatus(inv.status)]}
                 </Badge>
               </div>
             </div>

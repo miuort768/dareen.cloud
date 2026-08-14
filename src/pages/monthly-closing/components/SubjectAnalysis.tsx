@@ -49,7 +49,7 @@ export const SubjectAnalysis = React.memo(({ subjectAnalysis, reportCurrency = '
                                 <span className="text-muted font-bold">صافي الربح</span>
                                 <span className="font-semibold text-primary">{subj.profit.toLocaleString()} {reportCurrency}</span>
                             </div>
-                            <ProgressBar value={Math.min(100, (subj.profit / subj.income) * 100)} variant="primary" size="sm" />
+                            <ProgressBar value={subj.income > 0 ? Math.min(100, (subj.profit / subj.income) * 100) : 0} variant="primary" size="sm" />
                             <div className="flex justify-between items-center text-micro text-muted mt-1">
                                 <span className="font-bold">النشاط: {subj.sessionsCount} حصة</span>
                             </div>

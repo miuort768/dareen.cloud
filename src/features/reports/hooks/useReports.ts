@@ -39,13 +39,13 @@ export const useReports = () => {
             .filter(s => s.status === 'completed')
             .reduce((sum, s) => sum + (Number(s.price) || 0), 0);
         const totalExpenses = invoices
-            .filter(inv => inv.status === 'مدفوعة')
+            .filter(inv => ['paid', 'مدفوعة', 'تم الدفع'].includes((inv.status || '').toLowerCase()))
             .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
         const monthRevenue = sessions
             .filter(s => s.status === 'completed' && s.date?.startsWith(currentMonth))
             .reduce((sum, s) => sum + (Number(s.price) || 0), 0);
         const monthExpenses = invoices
-            .filter(inv => inv.status === 'مدفوعة' && inv.date?.startsWith(currentMonth))
+            .filter(inv => ['paid', 'مدفوعة', 'تم الدفع'].includes((inv.status || '').toLowerCase()) && inv.date?.startsWith(currentMonth))
             .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0);
 
         // Months

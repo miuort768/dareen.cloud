@@ -1,5 +1,5 @@
 import { Search, Calendar, GraduationCap, Plus, X, UserPlus, Trash2, Printer } from 'lucide-react';
-import { INVOICE_STATUS } from '../../../types/invoice';
+import { INVOICE_STATUS, INVOICE_STATUS_LABEL } from '../../../types/invoice';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
 import { PrimaryBtn, SecondaryBtn, DangerBtn } from '../components/InvoiceUI';
 
@@ -63,7 +63,7 @@ export const TeacherInvoicesHeader = ({
                     className="w-auto min-w-[120px] rounded-xl px-3 py-2 text-xs font-bold outline-none bg-card border border-border text-main focus:ring-2 focus:ring-focus transition-all">
                     <option value="all">جميع الحالات</option>
                     {Object.values(INVOICE_STATUS).map(status => (
-                        <option key={status} value={status}>{status}</option>
+                        <option key={status} value={status}>{INVOICE_STATUS_LABEL[status] || status}</option>
                     ))}
                 </select>
             </div>

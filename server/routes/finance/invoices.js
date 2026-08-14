@@ -176,6 +176,18 @@ router.put('/student/:id', validate(updateStudentInvoiceSchema), async (req, res
   }
 });
 
+router.patch('/student/:id', validate(updateStudentInvoiceSchema), async (req, res) => {
+  try {
+    const invoice = await updateStudentInvoice(req.params.id, req.body, req.user);
+    res.json(invoice);
+  } catch (err) {
+    if (err.statusCode === 404) return res.status(404).json({ error: err.message });
+    if (err.statusCode === 409) return res.status(409).json({ error: err.message });
+    logger.error('Error updating student invoice', err, { id: req.params.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.post('/student/:id/pay', async (req, res) => {
   try {
     const invoice = await payStudentInvoice(req.params.id, req.body, req.user);

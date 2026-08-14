@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CheckCircle, Clock, AlertTriangle, FileText, Wallet, BarChart3, Filter, DollarSign } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useShowNotification, useLogout, useAcademyName } from '../context/AppContext';
-import { type TeacherInvoice, INVOICE_STATUS } from '../types/invoice';
+import { type TeacherInvoice, INVOICE_STATUS, normalizeInvoiceStatus } from '../types/invoice';
 import { Skeleton } from '../shared/components/ui';
 import { TeacherDashboardHeader } from './TeacherDashboardHeader';
 import { format } from 'date-fns';
@@ -17,10 +17,10 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 const statusConfig = (status: string) => {
-    switch (status) {
+    switch (normalizeInvoiceStatus(status)) {
         case INVOICE_STATUS.PAID: return { label: 'مدفوعة', icon: CheckCircle, cls: 'bg-success/10 text-success border-success/20' };
         case INVOICE_STATUS.PROCESSING: return { label: 'قيد المعالجة', icon: Clock, cls: 'bg-warning/10 text-warning border-warning/20' };
-        case INVOICE_STATUS.OVERDUE: return { label: 'متأخرة', icon: AlertTriangle, cls: 'bg-error/10 text-error border-error/20' };
+        case INVOICE_STATUS.REVIEWED: return { label: 'تمت المراجعة', icon: AlertTriangle, cls: 'bg-info/10 text-info border-info/20' };
         default: return { label: 'غير مدفوعة', icon: AlertTriangle, cls: 'bg-error/10 text-error border-error/20' };
     }
 };
@@ -70,23 +70,23 @@ export const TeacherPaymentHistory = () => {
         const result = { total: 0, paid: 0, processing: 0, overdue: 0, unpaid: 0 };
         invoices.forEach(inv => {
             result.total += inv.amount;
-            if (inv.status === INVOICE_STATUS.PAID) result.paid += inv.amount;
-            else if (inv.status === INVOICE_STATUS.PROCESSING) result.processing += inv.amount;
-            else if (inv.status === INVOICE_STATUS.OVERDUE) result.overdue += inv.amount;
+            const s = normalizeInvoiceStatus(inv.status);
+            if (s === INVOICE_STATUS.PAID) result.paid += inv.amount;
+            else if (s === INVOICE_STATUS.PROCESSING) result.processing += inv.amount;
             else result.unpaid += inv.amount;
         });
         return result;
     }, [invoices]);
 
-    const paidCount = useMemo(() => invoices.filter(i => i.status === INVOICE_STATUS.PAID).length, [invoices]);
-    const pendingCount = useMemo(() => invoices.filter(i => i.status === INVOICE_STATUS.PROCESSING).length, [invoices]);
-    const overdueCount = useMemo(() => invoices.filter(i => i.status === INVOICE_STATUS.OVERDUE || i.status === INVOICE_STATUS.UNPAID).length, [invoices]);
+    const paidCount = useMemo(() => invoices.filter(i => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID).length, [invoices]);
+    const pendingCount = useMemo(() => invoices.filter(i => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PROCESSING).length, [invoices]);
+    const overdueCount = useMemo(() => invoices.filter(i => { const s = normalizeInvoiceStatus(i.status); return s !== INVOICE_STATUS.PAID && s !== INVOICE_STATUS.PROCESSING; }).length, [invoices]);
 
     const kpiCards = useMemo(() => [
         { label: 'إجمالي الفواتير', value: invoices.length, icon: DollarSign, gradient: 'from-primary/20 to-primary/5', iconBg: 'bg-primary/10 text-primary', accent: 'bg-primary' },
         { label: 'مدفوعة', value: paidCount, icon: CheckCircle, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
         { label: 'قيد المعالجة', value: pendingCount, icon: Clock, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
-        { label: 'متأخرة', value: overdueCount, icon: AlertTriangle, gradient: 'from-error/20 to-error/5', iconBg: 'bg-error/10 text-error', accent: 'bg-error' },
+        { label: 'غير مدفوعة', value: overdueCount, icon: AlertTriangle, gradient: 'from-error/20 to-error/5', iconBg: 'bg-error/10 text-error', accent: 'bg-error' },
     ], [invoices.length, paidCount, pendingCount, overdueCount]);
 
     const fabActions = useMemo(() => [
@@ -186,7 +186,7 @@ export const TeacherPaymentHistory = () => {
                                 <option value="all">جميع الحالات</option>
                                 <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
                                 <option value={INVOICE_STATUS.PROCESSING}>قيد المعالجة</option>
-                                <option value={INVOICE_STATUS.OVERDUE}>متأخرة</option>
+                                <option value={INVOICE_STATUS.REVIEWED}>تمت المراجعة</option>
                                 <option value={INVOICE_STATUS.UNPAID}>غير مدفوعة</option>
                             </select>
                         </div>

@@ -93,6 +93,15 @@ export const MobileAttendance = () => {
         if (!secureModalData || !logDate || isLogging) return;
         setIsLogging(true);
         const { student, enrollment } = secureModalData;
+        const alreadyLogged = allSessions.some(s =>
+            s.studentId === student.id && s.subject === enrollment.subject && s.date === logDate
+        );
+        if (alreadyLogged) {
+            showNotification('الحصة مسجلة بالفعل لهذا الطالب والمادة في هذا التاريخ', 'warning');
+            setSecureModalData(null);
+            setIsLogging(false);
+            return;
+        }
         const now = new Date();
         const currentTime = now.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
         const calculatedPrice = enrollment.price ? (enrollment.price - (enrollment.discount || 0)) : undefined;

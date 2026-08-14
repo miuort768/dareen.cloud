@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ShieldCheck, X, CheckCircle2, XCircle, Lock, BookOpen, Star } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Button } from '../components/ui/Button';
@@ -24,6 +24,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     const [homework, setHomework] = useState('');
     const [needsCompensation, setNeedsCompensation] = useState(false);
     const [error, setError] = useState('');
+    const submittedRef = useRef(false);
 
     useEffect(() => {
         if (isOpen) {
@@ -33,17 +34,20 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             setHomework('');
             setNeedsCompensation(false);
             setError('');
+            submittedRef.current = false;
         }
     }, [isOpen]);
 
     if (!isOpen) return null;
 
     const handleConfirm = () => {
+        if (submittedRef.current) return;
         const secret = import.meta.env.VITE_ATTENDANCE_SECRET || '';
         if (password.toLowerCase() !== secret.toLowerCase()) {
             setError('كلمة المرور غير صحيحة');
             return;
         }
+        submittedRef.current = true;
         onConfirm(status, topics, homework, needsCompensation);
         onClose();
     };

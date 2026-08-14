@@ -193,39 +193,22 @@ export const useFinance = () => {
             ...manualTransactions,
             ...sessions
                 .filter(s => s.status === 'completed' || s.status === 'scheduled')
-                .flatMap(s => {
-                    const trans = [];
-                    // Revenue
-                    trans.push({
-                        id: `session-rev-${s.id}`,
-                        type: 'income' as const,
-                        category: 'حصة دراسية',
-                        amount: Number(s.price) || 0,
-                        date: s.date || '',
-                        description: `(دفق مالي) ${s.studentName} - ${s.subject}`,
-                        status: s.status === 'completed' ? 'completed' : 'pending' as const
-                    });
-                    // Labor Cost (Accrued) - Only if completed
-                    if (s.status === 'completed') {
-                        trans.push({
-                            id: `session-cost-${s.id}`,
-                            type: 'expense' as const,
-                            category: 'تكلفة المعلمة',
-                            amount: Number(s.teacherPrice) || 0,
-                            date: s.date || '',
-                            description: `(أجر معلمة - مستحق) ${s.teacherName} - عن ${s.studentName}`,
-                            status: 'completed' as const
-                        });
-                    }
-                    return trans;
-                }),
+                .map(s => ({
+                    id: `session-rev-${s.id}`,
+                    type: 'income' as const,
+                    category: 'حصة دراسية',
+                    amount: Number(s.price) || 0,
+                    date: s.date || '',
+                    description: `(دفق مالي) ${s.studentName} - ${s.subject}`,
+                    status: s.status === 'completed' ? 'completed' : 'pending' as const
+                })),
             ...invoices.map(inv => ({
                 id: `invoice-${inv.id}`,
                 type: 'expense' as const,
                 category: 'راتب معلمة',
-                amount: (Number(inv.amount) || 0),
+                amount: Math.max((Number(inv.amount) || 0) - (Number(inv.personalExpenses) || 0), 0),
                 date: inv.date || '',
-                description: `فاتورة مدفوعة: ${inv.teacher} ${inv.personalExpenses ? `(بعد خصم ${inv.personalExpenses} نثريات)` : ''}`,
+                description: `فاتورة مدفوعة: ${inv.teacher}${inv.personalExpenses ? ` (بعد خصم ${inv.personalExpenses} نثريات)` : ''}`,
                 status: ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()) ? 'completed' : 
                         ['pending', 'معلقة', 'قيد المعالجة'].includes(inv.status?.toLowerCase()) ? 'pending' : 'cancelled' as const
             }))

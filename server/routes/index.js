@@ -189,6 +189,7 @@ router.use('/studentInvoices', isAdmin, (req, res, next) => {
 
 router.use('/invoices', isAdmin, (req, res, next) => {
     if (req.url === '' || req.url === '/') req.url = '/teacher';
+    else if (req.url === '/stats') req.url = '/stats';
     else if (!req.url.startsWith('/teacher') && !req.url.startsWith('/student')) req.url = '/teacher' + req.url;
     invoiceRouter(req, res, next);
 });

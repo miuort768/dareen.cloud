@@ -52,6 +52,7 @@ export interface AttendanceStats {
     todayScheduled: number;
     todayTotal: number;
     totalCompleted: number;
+    totalCancelled: number;
 }
 
 export interface TeacherStats {

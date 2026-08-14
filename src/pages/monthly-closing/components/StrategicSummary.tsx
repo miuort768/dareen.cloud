@@ -94,7 +94,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({ netProjected
                                 <div className="flex gap-6">
                                     <div className="shrink-0 w-8 h-8 bg-primary text-on-primary flex items-center justify-center font-semibold text-xs italic rounded-xl">02</div>
                                      <p className="text-xs font-bold leading-relaxed text-muted italic">
-                                         إجمالي السيولة النقدية المتوفرة حالياً تغطي التزامات رواتب المعلمات بنسبة {(totalActualCollections / totalTeacherPayout * 100).toFixed(0)}% مما يعزز الاستقرار المالي للمؤسسة.
+                                         إجمالي السيولة النقدية المتوفرة حالياً تغطي التزامات رواتب المعلمات بنسبة {(totalTeacherPayout > 0 ? (totalActualCollections / totalTeacherPayout * 100) : 0).toFixed(0)}% مما يعزز الاستقرار المالي للمؤسسة.
                                      </p>
                                 </div>
                             </div>

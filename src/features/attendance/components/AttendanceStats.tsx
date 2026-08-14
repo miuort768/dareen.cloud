@@ -136,7 +136,7 @@ export const AttendanceStats = ({ stats, teacherStats, isTeacher, periodLabel, p
                         </div>
                     </div>
                     <div className="flex items-baseline gap-2">
-                        <span className="text-2xl md:text-3xl font-bold text-on-primary"><Counter value={total - 1} /></span>
+                        <span className="text-2xl md:text-3xl font-bold text-on-primary"><Counter value={total} /></span>
                         <span className="text-[10px] font-bold text-white/60">حصة</span>
                     </div>
                     <div className="flex items-center gap-3 mt-2">

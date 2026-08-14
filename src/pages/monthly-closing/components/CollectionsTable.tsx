@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Wallet } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
@@ -23,12 +23,32 @@ interface CollectionsTableProps {
 
 export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoices, startDate, endDate }) => {
     const queryClient = useQueryClient();
+    const [savingId, setSavingId] = useState<string | null>(null);
+    const [saveError, setSaveError] = useState('');
+
+    const handleToggle = async (item: StudentInvoice) => {
+        if (savingId) return;
+        setSavingId(item.id);
+        setSaveError('');
+        try {
+            const newStatus = item.status === 'paid' ? 'pending' : 'paid';
+            await api.patch(`/studentInvoices/${item.id}`, { status: newStatus });
+            await queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
+        } catch {
+            setSaveError('تعذر تحديث الحالة، حاول مجددًا');
+        } finally {
+            setSavingId(null);
+        }
+    };
 
     return (
         <SectionCard>
             <div className="p-4 border-b border-border">
                 <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" color="var(--bg-success)" />
             </div>
+            {saveError && (
+                <div className="px-4 py-2 text-micro font-bold text-error bg-error/10 border-b border-border">{saveError}</div>
+            )}
             {/* Desktop table */}
             <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-start">
@@ -53,13 +73,10 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                 <td className="px-4 py-4 text-center text-micro text-muted font-mono">{item.date}</td>
                                 <td className="px-4 py-4 text-center">
                                     <button
-                                        onClick={async () => {
-                                            const newStatus = item.status === 'paid' ? 'pending' : 'paid';
-                                            await api.patch(`/studentInvoices/${item.id}`, { status: newStatus });
-                                            queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
-                                        }}
+                                        onClick={() => handleToggle(item)}
+                                        disabled={savingId === item.id}
                                         className={cn(
-                                            "px-3 py-1 font-bold text-micro uppercase transition-all active:scale-95 rounded-xl",
+                                            "px-3 py-1 font-bold text-micro uppercase transition-all active:scale-95 rounded-xl disabled:opacity-60",
                                             item.status === 'paid' ? "bg-success text-on-success" : "text-error border border-error bg-error-light"
                                         )}
                                     >
@@ -85,13 +102,10 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                         <div className="flex items-center justify-between">
                             <span className="text-micro text-muted font-mono">{item.date}</span>
                             <button
-                                onClick={async () => {
-                                    const newStatus = item.status === 'paid' ? 'pending' : 'paid';
-                                    await api.patch(`/studentInvoices/${item.id}`, { status: newStatus });
-                                    queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] });
-                                }}
+                                onClick={() => handleToggle(item)}
+                                disabled={savingId === item.id}
                                 className={cn(
-                                    "px-3 py-1 font-bold text-micro uppercase transition-all active:scale-95 rounded-xl",
+                                    "px-3 py-1 font-bold text-micro uppercase transition-all active:scale-95 rounded-xl disabled:opacity-60",
                                     item.status === 'paid' ? "bg-success text-on-success" : "text-error border border-error bg-error-light"
                                 )}
                             >

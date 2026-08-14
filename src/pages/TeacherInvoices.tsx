@@ -6,7 +6,7 @@ import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
 import { CURRENCY_SYMBOL } from '../config/constants';
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext';
-import { type TeacherInvoice, type Teacher, type TeacherInvoiceFormData, INVOICE_STATUS } from '../types/invoice';
+import { type TeacherInvoice, type Teacher, type TeacherInvoiceFormData, INVOICE_STATUS, normalizeInvoiceStatus } from '../types/invoice';
 import { PageLoader } from '../components/ui/PageLoader';
 import { InvoiceStats } from './teacher-invoices/components/InvoiceStats';
 import { InvoiceForm } from './teacher-invoices/components/InvoiceForm';
@@ -113,7 +113,7 @@ export const TeacherInvoices = () => {
         const result = filteredInvoices.reduce((acc, inv) => {
             acc.totalAmount += inv.amount;
             acc.personalExpenses += inv.personalExpenses || 0;
-            if (inv.status === INVOICE_STATUS.PAID) acc.paidAmount += inv.amount;
+            if (normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.PAID) acc.paidAmount += inv.amount;
             else acc.unpaidAmount += inv.amount;
             return acc;
         }, { totalAmount: 0, paidAmount: 0, unpaidAmount: 0, personalExpenses: 0 });
@@ -314,7 +314,7 @@ export const TeacherInvoices = () => {
                                 <option value="all">الكل</option>
                                 <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
                                 <option value={INVOICE_STATUS.PROCESSING}>قيد المعالجة</option>
-                                <option value={INVOICE_STATUS.OVERDUE}>متأخرة</option>
+                                <option value={INVOICE_STATUS.REVIEWED}>تمت المراجعة</option>
                                 <option value={INVOICE_STATUS.UNPAID}>غير مدفوعة</option>
                             </select>
                         </div>
