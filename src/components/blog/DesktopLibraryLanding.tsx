@@ -339,7 +339,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
               <span className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center mb-3">
                 <Mail size={18} />
               </span>
-              <h3 className="text-sm font-extrabold text-white mb-1">اشترك في النشرة التعليمية</h3>
+              <h3 className="text-sm font-extrabold text-on-primary dark:text-main mb-1">اشترك في النشرة التعليمية</h3>
               <p className="text-[11px] text-white/50 font-medium leading-relaxed mb-4">
                 ليصلك جديد الكتب والمذكرات مباشرة على هاتفك.
               </p>

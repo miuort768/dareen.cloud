@@ -11,21 +11,22 @@ interface FixedExpensesManagerProps {
     onClearAll: () => void;
 }
 
-const CATEGORY_CONFIG: Record<string, { icon: React.ComponentType<{ size?: number }>; gradient: string }> = {
-    'كهرباء': { icon: Zap, gradient: 'bg-gradient-to-br from-warning/80 to-warning' },
-    'انترنت': { icon: Wifi, gradient: 'bg-gradient-to-br from-info/80 to-info' },
-    'تسويق': { icon: Megaphone, gradient: 'bg-gradient-to-br from-error/80 to-error' },
-    'ايجار': { icon: Building2, gradient: 'bg-gradient-to-br from-primary/80 to-primary' },
-    'مكتب': { icon: Home, gradient: 'bg-gradient-to-br from-success/80 to-success' },
-    'صيانة': { icon: Wrench, gradient: 'bg-gradient-to-br from-accent/80 to-accent' },
+const CATEGORY_CONFIG: Record<string, { icon: React.ComponentType<{ size?: number }>; gradient: string; on: string }> = {
+    'كهرباء': { icon: Zap, gradient: 'bg-gradient-to-br from-warning/80 to-warning', on: 'text-on-warning' },
+    'انترنت': { icon: Wifi, gradient: 'bg-gradient-to-br from-info/80 to-info', on: 'text-on-info' },
+    'تسويق': { icon: Megaphone, gradient: 'bg-gradient-to-br from-error/80 to-error', on: 'text-on-error' },
+    'ايجار': { icon: Building2, gradient: 'bg-gradient-to-br from-primary/80 to-primary', on: 'text-on-primary' },
+    'مكتب': { icon: Home, gradient: 'bg-gradient-to-br from-success/80 to-success', on: 'text-on-success' },
+    'صيانة': { icon: Wrench, gradient: 'bg-gradient-to-br from-accent/80 to-accent', on: 'text-on-accent' },
 };
 
 const DEFAULT_ICON = MoreHorizontal;
 const DEFAULT_GRADIENT = 'bg-gradient-to-br from-primary/80 to-primary';
+const DEFAULT_ON = 'text-on-primary';
 
 const ExpenseCard = ({ expense, onUpdate }: { expense: FixedExpense; onUpdate: (id: number, val: string) => void }) => {
     const [val, setVal] = useState(expense.amount?.toString() || '');
-    const cfg = CATEGORY_CONFIG[expense.name] || { icon: DEFAULT_ICON, gradient: DEFAULT_GRADIENT };
+    const cfg = CATEGORY_CONFIG[expense.name] || { icon: DEFAULT_ICON, gradient: DEFAULT_GRADIENT, on: DEFAULT_ON };
     const Icon = cfg.icon;
 
     useEffect(() => { setVal(expense.amount?.toString() || ''); }, [expense.amount]);
@@ -38,7 +39,7 @@ const ExpenseCard = ({ expense, onUpdate }: { expense: FixedExpense; onUpdate: (
             className="relative overflow-hidden rounded-2xl bg-card border border-border/60 shadow-sm hover:shadow-md transition-all p-3"
         >
             <div className="flex items-center gap-2.5 mb-2.5">
-                <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${cfg.gradient} flex items-center justify-center text-white shadow-sm`}>
+                <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${cfg.gradient} flex items-center justify-center ${cfg.on} shadow-sm`}>
                     <Icon size={13} />
                 </div>
                 <span className="text-[10px] font-bold text-main">{expense.name}</span>

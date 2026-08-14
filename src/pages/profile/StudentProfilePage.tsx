@@ -291,7 +291,7 @@ export const StudentProfilePage = () => {
 
                 <motion.div {...stagger(5)}>
                     <ProfileBottomMotivation
-                        icon={<Target size={28} className="text-white" />}
+                        icon={<Target size={28} />}
                         title={nextRank.next ? `تبقى ${nextRank.pointsNeeded} نقطة للوصول إلى ${nextRank.next.name}` : 'أحسنت! وصلت لأعلى المراتب'}
                         description={nextRank.next ? `واصل التعلم واجمع النقاط لتصل إلى الرتبة التالية` : `أنت نجم ${academyName}!`}
                         progress={nextRank.next ? Math.min(Math.round((points / (points + (nextRank.pointsNeeded || 1))) * 100), 100) : 100}

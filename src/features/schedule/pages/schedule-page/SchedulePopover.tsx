@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Video, ExternalLink, CalendarDays, BookOpen, GraduationCap, User, Star } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ScheduleEvent {
     id: string; studentId: string; studentName: string; studentGrade: string;
@@ -7,29 +8,29 @@ interface ScheduleEvent {
     hour: string; period: string; time: string; studentPoints?: number;
 }
 
-const SUBJECT_COLORS: Record<string, { bg: string; text: string; chip: string }> = {
-    'رياضيات': { bg: 'bg-primary', text: 'text-primary', chip: 'bg-primary/[12%]' },
-    'علوم': { bg: 'bg-success', text: 'text-success', chip: 'bg-success/[12%]' },
-    'عربي': { bg: 'bg-warning', text: 'text-warning', chip: 'bg-warning/[12%]' },
-    'انجليزي': { bg: 'bg-info', text: 'text-info', chip: 'bg-info/[12%]' },
-    'دين': { bg: 'bg-accent', text: 'text-accent', chip: 'bg-accent/[12%]' },
-    'تاريخ': { bg: 'bg-error', text: 'text-error', chip: 'bg-error/[12%]' },
-    'قرآن': { bg: 'bg-accent', text: 'text-accent', chip: 'bg-accent/[12%]' },
-    'قواعد': { bg: 'bg-primary', text: 'text-primary', chip: 'bg-primary/[12%]' },
-    'بلاغة': { bg: 'bg-info', text: 'text-info', chip: 'bg-info/[12%]' },
-    'فقه': { bg: 'bg-success', text: 'text-success', chip: 'bg-success/[12%]' },
-    'توحيد': { bg: 'bg-accent', text: 'text-accent', chip: 'bg-accent/[12%]' },
-    'تفسير': { bg: 'bg-warning', text: 'text-warning', chip: 'bg-warning/[12%]' },
-    'نحو': { bg: 'bg-error', text: 'text-error', chip: 'bg-error/[12%]' },
+const SUBJECT_COLORS: Record<string, { bg: string; text: string; on: string; chip: string }> = {
+    'رياضيات': { bg: 'bg-primary', text: 'text-primary', on: 'text-on-primary', chip: 'bg-primary/[12%]' },
+    'علوم': { bg: 'bg-success', text: 'text-success', on: 'text-on-success', chip: 'bg-success/[12%]' },
+    'عربي': { bg: 'bg-warning', text: 'text-warning', on: 'text-on-warning', chip: 'bg-warning/[12%]' },
+    'انجليزي': { bg: 'bg-info', text: 'text-info', on: 'text-on-info', chip: 'bg-info/[12%]' },
+    'دين': { bg: 'bg-accent', text: 'text-accent', on: 'text-on-accent', chip: 'bg-accent/[12%]' },
+    'تاريخ': { bg: 'bg-error', text: 'text-error', on: 'text-on-error', chip: 'bg-error/[12%]' },
+    'قرآن': { bg: 'bg-accent', text: 'text-accent', on: 'text-on-accent', chip: 'bg-accent/[12%]' },
+    'قواعد': { bg: 'bg-primary', text: 'text-primary', on: 'text-on-primary', chip: 'bg-primary/[12%]' },
+    'بلاغة': { bg: 'bg-info', text: 'text-info', on: 'text-on-info', chip: 'bg-info/[12%]' },
+    'فقه': { bg: 'bg-success', text: 'text-success', on: 'text-on-success', chip: 'bg-success/[12%]' },
+    'توحيد': { bg: 'bg-accent', text: 'text-accent', on: 'text-on-accent', chip: 'bg-accent/[12%]' },
+    'تفسير': { bg: 'bg-warning', text: 'text-warning', on: 'text-on-warning', chip: 'bg-warning/[12%]' },
+    'نحو': { bg: 'bg-error', text: 'text-error', on: 'text-on-error', chip: 'bg-error/[12%]' },
 };
 
 const FALLBACKS = [
-    { bg: 'bg-primary', text: 'text-primary', chip: 'bg-primary/[12%]' },
-    { bg: 'bg-success', text: 'text-success', chip: 'bg-success/[12%]' },
-    { bg: 'bg-warning', text: 'text-warning', chip: 'bg-warning/[12%]' },
-    { bg: 'bg-info', text: 'text-info', chip: 'bg-info/[12%]' },
-    { bg: 'bg-accent', text: 'text-accent', chip: 'bg-accent/[12%]' },
-    { bg: 'bg-error', text: 'text-error', chip: 'bg-error/[12%]' },
+    { bg: 'bg-primary', text: 'text-primary', on: 'text-on-primary', chip: 'bg-primary/[12%]' },
+    { bg: 'bg-success', text: 'text-success', on: 'text-on-success', chip: 'bg-success/[12%]' },
+    { bg: 'bg-warning', text: 'text-warning', on: 'text-on-warning', chip: 'bg-warning/[12%]' },
+    { bg: 'bg-info', text: 'text-info', on: 'text-on-info', chip: 'bg-info/[12%]' },
+    { bg: 'bg-accent', text: 'text-accent', on: 'text-on-accent', chip: 'bg-accent/[12%]' },
+    { bg: 'bg-error', text: 'text-error', on: 'text-on-error', chip: 'bg-error/[12%]' },
 ];
 
 const getSC = (subject: string) => SUBJECT_COLORS[subject?.trim() || ''] || FALLBACKS[Math.abs((subject?.trim() || '').length) % FALLBACKS.length];
@@ -78,7 +79,7 @@ export const SchedulePopover = ({ event, onClose, onStartLiveSession, onViewStud
                                         <BookOpen size={18} className="text-white" />
                                     </div>
                                     <div>
-                                        <h3 className="text-sm font-bold text-white">{event.subject}</h3>
+                                        <h3 className={cn("text-sm font-bold", c.on)}>{event.subject}</h3>
                                         <p className="text-[10px] text-white/70 mt-0.5">{event.curriculum || 'المنهج العام'}</p>
                                     </div>
                                 </div>

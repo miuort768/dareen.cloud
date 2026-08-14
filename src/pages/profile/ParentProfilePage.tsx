@@ -255,7 +255,7 @@ export const ParentProfilePage = () => {
 
                 <motion.div {...stagger(4)}>
                     <ProfileBottomMotivation
-                        icon={<Users size={28} className="text-on-primary" />}
+                        icon={<Users size={28} />}
                         title="أنت عائلة ملهمة!"
                         description={`${children.length > 1 ? 'أبناؤك' : 'ابنك'} يتقدمون بفضل متابعتك المستمرة — استمر في دعمهم لتحقيق المزيد`}
                         progress={Math.min(Math.round((totalPoints / 1000) * 100), 100)}

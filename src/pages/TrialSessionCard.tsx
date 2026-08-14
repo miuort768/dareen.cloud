@@ -25,12 +25,12 @@ const statusConfig: Record<string, { label: string; dot: string; bg: string; tex
 };
 
 const avatarGradients = [
-    'from-primary to-primary-deep',
-    'from-success to-success-dark',
-    'from-warning to-warning-dark',
-    'from-error to-error-dark',
-    'from-info to-info-dark',
-    'from-chart-4 to-chart-4/80',
+    { g: 'from-primary to-primary-deep', on: 'text-on-primary' },
+    { g: 'from-success to-success-dark', on: 'text-on-success' },
+    { g: 'from-warning to-warning-dark', on: 'text-on-warning' },
+    { g: 'from-error to-error-dark', on: 'text-on-error' },
+    { g: 'from-info to-info-dark', on: 'text-on-info' },
+    { g: 'from-chart-4 to-chart-4/80', on: 'text-white' },
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -64,8 +64,8 @@ export const TrialSessionCard = ({ session: t, onEdit, onDelete, onCall, onWhats
             <div className="p-4 pb-3 cursor-pointer" onClick={onCardClick}>
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                        <div className={cn("w-11 h-11 rounded-xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md", gradient)}>
-                            <User size={18} className="text-white" />
+                        <div className={cn("w-11 h-11 rounded-xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md", gradient.g)}>
+                            <User size={18} className={gradient.on} />
                         </div>
                         <div className="text-right">
                             <h3 className="text-[14px] font-bold text-main leading-tight">{t.studentName}</h3>

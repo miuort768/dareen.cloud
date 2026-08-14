@@ -14,10 +14,10 @@ interface ProfileBottomMotivationProps {
 }
 
 const colorMap = {
-    primary: { border: 'border-s-primary', iconBg: 'bg-primary/10', iconText: 'text-primary', bar: 'bg-primary' },
-    success: { border: 'border-s-success', iconBg: 'bg-success/10', iconText: 'text-success', bar: 'bg-success' },
-    warning: { border: 'border-s-warning', iconBg: 'bg-warning/10', iconText: 'text-warning', bar: 'bg-warning' },
-    info: { border: 'border-s-info', iconBg: 'bg-info/10', iconText: 'text-info', bar: 'bg-info' },
+    primary: { border: 'border-s-primary', iconBg: 'bg-primary/10', iconText: 'text-primary dark:text-main', bar: 'bg-primary' },
+    success: { border: 'border-s-success', iconBg: 'bg-success/10', iconText: 'text-success dark:text-main', bar: 'bg-success' },
+    warning: { border: 'border-s-warning', iconBg: 'bg-warning/10', iconText: 'text-warning dark:text-main', bar: 'bg-warning' },
+    info: { border: 'border-s-info', iconBg: 'bg-info/10', iconText: 'text-info dark:text-main', bar: 'bg-info' },
 };
 
 export const ProfileBottomMotivation = ({
@@ -44,7 +44,7 @@ export const ProfileBottomMotivation = ({
             <div className="flex flex-col md:flex-row md:items-center gap-5">
                 <div className="flex items-center gap-4 flex-1">
                     <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center shrink-0", c.iconBg)}>
-                        <span className="flex items-center justify-center">{icon}</span>
+                        <span className={cn("flex items-center justify-center", c.iconText)}>{icon}</span>
                     </div>
                     <div className="min-w-0">
                         <h3 className="text-lg md:text-xl font-bold text-main dark:text-main mb-1">{title}</h3>

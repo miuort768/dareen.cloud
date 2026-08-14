@@ -14,12 +14,12 @@ interface EvaluationCardProps {
 }
 
 const avatarGradients = [
-    'from-primary to-primary-hover',
-    'from-success to-success-hover',
-    'from-info to-info-hover',
-    'from-warning to-warning-hover',
-    'from-error to-error-hover',
-    'from-accent to-accent-hover',
+    { g: 'from-primary to-primary-hover', on: 'text-on-primary' },
+    { g: 'from-success to-success-hover', on: 'text-on-success' },
+    { g: 'from-info to-info-hover', on: 'text-on-info' },
+    { g: 'from-warning to-warning-hover', on: 'text-on-warning' },
+    { g: 'from-error to-error-hover', on: 'text-on-error' },
+    { g: 'from-accent to-accent-hover', on: 'text-on-accent' },
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -52,7 +52,7 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
     return (
         <div className="group bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-2 hover:ring-1 hover:ring-primary/20 flex flex-col">
             {/* Gradient Top Bar */}
-            <div className={cn("h-10 bg-gradient-to-r relative overflow-hidden shrink-0", gradient)}>
+            <div className={cn("h-10 bg-gradient-to-r relative overflow-hidden shrink-0", gradient.g)}>
                 <div className="absolute inset-0 bg-white/10" />
                 <div className="absolute -top-4 -end-4 w-12 h-12 bg-white/20 rounded-full blur-xl" />
                 <div className="absolute -bottom-4 -start-4 w-8 h-8 bg-black/10 rounded-full blur-lg" />
@@ -62,7 +62,7 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
             <div className="px-4 -mt-5 relative z-10">
                 <div className="flex items-end justify-between">
                     <div className="flex items-center gap-3 min-w-0 flex-1">
-                        <div className={cn("w-11 h-11 rounded-xl bg-gradient-to-br flex items-center justify-center text-sm font-bold text-white ring-2 ring-white shadow-lg shrink-0", gradient)}>
+                        <div className={cn("w-11 h-11 rounded-xl bg-gradient-to-br flex items-center justify-center text-sm font-bold ring-2 ring-white shadow-lg shrink-0", gradient.g, gradient.on)}>
                             {(student.name || '?').charAt(0)}
                         </div>
                         <div className="min-w-0 flex-1">

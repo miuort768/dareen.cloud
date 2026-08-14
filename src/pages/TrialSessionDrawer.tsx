@@ -22,12 +22,12 @@ const statusConfig: Record<string, { label: string; dot: string; text: string; b
 };
 
 const avatarGradients = [
-    'from-primary to-primary-deep',
-    'from-success to-success-dark',
-    'from-warning to-warning-dark',
-    'from-error to-error-dark',
-    'from-info to-info-dark',
-    'from-chart-4 to-chart-4/80',
+    { g: 'from-primary to-primary-deep', on: 'text-on-primary' },
+    { g: 'from-success to-success-dark', on: 'text-on-success' },
+    { g: 'from-warning to-warning-dark', on: 'text-on-warning' },
+    { g: 'from-error to-error-dark', on: 'text-on-error' },
+    { g: 'from-info to-info-dark', on: 'text-on-info' },
+    { g: 'from-chart-4 to-chart-4/80', on: 'text-white' },
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -89,8 +89,8 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                 <div className="overflow-y-auto">
                     <div className="p-5 border-b border-border">
                         <div className="flex items-center gap-4">
-                            <div className={cn("w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md", gradient)}>
-                                <User size={22} className="text-white" />
+                            <div className={cn("w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md", gradient.g)}>
+                                <User size={22} className={gradient.on} />
                             </div>
                             <div className="min-w-0">
                                 <h2 className="text-base font-bold text-main">{session.studentName}</h2>

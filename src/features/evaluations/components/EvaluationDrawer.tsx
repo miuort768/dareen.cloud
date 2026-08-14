@@ -16,12 +16,12 @@ interface EvaluationDrawerProps {
 }
 
 const avatarGradients = [
-    'from-primary to-primary-hover',
-    'from-success to-success-hover',
-    'from-info to-info-hover',
-    'from-warning to-warning-hover',
-    'from-error to-error-hover',
-    'from-accent to-accent-hover',
+    { g: 'from-primary to-primary-hover', on: 'text-on-primary' },
+    { g: 'from-success to-success-hover', on: 'text-on-success' },
+    { g: 'from-info to-info-hover', on: 'text-on-info' },
+    { g: 'from-warning to-warning-hover', on: 'text-on-warning' },
+    { g: 'from-error to-error-hover', on: 'text-on-error' },
+    { g: 'from-accent to-accent-hover', on: 'text-on-accent' },
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -70,19 +70,19 @@ export const EvaluationDrawer = ({ student, evaluations, canDelete, onDelete, on
                     dir="rtl"
                 >
                     {/* Header */}
-                    <div className={cn("relative overflow-hidden p-5 bg-gradient-to-br", gradient)}>
+                    <div className={cn("relative overflow-hidden p-5 bg-gradient-to-br", gradient.g)}>
                         <div className="absolute inset-0 bg-white/10" />
                         <div className="absolute -top-6 -end-6 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
                         <div className="absolute -bottom-6 -start-6 w-16 h-16 bg-black/10 rounded-full blur-xl" />
-                        <button onClick={onClose} className="absolute top-3 end-3 w-7 h-7 flex items-center justify-center bg-black/10 hover:bg-black/20 text-white rounded-lg transition-all z-10">
+                        <button onClick={onClose} className={cn("absolute top-3 end-3 w-7 h-7 flex items-center justify-center bg-black/10 hover:bg-black/20 rounded-lg transition-all z-10", gradient.on)}>
                             <X size={14} />
                         </button>
                         <div className="relative z-10 flex items-center gap-4">
-                            <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-xl font-bold text-white ring-2 ring-white/30 shadow-lg shrink-0">
+                            <div className={cn("w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-xl font-bold ring-2 ring-white/30 shadow-lg shrink-0", gradient.on)}>
                                 {(student.name || '?').charAt(0)}
                             </div>
                             <div className="min-w-0 flex-1">
-                                <h2 className="text-base font-bold text-white truncate">{student.name}</h2>
+                                <h2 className={cn("text-base font-bold truncate", gradient.on)}>{student.name}</h2>
                                 <p className="text-[10px] text-white/70 mt-0.5">{student.grade || '—'}</p>
                                 <div className="flex items-center gap-2 mt-1.5">
                                     <span className="flex items-center gap-1 px-2 py-0.5 bg-warning-soft/60 rounded text-[8px] font-bold text-warning">

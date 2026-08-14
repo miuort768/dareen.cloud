@@ -29,12 +29,12 @@ interface StudentDrawerProps {
 type TabKey = 'overview' | 'programs' | 'timeline';
 
 const avatarGradients = [
-  'from-primary to-primary-hover',
-  'from-success to-success-hover',
-  'from-info to-info-hover',
-  'from-warning to-warning-hover',
-  'from-error to-error-hover',
-  'from-accent to-accent-hover',
+  { g: 'from-primary to-primary-hover', on: 'text-on-primary' },
+  { g: 'from-success to-success-hover', on: 'text-on-success' },
+  { g: 'from-info to-info-hover', on: 'text-on-info' },
+  { g: 'from-warning to-warning-hover', on: 'text-on-warning' },
+  { g: 'from-error to-error-hover', on: 'text-on-error' },
+  { g: 'from-accent to-accent-hover', on: 'text-on-accent' },
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -142,8 +142,8 @@ export const StudentDrawer = ({ student, onClose, sessions = [], teachers = [], 
           {/* Profile */}
           <div className="p-5 border-b border-border bg-gradient-to-l from-primary/[0.03] to-transparent">
             <div className="flex items-center gap-4">
-              <div className={cn("w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md ring-2 ring-white/30", gradient)}>
-                <span className="text-xl font-bold text-white">{student.name?.charAt(0) || 'ط'}</span>
+              <div className={cn("w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center shrink-0 shadow-md ring-2 ring-white/30", gradient.g)}>
+                <span className={cn("text-xl font-bold", gradient.on)}>{student.name?.charAt(0) || 'ط'}</span>
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">

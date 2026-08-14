@@ -35,9 +35,9 @@ const TrendBadge = ({ value, positive }: { value: number; positive: boolean }) =
     );
 };
 
-const KPICard = ({ title, value, icon: Icon, monthValue, gradient, trend, profitMargin: pm }: {
+const KPICard = ({ title, value, icon: Icon, monthValue, gradient, on, trend, profitMargin: pm }: {
     title: string; value: number; icon: React.ComponentType<{ size?: number }>;
-    monthValue: number; gradient: string; trend?: number; profitMargin?: string;
+    monthValue: number; gradient: string; on: string; trend?: number; profitMargin?: string;
 }) => (
     <motion.div
         whileHover={{ scale: 1.01, y: -1 }}
@@ -47,7 +47,7 @@ const KPICard = ({ title, value, icon: Icon, monthValue, gradient, trend, profit
         <div className={`absolute top-0 left-0 right-0 h-0.5 ${gradient}`} />
         <div className="relative p-3.5">
             <div className="flex items-start justify-between mb-2">
-                <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${gradient} text-white`}>
+                <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${gradient} ${on}`}>
                     <Icon size={14} />
                 </div>
                 {trend !== undefined && <TrendBadge value={trend} positive={title === 'صافي الربح'} />}
@@ -79,15 +79,15 @@ export const FinanceStats = ({
     return (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5" dir="rtl">
             <KPICard title="إجمالي الإيرادات" value={totalIncome} icon={TrendingUp}
-                monthValue={monthIncome} gradient="bg-gradient-to-r from-success/80 to-success"
+                monthValue={monthIncome} gradient="bg-gradient-to-r from-success/80 to-success" on="text-on-success"
                 trend={Math.round(incomeTrend)} />
             <KPICard title="مستحقات المعلمات" value={totalExpenses} icon={TrendingDown}
-                monthValue={monthExpenses} gradient="bg-gradient-to-r from-error/80 to-error"
+                monthValue={monthExpenses} gradient="bg-gradient-to-r from-error/80 to-error" on="text-on-error"
                 trend={Math.round(expenseTrend)} />
             <KPICard title="المصروفات التشغيلية" value={totalFixedExpenses} icon={Wallet}
-                monthValue={totalFixedExpenses} gradient="bg-gradient-to-r from-warning/80 to-warning" />
+                monthValue={totalFixedExpenses} gradient="bg-gradient-to-r from-warning/80 to-warning" on="text-on-warning" />
             <KPICard title="صافي الربح" value={netProfit} icon={DollarSign}
-                monthValue={monthProfit} gradient="bg-gradient-to-r from-primary/80 to-primary"
+                monthValue={monthProfit} gradient="bg-gradient-to-r from-primary/80 to-primary" on="text-on-primary"
                 trend={totalIncome ? Math.round((netProfit / totalIncome) * 100) : 0}
                 profitMargin={profitMargin} />
         </div>

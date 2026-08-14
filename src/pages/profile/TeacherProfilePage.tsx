@@ -274,7 +274,7 @@ export const TeacherProfilePage = () => {
 
                 <motion.div {...stagger(6)}>
                     <ProfileBottomMotivation
-                        icon={<Target size={28} className="text-on-primary" />}
+                        icon={<Target size={28} />}
                         title="استمر في التدريس!"
                         description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد وصلت إلى أعلى المراتب! استمر في التألق'}
                         progress={nextRank ? Math.round((points / 1000) * 100) : 100}
