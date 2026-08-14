@@ -60,7 +60,7 @@ export const ParentDashboard = () => {
         enabled: currentUser?.role === 'parent',
     });
 
-    const children = parentData?.children ?? [];
+    const children = useMemo(() => parentData?.children ?? [], [parentData]);
     const sessions = parentData?.sessions ?? [];
     const allPointLogs = parentData?.allPointLogs ?? [];
 

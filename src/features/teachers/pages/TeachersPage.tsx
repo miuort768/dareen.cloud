@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useUIStore } from '../../../store/uiStore';
@@ -16,6 +16,17 @@ import { TeacherTable } from '../components/TeacherTable';
 import { TeacherDetails } from '../components/TeacherDetails';
 import type { Teacher, Session, Student, Enrollment } from '../../../types';
 import { TeachersPageHeader, TeachersPageModals } from './teachers-page';
+
+const enrollmentTeacherName = (en: Enrollment): string | undefined => {
+  if (typeof en.teacher === 'string') return en.teacher;
+  if (en.teacher && typeof en.teacher === 'object') return (en.teacher as { name?: string }).name;
+  return en.teacherFallback;
+};
+
+const matchesTeacher = (en: Enrollment, t: Teacher): boolean => {
+  const name = enrollmentTeacherName(en);
+  return Boolean((en.teacherId && t.id && en.teacherId === t.id) || (name && t.name && name === t.name));
+};
 
 export const Teachers = () => {
   useEffect(() => { document.title = 'المعلمات | دارين السابعة للتعليم والتدريب'; }, []);
@@ -56,17 +67,6 @@ export const Teachers = () => {
   const [successModalData, setSuccessModalData] = useState<{ isOpen: boolean; title: string; message: string }>({ isOpen: false, title: '', message: '' });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const enrollmentTeacherName = (en: Enrollment): string | undefined => {
-    if (typeof en.teacher === 'string') return en.teacher;
-    if (en.teacher && typeof en.teacher === 'object') return (en.teacher as { name?: string }).name;
-    return en.teacherFallback;
-  };
-
-  const matchesTeacher = (en: Enrollment, t: Teacher): boolean => {
-    const name = enrollmentTeacherName(en);
-    return Boolean((en.teacherId && t.id && en.teacherId === t.id) || (name && t.name && name === t.name));
-  };
-
   const uniqueSubjects = useMemo(() => [...new Set(teachers.map(t => t.subject))].filter(Boolean), [teachers]);
   const subjectsList = useMemo(() => uniqueSubjects as string[], [uniqueSubjects]);
   const averagePrice = useMemo(() => teachers.length > 0 ? Math.round(teachers.reduce((sum, t) => sum + Number(t.price), 0) / teachers.length) : 0, [teachers]);
@@ -91,17 +91,17 @@ export const Teachers = () => {
     return counts;
   }, [students, teachers]);
 
-  const computeStatus = (teacher: Teacher): string => {
+  const computeStatus = useCallback((teacher: Teacher): string => {
     const count = studentCounts[teacher.name] || 0;
     return count > 0 ? 'active' : 'inactive';
-  };
+  }, [studentCounts]);
 
   const filteredTeachers = useMemo(() => teachers.filter(t => {
     const matchSearch = !searchTerm || (t.name || '').toLowerCase().includes(searchTerm.toLowerCase()) || (t.subject || '').toLowerCase().includes(searchTerm.toLowerCase()) || (t.phone1 || '').includes(searchTerm);
     const matchSubject = !filterSubject || t.subject === filterSubject;
     const matchStatus = !filterStatus || computeStatus(t) === filterStatus;
     return matchSearch && matchSubject && matchStatus;
-  }), [teachers, searchTerm, filterSubject, filterStatus]);
+  }), [teachers, searchTerm, filterSubject, filterStatus, computeStatus]);
 
   const handleAddTeacher = async (data: Omit<Teacher, 'id'>) => {
     try {

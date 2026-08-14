@@ -61,7 +61,7 @@ export const Parents = () => {
         { icon: Plus, label: 'إضافة ولي أمر', onClick: () => { actions.setShowAddForm(!state.showAddForm); if (!state.showAddForm) { actions.setEditId(null); actions.setNewParent({ name: '', phone: '', email: '', username: '', password: '' }); } } },
         { icon: Download, label: 'تصدير Excel', onClick: () => downloadExport('parents', 'xlsx').then(() => showNotification('تم تصدير Excel', 'success')).catch(e => showNotification(e.message, 'error')) },
         { icon: Mail, label: 'تصدير PDF', onClick: () => downloadExport('parents', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error')) },
-    ], [state.showAddForm, showNotification]);
+    ], [state.showAddForm, showNotification, actions]);
 
     if (state.loading) {
         return (

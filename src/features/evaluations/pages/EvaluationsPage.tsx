@@ -52,8 +52,8 @@ export const Evaluations = () => {
         enabled: !!currentUser,
     });
 
-    const evaluations = data?.evaluations ?? [];
-    const students = data?.students ?? [];
+    const evaluations = useMemo(() => data?.evaluations ?? [], [data]);
+    const students = useMemo(() => data?.students ?? [], [data]);
 
     const createMutation = useMutation({
         mutationFn: async (payload: Record<string, unknown>) => api.post('/evaluations', payload),

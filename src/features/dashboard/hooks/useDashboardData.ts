@@ -245,7 +245,7 @@ export const useDashboardData = (currentUser: User | null) => {
             topStudents: isTeacher ? filteredStudents.sort((a: Student, b: Student) => (Number(b.totalPoints) || 0) - (Number(a.totalPoints) || 0)).slice(0, 5) : [],
             focusStudents: focusStudentsList
         };
-    }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data, transactionsQuery.data, fixedExpensesQuery.data, evaluationsQuery.data]);
+    }, [isLoading, currentUser, studentsQuery.data, teachersQuery.data, parentsQuery.data, sessionsQuery.data, teacherInvoicesQuery.data, studentInvoicesQuery.data, tasksQuery.data, transactionsQuery.data, fixedExpensesQuery.data, evaluationsQuery.data, teacherMeQuery.data]);
 
 
 

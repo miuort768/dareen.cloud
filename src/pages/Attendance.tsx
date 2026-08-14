@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Search, Users, Activity, CheckCircle, XCircle, Clock, Plus, List, BarChart3, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate, useLogout, useAcademyName } from '../context/AppContext';
@@ -125,11 +125,11 @@ export const Attendance = () => {
         setIsLogging(false);
     };
 
-    const handleViewHistory = (studentId: string, studentName: string, grade?: string, subject?: string) => {
+    const handleViewHistory = useCallback((studentId: string, studentName: string, grade?: string, subject?: string) => {
         const foundStudent = students.find(s => s.id === studentId);
         const enrollment = foundStudent?.enrollments?.find(e => e.subject === subject);
         setHistoryStudent({ id: studentId, name: studentName, grade, subject, curriculum: enrollment?.curriculum });
-    };
+    }, [students]);
 
     const handleUpdateStatus = async (id: string, status: Session['status']) => {
         const success = await updateStatus(id, status);
@@ -161,7 +161,7 @@ export const Attendance = () => {
         { icon: Plus, label: 'تسجيل حضور', onClick: () => document.querySelector<HTMLButtonElement>('[data-attendance-log]')?.click() },
         { icon: List, label: 'سجل الجلسات', onClick: () => { const first = filteredSessions[0]; if (first) handleViewHistory(first.studentId || '', first.studentName || '', undefined, first.subject); } },
         { icon: BarChart3, label: 'إحصائيات', onClick: () => document.querySelector('[data-stats-section]')?.scrollIntoView({ behavior: 'smooth' }) },
-    ], [filteredSessions]);
+    ], [filteredSessions, handleViewHistory]);
 
     return (
         <div className="min-h-full pb-24 relative font-sans" dir="rtl">

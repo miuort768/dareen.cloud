@@ -45,15 +45,18 @@ const getPaidIds = (): string[] => {
 
 const Counter = ({ value, duration = 800 }: { value: number; duration?: number }) => {
   const [count, setCount] = useState(0);
+  const countRef = useRef(0);
   const ref = useRef<number | null>(null);
   useEffect(() => {
     if (ref.current) cancelAnimationFrame(ref.current);
     const start = performance.now();
-    const from = count;
+    const from = countRef.current;
     const animate = (now: number) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(from + (value - from) * eased));
+      const next = Math.round(from + (value - from) * eased);
+      countRef.current = next;
+      setCount(next);
       if (progress < 1) ref.current = requestAnimationFrame(animate);
     };
     ref.current = requestAnimationFrame(animate);

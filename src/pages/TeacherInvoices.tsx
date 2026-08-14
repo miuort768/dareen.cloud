@@ -61,8 +61,8 @@ export const TeacherInvoices = () => {
         },
     });
 
-    const invoices = invoicesData?.invoices ?? [];
-    const teachers = invoicesData?.teachers ?? [];
+    const invoices = useMemo(() => invoicesData?.invoices ?? [], [invoicesData]);
+    const teachers = useMemo(() => invoicesData?.teachers ?? [], [invoicesData]);
 
     const invalidateInvoices = useCallback(() => {
         queryClient.invalidateQueries({ queryKey: ['teacher-invoices'] });
@@ -89,14 +89,14 @@ export const TeacherInvoices = () => {
         onSuccess: () => { invalidateInvoices(); },
     });
 
-    const handleFabAction = (action: string) => {
+    const handleFabAction = useCallback((action: string) => {
         setFabOpen(false);
         switch (action) {
             case 'add': if (!isTeacher) setShowForm(!showForm); break;
             case 'import': if (!isTeacher) handleImportTeachers(); break;
             case 'print': window.print(); break;
         }
-    };
+    }, [isTeacher, showForm, handleImportTeachers]);
 
     const filteredInvoices = useMemo(() => {
         let list = invoices;
@@ -230,7 +230,7 @@ export const TeacherInvoices = () => {
         { icon: Plus, label: 'إضافة فاتورة', onClick: () => handleFabAction('add') },
         { icon: RefreshCw, label: 'استيراد معلمات', onClick: () => handleFabAction('import') },
         { icon: FileText, label: 'طباعة', onClick: () => handleFabAction('print') },
-    ], [showForm, isTeacher]);
+    ], [handleFabAction]);
 
     if (loading && invoices.length === 0) return <PageLoader />;
 

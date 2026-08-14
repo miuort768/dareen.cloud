@@ -104,7 +104,7 @@ export const Schedule = () => {
                     })
                 )
         );
-    }, [students, isTeacher, teacherToMatch]);
+    }, [students, isTeacher, teacherToMatch, currentUser?.id]);
 
     const uniqueTeachers = useMemo(() => Array.from(new Set(allEvents.map(e => e.teacherName))).sort(), [allEvents]);
     const uniqueSubjects = useMemo(() => Array.from(new Set(allEvents.map(e => e.subject))).sort(), [allEvents]);

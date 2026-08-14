@@ -114,7 +114,7 @@ export const Tasks = () => {
         { label: 'معلقة', value: stats.pending, icon: Clock, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
         { label: 'قيد التنفيذ', value: stats.inProgress, icon: RefreshCcw, gradient: 'from-info/20 to-info/5', iconBg: 'bg-info/10 text-info', accent: 'bg-info' },
         { label: 'تم الإنجاز', value: stats.completed, icon: CheckCircle2, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
-    ], [stats]);
+    ], [stats.total, stats.pending, stats.inProgress, stats.completed]);
 
     const fabActions = useMemo(() => [
         { icon: Plus, label: 'مهمة جديدة', onClick: () => setShowAddForm(true) },
