@@ -168,7 +168,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     );
 };
 
-const SelectField = ({ label, icon: Icon, placeholder, value, onChange, required, options }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; options: string[] }) => {
+const SelectField = ({ label, icon: Icon, placeholder, value, onChange, options }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; options: string[] }) => {
     const selectId = `student-select-${label.replace(/\s+/g, '-')}`;
     return (
         <div className="space-y-2">

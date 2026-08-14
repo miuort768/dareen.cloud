@@ -45,7 +45,7 @@ export const AttendanceHeader = ({ date, onDateChange, isTeacher, stats, teacher
                             <Activity size={20} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-sm md:text-lg font-bold text-white leading-tight">تحضير الطلاب والمتابعة اليومية</h1>
+                            <h1 className="text-sm md:text-lg font-bold text-on-primary leading-tight">تحضير الطلاب والمتابعة اليومية</h1>
                             <p className="text-[10px] md:text-micro font-bold text-white/70 mt-0.5">إدارة الجداول الأكاديمية والتحضير المباشر</p>
                         </div>
                     </div>

@@ -68,7 +68,7 @@ export const AttendanceStats = ({ stats, teacherStats, isTeacher, periodLabel, p
                             </TooltipWrap>
                         </div>
                         <div className="flex items-baseline gap-2">
-                            <span className="text-2xl md:text-3xl font-bold text-white"><Counter value={teacherStats.rate} suffix="%" /></span>
+                            <span className="text-2xl md:text-3xl font-bold text-on-primary"><Counter value={teacherStats.rate} suffix="%" /></span>
                             <TrendBadge value={trendRate} label="مقارنة بالأمس" />
                         </div>
                         <div className="mt-3 h-2 bg-white/15 rounded-full overflow-hidden">
@@ -136,7 +136,7 @@ export const AttendanceStats = ({ stats, teacherStats, isTeacher, periodLabel, p
                         </div>
                     </div>
                     <div className="flex items-baseline gap-2">
-                        <span className="text-2xl md:text-3xl font-bold text-white"><Counter value={total - 1} /></span>
+                        <span className="text-2xl md:text-3xl font-bold text-on-primary"><Counter value={total - 1} /></span>
                         <span className="text-[10px] font-bold text-white/60">حصة</span>
                     </div>
                     <div className="flex items-center gap-3 mt-2">

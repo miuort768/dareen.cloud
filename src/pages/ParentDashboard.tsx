@@ -8,7 +8,6 @@ import { Skeleton } from '../shared/components/ui';
 import { ParentDashboardDesktop } from './parent-dashboard/ParentDashboardDesktop';
 import { ParentDashboardMobile } from './parent-dashboard/ParentDashboardMobile';
 import type { Student } from '../types';
-import type { PointLogEntry } from './parent-dashboard/types';
 
 export const ParentDashboard = () => {
     const academyName = useAcademyName();

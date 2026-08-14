@@ -1,4 +1,4 @@
-﻿import { Users, BookOpen, TrendingUp, Calendar } from 'lucide-react';
+﻿import { Users, TrendingUp, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 import type { Student } from '../../types';

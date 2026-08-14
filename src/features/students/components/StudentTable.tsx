@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react';
-import { Edit, Trash, Bell, GraduationCap, Star, ArrowUpDown, ChevronUp, ChevronDown, AlertTriangle } from 'lucide-react';
+import { Edit, Trash, Bell, GraduationCap, Star, AlertTriangle } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { Table, ProgressBar } from '../../../shared/components/ui';
 import type { Column } from '../../../shared/components/ui';

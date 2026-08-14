@@ -34,12 +34,6 @@ const particles = Array.from({ length: 10 }, (_, i) => ({
     size: Math.random() * 6 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
 }));
 
-const statusConfig = {
-    completed: { icon: CheckCircle, label: 'حضور', class: 'bg-success/10 text-success border-success/20' },
-    cancelled: { icon: XCircle, label: 'غياب', class: 'bg-error/10 text-error border-error/20' },
-    scheduled: { icon: Clock, label: 'مقرر', class: 'bg-warning/10 text-warning border-warning/20' },
-} as const;
-
 export const Attendance = () => {
     const academyName = useAcademyName();
     useEffect(() => { document.title = `الحضور والغياب | ${academyName}`; }, [academyName]);
@@ -188,7 +182,7 @@ export const Attendance = () => {
                                 <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><UserCheck className="text-white" size={20} /></div>
                                 <span className="text-white/70 text-xs font-medium">نظام الحضور والغياب</span>
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">الحضور والغياب</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-on-primary mb-1">الحضور والغياب</h1>
                             <p className="text-white/70 text-sm">متابعة حضور وغياب الطلاب بشكل يومي</p>
                         </div>
                         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">

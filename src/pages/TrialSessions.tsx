@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef, useMemo } from 'react';
-import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, GraduationCap, TrendingUp, Clock, Users, X, CalendarDays, Eye, EyeOff, Download, ChevronLeft, ChevronRight, FileText, Trash2 } from 'lucide-react';
+import { Search, Plus, AlertTriangle, CheckCircle2, BookOpen, TrendingUp, Clock, Users, X, CalendarDays, Eye, EyeOff, Download, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { api } from '../lib/api';
@@ -254,17 +254,6 @@ export const TrialSessions = () => {
     const matchSubject = !filterSubject || t.subject === filterSubject;
     return matchPaidFilter && matchSearch && matchStatus && matchSubject;
   }), [trials, paidIds, showPaid, search, filterStatus, filterSubject]);
-
-  const groups = useMemo(() => {
-    const g = new Map<string, TrialSession[]>();
-    for (const t of filtered) {
-      const key = t.parentPhone || t.id;
-      const arr = g.get(key) || [];
-      arr.push(t);
-      g.set(key, arr);
-    }
-    return g;
-  }, [filtered]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginatedFiltered = useMemo(() => {

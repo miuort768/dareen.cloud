@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Wrench, Lock, Users, ShieldCheck, Snowflake } from 'lucide-react';
+import { Lock, Users, ShieldCheck, Snowflake } from 'lucide-react';
 import { Image } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
 

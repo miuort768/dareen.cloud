@@ -70,7 +70,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <h2 className="text-lg font-bold text-white leading-tight mb-0.5">
+                        <h2 className="text-lg font-bold text-on-primary leading-tight mb-0.5">
                             {nextSession.subject}
                         </h2>
                         <p className="text-sm text-white/70 dark:text-on-primary/70 font-medium">

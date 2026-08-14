@@ -33,7 +33,7 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
         info: { icon: Info, iconBg: 'bg-info', iconText: 'text-on-info', text: 'text-info', progressBar: 'bg-info', ring: 'ring-info/20' }
     };
 
-    const { icon: Icon, iconBg, iconText, text, progressBar, ring } = config[type];
+    const { icon: Icon, iconBg, iconText, progressBar, ring } = config[type];
 
     return (
         <div className={cn(

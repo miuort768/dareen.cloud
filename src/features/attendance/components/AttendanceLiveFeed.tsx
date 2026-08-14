@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, XCircle, Clock, BookOpen, User, GraduationCap, Zap } from 'lucide-react';
+import { CheckCircle2, XCircle, Clock, BookOpen, GraduationCap, Zap } from 'lucide-react';
 import type { Session } from '../types';
 
 interface AttendanceLiveFeedProps {

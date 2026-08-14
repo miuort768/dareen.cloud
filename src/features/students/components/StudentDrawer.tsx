@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, Phone, MessageSquare, Star, Trophy, BookOpen, Users, DollarSign, Calendar, Clock, GraduationCap, CheckCircle2, Award, Plus, TrendingUp, Briefcase, UserCheck, Zap, Flame } from 'lucide-react';
+import { X, ChevronLeft, Phone, MessageSquare, Star, Trophy, BookOpen, Users, DollarSign, Calendar, Clock, GraduationCap, CheckCircle2, Plus, TrendingUp, Zap, Flame } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import type { Student, Enrollment, ScheduleSlot } from '../types';
+import type { Student, ScheduleSlot } from '../types';
 import type { Teacher } from '../../teachers/types';
 import { EnrollmentForm } from './EnrollmentForm';
 import { enrollmentTeacherName } from '../utils/enrollmentUtils';
@@ -72,7 +72,7 @@ const tabs: { key: TabKey; label: string; icon: React.ComponentType<{ size?: num
   { key: 'timeline', label: 'النشاطات', icon: Clock },
 ];
 
-export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teachers = [], isAddingProgram = false, inline = false, onAddProgram }: StudentDrawerProps) => {
+export const StudentDrawer = ({ student, onClose, sessions = [], teachers = [], isAddingProgram = false, inline = false, onAddProgram }: StudentDrawerProps) => {
   const [activeTab, setActiveTab] = useState<TabKey>('overview');
   const [showAddProgram, setShowAddProgram] = useState(false);
 
@@ -98,9 +98,6 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teacher
   const level = getNextLevel(points);
   const enrollments = student.enrollments || [];
   const totalSessionsUsed = enrollments.reduce((acc, en) => acc + (en.sessionsUsed || 0), 0);
-  const totalSessionsExpected = enrollments.reduce((acc, en) => acc + (en.sessionsTotal || 0), 0);
-  const totalSessionsRemaining = totalSessionsExpected - totalSessionsUsed;
-  const attendanceRate = totalSessionsExpected > 0 ? Math.round((totalSessionsUsed / totalSessionsExpected) * 100) : 0;
 
   const completedSessions = sessions.filter(s => s.status === 'completed').length;
   const totalSess = sessions.length;
@@ -212,7 +209,7 @@ export const StudentDrawer = ({ student, onClose, onEdit, sessions = [], teacher
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-warning to-warning-hover flex items-center justify-center shadow-sm">
-                        <Trophy size={16} className="text-white" />
+                        <Trophy size={16} className="text-on-warning" />
                       </div>
                       <div>
                         <p className="text-xs font-bold text-main">{level.label}</p>

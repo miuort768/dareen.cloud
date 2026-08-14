@@ -66,13 +66,6 @@ export const useSettingsHandlers = () => {
     const setHeroBanners = (v: string) => setSetting('heroBanners', v);
     const setReminderMinutesBefore = (v: string) => setSetting('reminderMinutesBefore', Number(v));
     const setWhatsappNumbers = (v: string) => setSetting('whatsappNumbers', v);
-    const setLibraryTelegram = (v: string) => setSetting('libraryTelegram', v);
-    const setAcademicYear = (v: string) => setSetting('academicYear', v);
-    const setSemesterStartDate = (v: string) => setSetting('semesterStartDate', v);
-    const setSemesterEndDate = (v: string) => setSetting('semesterEndDate', v);
-    const setFooterDescription = (v: string) => setSetting('footerDescription', v);
-    const setFooterAddress = (v: string) => setSetting('footerAddress', v);
-    const setFooterInstagram = (v: string) => setSetting('footerInstagram', v);
 
     const [activeTab, setActiveTab] = useState<TabId>('general');
     const [loading, setLoading] = useState(true);

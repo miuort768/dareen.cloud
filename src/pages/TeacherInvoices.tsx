@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, Plus, RefreshCw, FileText, BarChart3, Filter, DollarSign, CheckCircle2, AlertCircle, CreditCard } from 'lucide-react';
+import { GraduationCap, Plus, RefreshCw, FileText, DollarSign, CheckCircle2, AlertCircle } from 'lucide-react';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
 import { api } from '../lib/api';
 import { CURRENCY_SYMBOL } from '../config/constants';
@@ -26,7 +26,7 @@ export const TeacherInvoices = () => {
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [isSaving, setIsSaving] = useState(false);
-    const [isDeletingAll, setIsDeletingAll] = useState(false);
+    const [, setIsDeletingAll] = useState(false);
     const [formData, setFormData] = useState<TeacherInvoiceFormData>({
         teacherId: '', teacher: '', specialization: '', amount: '',
         paymentMethod: '', status: INVOICE_STATUS.PROCESSING,
@@ -250,7 +250,7 @@ export const TeacherInvoices = () => {
                                 <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><GraduationCap className="text-white" size={20} /></div>
                                 <span className="text-white/70 text-xs font-medium">المالية</span>
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">فواتير المعلمات</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-on-primary mb-1">فواتير المعلمات</h1>
                             <p className="text-white/70 text-sm">إدارة مستحقات المعلمات المالية</p>
                         </div>
                         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">

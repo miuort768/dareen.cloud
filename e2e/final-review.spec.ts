@@ -44,6 +44,29 @@ const ROUTES: Record<string, string[]> = {
 type ConsoleEntry = { type: string; text: string };
 type NetEntry = { kind: string; url: string; status?: number; error?: string };
 
+type OverlayItem = {
+  tag: string;
+  text: string;
+  aria: string;
+  href: string;
+  type: string;
+  cls: string;
+  disabled: boolean;
+  pe: string;
+  offscreen: boolean;
+  covered: boolean;
+  overlay: null | {
+    tag: string;
+    id: string;
+    cls: string;
+    text: string;
+    z: string;
+    pos: string;
+    pe: string;
+    opacity: string;
+  };
+};
+
 type AuditEntry = {
   route: string;
   pathname: string;
@@ -59,18 +82,18 @@ type AuditEntry = {
   pageErrors: string[];
   badResponses: NetEntry[];
   requestFailures: NetEntry[];
-  covered: any[];
-  pointerEventsNone: any[];
+  covered: OverlayItem[];
+  pointerEventsNone: OverlayItem[];
 };
 
-function detectOverlays(): any[] {
+function detectOverlays(): OverlayItem[] {
   const sel = [
     'button', 'a[href]', 'select',
     '[role="button"]', '[role="tab"]', '[role="menuitem"]', '[role="radio"]',
     '[aria-haspopup]', 'input:not([type="hidden"])', 'textarea',
   ].join(',');
   const els = Array.from(document.querySelectorAll(sel)) as HTMLElement[];
-  const items: any[] = [];
+  const items: OverlayItem[] = [];
   for (const el of els) {
     const r = el.getBoundingClientRect();
     if (r.width === 0 || r.height === 0) continue;
@@ -81,7 +104,7 @@ function detectOverlays(): any[] {
     const offscreen = cx < 0 || cy < 0 || cx > window.innerWidth || cy > window.innerHeight;
     const top = offscreen ? null : document.elementFromPoint(cx, cy);
     const covered = !offscreen && !!top && !el.contains(top);
-    const rec: any = {
+    const rec: OverlayItem = {
       tag: el.tagName.toLowerCase(),
       text: (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 90),
       aria: el.getAttribute('aria-label') || '',
@@ -161,8 +184,8 @@ async function auditRoute(page: Page, route: string): Promise<AuditEntry> {
   const modalOpenerButtons = await page.locator('button[aria-haspopup="dialog"], button[data-state]').count();
   const viteError = await page.locator('#vite-error-overlay').textContent({ timeout: 1500 }).catch(() => null);
   const items = await page.evaluate(detectOverlays);
-  const covered = items.filter((i: any) => i.covered && i.overlay && !i.disabled);
-  const peNone = items.filter((i: any) => !i.covered && i.pe === 'none' && !i.disabled);
+  const covered = items.filter((i: OverlayItem) => i.covered && i.overlay && !i.disabled);
+  const peNone = items.filter((i: OverlayItem) => !i.covered && i.pe === 'none' && !i.disabled);
 
   return {
     route,
@@ -229,7 +252,7 @@ test.describe('Final Pre-Production Review (report only — no fixes)', () => {
         for (const rf of e.requestFailures.slice(0, 5)) console.log(`  F ${role.id} ${e.route}: ${rf.error} ${rf.url}`);
         for (const it of e.covered.slice(0, 6)) {
           const label = it.text || it.aria || it.href || it.cls.slice(0, 40);
-          console.log(`  X ${role.id} ${e.route}: <${it.tag}> "${label}" COVERED by <${it.overlay.tag}> z=${it.overlay.z} cls=${it.overlay.cls.slice(0, 60)}`);
+          console.log(`  X ${role.id} ${e.route}: <${it.tag}> "${label}" COVERED by <${it.overlay!.tag}> z=${it.overlay!.z} cls=${it.overlay!.cls.slice(0, 60)}`);
         }
       }
     });

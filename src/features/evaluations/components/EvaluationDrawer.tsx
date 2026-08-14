@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Award, Star, Calendar, BookOpen, TrendingUp, Clock, User, GraduationCap, Trophy, Trash2, History } from 'lucide-react';
+import { X, Award, Star, Calendar, BookOpen, TrendingUp, GraduationCap, Trophy, Trash2, History } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { format } from 'date-fns';
 import { ProgressBar } from '../../../shared/components/ui';

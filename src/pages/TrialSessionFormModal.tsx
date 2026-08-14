@@ -100,7 +100,7 @@ export const TrialSessionFormModal = ({ editingId, form, teachers, isSaving, onC
                     <textarea value={form.notes} onChange={e => onChange({ ...form, notes: e.target.value })} rows={2} className={inputClass + " resize-none"} placeholder="اكتب أي تفاصيل..." />
                 </div>
                 <div className="flex gap-3 pt-2 pb-4">
-                    <button type="submit" disabled={isSaving} className="flex-1 py-3.5 bg-gradient-to-l from-primary to-primary-deep text-white text-[13px] font-bold rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 shadow-md shadow-primary/15">
+                    <button type="submit" disabled={isSaving} className="flex-1 py-3.5 bg-gradient-to-l from-primary to-primary-deep text-on-primary text-[13px] font-bold rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 shadow-md shadow-primary/15">
                         {isSaving ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}
                     </button>
                     <button type="button" onClick={onClose} className="flex-1 py-3.5 text-[11px] font-bold text-muted bg-surface hover:bg-hover rounded-xl transition-all active:scale-[0.98]">إلغاء</button>

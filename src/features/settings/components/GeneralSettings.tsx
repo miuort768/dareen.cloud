@@ -35,7 +35,6 @@ export const GeneralSettings = ({
     localBackdateLock, setBackdateTarget, setShowBackdateModal,
     handleSaveGeneral, isSaving
 }: GeneralSettingsProps) => {
-    const currentCurrency = ALLOWED_CURRENCIES.find(c => c.code === localCurrency);
 
     return (
         <div className="space-y-4">

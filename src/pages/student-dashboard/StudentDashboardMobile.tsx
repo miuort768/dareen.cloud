@@ -34,7 +34,7 @@ interface StudentDashboardMobileProps {
     onRefresh: () => void;
 }
 
-export const StudentDashboardMobile = ({ currentUser, studentData, sessions, pointLogs, logout, onRefresh }: StudentDashboardMobileProps) => {
+export const StudentDashboardMobile = ({ studentData, sessions, pointLogs, logout, onRefresh }: StudentDashboardMobileProps) => {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [pullDistance, setPullDistance] = useState(0);
     const [startY, setStartY] = useState(0);

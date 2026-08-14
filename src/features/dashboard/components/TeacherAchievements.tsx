@@ -37,7 +37,7 @@ export const TeacherAchievements = ({ stats, lowBalanceStudents, isTeacher }: Te
                             </span>
                         </div>
                         <div className="flex items-baseline gap-1.5">
-                            <span className="text-2xl font-bold tabular-nums text-white">
+                            <span className="text-2xl font-bold tabular-nums text-on-primary">
                                 {isTeacher ? (stats.monthNetProfit || 0).toLocaleString('ar-EG') : stats.expectedCollection.toLocaleString('ar-EG')}
                             </span>
                             <span className="text-[11px] font-bold text-white/70">{CURRENCY_SYMBOL}</span>

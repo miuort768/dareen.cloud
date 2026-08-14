@@ -39,7 +39,7 @@ export const NotificationsCenter = ({
     const adminPhone = useAdminPhone();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState<'smart' | 'room'>('smart');
-    const [dismissedIds, setDismissedIds] = useState<string[]>([]);
+    const [, setDismissedIds] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchDismissed = async () => {

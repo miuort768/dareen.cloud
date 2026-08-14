@@ -35,7 +35,7 @@ export const TeachersPageHeader = ({ totalTeachers, uniqueSubjects, averagePrice
             <Users size={18} className="text-white" />
           </div>
           <div>
-            <h1 className="text-base md:text-lg font-bold text-white">إدارة المعلمات</h1>
+            <h1 className="text-base md:text-lg font-bold text-on-primary">إدارة المعلمات</h1>
             <p className="text-[11px] text-white/70">{totalTeachers} معلمة نشطة</p>
           </div>
         </div>

@@ -1,6 +1,6 @@
-﻿import { useState, useEffect, useMemo, useCallback } from 'react';
+﻿import { useState, useEffect, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked, Download, ChevronDown, Inbox, Filter, X } from 'lucide-react';
+import { Briefcase, Trash2, Phone, MessageCircle, GraduationCap, Calendar, Award, Globe, BookOpen, Search, CheckCircle2, BookMarked, Download, Inbox, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api, safeArray } from '../lib/api';
 import { confirm } from '../lib/confirmDialog';

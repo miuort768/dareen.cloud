@@ -59,7 +59,7 @@ export const MobileHero = ({ view, gridItems, currentTypeName, currentCurriculum
 
                         {/* Content */}
                         <div className="min-w-0">
-                            <h1 className="text-xl font-black text-white leading-tight mb-1.5 font-heading">
+                            <h1 className="text-xl font-black text-on-primary leading-tight mb-1.5 font-heading">
                                 مكتبة <span className="text-accent">{academyName}</span>
                             </h1>
                             <p className="text-[11px] text-white/50 leading-relaxed mb-4 font-medium">
@@ -218,7 +218,7 @@ export const DesktopHero = ({ view, gridItems, currentTypeName, currentCurriculu
                                 <span className="text-[11px] font-extrabold text-white/90 tracking-wide">مركز ملفات {academyName}</span>
                             </div>
 
-                            <h1 className="text-4xl xl:text-5xl 2xl:text-[3.5rem] font-heading font-black text-white leading-[1.1] mb-5 max-w-xl">
+                            <h1 className="text-4xl xl:text-5xl 2xl:text-[3.5rem] font-heading font-black text-on-primary leading-[1.1] mb-5 max-w-xl">
                                 مركز ملفات
                                 <span className="relative inline-block mx-3">
                                     <span className="relative z-10 text-accent">{academyName}</span>

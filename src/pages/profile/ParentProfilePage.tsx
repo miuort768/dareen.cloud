@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
-    Phone, Mail, Users, BookOpen, Star, User, CalendarDays,
-    TrendingUp, Award, ChevronLeft, Edit3, Heart, Target,
+    Phone, Mail, Users, BookOpen, Star, User,
+    TrendingUp, ChevronLeft, Heart,
     Trophy, Flame
 } from 'lucide-react';
 import { api } from '../../lib/api';
@@ -21,12 +21,6 @@ const stagger = (i: number) => ({
     initial: { opacity: 0, y: 16 },
     animate: { opacity: 1, y: 0 },
     transition: { delay: i * 0.04, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] },
-});
-
-const fadeUp = (delay: number) => ({
-    initial: { opacity: 0, y: 16 },
-    animate: { opacity: 1, y: 0 },
-    transition: { delay, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
 });
 
 const StatCard = ({ icon, value, label, trend, color = 'primary' }: {
@@ -261,7 +255,7 @@ export const ParentProfilePage = () => {
 
                 <motion.div {...stagger(4)}>
                     <ProfileBottomMotivation
-                        icon={<Users size={28} className="text-white" />}
+                        icon={<Users size={28} className="text-on-primary" />}
                         title="أنت عائلة ملهمة!"
                         description={`${children.length > 1 ? 'أبناؤك' : 'ابنك'} يتقدمون بفضل متابعتك المستمرة — استمر في دعمهم لتحقيق المزيد`}
                         progress={Math.min(Math.round((totalPoints / 1000) * 100), 100)}

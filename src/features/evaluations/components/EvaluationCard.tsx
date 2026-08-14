@@ -1,4 +1,4 @@
-import { Award, Plus, History, Star, Calendar, TrendingUp, Clock, User } from 'lucide-react';
+import { Award, Plus, History, Star, Calendar, TrendingUp, User } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { format } from 'date-fns';
 import { RATING_OPTIONS } from '../types/constants';
@@ -47,7 +47,6 @@ export const EvaluationCard = ({ student, evaluations, isParent, onAddEvaluation
     const totalSessions = (student.enrollments || []).reduce((s, en) => s + en.sessionsTotal, 0);
     const usedSessions = (student.enrollments || []).reduce((s, en) => s + en.sessionsUsed, 0);
     const progress = totalSessions > 0 ? Math.round((usedSessions / totalSessions) * 100) : 0;
-    const evalProgress = studentEvals.length > 0 ? Math.min(100, Math.round((studentEvals.length / Math.max(totalEnrollments, 1)) * 100)) : 0;
     const gradient = getAvatarGradient(student.name);
 
     return (

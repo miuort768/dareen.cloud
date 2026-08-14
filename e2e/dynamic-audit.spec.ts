@@ -39,7 +39,28 @@ const ROUTES: Record<string, string[]> = {
   parent: ['/parent-dashboard', '/parent-students', '/parent-announcements', '/parent-profile', '/parent-payment-history', '/chat'],
 };
 
-type AuditItem = any;
+type AuditItem = {
+  tag: string;
+  text: string;
+  aria: string;
+  href: string;
+  type: string;
+  cls: string;
+  disabled: boolean;
+  pe: string;
+  offscreen: boolean;
+  covered: boolean;
+  overlay: null | {
+    tag: string;
+    id: string;
+    cls: string;
+    text: string;
+    z: string;
+    pos: string;
+    pe: string;
+    opacity: string;
+  };
+};
 type AuditEntry = {
   route: string;
   pathname: string;
@@ -176,7 +197,7 @@ test.describe('Dynamic UI Audit (report only — no fixes)', () => {
         if (e.spinnerVisible && e.interactiveCount === 0) console.log(`  ?? ${role.id} ${e.route} -> stuck spinner, 0 interactive elements`);
         for (const it of e.covered.slice(0, 10)) {
           const label = it.text || it.aria || it.href || it.cls.slice(0, 40);
-          const ov = it.overlay;
+          const ov = it.overlay!;
           console.log(`  X ${role.id} ${e.route}: <${it.tag}> "${label}" COVERED by <${ov.tag}> z=${ov.z} pos=${ov.pos} pe=${ov.pe} cls=${ov.cls.slice(0, 70)}`);
         }
         if (e.covered.length > 10) console.log(`    ... ${role.id} ${e.route}: +${e.covered.length - 10} more covered`);

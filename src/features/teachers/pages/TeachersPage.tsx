@@ -182,9 +182,6 @@ export const Teachers = () => {
     catch (e) { console.error(e); showNotification('فشل الحذف', 'error'); }
   };
 
-  const handleCall = (phone: string) => { window.open(`tel:${phone}`); };
-  const handleWhatsApp = (phone: string) => { window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}`, '_blank'); };
-
   const handleRowSelect = (teacher: Teacher) => { setSelectedTeacher(teacher); setShowDetails(true); };
 
   const unenrollMutation = useMutation({

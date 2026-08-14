@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { TrendingUp, TrendingDown, Wallet, DollarSign, ArrowUpRight, ArrowDownRight, Info } from 'lucide-react';
+import { TrendingUp, TrendingDown, Wallet, DollarSign, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
 interface FinanceStatsProps {
     totalIncome: number;
@@ -71,7 +71,7 @@ const KPICard = ({ title, value, icon: Icon, monthValue, gradient, trend, profit
 
 export const FinanceStats = ({
     totalIncome, monthIncome, totalExpenses, monthExpenses,
-    totalFixedExpenses, netProfit, monthProfit, reportCurrency = 'EGP', profitMargin = '0',
+    totalFixedExpenses, netProfit, monthProfit, profitMargin = '0',
 }: FinanceStatsProps) => {
     const incomeTrend = monthIncome && totalIncome ? (monthIncome / (totalIncome / 12) - 1) * 100 : 0;
     const expenseTrend = monthExpenses && totalExpenses ? (monthExpenses / (totalExpenses / 12) - 1) * 100 : 0;

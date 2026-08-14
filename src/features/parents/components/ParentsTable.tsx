@@ -1,5 +1,5 @@
 import { memo, useMemo, useState, Fragment } from 'react';
-import { Edit, Trash2, Users, Phone, Mail, MessageCircle, ArrowUpRight, GraduationCap, AlertCircle, Star, X, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
+import { Edit, Trash2, Users, Phone, Mail, MessageCircle, ArrowUpRight, GraduationCap, AlertCircle, Star, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 import type { Parent, Student } from '../../../types';
@@ -38,7 +38,6 @@ const getStatusBadge = (children: Student[]) => {
 export const ParentsTable = memo<ParentsTableProps>(({
     parents,
     students,
-    selectedParentId,
     onSelectParent,
     onEdit,
     onDelete,
@@ -97,7 +96,6 @@ export const ParentsTable = memo<ParentsTableProps>(({
                     <tbody className="divide-y divide-border">
                         {sortedParents.length > 0 ? sortedParents.map((parent, idx) => {
                             const children = students.filter(s => s.parentPhone === parent.phone);
-                            const isSelected = selectedParentId === parent.id;
                             const isExpanded = expandedId === parent.id;
                             const status = getStatusBadge(children);
                             const hasOverdue = children.some(c => (c.enrollments || []).some(en => (en.sessionsTotal - en.sessionsUsed) <= 2));
@@ -329,7 +327,6 @@ export const ParentsTable = memo<ParentsTableProps>(({
             <div className="md:hidden space-y-2 p-2">
                 {sortedParents.map((parent) => {
                     const children = students.filter(s => s.parentPhone === parent.phone);
-                    const isSelected = selectedParentId === parent.id;
                     const isExpanded = expandedId === parent.id;
                     const status = getStatusBadge(children);
 

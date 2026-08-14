@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { Settings as SettingsIcon, Building2, Users, Shield, Palette, Coins, MessageSquare, HardDrive, Clock, UserCheck, Award, FileText, Lock, KeyRound, Activity, Calendar } from 'lucide-react';
+import { Settings as SettingsIcon, Users, KeyRound, Activity } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Skeleton } from '../../../shared/components/ui';
 import { cn } from '../../../lib/utils';
@@ -66,7 +66,7 @@ export const Settings = () => {
                                 <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><SettingsIcon className="text-white" size={20} /></div>
                                 <span className="text-white/70 text-xs font-medium">النظام</span>
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">الإعدادات</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-on-primary mb-1">الإعدادات</h1>
                             <p className="text-white/70 text-sm">إدارة إعدادات المنصة وتكوين النظام</p>
                         </div>
                         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">

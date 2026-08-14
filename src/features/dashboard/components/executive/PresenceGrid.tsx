@@ -3,12 +3,6 @@ import type { PresenceUser } from '../../services/executiveService';
 import { Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const STATUS_DOT: Record<string, string> = {
-    online: 'bg-success',
-    away: 'bg-warning',
-    offline: 'bg-muted',
-};
-
 const STATUS_BG: Record<string, string> = {
     online: 'bg-success-soft',
     away: 'bg-warning-soft',

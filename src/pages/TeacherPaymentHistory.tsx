@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, CheckCircle, Clock, AlertTriangle, FileText, Wallet, BarChart3, Filter, Calendar, DollarSign } from 'lucide-react';
+import { Search, CheckCircle, Clock, AlertTriangle, FileText, Wallet, BarChart3, Filter, DollarSign } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useShowNotification, useLogout, useAcademyName } from '../context/AppContext';
 import { type TeacherInvoice, INVOICE_STATUS } from '../types/invoice';
@@ -134,7 +134,7 @@ export const TeacherPaymentHistory = () => {
                                 <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><Wallet className="text-white" size={20} /></div>
                                 <span className="text-white/70 text-xs font-medium">المالية</span>
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">سجل الدفعات</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-on-primary mb-1">سجل الدفعات</h1>
                             <p className="text-white/70 text-sm">سجل المدفوعات والمستحقات المالية</p>
                         </div>
                         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">

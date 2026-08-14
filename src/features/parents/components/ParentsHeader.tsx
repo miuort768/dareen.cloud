@@ -1,4 +1,4 @@
-import { Users, Plus, X, BookOpen, GraduationCap, TrendingUp, Download, FileSpreadsheet, FileText, Search, UserPlus } from 'lucide-react';
+import { Users, X, GraduationCap, TrendingUp, Download, FileSpreadsheet, FileText, Search, UserPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 
@@ -63,7 +63,7 @@ export const ParentsHeader = ({
                         <Users size={16} className="text-white" />
                     </div>
                     <div>
-                        <h1 className="text-sm md:text-base font-bold text-white">سجل أولياء الأمور</h1>
+                        <h1 className="text-sm md:text-base font-bold text-on-primary">سجل أولياء الأمور</h1>
                         <p className="text-[10px] md:text-[11px] text-white/70">{totalParents} ولي أمر · {totalLinkedStudents} طالب مرتبط</p>
                     </div>
                 </div>

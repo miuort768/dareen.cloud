@@ -42,7 +42,7 @@ const cards = [
     },
 ];
 
-export const TodaySummary = ({ sessions, children: kids, todayTasks }: TodaySummaryProps) => {
+export const TodaySummary = ({ sessions, todayTasks }: TodaySummaryProps) => {
     const completed = sessions.filter(s => s.status === 'completed').length;
     const cancelled = sessions.filter(s => s.status === 'cancelled').length;
 

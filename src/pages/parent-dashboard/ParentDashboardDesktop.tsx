@@ -36,7 +36,7 @@ interface ParentDashboardDesktopProps {
     onRefresh: () => void;
 }
 
-export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sessions, allPointLogs, activeTimers, todayTasks, formatTime, logout, onRefresh }: ParentDashboardDesktopProps) => {
+export const ParentDashboardDesktop = ({ currentUser, adminPhone, children, sessions, allPointLogs, activeTimers, todayTasks, formatTime, logout }: ParentDashboardDesktopProps) => {
     const navigate = useNavigate();
 
     const stats = useMemo(() => {

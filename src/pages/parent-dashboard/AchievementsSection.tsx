@@ -6,7 +6,7 @@ interface AchievementsSectionProps {
     rank: { name: string };
 }
 
-export const AchievementsSection = ({ points, rank }: AchievementsSectionProps) => {
+export const AchievementsSection = ({ points }: AchievementsSectionProps) => {
     const badges = [
         { icon: Star, label: 'طالب نشيط', unlocked: points >= 100, color: 'text-warning', bg: 'bg-warning-soft dark:bg-warning/10' },
         { icon: Flame, label: '7 أيام متتالية', unlocked: points >= 200, color: 'text-error', bg: 'bg-error-soft dark:bg-error/10' },

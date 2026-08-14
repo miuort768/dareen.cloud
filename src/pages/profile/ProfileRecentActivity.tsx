@@ -22,13 +22,6 @@ const typeColors: Record<string, string> = {
     default: 'bg-surface text-muted border-border',
 };
 
-const typeDots: Record<string, string> = {
-    success: 'bg-success',
-    warning: 'bg-warning',
-    info: 'bg-info',
-    default: 'bg-border',
-};
-
 export const ProfileRecentActivity = ({ activities, title = 'آخر النشاطات' }: ProfileRecentActivityProps) => {
     if (activities.length === 0) return null;
 

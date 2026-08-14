@@ -1,5 +1,4 @@
 ﻿import { GraduationCap, Sparkles, TrendingUp, Calendar } from 'lucide-react';
-import { RANK_ICON_MAP } from '../../shared/utils/ranks';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 
@@ -26,7 +25,6 @@ const getDayName = (): string => {
 
 export const HeroSection = ({ name, grade, curriculum, points, rank, attendanceRate }: HeroSectionProps) => {
     const firstName = name.split(' ')[0] || name;
-    const RankIconComponent = RANK_ICON_MAP[rank.icon] || Sparkles;
 
     const radius = 54;
     const circumference = 2 * Math.PI * radius;

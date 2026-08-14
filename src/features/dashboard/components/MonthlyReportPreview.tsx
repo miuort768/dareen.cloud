@@ -20,8 +20,9 @@ interface MonthlyReportPreviewProps {
 }
 
 export const MonthlyReportPreview = ({ isOpen, onClose, student, onShare }: MonthlyReportPreviewProps) => {
-    if (!isOpen || !student) return null;
     const academyName = useAcademyName();
+
+    if (!isOpen || !student) return null;
 
     return (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-background/50 dark:bg-black/70" dir="rtl">

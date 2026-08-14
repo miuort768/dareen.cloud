@@ -27,7 +27,7 @@ export const MobileBottomNav = ({ items, activeTab, onTabChange, layoutId = 'bot
     <nav className="fixed bottom-0 end-0 start-0 z-50 md:hidden" aria-label="التنقل الرئيسي للهاتف">
       <div className="px-4 pt-1" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
         {/* حاوية الشريط الخلفية الزجاجية الفاخرة */}
-        <div className="relative rounded-[24px] bg-card/75 dark:bg-[#0e0e12]/70 backdrop-blur-xl border border-border/30 dark:border-white/[0.04] shadow-elevation-3">
+        <div className="relative rounded-[24px] bg-card/75 dark:bg-background/70 backdrop-blur-xl border border-border/30 dark:border-white/[0.04] shadow-elevation-3">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent dark:via-white/[0.05] pointer-events-none" />
 
           <div className="relative flex items-center justify-around h-[68px] px-2">

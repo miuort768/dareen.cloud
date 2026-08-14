@@ -2,7 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     RefreshCw, TrendingUp, BarChart3, AlertCircle, Users, Receipt, Wallet,
-    CalendarCheck, FileText, Plus, TrendingDown, Activity as ActivityIcon
+    CalendarCheck, FileText, TrendingDown, Activity as ActivityIcon
 } from 'lucide-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSemesterName, useAcademyName } from '../context/AppContext';
@@ -151,7 +151,7 @@ export const MonthlyClosing = () => {
                                 <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><CalendarCheck className="text-white" size={20} /></div>
                                 <span className="text-white/70 text-xs font-medium">{semesterName}</span>
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">الإقفال الشهري</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-on-primary mb-1">الإقفال الشهري</h1>
                             <p className="text-white/70 text-sm">تقرير مالي وإداري شامل عن الشهر</p>
                         </div>
                         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">

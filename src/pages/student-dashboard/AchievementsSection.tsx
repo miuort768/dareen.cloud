@@ -8,7 +8,7 @@ interface AchievementsSectionProps {
     nextRank: { next: { name: string; minPoints: number } | null; pointsNeeded: number };
 }
 
-export const AchievementsSection = ({ points, rank, nextRank }: AchievementsSectionProps) => {
+export const AchievementsSection = ({ points, nextRank }: AchievementsSectionProps) => {
     const xpPercent = nextRank.next ? Math.min(Math.round((points / nextRank.next.minPoints) * 100), 100) : 100;
 
     const badges = [

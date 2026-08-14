@@ -28,7 +28,7 @@ interface StudentDashboardDesktopProps {
     onRefresh: () => void;
 }
 
-export const StudentDashboardDesktop = ({ studentData, sessions, pointLogs, onRefresh }: StudentDashboardDesktopProps) => {
+export const StudentDashboardDesktop = ({ studentData, sessions, pointLogs }: StudentDashboardDesktopProps) => {
     const logout = useLogout();
 
     const enrollments = studentData?.enrollments || [];

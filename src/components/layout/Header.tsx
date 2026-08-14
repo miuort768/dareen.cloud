@@ -2,7 +2,7 @@ import { Sun, Moon, User, MessageSquare, Search } from 'lucide-react';
 import { useState, useEffect, memo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { useDarkMode } from '../../shared/hooks/useDarkMode';
-import { useCurrentUser, useAcademyName } from '../../context/AppContext';
+import { useCurrentUser } from '../../context/AppContext';
 import { NotificationDropdown } from '../ui/NotificationDropdown';
 import { Button } from '../ui/button';
 import { Image } from '../../shared/components/ui';
@@ -49,7 +49,6 @@ export const Header = memo(() => {
     const [theme, setTheme] = useDarkMode();
     const location = useLocation();
     const currentUser = useCurrentUser();
-    const academyName = useAcademyName();
     const totalUnreadCount = useUnreadStore(s => s.totalUnreadCount);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
 

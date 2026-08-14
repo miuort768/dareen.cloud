@@ -40,7 +40,6 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
                 {tasks.map((task) => {
                     const isDone = completedIds.has(task.id);
                     const config = typeConfig[task.type] || typeConfig.session;
-                    const Icon = config.icon;
 
                     return (
                         <button

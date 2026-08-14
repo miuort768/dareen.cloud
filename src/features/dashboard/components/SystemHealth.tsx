@@ -24,7 +24,6 @@ export const SystemHealth = ({ stats }: SystemHealthProps) => {
     else if (stats.attendanceRate < 75) issues.push({ label: `نسبة حضور ${stats.attendanceRate}%`, severity: 'warning' });
 
     const hasErrors = issues.some(i => i.severity === 'error');
-    const hasWarnings = issues.some(i => i.severity === 'warning');
     const allGood = issues.length === 0;
 
     const timeAgo = () => {

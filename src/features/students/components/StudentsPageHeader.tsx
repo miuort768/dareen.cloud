@@ -35,7 +35,7 @@ export const StudentsPageHeader = ({ searchTerm, onSearchChange, totalStudents, 
             <Users size={18} className="text-white" />
           </div>
           <div>
-            <h1 className="text-base md:text-lg font-bold text-white">إدارة الطلاب</h1>
+            <h1 className="text-base md:text-lg font-bold text-on-primary">إدارة الطلاب</h1>
             <p className="text-[11px] text-white/70">{totalStudents} طالب نشط</p>
           </div>
         </div>

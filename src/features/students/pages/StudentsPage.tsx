@@ -14,7 +14,6 @@ import { StudentStats } from '../components/StudentStats';
 import { StudentForm } from '../components/StudentForm';
 import { StudentTable } from '../components/StudentTable';
 import { StudentDrawer } from '../components/StudentDrawer';
-import { StudentsPageHeader } from '../components/StudentsPageHeader';
 import { StudentsFilters } from '../components/StudentsFilters';
 import { StudentsToolbar } from '../components/StudentsToolbar';
 import { generateSessionDates } from '../utils/sessionUtils';
@@ -92,8 +91,7 @@ export const Students = () => {
     const { teachers, isLoading: loadingTeachers } = useTeachers();
 
     const [showAddForm, setShowAddForm] = useState(false);
-    const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-    const [showDetails, setShowDetails] = useState(false);
+    const [, setSelectedStudent] = useState<Student | null>(null);
     const [drawerStudent, setDrawerStudent] = useState<Student | null>(null);
     const [editId, setEditId] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -113,9 +111,6 @@ export const Students = () => {
     const averageSessions = useMemo(() =>
         allStudents.length > 0 ? Math.round(totalExpectedSessions / allStudents.length) : 0,
     [allStudents.length, totalExpectedSessions]);
-    const totalEnrollments = useMemo(() =>
-        allStudents.reduce((acc, s) => acc + (s.enrollments?.length || 0), 0),
-    [allStudents]);
     const completedSessions = useMemo(() =>
         allStudents.reduce((acc, s) => acc + (s.enrollments?.reduce((ea, en) => ea + (en.sessionsUsed || 0), 0) || 0), 0),
     [allStudents]);
@@ -174,21 +169,6 @@ export const Students = () => {
         } finally {
             setIsAddingEnrollment(false);
         }
-    };
-
-    const handleAddSessions = async (index: number, amount: number) => {
-        if (!selectedStudent) return;
-        const enrollment = selectedStudent.enrollments?.[index];
-        if (!enrollment) return;
-
-        const updatedEnrollments = [...(selectedStudent.enrollments || [])];
-        updatedEnrollments[index] = { ...enrollment, sessionsTotal: enrollment.sessionsTotal + amount };
-
-        const updatedStudent = { ...selectedStudent, enrollments: updatedEnrollments };
-        updateStudent(updatedStudent);
-        setSelectedStudent(updatedStudent);
-        queryClient.invalidateQueries({ queryKey: ['students'] });
-        showNotification(`تمت إضافة ${amount} حصة بنجاح`, 'success');
     };
 
     const handleSendStudentNotification = async (message: string) => {
@@ -255,7 +235,7 @@ export const Students = () => {
                                 <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><GraduationCap className="text-white" size={20} /></div>
                                 <span className="text-white/70 text-xs font-medium">إدارة الطلاب</span>
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">الطلاب</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-on-primary mb-1">الطلاب</h1>
                             <p className="text-white/70 text-sm">إدارة بيانات الطلاب والاشتراكات والجلسات</p>
                         </div>
                         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
@@ -419,14 +399,14 @@ export const Students = () => {
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
                             <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-full bg-primary text-white shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
                 <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-full shadow-xl text-white flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
                     <Plus size={24} />
                 </motion.button>
             </div>

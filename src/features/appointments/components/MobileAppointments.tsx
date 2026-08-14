@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCurrentUser } from '../../../context/AppContext';
 import { api } from '../../../lib/api';
@@ -11,7 +11,6 @@ import { AppointmentPullToRefresh, AppointmentStats, AppointmentTabs, Appointmen
 export const MobileAppointments = () => {
     const currentUser = useCurrentUser();
     const queryClient = useQueryClient();
-    const mountedRef = useRef(true);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCurrentUser } from '../../context/AppContext';
 import { api } from '../../lib/api';
 import { socketService } from '../../lib/socket';
-import { SOCKET_EVENTS, type SessionInvitePayload, type SessionLinkUpdatedPayload } from '../../lib/socket-events';
+import { SOCKET_EVENTS, type SessionLinkUpdatedPayload } from '../../lib/socket-events';
 import type { LiveSession } from '../../types';
 
 const PROVIDER_NAMES: Record<string, string> = {
@@ -39,7 +39,7 @@ export const ActiveSessionBanner = () => {
         const socket = socketService.getSocket();
         if (!socket) return;
 
-        const handleInvite = (_data: SessionInvitePayload) => {
+        const handleInvite = () => {
             fetchActiveSession();
         };
 

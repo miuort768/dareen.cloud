@@ -116,7 +116,7 @@ export const AdminBlogCustomers = () => {
                                 <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><Mail className="text-white" size={20} /></div>
                                 <span className="text-white/70 text-xs font-medium">المكتبة التعليمية</span>
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">عملاء المدونة</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-on-primary mb-1">عملاء المدونة</h1>
                             <p className="text-white/70 text-sm">عملاء النشرة البريدية — الدولة ورقم الهاتف</p>
                         </div>
                         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">

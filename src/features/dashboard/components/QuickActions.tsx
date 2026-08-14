@@ -229,7 +229,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                                 exit={{ y: '-100%' }}
                                 transition={{ type: 'spring', damping: 32, stiffness: 350 }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="absolute inset-x-0 bottom-0 top-12 bg-background dark:bg-[#0e0e12] rounded-t-[2rem] overflow-hidden flex flex-col"
+                                className="absolute inset-x-0 bottom-0 top-12 bg-background rounded-t-[2rem] overflow-hidden flex flex-col"
                             >
                                 {/* Header */}
                                 <div className="flex items-center justify-between px-5 py-4 border-b border-border/50 dark:border-white/[0.06]">

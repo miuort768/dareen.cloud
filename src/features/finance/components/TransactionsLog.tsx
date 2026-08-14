@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp, ArrowUpRight, ArrowDownRight, Eye, MoreHorizontal, FileText } from 'lucide-react';
-import { CURRENCY_SYMBOL } from '../../../config/constants';
 
 interface Transaction {
     id: number;

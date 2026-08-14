@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
     Phone, Mail, BookOpen, Users, Play, DollarSign, MapPin, FileText,
     CalendarDays, Clock, GraduationCap, Globe, Laptop, UserCheck,
-    Star, Trophy, Award, Target, TrendingUp, Edit3, ChevronLeft,
+    Star, Trophy, Target, TrendingUp, Edit3,
     Flame, CheckCircle2, BarChart3, UserPlus
 } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext';
 import { CURRENCY_SYMBOL } from '../../config/constants';
 import { getRankByPoints, TEACHER_RANKS } from '../../shared/utils/ranks';
-import { Skeleton, Button } from '../../shared/components/ui';
+import { Skeleton } from '../../shared/components/ui';
 import { TeacherDashboardHeader } from '../TeacherDashboardHeader';
 import { ProfileHero } from './ProfileHero';
 import { ProfileAchievements } from './ProfileAchievements';
@@ -106,7 +106,7 @@ export const TeacherProfilePage = () => {
     const currentUser = useCurrentUser();
     const logout = useLogout();
     const [teacherData, setTeacherData] = useState<TeacherData | null>(null);
-    const [dashboardStats, setDashboardStats] = useState<DashboardStats | null>(null);
+    const [dashboardStats] = useState<DashboardStats | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -274,7 +274,7 @@ export const TeacherProfilePage = () => {
 
                 <motion.div {...stagger(6)}>
                     <ProfileBottomMotivation
-                        icon={<Target size={28} className="text-white" />}
+                        icon={<Target size={28} className="text-on-primary" />}
                         title="استمر في التدريس!"
                         description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد وصلت إلى أعلى المراتب! استمر في التألق'}
                         progress={nextRank ? Math.round((points / 1000) * 100) : 100}

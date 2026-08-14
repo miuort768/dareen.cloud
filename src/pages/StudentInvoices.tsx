@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Search, Receipt, CheckCircle, Clock, AlertCircle, FileText, Printer, DollarSign, X } from 'lucide-react';
+import { Search, Receipt, CheckCircle, Clock, AlertCircle, FileText, Printer, X } from 'lucide-react';
 import { api } from '../lib/api';
 import { useCurrentUser, useAcademyName } from '../context/AppContext';
 import { Skeleton } from '../shared/components/ui';

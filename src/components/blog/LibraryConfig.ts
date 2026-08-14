@@ -1,4 +1,4 @@
-import { Zap, CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, School, GraduationCap, Languages, Globe } from 'lucide-react';
+import { CheckCircle, FileText, AlignLeft, Building2, Anchor, Building, Palmtree, School, GraduationCap, Languages, Globe } from 'lucide-react';
 
 export const gradeNames: Record<string, string> = {
   '1': 'الأول', '2': 'الثاني', '3': 'الثالث', '4': 'الرابع', '5': 'الخامس',

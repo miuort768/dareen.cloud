@@ -12,7 +12,6 @@ import { InsightsPanel } from './InsightsPanel';
 import { QuickActionsGrid } from './QuickActionsGrid';
 import { SectionErrorBoundary } from '../../../../shared/components/ui';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, RefreshCw, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';

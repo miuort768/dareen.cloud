@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Award, Plus, X, Search, Users, Star, TrendingUp, UserCheck, UserX, Filter } from 'lucide-react';
+import { Award, Plus, X, Search, Users, Star, TrendingUp, UserCheck, UserX } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '../../../lib/utils';
 
@@ -56,7 +55,7 @@ export const EvaluationsHeader = ({ stats, showAddButton, searchTerm, onSearchCh
                             <Award size={16} className="text-white" />
                         </div>
                         <div>
-                            <h1 className="text-sm md:text-base font-bold text-white">تقييم الطلاب</h1>
+                            <h1 className="text-sm md:text-base font-bold text-on-primary">تقييم الطلاب</h1>
                             <p className="text-[10px] md:text-[11px] text-white/70">{stats.totalStudents} طالب</p>
                         </div>
                     </div>

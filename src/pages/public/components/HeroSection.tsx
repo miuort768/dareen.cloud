@@ -1,6 +1,5 @@
 ﻿import { Link } from 'react-router-dom';
-import { Play, ArrowLeft, Star, MessageCircle, Users } from 'lucide-react';
-import { Image } from '../../../shared/components/ui';
+import { ArrowLeft, Star, MessageCircle, Users } from 'lucide-react';
 
 interface HeroSectionProps {
     typewriterText: string;

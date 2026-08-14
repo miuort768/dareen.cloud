@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TrendingUp, Plus, CalendarCheck, ArrowUpRight, ArrowDownRight, FileText, RefreshCcw, X, Zap, Wallet, PieChart, Receipt } from 'lucide-react';
+import { TrendingUp, Plus, CalendarCheck, ArrowUpRight, ArrowDownRight, RefreshCcw, Wallet, Receipt } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { TransactionsLog } from '../components/TransactionsLog';
 import { FinanceCharts } from '../components/FinanceCharts';
@@ -86,7 +86,7 @@ export const Finance = () => {
                                 <div className="p-2 rounded-xl bg-white/15 backdrop-blur-sm"><TrendingUp className="text-white" size={20} /></div>
                                 <span className="text-white/70 text-xs font-medium">المالية</span>
                             </div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">الإدارة المالية</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold text-on-primary mb-1">الإدارة المالية</h1>
                             <p className="text-white/70 text-sm">نظرة شاملة على التدفقات المالية</p>
                         </div>
                         <div className="flex items-center gap-2">
@@ -103,17 +103,17 @@ export const Finance = () => {
                     <div className="relative z-10 flex flex-wrap items-center gap-3 mt-4 pt-4 border-t border-white/10">
                         <div className="flex items-center gap-2">
                             <div className="p-1.5 rounded-lg bg-success/20"><ArrowUpRight className="text-success" size={14} /></div>
-                            <div><p className="text-white/50 text-xs">إيرادات الشهر</p><p className="text-white font-bold text-sm tabular-nums">{(state.monthIncome || 0).toLocaleString()} {CURRENCY_SYMBOL}</p></div>
+                            <div><p className="text-white/50 text-xs">إيرادات الشهر</p><p className="text-on-primary font-bold text-sm tabular-nums">{(state.monthIncome || 0).toLocaleString()} {CURRENCY_SYMBOL}</p></div>
                         </div>
                         <div className="w-px h-8 bg-white/10" />
                         <div className="flex items-center gap-2">
                             <div className="p-1.5 rounded-lg bg-error/20"><ArrowDownRight className="text-error" size={14} /></div>
-                            <div><p className="text-white/50 text-xs">مصاريف الشهر</p><p className="text-white font-bold text-sm tabular-nums">{(state.monthExpenses || 0).toLocaleString()} {CURRENCY_SYMBOL}</p></div>
+                            <div><p className="text-white/50 text-xs">مصاريف الشهر</p><p className="text-on-primary font-bold text-sm tabular-nums">{(state.monthExpenses || 0).toLocaleString()} {CURRENCY_SYMBOL}</p></div>
                         </div>
                         <div className="w-px h-8 bg-white/10" />
                         <div className="flex items-center gap-2">
                             <div className="p-1.5 rounded-lg bg-info/20"><Wallet className="text-info" size={14} /></div>
-                            <div><p className="text-white/50 text-xs">صافي الربح</p><p className="text-white font-bold text-sm tabular-nums">{(state.netProfit || 0).toLocaleString()} {CURRENCY_SYMBOL}</p></div>
+                            <div><p className="text-white/50 text-xs">صافي الربح</p><p className="text-on-primary font-bold text-sm tabular-nums">{(state.netProfit || 0).toLocaleString()} {CURRENCY_SYMBOL}</p></div>
                         </div>
                     </div>
                 </motion.div>

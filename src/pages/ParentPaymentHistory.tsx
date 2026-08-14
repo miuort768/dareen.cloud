@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CheckCircle, Clock, AlertCircle, FileText, ArrowLeft, Wallet, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
-import { useCurrentUser, useShowNotification, useLogout, useIsLoading } from '../context/AppContext';
+import { useShowNotification, useLogout, useIsLoading } from '../context/AppContext';
 import { Skeleton } from '../shared/components/ui';
 import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader';
 import { CURRENCY_SYMBOL } from '../config/constants';
@@ -111,7 +111,6 @@ const ListSkeleton = () => (
 export const ParentPaymentHistory = () => {
     useEffect(() => { document.title = 'سجل الدفعات | ولي الأمر'; }, []);
     const navigate = useNavigate();
-    const currentUser = useCurrentUser();
     const logout = useLogout();
     const showNotification = useShowNotification();
     const authLoading = useIsLoading();

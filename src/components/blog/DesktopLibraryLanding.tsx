@@ -273,7 +273,7 @@ export const DesktopLibraryLanding = ({ posts, loading, setSearchParams }: Deskt
 
       {/* ===== SEARCH BAR ===== */}
       <section className="mb-6">
-        <div className="rounded-2xl lg:rounded-none border border-border dark:border-white/15 bg-card dark:bg-[#181b20] p-5 shadow-elevation-1">
+        <div className="rounded-2xl lg:rounded-none border border-border dark:border-white/15 bg-card p-5 shadow-elevation-1">
           <div className="flex items-center gap-4">
             <span className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center shrink-0">
               <Search size={18} />

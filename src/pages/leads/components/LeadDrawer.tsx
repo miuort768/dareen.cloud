@@ -1,7 +1,7 @@
 ﻿import { useState, useEffect, useRef } from 'react';
-import { X, Phone, CheckCircle2, Edit3, UserPlus, Tag, Calendar, AlertTriangle, Save, Clock, Trash2, Edit, MessageSquare } from 'lucide-react';
+import { X, Phone, CheckCircle2, UserPlus, Tag, Calendar, Save, Edit, MessageSquare } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '../../../shared/components/ui/Button';
 import type { Lead, LeadStatus, LeadPriority } from '../../../features/crm/types';
 import { GradientAvatar, getLeadAge, statusColors, getPriority } from './LeadsUI';
@@ -37,9 +37,6 @@ const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
     if (lead.status === 'converted') events.push({ id: '5', type: 'converted', label: 'تم التحويل إلى مشترك', date: lead.updatedAt || lead.createdAt, icon: CheckCircle2, color: 'text-info', bg: 'bg-info/10' });
     return events;
 };
-
-const avatarGradients = ['from-primary to-primary-hover', 'from-success to-success-hover', 'from-info to-info-hover', 'from-warning to-warning-hover', 'from-error to-error-hover', 'from-accent to-accent-hover'];
-const getGradient = (name: string) => { let h = 0; for (let i = 0; i < (name || '').length; i++) h = name.charCodeAt(i) + ((h << 5) - h); return avatarGradients[Math.abs(h) % avatarGradients.length]; };
 
 const statusRingColor: Record<LeadStatus, string> = {
     new: 'ring-info/50', contacted: 'ring-warning/50', interested: 'ring-success/50',

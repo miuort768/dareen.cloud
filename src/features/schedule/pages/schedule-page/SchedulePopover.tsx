@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Video, ExternalLink, CalendarDays, BookOpen, GraduationCap, User, Clock, Star } from 'lucide-react';
+import { X, Video, ExternalLink, CalendarDays, BookOpen, GraduationCap, User, Star } from 'lucide-react';
 
 interface ScheduleEvent {
     id: string; studentId: string; studentName: string; studentGrade: string;
@@ -131,7 +131,7 @@ export const SchedulePopover = ({ event, onClose, onStartLiveSession, onViewStud
                         {/* Actions */}
                         <div className="flex gap-2 p-4 pt-0">
                             <button onClick={onStartLiveSession}
-                                className="flex-1 h-10 text-white text-[10px] font-bold rounded-xl transition-all active:scale-95 flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-hover">
+                                className="flex-1 h-10 text-on-primary text-[10px] font-bold rounded-xl transition-all active:scale-95 flex items-center justify-center gap-1.5 bg-primary hover:bg-primary-hover">
                                 <Video size={13} />
                                 بدء بث مباشر
                             </button>

@@ -144,7 +144,7 @@ export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: 
                     {/* Sticky header row */}
                     <div className="grid grid-cols-[100px_repeat(7,1fr)] border-b border-border/40 sticky top-0 z-30 bg-surface shadow-xs">
                         <div className="sticky start-0 z-10 p-3 text-[9px] font-bold text-muted border-e border-border/40 bg-surface" />
-                        {DAYS_OF_WEEK.map((day, idx) => (
+                        {DAYS_OF_WEEK.map((day) => (
                             <div key={day}
                                 className={`p-2.5 text-center border-e border-border/40 last:border-e-0 bg-surface ${isToday(day) ? 'bg-primary-soft' : ''}`}>
                                 <div className="text-xs font-bold text-main">{day}</div>

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-    GraduationCap, BookOpen, Clock, Trophy, Target, Star,
-    Phone, User, CalendarDays, Award, TrendingUp, Edit3,
+    GraduationCap, BookOpen, Trophy, Target, Star,
+    Phone, User, CalendarDays, TrendingUp,
     CheckCircle2, Play, Flame, XCircle, Calendar
 } from 'lucide-react';
 import { api } from '../../lib/api';
@@ -52,12 +52,6 @@ interface Session {
     teacherName?: string;
     date?: string;
 }
-
-const fadeUp = (delay: number) => ({
-    initial: { opacity: 0, y: 16 },
-    animate: { opacity: 1, y: 0 },
-    transition: { delay, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
-});
 
 const StatCard = ({ icon, value, label, trend, color = 'primary' }: {
     icon: React.ReactNode; value: string | number; label: string; trend?: { value: number; isUp: boolean }; color?: string;
