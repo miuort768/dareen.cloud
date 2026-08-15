@@ -14,10 +14,8 @@ import { StudentStats } from '../components/StudentStats';
 import { StudentForm } from '../components/StudentForm';
 import { StudentTable } from '../components/StudentTable';
 import { StudentDrawer } from '../components/StudentDrawer';
-import { StudentsFilters } from '../components/StudentsFilters';
 import { StudentsToolbar } from '../components/StudentsToolbar';
 import { generateSessionDates } from '../utils/sessionUtils';
-import { normalizeCurriculum } from '../utils/curriculumUtils';
 import type { Student, ScheduleSlot } from '../types';
 import { cn } from '../../../lib/utils';
 
@@ -66,8 +64,6 @@ export const Students = () => {
     const showNotification = useShowNotification();
 
     const [searchTerm, setSearchTerm] = useState('');
-    const [filterGrade, setFilterGrade] = useState('');
-    const [filterCurriculum, setFilterCurriculum] = useState('');
     const [notifyingStudent, setNotifyingStudent] = useState<Student | null>(null);
     const [broadcastOpen, setBroadcastOpen] = useState(false);
     const [fabOpen, setFabOpen] = useState(false);
@@ -77,33 +73,15 @@ export const Students = () => {
         [...new Set(allStudents.map(s => s.grade).filter(Boolean))].sort() as string[],
     [allStudents]);
 
-    const uniqueCurriculums = useMemo(() =>
-        [...new Set(allStudents.map(s => normalizeCurriculum(s.curriculum)).filter(Boolean))].sort() as string[],
-    [allStudents]);
-
-    const gradeCounts = useMemo(() => {
-        const m: Record<string, number> = {};
-        allStudents.forEach(s => { if (s.grade) m[s.grade] = (m[s.grade] || 0) + 1; });
-        return m;
-    }, [allStudents]);
-
-    const curriculumCounts = useMemo(() => {
-        const m: Record<string, number> = {};
-        allStudents.forEach(s => { const c = normalizeCurriculum(s.curriculum); if (c) m[c] = (m[c] || 0) + 1; });
-        return m;
-    }, [allStudents]);
-
     const students = useMemo(() =>
         allStudents.filter(student => {
             const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 student.parentPhone?.includes(searchTerm) ||
                 student.studentPhone?.includes(searchTerm) ||
                 student.grade.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesGrade = !filterGrade || student.grade === filterGrade;
-            const matchesCurriculum = !filterCurriculum || normalizeCurriculum(student.curriculum) === filterCurriculum;
-            return matchesSearch && matchesGrade && matchesCurriculum;
+            return matchesSearch;
         }),
-    [allStudents, searchTerm, filterGrade, filterCurriculum]);
+    [allStudents, searchTerm]);
 
     const { teachers, isLoading: loadingTeachers } = useTeachers();
 
@@ -382,10 +360,6 @@ export const Students = () => {
                             {deleteAllError && <p className="text-[11px] font-bold text-error flex items-center gap-1"><AlertCircle size={12} />{deleteAllError}</p>}
                         </div>
                     )}
-                </motion.div>
-
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-                    <StudentsFilters filterGrade={filterGrade} uniqueGrades={uniqueGrades} gradeCounts={gradeCounts} onGradeChange={setFilterGrade} filterCurriculum={filterCurriculum} uniqueCurriculums={uniqueCurriculums} curriculumCounts={curriculumCounts} onCurriculumChange={setFilterCurriculum} />
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
