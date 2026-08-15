@@ -52,7 +52,13 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
   }
 });
 
+const DELETE_ALL_PASSWORD = 'dareen';
+
 router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
+  const password = req.headers['x-delete-password'];
+  if (password !== DELETE_ALL_PASSWORD) {
+    return res.status(403).json({ error: 'كلمة المرور التحذيرية غير صحيحة' });
+  }
   try {
     await studentService.deleteAllStudents(req.user);
     res.json({ message: 'All students and enrollments deleted' });

@@ -60,7 +60,7 @@ async function fetchStudents({ q, from, to }) {
     return prisma.student.findMany({
         where,
         select: { id: true, name: true, studentPhone: true, parentPhone: true,
-                  email: true, grade: true, curriculum: true, totalPoints: true,
+                  grade: true, curriculum: true, totalPoints: true,
                   createdAt: true },
         orderBy: { name: 'asc' },
     });
@@ -172,7 +172,6 @@ const COLUMNS = {
         { header: 'الاسم', key: 'name', width: 25 },
         { header: 'رقم الطالب', key: 'studentPhone', width: 18 },
         { header: 'رقم ولي الأمر', key: 'parentPhone', width: 18 },
-        { header: 'البريد', key: 'email', width: 25 },
         { header: 'الصف', key: 'grade', width: 12 },
         { header: 'المنهج', key: 'curriculum', width: 15 },
         { header: 'النقاط', key: 'totalPoints', width: 10 },

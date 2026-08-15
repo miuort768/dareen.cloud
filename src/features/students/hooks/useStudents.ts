@@ -45,10 +45,13 @@ export const useStudents = (searchTerm?: string) => {
     });
 
     const deleteAllMutation = useMutation({
-        mutationFn: studentService.deleteAll,
+        mutationFn: (password?: string) => studentService.deleteAll(password),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['students'] });
             showNotification('تم حذف جميع الطلاب بنجاح', 'success');
+        },
+        onError: (error: Error) => {
+            showNotification(error.message || 'فشل حذف جميع الطلاب', 'error');
         }
     });
 
@@ -59,6 +62,7 @@ export const useStudents = (searchTerm?: string) => {
         createStudentAsync: createMutation.mutateAsync,
         updateStudent: updateMutation.mutate,
         deleteStudent: deleteMutation.mutate,
-        deleteAllStudents: deleteAllMutation.mutate
+        deleteAllStudents: deleteAllMutation.mutate,
+        deleteAllStudentsAsync: deleteAllMutation.mutateAsync
     };
 };

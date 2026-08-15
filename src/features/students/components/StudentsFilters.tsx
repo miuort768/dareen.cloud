@@ -1,12 +1,14 @@
-import { GraduationCap, BookOpen } from 'lucide-react';
+import { GraduationCap, BookOpen, Filter } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface StudentsFiltersProps {
   filterGrade: string;
   uniqueGrades: string[];
+  gradeCounts: Record<string, number>;
   onGradeChange: (val: string) => void;
   filterCurriculum: string;
   uniqueCurriculums: string[];
+  curriculumCounts: Record<string, number>;
   onCurriculumChange: (val: string) => void;
 }
 
@@ -25,82 +27,70 @@ const getGradeStyle = (grade?: string) => {
   return key ? gradeColors[key] : 'text-info bg-info-soft ring-info/20';
 };
 
-export const StudentsFilters = ({ filterGrade, uniqueGrades, onGradeChange, filterCurriculum, uniqueCurriculums, onCurriculumChange }: StudentsFiltersProps) => (
-  <div className="bg-card border border-border rounded-2xl p-3 shadow-elevation-1">
-    <div className="flex items-center gap-2 flex-wrap">
-      {/* Filter icon */}
-      <span className="text-[9px] font-bold text-muted bg-surface px-2 py-1 rounded-lg border border-border shrink-0">
-        تصفية:
-      </span>
+const chipBase = "px-3 py-1.5 rounded-xl text-[11px] font-bold ring-1 transition-all active:scale-95";
+const chipIdle = "text-muted bg-surface ring-border hover:bg-hover";
+const chipActiveAll = "bg-primary text-on-primary ring-primary/30";
 
-      {/* Grade Pills */}
-      {uniqueGrades.length > 0 && (
-        <div className="flex items-center gap-1 flex-wrap">
-          <button
-            onClick={() => onGradeChange('')}
-            className={cn(
-              "px-2.5 py-1 rounded-lg text-[9px] font-bold ring-1 transition-all",
-              !filterGrade
-                ? 'bg-primary text-on-primary ring-primary/30'
-                : 'text-muted bg-surface ring-border hover:bg-hover'
-            )}
-          >
-            <GraduationCap size={10} className="inline me-1" />
-            الكل
-          </button>
-          {uniqueGrades.map(g => (
+export const StudentsFilters = ({ filterGrade, uniqueGrades, gradeCounts, onGradeChange, filterCurriculum, uniqueCurriculums, curriculumCounts, onCurriculumChange }: StudentsFiltersProps) => {
+  const hasFilters = !!filterGrade || !!filterCurriculum;
+  return (
+    <div className="bg-card border border-border rounded-2xl p-4 shadow-elevation-1">
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-main">
+            <span className="p-1.5 bg-primary/10 text-primary rounded-lg"><Filter size={13} /></span>
+            تصفية الطلاب
+          </span>
+          {hasFilters && (
             <button
-              key={g}
-              onClick={() => onGradeChange(filterGrade === g ? '' : g)}
-              className={cn(
-                "px-2.5 py-1 rounded-lg text-[9px] font-bold ring-1 transition-all",
-                filterGrade === g
-                  ? getGradeStyle(g)
-                  : 'text-muted bg-surface ring-border hover:bg-hover'
-              )}
+              onClick={() => { onGradeChange(''); onCurriculumChange(''); }}
+              className="text-[10px] font-bold text-error hover:text-error-hover transition-colors"
             >
-              {g}
+              مسح الكل
             </button>
-          ))}
+          )}
         </div>
-      )}
 
-      {/* Separator */}
-      {uniqueGrades.length > 0 && uniqueCurriculums.length > 0 && (
-        <span className="text-border mx-1">|</span>
-      )}
+        {uniqueGrades.length > 0 && (
+          <div className="flex items-start sm:items-center gap-2 flex-wrap">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-muted shrink-0 mt-1 sm:mt-0">
+              <GraduationCap size={13} />
+              المرحلة
+            </span>
+            <button onClick={() => onGradeChange('')} className={cn(chipBase, !filterGrade ? chipActiveAll : chipIdle)}>الكل</button>
+            {uniqueGrades.map(g => (
+              <button
+                key={g}
+                onClick={() => onGradeChange(filterGrade === g ? '' : g)}
+                className={cn(chipBase, filterGrade === g ? cn('ring-1', getGradeStyle(g)) : chipIdle)}
+              >
+                {g}
+                {gradeCounts[g] ? <span className={cn('ms-1 text-[9px] tabular-nums', filterGrade === g ? 'opacity-80' : 'text-muted')}>({gradeCounts[g]})</span> : null}
+              </button>
+            ))}
+          </div>
+        )}
 
-      {/* Curriculum Pills */}
-      {uniqueCurriculums.length > 0 && (
-        <div className="flex items-center gap-1 flex-wrap">
-          <button
-            onClick={() => onCurriculumChange('')}
-            className={cn(
-              "px-2.5 py-1 rounded-lg text-[9px] font-bold ring-1 transition-all",
-              !filterCurriculum
-                ? 'bg-primary text-on-primary ring-primary/30'
-                : 'text-muted bg-surface ring-border hover:bg-hover'
-            )}
-          >
-            <BookOpen size={10} className="inline me-1" />
-            الكل
-          </button>
-          {uniqueCurriculums.map(c => (
-            <button
-              key={c}
-              onClick={() => onCurriculumChange(filterCurriculum === c ? '' : c)}
-              className={cn(
-                "px-2.5 py-1 rounded-lg text-[9px] font-bold ring-1 transition-all",
-                filterCurriculum === c
-                  ? 'text-info bg-info-soft ring-info/20'
-                  : 'text-muted bg-surface ring-border hover:bg-hover'
-              )}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-      )}
+        {uniqueCurriculums.length > 0 && (
+          <div className="flex items-start sm:items-center gap-2 flex-wrap">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-muted shrink-0 mt-1 sm:mt-0">
+              <BookOpen size={13} />
+              المنهج
+            </span>
+            <button onClick={() => onCurriculumChange('')} className={cn(chipBase, !filterCurriculum ? chipActiveAll : chipIdle)}>الكل</button>
+            {uniqueCurriculums.map(c => (
+              <button
+                key={c}
+                onClick={() => onCurriculumChange(filterCurriculum === c ? '' : c)}
+                className={cn(chipBase, filterCurriculum === c ? 'text-info bg-info-soft ring-info/20' : chipIdle)}
+              >
+                {c}
+                {curriculumCounts[c] ? <span className={cn('ms-1 text-[9px] tabular-nums', filterCurriculum === c ? 'opacity-80' : 'text-muted')}>({curriculumCounts[c]})</span> : null}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};

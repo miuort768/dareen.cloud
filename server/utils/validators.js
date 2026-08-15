@@ -165,6 +165,7 @@ const createEnrollmentSchema = z.object({
     curr: z.string().optional().or(z.literal('')),
     curriculum: z.string().optional().or(z.literal('')),
     sessionsTotal: z.number().int().min(0).default(0),
+    teacherPrice: z.number().int().min(0).nullable().optional(),
     schedule: z.array(z.object({
         day: z.string(),
         hour: z.string(),

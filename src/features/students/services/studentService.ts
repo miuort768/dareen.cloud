@@ -19,8 +19,8 @@ export const studentService = {
         return api.delete(`/students/${id}`);
     },
 
-    deleteAll: async (): Promise<void> => {
-        return api.delete('/students');
+    deleteAll: async (password?: string): Promise<void> => {
+        return api.delete('/students', { headers: password ? { 'X-Delete-Password': password } : {} });
     },
 
     createInvoice: async (invoice: Omit<StudentInvoice, 'id'>): Promise<StudentInvoice> => {

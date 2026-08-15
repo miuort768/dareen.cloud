@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { UserPlus, Edit, Save, Shield, Key, Info, GraduationCap, Phone, User as UserIcon, X, Tag, DollarSign, FileText } from 'lucide-react';
 import type { Student } from '../types';
 import { cn } from '../../../lib/utils';
+import { CURRENCY_OPTIONS } from '../../../config/constants';
+import { CURRICULUM_OPTIONS, normalizeCurriculum } from '../utils/curriculumUtils';
 
 interface StudentFormProps {
     onSubmit: (data: Omit<Student, 'id' | 'enrollments'>) => void;
@@ -10,8 +12,6 @@ interface StudentFormProps {
 }
 
 const GRADE_OPTIONS = ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس', 'السابع', 'الثامن', 'التاسع', 'العاشر', 'الحادي عشر', 'الثاني عشر'];
-const CURRICULUM_OPTIONS = ['المنهج السعودي', 'المنهج المصري', 'المنهج السوري', 'المنهج الكويتي', 'المنهج الإماراتي', 'المنهج الفلسطيني', 'منهج دبلوما', 'منهج أمريكي', 'منهج بريطاني', 'أخرى'];
-const CURRENCY_OPTIONS = ['EGP', 'KWD', 'SAR', 'AED', 'QAR', 'OMR', 'BHD', 'USD'];
 
 export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProps) => {
     const [formData, setFormData] = useState({
@@ -34,7 +34,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 grade: initialData.grade,
                 parentPhone: initialData.parentPhone,
                 studentPhone: initialData.studentPhone || '',
-                curriculum: initialData.curriculum || '',
+                curriculum: normalizeCurriculum(initialData.curriculum || ''),
                 notes: initialData.notes || '',
                 sessionPrice: String(initialData.sessionPrice || 0),
                 currency: initialData.currency || 'SAR',
@@ -168,8 +168,10 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     );
 };
 
-const SelectField = ({ label, icon: Icon, placeholder, value, onChange, options }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; options: string[] }) => {
+const SelectField = ({ label, icon: Icon, placeholder, value, onChange, options }: { label: string; icon: React.ComponentType<{ size?: number }>; placeholder?: string; value: string; onChange: (val: string) => void; required?: boolean; options: string[] | { value: string; label: string }[] }) => {
     const selectId = `student-select-${label.replace(/\s+/g, '-')}`;
+    const normalized = options.map(o => (typeof o === 'string' ? { value: o, label: o } : o));
+    const allOptions = value && !normalized.some(o => o.value === value) ? [{ value, label: value }, ...normalized] : normalized;
     return (
         <div className="space-y-2">
             <label htmlFor={selectId} className="text-micro font-normal text-muted uppercase ms-1">{label}</label>
@@ -187,8 +189,8 @@ const SelectField = ({ label, icon: Icon, placeholder, value, onChange, options 
                     )}
                 >
                     <option value="" disabled>{placeholder || 'اختر...'}</option>
-                    {options.map(opt => (
-                        <option key={opt} value={opt}>{opt}</option>
+                    {allOptions.map(opt => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
                     ))}
                 </select>
             </div>

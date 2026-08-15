@@ -112,6 +112,7 @@ model Enrollment {
   curr             String?
   sessionsTotal    Int      @default(0) @map("sessions_total")
   sessionsUsed     Int      @default(0) @map("sessions_used")
+  teacherPrice     Int?     @map("teacher_price")
   schedule         String?
   nextSessionNotes String?  @map("next_session_notes")
   isFrozen         Int?     @default(0) @map("isFrozen")

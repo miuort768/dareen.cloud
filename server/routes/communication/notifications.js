@@ -32,6 +32,54 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.post('/broadcast', checkRole(['admin']), async (req, res) => {
+    const body = req.body || {};
+    try {
+        const students = await prisma.student.findMany({
+            where: { deletedAt: null },
+            select: { id: true, name: true },
+        });
+
+        if (students.length === 0) {
+            return res.status(200).json({ count: 0 });
+        }
+
+        const time = body.time || new Date().toISOString();
+        const title = body.title || 'تنبيه من الإدارة';
+        const message = body.message || null;
+        const type = body.type || 'info';
+
+        await prisma.$transaction(students.map(s => prisma.notification.create({
+            data: {
+                id: uuidv4(),
+                senderId: body.senderId || 'system',
+                receiverId: s.id,
+                senderName: body.senderName || null,
+                title,
+                message,
+                type,
+                time,
+                read: 0,
+                link: body.link || null,
+            }
+        })));
+
+        students.forEach(s => {
+            sendNotification({
+                userId: s.id,
+                title,
+                body: message,
+                data: { url: body.url || '/', type },
+                priority: type === 'warning' ? 1 : 2,
+            }).catch((err) => logger.warn('Enqueue broadcast notification failed: ' + (err.message || err)));
+        });
+
+        res.status(201).json({ count: students.length, title, message, type });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Broadcast notification');
+    }
+});
+
 router.post('/', checkRole(['admin']), async (req, res) => {
     const body = req.body;
     const id = body.id || uuidv4();

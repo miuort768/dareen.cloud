@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit3, Save, Key, Info, User, Phone, Tag, DollarSign, X } from 'lucide-react';
 import { cn } from '../../../lib/utils';
+import { CURRENCY_OPTIONS } from '../../../config/constants';
 import type { Teacher } from '../types';
 
 const SUBJECT_OPTIONS = [
@@ -153,14 +154,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                                     onChange={e => setFormData({ ...formData, currency: e.target.value })}
                                     className="w-full px-4 py-2.5 bg-surface border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all ps-10 appearance-none"
                                 >
-                                    <option value="KWD">د.ك (KWD)</option>
-                                    <option value="SAR">﷼ (SAR)</option>
-                                    <option value="AED">د.إ (AED)</option>
-                                    <option value="QAR">﷼ (QAR)</option>
-                                    <option value="OMR">﷼ (OMR)</option>
-                                    <option value="BHD">د.ب (BHD)</option>
-                                    <option value="EGP">ج.م (EGP)</option>
-                                    <option value="USD">$ (USD)</option>
+                                    {CURRENCY_OPTIONS.map(c => <option key={c.code} value={c.code}>{c.label}</option>)}
                                 </select>
                             </div>
                         </div>

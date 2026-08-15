@@ -6,6 +6,7 @@ import type { Student, ScheduleSlot } from '../types';
 import type { Teacher } from '../../teachers/types';
 import { EnrollmentForm } from './EnrollmentForm';
 import { enrollmentTeacherName } from '../utils/enrollmentUtils';
+import { normalizeCurriculum } from '../utils/curriculumUtils';
 
 interface StudentDrawerProps {
   student: Student | null;
@@ -318,7 +319,7 @@ export const StudentDrawer = ({ student, onClose, sessions = [], teachers = [], 
                     {student.curriculum && (
                       <div className="flex items-center justify-between p-2.5 rounded-xl bg-card border border-border">
                         <span className="text-[10px] text-muted">المنهج</span>
-                        <span className="text-[10px] font-bold text-main">{student.curriculum}</span>
+                        <span className="text-[10px] font-bold text-main">{normalizeCurriculum(student.curriculum)}</span>
                       </div>
                     )}
                     {student.username && (
@@ -375,7 +376,7 @@ export const StudentDrawer = ({ student, onClose, sessions = [], teachers = [], 
                               <p className="text-[9px] text-muted">{enrollmentTeacherName(en) || '—'}</p>
                               {en.curriculum ? (
                                 <span className="inline-flex items-center gap-0.5 mt-1 px-1.5 py-0.5 rounded text-[8px] font-bold bg-primary-soft text-primary ring-1 ring-primary/20">
-                                  <BookOpen size={8} /> {en.curriculum}
+                                  <BookOpen size={8} /> {normalizeCurriculum(en.curriculum)}
                                 </span>
                               ) : null}
                             </div>

@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Plus, X, Loader2 } from 'lucide-react';
 import type { Teacher } from '../../teachers/types';
 import type { ScheduleSlot } from '../types';
-
-export const CURRENCIES = ['EGP', 'KWD', 'SAR', 'AED', 'QAR', 'OMR', 'BHD', 'USD'];
+import { CURRENCY_OPTIONS } from '../../../config/constants';
 
 interface EnrollmentFormProps {
     teachers: Teacher[];
@@ -14,6 +13,7 @@ interface EnrollmentFormProps {
         curr: string;
         curriculum?: string;
         totalSessions: number;
+        teacherPrice?: number;
         schedule: ScheduleSlot[];
     }) => void;
     isLoading?: boolean;
@@ -26,7 +26,8 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading, defaultCurrency 
         subject: '',
         curr: defaultCurrency || 'EGP',
         curriculum: '',
-        totalSessions: ''
+        totalSessions: '',
+        teacherPrice: ''
     });
     const [schedule, setSchedule] = useState<ScheduleSlot[]>([]);
     const [slotInput, setSlotInput] = useState({ day: '', hour: '', period: 'pm' });
@@ -52,9 +53,10 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading, defaultCurrency 
             curr: form.curr,
             curriculum: form.curriculum,
             totalSessions: Number(form.totalSessions) || 0,
+            teacherPrice: Number(form.teacherPrice) || undefined,
             schedule
         });
-        setForm({ teacherId: '', subject: '', curr: defaultCurrency || 'EGP', curriculum: '', totalSessions: '' });
+        setForm({ teacherId: '', subject: '', curr: defaultCurrency || 'EGP', curriculum: '', totalSessions: '', teacherPrice: '' });
         setSchedule([]);
     };
 
@@ -90,7 +92,7 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading, defaultCurrency 
                         aria-label="العملة"
                         className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main rounded-xl"
                     >
-                        {CURRENCIES.map(c => <option key={c} value={c}>{c}</option>)}
+                        {CURRENCY_OPTIONS.map(c => <option key={c.code} value={c.code}>{c.label}</option>)}
                     </select>
                     <input
                         placeholder="المنهج"
@@ -100,15 +102,26 @@ export const EnrollmentForm = ({ teachers, onSubmit, isLoading, defaultCurrency 
                         className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main rounded-xl"
                     />
                 </div>
-                <input
-                    required
-                    type="number"
-                    placeholder="عدد الحصص"
-                    aria-label="عدد الحصص"
-                    value={form.totalSessions}
-                    onChange={e => setForm({ ...form, totalSessions: e.target.value })}
-                    className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main rounded-xl"
-                />
+                <div className="grid grid-cols-2 gap-2">
+                    <input
+                        required
+                        type="number"
+                        placeholder="عدد الحصص"
+                        aria-label="عدد الحصص"
+                        value={form.totalSessions}
+                        onChange={e => setForm({ ...form, totalSessions: e.target.value })}
+                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main rounded-xl"
+                    />
+                    <input
+                        type="number"
+                        min="0"
+                        placeholder="سعر حصة المعلمة"
+                        aria-label="سعر الحصة التي ستحصل عليها المعلمة"
+                        value={form.teacherPrice}
+                        onChange={e => setForm({ ...form, teacherPrice: e.target.value })}
+                        className="w-full px-3 py-2 bg-surface border border-border text-xs font-normal text-main rounded-xl"
+                    />
+                </div>
 
                 <div className="bg-primary-soft p-3 space-y-3 rounded-xl">
                     <p className="text-micro font-medium text-primary uppercase">المواعيد</p>

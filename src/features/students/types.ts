@@ -27,6 +27,7 @@ export interface Enrollment {
     curriculum?: string;
     sessionsTotal: number;
     sessionsUsed: number;
+    teacherPrice?: number;
     schedule: ScheduleSlot[];
     price?: number;
     isFrozen?: boolean;

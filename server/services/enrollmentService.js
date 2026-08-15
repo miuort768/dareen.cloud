@@ -108,7 +108,7 @@ async function getTeacherEnrollments(teacherId) {
 }
 
 async function createEnrollment(data, user) {
-  const { studentId, teacherId, teacher, subject, curr, curriculum, sessionsTotal, schedule, sessions, nextSessionNotes } = data;
+  const { studentId, teacherId, teacher, subject, curr, curriculum, sessionsTotal, schedule, sessions, nextSessionNotes, teacherPrice } = data;
 
   if (!studentId || !subject) {
     throw Object.assign(new Error('studentId and subject are required'), { statusCode: 400 });
@@ -142,6 +142,7 @@ async function createEnrollment(data, user) {
         subject, curr: curr || student.currency || null,
         curriculum: curriculum || null,
         sessionsTotal: sessionsTotal || 0,
+        teacherPrice: teacherPrice != null ? teacherPrice : null,
         schedule: schedule && schedule.length > 0 ? JSON.stringify(schedule) : null,
         nextSessionNotes: nextSessionNotes || null,
       },
@@ -153,7 +154,7 @@ async function createEnrollment(data, user) {
         ? await tx.teacher.findUnique({ where: { id: teacherId }, select: { id: true, price: true, currency: true } })
         : null;
       const studentPrice = student.sessionPrice ?? 0;
-      const teacherPrice = teacherRow ? teacherRow.price : 0;
+      const sessionTeacherPrice = teacherPrice != null && teacherPrice > 0 ? teacherPrice : (teacherRow ? teacherRow.price : 0);
       const studentCurrency = curr || student.currency || 'EGP';
       const teacherCurrency = (teacherRow && teacherRow.currency) || 'EGP';
 
@@ -186,7 +187,7 @@ async function createEnrollment(data, user) {
             time: s.time || null,
             status: 'scheduled',
             price: studentPrice,
-            teacherPrice,
+            teacherPrice: sessionTeacherPrice,
             studentCurrency,
             teacherCurrency,
             exchangeRateFrom,

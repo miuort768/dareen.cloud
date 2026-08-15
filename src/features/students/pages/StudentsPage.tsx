@@ -4,7 +4,7 @@ import { useTeachers } from '../../teachers/hooks/useTeachers';
 import { useShowNotification } from '../../../context/AppContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { api } from '../../../lib/api';
-import { AlertCircle, TrendingUp, Plus, Users, BookOpen, GraduationCap, Bell, Star, Filter } from 'lucide-react';
+import { AlertCircle, TrendingUp, Plus, Users, BookOpen, GraduationCap, Star, Trash2, Megaphone, Loader2, ShieldAlert } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { Skeleton } from '../../../shared/components/ui';
@@ -17,10 +17,13 @@ import { StudentDrawer } from '../components/StudentDrawer';
 import { StudentsFilters } from '../components/StudentsFilters';
 import { StudentsToolbar } from '../components/StudentsToolbar';
 import { generateSessionDates } from '../utils/sessionUtils';
+import { normalizeCurriculum } from '../utils/curriculumUtils';
 import type { Student, ScheduleSlot } from '../types';
 import { cn } from '../../../lib/utils';
 
-function AnimatedCounter({ value }: { value: number }) {
+const DELETE_ALL_PASSWORD = 'dareen';
+
+function AnimatedCounter({ value, className = '' }: { value: number; className?: string }) {
     const [display, setDisplay] = useState('0');
     useEffect(() => {
         let start = 0;
@@ -38,7 +41,7 @@ function AnimatedCounter({ value }: { value: number }) {
         };
         requestAnimationFrame(animate);
     }, [value]);
-    return <span className="text-2xl font-bold tabular-nums">{display}</span>;
+    return <span className={cn("font-bold tabular-nums", className)}>{display}</span>;
 }
 
 const particles = Array.from({ length: 10 }, (_, i) => ({
@@ -53,6 +56,7 @@ interface EnrollmentFormData {
     curr: string;
     curriculum?: string;
     totalSessions: number;
+    teacherPrice?: number;
     schedule: ScheduleSlot[];
 }
 
@@ -65,16 +69,29 @@ export const Students = () => {
     const [filterGrade, setFilterGrade] = useState('');
     const [filterCurriculum, setFilterCurriculum] = useState('');
     const [notifyingStudent, setNotifyingStudent] = useState<Student | null>(null);
+    const [broadcastOpen, setBroadcastOpen] = useState(false);
     const [fabOpen, setFabOpen] = useState(false);
-    const { students: allStudents, isLoading: loadingStudents, createStudent, updateStudent, deleteAllStudents } = useStudents();
+    const { students: allStudents, isLoading: loadingStudents, createStudent, updateStudent, deleteAllStudentsAsync } = useStudents();
 
     const uniqueGrades = useMemo(() =>
         [...new Set(allStudents.map(s => s.grade).filter(Boolean))].sort() as string[],
     [allStudents]);
 
     const uniqueCurriculums = useMemo(() =>
-        [...new Set(allStudents.map(s => s.curriculum).filter(Boolean))].sort() as string[],
+        [...new Set(allStudents.map(s => normalizeCurriculum(s.curriculum)).filter(Boolean))].sort() as string[],
     [allStudents]);
+
+    const gradeCounts = useMemo(() => {
+        const m: Record<string, number> = {};
+        allStudents.forEach(s => { if (s.grade) m[s.grade] = (m[s.grade] || 0) + 1; });
+        return m;
+    }, [allStudents]);
+
+    const curriculumCounts = useMemo(() => {
+        const m: Record<string, number> = {};
+        allStudents.forEach(s => { const c = normalizeCurriculum(s.curriculum); if (c) m[c] = (m[c] || 0) + 1; });
+        return m;
+    }, [allStudents]);
 
     const students = useMemo(() =>
         allStudents.filter(student => {
@@ -83,7 +100,7 @@ export const Students = () => {
                 student.studentPhone?.includes(searchTerm) ||
                 student.grade.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesGrade = !filterGrade || student.grade === filterGrade;
-            const matchesCurriculum = !filterCurriculum || student.curriculum === filterCurriculum;
+            const matchesCurriculum = !filterCurriculum || normalizeCurriculum(student.curriculum) === filterCurriculum;
             return matchesSearch && matchesGrade && matchesCurriculum;
         }),
     [allStudents, searchTerm, filterGrade, filterCurriculum]);
@@ -96,6 +113,9 @@ export const Students = () => {
     const [editId, setEditId] = useState<string | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const [isDeletingAll, setIsDeletingAll] = useState(false);
+    const [isDeletingAllBusy, setIsDeletingAllBusy] = useState(false);
+    const [deleteAllPassword, setDeleteAllPassword] = useState('');
+    const [deleteAllError, setDeleteAllError] = useState('');
     const [isAddingEnrollment, setIsAddingEnrollment] = useState(false);
 
     const loading = loadingStudents || loadingTeachers;
@@ -147,6 +167,7 @@ export const Students = () => {
                 curr: enrollData.curr,
                 curriculum: enrollData.curriculum || '',
                 sessionsTotal: enrollData.totalSessions,
+                teacherPrice: enrollData.teacherPrice ?? null,
                 schedule: enrollData.schedule,
                 sessions: generateSessionDates(enrollData.schedule, enrollData.totalSessions).map(info => ({
                     date: info.date.toISOString().split('T')[0],
@@ -192,6 +213,41 @@ export const Students = () => {
         }
     };
 
+    const handleSendBroadcastNotification = async (message: string) => {
+        try {
+            const res = await api.post<{ count?: number }>('/notifications/broadcast', {
+                senderName: 'الإدارة',
+                title: 'تنبيه من الإدارة',
+                message,
+                type: 'info',
+                time: new Date().toISOString(),
+                read: false
+            });
+            showNotification(`تم إرسال التنبيه لجميع الطلاب${res?.count ? ` (${res.count})` : ''} بنجاح`, 'success');
+        } catch (e) {
+            console.error(e);
+            showNotification('فشل إرسال التنبيه العام', 'error');
+        }
+    };
+
+    const handleDeleteAll = async () => {
+        if (deleteAllPassword !== DELETE_ALL_PASSWORD) {
+            setDeleteAllError('كلمة المرور التحذيرية غير صحيحة');
+            return;
+        }
+        setDeleteAllError('');
+        setIsDeletingAllBusy(true);
+        try {
+            await deleteAllStudentsAsync(deleteAllPassword);
+            setDeleteAllPassword('');
+            setIsDeletingAll(false);
+        } catch {
+            // Error toast handled inside mutation onError
+        } finally {
+            setIsDeletingAllBusy(false);
+        }
+    };
+
     const kpiCards = useMemo(() => [
         { label: 'إجمالي الطلاب', value: allStudents.length, icon: Users, gradient: 'from-primary/20 to-primary/5', iconBg: 'bg-primary/10 text-primary', accent: 'bg-primary' },
         { label: 'الاشتراكات النشطة', value: activeEnrollments, icon: BookOpen, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
@@ -201,9 +257,9 @@ export const Students = () => {
 
     const fabActions = useMemo(() => [
         { icon: Plus, label: 'إضافة طالب', onClick: () => { setEditId(null); setShowAddForm(true); } },
-        { icon: Bell, label: 'إرسال إشعار', onClick: () => { if (students.length > 0) setNotifyingStudent(students[0]); } },
-        { icon: Filter, label: 'تصفية متقدمة', onClick: () => document.querySelector('[data-filters]')?.scrollIntoView({ behavior: 'smooth' }) },
-    ], [students]);
+        { icon: Megaphone, label: 'بث إشعار للجميع', onClick: () => setBroadcastOpen(true) },
+        { icon: Trash2, label: 'حذف الكل', onClick: () => setIsDeletingAll(true) },
+    ], []);
 
     if (loading) {
         return (
@@ -241,17 +297,17 @@ export const Students = () => {
                         <div className="flex items-center gap-4 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
                             <div className="text-center">
                                 <p className="text-white/60 text-xs mb-1">إجمالي الطلاب</p>
-                                <div className="text-2xl font-bold text-white"><AnimatedCounter value={allStudents.length} /></div>
+                                <div className="text-lg md:text-2xl font-bold text-white"><AnimatedCounter value={allStudents.length} /></div>
                             </div>
                             <div className="w-px h-10 bg-white/10" />
                             <div className="text-center">
                                 <p className="text-white/60 text-xs mb-1">الاشتراكات</p>
-                                <div className="text-2xl font-bold text-white"><AnimatedCounter value={activeEnrollments} /></div>
+                                <div className="text-lg md:text-2xl font-bold text-white"><AnimatedCounter value={activeEnrollments} /></div>
                             </div>
                             <div className="w-px h-10 bg-white/10" />
                             <div className="text-center">
                                 <p className="text-white/60 text-xs mb-1">الحصص المكتملة</p>
-                                <div className="text-2xl font-bold text-white"><AnimatedCounter value={completedSessions} /></div>
+                                <div className="text-lg md:text-2xl font-bold text-white"><AnimatedCounter value={completedSessions} /></div>
                             </div>
                         </div>
                     </div>
@@ -299,21 +355,37 @@ export const Students = () => {
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
                     {isDeletingAll && (
-                        <div className="border border-error-soft bg-error-soft p-4 flex items-center justify-between rounded-2xl">
+                        <div className="border border-error-soft bg-error-soft/60 p-4 md:p-5 flex flex-col gap-4 rounded-2xl">
                             <div className="flex items-center gap-3">
-                                <AlertCircle size={18} className="text-error" />
-                                <span className="text-xs font-bold text-error">هل أنت متأكد من حذف جميع الطلاب؟</span>
+                                <div className="p-2 bg-error/10 text-error rounded-xl"><ShieldAlert size={18} /></div>
+                                <div>
+                                    <p className="text-xs font-bold text-error">حذف جميع الطلاب نهائيًا</p>
+                                    <p className="text-[11px] text-muted">هذا الإجراء لا يمكن التراجع عنه وسيحذف كل الطلاب والاشتراكات والجلسات.</p>
+                                </div>
                             </div>
-                            <div className="flex gap-2">
-                                <button onClick={async () => { await deleteAllStudents(); setIsDeletingAll(false); }} className="h-8 px-4 bg-error text-on-error text-micro font-bold hover:bg-error-hover transition-all rounded-2xl">تأكيد الحذف</button>
-                                <button onClick={() => setIsDeletingAll(false)} className="h-8 px-4 bg-surface text-main text-micro font-bold border border-border transition-all rounded-2xl">إلغاء</button>
+                            <div className="flex flex-col sm:flex-row gap-2">
+                                <input
+                                    type="password"
+                                    value={deleteAllPassword}
+                                    onChange={e => { setDeleteAllPassword(e.target.value); setDeleteAllError(''); }}
+                                    onKeyDown={e => { if (e.key === 'Enter') handleDeleteAll(); }}
+                                    placeholder="أدخل كلمة المرور التحذيرية"
+                                    aria-label="كلمة المرور التحذيرية لحذف جميع الطلاب"
+                                    className="w-full sm:max-w-xs px-3 py-2 bg-surface border border-error/30 focus:outline-none focus:border-error focus:ring-2 focus:ring-error/10 text-xs font-normal text-main rounded-xl transition-all placeholder:text-muted"
+                                />
+                                <button onClick={handleDeleteAll} disabled={isDeletingAllBusy} className="h-9 px-4 inline-flex items-center justify-center gap-2 bg-error text-on-error text-micro font-bold hover:bg-error-hover disabled:opacity-50 transition-all rounded-xl">
+                                    {isDeletingAllBusy && <Loader2 className="animate-spin" size={14} />}
+                                    تأكيد الحذف
+                                </button>
+                                <button onClick={() => { setIsDeletingAll(false); setDeleteAllPassword(''); setDeleteAllError(''); }} className="h-9 px-4 bg-surface text-main text-micro font-bold border border-border transition-all rounded-xl">إلغاء</button>
                             </div>
+                            {deleteAllError && <p className="text-[11px] font-bold text-error flex items-center gap-1"><AlertCircle size={12} />{deleteAllError}</p>}
                         </div>
                     )}
                 </motion.div>
 
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} data-filters>
-                    <StudentsFilters filterGrade={filterGrade} uniqueGrades={uniqueGrades} onGradeChange={setFilterGrade} filterCurriculum={filterCurriculum} uniqueCurriculums={uniqueCurriculums} onCurriculumChange={setFilterCurriculum} />
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                    <StudentsFilters filterGrade={filterGrade} uniqueGrades={uniqueGrades} gradeCounts={gradeCounts} onGradeChange={setFilterGrade} filterCurriculum={filterCurriculum} uniqueCurriculums={uniqueCurriculums} curriculumCounts={curriculumCounts} onCurriculumChange={setFilterCurriculum} />
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
@@ -372,6 +444,14 @@ export const Students = () => {
                 onClose={() => setNotifyingStudent(null)}
             />
 
+            <SendNotificationModal
+                isOpen={broadcastOpen}
+                title="بث إشعار لجميع الطلاب"
+                recipientName=""
+                onSend={handleSendBroadcastNotification}
+                onClose={() => setBroadcastOpen(false)}
+            />
+
             <ConfirmModal
                 isOpen={!!deletingId}
                 title="حذف طالب"
@@ -399,14 +479,14 @@ export const Students = () => {
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
                             <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                className="w-10 h-10 rounded-lg bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
                 <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    className={cn("w-12 h-12 rounded-xl shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
                     <Plus size={24} />
                 </motion.button>
             </div>
