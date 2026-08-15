@@ -16,7 +16,6 @@ interface TeacherDetailsProps {
     sessions: Session[];
     onLogAttendance: (student: Student, enrollment: Enrollment) => void;
     onUnenroll: (student: Student, teacherName: string) => void;
-    onDeleteSession: (sessionId: string) => void;
     onSendNotification: (teacher: Teacher) => void;
     isTeacherView: boolean;
 }
@@ -28,7 +27,6 @@ export const TeacherDetails = ({
     sessions,
     onLogAttendance,
     onUnenroll,
-    onDeleteSession,
     onSendNotification,
     isTeacherView
 }: TeacherDetailsProps) => {
@@ -123,7 +121,7 @@ export const TeacherDetails = ({
 
                     {showActivity && (
                         <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                            <TeacherActivitySection teacherName={teacher.name} sessions={teacherSessions} isTeacherView={isTeacherView} onDeleteSession={onDeleteSession} activity={activity} activityLoading={activityLoading} />
+                            <TeacherActivitySection activity={activity} activityLoading={activityLoading} />
                         </div>
                     )}
                 </div>

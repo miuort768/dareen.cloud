@@ -263,7 +263,6 @@ export const Teachers = () => {
                 students={students} sessions={sessions}
                 onLogAttendance={(s, e) => setSecureModalData({ student: s, enrollment: e })}
                 onUnenroll={(s, t) => unenrollMutation.mutate({ student: s, teacherName: t, teacherId: selectedTeacher?.id })}
-                onDeleteSession={async (id) => { await api.delete(`/sessions/${id}`); queryClient.invalidateQueries({ queryKey: ['sessions'] }); }}
                 onSendNotification={(t) => setNotifyingTeacher(t)} isTeacherView={isTeacher} />
             )}
           </motion.div>
