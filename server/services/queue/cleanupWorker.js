@@ -145,9 +145,9 @@ class CleanupWorker {
     async cleanupPushSubscriptions(metrics, dryRun) {
         const prisma = getPrisma();
         const duplicates = await prisma.$queryRawUnsafe(`
-            SELECT userId, subscription, COUNT(*) as cnt, MIN(id) as keepId
+            SELECT "userId", subscription, COUNT(*) as cnt, MIN(id) as keepId
             FROM push_subscriptions
-            GROUP BY userId, subscription
+            GROUP BY "userId", subscription
             HAVING COUNT(*) > 1
         `);
 
