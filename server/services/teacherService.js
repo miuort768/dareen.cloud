@@ -51,7 +51,7 @@ async function getTeacherById(id) {
 }
 
 async function createTeacher(data, user) {
-  const { id, name, phone1, phone2, subject, price, email, username, password, currency } = data;
+  const { id, name, phone1, phone2, subject, price, email, username, password, currency, points } = data;
   const newId = id || `t_${crypto.randomBytes(4).toString('hex')}`;
 
   if (!name) {
@@ -73,6 +73,7 @@ async function createTeacher(data, user) {
         id: newId, name, phone1, phone2, subject,
         price: price || 0, currency: currency || 'EGP',
         email, username: dbUsername, password: hashed,
+        points: points ?? 0,
       },
     });
   });
@@ -87,7 +88,7 @@ async function createTeacher(data, user) {
 }
 
 async function updateTeacher(id, data, user) {
-  const { name, phone1, phone2, subject, price, email, username, password, currency } = data;
+  const { name, phone1, phone2, subject, price, email, username, password, currency, points } = data;
 
   const existing = await prisma.teacher.findUnique({ where: { id } });
   if (!existing) {
@@ -103,6 +104,7 @@ async function updateTeacher(id, data, user) {
   }
 
   const updateData = { name, phone1, phone2, subject, price: price || 0, currency: currency || 'EGP', email };
+  if (points !== undefined) updateData.points = points;
   if (dbUsername) updateData.username = dbUsername;
 
   if (password && password.trim() !== '' && !password.startsWith('$2b$')) {

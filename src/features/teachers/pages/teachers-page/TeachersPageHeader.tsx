@@ -15,7 +15,7 @@ export const TeachersPageHeader = ({ totalTeachers, uniqueSubjects, averagePrice
     initial={{ opacity: 0, y: 12 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.35 }}
-    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary-light dark:via-primary-deep dark:to-primary-soft p-5 md:p-6"
+    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary-soft dark:via-card dark:to-primary-soft p-5 md:p-6"
   >
     <div className="absolute inset-0 opacity-[0.06]">
       <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -31,12 +31,12 @@ export const TeachersPageHeader = ({ totalTeachers, uniqueSubjects, averagePrice
     <div className="relative z-10">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center ring-2 ring-white/30">
-            <Users size={18} className="text-white" />
+          <div className="w-10 h-10 rounded-xl bg-white/20 dark:bg-accent flex items-center justify-center ring-2 ring-white/30 dark:ring-accent-light">
+            <Users size={18} className="text-white dark:text-on-accent" />
           </div>
           <div>
-            <h1 className="text-base md:text-lg font-bold text-on-primary">إدارة المعلمات</h1>
-            <p className="text-[11px] text-white/70">{totalTeachers} معلمة نشطة</p>
+            <h1 className="text-base md:text-lg font-bold text-on-primary dark:text-main">إدارة المعلمات</h1>
+            <p className="text-[11px] text-white/70 dark:text-muted">{totalTeachers} معلمة نشطة</p>
           </div>
         </div>
         <button
@@ -44,8 +44,8 @@ export const TeachersPageHeader = ({ totalTeachers, uniqueSubjects, averagePrice
           className={cn(
             "flex items-center gap-1.5 text-[11px] font-bold px-4 py-2.5 rounded-xl transition-all active:scale-[0.97] shadow-lg",
             showAddForm
-              ? "bg-white/20 text-white hover:bg-white/30"
-              : "bg-white text-primary hover:bg-white/90"
+              ? "bg-white/20 text-white hover:bg-white/30 dark:bg-accent-light dark:text-accent dark:hover:bg-accent dark:hover:text-on-accent"
+              : "bg-white text-primary hover:bg-white/90 dark:bg-accent dark:text-on-accent dark:hover:bg-accent-hover dark:hover:text-on-accent"
           )}
         >
           {showAddForm ? <X size={13} /> : <Plus size={13} />}
@@ -58,12 +58,12 @@ export const TeachersPageHeader = ({ totalTeachers, uniqueSubjects, averagePrice
           { icon: BookOpen, value: uniqueSubjects, label: 'عدد التخصصات' },
           { icon: DollarSign, value: `${averagePrice.toLocaleString()} ج.م`, label: 'متوسط السعر' },
         ].map((item, i) => (
-          <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
+          <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10 dark:bg-accent-light dark:border-accent">
             <div className="flex items-center gap-1.5 mb-0.5">
-              <item.icon size={12} className="text-white/70" />
-              <span className="text-sm font-bold text-white tabular-nums">{item.value}</span>
+              <item.icon size={12} className="text-white/70 dark:text-accent" />
+              <span className="text-sm font-bold text-white tabular-nums dark:text-accent">{item.value}</span>
             </div>
-            <p className="text-[9px] text-white/60">{item.label}</p>
+            <p className="text-[9px] text-white/60 dark:text-muted">{item.label}</p>
           </div>
         ))}
       </div>

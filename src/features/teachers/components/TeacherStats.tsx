@@ -36,9 +36,9 @@ const primaryStat = {
   label: 'المعلمات',
   icon: Users,
   value: (p: TeacherStatsProps) => p.totalTeachers,
-  bg: 'bg-gradient-to-br from-primary via-primary-deep to-primary-hover',
-  text: 'text-on-primary',
-  iconBg: 'bg-white/15',
+  bg: 'bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary-soft dark:via-card dark:to-primary-soft',
+  text: 'text-on-primary dark:text-accent',
+  iconBg: 'bg-white/15 dark:bg-accent dark:ring-accent-light dark:text-on-accent',
 };
 
 const secondaryStats = [
@@ -84,7 +84,7 @@ export const TeacherStats = (props: TeacherStatsProps) => {
         <div className="relative z-10 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center ring-2 ring-white/20", primaryStat.iconBg)}>
-              <primaryStat.icon size={22} className={primaryStat.text} />
+              <primaryStat.icon size={22} className={cn(primaryStat.text, "dark:text-on-accent")} />
             </div>
             <div>
               <p className={cn("text-2xl font-bold tabular-nums leading-none", primaryStat.text)}>

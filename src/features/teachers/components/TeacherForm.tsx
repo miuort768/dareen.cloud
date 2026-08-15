@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Edit3, Save, Key, Info, User, Phone, Tag, DollarSign, X } from 'lucide-react';
+import { Plus, Edit3, Save, Key, Info, User, Phone, Tag, DollarSign, X, Award } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { CURRENCY_OPTIONS } from '../../../config/constants';
 import type { Teacher } from '../types';
@@ -33,7 +33,8 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
         price: '',
         currency: 'EGP',
         username: '',
-        password: ''
+        password: '',
+        points: ''
     });
     const [enableLogin, setEnableLogin] = useState(false);
 
@@ -47,7 +48,8 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                 price: String(initialData.price),
                 username: initialData.username || '',
                 password: initialData.password || '',
-                currency: initialData.currency || 'SAR'
+                currency: initialData.currency || 'SAR',
+                points: String(initialData.points ?? 0)
             });
             setEnableLogin(!!initialData.username);
         }
@@ -60,7 +62,8 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
             price: Number(formData.price),
             currency: formData.currency || 'SAR',
             username: enableLogin ? formData.username : '',
-            password: enableLogin ? formData.password : ''
+            password: enableLogin ? formData.password : '',
+            points: Number(formData.points)
         });
     };
 
@@ -132,6 +135,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                             </div>
                         </div>
                         <FormInput label="السعر الافتراضي للحصة" icon={DollarSign} type="number" value={formData.price} onChange={(val: string) => setFormData({ ...formData, price: val })} placeholder="0.00" />
+                        <FormInput label="النقاط" icon={Award} type="number" value={formData.points} onChange={(val: string) => setFormData({ ...formData, points: val })} placeholder="0" />
                     </div>
                 </div>
 

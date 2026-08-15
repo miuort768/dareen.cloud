@@ -61,10 +61,21 @@ router.post('/', async (req, res) => {
 
         await prisma.forumPost.create({ data: newPost });
 
+        let awardedPoints = 0;
+        if (user.role === 'teacher') {
+            awardedPoints = 10;
+            await prisma.teacher.update({
+                where: { id: user.id },
+                data: { points: { increment: awardedPoints } }
+            });
+            logger.info(`Teacher ${realName} awarded ${awardedPoints} points for forum post`);
+        }
+
         res.status(201).json({
             ...newPost,
             upvotes: [],
             downvotes: [],
+            awardedPoints,
             message: newPost.status === 'pending' ? 'تم إرسال المنشور للمراجعة.' : 'تم النشر بنجاح.'
         });
     } catch (err) {

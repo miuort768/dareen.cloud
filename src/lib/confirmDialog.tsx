@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
-import { AlertCircle, X, LogOut, Info } from 'lucide-react';
+import { AlertCircle, X, Trash2, Info } from 'lucide-react';
 import { cn } from './utils';
 
 const FOCUSABLE_SELECTOR = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -199,7 +199,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                                     ? "bg-error-light dark:bg-error/10 text-error"
                                     : "bg-primary-soft dark:bg-primary/10 text-primary"
                             )}>
-                                {options.icon || (isDestructive ? <LogOut size={28} /> : <AlertCircle size={28} />)}
+                                {options.icon || (isDestructive ? <Trash2 size={28} /> : <AlertCircle size={28} />)}
                             </div>
 
                             <h3 className="text-lg font-bold text-main mb-2">

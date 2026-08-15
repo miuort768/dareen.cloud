@@ -1,6 +1,6 @@
 import { memo, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Edit, Trash2, GraduationCap, MessageCircle, Bell, Star, ChevronUp, ChevronDown, ArrowUpDown } from 'lucide-react';
+import { Edit, Trash2, GraduationCap, MessageCircle, Bell, Award, ChevronUp, ChevronDown, ArrowUpDown } from 'lucide-react';
 import type { Teacher } from '../types';
 import { cn } from '../../../lib/utils';
 import { CURRENCY_SYMBOL } from '../../../config/constants';
@@ -109,11 +109,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
     return { label: 'متوقفة', dot: 'bg-error', text: 'text-error bg-error/10 ring-error/20' };
   };
 
-  const computeRating = (teacher: Teacher): number => {
-    const count = studentCounts[teacher.name] || 0;
-    if (teacher.points) return Math.min(5, Math.round((teacher.points / 20) * 10) / 10);
-    return Math.min(5, Math.round((count / 3) * 10) / 10);
-  };
+  const teacherPoints = (teacher: Teacher): number => teacher.points ?? 0;
 
   const thClass = "px-5 py-3 font-bold text-[10px] tracking-wider text-muted select-none cursor-pointer hover:text-main transition-colors";
   const thInnerClass = "flex items-center gap-1";
@@ -142,7 +138,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                   <div className={cn(thInnerClass, 'justify-center')}><SortIcon field="subject" /> التخصص</div>
                 </th>
                 <th className={cn(thClass, 'text-center')}>
-                  <div className={cn(thInnerClass, 'justify-center')}>التقييم</div>
+                  <div className={cn(thInnerClass, 'justify-center')}>النقاط</div>
                 </th>
                 <th className={cn(thClass, 'text-center')}>
                   <div className={cn(thInnerClass, 'justify-center')}>الحالة</div>
@@ -162,7 +158,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
               {sorted.map((teacher) => {
                 const isSelected = selectedId === teacher.id;
                 const status = computeStatus(teacher);
-                const rating = computeRating(teacher);
+                const points = teacherPoints(teacher);
                 const subjectStyle = getSubjectStyle(teacher.subject);
                 return (
                   <tr
@@ -175,7 +171,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                   >
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3.5">
-                        <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center font-bold text-base text-on-primary shrink-0 shadow-sm ring-2 ring-primary/20">
+                        <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-primary-deep dark:from-accent dark:to-primary-deep flex items-center justify-center font-bold text-base text-on-primary dark:text-on-accent shrink-0 shadow-sm ring-2 ring-primary/20">
                           {(teacher.name || '?').charAt(0)}
                         </div>
                         <div className="min-w-0">
@@ -190,9 +186,9 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                       </span>
                     </td>
                     <td className="px-5 py-4 text-center">
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-warning">
-                        <Star size={11} />
-                        {rating.toFixed(1)}
+                      <span className={cn("inline-flex items-center gap-1 text-[11px] font-bold", points > 0 ? "text-warning" : "text-muted")}>
+                        <Award size={11} />
+                        {points}
                       </span>
                     </td>
                     <td className="px-5 py-4 text-center">
@@ -249,7 +245,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
         {sorted.map((teacher) => {
           const isSelected = selectedId === teacher.id;
           const status = computeStatus(teacher);
-          const rating = computeRating(teacher);
+          const points = teacherPoints(teacher);
           const subjectStyle = getSubjectStyle(teacher.subject);
           return (
             <motion.div
@@ -267,7 +263,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
             >
                 <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center font-bold text-base text-on-primary shrink-0 ring-2 ring-primary/20">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-primary-deep dark:from-accent dark:to-primary-deep flex items-center justify-center font-bold text-base text-on-primary dark:text-on-accent shrink-0 ring-2 ring-primary/20">
                     {(teacher.name || '?').charAt(0)}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -282,7 +278,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                         {teacher.subject}
                       </span>
                       <span className="inline-flex items-center gap-0.5 text-[10px] text-warning">
-                        <Star size={9} />{rating.toFixed(1)}
+                        <Award size={9} />{points}
                       </span>
                     </div>
                   </div>

@@ -35,7 +35,8 @@ const createTeacherSchema = z.object({
     email: z.string().optional().or(z.literal('')),
     currency: z.string().optional(),
     username: z.string().optional().or(z.literal('')),
-    password: z.string().optional().or(z.literal(''))
+    password: z.string().optional().or(z.literal('')),
+    points: z.number().or(z.string().transform(val => Number(val))).optional()
 });
 
 const updateTeacherSchema = createTeacherSchema.partial();

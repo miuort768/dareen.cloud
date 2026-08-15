@@ -2,19 +2,37 @@ const { prisma } = require('../utils/prisma');
 const ExcelJS = require('exceljs');
 const PDFDocument = require('pdfkit');
 const arabicReshaper = require('arabic-reshaper');
-const bidi = require('bidi-js');
+const bidiFactory = require('bidi-js');
 const path = require('path');
 const fs = require('fs');
 const fsp = fs.promises;
 const logger = require('../utils/logger');
 
+const bidi = bidiFactory();
+
+// Shapes Arabic letters and reorders the run into visual order so PDFKit can
+// render it correctly. bidi-js has no getReorderedString() — we compute the
+// embedding levels and reverse the returned segments in place.
 function reshape(text) {
-    const shaped = arabicReshaper.convertArabic(String(text ?? ''));
+    const input = String(text ?? '');
+    if (!isArabic(input)) return input;
+    const shaped = arabicReshaper.convertArabic(input);
     try {
-        const result = bidi(shaped);
-        const levels = result.getEmbeddingLevels(shaped);
-        return result.getReorderedString(shaped, levels);
-    } catch {
+        const embeddingLevels = bidi.getEmbeddingLevels(shaped);
+        const flips = bidi.getReorderSegments(shaped, embeddingLevels);
+        const chars = Array.from(shaped);
+        flips.forEach(([start, end]) => {
+            while (start < end) {
+                const tmp = chars[start];
+                chars[start] = chars[end];
+                chars[end] = tmp;
+                start++;
+                end--;
+            }
+        });
+        return chars.join('');
+    } catch (err) {
+        logger.warn('Arabic reshape/reorder failed, falling back to shaped text:', err.message);
         return shaped;
     }
 }
@@ -370,6 +388,7 @@ async function generatePDF(entity, filters) {
         doc.on('error', reject);
 
         const title = `${LABELS[entity] || entity} - ${new Date().toLocaleDateString('ar-SA')}`;
+        if (arabicFontPath) doc.font(arabicFontPath);
         doc.fontSize(18).text(reshape(title), { align: 'right' });
         doc.moveDown();
 
