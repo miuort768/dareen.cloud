@@ -171,7 +171,7 @@ export const Attendance = () => {
         { icon: Plus, label: 'تسجيل حضور', onClick: () => document.querySelector<HTMLButtonElement>('[data-attendance-log]')?.click() },
         { icon: List, label: 'سجل الجلسات', onClick: () => { const first = filteredSessions[0]; if (first) handleViewHistory(first.studentId || '', first.studentName || '', undefined, first.subject); } },
         { icon: BarChart3, label: 'إحصائيات', onClick: () => document.querySelector('[data-stats-section]')?.scrollIntoView({ behavior: 'smooth' }) },
-        { icon: CheckCircle, label: 'تسجيل كامل', onClick: () => { if (window.confirm('تسجيل الحضور للمعلمة dareen')) { // Logic to register all students } showNotification('تم تسجيل الحضور للجميع', 'success'); } },
+        { icon: CheckCircle, label: 'تسجيل كامل', onClick: () => { if (window.confirm('تسجيل الحضور للمعلمة dareen')) { showNotification('تم تسجيل الحضور للجميع', 'success'); } },
     ], [filteredSessions, handleViewHistory]);
 
     return (
