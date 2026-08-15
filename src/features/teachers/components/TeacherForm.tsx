@@ -3,6 +3,19 @@ import { Plus, Edit3, Save, Key, Info, User, Phone, Tag, DollarSign, X } from 'l
 import { cn } from '../../../lib/utils';
 import type { Teacher } from '../types';
 
+const SUBJECT_OPTIONS = [
+    'اللغة العربية',
+    'اللغة الانجليزية',
+    'اللغة الفرنسية',
+    'اللغة الاسبانية',
+    'الرياضيات',
+    'العلوم وفروعها',
+    'القران الكريم',
+    'المواد الشرعية',
+    'الاجتماعيات',
+    'اخري',
+];
+
 interface TeacherFormProps {
     onSubmit: (data: Omit<Teacher, 'id'>) => void;
     initialData?: Teacher | null;
@@ -96,7 +109,27 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                         <FormInput label="الاسم الكامل" icon={User} value={formData.name} onChange={(val: string) => setFormData({ ...formData, name: val })} required placeholder="سارة محمد" />
                         <FormInput label="رقم الهاتف (1)" icon={Phone} type="tel" value={formData.phone1} onChange={(val: string) => setFormData({ ...formData, phone1: val })} required placeholder="05XXXXXXXX" dir="ltr" />
                         <FormInput label="رقم الهاتف (2)" icon={Phone} type="tel" value={formData.phone2} onChange={(val: string) => setFormData({ ...formData, phone2: val })} placeholder="اختياري" dir="ltr" />
-                        <FormInput label="التخصص" icon={Tag} value={formData.subject} onChange={(val: string) => setFormData({ ...formData, subject: val })} required placeholder="لغة عربية" />
+                        <div className="space-y-1.5">
+                            <label htmlFor="teacher-form-subject" className="text-xs text-muted ms-1">التخصص</label>
+                            <div className="relative">
+                                <Tag className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={12} />
+                                <select
+                                    id="teacher-form-subject"
+                                    required
+                                    value={formData.subject}
+                                    onChange={e => setFormData({ ...formData, subject: e.target.value })}
+                                    className="w-full px-4 py-2.5 bg-surface border border-border focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main text-xs transition-all ps-10 appearance-none cursor-pointer"
+                                >
+                                    <option value="" disabled>اختر التخصص...</option>
+                                    {formData.subject && !SUBJECT_OPTIONS.includes(formData.subject) && (
+                                        <option value={formData.subject}>{formData.subject}</option>
+                                    )}
+                                    {SUBJECT_OPTIONS.map(s => (
+                                        <option key={s} value={s}>{s}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
                         <FormInput label="السعر الافتراضي للحصة" icon={DollarSign} type="number" value={formData.price} onChange={(val: string) => setFormData({ ...formData, price: val })} placeholder="0.00" />
                     </div>
                 </div>

@@ -56,7 +56,7 @@ export const TeachersPageHeader = ({ totalTeachers, uniqueSubjects, averagePrice
         {[
           { icon: Users, value: totalTeachers, label: 'عدد المعلمات' },
           { icon: BookOpen, value: uniqueSubjects, label: 'عدد التخصصات' },
-          { icon: DollarSign, value: `${averagePrice.toLocaleString()}`, label: 'متوسط السعر' },
+          { icon: DollarSign, value: `${averagePrice.toLocaleString()} ج.م`, label: 'متوسط السعر' },
         ].map((item, i) => (
           <div key={i} className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
             <div className="flex items-center gap-1.5 mb-0.5">

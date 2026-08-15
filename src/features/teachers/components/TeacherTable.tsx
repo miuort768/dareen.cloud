@@ -22,14 +22,21 @@ type SortDir = 'asc' | 'desc';
 const subjectColorMap: Record<string, string> = {
   رياضيات: 'text-primary bg-primary/10 ring-primary/20',
   عربي: 'text-success bg-success/10 ring-success/20',
+  'اللغة العربية': 'text-success bg-success/10 ring-success/20',
   علوم: 'text-info bg-info-soft ring-info/20',
   إنجليزي: 'text-warning bg-warning/10 ring-warning/20',
+  'اللغة الانجليزية': 'text-warning bg-warning/10 ring-warning/20',
   فيزياء: 'text-accent bg-accent/10 ring-accent/20',
   كيمياء: 'text-error bg-error/10 ring-error/20',
   لغات: 'text-accent bg-accent/10 ring-accent/20',
+  'اللغة الفرنسية': 'text-accent bg-accent/10 ring-accent/20',
+  'اللغة الاسبانية': 'text-info bg-info-soft ring-info/20',
   أدبي: 'text-warning bg-warning/10 ring-warning/20',
   دراسات: 'text-success bg-success/10 ring-success/20',
   قرآن: 'text-primary bg-primary/10 ring-primary/20',
+  قران: 'text-primary bg-primary/10 ring-primary/20',
+  شرعية: 'text-success bg-success/10 ring-success/20',
+  اجتماعيات: 'text-warning bg-warning/10 ring-warning/20',
 };
 
 const getSubjectStyle = (subject?: string) => {
@@ -167,13 +174,13 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                     )}
                   >
                     <td className="px-5 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center font-bold text-sm text-on-primary shrink-0 shadow-sm ring-2 ring-primary/20">
+                      <div className="flex items-center gap-3.5">
+                        <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center font-bold text-base text-on-primary shrink-0 shadow-sm ring-2 ring-primary/20">
                           {(teacher.name || '?').charAt(0)}
                         </div>
-                        <div>
-                          <p className="font-bold text-sm text-main leading-tight">{teacher.name || '—'}</p>
-                          <p className="text-[10px] text-muted mt-0.5">ID: {(teacher.id || '').substring(0, 8)}</p>
+                        <div className="min-w-0">
+                          <p className="font-bold text-[15px] text-main leading-tight truncate">{teacher.name || '—'}</p>
+                          <p className="text-[10px] text-muted font-mono mt-1.5">ID: {(teacher.id || '').substring(0, 8)}</p>
                         </div>
                       </div>
                     </td>
@@ -258,19 +265,19 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                 isSelected && "ring-1 ring-primary/30"
               )}
             >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center font-bold text-sm text-on-primary shrink-0 ring-2 ring-primary/20">
+                <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-primary-deep flex items-center justify-center font-bold text-base text-on-primary shrink-0 ring-2 ring-primary/20">
                     {(teacher.name || '?').charAt(0)}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-bold text-main leading-tight truncate">{teacher.name || '—'}</h4>
+                      <h4 className="text-base font-bold text-main leading-tight truncate">{teacher.name || '—'}</h4>
                       <span className={cn("inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold ring-1", status.text)}>
                         <span className={cn("w-1 h-1 rounded-full", status.dot)} />
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 mt-0.5">
+                    <div className="flex items-center gap-2 mt-1">
                       <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded text-[9px] font-bold ring-1", subjectStyle)}>
                         {teacher.subject}
                       </span>
@@ -281,8 +288,8 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                   </div>
                 </div>
                 <div className="text-end shrink-0 ms-2">
-                  <span className="text-sm font-bold text-success">{teacher.price}</span>
-                  <span className="text-[9px] text-muted block">{getCurrencySymbol(teacher.currency)} / حصة</span>
+                  <span className="text-base font-bold text-success">{teacher.price}</span>
+                  <span className="text-[9px] text-muted block mt-0.5">{getCurrencySymbol(teacher.currency)} / حصة</span>
                 </div>
               </div>
               <div className="flex items-center gap-1.5">

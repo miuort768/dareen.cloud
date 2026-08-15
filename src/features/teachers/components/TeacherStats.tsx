@@ -2,7 +2,6 @@ import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Users, UserPlus, BookOpen, DollarSign } from 'lucide-react';
 import { cn } from '../../../lib/utils';
-import { CURRENCY_SYMBOL } from '../../../config/constants';
 
 interface TeacherStatsProps {
   totalTeachers: number;
@@ -55,7 +54,7 @@ const secondaryStats = [
   },
   {
     label: 'متوسط السعر', icon: DollarSign,
-    value: (p: TeacherStatsProps) => `${p.averagePrice} ${CURRENCY_SYMBOL}`,
+    value: (p: TeacherStatsProps) => `${p.averagePrice} ج.م`,
     bg: 'bg-warning-soft', text: 'text-warning', iconBg: 'bg-warning/10', ring: 'ring-warning/20',
   },
 ];

@@ -59,7 +59,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 onClick={onClose}
             ></div>
 
-            <div className="relative bg-card dark:bg-card border border-border shadow-elevation-3 w-full max-w-md overflow-hidden rounded-2xl animate-in zoom-in-95 duration-200">
+            <div className="relative bg-card dark:bg-card border border-border shadow-elevation-3 w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200">
                 {/* Accent bar */}
                 <div className={cn(
                     "h-1 w-full",

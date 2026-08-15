@@ -22,12 +22,21 @@ interface TeacherToolbarProps {
 const subjectColorMap: Record<string, string> = {
   رياضيات: 'text-primary bg-primary/10 ring-primary/20',
   عربي: 'text-success bg-success/10 ring-success/20',
+  'اللغة العربية': 'text-success bg-success/10 ring-success/20',
   علوم: 'text-info bg-info-soft ring-info/20',
   إنجليزي: 'text-warning bg-warning/10 ring-warning/20',
+  'اللغة الانجليزية': 'text-warning bg-warning/10 ring-warning/20',
   فيزياء: 'text-accent bg-accent/10 ring-accent/20',
   كيمياء: 'text-error bg-error/10 ring-error/20',
   لغات: 'text-accent bg-accent/10 ring-accent/20',
+  'اللغة الفرنسية': 'text-accent bg-accent/10 ring-accent/20',
+  'اللغة الاسبانية': 'text-info bg-info-soft ring-info/20',
   أدبي: 'text-warning bg-warning/10 ring-warning/20',
+  دراسات: 'text-success bg-success/10 ring-success/20',
+  قرآن: 'text-primary bg-primary/10 ring-primary/20',
+  قران: 'text-primary bg-primary/10 ring-primary/20',
+  شرعية: 'text-success bg-success/10 ring-success/20',
+  اجتماعيات: 'text-warning bg-warning/10 ring-warning/20',
 };
 
 const getSubjectStyle = (subject?: string) => {

@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Bell, MessageCircle, Clock, CreditCard } from 'lucide-react';
+import { X, Bell, MessageCircle, Clock, ChevronDown } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import type { Teacher, Session } from '../types';
 import type { Student, Enrollment } from '../../../types';
-import { TeacherCard } from './TeacherCard';
 import { TeacherPerformanceGauge } from './TeacherPerformanceGauge';
 import { TeacherEnrollmentList } from './TeacherEnrollmentList';
-import { TeacherActivityModal } from './TeacherActivityModal';
+import { TeacherActivitySection } from './TeacherActivitySection';
 
 interface TeacherDetailsProps {
     teacher: Teacher;
@@ -33,8 +32,7 @@ export const TeacherDetails = ({
     isTeacherView
 }: TeacherDetailsProps) => {
     const navigate = useNavigate();
-    const [showCard, setShowCard] = useState(false);
-    const [showActivityModal, setShowActivityModal] = useState(false);
+    const [showActivity, setShowActivity] = useState(false);
 
     const enrolledStudents = students.filter(s =>
         s.enrollments?.some((e: Enrollment) => {
@@ -67,29 +65,29 @@ export const TeacherDetails = ({
 
     return (
         <div className={cn(
-            "bg-card border border-border rounded-2xl flex flex-col h-fit overflow-hidden",
+            "bg-card border border-border flex flex-col h-fit overflow-hidden",
             "lg:static lg:sticky lg:top-4"
         )} dir="rtl">
             {/* Header Section */}
             <div className="bg-primary px-5 py-5 md:px-7 md:py-6">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/15">
+                        <div className="w-12 h-12 flex items-center justify-center bg-white/15">
                             <span className="font-bold text-xl text-on-primary">{(teacher.name || '?').charAt(0)}</span>
                         </div>
                         <div className="min-w-0">
                             <h3 className="text-sm font-bold text-on-primary truncate">{teacher.name}</h3>
-                            <span className="text-[10px] text-error bg-error-soft px-2 py-0.5 rounded-lg">{teacher.subject}</span>
+                            <span className="text-[10px] text-error bg-error-soft px-2 py-0.5">{teacher.subject}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
                         {!isTeacherView && (
                             <>
-                                <button onClick={() => onSendNotification(teacher)} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary rounded-xl transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={16} /></button>
-                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary rounded-xl transition-all" title="مراسلة" aria-label="مراسلة"><MessageCircle size={16} /></button>
+                                <button onClick={() => onSendNotification(teacher)} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary transition-all" title="إرسال إشعار" aria-label="إرسال إشعار"><Bell size={16} /></button>
+                                <button onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary transition-all" title="مراسلة" aria-label="مراسلة"><MessageCircle size={16} /></button>
                             </>
                         )}
-                        <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary rounded-xl transition-all" title="إغلاق" aria-label="إغلاق"><X size={16} /></button>
+                        <button onClick={onClose} className="w-9 h-9 flex items-center justify-center bg-white/15 hover:bg-white/25 text-on-primary transition-all" title="إغلاق" aria-label="إغلاق"><X size={16} /></button>
                     </div>
                 </div>
             </div>
@@ -101,41 +99,33 @@ export const TeacherDetails = ({
 
                 <div className="pt-4 space-y-3">
                     <button
-                        onClick={() => setShowCard(true)}
-                        className="w-full py-4 bg-surface border border-border rounded-2xl flex items-center justify-between px-6 hover:border-primary transition-all group"
+                        onClick={() => setShowActivity(v => !v)}
+                        aria-expanded={showActivity}
+                        aria-label="سجل النشاطات المفصل"
+                        className={cn(
+                            "w-full py-4 border flex items-center justify-between px-6 transition-all group",
+                            showActivity ? "bg-primary text-on-primary border-primary" : "bg-primary-soft border-primary/20 hover:border-primary"
+                        )}
                     >
                         <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center group-hover:bg-primary-hover transition-all">
-                                <CreditCard size={18} className="text-on-primary" />
-                            </div>
-                            <div className="text-start">
-                                <p className="text-sm text-main group-hover:text-primary transition-all">بطاقة هوية المعلمة</p>
-                                <p className="text-xs text-muted mt-0.5">عرض بيانات التعريف والرواتب</p>
-                            </div>
-                        </div>
-                        <CreditCard size={16} className="text-muted group-hover:text-primary" />
-                    </button>
-                    <button
-                        onClick={() => setShowActivityModal(true)}
-                        className="w-full py-4 bg-primary-soft border border-primary/20 rounded-2xl flex items-center justify-between px-6 hover:border-primary transition-all group"
-                    >
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center group-hover:bg-primary-hover transition-all">
+                            <div className="w-10 h-10 bg-primary flex items-center justify-center group-hover:bg-primary-hover transition-all">
                                 <Clock size={18} className="text-on-primary" />
                             </div>
                             <div className="text-start">
-                                <p className="text-sm text-main group-hover:text-primary transition-all">سجل النشاطات المفصل</p>
-                                <p className="text-xs text-primary mt-0.5">عرض آخر {teacherSessions.length} عملية</p>
+                                <p className={cn("text-sm transition-all", showActivity ? "text-on-primary" : "text-main group-hover:text-primary")}>سجل النشاطات المفصل</p>
+                                <p className={cn("text-xs mt-0.5", showActivity ? "text-on-primary/70" : "text-primary")}>عرض آخر {teacherSessions.length} عملية</p>
                             </div>
                         </div>
-                        <Clock size={16} className="text-primary" />
+                        <ChevronDown size={16} className={cn("transition-transform", showActivity && "rotate-180")} />
                     </button>
+
+                    {showActivity && (
+                        <div className="animate-in fade-in slide-in-from-top-2 duration-300">
+                            <TeacherActivitySection teacherName={teacher.name} sessions={teacherSessions} isTeacherView={isTeacherView} onDeleteSession={onDeleteSession} />
+                        </div>
+                    )}
                 </div>
             </div>
-
-            {showCard && <TeacherCard teacher={teacher} onClose={() => setShowCard(false)} />}
-
-            <TeacherActivityModal isOpen={showActivityModal} onClose={() => setShowActivityModal(false)} teacherName={teacher.name} sessions={teacherSessions} isTeacherView={isTeacherView} onDeleteSession={onDeleteSession} />
         </div>
     );
 };

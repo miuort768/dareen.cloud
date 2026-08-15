@@ -37,7 +37,7 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
 
     return (
         <div className={cn(
-            "group relative flex items-center gap-3 p-3 pe-2 w-full sm:min-w-[300px] sm:max-w-[380px] bg-card border border-border shadow-elevation-3 rounded-2xl transition-all duration-500 overflow-hidden",
+            "group relative flex items-center gap-3 p-3 pe-2 w-full sm:min-w-[300px] sm:max-w-[380px] bg-card border border-border shadow-elevation-3 transition-all duration-500 overflow-hidden",
             isExiting ? "opacity-0 scale-95 -translate-x-4" : "animate-in slide-in-from-left-8 fade-in",
             "hover:shadow-elevation-4 hover:-translate-y-0.5"
         )}>
@@ -54,7 +54,7 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
             >
                 <X size={14} />
             </button>
-            <div className="absolute bottom-0 end-0 start-0 h-1 overflow-hidden rounded-b-2xl">
+            <div className="absolute bottom-0 end-0 start-0 h-1 overflow-hidden">
                 <div
                     className={cn("h-full opacity-50", progressBar)}
                     style={{ animation: `toast-progress ${duration}ms linear forwards` }}

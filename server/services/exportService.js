@@ -17,7 +17,7 @@ function isArabic(text) {
 }
 
 let arabicFontPath = null;
-const FONT_URL = 'https://github.com/google/fonts/raw/main/ofl/notonaskharabic/NotoNaskhArabic%5Bwght%5D.ttf';
+const FONT_URL = 'https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/amiri/Amiri-Regular.ttf';
 const FONT_FALLBACK_NAME = 'NotoNaskhArabic.ttf';
 const FONT_DIR = path.join(__dirname, '..', 'fonts');
 
@@ -303,7 +303,13 @@ function drawTable(doc, cols, rows, arabicFont) {
     let y = doc.y;
 
     doc.fontSize(9);
-    if (arabicFont) doc.font(arabicFont);
+    if (arabicFont) {
+        try {
+            doc.font(arabicFont);
+        } catch (err) {
+            logger.warn('Failed to load Arabic font for PDF table:', err.message);
+        }
+    }
 
     const drawHeader = () => {
         cols.forEach((col, i) => {
