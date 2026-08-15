@@ -2,7 +2,17 @@ import { memo, useMemo, useState, Fragment } from 'react';
 import { Edit, Trash2, Users, Phone, Mail, MessageCircle, ArrowUpRight, GraduationCap, AlertCircle, Star, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../../lib/utils';
+import { canonicalPhone } from '../../../lib/phone';
 import type { Parent, Student } from '../../../types';
+
+const samePhone = (a?: string | null, b?: string | null) => {
+    const ca = canonicalPhone(a);
+    const cb = canonicalPhone(b);
+    return ca.length > 0 && ca === cb;
+};
+
+const childrenOf = (parent: Parent, students: Student[]) =>
+    students.filter(s => samePhone(parent.phone, s.parentPhone) || (parent.id && s.parent?.id === parent.id));
 
 interface ParentsTableProps {
     parents: Parent[];
@@ -54,8 +64,8 @@ export const ParentsTable = memo<ParentsTableProps>(({
 
     const sortedParents = useMemo(() => {
         return [...parents].sort((a, b) => {
-            const childrenA = students.filter(s => s.parentPhone === a.phone);
-            const childrenB = students.filter(s => s.parentPhone === b.phone);
+            const childrenA = childrenOf(a, students);
+            const childrenB = childrenOf(b, students);
             let cmp = 0;
             if (sortField === 'name') cmp = a.name.localeCompare(b.name);
             else if (sortField === 'phone') cmp = a.phone.localeCompare(b.phone);
@@ -95,7 +105,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
                     </thead>
                     <tbody className="divide-y divide-border">
                         {sortedParents.length > 0 ? sortedParents.map((parent, idx) => {
-                            const children = students.filter(s => s.parentPhone === parent.phone);
+                            const children = childrenOf(parent, students);
                             const isExpanded = expandedId === parent.id;
                             const status = getStatusBadge(children);
                             const hasOverdue = children.some(c => (c.enrollments || []).some(en => (en.sessionsTotal - en.sessionsUsed) <= 2));
@@ -326,7 +336,7 @@ export const ParentsTable = memo<ParentsTableProps>(({
             {/* ── Mobile View ── */}
             <div className="md:hidden space-y-2 p-2">
                 {sortedParents.map((parent) => {
-                    const children = students.filter(s => s.parentPhone === parent.phone);
+                    const children = childrenOf(parent, students);
                     const isExpanded = expandedId === parent.id;
                     const status = getStatusBadge(children);
 

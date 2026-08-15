@@ -34,6 +34,7 @@ export interface Student {
     notes?: string;
     sessionPrice: number;
     enrollments: Enrollment[];
+    parent?: { id: string; name: string; phone: string } | null;
     totalPoints?: number;
     badges?: string;
 }

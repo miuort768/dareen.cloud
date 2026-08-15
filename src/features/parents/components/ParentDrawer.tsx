@@ -241,8 +241,8 @@ const ParentHeader = ({ parent, hasOverdue, childrenCount, onClose }: {
             <div className="absolute inset-0 bg-white/10" />
             <div className="absolute -top-6 -end-6 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
             <div className="absolute -bottom-6 -start-6 w-16 h-16 bg-black/10 rounded-full blur-xl" />
-            <button onClick={onClose} className={cn("absolute top-3 end-3 w-7 h-7 flex items-center justify-center bg-black/10 hover:bg-black/20 rounded-lg transition-all z-10", gradient.on)} aria-label="إغلاق">
-                <X size={14} />
+            <button onClick={onClose} className={cn("absolute top-4 end-4 w-10 h-10 flex items-center justify-center bg-black/10 hover:bg-black/20 rounded-xl transition-all z-10", gradient.on)} aria-label="إغلاق">
+                <X size={20} />
             </button>
             <div className="relative z-10 flex items-center gap-4">
                 <div className={cn("w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-xl font-bold ring-2 ring-white/30 shadow-lg shrink-0", gradient.on)}>

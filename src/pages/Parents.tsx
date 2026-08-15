@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import { cn } from '../lib/utils';
 import { downloadExport } from '../lib/download';
 import { useShowNotification, useAcademyName } from '../context/AppContext';
+import type { Parent, Student } from '../types';
 
 import { ParentsHeader } from '../features/parents/components/ParentsHeader';
 import { ParentsTable } from '../features/parents/components/ParentsTable';
@@ -11,6 +12,16 @@ import { ParentDrawer } from '../features/parents/components/ParentDrawer';
 import { ParentForm } from '../features/parents/components/ParentForm';
 import { useParents } from '../features/parents/hooks/useParents';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
+import { canonicalPhone } from '../lib/phone';
+
+const samePhone = (a?: string | null, b?: string | null) => {
+    const ca = canonicalPhone(a);
+    const cb = canonicalPhone(b);
+    return ca.length > 0 && ca === cb;
+};
+
+const parentHasStudents = (parent: Parent, students: Student[]) =>
+    students.filter(s => samePhone(parent.phone, s.parentPhone) || (parent.id && s.parent?.id === parent.id));
 
 function AnimatedCounter({ value }: { value: number }) {
     const motionValue = useMotionValue(0);
@@ -41,10 +52,10 @@ export const Parents = () => {
 
     const filteredParents = useMemo(() => {
         let list = state.filteredParents;
-        if (filterStatus === 'active') list = list.filter(p => state.students.some(s => s.parentPhone === p.phone && (s.enrollments?.length || 0) > 0));
-        else if (filterStatus === 'inactive') list = list.filter(p => !state.students.some(s => s.parentPhone === p.phone && (s.enrollments?.length || 0) > 0));
+        if (filterStatus === 'active') list = list.filter(p => parentHasStudents(p, state.students).some(s => (s.enrollments?.length || 0) > 0));
+        else if (filterStatus === 'inactive') list = list.filter(p => !parentHasStudents(p, state.students).some(s => (s.enrollments?.length || 0) > 0));
         else if (filterStatus === 'overdue') list = list.filter(p =>
-            state.students.some(s => s.parentPhone === p.phone && (s.enrollments || []).some(en => (en.sessionsTotal - en.sessionsUsed) <= 2))
+            parentHasStudents(p, state.students).some(s => (s.enrollments || []).some(en => (en.sessionsTotal - en.sessionsUsed) <= 2))
         );
         return list;
     }, [state.filteredParents, filterStatus, state.students]);

@@ -4,6 +4,7 @@ import { parentsService } from '../services/parentsService';
 import type { Parent } from '../../../types';
 import type { FamilyScheduleItem } from '../types';
 import { useShowNotification } from '../../../context/AppContext';
+import { canonicalPhone } from '../../../lib/phone';
 
 export const useParents = () => {
     const queryClient = useQueryClient();
@@ -111,30 +112,14 @@ export const useParents = () => {
         });
     };
 
-    const ARABIC_DIGITS: Record<string, string> = {
-        '٠': '0', '١': '1', '٢': '2', '٣': '3', '٤': '4',
-        '٥': '5', '٦': '6', '٧': '7', '٨': '8', '٩': '9',
-    };
-    const KNOWN_COUNTRY_CODES = ['966', '965', '971', '974', '968', '973', '20'];
-    const normalizePhone = (phone: string): string => {
-        let digits = String(phone || '')
-            .replace(/[٠-٩]/g, d => ARABIC_DIGITS[d])
-            .replace(/\D/g, '');
-        if (!digits) return '';
-        digits = digits.replace(/^00/, '').replace(/^\+/, '');
-        for (const cc of KNOWN_COUNTRY_CODES) {
-            if (digits.startsWith(cc)) {
-                const rest = digits.slice(cc.length);
-                if (rest.length >= 8 && rest.length <= 10) {
-                    return `0${rest}`;
-                }
-            }
-        }
-        return digits;
+    const samePhone = (a?: string | null, b?: string | null) => {
+        const ca = canonicalPhone(a);
+        const cb = canonicalPhone(b);
+        return ca.length > 0 && ca === cb;
     };
 
     const handleImportParents = async () => {
-        const existingPhones = new Set(parents.map(p => normalizePhone(p.phone)).filter(Boolean));
+        const existingPhones = new Set(parents.map(p => canonicalPhone(p.phone)).filter(Boolean));
         const newParentsList: Omit<Parent, 'id'>[] = [];
         const seenPhones = new Set();
 
@@ -166,7 +151,7 @@ export const useParents = () => {
         // Group students by normalized parent phone
         const studentsByPhone: Record<string, typeof students> = {};
         for (const s of students) {
-            const canonical = normalizePhone(s.parentPhone || '');
+            const canonical = canonicalPhone(s.parentPhone || '');
             if (canonical && !existingPhones.has(canonical)) {
                 if (!studentsByPhone[canonical]) {
                     studentsByPhone[canonical] = [];
@@ -265,7 +250,9 @@ export const useParents = () => {
     }, [parents, searchTerm]);
 
     const stats = useMemo(() => {
-        const linkedStudents = students.filter(s => parents.some(p => p.phone === s.parentPhone));
+        const linkedStudents = students.filter(s =>
+            parents.some(p => samePhone(p.phone, s.parentPhone) || (p.id && s.parent?.id === p.id))
+        );
         return {
             totalParents: parents.length,
             totalLinkedStudents: linkedStudents.length
@@ -275,7 +262,15 @@ export const useParents = () => {
     const selectedParentData = useMemo(() => {
         if (!selectedParent) return null;
 
-        const children = students.filter(s => s.parentPhone === selectedParent.phone);
+        const children = students.filter(s =>
+            samePhone(selectedParent.phone, s.parentPhone) || s.parent?.id === selectedParent.id
+        );
+
+        const toMinutes = (h: string) => {
+            const [hh, mm = '0'] = String(h || '').split(':');
+            const mins = parseInt(hh, 10) * 60 + parseInt(mm, 10);
+            return Number.isNaN(mins) ? 0 : mins;
+        };
 
         const familySchedule: FamilyScheduleItem[] = children.flatMap(child =>
             (child.enrollments || []).flatMap(en =>
@@ -287,7 +282,7 @@ export const useParents = () => {
             )
         ).sort((a, b) => {
             if (a.day !== b.day) return a.day.localeCompare(b.day);
-            return Number(a.hour) - Number(b.hour);
+            return toMinutes(a.hour) - toMinutes(b.hour);
         });
 
         const totalEnrollments = children.reduce((sum, child) => sum + (child.enrollments?.length || 0), 0);
