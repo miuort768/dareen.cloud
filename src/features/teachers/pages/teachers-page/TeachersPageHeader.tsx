@@ -44,8 +44,8 @@ export const TeachersPageHeader = ({ totalTeachers, uniqueSubjects, averagePrice
           className={cn(
             "flex items-center gap-1.5 text-[11px] font-bold px-4 py-2.5 rounded-xl transition-all active:scale-[0.97] shadow-lg",
             showAddForm
-              ? "bg-white/20 text-white hover:bg-white/30 dark:bg-accent-light dark:text-accent dark:hover:bg-accent dark:hover:text-on-accent"
-              : "bg-white text-primary hover:bg-white/90 dark:bg-accent dark:text-on-accent dark:hover:bg-accent-hover dark:hover:text-on-accent"
+              ? "bg-white/20 text-white hover:bg-white/30 dark:bg-white/20 dark:text-white dark:hover:bg-white/30"
+              : "bg-white text-primary hover:bg-white/90 dark:bg-white dark:text-on-primary dark:hover:bg-white/80"
           )}
         >
           {showAddForm ? <X size={13} /> : <Plus size={13} />}
