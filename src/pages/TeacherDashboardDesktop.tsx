@@ -45,7 +45,28 @@ export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceS
     const [startDialog, setStartDialog] = useState<{ open: boolean; studentId?: string; subject?: string }>({ open: false });
 
     const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
+    const allTimeline = timeline || [];
+    const remainingSessions = allTimeline.filter(s => s.status === 'scheduled' || s.status === 'in-progress');
+    // Filter to find the next upcoming session (not the first one, but the one after current time)
+    const nextUpcomingSession = remainingSessions.length > 0 
+        ? remainingSessions.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())[0] 
+        : null;
     const openStart = (studentId?: string, subject?: string) => setStartDialog({ open: true, studentId, subject });
+    const handleSkip = () => {
+        // Find the session after the current nextSession
+        if (nextUpcomingSession) {
+            const currentIndex = remainingSessions.indexOf(nextUpcomingSession);
+            const nextIndex = currentIndex + 1;
+            if (nextIndex < remainingSessions.length) {
+                setStartDialog({ open: true, studentId: remainingSessions[nextIndex].studentId, subject: remainingSessions[nextIndex].subject });
+            } else {
+                // No more sessions
+                setStartDialog({ open: false });
+            }
+        } else {
+            setStartDialog({ open: false });
+        }
+    };
 
     return (
         <>
@@ -54,7 +75,11 @@ export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceS
 
             <motion.div {...fadeUp(0.04)}>
                 {nextSession ? (
-                    <NextSessionHero timeline={timeline} onStart={() => openStart(nextSession.studentId, nextSession.subject)} />
+                    <NextSessionHero
+    timeline={timeline}
+    onStart={(id, subject) => openStart(id, subject)}
+    onSkip={() => handleSkip()}
+/>
                 ) : (
                     <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 h-full flex items-center justify-center min-h-[200px]">
                         <EmptyState icon={Calendar} title="لا توجد حصة قادمة" subtitle="يمكنك بدء حصة مباشرة متى شئت" compact />

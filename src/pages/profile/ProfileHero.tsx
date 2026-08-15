@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowRight, Settings, Share2, Edit3, Clock, CalendarDays, Users, BookOpen, Play, Star, DollarSign } from 'lucide-react';
+import { ArrowRight, Settings, Share2, Download, Edit3, Clock, CalendarDays, Users, BookOpen, Play, Star, DollarSign } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from '../../shared/components/ui';
 import { useCurrentUser, useShowNotification } from '../../context/AppContext';
@@ -18,7 +18,7 @@ interface ProfileHeroProps {
 
 const ROLE_CONFIG = {
     student: { label: 'طالب', color: 'bg-primary-soft text-primary', dashboard: '/student-dashboard' },
-    teacher: { label: 'معلم', color: 'bg-info-soft text-info', dashboard: '/teacher-dashboard' },
+    teacher: { label: 'معلم معتمد', color: 'bg-primary-soft text-primary', dashboard: '/teacher-dashboard' },
     parent: { label: 'ولي أمر', color: 'bg-warning-soft text-warning', dashboard: '/parent-dashboard' },
 };
 
@@ -51,6 +51,24 @@ export const ProfileHero = ({ name, role, subtitle, points, rank, stats }: Profi
             showNotification('تم نسخ رابط الملف الشخصي', 'success');
         } catch {
             showNotification('تعذر نسخ الرابط', 'error');
+        }
+    };
+
+    const handleDownload = async () => {
+        try {
+            const name = currentUser?.name || name;
+            const username = currentUser?.username || '';
+            const text = `${name}\n${username}`;
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'teacher-data.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+            showNotification('تم تحميل بيانات المعلمة', 'success');
+        } catch (error) {
+            showNotification('تعذر تحميل البيانات', 'error');
         }
     };
 
@@ -90,9 +108,12 @@ export const ProfileHero = ({ name, role, subtitle, points, rank, stats }: Profi
                                 </button>
                             </>
                         )}
-                        <button onClick={handleShare} className="w-8 h-8 rounded-xl bg-surface dark:bg-hover flex items-center justify-center hover:bg-border/50 dark:hover:bg-primary/10 transition-colors" title="مشاركة الملف" aria-label="مشاركة الملف">
-                            <Share2 size={13} className="text-muted dark:text-muted" />
-                        </button>
+<button onClick={handleDownload} className="w-8 h-8 rounded-xl bg-surface dark:bg-hover flex items-center justify-center hover:bg-border/50 dark:hover:bg-primary/10 transition-colors" title="تحميل البيانات">
+                                    <Download size={13} className="text-primary" />
+                                </button>
+                                <button onClick={handleShare} className="w-8 h-8 rounded-xl bg-surface dark:bg-hover flex items-center justify-center hover:bg-border/50 dark:hover:bg-primary/10 transition-colors" title="مشاركة الملف">
+                                    <Share2 size={13} className="text-muted dark:text-muted" />
+                                </button>
                     </div>
                 </div>
 
@@ -123,12 +144,11 @@ export const ProfileHero = ({ name, role, subtitle, points, rank, stats }: Profi
                                     </span>
                                 )}
                             </div>
-                        </div>
+</div>
                     </div>
+                </div>
 
                     <div className="flex items-center gap-2 px-4 h-10 rounded-xl bg-primary/10 dark:bg-primary/10 text-primary dark:text-primary text-sm font-bold tabular-nums shrink-0 self-start md:self-center">
-                        <Clock size={14} />
-                        {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
                     </div>
                 </div>
 

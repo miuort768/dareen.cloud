@@ -135,7 +135,6 @@ export const TeacherProfilePage = () => {
         { icon: <Phone size={13} className="text-success" />, label: 'رقم الهاتف', value: teacherData?.phone1 || '—' },
         { icon: <Mail size={13} className="text-info" />, label: 'البريد الإلكتروني', value: teacherData?.email || '—' },
         { icon: <DollarSign size={13} className="text-warning" />, label: 'سعر الحصة', value: teacherData?.price ? `${teacherData.price} ${CURRENCY_SYMBOL}` : '—' },
-        { icon: <MapPin size={13} className="text-error" />, label: 'المدينة', value: teacherData?.city || '—' },
     ];
 
     const teachingFields = [
@@ -206,7 +205,7 @@ export const TeacherProfilePage = () => {
                     <TeacherDashboardHeader logout={logout} />
                 </div>
             )}
-            <div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6">
+<div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6">
                 <motion.div {...stagger(0)}>
                     <ProfileHero
                         name={name}
@@ -216,9 +215,18 @@ export const TeacherProfilePage = () => {
                         rank={rank}
                         stats={dashboardStats || undefined}
                     />
+                    <ProfileBottomMotivation
+                        icon={<Target size={28} />}
+                        title="استمر في التدريس!"
+                        description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد reached إلى أعلى المراتب! استمر في التألق'}
+                        progress={nextRank ? Math.round((points / 1000) * 100) : 100}
+                        progressLabel="التقدم نحو الرتبة التالية"
+                        targetLabel={nextRank ? `${nextRank.needed} نقطة متبقية` : 'أحسنت!'}
+                        color="primary"
+                    />
                 </motion.div>
 
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <StatCard icon={<Users size={18} className="text-primary" />} value={dashboardStats?.studentsCount ?? 0} label="إجمالي الطلاب" color="primary" trend={{ value: 12, isUp: true }} />
                     <StatCard icon={<BookOpen size={18} className="text-success" />} value={teacherData?.subject || '—'} label="المواد" color="success" />
                     <StatCard icon={<Play size={18} className="text-info" />} value={dashboardStats?.completedSessions ?? 0} label="الحصص المنفذة" color="info" trend={{ value: 8, isUp: true }} />
@@ -238,29 +246,7 @@ export const TeacherProfilePage = () => {
                             </div>
                         </div>
 
-                        <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
-                            <h3 className="text-base font-bold text-main mb-4 flex items-center gap-2">
-                                <BookOpen size={16} className="text-info" />
-                                المعلومات التعليمية
-                            </h3>
-                            <div className="space-y-2.5">
-                                {teachingFields.map((f, i) => <InfoRow key={i} icon={f.icon} label={f.label} value={f.value} />)}
-                            </div>
-                            {teacherData?.biography && (
-                                <div className="mt-4 p-3 bg-surface rounded-xl border border-border/50">
-                                    <p className="text-[10px] text-muted font-medium mb-1">السيرة الذاتية</p>
-                                    <p className="text-xs font-medium text-main leading-relaxed">{teacherData.biography}</p>
-                                </div>
-                            )}
-                        </div>
-
                         <PaymentSettingsSection />
-                    </motion.div>
-
-                    <motion.div {...stagger(3)} className="space-y-4 md:space-y-6">
-                        <ProfileAchievements achievements={achievements} />
-                        <ProfileProgress items={progressItems} />
-                    </motion.div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">

@@ -182,15 +182,16 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string, date
                 }))
         );
 
+        const expectedTotal = 16; // Fixed total sessions for percentage calculation
         const teacherStats: TeacherStats = {
-            expected: matchedEnrollments.reduce((acc, me) => acc + (me.enrollment.sessionsTotal || 0), 0),
+            expected: expectedTotal,
             used: matchedEnrollments.reduce((acc, me) => acc + (me.enrollment.sessionsUsed || 0), 0),
             remaining: 0,
             rate: 0
         };
 
-        teacherStats.remaining = teacherStats.expected - teacherStats.used;
-        teacherStats.rate = teacherStats.expected > 0 ? Math.round((teacherStats.used / teacherStats.expected) * 100) : 0;
+        teacherStats.remaining = expectedTotal - teacherStats.used;
+        teacherStats.rate = expectedTotal > 0 ? Math.round((teacherStats.used / expectedTotal) * 100) : 0;
 
         return { matchedEnrollments, teacherStats };
     }, [students, currentUser]);

@@ -75,7 +75,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                                 <p className="text-[11px] text-muted">كلمة مرور المشرف مطلوبة</p>
                             </div>
                         </div>
-                        <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg text-muted hover:bg-hover hover:text-main transition-all" aria-label="إغلاق">
+                        <button onClick={onClose} className="w-8 h-8 rounded-xl bg-error text-on-error flex items-center justify-center rounded-lg text-muted hover:bg-hover hover:text-main transition-all" aria-label="إغلاق">
                             <X size={16} />
                         </button>
                     </div>

@@ -1,4 +1,4 @@
-export const CURRENCY_SYMBOL = "ر.س";
+export const CURRENCY_SYMBOL = "ج.م";
 export const SITE_URL = "https://dareen.cloud";
 
 export const CURRENCY_OPTIONS = [

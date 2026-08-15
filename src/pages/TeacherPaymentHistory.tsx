@@ -89,6 +89,13 @@ export const TeacherPaymentHistory = () => {
         { label: 'غير مدفوعة', value: overdueCount, icon: AlertTriangle, gradient: 'from-error/20 to-error/5', iconBg: 'bg-error/10 text-error', accent: 'bg-error' },
     ], [invoices.length, paidCount, pendingCount, overdueCount]);
 
+    const periodOptions = useMemo(() => [
+        { value: 'all', label: 'جميع الفترات' },
+        { value: 'month', label: 'شهري' },
+        { value: 'quarter', label: 'ربع سنوي' },
+        { value: 'year', label: 'سنوي' },
+    ], []);
+
     const fabActions = useMemo(() => [
         { icon: BarChart3, label: 'إحصائيات', onClick: () => document.querySelector('[data-kpi]')?.scrollIntoView({ behavior: 'smooth' }) },
         { icon: Filter, label: 'تصفية', onClick: () => document.querySelector('[data-search]')?.scrollIntoView({ behavior: 'smooth' }) },
@@ -191,6 +198,22 @@ export const TeacherPaymentHistory = () => {
                             </select>
                         </div>
                     </div>
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                        <div>
+                            <p className="text-[10px] font-bold text-muted mb-1">الفترة</p>
+                            <select value={period} onChange={(e) => setPeriod(e.target.value)}
+                                className="w-full bg-card border border-border rounded-xl py-3 ps-3 pe-3 text-xs font-bold text-main focus:outline-none focus:border-primary transition-all appearance-none cursor-pointer">
+                                {periodOptions.map(p => (
+                                    <option key={p.value} value={p.value}>{p.label}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div>
+                            <button onClick={() => window.print()} className="w-full bg-primary text-on-primary py-2 rounded-lg text-sm font-medium transition-all">
+                                طباعة
+                            </button>
+                        </div>
+                    </div>
                 </motion.div>
 
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
@@ -281,15 +304,15 @@ export const TeacherPaymentHistory = () => {
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
                             <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                className="w-10 h-10 rounded-lg bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
-                <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
-                    <Wallet size={22} />
+<motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                        className={cn("w-12 h-12 rounded-lg shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                        <Wallet size={22} />
                 </motion.button>
             </div>
         </div>

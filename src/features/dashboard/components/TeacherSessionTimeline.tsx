@@ -110,6 +110,14 @@ export const TeacherSessionTimeline = ({ sessions, onStudentClick, onSessionStar
                                         {isCompleted ? 'مكتملة' : isCancelled ? 'ملغاة' : 'قادمة'}
                                     </span>
                                     {isOngoing && <Play size={10} className="text-primary fill-current" />}
+                                {onSessionStart && (
+                                    <Button onClick={(e) => { e.stopPropagation(); onSessionStart?.(session); }} className="absolute inset-2 bg-primary dark:bg-primary text-on-primary dark:text-on-primary rounded-xl flex-col opacity-0 scale-95 group-hover/card:opacity-100 group-hover/card:scale-100 transition-all z-10">
+                                        <div className="w-9 h-9 bg-on-primary/15 dark:bg-on-primary/15 text-on-primary dark:text-on-primary rounded-xl flex items-center justify-center mb-2">
+                                            <Play size={18} className="fill-current translate-x-0.5" />
+                                        </div>
+                                        <span className="font-bold text-[11px]">بدء الحصة</span>
+                                    </Button>
+                                )}
                                 </div>
 
                                 {isOngoing && (

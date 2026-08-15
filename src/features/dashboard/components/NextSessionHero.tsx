@@ -14,7 +14,8 @@ interface TimelineSession {
 
 interface NextSessionHeroProps {
     timeline?: TimelineSession[];
-    onStart: (id: string) => void;
+    onStart: (id?: string, subject?: string) => void;
+    onSkip?: () => void;
 }
 
 const parseTime = (t?: string) => {
@@ -29,8 +30,10 @@ const parseTime = (t?: string) => {
     return { h: h % 24, m: m % 60 };
 };
 
-export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => {
+export const NextSessionHero = ({ timeline, onStart, onSkip }: NextSessionHeroProps) => {
     const nextSession = timeline?.find(s => s.status === 'scheduled' || s.status === 'in-progress');
+    const allSessions = timeline || [];
+    const remainingSessions = allSessions.filter(s => s.status === 'scheduled' || s.status === 'in-progress');
     const [timeLeft, setTimeLeft] = useState('');
     const [isNow, setIsNow] = useState(false);
 
@@ -84,11 +87,21 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
 
                     <div className="flex-1 min-w-0">
                         <h2 className="text-lg font-bold text-on-primary leading-tight mb-0.5">
-                            {nextSession.subject}
+                            {nextSession?.subject || ''}
                         </h2>
                         <p className="text-sm text-white/70 dark:text-on-primary/70 font-medium">
-                            {nextSession.studentName}
+                            {nextSession?.studentName || ''}
                         </p>
+                        {nextSession?.studentGrade && (
+                            <p className="text-[10px] text-white/60 dark:text-on-primary/60 font-medium">
+                                Grade: {nextSession.studentGrade}
+                            </p>
+                        )}
+                        {nextSession?.curriculum && (
+                            <p className="text-[10px] text-white/60 dark:text-on-primary/60 font-medium">
+                                {nextSession.curriculum}
+                            </p>
+                        )}
                     </div>
 
                     <div className="flex items-center gap-3">
@@ -100,13 +113,23 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
                                 {isNow ? "الآن" : timeLeft}
                             </span>
                         </div>
+                        {onSkip && (
+                            <Button
+                                onClick={onSkip}
+                                className="ml-2 bg-white/20 dark:bg-black/20 hover:bg-white/30 dark:hover:bg-black/30 text-white dark:text-on-primary border-0 gap-2 text-sm"
+                                size="sm"
+                            >
+                                <Skip size={14} fill="currentColor" />
+                                تخطي
+                            </Button>
+                        )}
                     </div>
                 </div>
 
                 <div className="mt-4 flex items-center justify-between">
-                    <span className="text-sm text-white/60 dark:text-on-primary/60 font-medium">{nextSession.time}</span>
+                    <span className="text-sm text-white/60 dark:text-on-primary/60 font-medium">{nextSession?.time || ''}</span>
                     <Button
-                        onClick={() => onStart(nextSession.id)}
+                        onClick={() => onStart(nextSession?.id)}
                         className="bg-white/20 dark:bg-black/20 hover:bg-white/30 dark:hover:bg-black/30 text-white dark:text-on-primary border-0 gap-2"
                         size="sm"
                     >

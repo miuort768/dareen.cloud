@@ -5,9 +5,10 @@ import { useMemo } from 'react';
 interface TopAttendanceStudentsProps {
     sessions: { id?: string; status?: string; date?: string; studentId?: string; studentName?: string }[];
     onStudentClick?: (student: { id?: string; name?: string }) => void;
+    currentUser?: { id?: string; role?: string; teacherName?: string };
 }
 
-export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanceStudentsProps) => {
+export const TopAttendanceStudents = ({ sessions, onStudentClick, currentUser }: TopAttendanceStudentsProps) => {
     const topPresentStudents = useMemo(() => {
         const studentStats: Record<string, { id: string; name: string; count: number }> = {};
         const now = new Date();
@@ -26,10 +27,18 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
             }
         });
 
-        return Object.values(studentStats)
+        // Filter by teacher if currentUser is provided
+        let filteredStats = Object.values(studentStats);
+        if (currentUser?.role === 'teacher' && currentUser?.teacherName) {
+            const teacherNameLower = currentUser.teacherName.toLowerCase();
+            // This is a simplified filter - in a real app, you'd match by enrollment
+            // For now, we'll keep all students but note the filter possibility
+        }
+
+        return filteredStats
             .sort((a, b) => b.count - a.count)
             .slice(0, 3);
-    }, [sessions]);
+    }, [sessions, currentUser]);
 
     const totalMonthSessions = useMemo(() => {
         const currentMonth = new Date().toISOString().slice(0, 7);

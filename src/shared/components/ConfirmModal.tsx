@@ -94,7 +94,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                     {/* Close button */}
                     <button
                         onClick={onClose}
-                        className="absolute top-4 start-4 w-8 h-8 flex items-center justify-center rounded-lg text-muted hover:bg-hover hover:text-main transition-all"
+                        className="absolute top-4 start-4 w-8 h-8 rounded-xl bg-error text-on-error flex items-center justify-center rounded-lg text-muted hover:bg-hover hover:text-main transition-all"
                         aria-label="إغلاق"
                     >
                         <X size={16} />

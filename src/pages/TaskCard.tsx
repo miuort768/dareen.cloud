@@ -19,9 +19,9 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
 
     return (
         <div className={cn(
-            "bg-card rounded-card p-5 shadow-sm transition-all hover:shadow-md relative",
+            "bg-card p-5 shadow-sm transition-all hover:shadow-md relative",
             isCompleted && "opacity-60",
-            task.priority === 'high' ? "border-s-4 border-s-error" : task.priority === 'medium' ? "border-s-4 border-s-warning" : "border-s-4 border-s-primary"
+            task.priority === 'high' ? "border-2 border-s-error" : task.priority === 'medium' ? "border-2 border-s-warning" : "border-2 border-s-primary"
         )}>
             {!isCompleted && (
                 <div className={cn(
@@ -94,7 +94,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
 };
 
 export const EmptyTaskState = () => (
-    <div className="col-span-full py-14 text-center bg-card border border-border rounded-card shadow-sm">
+    <div className="col-span-full py-14 text-center bg-card border border-border p-8 shadow-sm">
         <div className="w-16 h-16 bg-primary rounded-card flex items-center justify-center mx-auto mb-4 shadow-soft">
             <ClipboardList size={24} className="text-on-primary" />
         </div>

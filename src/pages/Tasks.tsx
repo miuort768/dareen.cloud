@@ -120,7 +120,8 @@ export const Tasks = () => {
         { icon: Plus, label: 'مهمة جديدة', onClick: () => setShowAddForm(true) },
         { icon: Filter, label: 'تصفية', onClick: () => setFilterPriority(filterPriority === 'all' ? 'high' : 'all') },
         { icon: TrendingUp, label: 'نسبة الإنجاز', onClick: () => document.querySelector('[data-stats]')?.scrollIntoView({ behavior: 'smooth' }) },
-    ], [filterPriority]);
+        { icon: Trash2, label: 'حذف الكل', onClick: async () => { if (await confirm('هل أنت متأكد من حذف جميع المهام؟')) { const taskIds = tasks.map(t => t.id); for (const id of taskIds) await deleteTask(id); } } },
+    ], [filterPriority, tasks, deleteTask]);
 
     if (loading) return <PageLoader />;
 
@@ -199,13 +200,7 @@ export const Tasks = () => {
                                 className="w-full bg-card border border-border rounded-card py-3 px-4 ps-10 text-xs font-bold text-main focus:outline-none focus:border-primary transition-all placeholder:text-muted shadow-sm" />
                         </div>
                         <div className="flex overflow-x-auto no-scrollbar gap-2 w-full md:flex md:w-auto">
-                            {['all', 'high', 'medium', 'low'].map(p => (
-                                <button key={p} onClick={() => setFilterPriority(p as 'high' | 'medium' | 'low' | 'all')}
-                                    className={cn("px-3 py-2 font-bold text-[10px] uppercase tracking-wider transition-all whitespace-nowrap rounded-xl border",
-                                        filterPriority === p ? "bg-primary border-primary text-on-primary" : "bg-surface border-border text-dim hover:border-primary hover:text-primary")}>
-                                    {p === 'all' ? 'الكل' : p === 'high' ? 'عالية' : p === 'medium' ? 'متوسطة' : 'منخفضة'}
-                                </button>
-                            ))}
+                            {/* Filter buttons removed per design system v1.2 */}
                         </div>
                     </div>
                 </motion.div>
@@ -236,15 +231,15 @@ export const Tasks = () => {
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
                             <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                className="w-10 h-10 rounded-lg bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
-                <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
-                    <Plus size={24} />
+<motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+                        className={cn("w-12 h-12 rounded-lg shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                        <Plus size={24} />
                 </motion.button>
             </div>
         </div>

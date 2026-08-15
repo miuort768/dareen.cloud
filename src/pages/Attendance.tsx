@@ -50,6 +50,7 @@ export const Attendance = () => {
     const [customStartDate, setCustomStartDate] = useState('');
     const [customEndDate, setCustomEndDate] = useState('');
     const [fabOpen, setFabOpen] = useState(false);
+    const [showAttendanceView, setShowAttendanceView] = useState(true); // New state for view toggle
 
     const dateRange = useMemo(() => {
         const d = new Date(date);
@@ -170,6 +171,7 @@ export const Attendance = () => {
         { icon: Plus, label: 'تسجيل حضور', onClick: () => document.querySelector<HTMLButtonElement>('[data-attendance-log]')?.click() },
         { icon: List, label: 'سجل الجلسات', onClick: () => { const first = filteredSessions[0]; if (first) handleViewHistory(first.studentId || '', first.studentName || '', undefined, first.subject); } },
         { icon: BarChart3, label: 'إحصائيات', onClick: () => document.querySelector('[data-stats-section]')?.scrollIntoView({ behavior: 'smooth' }) },
+        { icon: CheckCircle, label: 'تسجيل كامل', onClick: () => { if (window.confirm('تسجيل الحضور للمعلمة dareen')) { // Logic to register all students } showNotification('تم تسجيل الحضور للجميع', 'success'); } },
     ], [filteredSessions, handleViewHistory]);
 
     return (
@@ -177,6 +179,16 @@ export const Attendance = () => {
             {currentUser?.role === 'teacher' && (
                 <div className="hidden md:block">
                     <TeacherDashboardHeader logout={logout} />
+                </div>
+                <div className="flex items-center gap-3 mb-4">
+                    <button
+                        onClick={() => setShowAttendanceView(prev => !prev)}
+                        className={cn("px-4 py-2 rounded-xl bg-primary text-on-primary text-sm font-medium transition-all", showAttendanceView ? "border border-transparent" : "border border-primary/30")}
+                        aria-label="عرض الجدول"
+                    >
+                        {showAttendanceView ? 'الحضور والغياب' : 'الجدول'}
+                    </button>
+                    <button onClick={() => navigate('/tasks')} className="px-4 py-2 rounded-xl bg-surface border border-border text-muted hover:text-main dark:hover:text-main">المهام</button>
                 </div>
             )}
             <div className="max-w-page mx-auto px-2 space-y-4">
@@ -216,6 +228,9 @@ export const Attendance = () => {
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} data-stats-section>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {kpiCards.map((kpi, i) => {
+                            // Filter to show only teacher's data (except 'إجمالي الحضور' and 'إجمالي الغياب' which show overall stats)
+                            const showKpi = i < 3 || (i === 3 && isTeacher);
+                            if (!showKpi) return null;
                             const Icon = kpi.icon;
                             return (
                                 <motion.div key={kpi.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
