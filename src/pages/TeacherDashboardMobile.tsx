@@ -117,8 +117,20 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                             </div>
                         </div>
                         <div className="w-9 h-9 rounded-xl bg-primary-soft dark:bg-primary/10 flex items-center justify-center relative">
-                            <Bell size={15} className="text-primary dark:text-primary" />
-                            <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface" />
+                            <button
+                                onClick={() => {
+                                    setActiveTab('home');
+                                    setTimeout(() => {
+                                        const el = document.getElementById('announcements-section');
+                                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    }, 250);
+                                }}
+                                className="w-full h-full flex items-center justify-center"
+                                aria-label="الإعلانات"
+                            >
+                                <Bell size={15} className="text-primary dark:text-primary" />
+                                <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface" />
+                            </button>
                         </div>
                     </div>
                     {/* Stats row */}
@@ -180,7 +192,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                         <LiveSessions />
                                     </div>
                                 </section>
-                                <section>
+                                <section id="announcements-section" className="scroll-mt-24">
                                     <div className="flex items-center gap-2 mb-3 px-1">
                                         <Sparkles size={14} className="text-warning" />
                                         <h2 className="text-sm font-bold text-main dark:text-main">الإعلانات</h2>

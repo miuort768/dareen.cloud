@@ -28,6 +28,25 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
     const [theme, setTheme] = useDarkMode();
     const firstName = (currentUser?.name || currentUser?.username || 'المعلمة').split(' ')[0];
 
+    const handleAnnouncements = () => {
+        const canViewAnnouncements = currentUser?.permissions?.includes('*') || currentUser?.permissions?.includes('announcements');
+        if (canViewAnnouncements) {
+            navigate('/announcements');
+            return;
+        }
+        navigate('/teacher-dashboard');
+        const tryScroll = (attempt = 0) => {
+            if (attempt > 10) return;
+            const el = document.getElementById('announcements-section');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
+            setTimeout(() => tryScroll(attempt + 1), 200);
+        };
+        setTimeout(() => tryScroll(), 200);
+    };
+
     return (
         <header className="sticky top-0 z-[100] bg-surface/90 dark:bg-surface/90 backdrop-blur-xl border-b border-border dark:border-primary/20 transition-colors duration-500">
             <div className="max-w-page mx-auto">
@@ -62,7 +81,7 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
                         <IconButton
                             icon={<Bell size={16} strokeWidth={1.5} />}
                             label="الإعلانات"
-                            onClick={() => navigate('/announcements')}
+                            onClick={handleAnnouncements}
                         />
                         <IconButton
                             icon={<LogOut size={16} strokeWidth={1.5} />}

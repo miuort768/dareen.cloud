@@ -77,7 +77,7 @@ export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceS
                     <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                         <LiveSessions />
                     </div>
-                    <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
+                    <div id="announcements-section" className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300 scroll-mt-32">
                         <ModernAnnouncements />
                     </div>
                     {timeline.length > 0 && (
