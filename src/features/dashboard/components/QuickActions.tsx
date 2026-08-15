@@ -9,6 +9,7 @@ import { useCurrentUser } from '@/context/AppContext';
 interface QuickActionsProps {
     onStartSession?: () => void;
     sessionAvailable?: boolean;
+    showQuickLinks?: boolean;
 }
 
 const actions = [
@@ -59,7 +60,7 @@ const scrollToAnnouncements = () => {
     setTimeout(() => tryScroll(), 200);
 };
 
-export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsProps) => {
+export const QuickActions = ({ onStartSession, sessionAvailable, showQuickLinks = true }: QuickActionsProps) => {
     const navigate = useNavigate();
     const currentUser = useCurrentUser();
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -140,7 +141,7 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                     "active:bg-primary-active active:scale-[0.99]",
                     "transition-all duration-200",
                     "flex items-center justify-center gap-3",
-                    "group flex-1 min-h-[92px]"
+                    "group flex-1 min-h-[76px]"
                 )}
             >
                 <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-on-primary/15 dark:bg-on-primary/15 group-hover:bg-on-primary/20 dark:group-hover:bg-on-primary/20 transition-colors">
@@ -154,66 +155,70 @@ export const QuickActions = ({ onStartSession, sessionAvailable }: QuickActionsP
                 )}
             </button>
 
-            {/* روابط سريعة — شبكة داخل البطاقة على الشاشات الكبيرة */}
-            <div className="hidden md:block">{quickLinksGrid}</div>
+            {/* روابط سريعة (للمدير فقط) — شبكة داخل البطاقة على الشاشات الكبيرة */}
+            {showQuickLinks && (
+                <>
+                    <div className="hidden md:block">{quickLinksGrid}</div>
 
-            {/* زر فتح الورقة السفلية على الموبايل */}
-            <button
-                onClick={() => { triggerHaptic('light'); setMobileOpen(true); }}
-                className={cn(
-                    "md:hidden w-full py-2.5 rounded-xl bg-surface dark:bg-card border border-border dark:border-border",
-                    "text-muted dark:text-muted text-xs font-bold",
-                    "active:scale-[0.98] transition-all duration-200",
-                    "flex items-center justify-center gap-1.5"
-                )}
-            >
-                <MoreHorizontal size={14} />
-                المزيد من الإجراءات
-            </button>
+                    {/* زر فتح الورقة السفلية على الموبايل */}
+                    <button
+                        onClick={() => { triggerHaptic('light'); setMobileOpen(true); }}
+                        className={cn(
+                            "md:hidden w-full py-2.5 rounded-xl bg-surface dark:bg-card border border-border dark:border-border",
+                            "text-muted dark:text-muted text-xs font-bold",
+                            "active:scale-[0.98] transition-all duration-200",
+                            "flex items-center justify-center gap-1.5"
+                        )}
+                    >
+                        <MoreHorizontal size={14} />
+                        المزيد من الإجراءات
+                    </button>
 
-            {/* الورقة المنبثقة السفلية (موبايل) */}
-            <AnimatePresence>
-                {mobileOpen && (
-                    <div className="fixed inset-0 z-[1000] flex flex-col justify-end">
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-                            onClick={closeMobile}
-                        />
-                        <motion.div
-                            initial={{ y: '100%' }}
-                            animate={{ y: 0 }}
-                            exit={{ y: '100%' }}
-                            transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-                            className="relative w-full max-h-[85vh] bg-card border-t border-border rounded-t-[28px] overflow-hidden flex flex-col z-10 pb-8"
-                            onClick={(e) => e.stopPropagation()}
-                            dir="rtl"
-                        >
-                            <div className="flex flex-col items-center py-2" onClick={closeMobile}>
-                                <div className="w-12 h-1.5 rounded-full bg-border opacity-70 cursor-pointer" />
-                            </div>
-                            <div className="flex items-center justify-between px-6 pb-4 border-b border-border/30">
-                                <div>
-                                    <h2 className="text-base font-bold text-main">الوصول السريع والإجراءات</h2>
-                                    <p className="text-[10px] text-muted mt-0.5">اختر الإجراء الذي تريد القيام به</p>
-                                </div>
-                                <button
+                    {/* الورقة المنبثقة السفلية (موبايل) */}
+                    <AnimatePresence>
+                        {mobileOpen && (
+                            <div className="fixed inset-0 z-[1000] flex flex-col justify-end">
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                                     onClick={closeMobile}
-                                    aria-label="إغلاق"
-                                    className="w-8 h-8 flex items-center justify-center rounded-full bg-surface hover:bg-hover active:scale-90 transition-all"
+                                />
+                                <motion.div
+                                    initial={{ y: '100%' }}
+                                    animate={{ y: 0 }}
+                                    exit={{ y: '100%' }}
+                                    transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+                                    className="relative w-full max-h-[85vh] bg-card border-t border-border rounded-t-[28px] overflow-hidden flex flex-col z-10 pb-8"
+                                    onClick={(e) => e.stopPropagation()}
+                                    dir="rtl"
                                 >
-                                    <X size={14} className="text-muted" />
-                                </button>
+                                    <div className="flex flex-col items-center py-2" onClick={closeMobile}>
+                                        <div className="w-12 h-1.5 rounded-full bg-border opacity-70 cursor-pointer" />
+                                    </div>
+                                    <div className="flex items-center justify-between px-6 pb-4 border-b border-border/30">
+                                        <div>
+                                            <h2 className="text-base font-bold text-main">الوصول السريع والإجراءات</h2>
+                                            <p className="text-[10px] text-muted mt-0.5">اختر الإجراء الذي تريد القيام به</p>
+                                        </div>
+                                        <button
+                                            onClick={closeMobile}
+                                            aria-label="إغلاق"
+                                            className="w-8 h-8 flex items-center justify-center rounded-full bg-surface hover:bg-hover active:scale-90 transition-all"
+                                        >
+                                            <X size={14} className="text-muted" />
+                                        </button>
+                                    </div>
+                                    <div className="p-6 overflow-y-auto no-scrollbar">
+                                        {quickLinksGrid}
+                                    </div>
+                                </motion.div>
                             </div>
-                            <div className="p-6 overflow-y-auto no-scrollbar">
-                                {quickLinksGrid}
-                            </div>
-                        </motion.div>
-                    </div>
-                )}
-            </AnimatePresence>
+                        )}
+                    </AnimatePresence>
+                </>
+            )}
         </div>
     );
 };

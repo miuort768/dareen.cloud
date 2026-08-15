@@ -163,7 +163,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                     </div>
                                 )}
                                 <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4">
-                                    <QuickActions onStartSession={() => openStart(nextSession?.studentId, nextSession?.subject)} sessionAvailable={!!nextSession} />
+                                    <QuickActions onStartSession={() => openStart(nextSession?.studentId, nextSession?.subject)} sessionAvailable={!!nextSession} showQuickLinks={false} />
                                 </div>
                                 <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4">
                                     <button onClick={() => navigate('/teacher-payment-history')}

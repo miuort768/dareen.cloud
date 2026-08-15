@@ -52,18 +52,23 @@ export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceS
             <TeacherDashboardHeader logout={logout} />
             <div className="max-w-page mx-auto px-4 space-y-3 md:space-y-4 pb-28 pt-4">
 
-            <motion.div {...fadeUp(0.04)} className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 items-stretch">
-                <div className="h-full">
-                    {nextSession ? (
-                        <NextSessionHero timeline={timeline} onStart={() => openStart(nextSession.studentId, nextSession.subject)} />
-                    ) : (
-                        <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 h-full flex items-center justify-center min-h-[220px]">
-                            <EmptyState icon={Calendar} title="لا توجد حصة قادمة" subtitle="يمكنك بدء حصة مباشرة متى شئت" compact />
-                        </div>
-                    )}
-                </div>
-                <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 transition-all duration-300 shadow-sm hover:shadow-md">
-                    <QuickActions onStartSession={() => openStart(nextSession?.studentId, nextSession?.subject)} sessionAvailable={!!nextSession} />
+            <motion.div {...fadeUp(0.04)}>
+                {nextSession ? (
+                    <NextSessionHero timeline={timeline} onStart={() => openStart(nextSession.studentId, nextSession.subject)} />
+                ) : (
+                    <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 h-full flex items-center justify-center min-h-[200px]">
+                        <EmptyState icon={Calendar} title="لا توجد حصة قادمة" subtitle="يمكنك بدء حصة مباشرة متى شئت" compact />
+                    </div>
+                )}
+            </motion.div>
+
+            <motion.div {...fadeUp(0.06)}>
+                <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4 transition-all duration-300 shadow-sm hover:shadow-md">
+                    <QuickActions
+                        onStartSession={() => openStart(nextSession?.studentId, nextSession?.subject)}
+                        sessionAvailable={!!nextSession}
+                        showQuickLinks={false}
+                    />
                 </div>
             </motion.div>
 
