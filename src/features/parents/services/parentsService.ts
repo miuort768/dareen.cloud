@@ -18,8 +18,10 @@ export const parentsService = {
         return api.put<Parent>(`/parents/${id}`, parent);
     },
 
-    async deleteParent(id: string) {
-        return api.delete(`/parents/${id}`);
+    async deleteParent(id: string, password?: string) {
+        return api.delete(`/parents/${id}`, {
+            headers: password ? { 'X-Delete-Password': password } : {}
+        });
     },
 
     async importParents(newParents: Omit<Parent, 'id'>[]) {

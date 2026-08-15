@@ -9,7 +9,14 @@ const fsp = fs.promises;
 const logger = require('../utils/logger');
 
 function reshape(text) {
-    return bidi(arabicReshaper(text));
+    const shaped = arabicReshaper.convertArabic(String(text ?? ''));
+    try {
+        const result = bidi(shaped);
+        const levels = result.getEmbeddingLevels(shaped);
+        return result.getReorderedString(shaped, levels);
+    } catch {
+        return shaped;
+    }
 }
 
 function isArabic(text) {

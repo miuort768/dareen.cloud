@@ -25,10 +25,11 @@ export const useParents = () => {
 
     const [confirmModal, setConfirmModal] = useState<{
         show: boolean;
+        title?: string;
         message: string;
         confirmText?: string;
         variant?: 'danger' | 'primary';
-        action: (() => void) | null;
+        action: ((password?: string) => void) | null;
     }>({ show: false, message: '', action: null });
 
     // React Query
@@ -59,7 +60,7 @@ export const useParents = () => {
     });
 
     const deleteMutation = useMutation({
-        mutationFn: parentsService.deleteParent,
+        mutationFn: ({ id, password }: { id: string, password?: string }) => parentsService.deleteParent(id, password),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['parents'] });
             showNotification('تم الحذف بنجاح', 'success');
@@ -99,11 +100,12 @@ export const useParents = () => {
     const handleDeleteParent = (id: string) => {
         setConfirmModal({
             show: true,
-            message: 'هل أنت متأكد من حذف هذا الولي أمر؟',
+            title: 'تأكيد عملية الحذف',
+            message: 'هذا الإجراء سيحذف ولي الأمر نهائياً. أدخل كلمة المرور التحذيرية للمتابعة.',
             confirmText: 'نعم، حذف',
             variant: 'danger',
-            action: async () => {
-                await deleteMutation.mutateAsync(id);
+            action: async (password) => {
+                await deleteMutation.mutateAsync({ id, password });
                 if (selectedParent?.id === id) setShowDetails(false);
             }
         });
@@ -193,6 +195,7 @@ export const useParents = () => {
         if (newParentsList.length === 0) {
             setConfirmModal({
                 show: true,
+                title: 'الاستيراد من الطلاب',
                 message: 'لا يوجد أولياء أمور جدد للاستيراد من قائمة الطلاب حالياً.',
                 confirmText: 'حسناً',
                 variant: 'primary',
@@ -203,6 +206,7 @@ export const useParents = () => {
 
         setConfirmModal({
             show: true,
+            title: 'تأكيد الاستيراد',
             message: `تم العثور على ${newParentsList.length} ولي أمر جديد في قائمة الطلاب. هل تريد استيرادهم تلقائياً؟`,
             confirmText: 'بدء الاستيراد',
             variant: 'primary',
@@ -221,6 +225,7 @@ export const useParents = () => {
                     }
                     setConfirmModal({
                         show: true,
+                        title: 'نتيجة الاستيراد',
                         message,
                         confirmText: 'إغلاق',
                         variant: 'primary',

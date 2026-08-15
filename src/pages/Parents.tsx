@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { AlertCircle, Plus, Users, GraduationCap, Phone, Mail, Download } from 'lucide-react';
+import { Plus, Users, GraduationCap, Phone, Download, FileText, FileUp } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { downloadExport } from '../lib/download';
@@ -10,6 +10,7 @@ import { ParentsTable } from '../features/parents/components/ParentsTable';
 import { ParentDrawer } from '../features/parents/components/ParentDrawer';
 import { ParentForm } from '../features/parents/components/ParentForm';
 import { useParents } from '../features/parents/hooks/useParents';
+import { ConfirmModal } from '../shared/components/ConfirmModal';
 
 function AnimatedCounter({ value }: { value: number }) {
     const motionValue = useMotionValue(0);
@@ -17,7 +18,7 @@ function AnimatedCounter({ value }: { value: number }) {
     const rounded = useTransform(spring, (v) => Math.round(v));
     const displayValue = useTransform(rounded, (v) => v.toLocaleString('ar-EG'));
     useEffect(() => { motionValue.set(value); }, [value, motionValue]);
-    return <motion.span className="text-2xl font-bold tabular-nums">{displayValue}</motion.span>;
+    return <motion.span className="text-xl sm:text-2xl font-bold tabular-nums">{displayValue}</motion.span>;
 }
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
@@ -59,8 +60,9 @@ export const Parents = () => {
 
     const fabActions = useMemo(() => [
         { icon: Plus, label: 'إضافة ولي أمر', onClick: () => { actions.setShowAddForm(!state.showAddForm); if (!state.showAddForm) { actions.setEditId(null); actions.setNewParent({ name: '', phone: '', email: '', username: '', password: '' }); } } },
+        { icon: FileUp, label: 'استيراد من الطلاب', onClick: actions.handleImportParents },
         { icon: Download, label: 'تصدير Excel', onClick: () => downloadExport('parents', 'xlsx').then(() => showNotification('تم تصدير Excel', 'success')).catch(e => showNotification(e.message, 'error')) },
-        { icon: Mail, label: 'تصدير PDF', onClick: () => downloadExport('parents', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error')) },
+        { icon: FileText, label: 'تصدير PDF', onClick: () => downloadExport('parents', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error')) },
     ], [state.showAddForm, showNotification, actions]);
 
     if (state.loading) {
@@ -116,7 +118,7 @@ export const Parents = () => {
                                         <div className={cn("h-1 w-12 rounded-full", kpi.accent)} />
                                     </div>
                                     <p className="text-xs text-muted mb-1">{kpi.label}</p>
-                                    {typeof kpi.value === 'number' ? <AnimatedCounter value={kpi.value} /> : <span className="text-2xl font-bold">{kpi.value}</span>}
+                                    {typeof kpi.value === 'number' ? <AnimatedCounter value={kpi.value} /> : <span className="text-xl sm:text-2xl font-bold">{kpi.value}</span>}
                                 </motion.div>
                             );
                         })}
@@ -127,7 +129,8 @@ export const Parents = () => {
                     <AnimatePresence>
                         {state.showAddForm && (
                             <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                                <ParentForm isEdit={isEdit} formData={state.newParent} onChange={actions.setNewParent} onSubmit={actions.handleAddParent} />
+                                <ParentForm isEdit={isEdit} formData={state.newParent} onChange={actions.setNewParent} onSubmit={actions.handleAddParent}
+                                    onClose={() => { actions.setShowAddForm(false); actions.setEditId(null); }} />
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -149,34 +152,20 @@ export const Parents = () => {
                 </div>
 
                 {/* Parent details now render inline above */}
-
-                <AnimatePresence>
-                    {state.confirmModal.show && (
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-                            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.2 }}
-                                className="bg-card border border-border shadow-elevation-2 w-full max-w-sm overflow-hidden rounded-2xl">
-                                <div className="bg-gradient-to-r from-error to-error-hover h-1.5 w-full" />
-                                <div className="p-8">
-                                    <div className="w-16 h-16 bg-error-soft text-error border border-error flex items-center justify-center mb-6 mx-auto rounded-2xl">
-                                        <AlertCircle size={32} />
-                                    </div>
-                                    <h3 className="font-medium text-lg text-main mb-3 text-center uppercase tracking-tighter">تأكيد عملية الحذف</h3>
-                                    <p className="text-xs font-normal text-muted leading-relaxed mb-8 text-center">{state.confirmModal.message}</p>
-                                    <div className="flex gap-2">
-                                        <button onClick={() => { if (state.confirmModal.action) state.confirmModal.action(); actions.setConfirmModal({ ...state.confirmModal, show: false }); }}
-                                            className={cn("flex-1 py-4 text-on-primary font-medium text-micro shadow-sm transition-all active:scale-95 uppercase tracking-label border rounded-xl", state.confirmModal.variant === 'primary' ? "bg-primary border-primary hover:bg-primary-hover shadow-lg" : "bg-error border-error hover:bg-error-hover shadow-lg")}>
-                                            {state.confirmModal.confirmText || 'تأكيد الحذف'}
-                                        </button>
-                                        <button onClick={() => actions.setConfirmModal({ ...state.confirmModal, show: false, action: null })}
-                                            className="flex-1 py-4 bg-surface text-muted font-medium text-micro hover:bg-surface transition-all rounded-xl">إلغاء</button>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </div>
+
+            <ConfirmModal
+                isOpen={state.confirmModal.show}
+                title={state.confirmModal.title || (state.confirmModal.variant === 'danger' ? 'تأكيد عملية الحذف' : 'إشعار')}
+                message={state.confirmModal.message}
+                confirmText={state.confirmModal.confirmText}
+                cancelText="إلغاء"
+                isDestructive={state.confirmModal.variant !== 'primary'}
+                requirePassword={state.confirmModal.variant === 'danger'}
+                expectedPassword="dareen"
+                onConfirm={() => { if (state.confirmModal.action) state.confirmModal.action(); }}
+                onClose={() => actions.setConfirmModal({ ...state.confirmModal, show: false, action: null })}
+            />
 
             <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
                 <AnimatePresence>
@@ -185,14 +174,14 @@ export const Parents = () => {
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
                             <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                className="w-10 h-10 rounded-lg bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
                 <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    className={cn("w-12 h-12 rounded-xl shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
                     <Plus size={24} />
                 </motion.button>
             </div>

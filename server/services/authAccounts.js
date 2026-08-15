@@ -239,12 +239,15 @@ async function findIdentityByUsername(username) {
   const normalized = await normalizeUsername(username);
   if (!normalized) return null;
 
+  // NOTE: no deletedAt filter here — this checks DB unique constraints, which
+  // still apply to soft-deleted rows (username is @unique per table). Login
+  // resolution uses resolveLegacyIdentity which filters deleted rows.
   const hits = await Promise.all([
     prisma.user.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' } }, select: { id: true, username: true } }),
-    prisma.teacher.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
+    prisma.teacher.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' } }, select: { id: true, username: true } }),
     prisma.chatProfile.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' } }, select: { id: true, username: true } }),
-    prisma.parent.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
-    prisma.student.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' }, deletedAt: null }, select: { id: true, username: true } }),
+    prisma.parent.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' } }, select: { id: true, username: true } }),
+    prisma.student.findFirst({ where: { username: { equals: normalized, mode: 'insensitive' } }, select: { id: true, username: true } }),
     // The unified accounts table is the authoritative global-unique source when present
     prisma.account.findUnique({ where: { normalizedLogin: normalized } }).then(a => a ? { id: a.entityId, username: a.username } : null).catch(() => null),
   ]);

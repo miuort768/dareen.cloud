@@ -1,17 +1,20 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import { AlertCircle, X, Trash2 } from 'lucide-react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
+import { AlertCircle, X, Trash2, KeyRound } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Button } from '../components/ui/Button';
 
 interface ConfirmModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: () => void;
+    onConfirm: (password?: string) => void;
     title: string;
     message: string;
     confirmText?: string;
     cancelText?: string;
     isDestructive?: boolean;
+    requirePassword?: boolean;
+    expectedPassword?: string;
+    passwordPlaceholder?: string;
 }
 
 const FOCUSABLE = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -24,15 +27,24 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     message,
     confirmText = 'تأكيد العملية',
     cancelText = 'تراجع',
-    isDestructive = true
+    isDestructive = true,
+    requirePassword = false,
+    expectedPassword = '',
+    passwordPlaceholder = 'أدخل كلمة المرور التحذيرية'
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const previousFocus = useRef<HTMLElement | null>(null);
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     useEffect(() => {
         if (isOpen) {
             previousFocus.current = document.activeElement as HTMLElement;
+            setPassword('');
+            setPasswordError('');
             setTimeout(() => {
+                const input = containerRef.current?.querySelector<HTMLElement>('input');
+                if (input) { input.focus(); return; }
                 containerRef.current?.querySelector<HTMLElement>('button')?.focus();
             }, 50);
         } else {
@@ -49,6 +61,18 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
             else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
         }
     }, [onClose]);
+
+    const handleConfirm = () => {
+        if (requirePassword) {
+            if (password !== expectedPassword) {
+                setPasswordError('كلمة المرور التحذيرية غير صحيحة');
+                return;
+            }
+            setPasswordError('');
+        }
+        onConfirm(password || undefined);
+        onClose();
+    };
 
     if (!isOpen) return null;
 
@@ -97,10 +121,40 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                             {message}
                         </p>
 
+                        {/* Password gate */}
+                        {requirePassword && (
+                            <div className="w-full mb-6">
+                                <div className="relative">
+                                    <KeyRound size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
+                                    <input
+                                        type="password"
+                                        autoComplete="off"
+                                        value={password}
+                                        onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
+                                        onKeyDown={(e) => { if (e.key === 'Enter') handleConfirm(); }}
+                                        placeholder={passwordPlaceholder}
+                                        aria-label="كلمة المرور التحذيرية"
+                                        className={cn(
+                                            "w-full ps-9 pe-3 py-2.5 bg-surface border rounded-xl text-xs font-bold text-main outline-none transition-all focus:ring-2",
+                                            passwordError
+                                                ? "border-error focus:border-error focus:ring-error/20"
+                                                : "border-border focus:border-primary focus:ring-focus"
+                                        )}
+                                    />
+                                </div>
+                                {passwordError && (
+                                    <p className="text-[11px] font-bold text-error mt-1.5 flex items-center gap-1">
+                                        <AlertCircle size={11} />
+                                        {passwordError}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
                         {/* Buttons */}
                         <div className="flex flex-col gap-2.5 w-full">
                             <Button
-                                onClick={() => { onConfirm(); onClose(); }}
+                                onClick={handleConfirm}
                                 variant={isDestructive ? 'destructive' : 'primary'}
                                 size="lg"
                                 className="w-full"

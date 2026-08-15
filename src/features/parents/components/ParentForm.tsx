@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Save, ShieldCheck } from 'lucide-react';
+import { User, Save, ShieldCheck, X } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 
 interface ParentFormProps {
@@ -7,6 +7,7 @@ interface ParentFormProps {
     formData: { name: string; phone: string; email: string; username?: string; password?: string };
     onChange: (data: { name: string; phone: string; email: string; username?: string; password?: string }) => void;
     onSubmit: (e: React.FormEvent) => void;
+    onClose?: () => void;
 }
 
 const InputField = ({ label, icon: Icon, ...props }: { label: string; icon: React.ComponentType<{ size?: number }>; } & Record<string, unknown>) => (
@@ -31,22 +32,35 @@ export const ParentForm: React.FC<ParentFormProps> = ({
     isEdit,
     formData,
     onChange,
-    onSubmit
+    onSubmit,
+    onClose
 }) => {
     return (
         <div className="bg-card border border-border shadow-elevation-2 relative overflow-hidden rounded-2xl">
             {/* Header */}
             <div className="bg-primary p-6 md:p-8">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 flex items-center justify-center bg-white/15 backdrop-blur-sm text-on-primary rounded-xl">
-                        <ShieldCheck size={18} />
+                <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 flex items-center justify-center bg-white/15 backdrop-blur-sm text-on-primary rounded-xl">
+                            <ShieldCheck size={18} />
+                        </div>
+                        <div>
+                            <h3 className="font-medium text-sm text-on-primary uppercase tracking-widest">
+                                {isEdit ? 'تحديث ملف ولي الأمر' : 'تسجيل ولي أمر جديد بالنظام'}
+                            </h3>
+                            <p className="text-micro text-on-primary/70 font-normal uppercase tracking-widest mt-0.5">تأكد من صحة البيانات لضمان وصول الإشعارات</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3 className="font-medium text-sm text-on-primary uppercase tracking-widest">
-                            {isEdit ? 'تحديث ملف ولي الأمر' : 'تسجيل ولي أمر جديد بالنظام'}
-                        </h3>
-                        <p className="text-micro text-on-primary/70 font-normal uppercase tracking-widest mt-0.5">تأكد من صحة البيانات لضمان وصول الإشعارات</p>
-                    </div>
+                    {onClose && (
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            aria-label="إغلاق النموذج"
+                            className="w-9 h-9 shrink-0 flex items-center justify-center rounded-xl bg-white/15 text-on-primary hover:bg-error hover:text-on-error backdrop-blur-sm transition-all active:scale-90"
+                        >
+                            <X size={16} />
+                        </button>
+                    )}
                 </div>
             </div>
 

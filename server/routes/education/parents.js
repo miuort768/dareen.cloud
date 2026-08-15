@@ -81,7 +81,13 @@ router.put('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
   }
 });
 
+const DELETE_ALL_PASSWORD = 'dareen';
+
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
+  const password = req.headers['x-delete-password'];
+  if (password !== DELETE_ALL_PASSWORD) {
+    return res.status(403).json({ error: 'كلمة المرور التحذيرية غير صحيحة' });
+  }
   try {
     await parentService.deleteParent(req.params.id, req.user);
     res.json({ message: 'Deleted' });
@@ -93,6 +99,10 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
 });
 
 router.delete('/', authMiddleware, checkRole(['admin']), async (req, res) => {
+  const password = req.headers['x-delete-password'];
+  if (password !== DELETE_ALL_PASSWORD) {
+    return res.status(403).json({ error: 'كلمة المرور التحذيرية غير صحيحة' });
+  }
   try {
     const count = await parentService.deleteAllParents(req.user);
     res.json({ message: 'All parents deleted', count });
