@@ -25,4 +25,23 @@ export interface Session {
     status: 'completed' | 'cancelled' | 'scheduled';
     price?: number;
     teacherPrice?: number;
+    createdAt?: string;
+}
+
+export interface TeacherActivity {
+    lastSession?: {
+        studentName: string;
+        subject?: string;
+        date: string;
+        time?: string;
+        createdAt?: string;
+    } | null;
+    lastLoginAt?: string | null;
+    lastChat?: {
+        withName?: string | null;
+        conversationName?: string | null;
+        isGroup?: boolean;
+        content?: string;
+        timestamp?: string;
+    } | null;
 }

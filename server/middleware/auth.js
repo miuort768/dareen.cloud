@@ -2,6 +2,24 @@ const jwt = require('jsonwebtoken');
 const { hasPermission } = require('../services/permissionService');
 const authAccounts = require('../services/authAccounts');
 
+// In-memory throttle so authenticated activity only writes lastLoginAt at most
+// once per window per user (keeps the request path latency-free and the DB quiet).
+const LAST_SEEN_WINDOW_MS = 15 * 60 * 1000;
+const lastSeenTouch = new Map();
+
+function shouldTouchLastSeen(key) {
+  const now = Date.now();
+  const last = lastSeenTouch.get(key);
+  if (last && now - last < LAST_SEEN_WINDOW_MS) return false;
+  lastSeenTouch.set(key, now);
+  if (lastSeenTouch.size > 5000) {
+    for (const [k, ts] of lastSeenTouch) {
+      if (now - ts > LAST_SEEN_WINDOW_MS) lastSeenTouch.delete(k);
+    }
+  }
+  return true;
+}
+
 const authMiddleware = async (req, res, next) => {
     const authHeader = req.headers.authorization;
 
@@ -22,6 +40,13 @@ const authMiddleware = async (req, res, next) => {
         }
 
         req.user = decoded;
+
+        // Throttled activity tracking: mark the teacher as "active on the
+        // platform" so admin activity logs show when she last opened/used it.
+        if (decoded.role === 'teacher' && shouldTouchLastSeen(`teacher:${decoded.id}`)) {
+            authAccounts.touchLastSeen('teacher', decoded.id);
+        }
+
         next();
     } catch (error) {
         return res.status(401).json({ error: 'Invalid or expired token' });

@@ -7,6 +7,7 @@ import type { Student, Enrollment } from '../../../types';
 import { TeacherPerformanceGauge } from './TeacherPerformanceGauge';
 import { TeacherEnrollmentList } from './TeacherEnrollmentList';
 import { TeacherActivitySection } from './TeacherActivitySection';
+import { useTeacherActivity } from '../hooks/useTeacherActivity';
 
 interface TeacherDetailsProps {
     teacher: Teacher;
@@ -33,6 +34,7 @@ export const TeacherDetails = ({
 }: TeacherDetailsProps) => {
     const navigate = useNavigate();
     const [showActivity, setShowActivity] = useState(false);
+    const { data: activity, isLoading: activityLoading } = useTeacherActivity(teacher.id);
 
     const enrolledStudents = students.filter(s =>
         s.enrollments?.some((e: Enrollment) => {
@@ -121,7 +123,7 @@ export const TeacherDetails = ({
 
                     {showActivity && (
                         <div className="animate-in fade-in slide-in-from-top-2 duration-300">
-                            <TeacherActivitySection teacherName={teacher.name} sessions={teacherSessions} isTeacherView={isTeacherView} onDeleteSession={onDeleteSession} />
+                            <TeacherActivitySection teacherName={teacher.name} sessions={teacherSessions} isTeacherView={isTeacherView} onDeleteSession={onDeleteSession} activity={activity} activityLoading={activityLoading} />
                         </div>
                     )}
                 </div>

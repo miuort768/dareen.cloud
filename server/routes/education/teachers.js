@@ -144,6 +144,66 @@ router.get('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
   }
 });
 
+// Resolve a chat participant's display name across all identity tables.
+// Mirrors the sender-name resolution in routes/communication/chat.js.
+async function resolveChatUserName(userId) {
+  if (!userId) return null;
+  const found = await prisma.user.findUnique({ where: { id: userId }, select: { name: true } })
+    ?? await prisma.teacher.findUnique({ where: { id: userId }, select: { name: true } })
+    ?? await prisma.parent.findUnique({ where: { id: userId }, select: { name: true } })
+    ?? await prisma.student.findUnique({ where: { id: userId }, select: { name: true } })
+    ?? await prisma.chatProfile.findUnique({ where: { id: userId }, select: { name: true } });
+  return found ? found.name : null;
+}
+
+// ========== /:id/activity — detailed activity summary for a teacher ==========
+router.get('/:id/activity', authMiddleware, checkRole(['admin']), async (req, res) => {
+  try {
+    const teacher = await prisma.teacher.findUnique({ where: { id: req.params.id } });
+    if (!teacher) return res.status(404).json({ error: 'Teacher not found' });
+
+    const [lastSession, account, lastMessage] = await Promise.all([
+      prisma.session.findFirst({
+        where: { status: 'completed', OR: [{ teacherId: req.params.id }, { teacherName: teacher.name }] },
+        orderBy: { createdAt: 'desc' },
+        select: { studentName: true, subject: true, date: true, time: true, createdAt: true },
+      }),
+      prisma.account.findFirst({
+        where: { accountType: 'TEACHER', entityId: req.params.id },
+        select: { lastLoginAt: true },
+      }),
+      prisma.message.findFirst({
+        where: { senderId: req.params.id },
+        orderBy: { timestamp: 'desc' },
+        include: { conversation: { include: { members: { select: { userId: true } } } } },
+      }),
+    ]);
+
+    let lastChat = null;
+    if (lastMessage) {
+      const conv = lastMessage.conversation;
+      const otherIds = (conv.members || []).map(m => m.userId).filter(uid => uid !== req.params.id);
+      const withName = conv.isGroup ? conv.name || null : await resolveChatUserName(otherIds[0]);
+      lastChat = {
+        withName,
+        conversationName: conv.name || null,
+        isGroup: !!conv.isGroup,
+        content: lastMessage.content.length > 60 ? `${lastMessage.content.substring(0, 60)}...` : lastMessage.content,
+        timestamp: lastMessage.timestamp,
+      };
+    }
+
+    res.json({
+      lastSession,
+      lastLoginAt: account?.lastLoginAt || null,
+      lastChat,
+    });
+  } catch (err) {
+    logger.error('Error fetching teacher activity', err, { id: req.params.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.get('/:id/payment-settings', authMiddleware, checkRole(['admin']), async (req, res) => {
   try {
     const setting = await prisma.teacherPaymentSetting.findUnique({

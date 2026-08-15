@@ -72,6 +72,20 @@ async function touchLastLogin(accountId) {
   } catch { /* best-effort */ }
 }
 
+// Best-effort "last seen" update by entity identity (used for throttled
+// activity tracking so lastLoginAt reflects actual platform usage, not just
+// logins). No-op when no account row exists (e.g. legacy-only deployments).
+async function touchLastSeen(entityType, entityId) {
+  try {
+    const accountType = ACCOUNT_TYPE_MAP[entityType];
+    if (!accountType || !entityId) return;
+    await prisma.account.updateMany({
+      where: { accountType, entityId },
+      data: { lastLoginAt: new Date() },
+    });
+  } catch { /* best-effort */ }
+}
+
 async function authenticate(normalizedLogin, password) {
   if (isAccountsMode()) {
     const account = await findAccountForLogin(normalizedLogin);
@@ -357,6 +371,7 @@ module.exports = {
   incrementTokenVersion,
   checkTokenVersion,
   getAccountByEntity,
+  touchLastSeen,
   getAuthMode,
   isAccountsMode,
   isDualMode,

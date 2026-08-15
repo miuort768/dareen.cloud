@@ -1,5 +1,5 @@
 import { api } from '../../../lib/api';
-import type { Teacher } from '../types';
+import type { Teacher, TeacherActivity } from '../types';
 
 export const teacherService = {
     getAll: async (): Promise<Teacher[]> => {
@@ -16,5 +16,9 @@ export const teacherService = {
 
     delete: async (id: string): Promise<void> => {
         return api.delete(`/teachers/${id}`);
+    },
+
+    getActivity: async (id: string): Promise<TeacherActivity> => {
+        return api.get<TeacherActivity>(`/teachers/${id}/activity`);
     }
 };
