@@ -166,9 +166,6 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                     <QuickActions onStartSession={() => openStart(nextSession?.studentId, nextSession?.subject)} sessionAvailable={!!nextSession} />
                                 </div>
                                 <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4">
-                                    <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
-                                </div>
-                                <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4">
                                     <button onClick={() => navigate('/teacher-payment-history')}
                                         className="w-full flex items-center gap-3 py-1 text-start transition-all duration-200 hover:opacity-80 active:scale-[0.99]"
                                         aria-label="سجل الدفعات"
@@ -201,6 +198,9 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                         <ModernAnnouncements />
                                     </div>
                                 </section>
+                                <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4">
+                                    <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
+                                </div>
                             </div>
                         )}
                         {activeTab === 'schedule' && (
