@@ -4,4 +4,5 @@ export interface FamilyScheduleItem {
     period: string;
     studentName: string;
     subject: string;
+    teacherName: string;
 }

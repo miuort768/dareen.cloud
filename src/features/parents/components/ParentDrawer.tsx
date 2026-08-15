@@ -186,41 +186,55 @@ const OverviewTab = ({ parent, details, children, handleCall, handleWhatsApp, on
     </>
 );
 
+const DAY_ORDER = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
+
+const toMinutes = (h: string) => {
+    const [hh, mm = '0'] = String(h || '').split(':');
+    const mins = parseInt(hh, 10) * 60 + parseInt(mm, 10);
+    return Number.isNaN(mins) ? 0 : mins;
+};
+
 const ScheduleTab = ({ familySchedule }: { familySchedule: FamilyScheduleItem[] }) => (
     <div className="space-y-3">
         <h5 className="text-[9px] font-bold text-muted flex items-center gap-1.5">
             <Clock size={10} />
             الجدول العائلي الموحد
         </h5>
-        {familySchedule.length > 0 ? (() => {
-            const grouped = familySchedule.reduce((acc, curr) => {
-                const key = `${curr.studentName}-${curr.subject}`;
-                if (!acc[key]) acc[key] = { student: curr.studentName, subject: curr.subject, times: [] as FamilyScheduleItem[] };
-                acc[key].times.push(curr);
-                return acc;
-            }, {} as Record<string, { student: string; subject: string; times: FamilyScheduleItem[] }>);
-
-            return Object.values(grouped).map((group, idx) => (
-                <div key={idx} className="p-3 bg-card border border-border rounded-xl">
-                    <div className="flex items-center justify-between mb-3">
-                        <div>
-                            <p className="text-[11px] font-bold text-main">{group.subject}</p>
-                            <p className="text-[8px] text-warning font-bold mt-0.5">{group.student}</p>
-                        </div>
-                        <Clock size={12} className="text-muted" />
+        {familySchedule.length > 0 ? DAY_ORDER.map(day => {
+            const dayItems = familySchedule
+                .filter(s => s.day === day)
+                .sort((a, b) => toMinutes(a.hour) - toMinutes(b.hour));
+            if (dayItems.length === 0) return null;
+            return (
+                <div key={day} className="bg-card border border-border rounded-xl overflow-hidden">
+                    <div className="px-3 py-2 bg-primary-soft/70 border-b border-border flex items-center gap-2">
+                        <Calendar size={12} className="text-primary" />
+                        <p className="text-[10px] font-bold text-primary">{day}</p>
+                        <span className="ms-auto text-[9px] font-bold text-primary/70">{dayItems.length} حصة</span>
                     </div>
-                    <div className="flex flex-wrap gap-1.5 pt-2 border-t border-border">
-                        {group.times.map((t, i) => (
-                            <div key={i} className="flex items-center gap-1.5 px-2 py-1 bg-surface border border-border text-[8px] font-bold rounded-lg">
-                                <span className="text-muted">{t.day}</span>
-                                <span className="w-0.5 h-0.5 bg-primary rounded-full" />
-                                <span className="text-primary font-mono">{t.hour} {t.period === 'am' ? 'ص' : 'م'}</span>
+                    <div className="divide-y divide-border/60">
+                        {dayItems.map((s, i) => (
+                            <div key={i} className="px-3 py-2.5 flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-lg bg-primary-soft text-primary flex items-center justify-center text-[10px] font-bold shrink-0">
+                                    {(s.studentName || '?').charAt(0)}
+                                </div>
+                                <div className="min-w-0 flex-1">
+                                    <p className="text-[11px] font-bold text-main truncate">{s.studentName}</p>
+                                    <p className="text-[9px] text-muted truncate">
+                                        {s.subject}
+                                        {s.teacherName ? <span className="text-primary font-bold"> • {s.teacherName}</span> : null}
+                                    </p>
+                                </div>
+                                <div className="flex items-center gap-1 px-2 py-1 bg-surface border border-border text-[9px] font-bold rounded-lg shrink-0">
+                                    <Clock size={9} className="text-primary" />
+                                    <span className="text-primary font-mono">{s.hour} {s.period === 'am' ? 'ص' : 'م'}</span>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </div>
-            ));
-        })() : (
+            );
+        }) : (
             <div className="py-12 text-center border border-dashed border-border rounded-xl">
                 <Calendar size={32} className="mx-auto text-muted mb-2 opacity-40" />
                 <p className="text-[10px] text-muted">لا توجد مواعيد حالياً</p>
