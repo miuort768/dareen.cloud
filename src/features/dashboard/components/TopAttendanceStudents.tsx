@@ -28,7 +28,7 @@ export const TopAttendanceStudents = ({ sessions, onStudentClick }: TopAttendanc
 
         return Object.values(studentStats)
             .sort((a, b) => b.count - a.count)
-            .slice(0, 5);
+            .slice(0, 3);
     }, [sessions]);
 
     const totalMonthSessions = useMemo(() => {

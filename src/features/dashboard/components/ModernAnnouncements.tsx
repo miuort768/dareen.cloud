@@ -71,7 +71,7 @@ export const ModernAnnouncements = () => {
     };
 
     return (
-        <div className="rounded-2xl bg-card dark:bg-card border border-border dark:border-primary/20 overflow-hidden font-dash" dir="rtl">
+        <div className="rounded-xl bg-card dark:bg-card border border-border dark:border-primary/20 overflow-hidden font-dash" dir="rtl">
             <div className="flex flex-col md:flex-row items-stretch">
                 {/* Type Indicator */}
                 <div

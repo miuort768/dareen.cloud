@@ -102,7 +102,7 @@ export const SmartNotifications = ({ lowBalanceStudents, focusStudents }: SmartN
                     <div
                         key={`alert-${i}`}
                         className={cn(
-                            "relative flex items-start gap-3 p-4 rounded-xl border overflow-hidden group cursor-pointer transition-all duration-200 hover:shadow-sm",
+                            "relative flex items-start gap-3 p-4 rounded-2xl border overflow-hidden group cursor-pointer transition-all duration-200 hover:shadow-sm",
                             alert.bg, alert.border
                         )}
                         role="button"
