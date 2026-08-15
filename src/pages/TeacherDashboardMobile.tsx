@@ -17,6 +17,7 @@ import { LiveSessions } from '../features/dashboard/components/LiveSessions';
 import { NextSessionHero } from '../features/dashboard/components/NextSessionHero';
 import { QuickActions } from '../features/dashboard/components/QuickActions';
 import { SmartNotifications } from '../features/dashboard/components/SmartNotifications';
+import { StartLiveSessionDialog } from '../features/dashboard/components/StartLiveSessionDialog';
 import { FinancialSnapshot } from '../features/dashboard/components/FinancialSnapshot';
 import { AttendanceChart } from '../features/dashboard/components/AttendanceChart';
 import type { DashboardStats as DashboardStatsType, LowBalanceStudent, DashboardTask } from '../features/dashboard/types';
@@ -29,7 +30,7 @@ interface TeacherDashboardMobileProps {
     tasks: DashboardTask[];
     lowBalanceStudents: LowBalanceStudent[];
     focusStudents: { id: string; name: string; reason: string; type: string }[];
-    timeline: { id: string; studentName: string; time: string; subject: string; status: string }[];
+    timeline: { id: string; studentId?: string; studentName: string; time: string; subject: string; status: string }[];
     onRefresh: () => void;
 }
 
@@ -72,8 +73,10 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
     };
     const [briefingStudent, setBriefingStudent] = useState<{ id?: string; name?: string; grade?: string; notes?: string; totalPoints?: number } | null>(null);
     const [selectedStudentForReport, setSelectedStudentForReport] = useState<{ id: string; name: string; grade: string; subject: string; points: number; attendance: number; sessionsCompleted: number; lastNotes: string[] } | null>(null);
+    const [startDialog, setStartDialog] = useState<{ open: boolean; studentId?: string; subject?: string }>({ open: false });
 
     const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
+    const openStart = (studentId?: string, subject?: string) => setStartDialog({ open: true, studentId, subject });
 
     return (
         <div
@@ -144,11 +147,11 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                             <div className="space-y-4">
                                 {nextSession && (
                                     <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4">
-                                        <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
+                                        <NextSessionHero timeline={timeline} onStart={() => openStart(nextSession.studentId, nextSession.subject)} />
                                     </div>
                                 )}
                                 <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4">
-                                    <QuickActions onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} sessionAvailable={!!nextSession} />
+                                    <QuickActions onStartSession={() => openStart(nextSession?.studentId, nextSession?.subject)} sessionAvailable={!!nextSession} />
                                 </div>
                                 <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4">
                                     <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
@@ -197,7 +200,7 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
                                             <h2 className="text-sm font-bold text-main dark:text-main">الجدول اليومي</h2>
                                         </div>
                                         <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-4">
-                                            <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
+                                            <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(s) => openStart(s.studentId, s.subject)} />
                                         </div>
                                     </section>
                                 ) : (
@@ -282,6 +285,12 @@ export const TeacherDashboardMobile = ({ currentUser, stats, rawSessions, tasks,
             {selectedStudentForReport && (
                 <MonthlyReportPreview isOpen={!!selectedStudentForReport} onClose={() => setSelectedStudentForReport(null)} student={selectedStudentForReport} onShare={() => {}} />
             )}
+            <StartLiveSessionDialog
+                open={startDialog.open}
+                onClose={() => setStartDialog({ open: false })}
+                defaultStudentId={startDialog.studentId}
+                defaultSubject={startDialog.subject}
+            />
         </div>
     );
 };

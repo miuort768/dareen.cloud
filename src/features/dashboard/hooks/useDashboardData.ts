@@ -221,6 +221,7 @@ export const useDashboardData = (currentUser: User | null) => {
                 .filter((s: Session) => s.date === today)
                 .map((s: Session) => ({
                     id: s.id,
+                    studentId: s.studentId,
                     studentName: s.studentName,
                     time: s.time,
                     subject: s.subject,

@@ -1,5 +1,4 @@
-﻿import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+﻿import { motion } from 'framer-motion';
 import { TeacherDashboardHeader } from './TeacherDashboardHeader';
 import { DashboardStats } from '../features/dashboard/components/DashboardStats';
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements';
@@ -13,6 +12,7 @@ import { LiveSessions } from '../features/dashboard/components/LiveSessions';
 import { NextSessionHero } from '../features/dashboard/components/NextSessionHero';
 import { QuickActions } from '../features/dashboard/components/QuickActions';
 import { SmartNotifications } from '../features/dashboard/components/SmartNotifications';
+import { StartLiveSessionDialog } from '../features/dashboard/components/StartLiveSessionDialog';
 import { FinancialSnapshot } from '../features/dashboard/components/FinancialSnapshot';
 import { AttendanceChart } from '../features/dashboard/components/AttendanceChart';
 import type { DashboardStats as DashboardStatsType, LowBalanceStudent, DashboardTask } from '../features/dashboard/types';
@@ -27,7 +27,7 @@ interface TeacherDashboardDesktopProps {
     tasks: DashboardTask[];
     lowBalanceStudents: LowBalanceStudent[];
     focusStudents: { id: string; name: string; reason: string; type: string }[];
-    timeline: { id: string; studentName: string; time: string; subject: string; status: string }[];
+    timeline: { id: string; studentId?: string; studentName: string; time: string; subject: string; status: string }[];
     logout: () => void;
 }
 
@@ -38,28 +38,29 @@ const fadeUp = (delay: number) => ({
 });
 
 export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceStudents, focusStudents, timeline, logout }: TeacherDashboardDesktopProps) => {
-    const navigate = useNavigate();
     const [briefingStudent, setBriefingStudent] = useState<{ id?: string; name?: string; grade?: string; notes?: string; totalPoints?: number } | null>(null);
     const [selectedStudentForReport, setSelectedStudentForReport] = useState<{ id: string; name: string; grade: string; subject: string; points: number; attendance: number; sessionsCompleted: number; lastNotes: string[] } | null>(null);
+    const [startDialog, setStartDialog] = useState<{ open: boolean; studentId?: string; subject?: string }>({ open: false });
 
     const nextSession = timeline.find(s => s.status === 'scheduled' || s.status === 'in-progress');
+    const openStart = (studentId?: string, subject?: string) => setStartDialog({ open: true, studentId, subject });
 
     return (
         <>
             <TeacherDashboardHeader logout={logout} />
             <div className="max-w-page mx-auto px-4 space-y-3 md:space-y-4 pb-28 pt-4">
 
-            <motion.div {...fadeUp(0.04)}>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4">
+            <motion.div {...fadeUp(0.04)} className="space-y-3 md:space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 items-start">
                     <div className="space-y-3 md:space-y-4">
                         {nextSession && (
-                            <NextSessionHero timeline={timeline} onStart={(id) => navigate(`/classroom/${id}`)} />
+                            <NextSessionHero timeline={timeline} onStart={() => openStart(nextSession.studentId, nextSession.subject)} />
                         )}
                         <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 transition-all duration-300 shadow-sm hover:shadow-md">
-                            <QuickActions onStartSession={() => { if (nextSession) navigate(`/classroom/${nextSession.id}`); }} sessionAvailable={!!nextSession} />
+                            <QuickActions onStartSession={() => openStart(nextSession?.studentId, nextSession?.subject)} sessionAvailable={!!nextSession} />
                         </div>
                     </div>
-                    <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 transition-all duration-300 shadow-sm hover:shadow-md">
+                    <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 transition-all duration-300 shadow-sm hover:shadow-md h-full flex flex-col justify-center min-h-[220px]">
                         <SmartNotifications lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents || []} />
                     </div>
                 </div>
@@ -81,7 +82,7 @@ export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceS
                     </div>
                     {timeline.length > 0 && (
                         <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
-                            <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(id) => navigate(`/classroom/${id}`)} />
+                            <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} onSessionStart={(s) => openStart(s.studentId, s.subject)} />
                         </div>
                     )}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
@@ -127,6 +128,12 @@ export const TeacherDashboardDesktop = ({ stats, rawSessions, tasks, lowBalanceS
             {selectedStudentForReport && (
                 <MonthlyReportPreview isOpen={!!selectedStudentForReport} onClose={() => setSelectedStudentForReport(null)} student={selectedStudentForReport} onShare={() => {}} />
             )}
+            <StartLiveSessionDialog
+                open={startDialog.open}
+                onClose={() => setStartDialog({ open: false })}
+                defaultStudentId={startDialog.studentId}
+                defaultSubject={startDialog.subject}
+            />
             </div>
         </>
     );

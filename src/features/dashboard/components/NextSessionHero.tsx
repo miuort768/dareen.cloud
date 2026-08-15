@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 
 interface TimelineSession {
     id: string;
+    studentId?: string;
     studentName: string;
     time: string;
     subject: string;
@@ -16,6 +17,18 @@ interface NextSessionHeroProps {
     onStart: (id: string) => void;
 }
 
+const parseTime = (t?: string) => {
+    const raw = String(t || '').replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d))).trim();
+    const match = raw.match(/(\d{1,2})\s*[:.]?\s*(\d{0,2})/);
+    if (!match) return { h: 0, m: 0 };
+    let h = parseInt(match[1], 10) || 0;
+    const m = match[2] ? (parseInt(match[2], 10) || 0) : 0;
+    const lower = raw.toLowerCase();
+    if (lower.includes('pm') && h < 12) h += 12;
+    if (lower.includes('am') && h === 12) h = 0;
+    return { h: h % 24, m: m % 60 };
+};
+
 export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => {
     const nextSession = timeline?.find(s => s.status === 'scheduled' || s.status === 'in-progress');
     const [timeLeft, setTimeLeft] = useState('');
@@ -25,7 +38,7 @@ export const NextSessionHero = ({ timeline, onStart }: NextSessionHeroProps) => 
         if (!nextSession) return;
 
         const updateTimer = () => {
-            const [hours, minutes] = nextSession.time.split(':').map(Number);
+            const { h: hours, m: minutes } = parseTime(nextSession.time);
             const now = new Date();
             const sessionTime = new Date();
             sessionTime.setHours(hours, minutes, 0);

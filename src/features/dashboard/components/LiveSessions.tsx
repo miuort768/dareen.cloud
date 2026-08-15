@@ -5,11 +5,12 @@ import { api } from '../../../lib/api';
 import { socketService } from '../../../lib/socket';
 import { SOCKET_EVENTS } from '../../../lib/socket-events';
 import { useCurrentUser } from '../../../context/AppContext';
-import { startLiveSession, updateLiveSession } from '../../../services/liveSessionService';
+import { updateLiveSession } from '../../../services/liveSessionService';
 import { cn } from '@/lib/utils';
 import { confirm } from '../../../lib/confirmDialog';
 import { Button } from '@/components/ui/button';
-import type { LiveSession, Student } from '../../../types';
+import { StartLiveSessionDialog } from './StartLiveSessionDialog';
+import type { LiveSession } from '../../../types';
 
 const PROVIDERS = [
     { value: 'google_meet', label: 'Google Meet' },
@@ -29,12 +30,7 @@ export const LiveSessions = () => {
     const [copiedId, setCopiedId] = useState<string | null>(null);
     const currentUser = useCurrentUser();
 
-    const [showDialog, setShowDialog] = useState(false);
-    const [dialogError, setDialogError] = useState<string | null>(null);
-    const [meetingProvider, setMeetingProvider] = useState('google_meet');
-    const [meetingUrl, setMeetingUrl] = useState('');
-    const [subject, setSubject] = useState('');
-    const [targetStudentId, setTargetStudentId] = useState('');
+    const [showCreateDialog, setShowCreateDialog] = useState(false);
 
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [editingSession, setEditingSession] = useState<LiveSession | null>(null);
@@ -46,14 +42,6 @@ export const LiveSessions = () => {
         queryKey: ['live-sessions'],
         queryFn: () => api.get<LiveSession[]>('/live/active'),
         select: (data) => Array.isArray(data) ? data : [],
-    });
-
-    const { data: students = [], isLoading: loadingStudents } = useQuery<Student[]>({
-        queryKey: ['students'],
-        queryFn: async () => {
-            const data = await api.get<{ data: Student[] } | Student[]>('/students');
-            return Array.isArray(data) ? data : (data.data || []);
-        },
     });
 
     useEffect(() => {
@@ -69,21 +57,6 @@ export const LiveSessions = () => {
             socket.off(SOCKET_EVENTS.SESSION_LINK_UPDATED, invalidate);
         };
     }, [queryClient]);
-
-    const startMutation = useMutation({
-        mutationFn: startLiveSession,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['live-sessions'] });
-            setShowDialog(false);
-            setMeetingUrl('');
-            setSubject('');
-            setMeetingProvider('google_meet');
-            setTargetStudentId('');
-        },
-        onError: (err: unknown) => {
-            setDialogError(err instanceof Error ? err.message : 'فشل بدء الحصة');
-        },
-    });
 
     const endMutation = useMutation({
         mutationFn: (id: string) => api.post(`/live/end/${id}`, {}),
@@ -103,25 +76,6 @@ export const LiveSessions = () => {
             setEditError(err instanceof Error ? err.message : 'فشل تحديث الرابط');
         },
     });
-
-    const startNewSession = () => {
-        if (!targetStudentId) {
-            setDialogError('يرجى اختيار الطالب قبل بدء الحصة');
-            return;
-        }
-        if (!meetingUrl.trim()) {
-            setDialogError('يرجى إدخال رابط الاجتماع');
-            return;
-        }
-        setDialogError(null);
-        startMutation.mutate({
-            title: `حصة مباشرة: ${subject || currentUser?.name}`,
-            subject,
-            meetingProvider: meetingProvider as 'google_meet' | 'zoom' | 'custom',
-            meetingUrl: meetingUrl.trim(),
-            targetStudentId,
-        });
-    };
 
     const endSession = async (sessionId: string) => {
         if (!(await confirm({ title: 'إنهاء الحصة المباشرة', description: 'هل أنت متأكد من إنهاء هذه الحصة المباشرة؟', confirmText: 'إنهاء', cancelText: 'إلغاء' }))) return;
@@ -177,7 +131,7 @@ export const LiveSessions = () => {
                 </div>
                 {isTeacher && (
                     <Button
-                        onClick={() => setShowDialog(true)}
+                        onClick={() => setShowCreateDialog(true)}
                         size="sm"
                         className="h-9 px-3.5 rounded-xl text-[11px] font-bold gap-1.5 bg-primary dark:bg-primary text-on-primary dark:text-on-primary"
                     >
@@ -213,7 +167,7 @@ export const LiveSessions = () => {
                     <p className="text-[13px] font-bold text-muted dark:text-muted">لا توجد حصص مباشرة حالياً</p>
                     <p className="text-[11px] text-muted/60 dark:text-dim mt-1">ابدأ حصتك بضغطة واحدة</p>
                     {isTeacher && (
-                        <Button onClick={() => setShowDialog(true)} size="sm" className="mt-3 h-9 px-5 rounded-xl text-[11px] font-bold gap-1.5 bg-primary dark:bg-primary text-on-primary dark:text-on-primary">
+                        <Button onClick={() => setShowCreateDialog(true)} size="sm" className="mt-3 h-9 px-5 rounded-xl text-[11px] font-bold gap-1.5 bg-primary dark:bg-primary text-on-primary dark:text-on-primary">
                             <Plus size={13} /> بدء حصة
                         </Button>
                     )}
@@ -295,124 +249,7 @@ export const LiveSessions = () => {
             )}
 
             {/* Create Dialog */}
-            {showDialog && (
-                <div
-                    className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40"
-                    onClick={() => setShowDialog(false)}
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label="بدء حصة مباشرة"
-                    onKeyDown={(e) => { if (e.key === 'Escape') setShowDialog(false); }}
-                >
-                    <div
-                        className="bg-card dark:bg-card rounded-2xl shadow-2xl border border-border dark:border-primary/20 p-6 max-w-md w-full space-y-5"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <h3 className="font-bold text-lg text-main dark:text-main text-center">بدء حصة مباشرة</h3>
-
-                        <div>
-                            <label htmlFor="live-student" className="block text-xs font-bold text-muted dark:text-muted mb-2">الطالب <span className="text-error">*</span></label>
-                            <select
-                                id="live-student"
-                                value={targetStudentId}
-                                onChange={(e) => setTargetStudentId(e.target.value)}
-                                className="w-full px-4 py-3 text-sm font-medium bg-background dark:bg-surface border border-border dark:border-primary/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus appearance-none"
-                            >
-                                <option value="">— اختر الطالب —</option>
-                                {loadingStudents && <option value="" disabled>جاري تحميل الطلاب...</option>}
-                                {students.map((s) => (
-                                    <option key={s.id} value={s.id}>{s.name}</option>
-                                ))}
-                            </select>
-                            {!loadingStudents && students.length === 0 && (
-                                <p className="text-[11px] font-bold text-muted dark:text-dim mt-1">لا يوجد طلاب مضافون لك حالياً.</p>
-                            )}
-                        </div>
-
-                        <div>
-                            <label htmlFor="live-subject" className="block text-xs font-bold text-muted dark:text-muted mb-2">المادة</label>
-                            <input
-                                id="live-subject"
-                                type="text"
-                                value={subject}
-                                onChange={(e) => setSubject(e.target.value)}
-                                placeholder="الرياضيات"
-                                className="w-full px-4 py-3 text-sm font-medium bg-background dark:bg-surface border border-border dark:border-primary/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-xs font-bold text-muted dark:text-muted mb-2">نوع الاجتماع</label>
-                            <div className="flex gap-2">
-                                {PROVIDERS.map((p) => (
-                                    <button
-                                        key={p.value}
-                                        onClick={() => setMeetingProvider(p.value)}
-                                        className={cn(
-                                            "flex-1 py-3 px-2 text-[11px] font-bold rounded-xl border-2 transition-all",
-                                            meetingProvider === p.value
-                                                ? "border-primary dark:border-primary bg-primary-soft dark:bg-primary/10 text-primary dark:text-primary"
-                                                : "border-border dark:border-primary/20 text-muted dark:text-muted hover:border-border dark:hover:border-accent/30"
-                                        )}
-                                    >
-                                        {p.label}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div>
-                            <label htmlFor="live-meeting-url" className="block text-xs font-bold text-muted dark:text-muted mb-2">رابط الاجتماع</label>
-                            <div className="flex gap-2">
-                                <input
-                                    id="live-meeting-url"
-                                    type="url"
-                                    value={meetingUrl}
-                                    onChange={(e) => setMeetingUrl(e.target.value)}
-                                    placeholder={
-                                        meetingProvider === 'google_meet' ? 'https://meet.google.com/abc-defg-hij' :
-                                        meetingProvider === 'zoom' ? 'https://zoom.us/j/1234567890' :
-                                        'https://...'
-                                    }
-                                    className="flex-1 px-4 py-3 text-sm font-medium bg-background dark:bg-surface border border-border dark:border-primary/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-focus"
-                                />
-                                {meetingProvider === 'google_meet' && (
-                                    <a
-                                        href="https://meet.google.com/new"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="px-3 py-3 text-[11px] font-bold rounded-xl bg-success/10 border border-success/20 text-success hover:bg-success/20 transition-colors whitespace-nowrap flex items-center gap-1"
-                                        title="إنشاء رابط Google Meet جديد"
-                                    >
-                                        <LinkIcon size={14} /> إنشاء
-                                    </a>
-                                )}
-                            </div>
-                        </div>
-
-                        {dialogError && (
-                            <p className="text-error text-xs font-bold">{dialogError}</p>
-                        )}
-
-                        <div className="flex gap-3 pt-2">
-                            <Button
-                                variant="outline"
-                                onClick={() => { setShowDialog(false); setDialogError(null); setTargetStudentId(''); }}
-                                className="flex-1 h-11 rounded-xl text-xs font-bold"
-                            >
-                                إلغاء
-                            </Button>
-                            <Button
-                                onClick={startNewSession}
-                                disabled={startMutation.isPending || !targetStudentId}
-                                className="flex-1 h-11 rounded-xl text-xs font-bold bg-primary dark:bg-primary text-on-primary dark:text-on-primary gap-2"
-                            >
-                                {startMutation.isPending ? <><Loader2 size={14} className="animate-spin" /> جاري...</> : 'بدء الحصة'}
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <StartLiveSessionDialog open={showCreateDialog} onClose={() => setShowCreateDialog(false)} />
 
             {showEditDialog && editingSession && (
                 <div

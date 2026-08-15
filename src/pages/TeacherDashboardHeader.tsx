@@ -41,8 +41,8 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
                             <span className="text-sm font-bold text-on-primary dark:text-on-primary">{firstName.charAt(0)}</span>
                         </div>
                         <div className="hidden sm:block">
-                            <h1 className="text-sm font-bold text-main dark:text-main leading-tight">ꩥ��� {firstName}</h1>
-                            <p className="text-[11px] font-medium text-muted dark:text-muted">���� ���� ������</p>
+                            <h1 className="text-sm font-bold text-main dark:text-main leading-tight">أهلاً بك {firstName}</h1>
+                            <p className="text-[11px] font-medium text-muted dark:text-muted">نظرة عامة على حصصك اليوم</p>
                         </div>
                     </button>
 
