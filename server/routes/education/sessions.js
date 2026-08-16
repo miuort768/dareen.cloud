@@ -16,9 +16,9 @@ async function updateSessionCount(tx, { studentId, subject, teacherName, teacher
     const match = enrollments.find(e =>
         (teacherId && e.teacherId === teacherId) ||
         (teacherName && e.teacherFallback && e.teacherFallback.trim().toLowerCase() === teacherName.trim().toLowerCase())
-    ) || enrollments[0];
+    ) || (enrollments.length === 1 ? enrollments[0] : null);
     if (!match) {
-        throw new Error(`لم يتم العثور على اشتراك للطالب ${studentId} في مادة ${subject}`);
+        throw new Error(`لم يتم العثور على اشتراك مطابق للطالب ${studentId} في مادة ${subject}`);
     }
     const newVal = delta > 0 ? match.sessionsUsed + 1 : Math.max(0, match.sessionsUsed - 1);
     await tx.enrollment.update({ where: { id: match.id }, data: { sessionsUsed: newVal } });
@@ -136,12 +136,14 @@ router.post('/', authMiddleware, checkRole(['admin', 'teacher']), validate(creat
         if (isTeacher) {
             // Force the session to be recorded under the requesting teacher's identity
             body.teacherId = req.user.id;
-            body.teacherName = req.user.teacherName || req.user.name || body.teacherName;
+            body.teacherName = body.teacherName || req.user.teacherName || req.user.name || '';
 
-            // Teachers may only create sessions for students enrolled with them
-            const teacherName = body.teacherName;
+            // Teachers may only create sessions for students enrolled with them.
+            // Match by teacher row id OR any of the teacher's known names so that
+            // account-only logins (no linked Teacher row) still pass ownership.
+            const candidateNames = [...new Set([body.teacherName, req.user.teacherName, req.user.name].filter(Boolean))];
             const where = { studentId: body.studentId, deletedAt: null, OR: [{ teacherId: req.user.id }] };
-            if (teacherName) where.OR.push({ teacherFallback: { equals: teacherName, mode: 'insensitive' } });
+            candidateNames.forEach(n => where.OR.push({ teacherFallback: { equals: n, mode: 'insensitive' } }));
             const ownership = await prisma.enrollment.findFirst({ where, select: { id: true } });
             if (!ownership) {
                 return res.status(403).json({ error: 'Access denied: student is not enrolled with you' });
@@ -161,13 +163,18 @@ router.post('/', authMiddleware, checkRole(['admin', 'teacher']), validate(creat
                 studentPrice = student.sessionPrice ?? 0;
             }
 
-            const teacherRow = body.teacherId
-                ? await tx.teacher.findUnique({ where: { id: body.teacherId }, select: { id: true, price: true, currency: true } })
-                : body.teacherName
-                    ? await tx.teacher.findFirst({ where: { name: body.teacherName }, select: { id: true, price: true, currency: true } })
-                    : null;
+            let teacherRow = null;
+            if (body.teacherId) {
+                teacherRow = await tx.teacher.findUnique({ where: { id: body.teacherId }, select: { id: true, price: true, currency: true } });
+            }
+            // Account-only teacher logins carry an account id that is NOT a Teacher row.
+            // Fall back to resolving the real Teacher row by name so the session never
+            // stores a dangling teacherId (which would violate the FK and return 500).
+            if (!teacherRow && body.teacherName) {
+                teacherRow = await tx.teacher.findFirst({ where: { name: body.teacherName }, select: { id: true, price: true, currency: true } });
+            }
 
-            const finalTeacherId = body.teacherId ?? (teacherRow ? teacherRow.id : null);
+            const finalTeacherId = teacherRow ? teacherRow.id : null;
             if (teacherRow) teacherPrice = teacherRow.price;
 
             // Phase 2B: Currency snapshot

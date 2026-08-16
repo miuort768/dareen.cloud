@@ -7,7 +7,7 @@ interface BulkAttendanceButtonProps {
     matchedEnrollments: { student: Student; enrollment: Enrollment }[];
     allSessions: Session[];
     logDate: string;
-    logAttendance: (data: Record<string, unknown>) => Promise<boolean>;
+    logAttendance: (data: Record<string, unknown>) => Promise<{ success: boolean; error?: string }>;
 }
 
 export const BulkAttendanceButton = ({ matchedEnrollments, allSessions, logDate, logAttendance }: BulkAttendanceButtonProps) => {
@@ -37,13 +37,13 @@ export const BulkAttendanceButton = ({ matchedEnrollments, allSessions, logDate,
 
         let successCount = 0;
         for (const { student, enrollment } of todayStudents) {
-            const success = await logAttendance({
+            const result = await logAttendance({
                 studentId: student.id, studentName: student.name, teacherName: enrollment.teacher,
                 teacherId: enrollment.teacherId, subject: enrollment.subject, date: logDate, time: currentTime,
                 status: 'completed', day: selectedDayName,
                 price: enrollment.price ? (enrollment.price - (enrollment.discount || 0)) : undefined
             });
-            if (success) successCount++;
+            if (result?.success) successCount++;
         }
         showNotification(`تم تسجيل ${successCount} طالب بنجاح`, 'success');
     };

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Clock, Edit, Trash2 } from 'lucide-react';
 import type { ScheduleSlot } from '../types';
+import { normalizePeriod, periodLabel } from '../utils/slotUtils';
 
 interface StudentScheduleEditorProps {
     schedule: ScheduleSlot[];
@@ -11,7 +12,7 @@ interface StudentScheduleEditorProps {
 }
 
 export const StudentScheduleEditor = ({ schedule, isEditing, onToggleEdit, onDeleteSlot, onSaveSlot }: StudentScheduleEditorProps) => {
-    const [tempSlot, setTempSlot] = useState({ day: 'الأحد', hour: '', period: 'مساءً' });
+    const [tempSlot, setTempSlot] = useState({ day: 'الأحد', hour: '', period: 'pm' });
     const [editSlotIndex, setEditSlotIndex] = useState<number | null>(null);
 
     return (
@@ -29,7 +30,7 @@ export const StudentScheduleEditor = ({ schedule, isEditing, onToggleEdit, onDel
             <div className="flex flex-wrap gap-1.5">
                 {schedule?.length > 0 ? schedule.map((slot, i) => (
                     <div key={`slot-${i}`} className="flex items-center gap-1.5 px-2 py-1 bg-card border border-border text-micro font-bold text-muted rounded-xl">
-                        <span>{slot.day} {slot.hour}{slot.period === 'am' ? 'ص' : 'م'}</span>
+                        <span>{slot.day} {slot.hour} {periodLabel(slot.period)}</span>
                         {isEditing && (
                             <div className="flex gap-1.5 ms-1.5 ps-1.5 border-s border-border">
                                 <button onClick={() => { setEditSlotIndex(i); setTempSlot(slot); }} aria-label="تعديل الموعد" className="text-primary"><Edit size={10} /></button>
@@ -55,8 +56,15 @@ export const StudentScheduleEditor = ({ schedule, isEditing, onToggleEdit, onDel
                             <p className="text-micro font-bold text-on-primary/60 mb-1 uppercase">الساعة</p>
                             <input type="text" aria-label="الساعة" value={tempSlot.hour} onChange={(e) => setTempSlot({ ...tempSlot, hour: e.target.value.replace(/^0+/, '') })} placeholder="مثال: 4" className="w-full text-micro font-bold p-1.5 bg-white/10 border-none rounded-xl outline-none focus-visible:ring-0" />
                         </div>
+                        <div>
+                            <p className="text-micro font-bold text-on-primary/60 mb-1 uppercase">الفترة</p>
+                            <select value={normalizePeriod(tempSlot.period)} onChange={(e) => setTempSlot({ ...tempSlot, period: e.target.value })} aria-label="اختر الفترة" className="w-full text-micro font-bold p-1.5 bg-white/10 border-none rounded-xl outline-none focus-visible:ring-0">
+                                <option value="am" className="text-main">صباحاً</option>
+                                <option value="pm" className="text-main">مساءً</option>
+                            </select>
+                        </div>
                     </div>
-                    <button onClick={() => { onSaveSlot(tempSlot, editSlotIndex); setTempSlot({ day: 'الأحد', hour: '', period: 'مساءً' }); setEditSlotIndex(null); }} className="w-full bg-white text-primary font-bold text-micro py-2 rounded-xl hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors shadow-sm active:scale-95">
+                    <button onClick={() => { onSaveSlot({ ...tempSlot, period: normalizePeriod(tempSlot.period) }, editSlotIndex); setTempSlot({ day: 'الأحد', hour: '', period: 'pm' }); setEditSlotIndex(null); }} className="w-full bg-white text-primary font-bold text-micro py-2 rounded-xl hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors shadow-sm active:scale-95">
                         {editSlotIndex !== null ? 'تحديث' : 'إضافة'}
                     </button>
                 </div>

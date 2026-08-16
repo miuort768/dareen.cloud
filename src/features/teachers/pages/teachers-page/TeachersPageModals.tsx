@@ -10,7 +10,7 @@ interface TeachersPageModalsProps {
     onCancelDelete: () => void;
     secureModalData: { student: Student; enrollment: Enrollment } | null;
     onSecureClose: () => void;
-    onSecureConfirm: (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => void;
+    onSecureConfirm: (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => Promise<boolean | void>;
     secureStudentName: string;
     logDate: string;
     notifyingTeacher: { id: string; name: string } | null;

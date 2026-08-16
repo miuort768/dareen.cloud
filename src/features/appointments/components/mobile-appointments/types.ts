@@ -9,6 +9,7 @@ export interface Enrollment {
     teacher: string;
     subject: string;
     curr: string;
+    teacherId?: string | number;
     schedule: ScheduleSlot[];
 }
 

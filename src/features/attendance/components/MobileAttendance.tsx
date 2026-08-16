@@ -90,7 +90,7 @@ export const MobileAttendance = () => {
     });
 
     const handleConfirmLog = async (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => {
-        if (!secureModalData || !logDate || isLogging) return;
+        if (!secureModalData || !logDate || isLogging) return false;
         setIsLogging(true);
         const { student, enrollment } = secureModalData;
         const alreadyLogged = allSessions.some(s =>
@@ -100,7 +100,7 @@ export const MobileAttendance = () => {
             showNotification('الحصة مسجلة بالفعل لهذا الطالب والمادة في هذا التاريخ', 'warning');
             setSecureModalData(null);
             setIsLogging(false);
-            return;
+            return true;
         }
         const now = new Date();
         const currentTime = now.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
@@ -121,10 +121,13 @@ export const MobileAttendance = () => {
                 window.open(waLink, '_blank');
             }
             setSecureModalData(null);
+            setIsLogging(false);
+            return true;
         } else {
             showNotification(result.error || 'فشل تسجيل الحصة', 'error');
+            setIsLogging(false);
+            return false;
         }
-        setIsLogging(false);
     };
 
     const handleViewHistory = (studentId: string, studentName: string, grade?: string, subject?: string) => {
@@ -151,13 +154,13 @@ export const MobileAttendance = () => {
         const currentTime = now.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
         let successCount = 0;
         for (const { student, enrollment } of todayStudents) {
-            const success = await logAttendance({
+            const result = await logAttendance({
                 studentId: student.id, studentName: student.name, teacherName: enrollment.teacher,
                 teacherId: enrollment.teacherId, subject: enrollment.subject, date: logDate, time: currentTime,
                 status: 'completed', day: selectedDayName,
                 price: enrollment.price ? (enrollment.price - (enrollment.discount || 0)) : undefined
             });
-            if (success) successCount++;
+            if (result?.success) successCount++;
         }
         showNotification(`تم تسجيل ${successCount} طالب بنجاح`, 'success');
     };

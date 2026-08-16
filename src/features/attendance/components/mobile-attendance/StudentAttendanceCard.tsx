@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle2, History } from 'lucide-react';
 import { ProgressBar } from '../../../../shared/components/ui';
 import type { Student, Enrollment } from '../../types';
+import { periodLabel } from '../../utils/slotUtils';
 
 interface StudentAttendanceCardProps {
     student: Student;
@@ -42,7 +43,7 @@ export const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory
                 <div className="text-end">
                     {todaySlot ? (
                         <span className="text-micro font-bold px-2 py-1 rounded-lg bg-primary-soft text-primary">
-                            {todaySlot.hour}:00 {todaySlot.period === 'am' ? 'ص' : 'م'}
+                            {todaySlot.hour}:00 {periodLabel(todaySlot.period)}
                         </span>
                     ) : (
                         <span className="text-micro font-bold text-muted bg-surface px-2 py-1 rounded-lg">بدون موعد</span>

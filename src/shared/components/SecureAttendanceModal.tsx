@@ -6,7 +6,7 @@ import { Button } from '../components/ui/Button';
 interface SecureAttendanceModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => void;
+    onConfirm: (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => Promise<boolean | void>;
     studentName: string;
     date: string;
 }
@@ -40,7 +40,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
     if (!isOpen) return null;
 
-    const handleConfirm = () => {
+    const handleConfirm = async () => {
         if (submittedRef.current) return;
         const secret = import.meta.env.VITE_ATTENDANCE_SECRET || '';
         if (password.toLowerCase() !== secret.toLowerCase()) {
@@ -48,8 +48,18 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             return;
         }
         submittedRef.current = true;
-        onConfirm(status, topics, homework, needsCompensation);
-        onClose();
+        try {
+            const ok = await onConfirm(status, topics, homework, needsCompensation);
+            if (ok !== false) {
+                onClose();
+            } else {
+                submittedRef.current = false;
+                setError('تعذر تسجيل الحصة، حاول مرة أخرى');
+            }
+        } catch (e) {
+            submittedRef.current = false;
+            setError('تعذر تسجيل الحصة، حاول مرة أخرى');
+        }
     };
 
     return (

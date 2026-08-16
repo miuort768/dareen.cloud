@@ -146,7 +146,7 @@ export const Appointments = () => {
         return a.day === today && !completedSessionIds.includes(a.id);
     }).length;
 
-    const completedCount = completedSessionIds.length;
+    const completedCount = allAppointments.filter(a => completedSessionIds.includes(a.id)).length;
     const hasActiveFilters = searchTerm || filterDay !== 'all' || filterTeacher !== 'all';
 
     const handleSelectAppointment = (appointment: AppointmentEvent) => {
@@ -169,10 +169,20 @@ export const Appointments = () => {
         { label: 'تم الإنجاز', value: completedCount, icon: CheckCircle, gradient: 'from-info/20 to-info/5', iconBg: 'bg-info/10 text-info', accent: 'bg-info' },
     ], [totalAppointments, todayAppointments, remainingToday, completedCount]);
 
+    const handleCompleteAll = () => {
+        const remaining = allAppointments.filter(a => !completedSessionIds.includes(a.id));
+        if (remaining.length === 0) {
+            showNotification('لا توجد مواعيد متبقية', 'info');
+            return;
+        }
+        remaining.forEach(a => completeMutation.mutate(a.id));
+        showNotification(`جاري تسجيل إتمام ${remaining.length} حصة`, 'success');
+    };
+
     const fabActions = useMemo(() => [
         { icon: Calendar, label: 'مواعيد اليوم', onClick: () => { const today = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }); setFilterDay(today); } },
-        { icon: CheckCircle, label: 'إتمام الكل', onClick: () => { showNotification('تم تسجيل جميع الحصص الحالية', 'success'); } },
-    ], []);
+        { icon: CheckCircle, label: 'إتمام الكل', onClick: handleCompleteAll },
+    ], [allAppointments, completedSessionIds, completeMutation]);
 
     if (loading) return <PageLoader />;
 

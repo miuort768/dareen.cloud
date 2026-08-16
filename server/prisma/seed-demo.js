@@ -32,7 +32,7 @@ if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('postgresql'
 const PREFIX = 'demo_';
 const PASSWORD = '123456';
 
-const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+const ARABIC_DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 const dayName = (d) => ARABIC_DAYS[new Date(d).getDay()];
 
 function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
@@ -198,11 +198,19 @@ const QUALIFICATIONS = ['بكالوريوس', 'ماجستير', 'دكتوراه'
 
 const DAY_HOURS = {
   'الأحد': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
-  'الإثنين': ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+  'الاثنين': ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
   'الثلاثاء': ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
   'الأربعاء': ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
   'الخميس': ['14:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
   'السبت': ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '16:00', '17:00', '18:00', '19:00'],
+};
+
+// Convert 24h "HH:mm" to the canonical 12h slot format used across the app: { hour: '9', period: 'am'|'pm' }
+const toSlotHour = (hhmm) => {
+  const h = parseInt(String(hhmm).split(':')[0], 10);
+  const period = h >= 12 ? 'pm' : 'am';
+  const hour12 = h % 12 === 0 ? 12 : h % 12;
+  return { hour: String(hour12), period };
 };
 
 async function main() {
@@ -335,14 +343,16 @@ async function main() {
 
       // Generate 2–5 different weekdays with 1–2 slots each
       const numDays = isCore ? randomInt(3, 5) : randomInt(1, 3);
-      const allDays = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'السبت'];
+      const allDays = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'السبت'];
       const selectedDays = allDays.sort(() => Math.random() - 0.5).slice(0, numDays);
 
       const finalSchedule = selectedDays.flatMap((day) => {
         const hours = DAY_HOURS[day] || ['16:00'];
         const h1 = pick(hours);
         const h2 = isCore && Math.random() < 0.3 ? pick(hours.filter((h) => h !== h1)) : null;
-        return h2 ? [{ day, hour: h1 }, { day, hour: h2 }] : [{ day, hour: h1 }];
+        const s1 = toSlotHour(h1);
+        const s2 = h2 ? toSlotHour(h2) : null;
+        return s2 ? [{ day, hour: s1.hour, period: s1.period }, { day, hour: s2.hour, period: s2.period }] : [{ day, hour: s1.hour, period: s1.period }];
       });
 
       await prisma.enrollment.create({
@@ -400,7 +410,7 @@ async function main() {
             subject: enr.subject,
             date: d.toISOString().split('T')[0],
             day: dayNameStr,
-            time: slot.hour,
+            time: `${slot.hour}:00 ${slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
             price: randomInt(0, 25),
             status,
           },

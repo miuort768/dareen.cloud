@@ -6,6 +6,7 @@ import { api } from '../lib/api';
 import { cn } from '../lib/utils';
 import { PageHeader, ProgressBar } from '../shared/components/ui';
 import type { Student, Session, Enrollment } from '../types';
+import { periodLabel } from '../features/attendance/utils/slotUtils';
 
 export const Agenda = () => {
     useEffect(() => { document.title = 'الأجندة | دارين السابعة للتعليم والتدريب'; }, []);
@@ -78,7 +79,7 @@ export const Agenda = () => {
                             studentGrade: student.grade,
                             teacherName: enrollment.teacher,
                             subject: enrollment.subject,
-                            time: `${slot.hour} ${slot.period === 'am' ? 'صباحاً' : 'مساءً'}`,
+                            time: `${slot.hour} ${periodLabel(slot.period, true)}`,
                             hour: slot.hour,
                             period: slot.period,
                             isDone,

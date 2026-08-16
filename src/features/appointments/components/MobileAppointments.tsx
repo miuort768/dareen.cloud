@@ -60,7 +60,7 @@ export const MobileAppointments = () => {
     const allAppointments: AppointmentEvent[] = useMemo(() =>
         (students || []).flatMap(student =>
             (student.enrollments || [])
-                .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch)
+                .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch || enrollment.teacherId === currentUser.id)
                 .flatMap(enrollment =>
                     (enrollment.schedule || []).map(slot => {
                         const isPM = !(slot.period === 'am' || slot.period === 'صباحاً' || slot.period === 'صباحا' || slot.period === 'ص');

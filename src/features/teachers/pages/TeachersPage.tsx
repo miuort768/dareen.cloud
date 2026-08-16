@@ -121,7 +121,7 @@ export const Teachers = () => {
   const handleDeleteTeacher = () => { if (deletingTeacherId) { deleteTeacher(deletingTeacherId); setDeletingTeacherId(null); } };
 
   const handleConfirmLog = async (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => {
-    if (!secureModalData || !selectedTeacher || !logDate) return;
+    if (!secureModalData || !selectedTeacher || !logDate) return false;
     const { student, enrollment } = secureModalData;
     const now = new Date();
     const currentTime = now.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
@@ -135,8 +135,13 @@ export const Teachers = () => {
       showNotification(`تم تسجيل ${status === 'completed' ? 'حضور' : 'غياب'} بنجاح`, 'success');
       queryClient.invalidateQueries({ queryKey: ['students'] });
       queryClient.invalidateQueries({ queryKey: ['sessions'] });
-    } catch (e) { console.error(e); showNotification('فشل تسجيل الحضور', 'error'); }
-    finally { setSecureModalData(null); }
+      setSecureModalData(null);
+      return true;
+    } catch (e) {
+      console.error(e);
+      showNotification('فشل تسجيل الحضور', 'error');
+      return false;
+    }
   };
 
   const handleSendTeacherNotification = async (message: string) => {

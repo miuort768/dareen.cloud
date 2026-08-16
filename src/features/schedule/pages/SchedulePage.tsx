@@ -11,6 +11,7 @@ import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page';
 import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader';
 import { StudentDashboardHeader } from '../../../pages/student-dashboard/StudentDashboardHeader';
 import { cn } from '../../../lib/utils';
+import { to24Minutes } from '../../attendance/utils/slotUtils';
 
 interface Student { id: string; name: string; grade: string; parentPhone: string; enrollments: Enrollment[]; totalPoints?: number; }
 interface Enrollment { teacher: string; subject: string; curr: string; sessionsTotal: number; sessionsUsed: number; schedule: ScheduleSlot[]; teacherId?: string | number; }
@@ -130,16 +131,17 @@ export const Schedule = () => {
 
     const nextSession = useMemo(() => {
         const now = new Date();
-        const currentHour = now.getHours();
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
         const today = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
         const todayEvents = filteredEvents.filter(e => e.day === today)
-            .filter(e => parseInt(e.hour) >= currentHour)
-            .sort((a, b) => parseInt(a.hour) - parseInt(b.hour));
+            .filter(e => to24Minutes(e.hour, e.period) >= currentMinutes)
+            .sort((a, b) => to24Minutes(a.hour, a.period) - to24Minutes(b.hour, b.period));
         if (todayEvents.length > 0) return todayEvents[0];
         const todayIdx = DAYS.indexOf(today);
         for (let i = 1; i <= 7; i++) {
             const nextDay = DAYS[(todayIdx + i) % 7];
-            const nextEvents = filteredEvents.filter(e => e.day === nextDay).sort((a, b) => parseInt(a.hour) - parseInt(b.hour));
+            const nextEvents = filteredEvents.filter(e => e.day === nextDay)
+                .sort((a, b) => to24Minutes(a.hour, a.period) - to24Minutes(b.hour, b.period));
             if (nextEvents.length > 0) return nextEvents[0];
         }
         return null;

@@ -97,7 +97,7 @@ const [fabOpen, setFabOpen] = useState(false);
     const [logDate, setLogDate] = useState(new Date().toLocaleDateString('en-CA'));
 
     const handleConfirmLog = async (status: 'completed' | 'cancelled', topics?: string, homework?: string, needsCompensation?: boolean) => {
-        if (!secureModalData || !logDate || isLogging) return;
+        if (!secureModalData || !logDate || isLogging) return false;
         setIsLogging(true);
         const { student, enrollment } = secureModalData;
         const alreadyLogged = allSessions.some(s =>
@@ -107,7 +107,7 @@ const [fabOpen, setFabOpen] = useState(false);
             showNotification('الحصة مسجلة بالفعل لهذا الطالب والمادة في هذا التاريخ', 'warning');
             setSecureModalData(null);
             setIsLogging(false);
-            return;
+            return true;
         }
         const now = new Date();
         const currentTime = now.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
@@ -128,10 +128,13 @@ const [fabOpen, setFabOpen] = useState(false);
                 window.open(waLink, '_blank');
             }
             setSecureModalData(null);
+            setIsLogging(false);
+            return true;
         } else {
             showNotification(result.error || 'فشل تسجيل الحصة', 'error');
+            setIsLogging(false);
+            return false;
         }
-        setIsLogging(false);
     };
 
     const handleViewHistory = useCallback((studentId: string, studentName: string, grade?: string, subject?: string) => {
@@ -170,7 +173,6 @@ const [fabOpen, setFabOpen] = useState(false);
         { icon: Plus, label: 'تسجيل حضور', onClick: () => document.querySelector<HTMLButtonElement>('[data-attendance-log]')?.click() },
         { icon: List, label: 'سجل الجلسات', onClick: () => { const first = filteredSessions[0]; if (first) handleViewHistory(first.studentId || '', first.studentName || '', undefined, first.subject); } },
         { icon: BarChart3, label: 'إحصائيات', onClick: () => document.querySelector('[data-stats-section]')?.scrollIntoView({ behavior: 'smooth' }) },
-        { icon: CheckCircle, label: 'تسجيل كامل', onClick: () => { if (window.confirm('تسجيل الحضور للمعلمة dareen')) { showNotification('تم تسجيل الحضور للجميع', 'success'); } } },
     ], [filteredSessions, handleViewHistory])
 
     return (
