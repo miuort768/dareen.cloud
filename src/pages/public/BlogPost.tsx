@@ -37,7 +37,7 @@ export const BlogPost = () => {
     const adminPhone = useSettingsStore(s => s.adminPhone);
     const whatsappNumber = adminPhone.replace(/\D/g, '');
     const [buttonState, setButtonState] = useState<{ type: 'download' | 'watch'; phase: 'counting' | 'ready'; seconds?: number } | null>(null);
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const { data: post, isLoading: loading } = useQuery<BlogPostType | null>({
         queryKey: ['blog-post', slug],

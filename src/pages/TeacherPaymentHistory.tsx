@@ -35,6 +35,7 @@ export const TeacherPaymentHistory = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterStatus, setFilterStatus] = useState<string>('all');
+    const [period, setPeriod] = useState('all');
     const [fabOpen, setFabOpen] = useState(false);
 
     useEffect(() => {
@@ -63,8 +64,17 @@ export const TeacherPaymentHistory = () => {
     const filteredInvoices = useMemo(() => invoices.filter(inv => {
         const matchesSearch = inv.teacher.toLowerCase().includes(searchTerm.toLowerCase()) || inv.specialization.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesStatus = filterStatus === 'all' || inv.status === filterStatus;
-        return matchesSearch && matchesStatus;
-    }), [invoices, searchTerm, filterStatus]);
+        const matchesPeriod = period === 'all' || (() => {
+            const d = new Date(inv.date);
+            const now = new Date();
+            if (isNaN(d.getTime())) return true;
+            if (period === 'year') return d.getFullYear() === now.getFullYear();
+            if (period === 'quarter') return d.getFullYear() === now.getFullYear() && Math.floor(d.getMonth() / 3) === Math.floor(now.getMonth() / 3);
+            if (period === 'month') return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+            return true;
+        })();
+        return matchesSearch && matchesStatus && matchesPeriod;
+    }), [invoices, searchTerm, filterStatus, period]);
 
     const stats = useMemo(() => {
         const result = { total: 0, paid: 0, processing: 0, overdue: 0, unpaid: 0 };

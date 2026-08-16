@@ -50,7 +50,7 @@ const inputClasses = [
 
 export const InvoiceForm = ({
   showForm, editingId, formData, setFormData,
-  handleSubmit, handleStudentChange, students, isSaving
+  handleSubmit, handleCancel, handleStudentChange, students, isSaving
 }: InvoiceFormProps) => {
   if (!showForm) return null;
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { AlertCircle, CheckCircle2, Plus, Search, RefreshCcw, TrendingUp, ListTodo, Clock, Filter } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Plus, Search, RefreshCcw, TrendingUp, ListTodo, Clock, Filter, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { StatCard } from '../shared/components/ui';

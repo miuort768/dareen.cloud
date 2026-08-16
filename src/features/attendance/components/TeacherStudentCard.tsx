@@ -207,7 +207,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                 <StudentScheduleEditor
                     schedule={en.schedule || []}
                     isEditing={isEditing}
-                    onToggleEdit={() => { setIsEditing(!isEditing); setEditSlotIndex(null); }}
+                    onToggleEdit={() => setIsEditing(!isEditing)}
                     onDeleteSlot={(i) => onDeleteSlot(student, en, i)}
                     onSaveSlot={(slot, editIdx) => {
                         const newSch = [...(en.schedule || [])];

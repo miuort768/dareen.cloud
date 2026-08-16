@@ -4,6 +4,7 @@ import { SectionCard, SectionTitle, PrimaryBtn, SecondaryBtn, DangerBtn } from '
 import { settingsService } from '../services/settingsService';
 import { safeArray } from '../../../lib/api';
 import { cn } from '../../../lib/utils';
+import { useShowNotification } from '../../../context/AppContext';
 
 export const BackupSection = ({
     handleExportBackup, handleImportBackup, triggerReset, isSaving, triggerArchive,
@@ -13,6 +14,7 @@ export const BackupSection = ({
 }) => {
     const [backupHistory, setBackupHistory] = useState<{ id: number; type: string; status: string; size: number; createdAt: string }[]>([]);
     const [loading, setLoading] = useState(true);
+    const showNotify = useShowNotification();
 
     useEffect(() => {
         const fetchHistory = async () => {

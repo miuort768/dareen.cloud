@@ -17,7 +17,7 @@ export const useChatSocketInit = () => {
     const isAuthenticated = useIsAuthenticated();
     const currentUser = useCurrentUser();
     const queryClient = useQueryClient();
-    const typingTimeoutsRef = useRef<Record<string, NodeJS.Timeout>>({});
+    const typingTimeoutsRef = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
     const setIsConnected = useChatStore(s => s.setIsConnected);

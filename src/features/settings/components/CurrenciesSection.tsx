@@ -18,19 +18,20 @@ export const CurrenciesSection = ({
     const [newRate, setNewRate] = useState({ fromCurrency: '', toCurrency: '', buyRate: '', sellRate: '', notes: '' });
     const [activeTab, setActiveTab] = useState<'currencies' | 'rates'>('currencies');
 
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const [cur, rts] = await Promise.all([
+                settingsService.getCurrencies(),
+                settingsService.getExchangeRates(),
+            ]);
+            setCurrencies(cur);
+            setRates(rts);
+        } catch (e) { console.error(e); }
+        finally { setLoading(false); }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const [cur, rts] = await Promise.all([
-                    settingsService.getCurrencies(),
-                    settingsService.getExchangeRates(),
-                ]);
-                setCurrencies(cur);
-                setRates(rts);
-            } catch (e) { console.error(e); }
-            finally { setLoading(false); }
-        };
         fetchData();
     }, []);
 

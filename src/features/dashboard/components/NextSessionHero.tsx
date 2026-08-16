@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Clock, Play, GraduationCap } from 'lucide-react';
+import { Clock, Play, GraduationCap, SkipForward } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
@@ -119,7 +119,7 @@ export const NextSessionHero = ({ timeline, onStart, onSkip }: NextSessionHeroPr
                                 className="ml-2 bg-white/20 dark:bg-black/20 hover:bg-white/30 dark:hover:bg-black/30 text-white dark:text-on-primary border-0 gap-2 text-sm"
                                 size="sm"
                             >
-                                <Skip size={14} fill="currentColor" />
+                                <SkipForward size={14} fill="currentColor" />
                                 تخطي
                             </Button>
                         )}

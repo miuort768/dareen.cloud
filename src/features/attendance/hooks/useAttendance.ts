@@ -48,14 +48,15 @@ export const useAttendance = (currentUser: GlobalUser | null, date: string, date
         }
     };
 
-    const logAttendance = async (sessionData: Omit<Session, 'id'>) => {
+    const logAttendance = async (sessionData: Omit<Session, 'id'>): Promise<{ success: boolean; error?: string }> => {
         try {
             await attendanceService.createSession(sessionData);
             fetchAll();
-            return true;
+            return { success: true };
         } catch (error) {
             console.error("Error logging attendance", error);
-            return false;
+            const message = error instanceof Error ? error.message : 'حدث خطأ غير متوقع';
+            return { success: false, error: message };
         }
     };
 

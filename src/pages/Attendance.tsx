@@ -112,13 +112,13 @@ const [fabOpen, setFabOpen] = useState(false);
         const now = new Date();
         const currentTime = now.toLocaleTimeString('ar-EG', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
         const calculatedPrice = enrollment.price ? (enrollment.price - (enrollment.discount || 0)) : undefined;
-        const success = await logAttendance({
-            studentId: student.id, studentName: student.name, teacherName: enrollment.teacher,
+        const result = await logAttendance({
+            studentId: student.id, studentName: student.name || 'غير محدد', teacherName: enrollment.teacher || currentUser?.teacherName || currentUser?.name || '',
             teacherId: enrollment.teacherId, subject: enrollment.subject, date: logDate, time: currentTime,
             status, day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' }),
             topics, homework, needsCompensation, price: calculatedPrice
         });
-        if (success) {
+        if (result.success) {
             showNotification(`تم تسجيل ${student.name} (${status === 'completed' ? 'حضور' : 'غياب'})`, 'success');
             if (whatsappAutoNotify && status === 'completed' && student.parentPhone) {
                 const waLink = generateWhatsAppLink(student.parentPhone, whatsappTemplate, {
@@ -129,7 +129,7 @@ const [fabOpen, setFabOpen] = useState(false);
             }
             setSecureModalData(null);
         } else {
-            showNotification('فشل تسجيل الحصة', 'error');
+            showNotification(result.error || 'فشل تسجيل الحصة', 'error');
         }
         setIsLogging(false);
     };
