@@ -148,10 +148,6 @@ export const ProfileHero = ({ name, role, subtitle, points, rank, stats }: Profi
                     </div>
                 </div>
 
-                    <div className="flex items-center gap-2 px-4 h-10 rounded-xl bg-primary/10 dark:bg-primary/10 text-primary dark:text-primary text-sm font-bold tabular-nums shrink-0 self-start md:self-center">
-                    </div>
-                </div>
-
                 <div className="hidden md:flex items-center gap-4 mt-5 pt-5 border-t border-border dark:border-border">
                     <span className="inline-flex items-center gap-1.5 text-muted dark:text-muted text-[11px] font-medium">
                         <CalendarDays size={12} />

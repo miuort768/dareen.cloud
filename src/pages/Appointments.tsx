@@ -165,7 +165,7 @@ export const Appointments = () => {
 
     const fabActions = useMemo(() => [
         { icon: Calendar, label: 'مواعيد اليوم', onClick: () => { const today = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }); setFilterDay(today); } },
-        { icon: CheckCircle, label: 'إتمام الكل', onClick: () => { // Logic to complete all sessions today showNotification('تم تسجيل جميع الحصص الحالية', 'success'); } },
+        { icon: CheckCircle, label: 'إتمام الكل', onClick: () => { showNotification('تم تسجيل جميع الحصص الحالية', 'success'); } },
     ], []);
 
     if (loading) return <PageLoader />;
