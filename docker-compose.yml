@@ -4,6 +4,7 @@ services:
       context: .
       args:
         - VITE_API_URL=/api
+        - VITE_ATTENDANCE_SECRET=${VITE_ATTENDANCE_SECRET:-dareen@2025}
     container_name: darin-app
     restart: always
     ports:
