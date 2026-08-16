@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Search, Users, Activity, CheckCircle, XCircle, Clock, Plus, List, BarChart3, UserCheck } from 'lucide-react';
+import { Search, Users, Activity, CheckCircle, XCircle, Clock, Plus, List, BarChart3, UserCheck, ListTodo } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate, useLogout, useAcademyName } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -49,8 +49,7 @@ export const Attendance = () => {
     const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('today');
     const [customStartDate, setCustomStartDate] = useState('');
     const [customEndDate, setCustomEndDate] = useState('');
-    const [fabOpen, setFabOpen] = useState(false);
-    const [showAttendanceView, setShowAttendanceView] = useState(true); // New state for view toggle
+const [fabOpen, setFabOpen] = useState(false);
 
     const dateRange = useMemo(() => {
         const d = new Date(date);
@@ -183,13 +182,17 @@ export const Attendance = () => {
                     </div>
                     <div className="flex items-center gap-3 mb-4">
                         <button
-                            onClick={() => setShowAttendanceView(prev => !prev)}
-                            className={cn("px-4 py-2 rounded-xl bg-primary text-on-primary text-sm font-medium transition-all", showAttendanceView ? "border border-transparent" : "border border-primary/30")}
-                            aria-label="عرض الجدول"
+                            onClick={() => navigate('/attendance')}
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-on-primary text-sm font-medium transition-all"
+                            aria-label="الحضور والغياب"
                         >
-                            {showAttendanceView ? 'الحضور والغياب' : 'الجدول'}
+                            <UserCheck size={14} />
+                            الحضور والغياب
                         </button>
-                        <button onClick={() => navigate('/tasks')} className="px-4 py-2 rounded-xl bg-surface border border-border text-muted hover:text-main dark:hover:text-main">المهام</button>
+                        <button onClick={() => navigate('/tasks')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-border text-muted hover:text-main dark:hover:text-main">
+                            <ListTodo size={14} />
+                            المهام
+                        </button>
                     </div>
                 </>
             )}

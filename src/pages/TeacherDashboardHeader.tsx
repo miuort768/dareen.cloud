@@ -1,4 +1,4 @@
-﻿import { LogOut, Sun, Moon, Bell, Home, Calendar, MessageSquare, User, MessageCircle, ListTodo, Wallet, CalendarDays } from 'lucide-react';
+﻿import { LogOut, Sun, Moon, Bell, Home, Calendar, MessageSquare, User, MessageCircle, ListTodo, Wallet, CalendarDays, UserCheck } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDarkMode } from '../shared/hooks/useDarkMode';
 import { useCurrentUser, useAcademicYear } from '../context/AppContext';
@@ -13,6 +13,7 @@ interface TeacherDashboardHeaderProps {
 const navTabs = [
     { id: 'home', label: 'الرئيسية', icon: Home, path: '/teacher-dashboard' },
     { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/schedule' },
+    { id: 'attendance', label: 'الحضور والغياب', icon: UserCheck, path: '/attendance' },
     { id: 'tasks', label: 'المهام', icon: ListTodo, path: '/tasks' },
     { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
     { id: 'chat', label: 'الرسائل', icon: MessageSquare, path: '/chat' },

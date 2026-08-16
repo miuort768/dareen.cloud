@@ -1,14 +1,18 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useCurrentUser, useShowNotification, useAcademyName, useLogout } from '../context/AppContext';
 import { api } from '../lib/api';
 import { PageLoader } from '../components/ui/PageLoader';
 import { ErrorBanner } from '../shared/components/ui/ErrorState';
 import { MobileAppointments } from '../features/appointments/components/MobileAppointments';
 import { AppointmentsFilters, DAYS_OF_WEEK, AppointmentScheduleGrid, AppointmentDetailPanel } from './appointments-page';
-import { Plus, Calendar, CheckCircle, Clock, BarChart3, Filter } from 'lucide-react';
+import { Plus, Calendar, CheckCircle, Clock, BarChart3, Filter, Home, ListTodo, MessageCircle, MessageSquare, Wallet, Moon, Bell, LogOut, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
+import { useDarkMode } from '../shared/hooks/useDarkMode';
+import { confirm } from '../lib/confirmDialog';
+import { IconButton } from '../shared/components/ui/IconButton';
 
 interface AppointmentEvent {
     id: string; studentName: string; studentGrade: string; teacherName: string;
@@ -28,6 +32,8 @@ export const Appointments = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const location = useLocation();
+    const logout = useLogout();
+    const [theme, setTheme] = useDarkMode();
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDay, setFilterDay] = useState<string>('all');
@@ -192,6 +198,14 @@ export const Appointments = () => {
                         >
                             <Home size={14} className="text-primary" />
                            الرئيسية
+                        </button>
+                        <button
+                            onClick={() => navigate('/attendance')}
+                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-border text-muted hover:text-main dark:hover:text-main transition-all"
+                            aria-label="الحضور والغياب"
+                        >
+                            <UserCheck size={14} className="text-muted" />
+                            الحضور والغياب
                         </button>
                         <button
                             onClick={() => navigate('/tasks')}
