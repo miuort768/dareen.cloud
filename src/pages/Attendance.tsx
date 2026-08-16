@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Search, Users, Activity, CheckCircle, XCircle, Clock, Plus, List, BarChart3, UserCheck, ListTodo } from 'lucide-react';
+import { Search, Users, Activity, CheckCircle, XCircle, Clock, Plus, List, BarChart3, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useCurrentUser, useShowNotification, useWhatsappAutoNotify, useWhatsappTemplate, useLogout, useAcademyName } from '../context/AppContext';
 import { ConfirmModal } from '../shared/components/ConfirmModal';
@@ -179,20 +179,6 @@ const [fabOpen, setFabOpen] = useState(false);
                 <>
                     <div className="hidden md:block">
                         <TeacherDashboardHeader logout={logout} />
-                    </div>
-                    <div className="flex items-center gap-3 mb-4">
-                        <button
-                            onClick={() => navigate('/attendance')}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-on-primary text-sm font-medium transition-all"
-                            aria-label="الحضور والغياب"
-                        >
-                            <UserCheck size={14} />
-                            الحضور والغياب
-                        </button>
-                        <button onClick={() => navigate('/tasks')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-border text-muted hover:text-main dark:hover:text-main">
-                            <ListTodo size={14} />
-                            المهام
-                        </button>
                     </div>
                 </>
             )}
