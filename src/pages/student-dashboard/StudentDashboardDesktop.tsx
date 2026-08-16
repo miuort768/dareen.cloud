@@ -13,7 +13,7 @@ import { AchievementsSection } from './AchievementsSection';
 import { RecentActivity } from './RecentActivity';
 import { useLogout } from '../../context/AppContext';
 
-const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+const ARABIC_DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
 const fadeUp = (delay: number) => ({
     initial: { opacity: 0, y: 16 },

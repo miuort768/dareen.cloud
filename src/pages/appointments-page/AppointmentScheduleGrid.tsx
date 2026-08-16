@@ -35,37 +35,32 @@ export const AppointmentScheduleGrid = ({ appointmentsByDay, onSelectAppointment
                         {appointments.length} موعد
                     </span>
                 </div>
-                <div className="p-3 flex-1 flex flex-col justify-start min-h-[140px]">
-                    {appointments.length > 0 ? (() => {
-                        const nextSession = appointments[0];
-                        return (
-                            <div key={nextSession.id}
-                                onClick={() => { onSelectAppointment(nextSession); }}
-                                className="flex flex-col gap-2 cursor-pointer group">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-1.5">
-                                        <Clock size={12} className="text-primary" />
-                                        <span className="font-bold text-sm tabular-nums text-primary">{nextSession.time}</span>
-                                    </div>
-                                    <span className="text-micro font-bold px-1.5 py-0.5 rounded-lg bg-primary-soft text-primary">التالي</span>
+                <div className="p-3 flex-1 flex flex-col gap-2 justify-start min-h-[140px]">
+                    {appointments.length > 0 ? appointments.map((app, i) => (
+                        <div key={app.id} onClick={() => onSelectAppointment(app)} className="flex flex-col cursor-pointer group">
+                            <div className="flex items-center justify-between mb-1">
+                                <div className="flex items-center gap-1.5">
+                                    <Clock size={12} className="text-primary" />
+                                    <span className="font-bold text-sm tabular-nums text-primary">{app.time}</span>
                                 </div>
-                                <div className="p-2 rounded-xl border border-primary-soft transition-all bg-primary-soft/50">
-                                    <div className="flex items-center gap-1.5 mb-1">
-                                        <User size={11} className="shrink-0 text-primary" />
-                                        <span className="text-xs font-bold text-main truncate">{nextSession.studentName}</span>
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                        <ShieldCheck size={10} className="shrink-0 text-success" />
-                                        <span className="text-micro font-bold text-muted truncate">{nextSession.teacherName}</span>
-                                    </div>
-                                </div>
-                                <button onClick={(e) => onCompleteSession(nextSession.id, e)}
-                                    className="w-full bg-success hover:brightness-90 text-on-success py-2.5 font-bold text-xs rounded-xl active:scale-95 transition-all flex items-center justify-center gap-1.5">
-                                    <CheckCircle2 size={14} /> إتمام الحصة
-                                </button>
+                                {i === 0 && <span className="text-micro font-bold px-1.5 py-0.5 rounded-lg bg-primary-soft text-primary">التالي</span>}
                             </div>
-                        );
-                    })() : (
+                            <div className="p-2 rounded-xl border border-border bg-surface transition-all group-hover:border-primary/40">
+                                <div className="flex items-center gap-1.5 mb-1">
+                                    <User size={11} className="shrink-0 text-primary" />
+                                    <span className="text-xs font-bold text-main truncate">{app.studentName}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                    <ShieldCheck size={10} className="shrink-0 text-success" />
+                                    <span className="text-micro font-bold text-muted truncate">{app.teacherName}</span>
+                                </div>
+                            </div>
+                            <button onClick={(e) => onCompleteSession(app.id, e)}
+                                className="w-full bg-success hover:brightness-90 text-on-success py-2 font-bold text-xs rounded-xl active:scale-95 transition-all flex items-center justify-center gap-1.5 mt-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
+                                <CheckCircle2 size={14} /> إتمام الحصة
+                            </button>
+                        </div>
+                    )) : (
                         <div className="flex-1 flex flex-col items-center justify-center py-6">
                             <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-2 bg-primary-soft">
                                 <Calendar size={18} className="text-primary" />

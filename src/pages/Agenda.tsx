@@ -123,7 +123,7 @@ export const Agenda = () => {
         });
     };
 
-    const DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    const DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
     if (loadingStudents || loadingSessions) {
         return <div className="p-6 lg:p-12 text-center">جاري تحميل البيانات...</div>;

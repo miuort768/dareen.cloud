@@ -17,7 +17,7 @@ import { StudentDashboardHeader } from './StudentDashboardHeader';
 import { MobileBottomNav } from './MobileBottomNav';
 import type { User } from '../../types/auth';
 
-const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+const ARABIC_DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
 const fadeUp = (delay: number) => ({
     initial: { opacity: 0, y: 16 },

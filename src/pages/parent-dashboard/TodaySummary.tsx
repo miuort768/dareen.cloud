@@ -9,7 +9,7 @@ interface TodaySummaryProps {
     todayTasks: { studentName: string; subject: string; teacher: string; time: string; period: string }[];
 }
 
-const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+const ARABIC_DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
 const cards = [
     {

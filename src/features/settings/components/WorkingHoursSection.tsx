@@ -3,7 +3,7 @@ import { Clock, Sun, Moon } from 'lucide-react';
 import { SectionCard, SectionTitle, FieldLabel, InputField, PrimaryBtn } from './SettingsUI';
 import { settingsService } from '../services/settingsService';
 
-const DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+const DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
 export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) => void }) => {
     const [schedule, setSchedule] = useState<{ day: number; enabled: boolean; start: string; end: string }[]>(
