@@ -244,10 +244,23 @@ export const TeacherProfilePage = () => {
                             <div className="space-y-2.5">
                                 {infoFields.map((f, i) => <InfoRow key={i} icon={f.icon} label={f.label} value={f.value} />)}
                             </div>
-</div>
+                        </div>
 
                         <PaymentSettingsSection />
-                </motion.div>
+                    </motion.div>
+
+                    <motion.div {...stagger(3)} className="space-y-4 md:space-y-6">
+                        <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
+                            <h3 className="text-base font-bold text-main mb-4 flex items-center gap-2">
+                                <GraduationCap size={16} className="text-primary" />
+                                معلومات التدريس
+                            </h3>
+                            <div className="space-y-2.5">
+                                {teachingFields.map((f, i) => <InfoRow key={i} icon={f.icon} label={f.label} value={f.value} />)}
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <motion.div {...stagger(4)}>
