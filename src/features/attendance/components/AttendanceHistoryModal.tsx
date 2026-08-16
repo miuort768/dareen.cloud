@@ -17,10 +17,11 @@ interface AttendanceHistoryModalProps {
     studentGrade?: string;
     studentSubject?: string;
     studentCurriculum?: string;
+    canDelete?: boolean;
     onSessionChange?: () => void;
 }
 
-export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId, teacherName, studentGrade, studentSubject, studentCurriculum, onSessionChange }: AttendanceHistoryModalProps) => {
+export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId, teacherName, studentGrade, studentSubject, studentCurriculum, canDelete = true, onSessionChange }: AttendanceHistoryModalProps) => {
     const [editingSession, setEditingSession] = useState<Session | null>(null);
     const [deletingId, setDeletingId] = useState<string | null>(null);
     const showNotification = useShowNotification();
@@ -234,14 +235,16 @@ export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId
                                                     >
                                                         <Edit2 size={14} />
                                                     </button>
-                                                    <button
-                                                        onClick={() => handleDelete(session.id)}
-                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-error-soft text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                                                        aria-label="حذف"
-                                                        disabled={deletingId === session.id}
-                                                    >
-                                                        {deletingId === session.id ? <div className="w-4 h-4 border-2 border-error border-t-transparent rounded-full animate-spin"></div> : <Trash2 size={14} />}
-                                                    </button>
+                                                    {canDelete && (
+                                                        <button
+                                                            onClick={() => handleDelete(session.id)}
+                                                            className="p-2 rounded-xl transition-all active:scale-95 bg-error-soft text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                                                            aria-label="حذف"
+                                                            disabled={deletingId === session.id}
+                                                        >
+                                                            {deletingId === session.id ? <div className="w-4 h-4 border-2 border-error border-t-transparent rounded-full animate-spin"></div> : <Trash2 size={14} />}
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </div>
                                         </>

@@ -93,7 +93,18 @@ router.get('/', authMiddleware, async (req, res) => {
                 where.studentId = { in: childIds };
             }
         } else if (req.user.role === 'teacher') {
-            where.teacherId = req.user.id;
+            // Teachers log in via accounts; their sessions may be stored under the
+            // account id OR the resolved real Teacher row id, so match by both the
+            // account id and any known teacher name.
+            const tName = (req.user.teacherName || req.user.name || '').trim();
+            const ownershipOr = [{ teacherId: req.user.id }];
+            if (tName) ownershipOr.push({ teacherName: { equals: tName, mode: 'insensitive' } });
+            if (q) {
+                // q already populated where.OR; keep both filters (AND semantics)
+                where.AND = [{ OR: ownershipOr }];
+            } else {
+                where.OR = ownershipOr;
+            }
         } else if (req.user.role === 'admin') {
             if (studentId) where.studentId = studentId;
             if (teacherId) where.teacherId = teacherId;
@@ -259,10 +270,16 @@ router.patch('/:id', authMiddleware, checkRole(['admin', 'teacher']), validate(u
     keys.forEach(k => { data[k] = updates[k]; });
 
     try {
-        const existing = await prisma.session.findUnique({ where: { id }, select: { id: true, teacherId: true } });
+        const existing = await prisma.session.findUnique({ where: { id }, select: { id: true, teacherId: true, teacherName: true } });
         if (!existing) return res.status(404).json({ error: 'Session not found' });
-        if (isTeacher && existing.teacherId !== req.user.id) {
-            return res.status(403).json({ error: 'Access denied: cannot modify other teachers sessions' });
+        if (isTeacher) {
+            // Sessions may reference the account id OR the real Teacher row id.
+            const tName = (req.user.teacherName || req.user.name || '').trim();
+            const ownsById = existing.teacherId === req.user.id;
+            const ownsByName = tName && (existing.teacherName || '').trim().toLowerCase() === tName.toLowerCase();
+            if (!ownsById && !ownsByName) {
+                return res.status(403).json({ error: 'Access denied: cannot modify other teachers sessions' });
+            }
         }
 
         const updated = await prisma.$transaction(async (tx) => {

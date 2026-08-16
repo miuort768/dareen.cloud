@@ -7,7 +7,7 @@ interface BulkAttendanceButtonProps {
     matchedEnrollments: { student: Student; enrollment: Enrollment }[];
     allSessions: Session[];
     logDate: string;
-    logAttendance: (data: Record<string, unknown>) => Promise<{ success: boolean; error?: string }>;
+    logAttendance: (data: Omit<Session, 'id'>) => Promise<{ success: boolean; error?: string }>;
 }
 
 export const BulkAttendanceButton = ({ matchedEnrollments, allSessions, logDate, logAttendance }: BulkAttendanceButtonProps) => {

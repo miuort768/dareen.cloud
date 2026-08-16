@@ -281,7 +281,7 @@ export const MobileAttendance = () => {
                 studentId={historyStudent?.id || ''} studentName={historyStudent?.name || ''}
                 teacherName={currentUser?.teacherName || currentUser?.name || ''}
                 studentGrade={historyStudent?.grade} studentSubject={historyStudent?.subject}
-                studentCurriculum={historyStudent?.curriculum} onSessionChange={refresh} />
+                studentCurriculum={historyStudent?.curriculum} onSessionChange={refresh} canDelete={currentUser?.role !== 'teacher'} />
             <ConfirmModal isOpen={!!deletingSlot} title="حذف موعد الحصة"
                 message="هل أنت متأكد من حذف هذا الموعد؟ لا يمكن الرجوع عن هذا الإجراء"
                 onConfirm={() => {
