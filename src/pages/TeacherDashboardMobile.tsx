@@ -263,11 +263,11 @@ export const TeacherDashboardMobile = ({
                     />
                   </div>
                 )}
-                <div className="rounded-2xl border border-border bg-surface p-4 dark:border-border dark:bg-card">
+                <div className="px-1">
                   <QuickActions
                     onStartSession={() => openStart(nextSession?.studentId, nextSession?.subject)}
                     sessionAvailable={!!nextSession}
-                    showQuickLinks={false}
+                    showQuickLinks={true}
                   />
                 </div>
                 <div className="rounded-2xl border border-border bg-surface p-4 dark:border-border dark:bg-card">
