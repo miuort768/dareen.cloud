@@ -3,6 +3,15 @@ const { prisma } = require('../utils/prisma');
 const { syncAccount, deactivateAccount } = require('./authAccounts');
 
 class ChatService {
+    async resolveUserName(userId) {
+        const profile = await prisma.user.findUnique({ where: { id: userId }, select: { name: true } })
+            ?? await prisma.teacher.findUnique({ where: { id: userId }, select: { name: true } })
+            ?? await prisma.parent.findUnique({ where: { id: userId }, select: { name: true } })
+            ?? await prisma.student.findUnique({ where: { id: userId }, select: { name: true } })
+            ?? await prisma.chatProfile.findUnique({ where: { id: userId }, select: { name: true } });
+        return profile?.name || userId;
+    }
+
     async getProfiles() {
         return await prisma.chatProfile.findMany({
             select: { id: true, name: true, username: true, avatar: true, status: true, lastSeen: true }
@@ -56,11 +65,29 @@ class ChatService {
         });
         notifs.forEach(n => { unreadCounts[n.conversationId] = (unreadCounts[n.conversationId] || 0) + 1; });
 
+        // Batch-resolve names for non-group conversations
+        const otherUserIds = [...new Set(
+            conversations
+                .filter(c => !c.isGroup)
+                .map(c => c.members.find(m => m.userId !== userId)?.userId)
+                .filter(Boolean)
+        )];
+
+        const nameMap = {};
+        for (const id of otherUserIds) {
+            const profile = await prisma.user.findUnique({ where: { id }, select: { name: true } })
+                ?? await prisma.teacher.findUnique({ where: { id }, select: { name: true } })
+                ?? await prisma.parent.findUnique({ where: { id }, select: { name: true } })
+                ?? await prisma.student.findUnique({ where: { id }, select: { name: true } })
+                ?? await prisma.chatProfile.findUnique({ where: { id }, select: { name: true } });
+            nameMap[id] = profile?.name || id;
+        }
+
         return conversations.map(c => {
             const otherMember = c.members.find(m => m.userId !== userId);
             let displayName = c.name;
             if (!c.isGroup && otherMember) {
-                displayName = otherMember.userId;
+                displayName = nameMap[otherMember.userId] || otherMember.userId;
             }
             const lm = lastMsgMap[c.id];
             return {
