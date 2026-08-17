@@ -2,6 +2,7 @@ import { Users } from 'lucide-react';
 import { useShowNotification } from '../../context/AppContext';
 import { confirm } from '../../lib/confirmDialog';
 import type { Student, Enrollment, Session } from '../../features/attendance/types';
+import { normalizeDayName } from '../../features/attendance/utils/slotUtils';
 
 interface BulkAttendanceButtonProps {
     matchedEnrollments: { student: Student; enrollment: Enrollment }[];
@@ -16,7 +17,7 @@ export const BulkAttendanceButton = ({ matchedEnrollments, allSessions, logDate,
     const handleBulk = async () => {
         const selectedDayName = new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' });
         const todayStudents = (matchedEnrollments || []).filter(({ student, enrollment }) => {
-            const isScheduledToday = enrollment.schedule?.some(slot => slot.day === selectedDayName);
+            const isScheduledToday = enrollment.schedule?.some(slot => normalizeDayName(slot.day) === selectedDayName);
             const alreadyLogged = allSessions.some(s =>
                 s.studentId === student.id && s.subject === enrollment.subject && s.date === logDate
             );

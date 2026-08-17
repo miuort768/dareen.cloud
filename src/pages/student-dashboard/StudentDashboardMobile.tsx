@@ -10,6 +10,7 @@ import { TodayTasks } from './TodayTasks';
 import { ProgressOverview } from './ProgressOverview';
 import { SubjectCards } from './SubjectCards';
 import { ContinueLearning } from './ContinueLearning';
+import { normalizeDayName } from '../../features/attendance/utils/slotUtils';
 import { InvoicesCard } from './InvoicesCard';
 import { AchievementsSection } from './AchievementsSection';
 import { RecentActivity } from './RecentActivity';
@@ -69,7 +70,7 @@ export const StudentDashboardMobile = ({ studentData, sessions, pointLogs, logou
         let minDiff = Infinity;
         enrollments.forEach((en: Enrollment) => {
             (en.schedule || []).forEach((slot) => {
-                if (slot.day === todayDay) {
+                if (normalizeDayName(slot.day) === todayDay) {
                     const [h, m] = (slot.hour || '0:0').split(':').map(Number);
                     const diff = ((h || 0) * 60 + (m || 0)) - nowMinutes;
                     if (diff > 0 && diff < minDiff) {
@@ -89,7 +90,7 @@ export const StudentDashboardMobile = ({ studentData, sessions, pointLogs, logou
                 tasks.push({ id: `hw-${en.subject}`, subject: en.subject || '', teacher: en.teacherName || en.teacher || '', time: '', type: 'homework', completed: false });
             }
             (en.schedule || []).forEach((slot) => {
-                if (slot.day === todayDay) {
+                if (normalizeDayName(slot.day) === todayDay) {
                     tasks.push({ id: `sess-${en.subject}-${slot.hour}`, subject: en.subject || '', teacher: en.teacherName || en.teacher || '', time: slot.hour || '', type: 'session', completed: false });
                 }
             });

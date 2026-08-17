@@ -9,6 +9,7 @@ import { startLiveSession } from '../../../services/liveSessionService';
 import { LiveSessions } from '../../dashboard/components/LiveSessions';
 import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile';
 import { MobileScheduleDayChips, MobileScheduleDetailsSheet } from './mobile-schedule';
+import { normalizeDayName } from '../../attendance/utils/slotUtils';
 
 interface Student { id: string; name: string; grade: string; enrollments: Enrollment[]; }
 interface Enrollment { teacher: string; subject: string; curr: string; schedule: ScheduleSlot[]; teacherId?: string | number; }
@@ -84,10 +85,10 @@ export const MobileSchedule = () => {
                         const normalizedPeriod = (slot.period || '').trim().toLowerCase();
                         const isAM = ['am', 'صباحاً', 'صباحا', 'ص', 'am.', 'a.m', 'a.m.'].includes(normalizedPeriod) || normalizedPeriod.startsWith('صباح');
                         return {
-                            id: `${student.id}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
+                            id: `${student.id}-${enrollment.teacher}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
                             studentId: student.id, studentName: student.name, studentGrade: student.grade,
                             teacherName: (enrollment.teacher || '').trim(), subject: enrollment.subject,
-                            curriculum: enrollment.curr, day: (slot.day || '').trim(),
+                            curriculum: enrollment.curr, day: normalizeDayName(slot.day),
                             hour: String(parseInt(String(slot.hour).trim(), 10) || ''),
                             period: isAM ? 'am' : 'pm',
                             time: `${String(parseInt(String(slot.hour).trim(), 10) || '')}:00 ${isAM ? 'ص' : 'م'}`,

@@ -14,6 +14,7 @@ import { AttendanceHistoryModal } from './AttendanceHistoryModal';
 import { RescheduleModal } from './RescheduleModal';
 import { generateWhatsAppLink } from '../../../lib/whatsapp';
 import { AttendanceStatsBar, StudentAttendanceCard, AttendanceHistoryView, AdminAttendanceView } from './mobile-attendance';
+import { normalizeDayName } from '../utils/slotUtils';
 
 export const MobileAttendance = () => {
     const currentUser = useCurrentUser();
@@ -139,7 +140,7 @@ export const MobileAttendance = () => {
     const handleBulkAttendance = async () => {
         const selectedDayName = new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' });
         const todayStudents = (matchedEnrollments || []).filter(({ student, enrollment }) => {
-            const isScheduledToday = enrollment.schedule?.some(slot => slot.day === selectedDayName);
+            const isScheduledToday = enrollment.schedule?.some(slot => normalizeDayName(slot.day) === selectedDayName);
             const alreadyLogged = allSessions.some(s =>
                 s.studentId === student.id && s.subject === enrollment.subject && s.date === logDate
             );

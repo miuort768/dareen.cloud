@@ -12,6 +12,7 @@ import { InvoicesCard } from './InvoicesCard';
 import { AchievementsSection } from './AchievementsSection';
 import { RecentActivity } from './RecentActivity';
 import { useLogout } from '../../context/AppContext';
+import { normalizeDayName } from '../../features/attendance/utils/slotUtils';
 
 const ARABIC_DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
@@ -61,7 +62,7 @@ export const StudentDashboardDesktop = ({ studentData, sessions, pointLogs }: St
         let minDiff = Infinity;
         enrollments.forEach((en: Enrollment) => {
             (en.schedule || []).forEach((slot) => {
-                if (slot.day === todayDay) {
+                if (normalizeDayName(slot.day) === todayDay) {
                     const [h, m] = (slot.hour || '0:0').split(':').map(Number);
                     const diff = ((h || 0) * 60 + (m || 0)) - nowMinutes;
                     if (diff > 0 && diff < minDiff) {
@@ -81,7 +82,7 @@ export const StudentDashboardDesktop = ({ studentData, sessions, pointLogs }: St
                 tasks.push({ id: `hw-${en.subject}`, subject: en.subject || '', teacher: en.teacherName || en.teacher || '', time: '', type: 'homework', completed: false });
             }
             (en.schedule || []).forEach((slot) => {
-                if (slot.day === todayDay) {
+                if (normalizeDayName(slot.day) === todayDay) {
                     tasks.push({ id: `sess-${en.subject}-${slot.hour}`, subject: en.subject || '', teacher: en.teacherName || en.teacher || '', time: slot.hour || '', type: 'session', completed: false });
                 }
             });

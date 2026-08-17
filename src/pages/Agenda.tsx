@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { CalendarCheck, CheckCircle2, Search, Calendar, User, BookOpen } from 'lucide-react';
 import { useCurrentUser, useShowNotification } from '../context/AppContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -6,7 +6,7 @@ import { api } from '../lib/api';
 import { cn } from '../lib/utils';
 import { PageHeader, ProgressBar } from '../shared/components/ui';
 import type { Student, Session, Enrollment } from '../types';
-import { periodLabel } from '../features/attendance/utils/slotUtils';
+import { periodLabel, normalizeDayName } from '../features/attendance/utils/slotUtils';
 
 export const Agenda = () => {
     useEffect(() => { document.title = 'الأجندة | دارين السابعة للتعليم والتدريب'; }, []);
@@ -15,6 +15,7 @@ export const Agenda = () => {
     const showNotification = useShowNotification();
     const isTeacher = currentUser?.role === 'teacher';
     const teacherName = currentUser?.teacherName || currentUser?.name;
+    const markBusyRef = useRef(false);
 
     const [activeDay, setActiveDay] = useState(new Date().toLocaleDateString('ar-EG', { weekday: 'long' }));
     const [searchTerm, setSearchTerm] = useState('');
@@ -58,7 +59,7 @@ export const Agenda = () => {
                 if (isTeacher && enrollment.teacher !== teacherName && enrollment.teacherId !== currentUser?.id) return;
 
                 enrollment.schedule?.forEach(slot => {
-                    if (slot.day === activeDay) {
+                    if (normalizeDayName(slot.day) === activeDay) {
                         // Check if already completed today
                         const today = new Date().toLocaleDateString('en-CA');
                         const isDone = sessions.some(s =>
@@ -103,25 +104,35 @@ export const Agenda = () => {
         subject: string; hour: string; period: string; isDone: boolean; enrollment: Enrollment;
     };
 
-    const handleMarkDone = (appointment: ScheduledAppointment) => {
-        const now = new Date();
-        const currentTime = now.toLocaleTimeString('ar-EG', {
-            hour: 'numeric',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: true
-        });
+    const handleMarkDone = async (appointment: ScheduledAppointment) => {
+        if (markBusyRef.current) return;
+        markBusyRef.current = true;
 
-        logAttendanceMutation.mutate({
-            studentId: appointment.studentId,
-            studentName: appointment.studentName,
-            teacherName: appointment.teacherName,
-            subject: appointment.subject,
-            date: new Date().toLocaleDateString('en-CA'),
-            time: currentTime,
-            status: 'completed',
-            day: activeDay
-        });
+        const alreadyDone = scheduledAppointments.some(a => a.isDone && a.studentId === appointment.studentId && a.subject === appointment.subject);
+        if (alreadyDone) {
+            showNotification('هذه الحصة مسجلة بالفعل', 'warning');
+            markBusyRef.current = false;
+            return;
+        }
+
+        try {
+            await logAttendanceMutation.mutateAsync({
+                studentId: appointment.studentId,
+                studentName: appointment.studentName,
+                teacherName: appointment.teacherName,
+                subject: appointment.subject,
+                date: new Date().toLocaleDateString('en-CA'),
+                time: new Date().toLocaleTimeString('ar-EG', {
+                    hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true
+                }),
+                status: 'completed',
+                day: activeDay
+            });
+        } catch {
+            // notification already shown by onError
+        } finally {
+            markBusyRef.current = false;
+        }
     };
 
     const DAYS = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];

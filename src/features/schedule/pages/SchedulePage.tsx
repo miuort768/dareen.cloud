@@ -11,7 +11,7 @@ import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page';
 import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader';
 import { StudentDashboardHeader } from '../../../pages/student-dashboard/StudentDashboardHeader';
 import { cn } from '../../../lib/utils';
-import { to24Minutes } from '../../attendance/utils/slotUtils';
+import { to24Minutes, normalizeDayName } from '../../attendance/utils/slotUtils';
 
 interface Student { id: string; name: string; grade: string; parentPhone: string; enrollments: Enrollment[]; totalPoints?: number; }
 interface Enrollment { teacher: string; subject: string; curr: string; sessionsTotal: number; sessionsUsed: number; schedule: ScheduleSlot[]; teacherId?: string | number; }
@@ -89,14 +89,14 @@ export const Schedule = () => {
                         const isAM = ['am', 'صباحاً', 'صباحا', 'ص', 'am.', 'a.m', 'a.m.'].includes(normalizedPeriod) || normalizedPeriod.startsWith('صباح');
                         const sId = student.id;
                         return {
-                            id: `${sId}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
+                            id: `${sId}-${enrollment.teacher}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
                             studentId: sId,
                             studentName: student.name,
                             studentGrade: student.grade,
                             teacherName: (enrollment.teacher || '').trim(),
                             subject: enrollment.subject,
                             curriculum: enrollment.curr,
-                            day: (slot.day || '').trim(),
+                            day: normalizeDayName(slot.day),
                             hour: String(parseInt(String(slot.hour).trim(), 10) || ''),
                             period: isAM ? 'am' : 'pm',
                             time: `${String(parseInt(String(slot.hour).trim(), 10) || '')}:00 ${isAM ? 'ص' : 'م'}`,

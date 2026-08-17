@@ -8,6 +8,7 @@ import { Skeleton } from '../shared/components/ui';
 import { ParentDashboardDesktop } from './parent-dashboard/ParentDashboardDesktop';
 import { ParentDashboardMobile } from './parent-dashboard/ParentDashboardMobile';
 import type { Student } from '../types';
+import { normalizeDayName } from '../features/attendance/utils/slotUtils';
 
 export const ParentDashboard = () => {
     const academyName = useAcademyName();
@@ -101,7 +102,7 @@ export const ParentDashboard = () => {
         children.forEach(child => {
             (child.enrollments || []).forEach((en: { teacherName?: string; subject?: string; teacher?: string; schedule?: { day: string; hour: string; period: string }[] }) => {
                 (en.schedule || []).forEach((slot: { day: string; hour: string; period: string }) => {
-                    if (slot.day === todayArabic) {
+                    if (normalizeDayName(slot.day) === todayArabic) {
                         tasks.push({
                             studentName: child.name,
                             subject: en.subject || en.teacherName || '',

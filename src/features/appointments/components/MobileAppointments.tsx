@@ -6,6 +6,7 @@ import { triggerHaptic } from '../../../lib/haptics';
 import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile';
 import type { Student, AppointmentEvent } from './mobile-appointments/types';
 import { DAYS_OF_WEEK } from './mobile-appointments/types';
+import { normalizeDayName } from '../../attendance/utils/slotUtils';
 import { AppointmentPullToRefresh, AppointmentStats, AppointmentTabs, AppointmentFilters, AppointmentListView, AppointmentDetailsSheet } from './mobile-appointments';
 
 export const MobileAppointments = () => {
@@ -67,10 +68,10 @@ export const MobileAppointments = () => {
                         const normalizedPeriod = isPM ? 'م' : 'ص';
                         const normHour = String(parseInt(String(slot.hour).trim(), 10) || '');
                         return {
-                            id: `${student.id}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
+                            id: `${student.id}-${enrollment.teacher}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
                             studentName: student.name, studentGrade: student.grade,
                             teacherName: (enrollment.teacher || '').trim(), subject: enrollment.subject,
-                            curriculum: enrollment.curr, day: (slot.day || '').trim(),
+                            curriculum: enrollment.curr, day: normalizeDayName(slot.day),
                             hour: normHour, period: slot.period,
                             time: `${normHour} ${normalizedPeriod}`, isPM
                         };

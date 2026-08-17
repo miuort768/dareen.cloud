@@ -256,6 +256,10 @@ async function startServer() {
             console.error('Queue system init failed (non-fatal):', err.message);
         });
 
+        // Daily reset of completed_sessions (appointment flags) at 00:10
+        const completedSessionsReset = require('./services/completedSessionsReset');
+        completedSessionsReset.start();
+
         const server = http.createServer(app);
         const io = new Server(server, {
             path: '/api/socket.io',
@@ -295,6 +299,7 @@ async function startServer() {
                 try {
                     // Stop background schedulers and workers
                     try { require('./socket/reminderScheduler').stop(); } catch { /* ignore */ }
+                    try { require('./services/completedSessionsReset').stop(); } catch { /* ignore */ }
                     try {
                         const { shutdownSchedulers } = require('./services/queue/scheduler');
                         shutdownSchedulers();

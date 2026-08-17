@@ -5,6 +5,7 @@ import type { User } from '../../../types/auth';
 import type { Student, Teacher, Parent, Session, TeacherInvoice, StudentInvoice, Transaction, FixedExpense, Enrollment, ScheduleSlot } from '../../../types';
 import type { DashboardStats, DashboardTask } from '../types';
 import { getSafeArray, isSameMonth, computeLowBalanceStudents, computeChartData, getPaidInv, getManualExp } from '../utils/dashboardHelpers';
+import { normalizeDayName } from '../../attendance/utils/slotUtils';
 
 export const useDashboardData = (currentUser: User | null) => {
     const queryClient = useQueryClient();
@@ -106,7 +107,7 @@ export const useDashboardData = (currentUser: User | null) => {
             s.enrollments?.forEach((en: Enrollment) => {
                 if (isTeacher && en.teacher !== teacherName && en.teacherId !== currentUser.id) return;
                 en.schedule?.forEach((slot: ScheduleSlot) => {
-                    if (slot.day === currentDayName) todayScheduledCount++;
+                    if (normalizeDayName(slot.day) === currentDayName) todayScheduledCount++;
                 });
             });
         });

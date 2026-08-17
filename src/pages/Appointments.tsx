@@ -10,6 +10,7 @@ import { AppointmentsFilters, DAYS_OF_WEEK, AppointmentScheduleGrid, Appointment
 import { Plus, Calendar, CheckCircle, Clock, BarChart3, Filter, Home, ListTodo, MessageCircle, MessageSquare, Wallet, Moon, Bell, LogOut, UserCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
+import { normalizeDayName } from '../features/attendance/utils/slotUtils';
 import { useDarkMode } from '../shared/hooks/useDarkMode';
 import { confirm } from '../lib/confirmDialog';
 import { IconButton } from '../shared/components/ui/IconButton';
@@ -94,13 +95,13 @@ export const Appointments = () => {
                     const isPM = !(slot.period === 'am' || slot.period === 'صباحاً' || slot.period === 'صباحا' || slot.period === 'ص');
                     const normHour = String(parseInt(String(slot.hour).trim(), 10) || '');
                     return {
-                        id: `${student.id}-${enrollment.teacher}-${slot.day}-${slot.hour}-${slot.period}`,
+                        id: `${student.id}-${enrollment.teacher}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
                         studentName: student.name,
                         studentGrade: student.grade,
                         teacherName: (enrollment.teacher || '').trim(),
                         subject: enrollment.subject,
                         curriculum: enrollment.curr,
-                        day: (slot.day || '').trim(),
+                        day: normalizeDayName(slot.day),
                         hour: normHour,
                         period: slot.period,
                         time: `${normHour} ${normalizedPeriod}`,

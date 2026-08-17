@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { BookOpen, CheckCircle2, History } from 'lucide-react';
 import { ProgressBar } from '../../../../shared/components/ui';
 import type { Student, Enrollment } from '../../types';
-import { periodLabel } from '../../utils/slotUtils';
+import { periodLabel, normalizeDayName } from '../../utils/slotUtils';
 
 interface StudentAttendanceCardProps {
     student: Student;
@@ -15,7 +15,7 @@ interface StudentAttendanceCardProps {
 
 export const StudentAttendanceCard = ({ student, enrollment, onAttend, onHistory }: StudentAttendanceCardProps) => {
     const todayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
-    const todaySlot = enrollment.schedule?.find(s => s.day === todayName);
+    const todaySlot = enrollment.schedule?.find(s => normalizeDayName(s.day) === todayName);
     const used = enrollment.sessionsUsed || 0;
     const total = enrollment.sessionsTotal || 1;
     const progressPct = Math.min(100, Math.round((used / total) * 100));
