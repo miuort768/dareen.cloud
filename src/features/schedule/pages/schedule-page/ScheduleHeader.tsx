@@ -1,129 +1,231 @@
-import { Search, Printer, CalendarDays, ChevronRight, ChevronLeft, GraduationCap, BookOpen } from 'lucide-react';
+import { useMemo } from 'react'
+import { motion } from 'framer-motion'
+import {
+  Search,
+  Printer,
+  CalendarDays,
+  ChevronRight,
+  ChevronLeft,
+  GraduationCap,
+  BookOpen,
+} from 'lucide-react'
 
 interface ScheduleHeaderProps {
-    searchTerm: string;
-    onSearchChange: (v: string) => void;
-    filterDay: string;
-    onDayChange: (v: string) => void;
-    filterTeacher: string;
-    onTeacherChange: (v: string) => void;
-    filterSubject: string;
-    onSubjectChange: (v: string) => void;
-    uniqueTeachers: string[];
-    uniqueSubjects: string[];
-    todayDayName: string;
-    weekLabel: string;
-    onWeekChange: (direction: -1 | 1) => void;
-    onPrint: () => void;
-    stats: { sessions: number; teachers: number; students: number };
+  searchTerm: string
+  onSearchChange: (v: string) => void
+  filterDay: string
+  onDayChange: (v: string) => void
+  filterTeacher: string
+  onTeacherChange: (v: string) => void
+  filterSubject: string
+  onSubjectChange: (v: string) => void
+  uniqueTeachers: string[]
+  uniqueSubjects: string[]
+  todayDayName: string
+  weekLabel: string
+  onWeekChange: (direction: -1 | 1) => void
+  onPrint: () => void
+  stats: { sessions: number; teachers: number; students: number }
 }
 
-const DAYS_OF_WEEK = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
+const DAYS_OF_WEEK = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
 
 export const ScheduleHeader = ({
-    searchTerm, onSearchChange, filterDay, onDayChange,
-    filterTeacher, onTeacherChange, filterSubject, onSubjectChange,
-    uniqueTeachers, uniqueSubjects, todayDayName,
-    weekLabel, onWeekChange, onPrint, stats
-}: ScheduleHeaderProps) => (
-    <div className="shadow-sm px-4 md:px-6 py-4 md:py-5 flex flex-col gap-4 mb-4 rounded-2xl bg-primary relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.05]">
-            <svg width="100%" height="100%"><defs><pattern id="sch-header-grid" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.5" fill="white" /></pattern></defs><rect width="100%" height="100%" fill="url(#sch-header-grid)" /></svg>
+  searchTerm,
+  onSearchChange,
+  filterDay,
+  onDayChange,
+  filterTeacher,
+  onTeacherChange,
+  filterSubject,
+  onSubjectChange,
+  uniqueTeachers,
+  uniqueSubjects,
+  todayDayName,
+  weekLabel,
+  onWeekChange,
+  onPrint,
+  stats,
+}: ScheduleHeaderProps) => {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 6 }, (_, i) => ({
+        id: i,
+        size: 4 + Math.random() * 8,
+        x: 10 + Math.random() * 80,
+        y: 10 + Math.random() * 80,
+        duration: 3 + Math.random() * 3,
+        delay: Math.random() * 2,
+      })),
+    [],
+  )
+
+  return (
+    <div className="mb-4 space-y-3">
+      {/* Hero Banner */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/70 p-6 md:p-8"
+      >
+        {particles.map((p) => (
+          <motion.div
+            key={p.id}
+            className="absolute rounded-full bg-white/10"
+            style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
+            animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
+            transition={{
+              duration: p.duration,
+              repeat: Infinity,
+              delay: p.delay,
+              ease: 'easeInOut',
+            }}
+          />
+        ))}
+        <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <div className="mb-2 flex items-center gap-2">
+              <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
+                <CalendarDays className="text-white" size={20} />
+              </div>
+              <span className="text-xs font-medium text-white/70">نظام الجداول الدراسية</span>
+            </div>
+            <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">
+              الجداول الدراسية
+            </h1>
+            <p className="text-sm text-white/70">جدول الحصص الأسبوعي للمعلمات والطلاب</p>
+          </div>
+          <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
+            <div className="text-center">
+              <p className="mb-1 text-xs text-white/60">الحصص</p>
+              <div className="text-2xl font-bold text-white">{stats.sessions}</div>
+            </div>
+            <div className="h-10 w-px bg-white/10" />
+            <div className="text-center">
+              <p className="mb-1 text-xs text-white/60">المعلمات</p>
+              <div className="text-2xl font-bold text-white">{stats.teachers}</div>
+            </div>
+            <div className="h-10 w-px bg-white/10" />
+            <div className="text-center">
+              <p className="mb-1 text-xs text-white/60">الطلاب</p>
+              <div className="text-2xl font-bold text-white">{stats.students}</div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Controls toolbar */}
+      <div className="flex flex-col items-start justify-between gap-3 rounded-2xl border border-border bg-card p-3 md:flex-row md:items-center md:p-4">
+        {/* Left: week nav + search + today */}
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => onWeekChange(-1)}
+              className="flex h-8 w-8 items-center justify-center rounded-xl bg-hover text-main transition-all hover:bg-primary/10 active:scale-90"
+            >
+              <ChevronRight size={14} />
+            </button>
+            <span className="min-w-[90px] rounded-xl bg-surface px-3 py-1.5 text-center text-xs font-bold text-main">
+              {weekLabel}
+            </span>
+            <button
+              onClick={() => onWeekChange(1)}
+              className="flex h-8 w-8 items-center justify-center rounded-xl bg-hover text-main transition-all hover:bg-primary/10 active:scale-90"
+            >
+              <ChevronLeft size={14} />
+            </button>
+          </div>
+
+          <div className="relative">
+            <Search size={13} className="absolute start-2.5 top-1/2 -translate-y-1/2 text-muted" />
+            <input
+              type="text"
+              aria-label="بحث"
+              placeholder="بحث..."
+              value={searchTerm}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="h-8 w-28 rounded-xl border border-border bg-surface px-7 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus:border-primary sm:w-36"
+            />
+          </div>
+
+          <button
+            onClick={() => onDayChange(filterDay === todayDayName ? 'all' : todayDayName)}
+            className={`flex h-8 items-center gap-1.5 whitespace-nowrap rounded-xl border px-3 text-xs font-bold transition-all active:scale-95 ${
+              filterDay === todayDayName
+                ? 'border-primary bg-primary text-on-primary'
+                : 'border-border bg-surface text-main hover:bg-hover'
+            }`}
+          >
+            <CalendarDays size={12} />
+            <span className="hidden sm:inline">اليوم</span>
+          </button>
+
+          <button
+            onClick={onPrint}
+            className="flex h-8 items-center gap-1.5 rounded-xl border border-border bg-surface px-3 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95"
+          >
+            <Printer size={12} />
+          </button>
         </div>
 
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3">
-            {/* Title */}
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl flex items-center justify-center shrink-0 bg-white/15 ring-2 ring-white/20">
-                    <CalendarDays size={20} className="text-on-primary" />
-                </div>
-                <div>
-                    <h1 className="text-base md:text-xl font-bold text-on-primary leading-tight">الجداول الدراسية</h1>
-                    <p className="text-[10px] md:text-xs font-bold text-on-primary/70 mt-0.5">جدول الحصص الأسبوعي</p>
-                </div>
-            </div>
+        {/* Right: filters + pills */}
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-1.5 rounded-lg bg-primary-soft px-2.5 py-1">
+            <CalendarDays size={11} className="text-primary" />
+            <span className="text-[10px] font-bold text-primary">{stats.sessions} حصة</span>
+          </div>
+          <div className="flex items-center gap-1.5 rounded-lg bg-primary-soft px-2.5 py-1">
+            <GraduationCap size={11} className="text-primary" />
+            <span className="text-[10px] font-bold text-primary">{stats.teachers} معلمة</span>
+          </div>
+          <div className="flex items-center gap-1.5 rounded-lg bg-primary-soft px-2.5 py-1">
+            <BookOpen size={11} className="text-primary" />
+            <span className="text-[10px] font-bold text-primary">{stats.students} طالب</span>
+          </div>
 
-            {/* Actions right side */}
-            <div className="flex items-center gap-2 flex-wrap no-print">
-                {/* Search */}
-                <div className="relative">
-                    <Search size={13} className="absolute start-2.5 top-1/2 -translate-y-1/2 text-on-primary/50" />
-                    <input type="text" aria-label="بحث" placeholder="بحث..." value={searchTerm}
-                        onChange={e => onSearchChange(e.target.value)}
-                        className="w-24 sm:w-32 h-8 bg-white/15 border border-white/20 text-on-primary placeholder:text-on-primary/50 text-[10px] font-bold rounded-xl px-7 outline-none focus:border-white/50 transition-all" />
-                </div>
+          <select
+            value={filterDay}
+            onChange={(e) => onDayChange(e.target.value)}
+            aria-label="اليوم"
+            className="h-8 rounded-xl border border-border bg-surface px-2 text-xs font-bold text-main outline-none transition-all focus:border-primary"
+          >
+            <option value="all">كل الأيام</option>
+            {DAYS_OF_WEEK.map((day) => (
+              <option key={day} value={day}>
+                {day}
+              </option>
+            ))}
+          </select>
 
-                {/* Today button */}
-                <button onClick={() => onDayChange(filterDay === todayDayName ? 'all' : todayDayName)}
-                    className={`h-8 px-2 text-[10px] font-bold rounded-xl transition-all active:scale-95 flex items-center gap-1 border whitespace-nowrap
-                        ${filterDay === todayDayName
-                            ? 'bg-white/25 border-white/30 text-on-primary'
-                            : 'bg-white/15 border-white/20 text-on-primary/70 hover:bg-white/25 hover:text-on-primary'}`}>
-                    <CalendarDays size={11} />
-                    <span className="hidden sm:inline">اليوم</span>
-                </button>
+          <select
+            value={filterTeacher}
+            onChange={(e) => onTeacherChange(e.target.value)}
+            aria-label="المعلمة"
+            className="h-8 rounded-xl border border-border bg-surface px-2 text-xs font-bold text-main outline-none transition-all focus:border-primary"
+          >
+            <option value="all">كل المعلمات</option>
+            {uniqueTeachers.map((t) => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
 
-                {/* Day select */}
-                <select value={filterDay} onChange={e => onDayChange(e.target.value)} aria-label="اليوم"
-                    className="h-8 px-2 bg-white/15 border border-white/20 text-on-primary text-[10px] font-bold rounded-xl outline-none focus:border-white/50 transition-all">
-                    <option value="all" className="text-main">كل الأيام</option>
-                    {DAYS_OF_WEEK.map(day => <option key={day} value={day} className="text-main">{day}</option>)}
-                </select>
-
-                {/* Print */}
-                <button onClick={onPrint}
-                    className="h-8 px-3 bg-white/15 border border-white/20 text-on-primary text-[10px] font-bold rounded-xl hover:bg-white/30 transition-all active:scale-95 flex items-center gap-1.5">
-                    <Printer size={12} />
-                </button>
-            </div>
+          <select
+            value={filterSubject}
+            onChange={(e) => onSubjectChange(e.target.value)}
+            aria-label="المادة"
+            className="h-8 rounded-xl border border-border bg-surface px-2 text-xs font-bold text-main outline-none transition-all focus:border-primary"
+          >
+            <option value="all">كل المواد</option>
+            {uniqueSubjects.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
         </div>
-
-        {/* Second row: navigation + extra filters + stats */}
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-            {/* Week navigation */}
-            <div className="flex items-center gap-2">
-                <button onClick={() => onWeekChange(-1)}
-                    className="h-7 w-7 flex items-center justify-center rounded-lg bg-white/15 hover:bg-white/25 text-on-primary transition-all active:scale-90">
-                    <ChevronRight size={14} />
-                </button>
-                <span className="text-[10px] font-bold text-on-primary px-2 py-1 bg-white/10 rounded-lg min-w-[90px] text-center">
-                    {weekLabel}
-                </span>
-                <button onClick={() => onWeekChange(1)}
-                    className="h-7 w-7 flex items-center justify-center rounded-lg bg-white/15 hover:bg-white/25 text-on-primary transition-all active:scale-90">
-                    <ChevronLeft size={14} />
-                </button>
-            </div>
-
-            {/* Summary pills */}
-            <div className="flex items-center gap-2 flex-wrap">
-                <div className="flex items-center gap-1.5 px-2 py-1 bg-white/10 rounded-lg">
-                    <CalendarDays size={10} className="text-on-primary/60" />
-                    <span className="text-[9px] font-bold text-on-primary/80">{stats.sessions} حصة</span>
-                </div>
-                <div className="flex items-center gap-1.5 px-2 py-1 bg-white/10 rounded-lg">
-                    <GraduationCap size={10} className="text-on-primary/60" />
-                    <span className="text-[9px] font-bold text-on-primary/80">{stats.teachers} معلمة</span>
-                </div>
-                <div className="flex items-center gap-1.5 px-2 py-1 bg-white/10 rounded-lg">
-                    <BookOpen size={10} className="text-on-primary/60" />
-                    <span className="text-[9px] font-bold text-on-primary/80">{stats.students} طالب</span>
-                </div>
-
-                {/* Teacher filter */}
-                <select value={filterTeacher} onChange={e => onTeacherChange(e.target.value)} aria-label="المعلمة"
-                    className="h-7 px-2 bg-white/15 border border-white/20 text-on-primary text-[9px] font-bold rounded-lg outline-none focus:border-white/50 transition-all">
-                    <option value="all" className="text-main">كل المعلمات</option>
-                    {uniqueTeachers.map(t => <option key={t} value={t} className="text-main">{t}</option>)}
-                </select>
-
-                {/* Subject filter */}
-                <select value={filterSubject} onChange={e => onSubjectChange(e.target.value)} aria-label="المادة"
-                    className="h-7 px-2 bg-white/15 border border-white/20 text-on-primary text-[9px] font-bold rounded-lg outline-none focus:border-white/50 transition-all">
-                    <option value="all" className="text-main">كل المواد</option>
-                    {uniqueSubjects.map(s => <option key={s} value={s} className="text-main">{s}</option>)}
-                </select>
-            </div>
-        </div>
+      </div>
     </div>
-);
+  )
+}
