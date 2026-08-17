@@ -11,6 +11,7 @@ module.exports = {
         sans: 'var(--font-family-sans)',
         heading: 'var(--font-family-heading)',
         dash: 'var(--font-family-dash)',
+        display: 'var(--font-family-display)',
       },
       fontSize: {
         xs: ['var(--font-size-xs)', { lineHeight: 'var(--line-height-xs)' }],

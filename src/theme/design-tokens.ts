@@ -1,8 +1,9 @@
 export const typography = {
   fontFamily: {
-    sans: "'Readex Pro', sans-serif",
-    heading: "'El Messiri', sans-serif",
-    dash: "'Readex Pro', sans-serif",
+    sans: "'Tajawal', 'IBM Plex Sans Arabic', sans-serif",
+    heading: "'Noto Kufi Arabic', 'El Messiri', sans-serif",
+    dash: "'Tajawal', 'Cairo', sans-serif",
+    display: "'Noto Kufi Arabic', 'Tajawal', sans-serif",
   },
   fontWeight: {
     normal: '400',
@@ -23,7 +24,7 @@ export const typography = {
     '6xl': { size: '3rem', lineHeight: '1' },
     '7xl': { size: '3.75rem', lineHeight: '1' },
   },
-} as const;
+} as const
 
 export const spacing: Record<string, string> = {
   px: '1px',
@@ -61,7 +62,7 @@ export const spacing: Record<string, string> = {
   '72': '18rem',
   '80': '20rem',
   '96': '24rem',
-};
+}
 
 export const radius = {
   none: '0',
@@ -74,7 +75,7 @@ export const radius = {
   '2xl': '1rem',
   '3xl': '1.5rem',
   full: '9999px',
-} as const;
+} as const
 
 export const shadows = {
   sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
@@ -88,6 +89,6 @@ export const shadows = {
   gold: '0 10px 30px -10px rgb(var(--color-gold) / 0.3)',
   'gold-hover': '0 20px 40px -10px rgb(var(--color-gold) / 0.4)',
   glass: '0 8px 32px 0 rgb(var(--color-primary-deep) / 0.05)',
-} as const;
+} as const
 
-export type DesignTokenCategory = 'typography' | 'spacing' | 'radius' | 'shadows';
+export type DesignTokenCategory = 'typography' | 'spacing' | 'radius' | 'shadows'

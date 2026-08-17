@@ -1,7 +1,8 @@
 :root {
-  --font-family-sans: 'IBM Plex Sans Arabic', 'Readex Pro', sans-serif;
-  --font-family-heading: 'IBM Plex Sans Arabic', 'El Messiri', sans-serif;
-  --font-family-dash: 'IBM Plex Sans Arabic', 'Cairo', sans-serif;
+  --font-family-sans: 'Tajawal', 'IBM Plex Sans Arabic', 'Readex Pro', sans-serif;
+  --font-family-heading: 'Noto Kufi Arabic', 'El Messiri', sans-serif;
+  --font-family-dash: 'Tajawal', 'Cairo', sans-serif;
+  --font-family-display: 'Noto Kufi Arabic', 'Tajawal', sans-serif;
 
   --font-size-xs: 0.75rem;
   --line-height-xs: 1rem;
