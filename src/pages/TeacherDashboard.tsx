@@ -1,35 +1,70 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { PageLoader } from '../components/ui/PageLoader';
-import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext';
-import { useDashboardData } from '../features/dashboard/hooks/useDashboardData';
-import { TeacherDashboardDesktop } from './TeacherDashboardDesktop';
-import { TeacherDashboardMobile } from './TeacherDashboardMobile';
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { PageLoader } from '../components/ui/PageLoader'
+import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext'
+import { useDashboardData } from '../features/dashboard/hooks/useDashboardData'
+import { TeacherDashboardDesktop } from './TeacherDashboardDesktop'
+import { TeacherDashboardMobile } from './TeacherDashboardMobile'
 
 export const TeacherDashboard = () => {
-    const academyName = useAcademyName();
-    useEffect(() => { document.title = `لوحة تحكم المعلمة | ${academyName}`; }, [academyName]);
-    const currentUser = useCurrentUser();
-    const logout = useLogout();
-    const navigate = useNavigate();
-    const { stats, tasks, loading, rawSessions, lowBalanceStudents, focusStudents, fetchDashboardData } = useDashboardData(currentUser);
+  const academyName = useAcademyName()
+  useEffect(() => {
+    document.title = `لوحة تحكم المعلمة | ${academyName}`
+  }, [academyName])
+  const currentUser = useCurrentUser()
+  const logout = useLogout()
+  const navigate = useNavigate()
+  const {
+    stats,
+    tasks,
+    loading,
+    rawSessions,
+    lowBalanceStudents,
+    focusStudents,
+    fetchDashboardData,
+  } = useDashboardData(currentUser)
 
-    const isInvalidRole = !!currentUser && currentUser.role !== 'teacher';
-    useEffect(() => { if (isInvalidRole) navigate('/', { replace: true }); }, [isInvalidRole, navigate]);
+  const isInvalidRole = !!currentUser && currentUser.role !== 'teacher'
+  useEffect(() => {
+    if (isInvalidRole) navigate('/', { replace: true })
+  }, [isInvalidRole, navigate])
 
-    if (!currentUser || currentUser.role !== 'teacher') return <div className="min-h-full bg-surface dark:bg-background font-sans" />;
-    if (loading) return <PageLoader />;
+  if (!currentUser || currentUser.role !== 'teacher')
+    return <div className="min-h-full bg-surface font-sans dark:bg-background" />
+  if (loading) return <PageLoader />
 
-    const timeline = stats.todayTimeline || [];
+  const timeline = stats.todayTimeline || []
 
-    return (
-        <>
-            <div className="hidden md:block min-h-full pb-24 overflow-x-hidden relative bg-background dark:bg-background font-sans transition-colors duration-500" dir="rtl">
-                <TeacherDashboardDesktop currentUser={currentUser} stats={stats} rawSessions={rawSessions} tasks={tasks} lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents} timeline={timeline} logout={logout} />
-            </div>
-            <div className="block md:hidden">
-                <TeacherDashboardMobile currentUser={currentUser} stats={stats} rawSessions={rawSessions} tasks={tasks} lowBalanceStudents={lowBalanceStudents} focusStudents={focusStudents} timeline={timeline} onRefresh={fetchDashboardData} />
-            </div>
-        </>
-    );
-};
+  return (
+    <>
+      <div
+        className="relative hidden min-h-full overflow-x-hidden bg-background pb-24 font-sans transition-colors duration-500 dark:bg-background md:block"
+        dir="rtl"
+      >
+        <TeacherDashboardDesktop
+          currentUser={currentUser}
+          stats={stats}
+          rawSessions={rawSessions}
+          tasks={tasks}
+          lowBalanceStudents={lowBalanceStudents}
+          focusStudents={focusStudents}
+          timeline={timeline}
+          logout={logout}
+        />
+      </div>
+      <div className="block md:hidden">
+        <TeacherDashboardMobile
+          currentUser={currentUser}
+          stats={stats}
+          rawSessions={rawSessions}
+          tasks={tasks}
+          lowBalanceStudents={lowBalanceStudents}
+          focusStudents={focusStudents}
+          timeline={timeline}
+          onRefresh={fetchDashboardData}
+          logout={logout}
+        />
+      </div>
+    </>
+  )
+}

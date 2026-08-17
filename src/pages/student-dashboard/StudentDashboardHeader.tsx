@@ -1,110 +1,138 @@
-﻿import { LogOut, Sun, Moon, Bell, Home, Calendar, MessageSquare, User, MessageCircle, CalendarDays } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useDarkMode } from '../../shared/hooks/useDarkMode';
-import { useCurrentUser, useAcademicYear } from '../../context/AppContext';
-import { confirm } from '../../lib/confirmDialog';
-import { cn } from '../../lib/utils';
-import { Image } from '../../shared/components/ui';
-import { IconButton } from '../../shared/components/ui/IconButton';
+﻿import {
+  LogOut,
+  Sun,
+  Moon,
+  Bell,
+  Home,
+  Calendar,
+  MessageSquare,
+  User,
+  MessageCircle,
+  CalendarDays,
+} from 'lucide-react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useDarkMode } from '../../shared/hooks/useDarkMode'
+import { useCurrentUser, useAcademicYear } from '../../context/AppContext'
+import { confirm } from '../../lib/confirmDialog'
+import { cn } from '../../lib/utils'
+import { Image } from '../../shared/components/ui'
+import { IconButton } from '../../shared/components/ui/IconButton'
 
 interface StudentDashboardHeaderProps {
-    logout: () => void;
+  logout: () => void
 }
 
 const navTabs = [
-    { id: 'home', label: 'الرئيسية', icon: Home, path: '/student-dashboard' },
-    { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/schedule' },
-    { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
-    { id: 'chat', label: 'الرسائل', icon: MessageSquare, path: '/chat' },
-    { id: 'profile', label: 'الحساب', icon: User, path: '/student-profile' },
-];
+  { id: 'home', label: 'الرئيسية', icon: Home, path: '/student-dashboard' },
+  { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/schedule' },
+  { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
+  { id: 'chat', label: 'الرسائل', icon: MessageSquare, path: '/chat' },
+  { id: 'profile', label: 'الحساب', icon: User, path: '/student-profile' },
+]
 
 export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const currentUser = useCurrentUser();
-    const academicYear = useAcademicYear();
-    const [theme, setTheme] = useDarkMode();
-    const firstName = (currentUser?.name || currentUser?.username || 'الطالب').split(' ')[0];
+  const navigate = useNavigate()
+  const location = useLocation()
+  const currentUser = useCurrentUser()
+  const academicYear = useAcademicYear()
+  const [theme, setTheme] = useDarkMode()
+  const firstName = (currentUser?.name || currentUser?.username || 'الطالب').split(' ')[0]
 
-    return (
-        <header className="sticky top-0 z-[100] bg-surface/95 dark:bg-card/95 backdrop-blur-xl border-b border-border dark:border-border transition-colors duration-300">
-            <div className="max-w-page mx-auto">
-                <div className="flex items-center justify-between px-4 md:px-6 h-16">
-                    <div className="flex items-center gap-3">
-                        <Image src="/dareen_logo_new.webp" alt="دارين" className="w-9 h-9 rounded-xl shrink-0" imgClassName="object-contain" />
-                        <button
-                            onClick={() => navigate('/student-profile')}
-                            className="flex items-center gap-3 text-start rounded-xl p-1.5 -m-1.5 hover:bg-hover dark:hover:bg-hover transition-all duration-200 active:scale-[0.98]"
-                            aria-label="الملف الشخصي"
-                        >
-                            <div className="w-10 h-10 rounded-xl bg-primary dark:bg-primary flex items-center justify-center">
-                                <span className="text-sm font-bold text-on-primary dark:text-on-primary">{firstName.charAt(0)}</span>
-                            </div>
-                            <div className="hidden sm:block">
-                                <h1 className="text-sm font-bold text-main dark:text-main leading-tight">ꩥ��� {firstName}</h1>
-                                <p className="text-[11px] font-medium text-muted dark:text-muted">���� ���� ����</p>
-                            </div>
-                        </button>
-                    </div>
+  return (
+    <header className="bg-surface/95 dark:bg-card/95 sticky top-0 z-[100] border-b border-border backdrop-blur-xl transition-colors duration-300 dark:border-border">
+      <div className="mx-auto max-w-page">
+        <div className="flex h-16 items-center justify-between px-4 md:px-6">
+          <div className="flex items-center gap-3">
+            <Image
+              src="/dareen_logo_new.webp"
+              alt="دارين"
+              className="h-9 w-9 shrink-0 rounded-xl"
+              imgClassName="object-contain"
+            />
+            <button
+              onClick={() => navigate('/student-profile')}
+              className="-m-1.5 flex items-center gap-3 rounded-xl p-1.5 text-start transition-all duration-200 hover:bg-hover active:scale-[0.98] dark:hover:bg-hover"
+              aria-label="الملف الشخصي"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary dark:bg-primary">
+                <span className="text-sm font-bold text-on-primary dark:text-on-primary">
+                  {firstName.charAt(0)}
+                </span>
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-sm font-bold leading-tight text-main dark:text-main">
+                  مرحباً {firstName}
+                </h1>
+                <p className="text-[11px] font-medium text-muted dark:text-muted">طالب في المعهد</p>
+              </div>
+            </button>
+          </div>
 
-                    {academicYear && (
-                        <span className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-primary-soft text-primary text-[11px] font-bold rounded-lg">
-                            <CalendarDays size={13} />
-                            {academicYear}
-                        </span>
-                    )}
+          {academicYear && (
+            <span className="hidden items-center gap-1.5 rounded-lg bg-primary-soft px-3 py-1.5 text-[11px] font-bold text-primary sm:flex">
+              <CalendarDays size={13} />
+              {academicYear}
+            </span>
+          )}
 
-                    <div className="flex items-center gap-1.5">
-                        <IconButton
-                            icon={theme === 'dark' ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
-                            label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        />
-                        <IconButton
-                            icon={
-                                <span className="relative">
-                                    <Bell size={16} strokeWidth={1.5} />
-                                    <span className="absolute -top-0.5 -end-0.5 w-2 h-2 bg-error rounded-full border-2 border-surface dark:border-card" />
-                                </span>
-                            }
-                            label="الإعلانات"
-                            onClick={() => navigate('/parent-announcements')}
-                        />
-                        <IconButton
-                            icon={<LogOut size={16} strokeWidth={1.5} />}
-                            label="تسجيل الخروج"
-                            variant="error"
-                            onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
-                        />
-                    </div>
-                </div>
+          <div className="flex items-center gap-1.5">
+            <IconButton
+              icon={
+                theme === 'dark' ? (
+                  <Sun size={16} strokeWidth={1.5} />
+                ) : (
+                  <Moon size={16} strokeWidth={1.5} />
+                )
+              }
+              label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            />
+            <IconButton
+              icon={
+                <span className="relative">
+                  <Bell size={16} strokeWidth={1.5} />
+                  <span className="absolute -end-0.5 -top-0.5 h-2 w-2 rounded-full border-2 border-surface bg-error dark:border-card" />
+                </span>
+              }
+              label="الإعلانات"
+              onClick={() => navigate('/parent-announcements')}
+            />
+            <IconButton
+              icon={<LogOut size={16} strokeWidth={1.5} />}
+              label="تسجيل الخروج"
+              variant="error"
+              onClick={async () => {
+                if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout()
+              }}
+            />
+          </div>
+        </div>
 
-                <div className="hidden md:flex items-center gap-1 px-4 pb-0">
-                    {navTabs.map((tab) => {
-                        const Icon = tab.icon;
-                        const isActive = location.pathname === tab.path;
-                        return (
-                            <button
-                                key={tab.id}
-                                onClick={() => navigate(tab.path)}
-                                className={cn(
-                                    "flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold transition-all duration-200 relative",
-                                    isActive
-                                        ? "text-primary dark:text-primary bg-background dark:bg-background border-t border-x border-border dark:border-border"
-                                        : "text-muted dark:text-muted hover:text-main dark:hover:text-main hover:bg-hover dark:hover:bg-hover active:scale-[0.97]"
-                                )}
-                            >
-                                <Icon size={15} strokeWidth={isActive ? 2 : 1.5} />
-                                {tab.label}
-                                {isActive && (
-                                    <span className="absolute bottom-0 inset-x-4 h-0.5 bg-primary dark:bg-primary rounded-full" />
-                                )}
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
-        </header>
-    );
-};
+        <div className="hidden items-center gap-1 px-4 pb-0 md:flex">
+          {navTabs.map((tab) => {
+            const Icon = tab.icon
+            const isActive = location.pathname === tab.path
+            return (
+              <button
+                key={tab.id}
+                onClick={() => navigate(tab.path)}
+                className={cn(
+                  'relative flex items-center gap-2 rounded-t-xl px-4 py-2.5 text-xs font-semibold transition-all duration-200',
+                  isActive
+                    ? 'border-x border-t border-border bg-background text-primary dark:border-border dark:bg-background dark:text-primary'
+                    : 'text-muted hover:bg-hover hover:text-main active:scale-[0.97] dark:text-muted dark:hover:bg-hover dark:hover:text-main',
+                )}
+              >
+                <Icon size={15} strokeWidth={isActive ? 2 : 1.5} />
+                {tab.label}
+                {isActive && (
+                  <span className="absolute inset-x-4 bottom-0 h-0.5 rounded-full bg-primary dark:bg-primary" />
+                )}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    </header>
+  )
+}

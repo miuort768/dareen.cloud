@@ -1,32 +1,31 @@
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
+import { fadeUpStatic } from '../../../../shared/animations/fadeUp'
 
 interface AttendanceStatsBarProps {
-    completedToday: number;
-    cancelledToday: number;
-    scheduledToday: number;
+  completedToday: number
+  cancelledToday: number
+  scheduledToday: number
 }
 
-const fadeUp = {
-    initial: { opacity: 0, y: 12 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.35, ease: 'easeOut' }
-};
-
-export const AttendanceStatsBar = ({ completedToday, cancelledToday, scheduledToday }: AttendanceStatsBarProps) => (
-    <motion.div {...fadeUp} className="px-4 pt-3 pb-2">
-        <div className="grid grid-cols-3 gap-2">
-            <div className="bg-card rounded-2xl p-3 text-center border border-success/30">
-                <p className="text-lg font-bold text-success tabular-nums leading-none">{completedToday}</p>
-                <p className="text-micro font-bold text-success/70 mt-1">حضور</p>
-            </div>
-            <div className="bg-card rounded-2xl p-3 text-center border border-error/30">
-                <p className="text-lg font-bold text-error tabular-nums leading-none">{cancelledToday}</p>
-                <p className="text-micro font-bold text-error/70 mt-1">غياب</p>
-            </div>
-            <div className="bg-card rounded-2xl p-3 text-center border border-border/30">
-                <p className="text-lg font-bold text-main tabular-nums leading-none">{scheduledToday}</p>
-                <p className="text-micro font-bold text-muted mt-1">متبقي</p>
-            </div>
-        </div>
-    </motion.div>
-);
+export const AttendanceStatsBar = ({
+  completedToday,
+  cancelledToday,
+  scheduledToday,
+}: AttendanceStatsBarProps) => (
+  <motion.div {...fadeUpStatic} className="px-4 pb-2 pt-3">
+    <div className="grid grid-cols-3 gap-2">
+      <div className="border-success/30 rounded-2xl border bg-card p-3 text-center">
+        <p className="text-lg font-bold tabular-nums leading-none text-success">{completedToday}</p>
+        <p className="text-success/70 mt-1 text-micro font-bold">حضور</p>
+      </div>
+      <div className="border-error/30 rounded-2xl border bg-card p-3 text-center">
+        <p className="text-lg font-bold tabular-nums leading-none text-error">{cancelledToday}</p>
+        <p className="text-error/70 mt-1 text-micro font-bold">غياب</p>
+      </div>
+      <div className="border-border/30 rounded-2xl border bg-card p-3 text-center">
+        <p className="text-lg font-bold tabular-nums leading-none text-main">{scheduledToday}</p>
+        <p className="mt-1 text-micro font-bold text-muted">متبقي</p>
+      </div>
+    </div>
+  </motion.div>
+)
