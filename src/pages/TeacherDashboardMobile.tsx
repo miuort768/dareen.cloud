@@ -6,9 +6,6 @@ import {
   Users,
   Award,
   Bell,
-  LayoutDashboard,
-  Calendar,
-  CheckSquare,
   Sparkles,
   Wallet,
   ArrowLeft,
@@ -17,10 +14,8 @@ import {
   User as UserIcon,
   LogOut,
 } from 'lucide-react'
-import { triggerHaptic } from '../lib/haptics'
 import { EmptyState } from '../shared/components/ui/EmptyState'
 import { cn } from '../lib/utils'
-import { MobileBottomNav } from '../shared/components/ui/MobileBottomNav'
 import { usePullToRefresh } from '../shared/components/mobile/usePullToRefresh'
 import { TeacherAchievements } from '../features/dashboard/components/TeacherAchievements'
 import { TasksAndRequests } from '../features/dashboard/components/TasksAndRequests'
@@ -62,12 +57,6 @@ interface TeacherDashboardMobileProps {
   logout?: () => void
 }
 
-const tabs = [
-  { id: 'home' as const, label: 'الرئيسية', icon: LayoutDashboard },
-  { id: 'schedule' as const, label: 'الجدول', icon: Calendar },
-  { id: 'reports' as const, label: 'التقارير', icon: CheckSquare },
-]
-
 export const TeacherDashboardMobile = ({
   currentUser,
   stats,
@@ -81,10 +70,6 @@ export const TeacherDashboardMobile = ({
 }: TeacherDashboardMobileProps) => {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<'home' | 'schedule' | 'reports'>('home')
-  const handleTabChange = (tab: 'home' | 'schedule' | 'reports') => {
-    triggerHaptic('light')
-    setActiveTab(tab)
-  }
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh })
   const containerRef = useRef<HTMLDivElement>(null)
   const [briefingStudent, setBriefingStudent] = useState<{
@@ -410,14 +395,6 @@ export const TeacherDashboardMobile = ({
           </motion.div>
         </AnimatePresence>
       </div>
-
-      {/* Bottom Tab Bar */}
-      <MobileBottomNav
-        items={tabs}
-        activeTab={activeTab}
-        onTabChange={(id) => handleTabChange(id as 'home' | 'schedule' | 'reports')}
-        layoutId="teacher-tab-dot"
-      />
 
       {briefingStudent && (
         <StudentQuickBrief

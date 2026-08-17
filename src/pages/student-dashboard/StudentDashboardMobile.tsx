@@ -25,7 +25,6 @@ import { InvoicesCard } from './InvoicesCard'
 import { AchievementsSection } from './AchievementsSection'
 import { RecentActivity } from './RecentActivity'
 import { StudentDashboardHeader } from './StudentDashboardHeader'
-import { MobileBottomNav } from './MobileBottomNav'
 import type { User } from '../../types/auth'
 
 interface StudentDashboardMobileProps {
@@ -210,10 +209,6 @@ export const StudentDashboardMobile = ({
           </motion.div>
         </div>
       </main>
-
-      <div className="block md:hidden">
-        <MobileBottomNav />
-      </div>
     </div>
   )
 }

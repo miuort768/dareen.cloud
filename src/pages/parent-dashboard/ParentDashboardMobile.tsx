@@ -6,7 +6,6 @@ import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { usePullToRefresh } from '../../shared/components/mobile/usePullToRefresh'
 import { fadeUp } from '../../shared/animations/fadeUp'
 import { ParentDashboardHeader } from './ParentDashboardHeader'
-import { MobileBottomNav } from './MobileBottomNav'
 import { HeroSection } from './HeroSection'
 import { ChildrenCards } from './ChildrenCards'
 import { TodaySummary } from './TodaySummary'
@@ -179,10 +178,6 @@ export const ParentDashboardMobile = ({
           </motion.div>
         </div>
       </main>
-
-      <div className="block md:hidden">
-        <MobileBottomNav />
-      </div>
     </div>
   )
 }

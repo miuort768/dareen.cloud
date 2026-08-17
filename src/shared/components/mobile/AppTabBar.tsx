@@ -1,6 +1,6 @@
-import type { LucideIcon } from 'lucide-react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { createPortal } from 'react-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard,
   CalendarDays,
@@ -8,14 +8,23 @@ import {
   Wallet,
   Users,
   Megaphone,
-  MessageCircle,
+  MessageSquare,
   User,
-  Menu,
+  MoreHorizontal,
+  GraduationCap,
+  CalendarCheck,
+  Settings,
+  UserCheck,
+  FileText,
+  DollarSign,
+  Home,
+  MessageCircle,
 } from 'lucide-react'
 import { useCurrentUser } from '../../../context/AppContext'
 import { useUnreadStore } from '../../../store/unreadStore'
 import { triggerHaptic } from '../../../lib/haptics'
 import { cn } from '../../../lib/utils'
+import type { LucideIcon } from 'lucide-react'
 
 interface TabItem {
   id: string
@@ -28,40 +37,51 @@ interface AppTabBarProps {
   onMore: () => void
 }
 
-/** Routes that already render their own bottom tab bar (dashboards + chat). */
-const SELF_NAV_PATHS = ['/teacher-dashboard', '/student-dashboard', '/parent-dashboard', '/chat']
-
 const ADMIN_TABS: TabItem[] = [
   { id: 'home', label: 'الرئيسية', icon: LayoutDashboard, path: '/admin-dashboard' },
+  { id: 'students', label: 'الطلاب', icon: GraduationCap, path: '/students' },
+  { id: 'teachers', label: 'المعلمات', icon: Users, path: '/teachers' },
   { id: 'schedule', label: 'الجدول', icon: CalendarDays, path: '/schedule' },
+  { id: 'attendance', label: 'الحضور', icon: UserCheck, path: '/attendance' },
   { id: 'tasks', label: 'المهام', icon: ClipboardList, path: '/tasks' },
   { id: 'finance', label: 'المالية', icon: Wallet, path: '/finance' },
+  { id: 'announcements', label: 'الإعلانات', icon: Megaphone, path: '/announcements' },
+  { id: 'forum', label: 'المنتدى', icon: MessageSquare, path: '/forum' },
+  { id: 'settings', label: 'الإعدادات', icon: Settings, path: '/settings' },
 ]
 
 const TEACHER_TABS: TabItem[] = [
   { id: 'home', label: 'الرئيسية', icon: LayoutDashboard, path: '/teacher-dashboard' },
   { id: 'schedule', label: 'الجدول', icon: CalendarDays, path: '/schedule' },
   { id: 'tasks', label: 'المهام', icon: ClipboardList, path: '/tasks' },
-  { id: 'payments', label: 'سجل الدفع', icon: Wallet, path: '/teacher-payment-history' },
+  { id: 'attendance', label: 'الحضور', icon: UserCheck, path: '/attendance' },
+  { id: 'appointments', label: 'المواعيد', icon: CalendarCheck, path: '/appointments' },
+  { id: 'reports', label: 'التقارير', icon: FileText, path: '/reports' },
+  { id: 'forum', label: 'المنتدى', icon: MessageSquare, path: '/forum' },
+  { id: 'payments', label: 'الدفع', icon: DollarSign, path: '/teacher-payment-history' },
 ]
 
 const PARENT_TABS: TabItem[] = [
-  { id: 'home', label: 'الرئيسية', icon: LayoutDashboard, path: '/parent-dashboard' },
-  { id: 'children', label: 'أبنائي', icon: Users, path: '/parent-students' },
+  { id: 'home', label: 'الرئيسية', icon: Home, path: '/parent-dashboard' },
+  { id: 'children', label: 'الأبناء', icon: Users, path: '/parent-students' },
   { id: 'announcements', label: 'الإعلانات', icon: Megaphone, path: '/parent-announcements' },
-  { id: 'payments', label: 'سجل الدفع', icon: Wallet, path: '/parent-payment-history' },
+  { id: 'chat', label: 'المحادثة', icon: MessageSquare, path: '/chat' },
+  { id: 'payments', label: 'الدفع', icon: DollarSign, path: '/parent-payment-history' },
 ]
 
 const STUDENT_TABS: TabItem[] = [
-  { id: 'home', label: 'الرئيسية', icon: LayoutDashboard, path: '/student-dashboard' },
+  { id: 'home', label: 'الرئيسية', icon: GraduationCap, path: '/student-dashboard' },
   { id: 'schedule', label: 'الجدول', icon: CalendarDays, path: '/schedule' },
-  { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
-  { id: 'profile', label: 'الحساب', icon: User, path: '/student-profile' },
+  { id: 'tasks', label: 'المهام', icon: ClipboardList, path: '/tasks' },
+  { id: 'forum', label: 'المنتدى', icon: MessageSquare, path: '/forum' },
+  { id: 'chat', label: 'الرسائل', icon: MessageCircle, path: '/chat' },
+  { id: 'profile', label: 'حسابي', icon: User, path: '/student-profile' },
 ]
 
 /**
- * Global iOS-style bottom tab bar. Role-aware, renders on mobile only,
- * and hides itself on routes that provide their own navigation.
+ * Unified global bottom tab bar.
+ * Renders on ALL pages for ALL roles (via Layout.tsx).
+ * Uses createPortal for consistent z-index stacking.
  */
 export const AppTabBar = ({ onMore }: AppTabBarProps) => {
   const navigate = useNavigate()
@@ -69,13 +89,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
   const currentUser = useCurrentUser()
   const totalUnreadCount = useUnreadStore((s) => s.totalUnreadCount)
 
-  const isChatOnly = currentUser?.role === 'chat_user'
-  if (isChatOnly) return null
-
-  const isHiddenOnSelfNav = SELF_NAV_PATHS.some(
-    (p) => location.pathname === p || location.pathname.startsWith(`${p}/`),
-  )
-  if (isHiddenOnSelfNav) return null
+  if (currentUser?.role === 'chat_user') return null
 
   const tabs =
     currentUser?.role === 'teacher'
@@ -86,15 +100,11 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
           ? STUDENT_TABS
           : ADMIN_TABS
 
-  const isActive = (tab: TabItem) => {
-    if (location.pathname === tab.path) return true
-    if (tab.id === 'home' && (location.pathname === '/' || location.pathname.includes('dashboard')))
-      return true
-    if (tab.path !== '/' && location.pathname.startsWith(tab.path)) return true
-    return false
-  }
-
-  const activeTab = (tabs.find(isActive) ?? tabs[0])?.id ?? ''
+  const activeTabId =
+    tabs.find(
+      (t) =>
+        location.pathname === t.path || (t.path !== '/' && location.pathname.startsWith(t.path)),
+    )?.id ?? tabs[0].id
 
   const handleTab = (tab: TabItem) => {
     if (location.pathname === tab.path) return
@@ -102,79 +112,96 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
     navigate(tab.path)
   }
 
-  return (
-    <nav className="fixed inset-x-0 bottom-0 z-[45] md:hidden">
-      <div className="h-2 bg-background" />
-      <div className="border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-black/10">
-        <div className="flex items-center justify-around px-1 py-1.5">
-          {tabs.map((tab) => {
-            const Icon = tab.icon
-            const isTabActive = tab.id === activeTab
-            return (
-              <motion.button
-                key={tab.id}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => handleTab(tab)}
-                aria-label={tab.label}
-                className="relative flex min-w-[56px] flex-col items-center gap-0.5 px-3 py-1"
-              >
-                <div
-                  className={cn(
-                    'relative rounded-xl p-1.5 transition-all duration-300',
-                    isTabActive && 'bg-primary-soft',
-                  )}
-                >
-                  <Icon
-                    size={20}
-                    strokeWidth={isTabActive ? 2 : 1.5}
-                    className={cn(
-                      'transition-colors duration-300',
-                      isTabActive ? 'text-primary' : 'text-muted',
-                    )}
-                  />
-                </div>
-                <span
-                  className={cn(
-                    'text-[10px] font-bold leading-none transition-all duration-300',
-                    isTabActive ? 'text-primary' : 'text-muted',
-                  )}
-                >
-                  {tab.label}
-                </span>
-                {isTabActive && (
-                  <motion.div
-                    layoutId="app-tab-indicator"
-                    className="absolute -top-1.5 h-1 w-7 rounded-full bg-primary shadow-lg shadow-primary/30"
-                  />
-                )}
-              </motion.button>
-            )
-          })}
+  const handleMore = () => {
+    triggerHaptic('light')
+    onMore()
+  }
 
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => {
-              triggerHaptic('light')
-              onMore()
-            }}
-            aria-label="القائمة"
-            className="relative flex min-w-[56px] flex-col items-center gap-0.5 px-3 py-1"
-          >
-            <div className="relative rounded-xl p-1.5">
-              <Menu size={20} strokeWidth={1.5} className="text-muted" />
-              {totalUnreadCount > 0 && (
-                <span className="absolute -end-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[9px] font-black leading-none text-on-error">
-                  {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
-                </span>
-              )}
-            </div>
-            <span className="text-[10px] font-bold leading-none text-muted">المزيد</span>
-          </motion.button>
+  return createPortal(
+    <nav className="fixed inset-x-0 bottom-0 z-50 md:hidden" aria-label="التنقل الرئيسي">
+      <div
+        className="px-3 pt-1"
+        style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
+      >
+        <div className="bg-card/80 dark:bg-background/80 border-border/30 relative rounded-[20px] border shadow-elevation-3 backdrop-blur-xl dark:border-white/[0.06]">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent dark:via-white/[0.05]" />
+
+          <div className="relative flex h-[60px] items-center justify-around px-1">
+            {tabs.map((tab) => {
+              const Icon = tab.icon
+              const isActive = tab.id === activeTabId
+
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTab(tab)}
+                  aria-label={tab.label}
+                  className={cn(
+                    'relative flex h-full flex-1 touch-manipulation flex-col items-center justify-center gap-0.5 outline-none transition-all duration-200',
+                    isActive && 'scale-105',
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'rounded-xl p-1.5 transition-all duration-200',
+                      isActive && 'bg-primary/10 dark:bg-primary/15',
+                    )}
+                  >
+                    <Icon
+                      size={20}
+                      strokeWidth={isActive ? 2.2 : 1.6}
+                      className={cn(
+                        'transition-colors duration-200',
+                        isActive ? 'text-primary' : 'text-muted',
+                      )}
+                    />
+                  </div>
+                  <span
+                    className={cn(
+                      'text-[9px] font-bold leading-none transition-colors duration-200',
+                      isActive ? 'text-primary' : 'text-muted',
+                    )}
+                  >
+                    {tab.label}
+                  </span>
+
+                  <AnimatePresence initial={false}>
+                    {isActive && (
+                      <motion.div
+                        key="active-indicator"
+                        layoutId="app-tab-active"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 28 }}
+                        className="absolute -top-0.5 h-[3px] w-5 rounded-full bg-primary"
+                      />
+                    )}
+                  </AnimatePresence>
+                </button>
+              )
+            })}
+
+            {/* زر المزيد */}
+            <button
+              onClick={handleMore}
+              aria-label="المزيد"
+              className="relative flex h-full flex-1 touch-manipulation flex-col items-center justify-center gap-0.5 outline-none"
+            >
+              <div className="relative rounded-xl p-1.5">
+                <MoreHorizontal size={20} strokeWidth={1.6} className="text-muted" />
+                {totalUnreadCount > 0 && (
+                  <span className="absolute -end-1 -top-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[8px] font-black leading-none text-on-error">
+                    {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
+                  </span>
+                )}
+              </div>
+              <span className="text-[9px] font-bold leading-none text-muted">المزيد</span>
+            </button>
+          </div>
         </div>
       </div>
-    </nav>
+    </nav>,
+    document.body,
   )
 }
-
-export const appTabBarHidden = (pathname: string) =>
-  SELF_NAV_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`))
