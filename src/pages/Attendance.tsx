@@ -6,6 +6,7 @@ import {
   CheckCircle,
   XCircle,
   Clock,
+  Plus,
   List,
   BarChart3,
   UserCheck,
