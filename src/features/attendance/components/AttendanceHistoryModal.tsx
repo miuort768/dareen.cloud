@@ -1,276 +1,354 @@
-import { useState, useRef, useCallback } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { X, Calendar, CheckCircle2, XCircle, Clock, AlertCircle, Trash2, Edit2, Save, XSquare } from 'lucide-react';
-import { api } from '../../../lib/api';
-import { Skeleton } from '../../../shared/components/ui';
-import { cn } from '../../../lib/utils';
-import { useShowNotification } from '../../../context/AppContext';
-import { confirm } from '../../../lib/confirmDialog';
-import type { Session } from '../types';
+import { useState, useRef, useCallback } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import {
+  X,
+  Calendar,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  AlertCircle,
+  Trash2,
+  Edit2,
+  Save,
+  XSquare,
+} from 'lucide-react'
+import { api } from '../../../lib/api'
+import { Skeleton } from '../../../shared/components/ui'
+import { cn } from '../../../lib/utils'
+import { useShowNotification } from '../../../context/AppContext'
+import { confirm } from '../../../lib/confirmDialog'
+import type { Session } from '../types'
 
 interface AttendanceHistoryModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    studentName: string;
-    studentId: string;
-    teacherName: string;
-    studentGrade?: string;
-    studentSubject?: string;
-    studentCurriculum?: string;
-    canDelete?: boolean;
-    onSessionChange?: () => void;
+  isOpen: boolean
+  onClose: () => void
+  studentName: string
+  studentId: string
+  teacherName: string
+  studentGrade?: string
+  studentSubject?: string
+  studentCurriculum?: string
+  canDelete?: boolean
+  onSessionChange?: () => void
 }
 
-export const AttendanceHistoryModal = ({ isOpen, onClose, studentName, studentId, teacherName, studentGrade, studentSubject, studentCurriculum, canDelete = true, onSessionChange }: AttendanceHistoryModalProps) => {
-    const [editingSession, setEditingSession] = useState<Session | null>(null);
-    const [deletingId, setDeletingId] = useState<string | null>(null);
-    const showNotification = useShowNotification();
-    const containerRef = useRef<HTMLDivElement>(null);
-    const queryClient = useQueryClient();
+export const AttendanceHistoryModal = ({
+  isOpen,
+  onClose,
+  studentName,
+  studentId,
+  teacherName,
+  studentGrade,
+  studentSubject,
+  studentCurriculum,
+  canDelete = true,
+  onSessionChange,
+}: AttendanceHistoryModalProps) => {
+  const [editingSession, setEditingSession] = useState<Session | null>(null)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+  const showNotification = useShowNotification()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const queryClient = useQueryClient()
 
-    const { data: history = [], isLoading: loading } = useQuery({
-        queryKey: ['attendance-history', studentId, teacherName, studentSubject],
-        queryFn: async () => {
-            const data = await api.get<Session[]>(`/sessions?studentId=${studentId}&q=${encodeURIComponent(teacherName)}`);
-            const sessions = Array.isArray(data) ? data : [];
-            return sessions
-                .filter(
-                    s =>
-                        s.studentId === studentId &&
-                        s.teacherName === teacherName &&
-                        (studentSubject ? s.subject === studentSubject : true) &&
-                        (s.status === 'completed' || s.status === 'cancelled')
-                )
-                .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const { data: history = [], isLoading: loading } = useQuery({
+    queryKey: ['attendance-history', studentId, teacherName, studentSubject],
+    queryFn: async () => {
+      const data = await api.get<Session[]>(
+        `/sessions?studentId=${studentId}&q=${encodeURIComponent(teacherName)}`,
+      )
+      const sessions = Array.isArray(data) ? data : []
+      return sessions
+        .filter(
+          (s) =>
+            s.studentId === studentId &&
+            s.teacherName === teacherName &&
+            (studentSubject ? s.subject === studentSubject : true) &&
+            (s.status === 'completed' || s.status === 'cancelled'),
+        )
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    },
+    enabled: isOpen && !!studentId,
+  })
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => api.delete(`/sessions/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['attendance-history'] })
+      onSessionChange?.()
+    },
+  })
+
+  const updateMutation = useMutation({
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: string
+      data: { date: string; status: string; day: string }
+    }) => api.patch(`/sessions/${id}`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['attendance-history'] })
+      onSessionChange?.()
+      setEditingSession(null)
+    },
+  })
+
+  const handleDelete = async (id: string) => {
+    if (
+      !(await confirm({
+        title: 'حذف السجل',
+        description: 'هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.',
+        confirmText: 'حذف',
+        cancelText: 'إلغاء',
+      }))
+    )
+      return
+
+    setDeletingId(id)
+    try {
+      await deleteMutation.mutateAsync(id)
+    } catch (error) {
+      console.error('Error deleting session:', error)
+      showNotification('حدث خطأ أثناء الحذف', 'error')
+    } finally {
+      setDeletingId(null)
+    }
+  }
+
+  const handleUpdate = async () => {
+    if (!editingSession) return
+    try {
+      await updateMutation.mutateAsync({
+        id: editingSession.id,
+        data: {
+          date: editingSession.date,
+          status: editingSession.status,
+          day: new Date(editingSession.date).toLocaleDateString('ar-EG', {
+            weekday: 'long',
+          }),
         },
-        enabled: isOpen && !!studentId,
-    });
+      })
+    } catch (error) {
+      console.error('Error updating session:', error)
+      showNotification('حدث خطأ أثناء التحديث', 'error')
+    }
+  }
 
-    const deleteMutation = useMutation({
-        mutationFn: (id: string) => api.delete(`/sessions/${id}`),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['attendance-history'] });
-            onSessionChange?.();
-        },
-    });
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation()
+        onClose()
+      }
+    },
+    [onClose],
+  )
 
-    const updateMutation = useMutation({
-        mutationFn: ({ id, data }: { id: string; data: { date: string; status: string; day: string } }) => api.patch(`/sessions/${id}`, data),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['attendance-history'] });
-            onSessionChange?.();
-            setEditingSession(null);
-        },
-    });
+  if (!isOpen) return null
 
-    const handleDelete = async (id: string) => {
-        if (!(await confirm({ title: 'حذف السجل', description: 'هل أنت متأكد من حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء.', confirmText: 'حذف', cancelText: 'إلغاء' }))) return;
-
-        setDeletingId(id);
-        try {
-            await deleteMutation.mutateAsync(id);
-        } catch (error) {
-            console.error("Error deleting session:", error);
-            showNotification('حدث خطأ أثناء الحذف', 'error');
-        } finally {
-            setDeletingId(null);
-        }
-    };
-
-    const handleUpdate = async () => {
-        if (!editingSession) return;
-
-        try {
-            await updateMutation.mutateAsync({
-                id: editingSession.id,
-                data: {
-                    date: editingSession.date,
-                    status: editingSession.status,
-                    day: new Date(editingSession.date).toLocaleDateString('ar-EG', { weekday: 'long' }),
-                },
-            });
-        } catch (error) {
-            console.error("Error updating session:", error);
-            showNotification('حدث خطأ أثناء التحديث', 'error');
-        }
-    };
-
-    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
-        if (e.key === 'Escape') { e.stopPropagation(); onClose(); }
-    }, [onClose]);
-
-    if (!isOpen) return null;
-
-    return (
-        <div ref={containerRef} className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in" role="dialog" aria-modal="true" aria-label={studentName} onKeyDown={handleKeyDown}>
-            <div className="bg-card w-full max-w-2xl rounded-2xl shadow-elevation-2 border border-border animate-in zoom-in-95 max-h-[90vh] flex flex-col overflow-hidden">
-                <div className="p-5 border-b border-border flex justify-between items-center bg-primary text-on-primary rounded-t-2xl">
-                    <div>
-                        <h3 className="text-sm font-bold flex items-center gap-2">
-                            <Clock size={18} />
-                            سجل حضور الطالب
-                        </h3>
-                        <div className="mt-2">
-                            <p className="text-base font-bold text-on-primary">{studentName}</p>
-                            <div className="flex flex-wrap gap-2 mt-1">
-                                {studentGrade && (
-                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-white/15 text-on-primary">
-                                        الصف {studentGrade}
-                                    </span>
-                                )}
-                                {studentCurriculum && (
-                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-white/15 text-on-primary">
-                                        {studentCurriculum}
-                                    </span>
-                                )}
-                                {studentSubject && (
-                                    <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-white/15 text-on-primary">
-                                        منهج {studentSubject}
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center text-on-primary/60 hover:text-on-primary hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors rounded-xl" aria-label="إغلاق">
-                        <X size={20} />
-                    </button>
-                </div>
-
-                <div className="flex-1 overflow-y-auto custom-scrollbar">
-                    {loading ? (
-                        <div className="space-y-3 px-5">
-                            {[...Array(5)].map((_, i) => (
-                                <Skeleton key={`skel-${i}`} className="h-16 rounded-xl" />
-                            ))}
-                        </div>
-                    ) : history.length > 0 ? (
-                        <div className="space-y-3 p-5">
-                            {history.map((session) => (
-                                <div
-                                    key={session.id}
-                                    className={cn(
-                                        "flex items-center justify-between transition-all group bg-card border border-e-[4px]",
-                                        session.status === 'completed'
-                                            ? "border-success/20 bg-success-soft/30 border-e-success"
-                                            : "border-error/20 bg-error-soft/30 border-e-error"
-                                    )}
-                                >
-                                    {editingSession?.id === session.id ? (
-                                        <div className="flex-1 flex items-center gap-4 p-4">
-                                            <input
-                                                type="date" aria-label="تاريخ الجلسة"
-                                                value={editingSession.date}
-                                                onChange={e => setEditingSession({ ...editingSession, date: e.target.value })}
-                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10 transition-all"
-                                            />
-                                            <select
-                                                value={editingSession.status}
-                                                onChange={e => setEditingSession({ ...editingSession, status: e.target.value as 'completed' | 'cancelled' })}
-                                                aria-label="حالة الحضور"
-                                                className="px-3 py-2 text-micro font-bold border border-border rounded-xl bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10 transition-all"
-                                            >
-                                                <option value="completed">حضور</option>
-                                                <option value="cancelled">غياب</option>
-                                            </select>
-                                            <div className="flex gap-2 ms-auto">
-                                                    <button
-                                                        onClick={handleUpdate}
-                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-success-soft text-success focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                                                        aria-label="حفظ"
-                                                    >
-                                                        <Save size={16} />
-                                                    </button>
-                                                    <button
-                                                        onClick={() => setEditingSession(null)}
-                                                        className="p-2 rounded-xl transition-all bg-surface text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                                                        aria-label="إلغاء"
-                                                    >
-                                                    <XSquare size={16} />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <>
-                                            <div className="flex items-center gap-4 p-4">
-                                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${session.status === 'completed' ? 'bg-success-soft' : 'bg-error-soft'}`}>
-                                                    {session.status === 'completed' ? <CheckCircle2 size={20} className="text-success" /> : <XCircle size={20} className="text-error" />}
-                                                </div>
-                                                <div>
-                                                    <div className="flex items-center gap-2">
-                                                        <Calendar size={14} className="text-muted" />
-                                                        <p className="text-sm font-bold text-main">{session.date}</p>
-                                                        <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-surface text-muted">{session.day}</span>
-                                                    </div>
-                                                    <p className="text-xs font-bold text-muted mt-0.5">{session.subject} - {session.time}</p>
-                                                    
-                                                    {(session.topics || session.homework) && (
-                                                        <div className="mt-3 space-y-2 pb-1">
-                                                            {session.topics && (
-                                                                <div className="flex gap-2">
-                                                                    <span className="text-micro font-bold px-1.5 py-0.5 h-fit whitespace-nowrap rounded-lg bg-success-soft text-success">المنجز</span>
-                                                                    <p className="text-xs font-bold text-main leading-relaxed border-e-[2px] border-e-success-soft pe-2">{session.topics}</p>
-                                                                </div>
-                                                            )}
-                                                            {session.homework && (
-                                                                <div className="flex gap-2">
-                                                                    <span className="text-micro font-bold px-1.5 py-0.5 h-fit whitespace-nowrap rounded-lg bg-warning-soft text-warning">الواجب</span>
-                                                                    <p className="text-xs font-bold text-muted leading-relaxed border-e-[2px] border-e-warning-soft pe-2">{session.homework}</p>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-center gap-3 ps-0 p-4">
-                                                <span className={`text-micro font-bold px-2 py-1 rounded-xl ${session.status === 'completed' ? 'bg-success-soft text-success' : 'bg-error-soft text-error'}`}>
-                                                    {session.status === 'completed' ? 'حضور' : 'غياب'}
-                                                </span>
-
-                                                <div className="flex gap-1 opacity-100 lg:opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <button
-                                                        onClick={() => setEditingSession(session)}
-                                                        className="p-2 rounded-xl transition-all active:scale-95 bg-primary-soft text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                                                        aria-label="تعديل"
-                                                    >
-                                                        <Edit2 size={14} />
-                                                    </button>
-                                                    {canDelete && (
-                                                        <button
-                                                            onClick={() => handleDelete(session.id)}
-                                                            className="p-2 rounded-xl transition-all active:scale-95 bg-error-soft text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                                                            aria-label="حذف"
-                                                            disabled={deletingId === session.id}
-                                                        >
-                                                            {deletingId === session.id ? <div className="w-4 h-4 border-2 border-error border-t-transparent rounded-full animate-spin"></div> : <Trash2 size={14} />}
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="py-12 text-center flex flex-col items-center gap-4 mx-5 mb-5 bg-card border border-dashed border-border rounded-2xl">
-                            <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-surface text-muted">
-                                <AlertCircle size={24} />
-                            </div>
-                            <p className="text-sm font-bold text-muted">لا يوجد سجلات حضور أو غياب سابقة لهذا الطالب</p>
-                        </div>
-                    )}
-                </div>
-
-                <div className="p-5 border-t border-border">
-                    <button
-                        onClick={onClose}
-                        className="w-full bg-primary hover:bg-primary-hover text-on-primary font-bold py-3 text-sm rounded-xl transition-all active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                    >
-                        إغلاق
-                    </button>
-                </div>
+  return (
+    <div
+      ref={containerRef}
+      className="fixed inset-0 z-[150] flex items-center justify-center p-3"
+      role="dialog"
+      aria-modal="true"
+      aria-label={studentName}
+      onKeyDown={handleKeyDown}
+    >
+      <div className="absolute inset-0 bg-black/30" onClick={onClose} />
+      <div className="relative flex max-h-[75vh] w-full max-w-xs flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2">
+        {/* Compact Header */}
+        <div className="flex items-center justify-between bg-primary px-4 py-3">
+          <div className="flex items-center gap-2.5">
+            <Clock size={14} className="text-on-primary" />
+            <div className="min-w-0">
+              <h3 className="truncate text-xs font-bold text-on-primary">سجل الحضور</h3>
+              <p className="text-on-primary/70 truncate text-[10px]">{studentName}</p>
             </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/15 text-on-primary transition-colors hover:bg-white/25"
+            aria-label="إغلاق"
+          >
+            <X size={14} />
+          </button>
         </div>
-    );
-};
+
+        {/* Tags */}
+        <div className="flex items-center gap-1.5 border-b border-border bg-surface px-4 py-2">
+          {studentGrade && (
+            <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary">
+              الصف {studentGrade}
+            </span>
+          )}
+          {studentSubject && (
+            <span className="rounded bg-success-soft px-1.5 py-0.5 text-[9px] font-bold text-success">
+              {studentSubject}
+            </span>
+          )}
+          {studentCurriculum && (
+            <span className="rounded bg-info-soft px-1.5 py-0.5 text-[9px] font-bold text-info">
+              {studentCurriculum}
+            </span>
+          )}
+          <span className="me-auto rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary">
+            {history.length} سجل
+          </span>
+        </div>
+
+        {/* List */}
+        <div className="no-scrollbar flex-1 overflow-y-auto p-3">
+          {loading ? (
+            <div className="space-y-2">
+              {[...Array(4)].map((_, i) => (
+                <Skeleton key={`skel-${i}`} className="h-14 rounded-lg" />
+              ))}
+            </div>
+          ) : history.length > 0 ? (
+            <div className="space-y-2">
+              {history.map((session) => (
+                <div
+                  key={session.id}
+                  className={cn(
+                    'rounded-lg border bg-surface p-2.5',
+                    session.status === 'completed' ? 'border-success/20' : 'border-error/20',
+                  )}
+                >
+                  {editingSession?.id === session.id ? (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="date"
+                        aria-label="تاريخ الجلسة"
+                        value={editingSession.date}
+                        onChange={(e) =>
+                          setEditingSession({
+                            ...editingSession,
+                            date: e.target.value,
+                          })
+                        }
+                        className="rounded-lg border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                      />
+                      <select
+                        value={editingSession.status}
+                        onChange={(e) =>
+                          setEditingSession({
+                            ...editingSession,
+                            status: e.target.value as 'completed' | 'cancelled',
+                          })
+                        }
+                        aria-label="حالة الحضور"
+                        className="rounded-lg border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                      >
+                        <option value="completed">حضور</option>
+                        <option value="cancelled">غياب</option>
+                      </select>
+                      <div className="me-auto flex gap-1">
+                        <button
+                          onClick={handleUpdate}
+                          className="rounded-lg bg-success-soft p-1.5 text-success transition-all active:scale-95"
+                          aria-label="حفظ"
+                        >
+                          <Save size={12} />
+                        </button>
+                        <button
+                          onClick={() => setEditingSession(null)}
+                          className="rounded-lg bg-surface p-1.5 text-muted transition-all"
+                          aria-label="إلغاء"
+                        >
+                          <XSquare size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={cn(
+                            'flex h-7 w-7 items-center justify-center rounded-lg',
+                            session.status === 'completed' ? 'bg-success-soft' : 'bg-error-soft',
+                          )}
+                        >
+                          {session.status === 'completed' ? (
+                            <CheckCircle2 size={14} className="text-success" />
+                          ) : (
+                            <XCircle size={14} className="text-error" />
+                          )}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5">
+                            <Calendar size={10} className="text-muted" />
+                            <span className="text-[10px] font-bold text-main">{session.date}</span>
+                            <span className="rounded bg-surface px-1 py-0.5 text-[8px] font-bold text-muted">
+                              {session.day}
+                            </span>
+                          </div>
+                          <p className="text-[9px] text-muted">
+                            {session.subject} - {session.time}
+                          </p>
+                          {session.topics && (
+                            <p className="mt-0.5 line-clamp-1 text-[9px] text-muted">
+                              {session.topics}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex shrink-0 items-center gap-1">
+                        <span
+                          className={cn(
+                            'rounded px-1.5 py-0.5 text-[9px] font-bold',
+                            session.status === 'completed'
+                              ? 'bg-success-soft text-success'
+                              : 'bg-error-soft text-error',
+                          )}
+                        >
+                          {session.status === 'completed' ? 'حضور' : 'غياب'}
+                        </span>
+                        <button
+                          onClick={() => setEditingSession(session)}
+                          className="rounded p-1 text-muted transition-all hover:text-primary"
+                          aria-label="تعديل"
+                        >
+                          <Edit2 size={10} />
+                        </button>
+                        {canDelete && (
+                          <button
+                            onClick={() => handleDelete(session.id)}
+                            className="rounded p-1 text-muted transition-all hover:text-error"
+                            aria-label="حذف"
+                            disabled={deletingId === session.id}
+                          >
+                            {deletingId === session.id ? (
+                              <div className="h-3 w-3 animate-spin rounded-full border-2 border-error border-t-transparent" />
+                            ) : (
+                              <Trash2 size={10} />
+                            )}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center py-8 text-center">
+              <AlertCircle size={20} className="text-muted/30 mb-1.5" />
+              <p className="text-[10px] text-muted">لا يوجد سجلات حضور سابقة</p>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-border px-3 py-2">
+          <button
+            onClick={onClose}
+            className="w-full rounded-lg bg-surface py-2 text-[10px] font-bold text-main transition-colors hover:bg-hover"
+          >
+            إغلاق
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
