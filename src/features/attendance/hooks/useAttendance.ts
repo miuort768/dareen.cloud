@@ -306,16 +306,25 @@ export const useAttendance = (
         }
       })
 
-      const studentsList = Array.from(studentMap.values()).map((data) => ({
-        ...data,
-        rate: data.total > 0 ? Math.round((data.completed / data.total) * 100) : 0,
-      }))
+      const studentsList = Array.from(studentMap.values()).map((data) => {
+        let sCompleted = 0
+        let sCancelled = 0
+        teacherSessions
+          .filter((s) => s.studentId === data.studentId && s.subject === data.subject)
+          .forEach((s) => {
+            if (s.status === 'completed') sCompleted++
+            else if (s.status === 'cancelled') sCancelled++
+          })
+        const resolved = sCompleted + sCancelled
+        return { ...data, rate: resolved > 0 ? Math.round((sCompleted / resolved) * 100) : 0 }
+      })
 
       const completed = teacherSessions.filter((s) => s.status === 'completed').length
       const cancelled = teacherSessions.filter((s) => s.status === 'cancelled').length
       const scheduled = teacherSessions.filter((s) => s.status === 'scheduled').length
       const totalSessions = completed + cancelled + scheduled
-      const rate = totalSessions > 0 ? Math.round((completed / totalSessions) * 100) : 0
+      const resolvedSessions = completed + cancelled
+      const rate = resolvedSessions > 0 ? Math.round((completed / resolvedSessions) * 100) : 0
 
       return {
         teacherName,
