@@ -13,7 +13,7 @@ export const MaintenanceScreen = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((prev) => (prev >= 60 ? 60 : prev + 1))
+      setProgress((prev) => (prev >= 96 ? 96 : prev + 1))
     }, 80)
     return () => clearInterval(timer)
   }, [])
