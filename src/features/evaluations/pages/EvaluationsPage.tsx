@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { User, Users, Plus, Award, Star, TrendingUp, BarChart3 } from 'lucide-react'
+import { User, Users, Plus, Award } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api, safeArray } from '../../../lib/api'
@@ -12,15 +12,6 @@ import { EvaluationFormModal } from '../components/EvaluationFormModal'
 import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader'
 import type { Student, Evaluation } from '../../../types'
 import { cn } from '../../../lib/utils'
-
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
 
 export const Evaluations = () => {
   useEffect(() => {
@@ -181,52 +172,16 @@ export const Evaluations = () => {
     }
   }, [teacherStudents, evaluations, totalXP])
 
-  const kpiCards = useMemo(
-    () => [
-      {
-        label: 'إجمالي الطلاب',
-        value: stats.totalStudents,
-        icon: Users,
-        gradient: 'from-primary/20 to-primary/5',
-        iconBg: 'bg-primary/10 text-primary',
-        accent: 'bg-primary',
-      },
-      {
-        label: 'تم تقييمهم',
-        value: stats.evaluatedCount,
-        icon: Star,
-        gradient: 'from-success/20 to-success/5',
-        iconBg: 'bg-success/10 text-success',
-        accent: 'bg-success',
-      },
-      {
-        label: 'إجمالي XP',
-        value: stats.totalXP,
-        icon: Award,
-        gradient: 'from-warning/20 to-warning/5',
-        iconBg: 'bg-warning/10 text-warning',
-        accent: 'bg-warning',
-      },
-      {
-        label: 'متوسط التقييم',
-        value: stats.avgRating,
-        icon: TrendingUp,
-        gradient: 'from-info/20 to-info/5',
-        iconBg: 'bg-info/10 text-info',
-        accent: 'bg-info',
-      },
-    ],
-    [stats],
-  )
-
   const fabActions = useMemo(
     () => [
       { icon: Plus, label: 'إضافة تقييم', onClick: () => setIsModalOpen(true) },
       {
-        icon: BarChart3,
-        label: 'تصفية متقدمة',
-        onClick: () =>
-          document.querySelector('[data-filters]')?.scrollIntoView({ behavior: 'smooth' }),
+        icon: Users,
+        label: 'الكل',
+        onClick: () => {
+          setFilterStatus('')
+          document.querySelector('[data-cards]')?.scrollIntoView({ behavior: 'smooth' })
+        },
       },
       {
         icon: Award,
@@ -260,77 +215,27 @@ export const Evaluations = () => {
         </div>
       )}
       <div className="relative z-10 mx-auto max-w-page space-y-3 px-2">
-        <div className="relative overflow-hidden rounded-2xl">
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="pointer-events-none absolute z-10 rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <EvaluationsHeader
-            stats={stats}
-            showAddButton={currentUser?.role !== 'parent'}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            filterStatus={filterStatus}
-            onFilterStatusChange={setFilterStatus}
-            onAddClick={() => setIsModalOpen(true)}
-          />
-        </div>
+        <EvaluationsHeader
+          stats={stats}
+          showAddButton={currentUser?.role !== 'parent'}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          filterStatus={filterStatus}
+          onFilterStatusChange={setFilterStatus}
+          onAddClick={() => setIsModalOpen(true)}
+        />
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-            {kpiCards.map((kpi, i) => {
-              const Icon = kpi.icon
-              return (
-                <motion.div
-                  key={kpi.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.12 + i * 0.06 }}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  className={cn(
-                    'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
-                    kpi.gradient,
-                  )}
-                >
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('rounded-lg p-2', kpi.iconBg)}>
-                      <Icon size={16} />
-                    </div>
-                    <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
-                  </div>
-                  <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                  <p className="text-2xl font-bold text-main">{kpi.value}</p>
-                </motion.div>
-              )
-            })}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.15 }}
           data-cards
         >
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {sortedStudents.map((student, idx) => (
               <motion.div
                 key={student.id}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.03 * idx }}
               >
@@ -388,6 +293,7 @@ export const Evaluations = () => {
         />
       </div>
 
+      {/* FAB */}
       <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
         <AnimatePresence>
           {fabOpen &&
