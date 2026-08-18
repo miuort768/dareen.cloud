@@ -19,7 +19,7 @@ import { InvoicePreviewModal } from '../components/InvoicePreviewModal'
 import { FixedExpensesManager } from '../components/FixedExpensesManager'
 import { useFinance } from '../hooks/useFinance'
 import { useNavigate } from 'react-router-dom'
-import { CURRENCY_SYMBOL } from '../../../config/constants'
+import { getCurrencySymbol } from '../../../config/constants'
 
 interface PendingInvoice {
   id: string
@@ -158,7 +158,8 @@ export const Finance = () => {
               <div>
                 <p className="text-[10px] font-bold text-white/50">إيرادات الشهر</p>
                 <p className="text-sm font-bold tabular-nums text-on-primary">
-                  {(state.monthIncome || 0).toLocaleString()} {CURRENCY_SYMBOL}
+                  {(state.monthIncome || 0).toLocaleString()}{' '}
+                  {getCurrencySymbol(state.reportCurrency)}
                 </p>
               </div>
             </div>
@@ -169,7 +170,8 @@ export const Finance = () => {
               <div>
                 <p className="text-[10px] font-bold text-white/50">مصاريف الشهر</p>
                 <p className="text-sm font-bold tabular-nums text-on-primary">
-                  {(state.monthExpenses || 0).toLocaleString()} {CURRENCY_SYMBOL}
+                  {(state.monthExpenses || 0).toLocaleString()}{' '}
+                  {getCurrencySymbol(state.reportCurrency)}
                 </p>
               </div>
             </div>
@@ -180,7 +182,8 @@ export const Finance = () => {
               <div>
                 <p className="text-[10px] font-bold text-white/50">صافي الربح</p>
                 <p className="text-sm font-bold tabular-nums text-on-primary">
-                  {(state.netProfit || 0).toLocaleString()} {CURRENCY_SYMBOL}
+                  {(state.netProfit || 0).toLocaleString()}{' '}
+                  {getCurrencySymbol(state.reportCurrency)}
                 </p>
               </div>
             </div>

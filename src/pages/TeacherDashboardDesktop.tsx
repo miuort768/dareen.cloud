@@ -11,11 +11,9 @@ import { TopAttendanceStudents } from '../features/dashboard/components/TopAtten
 import { TeacherSessionTimeline } from '../features/dashboard/components/TeacherSessionTimeline'
 import { StudentQuickBrief } from '../features/dashboard/components/StudentQuickBrief'
 import { MonthlyReportPreview } from '../features/dashboard/components/MonthlyReportPreview'
-import { LiveSessions } from '../features/dashboard/components/LiveSessions'
 import { NextSessionHero } from '../features/dashboard/components/NextSessionHero'
 import { QuickActions } from '../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../features/dashboard/components/SmartNotifications'
-import { StartLiveSessionDialog } from '../features/dashboard/components/StartLiveSessionDialog'
 import { FinancialSnapshot } from '../features/dashboard/components/FinancialSnapshot'
 import { AttendanceChart } from '../features/dashboard/components/AttendanceChart'
 import type {
@@ -70,45 +68,8 @@ export const TeacherDashboardDesktop = ({
     sessionsCompleted: number
     lastNotes: string[]
   } | null>(null)
-  const [startDialog, setStartDialog] = useState<{
-    open: boolean
-    studentId?: string
-    subject?: string
-  }>({ open: false })
 
   const nextSession = timeline.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
-  const allTimeline = timeline || []
-  const remainingSessions = allTimeline.filter(
-    (s) => s.status === 'scheduled' || s.status === 'in-progress',
-  )
-  // Filter to find the next upcoming session (not the first one, but the one after current time)
-  const nextUpcomingSession =
-    remainingSessions.length > 0
-      ? [...remainingSessions].sort(
-          (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime(),
-        )[0]
-      : null
-  const openStart = (studentId?: string, subject?: string) =>
-    setStartDialog({ open: true, studentId, subject })
-  const handleSkip = () => {
-    // Find the session after the current nextSession
-    if (nextUpcomingSession) {
-      const currentIndex = remainingSessions.indexOf(nextUpcomingSession)
-      const nextIndex = currentIndex + 1
-      if (nextIndex < remainingSessions.length) {
-        setStartDialog({
-          open: true,
-          studentId: remainingSessions[nextIndex].studentId,
-          subject: remainingSessions[nextIndex].subject,
-        })
-      } else {
-        // No more sessions
-        setStartDialog({ open: false })
-      }
-    } else {
-      setStartDialog({ open: false })
-    }
-  }
 
   return (
     <>
@@ -116,11 +77,7 @@ export const TeacherDashboardDesktop = ({
       <div className="mx-auto max-w-page space-y-3 px-4 pb-28 pt-4 md:space-y-4">
         <motion.div {...fadeUp(0.04)}>
           {nextSession ? (
-            <NextSessionHero
-              timeline={timeline}
-              onStart={(id, subject) => openStart(id, subject)}
-              onSkip={() => handleSkip()}
-            />
+            <NextSessionHero timeline={timeline} />
           ) : (
             <div className="flex h-full min-h-[200px] items-center justify-center rounded-2xl border border-border bg-surface p-5 dark:border-border dark:bg-card">
               <EmptyState
@@ -135,11 +92,7 @@ export const TeacherDashboardDesktop = ({
 
         <motion.div {...fadeUp(0.06)}>
           <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm transition-all duration-300 hover:shadow-md dark:border-border dark:bg-card">
-            <QuickActions
-              onStartSession={() => openStart(nextSession?.studentId, nextSession?.subject)}
-              sessionAvailable={!!nextSession}
-              showQuickLinks={false}
-            />
+            <QuickActions showQuickLinks={false} />
           </div>
         </motion.div>
 
@@ -159,11 +112,7 @@ export const TeacherDashboardDesktop = ({
           </div>
           {timeline.length > 0 && (
             <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
-              <TeacherSessionTimeline
-                sessions={timeline}
-                onStudentClick={setBriefingStudent}
-                onSessionStart={(s) => openStart(s.studentId, s.subject)}
-              />
+              <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
             </div>
           )}
           <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
@@ -174,6 +123,7 @@ export const TeacherDashboardDesktop = ({
               monthNetProfit={stats.monthNetProfit}
               monthRevenue={stats.monthRevenue}
               expectedCollection={stats.expectedCollection}
+              currency={stats.currency}
             />
           </div>
           <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
@@ -246,12 +196,6 @@ export const TeacherDashboardDesktop = ({
             onShare={() => {}}
           />
         )}
-        <StartLiveSessionDialog
-          open={startDialog.open}
-          onClose={() => setStartDialog({ open: false })}
-          defaultStudentId={startDialog.studentId}
-          defaultSubject={startDialog.subject}
-        />
       </div>
     </>
   )

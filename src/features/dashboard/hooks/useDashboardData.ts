@@ -196,37 +196,79 @@ export const useDashboardData = (currentUser: User | null) => {
       })
     })
 
-    // 4. Financials
+    // 4. Financials — currency-aware computation
+    // Determine target currency: teacher uses their own currency, admin uses EGP (server converts)
+    const targetCurrency = isTeacher ? teacherData?.currency || 'EGP' : 'EGP'
+
     const getSessionRev = (s: Session) => {
       if (s.price !== null && s.price !== undefined) return Number(s.price)
       const stu = students.find((st: Student) => st.id === s.studentId)
       return Number(stu?.sessionPrice) || 0
     }
 
-    const getRevenue = (list: Session[]) =>
-      list.reduce((sum: number, s: Session) => sum + getSessionRev(s), 0)
-    const getManualInc = (list: Transaction[]) =>
-      list
-        .filter((t: Transaction) => t.type === 'income')
-        .reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0)
+    const getSessionCur = (s: Session): string => {
+      return (
+        s.studentCurrency ||
+        students.find((st: Student) => st.id === s.studentId)?.currency ||
+        'EGP'
+      )
+    }
 
     const fixedTotal = fixedExpenses.reduce(
       (sum: number, item: FixedExpense) => sum + (Number(item.amount) || 0),
       0,
     )
 
-    const totalRevenueValue = getRevenue(completedSessions, students) + getManualInc(transactions)
+    // Sum revenue only in target currency (avoids mixing KWD+EGP etc.)
+    const totalRevenueValue =
+      completedSessions
+        .filter((s: Session) => getSessionCur(s) === targetCurrency)
+        .reduce((sum: number, s: Session) => sum + getSessionRev(s), 0) +
+      transactions
+        .filter((t: Transaction) => t.type === 'income' && (t.currency || 'EGP') === targetCurrency)
+        .reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0)
+
     const monthRevenueValue =
-      getRevenue(monthComplete, students) +
-      getManualInc(transactions.filter((t: Transaction) => isSameMonth(t.date, now)))
+      monthComplete
+        .filter((s: Session) => getSessionCur(s) === targetCurrency)
+        .reduce((sum: number, s: Session) => sum + getSessionRev(s), 0) +
+      transactions
+        .filter(
+          (t: Transaction) =>
+            t.type === 'income' &&
+            isSameMonth(t.date, now) &&
+            (t.currency || 'EGP') === targetCurrency,
+        )
+        .reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0)
 
     const totalExpensesValue = isTeacher
-      ? getPaidInv(teacherInvoices) + getManualExp(transactions)
+      ? getPaidInv(
+          teacherInvoices.filter(
+            (inv: TeacherInvoice) => (inv.currency || 'EGP') === targetCurrency,
+          ),
+        ) +
+        transactions
+          .filter(
+            (t: Transaction) => t.type === 'expense' && (t.currency || 'EGP') === targetCurrency,
+          )
+          .reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0)
       : getPaidInv(teacherInvoices) + getManualExp(transactions) + fixedTotal
 
     const monthExpensesValue = isTeacher
-      ? getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date, now))) +
-        getManualExp(transactions.filter((t: Transaction) => isSameMonth(t.date, now)))
+      ? getPaidInv(
+          teacherInvoices.filter(
+            (inv: TeacherInvoice) =>
+              isSameMonth(inv.date, now) && (inv.currency || 'EGP') === targetCurrency,
+          ),
+        ) +
+        transactions
+          .filter(
+            (t: Transaction) =>
+              t.type === 'expense' &&
+              isSameMonth(t.date, now) &&
+              (t.currency || 'EGP') === targetCurrency,
+          )
+          .reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0)
       : getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date, now))) +
         getManualExp(transactions.filter((t: Transaction) => isSameMonth(t.date, now))) +
         fixedTotal
@@ -249,6 +291,7 @@ export const useDashboardData = (currentUser: User | null) => {
       fixedTotal,
       isTeacher,
       now,
+      students,
     )
 
     // 6. Low Balance
@@ -348,6 +391,7 @@ export const useDashboardData = (currentUser: User | null) => {
       ).length,
       lowBalanceCount: lowBalance.length,
       expectedCollection: anticipatedCollection,
+      currency: targetCurrency,
       totalSessions: filteredSessions.length,
       monthCompletedSessions: monthComplete.length,
       monthTotalSessions: filteredSessions.filter(
