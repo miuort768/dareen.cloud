@@ -1,7 +1,6 @@
-const CACHE = 'dareen-v15';
+const CACHE = 'dareen-v16';
 const STATIC_ASSETS = [
   '/',
-  '/index.html',
   '/manifest.json',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
@@ -45,12 +44,14 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (request.destination === 'style' || request.destination === 'script' || request.destination === 'font' || request.destination === 'image') {
-    event.respondWith(staleWhileRevalidate(request));
+    event.respondWith(networkFirst(request));
     return;
   }
 
   if (request.mode === 'navigate') {
-    event.respondWith(networkFirst(request));
+    event.respondWith(
+      fetch(request).catch(() => caches.match('/'))
+    );
   }
 });
 
@@ -72,18 +73,6 @@ self.addEventListener('notificationclick', (event) => {
   event.waitUntil(clients.openWindow(event.notification.data.url));
 });
 
-async function staleWhileRevalidate(request) {
-  const cached = await caches.match(request);
-  const fetchPromise = fetch(request).then(response => {
-    if (response.ok) {
-      const clone = response.clone();
-      caches.open(CACHE).then(c => c.put(request, clone));
-    }
-    return response;
-  }).catch(() => cached);
-  return cached || fetchPromise;
-}
-
 async function networkFirst(request) {
   try {
     const response = await fetch(request);
@@ -95,10 +84,6 @@ async function networkFirst(request) {
   } catch {
     const cached = await caches.match(request);
     if (cached) return cached;
-    if (request.mode === 'navigate') {
-      const fallback = await caches.match('/');
-      if (fallback) return fallback;
-    }
     return new Response('Offline', { status: 503 });
   }
 }

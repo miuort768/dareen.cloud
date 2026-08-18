@@ -58,24 +58,38 @@ createRoot(document.getElementById('root')!).render(
 )
 
 // Apply initial theme from localStorage to prevent flash
-const savedTheme = localStorage.getItem('theme') || localStorage.getItem('public-theme') || 'light';
+const savedTheme = localStorage.getItem('theme') || localStorage.getItem('public-theme') || 'light'
 if (savedTheme === 'dark') {
-    document.documentElement.classList.add('dark');
+  document.documentElement.classList.add('dark')
 } else {
-    document.documentElement.classList.remove('dark');
+  document.documentElement.classList.remove('dark')
 }
 
 // Global variable to catch PWA install prompt (stored for InstallPWA component)
-(window as unknown as { deferredPrompt: Event | null }).deferredPrompt = null;
+;(window as unknown as { deferredPrompt: Event | null }).deferredPrompt = null
 window.addEventListener('beforeinstallprompt', (e) => {
-    (window as unknown as { deferredPrompt: Event | null }).deferredPrompt = e;
-});
+  ;(window as unknown as { deferredPrompt: Event | null }).deferredPrompt = e
+})
 
 // Register Service Worker for notifications
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(err => {
-      console.error('SW registration failed: ', err);
-    });
-  });
+    navigator.serviceWorker
+      .register('/sw.js', { updateViaCache: 'none' })
+      .then((reg) => {
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'activated') {
+                window.location.reload()
+              }
+            })
+          }
+        })
+      })
+      .catch((err) => {
+        console.error('SW registration failed: ', err)
+      })
+  })
 }
