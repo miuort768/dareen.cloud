@@ -6,7 +6,6 @@ import {
   CheckCircle,
   XCircle,
   Clock,
-  Plus,
   List,
   BarChart3,
   UserCheck,
@@ -32,7 +31,7 @@ import type { PeriodFilter } from '../features/attendance/components/AttendanceF
 import { RescheduleModal } from '../features/attendance/components/RescheduleModal'
 import { useAttendance } from '../features/attendance/hooks/useAttendance'
 import { MobileAttendance } from '../features/attendance/components/MobileAttendance'
-import type { Student, Enrollment, Session } from '../features/attendance/types'
+import type { Student, Enrollment } from '../features/attendance/types'
 import { generateWhatsAppLink } from '../lib/whatsapp'
 import {
   SectionCard,
@@ -68,6 +67,7 @@ export const Attendance = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [filterStatus, setFilterStatus] = useState<string>('all')
   const [filterTeacher, setFilterTeacher] = useState<string>('all')
+  const [filterSubject, setFilterSubject] = useState<string>('all')
   const [periodFilter, setPeriodFilter] = useState<PeriodFilter>('today')
   const [customStartDate, setCustomStartDate] = useState('')
   const [customEndDate, setCustomEndDate] = useState('')
@@ -120,7 +120,6 @@ export const Attendance = () => {
   const {
     students,
     allSessions,
-    updateStatus,
     logAttendance,
     updateSchedule,
     updateEnrollmentNotes,
@@ -129,6 +128,8 @@ export const Attendance = () => {
     periodStats,
     matchedEnrollments,
     uniqueTeachers,
+    uniqueSubjects,
+    teacherAttendanceRates,
     refresh,
     teacherStats,
   } = useAttendance(currentUser, date, dateRange)
@@ -141,7 +142,6 @@ export const Attendance = () => {
     student: Student
     enrollment: Enrollment
   } | null>(null)
-  const [isLogging, setIsLogging] = useState(false)
   const [historyStudent, setHistoryStudent] = useState<{
     id: string
     name: string
@@ -239,14 +239,6 @@ export const Attendance = () => {
     [students],
   )
 
-  const handleUpdateStatus = async (id: string, status: Session['status']) => {
-    const success = await updateStatus(id, status)
-    showNotification(
-      success ? 'تم تحديث حالة الجلسة' : 'لم يتم التحديث',
-      success ? 'success' : 'error',
-    )
-  }
-
   const filteredSessions = allSessions.filter((s) => {
     const dateMatch =
       s.date === date ||
@@ -260,7 +252,8 @@ export const Attendance = () => {
       (s.subject || '').toLowerCase().includes(searchTerm.toLowerCase())
     const statusMatch = filterStatus === 'all' || s.status === filterStatus
     const teacherMatch = filterTeacher === 'all' || s.teacherName === filterTeacher
-    return searchMatch && statusMatch && teacherMatch
+    const subjectMatch = filterSubject === 'all' || s.subject === filterSubject
+    return searchMatch && statusMatch && teacherMatch && subjectMatch
   })
 
   const isTeacher = currentUser?.role === 'teacher'
@@ -301,11 +294,6 @@ export const Attendance = () => {
 
   const fabActions = useMemo(
     () => [
-      {
-        icon: Plus,
-        label: 'تسجيل حضور',
-        onClick: () => document.querySelector<HTMLButtonElement>('[data-attendance-log]')?.click(),
-      },
       {
         icon: List,
         label: 'سجل الجلسات',
@@ -504,6 +492,9 @@ export const Attendance = () => {
                 filterTeacher={filterTeacher}
                 onTeacherChange={setFilterTeacher}
                 uniqueTeachers={uniqueTeachers}
+                filterSubject={filterSubject}
+                onSubjectChange={setFilterSubject}
+                uniqueSubjects={uniqueSubjects}
                 periodFilter={periodFilter}
                 onPeriodChange={setPeriodFilter}
                 customStartDate={customStartDate}
@@ -617,19 +608,10 @@ export const Attendance = () => {
             ) : (
               <>
                 <AdminTeacherGroupList
-                  uniqueTeachers={uniqueTeachers}
+                  teacherAttendanceRates={teacherAttendanceRates}
                   filterTeacher={filterTeacher}
-                  students={students}
-                  searchTerm={searchTerm}
-                  filteredSessions={filteredSessions}
-                  date={date}
-                  isLogging={isLogging}
-                  onLogAttendance={(s, e) => {
-                    setLogDate(date)
-                    setSecureModalData({ student: s, enrollment: e })
-                  }}
+                  filterSubject={filterSubject}
                   onViewHistory={handleViewHistory}
-                  onUpdateStatus={handleUpdateStatus}
                 />
                 <motion.div
                   initial={{ opacity: 0, y: 12 }}

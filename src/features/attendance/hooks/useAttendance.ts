@@ -1,221 +1,304 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { api } from '../../../lib/api';
-import { attendanceService } from '../services/attendanceService';
-import type { Session, Student, AttendanceStats, TeacherStats, GlobalUser, ScheduleSlot } from '../types';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import { api } from '../../../lib/api'
+import { attendanceService } from '../services/attendanceService'
+import type {
+  Session,
+  Student,
+  AttendanceStats,
+  TeacherStats,
+  TeacherAttendanceRate,
+  GlobalUser,
+  ScheduleSlot,
+} from '../types'
 
-export const useAttendance = (currentUser: GlobalUser | null, date: string, dateRange?: { start: string; end: string }) => {
-    const [students, setStudents] = useState<Student[]>([]);
-    const [allSessions, setAllSessions] = useState<Session[]>([]);
-    const [loading, setLoading] = useState(true);
-    const mountedRef = useRef(true);
+export const useAttendance = (
+  currentUser: GlobalUser | null,
+  date: string,
+  dateRange?: { start: string; end: string },
+) => {
+  const [students, setStudents] = useState<Student[]>([])
+  const [allSessions, setAllSessions] = useState<Session[]>([])
+  const [loading, setLoading] = useState(true)
+  const mountedRef = useRef(true)
 
-    useEffect(() => {
-        mountedRef.current = true;
-        return () => { mountedRef.current = false; };
-    }, []);
+  useEffect(() => {
+    mountedRef.current = true
+    return () => {
+      mountedRef.current = false
+    }
+  }, [])
 
-    const fetchAll = useCallback(async () => {
-        setLoading(true);
-        try {
-            const [sessionsData, studentsData] = await Promise.all([
-                attendanceService.getSessions(),
-                attendanceService.getStudents()
-            ]);
-            if (mountedRef.current) {
-                setAllSessions(sessionsData);
-                setStudents(studentsData);
-            }
-        } catch (error) {
-            console.error("Error fetching attendance data", error);
-        } finally {
-            if (mountedRef.current) setLoading(false);
-        }
-    }, []);
+  const fetchAll = useCallback(async () => {
+    setLoading(true)
+    try {
+      const [sessionsData, studentsData] = await Promise.all([
+        attendanceService.getSessions(),
+        attendanceService.getStudents(),
+      ])
+      if (mountedRef.current) {
+        setAllSessions(sessionsData)
+        setStudents(studentsData)
+      }
+    } catch (error) {
+      console.error('Error fetching attendance data', error)
+    } finally {
+      if (mountedRef.current) setLoading(false)
+    }
+  }, [])
 
-    useEffect(() => {
-        fetchAll();
-    }, [date, fetchAll]);
+  useEffect(() => {
+    fetchAll()
+  }, [date, fetchAll])
 
-    const updateStatus = async (id: string, newStatus: Session['status']) => {
-        try {
-            await attendanceService.updateSessionStatus(id, newStatus);
-            setAllSessions(prev => prev.map(s => s.id === id ? { ...s, status: newStatus } : s));
-            fetchAll(); // Refresh to ensure consistency
-            return true;
-        } catch (error) {
-            console.error("Error updating status", error);
-            return false;
-        }
-    };
+  const updateStatus = async (id: string, newStatus: Session['status']) => {
+    try {
+      await attendanceService.updateSessionStatus(id, newStatus)
+      setAllSessions((prev) => prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s)))
+      fetchAll() // Refresh to ensure consistency
+      return true
+    } catch (error) {
+      console.error('Error updating status', error)
+      return false
+    }
+  }
 
-    const logAttendance = async (sessionData: Omit<Session, 'id'>): Promise<{ success: boolean; error?: string }> => {
-        try {
-            await attendanceService.createSession(sessionData);
-            fetchAll();
-            return { success: true };
-        } catch (error) {
-            console.error("Error logging attendance", error);
-            const message = error instanceof Error ? error.message : 'حدث خطأ غير متوقع';
-            return { success: false, error: message };
-        }
-    };
+  const logAttendance = async (
+    sessionData: Omit<Session, 'id'>,
+  ): Promise<{ success: boolean; error?: string }> => {
+    try {
+      await attendanceService.createSession(sessionData)
+      fetchAll()
+      return { success: true }
+    } catch (error) {
+      console.error('Error logging attendance', error)
+      const message = error instanceof Error ? error.message : 'حدث خطأ غير متوقع'
+      return { success: false, error: message }
+    }
+  }
 
-    const updateSchedule = async (student: Student, enrollmentIndex: number, newSchedule: ScheduleSlot[]) => {
-        try {
-            const enrollment = student.enrollments?.[enrollmentIndex];
-            if (!enrollment?.id) return false;
-            await attendanceService.updateSchedule(student.id, enrollment.id, newSchedule);
-            fetchAll();
-            return true;
-        } catch (error) {
-            console.error("Error updating schedule", error);
-            return false;
-        }
-    };
+  const updateSchedule = async (
+    student: Student,
+    enrollmentIndex: number,
+    newSchedule: ScheduleSlot[],
+  ) => {
+    try {
+      const enrollment = student.enrollments?.[enrollmentIndex]
+      if (!enrollment?.id) return false
+      await attendanceService.updateSchedule(student.id, enrollment.id, newSchedule)
+      fetchAll()
+      return true
+    } catch (error) {
+      console.error('Error updating schedule', error)
+      return false
+    }
+  }
 
-    const updateEnrollmentNotes = async (studentId: string, subject: string, notes: string) => {
-        try {
-            const student = students.find(s => s.id === studentId);
-            if (!student) return false;
+  const updateEnrollmentNotes = async (studentId: string, subject: string, notes: string) => {
+    try {
+      const student = students.find((s) => s.id === studentId)
+      if (!student) return false
 
-            const enrollment = student.enrollments.find(e => e.subject === subject);
-            if (!enrollment?.id) return false;
+      const enrollment = student.enrollments.find((e) => e.subject === subject)
+      if (!enrollment?.id) return false
 
-            await attendanceService.updateEnrollmentNotes(studentId, enrollment.id, notes);
-            // Deep update state to ensure re-render
-            setStudents(prev => prev.map(s => s.id === studentId ? {
+      await attendanceService.updateEnrollmentNotes(studentId, enrollment.id, notes)
+      // Deep update state to ensure re-render
+      setStudents((prev) =>
+        prev.map((s) =>
+          s.id === studentId
+            ? {
                 ...s,
-                enrollments: s.enrollments.map(e => e.subject === subject ? { ...e, nextSessionNotes: notes } : e),
-            } : s));
-            return true;
-        } catch (error) {
-            console.error("Error updating enrollment notes", error);
-            return false;
-        }
-    };
+                enrollments: s.enrollments.map((e) =>
+                  e.subject === subject ? { ...e, nextSessionNotes: notes } : e,
+                ),
+              }
+            : s,
+        ),
+      )
+      return true
+    } catch (error) {
+      console.error('Error updating enrollment notes', error)
+      return false
+    }
+  }
 
-    const requestReschedule = async (studentId: string, studentName: string, subject: string, data: { date: string, time: string, reason: string }) => {
-        try {
-            await api.post('/tasks', {
-                id: Math.random().toString(36).substring(2, 11) + Date.now().toString(36),
-                title: `طلب تأجيل: ${studentName}`,
-                description: `الحصة: ${subject}\nالموعد المقترح: ${data.date} - ${data.time}\nالسبب: ${data.reason}`,
-                status: 'pending',
-                priority: 'medium',
-                dueDate: data.date,
-                teacherId: currentUser?.id,
-                studentId: studentId
-            });
-            return true;
-        } catch (err) {
-            console.error('Reschedule error:', err);
-            return false;
-        }
-    };
+  const requestReschedule = async (
+    studentId: string,
+    studentName: string,
+    subject: string,
+    data: { date: string; time: string; reason: string },
+  ) => {
+    try {
+      await api.post('/tasks', {
+        id: Math.random().toString(36).substring(2, 11) + Date.now().toString(36),
+        title: `طلب تأجيل: ${studentName}`,
+        description: `الحصة: ${subject}\nالموعد المقترح: ${data.date} - ${data.time}\nالسبب: ${data.reason}`,
+        status: 'pending',
+        priority: 'medium',
+        dueDate: data.date,
+        teacherId: currentUser?.id,
+        studentId: studentId,
+      })
+      return true
+    } catch (err) {
+      console.error('Reschedule error:', err)
+      return false
+    }
+  }
 
-    const stats = useMemo<AttendanceStats>(() => {
-        // We filter sessions by date here to match the logic in Attendance.tsx
-        const todaySessions = allSessions.filter(s => {
-            if (s.date === date) return true;
-            if (s.status === 'scheduled') {
-                const sessionDate = new Date(s.date);
-                const clientDate = new Date(date);
-                const diffTime = clientDate.getTime() - sessionDate.getTime();
-                const diffDays = diffTime / (1000 * 3600 * 24);
-                return diffDays > 0 && diffDays <= 1;
-            }
-            return false;
-        });
-
-        return {
-            todayCompleted: todaySessions.filter(s => s.status === 'completed').length,
-            todayCancelled: todaySessions.filter(s => s.status === 'cancelled').length,
-            todayScheduled: todaySessions.filter(s => s.status === 'scheduled').length,
-            todayTotal: todaySessions.length,
-            totalCompleted: allSessions.filter(s => s.status === 'completed').length,
-            totalCancelled: allSessions.filter(s => s.status === 'cancelled').length
-        };
-    }, [allSessions, date]);
-
-    const periodStats = useMemo(() => {
-        if (!dateRange) return null;
-        const { start, end } = dateRange;
-        const rangeSessions = allSessions.filter(s => {
-            return s.date >= start && s.date <= end;
-        });
-        const startDate = new Date(`${start}T00:00:00`);
-        const endDate = new Date(`${end}T00:00:00`);
-        const lengthDays = Math.max(Math.round((endDate.getTime() - startDate.getTime()) / 86400000) + 1, 1);
-        const prevEnd = new Date(startDate);
-        prevEnd.setDate(startDate.getDate() - 1);
-        const prevStart = new Date(startDate);
-        prevStart.setDate(startDate.getDate() - lengthDays);
-        const prevStartStr = prevStart.toLocaleDateString('en-CA');
-        const prevEndStr = prevEnd.toLocaleDateString('en-CA');
-        const prevSessions = allSessions.filter(s => s.date >= prevStartStr && s.date <= prevEndStr);
-        return {
-            completed: rangeSessions.filter(s => s.status === 'completed').length,
-            cancelled: rangeSessions.filter(s => s.status === 'cancelled').length,
-            scheduled: rangeSessions.filter(s => s.status === 'scheduled').length,
-            total: rangeSessions.length,
-            prevCompleted: prevSessions.filter(s => s.status === 'completed').length,
-            prevCancelled: prevSessions.filter(s => s.status === 'cancelled').length
-        };
-    }, [allSessions, dateRange]);
-
-    const teacherData = useMemo(() => {
-        const nameToMatch = (currentUser?.teacherName || currentUser?.name || '').trim().toLowerCase();
-        const tidToMatch = currentUser?.id;
-
-        // Flatten enrollments to handle multiple subjects per student for the same teacher
-        const matchedEnrollments = students.flatMap(s =>
-            (s.enrollments || [])
-                .filter(en => {
-                    const enTeacherName = (en.teacher || '').trim().toLowerCase();
-                    // Match by ID if available, otherwise fallback to robust name matching
-                    const isIdMatch = tidToMatch && en.teacherId === tidToMatch;
-                    const isNameMatch = enTeacherName === nameToMatch;
-                    return isIdMatch || isNameMatch;
-                })
-                .map(en => ({
-                    student: s,
-                    enrollment: en
-                }))
-        );
-
-        const expectedTotal = 16; // Fixed total sessions for percentage calculation
-        const teacherStats: TeacherStats = {
-            expected: expectedTotal,
-            used: matchedEnrollments.reduce((acc, me) => acc + (me.enrollment.sessionsUsed || 0), 0),
-            remaining: 0,
-            rate: 0
-        };
-
-        teacherStats.remaining = expectedTotal - teacherStats.used;
-        teacherStats.rate = expectedTotal > 0 ? Math.round((teacherStats.used / expectedTotal) * 100) : 0;
-
-        return { matchedEnrollments, teacherStats };
-    }, [students, currentUser]);
-
-    const uniqueTeachers = useMemo(() => {
-        return Array.from(new Set(students.flatMap(s => s.enrollments?.map(e => e.teacher) || [])))
-            .filter(Boolean)
-            .sort();
-    }, [students]);
+  const stats = useMemo<AttendanceStats>(() => {
+    // We filter sessions by date here to match the logic in Attendance.tsx
+    const todaySessions = allSessions.filter((s) => {
+      if (s.date === date) return true
+      if (s.status === 'scheduled') {
+        const sessionDate = new Date(s.date)
+        const clientDate = new Date(date)
+        const diffTime = clientDate.getTime() - sessionDate.getTime()
+        const diffDays = diffTime / (1000 * 3600 * 24)
+        return diffDays > 0 && diffDays <= 1
+      }
+      return false
+    })
 
     return {
-        students,
-        allSessions,
-        loading,
-        updateStatus,
-        logAttendance,
-        updateSchedule,
-        updateEnrollmentNotes,
-        requestReschedule,
-        stats,
-        periodStats,
-        ...teacherData,
-        uniqueTeachers,
-        refresh: fetchAll
-    };
-};
+      todayCompleted: todaySessions.filter((s) => s.status === 'completed').length,
+      todayCancelled: todaySessions.filter((s) => s.status === 'cancelled').length,
+      todayScheduled: todaySessions.filter((s) => s.status === 'scheduled').length,
+      todayTotal: todaySessions.length,
+      totalCompleted: allSessions.filter((s) => s.status === 'completed').length,
+      totalCancelled: allSessions.filter((s) => s.status === 'cancelled').length,
+    }
+  }, [allSessions, date])
+
+  const periodStats = useMemo(() => {
+    if (!dateRange) return null
+    const { start, end } = dateRange
+    const rangeSessions = allSessions.filter((s) => {
+      return s.date >= start && s.date <= end
+    })
+    const startDate = new Date(`${start}T00:00:00`)
+    const endDate = new Date(`${end}T00:00:00`)
+    const lengthDays = Math.max(
+      Math.round((endDate.getTime() - startDate.getTime()) / 86400000) + 1,
+      1,
+    )
+    const prevEnd = new Date(startDate)
+    prevEnd.setDate(startDate.getDate() - 1)
+    const prevStart = new Date(startDate)
+    prevStart.setDate(startDate.getDate() - lengthDays)
+    const prevStartStr = prevStart.toLocaleDateString('en-CA')
+    const prevEndStr = prevEnd.toLocaleDateString('en-CA')
+    const prevSessions = allSessions.filter((s) => s.date >= prevStartStr && s.date <= prevEndStr)
+    return {
+      completed: rangeSessions.filter((s) => s.status === 'completed').length,
+      cancelled: rangeSessions.filter((s) => s.status === 'cancelled').length,
+      scheduled: rangeSessions.filter((s) => s.status === 'scheduled').length,
+      total: rangeSessions.length,
+      prevCompleted: prevSessions.filter((s) => s.status === 'completed').length,
+      prevCancelled: prevSessions.filter((s) => s.status === 'cancelled').length,
+    }
+  }, [allSessions, dateRange])
+
+  const teacherData = useMemo(() => {
+    const nameToMatch = (currentUser?.teacherName || currentUser?.name || '').trim().toLowerCase()
+    const tidToMatch = currentUser?.id
+
+    // Flatten enrollments to handle multiple subjects per student for the same teacher
+    const matchedEnrollments = students.flatMap((s) =>
+      (s.enrollments || [])
+        .filter((en) => {
+          const enTeacherName = (en.teacher || '').trim().toLowerCase()
+          // Match by ID if available, otherwise fallback to robust name matching
+          const isIdMatch = tidToMatch && en.teacherId === tidToMatch
+          const isNameMatch = enTeacherName === nameToMatch
+          return isIdMatch || isNameMatch
+        })
+        .map((en) => ({
+          student: s,
+          enrollment: en,
+        })),
+    )
+
+    const expectedTotal = 16 // Fixed total sessions for percentage calculation
+    const teacherStats: TeacherStats = {
+      expected: expectedTotal,
+      used: matchedEnrollments.reduce((acc, me) => acc + (me.enrollment.sessionsUsed || 0), 0),
+      remaining: 0,
+      rate: 0,
+    }
+
+    teacherStats.remaining = expectedTotal - teacherStats.used
+    teacherStats.rate =
+      expectedTotal > 0 ? Math.round((teacherStats.used / expectedTotal) * 100) : 0
+
+    return { matchedEnrollments, teacherStats }
+  }, [students, currentUser])
+
+  const uniqueTeachers = useMemo(() => {
+    return Array.from(new Set(students.flatMap((s) => s.enrollments?.map((e) => e.teacher) || [])))
+      .filter(Boolean)
+      .sort()
+  }, [students])
+
+  const uniqueSubjects = useMemo(() => {
+    return Array.from(new Set(allSessions.map((s) => s.subject).filter(Boolean))).sort()
+  }, [allSessions])
+
+  const teacherAttendanceRates = useMemo<TeacherAttendanceRate[]>(() => {
+    const rates = uniqueTeachers.map((teacherName) => {
+      const teacherSessions = allSessions.filter((s) => s.teacherName === teacherName)
+      const completed = teacherSessions.filter((s) => s.status === 'completed').length
+      const cancelled = teacherSessions.filter((s) => s.status === 'cancelled').length
+      const scheduled = teacherSessions.filter((s) => s.status === 'scheduled').length
+      const totalSessions = completed + cancelled + scheduled
+      const rate = totalSessions > 0 ? Math.round((completed / totalSessions) * 100) : 0
+
+      const studentMap = new Map<
+        string,
+        { studentName: string; subject: string; completed: number; total: number }
+      >()
+      teacherSessions.forEach((s) => {
+        const key = `${s.studentId}-${s.subject}`
+        const existing = studentMap.get(key)
+        if (existing) {
+          existing.total++
+          if (s.status === 'completed') existing.completed++
+        } else {
+          studentMap.set(key, {
+            studentName: s.studentName || '',
+            subject: s.subject || '',
+            completed: s.status === 'completed' ? 1 : 0,
+            total: 1,
+          })
+        }
+      })
+
+      const students = Array.from(studentMap.entries()).map(([studentId, data]) => ({
+        studentId,
+        ...data,
+        rate: data.total > 0 ? Math.round((data.completed / data.total) * 100) : 0,
+      }))
+
+      return { teacherName, totalSessions, completed, cancelled, scheduled, rate, students }
+    })
+    return rates.sort((a, b) => b.rate - a.rate)
+  }, [allSessions, uniqueTeachers])
+
+  return {
+    students,
+    allSessions,
+    loading,
+    updateStatus,
+    logAttendance,
+    updateSchedule,
+    updateEnrollmentNotes,
+    requestReschedule,
+    stats,
+    periodStats,
+    ...teacherData,
+    uniqueTeachers,
+    uniqueSubjects,
+    teacherAttendanceRates,
+    refresh: fetchAll,
+  }
+}

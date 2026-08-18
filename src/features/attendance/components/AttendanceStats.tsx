@@ -188,6 +188,15 @@ export const AttendanceStats = ({
     ? Math.round(((stats.todayCancelled - prevCancelled) / prevCancelled) * 100)
     : 0
 
+  const attendanceRate =
+    stats.todayCompleted + stats.todayCancelled > 0
+      ? Math.round((stats.todayCompleted / (stats.todayCompleted + stats.todayCancelled)) * 100)
+      : 100
+  const absenceRate =
+    stats.todayCompleted + stats.todayCancelled > 0
+      ? Math.round((stats.todayCancelled / (stats.todayCompleted + stats.todayCancelled)) * 100)
+      : 0
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -200,10 +209,10 @@ export const AttendanceStats = ({
         <div className="relative z-10">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-[10px] font-bold text-white/70">
-              إجمالي اليوم ({periodLabel || 'اليوم'})
+              إحصائيات الفترة ({periodLabel || 'اليوم'})
             </span>
             <div className="flex items-center gap-2">
-              <TooltipWrap text="مجموع جميع الحصص لجميع المعلمات في اليوم الحالي">
+              <TooltipWrap text="مجموع جميع الحصص لجميع المعلمات">
                 <Info size={10} className="text-white/50" />
               </TooltipWrap>
               <Users size={12} className="text-white/50" />
@@ -275,12 +284,53 @@ export const AttendanceStats = ({
         </div>
       </div>
 
-      {/* 3 smaller cards */}
+      {/* Rate cards — attendance % + absence % */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="border-success/20 bg-success-soft/30 rounded-2xl border p-4">
+          <div className="mb-2 flex items-center justify-between">
+            <CheckCircle2 size={14} className="text-success" />
+            <TrendBadge value={trendCompleted} label="مقارنة" />
+          </div>
+          <p className="text-2xl font-bold tabular-nums text-success">
+            {attendanceRate}
+            <span className="text-sm">%</span>
+          </p>
+          <p className="mt-0.5 text-[10px] font-bold text-muted">نسبة الحضور</p>
+          <div className="bg-success/10 mt-2 h-1.5 overflow-hidden rounded-full">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${attendanceRate}%` }}
+              transition={{ duration: 0.8 }}
+              className="h-full rounded-full bg-success"
+            />
+          </div>
+        </div>
+        <div className="border-error/20 bg-error-soft/30 rounded-2xl border p-4">
+          <div className="mb-2 flex items-center justify-between">
+            <XCircle size={14} className="text-error" />
+            <TrendBadge value={trendCancelled} label="مقارنة" />
+          </div>
+          <p className="text-2xl font-bold tabular-nums text-error">
+            {absenceRate}
+            <span className="text-sm">%</span>
+          </p>
+          <p className="mt-0.5 text-[10px] font-bold text-muted">نسبة الغياب</p>
+          <div className="bg-error/10 mt-2 h-1.5 overflow-hidden rounded-full">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${absenceRate}%` }}
+              transition={{ duration: 0.8 }}
+              className="h-full rounded-full bg-error"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Count cards */}
       <div className="grid grid-cols-3 gap-3">
         <div className="rounded-2xl border border-border bg-card p-4">
           <div className="mb-2 flex items-center justify-between">
             <CheckCircle2 size={14} className="text-success" />
-            <TrendBadge value={trendCompleted} label="مقارنة" />
           </div>
           <p className="text-lg font-bold text-success">
             <Counter value={stats.todayCompleted} />
@@ -290,7 +340,6 @@ export const AttendanceStats = ({
         <div className="rounded-2xl border border-border bg-card p-4">
           <div className="mb-2 flex items-center justify-between">
             <XCircle size={14} className="text-error" />
-            <TrendBadge value={trendCancelled} label="مقارنة" />
           </div>
           <p className="text-lg font-bold text-error">
             <Counter value={stats.todayCancelled} />

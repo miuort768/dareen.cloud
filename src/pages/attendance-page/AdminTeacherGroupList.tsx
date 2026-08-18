@@ -1,167 +1,221 @@
-import { BookOpen, History } from 'lucide-react';
-import { cn } from '../../lib/utils';
-import { SectionCard } from './StyledComponents';
-import type { Student, Enrollment, Session } from '../../features/attendance/types';
-import { ProgressBar } from '../../shared/components/ui';
+import { History, TrendingUp, TrendingDown, Minus } from 'lucide-react'
+import { cn } from '../../lib/utils'
+import { SectionCard } from './StyledComponents'
+import type { TeacherAttendanceRate } from '../../features/attendance/types'
 
 interface AdminTeacherGroupListProps {
-    uniqueTeachers: string[];
-    filterTeacher: string;
-    students: Student[];
-    searchTerm: string;
-    filteredSessions: Session[];
-    date: string;
-    isLogging: boolean;
-    onLogAttendance: (student: Student, enrollment: Enrollment) => void;
-    onViewHistory: (studentId: string, studentName: string, grade?: string, subject?: string) => void;
-    onUpdateStatus: (id: string, status: Session['status']) => void;
+  teacherAttendanceRates: TeacherAttendanceRate[]
+  filterTeacher: string
+  filterSubject?: string
+  onViewHistory: (studentId: string, studentName: string, grade?: string, subject?: string) => void
 }
 
-const getGradeDisplay = (studentName: string, grade?: string) => {
-    if (!grade) return studentName.charAt(0);
-    const mapping: Record<string, string> = {
-        'الأول': '1', 'الثاني': '2', 'الثالث': '3', 'الرابع': '4', 'الخامس': '5', 'السادس': '6',
-        'السابع': '7', 'الثامن': '8', 'التاسع': '9', 'العاشر': '10'
-    };
-    const numMatch = grade.match(/\d+/);
-    if (numMatch) return numMatch[0];
-    for (const [key, val] of Object.entries(mapping)) {
-        if (grade.includes(key)) return val;
-    }
-    return studentName.charAt(0);
-};
+const getRateColor = (rate: number) => {
+  if (rate >= 80) return 'text-success'
+  if (rate >= 60) return 'text-warning'
+  return 'text-error'
+}
 
-export const AdminTeacherGroupList = ({ uniqueTeachers, filterTeacher, students, searchTerm, filteredSessions, isLogging, onLogAttendance, onViewHistory }: AdminTeacherGroupListProps) => {
-    const visibleTeachers = uniqueTeachers.filter(t => filterTeacher === 'all' || t === filterTeacher);
-    if (visibleTeachers.length === 0) return null;
+const getRateBg = (rate: number) => {
+  if (rate >= 80) return 'bg-success-soft'
+  if (rate >= 60) return 'bg-warning-soft'
+  return 'bg-error-soft'
+}
 
-    return (
-        <div className="space-y-6">
-            {visibleTeachers.map(teacher => {
-                const teacherStudentsList = students.filter(s => s.enrollments?.some(e => e.teacher === teacher));
-                const filtered = teacherStudentsList.filter(s =>
-                    (s.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
-                    s.enrollments.some(e => e.teacher === teacher && (e.subject || '').toLowerCase().includes((searchTerm || '').toLowerCase()))
-                );
-                if (filtered.length === 0) return null;
+const getRateBarColor = (rate: number) => {
+  if (rate >= 80) return 'bg-success'
+  if (rate >= 60) return 'bg-warning'
+  return 'bg-error'
+}
 
-                return (
-                    <SectionCard key={teacher} className="p-0 overflow-hidden">
-                        <div className="bg-primary px-5 py-3 flex items-center justify-between border-b border-border">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-xl flex items-center justify-center text-xs font-semibold shadow-sm bg-white/15 text-on-primary">
-                                    {teacher.charAt(0)}
-                                </div>
-                                <div>
-                                    <h3 className="text-xs font-bold text-on-primary">قائمة الطلاب: {teacher}</h3>
-                                    <p className="text-micro font-bold text-on-primary/70 tracking-wider">إدارة الحصص والتحضير</p>
-                                </div>
-                            </div>
-                            <div className="text-micro font-bold px-3 py-1 rounded-lg bg-white/15 text-on-primary">
-                                {filtered.length} طالب
-                            </div>
+const getGradeDisplay = (studentName: string) => {
+  return studentName.charAt(0)
+}
+
+export const AdminTeacherGroupList = ({
+  teacherAttendanceRates,
+  filterTeacher,
+  filterSubject,
+  onViewHistory,
+}: AdminTeacherGroupListProps) => {
+  const visibleTeachers = teacherAttendanceRates.filter(
+    (t) =>
+      (filterTeacher === 'all' || t.teacherName === filterTeacher) &&
+      (filterSubject === 'all' ||
+        !filterSubject ||
+        t.students.some((s) => s.subject === filterSubject)),
+  )
+
+  if (visibleTeachers.length === 0) return null
+
+  return (
+    <div className="space-y-4">
+      {visibleTeachers.map((teacher) => {
+        const filteredStudents =
+          filterSubject && filterSubject !== 'all'
+            ? teacher.students.filter((s) => s.subject === filterSubject)
+            : teacher.students
+
+        if (filteredStudents.length === 0) return null
+
+        return (
+          <SectionCard key={teacher.teacherName} className="overflow-hidden p-0">
+            {/* Teacher Header */}
+            <div className="flex items-center justify-between bg-primary px-5 py-3">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-xs font-bold text-on-primary shadow-sm">
+                  {teacher.teacherName.charAt(0)}
+                </div>
+                <div>
+                  <h3 className="text-xs font-bold text-on-primary">{teacher.teacherName}</h3>
+                  <p className="text-on-primary/70 text-[10px] font-bold">
+                    {filteredStudents.length} طالب
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                {/* Teacher rate badge */}
+                <div
+                  className={cn(
+                    'flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold',
+                    getRateBg(teacher.rate),
+                    getRateColor(teacher.rate),
+                  )}
+                >
+                  {teacher.rate >= 80 ? (
+                    <TrendingUp size={12} />
+                  ) : teacher.rate >= 60 ? (
+                    <Minus size={12} />
+                  ) : (
+                    <TrendingDown size={12} />
+                  )}
+                  {teacher.rate}%
+                </div>
+                {/* Session counts */}
+                <div className="text-on-primary/70 flex items-center gap-2 text-[10px] font-bold">
+                  <span className="flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-success" />
+                    {teacher.completed}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-error" />
+                    {teacher.cancelled}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-warning" />
+                    {teacher.scheduled}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Students Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="bg-surface/50 border-b border-border">
+                    <th className="px-4 py-2.5 text-start text-[10px] font-bold text-muted">
+                      الطالب
+                    </th>
+                    <th className="px-4 py-2.5 text-start text-[10px] font-bold text-muted">
+                      المادة
+                    </th>
+                    <th className="px-4 py-2.5 text-center text-[10px] font-bold text-muted">
+                      الحصص
+                    </th>
+                    <th className="px-4 py-2.5 text-center text-[10px] font-bold text-muted">
+                      النسبة
+                    </th>
+                    <th className="px-4 py-2.5 text-center text-[10px] font-bold text-muted">
+                      التغطية
+                    </th>
+                    <th className="px-4 py-2.5 text-center text-[10px] font-bold text-muted">
+                      سجل
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredStudents.map((student, idx) => (
+                    <tr
+                      key={`${student.studentId}-${student.subject}-${idx}`}
+                      className={cn(
+                        'border-border/50 hover:bg-surface/30 border-b transition-colors',
+                        idx % 2 === 0 && 'bg-surface/10',
+                      )}
+                    >
+                      <td className="px-4 py-2.5">
+                        <div className="flex items-center gap-2.5">
+                          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-[10px] font-bold text-primary">
+                            {getGradeDisplay(student.studentName)}
+                          </div>
+                          <span className="max-w-[120px] truncate text-[11px] font-bold text-main">
+                            {student.studentName}
+                          </span>
                         </div>
-
-                        <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {filtered.map(student => {
-                                const enrollment = student.enrollments.find(e => e.teacher === teacher) ?? { subject: '', sessionsUsed: 0, sessionsTotal: 0 };
-                                const session = filteredSessions.find(s =>
-                                    s.studentId === student.id && s.teacherName === teacher && s.subject === enrollment.subject
-                                );
-
-                                if (session) {
-                                    return (
-                                        <div key={session.id} className="bg-card border border-border shadow-sm rounded-2xl p-5 space-y-4">
-                                            <div className="flex justify-between items-start">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-sm font-semibold">
-                                                        {getGradeDisplay(student.name, student.grade)}
-                                                    </div>
-                                                    <div>
-                                                        <h4 className="font-bold text-main text-xs mb-1">{student.name}</h4>
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="text-micro font-bold text-muted bg-card px-1.5 py-0.5 rounded-lg border border-border">{student.grade}</span>
-                                                            <p className="text-micro font-bold text-muted flex items-center gap-1">
-                                                                <BookOpen size={10} className="text-primary" /> {enrollment.subject}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <span className={cn("text-micro font-bold px-2 py-0.5 rounded-lg",
-                                                    session.status === 'completed' ? 'bg-success-soft text-success' :
-                                                    session.status === 'cancelled' ? 'bg-error-soft text-error' : 'bg-warning-soft text-warning')}>
-                                                    {session.status === 'completed' ? 'تم' : session.status === 'cancelled' ? 'غائب' : 'مجدول'}
-                                                </span>
-                                            </div>
-
-                                            <div className="space-y-1.5">
-                                                <div className="flex justify-between items-center text-micro font-bold uppercase text-muted">
-                                                    <span>تغطية الحصص</span>
-                                                    <span className="text-main tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
-                                                </div>
-                                                <ProgressBar value={Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)} variant="attendance" />
-                                            </div>
-
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-micro font-bold text-muted">{session.time}</span>
-                                                <div className={cn("w-2 h-2 rounded-full",
-                                                    session.status === 'completed' ? 'bg-success' : session.status === 'cancelled' ? 'bg-error' : 'bg-warning')} />
-                                            </div>
-                                        </div>
-                                    );
-                                }
-
-                                return (
-                                    <div key={`${student.id}-${enrollment.id || enrollment.subject}`} className="bg-card border border-border shadow-sm rounded-2xl p-5 space-y-4 flex flex-col justify-between">
-                                        <div className="flex justify-between items-start">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-primary-soft text-primary flex items-center justify-center text-sm font-semibold">
-                                                    {getGradeDisplay(student.name, student.grade)}
-                                                </div>
-                                                <div>
-                                                    <h4 className="font-bold text-main text-xs mb-1">{student.name}</h4>
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="text-micro font-bold text-muted bg-card px-1.5 py-0.5 rounded-lg border border-border">{student.grade}</span>
-                                                        <p className="text-micro font-bold text-muted flex items-center gap-1">
-                                                            <BookOpen size={10} className="text-primary" /> {enrollment.subject}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="text-micro font-bold px-2 py-0.5 rounded-lg uppercase animate-pulse bg-warning-soft text-warning-dark">انتظار</div>
-                                        </div>
-
-                                        <div className="space-y-1.5">
-                                            <div className="flex justify-between items-center text-micro font-bold uppercase text-muted">
-                                                <span>تغطية الحصص</span>
-                                                <span className="text-main tabular-nums">{enrollment.sessionsUsed} / {enrollment.sessionsTotal}</span>
-                                            </div>
-                                            <ProgressBar value={Math.min(100, enrollment.sessionsTotal > 0 ? (enrollment.sessionsUsed / enrollment.sessionsTotal) * 100 : 0)} variant="attendance" />
-                                        </div>
-
-                                        <div className="grid grid-cols-2 gap-2">
-                                            <button onClick={() => onLogAttendance(student, enrollment)}
-                                                disabled={isLogging}
-                                                className="py-2.5 bg-success hover:bg-success-hover disabled:opacity-50 disabled:cursor-not-allowed text-on-success font-semibold text-micro rounded-xl flex items-center justify-center transition-all duration-200 shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
-                                                حضور
-                                            </button>
-                                            <button onClick={() => onLogAttendance(student, enrollment)}
-                                                disabled={isLogging}
-                                                className="py-2.5 bg-error hover:bg-error-hover disabled:opacity-50 disabled:cursor-not-allowed text-on-error font-semibold text-micro rounded-xl flex items-center justify-center transition-all duration-200 shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
-                                                غياب
-                                            </button>
-                                        </div>
-                                        <button onClick={() => onViewHistory(student.id, student.name, student.grade, enrollment.subject)}
-                                            className="w-full py-2.5 bg-primary hover:bg-primary-hover text-on-primary font-semibold text-micro rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus">
-                                            <History size={14} /> سجل الطالب
-                                        </button>
-                                    </div>
-                                );
-                            })}
+                      </td>
+                      <td className="px-4 py-2.5">
+                        <span className="rounded-md bg-surface px-2 py-0.5 text-[10px] font-bold text-muted">
+                          {student.subject}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2.5 text-center">
+                        <span className="text-[11px] font-bold tabular-nums text-main">
+                          {student.completed}/{student.total}
+                        </span>
+                      </td>
+                      <td className="px-4 py-2.5 text-center">
+                        <span
+                          className={cn(
+                            'inline-flex items-center gap-1 text-[11px] font-bold tabular-nums',
+                            getRateColor(student.rate),
+                          )}
+                        >
+                          {student.rate >= 80 ? (
+                            <TrendingUp size={10} />
+                          ) : student.rate >= 60 ? (
+                            <Minus size={10} />
+                          ) : (
+                            <TrendingDown size={10} />
+                          )}
+                          {student.rate}%
+                        </span>
+                      </td>
+                      <td className="px-4 py-2.5">
+                        <div className="flex items-center gap-2">
+                          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface">
+                            <div
+                              className={cn(
+                                'h-full rounded-full transition-all',
+                                getRateBarColor(student.rate),
+                              )}
+                              style={{ width: `${student.rate}%` }}
+                            />
+                          </div>
                         </div>
-                    </SectionCard>
-                );
-            })}
-        </div>
-    );
-};
+                      </td>
+                      <td className="px-4 py-2.5 text-center">
+                        <button
+                          onClick={() =>
+                            onViewHistory(
+                              student.studentId,
+                              student.studentName,
+                              undefined,
+                              student.subject,
+                            )
+                          }
+                          className="inline-flex items-center gap-1 rounded-lg bg-primary-soft px-2 py-1 text-[9px] font-bold text-primary transition-all hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                        >
+                          <History size={10} /> سجل
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </SectionCard>
+        )
+      })}
+    </div>
+  )
+}
