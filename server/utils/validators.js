@@ -83,7 +83,7 @@ const createEvaluationSchema = z.object({
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD").optional().or(z.literal('')),
     rating: z.enum(['ممتاز', 'جيد جدًا', 'جيد', 'مقبول', 'ضعيف', 'يحتاج تحسين']).default('ممتاز'),
     notes: z.string().optional().or(z.literal('')),
-    points: z.number().int().min(0).default(0)
+    points: z.number().int().min(0).max(50).default(0)
 });
 
 const updateEvaluationSchema = createEvaluationSchema.partial();

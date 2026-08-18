@@ -138,12 +138,12 @@ export const EvaluationFormModal = ({
                   <div className="mb-2 flex items-center justify-between">
                     <label className="text-xs font-bold text-muted">نقاط المكافأة (XP)</label>
                     <div className="flex gap-1.5">
-                      {[5, 10, 20, 50].map((p) => (
+                      {[5, 10, 15, 20, 25, 30, 50].map((p) => (
                         <button
                           key={p}
                           type="button"
                           onClick={() => onChange({ ...formData, points: p })}
-                          className="border-warning/20 hover:bg-warning/10 rounded-lg border bg-warning-soft px-2.5 py-1 text-[10px] font-bold text-warning transition-colors"
+                          className="border-warning/20 hover:bg-warning/10 rounded-lg border bg-warning-soft px-2 py-1 text-[10px] font-bold text-warning transition-colors"
                         >
                           +{p}
                         </button>
@@ -157,12 +157,19 @@ export const EvaluationFormModal = ({
                     <input
                       type="number"
                       value={formData.points || ''}
-                      onChange={(e) => onChange({ ...formData, points: Number(e.target.value) })}
+                      onChange={(e) =>
+                        onChange({
+                          ...formData,
+                          points: Math.min(50, Math.max(0, Number(e.target.value))),
+                        })
+                      }
                       placeholder="0"
                       min="0"
+                      max="50"
                       className="focus:ring-warning/10 flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-medium text-warning transition-all focus:outline-none focus:ring-2"
                     />
                   </div>
+                  <p className="mt-1 text-[10px] text-muted">الحد الأقصى 50 نقطة في كل تقييم</p>
                 </div>
 
                 <div>
