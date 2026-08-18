@@ -1,102 +1,206 @@
-import { Award, X, CheckCircle2, Zap } from 'lucide-react';
-import { cn } from '../../../lib/utils';
-import { RATING_OPTIONS } from '../types/constants';
-import type { Student } from '../../../types';
+import { useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Award, X, CheckCircle2, Zap } from 'lucide-react'
+import { cn } from '../../../lib/utils'
+import { RATING_OPTIONS } from '../types/constants'
+import type { Student } from '../../../types'
 
 interface EvaluationFormModalProps {
-    isOpen: boolean;
-    formData: { studentId: string; rating: string; points: number; notes: string };
-    students: Student[];
-    teacherStudents: Student[];
-    isSubmitting?: boolean;
-    onClose: () => void;
-    onChange: (data: { studentId: string; rating: string; points: number; notes: string }) => void;
-    onSubmit: (e: React.FormEvent) => void;
+  isOpen: boolean
+  formData: { studentId: string; rating: string; points: number; notes: string }
+  students: Student[]
+  teacherStudents: Student[]
+  isSubmitting?: boolean
+  onClose: () => void
+  onChange: (data: { studentId: string; rating: string; points: number; notes: string }) => void
+  onSubmit: (e: React.FormEvent) => void
 }
 
-export const EvaluationFormModal = ({ isOpen, formData, students, teacherStudents, isSubmitting, onClose, onChange, onSubmit }: EvaluationFormModalProps) => {
-    if (!isOpen) return null;
+export const EvaluationFormModal = ({
+  isOpen,
+  formData,
+  students,
+  teacherStudents,
+  isSubmitting,
+  onClose,
+  onChange,
+  onSubmit,
+}: EvaluationFormModalProps) => {
+  const dialogRef = useRef<HTMLDivElement>(null)
 
-    return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[10001]">
-            <div className="bg-card shadow-elevation-2 w-full max-w-md flex flex-col max-h-[90vh] overflow-hidden border border-border mt-20 md:mt-0 rounded-2xl">
-                <div className="p-4 border-b border-border flex justify-between items-center bg-primary text-on-primary rounded-t-2xl">
-                    <h3 className="text-sm font-bold flex items-center gap-2">
-                        <Award size={16} />
-                        {formData.studentId ? `تقييم: ${students.find(s => s.id === formData.studentId)?.name || ''}` : 'إضافة تقييم جديد'}
-                    </h3>
-                    <button onClick={onClose} aria-label="إغلاق" className="w-7 h-7 bg-white/15 hover:bg-white/25 flex items-center justify-center transition-colors rounded-xl"><X size={14} /></button>
+  useEffect(() => {
+    if (!isOpen) return
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleEsc)
+    return () => document.removeEventListener('keydown', handleEsc)
+  }, [isOpen, onClose])
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) onClose()
+          }}
+        >
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+          <motion.div
+            ref={dialogRef}
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="relative flex max-h-[85vh] w-full max-w-md flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-3"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-border p-4">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft">
+                  <Award size={18} className="text-primary" />
                 </div>
-
-                <div className="p-4 overflow-y-auto space-y-4">
-                    <form id="evaluation-form" onSubmit={onSubmit} className="space-y-4">
-                        {!formData.studentId && (
-                            <div>
-                                <label className="block text-micro md:text-xs font-bold text-muted mb-1.5">اختر الطالب</label>
-                                <select value={formData.studentId} onChange={(e) => onChange({ ...formData, studentId: e.target.value })} required aria-label="اختر الطالب"
-                                    className="w-full border border-border bg-surface px-3 py-2 md:px-4 md:py-3 font-normal text-xs md:text-sm text-main rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all">
-                                    <option value="">-- اختر من قائمة طلابك --</option>
-                                    {teacherStudents.map(s => (
-                                        <option key={s.id} value={s.id}>{s.name} ({s.grade})</option>
-                                    ))}
-                                </select>
-                            </div>
-                        )}
-
-                        <div>
-                            <label className="block text-micro md:text-xs font-bold text-muted mb-2">مستوى التميز</label>
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-3">
-                                {RATING_OPTIONS.map((opt) => {
-                                    const isSelected = formData.rating === opt.value;
-                                    const OptIcon = opt.icon;
-                                    return (
-                                        <button type="button" key={opt.value} onClick={() => onChange({ ...formData, rating: opt.value })}
-                                            className={cn("p-2 border-2 transition-all duration-200 flex flex-col items-center justify-center gap-1 rounded-xl",
-                                                isSelected ? cn(opt.bg, opt.border, opt.color, "scale-105") : "border-border bg-surface text-muted hover:border-primary/30")}>
-                                            <OptIcon size={14} strokeWidth={isSelected ? 3 : 2} className={cn(isSelected && "animate-bounce")} />
-                                            <span className="text-micro font-bold uppercase leading-none">{opt.value}</span>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="flex items-center justify-between mb-2">
-                                <label className="text-micro md:text-xs font-bold text-muted">نقاط المكافأة (XP)</label>
-                                <div className="flex gap-1.5">
-                                    {[5, 10, 20, 50].map(p => (
-                                        <button key={p} type="button" onClick={() => onChange({ ...formData, points: p })}
-                                            className="px-2 py-0.5 font-bold text-micro transition-colors rounded-xl bg-warning-soft text-warning border border-warning/20">+{p}</button>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shrink-0 rounded-xl bg-warning-soft border border-warning/20">
-                                    <Zap size={16} className="text-warning" />
-                                </div>
-                                <input type="number" value={formData.points || ''} onChange={(e) => onChange({ ...formData, points: Number(e.target.value) })}
-                                    placeholder="0" min="0"
-                                    className="flex-1 border border-border bg-surface px-3 py-2 font-medium text-base text-warning text-center rounded-xl focus:outline-none focus:ring-2 focus:ring-warning/10 transition-all" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-micro md:text-xs font-bold text-muted mb-1.5">رسالة الإشادة (تظهر لولي الأمر)</label>
-                            <textarea value={formData.notes} onChange={(e) => onChange({ ...formData, notes: e.target.value })} rows={2}
-                                className="w-full border border-border bg-surface px-3 py-2 text-sm font-normal rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/10 resize-none placeholder:text-muted transition-all"
-                                placeholder="مثال: أداء ممتاز اليوم..." />
-                        </div>
-                    </form>
+                <div>
+                  <h3 className="text-sm font-bold text-main">
+                    {formData.studentId
+                      ? `تقييم: ${students.find((s) => s.id === formData.studentId)?.name || ''}`
+                      : 'إضافة تقييم جديد'}
+                  </h3>
+                  <p className="mt-0.5 text-[10px] text-muted">تقييم أداء الطالب</p>
                 </div>
-
-                <div className="p-4 border-t border-border flex justify-end gap-3">
-                    <button type="button" onClick={onClose} className="px-5 py-2.5 bg-surface text-main text-xs font-bold hover:bg-background border border-border transition-all rounded-xl">إلغاء</button>
-                    <button type="submit" form="evaluation-form" disabled={isSubmitting} className="px-6 py-2.5 bg-primary hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed text-on-primary text-xs font-bold transition-all flex items-center gap-2 rounded-xl active:scale-95">
-                        <CheckCircle2 size={14} /> {isSubmitting ? 'جاري الإرسال...' : 'إرسال التقييم'}
-                    </button>
-                </div>
+              </div>
+              <button
+                onClick={onClose}
+                aria-label="إغلاق"
+                className="flex h-8 w-8 items-center justify-center rounded-xl bg-surface text-muted transition-all hover:bg-hover hover:text-main"
+              >
+                <X size={16} />
+              </button>
             </div>
-        </div>
-    );
-};
+
+            {/* Form body */}
+            <div className="flex-1 space-y-4 overflow-y-auto p-4">
+              <form id="evaluation-form" onSubmit={onSubmit} className="space-y-4">
+                {!formData.studentId && (
+                  <div>
+                    <label className="mb-1.5 block text-xs font-bold text-muted">اختر الطالب</label>
+                    <select
+                      value={formData.studentId}
+                      onChange={(e) => onChange({ ...formData, studentId: e.target.value })}
+                      required
+                      aria-label="اختر الطالب"
+                      className="w-full rounded-xl border border-border bg-surface px-3 py-2.5 text-sm text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                    >
+                      <option value="">-- اختر من قائمة طلابك --</option>
+                      {teacherStudents.map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.name} ({s.grade})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <div>
+                  <label className="mb-2 block text-xs font-bold text-muted">مستوى التميز</label>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                    {RATING_OPTIONS.map((opt) => {
+                      const isSelected = formData.rating === opt.value
+                      const OptIcon = opt.icon
+                      return (
+                        <button
+                          type="button"
+                          key={opt.value}
+                          onClick={() => onChange({ ...formData, rating: opt.value })}
+                          className={cn(
+                            'flex flex-col items-center justify-center gap-1.5 rounded-xl border-2 p-3 transition-all duration-200',
+                            isSelected
+                              ? cn(opt.bg, opt.border, opt.color, 'scale-105 shadow-sm')
+                              : 'border-border bg-surface text-muted hover:border-primary/30',
+                          )}
+                        >
+                          <OptIcon size={16} strokeWidth={isSelected ? 2.5 : 2} />
+                          <span className="text-[10px] font-bold uppercase leading-none">
+                            {opt.value}
+                          </span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
+                    <label className="text-xs font-bold text-muted">نقاط المكافأة (XP)</label>
+                    <div className="flex gap-1.5">
+                      {[5, 10, 20, 50].map((p) => (
+                        <button
+                          key={p}
+                          type="button"
+                          onClick={() => onChange({ ...formData, points: p })}
+                          className="border-warning/20 hover:bg-warning/10 rounded-lg border bg-warning-soft px-2.5 py-1 text-[10px] font-bold text-warning transition-colors"
+                        >
+                          +{p}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="border-warning/20 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border bg-warning-soft">
+                      <Zap size={16} className="text-warning" />
+                    </div>
+                    <input
+                      type="number"
+                      value={formData.points || ''}
+                      onChange={(e) => onChange({ ...formData, points: Number(e.target.value) })}
+                      placeholder="0"
+                      min="0"
+                      className="focus:ring-warning/10 flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-medium text-warning transition-all focus:outline-none focus:ring-2"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-xs font-bold text-muted">
+                    رسالة الإشادة (تظهر لولي الأمر)
+                  </label>
+                  <textarea
+                    value={formData.notes}
+                    onChange={(e) => onChange({ ...formData, notes: e.target.value })}
+                    rows={3}
+                    className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-sm transition-all placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary/10"
+                    placeholder="مثال: أداء ممتاز اليوم..."
+                  />
+                </div>
+              </form>
+            </div>
+
+            {/* Footer */}
+            <div className="flex justify-end gap-3 border-t border-border bg-card p-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-xl border border-border bg-surface px-5 py-2.5 text-xs font-bold text-main transition-all hover:bg-hover"
+              >
+                إلغاء
+              </button>
+              <button
+                type="submit"
+                form="evaluation-form"
+                disabled={isSubmitting}
+                className="flex items-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <CheckCircle2 size={14} /> {isSubmitting ? 'جاري الإرسال...' : 'إرسال التقييم'}
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
