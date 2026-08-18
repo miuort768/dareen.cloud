@@ -84,9 +84,6 @@ export const AttendanceStats = ({
   prevCancelled = 0,
 }: AttendanceStatsProps) => {
   if (isTeacher && teacherStats) {
-    const trendRate = prevCompleted
-      ? Math.round(((teacherStats.rate - prevCompleted) / prevCompleted) * 100)
-      : 0
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -106,7 +103,6 @@ export const AttendanceStats = ({
               <span className="text-2xl font-bold text-on-primary md:text-3xl">
                 <Counter value={teacherStats.rate} suffix="%" />
               </span>
-              <TrendBadge value={trendRate} label="مقارنة بالأمس" />
             </div>
             <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/15">
               <motion.div

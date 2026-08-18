@@ -529,7 +529,10 @@ export const MobileAttendance = () => {
             if (deletingSlot) {
               const { student, enrollment, slotIndex } = deletingSlot
               const newSch = enrollment.schedule.filter((_, idx) => idx !== slotIndex)
-              updateSchedule(student, student.enrollments.indexOf(enrollment), newSch)
+              const enrollIdx = student.enrollments.findIndex(
+                (e) => e.id === enrollment.id && e.subject === enrollment.subject,
+              )
+              if (enrollIdx >= 0) updateSchedule(student, enrollIdx, newSch)
               setDeletingSlot(null)
             }
           }}
