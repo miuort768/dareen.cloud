@@ -73,6 +73,7 @@ export const Attendance = () => {
   const [customStartDate, setCustomStartDate] = useState('')
   const [customEndDate, setCustomEndDate] = useState('')
   const [fabOpen, setFabOpen] = useState(false)
+  const [isLogging, setIsLogging] = useState(false)
 
   const dateRange = useMemo(() => {
     const d = new Date(date)
