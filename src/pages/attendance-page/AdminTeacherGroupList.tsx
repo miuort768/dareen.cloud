@@ -1,4 +1,4 @@
-import { History, TrendingUp, TrendingDown, Minus } from 'lucide-react'
+import { History, TrendingUp, TrendingDown, Minus, Users } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { SectionCard } from './StyledComponents'
 import type { TeacherAttendanceRate } from '../../features/attendance/types'
