@@ -25,7 +25,7 @@ import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModa
 import { AttendanceStats } from '../features/attendance/components/AttendanceStats'
 import { AttendanceHeader } from '../features/attendance/components/AttendanceHeader'
 import { AttendanceFilters } from '../features/attendance/components/AttendanceFilters'
-import { AttendanceLiveFeed } from '../features/attendance/components/AttendanceLiveFeed'
+
 import { TeacherStudentCard } from '../features/attendance/components/TeacherStudentCard'
 import { AttendanceHistoryModal } from '../features/attendance/components/AttendanceHistoryModal'
 import type { PeriodFilter } from '../features/attendance/components/AttendanceFilters'
@@ -614,13 +614,6 @@ export const Attendance = () => {
                   filterSubject={filterSubject}
                   onViewHistory={handleViewHistory}
                 />
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <AttendanceLiveFeed sessions={filteredSessions} />
-                </motion.div>
               </>
             )}
           </motion.div>
