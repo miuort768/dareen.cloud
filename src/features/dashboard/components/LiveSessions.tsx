@@ -14,6 +14,8 @@ import {
   Video,
   CheckCircle2,
   Pencil,
+  Clock,
+  Globe,
 } from 'lucide-react'
 import { api } from '../../../lib/api'
 import { socketService } from '../../../lib/socket'
@@ -27,15 +29,31 @@ import { StartLiveSessionDialog } from './StartLiveSessionDialog'
 import type { LiveSession } from '../../../types'
 
 const PROVIDERS = [
-  { value: 'google_meet', label: 'Google Meet' },
-  { value: 'zoom', label: 'Zoom' },
-  { value: 'custom', label: 'رابط آخر' },
+  { value: 'google_meet', label: 'Google Meet', color: 'bg-success text-on-primary' },
+  { value: 'zoom', label: 'Zoom', color: 'bg-info text-on-primary' },
+  { value: 'custom', label: 'رابط آخر', color: 'bg-muted text-on-primary' },
 ]
 
 const PROVIDER_LABELS: Record<string, string> = {
   google_meet: 'Google Meet',
   zoom: 'Zoom',
   custom: 'رابط مخصص',
+}
+
+const PROVIDER_DOT_COLORS: Record<string, string> = {
+  google_meet: 'bg-success',
+  zoom: 'bg-info',
+  custom: 'bg-muted',
+}
+
+function timeAgo(dateStr: string) {
+  const diff = Date.now() - new Date(dateStr).getTime()
+  const mins = Math.floor(diff / 60000)
+  if (mins < 1) return 'الآن'
+  if (mins < 60) return `منذ ${mins} دقيقة`
+  const hrs = Math.floor(mins / 60)
+  if (hrs < 24) return `منذ ${hrs} ساعة`
+  return `منذ ${Math.floor(hrs / 24)} يوم`
 }
 
 export const LiveSessions = () => {
@@ -148,19 +166,39 @@ export const LiveSessions = () => {
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="dark:bg-success/10 flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft">
-            <Radio size={16} className="text-success dark:text-success" />
+          <div className="relative">
+            <div className="dark:bg-success/10 flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft">
+              <Radio size={16} className="text-success" />
+            </div>
+            {sessions.length > 0 && (
+              <span className="absolute -left-1 -top-1 flex h-3.5 w-3.5 items-center justify-center">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
+              </span>
+            )}
           </div>
           <div>
-            <h3 className="text-[13px] font-bold text-main dark:text-main">الحصص المباشرة</h3>
-            <p className="text-[11px] text-muted dark:text-muted">روابط البث المباشر</p>
+            <div className="flex items-center gap-2">
+              <h3 className="text-[13px] font-bold text-main">الحصص المباشرة</h3>
+              {sessions.length > 0 && (
+                <span className="dark:bg-success/10 inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-bold text-success">
+                  <span className="h-1.5 w-1.5 rounded-full bg-success" />
+                  مباشر
+                </span>
+              )}
+            </div>
+            <p className="text-[11px] text-muted">
+              {sessions.length > 0
+                ? `${sessions.length} ${sessions.length === 1 ? 'حصة' : 'حصص'} جارية الآن`
+                : 'روابط البث المباشر'}
+            </p>
           </div>
         </div>
         {isTeacher && (
           <Button
             onClick={() => setShowCreateDialog(true)}
             size="sm"
-            className="h-9 gap-1.5 rounded-xl bg-primary px-3.5 text-[11px] font-bold text-on-primary dark:bg-primary dark:text-on-primary"
+            className="h-9 gap-1.5 rounded-xl bg-primary px-3.5 text-[11px] font-bold text-on-primary"
           >
             <Plus size={13} />
             بدء حصة
@@ -170,14 +208,14 @@ export const LiveSessions = () => {
 
       {/* Error */}
       {displayError && (
-        <div className="dark:bg-error/10 dark:border-error/20 mb-3 flex items-center justify-between rounded-xl border border-error bg-error-soft p-3">
+        <div className="border-error/20 dark:border-error/20 dark:bg-error/10 mb-3 flex items-center justify-between rounded-xl border bg-error-soft p-3">
           <div className="flex items-center gap-2">
-            <AlertCircle size={14} className="shrink-0 text-error dark:text-error" />
-            <span className="text-xs font-medium text-error dark:text-error">{displayError}</span>
+            <AlertCircle size={14} className="shrink-0 text-error" />
+            <span className="text-xs font-medium text-error">{displayError}</span>
           </div>
           <button
             onClick={() => refetch()}
-            className="dark:hover:bg-error/15 flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-error transition-colors hover:bg-error-soft dark:text-error"
+            className="hover:bg-error/10 dark:hover:bg-error/15 flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-error transition-colors"
           >
             <RefreshCcw size={11} /> إعادة
           </button>
@@ -190,104 +228,126 @@ export const LiveSessions = () => {
           <Loader2 className="animate-spin text-primary" size={20} />
         </div>
       ) : sessions.length === 0 ? (
-        <div className="py-8 text-center">
-          <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/10">
-            <Video size={28} className="text-primary/30 dark:text-primary/30" />
+        <div className="bg-surface/50 rounded-2xl border border-dashed border-border py-10 text-center">
+          <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/10">
+            <Video size={24} className="text-primary/40 dark:text-primary/30" />
           </div>
-          <p className="text-[13px] font-bold text-muted dark:text-muted">
-            لا توجد حصص مباشرة حالياً
-          </p>
+          <p className="text-[13px] font-bold text-muted">لا توجد حصص مباشرة حالياً</p>
           <p className="text-muted/60 mt-1 text-[11px] dark:text-dim">ابدأ حصتك بضغطة واحدة</p>
           {isTeacher && (
             <Button
               onClick={() => setShowCreateDialog(true)}
               size="sm"
-              className="mt-3 h-9 gap-1.5 rounded-xl bg-primary px-5 text-[11px] font-bold text-on-primary dark:bg-primary dark:text-on-primary"
+              className="mt-3 h-9 gap-1.5 rounded-xl bg-primary px-5 text-[11px] font-bold text-on-primary"
             >
               <Plus size={13} /> بدء حصة
             </Button>
           )}
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           {sessions.map((session) => (
             <div
               key={session.id}
-              className="flex items-center justify-between rounded-xl border border-border bg-surface p-4 transition-colors hover:bg-hover dark:border-primary/20 dark:bg-hover dark:hover:bg-primary/5"
+              className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-md hover:shadow-primary/5 dark:border-primary/15 dark:hover:border-primary/25"
             >
-              <div className="flex min-w-0 items-center gap-3">
+              {/* Live indicator bar */}
+              <div className="via-success/60 h-0.5 bg-gradient-to-l from-success to-transparent" />
+
+              <div className="flex items-center gap-3 p-4">
+                {/* Live pulse icon */}
                 <div className="relative shrink-0">
-                  <div className="dark:bg-success/10 flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft">
-                    <Radio size={14} className="text-success dark:text-success" />
+                  <div className="dark:bg-success/10 flex h-11 w-11 items-center justify-center rounded-xl bg-success-soft">
+                    <Radio size={15} className="text-success" />
                   </div>
-                  <span className="absolute -start-0.5 -top-0.5 h-2.5 w-2.5 animate-pulse rounded-full border-2 border-surface bg-success" />
+                  <span className="absolute -start-0.5 -top-0.5 h-3 w-3">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-50" />
+                    <span className="relative inline-flex h-3 w-3 rounded-full border-2 border-card bg-success" />
+                  </span>
                 </div>
-                <div className="min-w-0">
-                  <h4 className="truncate text-xs font-bold text-main dark:text-main">
-                    {session.title}
-                  </h4>
-                  <div className="mt-0.5 flex items-center gap-1.5">
-                    <Users size={10} className="shrink-0 text-muted dark:text-muted" />
-                    <span className="truncate text-[10px] font-medium text-muted dark:text-muted">
+
+                {/* Info */}
+                <div className="min-w-0 flex-1">
+                  <h4 className="text-[13px] font-bold text-main">{session.title}</h4>
+                  <div className="mt-1 flex items-center gap-2 text-[11px] text-muted">
+                    <span className="flex items-center gap-1">
+                      <Users size={10} />
                       {session.teacherName}
                     </span>
                     {session.subject && (
                       <>
-                        <span className="text-muted/40 text-[10px] dark:text-dim">·</span>
-                        <span className="truncate text-[10px] text-muted dark:text-muted">
-                          {session.subject}
-                        </span>
+                        <span className="text-border">·</span>
+                        <span>{session.subject}</span>
                       </>
                     )}
+                    <span className="text-border">·</span>
+                    <span className="flex items-center gap-1">
+                      <Clock size={10} />
+                      {session.startedAt ? timeAgo(session.startedAt) : 'مباشر'}
+                    </span>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex shrink-0 items-center gap-1.5">
-                <span className="rounded-lg bg-surface px-2 py-0.5 text-[10px] font-bold text-muted dark:bg-hover dark:text-muted">
-                  {PROVIDER_LABELS[session.meetingProvider] || session.meetingProvider}
-                </span>
-                <a
-                  href={session.meetingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="dark:hover:bg-accent/90 flex min-h-[44px] min-w-[44px] items-center gap-1.5 rounded-xl bg-primary px-3 text-[11px] font-bold text-on-primary transition-colors hover:bg-primary-hover dark:bg-primary dark:text-on-primary"
-                >
-                  <ExternalLink size={11} />
-                  انضم
-                </a>
-                <button
-                  onClick={() => copyLink(session.meetingUrl || '', session.id)}
-                  className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border text-muted transition-colors hover:bg-surface dark:border-primary/20 dark:text-muted dark:hover:bg-primary/5"
-                  title="نسخ الرابط"
-                  aria-label="نسخ رابط الحصة"
-                >
-                  {copiedId === session.id ? (
-                    <CheckCircle2 size={13} className="text-success dark:text-success" />
-                  ) : (
-                    <Copy size={13} />
+                {/* Provider badge */}
+                <div className="hidden items-center gap-1.5 rounded-lg bg-surface px-2.5 py-1 dark:bg-hover sm:flex">
+                  <span
+                    className={cn(
+                      'h-1.5 w-1.5 rounded-full',
+                      PROVIDER_DOT_COLORS[session.meetingProvider] || 'bg-muted',
+                    )}
+                  />
+                  <span className="text-[10px] font-bold text-muted">
+                    {PROVIDER_LABELS[session.meetingProvider] || session.meetingProvider}
+                  </span>
+                </div>
+
+                {/* Actions */}
+                <div className="flex shrink-0 items-center gap-1">
+                  <a
+                    href={session.meetingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex min-h-[36px] items-center gap-1.5 rounded-xl bg-primary px-3.5 text-[11px] font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.97]"
+                  >
+                    <ExternalLink size={12} />
+                    انضم
+                  </a>
+
+                  <button
+                    onClick={() => copyLink(session.meetingUrl || '', session.id)}
+                    className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border text-muted transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary dark:border-primary/15 dark:hover:bg-primary/10"
+                    title="نسخ الرابط"
+                    aria-label="نسخ رابط الحصة"
+                  >
+                    {copiedId === session.id ? (
+                      <CheckCircle2 size={14} className="text-success" />
+                    ) : (
+                      <Copy size={14} />
+                    )}
+                  </button>
+
+                  {isTeacher && (
+                    <button
+                      onClick={() => openEditDialog(session)}
+                      className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border text-muted transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary dark:border-primary/15 dark:hover:bg-primary/10"
+                      title="تعديل الرابط"
+                      aria-label="تعديل رابط الحصة"
+                    >
+                      <Pencil size={14} />
+                    </button>
                   )}
-                </button>
-                {isTeacher && (
-                  <button
-                    onClick={() => openEditDialog(session)}
-                    className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl border border-border text-muted transition-colors hover:bg-surface dark:border-primary/20 dark:text-muted dark:hover:bg-primary/5"
-                    title="تعديل الرابط"
-                    aria-label="تعديل رابط الحصة"
-                  >
-                    <Pencil size={13} />
-                  </button>
-                )}
-                {isTeacher && (
-                  <button
-                    onClick={() => endSession(session.id)}
-                    className="dark:hover:bg-error/10 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-error transition-colors hover:bg-error-soft dark:text-error"
-                    title="إنهاء الحصة"
-                    aria-label="إنهاء الحصة"
-                  >
-                    <StopCircle size={13} />
-                  </button>
-                )}
+
+                  {isTeacher && (
+                    <button
+                      onClick={() => endSession(session.id)}
+                      className="text-error/60 hover:border-error/30 dark:border-error/15 dark:hover:bg-error/10 flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border transition-all hover:bg-error-soft hover:text-error"
+                      title="إنهاء الحصة"
+                      aria-label="إنهاء الحصة"
+                    >
+                      <StopCircle size={14} />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -299,7 +359,7 @@ export const LiveSessions = () => {
 
       {showEditDialog && editingSession && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
           onClick={() => setShowEditDialog(false)}
           role="dialog"
           aria-modal="true"
@@ -309,17 +369,19 @@ export const LiveSessions = () => {
           }}
         >
           <div
-            className="w-full max-w-md space-y-5 rounded-2xl border border-border bg-card p-6 shadow-2xl dark:border-primary/20 dark:bg-card"
+            className="w-full max-w-md space-y-5 rounded-2xl border border-border bg-card p-6 shadow-2xl dark:border-primary/20"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-center text-lg font-bold text-main dark:text-main">
-              تعديل رابط الحصة
-            </h3>
+            <div className="text-center">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
+                <Globe size={20} className="text-primary" />
+              </div>
+              <h3 className="text-base font-bold text-main">تعديل رابط الحصة</h3>
+              <p className="mt-1 text-[11px] text-muted">غيّر رابط الاجتماع للحصة المباشرة</p>
+            </div>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-muted dark:text-muted">
-                نوع الاجتماع
-              </label>
+              <label className="mb-2 block text-xs font-bold text-muted">نوع الاجتماع</label>
               <div className="flex gap-2">
                 {PROVIDERS.map((p) => (
                   <button
@@ -328,8 +390,8 @@ export const LiveSessions = () => {
                     className={cn(
                       'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold transition-all',
                       editProvider === p.value
-                        ? 'border-primary bg-primary-soft text-primary dark:border-primary dark:bg-primary/10 dark:text-primary'
-                        : 'dark:hover:border-accent/30 border-border text-muted hover:border-border dark:border-primary/20 dark:text-muted',
+                        ? 'border-primary bg-primary-soft text-primary dark:border-primary dark:bg-primary/10'
+                        : 'border-border text-muted hover:border-primary/30 dark:border-primary/15',
                     )}
                   >
                     {p.label}
@@ -339,10 +401,7 @@ export const LiveSessions = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="edit-meeting-url"
-                className="mb-2 block text-xs font-bold text-muted dark:text-muted"
-              >
+              <label htmlFor="edit-meeting-url" className="mb-2 block text-xs font-bold text-muted">
                 رابط الاجتماع
               </label>
               <div className="flex gap-2">
@@ -365,7 +424,7 @@ export const LiveSessions = () => {
                     href="https://meet.google.com/new"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="dark:bg-success/10 dark:border-success/20 dark:hover:bg-success/15 flex items-center gap-1 whitespace-nowrap rounded-xl border border-success bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors hover:bg-success-soft dark:text-success"
+                    className="border-success/20 hover:bg-success/10 dark:bg-success/10 dark:hover:bg-success/15 flex items-center gap-1 whitespace-nowrap rounded-xl border bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors"
                     title="إنشاء رابط Google Meet جديد"
                   >
                     <LinkIcon size={14} /> إنشاء
@@ -374,9 +433,7 @@ export const LiveSessions = () => {
               </div>
             </div>
 
-            {editError && (
-              <p className="text-xs font-bold text-error dark:text-error">{editError}</p>
-            )}
+            {editError && <p className="text-xs font-bold text-error">{editError}</p>}
 
             <div className="flex gap-3 pt-2">
               <Button
@@ -393,7 +450,7 @@ export const LiveSessions = () => {
               <Button
                 onClick={saveEditedLink}
                 disabled={editMutation.isPending}
-                className="h-11 flex-1 gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary dark:bg-primary dark:text-on-primary"
+                className="h-11 flex-1 gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary"
               >
                 {editMutation.isPending ? (
                   <>

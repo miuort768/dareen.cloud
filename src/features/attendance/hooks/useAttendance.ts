@@ -235,36 +235,69 @@ export const useAttendance = (
   }, [students, currentUser])
 
   const uniqueTeachers = useMemo(() => {
-    return Array.from(new Set(students.flatMap((s) => s.enrollments?.map((e) => e.teacher) || [])))
+    return Array.from(
+      new Set(students.flatMap((s) => s.enrollments?.map((e) => (e.teacher || '').trim()) || [])),
+    )
       .filter(Boolean)
       .sort()
   }, [students])
 
   const uniqueSubjects = useMemo(() => {
-    return Array.from(new Set(allSessions.map((s) => s.subject).filter(Boolean))).sort()
-  }, [allSessions])
+    const fromSessions = allSessions.map((s) => s.subject).filter(Boolean)
+    const fromEnrollments = students
+      .flatMap((s) => s.enrollments?.map((e) => e.subject) || [])
+      .filter(Boolean)
+    return Array.from(new Set([...fromSessions, ...fromEnrollments])).sort()
+  }, [allSessions, students])
 
   const teacherAttendanceRates = useMemo<TeacherAttendanceRate[]>(() => {
     const rates = uniqueTeachers.map((teacherName) => {
-      const teacherSessions = allSessions.filter((s) => s.teacherName === teacherName)
-      const completed = teacherSessions.filter((s) => s.status === 'completed').length
-      const cancelled = teacherSessions.filter((s) => s.status === 'cancelled').length
-      const scheduled = teacherSessions.filter((s) => s.status === 'scheduled').length
-      const totalSessions = completed + cancelled + scheduled
-      const rate = totalSessions > 0 ? Math.round((completed / totalSessions) * 100) : 0
+      // Start from enrollments — ensures all students appear even without sessions
+      const teacherEnrollments = students.flatMap((s) =>
+        (s.enrollments || [])
+          .filter((en) => (en.teacher || '').trim() === teacherName)
+          .map((en) => ({ student: s, enrollment: en })),
+      )
 
+      // Build student list from enrollments
       const studentMap = new Map<
         string,
-        { studentName: string; subject: string; completed: number; total: number }
+        {
+          studentId: string
+          studentName: string
+          subject: string
+          completed: number
+          total: number
+        }
       >()
+
+      teacherEnrollments.forEach(({ student, enrollment }) => {
+        const key = `${student.id}-${enrollment.subject}`
+        if (!studentMap.has(key)) {
+          studentMap.set(key, {
+            studentId: student.id,
+            studentName: student.name || '',
+            subject: enrollment.subject || '',
+            completed: 0,
+            total: 0,
+          })
+        }
+      })
+
+      // Overlay session stats
+      const teacherSessions = allSessions.filter(
+        (s) => (s.teacherName || '').trim() === teacherName,
+      )
       teacherSessions.forEach((s) => {
         const key = `${s.studentId}-${s.subject}`
-        const existing = studentMap.get(key)
-        if (existing) {
-          existing.total++
-          if (s.status === 'completed') existing.completed++
+        const entry = studentMap.get(key)
+        if (entry) {
+          entry.total++
+          if (s.status === 'completed') entry.completed++
         } else {
+          // Session exists but no enrollment found — still show it
           studentMap.set(key, {
+            studentId: s.studentId,
             studentName: s.studentName || '',
             subject: s.subject || '',
             completed: s.status === 'completed' ? 1 : 0,
@@ -273,16 +306,29 @@ export const useAttendance = (
         }
       })
 
-      const students = Array.from(studentMap.entries()).map(([studentId, data]) => ({
-        studentId,
+      const studentsList = Array.from(studentMap.values()).map((data) => ({
         ...data,
         rate: data.total > 0 ? Math.round((data.completed / data.total) * 100) : 0,
       }))
 
-      return { teacherName, totalSessions, completed, cancelled, scheduled, rate, students }
+      const completed = teacherSessions.filter((s) => s.status === 'completed').length
+      const cancelled = teacherSessions.filter((s) => s.status === 'cancelled').length
+      const scheduled = teacherSessions.filter((s) => s.status === 'scheduled').length
+      const totalSessions = completed + cancelled + scheduled
+      const rate = totalSessions > 0 ? Math.round((completed / totalSessions) * 100) : 0
+
+      return {
+        teacherName,
+        totalSessions,
+        completed,
+        cancelled,
+        scheduled,
+        rate,
+        students: studentsList,
+      }
     })
     return rates.sort((a, b) => b.rate - a.rate)
-  }, [allSessions, uniqueTeachers])
+  }, [allSessions, uniqueTeachers, students])
 
   return {
     students,
