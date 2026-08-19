@@ -89,13 +89,13 @@ export const MobileHero = ({
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-[11px] font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
+                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-[11px] font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
                 >
                   طلب حصة مجانية فردية
                 </a>
                 <a
                   href="#mobile-categories"
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-5 py-2.5 text-[11px] font-extrabold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-[0.97] dark:bg-white/5"
+                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-5 py-2.5 text-[11px] font-extrabold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-[0.97] dark:bg-white/5"
                 >
                   تصفح الدورات
                 </a>
@@ -174,7 +174,7 @@ export const MobileHero = ({
                   return next
                 })
               }}
-              className="relative flex flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-border bg-card p-5 text-main shadow-sm transition-all duration-200 hover:border-primary/30 hover:shadow-md active:scale-[0.97]"
+              className="relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-border bg-card p-5 text-main shadow-sm transition-all duration-200 hover:border-primary/30 hover:shadow-md active:scale-[0.97]"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft">
                 <item.icon size={20} className="text-primary" />
@@ -253,7 +253,7 @@ export const MobileHero = ({
                   return next
                 })
               }}
-              className="relative flex flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-border bg-card p-5 text-main shadow-sm transition-all duration-200 hover:border-primary/30 hover:shadow-md active:scale-[0.97]"
+              className="relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-border bg-card p-5 text-main shadow-sm transition-all duration-200 hover:border-primary/30 hover:shadow-md active:scale-[0.97]"
             >
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft">
                 <item.icon size={20} className="text-primary" />
@@ -331,13 +331,13 @@ export const DesktopHero = ({
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
                 >
                   طلب حصة مجانية
                 </a>
                 <a
                   href="#library-categories"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-6 py-3 text-sm font-extrabold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-[0.97] dark:bg-white/5"
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-6 py-3 text-sm font-extrabold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-[0.97] dark:bg-white/5"
                 >
                   تصفح الدورات
                 </a>
@@ -463,28 +463,26 @@ export const DesktopHero = ({
                     return next
                   })
                 }}
-                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
+                className="group relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
               >
-                <div className="mb-3 flex items-center justify-between">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
-                    <item.icon size={22} className="text-primary" />
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
+                  <item.icon size={22} className="text-primary" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <h3 className="mb-0.5 text-base font-extrabold text-main transition-colors duration-300 group-hover:text-primary">
+                    {item.name}
+                  </h3>
+                  {item.sub && (
+                    <p className="text-[11px] font-medium leading-relaxed text-muted">{item.sub}</p>
+                  )}
+                  <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-extrabold text-primary transition-all duration-300 group-hover:gap-2.5">
+                    تصفح المحتوى
+                    <ArrowLeft
+                      size={12}
+                      className="transition-transform duration-300 group-hover:-translate-x-1"
+                    />
                   </span>
                 </div>
-                <h3 className="mb-1 text-base font-extrabold text-main transition-colors duration-300 group-hover:text-primary">
-                  {item.name}
-                </h3>
-                {item.sub && (
-                  <p className="mb-3 text-[11px] font-medium leading-relaxed text-muted">
-                    {item.sub}
-                  </p>
-                )}
-                <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-primary transition-all duration-300 group-hover:gap-2.5">
-                  تصفح المحتوى
-                  <ArrowLeft
-                    size={12}
-                    className="transition-transform duration-300 group-hover:-translate-x-1"
-                  />
-                </span>
               </button>
             ))}
           </div>
@@ -557,17 +555,17 @@ export const DesktopHero = ({
                       return next
                     })
                   }}
-                  className="relative flex w-full flex-col items-center justify-center gap-2 overflow-hidden rounded-2xl border border-border bg-card px-4 py-5 text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-elevation-2 active:scale-[0.97]"
+                  className="relative flex w-full cursor-pointer items-center gap-3 overflow-hidden rounded-2xl border border-border bg-card px-4 py-4 text-start text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-elevation-2 active:scale-[0.97]"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
                     <item.icon size={18} className="text-primary" />
                   </div>
-                  <span className="text-center text-sm font-extrabold leading-tight">
-                    {item.name}
-                  </span>
-                  {item.sub && (
-                    <span className="text-[11px] font-medium text-muted">{item.sub}</span>
-                  )}
+                  <div className="min-w-0 flex-1">
+                    <span className="block text-sm font-extrabold leading-tight">{item.name}</span>
+                    {item.sub && (
+                      <span className="block text-[11px] font-medium text-muted">{item.sub}</span>
+                    )}
+                  </div>
                 </button>
               </div>
             ),
