@@ -16,6 +16,7 @@ import { QuickActions } from '../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../features/dashboard/components/SmartNotifications'
 import { FinancialSnapshot } from '../features/dashboard/components/FinancialSnapshot'
 import { AttendanceChart } from '../features/dashboard/components/AttendanceChart'
+import { LiveSessions } from '../features/dashboard/components/LiveSessions'
 import type {
   DashboardStats as DashboardStatsType,
   LowBalanceStudent,
