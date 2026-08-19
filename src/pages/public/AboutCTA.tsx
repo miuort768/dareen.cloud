@@ -70,7 +70,7 @@ export const AboutCTA = () => {
 
                     <h2 className="mb-4 text-xl font-black leading-tight text-on-primary dark:text-main md:text-3xl lg:text-4xl">
                       هل أنت مستعد لتكون <br />
-                      <span className="from-white to-white/80 bg-clip-text text-transparent dark:from-primary dark:to-primary">
+                      <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent dark:from-primary dark:to-primary">
                         جزءاً من حكايتنا؟
                       </span>
                     </h2>
