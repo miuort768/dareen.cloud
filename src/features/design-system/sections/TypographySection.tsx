@@ -7,20 +7,20 @@ const TEXT_SIZES = [
   { label: 'Body', className: 'text-base' },
   { label: 'Body Small', className: 'text-sm' },
   { label: 'Caption', className: 'text-xs text-muted' },
-];
+]
 
 export function TypographySection() {
   return (
     <section>
-      <h2 className="text-lg font-bold mb-4">الطباعة — Typography</h2>
+      <h2 className="mb-4 text-lg font-bold">الطباعة — Typography</h2>
       <div className="space-y-3">
         {TEXT_SIZES.map(({ label, className }) => (
-          <div key={label} className="flex items-center gap-4 p-3 rounded-card border">
-            <span className="text-xs text-muted font-mono w-24 shrink-0">{label}</span>
-            <p className={className}>مرحباً بكم في منصة دارين التعليمية</p>
+          <div key={label} className="flex items-center gap-4 rounded-card border p-3">
+            <span className="w-24 shrink-0 font-mono text-xs text-muted">{label}</span>
+            <p className={className}>مرحباً بكم في منصة دارين السابعة التعليمية</p>
           </div>
         ))}
       </div>
     </section>
-  );
+  )
 }

@@ -559,7 +559,7 @@ router.post('/system-reset', async (req, res) => {
             await tx.systemSetting.deleteMany();
 
             const defaultSettings = [
-                { key: 'academy_name', value: 'دارين لتعليم و التدريب' },
+                { key: 'academy_name', value: 'دارين السابعة للتعليم والتدريب' },
                 { key: 'admin_phone', value: '201152001250' },
                 { key: 'theme_color', value: 'indigo' },
                 { key: 'notifications_enabled', value: 'true' },

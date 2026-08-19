@@ -29,7 +29,7 @@ const routeMeta: Record<string, { title: string; subtitle: string; icon?: string
   '/announcements': { title: 'الإعلانات', subtitle: 'نشر الإعلانات العامة والتنبيهات' },
   '/chat': { title: 'المحادثات', subtitle: 'التواصل المباشر' },
   '/reports': { title: 'التقارير', subtitle: 'التقارير والإحصائيات العامة' },
-  '/forum': { title: 'منتدى دارين', subtitle: 'مساحة لمشاركة الأفكار' },
+  '/forum': { title: 'منتدى دارين السابعة', subtitle: 'مساحة لمشاركة الأفكار' },
   '/settings': { title: 'إعدادات النظام', subtitle: 'تكوين إعدادات النظام' },
   '/parent-students': { title: 'أبنائي', subtitle: 'متابعة الحضور والتقويم' },
   '/parent-announcements': { title: 'إعلانات المنصة', subtitle: 'آخر المستجدات' },
@@ -98,7 +98,7 @@ export const Header = memo(() => {
         <div className="flex min-w-0 flex-1 items-center gap-4">
           <Image
             src="/dareen_logo_new.webp"
-            alt="دارين"
+            alt="دارين السابعة"
             className="hidden h-9 w-9 shrink-0 rounded-xl sm:block"
             imgClassName="object-contain"
           />

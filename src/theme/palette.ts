@@ -1,11 +1,11 @@
 /**
- * Palette — اختيار الدرجات المعتمدة لهوية دارين
+ * Palette — اختيار الدرجات المعتمدة لهوية دارين السابعة
  *
  * هذا الملف هو الطبقة الوحيدة التي تختار الدرجات من primitives.
  * جميع المكونات تتعامل مع semantic.ts فقط.
  */
 
-import { indigo, slate, gold, emerald, amber, rose, sky } from './primitives';
+import { indigo, slate, gold, emerald, amber, rose, sky } from './primitives'
 
 export const palette = {
   // Primary
@@ -81,6 +81,6 @@ export const palette = {
   // Aliases
   textSecondary: slate[500],
   borderHover: slate[300],
-} as const;
+} as const
 
-export type PaletteToken = keyof typeof palette;
+export type PaletteToken = keyof typeof palette

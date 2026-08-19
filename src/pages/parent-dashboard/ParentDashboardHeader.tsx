@@ -45,7 +45,7 @@ export const ParentDashboardHeader = ({ logout }: ParentDashboardHeaderProps) =>
           <div className="flex items-center gap-3">
             <Image
               src="/dareen_logo_new.webp"
-              alt="دارين"
+              alt="دارين السابعة"
               className="h-9 w-9 shrink-0 rounded-xl"
               imgClassName="object-contain"
             />

@@ -59,7 +59,7 @@ self.addEventListener('push', (event) => {
   const data = event.data ? event.data.json() : {};
   const title = data.title || 'تنبيه جديد';
   const options = {
-    body: data.body || 'لديك إشعار جديد من منصة دارين',
+    body: data.body || 'لديك إشعار جديد من منصة دارين السابعة',
     icon: '/icons/icon-192x192.png',
     badge: '/icons/icon-96x96.png',
     vibrate: [100, 50, 100],
