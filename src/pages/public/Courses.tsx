@@ -1,26 +1,26 @@
-﻿import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { MobileHeader } from '../../components/public/MobileHeader';
-import { PublicFooter } from '../../components/public/PublicFooter';
-import { Image } from '../../shared/components/ui';
-import { Search, Users, Sparkles, Star, MessageCircle } from 'lucide-react';
-import { useSettingsStore } from '../../store/settingsStore';
-import { useAcademyName } from '../../context/AppContext';
-import { SEO } from '../../components/SEO';
-import { COURSES, CATEGORIES } from '../../data/courses';
-import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll';
+﻿import { useState, useMemo } from 'react'
+import { motion } from 'framer-motion'
+import { MobileHeader } from '../../components/public/MobileHeader'
+import { PublicFooter } from '../../components/public/PublicFooter'
+import { Image } from '../../shared/components/ui'
+import { Search, Users, Sparkles, Star, MessageCircle } from 'lucide-react'
+import { useSettingsStore } from '../../store/settingsStore'
+import { useAcademyName } from '../../context/AppContext'
+import { SEO } from '../../components/SEO'
+import { COURSES, CATEGORIES } from '../../data/courses'
+import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll'
 
 const parseStudentCount = (s: string) => {
-  const n = parseFloat(s.replace(/[kK]/, ''));
-  return s.includes('k') || s.includes('K') ? Math.round(n * 1000) : Math.round(n);
-};
+  const n = parseFloat(s.replace(/[kK]/, ''))
+  return s.includes('k') || s.includes('K') ? Math.round(n * 1000) : Math.round(n)
+}
 
 const containerVariants = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.06 },
   },
-};
+}
 
 const cardVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -29,7 +29,7 @@ const cardVariants = {
     y: 0,
     transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] },
   },
-};
+}
 
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex items-center gap-0.5">
@@ -37,123 +37,168 @@ const StarRating = ({ rating }: { rating: number }) => (
       <Star
         key={star}
         size={10}
-        className={star <= Math.floor(rating) ? 'text-warning dark:text-primary fill-warning dark:fill-primary' : 'text-dim dark:text-dim fill-none'}
+        className={
+          star <= Math.floor(rating)
+            ? 'fill-warning text-warning dark:fill-primary dark:text-primary'
+            : 'fill-none text-dim dark:text-dim'
+        }
       />
     ))}
-    <span className="text-micro font-black text-muted dark:text-muted ms-1">{rating}</span>
+    <span className="ms-1 text-micro font-black text-muted dark:text-muted">{rating}</span>
   </div>
-);
+)
 
 export const Courses = () => {
-  const academyName = useAcademyName();
-  const adminPhone = useSettingsStore(s => s.adminPhone);
-  const whatsappNumbers = useSettingsStore(s => s.whatsappNumbers);
+  const academyName = useAcademyName()
+  const adminPhone = useSettingsStore((s) => s.adminPhone)
+  const whatsappNumbers = useSettingsStore((s) => s.whatsappNumbers)
 
   const getNumber = (label: string): string => {
     try {
-      const entries: { label: string; phone: string }[] = JSON.parse(whatsappNumbers);
-      const found = entries.find((e) => e.label === label);
-      return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '');
-    } catch (e) { console.warn(e); return adminPhone.replace(/\D/g, ''); }
-  };
+      const entries: { label: string; phone: string }[] = JSON.parse(whatsappNumbers)
+      const found = entries.find((e) => e.label === label)
+      return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '')
+    } catch (e) {
+      console.warn(e)
+      return adminPhone.replace(/\D/g, '')
+    }
+  }
 
-  const whatsappNumber = getNumber('تواصل عبر واتساب');
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+  const whatsappNumber = getNumber('تواصل عبر واتساب')
+  const [activeCategory, setActiveCategory] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const filteredCourses = useMemo(() =>
-    COURSES.filter(course => {
-      const matchesCategory = activeCategory === 'all' || course.category === activeCategory;
-      const searchLower = (searchQuery || '').toLowerCase().trim();
-      const matchesSearch = !searchLower ||
-        (course.title || '').toLowerCase().includes(searchLower) ||
-        (course.desc || '').toLowerCase().includes(searchLower);
-      return matchesCategory && matchesSearch;
+  const filteredCourses = useMemo(
+    () =>
+      COURSES.filter((course) => {
+        const matchesCategory = activeCategory === 'all' || course.category === activeCategory
+        const searchLower = (searchQuery || '').toLowerCase().trim()
+        const matchesSearch =
+          !searchLower ||
+          (course.title || '').toLowerCase().includes(searchLower) ||
+          (course.desc || '').toLowerCase().includes(searchLower)
+        return matchesCategory && matchesSearch
+      }),
+    [activeCategory, searchQuery],
+  )
+
+  const courseSchema = useMemo(
+    () => ({
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: COURSES.map((c, i) => ({
+        '@type': 'Course',
+        position: i + 1,
+        name: c.title,
+        description: c.desc,
+        provider: {
+          '@type': 'EducationalOrganization',
+          name: academyName,
+          url: 'https://dareen.cloud',
+        },
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: c.rating,
+          bestRating: 5,
+          ratingCount: parseStudentCount(c.students),
+        },
+        offers: {
+          '@type': 'Offer',
+          priceCurrency: 'SAR',
+          price: '0',
+          availability: 'https://schema.org/InStock',
+        },
+      })),
     }),
-    [activeCategory, searchQuery]
-  );
-
-  const courseSchema = useMemo(() => ({
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: COURSES.map((c, i) => ({
-      '@type': 'Course',
-      position: i + 1,
-      name: c.title,
-      description: c.desc,
-      provider: { '@type': 'EducationalOrganization', name: academyName, url: 'https://dareen.cloud' },
-      aggregateRating: { '@type': 'AggregateRating', ratingValue: c.rating, bestRating: 5, ratingCount: parseStudentCount(c.students) },
-      offers: { '@type': 'Offer', priceCurrency: 'SAR', price: '0', availability: 'https://schema.org/InStock' },
-    })),
-  }), [academyName]);
+    [academyName],
+  )
 
   return (
-    <div className="min-h-full bg-background dark:bg-background font-sans text-main relative flex flex-col transition-colors duration-500">
-      <SEO title="الدورات التعليمية أونلاين" description="دورات تعليمية أونلاين للمناهج السعودية والكويتية والإماراتية والقطرية والعمانية والبحرينية. دروس خصوصية في الرياضيات والعلوم واللغة العربية والإنجليزية وقدرات وتحصيلي في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق. تأسيس أطفال، تحفيظ قرآن، مراجعات نهائية مع نخبة المعلمين الخبراء." url="https://dareen.cloud/courses" image="/dareen_books_portal_v3.png" breadcrumbs={[{ name: 'الرئيسية', item: '/' }, { name: 'الدورات', item: '/courses' }]} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
+    <div className="relative flex min-h-full flex-col bg-background font-sans text-main transition-colors duration-500 dark:bg-background">
+      <SEO
+        title="الدورات التعليمية أونلاين"
+        description="دورات تعليمية أونلاين للمناهج السعودية والكويتية والإماراتية والقطرية والعمانية والبحرينية. دروس خصوصية في الرياضيات والعلوم واللغة العربية والإنجليزية وقدرات وتحصيلي في الرياض وجدة والكويت ودبي والدوحة والريان ومسقط وصلالة والمنامة والمحرق. تأسيس أطفال، تحفيظ قرآن، مراجعات نهائية مع نخبة المعلمين الخبراء."
+        url="https://dareen.cloud/courses"
+        image="/dareen_books_portal_v3.png"
+        breadcrumbs={[
+          { name: 'الرئيسية', item: '/' },
+          { name: 'الدورات', item: '/courses' },
+        ]}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
+      />
       <MobileHeader />
 
-      <main className="flex-grow md:pt-32 pb-6 md:pb-10 relative overflow-x-clip">
-        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-15%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-primary/5 to-primary/5 dark:from-primary/[0.05] dark:to-primary/[0.05] rounded-full blur-[140px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-gradient-to-tr from-info/3 to-primary/3 dark:from-primary/[0.03] dark:to-primary/[0.03] rounded-full blur-[120px]" />
-          <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[80%] h-[1px] bg-gradient-to-r from-transparent via-primary/10 dark:via-primary/20 to-transparent" />
+      <main className="relative flex-grow overflow-x-clip pb-6 md:pb-10 md:pt-32">
+        <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute right-[-10%] top-[-15%] h-[60%] w-[60%] rounded-full bg-gradient-to-br from-primary/5 to-primary/5 blur-[140px] dark:from-primary/[0.05] dark:to-primary/[0.05]" />
+          <div className="from-info/3 to-primary/3 absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr blur-[120px] dark:from-primary/[0.03] dark:to-primary/[0.03]" />
+          <div className="absolute left-[50%] top-[40%] h-[1px] w-[80%] translate-x-[-50%] bg-gradient-to-r from-transparent via-primary/10 to-transparent dark:via-primary/20" />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
-                        <AnimateOnScroll animation="fadeUp">
-                        <div className="text-center mb-4 md:mb-6">
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary-soft/60 dark:bg-primary/15 backdrop-blur-sm border border-primary dark:border-primary/30 rounded-full mb-2 md:mb-6">
-                                <Sparkles size={13} className="text-primary dark:text-primary" />
-                                <span className="text-micro font-black text-primary dark:text-primary">استكشف مسيرتك التعليمية</span>
-                            </div>
+        <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll animation="fadeUp">
+            <div className="mb-4 text-center md:mb-6">
+              <div className="bg-primary-soft/60 mb-2 inline-flex items-center gap-2 rounded-full border border-primary px-4 py-1.5 backdrop-blur-sm dark:border-primary/30 dark:bg-primary/15 md:mb-6">
+                <Sparkles size={13} className="text-primary dark:text-primary" />
+                <span className="text-micro font-black text-primary dark:text-primary">
+                  استكشف مسيرتك التعليمية
+                </span>
+              </div>
 
-                            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-heading font-black text-main dark:text-main mb-2 md:mb-4 leading-tight tracking-tight">
-                                <span className="text-primary dark:text-primary">
-                                    دورات
-                                </span>{' '}
-                                {academyName}
-                            </h1>
+              <h1 className="mb-2 font-heading text-2xl font-black leading-tight tracking-tight text-main dark:text-main sm:text-4xl md:mb-4 lg:text-5xl">
+                <span className="text-primary dark:text-primary">دورات</span> {academyName}
+              </h1>
 
-                            <p className="text-sm sm:text-base text-muted dark:text-muted max-w-2xl mx-auto leading-relaxed font-medium">
-                                برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل التعلّم تجربة ممتعة
-                            </p>
-                        </div>
-                        </AnimateOnScroll>
+              <p className="mx-auto max-w-2xl text-sm font-medium leading-relaxed text-muted dark:text-muted sm:text-base">
+                برامج تعليمية مصممة بعناية لتُناسب جميع المراحل والمستويات — بأسلوب تفاعلي يجعل
+                التعلّم تجربة ممتعة
+              </p>
+            </div>
+          </AnimateOnScroll>
 
-                        <div className="max-w-4xl mx-auto mb-6">
-            <div className="relative group">
+          <div className="mx-auto mb-6 max-w-4xl">
+            <div className="group relative">
               <input
                 type="text"
                 aria-label="ابحث عن دورتك المفضلة"
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-5 ps-12 py-4 rounded-card bg-card dark:bg-card border border-border dark:border-primary/30 shadow-lg shadow-sm/50 dark:shadow-black/20 focus-visible:border-primary/50 dark:focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:focus-visible:ring-primary/10 outline-none transition-all text-base placeholder:text-dim dark:placeholder:text-dim font-bold dark:focus-visible:shadow-lg"
+                className="shadow-sm/50 w-full rounded-card border border-border bg-card px-5 py-4 ps-12 text-base font-bold shadow-lg outline-none transition-all placeholder:text-dim focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:border-primary/30 dark:bg-card dark:shadow-black/20 dark:placeholder:text-dim dark:focus-visible:border-primary/50 dark:focus-visible:shadow-lg dark:focus-visible:ring-primary/10"
               />
-              <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-dim dark:text-dim w-5 h-5 group-focus-within:text-primary dark:group-focus-within:text-primary transition-colors" />
+              <Search className="absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-dim transition-colors group-focus-within:text-primary dark:text-dim dark:group-focus-within:text-primary" />
             </div>
 
-            <div className="flex flex-wrap justify-center gap-2 mt-6">
+            <div className="mt-8 flex flex-wrap justify-center gap-2.5">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat.value}
                   type="button"
                   onClick={() => setActiveCategory(cat.value)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-card font-black text-xs transition-all duration-300 ${
+                  className={`flex cursor-pointer items-center gap-2 rounded-card px-4 py-2.5 text-xs font-black transition-all duration-300 ${
                     activeCategory === cat.value
-                      ? 'bg-primary-active dark:bg-primary text-on-primary dark:text-on-primary shadow-lg shadow-card/20 dark:shadow-primary/20'
-                      : 'bg-surface dark:bg-surface text-muted dark:text-muted border border-border dark:border-primary/20 hover:border-border/20 dark:hover:border-primary/40 hover:text-main dark:hover:text-main'
+                      ? 'shadow-card/20 bg-primary-active text-on-primary shadow-lg dark:bg-primary dark:text-on-primary dark:shadow-primary/20'
+                      : 'border border-border bg-surface text-muted hover:border-primary/30 hover:text-main hover:shadow-md dark:border-primary/20 dark:bg-card dark:text-muted dark:hover:border-primary/40 dark:hover:text-main'
                   }`}
                 >
                   <span className="flex items-center gap-2">
-                    <cat.icon size={14} className={activeCategory === cat.value ? 'text-on-primary dark:text-on-primary' : cat.color} />
+                    <cat.icon
+                      size={14}
+                      className={
+                        activeCategory === cat.value
+                          ? 'text-on-primary dark:text-on-primary'
+                          : cat.color
+                      }
+                    />
                     <span>{cat.label}</span>
                   </span>
                 </button>
               ))}
-                        </div>
-                            </div>
+            </div>
+          </div>
 
           {filteredCourses.length > 0 ? (
             <motion.div
@@ -162,58 +207,65 @@ export const Courses = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-60px' }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5"
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5 xl:grid-cols-4"
             >
               {filteredCourses.map((course) => (
                 <motion.div
                   key={course.id}
                   variants={cardVariants}
-                   className="group relative bg-card dark:bg-card border border-border dark:border-primary/20 rounded-card overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl hover:shadow-primary/5 dark:hover:shadow-primary/10 transition-all duration-500"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-card border border-border bg-card shadow-sm transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 dark:border-primary/20 dark:bg-card dark:hover:shadow-primary/10"
                 >
                   <div className="relative h-44 overflow-hidden bg-background dark:bg-card">
                     <Image
                       src={course.image}
                       alt={course.title}
-                      className="w-full h-full"
+                      className="h-full w-full"
                       imgClassName="object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
                     />
 
-                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-card dark:from-card to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-card to-transparent dark:from-card" />
 
-                    <div className="absolute top-3 start-3 z-10">
-                      <div className={`px-2.5 py-1 rounded-lg text-micro font-black text-on-primary shadow-lg bg-gradient-to-br ${course.color}`}>
-                        {CATEGORIES.find(c => c.value === course.category)?.label || course.category}
+                    <div className="absolute start-3 top-3 z-10">
+                      <div
+                        className={`rounded-lg bg-gradient-to-br px-2.5 py-1 text-micro font-black text-on-primary shadow-lg ${course.color}`}
+                      >
+                        {CATEGORIES.find((c) => c.value === course.category)?.label ||
+                          course.category}
                       </div>
                     </div>
 
                     <div className="absolute bottom-3 end-3 z-10">
-                      <div className="bg-surface/90 dark:bg-card/90 backdrop-blur-sm rounded-lg shadow-sm px-2 py-1 flex items-center gap-1">
+                      <div className="bg-surface/90 dark:bg-card/90 flex items-center gap-1 rounded-lg px-2 py-1 shadow-sm backdrop-blur-sm">
                         <StarRating rating={course.rating} />
                       </div>
                     </div>
                   </div>
 
-                    <div className="p-3 pb-0 flex flex-col flex-1">
-                    <h2 className="text-lg md:text-xl font-heading font-black text-main dark:text-main leading-snug group-hover:text-primary dark:group-hover:text-primary transition-colors">
+                  <div className="flex flex-1 flex-col p-3 pb-0">
+                    <h2 className="font-heading text-lg font-black leading-snug text-main transition-colors group-hover:text-primary dark:text-main dark:group-hover:text-primary md:text-xl">
                       {course.title}
                     </h2>
 
-                    <p className="text-xs text-muted dark:text-muted leading-relaxed line-clamp-2 mt-2 mb-4">
+                    <p className="mb-4 mt-2 line-clamp-2 text-xs leading-relaxed text-muted dark:text-muted">
                       {course.desc}
                     </p>
 
-                    <div className="mt-auto flex items-center justify-between py-3 border-t border-border dark:border-primary/15">
+                    <div className="mt-auto flex items-center justify-between border-t border-border py-3 dark:border-primary/15">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-lg bg-primary-soft dark:bg-primary/15 flex items-center justify-center">
+                        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/15">
                           <Users size={12} className="text-primary dark:text-primary" />
                         </div>
                         <div>
-                          <span className="text-xs font-black text-main dark:text-main leading-none block">{course.students}</span>
-                          <span className="text-micro font-bold text-muted dark:text-dim">طالب</span>
+                          <span className="block text-xs font-black leading-none text-main dark:text-main">
+                            {course.students}
+                          </span>
+                          <span className="text-micro font-bold text-muted dark:text-dim">
+                            طالب
+                          </span>
                         </div>
                       </div>
 
-                      <span className="flex items-center gap-1.5 text-xs font-black text-success bg-success-light dark:bg-primary/15 dark:text-primary px-3 py-1.5 rounded-lg">
+                      <span className="flex items-center gap-1.5 rounded-lg bg-success-light px-3 py-1.5 text-xs font-black text-success dark:bg-primary/10 dark:text-primary dark:shadow-[0_0_6px_rgba(99,102,241,0.12)]">
                         <Sparkles size={10} />
                         تجربة مجانية
                       </span>
@@ -224,14 +276,17 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-3 mb-3 flex items-center justify-center gap-2 bg-success hover:bg-success-dark dark:bg-primary dark:hover:bg-warning text-on-success dark:text-on-primary text-xs font-black py-2.5 rounded-card transition-all duration-300 shadow-lg shadow-success/20 hover:shadow-success/30 dark:shadow-primary/20 active:scale-[0.97] dark:shadow-lg"
+                    className="shadow-success/20 hover:shadow-success/30 mx-3 mb-3 flex items-center justify-center gap-2 rounded-card bg-success py-2.5 text-xs font-black text-on-success shadow-lg transition-all duration-300 hover:bg-success-dark active:scale-[0.97] dark:bg-primary dark:text-on-primary dark:shadow-lg dark:shadow-primary/20 dark:hover:bg-warning"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب
                   </a>
 
                   {course.seoKeywords && (
-                    <div className="absolute opacity-0 pointer-events-none overflow-hidden h-0" aria-hidden="true">
+                    <div
+                      className="pointer-events-none absolute h-0 overflow-hidden opacity-0"
+                      aria-hidden="true"
+                    >
                       <h2>الكلمات المفتاحية - {course.title}</h2>
                       <p>{course.seoKeywords.short}</p>
                       <h3>كلمات مفتاحية طويلة - {course.title}</h3>
@@ -246,13 +301,15 @@ export const Courses = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="text-center py-20"
+              className="py-20 text-center"
             >
-              <div className="w-16 h-16 rounded-card bg-background dark:bg-card flex items-center justify-center mx-auto mb-4 border border-border dark:border-primary/30">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-card border border-border bg-background dark:border-primary/30 dark:bg-card">
                 <Search size={28} className="text-dim dark:text-dim" />
               </div>
-              <h2 className="text-xl font-black text-main dark:text-main mb-1">لا توجد نتائج</h2>
-              <p className="text-sm text-muted dark:text-muted font-medium">جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر</p>
+              <h2 className="mb-1 text-xl font-black text-main dark:text-main">لا توجد نتائج</h2>
+              <p className="text-sm font-medium text-muted dark:text-muted">
+                جرّب كلمات بحث مختلفة أو اختر تصنيفاً آخر
+              </p>
             </motion.div>
           )}
         </div>
@@ -260,5 +317,5 @@ export const Courses = () => {
 
       <PublicFooter />
     </div>
-  );
-};
+  )
+}
