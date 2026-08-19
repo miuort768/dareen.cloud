@@ -20,6 +20,7 @@ interface ForumPostCardProps {
   isHighlighted: boolean
   isAdmin: boolean
   currentUserId: string
+  currentUserName?: string
   showMenuPostId: string | null
   setShowMenuPostId: (v: string | null) => void
   onVote: (postId: string, type: 'upvote') => void
@@ -40,6 +41,7 @@ export const ForumPostCard = ({
   isHighlighted,
   isAdmin,
   currentUserId,
+  currentUserName,
   showMenuPostId,
   setShowMenuPostId,
   onVote,
@@ -164,69 +166,102 @@ export const ForumPostCard = ({
       </button>
     </div>
     {viewingComments[post.id] && (
-      <div className="space-y-4 rounded-card border-t border-border bg-background p-4 md:p-5">
-        <div className="space-y-3">
+      <div className="bg-surface/50 border-t border-border p-4 md:p-5">
+        <div className="space-y-1">
           {buildThreadedComments(post.comments || []).map((node) => (
-            <div key={node.comment.id} className="space-y-3">
-              <div className="flex gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-card bg-primary-soft text-micro font-bold text-primary">
+            <div key={node.comment.id} className="group/comment">
+              <div className="flex gap-3 rounded-xl p-3 transition-colors hover:bg-card">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/15 to-primary/5 text-xs font-bold text-primary ring-1 ring-primary/10">
                   {(node.comment.authorName?.[0] || '').toUpperCase()}
                 </div>
-                <div className="flex-1">
-                  <div className="rounded-card border border-border bg-card p-3.5">
-                    <div className="mb-1 flex items-center justify-between">
-                      <h5 className="text-xs font-bold text-main">{node.comment.authorName}</h5>
-                      <span className="text-micro font-medium text-muted">
-                        {node.comment.created_at
-                          ? formatDistanceToNow(
-                              new Date(node.comment.created_at) > new Date()
-                                ? new Date()
-                                : new Date(node.comment.created_at),
-                              { addSuffix: true, locale: ar },
-                            )
-                          : ''}
+                <div className="min-w-0 flex-1">
+                  <div className="mb-1 flex items-center gap-2">
+                    <h5 className="text-[13px] font-bold text-main">{node.comment.authorName}</h5>
+                    {node.comment.authorRole === 'admin' && (
+                      <span className="bg-error/10 rounded-full px-1.5 py-0.5 text-[9px] font-bold text-error">
+                        إدارة
                       </span>
-                    </div>
-                    <p className="text-xs leading-relaxed text-muted">{node.comment.content}</p>
-                    <div className="mt-2 flex gap-3 border-t border-border pt-2">
+                    )}
+                    {node.comment.authorRole === 'teacher' && (
+                      <span className="bg-success/10 rounded-full px-1.5 py-0.5 text-[9px] font-bold text-success">
+                        معلم
+                      </span>
+                    )}
+                    {node.comment.authorRole === 'student' && (
+                      <span className="bg-info/10 rounded-full px-1.5 py-0.5 text-[9px] font-bold text-info">
+                        طالب
+                      </span>
+                    )}
+                    <span className="text-muted/70 text-micro">
+                      {node.comment.created_at
+                        ? formatDistanceToNow(
+                            new Date(node.comment.created_at) > new Date()
+                              ? new Date()
+                              : new Date(node.comment.created_at),
+                            { addSuffix: true, locale: ar },
+                          )
+                        : ''}
+                    </span>
+                  </div>
+                  <p className="text-main/80 text-[13px] leading-relaxed">{node.comment.content}</p>
+                  <div className="mt-2 flex items-center gap-1">
+                    <button
+                      onClick={() => {
+                        const currentText = commentTexts[post.id] || ''
+                        setCommentTexts((prev) => ({
+                          ...prev,
+                          [post.id]: `@${node.comment.authorName} ${currentText}`,
+                        }))
+                        document.getElementById(`comment-input-${post.id}`)?.focus()
+                      }}
+                      className="flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold text-muted transition-all hover:bg-primary/5 hover:text-primary"
+                    >
+                      <Reply size={11} />
+                      رد
+                    </button>
+                    {(isAdmin || currentUserId === node.comment.authorId) && (
                       <button
-                        onClick={() => {
-                          const currentText = commentTexts[post.id] || ''
-                          setCommentTexts((prev) => ({
-                            ...prev,
-                            [post.id]: `@${node.comment.authorName} ${currentText}`,
-                          }))
-                          document.getElementById(`comment-input-${post.id}`)?.focus()
-                        }}
-                        className="text-micro font-bold text-primary transition-colors hover:text-primary"
+                        onClick={() => onDeleteComment(post.id, node.comment.id)}
+                        className="hover:bg-error/5 flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold text-muted transition-all hover:text-error"
                       >
-                        رد
+                        <Trash2 size={10} />
+                        حذف
                       </button>
-                      {(isAdmin || currentUserId === node.comment.authorId) && (
-                        <button
-                          onClick={() => onDeleteComment(post.id, node.comment.id)}
-                          className="text-micro font-bold text-error transition-colors hover:text-error"
-                        >
-                          حذف
-                        </button>
-                      )}
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
               {node.replies.length > 0 && (
-                <div className="ms-3 space-y-2 border-s-2 border-primary ps-7">
+                <div className="me-0 ms-6 border-e-2 border-primary/20 ps-4">
                   {node.replies.map((replyNode) => (
-                    <div key={replyNode.comment.id} className="flex gap-2">
-                      <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-card bg-primary-soft text-micro font-bold text-primary">
+                    <div
+                      key={replyNode.comment.id}
+                      className="flex gap-2.5 rounded-xl p-2.5 transition-colors hover:bg-card"
+                    >
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-primary/5 text-[10px] font-bold text-primary ring-1 ring-primary/10">
                         {(replyNode.comment.authorName?.[0] || '').toUpperCase()}
                       </div>
-                      <div className="flex-1 rounded-card border border-border bg-card p-2.5">
-                        <div className="mb-0.5 flex items-center justify-between">
-                          <h5 className="text-micro font-bold text-main">
+                      <div className="min-w-0 flex-1">
+                        <div className="mb-0.5 flex items-center gap-2">
+                          <h5 className="text-[12px] font-bold text-main">
                             {replyNode.comment.authorName}
                           </h5>
-                          <span className="text-micro text-muted">
+                          {replyNode.comment.authorRole === 'admin' && (
+                            <span className="bg-error/10 rounded-full px-1.5 py-0.5 text-[8px] font-bold text-error">
+                              إدارة
+                            </span>
+                          )}
+                          {replyNode.comment.authorRole === 'teacher' && (
+                            <span className="bg-success/10 rounded-full px-1.5 py-0.5 text-[8px] font-bold text-success">
+                              معلم
+                            </span>
+                          )}
+                          {replyNode.comment.authorRole === 'student' && (
+                            <span className="bg-info/10 rounded-full px-1.5 py-0.5 text-[8px] font-bold text-info">
+                              طالب
+                            </span>
+                          )}
+                          <span className="text-muted/60 text-[10px]">
                             {replyNode.comment.created_at
                               ? formatDistanceToNow(
                                   new Date(replyNode.comment.created_at) > new Date()
@@ -237,17 +272,34 @@ export const ForumPostCard = ({
                               : ''}
                           </span>
                         </div>
-                        <p className="text-micro leading-relaxed text-muted">
+                        <p className="text-main/75 text-[12px] leading-relaxed">
                           {replyNode.comment.content}
                         </p>
-                        {(isAdmin || currentUserId === replyNode.comment.authorId) && (
+                        <div className="mt-1.5 flex items-center gap-1">
                           <button
-                            onClick={() => onDeleteComment(post.id, replyNode.comment.id)}
-                            className="mt-1 text-micro font-bold text-error transition-colors hover:text-error"
+                            onClick={() => {
+                              const currentText = commentTexts[post.id] || ''
+                              setCommentTexts((prev) => ({
+                                ...prev,
+                                [post.id]: `@${replyNode.comment.authorName} ${currentText}`,
+                              }))
+                              document.getElementById(`comment-input-${post.id}`)?.focus()
+                            }}
+                            className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold text-muted transition-all hover:bg-primary/5 hover:text-primary"
                           >
-                            حذف
+                            <Reply size={9} />
+                            رد
                           </button>
-                        )}
+                          {(isAdmin || currentUserId === replyNode.comment.authorId) && (
+                            <button
+                              onClick={() => onDeleteComment(post.id, replyNode.comment.id)}
+                              className="hover:bg-error/5 flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold text-muted transition-all hover:text-error"
+                            >
+                              <Trash2 size={9} />
+                              حذف
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -256,9 +308,9 @@ export const ForumPostCard = ({
             </div>
           ))}
         </div>
-        <div className="flex items-center gap-3 border-t border-border pt-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-card bg-primary-soft">
-            <User size={14} className="text-primary" />
+        <div className="border-border/50 mt-3 flex items-center gap-3 border-t pt-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/15 to-primary/5 text-xs font-bold text-primary ring-1 ring-primary/10">
+            {currentUserName?.[0]?.toUpperCase() || <User size={14} />}
           </div>
           <div className="relative flex-1">
             <input
@@ -267,8 +319,8 @@ export const ForumPostCard = ({
               aria-label="رد على المنشور"
               value={commentTexts[post.id] || ''}
               onChange={(e) => setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))}
-              placeholder="اكتب رداً على هذا المنشور..."
-              className="w-full rounded-card border border-border bg-card py-2.5 pe-10 ps-4 text-xs font-medium text-main transition-all placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus"
+              placeholder="اكتب تعليقاً..."
+              className="border-border/60 placeholder:text-muted/50 w-full rounded-xl border bg-card py-2.5 pe-11 ps-4 text-[13px] font-medium text-main transition-all focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/10"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') onAddComment(post.id)
               }}
@@ -277,9 +329,9 @@ export const ForumPostCard = ({
               onClick={() => onAddComment(post.id)}
               disabled={!(commentTexts[post.id] || '').trim()}
               aria-label="إرسال التعليق"
-              className="absolute end-1 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-card bg-primary text-on-primary transition-all hover:bg-primary-hover active:scale-90 disabled:opacity-30"
+              className="absolute end-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg bg-primary text-on-primary transition-all hover:bg-primary-hover active:scale-90 disabled:opacity-25"
             >
-              <Send size={11} />
+              <Send size={12} />
             </button>
           </div>
         </div>
