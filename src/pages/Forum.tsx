@@ -178,13 +178,10 @@ export const Forum = () => {
   }
 
   const totalUpvotes = useMemo(
-    () => posts.reduce((s, p) => s + (typeof p.upvotes === 'number' ? p.upvotes : 0), 0),
+    () => posts.reduce((s, p) => s + (Array.isArray(p.upvotes) ? p.upvotes.length : 0), 0),
     [posts],
   )
-  const totalComments = useMemo(
-    () => posts.reduce((s, p) => s + (p.comments?.length || 0), 0),
-    [posts],
-  )
+  const totalComments = useMemo(() => posts.reduce((s, p) => s + (p.commentCount || 0), 0), [posts])
 
   const kpiCards = useMemo(
     () => [
