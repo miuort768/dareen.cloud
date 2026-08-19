@@ -128,8 +128,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 key={conv.id}
                 onClick={() => setSelectedConv(conv)}
                 className={cn(
-                  'relative flex w-full items-center gap-3 px-3 py-3 transition-colors hover:bg-hover',
-                  isSelected && 'bg-surface dark:bg-hover',
+                  'relative flex w-full items-center gap-3 px-3 py-3 transition-colors hover:bg-primary/5',
+                  isSelected && 'bg-primary/10 dark:bg-primary/5',
                 )}
               >
                 <div className="relative shrink-0">
@@ -145,7 +145,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   </div>
                 </div>
 
-                <div className="mt-1 min-w-0 flex-1 border-b border-border pb-3 text-start">
+                <div className="border-border/50 mt-1 min-w-0 flex-1 border-b pb-3 text-start">
                   <div className="mb-0.5 flex items-center justify-between">
                     <div className="flex items-center gap-1.5 overflow-hidden">
                       {conv.isGroup && <ShieldCheck size={14} className="shrink-0 text-muted" />}
@@ -184,7 +184,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                     </div>
 
                     {(conv.unreadCount ?? 0) > 0 && (
-                      <div className="ms-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-success px-1.5 text-xs font-medium text-on-success">
+                      <div className="ms-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-success px-1.5 text-xs font-medium text-on-success shadow-sm">
                         {conv.unreadCount}
                       </div>
                     )}
