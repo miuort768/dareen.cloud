@@ -1,7 +1,16 @@
 import { useState } from 'react'
 import { MobileHeader } from '../../components/public/MobileHeader'
 import { PublicFooter } from '../../components/public/PublicFooter'
-import { Phone, Mail, MapPin, Send, CheckCircle2, MessageCircle, Sparkles } from 'lucide-react'
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Send,
+  CheckCircle2,
+  MessageCircle,
+  Sparkles,
+  Heart,
+} from 'lucide-react'
 import { useSettingsStore } from '../../store/settingsStore'
 import { SEO } from '../../components/SEO'
 import { cn } from '../../lib/utils'
@@ -54,8 +63,8 @@ export const Contact = () => {
     {
       icon: Mail,
       title: 'البريد الإلكتروني',
-      value: 'info@dareen7.com',
-      href: 'mailto:info@dareen7.com',
+      value: 'info@dareen7.online',
+      href: 'mailto:info@dareen7.online',
       gradient: 'from-primary to-primary',
       bg: 'bg-primary-soft dark:bg-primary/10',
       border: 'border-primary dark:border-primary/20',
@@ -96,7 +105,7 @@ export const Contact = () => {
             name: 'دارين السابعة',
             url: 'https://dareen.cloud',
             telephone: `+${adminPhone}`,
-            email: 'info@dareen7.com',
+            email: 'info@dareen7.online',
             contactPoint: {
               '@type': 'ContactPoint',
               telephone: `+${adminPhone}`,
@@ -164,8 +173,9 @@ export const Contact = () => {
                     <CheckCircle2 size={44} />
                   </div>
                   <h2 className="mb-2 text-2xl font-black text-main">تم الإرسال بنجاح!</h2>
-                  <p className="mb-8 text-sm text-muted">
-                    سيقوم فريقنا بالرد عليك في أقرب وقت ممكن.
+                  <p className="mb-8 flex items-center justify-center gap-1.5 text-sm text-muted">
+                    سنتواصل معك في أقرب وقت{' '}
+                    <Heart size={14} className="fill-warning text-warning" />
                   </p>
                   <button
                     onClick={() => setFormState('idle')}
@@ -178,7 +188,10 @@ export const Contact = () => {
                 <div className="p-6 md:p-8">
                   <div className="mb-4">
                     <h2 className="mb-1 text-xl font-black text-main">أرسل لنا رسالة</h2>
-                    <p className="text-sm text-muted">سنتواصل معك خلال 24 ساعة.</p>
+                    <p className="flex items-center gap-1.5 text-sm text-muted">
+                      سنتواصل معك في أقرب وقت{' '}
+                      <Heart size={12} className="fill-warning text-warning" />
+                    </p>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
