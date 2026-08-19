@@ -7,6 +7,7 @@ import {
   User,
   Send,
   MessageSquare,
+  CornerDownLeft,
 } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { ar } from 'date-fns/locale'
@@ -216,7 +217,7 @@ export const ForumPostCard = ({
                       }}
                       className="flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-bold text-muted transition-all hover:bg-primary/5 hover:text-primary"
                     >
-                      <Reply size={11} />
+                      <CornerDownLeft size={11} />
                       رد
                     </button>
                     {(isAdmin || currentUserId === node.comment.authorId) && (
@@ -287,7 +288,7 @@ export const ForumPostCard = ({
                             }}
                             className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold text-muted transition-all hover:bg-primary/5 hover:text-primary"
                           >
-                            <Reply size={9} />
+                            <CornerDownLeft size={9} />
                             رد
                           </button>
                           {(isAdmin || currentUserId === replyNode.comment.authorId) && (
