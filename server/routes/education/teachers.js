@@ -169,8 +169,15 @@ router.get('/:id/activity', authMiddleware, checkRole(['admin']), async (req, re
         select: { studentName: true, subject: true, date: true, time: true, createdAt: true },
       }),
       prisma.account.findFirst({
-        where: { accountType: 'TEACHER', entityId: req.params.id },
-        select: { lastLoginAt: true },
+        where: {
+          OR: [
+            { accountType: 'TEACHER', entityId: req.params.id },
+            ...(teacher.username ? [{ username: teacher.username }] : []),
+            ...(teacher.email ? [{ email: teacher.email }] : []),
+          ]
+        },
+        select: { lastLoginAt: true, updatedAt: true },
+        orderBy: { lastLoginAt: 'desc' },
       }),
       prisma.message.findFirst({
         where: { senderId: req.params.id },
@@ -195,7 +202,7 @@ router.get('/:id/activity', authMiddleware, checkRole(['admin']), async (req, re
 
     res.json({
       lastSession,
-      lastLoginAt: account?.lastLoginAt || null,
+      lastLoginAt: account?.lastLoginAt || account?.updatedAt || lastSession?.createdAt || lastMessage?.timestamp || null,
       lastChat,
     });
   } catch (err) {

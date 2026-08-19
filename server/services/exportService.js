@@ -275,6 +275,7 @@ async function generateExcel(entity, filters) {
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'Dareen App';
     const sheet = workbook.addWorksheet(LABELS[entity] || entity);
+    sheet.views = [{ rightToLeft: true }];
 
     if (entity === 'finance' && data && data.transactions) {
         sheet.columns = [
