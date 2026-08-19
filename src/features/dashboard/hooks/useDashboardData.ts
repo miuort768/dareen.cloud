@@ -198,7 +198,7 @@ export const useDashboardData = (currentUser: User | null) => {
 
     // 4. Financials — currency-aware computation
     // Determine target currency: teacher uses their own currency, admin uses EGP (server converts)
-    const targetCurrency = isTeacher ? teacherData?.currency || 'EGP' : 'EGP'
+    const targetCurrency = isTeacher ? teacherMe?.currency || 'EGP' : 'EGP'
 
     const getSessionRev = (s: Session) => {
       if (s.price !== null && s.price !== undefined) return Number(s.price)

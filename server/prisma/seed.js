@@ -36,14 +36,14 @@ const financialSettings = [
 ];
 
 const defaultRates = [
-  { fromCurrency: 'KWD', toCurrency: 'EGP', buyRate: 49.50, sellRate: 50.00 },
+  { fromCurrency: 'KWD', toCurrency: 'EGP', buyRate: 160.00, sellRate: 160.00 },
   { fromCurrency: 'KWD', toCurrency: 'SAR', buyRate: 12.40, sellRate: 12.50 },
   { fromCurrency: 'KWD', toCurrency: 'AED', buyRate: 12.10, sellRate: 12.20 },
   { fromCurrency: 'KWD', toCurrency: 'QAR', buyRate: 11.90, sellRate: 12.00 },
   { fromCurrency: 'KWD', toCurrency: 'OMR', buyRate: 1.28, sellRate: 1.30 },
   { fromCurrency: 'KWD', toCurrency: 'BHD', buyRate: 1.24, sellRate: 1.26 },
   { fromCurrency: 'KWD', toCurrency: 'USD', buyRate: 3.30, sellRate: 3.32 },
-  { fromCurrency: 'EGP', toCurrency: 'KWD', buyRate: 0.020, sellRate: 0.021 },
+  { fromCurrency: 'EGP', toCurrency: 'KWD', buyRate: 0.00625, sellRate: 0.00625 },
   { fromCurrency: 'SAR', toCurrency: 'KWD', buyRate: 0.080, sellRate: 0.081 },
   { fromCurrency: 'AED', toCurrency: 'KWD', buyRate: 0.082, sellRate: 0.083 },
   { fromCurrency: 'QAR', toCurrency: 'KWD', buyRate: 0.084, sellRate: 0.085 },
