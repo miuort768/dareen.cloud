@@ -1,6 +1,6 @@
 import { Sun, Moon, User, MessageSquare, Search } from 'lucide-react'
 import { useState, useEffect, memo } from 'react'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { useDarkMode } from '../../shared/hooks/useDarkMode'
 import { useCurrentUser } from '../../context/AppContext'
 import { NotificationDropdown } from '../ui/NotificationDropdown'
@@ -47,9 +47,11 @@ const routeMeta: Record<string, { title: string; subtitle: string; icon?: string
 export const Header = memo(() => {
   const [theme, setTheme] = useDarkMode()
   const location = useLocation()
+  const navigate = useNavigate()
   const currentUser = useCurrentUser()
   const totalUnreadCount = useUnreadStore((s) => s.totalUnreadCount)
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024)
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 1024)
@@ -126,6 +128,41 @@ export const Header = memo(() => {
                   type="text"
                   placeholder="بحث..."
                   aria-label="بحث"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && searchQuery.trim()) {
+                      const q = searchQuery.trim()
+                      const routes: [string, string][] = [
+                        ['الطلاب', '/students'],
+                        ['المعلمات', '/teachers'],
+                        ['المالية', '/finance'],
+                        ['الفواتير', '/student-invoices'],
+                        ['فواتير المعلمات', '/teacher-invoices'],
+                        ['الحضور', '/attendance'],
+                        ['الجداول', '/schedule'],
+                        ['الأجندة', '/agenda'],
+                        ['المواعيد', '/appointments'],
+                        ['المهام', '/tasks'],
+                        ['الإعلانات', '/announcements'],
+                        ['المحادثات', '/chat'],
+                        ['الدردشة', '/chat'],
+                        ['التقارير', '/reports'],
+                        ['الإعدادات', '/settings'],
+                        ['المنتدى', '/forum'],
+                        ['العملاء', '/leads'],
+                        ['الجلسات', '/trial-sessions'],
+                        ['الرسائل', '/admin-contacts'],
+                        ['التوظيف', '/admin-jobs'],
+                        ['التقييمات', '/evaluations'],
+                        ['الإغلاق', '/monthly-closing'],
+                        ['أولياء', '/parents'],
+                      ]
+                      const match = routes.find(([k]) => q.includes(k))
+                      navigate(match ? match[1] : '/students')
+                      setSearchQuery('')
+                    }
+                  }}
                   className="h-9 w-[200px] rounded-xl border border-border bg-background pl-3 pr-9 text-xs text-main outline-none transition-colors placeholder:text-muted focus:border-primary"
                 />
               </div>
