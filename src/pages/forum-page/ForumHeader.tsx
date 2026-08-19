@@ -1,19 +1,17 @@
-import { Sparkles } from 'lucide-react';
-import { useAcademyName } from '../../context/AppContext';
+import { useAcademyName } from '../../context/AppContext'
 
 export const ForumHeader = () => {
-    const academyName = useAcademyName();
-    return (
-        <div className="bg-primary rounded-card px-6 py-8 mx-4 mt-4 mb-6">
-            <div className="flex flex-col items-center text-center">
-                <div className="w-14 h-14 bg-primary-soft rounded-card flex items-center justify-center mb-4">
-                    <Sparkles size={26} className="text-on-primary" />
-                </div>
-                <h1 className="text-3xl font-bold text-on-primary leading-tight mb-2">منتدى {academyName}</h1>
-                <p className="text-sm text-on-primary/80 font-medium leading-relaxed max-w-md">
-                    مساحة آمنة للنقاش وتبادل الأفكار بين الطلاب والمعلمات وأولياء الأمور.
-                </p>
-            </div>
-        </div>
-    );
-};
+  const academyName = useAcademyName()
+  return (
+    <div className="mx-4 mb-6 mt-4 rounded-card bg-primary px-6 py-8">
+      <div className="flex flex-col items-center text-center">
+        <h1 className="mb-2 text-3xl font-bold leading-tight text-on-primary">
+          منتدى {academyName}
+        </h1>
+        <p className="text-on-primary/80 max-w-md text-sm font-medium leading-relaxed">
+          مساحة آمنة للنقاش وتبادل الأفكار بين الطلاب والمعلمات وأولياء الأمور.
+        </p>
+      </div>
+    </div>
+  )
+}

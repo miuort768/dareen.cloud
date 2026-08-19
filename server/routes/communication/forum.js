@@ -22,6 +22,7 @@ router.get('/', async (req, res) => {
         });
         const formattedPosts = posts.map(p => ({
             ...p,
+            created_at: p.createdAt,
             upvotes: JSON.parse(p.upvotes || '[]'),
             downvotes: JSON.parse(p.downvotes || '[]'),
             commentCount: p._count?.comments || 0,
@@ -185,7 +186,7 @@ router.get('/:id/comments', async (req, res) => {
             where: { postId: req.params.id },
             orderBy: { createdAt: 'asc' }
         });
-        res.json(comments);
+        res.json(comments.map(c => ({ ...c, created_at: c.createdAt })));
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch comments');
     }
