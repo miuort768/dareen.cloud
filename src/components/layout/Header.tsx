@@ -91,6 +91,7 @@ export const Header = memo(() => {
         'h-16 lg:h-[72px]',
         'bg-surface dark:bg-card',
         'border-b border-border backdrop-blur-xl',
+        'dark:border-indigo-500/15 dark:shadow-[0_1px_16px_rgba(99,102,241,0.12)]',
         'transition-all duration-300',
       )}
     >

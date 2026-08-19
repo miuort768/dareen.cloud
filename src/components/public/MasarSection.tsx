@@ -84,10 +84,10 @@ export const MasarSection = () => {
                     السعودية
                   </span>
                   <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-bold text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
-                    الإمارات
+                    الإمارات وقطر
                   </span>
                   <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-micro font-bold text-on-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary">
-                    قطر
+                    عمان والأردن
                   </span>
                 </div>
                 <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
