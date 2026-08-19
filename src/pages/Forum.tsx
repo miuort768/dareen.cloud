@@ -141,6 +141,14 @@ export const Forum = () => {
         showNotification('تم إضافة التعليق', 'success')
       }
       queryClient.invalidateQueries({ queryKey: ['forum'] })
+      for (const [pid, isOpen] of Object.entries(viewingComments)) {
+        if (isOpen) {
+          const data = await api.get<Comment[]>(`/forum/${pid}/comments`)
+          queryClient.setQueryData(['forum'], (old: Post[] = []) =>
+            old.map((p: Post) => (p.id === pid ? { ...p, comments: data } : p)),
+          )
+        }
+      }
     } catch (e) {
       console.error(e)
       showNotification('فشل إضافة التعليق', 'error')
