@@ -169,6 +169,16 @@ router.put('/:id', authMiddleware, checkRole(['admin']), validate(blogPostSchema
     }
 });
 
+router.delete('/all', authMiddleware, checkRole(['admin']), async (req, res) => {
+    try {
+        const result = await prisma.blogPost.deleteMany({});
+        cache.delPattern('blog:');
+        res.json({ success: true, count: result.count });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Delete all blog posts');
+    }
+});
+
 router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => {
     try {
         await prisma.blogPost.delete({ where: { id: req.params.id } });

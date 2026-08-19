@@ -9,7 +9,7 @@ import { BlogSearchBar } from './admin-blog/BlogSearchBar'
 import { BlogForm } from './admin-blog/BlogForm'
 import { BlogGrid } from './admin-blog/BlogGrid'
 import type { BlogPost } from './admin-blog/types'
-import { BookOpen, Plus, FileText, Eye, Star, Filter } from 'lucide-react'
+import { BookMarked, Plus, FileText, Eye, Star, Trash2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '../lib/utils'
 
@@ -21,6 +21,12 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
   duration: Math.random() * 6 + 4,
   delay: Math.random() * 3,
 }))
+
+const formatViews = (n: number) => {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, '')}M`
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1).replace(/\.0$/, '')}K`
+  return String(n)
+}
 
 export const AdminBlog = () => {
   const academyName = useAcademyName()
@@ -123,15 +129,67 @@ export const AdminBlog = () => {
     }
   }
 
+  const handleDeleteAll = async () => {
+    if (
+      !(await confirm({
+        message: 'هل أنت متأكد من حذف جميع المقالات؟ هذا الإجراء لا يمكن التراجع عنه.',
+        title: 'حذف جميع المقالات',
+        confirmText: 'نعم، حذف الكل',
+      }))
+    )
+      return
+    try {
+      const result = await api.delete<{ count: number }>('/blog/all')
+      showNotification(`تم حذف ${result.count ?? ''} مقال بنجاح`, 'success')
+      queryClient.invalidateQueries({ queryKey: ['blog'] })
+    } catch (e) {
+      console.error(e)
+      showNotification('حدث خطأ في الحذف', 'error')
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!currentPost?.title || !currentPost?.slug) {
       showNotification('يرجى إكمال الحقول المطلوبة', 'warning')
       return
     }
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(currentPost.slug)) {
+      showNotification('الرابط المختصر يجب أن يحتوي أحرف إنجليزية وأرقام وشرطات فقط', 'warning')
+      return
+    }
     const postData = {
-      ...currentPost,
+      title: currentPost.title,
+      slug: currentPost.slug,
+      excerpt: currentPost.excerpt || '',
       content: contentPart1 + (contentPart2 ? '\n\n' + contentPart2 : ''),
+      coverImage: currentPost.coverImage || '',
+      category: currentPost.category || '',
+      keywords: currentPost.keywords || '',
+      author: currentPost.author || '',
+      date: currentPost.date || new Date().toISOString(),
+      contentType: currentPost.contentType || '',
+      curriculum: currentPost.curriculum || '',
+      level: currentPost.level || '',
+      grade: currentPost.grade || '',
+      term: currentPost.term || '',
+      subject: currentPost.subject || '',
+      downloadLink: currentPost.downloadLink || '',
+      watchLink: currentPost.watchLink || '',
+      showButtons: currentPost.showButtons ?? true,
+      downloadButtonText: currentPost.downloadButtonText || '',
+      watchButtonText: currentPost.watchButtonText || '',
+      source: currentPost.source || '',
+      fileSize: currentPost.fileSize || '',
+      seoTitle: currentPost.seoTitle || '',
+      seoDescription: currentPost.seoDescription || '',
+      ogImage: currentPost.ogImage || '',
+      focusKeyword: currentPost.focusKeyword || '',
+      readingTime: typeof currentPost.readingTime === 'number' ? currentPost.readingTime : 0,
+      canonicalUrl: currentPost.canonicalUrl || '',
+      robotsIndex: currentPost.robotsIndex ?? true,
+      isFeatured: currentPost.isFeatured ?? false,
+      tags: currentPost.tags || '',
     }
     try {
       setSubmitting(true)
@@ -144,8 +202,9 @@ export const AdminBlog = () => {
       }
       setIsModalOpen(false)
       queryClient.invalidateQueries({ queryKey: ['blog'] })
-    } catch (err) {
-      showNotification(err instanceof Error ? err.message : 'حدث خطأ في الحفظ', 'error')
+    } catch (err: unknown) {
+      const raw = err instanceof Error ? err.message : 'حدث خطأ في الحفظ'
+      showNotification(raw.length > 120 ? raw.slice(0, 120) + '...' : raw, 'error')
     } finally {
       setSubmitting(false)
     }
@@ -186,7 +245,7 @@ export const AdminBlog = () => {
       {
         label: 'إجمالي المقالات',
         value: posts.length,
-        icon: BookOpen,
+        icon: BookMarked,
         gradient: 'from-primary/20 to-primary/5',
         iconBg: 'bg-primary/10 text-primary',
         accent: 'bg-primary',
@@ -201,15 +260,15 @@ export const AdminBlog = () => {
       },
       {
         label: 'إجمالي المشاهدات',
-        value: posts.reduce((s, p) => s + (p.views || 0), 0),
+        value: formatViews(posts.reduce((s, p) => s + (p.views || 0), 0)),
         icon: Eye,
         gradient: 'from-success/20 to-success/5',
         iconBg: 'bg-success/10 text-success',
         accent: 'bg-success',
       },
       {
-        label: 'الأنواع',
-        value: new Set(posts.map((p) => p.contentType)).size,
+        label: 'فوق مليون مشاهدة',
+        value: posts.filter((p) => (p.views || 0) >= 1_000_000).length,
         icon: FileText,
         gradient: 'from-info/20 to-info/5',
         iconBg: 'bg-info/10 text-info',
@@ -223,10 +282,9 @@ export const AdminBlog = () => {
     () => [
       { icon: Plus, label: 'مقال جديد', onClick: () => handleOpenModal() },
       {
-        icon: Filter,
-        label: 'بحث',
-        onClick: () =>
-          document.querySelector('[data-search]')?.scrollIntoView({ behavior: 'smooth' }),
+        icon: Trash2,
+        label: 'حذف الكل',
+        onClick: () => handleDeleteAll(),
       },
       {
         icon: Star,
@@ -234,7 +292,7 @@ export const AdminBlog = () => {
         onClick: () => setFilterType(filterType === '' ? 'notes' : ''),
       },
     ],
-    [filterType],
+    [filterType, handleDeleteAll],
   )
 
   return (
@@ -263,7 +321,7 @@ export const AdminBlog = () => {
             <div>
               <div className="mb-2 flex items-center gap-2">
                 <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                  <BookOpen className="text-white" size={20} />
+                  <BookMarked className="text-white" size={20} />
                 </div>
                 <span className="text-xs font-medium text-white/70">المدونة</span>
               </div>
@@ -279,7 +337,7 @@ export const AdminBlog = () => {
               <div className="text-center">
                 <p className="mb-1 text-xs text-white/60">المشاهدات</p>
                 <p className="text-2xl font-bold text-white">
-                  {posts.reduce((s, p) => s + (p.views || 0), 0)}
+                  {formatViews(posts.reduce((s, p) => s + (p.views || 0), 0))}
                 </p>
               </div>
             </div>
