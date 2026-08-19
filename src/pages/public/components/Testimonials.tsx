@@ -69,7 +69,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                   className={cn(
                     'group relative flex flex-col rounded-2xl border shadow-sm transition-all duration-700 hover:-translate-y-1',
                     isLarge
-                      ? 'border-success-dark bg-success-dark p-6 text-on-success dark:border-primary dark:bg-surface dark:text-on-primary lg:col-span-2'
+                      ? 'border-success-dark bg-success-dark p-6 text-on-success dark:border-primary dark:bg-surface dark:text-main lg:col-span-2'
                       : 'border-border bg-surface p-5 text-muted dark:border-primary/20 dark:bg-card dark:text-muted',
                   )}
                 >
@@ -78,7 +78,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                     className={cn(
                       'absolute -end-2 -top-2 transition-all duration-700',
                       isLarge
-                        ? 'dark:text-on-primary/10 text-on-success opacity-10'
+                        ? 'dark:text-main/10 text-on-success opacity-10'
                         : 'dark:group-hover:text-accent/15 text-primary opacity-5 group-hover:text-primary/15 dark:text-primary',
                     )}
                   />
@@ -106,7 +106,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                       className={cn(
                         'font-medium italic leading-relaxed',
                         isLarge
-                          ? 'text-sm text-on-success dark:text-on-primary'
+                          ? 'text-sm text-on-success dark:text-main'
                           : 'text-xs text-muted dark:text-muted',
                       )}
                     >
