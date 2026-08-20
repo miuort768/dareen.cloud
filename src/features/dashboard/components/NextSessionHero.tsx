@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Clock, Play, GraduationCap, SkipForward } from 'lucide-react'
+import { Clock, GraduationCap } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
 
 interface TimelineSession {
   id: string
@@ -14,8 +13,6 @@ interface TimelineSession {
 
 interface NextSessionHeroProps {
   timeline?: TimelineSession[]
-  onStart: (id?: string, subject?: string) => void
-  onSkip?: () => void
 }
 
 const parseTime = (t?: string) => {
@@ -32,7 +29,7 @@ const parseTime = (t?: string) => {
   return { h: h % 24, m: m % 60 }
 }
 
-export const NextSessionHero = ({ timeline, onStart, onSkip }: NextSessionHeroProps) => {
+export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
   const nextSession = timeline?.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
   const [timeLeft, setTimeLeft] = useState('')
   const [isNow, setIsNow] = useState(false)
@@ -115,16 +112,6 @@ export const NextSessionHero = ({ timeline, onStart, onSkip }: NextSessionHeroPr
                 {isNow ? 'الآن' : timeLeft}
               </span>
             </div>
-            {onSkip && (
-              <Button
-                onClick={onSkip}
-                className="ms-2 gap-2 border-0 bg-white/20 text-sm text-white hover:bg-white/30 dark:bg-black/20 dark:text-on-primary dark:hover:bg-black/30"
-                size="sm"
-              >
-                <SkipForward size={14} fill="currentColor" />
-                تخطي
-              </Button>
-            )}
           </div>
         </div>
 
@@ -132,14 +119,6 @@ export const NextSessionHero = ({ timeline, onStart, onSkip }: NextSessionHeroPr
           <span className="dark:text-on-primary/60 text-sm font-medium text-white/60">
             {nextSession?.time || ''}
           </span>
-          <Button
-            onClick={() => onStart(nextSession?.id)}
-            className="gap-2 border-0 bg-white/20 text-white hover:bg-white/30 dark:bg-black/20 dark:text-on-primary dark:hover:bg-black/30"
-            size="sm"
-          >
-            <Play size={14} fill="currentColor" />
-            بدء الحصة
-          </Button>
         </div>
       </div>
     </div>

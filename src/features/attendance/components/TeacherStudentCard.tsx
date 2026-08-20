@@ -1,11 +1,9 @@
 import React, { useState, useRef } from 'react'
-import { BookOpen, TrendingUp, Activity, MessageSquare, Radio, Play } from 'lucide-react'
+import { BookOpen, TrendingUp, Activity, MessageSquare } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { api } from '../../../lib/api'
-import { useShowNotification } from '../../../context/AppContext'
 import type { Student, Enrollment, ScheduleSlot } from '../types'
 
-import { startLiveSession } from '../../../services/liveSessionService'
 import { ProgressBar } from '../../../shared/components/ui'
 import { StudentCardTimer } from './StudentCardTimer'
 import { StudentScheduleEditor } from './StudentScheduleEditor'
@@ -45,7 +43,6 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [notes, setNotes] = useState(en.nextSessionNotes || '')
-  const showNotification = useShowNotification()
   const [isSavingNotes, setIsSavingNotes] = useState(false)
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 

@@ -10,7 +10,6 @@ import {
   GraduationCap,
   Users,
   Filter,
-  Printer,
   CheckCircle2,
   PartyPopper,
 } from 'lucide-react'
@@ -18,8 +17,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCurrentUser, useLogout } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
-import { startLiveSession } from '../../../services/liveSessionService'
-import { LiveSessions } from '../../dashboard/components/LiveSessions'
 import { MobileSchedule } from '../components/MobileSchedule'
 import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page'
 import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader'
@@ -98,6 +95,7 @@ export const Schedule = () => {
   const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim()
   const isTeacher = currentUser?.role === 'teacher'
   const isStudent = currentUser?.role === 'student'
+  const isAdmin = !isTeacher && !isStudent
   const logout = useLogout()
 
   // Completed sessions (daily reset via same API as Appointments)
@@ -254,29 +252,13 @@ export const Schedule = () => {
       ? ((todayQueue.length - remainingQueue.length) / todayQueue.length) * 100
       : 0
 
-  const handlePrint = () => window.print()
+  const handlePrint = () => {
+    window.print()
+  }
+
   const handleSelectEvent = (event: ScheduleEvent) => {
     setSelectedEvent(event)
     setShowDetails(true)
-  }
-
-  const handleStartLiveSession = async () => {
-    if (!selectedEvent) return
-    const meetingUrl = prompt('أدخل رابط Google Meet أو Zoom:', 'https://meet.google.com/')
-    if (!meetingUrl?.trim()) return
-    try {
-      const res = await startLiveSession({
-        title: `حصة مباشرة: ${selectedEvent.studentName}`,
-        subject: selectedEvent.subject,
-        meetingProvider: meetingUrl.includes('zoom.us') ? 'zoom' : 'google_meet',
-        meetingUrl: meetingUrl.trim(),
-        targetStudentId: selectedEvent.studentId,
-      })
-      if (res?.meetingUrl) window.open(res.meetingUrl, '_blank')
-    } catch (e) {
-      console.error(e)
-      setShowDetails(false)
-    }
   }
 
   const kpiCards = useMemo(
@@ -321,7 +303,6 @@ export const Schedule = () => {
     () => [
       { icon: CalendarDays, label: 'اليوم', onClick: () => setFilterDay(todayDayName) },
       { icon: Filter, label: 'كل الأيام', onClick: () => setFilterDay('all') },
-      { icon: Printer, label: 'طباعة', onClick: handlePrint },
     ],
     [todayDayName],
   )
@@ -415,9 +396,7 @@ export const Schedule = () => {
           </div>
         </motion.div>
 
-        {currentUser?.role === 'admin' && <LiveSessions />}
-
-        {/* Session Queue (Teacher only) */}
+        {/* Session Queue (Teacher ONLY — hidden for admin) */}
         {isTeacher && todayQueue.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: -8 }}
@@ -527,8 +506,8 @@ export const Schedule = () => {
           </motion.div>
         )}
 
-        {/* Next session banner (non-teacher or when no queue) */}
-        {!isTeacher && nextSession && (
+        {/* Next session banner — shown for admin and student (NOT for teacher) */}
+        {!isTeacher && !isAdmin && nextSession && (
           <motion.div
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -585,10 +564,10 @@ export const Schedule = () => {
           setShowDetails(false)
           setSelectedEvent(null)
         }}
-        onStartLiveSession={handleStartLiveSession}
         onViewStudent={() => navigate('/students')}
       />
 
+      {/* FAB — square with rounded corners (not circle) */}
       <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
         <AnimatePresence>
           {fabOpen &&
@@ -609,19 +588,45 @@ export const Schedule = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
                 >
                   <action.icon size={18} />
                 </button>
               </motion.div>
             ))}
         </AnimatePresence>
+
+        {/* Print button (separate, always visible) */}
+        <motion.button
+          onClick={handlePrint}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          title="طباعة الجدول"
+          className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface text-main shadow-md transition-all hover:bg-hover"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+            <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
+            <rect x="6" y="14" width="12" height="8" rx="1" />
+          </svg>
+        </motion.button>
+
         <motion.button
           onClick={() => setFabOpen(!fabOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-xl transition-all',
+            'flex h-12 w-12 items-center justify-center rounded-xl text-on-primary shadow-xl transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >
@@ -630,17 +635,31 @@ export const Schedule = () => {
       </div>
 
       <style>{`
-                @media print {
-                    body * { visibility: hidden; }
-                    #printable-schedule, #printable-schedule * { visibility: visible; }
-                    #printable-schedule { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; border: none !important; box-shadow: none !important; overflow: visible !important; }
-                    #printable-schedule .no-print { display: none !important; }
-                    #printable-schedule [class*="grid"] { transform: scale(0.65); transform-origin: top center; width: 153%; }
-                    #printable-schedule [class*="grid"] > div { font-size: 9px !important; }
-                    #printable-schedule [class*="min-h-["] { min-height: 40px !important; }
-                    @page { size: landscape; margin: 1cm; }
-                }
-            `}</style>
+        @media print {
+          body * { visibility: hidden !important; }
+          #printable-schedule,
+          #printable-schedule * { visibility: visible !important; }
+          #printable-schedule {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0 !important;
+            padding: 8px !important;
+            border: none !important;
+            box-shadow: none !important;
+            overflow: visible !important;
+            background: white !important;
+            z-index: 9999 !important;
+          }
+          #printable-schedule .no-print { display: none !important; }
+          #printable-schedule [class*="overflow-x-auto"] { overflow: visible !important; }
+          #printable-schedule [class*="min-w-"] { min-width: 0 !important; width: 100% !important; }
+          #printable-schedule [class*="min-h-[80px]"] { min-height: 40px !important; }
+          #printable-schedule { font-size: 8px !important; }
+          @page { size: landscape; margin: 0.5cm; }
+        }
+      `}</style>
     </div>
   )
 }

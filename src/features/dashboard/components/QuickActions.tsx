@@ -1,13 +1,10 @@
-import { UserPlus, FileText, CalendarDays, Megaphone, Play, ChevronLeft } from 'lucide-react'
+import { UserPlus, FileText, CalendarDays, Megaphone, ChevronLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { triggerHaptic } from '@/lib/haptics'
 import { useCurrentUser } from '@/context/AppContext'
 
 interface QuickActionsProps {
-  onStartSession?: () => void
-  sessionAvailable?: boolean
   showQuickLinks?: boolean
 }
 
@@ -59,19 +56,9 @@ const scrollToAnnouncements = () => {
   setTimeout(() => tryScroll(), 200)
 }
 
-export const QuickActions = ({
-  onStartSession,
-  sessionAvailable,
-  showQuickLinks = true,
-}: QuickActionsProps) => {
+export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
   const navigate = useNavigate()
   const currentUser = useCurrentUser()
-
-  const handleStart = () => {
-    triggerHaptic('medium')
-    if (onStartSession) onStartSession()
-    else navigate('/schedule')
-  }
 
   const canViewAnnouncements =
     currentUser?.permissions?.includes('*') || currentUser?.permissions?.includes('announcements')
@@ -131,30 +118,6 @@ export const QuickActions = ({
 
   return (
     <div className="flex h-full flex-col gap-3">
-      {/* زر بدء الحصة الآن */}
-      <button
-        onClick={handleStart}
-        className={cn(
-          'w-full rounded-2xl border-2 border-primary/30 p-4',
-          'bg-primary text-sm font-bold text-on-primary dark:bg-primary dark:text-on-primary',
-          'hover:border-primary/50 hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/20',
-          'active:scale-[0.99] active:bg-primary-active',
-          'transition-all duration-200',
-          'flex items-center justify-center gap-3',
-          'group min-h-[76px] flex-1',
-        )}
-      >
-        <span className="bg-on-primary/15 dark:bg-on-primary/15 group-hover:bg-on-primary/20 dark:group-hover:bg-on-primary/20 flex h-10 w-10 items-center justify-center rounded-xl transition-colors">
-          <Play size={18} fill="currentColor" />
-        </span>
-        <span className="text-base">بدء الحصة الآن</span>
-        {sessionAvailable && (
-          <span className="animate-pulse rounded-lg bg-success px-2 py-0.5 text-[10px] font-bold text-on-success dark:bg-success dark:text-on-success">
-            متاح
-          </span>
-        )}
-      </button>
-
       {/* روابط سريعة */}
       {showQuickLinks && (
         <>

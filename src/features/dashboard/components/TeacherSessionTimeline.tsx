@@ -1,6 +1,5 @@
-﻿import { Clock, Play, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react'
+﻿import { Clock, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
 import { useState, useMemo } from 'react'
 
 interface TimelineSession {
@@ -15,13 +14,11 @@ interface TimelineSession {
 interface TeacherSessionTimelineProps {
   sessions: TimelineSession[]
   onStudentClick?: (student: { id: string; name: string }) => void
-  onSessionStart?: (session: TimelineSession) => void
 }
 
 export const TeacherSessionTimeline = ({
   sessions,
   onStudentClick,
-  onSessionStart,
 }: TeacherSessionTimelineProps) => {
   const sortedSessions = useMemo(
     () => (sessions ? [...sessions].sort((a, b) => a.time.localeCompare(b.time)) : []),
@@ -149,21 +146,7 @@ export const TeacherSessionTimeline = ({
                     {isCompleted ? 'مكتملة' : isCancelled ? 'ملغاة' : 'قادمة'}
                   </span>
                   {isOngoing && (
-                    <Play size={10} className="fill-current text-primary dark:text-primary" />
-                  )}
-                  {isOngoing && onSessionStart && (
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        onSessionStart?.(session)
-                      }}
-                      className="absolute inset-2 z-10 scale-95 flex-col rounded-xl bg-primary text-on-primary opacity-0 transition-all group-hover/card:scale-100 group-hover/card:opacity-100 dark:bg-primary dark:text-on-primary"
-                    >
-                      <div className="bg-on-primary/15 dark:bg-on-primary/15 mb-2 flex h-9 w-9 items-center justify-center rounded-xl text-on-primary dark:text-on-primary">
-                        <Play size={18} className="translate-x-0.5 fill-current" />
-                      </div>
-                      <span className="text-[11px] font-bold">بدء الحصة</span>
-                    </Button>
+                    <div className="h-2 w-2 animate-pulse rounded-full bg-primary dark:bg-primary" />
                   )}
                 </div>
               </div>

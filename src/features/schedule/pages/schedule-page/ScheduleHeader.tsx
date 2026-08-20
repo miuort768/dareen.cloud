@@ -2,12 +2,12 @@ import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
   Search,
-  Printer,
   CalendarDays,
   ChevronRight,
   ChevronLeft,
   GraduationCap,
   BookOpen,
+  Filter,
 } from 'lucide-react'
 
 interface ScheduleHeaderProps {
@@ -44,7 +44,6 @@ export const ScheduleHeader = ({
   todayDayName,
   weekLabel,
   onWeekChange,
-  onPrint,
   stats,
 }: ScheduleHeaderProps) => {
   const particles = useMemo(
@@ -59,6 +58,13 @@ export const ScheduleHeader = ({
       })),
     [],
   )
+
+  const activeFiltersCount = [
+    filterDay !== 'all',
+    filterTeacher !== 'all',
+    filterSubject !== 'all',
+    searchTerm.trim().length > 0,
+  ].filter(Boolean).length
 
   return (
     <div className="mb-4 space-y-3">
@@ -114,116 +120,145 @@ export const ScheduleHeader = ({
         </div>
       </motion.div>
 
-      {/* Controls toolbar */}
-      <div className="flex flex-col items-start justify-between gap-3 rounded-2xl border border-border bg-card p-3 md:flex-row md:items-center md:p-4">
-        {/* Left: week nav + search + today */}
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-1.5">
+      {/* Controls toolbar — redesigned for better visual consistency */}
+      <div className="rounded-xl border border-border bg-card shadow-sm">
+        {/* Row 1: Search + Week Navigation */}
+        <div className="border-border/50 flex items-center gap-3 border-b px-4 py-3">
+          {/* Search */}
+          <div className="relative flex-1">
+            <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
+            <input
+              type="text"
+              aria-label="بحث"
+              placeholder="بحث عن طالب، معلمة، أو مادة..."
+              value={searchTerm}
+              onChange={(e) => onSearchChange(e.target.value)}
+              className="h-9 w-full rounded-lg border border-border bg-surface px-9 text-xs font-bold text-main outline-none transition-all placeholder:font-normal placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary/20"
+            />
+          </div>
+
+          {/* Week Navigation */}
+          <div className="flex shrink-0 items-center gap-1 rounded-lg border border-border bg-surface p-0.5">
             <button
               onClick={() => onWeekChange(-1)}
-              className="flex h-8 w-8 items-center justify-center rounded-xl bg-hover text-main transition-all hover:bg-primary/10 active:scale-90"
+              className="flex h-7 w-7 items-center justify-center rounded-md text-main transition-all hover:bg-hover active:scale-90"
+              aria-label="الأسبوع السابق"
             >
               <ChevronRight size={14} />
             </button>
-            <span className="min-w-[90px] rounded-xl bg-surface px-3 py-1.5 text-center text-xs font-bold text-main">
+            <span className="min-w-[110px] px-2 text-center text-[11px] font-bold text-main">
               {weekLabel}
             </span>
             <button
               onClick={() => onWeekChange(1)}
-              className="flex h-8 w-8 items-center justify-center rounded-xl bg-hover text-main transition-all hover:bg-primary/10 active:scale-90"
+              className="flex h-7 w-7 items-center justify-center rounded-md text-main transition-all hover:bg-hover active:scale-90"
+              aria-label="الأسبوع التالي"
             >
               <ChevronLeft size={14} />
             </button>
           </div>
+        </div>
 
-          <div className="relative">
-            <Search size={13} className="absolute start-2.5 top-1/2 -translate-y-1/2 text-muted" />
-            <input
-              type="text"
-              aria-label="بحث"
-              placeholder="بحث..."
-              value={searchTerm}
-              onChange={(e) => onSearchChange(e.target.value)}
-              className="h-8 w-28 rounded-xl border border-border bg-surface px-7 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus:border-primary sm:w-36"
-            />
+        {/* Row 2: Filters */}
+        <div className="flex flex-wrap items-center gap-2 px-4 py-2.5">
+          <div className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+            <Filter size={11} />
+            <span>تصفية:</span>
           </div>
 
+          {/* Today button */}
           <button
             onClick={() => onDayChange(filterDay === todayDayName ? 'all' : todayDayName)}
-            className={`flex h-8 items-center gap-1.5 whitespace-nowrap rounded-xl border px-3 text-xs font-bold transition-all active:scale-95 ${
+            className={`flex h-8 items-center gap-1.5 rounded-lg border px-3 text-xs font-bold transition-all ${
               filterDay === todayDayName
                 ? 'border-primary bg-primary text-on-primary'
                 : 'border-border bg-surface text-main hover:bg-hover'
             }`}
           >
-            <CalendarDays size={12} />
-            <span className="hidden sm:inline">اليوم</span>
+            <CalendarDays size={11} />
+            <span>اليوم</span>
           </button>
 
-          <button
-            onClick={onPrint}
-            className="flex h-8 items-center gap-1.5 rounded-xl border border-border bg-surface px-3 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95"
-          >
-            <Printer size={12} />
-          </button>
-        </div>
-
-        {/* Right: filters + pills */}
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-1.5 rounded-lg bg-primary-soft px-2.5 py-1">
-            <CalendarDays size={11} className="text-primary" />
-            <span className="text-[10px] font-bold text-primary">{stats.sessions} حصة</span>
+          {/* Day select */}
+          <div className="relative">
+            <CalendarDays
+              size={11}
+              className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
+            />
+            <select
+              value={filterDay}
+              onChange={(e) => onDayChange(e.target.value)}
+              className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary ${
+                filterDay !== 'all' ? 'border-primary text-primary' : 'border-border'
+              }`}
+            >
+              <option value="all">كل الأيام</option>
+              {DAYS_OF_WEEK.map((day) => (
+                <option key={day} value={day}>
+                  {day}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="flex items-center gap-1.5 rounded-lg bg-primary-soft px-2.5 py-1">
-            <GraduationCap size={11} className="text-primary" />
-            <span className="text-[10px] font-bold text-primary">{stats.teachers} معلمة</span>
+
+          {/* Teacher select */}
+          <div className="relative">
+            <GraduationCap
+              size={11}
+              className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
+            />
+            <select
+              value={filterTeacher}
+              onChange={(e) => onTeacherChange(e.target.value)}
+              className={`h-8 max-w-[160px] appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary ${
+                filterTeacher !== 'all' ? 'border-primary text-primary' : 'border-border'
+              }`}
+            >
+              <option value="all">كل المعلمات</option>
+              {uniqueTeachers.map((t) => (
+                <option key={t} value={t}>
+                  {t}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="flex items-center gap-1.5 rounded-lg bg-primary-soft px-2.5 py-1">
-            <BookOpen size={11} className="text-primary" />
-            <span className="text-[10px] font-bold text-primary">{stats.students} طالب</span>
+
+          {/* Subject select */}
+          <div className="relative">
+            <BookOpen
+              size={11}
+              className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
+            />
+            <select
+              value={filterSubject}
+              onChange={(e) => onSubjectChange(e.target.value)}
+              className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary ${
+                filterSubject !== 'all' ? 'border-primary text-primary' : 'border-border'
+              }`}
+            >
+              <option value="all">كل المواد</option>
+              {uniqueSubjects.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
           </div>
 
-          <select
-            value={filterDay}
-            onChange={(e) => onDayChange(e.target.value)}
-            aria-label="اليوم"
-            className="h-8 rounded-xl border border-border bg-surface px-2 text-xs font-bold text-main outline-none transition-all focus:border-primary"
-          >
-            <option value="all">كل الأيام</option>
-            {DAYS_OF_WEEK.map((day) => (
-              <option key={day} value={day}>
-                {day}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={filterTeacher}
-            onChange={(e) => onTeacherChange(e.target.value)}
-            aria-label="المعلمة"
-            className="h-8 rounded-xl border border-border bg-surface px-2 text-xs font-bold text-main outline-none transition-all focus:border-primary"
-          >
-            <option value="all">كل المعلمات</option>
-            {uniqueTeachers.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-
-          <select
-            value={filterSubject}
-            onChange={(e) => onSubjectChange(e.target.value)}
-            aria-label="المادة"
-            className="h-8 rounded-xl border border-border bg-surface px-2 text-xs font-bold text-main outline-none transition-all focus:border-primary"
-          >
-            <option value="all">كل المواد</option>
-            {uniqueSubjects.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
+          {/* Clear filters */}
+          {activeFiltersCount > 0 && (
+            <button
+              onClick={() => {
+                onDayChange('all')
+                onTeacherChange('all')
+                onSubjectChange('all')
+                onSearchChange('')
+              }}
+              className="border-error/30 flex h-8 items-center gap-1 rounded-lg border bg-error-soft px-3 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-error"
+            >
+              <span>مسح ({activeFiltersCount})</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

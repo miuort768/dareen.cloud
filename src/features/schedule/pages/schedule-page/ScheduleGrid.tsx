@@ -1,243 +1,472 @@
-import { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
-import { Clock, Plus, GraduationCap, UserRound } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Clock,
+  Plus,
+  GraduationCap,
+  UserRound,
+  Layers,
+  X,
+  CalendarDays,
+  BookOpen,
+} from 'lucide-react'
 
 interface ScheduleEvent {
-    id: string; studentId: string; studentName: string; studentGrade: string;
-    teacherName: string; subject: string; curriculum: string; day: string;
-    hour: string; period: string; time: string; studentPoints?: number;
+  id: string
+  studentId: string
+  studentName: string
+  studentGrade: string
+  teacherName: string
+  subject: string
+  curriculum: string
+  day: string
+  hour: string
+  period: string
+  time: string
+  studentPoints?: number
 }
 
-const DAYS_OF_WEEK = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
+const DAYS_OF_WEEK = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
 
 const TIME_SLOTS = [
-    { hour: 8, period: 'am', label: '8 ص' }, { hour: 9, period: 'am', label: '9 ص' },
-    { hour: 10, period: 'am', label: '10 ص' }, { hour: 11, period: 'am', label: '11 ص' },
-    { hour: 12, period: 'pm', label: '12 م' }, { hour: 1, period: 'pm', label: '1 م' },
-    { hour: 2, period: 'pm', label: '2 م' }, { hour: 3, period: 'pm', label: '3 م' },
-    { hour: 4, period: 'pm', label: '4 م' }, { hour: 5, period: 'pm', label: '5 م' },
-    { hour: 6, period: 'pm', label: '6 م' }, { hour: 7, period: 'pm', label: '7 م' },
-    { hour: 8, period: 'pm', label: '8 م' }, { hour: 9, period: 'pm', label: '9 م' },
-    { hour: 10, period: 'pm', label: '10 م' },
-];
+  { hour: 8, period: 'am', label: '8 ص' },
+  { hour: 9, period: 'am', label: '9 ص' },
+  { hour: 10, period: 'am', label: '10 ص' },
+  { hour: 11, period: 'am', label: '11 ص' },
+  { hour: 12, period: 'pm', label: '12 م' },
+  { hour: 1, period: 'pm', label: '1 م' },
+  { hour: 2, period: 'pm', label: '2 م' },
+  { hour: 3, period: 'pm', label: '3 م' },
+  { hour: 4, period: 'pm', label: '4 م' },
+  { hour: 5, period: 'pm', label: '5 م' },
+  { hour: 6, period: 'pm', label: '6 م' },
+  { hour: 7, period: 'pm', label: '7 م' },
+  { hour: 8, period: 'pm', label: '8 م' },
+  { hour: 9, period: 'pm', label: '9 م' },
+  { hour: 10, period: 'pm', label: '10 م' },
+]
 
-interface SubjectColors { bar: string; soft: string; text: string; border: string; }
-
-const SUBJECT_COLORS: Record<string, SubjectColors> = {
-    'رياضيات': { bar: 'bg-primary', soft: 'bg-primary-soft', text: 'text-primary', border: 'border-primary' },
-    'علوم': { bar: 'bg-success', soft: 'bg-success-soft', text: 'text-success', border: 'border-success' },
-    'عربي': { bar: 'bg-warning', soft: 'bg-warning-soft', text: 'text-warning', border: 'border-warning' },
-    'انجليزي': { bar: 'bg-info', soft: 'bg-info-soft', text: 'text-info', border: 'border-info' },
-    'دين': { bar: 'bg-accent', soft: 'bg-accent-soft', text: 'text-accent', border: 'border-accent' },
-    'تاريخ': { bar: 'bg-error', soft: 'bg-error-soft', text: 'text-error', border: 'border-error' },
-    'قرآن': { bar: 'bg-accent', soft: 'bg-accent-soft', text: 'text-accent', border: 'border-accent' },
-    'قواعد': { bar: 'bg-primary', soft: 'bg-primary-soft', text: 'text-primary', border: 'border-primary' },
-    'بلاغة': { bar: 'bg-info', soft: 'bg-info-soft', text: 'text-info', border: 'border-info' },
-    'فقه': { bar: 'bg-success', soft: 'bg-success-soft', text: 'text-success', border: 'border-success' },
-    'توحيد': { bar: 'bg-accent', soft: 'bg-accent-soft', text: 'text-accent', border: 'border-accent' },
-    'تفسير': { bar: 'bg-warning', soft: 'bg-warning-soft', text: 'text-warning', border: 'border-warning' },
-    'نحو': { bar: 'bg-error', soft: 'bg-error-soft', text: 'text-error', border: 'border-error' },
-};
-
-const FALLBACK_COLORS: SubjectColors[] = [
-    { bar: 'bg-primary', soft: 'bg-primary-soft', text: 'text-primary', border: 'border-primary' },
-    { bar: 'bg-success', soft: 'bg-success-soft', text: 'text-success', border: 'border-success' },
-    { bar: 'bg-warning', soft: 'bg-warning-soft', text: 'text-warning', border: 'border-warning' },
-    { bar: 'bg-info', soft: 'bg-info-soft', text: 'text-info', border: 'border-info' },
-    { bar: 'bg-accent', soft: 'bg-accent-soft', text: 'text-accent', border: 'border-accent' },
-    { bar: 'bg-error', soft: 'bg-error-soft', text: 'text-error', border: 'border-error' },
-];
-
-const getSubjectColor = (subject: string): SubjectColors => {
-    const normalized = subject?.trim() || '';
-    return SUBJECT_COLORS[normalized] || FALLBACK_COLORS[Math.abs(normalized.length) % FALLBACK_COLORS.length];
-};
-
-const EventCard = ({ event, onSelect, compact }: { event: ScheduleEvent; onSelect: () => void; compact?: boolean }) => {
-    const c = getSubjectColor(event.subject);
-
-    if (compact) {
-        return (
-            <motion.div
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={onSelect}
-                className={`relative rounded-lg cursor-pointer transition-all bg-card border border-border shadow-sm overflow-hidden hover:shadow-md hover:z-10`}
-            >
-                <div className="flex items-center gap-1.5 px-1.5 py-1">
-                    <span className={`w-1.5 h-1.5 rounded-full ${c.bar} shrink-0`} />
-                    <span className="text-[8px] font-bold text-main truncate">{event.studentName}</span>
-                    <span className={`text-[7px] font-bold ${c.text} shrink-0`}>{event.subject}</span>
-                </div>
-            </motion.div>
-        );
-    }
-
-    return (
-        <motion.div
-            whileHover={{ scale: 1.02, y: -1 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={onSelect}
-            className={`relative rounded-lg cursor-pointer transition-all bg-card border border-border shadow-sm overflow-hidden hover:shadow-md hover:z-10 group`}
-        >
-            <div className={`absolute top-0 inset-x-0 h-1 ${c.bar} rounded-t-lg`} />
-            <div className="p-1.5 pt-2">
-                <div className="flex items-center gap-1.5 mb-1">
-                    <span className={`flex items-center gap-1 px-1.5 py-0.5 rounded-md ${c.soft}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${c.bar}`} />
-                        <span className={`text-[7px] font-bold ${c.text} leading-none`}>{event.subject}</span>
-                    </span>
-                    <span className="flex items-center gap-1 text-muted me-auto text-[7px] font-bold tabular-nums">
-                        <Clock size={8} />
-                        {event.time}
-                    </span>
-                </div>
-                <p className="text-[10px] font-bold text-main leading-tight truncate">{event.studentName}</p>
-                <p className="text-[8px] text-muted truncate mt-0.5 flex items-center gap-1">
-                    <UserRound size={8} className="opacity-60" />
-                    {event.teacherName || event.studentGrade}
-                </p>
-            </div>
-        </motion.div>
-    );
-};
-
-const CurrentTimeLine = () => {
-    const [now, setNow] = useState(new Date());
-    useEffect(() => {
-        const interval = setInterval(() => setNow(new Date()), 60000);
-        return () => clearInterval(interval);
-    }, []);
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const totalMinutes = hours * 60 + minutes;
-    const startMinutes = 8 * 60;
-    const endMinutes = 22 * 60;
-    const pct = Math.min(Math.max((totalMinutes - startMinutes) / (endMinutes - startMinutes), 0), 1);
-    if (pct <= 0 || pct >= 1) return null;
-    const nowLabel = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true });
-    return (
-        <div className="absolute right-0 left-0 z-20 pointer-events-none" style={{ top: `${pct * 100}%` }}>
-            <div className="flex items-center gap-1.5">
-                <div className="h-2 w-2 rounded-full bg-error shadow-[0_0_6px_rgba(239,68,68,0.6)] shrink-0" />
-                <div className="h-px flex-1 bg-error" />
-                <span className="text-[7px] font-bold text-error bg-card px-1 py-0.5 rounded-md shadow-sm ms-auto">{nowLabel}</span>
-            </div>
-        </div>
-    );
-};
-
-interface ScheduleGridProps {
-    filteredEvents: ScheduleEvent[];
-    uniqueTeachers: string[];
-    onSelectEvent: (event: ScheduleEvent) => void;
+interface SubjectColors {
+  bar: string
+  soft: string
+  text: string
+  border: string
 }
 
-export const ScheduleGrid = ({ filteredEvents, uniqueTeachers, onSelectEvent }: ScheduleGridProps) => {
-    const isToday = useCallback((day: string) => new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day, []);
-    const getDayEvents = (events: ScheduleEvent[], day: string) => events.filter(e => e.day === day);
+const SUBJECT_COLORS: Record<string, SubjectColors> = {
+  رياضيات: {
+    bar: 'bg-primary',
+    soft: 'bg-primary-soft',
+    text: 'text-primary',
+    border: 'border-primary',
+  },
+  علوم: {
+    bar: 'bg-success',
+    soft: 'bg-success-soft',
+    text: 'text-success',
+    border: 'border-success',
+  },
+  عربي: {
+    bar: 'bg-warning',
+    soft: 'bg-warning-soft',
+    text: 'text-warning',
+    border: 'border-warning',
+  },
+  انجليزي: { bar: 'bg-info', soft: 'bg-info-soft', text: 'text-info', border: 'border-info' },
+  دين: { bar: 'bg-accent', soft: 'bg-accent-soft', text: 'text-accent', border: 'border-accent' },
+  تاريخ: { bar: 'bg-error', soft: 'bg-error-soft', text: 'text-error', border: 'border-error' },
+  قرآن: { bar: 'bg-accent', soft: 'bg-accent-soft', text: 'text-accent', border: 'border-accent' },
+  قواعد: {
+    bar: 'bg-primary',
+    soft: 'bg-primary-soft',
+    text: 'text-primary',
+    border: 'border-primary',
+  },
+  بلاغة: { bar: 'bg-info', soft: 'bg-info-soft', text: 'text-info', border: 'border-info' },
+  فقه: {
+    bar: 'bg-success',
+    soft: 'bg-success-soft',
+    text: 'text-success',
+    border: 'border-success',
+  },
+  توحيد: { bar: 'bg-accent', soft: 'bg-accent-soft', text: 'text-accent', border: 'border-accent' },
+  تفسير: {
+    bar: 'bg-warning',
+    soft: 'bg-warning-soft',
+    text: 'text-warning',
+    border: 'border-warning',
+  },
+  نحو: { bar: 'bg-error', soft: 'bg-error-soft', text: 'text-error', border: 'border-error' },
+}
 
-    return (
-        <div className="bg-surface border border-border/40 overflow-hidden rounded-2xl mt-4 shadow-sm relative">
-            <div className="overflow-x-auto custom-scrollbar">
-                <div className="min-w-[1000px] relative">
-                    {/* Sticky header row */}
-                    <div className="grid grid-cols-[100px_repeat(7,1fr)] border-b border-border/40 sticky top-0 z-30 bg-surface shadow-xs">
-                        <div className="sticky start-0 z-10 p-3 text-[9px] font-bold text-muted border-e border-border/40 bg-surface" />
-                        {DAYS_OF_WEEK.map((day) => (
-                            <div key={day}
-                                className={`p-2.5 text-center border-e border-border/40 last:border-e-0 bg-surface ${isToday(day) ? 'bg-primary-soft' : ''}`}>
-                                <div className="text-xs font-bold text-main">{day}</div>
-                                <div className={`mt-1 flex items-center justify-center gap-1 ${isToday(day) ? 'text-primary' : ''}`}>
-                                    {isToday(day) && (
-                                        <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+const FALLBACK_COLORS: SubjectColors[] = [
+  { bar: 'bg-primary', soft: 'bg-primary-soft', text: 'text-primary', border: 'border-primary' },
+  { bar: 'bg-success', soft: 'bg-success-soft', text: 'text-success', border: 'border-success' },
+  { bar: 'bg-warning', soft: 'bg-warning-soft', text: 'text-warning', border: 'border-warning' },
+  { bar: 'bg-info', soft: 'bg-info-soft', text: 'text-info', border: 'border-info' },
+  { bar: 'bg-accent', soft: 'bg-accent-soft', text: 'text-accent', border: 'border-accent' },
+  { bar: 'bg-error', soft: 'bg-error-soft', text: 'text-error', border: 'border-error' },
+]
 
-                    {/* Time slots */}
-                    {TIME_SLOTS.map((slot, slotIdx) => {
-                        const currentTimeSlots = filteredEvents.filter(e => e.hour === String(slot.hour) && e.period === slot.period);
-                        return (
-                            <div key={`${slot.hour}-${slot.period}`}
-                                className={`grid grid-cols-[100px_repeat(7,1fr)] ${slotIdx % 2 === 0 ? 'bg-surface' : 'bg-background/20'}`}>
-                                {/* Time label */}
-                                <div className="sticky start-0 z-10 p-1.5 border-e border-border/40 border-b border-border/40 bg-surface flex flex-col items-center justify-center">
-                                    <Clock size={10} className="text-muted" />
-                                    <span className="text-[10px] font-bold text-muted tabular-nums mt-0.5">{slot.label}</span>
-                                </div>
+const getSubjectColor = (subject: string): SubjectColors => {
+  const normalized = subject?.trim() || ''
+  return (
+    SUBJECT_COLORS[normalized] ||
+    FALLBACK_COLORS[Math.abs(normalized.length) % FALLBACK_COLORS.length]
+  )
+}
 
-                                {/* Day cells */}
-                                {DAYS_OF_WEEK.map((day) => {
-                                    const dayEvents = getDayEvents(currentTimeSlots, day);
-                                    const count = dayEvents.length;
-                                    const showCompact = count > 2;
-
-                                    return (
-                                        <div key={`${day}-${slot.hour}`}
-                                            className={`relative border-e border-border/40 last:border-e-0 border-b border-border/40 min-h-[80px] p-1 transition-colors
-                                                ${isToday(day) ? 'bg-primary-soft' : ''}
-                                                group`}>
-                                            {count === 0 ? (
-                                                <div className="h-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                                                    <div className="w-6 h-6 rounded-lg bg-primary-soft border border-dashed border-primary/30 flex items-center justify-center">
-                                                        <Plus size={11} className="text-primary" />
-                                                    </div>
-                                                    <span className="text-[8px] text-muted mt-1">إضافة حصة</span>
-                                                </div>
-                                            ) : (
-                                                <div className="space-y-1 p-0.5 h-full">
-                                                    {dayEvents.map((event, eIdx) => (
-                                                        <EventCard
-                                                            key={event.id}
-                                                            event={event}
-                                                            onSelect={() => onSelectEvent(event)}
-                                                            compact={showCompact && eIdx >= 1}
-                                                        />
-                                                    ))}
-                                                    {count > 3 && (
-                                                        <div className="text-center">
-                                                            <span className="text-[6px] font-bold text-primary bg-primary-soft px-1.5 py-0.5 rounded-full">
-                                                                +{count - 1} أخرى
-                                                            </span>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            )}
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        );
-                    })}
-
-                    {/* Current time line */}
-                    <CurrentTimeLine />
-                </div>
+// ─── Multi-event popup modal ─────────────────────────────────────────────────
+const MultiEventModal = ({
+  events,
+  onClose,
+  onSelect,
+}: {
+  events: ScheduleEvent[]
+  onClose: () => void
+  onSelect: (e: ScheduleEvent) => void
+}) => (
+  <AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.15 }}
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.92, y: 10 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+        className="w-full max-w-sm overflow-hidden rounded-xl border border-border bg-card shadow-elevation-2"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-border px-4 py-3">
+          <div className="flex items-center gap-2">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-soft">
+              <Layers size={13} className="text-primary" />
             </div>
-
-            {/* Legend */}
-            <div className="border-t border-border/40 p-3 flex flex-wrap items-center gap-2 bg-background/30 no-print">
-                <span className="text-[9px] font-bold text-muted ms-1">دليل المواد:</span>
-                {Object.entries(SUBJECT_COLORS).slice(0, 8).map(([subject, colors]) => (
-                    <div key={subject} className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-card border border-border/30">
-                        <div className={`w-1.5 h-1.5 rounded-full ${colors.bar}`} />
-                        <span className="text-[7px] font-bold text-muted">{subject}</span>
-                    </div>
-                ))}
-                {uniqueTeachers.length > 0 && (
-                    <>
-                        <span className="text-[9px] font-bold text-muted me-1 ms-2">|</span>
-                        <span className="text-[7px] text-muted flex items-center gap-1">
-                            <GraduationCap size={8} />
-                            {uniqueTeachers.length} معلمة
-                        </span>
-                    </>
-                )}
-                <span className="text-[7px] text-muted me-auto">{filteredEvents.length} حصة</span>
+            <div>
+              <p className="text-xs font-bold text-main">مواعيد متعددة</p>
+              <p className="text-[10px] text-muted">{events.length} مواعيد في نفس الوقت</p>
             </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="flex h-7 w-7 items-center justify-center rounded-lg text-muted transition-colors hover:bg-hover hover:text-main"
+            aria-label="إغلاق"
+          >
+            <X size={14} />
+          </button>
         </div>
-    );
-};
+        {/* Time badge */}
+        <div className="border-border/50 flex items-center gap-1.5 border-b bg-surface px-4 py-2">
+          <Clock size={11} className="text-muted" />
+          <span className="text-[11px] font-bold text-muted">
+            {events[0]?.time} — {events[0]?.day}
+          </span>
+        </div>
+        {/* Events list */}
+        <div className="divide-border/50 max-h-72 divide-y overflow-y-auto">
+          {events.map((event) => {
+            const c = getSubjectColor(event.subject)
+            return (
+              <button
+                key={event.id}
+                onClick={() => {
+                  onSelect(event)
+                  onClose()
+                }}
+                className="group flex w-full items-center gap-3 px-4 py-3 text-start transition-colors hover:bg-hover"
+              >
+                <div className={`w-1 self-stretch rounded-full ${c.bar} shrink-0`} />
+                <div className="min-w-0 flex-1">
+                  <div className="mb-0.5 flex items-center gap-2">
+                    <span
+                      className={`rounded-md px-1.5 py-0.5 text-[10px] font-bold ${c.soft} ${c.text}`}
+                    >
+                      {event.subject}
+                    </span>
+                    {event.studentGrade && (
+                      <span className="text-[9px] text-muted">{event.studentGrade}</span>
+                    )}
+                  </div>
+                  <p className="truncate text-xs font-bold text-main">{event.studentName}</p>
+                  <p className="mt-0.5 flex items-center gap-1 text-[10px] text-muted">
+                    <GraduationCap size={9} />
+                    {event.teacherName}
+                  </p>
+                </div>
+                <div className="flex items-center gap-1 text-muted opacity-0 transition-opacity group-hover:opacity-100">
+                  <CalendarDays size={12} />
+                </div>
+              </button>
+            )
+          })}
+        </div>
+      </motion.div>
+    </motion.div>
+  </AnimatePresence>
+)
+
+// ─── Single event card (sharp corners per request) ───────────────────────────
+const EventCard = ({ event, onSelect }: { event: ScheduleEvent; onSelect: () => void }) => {
+  const c = getSubjectColor(event.subject)
+  return (
+    <motion.div
+      whileHover={{ scale: 1.02, y: -1 }}
+      whileTap={{ scale: 0.97 }}
+      onClick={onSelect}
+      className="relative cursor-pointer overflow-hidden border border-border bg-card shadow-sm transition-all hover:z-10 hover:shadow-md"
+    >
+      <div className={`absolute inset-x-0 top-0 h-0.5 ${c.bar}`} />
+      <div className="p-1.5 pt-2">
+        <div className="mb-1 flex items-center gap-1.5">
+          <span className={`flex items-center gap-1 px-1.5 py-0.5 ${c.soft}`}>
+            <span className={`h-1.5 w-1.5 rounded-full ${c.bar}`} />
+            <span className={`text-[7px] font-bold ${c.text} leading-none`}>{event.subject}</span>
+          </span>
+          <span className="me-auto flex items-center gap-1 text-[7px] font-bold tabular-nums text-muted">
+            <Clock size={8} />
+            {event.time}
+          </span>
+        </div>
+        <p className="truncate text-[10px] font-bold leading-tight text-main">
+          {event.studentName}
+        </p>
+        <p className="mt-0.5 flex items-center gap-1 truncate text-[8px] text-muted">
+          <UserRound size={8} className="opacity-60" />
+          {event.teacherName || event.studentGrade}
+        </p>
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Multi card (shown when >1 events) ──────────────────────────────────────
+const MultiCard = ({
+  events,
+  onOpenModal,
+}: {
+  events: ScheduleEvent[]
+  onOpenModal: () => void
+}) => (
+  <motion.div
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.97 }}
+    onClick={onOpenModal}
+    className="relative cursor-pointer overflow-hidden border border-primary/30 bg-primary-soft shadow-sm transition-all hover:z-10 hover:shadow-md"
+  >
+    <div className="absolute inset-x-0 top-0 h-0.5 bg-primary" />
+    <div className="p-1.5 pt-2">
+      <div className="mb-1 flex items-center gap-1.5">
+        <Layers size={9} className="shrink-0 text-primary" />
+        <span className="text-[8px] font-bold text-primary">مواعيد متعددة</span>
+      </div>
+      <p className="text-[9px] font-bold text-main">{events.length} مواعيد</p>
+      <p className="mt-0.5 flex items-center gap-1 text-[8px] text-muted">
+        <BookOpen size={7} />
+        {Array.from(new Set(events.map((e) => e.subject)))
+          .slice(0, 2)
+          .join('، ')}
+        {events.length > 2 && '...'}
+      </p>
+    </div>
+  </motion.div>
+)
+
+const CurrentTimeLine = () => {
+  const [now, setNow] = useState(new Date())
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 60000)
+    return () => clearInterval(interval)
+  }, [])
+  const hours = now.getHours()
+  const minutes = now.getMinutes()
+  const totalMinutes = hours * 60 + minutes
+  const startMinutes = 8 * 60
+  const endMinutes = 22 * 60
+  const pct = Math.min(Math.max((totalMinutes - startMinutes) / (endMinutes - startMinutes), 0), 1)
+  if (pct <= 0 || pct >= 1) return null
+  const nowLabel = now.toLocaleTimeString('ar-EG', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  })
+  return (
+    <div
+      className="pointer-events-none absolute left-0 right-0 z-20"
+      style={{ top: `${pct * 100}%` }}
+    >
+      <div className="flex items-center gap-1.5">
+        <div className="h-2 w-2 shrink-0 rounded-full bg-error shadow-[0_0_6px_rgba(239,68,68,0.6)]" />
+        <div className="h-px flex-1 bg-error" />
+        <span className="ms-auto rounded-sm bg-card px-1 py-0.5 text-[7px] font-bold text-error shadow-sm">
+          {nowLabel}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+interface ScheduleGridProps {
+  filteredEvents: ScheduleEvent[]
+  uniqueTeachers: string[]
+  onSelectEvent: (event: ScheduleEvent) => void
+}
+
+export const ScheduleGrid = ({
+  filteredEvents,
+  uniqueTeachers,
+  onSelectEvent,
+}: ScheduleGridProps) => {
+  const isToday = useCallback(
+    (day: string) => new Date().toLocaleDateString('ar-EG', { weekday: 'long' }) === day,
+    [],
+  )
+  const getDayEvents = (events: ScheduleEvent[], day: string) => events.filter((e) => e.day === day)
+
+  const [multiModal, setMultiModal] = useState<ScheduleEvent[] | null>(null)
+
+  return (
+    <>
+      {/* Multi-event modal */}
+      {multiModal && (
+        <MultiEventModal
+          events={multiModal}
+          onClose={() => setMultiModal(null)}
+          onSelect={(e) => {
+            onSelectEvent(e)
+            setMultiModal(null)
+          }}
+        />
+      )}
+
+      <div className="border-border/40 relative mt-4 overflow-hidden rounded-xl border bg-surface shadow-sm">
+        <div className="custom-scrollbar overflow-x-auto">
+          <div className="relative min-w-[1000px]">
+            {/* Sticky header row */}
+            <div className="border-border/40 shadow-xs sticky top-0 z-30 grid grid-cols-[100px_repeat(7,1fr)] border-b bg-surface">
+              <div className="border-border/40 sticky start-0 z-10 border-e bg-surface p-3 text-[9px] font-bold text-muted" />
+              {DAYS_OF_WEEK.map((day) => (
+                <div
+                  key={day}
+                  className={`border-border/40 border-e bg-surface p-2.5 text-center last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''}`}
+                >
+                  <div className="text-xs font-bold text-main">{day}</div>
+                  <div
+                    className={`mt-1 flex items-center justify-center gap-1 ${isToday(day) ? 'text-primary' : ''}`}
+                  >
+                    {isToday(day) && (
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-none bg-primary" />
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Time slots */}
+            {TIME_SLOTS.map((slot, slotIdx) => {
+              const currentTimeSlots = filteredEvents.filter(
+                (e) => e.hour === String(slot.hour) && e.period === slot.period,
+              )
+              return (
+                <div
+                  key={`${slot.hour}-${slot.period}`}
+                  className={`grid grid-cols-[100px_repeat(7,1fr)] ${slotIdx % 2 === 0 ? 'bg-surface' : 'bg-background/20'}`}
+                >
+                  {/* Time label */}
+                  <div className="border-border/40 border-border/40 sticky start-0 z-10 flex flex-col items-center justify-center border-b border-e bg-surface p-1.5">
+                    <Clock size={10} className="text-muted" />
+                    <span className="mt-0.5 text-[10px] font-bold tabular-nums text-muted">
+                      {slot.label}
+                    </span>
+                  </div>
+
+                  {/* Day cells */}
+                  {DAYS_OF_WEEK.map((day) => {
+                    const dayEvents = getDayEvents(currentTimeSlots, day)
+                    const count = dayEvents.length
+
+                    return (
+                      <div
+                        key={`${day}-${slot.hour}`}
+                        className={`border-border/40 border-border/40 relative min-h-[80px] border-b border-e p-1 transition-colors last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''} group`}
+                      >
+                        {count === 0 ? (
+                          <div className="flex h-full cursor-pointer flex-col items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+                            <div className="flex h-6 w-6 items-center justify-center rounded-lg border border-dashed border-primary/30 bg-primary-soft">
+                              <Plus size={11} className="text-primary" />
+                            </div>
+                            <span className="mt-1 text-[8px] text-muted">إضافة حصة</span>
+                          </div>
+                        ) : count === 1 ? (
+                          <div className="h-full p-0.5">
+                            <EventCard
+                              event={dayEvents[0]}
+                              onSelect={() => onSelectEvent(dayEvents[0])}
+                            />
+                          </div>
+                        ) : /* Multiple events: show compact list if ≤2, otherwise multi-card */
+                        count <= 2 ? (
+                          <div className="h-full space-y-1 p-0.5">
+                            {dayEvents.map((event) => (
+                              <EventCard
+                                key={event.id}
+                                event={event}
+                                onSelect={() => onSelectEvent(event)}
+                              />
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="h-full p-0.5">
+                            <MultiCard
+                              events={dayEvents}
+                              onOpenModal={() => setMultiModal(dayEvents)}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            })}
+
+            {/* Current time line */}
+            <CurrentTimeLine />
+          </div>
+        </div>
+
+        {/* Legend */}
+        <div className="border-border/40 bg-background/30 no-print flex flex-wrap items-center gap-2 border-t p-3">
+          <span className="ms-1 text-[9px] font-bold text-muted">دليل المواد:</span>
+          {Object.entries(SUBJECT_COLORS)
+            .slice(0, 8)
+            .map(([subject, colors]) => (
+              <div
+                key={subject}
+                className="border-border/30 flex items-center gap-1 rounded-none border bg-card px-1.5 py-0.5"
+              >
+                <div className={`h-1.5 w-1.5 rounded-full ${colors.bar}`} />
+                <span className="text-[7px] font-bold text-muted">{subject}</span>
+              </div>
+            ))}
+          {uniqueTeachers.length > 0 && (
+            <>
+              <span className="me-1 ms-2 text-[9px] font-bold text-muted">|</span>
+              <span className="flex items-center gap-1 text-[7px] text-muted">
+                <GraduationCap size={8} />
+                {uniqueTeachers.length} معلمة
+              </span>
+            </>
+          )}
+          <span className="me-auto text-[7px] text-muted">{filteredEvents.length} حصة</span>
+        </div>
+      </div>
+    </>
+  )
+}

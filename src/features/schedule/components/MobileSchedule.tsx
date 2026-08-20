@@ -5,8 +5,6 @@ import { CalendarDays, Search, Loader2, Sparkles } from 'lucide-react'
 import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { triggerHaptic } from '../../../lib/haptics'
-import { startLiveSession } from '../../../services/liveSessionService'
-import { LiveSessions } from '../../dashboard/components/LiveSessions'
 import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile'
 import { MobileScheduleDayChips, MobileScheduleDetailsSheet } from './mobile-schedule'
 import { normalizeDayName } from '../../attendance/utils/slotUtils'
@@ -214,25 +212,6 @@ export const MobileSchedule = () => {
 
   const totalToday = allEvents.filter((e) => e.day === selectedDay).length
 
-  const handleStartSession = async () => {
-    if (!selectedEvent) return
-    const meetingUrl = prompt('أدخل رابط Google Meet أو Zoom:', 'https://meet.google.com/')
-    if (!meetingUrl || !meetingUrl.trim()) return
-    try {
-      const res = await startLiveSession({
-        title: `حصة مباشرة: ${selectedEvent.studentName}`,
-        subject: selectedEvent.subject,
-        meetingProvider: meetingUrl.includes('zoom.us') ? 'zoom' : 'google_meet',
-        meetingUrl: meetingUrl.trim(),
-        targetStudentId: selectedEvent.studentId,
-      })
-      if (res?.meetingUrl) window.open(res.meetingUrl, '_blank')
-    } catch (e) {
-      console.error(e)
-      setShowDetails(false)
-    }
-  }
-
   return (
     <MobilePage>
       <div {...handlers}>
@@ -292,15 +271,6 @@ export const MobileSchedule = () => {
             </div>
           </div>
         </motion.div>
-        {currentUser?.role === 'admin' && (
-          <div className="px-4 pb-2">
-            <div className="overflow-hidden rounded-2xl border border-border bg-card">
-              <div className="p-3">
-                <LiveSessions />
-              </div>
-            </div>
-          </div>
-        )}
         <div className="space-y-1 px-4">
           {loading && students.length === 0 ? (
             <MobileSkeleton rows={5} />
