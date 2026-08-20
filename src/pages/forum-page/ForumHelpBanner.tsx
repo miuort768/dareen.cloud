@@ -65,25 +65,25 @@ export const ForumHelpBanner = () => {
     const Icon = currentRules.icon;
 
     return (
-        <div className="max-w-[700px] mx-auto px-4 mt-8 mb-8">
-            <div className="bg-card border border-border rounded-2xl p-5 md:p-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
-                <div className="flex items-center gap-3.5 text-center md:text-start">
-                    <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+        <div className="max-w-[700px] mx-auto px-4 mt-6 mb-6">
+            <div className="bg-card border border-border rounded-card p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+                <div className="flex items-start sm:items-center gap-3.5 w-full sm:w-auto text-start">
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-card bg-primary-soft text-primary flex items-center justify-center shrink-0">
                         <BookOpen size={20} />
                     </div>
-                    <div>
-                        <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-                            <h4 className="text-main font-bold text-sm">قواعد وإرشادات المنتدى</h4>
-                            <span className={`text-micro font-bold px-2 py-0.5 rounded-lg border ${currentRules.badgeClass}`}>
+                    <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 mb-1">
+                            <h4 className="text-main font-bold text-xs sm:text-sm">قواعد وإرشادات المنتدى</h4>
+                            <span className={`text-micro font-bold px-2 py-0.5 rounded-card border ${currentRules.badgeClass}`}>
                                 خاص بـ {currentRules.roleTitle}
                             </span>
                         </div>
-                        <p className="text-muted text-xs font-medium">قواعد مخصصة لدورك في المنصة لضمان بيئة آمنة ومثمرة</p>
+                        <p className="text-muted text-[11px] sm:text-xs font-medium leading-relaxed">قواعد مخصصة لدورك في المنصة لضمان بيئة آمنة ومثمرة</p>
                     </div>
                 </div>
                 <button
                     onClick={() => setShowModal(true)}
-                    className="bg-primary text-on-primary px-5 py-2.5 text-xs font-bold rounded-xl hover:bg-primary-hover transition-all active:scale-95 shrink-0"
+                    className="w-full sm:w-auto bg-primary text-on-primary px-4 sm:px-5 py-2.5 text-xs font-bold rounded-card hover:bg-primary-hover transition-all active:scale-95 shrink-0 text-center"
                 >
                     عرض القواعد والتعليمات
                 </button>
@@ -92,43 +92,44 @@ export const ForumHelpBanner = () => {
             {/* Rules Modal */}
             <AnimatePresence>
                 {showModal && (
-                    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+                    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm">
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.95 }}
-                            className="relative w-full max-w-lg bg-card border border-border rounded-2xl overflow-hidden shadow-2xl"
+                            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                            className="relative w-full max-w-lg max-h-[85vh] flex flex-col bg-card border border-border rounded-card overflow-hidden shadow-elevation-4"
                             dir="rtl"
                         >
-                            <div className="p-5 bg-primary text-on-primary flex items-center justify-between">
+                            <div className="p-4 sm:p-5 bg-primary text-on-primary flex items-center justify-between shrink-0">
                                 <div className="flex items-center gap-2.5">
                                     <Icon size={20} />
-                                    <h3 className="font-bold text-sm">إرشادات وقواعد {currentRules.roleTitle}</h3>
+                                    <h3 className="font-bold text-xs sm:text-sm">إرشادات وقواعد {currentRules.roleTitle}</h3>
                                 </div>
                                 <button
                                     onClick={() => setShowModal(false)}
-                                    className="w-7 h-7 flex items-center justify-center rounded-xl bg-white/10 hover:bg-error transition-all"
+                                    aria-label="إغلاق النافذة"
+                                    className="w-7 h-7 flex items-center justify-center rounded-card bg-white/10 hover:bg-error transition-all"
                                 >
                                     <X size={16} />
                                 </button>
                             </div>
-                            <div className="p-6 space-y-4">
-                                <p className="text-xs font-bold text-muted mb-2">
-                                    عزيزي/عزيزتي {currentRules.roleTitle}، نرجو الالتزام بالقواعد التالية لضمان تجربة تعليمية راقية:
+                            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto custom-scrollbar flex-1">
+                                <p className="text-xs font-bold text-muted leading-relaxed">
+                                    عزيزي/عزيزتي {currentRules.roleTitle}، نرجو الالتزام بالقواعد التالية لضمان تجربة تعليمية راقية ومثمرة:
                                 </p>
-                                <ul className="space-y-3">
+                                <ul className="space-y-2.5">
                                     {currentRules.rules.map((rule, index) => (
-                                        <li key={index} className="flex items-start gap-3 p-3 rounded-xl bg-surface border border-border/50">
-                                            <span className="w-6 h-6 rounded-lg bg-primary/10 text-primary font-bold text-xs flex items-center justify-center shrink-0">
+                                        <li key={index} className="flex items-start gap-3 p-3 rounded-card bg-surface border border-border/50">
+                                            <span className="w-6 h-6 rounded-card bg-primary-soft text-primary font-bold text-xs flex items-center justify-center shrink-0">
                                                 {index + 1}
                                             </span>
-                                            <span className="text-xs font-bold text-main leading-relaxed">{rule}</span>
+                                            <span className="text-xs font-semibold text-main leading-relaxed">{rule}</span>
                                         </li>
                                     ))}
                                 </ul>
                                 <button
                                     onClick={() => setShowModal(false)}
-                                    className="w-full mt-4 py-3 bg-primary text-on-primary font-bold text-xs rounded-xl hover:bg-primary-hover transition-all"
+                                    className="w-full mt-4 py-3 bg-primary text-on-primary font-bold text-xs rounded-card hover:bg-primary-hover transition-all active:scale-98"
                                 >
                                     فهمت وأوافق على الإرشادات
                                 </button>

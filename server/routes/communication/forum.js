@@ -46,7 +46,8 @@ router.post('/', async (req, res) => {
         let realName = user.name || user.username;
         const dbUser = await prisma.user.findUnique({ where: { id: user.id }, select: { name: true } })
             ?? await prisma.teacher.findUnique({ where: { id: user.id }, select: { name: true } })
-            ?? await prisma.student.findUnique({ where: { id: user.id }, select: { name: true } });
+            ?? await prisma.student.findUnique({ where: { id: user.id }, select: { name: true } })
+            ?? await prisma.parent.findUnique({ where: { id: user.id }, select: { name: true } });
         if (dbUser && dbUser.name) realName = dbUser.name;
 
         const newPost = {
@@ -202,7 +203,8 @@ router.post('/:id/comments', async (req, res) => {
         let realName = user.name || user.username;
         const dbUser = await prisma.user.findUnique({ where: { id: user.id }, select: { name: true } })
             ?? await prisma.teacher.findUnique({ where: { id: user.id }, select: { name: true } })
-            ?? await prisma.student.findUnique({ where: { id: user.id }, select: { name: true } });
+            ?? await prisma.student.findUnique({ where: { id: user.id }, select: { name: true } })
+            ?? await prisma.parent.findUnique({ where: { id: user.id }, select: { name: true } });
         if (dbUser && dbUser.name) realName = dbUser.name;
 
         const newComment = {

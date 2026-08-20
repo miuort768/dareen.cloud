@@ -94,11 +94,11 @@ export const ForumPostCard = ({
       <div className="flex items-start justify-between p-4 md:p-5">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-card bg-primary-soft text-sm font-bold text-primary">
-            {(post.authorName?.[0] || '').toUpperCase()}
+            {((post.authorName || 'ولي الأمر')[0] || '').toUpperCase()}
           </div>
           <div>
             <div className="mb-0.5 flex items-center gap-2">
-              <h4 className="text-sm font-bold text-main">{post.authorName}</h4>
+              <h4 className="text-sm font-bold text-main">{post.authorName || (post.authorRole === 'parent' ? 'ولي الأمر' : 'عضو المنتدى')}</h4>
               {post.authorRole === 'admin' && (
                 <span className="rounded-card border border-error bg-error-light px-2 py-0.5 text-micro font-bold text-error">
                   إدارة
@@ -254,11 +254,11 @@ export const ForumPostCard = ({
               <div key={node.comment.id} className="group/comment">
                 <div className="flex gap-3 rounded-xl p-3 transition-colors hover:bg-card">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/15 to-primary/5 text-xs font-bold text-primary ring-1 ring-primary/10">
-                    {(node.comment.authorName?.[0] || '').toUpperCase()}
+                    {((node.comment.authorName || 'ولي الأمر')[0] || '').toUpperCase()}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="mb-1 flex items-center gap-2">
-                      <h5 className="text-[13px] font-bold text-main">{node.comment.authorName}</h5>
+                      <h5 className="text-[13px] font-bold text-main">{node.comment.authorName || (node.comment.authorRole === 'parent' ? 'ولي الأمر' : 'عضو المنتدى')}</h5>
                       {node.comment.authorRole === 'admin' && (
                         <span className="bg-error/10 rounded-full px-1.5 py-0.5 text-[9px] font-bold text-error">
                           إدارة
@@ -372,12 +372,12 @@ export const ForumPostCard = ({
                         className="flex gap-2.5 rounded-xl p-2.5 transition-colors hover:bg-card"
                       >
                         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-primary/5 text-[10px] font-bold text-primary ring-1 ring-primary/10">
-                          {(replyNode.comment.authorName?.[0] || '').toUpperCase()}
+                          {((replyNode.comment.authorName || 'ولي الأمر')[0] || '').toUpperCase()}
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="mb-0.5 flex items-center gap-2">
                             <h5 className="text-[12px] font-bold text-main">
-                              {replyNode.comment.authorName}
+                              {replyNode.comment.authorName || (replyNode.comment.authorRole === 'parent' ? 'ولي الأمر' : 'عضو المنتدى')}
                             </h5>
                             {replyNode.comment.authorRole === 'admin' && (
                               <span className="bg-error/10 rounded-full px-1.5 py-0.5 text-[8px] font-bold text-error">

@@ -8,15 +8,11 @@ import { api, safeArray } from '../lib/api'
 import {
   useCurrentUser,
   useShowNotification,
-  useLogout,
   useAcademyName,
 } from '../context/AppContext'
 import { confirm } from '../lib/confirmDialog'
 import type { Comment, Post } from '../features/forum/types'
 import { ForumHeader, ForumCreatePost, ForumPostCard, ForumHelpBanner } from './forum-page'
-import { TeacherDashboardHeader } from './TeacherDashboardHeader'
-import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader'
-import { StudentDashboardHeader } from './student-dashboard/StudentDashboardHeader'
 import { cn } from '../lib/utils'
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
@@ -34,7 +30,6 @@ export const Forum = () => {
     document.title = `المنتدى | ${academyName} للتعليم والتدريب`
   }, [academyName])
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const showNotification = useShowNotification()
   const isAdmin = currentUser?.role === 'admin'
   const [searchParams] = useSearchParams()
@@ -46,6 +41,8 @@ export const Forum = () => {
     queryKey: ['forum'],
     queryFn: () => api.get<Post[]>('/forum'),
     select: (data) => safeArray<Post>(data),
+    refetchInterval: 3000,
+    refetchOnWindowFocus: true,
   })
 
   const [newPostContent, setNewPostContent] = useState('')
@@ -141,14 +138,11 @@ export const Forum = () => {
         showNotification('تم إضافة التعليق', 'success')
       }
       queryClient.invalidateQueries({ queryKey: ['forum'] })
-      for (const [pid, isOpen] of Object.entries(viewingComments)) {
-        if (isOpen) {
-          const data = await api.get<Comment[]>(`/forum/${pid}/comments`)
-          queryClient.setQueryData(['forum'], (old: Post[] = []) =>
-            old.map((p: Post) => (p.id === pid ? { ...p, comments: data } : p)),
-          )
-        }
-      }
+      // Instantly fetch updated comments for this post without blocking loops
+      const updatedComments = await api.get<Comment[]>(`/forum/${postId}/comments`)
+      queryClient.setQueryData(['forum'], (old: Post[] = []) =>
+        old.map((p: Post) => (p.id === postId ? { ...p, comments: updatedComments } : p)),
+      )
     } catch (e) {
       console.error(e)
       showNotification('فشل إضافة التعليق', 'error')
@@ -292,23 +286,8 @@ export const Forum = () => {
   )
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-background pb-20 font-sans" dir="rtl">
-      {currentUser?.role === 'teacher' && (
-        <div className="hidden md:block">
-          <TeacherDashboardHeader logout={logout} />
-        </div>
-      )}
-      {currentUser?.role === 'parent' && (
-        <div className="hidden md:block">
-          <ParentDashboardHeader logout={logout} />
-        </div>
-      )}
-      {currentUser?.role === 'student' && (
-        <div className="hidden md:block">
-          <StudentDashboardHeader logout={logout} />
-        </div>
-      )}
-      <div className="relative z-10 pt-4">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-8 md:pb-12 font-sans" dir="rtl">
+      <div className="relative z-10 pt-2">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -390,7 +369,7 @@ export const Forum = () => {
                     isHighlighted={isHighlighted}
                     isAdmin={isAdmin}
                     currentUserId={currentUser?.id || ''}
-                    currentUserName={currentUser?.teacherName || currentUser?.name || ''}
+                    currentUserName={currentUser?.teacherName || currentUser?.name || currentUser?.username || 'ولي الأمر'}
                     showMenuPostId={showMenuPostId}
                     setShowMenuPostId={setShowMenuPostId}
                     onVote={handleVote}
@@ -414,7 +393,8 @@ export const Forum = () => {
         <ForumHelpBanner />
       </div>
 
-      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+      {/* Floating Action (+) Button */}
+      <div className="fixed bottom-20 md:bottom-8 end-4 md:end-8 z-50 flex flex-col items-end gap-3">
         <AnimatePresence>
           {fabOpen &&
             fabActions.map((action, i) => (
@@ -426,7 +406,7 @@ export const Forum = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-card border border-border bg-card px-3 py-1.5 text-xs font-bold text-main shadow-elevation-1">
                   {action.label}
                 </span>
                 <button
@@ -434,9 +414,9 @@ export const Forum = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl active:scale-95"
+                  className="flex h-12 w-12 items-center justify-center rounded-card border border-border/30 bg-primary text-on-primary shadow-elevation-2 transition-all hover:bg-primary-hover hover:shadow-elevation-3 active:scale-95"
                 >
-                  <action.icon size={18} />
+                  <action.icon size={20} />
                 </button>
               </motion.div>
             ))}
@@ -445,12 +425,13 @@ export const Forum = () => {
           onClick={() => setFabOpen(!fabOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          aria-label="إضافة منشور جديد أو فرز المنشورات"
           className={cn(
-            'flex h-13 w-13 items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
+            'flex h-14 w-14 items-center justify-center rounded-card text-on-primary shadow-elevation-3 transition-all border border-border/20',
+            fabOpen ? 'rotate-45 bg-error hover:bg-error/90' : 'bg-primary hover:bg-primary-hover',
           )}
         >
-          <Plus size={24} />
+          <Plus size={26} />
         </motion.button>
       </div>
     </div>
