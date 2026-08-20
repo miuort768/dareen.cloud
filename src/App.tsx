@@ -168,23 +168,31 @@ const ProtectedRoute = ({
   }
 
   if (permission && currentUser) {
+    const isAdmin = currentUser.role === 'admin'
     const hasExplicitPermission =
-      currentUser.permissions?.includes('*') || currentUser.permissions?.includes(permission)
+      isAdmin ||
+      currentUser.permissions?.includes('*') ||
+      currentUser.permissions?.includes(permission)
+
+    const isCommonAccess = ['schedule', 'announcements', 'parent_announcements', 'appointments', 'forum'].includes(permission)
+
     const isParentAccess =
       currentUser.role === 'parent' &&
-      (permission.startsWith('parent_') || permission === 'parent_announcements')
+      (permission.startsWith('parent_') || isCommonAccess)
+
     const isStudentAccess =
       currentUser.role === 'student' &&
-      (permission.startsWith('student_') || permission === 'parent_announcements')
-    const isTeacherDashboard = currentUser.role === 'teacher' && permission === 'dashboard'
-    const isTeacherEvaluation = currentUser.role === 'teacher' && permission === 'evaluations'
+      (permission.startsWith('student_') || isCommonAccess)
+
+    const isTeacherAccess =
+      currentUser.role === 'teacher' &&
+      ['dashboard', 'evaluations', 'schedule', 'announcements', 'finance', 'teacher_invoices', 'appointments', 'forum'].includes(permission)
 
     if (
       !hasExplicitPermission &&
       !isParentAccess &&
       !isStudentAccess &&
-      !isTeacherDashboard &&
-      !isTeacherEvaluation
+      !isTeacherAccess
     ) {
       return <Navigate to="/" replace />
     }

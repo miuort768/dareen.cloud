@@ -346,7 +346,11 @@ export const MobileSchedule = () => {
           showDetails={showDetails}
           event={selectedEvent}
           onClose={() => setShowDetails(false)}
-          onStartSession={handleStartSession}
+          onStartSession={() => {
+            triggerHaptic('light')
+            navigate('/appointments')
+            setShowDetails(false)
+          }}
           onViewStudent={() => {
             triggerHaptic('light')
             navigate('/students')
