@@ -63,25 +63,23 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
     return (
         <div className="fixed bottom-6 end-6 z-[9999] w-full max-w-sm pointer-events-none px-4 sm:px-0" dir="rtl">
             <div className={cn(
-                'relative overflow-hidden bg-white/70 dark:bg-card/75 backdrop-blur-lg',
-                'border border-success/30 dark:border-success/20 p-4.5',
+                'relative overflow-hidden bg-card border border-success/30 dark:border-success/20 p-4.5 rounded-none shadow-2xl',
                 'pointer-events-auto transition-all duration-300 ease-out',
-                'shadow-lg',
                 isExiting ? 'opacity-0 translate-y-6 scale-90 blur-sm' : 'animate-in slide-in-from-bottom-6 fade-in duration-300'
             )}>
                 
                 {/* ── Glowing Ambient Background ── */}
-                <div className="absolute -top-12 -end-12 w-24 h-24 bg-success/10 rounded-full blur-2xl pointer-events-none" />
-                <div className="absolute -bottom-12 -start-12 w-24 h-24 bg-info/10 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute -top-12 -end-12 w-24 h-24 bg-success/10 rounded-none blur-2xl pointer-events-none" />
+                <div className="absolute -bottom-12 -start-12 w-24 h-24 bg-info/10 rounded-none blur-2xl pointer-events-none" />
 
                 <div className="flex items-start gap-3.5 relative z-10">
                     
                     {/* ── Glowing Success Icon ── */}
                     <div className="flex-shrink-0 relative">
-                        <div className="w-10 h-10 rounded-xl bg-success flex items-center justify-center text-on-success">
+                        <div className="w-10 h-10 rounded-none bg-success flex items-center justify-center text-on-success">
                             <CheckCircle2 size={20} className="stroke-[2.5]" />
                         </div>
-                        <div className="absolute -top-1.5 -start-1.5 w-4 h-4 bg-warning/20 rounded-full flex items-center justify-center text-warning animate-bounce">
+                        <div className="absolute -top-1.5 -start-1.5 w-4 h-4 bg-warning/20 rounded-none flex items-center justify-center text-warning animate-bounce">
                             <Sparkles size={8} />
                         </div>
                     </div>
@@ -101,7 +99,7 @@ export const SuccessModal = ({ isOpen, title = 'عملية ناجحة', message,
                         onClick={handleClose}
                         className={cn(
                             'flex-shrink-0 text-muted hover:text-main dark:hover:text-dim',
-                            'p-1.5 rounded-xl bg-background dark:bg-surface hover:bg-surface dark:hover:bg-hover',
+                            'p-1.5 rounded-none bg-background dark:bg-surface hover:bg-surface dark:hover:bg-hover',
                             'border border-border transition-all active:scale-95'
                         )}
                     >

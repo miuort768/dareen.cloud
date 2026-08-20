@@ -37,12 +37,12 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
 
     return (
         <div className={cn(
-            "group relative flex items-center gap-3 p-3 pe-2 w-full sm:min-w-[300px] sm:max-w-[380px] bg-card border border-border border-s-4 shadow-elevation-3 rounded-2xl transition-all duration-500 overflow-hidden",
+            "group relative flex items-center gap-3 p-3 pe-2 w-full sm:min-w-[300px] sm:max-w-[380px] bg-card border border-border border-s-4 shadow-elevation-3 rounded-none transition-all duration-500 overflow-hidden",
             startBorder,
             isExiting ? "opacity-0 scale-95 -translate-x-4" : "animate-in slide-in-from-left-8 fade-in",
             "hover:shadow-elevation-4 hover:-translate-y-0.5"
         )}>
-            <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ring-1 shadow-sm", iconBg, iconText, ring)}>
+            <div className={cn("w-9 h-9 rounded-none flex items-center justify-center shrink-0 ring-1 shadow-sm", iconBg, iconText, ring)}>
                 <Icon size={18} />
             </div>
             <div className="flex-1 z-10 text-start min-w-0">
@@ -51,7 +51,7 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
             </div>
             <button
                 onClick={handleClose}
-                className="p-1.5 shrink-0 text-muted hover:bg-error-soft hover:text-error rounded-lg transition-colors"
+                className="p-1.5 shrink-0 text-muted hover:bg-error-soft hover:text-error rounded-none transition-colors"
                 aria-label="إغلاق"
             >
                 <X size={14} />

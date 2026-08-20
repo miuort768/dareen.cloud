@@ -37,7 +37,7 @@ export const AppointmentFilters = ({
         value={filterDay}
         onChange={(e) => onDayChange(e.target.value)}
         aria-label="تصفية حسب اليوم"
-        className="flex-1 rounded-2xl border border-border bg-card px-3 py-2 text-micro font-bold text-muted outline-none"
+        className="flex-1 rounded-2xl border border-border bg-card px-3 py-2 text-micro font-bold text-main outline-none dark:[color-scheme:dark]"
       >
         <option value="all">كل الأيام</option>
         {DAYS_OF_WEEK.map((day) => (
@@ -50,7 +50,7 @@ export const AppointmentFilters = ({
         value={filterTeacher}
         onChange={(e) => onTeacherChange(e.target.value)}
         aria-label="تصفية حسب المعلمة"
-        className="flex-1 rounded-2xl border border-border bg-card px-3 py-2 text-micro font-bold text-muted outline-none"
+        className="flex-1 rounded-2xl border border-border bg-card px-3 py-2 text-micro font-bold text-main outline-none dark:[color-scheme:dark]"
       >
         <option value="all">كل المعلمات</option>
         {uniqueTeachers.map((t) => (

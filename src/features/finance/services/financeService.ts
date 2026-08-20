@@ -49,17 +49,29 @@ export const financeService = {
             return { ...session, price, teacherPrice };
         });
 
+        const defaultExpenses: FixedExpense[] = [
+            { id: 1, name: 'تطوير المنصة', amount: 0 },
+            { id: 2, name: 'بونص المدير', amount: 0 },
+            { id: 3, name: 'إيجار المركز', amount: 0 },
+            { id: 4, name: 'كهرباء وإنترنت', amount: 0 },
+            { id: 5, name: 'نثريات وتسويق', amount: 0 },
+            { id: 6, name: 'حصص ملغية', amount: 0 },
+            { id: 7, name: 'أخرى', amount: 0 }
+        ];
+
+        // Ensure required categories exist in fixedExpenses
+        const finalFixedExpenses = fixedExpenses.length > 0 ? [...fixedExpenses] : [...defaultExpenses];
+        defaultExpenses.forEach(def => {
+            if (!finalFixedExpenses.some(e => e.name.toLowerCase().includes(def.name.toLowerCase()))) {
+                finalFixedExpenses.push({ ...def, id: finalFixedExpenses.length + 1 });
+            }
+        });
+
         return {
             sessions: processedSessions,
             invoices,
             transactions,
-            fixedExpenses: fixedExpenses.length > 0 ? fixedExpenses : [
-                { id: 1, name: 'إيجار المركز', amount: 0 },
-                { id: 2, name: 'كهرباء وإنترنت', amount: 0 },
-                { id: 3, name: 'نثريات وتسويق', amount: 0 },
-                { id: 4, name: 'حصص ملغية', amount: 0 },
-                { id: 5, name: 'أخرى', amount: 0 }
-            ]
+            fixedExpenses: finalFixedExpenses
         };
     },
 

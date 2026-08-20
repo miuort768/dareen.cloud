@@ -49,7 +49,7 @@ export const Finance = () => {
         actions.setShowAddModal(true)
         break
       case 'invoice':
-        navigate('/invoices')
+        navigate('/student-invoices')
         break
       case 'convert':
         actions.handleConvertAllFixedExpenses()
@@ -101,7 +101,7 @@ export const Finance = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
+          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-slate-950 dark:via-indigo-950/90 dark:to-slate-950 border border-transparent dark:border-primary/20 p-6 md:p-8"
         >
           <div className="absolute inset-0 opacity-[0.04]">
             <svg width="100%" height="100%">
@@ -132,7 +132,7 @@ export const Finance = () => {
               <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">
                 الإدارة المالية
               </h1>
-              <p className="text-sm text-white/70">نظرة شاملة على التدفقات المالية</p>
+              <p className="text-sm text-white/70">نظرة شاملة على التدفقات المالية للمعهد</p>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -267,12 +267,12 @@ export const Finance = () => {
                 transition={{ delay: 0.05 * i }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
                   {item.label}
                 </span>
                 <button
                   onClick={() => handleFabAction(item.action)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl active:scale-95"
                 >
                   <item.icon size={18} />
                 </button>
@@ -284,11 +284,11 @@ export const Finance = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-xl transition-all',
+            'flex h-13 w-13 items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >
-          <Plus size={22} />
+          <Plus size={24} />
         </motion.button>
       </div>
 

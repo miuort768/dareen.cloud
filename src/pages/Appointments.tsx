@@ -199,81 +199,6 @@ export const Appointments = () => {
 
     return (
         <div className="min-h-full pb-24 relative" dir="rtl">
-            <div className="max-w-page mx-auto px-2 border-b border-border/30 mb-4">
-                <div className="flex items-center justify-between h-16">
-                    <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => navigate('/teacher-dashboard')}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 text-primary text-sm font-medium hover:bg-primary/15 transition-all"
-                            aria-label="الرئيسية"
-                        >
-                            <Home size={14} className="text-primary" />
-                           الرئيسية
-                        </button>
-                        <button
-                            onClick={() => navigate('/attendance')}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-border text-muted hover:text-main dark:hover:text-main transition-all"
-                            aria-label="الحضور والغياب"
-                        >
-                            <UserCheck size={14} className="text-muted" />
-                            الحضور والغياب
-                        </button>
-                        <button
-                            onClick={() => navigate('/tasks')}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-border text-muted hover:text-main dark:hover:text-main transition-all"
-                            aria-label="المهام"
-                        >
-                            <ListTodo size={14} className="text-muted" />
-                            المهام
-                        </button>
-                        <button
-                            onClick={() => navigate('/forum')}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-border text-muted hover:text-main dark:hover:text-main transition-all"
-                            aria-label="المنتدى"
-                        >
-                            <MessageCircle size={14} className="text-muted" />
-                            المنتدى
-                        </button>
-                        <button
-                            onClick={() => navigate('/chat')}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface border border-border text-muted hover:text-main dark:hover:text-main transition-all"
-                            aria-label="الرسائل"
-                        >
-                            <MessageSquare size={14} className="text-muted" />
-                            الرسائل
-                        </button>
-                        <button
-                            onClick={() => navigate('/teacher-payment-history')}
-                            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 text-primary text-sm font-medium hover:bg-primary/15 transition-all"
-                            aria-label="سجل الدفع"
-                        >
-                            <Wallet size={14} className="text-primary" />
-                            سجل الدفع
-                        </button>
-                        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-primary-soft text-primary text-[11px] font-bold rounded-lg">
-                            أهلاً بك افكار
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <IconButton
-                            icon={<Moon size={16} strokeWidth={1.5} />}
-                            label="الوضع النهاري"
-                            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                        />
-                        <IconButton
-                            icon={<Bell size={16} strokeWidth={1.5} />}
-                            label="الإشعارات"
-                            onClick={() => navigate('/announcements')}
-                        />
-                        <IconButton
-                            icon={<LogOut size={16} strokeWidth={1.5} />}
-                            label="تسجيل الخروج"
-                            variant="error"
-                            onClick={async () => { if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout(); }}
-                        />
-                    </div>
-                </div>
-            </div>
             <div className="hidden md:block max-w-page mx-auto px-2">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8 mb-4">
                     {particles.map(p => (
@@ -338,7 +263,12 @@ export const Appointments = () => {
                 <div className={`grid gap-4 ${showDetails ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'}`}>
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
                         className={showDetails ? 'lg:col-span-2' : ''} data-schedule-grid>
-                        <AppointmentScheduleGrid appointmentsByDay={appointmentsByDay} onSelectAppointment={handleSelectAppointment} onCompleteSession={handleCompleteSession} />
+                        <AppointmentScheduleGrid
+                            appointmentsByDay={appointmentsByDay}
+                            onSelectAppointment={handleSelectAppointment}
+                            onCompleteSession={handleCompleteSession}
+                            isPending={completeMutation.isPending}
+                        />
                     </motion.div>
                     <AppointmentDetailPanel appointment={selectedAppointment} showDetails={showDetails} onClose={handleCloseDetails} />
                 </div>

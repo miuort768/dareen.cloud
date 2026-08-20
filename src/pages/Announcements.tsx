@@ -89,10 +89,20 @@ export const Announcements = () => {
         deleteMutation.mutate(id);
     };
 
-    const openEdit = (ann: Announcement) => {
-        setEditingAnnouncement(ann);
-        setFormData({ title: ann.title, content: ann.content, type: ann.type, isActive: ann.isActive });
-        setIsModalOpen(true);
+    const handleDeleteAll = async () => {
+        if (announcements.length === 0) {
+            showNotification('لا توجد إعلانات لحذفها', 'info');
+            return;
+        }
+        if (!await confirm(`هل أنت متأكد من حذف جميع الإعلانات (${announcements.length} إعلان)؟`)) return;
+        try {
+            await Promise.all(announcements.map(a => api.delete(`/announcements/${a.id}`)));
+            queryClient.invalidateQueries({ queryKey: ['announcements'] });
+            showNotification('تم حذف جميع الإعلانات بنجاح', 'success');
+        } catch (e) {
+            console.error(e);
+            showNotification('حدث خطأ أثناء حذف الإعلانات', 'error');
+        }
     };
 
     const kpiCards = useMemo(() => [
@@ -104,15 +114,14 @@ export const Announcements = () => {
 
     const fabActions = useMemo(() => [
         { icon: Plus, label: 'إعلان جديد', onClick: () => { setEditingAnnouncement(null); setFormData({ title: '', content: '', type: 'general', isActive: true }); setIsModalOpen(true); } },
-        { icon: BarChart3, label: 'إحصائيات', onClick: () => document.querySelector('[data-kpi]')?.scrollIntoView({ behavior: 'smooth' }) },
-        { icon: Filter, label: 'تصفية', onClick: () => {} },
-    ], []);
+        { icon: Trash2, label: 'حذف الكل', onClick: handleDeleteAll },
+    ], [announcements]);
 
     return (
         <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
             <div className="max-w-page mx-auto px-2">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8 mb-4">
+                    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-slate-950 dark:via-indigo-950/90 dark:to-slate-950 border border-transparent dark:border-primary/20 p-6 md:p-8 mb-4">
                     {particles.map(p => (
                         <motion.div key={p.id} className="absolute rounded-full bg-white/10 pointer-events-none"
                             style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
@@ -184,16 +193,16 @@ export const Announcements = () => {
                     {fabOpen && fabActions.map((action, i) => (
                         <motion.div key={action.label} initial={{ opacity: 0, scale: 0.3, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.3, y: 20 }} transition={{ delay: 0.05 * (fabActions.length - 1 - i) }} className="flex items-center gap-2">
-                            <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap">{action.label}</span>
+                            <span className="bg-card border border-border text-xs font-bold px-3 py-1.5 rounded-xl shadow-sm whitespace-nowrap">{action.label}</span>
                             <button onClick={() => { action.onClick(); setFabOpen(false); }}
-                                className="w-10 h-10 rounded-full bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center">
+                                className="w-11 h-11 rounded-2xl bg-primary text-on-primary shadow-lg hover:shadow-xl hover:bg-primary-hover transition-all flex items-center justify-center active:scale-95">
                                 <action.icon size={18} />
                             </button>
                         </motion.div>
                     ))}
                 </AnimatePresence>
                 <motion.button onClick={() => setFabOpen(!fabOpen)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                    className={cn("w-12 h-12 rounded-full shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
+                    className={cn("w-13 h-13 rounded-2xl shadow-xl text-on-primary flex items-center justify-center transition-all", fabOpen ? "bg-error rotate-45" : "bg-primary")}>
                     <Plus size={24} />
                 </motion.button>
             </div>
