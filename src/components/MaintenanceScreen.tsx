@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useAdminPhone } from '../context/AppContext'
+import { Wrench, Zap, Rocket, ShieldCheck, Clock, MessageCircle } from 'lucide-react'
 
 const FEATURES = [
-  { icon: '⚡', label: 'تحسين الأداء' },
-  { icon: '🚀', label: 'إضافة مزايا جديدة' },
-  { icon: '🔒', label: 'تحديثات أمنية' },
+  { icon: Zap, label: 'تحسين الأداء', desc: 'تحسين السرعة والاستجابة' },
+  { icon: Rocket, label: 'مزايا جديدة', desc: 'إضافة أدوات تعليمية متقدمة' },
+  { icon: ShieldCheck, label: 'تحديثات أمنية', desc: 'حماية بيانات طلابنا' },
 ] as const
 
 export const MaintenanceScreen = () => {
@@ -20,7 +21,7 @@ export const MaintenanceScreen = () => {
 
   return (
     <div
-      className="relative flex min-h-dvh w-full flex-col items-center justify-center overflow-x-hidden bg-background font-sans"
+      className="relative flex min-h-dvh w-full flex-col items-center overflow-x-hidden bg-background font-sans"
       dir="rtl"
     >
       {/* Decorative Background */}
@@ -41,25 +42,32 @@ export const MaintenanceScreen = () => {
         </svg>
       </div>
 
+      {/* Spacer — top breathing room */}
+      <div className="h-24 md:h-36" />
+
       {/* Content */}
-      <div className="relative z-10 flex w-full max-w-2xl flex-col items-center px-5 pb-12 pt-16 text-center">
-        {/* 1. Heading */}
-        <div className="mb-8 animate-[fadeUp_0.8s_ease-out_both]">
-          <h2 className="mb-3 text-2xl font-black leading-snug text-main md:text-4xl">
+      <div className="relative z-10 flex w-full max-w-2xl flex-col items-center px-5 text-center">
+        {/* Icon */}
+        <div className="mb-6 animate-[fadeUp_0.6s_ease-out_both]">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft shadow-elevation-1">
+            <Wrench size={28} className="text-primary" />
+          </div>
+        </div>
+
+        {/* Heading */}
+        <div className="mb-8 animate-[fadeUp_0.8s_ease-out_0.1s_both]">
+          <h1 className="mb-3 text-2xl font-black leading-snug text-main md:text-4xl">
             نحن بصدد إجراء
             <br />
             <span className="text-primary">تحديثات جذرية</span>
-          </h2>
-          <p className="mx-auto mb-2 max-w-md text-sm leading-relaxed text-muted md:text-base">
-            لضمان أفضل تجربة تعليمية لطلابنا ومعلمينا.
-          </p>
-          <p className="text-sm font-bold text-main">
-            سنكون متاحين خلال <span className="text-primary">وقت قصير جدًا</span>.
+          </h1>
+          <p className="mx-auto max-w-md text-sm leading-relaxed text-muted md:text-base">
+            لضمان أفضل تجربة تعليمية لطلابنا ومعلمينا
           </p>
         </div>
 
-        {/* 2. Progress Bar */}
-        <div className="mb-8 w-full max-w-xs animate-[fadeUp_0.8s_ease-out_0.15s_both]">
+        {/* Progress Bar */}
+        <div className="mb-10 w-full max-w-xs animate-[fadeUp_0.8s_ease-out_0.2s_both]">
           <div className="mb-2 flex items-center justify-between">
             <span className="text-xs font-bold text-muted">التقدم</span>
             <span className="text-xs font-bold tabular-nums text-primary">{progress}%</span>
@@ -70,52 +78,40 @@ export const MaintenanceScreen = () => {
               style={{ width: `${progress}%` }}
             />
           </div>
-          <p className="mt-2 animate-pulse text-center text-xs font-bold text-primary">
-            جارٍ التحديث...
-          </p>
+          <div className="mt-2 flex items-center justify-center gap-1.5">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+            <p className="text-xs font-bold text-primary">جارٍ التحديث...</p>
+          </div>
         </div>
 
-        {/* 3. Status Card */}
-        <div className="mb-8 w-full max-w-md animate-[fadeUp_0.8s_ease-out_0.3s_both]">
-          <div className="rounded-3xl border border-border bg-card p-6 shadow-elevation-1 md:p-8">
-            <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-                <svg
-                  className="h-5 w-5 text-primary"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-                </svg>
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 animate-pulse rounded-full bg-warning" />
-                  <span className="text-sm font-bold text-main">العمل جاري الآن</span>
-                </div>
-                <p className="mt-0.5 text-xs text-muted">نقوم بتطوير المنصة وتحسين الأداء</p>
-              </div>
+        {/* Features Cards */}
+        <div className="mb-10 w-full max-w-md animate-[fadeUp_0.8s_ease-out_0.3s_both]">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1 md:p-6">
+            <div className="mb-4 flex items-center gap-2.5">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-warning" />
+              <span className="text-sm font-bold text-main">العمل جاري الآن</span>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
               {FEATURES.map((f) => (
                 <div
                   key={f.label}
-                  className="flex items-center gap-1.5 rounded-xl bg-surface px-3 py-1.5 text-xs font-bold text-main"
+                  className="dark:bg-surface/80 flex flex-col items-center gap-2 rounded-xl border border-border bg-surface p-4 transition-all hover:border-primary/20"
                 >
-                  <span>{f.icon}</span>
-                  <span>{f.label}</span>
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-soft">
+                    <f.icon size={16} className="text-primary" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs font-bold text-main">{f.label}</p>
+                    <p className="mt-0.5 text-[10px] text-muted">{f.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* 4. CTA Button */}
-        <div className="mb-4 animate-[fadeUp_0.8s_ease-out_0.45s_both]">
+        {/* CTA Button */}
+        <div className="mb-4 animate-[fadeUp_0.8s_ease-out_0.4s_both]">
           {adminPhone ? (
             <a
               href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
@@ -123,34 +119,15 @@ export const MaintenanceScreen = () => {
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2.5 rounded-2xl bg-primary px-8 py-3.5 text-sm font-bold text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/25 active:scale-[0.97]"
             >
-              <svg
-                className="h-5 w-5 transition-transform duration-200 group-hover:scale-110"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
-                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
-              </svg>
+              <MessageCircle
+                size={18}
+                className="transition-transform duration-200 group-hover:scale-110"
+              />
               تواصل مع الدعم
             </a>
           ) : (
             <span className="inline-flex items-center gap-2.5 rounded-2xl bg-primary/10 px-8 py-3.5 text-sm font-bold text-primary">
-              <svg
-                className="h-5 w-5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
+              <Clock size={18} />
               سنكون متاحين قريبًا
             </span>
           )}
@@ -159,10 +136,10 @@ export const MaintenanceScreen = () => {
       </div>
 
       {/* Footer */}
-      <div className="bg-surface/50 relative z-10 mt-auto w-full animate-[fadeUp_0.8s_ease-out_0.6s_both] border-t border-border">
+      <div className="bg-surface/50 relative z-10 mt-auto w-full animate-[fadeUp_0.8s_ease-out_0.5s_both] border-t border-border">
         <div className="mx-auto flex max-w-2xl flex-col items-center px-5 py-8 text-center">
           <p className="mb-1 text-sm font-bold text-main">شكرًا لصبركم وثقتكم</p>
-          <p className="mb-3 text-xs text-muted">معًا نصنع تجربة تعليمية أفضل.</p>
+          <p className="mb-3 text-xs text-muted">معًا نصنع تجربة تعليمية أفضل</p>
           <p className="text-xs font-bold text-primary/60">dareen.online</p>
         </div>
       </div>
