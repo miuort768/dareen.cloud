@@ -380,7 +380,6 @@ export const Students = () => {
               <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">الطلاب</h1>
               <p className="text-sm text-white/70">إدارة بيانات الطلاب والاشتراكات والجلسات</p>
             </div>
-            </div>
           </div>
           <div className="relative mt-4">
             <svg
