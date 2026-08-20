@@ -1,4 +1,4 @@
-﻿import {
+import {
   LogOut,
   Sun,
   Moon,
@@ -27,6 +27,7 @@ const navTabs = [
   { id: 'children', label: 'أبنائي', icon: Users, path: '/parent-students' },
   { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
   { id: 'payments', label: 'سجل الدفع', icon: Wallet, path: '/parent-payment-history' },
+  { id: 'announcements', label: 'الإعلانات', icon: Bell, path: '/parent-announcements' },
   { id: 'profile', label: 'الحساب', icon: User, path: '/parent-profile' },
 ]
 
@@ -86,11 +87,6 @@ export const ParentDashboardHeader = ({ logout }: ParentDashboardHeaderProps) =>
               }
               label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            />
-            <IconButton
-              icon={<Bell size={16} strokeWidth={1.5} />}
-              label="الإعلانات"
-              onClick={() => navigate('/parent-announcements')}
             />
             <IconButton
               icon={<LogOut size={16} strokeWidth={1.5} />}

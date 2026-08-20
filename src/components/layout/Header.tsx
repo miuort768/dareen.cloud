@@ -59,11 +59,17 @@ export const Header = memo(() => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  // Dashboard paths where role-specific headers are used instead
   const dashboardPaths = ['/teacher-dashboard', '/student-dashboard', '/parent-dashboard', '/chat']
+  const isOnDashboard = dashboardPaths.some(
+    (p) => location.pathname === p || location.pathname.startsWith(`${p}/`)
+  )
+  // Hide general header:
+  // 1. On mobile: for dashboard paths (role headers render inside the page)
+  // 2. On all screens: for non-admin on /forum desktop (role-specific headers render there)
   if (
-    (!isDesktop &&
-      dashboardPaths.some((p) => location.pathname === p || location.pathname.startsWith(`${p}/`))) ||
-    (currentUser?.role !== 'admin' && location.pathname === '/forum')
+    (!isDesktop && isOnDashboard) ||
+    (isDesktop && currentUser?.role !== 'admin' && location.pathname === '/forum')
   )
     return null
 

@@ -1,4 +1,4 @@
-﻿import {
+import {
   LogOut,
   Sun,
   Moon,
@@ -27,6 +27,7 @@ const navTabs = [
   { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/schedule' },
   { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
   { id: 'chat', label: 'الرسائل', icon: MessageSquare, path: '/chat' },
+  { id: 'announcements', label: 'الإعلانات', icon: Bell, path: '/parent-announcements' },
   { id: 'profile', label: 'الحساب', icon: User, path: '/student-profile' },
 ]
 
@@ -86,16 +87,6 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
               }
               label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            />
-            <IconButton
-              icon={
-                <span className="relative">
-                  <Bell size={16} strokeWidth={1.5} />
-                  <span className="absolute -end-0.5 -top-0.5 h-2 w-2 rounded-full border-2 border-surface bg-error dark:border-card" />
-                </span>
-              }
-              label="الإعلانات"
-              onClick={() => navigate('/parent-announcements')}
             />
             <IconButton
               icon={<LogOut size={16} strokeWidth={1.5} />}

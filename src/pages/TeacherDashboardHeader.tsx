@@ -1,4 +1,4 @@
-﻿import {
+import {
   LogOut,
   Sun,
   Moon,
@@ -34,6 +34,7 @@ const navTabs = [
   { id: 'chat', label: 'الرسائل', icon: MessageSquare, path: '/chat' },
   { id: 'evaluations', label: 'التقييمات', icon: Award, path: '/evaluations' },
   { id: 'payments', label: 'سجل الدفع', icon: Wallet, path: '/teacher-payment-history' },
+  { id: 'announcements', label: 'الإعلانات', icon: Bell, path: '/announcements' },
   { id: 'profile', label: 'الحساب', icon: User, path: '/teacher-profile' },
 ]
 
@@ -44,26 +45,6 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
   const academicYear = useAcademicYear()
   const [theme, setTheme] = useDarkMode()
   const firstName = (currentUser?.name || currentUser?.username || 'المعلمة').split(' ')[0]
-
-  const handleAnnouncements = () => {
-    const canViewAnnouncements =
-      currentUser?.permissions?.includes('*') || currentUser?.permissions?.includes('announcements')
-    if (canViewAnnouncements) {
-      navigate('/announcements')
-      return
-    }
-    navigate('/teacher-dashboard')
-    const tryScroll = (attempt = 0) => {
-      if (attempt > 10) return
-      const el = document.getElementById('announcements-section')
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        return
-      }
-      setTimeout(() => tryScroll(attempt + 1), 200)
-    }
-    setTimeout(() => tryScroll(), 200)
-  }
 
   return (
     <header className="bg-surface/90 dark:bg-surface/90 sticky top-0 z-[100] border-b border-border backdrop-blur-xl transition-colors duration-500 dark:border-primary/20">
@@ -107,11 +88,6 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
               }
               label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            />
-            <IconButton
-              icon={<Bell size={16} strokeWidth={1.5} />}
-              label="الإعلانات"
-              onClick={handleAnnouncements}
             />
             <IconButton
               icon={<LogOut size={16} strokeWidth={1.5} />}
