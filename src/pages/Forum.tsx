@@ -177,6 +177,47 @@ export const Forum = () => {
     }
   }
 
+  const [sortMode, setSortMode] = useState<'latest' | 'most_liked' | 'most_commented'>('latest')
+
+  const handleEditPost = async (postId: string, newContent: string) => {
+    if (!isAdmin) return
+    try {
+      await api.patch(`/forum/${postId}`, { content: newContent })
+      showNotification('تم تعديل المنشور بنجاح', 'success')
+      queryClient.invalidateQueries({ queryKey: ['forum'] })
+    } catch (e) {
+      console.error(e)
+      showNotification('فشل تعديل المنشور', 'error')
+    }
+  }
+
+  const handleEditComment = async (commentId: string, newContent: string) => {
+    if (!isAdmin) return
+    try {
+      await api.patch(`/forum/comments/${commentId}`, { content: newContent })
+      showNotification('تم تعديل التعليق بنجاح', 'success')
+      queryClient.invalidateQueries({ queryKey: ['forum'] })
+    } catch (e) {
+      console.error(e)
+      showNotification('فشل تعديل التعليق', 'error')
+    }
+  }
+
+  const sortedPosts = useMemo(() => {
+    const list = [...posts]
+    if (sortMode === 'most_liked') {
+      return list.sort((a, b) => {
+        const likesA = Array.isArray(a.upvotes) ? a.upvotes.length : 0
+        const likesB = Array.isArray(b.upvotes) ? b.upvotes.length : 0
+        return likesB - likesA
+      })
+    }
+    if (sortMode === 'most_commented') {
+      return list.sort((a, b) => (b.commentCount || 0) - (a.commentCount || 0))
+    }
+    return list
+  }, [posts, sortMode])
+
   const totalUpvotes = useMemo(
     () => posts.reduce((s, p) => s + (Array.isArray(p.upvotes) ? p.upvotes.length : 0), 0),
     [posts],
@@ -226,16 +267,28 @@ export const Forum = () => {
       {
         icon: Plus,
         label: 'منشور جديد',
-        onClick: () => document.querySelector('[data-create-post] textarea')?.focus(),
+        onClick: () => {
+          document.querySelector('[data-create-post] textarea')?.focus()
+        },
       },
       {
-        icon: Filter,
-        label: 'المناقشات',
-        onClick: () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }),
+        icon: ThumbsUp,
+        label: 'الأكثر إعجاباً',
+        onClick: () => {
+          setSortMode('most_liked')
+          showNotification('تم فرز المنشورات حسب الأكثر إعجاباً', 'info')
+        },
       },
-      { icon: MessageCircle, label: 'التعليقات', onClick: () => {} },
+      {
+        icon: MessageCircle,
+        label: 'الأكثر تعليقاً',
+        onClick: () => {
+          setSortMode('most_commented')
+          showNotification('تم فرز المنشورات حسب الأكثر تعليقاً', 'info')
+        },
+      },
     ],
-    [],
+    [showNotification],
   )
 
   return (
@@ -255,25 +308,7 @@ export const Forum = () => {
           <StudentDashboardHeader logout={logout} />
         </div>
       )}
-      <div className="relative z-10">
-        <div className="relative mx-4 mt-4 max-w-[700px] overflow-hidden rounded-2xl md:mx-auto">
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="pointer-events-none absolute z-10 rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <ForumHeader />
-        </div>
-
+      <div className="relative z-10 pt-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -308,6 +343,22 @@ export const Forum = () => {
           </div>
         </motion.div>
 
+        {/* Sort indicator banner */}
+        {sortMode !== 'latest' && (
+          <div className="mx-auto max-w-[700px] px-4 mb-3 flex items-center justify-between bg-primary/10 border border-primary/30 p-2.5 rounded-xl text-xs font-bold text-primary">
+            <span>
+              يتم الآن عرض المنشورات بحسب:{' '}
+              {sortMode === 'most_liked' ? 'الأكثر إعجاباً 👍' : 'الأكثر تعليقاً 💬'}
+            </span>
+            <button
+              onClick={() => setSortMode('latest')}
+              className="text-micro bg-primary text-on-primary px-2.5 py-1 rounded-lg hover:bg-primary-hover transition-all"
+            >
+              إعادة تعيين الفرز
+            </button>
+          </div>
+        )}
+
         <div className="mx-auto max-w-[700px] space-y-6 px-4" data-create-post>
           <ForumCreatePost
             newPostContent={newPostContent}
@@ -320,7 +371,7 @@ export const Forum = () => {
                 <div key={`skel-${i}`} className="h-48 animate-pulse rounded-card bg-card" />
               ))}
             </div>
-          ) : posts.length === 0 ? (
+          ) : sortedPosts.length === 0 ? (
             <EmptyState
               icon={MessageSquare}
               title="لا توجد منشورات هنا"
@@ -328,7 +379,7 @@ export const Forum = () => {
             />
           ) : (
             <div className="space-y-6">
-              {posts.map((post: Post) => {
+              {sortedPosts.map((post: Post) => {
                 const isLiked = post.upvotes.includes(currentUser?.id || '')
                 const isHighlighted = post.id === highlightedPostId
                 return (
@@ -349,6 +400,8 @@ export const Forum = () => {
                     onAddComment={handleAddComment}
                     onDeleteComment={handleDeleteComment}
                     onUpdateStatus={handleUpdateStatus}
+                    onEditPost={handleEditPost}
+                    onEditComment={handleEditComment}
                     commentTexts={commentTexts}
                     setCommentTexts={setCommentTexts}
                     viewingComments={viewingComments}
@@ -373,7 +426,7 @@ export const Forum = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
                   {action.label}
                 </span>
                 <button
@@ -381,7 +434,7 @@ export const Forum = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl active:scale-95"
                 >
                   <action.icon size={18} />
                 </button>
@@ -393,7 +446,7 @@ export const Forum = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-xl transition-all',
+            'flex h-13 w-13 items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >

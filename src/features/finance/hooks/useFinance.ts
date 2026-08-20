@@ -194,36 +194,22 @@ export const useFinance = () => {
         .filter((t) => t.type === 'income' && t.status === 'completed' && isSameMonth(t.date))
         .reduce((sum, t) => sum + (Number(t.amount) || 0), 0)
 
-    const manualExpenses = filteredInvoices
-      .filter((inv) => ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()))
-      .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0)
-
-    const extraManualExpenses = filteredManualTx
-      .filter((t) => t.type === 'expense' && t.status === 'completed')
-      .reduce((sum, t) => sum + (Number(t.amount) || 0), 0)
-    const totalFixedExpenses = fixedExpenses
-      .filter((e) => curFilter(e.currency))
-      .reduce((sum, item) => sum + (Number(item.amount) || 0), 0)
-
-    const totalExpenses = manualExpenses + extraManualExpenses + totalFixedExpenses
-
-    const monthManualExpenses = filteredInvoices
-      .filter(
-        (inv) =>
-          ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()) &&
-          isSameMonth(inv.date),
-      )
-      .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0)
-
-    const monthExtraManualExpenses = filteredManualTx
-      .filter((t) => t.type === 'expense' && t.status === 'completed' && isSameMonth(t.date))
-      .reduce((sum, t) => sum + (Number(t.amount) || 0), 0)
-
     const automatedLaborCost = completedSessions.reduce(
       (sum, s) => sum + (Number(s.teacherPrice) || 0),
       0,
     )
-    const monthExpensesValue = monthManualExpenses + monthExtraManualExpenses + totalFixedExpenses
+
+    const monthAutomatedLaborCost = monthSessions.reduce(
+      (sum, s) => sum + (Number(s.teacherPrice) || 0),
+      0,
+    )
+
+    // Effective Labor/Invoice expenses (taking whichever is higher so labor cost is never missed)
+    const effectiveTotalLabor = Math.max(manualExpenses, automatedLaborCost)
+    const effectiveMonthLabor = Math.max(monthManualExpenses, monthAutomatedLaborCost)
+
+    const totalExpenses = effectiveTotalLabor + extraManualExpenses + totalFixedExpenses
+    const monthExpensesValue = effectiveMonthLabor + monthExtraManualExpenses + totalFixedExpenses
 
     const netProfit = totalIncome - totalExpenses
     const monthProfit = monthIncome - monthExpensesValue

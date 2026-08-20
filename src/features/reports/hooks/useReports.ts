@@ -18,9 +18,14 @@ export const useReports = () => {
   const data = reportData
 
   const stats = useMemo(() => {
-    const currentMonth = new Date().toISOString().slice(0, 7)
+    const now = new Date()
+    const currentMonthStr = now.toISOString().slice(0, 7)
 
-    // General
+    const prevMonthDate = new Date()
+    prevMonthDate.setMonth(prevMonthDate.getMonth() - 1)
+    const prevMonthStr = prevMonthDate.toISOString().slice(0, 7)
+
+    // General Arrays
     const students = safeArray(data.students)
     const sessions = safeArray(data.sessions)
     const invoices = safeArray(data.invoices)
@@ -35,23 +40,46 @@ export const useReports = () => {
     const attendanceRate =
       totalSessions > 0 ? Math.round((completedSessions / totalSessions) * 100) : 0
 
-    // Financial
+    // Financial calculations
     const totalRevenue = sessions
       .filter((s) => s.status === 'completed')
       .reduce((sum, s) => sum + (Number(s.price) || 0), 0)
-    const totalExpenses = invoices
+
+    const teacherCostFromSessions = sessions
+      .filter((s) => s.status === 'completed')
+      .reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0)
+
+    const invoiceExpenses = invoices
       .filter((inv) => ['paid', 'مدفوعة', 'تم الدفع'].includes((inv.status || '').toLowerCase()))
       .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0)
+
+    const totalExpenses = Math.max(invoiceExpenses, teacherCostFromSessions)
+
     const monthRevenue = sessions
-      .filter((s) => s.status === 'completed' && s.date?.startsWith(currentMonth))
+      .filter((s) => s.status === 'completed' && s.date?.startsWith(currentMonthStr))
       .reduce((sum, s) => sum + (Number(s.price) || 0), 0)
-    const monthExpenses = invoices
+
+    const prevMonthRevenue = sessions
+      .filter((s) => s.status === 'completed' && s.date?.startsWith(prevMonthStr))
+      .reduce((sum, s) => sum + (Number(s.price) || 0), 0)
+
+    const revenueGrowth = prevMonthRevenue > 0
+      ? Math.round(((monthRevenue - prevMonthRevenue) / prevMonthRevenue) * 100)
+      : monthRevenue > 0 ? 100 : 0
+
+    const monthTeacherCost = sessions
+      .filter((s) => s.status === 'completed' && s.date?.startsWith(currentMonthStr))
+      .reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0)
+
+    const monthInvoiceExpenses = invoices
       .filter(
         (inv) =>
           ['paid', 'مدفوعة', 'تم الدفع'].includes((inv.status || '').toLowerCase()) &&
-          inv.date?.startsWith(currentMonth),
+          inv.date?.startsWith(currentMonthStr),
       )
       .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0)
+
+    const monthExpenses = Math.max(monthInvoiceExpenses, monthTeacherCost)
 
     // Months
     const uniqueMonths = Array.from(
@@ -84,7 +112,9 @@ export const useReports = () => {
       .flatMap((s) => s.enrollments || [])
       .reduce(
         (acc, e) => {
-          acc[e.subject] = (acc[e.subject] || 0) + 1
+          if (e.subject && e.subject.trim()) {
+            acc[e.subject.trim()] = (acc[e.subject.trim()] || 0) + 1
+          }
           return acc
         },
         {} as Record<string, number>,
@@ -95,9 +125,15 @@ export const useReports = () => {
       value: count,
     }))
 
+    // FIX NULL IN GRADE DISTRIBUTION
     const gradeDistribution = students.reduce(
       (acc, s) => {
-        acc[s.grade] = (acc[s.grade] || 0) + 1
+        const raw = s.grade
+        const gradeKey =
+          !raw || String(raw).trim() === '' || String(raw).toLowerCase() === 'null' || String(raw).toLowerCase() === 'undefined'
+            ? 'غير محدد'
+            : String(raw).trim()
+        acc[gradeKey] = (acc[gradeKey] || 0) + 1
         return acc
       },
       {} as Record<string, number>,
@@ -111,12 +147,13 @@ export const useReports = () => {
     // Teacher Performance
     const teacherPerformance = sessions.reduce(
       (acc, s) => {
-        if (!acc[s.teacherName]) {
-          acc[s.teacherName] = { total: 0, completed: 0, cancelled: 0 }
+        const teacher = (s.teacherName && s.teacherName.trim()) ? s.teacherName.trim() : 'غير محدد'
+        if (!acc[teacher]) {
+          acc[teacher] = { total: 0, completed: 0, cancelled: 0 }
         }
-        acc[s.teacherName].total++
-        if (s.status === 'completed') acc[s.teacherName].completed++
-        if (s.status === 'cancelled') acc[s.teacherName].cancelled++
+        acc[teacher].total++
+        if (s.status === 'completed') acc[teacher].completed++
+        if (s.status === 'cancelled') acc[teacher].cancelled++
         return acc
       },
       {} as Record<string, { total: number; completed: number; cancelled: number }>,
@@ -130,14 +167,20 @@ export const useReports = () => {
 
     // Student Progress
     const studentProgressData = students.map((student) => {
-      const tSessions = student.enrollments?.reduce((sum, e) => sum + e.sessionsTotal, 0) || 0
-      const uSessions = student.enrollments?.reduce((sum, e) => sum + e.sessionsUsed, 0) || 0
+      const tSessions = student.enrollments?.reduce((sum, e) => sum + (e.sessionsTotal || 0), 0) || 0
+      const uSessions = student.enrollments?.reduce((sum, e) => sum + (e.sessionsUsed || 0), 0) || 0
       const progress = tSessions > 0 ? Math.round((uSessions / tSessions) * 100) : 0
+
+      const rawGrade = student.grade
+      const grade =
+        !rawGrade || String(rawGrade).trim() === '' || String(rawGrade).toLowerCase() === 'null' || String(rawGrade).toLowerCase() === 'undefined'
+          ? 'غير محدد'
+          : String(rawGrade).trim()
 
       return {
         id: student.id,
         name: student.name,
-        grade: student.grade,
+        grade,
         totalEnrollments: student.enrollments?.length || 0,
         totalSessions: tSessions,
         usedSessions: uSessions,
@@ -156,6 +199,7 @@ export const useReports = () => {
       totalExpenses,
       monthRevenue,
       monthExpenses,
+      revenueGrowth,
       monthlySessionsData,
       subjectPieData,
       gradeBarData,

@@ -125,11 +125,12 @@ export const MonthlyClosing = () => {
         })
     ).filter(item => item.isLow).sort((a, b) => a.remaining - b.remaining) || [];
 
-    const totalProjectedIncome = filteredSessions.reduce((acc, curr) => acc + (curr.price || 0), 0);
+    const validSessions = filteredSessions.filter(s => s.status !== 'cancelled');
+    const totalProjectedIncome = validSessions.reduce((acc, curr) => acc + (Number(curr.price) || 0), 0);
     const totalActualCollections = (studentInvoices || [])
-        .filter((inv: { date: string; status: string }) => inv.date >= startDate && inv.date <= endDate && inv.status === 'paid')
-        .reduce((acc: number, curr: { amount: number }) => acc + curr.amount, 0);
-    const totalTeacherPayout = payrollData.reduce((acc, curr) => acc + curr.totalAmount, 0);
+        .filter((inv: { date: string; status: string }) => inv.date >= startDate && inv.date <= endDate && ['paid', 'مدفوعة', 'تم الدفع'].includes((inv.status || '').toLowerCase()))
+        .reduce((acc: number, curr: { amount: number }) => acc + (Number(curr.amount) || 0), 0);
+    const totalTeacherPayout = payrollData.reduce((acc, curr) => acc + (Number(curr.totalAmount) || 0), 0);
     const netProjectedProfit = totalProjectedIncome - totalTeacherPayout;
     const netActualCashFlow = totalActualCollections - totalTeacherPayout;
 
