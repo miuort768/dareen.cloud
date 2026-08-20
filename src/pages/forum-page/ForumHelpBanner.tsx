@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useCurrentUser } from '../../context/AppContext';
-import { BookOpen, ShieldCheck, Heart, Sparkles, GraduationCap, X } from 'lucide-react';
+import { Scale, ShieldCheck, Heart, Sparkles, GraduationCap, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const ForumHelpBanner = () => {
@@ -69,7 +69,7 @@ export const ForumHelpBanner = () => {
             <div className="bg-card border border-border rounded-card p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
                 <div className="flex items-start sm:items-center gap-3.5 w-full sm:w-auto text-start">
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-card bg-primary-soft text-primary flex items-center justify-center shrink-0">
-                        <BookOpen size={20} />
+                        <Scale size={20} />
                     </div>
                     <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2 mb-1">
@@ -78,7 +78,7 @@ export const ForumHelpBanner = () => {
                                 خاص بـ {currentRules.roleTitle}
                             </span>
                         </div>
-                        <p className="text-muted text-[11px] sm:text-xs font-medium leading-relaxed">قواعد مخصصة لدورك في المنصة لضمان بيئة آمنة ومثمرة</p>
+                        <p className="text-muted text-[10px] sm:text-xs font-medium leading-tight truncate">قواعد مخصصة لدورك في المنصة لضمان بيئة آمنة ومثمرة</p>
                     </div>
                 </div>
                 <button

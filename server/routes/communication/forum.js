@@ -43,12 +43,16 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        let realName = user.name || user.username;
+        let realName = user.name;
         const dbUser = await prisma.user.findUnique({ where: { id: user.id }, select: { name: true } })
             ?? await prisma.teacher.findUnique({ where: { id: user.id }, select: { name: true } })
             ?? await prisma.student.findUnique({ where: { id: user.id }, select: { name: true } })
             ?? await prisma.parent.findUnique({ where: { id: user.id }, select: { name: true } });
-        if (dbUser && dbUser.name) realName = dbUser.name;
+        if (dbUser && dbUser.name) {
+            realName = dbUser.name;
+        } else if (!realName || realName === user.username) {
+            realName = (user.role === 'parent' ? 'ولي أمر' : user.role === 'teacher' ? 'معلمة' : user.role === 'admin' ? 'إدارة المنصة' : user.name || user.username);
+        }
 
         const newPost = {
             id: 'post_' + uuidv4(),
@@ -200,12 +204,16 @@ router.post('/:id/comments', async (req, res) => {
     if (!content || !content.trim()) return res.status(400).json({ error: 'Content is required.' });
 
     try {
-        let realName = user.name || user.username;
+        let realName = user.name;
         const dbUser = await prisma.user.findUnique({ where: { id: user.id }, select: { name: true } })
             ?? await prisma.teacher.findUnique({ where: { id: user.id }, select: { name: true } })
             ?? await prisma.student.findUnique({ where: { id: user.id }, select: { name: true } })
             ?? await prisma.parent.findUnique({ where: { id: user.id }, select: { name: true } });
-        if (dbUser && dbUser.name) realName = dbUser.name;
+        if (dbUser && dbUser.name) {
+            realName = dbUser.name;
+        } else if (!realName || realName === user.username) {
+            realName = (user.role === 'parent' ? 'ولي أمر' : user.role === 'teacher' ? 'معلمة' : user.role === 'admin' ? 'إدارة المنصة' : user.name || user.username);
+        }
 
         const newComment = {
             id: 'comment_' + uuidv4(),

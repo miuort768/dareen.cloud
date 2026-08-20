@@ -218,6 +218,19 @@ export const Forum = () => {
   )
   const totalComments = useMemo(() => posts.reduce((s, p) => s + (p.commentCount || 0), 0), [posts])
 
+  const totalParticipants = useMemo(() => {
+    const ids = new Set<string>()
+    posts.forEach((p) => {
+      if (p.authorId) ids.add(p.authorId)
+      else if (p.authorName) ids.add(p.authorName)
+      ;(p.comments || []).forEach((c) => {
+        if (c.authorId) ids.add(c.authorId)
+        else if (c.authorName) ids.add(c.authorName)
+      })
+    })
+    return ids.size
+  }, [posts])
+
   const kpiCards = useMemo(
     () => [
       {
@@ -246,14 +259,14 @@ export const Forum = () => {
       },
       {
         label: 'المشاركون',
-        value: new Set(posts.map((p) => p.userId)).size,
+        value: totalParticipants,
         icon: Users,
         gradient: 'from-info/20 to-info/5',
         iconBg: 'bg-info/10 text-info',
         accent: 'bg-info',
       },
     ],
-    [posts, totalUpvotes, totalComments],
+    [posts, totalUpvotes, totalComments, totalParticipants],
   )
 
   const fabActions = useMemo(
@@ -369,7 +382,7 @@ export const Forum = () => {
                     isHighlighted={isHighlighted}
                     isAdmin={isAdmin}
                     currentUserId={currentUser?.id || ''}
-                    currentUserName={currentUser?.teacherName || currentUser?.name || currentUser?.username || 'ولي الأمر'}
+                    currentUserName={currentUser?.name || currentUser?.teacherName || (currentUser?.role === 'parent' ? 'ولي أمر' : currentUser?.role === 'teacher' ? 'معلمة' : currentUser?.role === 'admin' ? 'إدارة المنصة' : currentUser?.username || 'عضو المنتدى')}
                     showMenuPostId={showMenuPostId}
                     setShowMenuPostId={setShowMenuPostId}
                     onVote={handleVote}
@@ -393,8 +406,8 @@ export const Forum = () => {
         <ForumHelpBanner />
       </div>
 
-      {/* Floating Action (+) Button */}
-      <div className="fixed bottom-20 md:bottom-8 end-4 md:end-8 z-50 flex flex-col items-end gap-3">
+      {/* Floating Action (+) Button - Hidden on mobile screens */}
+      <div className="hidden md:flex fixed bottom-8 end-8 z-50 flex-col items-end gap-3">
         <AnimatePresence>
           {fabOpen &&
             fabActions.map((action, i) => (
