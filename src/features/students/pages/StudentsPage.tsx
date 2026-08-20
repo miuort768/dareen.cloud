@@ -284,32 +284,32 @@ export const Students = () => {
         label: 'إجمالي الطلاب',
         value: allStudents.length,
         icon: Users,
-        gradient: 'from-primary/20 to-primary/5',
-        iconBg: 'bg-primary/10 text-primary',
+        gradient: 'from-primary/20 to-primary/5 dark:from-primary/30 dark:to-primary/10',
+        iconBg: 'bg-primary/10 text-primary dark:bg-primary/20',
         accent: 'bg-primary',
       },
       {
         label: 'الاشتراكات النشطة',
         value: activeEnrollments,
         icon: BookOpen,
-        gradient: 'from-success/20 to-success/5',
-        iconBg: 'bg-success/10 text-success',
+        gradient: 'from-success/20 to-success/5 dark:from-success/30 dark:to-success/10',
+        iconBg: 'bg-success/10 text-success dark:bg-success/20',
         accent: 'bg-success',
       },
       {
         label: 'حصص مكتملة',
         value: completedSessions,
         icon: Star,
-        gradient: 'from-warning/20 to-warning/5',
-        iconBg: 'bg-warning/10 text-warning',
+        gradient: 'from-warning/20 to-warning/5 dark:from-warning/30 dark:to-warning/10',
+        iconBg: 'bg-warning/10 text-warning dark:bg-warning/20',
         accent: 'bg-warning',
       },
       {
         label: 'متوسط الحصص',
         value: averageSessions,
         icon: GraduationCap,
-        gradient: 'from-info/20 to-info/5',
-        iconBg: 'bg-info/10 text-info',
+        gradient: 'from-info/20 to-info/5 dark:from-info/30 dark:to-info/10',
+        iconBg: 'bg-info/10 text-info dark:bg-info/20',
         accent: 'bg-info',
       },
     ],
@@ -355,7 +355,7 @@ export const Students = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 shadow-xl dark:border-amber-500/30 dark:from-zinc-950 dark:via-zinc-900 dark:to-black md:p-8"
+          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 shadow-xl dark:border-primary/30 dark:from-primary/90 dark:via-primary-deep dark:to-primary-hover md:p-8"
         >
           {particles.map((p) => (
             <motion.div

@@ -51,7 +51,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
           {/* Header */}
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 dark:bg-primary/15">
+              <div className="flex h-10 w-10 items-center justify-center rounded-none bg-primary/10 dark:bg-primary/15">
                 <Bell size={20} className="text-primary" />
               </div>
               <div>
@@ -63,7 +63,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-muted transition-all hover:bg-hover hover:text-main"
+              className="flex h-8 w-8 items-center justify-center rounded-none text-muted transition-all hover:bg-hover hover:text-main"
               aria-label="إغلاق"
             >
               <X size={16} />
@@ -83,7 +83,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="اكتب رسالتك هنا..."
-                className="h-28 w-full resize-none rounded-xl border border-border bg-surface p-3 text-xs font-medium leading-relaxed outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary/20 dark:bg-hover dark:text-main"
+                className="h-28 w-full resize-none rounded-none border border-border bg-surface p-3 text-xs font-medium leading-relaxed outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary/20 dark:bg-hover dark:text-main"
               />
             </div>
 

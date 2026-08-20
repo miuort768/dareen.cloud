@@ -174,7 +174,7 @@ export const StudentsToolbar = ({
             disabled={importing}
             className={cn(
               btnClass,
-              'border border-border bg-surface text-muted hover:bg-hover',
+              'border border-border bg-surface text-main hover:bg-hover',
               importing && 'opacity-60',
             )}
           >
@@ -205,10 +205,11 @@ export const StudentsToolbar = ({
             onClick={onDeleteAll}
             className={cn(
               btnClass,
-              'border-error/20 hover:bg-error/20 border bg-error-soft text-error',
+              'border-error/30 hover:bg-error/10 border bg-error-soft text-error',
             )}
           >
             <Trash2 size={12} />
+            <span className="hidden sm:inline">حذف الكل</span>
           </button>
         </div>
       </div>
