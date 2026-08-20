@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react'
+import { useMemo, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   X,
@@ -10,6 +10,7 @@ import {
   GraduationCap,
   Trash2,
   History,
+  ChevronDown,
 } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { format } from 'date-fns'
@@ -47,6 +48,7 @@ export const EvaluationDrawer = ({
   onDelete,
   onClose,
 }: EvaluationDrawerProps) => {
+  const [visibleCount, setVisibleCount] = useState(3)
   const studentEvals = useMemo(
     () =>
       (evaluations || [])
@@ -60,6 +62,7 @@ export const EvaluationDrawer = ({
 
   useEffect(() => {
     if (!student) return
+    setVisibleCount(3)
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
@@ -110,10 +113,7 @@ export const EvaluationDrawer = ({
               <div className="absolute inset-0 bg-white/10" />
               <button
                 onClick={onClose}
-                className={cn(
-                  'absolute end-2 top-2 z-10 flex h-6 w-6 items-center justify-center rounded-md bg-black/10 transition-all hover:bg-black/20',
-                  gradient.on,
-                )}
+                className="bg-error/80 absolute end-2 top-2 z-10 flex h-6 w-6 items-center justify-center rounded-md text-white transition-all hover:bg-error"
               >
                 <X size={12} />
               </button>
@@ -169,7 +169,7 @@ export const EvaluationDrawer = ({
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="rounded-lg border border-border bg-surface p-2 text-center"
+                    className="dark:bg-surface/80 rounded-lg border border-border bg-surface p-2 text-center"
                   >
                     <div
                       className={cn(
@@ -209,7 +209,7 @@ export const EvaluationDrawer = ({
                   {(student?.enrollments || []).map((en, i) => (
                     <div
                       key={i}
-                      className="flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-2"
+                      className="dark:bg-surface/80 flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-2"
                     >
                       <div className="min-w-0">
                         <p className="truncate text-[11px] font-bold text-main">{en.subject}</p>
@@ -232,48 +232,62 @@ export const EvaluationDrawer = ({
                   </span>
                 </h5>
                 {studentEvals.length > 0 ? (
-                  studentEvals.map((ev) => {
-                    const r =
-                      RATING_OPTIONS.find((ro) => ro.value === ev.rating) || RATING_OPTIONS[0]
-                    return (
-                      <div key={ev.id} className="rounded-lg border border-border bg-surface p-2">
-                        <div className="mb-1 flex items-center justify-between">
-                          <div className="flex items-center gap-1">
-                            <span
-                              className={cn(
-                                'flex items-center gap-0.5 rounded px-1.5 py-0.5 text-[9px] font-bold',
-                                r.pill,
-                              )}
-                            >
-                              <r.icon size={8} />
-                              {ev.rating}
-                            </span>
-                            {ev.points > 0 && (
-                              <span className="rounded bg-warning-soft px-1 py-0.5 text-[9px] font-bold text-warning">
-                                +{ev.points}
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-[9px] text-muted">
-                              {format(new Date(ev.created_at || ev.date), 'dd/MM')}
-                            </span>
-                            {canDelete(ev) && (
-                              <button
-                                onClick={() => onDelete(ev.id)}
-                                className="rounded p-0.5 text-muted transition-colors hover:text-error"
+                  <>
+                    {studentEvals.slice(0, visibleCount).map((ev) => {
+                      const r =
+                        RATING_OPTIONS.find((ro) => ro.value === ev.rating) || RATING_OPTIONS[0]
+                      return (
+                        <div
+                          key={ev.id}
+                          className="dark:bg-surface/80 rounded-lg border border-border bg-surface p-2"
+                        >
+                          <div className="mb-1 flex items-center justify-between">
+                            <div className="flex items-center gap-1">
+                              <span
+                                className={cn(
+                                  'flex items-center gap-0.5 rounded px-1.5 py-0.5 text-[9px] font-bold',
+                                  r.pill,
+                                )}
                               >
-                                <Trash2 size={9} />
-                              </button>
-                            )}
+                                <r.icon size={8} />
+                                {ev.rating}
+                              </span>
+                              {ev.points > 0 && (
+                                <span className="rounded bg-warning-soft px-1 py-0.5 text-[9px] font-bold text-warning">
+                                  +{ev.points}
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className="text-[9px] text-muted">
+                                {format(new Date(ev.created_at || ev.date), 'dd/MM')}
+                              </span>
+                              {canDelete(ev) && (
+                                <button
+                                  onClick={() => onDelete(ev.id)}
+                                  className="rounded p-0.5 text-muted transition-colors hover:text-error"
+                                >
+                                  <Trash2 size={9} />
+                                </button>
+                              )}
+                            </div>
                           </div>
+                          <p className="text-[10px] leading-relaxed text-muted">
+                            {ev.notes || 'بدون ملاحظات'}
+                          </p>
                         </div>
-                        <p className="text-[10px] leading-relaxed text-muted">
-                          {ev.notes || 'بدون ملاحظات'}
-                        </p>
-                      </div>
-                    )
-                  })
+                      )
+                    })}
+                    {studentEvals.length > visibleCount && (
+                      <button
+                        onClick={() => setVisibleCount((prev) => prev + 3)}
+                        className="dark:bg-surface/80 flex w-full items-center justify-center gap-1 rounded-lg border border-border bg-surface py-2 text-[10px] font-bold text-muted transition-all hover:border-primary/30 hover:text-primary"
+                      >
+                        <ChevronDown size={12} />
+                        المزيد ({studentEvals.length - visibleCount})
+                      </button>
+                    )}
+                  </>
                 ) : (
                   <div className="rounded-lg border border-dashed border-border py-6 text-center">
                     <History size={16} className="text-muted/30 mx-auto mb-1" />
@@ -287,7 +301,7 @@ export const EvaluationDrawer = ({
             <div className="border-t border-border px-3 py-2">
               <button
                 onClick={onClose}
-                className="w-full rounded-lg bg-surface py-2 text-[10px] font-bold text-main transition-colors hover:bg-hover"
+                className="bg-error/10 w-full rounded-lg py-2 text-[10px] font-bold text-error transition-colors hover:bg-error hover:text-on-error"
               >
                 إغلاق
               </button>

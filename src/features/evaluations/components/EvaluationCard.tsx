@@ -62,7 +62,7 @@ export const EvaluationCard = ({
   const gradient = getAvatarGradient(student.name)
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-2 hover:ring-1 hover:ring-primary/20">
+    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-2 hover:ring-1 hover:ring-primary/20 dark:bg-card dark:hover:ring-primary/30">
       {/* Gradient Top Bar */}
       <div className={cn('relative h-10 shrink-0 overflow-hidden bg-gradient-to-r', gradient.g)}>
         <div className="absolute inset-0 bg-white/10" />
@@ -84,11 +84,17 @@ export const EvaluationCard = ({
               {(student.name || '?').charAt(0)}
             </div>
             <div className="min-w-0 flex-1">
-              <h4 className="truncate text-sm font-bold text-main">{student.name}</h4>
-              <p className="truncate text-xs text-muted">{student.grade || '—'}</p>
+              <h4 className="bg-info/10 truncate rounded-lg px-2 py-0.5 text-sm font-bold text-info dark:text-info">
+                {student.name}
+              </h4>
+              {student.grade && (
+                <span className="bg-primary-soft/60 mt-0.5 inline-block truncate rounded-md px-1.5 py-0.5 text-[10px] font-bold text-primary dark:text-primary">
+                  {student.grade}
+                </span>
+              )}
             </div>
           </div>
-          <div className="border-warning/10 bg-warning-soft/60 flex shrink-0 items-center gap-1 rounded-lg border px-2 py-1">
+          <div className="border-warning/15 bg-warning-soft/70 dark:bg-warning-soft/50 flex shrink-0 items-center gap-1 rounded-xl border px-2 py-1">
             <Award size={11} className="text-warning" />
             <span className="text-xs font-bold tabular-nums text-warning">{totalStudentXP}</span>
             <span className="text-warning/60 text-[10px]">XP</span>
@@ -122,7 +128,7 @@ export const EvaluationCard = ({
                 </span>
               </div>
             </div>
-            <div className="min-h-[40px] rounded-xl border border-border bg-surface p-2.5">
+            <div className="dark:bg-surface/80 min-h-[40px] rounded-xl border border-border bg-surface p-2.5">
               <p className="line-clamp-2 text-xs italic leading-relaxed text-muted">
                 &ldquo;{lastEval.notes || 'بدون ملاحظات'}&rdquo;
               </p>
@@ -130,17 +136,23 @@ export const EvaluationCard = ({
 
             {/* Stats Row */}
             <div className="grid grid-cols-3 gap-1.5">
-              <div className="bg-primary-soft/30 rounded-lg p-2 text-center">
+              <div className="bg-primary-soft/40 dark:bg-primary-soft/30 rounded-xl p-2 text-center">
                 <p className="text-[10px] text-muted">المعدل</p>
-                <p className="text-xs font-bold tabular-nums text-primary">{avgRating || '—'}</p>
+                <p className="text-xs font-bold tabular-nums text-primary dark:text-primary">
+                  {avgRating || '—'}
+                </p>
               </div>
-              <div className="bg-success-soft/30 rounded-lg p-2 text-center">
+              <div className="bg-success-soft/40 dark:bg-success-soft/30 rounded-xl p-2 text-center">
                 <p className="text-[10px] text-muted">الحضور</p>
-                <p className="text-xs font-bold tabular-nums text-success">{progress}%</p>
+                <p className="text-xs font-bold tabular-nums text-success dark:text-success">
+                  {progress}%
+                </p>
               </div>
-              <div className="bg-warning-soft/30 rounded-lg p-2 text-center">
+              <div className="bg-warning-soft/40 dark:bg-warning-soft/30 rounded-xl p-2 text-center">
                 <p className="text-[10px] text-muted">التقييمات</p>
-                <p className="text-xs font-bold tabular-nums text-warning">{studentEvals.length}</p>
+                <p className="text-xs font-bold tabular-nums text-warning dark:text-warning">
+                  {studentEvals.length}
+                </p>
               </div>
             </div>
 
@@ -159,8 +171,8 @@ export const EvaluationCard = ({
           </>
         ) : (
           <div className="flex flex-1 flex-col items-center justify-center gap-2 py-4 text-center">
-            <div className="bg-primary-soft/50 flex h-10 w-10 items-center justify-center rounded-xl border border-dashed border-primary/20">
-              <Award size={16} className="text-primary/30" />
+            <div className="bg-primary-soft/40 dark:bg-primary-soft/30 flex h-10 w-10 items-center justify-center rounded-xl border border-dashed border-primary/20">
+              <Award size={16} className="text-primary/40 dark:text-primary/50" />
             </div>
             <div>
               <p className="text-xs font-bold text-muted">ابدأ أول تقييم</p>
@@ -190,31 +202,31 @@ export const EvaluationCard = ({
         {!isParent && (
           <button
             onClick={() => onAddEvaluation(student.id)}
-            className="flex items-center justify-center gap-1 rounded-lg bg-primary py-2 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
+            className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
           >
-            <Plus size={11} /> تقييم
+            <Plus size={12} /> تقييم
           </button>
         )}
         <button
           onClick={() => onViewHistory(student)}
           className={cn(
-            'flex items-center justify-center gap-1 rounded-lg border py-2 text-xs font-bold transition-all active:scale-95',
+            'flex items-center justify-center gap-1 rounded-xl border py-2.5 text-[11px] font-bold transition-all active:scale-95',
             isParent
               ? 'border-primary bg-primary text-on-primary hover:bg-primary-hover'
               : 'border-border bg-surface text-main hover:bg-background',
           )}
         >
-          <History size={11} /> السجل
-          <span className="me-0.5 rounded bg-primary-soft px-1 py-0.5 text-[9px] font-bold text-primary">
+          <History size={12} /> السجل
+          <span className="me-0.5 rounded-md bg-primary-soft px-1 py-0.5 text-[9px] font-bold text-primary">
             {studentEvals.length}
           </span>
         </button>
         {!isParent && (
           <button
             onClick={() => onViewProfile(student)}
-            className="flex items-center justify-center gap-1 rounded-lg border border-border bg-surface py-2 text-xs font-bold text-main transition-all hover:border-primary/30 hover:bg-background active:scale-95"
+            className="flex items-center justify-center gap-1 rounded-xl border border-border bg-surface py-2.5 text-[11px] font-bold text-main transition-all hover:border-primary/30 hover:bg-background active:scale-95"
           >
-            <User size={11} /> الملف
+            <User size={12} /> الملف
           </button>
         )}
       </div>

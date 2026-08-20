@@ -76,7 +76,7 @@ export const EvaluationFormModal = ({
               <button
                 onClick={onClose}
                 aria-label="إغلاق"
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-surface text-muted transition-all hover:bg-hover hover:text-main"
+                className="bg-error/10 flex h-9 w-9 items-center justify-center rounded-xl text-error transition-all hover:bg-error hover:text-on-error"
               >
                 <X size={16} />
               </button>
@@ -93,7 +93,7 @@ export const EvaluationFormModal = ({
                       onChange={(e) => onChange({ ...formData, studentId: e.target.value })}
                       required
                       aria-label="اختر الطالب"
-                      className="w-full rounded-xl border border-border bg-surface px-3 py-3 text-sm text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                      className="w-full rounded-xl border border-border bg-surface px-3 py-3 text-sm text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 dark:bg-card dark:text-main dark:focus:border-primary"
                     >
                       <option value="">-- اختر من قائمة طلابك --</option>
                       {teacherStudents.map((s) => (
@@ -186,7 +186,7 @@ export const EvaluationFormModal = ({
                     value={formData.notes}
                     onChange={(e) => onChange({ ...formData, notes: e.target.value })}
                     rows={3}
-                    className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-sm transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                    className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-sm transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 dark:bg-card dark:text-main"
                     placeholder="مثال: أداء ممتاز اليوم..."
                   />
                 </div>

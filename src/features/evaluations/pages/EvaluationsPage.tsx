@@ -314,7 +314,7 @@ export const Evaluations = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
                 >
                   <action.icon size={18} />
                 </button>
@@ -326,7 +326,7 @@ export const Evaluations = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-xl transition-all',
+            'flex h-12 w-12 items-center justify-center rounded-xl text-on-primary shadow-xl transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >
