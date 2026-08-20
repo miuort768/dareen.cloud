@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Megaphone, Plus, Bell, Calendar, Filter, BarChart3 } from 'lucide-react';
+import { Megaphone, Plus, Bell, Calendar, Filter, BarChart3, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { EmptyState } from '../shared/components/ui/EmptyState';
 import { api, safeArray } from '../lib/api';
@@ -34,6 +34,17 @@ export const Announcements = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
     const [fabOpen, setFabOpen] = useState(false);
+
+    const openEdit = (ann: Announcement) => {
+        setEditingAnnouncement(ann);
+        setFormData({
+            title: ann.title,
+            content: ann.content,
+            type: ann.type,
+            isActive: ann.isActive,
+        });
+        setIsModalOpen(true);
+    };
 
     const [formData, setFormData] = useState<{
         title: string;
