@@ -218,7 +218,7 @@ export const TeacherProfilePage = () => {
                     <ProfileBottomMotivation
                         icon={<Target size={28} />}
                         title="استمر في التدريس!"
-                        description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد reached إلى أعلى المراتب! استمر في التألق'}
+                        description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد وصلت إلى أعلى المراتب! استمر في التألق'}
                         progress={nextRank ? Math.round((points / 1000) * 100) : 100}
                         progressLabel="التقدم نحو الرتبة التالية"
                         targetLabel={nextRank ? `${nextRank.needed} نقطة متبقية` : 'أحسنت!'}

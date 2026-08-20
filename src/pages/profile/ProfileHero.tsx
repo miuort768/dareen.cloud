@@ -1,4 +1,4 @@
-import { ArrowRight, Share2, Edit3 } from 'lucide-react'
+import { ArrowRight, Share2, Edit3, Target, Calendar, User, BookOpen } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Avatar } from '../../shared/components/ui'
 import { useCurrentUser, useShowNotification } from '../../context/AppContext'
@@ -8,27 +8,27 @@ interface ProfileHeroProps {
   role: 'student' | 'teacher' | 'parent'
   subtitle?: string
   rank?: { name: string; icon: string }
+  points?: number
+  attendanceRate?: number
+  stats?: { attendanceRate?: number; studentsCount?: number; [key: string]: any }
 }
 
 const ROLE_CONFIG = {
   student: {
     label: 'طالب',
-    gradient: 'from-primary/20 via-primary/5 to-transparent',
     dashboard: '/student-dashboard',
   },
   teacher: {
     label: 'معلم معتمد',
-    gradient: 'from-info/20 via-info/5 to-transparent',
     dashboard: '/teacher-dashboard',
   },
   parent: {
     label: 'ولي أمر',
-    gradient: 'from-warning/20 via-warning/5 to-transparent',
     dashboard: '/parent-dashboard',
   },
 }
 
-export const ProfileHero = ({ name, role, subtitle, rank }: ProfileHeroProps) => {
+export const ProfileHero = ({ name, role, subtitle, rank, points, attendanceRate, stats }: ProfileHeroProps) => {
   const navigate = useNavigate()
   const config = ROLE_CONFIG[role]
   const currentUser = useCurrentUser()
@@ -55,70 +55,103 @@ export const ProfileHero = ({ name, role, subtitle, rank }: ProfileHeroProps) =>
     }
   }
 
+  // Derive a progress metric to show in the circle
+  const progressValue = attendanceRate !== undefined ? attendanceRate : stats?.attendanceRate || 0
+  const showProgress = progressValue > 0 || role === 'teacher' || role === 'student'
+
+  const radius = 54
+  const circumference = 2 * Math.PI * radius
+  const offset = circumference - (progressValue / 100) * circumference
+
   return (
-    <div className="from-primary/8 relative overflow-hidden rounded-b-3xl bg-gradient-to-b via-background to-background">
-      {/* Decorative background circles */}
-      <div className="absolute -end-20 -top-20 h-40 w-40 rounded-full bg-primary/5 blur-3xl" />
-      <div className="bg-info/5 absolute -start-10 -top-10 h-32 w-32 rounded-full blur-3xl" />
+    <div className="relative overflow-hidden rounded-b-[2.5rem] border-b border-x border-border/70 bg-card p-6 shadow-elevation-1 transition-all duration-300 md:p-8" dir="rtl">
+      <div className="pointer-events-none absolute -end-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -start-24 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
 
-      <div className="relative px-5 pb-6 pt-4">
-        {/* Top bar */}
-        <div className="mb-6 flex items-center justify-between">
-          <button
-            onClick={() => navigate(config.dashboard)}
-            className="bg-card/80 border-border/50 inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-[11px] font-bold text-muted backdrop-blur-sm transition-all active:scale-95"
-          >
-            <ArrowRight size={12} />
-            العودة
-          </button>
-          <div className="flex items-center gap-2">
-            {canAccessSettings && (
-              <button
-                onClick={() => navigate('/settings')}
-                className="bg-card/80 border-border/50 flex h-8 w-8 items-center justify-center rounded-xl border backdrop-blur-sm transition-all active:scale-95"
-              >
-                <Edit3 size={13} className="text-muted" />
-              </button>
-            )}
+      {/* Top bar */}
+      <div className="relative z-10 mb-8 flex items-center justify-between">
+        <button
+          onClick={() => navigate(config.dashboard)}
+          className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-surface px-4 py-2 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-95"
+        >
+          <ArrowRight size={14} />
+          لوحة التحكم
+        </button>
+        <div className="flex items-center gap-2">
+          {canAccessSettings && (
             <button
-              onClick={handleShare}
-              className="bg-card/80 border-border/50 flex h-8 w-8 items-center justify-center rounded-xl border backdrop-blur-sm transition-all active:scale-95"
+              onClick={() => navigate('/settings')}
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-surface transition-all hover:bg-hover active:scale-95"
             >
-              <Share2 size={13} className="text-muted" />
+              <Edit3 size={14} className="text-muted" />
             </button>
-          </div>
+          )}
+          <button
+            onClick={handleShare}
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-surface transition-all hover:bg-hover active:scale-95"
+          >
+            <Share2 size={14} className="text-muted" />
+          </button>
         </div>
+      </div>
 
-        {/* Avatar + Info */}
-        <div className="flex items-center gap-4">
+      <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div className="flex items-center gap-5">
           <div className="relative shrink-0">
             <Avatar name={name} size="xl" />
-            <div className="absolute -bottom-0.5 -end-0.5 h-4 w-4 rounded-full border-2 border-background bg-success">
+            <div className="absolute -bottom-1 -end-1 h-5 w-5 rounded-full border-[3px] border-card bg-success">
               <div className="h-full w-full animate-ping rounded-full bg-success opacity-50" />
             </div>
           </div>
           <div className="min-w-0 flex-1">
-            <div className="mb-1 flex items-center gap-2">
-              <span className="rounded-lg bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-primary">
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-bold text-primary">
+                <User size={12} />
                 {config.label}
               </span>
-              <span className="bg-success/10 inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold text-success">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
-                متصل
-              </span>
-            </div>
-            <h1 className="mb-0.5 truncate text-lg font-bold leading-tight text-main">{name}</h1>
-            <div className="flex flex-wrap items-center gap-2">
-              {subtitle && (
-                <span className="truncate text-[11px] font-medium text-muted">{subtitle}</span>
-              )}
               {rank && (
-                <span className="bg-warning/10 inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold text-warning">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-warning/10 px-3 py-1 text-[11px] font-bold text-warning">
                   {rank.icon} {rank.name}
                 </span>
               )}
             </div>
+            
+            <h1 className="mb-1.5 truncate text-2xl font-black leading-tight text-main md:text-3xl">{name}</h1>
+            
+            {subtitle && (
+              <p className="text-sm font-bold text-muted flex items-center gap-1.5">
+                <BookOpen size={14} />
+                {subtitle}
+              </p>
+            )}
           </div>
+        </div>
+
+        <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-end">
+          {showProgress && (
+            <div className="relative shrink-0">
+              <svg className="h-[100px] w-[100px] -rotate-90" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r={radius} fill="none" stroke="currentColor" className="text-border/50" strokeWidth="8" />
+                <circle cx="60" cy="60" r={radius} fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={offset} className="text-primary transition-all duration-1000 ease-out" />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-xl font-black text-main tabular-nums">{progressValue}%</span>
+                <span className="text-[9px] font-bold text-muted">الالتزام</span>
+              </div>
+            </div>
+          )}
+
+          {points !== undefined && (
+            <div className="flex items-center gap-2.5 rounded-2xl border border-border bg-surface px-5 py-3 shadow-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/10 text-warning">
+                <Target size={18} />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold text-muted">النقاط</p>
+                <p className="text-lg font-black text-main tabular-nums">{points}</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

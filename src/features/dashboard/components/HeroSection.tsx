@@ -1,6 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { Bell, CalendarDays, Clock, TrendingUp, Users, Target, Sparkles } from 'lucide-react';
+import { useMemo } from 'react';
+import { TrendingUp, Users, Target, Calendar } from 'lucide-react';
 import type { User } from '../../../types/auth';
 import type { DashboardStats } from '../types';
 
@@ -16,143 +15,109 @@ const roleLabels: Record<string, string> = {
     student: 'طالب',
 };
 
-export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
-    const [currentTime, setCurrentTime] = useState(new Date());
-    useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 30000);
-        return () => clearInterval(timer);
-    }, []);
+const getGreeting = (): string => {
+    const h = new Date().getHours();
+    if (h < 5) return 'تصبح على خير';
+    if (h < 12) return 'صباح الخير';
+    if (h < 17) return 'مساء الخير';
+    return 'مساء الخير';
+};
 
-    const hour = new Date().getHours();
-    const greeting = hour < 12 ? 'صباح الخير' : 'مساء الخير';
-
-    const dateStr = useMemo(() => new Intl.DateTimeFormat('ar-EG', {
+const getFormattedDate = (): string => {
+    return new Intl.DateTimeFormat('ar-EG', {
         weekday: 'long', day: 'numeric', month: 'long',
-    }).format(new Date()), []);
+    }).format(new Date());
+};
 
+export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
     const firstName = (currentUser?.name || 'المستخدم').split(' ')[0];
     const roleLabel = roleLabels[currentUser?.role || ''] || 'مستخدم';
-
+    
     const performanceScore = stats?.attendanceRate
         ? Math.round((stats.attendanceRate * 0.4) + ((stats.totalNetProfit || 0) > 0 ? 30 : 10) + (stats.studentsCount > 0 ? 20 : 0) + (stats.monthCompletedSessions > 0 ? 10 : 0))
         : 0;
 
-    const heroStats = [
-        {
-            icon: TrendingUp,
-            value: `+${Math.max(0, stats?.monthCompletedSessions || 0)}`,
-            label: 'نمو هذا الأسبوع',
-            trend: 'up' as const,
-        },
-        {
-            icon: Users,
-            value: stats?.studentsCount || 0,
-            label: 'طالب نشط',
-            trend: 'up' as const,
-        },
-        {
-            icon: Target,
-            value: `${Math.min(100, performanceScore)}%`,
-            label: 'مؤشر الأداء',
-            trend: (performanceScore > 60 ? 'up' : 'down') as const,
-        },
-    ];
+    const radius = 54;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - ((performanceScore || 0) / 100) * circumference;
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border overflow-hidden"
-            dir="rtl"
-        >
-            <div className="p-5 md:p-6">
-                <div className="flex items-center justify-between mb-5">
-                    <div className="flex items-center gap-4">
-                        <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-                            className="w-14 h-14 rounded-2xl bg-primary dark:bg-primary flex items-center justify-center shadow-elevation-1"
-                        >
-                            <span className="text-xl font-bold text-on-primary dark:text-on-primary">{firstName.charAt(0)}</span>
-                        </motion.div>
-                        <div>
-                            <motion.h1
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.25, duration: 0.4 }}
-                                className="text-lg md:text-2xl font-bold text-main dark:text-main leading-tight"
-                            >
-                                {greeting}، {firstName}
-                            </motion.h1>
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.35, duration: 0.4 }}
-                                className="flex items-center gap-3 mt-1"
-                            >
-                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg bg-primary/10 text-primary text-[10px] font-semibold">
-                                    <Sparkles size={10} />
-                                    {roleLabel}
-                                </span>
-                                <div className="flex items-center gap-1.5 text-sm text-muted dark:text-muted">
-                                    <CalendarDays size={12} />
-                                    <span className="text-[11px]">{dateStr}</span>
-                                </div>
-                            </motion.div>
-                        </div>
+        <div className="relative overflow-hidden rounded-2xl border border-border/70 bg-card p-6 shadow-elevation-1 transition-all duration-300 md:p-8" dir="rtl">
+            <div className="pointer-events-none absolute -end-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -start-24 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
+
+            <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                <div className="min-w-0 flex-1">
+                    <div className="mb-2 flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+                            <Target size={12} />
+                            {roleLabel}
+                        </span>
+                        <span className="text-xs font-medium text-muted">
+                            <Calendar size={12} className="inline me-1" />
+                            {getFormattedDate()}
+                        </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.4, duration: 0.4 }}
-                            className="hidden sm:flex items-center gap-1.5 px-3 h-7 rounded-lg bg-primary/10 dark:bg-primary/10 text-primary dark:text-primary text-[10px] font-semibold tabular-nums"
-                        >
-                            <Clock size={10} />
-                            {currentTime.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true })}
-                        </motion.div>
-                        <motion.button
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.45, duration: 0.3 }}
-                            className="relative w-10 h-10 rounded-xl bg-surface dark:bg-hover flex items-center justify-center text-muted dark:text-muted hover:bg-border/50 dark:hover:bg-primary/10 transition-colors"
-                            aria-label="الإشعارات"
-                        >
-                            <Bell size={16} />
-                            <span className="absolute -top-0.5 -end-0.5 w-2.5 h-2.5 bg-error rounded-full border-2 border-surface dark:border-card" />
-                        </motion.button>
-                    </div>
+
+                    <h1 className="mb-2 text-2xl font-black leading-tight text-main md:text-3xl">
+                        {getGreeting()}، {firstName}
+                    </h1>
+
+                    <p className="text-sm font-bold text-muted">
+                        مرحباً بك في لوحة تحكم الإدارة. أداء المنصة مستقر.
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 md:gap-3">
-                    {heroStats.map((item, i) => {
-                        const Icon = item.icon;
-                        return (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 12 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 + i * 0.08, duration: 0.3 }}
-                                className="relative group"
-                            >
-                                <div className="bg-surface dark:bg-hover rounded-xl p-2.5 md:p-4 border border-border dark:border-border hover:border-primary/30 transition-all duration-300">
-                                    <div className="flex items-center justify-between mb-1">
-                                        <div className="flex items-center gap-1.5 min-w-0">
-                                            <Icon size={14} className="text-primary dark:text-primary shrink-0" />
-                                            <span className="text-base md:text-2xl font-black text-main dark:text-main tabular-nums tracking-tight truncate">
-                                                {item.value}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <p className="text-[9px] md:text-[11px] text-muted dark:text-muted font-bold truncate">{item.label}</p>
-                                </div>
-                            </motion.div>
-                        );
-                    })}
+                <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-end">
+                    <div className="relative shrink-0">
+                        <svg className="h-[110px] w-[110px] -rotate-90" viewBox="0 0 120 120">
+                            <circle
+                                cx="60" cy="60" r={radius}
+                                fill="none" stroke="currentColor"
+                                className="text-border/50" strokeWidth="8"
+                            />
+                            <circle
+                                cx="60" cy="60" r={radius}
+                                fill="none" stroke="currentColor"
+                                strokeWidth="8" strokeLinecap="round"
+                                strokeDasharray={circumference} strokeDashoffset={offset}
+                                className="text-primary transition-all duration-1000 ease-out"
+                            />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                            <span className="text-2xl font-black text-main tabular-nums">{performanceScore}%</span>
+                            <span className="text-[10px] font-bold text-muted">مؤشر الأداء</span>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2.5 sm:flex-row">
+                        <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5 shadow-sm">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                                <TrendingUp size={16} />
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-muted">نمو هذا الأسبوع</p>
+                                <p className="text-base font-black text-main tabular-nums" dir="ltr">
+                                    +{Math.max(0, stats?.monthCompletedSessions || 0)}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5 shadow-sm">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-info/10 text-info">
+                                <Users size={16} />
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-muted">إجمالي الطلاب</p>
+                                <p className="text-base font-black text-main tabular-nums">
+                                    {stats?.studentsCount || 0}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 };
+
