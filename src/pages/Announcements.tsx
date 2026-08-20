@@ -12,8 +12,7 @@ import { cn } from '../lib/utils';
 import { TeacherDashboardHeader } from './TeacherDashboardHeader';
 import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader';
 import { StudentDashboardHeader } from './student-dashboard/StudentDashboardHeader';
-import { useLogout } from '../shared/hooks/useLogout';
-import { useCurrentUser } from '../context/AppContext';
+import { useCurrentUser, useLogout } from '../context/AppContext';
 
 type AnnouncementType = 'general' | 'urgent' | 'holiday' | 'event';
 

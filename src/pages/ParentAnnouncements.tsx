@@ -22,8 +22,7 @@ import { Skeleton } from '../shared/components/ui'
 import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader'
 import { StudentDashboardHeader } from './student-dashboard/StudentDashboardHeader'
 import { TeacherDashboardHeader } from './TeacherDashboardHeader'
-import { useLogout } from '../shared/hooks/useLogout'
-import { useCurrentUser } from '../context/AppContext'
+import { useCurrentUser, useLogout } from '../context/AppContext'
 
 const TYPE_CONFIG: Record<
   string,
