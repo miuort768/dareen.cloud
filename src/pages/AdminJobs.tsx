@@ -74,8 +74,9 @@ function exportToCsv(apps: JobApp[]) {
     a.onlineYears || '0',
   ])
   const bom = '﻿'
+  const newLine = '\n'
   const csv =
-    bom + [headers.join(','), ...rows.map((r) => r.map((c) => '"' + c + '"').join(','))].join('\n')
+    bom + [headers.join(','), ...rows.map((r) => r.map((c) => '"' + c + '"').join(','))].join(newLine)
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
