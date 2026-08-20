@@ -50,15 +50,32 @@ function formatDate12h(dateStr: string) {
   const hours = d.getHours()
   const period = hours >= 12 ? 'م' : 'ص'
   const h12 = hours % 12 || 12
-  return d.getFullYear() + '/' + pad(d.getMonth() + 1) + '/' + pad(d.getDate()) + ' ' + pad(h12) + ':' + pad(d.getMinutes()) + ' ' + period
+  return (
+    d.getFullYear() +
+    '/' +
+    pad(d.getMonth() + 1) +
+    '/' +
+    pad(d.getDate()) +
+    ' ' +
+    pad(h12) +
+    ':' +
+    pad(d.getMinutes()) +
+    ' ' +
+    period
+  )
 }
 
 function exportToCsv(apps: JobApp[]) {
   const headers = ['الاسم', 'رقم الهاتف', 'المناهج', 'سنوات الخبرة']
-  const rows = apps.map((a) => [a.name || '', a.phone || '', a.curriculums || '-', a.onlineYears || '0'])
+  const rows = apps.map((a) => [
+    a.name || '',
+    a.phone || '',
+    a.curriculums || '-',
+    a.onlineYears || '0',
+  ])
   const bom = '﻿'
-  const csv = bom + [headers.join(','), ...rows.map((r) => r.map((c) => '"' + c + '"').join(','))].join('
-')
+  const csv =
+    bom + [headers.join(','), ...rows.map((r) => r.map((c) => '"' + c + '"').join(','))].join('\n')
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
@@ -76,7 +93,7 @@ const subjectColorMap: Record<string, string> = {
   'اللغة العربية': 'bg-primary/10 text-primary border-primary/30',
   'اللغة الإنجليزية': 'bg-info/10 text-info border-info/30',
   'اللغة الفرنسية': 'bg-info/10 text-info border-info/30',
-  'الرياضيات': 'bg-warning/10 text-warning border-warning/30',
+  الرياضيات: 'bg-warning/10 text-warning border-warning/30',
   'الدراسات الاجتماعية': 'bg-accent/10 text-accent border-accent/30',
   'العلوم أو فروعها': 'bg-info/10 text-info border-info/30',
 }
@@ -193,10 +210,38 @@ export const AdminJobs = () => {
 
   const kpiCards = useMemo(
     () => [
-      { label: 'إجمالي الطلبات', value: apps.length, icon: Briefcase, color: 'text-primary', bg: 'bg-primary/10', border: 'border-primary/20' },
-      { label: 'بانتظار التواصل', value: pendingCount, icon: Inbox, color: 'text-warning', bg: 'bg-warning/10', border: 'border-warning/20' },
-      { label: 'تم التواصل', value: contactedCount, icon: CheckCircle2, color: 'text-success', bg: 'bg-success/10', border: 'border-success/20' },
-      { label: 'المواد', value: uniqueSubjects, icon: BookOpen, color: 'text-info', bg: 'bg-info/10', border: 'border-info/20' },
+      {
+        label: 'إجمالي الطلبات',
+        value: apps.length,
+        icon: Briefcase,
+        color: 'text-primary',
+        bg: 'bg-primary/10',
+        border: 'border-primary/20',
+      },
+      {
+        label: 'بانتظار التواصل',
+        value: pendingCount,
+        icon: Inbox,
+        color: 'text-warning',
+        bg: 'bg-warning/10',
+        border: 'border-warning/20',
+      },
+      {
+        label: 'تم التواصل',
+        value: contactedCount,
+        icon: CheckCircle2,
+        color: 'text-success',
+        bg: 'bg-success/10',
+        border: 'border-success/20',
+      },
+      {
+        label: 'المواد',
+        value: uniqueSubjects,
+        icon: BookOpen,
+        color: 'text-info',
+        bg: 'bg-info/10',
+        border: 'border-info/20',
+      },
     ],
     [apps, pendingCount, contactedCount, uniqueSubjects],
   )
@@ -239,7 +284,7 @@ export const AdminJobs = () => {
               </button>
               <button
                 onClick={() => downloadExport('jobs', 'pdf').catch((e: Error) => alert(e.message))}
-                className="flex items-center gap-2 rounded-none border border-error/20 bg-error/5 px-4 py-2.5 text-xs font-bold text-error transition-all duration-200 hover:border-error/30 hover:bg-error/10 active:scale-[0.98]"
+                className="border-error/20 bg-error/5 hover:border-error/30 hover:bg-error/10 flex items-center gap-2 rounded-none border px-4 py-2.5 text-xs font-bold text-error transition-all duration-200 active:scale-[0.98]"
               >
                 <FileText size={14} />
                 <span>تصدير PDF</span>
@@ -276,7 +321,9 @@ export const AdminJobs = () => {
                   )}
                 >
                   <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('flex h-9 w-9 items-center justify-center rounded-lg', kpi.bg)}>
+                    <div
+                      className={cn('flex h-9 w-9 items-center justify-center rounded-lg', kpi.bg)}
+                    >
                       <Icon size={16} className={kpi.color} />
                     </div>
                   </div>
@@ -473,23 +520,71 @@ export const AdminJobs = () => {
                       </div>
 
                       <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 border-t border-border pt-3 text-xs sm:grid-cols-4">
-                        <DetailRow icon={Phone} label="الهاتف" value={app.phone} contacted={!!app.contacted} phoneLink />
-                        <DetailRow icon={MessageCircle} label="واتساب" value={app.whatsapp || '-'} contacted={!!app.contacted} phoneLink={!!app.whatsapp} whatsappLink />
-                        <DetailRow icon={GraduationCap} label="المؤهل" value={app.qualification} contacted={!!app.contacted} />
-                        <DetailRow icon={Award} label="التقدير" value={app.grade || '-'} contacted={!!app.contacted} />
+                        <DetailRow
+                          icon={Phone}
+                          label="الهاتف"
+                          value={app.phone}
+                          contacted={!!app.contacted}
+                          phoneLink
+                        />
+                        <DetailRow
+                          icon={MessageCircle}
+                          label="واتساب"
+                          value={app.whatsapp || '-'}
+                          contacted={!!app.contacted}
+                          phoneLink={!!app.whatsapp}
+                          whatsappLink
+                        />
+                        <DetailRow
+                          icon={GraduationCap}
+                          label="المؤهل"
+                          value={app.qualification}
+                          contacted={!!app.contacted}
+                        />
+                        <DetailRow
+                          icon={Award}
+                          label="التقدير"
+                          value={app.grade || '-'}
+                          contacted={!!app.contacted}
+                        />
                         {app.subject && (
-                          <DetailRow icon={BookMarked} label="المادة" value={app.subject} contacted={!!app.contacted} />
+                          <DetailRow
+                            icon={BookMarked}
+                            label="المادة"
+                            value={app.subject}
+                            contacted={!!app.contacted}
+                          />
                         )}
-                        <DetailRow icon={Calendar} label="سنة التخرج" value={app.graduationYear || '-'} contacted={!!app.contacted} />
-                        <DetailRow icon={Globe} label="خبرة أون لاين" value={(app.onlineYears || '0') + ' سنة'} contacted={!!app.contacted} />
-                        <DetailRow icon={Calendar} label="التاريخ" value={formatDate12h(app.createdAt)} contacted={!!app.contacted} />
+                        <DetailRow
+                          icon={Calendar}
+                          label="سنة التخرج"
+                          value={app.graduationYear || '-'}
+                          contacted={!!app.contacted}
+                        />
+                        <DetailRow
+                          icon={Globe}
+                          label="خبرة أون لاين"
+                          value={(app.onlineYears || '0') + ' سنة'}
+                          contacted={!!app.contacted}
+                        />
+                        <DetailRow
+                          icon={Calendar}
+                          label="التاريخ"
+                          value={formatDate12h(app.createdAt)}
+                          contacted={!!app.contacted}
+                        />
                         <div className="col-span-2 mt-1 flex items-start gap-2.5 border-t border-border pt-3 sm:col-span-4">
                           <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                            <BookOpen size={10} className={app.contacted ? 'text-muted' : 'text-primary'} />
+                            <BookOpen
+                              size={10}
+                              className={app.contacted ? 'text-muted' : 'text-primary'}
+                            />
                           </div>
                           <div className="min-w-0">
                             <p className="mb-0.5 text-[10px] font-bold text-muted">المناهج</p>
-                            <span className="text-[10px] font-bold text-main">{app.curriculums || '-'}</span>
+                            <span className="text-[10px] font-bold text-main">
+                              {app.curriculums || '-'}
+                            </span>
                           </div>
                         </div>
                       </div>
