@@ -8,6 +8,44 @@ const { prisma } = require('../../utils/prisma');
 
 router.use(authMiddleware);
 
+const resolveAuthorNames = async (items) => {
+    if (!Array.isArray(items) || items.length === 0) return items;
+    const authorIds = [...new Set(items.map(item => item.authorId).filter(Boolean))];
+    if (authorIds.length === 0) return items;
+
+    try {
+        const [users, teachers, students, parents] = await Promise.all([
+            prisma.user.findMany({ where: { id: { in: authorIds } }, select: { id: true, name: true } }),
+            prisma.teacher.findMany({ where: { id: { in: authorIds } }, select: { id: true, name: true } }),
+            prisma.student.findMany({ where: { id: { in: authorIds } }, select: { id: true, name: true } }),
+            prisma.parent.findMany({ where: { id: { in: authorIds } }, select: { id: true, name: true } }),
+        ]);
+
+        const nameMap = {};
+        [...users, ...teachers, ...students, ...parents].forEach(u => {
+            if (u.id && u.name) nameMap[u.id] = u.name;
+        });
+
+        return items.map(item => {
+            let name = nameMap[item.authorId] || item.authorName;
+            if (!name || name.toLowerCase() === 'a.abdullah' || /^[a-z0-9_\-.]+$/i.test(name)) {
+                if (name && name.toLowerCase() === 'a.abdullah') name = 'أ. عبد الله';
+                else if (item.authorRole === 'parent') name = 'ولي أمر';
+                else if (item.authorRole === 'teacher') name = 'معلمة';
+                else if (item.authorRole === 'student') name = 'طالب';
+                else if (item.authorRole === 'admin') name = 'إدارة المنصة';
+            }
+            return {
+                ...item,
+                authorName: name || 'عضو المنصة'
+            };
+        });
+    } catch (e) {
+        logger.warn('Error resolving author names:', e);
+        return items;
+    }
+};
+
 router.get('/', async (req, res) => {
     try {
         const user = req.user;
@@ -20,14 +58,14 @@ router.get('/', async (req, res) => {
             include: { _count: { select: { comments: true } } },
             orderBy: { createdAt: 'desc' }
         });
-        const formattedPosts = posts.map(p => ({
+        const formattedPosts = await resolveAuthorNames(posts.map(p => ({
             ...p,
             created_at: p.createdAt,
             upvotes: JSON.parse(p.upvotes || '[]'),
             downvotes: JSON.parse(p.downvotes || '[]'),
             commentCount: p._count?.comments || 0,
             _count: undefined,
-        }));
+        })));
         res.json(formattedPosts);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch forum posts');
@@ -191,7 +229,8 @@ router.get('/:id/comments', async (req, res) => {
             where: { postId: req.params.id },
             orderBy: { createdAt: 'asc' }
         });
-        res.json(comments.map(c => ({ ...c, created_at: c.createdAt })));
+        const formattedComments = await resolveAuthorNames(comments.map(c => ({ ...c, created_at: c.createdAt })));
+        res.json(formattedComments);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch comments');
     }

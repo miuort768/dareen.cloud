@@ -42,6 +42,24 @@ interface ForumPostCardProps {
   viewingComments: Record<string, boolean>
 }
 
+const formatDisplayName = (rawName?: string, role?: string) => {
+  if (!rawName) return role === 'parent' ? 'ولي الأمر' : role === 'teacher' ? 'معلمة' : role === 'admin' ? 'إدارة المنصة' : 'طالب'
+  
+  const trimmed = rawName.trim()
+  if (trimmed.toLowerCase() === 'a.abdullah' || trimmed.toLowerCase() === 'abdullah') return 'أ. عبد الله'
+  
+  if (/[\u0600-\u06FF]/.test(trimmed)) return trimmed
+
+  if (/^[a-z0-9_\-.]+$/i.test(trimmed)) {
+    if (role === 'parent') return 'ولي الأمر'
+    if (role === 'teacher') return 'معلمة'
+    if (role === 'admin') return 'إدارة المنصة'
+    if (role === 'student') return 'طالب'
+  }
+
+  return trimmed
+}
+
 export const ForumPostCard = ({
   post,
   isLiked,
@@ -81,6 +99,8 @@ export const ForumPostCard = ({
     setEditingCommentId(null)
   }
 
+  const displayAuthorName = formatDisplayName(post.authorName, post.authorRole)
+
   return (
     <div
       key={post.id}
@@ -94,11 +114,11 @@ export const ForumPostCard = ({
       <div className="flex items-start justify-between p-4 md:p-5">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-card bg-primary-soft text-sm font-bold text-primary">
-            {((post.authorName || 'ولي الأمر')[0] || '').toUpperCase()}
+            {(displayAuthorName[0] || '').toUpperCase()}
           </div>
           <div>
             <div className="mb-0.5 flex items-center gap-2">
-              <h4 className="text-sm font-bold text-main">{post.authorName || (post.authorRole === 'parent' ? 'ولي الأمر' : 'عضو المنتدى')}</h4>
+              <h4 className="text-sm font-bold text-main">{displayAuthorName}</h4>
               {post.authorRole === 'admin' && (
                 <span className="rounded-card border border-error bg-error-light px-2 py-0.5 text-micro font-bold text-error">
                   إدارة
@@ -250,15 +270,17 @@ export const ForumPostCard = ({
       {viewingComments[post.id] && (
         <div className="bg-surface/50 border-t border-border p-4 md:p-5">
           <div className="space-y-1">
-            {buildThreadedComments(post.comments || []).map((node) => (
+            {buildThreadedComments(post.comments || []).map((node) => {
+              const commentAuthorName = formatDisplayName(node.comment.authorName, node.comment.authorRole)
+              return (
               <div key={node.comment.id} className="group/comment">
                 <div className="flex gap-3 rounded-xl p-3 transition-colors hover:bg-card">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/15 to-primary/5 text-xs font-bold text-primary ring-1 ring-primary/10">
-                    {((node.comment.authorName || 'ولي الأمر')[0] || '').toUpperCase()}
+                    {(commentAuthorName[0] || '').toUpperCase()}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="mb-1 flex items-center gap-2">
-                      <h5 className="text-[13px] font-bold text-main">{node.comment.authorName || (node.comment.authorRole === 'parent' ? 'ولي الأمر' : 'عضو المنتدى')}</h5>
+                      <h5 className="text-[13px] font-bold text-main">{commentAuthorName}</h5>
                       {node.comment.authorRole === 'admin' && (
                         <span className="bg-error/10 rounded-full px-1.5 py-0.5 text-[9px] font-bold text-error">
                           إدارة
@@ -366,18 +388,20 @@ export const ForumPostCard = ({
                 {/* Replies Thread */}
                 {node.replies.length > 0 && (
                   <div className="me-0 ms-6 border-e-2 border-primary/20 ps-4">
-                    {node.replies.map((replyNode) => (
+                    {node.replies.map((replyNode) => {
+                      const replyAuthorName = formatDisplayName(replyNode.comment.authorName, replyNode.comment.authorRole)
+                      return (
                       <div
                         key={replyNode.comment.id}
                         className="flex gap-2.5 rounded-xl p-2.5 transition-colors hover:bg-card"
                       >
                         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-primary/5 text-[10px] font-bold text-primary ring-1 ring-primary/10">
-                          {((replyNode.comment.authorName || 'ولي الأمر')[0] || '').toUpperCase()}
+                          {(replyAuthorName[0] || '').toUpperCase()}
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="mb-0.5 flex items-center gap-2">
                             <h5 className="text-[12px] font-bold text-main">
-                              {replyNode.comment.authorName || (replyNode.comment.authorRole === 'parent' ? 'ولي الأمر' : 'عضو المنتدى')}
+                              {replyAuthorName}
                             </h5>
                             {replyNode.comment.authorRole === 'admin' && (
                               <span className="bg-error/10 rounded-full px-1.5 py-0.5 text-[8px] font-bold text-error">
@@ -483,11 +507,13 @@ export const ForumPostCard = ({
                           </div>
                         </div>
                       </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 )}
               </div>
-            ))}
+              )
+            })}
           </div>
 
           <div className="border-border/50 mt-3 flex items-center gap-3 border-t pt-3">

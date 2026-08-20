@@ -61,8 +61,9 @@ export const Header = memo(() => {
 
   const dashboardPaths = ['/teacher-dashboard', '/student-dashboard', '/parent-dashboard', '/chat']
   if (
-    !isDesktop &&
-    dashboardPaths.some((p) => location.pathname === p || location.pathname.startsWith(`${p}/`))
+    (!isDesktop &&
+      dashboardPaths.some((p) => location.pathname === p || location.pathname.startsWith(`${p}/`))) ||
+    (currentUser?.role !== 'admin' && location.pathname === '/forum')
   )
     return null
 
