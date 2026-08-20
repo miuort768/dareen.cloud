@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Plus, Users, GraduationCap, Phone, Download, FileText, FileUp } from 'lucide-react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Plus, Download, FileText, FileUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 import { downloadExport } from '../lib/download';
 import { useShowNotification, useAcademyName } from '../context/AppContext';
@@ -22,15 +22,6 @@ const samePhone = (a?: string | null, b?: string | null) => {
 
 const parentHasStudents = (parent: Parent, students: Student[]) =>
     students.filter(s => samePhone(parent.phone, s.parentPhone) || (parent.id && s.parent?.id === parent.id));
-
-function AnimatedCounter({ value }: { value: number }) {
-    const motionValue = useMotionValue(0);
-    const spring = useSpring(motionValue, { stiffness: 80, damping: 20 });
-    const rounded = useTransform(spring, (v) => Math.round(v));
-    const displayValue = useTransform(rounded, (v) => v.toLocaleString('ar-EG'));
-    useEffect(() => { motionValue.set(value); }, [value, motionValue]);
-    return <motion.span className="text-xl sm:text-2xl font-bold tabular-nums">{displayValue}</motion.span>;
-}
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
     id: i, x: Math.random() * 100, y: Math.random() * 100,
@@ -62,15 +53,8 @@ export const Parents = () => {
 
     const isEdit = !!state.editId;
 
-    const kpiCards = useMemo(() => [
-        { label: 'إجمالي أولياء الأمور', value: state.totalParents, icon: Users, gradient: 'from-primary/20 to-primary/5', iconBg: 'bg-primary/10 text-primary', accent: 'bg-primary' },
-        { label: 'الأبناء المرتبطون', value: state.totalLinkedStudents, icon: GraduationCap, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
-        { label: 'متوسط الأبناء', value: Math.round(avgChildren * 10) / 10, icon: Phone, gradient: 'from-info/20 to-info/5', iconBg: 'bg-info/10 text-info', accent: 'bg-info' },
-        { label: 'جاهز للتصدير', value: filteredParents.length, icon: Download, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
-    ], [state.totalParents, state.totalLinkedStudents, avgChildren, filteredParents.length]);
-
     const fabActions = useMemo(() => [
-        { icon: Plus, label: 'إضافة ولي أمر', onClick: () => { actions.setShowAddForm(!state.showAddForm); if (!state.showAddForm) { actions.setEditId(null); actions.setNewParent({ name: '', phone: '', email: '', username: '', password: '' }); } } },
+        { icon: Plus, label: 'إضافة ولي أمر', onClick: () => { actions.setShowAddForm(!state.showAddForm); if (!state.showAddForm) { actions.setEditId(null); actions.setNewParent({ name: '', phone: '', phone2: '', username: '', password: '' }); } } },
         { icon: FileUp, label: 'استيراد من الطلاب', onClick: actions.handleImportParents },
         { icon: Download, label: 'تصدير Excel', onClick: () => downloadExport('parents', 'xlsx').then(() => showNotification('تم تصدير Excel', 'success')).catch(e => showNotification(e.message, 'error')) },
         { icon: FileText, label: 'تصدير PDF', onClick: () => downloadExport('parents', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error')) },
@@ -108,7 +92,7 @@ export const Parents = () => {
                             actions.setShowAddForm(!state.showAddForm);
                             if (!state.showAddForm) {
                                 actions.setEditId(null);
-                                actions.setNewParent({ name: '', phone: '', email: '', username: '', password: '' });
+                                actions.setNewParent({ name: '', phone: '', phone2: '', username: '', password: '' });
                             }
                         }}
                         onImport={actions.handleImportParents}
@@ -116,25 +100,6 @@ export const Parents = () => {
                         onExportPDF={() => downloadExport('parents', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error'))}
                     />
                 </div>
-
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
-                        {kpiCards.map((kpi, i) => {
-                            const Icon = kpi.icon;
-                            return (
-                                <motion.div key={kpi.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
-                                    whileHover={{ scale: 1.02, y: -2 }} className={cn("relative overflow-hidden rounded-xl bg-gradient-to-br border border-border/50 p-4", kpi.gradient)}>
-                                    <div className="flex items-center justify-between mb-3">
-                                        <div className={cn("p-2 rounded-lg", kpi.iconBg)}><Icon size={16} /></div>
-                                        <div className={cn("h-1 w-12 rounded-full", kpi.accent)} />
-                                    </div>
-                                    <p className="text-xs text-muted mb-1">{kpi.label}</p>
-                                    {typeof kpi.value === 'number' ? <AnimatedCounter value={kpi.value} /> : <span className="text-xl sm:text-2xl font-bold">{kpi.value}</span>}
-                                </motion.div>
-                            );
-                        })}
-                    </div>
-                </motion.div>
 
                 <div className="py-3 space-y-3">
                     <AnimatePresence>

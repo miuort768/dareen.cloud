@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Phone, Mail, MessageCircle, Edit, Trash2, Users, GraduationCap, BookOpen, Calendar, TrendingUp, Clock, AlertCircle, Star, AlertTriangle, KeyRound } from 'lucide-react';
+import { X, Phone, MessageCircle, Edit, Trash2, Users, GraduationCap, BookOpen, Calendar, TrendingUp, Clock, AlertCircle, Star, AlertTriangle, KeyRound } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { ProgressBar } from '../../../shared/components/ui';
 import type { Parent, Student } from '../../../types';
@@ -74,14 +74,14 @@ const OverviewTab = ({ parent, details, children, handleCall, handleWhatsApp, on
                         <p className="text-[11px] font-bold text-main font-mono" dir="ltr">{parent.phone}</p>
                     </div>
                 </div>
-                {parent.email && (
+                {parent.phone2 && (
                     <div className="flex items-center gap-2.5 px-3 py-2.5 bg-info-soft/30 border border-info/10 rounded-xl">
                         <div className="w-7 h-7 rounded-lg bg-info-soft flex items-center justify-center shrink-0">
-                            <Mail size={11} className="text-info" />
+                            <Phone size={11} className="text-info" />
                         </div>
                         <div>
-                            <p className="text-[9px] text-muted">البريد الإلكتروني</p>
-                            <p className="text-[11px] font-bold text-main truncate">{parent.email}</p>
+                            <p className="text-[9px] text-muted">هاتف إضافي</p>
+                            <p className="text-[11px] font-bold text-main font-mono" dir="ltr">{parent.phone2}</p>
                         </div>
                     </div>
                 )}
@@ -170,16 +170,16 @@ const OverviewTab = ({ parent, details, children, handleCall, handleWhatsApp, on
 
         {/* Actions */}
         <div className="grid grid-cols-2 gap-2 pt-2">
-            <button onClick={handleCall} className="flex items-center justify-center gap-2 py-2.5 bg-success text-on-success text-[10px] font-bold rounded-xl hover:bg-success-hover transition-all active:scale-95">
+            <button onClick={handleCall} className="flex items-center justify-center gap-2 py-2.5 bg-success text-on-success text-[10px] font-bold rounded-xl hover:bg-success-hover transition-all active:scale-95 dark:bg-success dark:text-on-success dark:hover:bg-success-hover">
                 <Phone size={12} /> اتصال
             </button>
-            <button onClick={handleWhatsApp} className="flex items-center justify-center gap-2 py-2.5 bg-warning text-on-warning text-[10px] font-bold rounded-xl hover:bg-warning-hover transition-all active:scale-95">
+            <button onClick={handleWhatsApp} className="flex items-center justify-center gap-2 py-2.5 bg-warning text-on-warning text-[10px] font-bold rounded-xl hover:bg-warning-hover transition-all active:scale-95 dark:bg-warning dark:text-on-warning dark:hover:bg-warning-hover">
                 <MessageCircle size={12} /> واتساب
             </button>
-            <button onClick={() => onEdit?.(parent)} className="flex items-center justify-center gap-2 py-2.5 bg-primary text-on-primary text-[10px] font-bold rounded-xl hover:bg-primary-hover transition-all active:scale-95">
+            <button onClick={() => onEdit?.(parent)} className="flex items-center justify-center gap-2 py-2.5 bg-primary text-on-primary text-[10px] font-bold rounded-xl hover:bg-primary-hover transition-all active:scale-95 dark:bg-primary dark:text-on-primary dark:hover:bg-primary-hover">
                 <Edit size={12} /> تعديل
             </button>
-            <button onClick={() => onDelete?.(parent.id)} className="flex items-center justify-center gap-2 py-2.5 bg-error text-on-error text-[10px] font-bold rounded-xl hover:bg-error-hover transition-all active:scale-95">
+            <button onClick={() => onDelete?.(parent.id)} className="flex items-center justify-center gap-2 py-2.5 bg-error text-on-error text-[10px] font-bold rounded-xl hover:bg-error-hover transition-all active:scale-95 dark:bg-error dark:text-on-error dark:hover:bg-error-hover">
                 <Trash2 size={12} /> حذف
             </button>
         </div>
@@ -252,9 +252,9 @@ const ParentHeader = ({ parent, hasOverdue, childrenCount, onClose }: {
     const gradient = getAvatarGradient(parent.name);
     return (
         <div className={cn("relative overflow-hidden p-5 bg-gradient-to-br", gradient.g)}>
-            <div className="absolute inset-0 bg-white/10" />
-            <div className="absolute -top-6 -end-6 w-24 h-24 bg-white/10 rounded-full blur-2xl" />
-            <div className="absolute -bottom-6 -start-6 w-16 h-16 bg-black/10 rounded-full blur-xl" />
+            <div className="absolute inset-0 bg-white/10 pointer-events-none" />
+            <div className="absolute -top-6 -end-6 w-24 h-24 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="absolute -bottom-6 -start-6 w-16 h-16 bg-black/10 rounded-full blur-xl pointer-events-none" />
             <button onClick={onClose} className={cn("absolute top-4 end-4 w-10 h-10 flex items-center justify-center bg-black/10 hover:bg-black/20 rounded-xl transition-all z-10", gradient.on)} aria-label="إغلاق">
                 <X size={20} />
             </button>

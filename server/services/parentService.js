@@ -10,7 +10,7 @@ const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccoun
 const CK = CACHE_KEYS.parents;
 
 const parentSelect = {
-  id: true, name: true, phone: true, email: true, username: true,
+  id: true, name: true, phone: true, phone2: true, email: true, username: true,
 };
 
 const ARABIC_DIGITS = {
@@ -124,7 +124,7 @@ async function getParentById(id) {
 }
 
 async function createParent(data, user) {
-  const { id, name, phone, email, username, password } = data;
+  const { id, name, phone, phone2, email, username, password } = data;
 
   if (!name || !phone) {
     throw Object.assign(new Error('Name and phone are required'), { statusCode: 400 });
@@ -151,7 +151,7 @@ async function createParent(data, user) {
   const parent = await prisma.$transaction(async (tx) => {
     return tx.parent.create({
       data: {
-        id: newId, name, phone,
+        id: newId, name, phone, phone2: phone2 || null,
         email: email || '',
         username: dbUsername,
         password: hashedPassword,
@@ -171,7 +171,7 @@ async function createParent(data, user) {
 }
 
 async function updateParent(id, data, user) {
-  const { name, phone, email, username, password } = data;
+  const { name, phone, phone2, email, username, password } = data;
 
   const existing = await prisma.parent.findUnique({ where: { id } });
   if (!existing) {
@@ -192,7 +192,7 @@ async function updateParent(id, data, user) {
       throw Object.assign(new Error('اسم المستخدم موجود بالفعل، يرجى اختيار اسم آخر لولي الأمر.'), { statusCode: 400, code: 'P2002' });
     }
   }
-  const updateData = { name, phone, email: email || '' };
+  const updateData = { name, phone, phone2: phone2 || null, email: email || '' };
   if (dbUsername) updateData.username = dbUsername;
 
   if (password && password.trim() !== '' && !password.startsWith('$2b$')) {

@@ -52,7 +52,7 @@ export const ParentsHeader = ({
     initial={{ opacity: 0, y: 12 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.35 }}
-    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-xl dark:border dark:border-amber-500/30 dark:from-zinc-950 dark:via-zinc-900 dark:to-black"
+    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-xl dark:from-primary dark:via-primary-deep dark:to-primary-hover dark:border dark:border-primary/20"
   >
     <div className="absolute inset-0 opacity-[0.06]">
       <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -162,7 +162,7 @@ export const ParentsHeader = ({
           <input
             type="text"
             aria-label="بحث عن ولي أمر"
-            placeholder="ابحث بالاسم أو الهاتف أو البريد..."
+            placeholder="ابحث بالاسم أو الهاتف..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
             className="w-full rounded-xl border border-white/20 bg-white/15 py-2.5 pe-3 ps-9 text-[11px] font-bold text-white outline-none backdrop-blur-sm transition-all placeholder:text-white/40 focus:border-white/40 focus:bg-white/20"

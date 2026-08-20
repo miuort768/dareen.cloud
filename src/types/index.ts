@@ -58,7 +58,8 @@ export interface Parent {
   id: string
   name: string
   phone: string
-  email: string
+  phone2?: string
+  email?: string
   username?: string
   password?: string
 }

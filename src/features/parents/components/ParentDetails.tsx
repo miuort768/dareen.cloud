@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, X, Phone, Mail, Users, GraduationCap, Calendar, TrendingUp, BookOpen, Clock } from 'lucide-react';
+import { User, X, Phone, Users, GraduationCap, Calendar, TrendingUp, BookOpen, Clock } from 'lucide-react';
 import { StatCard, ProgressBar } from '../../../shared/components/ui';
 import type { Parent, Student } from '../../../types';
 import type { FamilyScheduleItem } from '../types';
@@ -55,12 +55,12 @@ export const ParentDetails: React.FC<ParentDetailsProps> = ({
                                 {parent.phone}
                             </div>
                         </div>
-                        {parent.email && (
+                        {parent.phone2 && (
                             <div dir="ltr" className="flex items-center justify-between px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/10 text-micro font-medium text-on-primary/80 group hover:bg-white/15 transition-colors rounded-xl">
-                                <span className="text-on-primary/50 uppercase tracking-widest">Email</span>
+                                <span className="text-on-primary/50 uppercase tracking-widest">Phone 2</span>
                                 <div className="flex items-center gap-2">
-                                    <Mail size={11} className="text-info" />
-                                    <span className="truncate max-w-[140px]">{parent.email}</span>
+                                    <Phone size={11} className="text-info" />
+                                    <span className="truncate max-w-[140px]">{parent.phone2}</span>
                                 </div>
                             </div>
                         )}

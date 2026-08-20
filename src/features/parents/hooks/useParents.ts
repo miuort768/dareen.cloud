@@ -16,10 +16,10 @@ export const useParents = () => {
     const [selectedParent, setSelectedParent] = useState<Parent | null>(null);
     const [showDetails, setShowDetails] = useState(false);
     const [editId, setEditId] = useState<string | null>(null);
-    const [newParent, setNewParent] = useState<{ name: string; phone: string; email: string; username?: string; password?: string }>({
+    const [newParent, setNewParent] = useState<{ name: string; phone: string; phone2?: string; username?: string; password?: string }>({
         name: '',
         phone: '',
-        email: '',
+        phone2: '',
         username: '',
         password: ''
     });
@@ -79,7 +79,7 @@ export const useParents = () => {
                 await addMutation.mutateAsync(newParent);
             }
             setShowAddForm(false);
-            setNewParent({ name: '', phone: '', email: '', username: '', password: '' });
+            setNewParent({ name: '', phone: '', phone2: '', username: '', password: '' });
         } catch (error) {
             console.error("Error saving parent", error);
             showNotification(error.response?.data?.details || error.message || 'فشل في حفظ البيانات', 'error');
@@ -90,8 +90,8 @@ export const useParents = () => {
         setNewParent({
             name: parent.name,
             phone: parent.phone,
-            email: parent.email || '',
-            username: (parent as { username?: string }).username || parent.phone,
+            phone2: parent.phone2 || '',
+            username: parent.username || '',
             password: ''
         });
         setEditId(parent.id);
@@ -172,7 +172,7 @@ export const useParents = () => {
                 newParentsList.push({
                     name: `ولي أمر ${oldestStudent.name}`,
                     phone: phone,
-                    email: ''
+                    phone2: '',
                 });
             }
         }
@@ -245,7 +245,7 @@ export const useParents = () => {
         return parents.filter(p =>
             (p.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
             (p.phone || '').includes(searchTerm) ||
-            (p.email && p.email.toLowerCase().includes(searchTerm.toLowerCase()))
+            (p.phone2 && p.phone2.includes(searchTerm))
         );
     }, [parents, searchTerm]);
 

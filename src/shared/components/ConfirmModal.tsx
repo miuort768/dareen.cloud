@@ -111,11 +111,11 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
 
         <div className="relative p-6">
           {/* Close button */}
-          <button
-            onClick={onClose}
-            className="absolute start-4 top-4 flex h-8 w-8 items-center justify-center rounded-lg rounded-xl bg-error text-muted text-on-error transition-all hover:bg-hover hover:text-main"
-            aria-label="إغلاق"
-          >
+            <button
+              onClick={onClose}
+              className="absolute start-4 top-4 flex h-8 w-8 items-center justify-center rounded-none bg-error text-on-error transition-all hover:bg-error-hover hover:scale-110 active:scale-95"
+              aria-label="إغلاق"
+            >
             <X size={16} />
           </button>
 
@@ -123,7 +123,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
             {/* Icon */}
             <div
               className={cn(
-                'mb-5 flex h-16 w-16 items-center justify-center rounded-2xl',
+                'mb-5 flex h-16 w-16 items-center justify-center rounded-none',
                 isDestructive
                   ? 'bg-error/10 dark:bg-error/15 text-error'
                   : 'bg-primary/10 text-primary dark:bg-primary/15',
@@ -164,7 +164,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                     placeholder={passwordPlaceholder}
                     aria-label="كلمة المرور التحذيرية"
                     className={cn(
-                      'w-full rounded-xl border bg-surface py-2.5 pe-3 ps-9 text-xs font-bold text-main outline-none transition-all focus:ring-2',
+                      'w-full rounded-none border bg-surface py-2.5 pe-3 ps-9 text-xs font-bold text-main outline-none transition-all focus:ring-2',
                       passwordError
                         ? 'focus:ring-error/20 border-error focus:border-error'
                         : 'border-border focus:border-primary focus:ring-focus',

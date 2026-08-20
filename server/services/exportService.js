@@ -11,25 +11,36 @@ const logger = require('../utils/logger');
 const bidi = bidiFactory();
 
 // Shapes Arabic letters and reorders the run into visual order so PDFKit can
-// render it correctly. bidi-js has no getReorderedString() — we compute the
-// embedding levels and reverse the returned segments in place.
+// render it correctly. PDFKit renders LTR only, so after shaping we reverse
+// the string to get the correct visual order for Arabic text.
 function reshape(text) {
     const input = String(text ?? '');
     if (!isArabic(input)) return input;
     const shaped = arabicReshaper.convertArabic(input);
     try {
-        const embeddingLevels = bidi.getEmbeddingLevels(shaped);
-        const flips = bidi.getReorderSegments(shaped, embeddingLevels);
+        const { levels } = bidi.getEmbeddingLevels(shaped);
+        const maxLevel = Math.max(...levels);
         const chars = Array.from(shaped);
-        flips.forEach(([start, end]) => {
-            while (start < end) {
-                const tmp = chars[start];
-                chars[start] = chars[end];
-                chars[end] = tmp;
-                start++;
-                end--;
+        for (let level = maxLevel; level > 0; level--) {
+            let i = 0;
+            while (i < chars.length) {
+                if (levels[i] >= level) {
+                    let end = i;
+                    while (end < chars.length && levels[end] >= level) end++;
+                    let left = i, right = end - 1;
+                    while (left < right) {
+                        const tmp = chars[left];
+                        chars[left] = chars[right];
+                        chars[right] = tmp;
+                        left++;
+                        right--;
+                    }
+                    i = end;
+                } else {
+                    i++;
+                }
             }
-        });
+        }
         return chars.join('');
     } catch (err) {
         logger.warn('Arabic reshape/reorder failed, falling back to shaped text:', err.message);
@@ -107,7 +118,7 @@ async function fetchParents({ q, from, to }) {
     if (q) where.OR = [{ name: { contains: q } }, { phone: { contains: q } }];
     return prisma.parent.findMany({
         where,
-        select: { id: true, name: true, phone: true, email: true, createdAt: true },
+        select: { id: true, name: true, phone: true, phone2: true, createdAt: true },
         orderBy: { name: 'asc' },
     });
 }
@@ -227,7 +238,7 @@ const COLUMNS = {
     parents: [
         { header: 'الاسم', key: 'name', width: 25 },
         { header: 'رقم الهاتف', key: 'phone', width: 18 },
-        { header: 'البريد', key: 'email', width: 25 },
+        { header: 'هاتف إضافي', key: 'phone2', width: 18 },
     ],
     sessions: [
         { header: 'الطالب', key: 'studentName', width: 20 },

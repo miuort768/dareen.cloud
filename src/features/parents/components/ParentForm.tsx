@@ -112,11 +112,11 @@ export const ParentForm: React.FC<ParentFormProps> = ({
               onChange={(e) => onChange({ ...formData, username: e.target.value })}
             />
             <InputField
-              label={isEdit ? '���� ������ �������' : '���� ������ (�������)'}
+              label="كلمة المرور"
               icon={User}
               type="password"
-              required={!isEdit}
-              placeholder={isEdit ? '������ ����� ������� ��� �������' : '����� ���� ���� ����'}
+              required
+              placeholder="كلمة مرور الدخول للنظام"
               onChange={(e) => onChange({ ...formData, password: e.target.value })}
             />
           </div>

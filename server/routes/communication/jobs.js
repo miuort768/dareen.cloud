@@ -101,20 +101,4 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
     }
 });
 
-
-router.get('/export/:format', authMiddleware, checkRole(['admin']), async (req, res) => {
-    try {
-        const { format } = req.params;
-        if (!['xlsx', 'pdf'].includes(format)) {
-            return res.status(400).json({ error: 'Format must be xlsx or pdf' });
-        }
-        const result = await exportData('jobs', format, req.query);
-        res.setHeader('Content-Type', result.contentType);
-        res.setHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' + encodeURIComponent(result.filename));
-        res.send(result.buffer);
-    } catch (err) {
-        ResponseHandler.serverError(res, err, 'Export job applications');
-    }
-});
-
 module.exports = router;
