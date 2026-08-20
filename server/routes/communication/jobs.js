@@ -6,6 +6,7 @@ const ResponseHandler = require('../../utils/responseHandler');
 const logger = require('../../utils/logger');
 const { sanitizeInput } = require('../../middleware/advanced');
 const { prisma } = require('../../utils/prisma');
+const { exportData } = require('../../services/exportService');
 
 router.use(sanitizeInput);
 
@@ -97,6 +98,22 @@ router.delete('/:id', authMiddleware, checkRole(['admin']), async (req, res) => 
         res.json({ message: 'تم الحذف' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Delete job application');
+    }
+});
+
+
+router.get('/export/:format', authMiddleware, checkRole(['admin']), async (req, res) => {
+    try {
+        const { format } = req.params;
+        if (!['xlsx', 'pdf'].includes(format)) {
+            return res.status(400).json({ error: 'Format must be xlsx or pdf' });
+        }
+        const result = await exportData('jobs', format, req.query);
+        res.setHeader('Content-Type', result.contentType);
+        res.setHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' + encodeURIComponent(result.filename));
+        res.send(result.buffer);
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Export job applications');
     }
 });
 

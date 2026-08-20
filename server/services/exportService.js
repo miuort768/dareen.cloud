@@ -190,6 +190,20 @@ async function fetchAttendance({ from, to, teacherId }) {
     });
 }
 
+
+
+async function fetchJobs({ q, from, to }) {
+    const where = {};
+    if (q) where.OR = [{ name: { contains: q } }, { phone: { contains: q } }, { whatsapp: { contains: q } }];
+    if (from || to) where.createdAt = buildDateFilter(from, to);
+    return prisma.jobApplication.findMany({
+        where,
+        select: { id: true, name: true, phone: true, whatsapp: true, position: true,
+                  qualification: true, grade: true, graduationYear: true, onlineYears: true,
+                  curriculums: true, subject: true, contacted: true, createdAt: true },
+        orderBy: { createdAt: 'desc' },
+    });
+}
 // ── Column Definitions ─────────────────────────────────────
 
 const COLUMNS = {
@@ -247,6 +261,16 @@ const COLUMNS = {
         { header: 'التاريخ', key: 'date', width: 15 },
         { header: 'الوقت', key: 'time', width: 10 },
     ],
+    jobs: [
+        { header: 'الاسم', key: 'name', width: 25 },
+        { header: 'الهاتف', key: 'phone', width: 18 },
+        { header: 'الوظيفة', key: 'position', width: 20 },
+        { header: 'المؤهل', key: 'qualification', width: 15 },
+        { header: 'المادة', key: 'subject', width: 15 },
+        { header: 'المناهج', key: 'curriculums', width: 20 },
+        { header: 'خبرة أون لاين', key: 'onlineYears', width: 12 },
+        { header: 'تم التواصل', key: 'contacted', width: 10 },
+    ],
 };
 
 const LABELS = {
@@ -254,6 +278,7 @@ const LABELS = {
     sessions: 'الحصص', teacherInvoices: 'فواتير المعلمين',
     studentInvoices: 'فواتير الطلاب', attendance: 'الحضور',
     finance: 'المالية',
+    jobs: 'طلبات التوظيف',
 };
 
 const FETCHERS = {
@@ -264,6 +289,7 @@ const FETCHERS = {
     teacherInvoices: (f) => fetchInvoices({ ...f, type: 'teacher' }),
     studentInvoices: (f) => fetchInvoices({ ...f, type: 'student' }),
     attendance: fetchAttendance,
+    jobs: (f) => fetchJobs(f),
     finance: fetchFinance,
 };
 
