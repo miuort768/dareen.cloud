@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Calendar } from 'lucide-react'
 import { fadeUp } from '../shared/animations/fadeUp'
 import { EmptyState } from '../shared/components/ui/EmptyState'
@@ -80,7 +80,7 @@ export const TeacherDashboardDesktop = ({
           {nextSession ? (
             <NextSessionHero timeline={timeline} />
           ) : (
-            <div className="flex h-full min-h-[200px] items-center justify-center rounded-2xl border border-border bg-surface p-5 dark:border-border dark:bg-card">
+            <div className="flex h-full min-h-[160px] items-center justify-center rounded-2xl border border-border bg-surface p-5 dark:border-border dark:bg-card">
               <EmptyState
                 icon={Calendar}
                 title="لا توجد حصة قادمة"
@@ -91,71 +91,79 @@ export const TeacherDashboardDesktop = ({
           )}
         </motion.div>
 
-        <motion.div {...fadeUp(0.06)}>
-          <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm transition-all duration-300 hover:shadow-md dark:border-border dark:bg-card">
-            <QuickActions showQuickLinks={false} />
-          </div>
-        </motion.div>
-
         <motion.div {...fadeUp(0.08)}>
           <DashboardStats stats={stats} isTeacher={true} />
         </motion.div>
 
-        <motion.div {...fadeUp(0.12)}>
-          <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
-            <LiveSessions />
-          </div>
-        </motion.div>
-
-        <motion.div {...fadeUp(0.14)} className="grid grid-cols-1 gap-3 md:gap-4 lg:grid-cols-2">
-          <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
-            <AttendanceChart rate={stats.attendanceRate} />
-          </div>
-          {timeline.length > 0 && (
+        {/* ════════════════════════════════════════
+            Main Grid Layout (3 Columns)
+           ════════════════════════════════════════ */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          {/* Left Column (Main Content - span 2) */}
+          <div className="lg:col-span-2 space-y-6">
             <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
-              <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
+              <LiveSessions />
             </div>
-          )}
-          <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
-            <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
-          </div>
-          <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
-            <FinancialSnapshot
-              monthNetProfit={stats.monthNetProfit}
-              monthRevenue={stats.monthRevenue}
-              expectedCollection={stats.expectedCollection}
-              currency={stats.currency}
-            />
-          </div>
-          <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
-            <TeacherAchievements
-              stats={stats}
-              lowBalanceStudents={lowBalanceStudents}
-              isTeacher={true}
-            />
-          </div>
-          <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
-            <TasksAndRequests tasks={tasks} />
-          </div>
-        </motion.div>
 
-        <motion.div {...fadeUp(0.16)}>
-          <div
-            id="announcements-section"
-            className="scroll-mt-32 rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card"
-          >
-            <ModernAnnouncements />
-          </div>
-        </motion.div>
+            {timeline.length > 0 && (
+              <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
+                <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
+              </div>
+            )}
 
-        <motion.div {...fadeUp(0.18)}>
-          <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
-            <SmartNotifications
-              lowBalanceStudents={lowBalanceStudents}
-              focusStudents={focusStudents || []}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
+                <AttendanceChart rate={stats.attendanceRate} />
+              </div>
+              <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
+                <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
+              </div>
+            </div>
+
+            <div
+              id="announcements-section"
+              className="scroll-mt-32 rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card"
+            >
+              <ModernAnnouncements />
+            </div>
           </div>
-        </motion.div>
+
+          {/* Right Column (Sidebar/Widgets - span 1) */}
+          <div className="space-y-6">
+            <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm transition-all duration-300 hover:shadow-md dark:border-border dark:bg-card">
+              <QuickActions showQuickLinks={false} />
+            </div>
+
+            <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
+              <SmartNotifications
+                lowBalanceStudents={lowBalanceStudents}
+                focusStudents={focusStudents || []}
+              />
+            </div>
+
+            <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
+              <TasksAndRequests tasks={tasks} />
+            </div>
+
+            <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
+              <FinancialSnapshot
+                monthNetProfit={stats.monthNetProfit}
+                monthRevenue={stats.monthRevenue}
+                expectedCollection={stats.expectedCollection}
+                currency={stats.currency}
+              />
+            </div>
+
+            <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
+              <TeacherAchievements
+                stats={stats}
+                lowBalanceStudents={lowBalanceStudents}
+                isTeacher={true}
+              />
+            </div>
+          </div>
+        </div>
 
         {briefingStudent && (
           <StudentQuickBrief

@@ -25,23 +25,6 @@ const containerVariants = {
     visible: { opacity: 1, transition: { staggerChildren: 0.06 } }
 };
 
-const SectionDivider = () => (
-    <div className="relative py-2">
-        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 border-t border-divider" />
-    </div>
-);
-
-const SectionLabel = ({ label, hint }: { label: string; hint?: string }) => (
-    <div className="flex items-center gap-3 mb-5">
-        <span className="w-1 h-5 rounded-full bg-primary" />
-        <div className="flex items-baseline gap-2">
-            <h2 className="text-sm font-bold text-main">{label}</h2>
-            {hint && <span className="text-[10px] font-medium text-dim">{hint}</span>}
-        </div>
-        <div className="flex-1 h-px bg-divider" />
-    </div>
-);
-
 const asTasks = (tasks: { status?: string }[]) => tasks as DashboardTask[];
 const asRecordList = (list: unknown[]) => list as Record<string, unknown>[];
 const asTimelineSessions = (list: unknown[]) =>
@@ -206,70 +189,43 @@ export const Dashboard = () => {
                                 {/* ════════════════════════════════════════
                                     KPI Cards
                                    ════════════════════════════════════════ */}
-                                <div className="mb-8">
-                                    <SectionLabel label="المؤشرات الرئيسية" hint="ملخص الأداء المالي والتعليمي" />
+                                <div className="mb-6">
                                     <KPICards stats={stats} />
                                 </div>
 
-                                <SectionDivider />
-
                                 {/* ════════════════════════════════════════
-                                    Chart + Performance
+                                    Main Grid Layout (3 Columns)
                                    ════════════════════════════════════════ */}
-                                <div className="mb-8">
-                                    <SectionLabel label="تحليل الأداء" hint="الإيرادات والمصروفات الشهرية" />
-                                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                                        <div className="lg:col-span-2">
-                                            <FinanceOverview monthlyData={monthlyData} />
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                    
+                                    {/* Left Column (Main Content - span 2) */}
+                                    <div className="lg:col-span-2 space-y-6">
+                                        <FinanceOverview monthlyData={monthlyData} />
+                                        
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <TodaysFocus
+                                                todaySessions={todaySessions}
+                                                tasks={asTasks(tasks)}
+                                                lowBalanceCount={stats.lowBalanceCount}
+                                            />
+                                            <NotificationsCenter
+                                                tasks={asTasks(tasks)}
+                                                lowBalanceStudents={lowBalanceStudents}
+                                                students={asRecordList(rawStudents)}
+                                                sessions={asRecordList(rawSessions)}
+                                                studentInvoices={asRecordList(rawStudentInvoices)}
+                                            />
                                         </div>
-                                        <div className="lg:col-span-1">
-                                            <QuickActions />
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <SectionDivider />
-
-                                {/* ════════════════════════════════════════
-                                    Upcoming + Notifications
-                                   ════════════════════════════════════════ */}
-                                <div className="mb-8">
-                                    <SectionLabel label="الجدول والتنبيهات" hint="حصص اليوم والمهام والتنبيهات" />
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                                        <TodaysFocus
-                                            todaySessions={todaySessions}
-                                            tasks={asTasks(tasks)}
-                                            lowBalanceCount={stats.lowBalanceCount}
-                                        />
-                                        <NotificationsCenter
-                                            tasks={asTasks(tasks)}
-                                            lowBalanceStudents={lowBalanceStudents}
-                                            students={asRecordList(rawStudents)}
-                                            sessions={asRecordList(rawSessions)}
-                                            studentInvoices={asRecordList(rawStudentInvoices)}
-                                        />
-                                    </div>
-                                </div>
-
-                                <SectionDivider />
-
-                                {/* ════════════════════════════════════════
-                                    Activity
-                                   ════════════════════════════════════════ */}
-                                <div className="mb-8">
-                                    <SectionLabel label="النشاطات" hint="آخر العمليات والجلسات" />
-                                    <ActivityTimeline sessions={asTimelineSessions(rawSessions)} tasks={asTasks(tasks)} />
-                                </div>
-
-                                <SectionDivider />
-
-                                {/* ════════════════════════════════════════
-                                    System Health
-                                   ════════════════════════════════════════ */}
-                                <div className="mb-8">
-                                    <SectionLabel label="صحة النظام" hint="الحالة الفنية والأداء" />
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                                        <ActivityTimeline sessions={asTimelineSessions(rawSessions)} tasks={asTasks(tasks)} />
+                                        
                                         <SystemHealth stats={stats} />
+                                    </div>
+
+                                    {/* Right Column (Sidebar/Widgets - span 1) */}
+                                    <div className="space-y-6">
+                                        <QuickActions />
+                                        
                                         <div className="rounded-2xl bg-card border border-border shadow-sm p-5">
                                             <div className="flex items-center justify-between mb-4">
                                                 <div className="flex items-center gap-3">
@@ -282,22 +238,22 @@ export const Dashboard = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="grid grid-cols-2 gap-3">
-                                                <div className="p-4 rounded-xl bg-surface">
+                                            <div className="space-y-4">
+                                                <div className="p-4 rounded-xl bg-surface border border-border/50">
                                                     <p className="text-[10px] text-muted mb-1">نسبة الحضور</p>
                                                     <p className="text-xl font-bold text-main tabular-nums">{stats.attendanceRate}%</p>
-                                                    <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
+                                                    <div className="mt-2 h-1.5 rounded-full bg-border overflow-hidden">
                                                         <div className="h-full rounded-full bg-success transition-all duration-700" style={{ width: `${Math.min(100, stats.attendanceRate)}%` }} />
                                                     </div>
                                                 </div>
-                                                <div className="p-4 rounded-xl bg-surface">
+                                                <div className="p-4 rounded-xl bg-surface border border-border/50">
                                                     <p className="text-[10px] text-muted mb-1">فواتير مدفوعة</p>
                                                     <p className="text-xl font-bold text-main tabular-nums">{stats.paidInvoices}</p>
-                                                    <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
+                                                    <div className="mt-2 h-1.5 rounded-full bg-border overflow-hidden">
                                                         <div className="h-full rounded-full bg-info transition-all duration-700" style={{ width: `${Math.min(100, (stats.paidInvoices / Math.max(1, stats.pendingInvoices + stats.paidInvoices)) * 100)}%` }} />
                                                     </div>
                                                 </div>
-                                                <div className="p-4 rounded-xl bg-surface">
+                                                <div className="p-4 rounded-xl bg-surface border border-border/50">
                                                     <p className="text-[10px] text-muted mb-1">حصص مكتملة</p>
                                                     <p className="text-xl font-bold text-main tabular-nums">{stats.completedSessions}</p>
                                                     <div className="mt-2 h-1.5 rounded-full bg-hover overflow-hidden">
