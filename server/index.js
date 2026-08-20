@@ -220,8 +220,91 @@ app.get('/rss.xml', async (req, res) => {
     }
 });
 
-app.get(/(.*)/, (req, res) => {
+// ── Bot / crawler detector → inject OG meta into the HTML shell ──────────────
+const BOT_UA = /googlebot|bingbot|yandexbot|facebookexternalhit|facebot|twitterbot|linkedinbot|whatsapp|telegrambot|slackbot|discordbot|applebot|baiduspider|duckduckbot|semrushbot|ahrefsbot|msnbot|rogerbot|pinterestbot|redditbot|w3c_validator/i;
+
+// Per-route OG data (static routes that get shared)
+const OG_MAP = {
+    '/':                  { title: 'دارين السابعة - منصة تعليم عن بعد رائدة في الكويت والخليج', desc: 'دروس خصوصية أونلاين، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية.', img: '/dareen_logo_new.jpg' },
+    '/courses':           { title: 'دوراتنا التعليمية | دارين السابعة', desc: 'استعرض جميع المواد والدورات المتاحة في منصة دارين السابعة للتعليم عن بعد.', img: '/dareen_logo_new.jpg' },
+    '/about':             { title: 'من نحن | دارين السابعة', desc: 'تعرّف على منصة دارين السابعة للتعليم والتدريب عن بعد في الكويت والخليج.', img: '/dareen_logo_new.jpg' },
+    '/contact':           { title: 'تواصل معنا | دارين السابعة', desc: 'تواصل مع فريق دارين السابعة لمزيد من المعلومات.', img: '/dareen_logo_new.jpg' },
+    '/jobs':              { title: 'وظائف | دارين السابعة', desc: 'انضم إلى فريق دارين السابعة — فرص عمل للمعلمين والمحترفين.', img: '/dareen_logo_new.jpg' },
+    '/books':             { title: 'المدونة والموارد | دارين السابعة', desc: 'مقالات تعليمية، نصائح، وموارد مفيدة للطلاب وأولياء الأمور.', img: '/dareen_logo_new.jpg' },
+    '/privacy-policy':    { title: 'سياسة الخصوصية | دارين السابعة', desc: 'اقرأ سياسة الخصوصية الخاصة بمنصة دارين السابعة.', img: '/dareen_logo_new.jpg' },
+    '/terms-of-service':  { title: 'شروط الاستخدام | دارين السابعة', desc: 'اطلع على شروط وأحكام استخدام منصة دارين السابعة.', img: '/dareen_logo_new.jpg' },
+};
+
+const SITE_NAME = 'دارين السابعة للتعليم والتدريب';
+const BASE_URL  = 'https://dareen.cloud';
+
+function buildBotHtml(og) {
+    const title = og.title;
+    const desc  = og.desc;
+    const img   = og.img.startsWith('http') ? og.img : `${BASE_URL}${og.img}`;
+    const url   = og.url || BASE_URL;
+    return `<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<title>${title}</title>
+<meta name="description" content="${desc}"/>
+<meta property="og:title" content="${title}"/>
+<meta property="og:description" content="${desc}"/>
+<meta property="og:image" content="${img}"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:url" content="${url}"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="${SITE_NAME}"/>
+<meta property="og:locale" content="ar_AR"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="${title}"/>
+<meta name="twitter:description" content="${desc}"/>
+<meta name="twitter:image" content="${img}"/>
+</head>
+<body><h1>${title}</h1><p>${desc}</p></body>
+</html>`;
+}
+
+app.get(/(.*)/, async (req, res) => {
     if (req.path.startsWith('/api/') || req.path.startsWith('/uploads/')) return res.status(404).send('Not found');
+
+    const ua = req.headers['user-agent'] || '';
+    const isBot = BOT_UA.test(ua);
+
+    if (isBot) {
+        // Try to find a matching OG entry (exact, or prefix for blog posts)
+        let og = OG_MAP[req.path];
+
+        // Blog post: /books/:slug — fetch real post data from DB
+        if (!og && req.path.startsWith('/books/')) {
+            const slug = req.path.replace('/books/', '');
+            try {
+                const post = await prisma.blogPost.findUnique({
+                    where: { slug },
+                    select: { title: true, excerpt: true, coverImage: true }
+                });
+                if (post) {
+                    og = {
+                        title: `${post.title} | دارين السابعة`,
+                        desc: post.excerpt || 'مقال تعليمي من دارين السابعة',
+                        img: post.coverImage || '/dareen_logo_new.jpg',
+                        url: `${BASE_URL}/books/${slug}`
+                    };
+                }
+            } catch (_) { /* fall through */ }
+        }
+
+        // Fallback to homepage OG
+        if (!og) og = { ...OG_MAP['/'], url: `${BASE_URL}${req.path}` };
+        else og.url = og.url || `${BASE_URL}${req.path}`;
+
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.setHeader('Cache-Control', 'public, max-age=300'); // 5-min cache for bots
+        return res.send(buildBotHtml(og));
+    }
+
     res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
