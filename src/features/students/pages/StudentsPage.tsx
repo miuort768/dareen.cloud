@@ -6,7 +6,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import { api } from '../../../lib/api'
 import {
   AlertCircle,
-  TrendingUp,
   Plus,
   Users,
   BookOpen,
@@ -22,7 +21,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Skeleton } from '../../../shared/components/ui'
 import { SendNotificationModal } from '../../../shared/components/SendNotificationModal'
 import { ConfirmModal } from '../../../shared/components/ConfirmModal'
-import { StudentStats } from '../components/StudentStats'
 import { StudentForm } from '../components/StudentForm'
 import { StudentTable } from '../components/StudentTable'
 import { StudentDrawer } from '../components/StudentDrawer'
@@ -278,38 +276,38 @@ export const Students = () => {
     }
   }
 
-  const kpiCards = useMemo(
+  const statsCards = useMemo(
     () => [
       {
         label: 'إجمالي الطلاب',
         value: allStudents.length,
         icon: Users,
-        gradient: 'from-primary/20 to-primary/5 dark:from-primary/30 dark:to-primary/10',
-        iconBg: 'bg-primary/10 text-primary dark:bg-primary/20',
+        gradient: 'from-primary/15 to-primary/5 dark:from-primary/25 dark:to-primary/10',
+        iconBg: 'bg-primary/10 text-primary ring-primary/20',
         accent: 'bg-primary',
       },
       {
         label: 'الاشتراكات النشطة',
         value: activeEnrollments,
         icon: BookOpen,
-        gradient: 'from-success/20 to-success/5 dark:from-success/30 dark:to-success/10',
-        iconBg: 'bg-success/10 text-success dark:bg-success/20',
+        gradient: 'from-success/15 to-success/5 dark:from-success/25 dark:to-success/10',
+        iconBg: 'bg-success/10 text-success ring-success/20',
         accent: 'bg-success',
       },
       {
         label: 'حصص مكتملة',
         value: completedSessions,
         icon: Star,
-        gradient: 'from-warning/20 to-warning/5 dark:from-warning/30 dark:to-warning/10',
-        iconBg: 'bg-warning/10 text-warning dark:bg-warning/20',
+        gradient: 'from-warning/15 to-warning/5 dark:from-warning/25 dark:to-warning/10',
+        iconBg: 'bg-warning/10 text-warning ring-warning/20',
         accent: 'bg-warning',
       },
       {
-        label: 'متوسط الحصص',
+        label: 'متوسط الحصص للطالب',
         value: averageSessions,
         icon: GraduationCap,
-        gradient: 'from-info/20 to-info/5 dark:from-info/30 dark:to-info/10',
-        iconBg: 'bg-info/10 text-info dark:bg-info/20',
+        gradient: 'from-info/15 to-info/5 dark:from-info/25 dark:to-info/10',
+        iconBg: 'bg-info/10 text-info ring-info/20',
         accent: 'bg-info',
       },
     ],
@@ -382,27 +380,6 @@ export const Students = () => {
               <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">الطلاب</h1>
               <p className="text-sm text-white/70">إدارة بيانات الطلاب والاشتراكات والجلسات</p>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">إجمالي الطلاب</p>
-                <div className="text-lg font-bold text-white md:text-2xl">
-                  <AnimatedCounter value={allStudents.length} />
-                </div>
-              </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">الاشتراكات</p>
-                <div className="text-lg font-bold text-white md:text-2xl">
-                  <AnimatedCounter value={activeEnrollments} />
-                </div>
-              </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">الحصص المكتملة</p>
-                <div className="text-lg font-bold text-white md:text-2xl">
-                  <AnimatedCounter value={completedSessions} />
-                </div>
-              </div>
             </div>
           </div>
           <div className="relative mt-4">
@@ -436,29 +413,35 @@ export const Students = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-            {kpiCards.map((kpi, i) => {
-              const Icon = kpi.icon
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {statsCards.map((stat, i) => {
+              const Icon = stat.icon
               return (
                 <motion.div
-                  key={kpi.label}
-                  initial={{ opacity: 0, y: 20 }}
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.12 + i * 0.06 }}
+                  transition={{ delay: 0.1 + i * 0.05 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
-                    kpi.gradient,
+                    'relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br p-4 transition-all duration-300 hover:shadow-elevation-2',
+                    stat.gradient,
                   )}
                 >
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('rounded-lg p-2', kpi.iconBg)}>
-                      <Icon size={16} />
-                    </div>
-                    <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
+                  <div className="absolute inset-x-0 top-0 h-0.5">
+                    <div className={cn('h-full rounded-full', stat.accent)} />
                   </div>
-                  <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                  <AnimatedCounter value={kpi.value} />
+                  <div className="mb-3 flex items-center justify-between">
+                    <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl ring-1', stat.iconBg)}>
+                      <Icon size={18} />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold tabular-nums tracking-tight text-main">
+                      <AnimatedCounter value={stat.value} />
+                    </p>
+                    <p className="mt-1 text-xs text-muted">{stat.label}</p>
+                  </div>
                 </motion.div>
               )
             })}
@@ -545,27 +528,6 @@ export const Students = () => {
               )}
             </div>
           )}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-        >
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1 md:p-6">
-            <div className="mb-5 flex items-center gap-3">
-              <div className="ring-success/20 flex h-8 w-8 items-center justify-center rounded-xl bg-success-soft text-success ring-1">
-                <TrendingUp size={16} />
-              </div>
-              <h2 className="text-sm font-bold text-main">إحصائيات الطلاب</h2>
-            </div>
-            <StudentStats
-              totalStudents={allStudents.length}
-              activeEnrollments={activeEnrollments}
-              uniqueGrades={uniqueGrades.length}
-              averageSessionsPerStudent={averageSessions}
-            />
-          </div>
         </motion.div>
 
         <motion.div
