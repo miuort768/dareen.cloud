@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Users, BookOpen, DollarSign, TrendingUp, TrendingDown, Wallet } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CURRENCY_SYMBOL } from '@/config/constants';
@@ -129,7 +129,7 @@ export const KPICards = ({ stats }: KPICardsProps) => {
     ];
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
             {cards.map((card, i) => (
                 <KPICard key={`kpi-${i}`} item={card} index={i} />
             ))}

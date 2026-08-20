@@ -19,93 +19,97 @@ interface MobileBottomNavProps {
   layoutId?: string;
 }
 
-export const MobileBottomNav = ({ items, activeTab, onTabChange, layoutId = 'bottom-nav-active-pill' }: MobileBottomNavProps) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+export const MobileBottomNav = ({
+  items,
+  activeTab,
+  onTabChange,
+  layoutId = 'bottom-nav-active-pill',
+}: MobileBottomNavProps) => {
+  const navigate = useNavigate()
+  const location = useLocation()
 
   return createPortal(
-    <nav className="fixed bottom-0 end-0 start-0 z-50 md:hidden" aria-label="التنقل الرئيسي للهاتف">
-      <div className="px-4 pt-1" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
-        {/* حاوية الشريط الخلفية الزجاجية الفاخرة */}
-        <div className="relative rounded-[24px] bg-card/75 dark:bg-background/70 backdrop-blur-xl border border-border/30 dark:border-white/[0.04] shadow-elevation-3">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent dark:via-white/[0.05] pointer-events-none" />
+    <nav
+      className="fixed bottom-0 end-0 start-0 z-50 md:hidden"
+      aria-label="التنقل الرئيسي للهاتف"
+    >
+      <div
+        className="px-3 pt-1"
+        style={{ paddingBottom: 'max(0.65rem, env(safe-area-inset-bottom))' }}
+      >
+        <div className="relative rounded-[26px] border border-border/50 bg-card/90 backdrop-blur-2xl shadow-elevation-3 dark:border-white/10 dark:bg-background/90">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
-          <div className="relative flex items-center justify-around h-[68px] px-2">
+          <div className="relative flex h-[66px] items-center justify-around px-1.5">
             {items.map((item) => {
-              const Icon = item.icon;
+              const Icon = item.icon
               const isActive = activeTab
                 ? activeTab === item.id
-                : location.pathname === item.path;
-              const isCenter = item.isCenter;
+                : location.pathname === item.path
+              const isCenter = item.isCenter
 
               return (
                 <motion.button
                   key={item.id}
-                  whileTap={{ scale: 0.92 }}
+                  whileTap={{ scale: 0.94 }}
                   onClick={() => {
-                    triggerHaptic('light');
+                    triggerHaptic('light')
                     if (onTabChange) {
-                      onTabChange(item.id);
+                      onTabChange(item.id)
                     } else {
-                      navigate(item.path);
+                      navigate(item.path)
                     }
                   }}
                   className={cn(
-                    "relative touch-manipulation outline-none flex items-center justify-center transition-all duration-300 focus-visible:ring-2 focus-visible:ring-focus rounded-full",
-                    isCenter ? "w-[62px] h-[62px] -mt-5" : "flex-1 h-full py-1"
+                    'relative flex touch-manipulation items-center justify-center rounded-2xl transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    isCenter ? 'h-[54px] w-[54px] -mt-5' : 'min-h-[48px] flex-1 flex-col gap-1 py-1.5',
                   )}
                 >
                   {isCenter ? (
                     <>
-                      {/* الزر الدائري المركزي الخاص بالبث المباشر الفوري */}
-                      <div className="absolute -top-1 inset-x-0 flex justify-center pointer-events-none">
-                        <div className="w-[56px] h-[56px] rounded-full bg-primary/25 blur-lg scale-110" />
+                      <div className="pointer-events-none absolute inset-0 -top-1 flex justify-center">
+                        <div className="h-[52px] w-[52px] rounded-full bg-primary/20 blur-md" />
                       </div>
-                      <div className="relative w-[50px] h-[50px] rounded-full bg-gradient-to-b from-primary to-primary-hover flex items-center justify-center shadow-lg active:scale-90 transition-transform">
-                        <Icon size={22} className="text-on-primary" strokeWidth={2.5} />
+                      <div className="relative flex h-[50px] w-[50px] items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-2 transition-transform active:scale-95">
+                        <Icon size={22} strokeWidth={2.4} />
                       </div>
                     </>
                   ) : (
-                    <div className="relative flex items-center justify-center h-full w-full">
-                      <AnimatePresence initial={false}>
-                        {isActive ? (
-                          /* التبويب النشط: مستطيل دائري خفيف يحتوي الأيقونة والاسم */
-                          <motion.div
-                            layoutId={layoutId}
-                            className="flex items-center gap-2 px-3.5 py-2 bg-primary/10 dark:bg-primary/15 text-primary rounded-[14px] border border-primary/10"
-                            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                          >
-                            <Icon size={18} strokeWidth={2.2} className="text-primary shrink-0" />
-                            <motion.span
-                              initial={{ opacity: 0, width: 0 }}
-                              animate={{ opacity: 1, width: 'auto' }}
-                              exit={{ opacity: 0, width: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="text-[10px] font-extrabold leading-none whitespace-nowrap text-primary"
-                            >
-                              {item.label}
-                            </motion.span>
-                          </motion.div>
-                        ) : (
-                          /* التبويب غير النشط: أيقونة فقط شفافة */
-                          <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 0.6 }}
-                            className="p-2 text-muted"
-                          >
-                            <Icon size={20} strokeWidth={1.8} className="text-muted" />
-                          </motion.div>
+                    <>
+                      {isActive && (
+                        <motion.div
+                          layoutId={layoutId}
+                          transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                          className="absolute inset-x-1 inset-y-1 rounded-xl bg-primary/12 dark:bg-primary/20"
+                        />
+                      )}
+                      <div className="relative z-10 flex items-center justify-center">
+                        <Icon
+                          size={19}
+                          strokeWidth={isActive ? 2.3 : 1.7}
+                          className={cn(
+                            'transition-transform duration-300',
+                            isActive ? 'scale-110 text-primary' : 'text-muted',
+                          )}
+                        />
+                      </div>
+                      <span
+                        className={cn(
+                          'relative z-10 text-[10px] font-bold leading-none tracking-tight transition-colors duration-300',
+                          isActive ? 'font-black text-primary' : 'text-muted',
                         )}
-                      </AnimatePresence>
-                    </div>
+                      >
+                        {item.label}
+                      </span>
+                    </>
                   )}
                 </motion.button>
-              );
+              )
             })}
           </div>
         </div>
       </div>
     </nav>,
-    document.body
-  );
-};
+    document.body,
+  )
+}

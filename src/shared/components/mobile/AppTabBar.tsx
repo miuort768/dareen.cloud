@@ -95,15 +95,15 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
   }
 
   return createPortal(
-    <nav className="fixed inset-x-0 bottom-0 z-50 md:hidden" aria-label="التنقل الرئيسي">
+    <nav className="fixed inset-x-0 bottom-0 z-50 md:hidden" aria-label="التنقل الرئيسي للهاتف">
       <div
-        className="px-2 pt-1"
-        style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
+        className="px-3 pt-1"
+        style={{ paddingBottom: 'max(0.65rem, env(safe-area-inset-bottom))' }}
       >
-        <div className="border-border/40 bg-card/85 dark:bg-background/85 relative overflow-hidden rounded-[22px] border shadow-[0_-2px_20px_rgba(0,0,0,0.08)] backdrop-blur-2xl dark:border-white/[0.06] dark:shadow-[0_-2px_20px_rgba(0,0,0,0.3)]">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+        <div className="relative overflow-hidden rounded-[26px] border border-border/50 bg-card/90 backdrop-blur-2xl shadow-elevation-3 dark:border-white/10 dark:bg-background/90">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
-          <div className="flex items-stretch">
+          <div className="flex h-[66px] items-center justify-between px-1.5">
             {tabs.map((tab) => {
               const Icon = tab.icon
               const isActive = tab.id === activeTabId
@@ -114,42 +114,38 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
                   onClick={() => handleTab(tab)}
                   aria-label={tab.label}
                   aria-current={isActive ? 'page' : undefined}
-                  className="relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 py-2.5 outline-none"
+                  className={cn(
+                    'relative flex min-h-[48px] flex-1 flex-col items-center justify-center gap-1 rounded-2xl transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    isActive ? 'text-primary' : 'text-muted hover:text-main',
+                  )}
                 >
-                  <div
-                    className={cn(
-                      'flex items-center justify-center rounded-2xl p-2 transition-all duration-300',
-                      isActive && 'scale-110 bg-primary/10 dark:bg-primary/15',
-                    )}
-                  >
+                  {isActive && (
+                    <motion.div
+                      layoutId="app-tab-active-pill"
+                      transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                      className="absolute inset-x-1 inset-y-1 rounded-xl bg-primary/12 dark:bg-primary/20"
+                    />
+                  )}
+
+                  <div className="relative z-10 flex items-center justify-center">
                     <Icon
                       size={20}
-                      strokeWidth={isActive ? 2.2 : 1.5}
+                      strokeWidth={isActive ? 2.3 : 1.7}
                       className={cn(
-                        'transition-all duration-300',
-                        isActive
-                          ? 'text-primary drop-shadow-[0_0_6px_rgba(var(--color-primary-rgb),0.3)]'
-                          : 'text-muted',
+                        'transition-transform duration-300',
+                        isActive ? 'scale-110 text-primary' : 'text-muted',
                       )}
                     />
                   </div>
 
                   <span
                     className={cn(
-                      'text-[9px] font-semibold leading-none transition-all duration-300',
-                      isActive ? 'text-primary' : 'text-muted',
+                      'relative z-10 text-[10px] font-bold leading-none tracking-tight transition-colors duration-300',
+                      isActive ? 'font-black text-primary' : 'text-muted',
                     )}
                   >
                     {tab.label}
                   </span>
-
-                  {isActive && (
-                    <motion.div
-                      layoutId="tab-indicator"
-                      transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-                      className="absolute -bottom-0.5 h-[3px] w-4 rounded-full bg-primary shadow-[0_0_8px_rgba(var(--color-primary-rgb),0.4)]"
-                    />
-                  )}
                 </button>
               )
             })}
@@ -157,17 +153,19 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
             <button
               onClick={handleMore}
               aria-label="المزيد"
-              className="relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 py-2.5 outline-none"
+              className="relative flex min-h-[48px] flex-1 flex-col items-center justify-center gap-1 rounded-2xl transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-focus text-muted hover:text-main"
             >
-              <div className="relative flex items-center justify-center rounded-2xl p-2">
-                <MoreHorizontal size={20} strokeWidth={1.5} className="text-muted" />
+              <div className="relative z-10 flex items-center justify-center">
+                <MoreHorizontal size={20} strokeWidth={1.7} className="text-muted" />
                 {totalUnreadCount > 0 && (
-                  <span className="absolute -end-1 -top-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[8px] font-black leading-none text-on-error shadow-sm">
+                  <span className="absolute -end-2 -top-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[8px] font-black leading-none text-on-error shadow-elevation-1">
                     {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
                   </span>
                 )}
               </div>
-              <span className="text-[9px] font-semibold leading-none text-muted">المزيد</span>
+              <span className="relative z-10 text-[10px] font-bold leading-none tracking-tight text-muted">
+                المزيد
+              </span>
             </button>
           </div>
         </div>

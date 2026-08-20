@@ -126,30 +126,27 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-2 md:gap-3">
                     {heroStats.map((item, i) => {
                         const Icon = item.icon;
                         return (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 16 }}
+                                initial={{ opacity: 0, y: 12 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3 + i * 0.1, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+                                transition={{ delay: 0.2 + i * 0.08, duration: 0.3 }}
                                 className="relative group"
                             >
-                                <div className="bg-surface dark:bg-hover rounded-xl p-4 border border-border dark:border-border hover:border-primary/30 dark:hover:border-border transition-all duration-300">
+                                <div className="bg-surface dark:bg-hover rounded-xl p-2.5 md:p-4 border border-border dark:border-border hover:border-primary/30 transition-all duration-300">
                                     <div className="flex items-center justify-between mb-1">
-                                        <div className="flex items-center gap-2">
-                                            <Icon size={16} className="text-primary dark:text-primary" />
-                                            <span className="text-2xl font-bold text-main dark:text-main tabular-nums tracking-tight">
+                                        <div className="flex items-center gap-1.5 min-w-0">
+                                            <Icon size={14} className="text-primary dark:text-primary shrink-0" />
+                                            <span className="text-base md:text-2xl font-black text-main dark:text-main tabular-nums tracking-tight truncate">
                                                 {item.value}
                                             </span>
                                         </div>
-                                        <div className="flex items-center gap-0.5 text-success text-[10px] font-bold">
-                                            <TrendingUp size={10} />
-                                        </div>
                                     </div>
-                                    <p className="text-[11px] text-muted dark:text-muted font-medium">{item.label}</p>
+                                    <p className="text-[9px] md:text-[11px] text-muted dark:text-muted font-bold truncate">{item.label}</p>
                                 </div>
                             </motion.div>
                         );
