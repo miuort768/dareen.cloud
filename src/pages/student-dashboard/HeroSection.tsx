@@ -1,4 +1,4 @@
-﻿import { GraduationCap, Sparkles, TrendingUp, Calendar } from 'lucide-react'
+import { GraduationCap, Sparkles, TrendingUp, Calendar } from 'lucide-react'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 
@@ -38,45 +38,51 @@ export const HeroSection = ({
   const offset = circumference - (attendanceRate / 100) * circumference
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-border bg-surface p-6 transition-colors duration-300 dark:border-border dark:bg-card md:p-8">
-      <div className="pointer-events-none absolute -end-20 -top-20 h-60 w-60 rounded-full bg-primary/5 blur-3xl dark:bg-primary/5" />
-      <div className="pointer-events-none absolute -bottom-20 -start-20 h-60 w-60 rounded-full bg-primary/5 blur-3xl dark:bg-primary/5" />
+    <div className="relative overflow-hidden rounded-2xl border border-border/70 bg-card p-6 shadow-elevation-1 transition-all duration-300 md:p-8">
+      <div className="pointer-events-none absolute -end-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -start-24 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
 
-      <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center">
+      <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div className="min-w-0 flex-1">
-          <p className="mb-2 text-sm font-medium text-muted dark:text-muted">
+          <div className="mb-2 flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+              <Sparkles size={12} />
+              لوحة التحكم الدراسية
+            </span>
+            <span className="text-xs font-medium text-muted">
+              <Calendar size={12} className="inline me-1" />
+              {getDayName()}
+            </span>
+          </div>
+
+          <h1 className="mb-3 text-2xl font-black leading-tight text-main md:text-3xl">
             {getGreeting()}، {firstName}
-          </p>
-          <h1 className="mb-4 text-2xl font-bold leading-tight text-main dark:text-main md:text-[30px]">
-            {firstName}
           </h1>
+
           <div className="flex flex-wrap items-center gap-2">
             {grade && (
-              <span className="inline-flex items-center gap-1.5 rounded-lg bg-primary-soft px-3 py-1.5 text-xs font-semibold text-primary dark:bg-primary/10 dark:text-primary">
-                <GraduationCap size={12} /> {grade}
+              <span className="inline-flex items-center gap-1.5 rounded-xl bg-primary/10 px-3 py-1.5 text-xs font-bold text-primary">
+                <GraduationCap size={13} /> {grade}
               </span>
             )}
             {curriculum && (
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-medium text-muted dark:border-border dark:bg-surface dark:text-muted">
+              <span className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-1.5 text-xs font-bold text-muted">
                 {curriculum}
               </span>
             )}
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-medium text-muted dark:border-border dark:bg-surface dark:text-muted">
-              <Calendar size={11} /> {getDayName()}
-            </span>
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-4 sm:flex-row">
+        <div className="flex flex-col items-center gap-5 sm:flex-row sm:justify-end">
           <div className="relative shrink-0">
-            <svg className="h-[120px] w-[120px] -rotate-90" viewBox="0 0 120 120">
+            <svg className="h-[110px] w-[110px] -rotate-90" viewBox="0 0 120 120">
               <circle
                 cx="60"
                 cy="60"
                 r={radius}
                 fill="none"
                 stroke="currentColor"
-                className="text-border dark:text-border"
+                className="text-border/50"
                 strokeWidth="8"
               />
               <circle
@@ -89,24 +95,34 @@ export const HeroSection = ({
                 strokeLinecap="round"
                 strokeDasharray={circumference}
                 strokeDashoffset={offset}
-                className="text-primary transition-all duration-1000 ease-out dark:text-primary"
+                className="text-primary transition-all duration-1000 ease-out"
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl font-bold text-main dark:text-main">{attendanceRate}%</span>
-              <span className="text-[11px] font-medium text-muted dark:text-muted">حضور</span>
+              <span className="text-2xl font-black text-main tabular-nums">{attendanceRate}%</span>
+              <span className="text-[10px] font-bold text-muted">نسبة الحضور</span>
             </div>
           </div>
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <div className="flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 dark:border-border dark:bg-surface">
-              <Sparkles size={14} className="text-primary dark:text-primary" />
-              <span className="text-xs font-medium text-muted dark:text-muted">النقاط</span>
-              <span className="text-sm font-bold text-main dark:text-main">{points}</span>
+
+          <div className="flex flex-col gap-2.5 sm:flex-row">
+            <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5 shadow-sm">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Sparkles size={16} />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold text-muted">إجمالي النقاط</p>
+                <p className="text-base font-black text-main tabular-nums">{points}</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 dark:border-border dark:bg-surface">
-              <TrendingUp size={14} className="text-primary dark:text-primary" />
-              <span className="text-xs font-medium text-muted dark:text-muted">الرتبة</span>
-              <span className="text-xs font-bold text-main dark:text-main">{rank.name}</span>
+
+            <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5 shadow-sm">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-success/10 text-success">
+                <TrendingUp size={16} />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold text-muted">الرتبة الحالية</p>
+                <p className="text-xs font-extrabold text-main">{rank.name}</p>
+              </div>
             </div>
           </div>
         </div>
