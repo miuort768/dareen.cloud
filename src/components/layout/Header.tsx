@@ -66,10 +66,15 @@ export const Header = memo(() => {
   )
   // Hide general header:
   // 1. On mobile: for dashboard paths (role headers render inside the page)
-  // 2. On all screens: for non-admin on /forum desktop (role-specific headers render there)
+  // 2. On all screens: for non-admin on desktop for paths where role-specific headers render (/forum, /announcements, /parent-announcements)
+  const isRoleSpecificPath =
+    location.pathname === '/forum' ||
+    location.pathname === '/announcements' ||
+    location.pathname === '/parent-announcements'
+
   if (
     (!isDesktop && isOnDashboard) ||
-    (isDesktop && currentUser?.role !== 'admin' && location.pathname === '/forum')
+    (isDesktop && currentUser?.role !== 'admin' && isRoleSpecificPath)
   )
     return null
 

@@ -9,6 +9,11 @@ import { confirm } from '../lib/confirmDialog';
 import { AnnouncementCard } from './AnnouncementCard';
 import { AnnouncementFormModal } from './AnnouncementFormModal';
 import { cn } from '../lib/utils';
+import { TeacherDashboardHeader } from './TeacherDashboardHeader';
+import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader';
+import { StudentDashboardHeader } from './student-dashboard/StudentDashboardHeader';
+import { useLogout } from '../shared/hooks/useLogout';
+import { useCurrentUser } from '../context/AppContext';
 
 type AnnouncementType = 'general' | 'urgent' | 'holiday' | 'event';
 
@@ -30,6 +35,8 @@ export const Announcements = () => {
     const academyName = useAcademyName();
     useEffect(() => { document.title = `الإعلانات | ${academyName}`; }, [academyName]);
     const showNotification = useShowNotification();
+    const currentUser = useCurrentUser();
+    const logout = useLogout();
     const queryClient = useQueryClient();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null);
@@ -129,8 +136,24 @@ export const Announcements = () => {
     ], [announcements]);
 
     return (
-        <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
-            <div className="max-w-page mx-auto px-2">
+        <>
+            {currentUser?.role === 'teacher' && (
+                <div className="hidden md:block">
+                    <TeacherDashboardHeader logout={logout} />
+                </div>
+            )}
+            {currentUser?.role === 'parent' && (
+                <div className="hidden md:block">
+                    <ParentDashboardHeader logout={logout} />
+                </div>
+            )}
+            {currentUser?.role === 'student' && (
+                <div className="hidden md:block">
+                    <StudentDashboardHeader logout={logout} />
+                </div>
+            )}
+            <div className="min-h-full pb-24 overflow-x-hidden relative" dir="rtl">
+                <div className="max-w-page mx-auto px-2">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                     className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-slate-950 dark:via-indigo-950/90 dark:to-slate-950 border border-transparent dark:border-primary/20 p-6 md:p-8 mb-4">
                     {particles.map(p => (
@@ -218,5 +241,6 @@ export const Announcements = () => {
                 </motion.button>
             </div>
         </div>
+        </>
     );
 };
