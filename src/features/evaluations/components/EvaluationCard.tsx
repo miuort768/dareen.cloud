@@ -84,14 +84,24 @@ export const EvaluationCard = ({
               {(student.name || '?').charAt(0)}
             </div>
             <div className="min-w-0 flex-1">
-              <h4 className="bg-info/10 truncate rounded-lg px-2 py-0.5 text-sm font-bold text-info dark:text-info">
-                {student.name}
-              </h4>
-              {student.grade && (
-                <span className="bg-primary-soft/60 mt-0.5 inline-block truncate rounded-md px-1.5 py-0.5 text-[10px] font-bold text-primary dark:text-primary">
-                  {student.grade}
-                </span>
-              )}
+              <div
+                className={cn(
+                  'flex items-center gap-2 rounded-lg bg-gradient-to-l px-2.5 py-1 shadow-sm',
+                  gradient.g,
+                )}
+              >
+                <h4 className="truncate text-sm font-bold text-white">
+                  {student.name}
+                </h4>
+                {student.grade && (
+                  <>
+                    <span className="h-3 w-px shrink-0 bg-white/40" />
+                    <span className="shrink-0 truncate text-[10px] font-bold text-white/90">
+                      {student.grade}
+                    </span>
+                  </>
+                )}
+              </div>
             </div>
           </div>
           <div className="border-warning/15 bg-warning-soft/70 dark:bg-warning-soft/50 flex shrink-0 items-center gap-1 rounded-xl border px-2 py-1">
