@@ -208,8 +208,19 @@ export const Forum = () => {
     }
   }
 
+  const [searchTerm, setSearchTerm] = useState('')
+
   const sortedPosts = useMemo(() => {
-    const list = [...posts]
+    let list = [...posts]
+    const q = searchTerm.trim().toLowerCase()
+    if (q) {
+      list = list.filter(
+        (p) =>
+          (p.title || '').toLowerCase().includes(q) ||
+          (p.content || '').toLowerCase().includes(q) ||
+          (p.authorName || '').toLowerCase().includes(q),
+      )
+    }
     if (sortMode === 'most_liked') {
       return list.sort((a, b) => {
         const likesA = Array.isArray(a.upvotes) ? a.upvotes.length : 0
@@ -221,7 +232,7 @@ export const Forum = () => {
       return list.sort((a, b) => (b.commentCount || 0) - (a.commentCount || 0))
     }
     return list
-  }, [posts, sortMode])
+  }, [posts, sortMode, searchTerm])
 
   const totalUpvotes = useMemo(
     () => posts.reduce((s, p) => s + (Array.isArray(p.upvotes) ? p.upvotes.length : 0), 0),
@@ -327,6 +338,7 @@ export const Forum = () => {
         </div>
       )}
       <div className="relative z-10 pt-2">
+        <ForumHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
