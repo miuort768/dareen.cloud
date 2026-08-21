@@ -57,10 +57,10 @@ export const ParentForm: React.FC<ParentFormProps> = ({
             </div>
             <div>
               <h3 className="text-sm font-bold uppercase tracking-widest text-on-primary">
-                {isEdit ? '����� ��� ��� �����' : '����� ��� ��� ���� �������'}
+                {isEdit ? 'تحديث ملف ولي الأمر' : 'تسجيل ولي أمر جديد بالنظام'}
               </h3>
-              <p className="text-on-primary/70 mt-0.5 text-micro font-normal uppercase tracking-widest">
-                ���� �� ��� �������� ����� ���� ���������
+              <p className="text-white/70 mt-0.5 text-micro font-normal uppercase tracking-widest">
+                تأكد من صحة البيانات لضمان وصول الإشعارات
               </p>
             </div>
           </div>
@@ -68,7 +68,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
             <button
               type="button"
               onClick={onClose}
-              aria-label="����� �������"
+              aria-label="إغلاق النموذج"
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 text-on-primary backdrop-blur-sm transition-all hover:bg-error hover:text-on-error active:scale-90"
             >
               <X size={16} />
@@ -81,7 +81,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
         <form onSubmit={onSubmit} className="space-y-8">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-x-6 md:gap-y-8">
             <InputField
-              label="����� ������"
+              label="الاسم الكامل"
               icon={User}
               required
               type="text"
@@ -89,7 +89,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
               onChange={(e) => onChange({ ...formData, name: e.target.value })}
             />
             <InputField
-              label="��� ������ �������"
+              label="رقم الجوال الأساسي"
               icon={Phone}
               required
               type="tel"
@@ -97,18 +97,18 @@ export const ParentForm: React.FC<ParentFormProps> = ({
               onChange={(e) => onChange({ ...formData, phone: e.target.value })}
             />
             <InputField
-              label="��� ���� ����� (�������)"
+              label="رقم هاتف ثانوي (اختياري)"
               icon={Phone}
               type="tel"
               value={formData.phone2 || ''}
               onChange={(e) => onChange({ ...formData, phone2: e.target.value })}
             />
             <InputField
-              label="��� ��������"
+              label="اسم المستخدم"
               icon={User}
               type="text"
               value={formData.username || ''}
-              placeholder="��� �������� ������ ������"
+              placeholder="اسم المستخدم لحساب النظام"
               onChange={(e) => onChange({ ...formData, username: e.target.value })}
             />
             <InputField
@@ -127,7 +127,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
               className="group flex items-center gap-3 rounded-xl bg-primary px-10 py-4 text-micro font-bold text-on-primary shadow-lg shadow-primary/20 transition-all hover:bg-primary-hover active:scale-95"
             >
               <Save size={14} className="transition-transform group-hover:rotate-12" />
-              {isEdit ? '����� ��������' : '��� ������ ������'}
+              {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}
             </button>
           </div>
         </form>

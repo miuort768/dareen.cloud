@@ -93,14 +93,14 @@ export const AttendanceModal = ({
                                             </div>
                                         </div>
                                         <div className="grid grid-cols-2 gap-3 mb-4">
-                                            <div className="bg-success-soft p-3 rounded-xl flex items-center gap-3 border border-success/20">
+                                            <div className="bg-success-soft p-3 rounded-xl flex items-center gap-3 border border-success-soft">
                                                 <CheckCircle2 size={18} className="text-success shrink-0" />
                                                 <div>
                                                     <p className="text-micro text-success font-medium uppercase">حضر</p>
                                                     <p className="text-sm font-medium text-success">{attended} حصة</p>
                                                 </div>
                                             </div>
-                                            <div className="bg-error-soft p-3 rounded-xl flex items-center gap-3 border border-error/20">
+                                            <div className="bg-error-soft p-3 rounded-xl flex items-center gap-3 border border-error-soft">
                                                 <XCircle size={18} className="text-error shrink-0" />
                                                 <div>
                                                     <p className="text-micro text-error font-medium uppercase">غاب</p>

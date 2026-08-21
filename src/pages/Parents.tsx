@@ -53,8 +53,21 @@ export const Parents = () => {
 
     const isEdit = !!state.editId;
 
+    const openEditParent = (parent: Parent) => {
+        actions.handleEditParent(parent);
+        actions.setShowDetails(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const openAddParent = () => {
+        actions.setShowAddForm(true);
+        actions.setEditId(null);
+        actions.setNewParent({ name: '', phone: '', phone2: '', username: '', password: '' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     const fabActions = useMemo(() => [
-        { icon: Plus, label: 'إضافة ولي أمر', onClick: () => { actions.setShowAddForm(!state.showAddForm); if (!state.showAddForm) { actions.setEditId(null); actions.setNewParent({ name: '', phone: '', phone2: '', username: '', password: '' }); } } },
+        { icon: Plus, label: 'إضافة ولي أمر', onClick: () => { if (!state.showAddForm) openAddParent(); } },
         { icon: FileUp, label: 'استيراد من الطلاب', onClick: actions.handleImportParents },
         { icon: Download, label: 'تصدير Excel', onClick: () => downloadExport('parents', 'xlsx').then(() => showNotification('تم تصدير Excel', 'success')).catch(e => showNotification(e.message, 'error')) },
         { icon: FileText, label: 'تصدير PDF', onClick: () => downloadExport('parents', 'pdf').then(() => showNotification('تم تصدير PDF', 'success')).catch(e => showNotification(e.message, 'error')) },
@@ -89,10 +102,11 @@ export const Parents = () => {
                         filterStatus={filterStatus}
                         onFilterStatusChange={setFilterStatus}
                         onToggleAddForm={() => {
-                            actions.setShowAddForm(!state.showAddForm);
-                            if (!state.showAddForm) {
+                            if (state.showAddForm) {
+                                actions.setShowAddForm(false);
                                 actions.setEditId(null);
-                                actions.setNewParent({ name: '', phone: '', phone2: '', username: '', password: '' });
+                            } else {
+                                openAddParent();
                             }
                         }}
                         onImport={actions.handleImportParents}
@@ -115,11 +129,11 @@ export const Parents = () => {
                         {!state.showDetails ? (
                             <ParentsTable parents={filteredParents} students={state.students} selectedParentId={state.selectedParent?.id || null}
                                 showDetails={state.showDetails} onSelectParent={(parent) => { actions.setSelectedParent(parent); actions.setShowDetails(true); }}
-                                onEdit={actions.handleEditParent} onDelete={actions.handleDeleteParent}
+                                onEdit={openEditParent} onDelete={actions.handleDeleteParent}
                                 onViewParent={(parent) => { actions.setSelectedParent(parent); actions.setShowDetails(true); }} />
                         ) : (
                             <ParentDrawer parent={state.selectedParent} details={state.selectedParentData} onClose={() => actions.setShowDetails(false)}
-                                onEdit={actions.handleEditParent} onDelete={actions.handleDeleteParent}
+                                onEdit={openEditParent} onDelete={actions.handleDeleteParent}
                                 onCall={(phone) => window.open(`tel:${phone}`)}
                                 onWhatsApp={(phone) => window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}`, '_blank')}
                                 inline />

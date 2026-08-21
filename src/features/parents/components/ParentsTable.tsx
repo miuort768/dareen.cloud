@@ -55,19 +55,19 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="overflow-hidden"
         >
-            <div className="border-t border-border/50 bg-surface/30 px-6 py-5 space-y-5">
+            <div className="border-t border-border bg-surface px-6 py-5 space-y-5">
                 <div className="grid grid-cols-3 gap-3">
-                    <div className="flex items-center gap-2 px-3 py-2 bg-success-soft/30 rounded-xl border border-success/10">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-success-soft rounded-xl border border-success-soft">
                         <Phone size={12} className="text-success shrink-0" />
                         <span className="text-[10px] font-bold text-main font-mono" dir="ltr">{parent.phone}</span>
                     </div>
                     {parent.phone2 && (
-                        <div className="flex items-center gap-2 px-3 py-2 bg-info-soft/30 rounded-xl border border-info/10">
+                        <div className="flex items-center gap-2 px-3 py-2 bg-info-soft rounded-xl border border-info-soft">
                             <Phone size={12} className="text-info shrink-0" />
                             <span className="text-[10px] font-bold text-main font-mono" dir="ltr">{parent.phone2}</span>
                         </div>
                     )}
-                    <div className="flex items-center gap-2 px-3 py-2 bg-warning-soft/30 rounded-xl border border-warning/10">
+                    <div className="flex items-center gap-2 px-3 py-2 bg-warning-soft rounded-xl border border-warning-soft">
                         <Users size={12} className="text-warning shrink-0" />
                         <span className="text-[10px] font-bold text-main">{children.length} أبناء</span>
                     </div>
@@ -183,12 +183,12 @@ export const ParentsTable = memo<ParentsTableProps>(({
             header: 'بيانات التواصل',
             render: (parent) => (
                 <div className="flex flex-col gap-1.5">
-                    <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-success-soft/50 border border-success/10 rounded-lg w-fit">
+                    <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-success-soft border border-success-soft rounded-lg w-fit">
                         <Phone size={9} className="text-success shrink-0" />
                         <span className="font-mono text-[10px] font-bold text-main" dir="ltr">{parent.phone}</span>
                     </div>
                     {parent.phone2 && (
-                        <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-info-soft/50 border border-info/10 rounded-lg w-fit">
+                        <div className="inline-flex items-center gap-1.5 px-2 py-1 bg-info-soft border border-info-soft rounded-lg w-fit">
                             <Phone size={9} className="text-info shrink-0" />
                             <span className="font-mono text-[10px] font-bold text-main" dir="ltr">{parent.phone2}</span>
                         </div>
@@ -211,8 +211,8 @@ export const ParentsTable = memo<ParentsTableProps>(({
                                     <div className={cn(
                                         "w-7 h-7 flex items-center justify-center text-[8px] font-bold rounded-lg border-2 transition-all",
                                         i === 0 ? 'bg-primary/10 text-primary border-primary/20' :
-                                        i === 1 ? 'bg-success/10 text-success border-success/20' :
-                                        'bg-warning/10 text-warning border-warning/20'
+                                        i === 1 ? 'bg-success-soft text-success border-success-soft' :
+                                        'bg-warning-soft text-warning border-warning-soft'
                                     )}>
                                         {(child.name || '?').charAt(0)}
                                     </div>
@@ -320,8 +320,8 @@ export const ParentsTable = memo<ParentsTableProps>(({
                             <div key={child.id} className={cn(
                                 "w-6 h-6 flex items-center justify-center text-[7px] font-bold rounded-lg border-2",
                                 i === 0 ? 'bg-primary/10 text-primary border-primary/20' :
-                                i === 1 ? 'bg-success/10 text-success border-success/20' :
-                                'bg-warning/10 text-warning border-warning/20'
+                                i === 1 ? 'bg-success-soft text-success border-success-soft' :
+                                'bg-warning-soft text-warning border-warning-soft'
                             )}>
                                 {(child.name || '?').charAt(0)}
                             </div>

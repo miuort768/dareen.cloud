@@ -30,9 +30,9 @@ const avatarGradients = [
     { g: 'from-primary to-primary-hover', on: 'text-on-primary' },
     { g: 'from-success to-success-hover', on: 'text-on-success' },
     { g: 'from-info to-info-hover', on: 'text-on-info' },
-    { g: 'from-warning to-warning-hover', on: 'text-on-warning' },
-    { g: 'from-error to-error-hover', on: 'text-on-error' },
-    { g: 'from-accent to-accent-hover', on: 'text-on-accent' },
+    { g: 'from-info to-info-dark', on: 'text-on-info' },
+    { g: 'from-primary-light to-primary-soft', on: 'text-primary' },
+    { g: 'from-success-dark to-success-hover', on: 'text-on-success' },
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -65,7 +65,7 @@ const OverviewTab = ({ parent, details, children, handleCall, handleWhatsApp, on
         <div className="space-y-2">
             <h5 className="text-[9px] font-bold text-muted flex items-center gap-1.5"><Star size={10} /> بيانات التواصل</h5>
             <div className="grid grid-cols-1 gap-1.5">
-                <div className="flex items-center gap-2.5 px-3 py-2.5 bg-success-soft/30 border border-success/10 rounded-xl">
+                <div className="flex items-center gap-2.5 px-3 py-2.5 bg-success-soft border border-success-soft rounded-xl">
                     <div className="w-7 h-7 rounded-lg bg-success-soft flex items-center justify-center shrink-0">
                         <Phone size={11} className="text-success" />
                     </div>
@@ -75,7 +75,7 @@ const OverviewTab = ({ parent, details, children, handleCall, handleWhatsApp, on
                     </div>
                 </div>
                 {parent.phone2 && (
-                    <div className="flex items-center gap-2.5 px-3 py-2.5 bg-info-soft/30 border border-info/10 rounded-xl">
+                    <div className="flex items-center gap-2.5 px-3 py-2.5 bg-info-soft border border-info-soft rounded-xl">
                         <div className="w-7 h-7 rounded-lg bg-info-soft flex items-center justify-center shrink-0">
                             <Phone size={11} className="text-info" />
                         </div>
@@ -86,7 +86,7 @@ const OverviewTab = ({ parent, details, children, handleCall, handleWhatsApp, on
                     </div>
                 )}
                 {parent.username && (
-                    <div className="flex items-center gap-2.5 px-3 py-2.5 bg-primary-soft/30 border border-primary/10 rounded-xl">
+                    <div className="flex items-center gap-2.5 px-3 py-2.5 bg-primary-soft border border-primary-soft rounded-xl">
                         <div className="w-7 h-7 rounded-lg bg-primary-soft flex items-center justify-center shrink-0">
                             <KeyRound size={11} className="text-primary" />
                         </div>
@@ -207,12 +207,12 @@ const ScheduleTab = ({ familySchedule }: { familySchedule: FamilyScheduleItem[] 
             if (dayItems.length === 0) return null;
             return (
                 <div key={day} className="bg-card border border-border rounded-xl overflow-hidden">
-                    <div className="px-3 py-2 bg-primary-soft/70 border-b border-border flex items-center gap-2">
+                    <div className="px-3 py-2 bg-primary-soft border-b border-border flex items-center gap-2">
                         <Calendar size={12} className="text-primary" />
                         <p className="text-[10px] font-bold text-primary">{day}</p>
                         <span className="ms-auto text-[9px] font-bold text-primary/70">{dayItems.length} حصة</span>
                     </div>
-                    <div className="divide-y divide-border/60">
+                    <div className="divide-y divide-border">
                         {dayItems.map((s, i) => (
                             <div key={i} className="px-3 py-2.5 flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-lg bg-primary-soft text-primary flex items-center justify-center text-[10px] font-bold shrink-0">
@@ -271,7 +271,7 @@ const ParentHeader = ({ parent, hasOverdue, childrenCount, onClose }: {
                     )}
                     <span className={cn(
                         "flex items-center gap-1 px-1.5 py-0.5 text-[8px] font-bold rounded",
-                        childrenCount > 0 ? 'bg-success-soft/80 text-on-success' : 'bg-surface/80 text-muted'
+                        childrenCount > 0 ? 'bg-success-soft text-on-success' : 'bg-surface text-muted'
                     )}>
                         <span className={cn("w-1 h-1 rounded-full", childrenCount > 0 ? 'bg-success' : 'bg-muted')} />
                         {childrenCount > 0 ? 'نشط' : 'غير نشط'}
