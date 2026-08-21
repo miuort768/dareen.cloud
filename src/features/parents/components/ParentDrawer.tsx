@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Phone, MessageCircle, Edit, Trash2, Users, GraduationCap, BookOpen, Calendar, TrendingUp, Clock, AlertCircle, Star, AlertTriangle, KeyRound } from 'lucide-react';
 import { cn } from '../../../lib/utils';
@@ -25,21 +25,6 @@ interface ParentDrawerProps {
 }
 
 type TabKey = 'overview' | 'schedule';
-
-const avatarGradients = [
-    { g: 'from-primary to-primary-hover', on: 'text-on-primary' },
-    { g: 'from-success to-success-hover', on: 'text-on-success' },
-    { g: 'from-info to-info-hover', on: 'text-on-info' },
-    { g: 'from-info to-info-dark', on: 'text-on-info' },
-    { g: 'from-primary-light to-primary-soft', on: 'text-primary' },
-    { g: 'from-success-dark to-success-hover', on: 'text-on-success' },
-];
-
-const getAvatarGradient = (name: string) => {
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    return avatarGradients[Math.abs(hash) % avatarGradients.length];
-};
 
 const StatCell = ({ icon: Icon, value, label, color }: { icon: typeof Users; value: React.ReactNode; label: string; color: string }) => (
     <div className="p-3 bg-card border border-border rounded-xl">
@@ -248,30 +233,35 @@ const ParentHeader = ({ parent, hasOverdue, childrenCount, onClose }: {
     hasOverdue: boolean;
     childrenCount: number;
     onClose: () => void;
-}) => {
-    const gradient = getAvatarGradient(parent.name);
-    return (
-        <div className={cn("relative overflow-hidden p-5 bg-gradient-to-br", gradient.g)}>
-            <div className="absolute inset-0 bg-white/10 pointer-events-none" />
-            <div className="absolute -top-6 -end-6 w-24 h-24 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-            <div className="absolute -bottom-6 -start-6 w-16 h-16 bg-black/10 rounded-full blur-xl pointer-events-none" />
-            <button onClick={onClose} className={cn("absolute top-4 end-4 w-10 h-10 flex items-center justify-center bg-black/10 hover:bg-black/20 rounded-xl transition-all z-10", gradient.on)} aria-label="إغلاق">
-                <X size={20} />
-            </button>
-            <div className="relative z-10 flex items-center gap-4">
-                <div className={cn("w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-xl font-bold ring-2 ring-white/30 shadow-lg shrink-0", gradient.on)}>
-                    {(parent.name || '?').charAt(0)}
-                </div>
-                <div className="min-w-0">
-                    <h2 className={cn("text-base font-bold truncate", gradient.on)}>{parent.name}</h2>
-                    <p className="text-[10px] text-white/70 mt-0.5">ID: {(parent.id || '').substring(0, 8)}</p>
-                    <div className="flex items-center gap-1.5 mt-1.5">
+}) => (
+    <div className="relative overflow-hidden bg-gradient-to-l from-primary to-primary-deep p-5">
+        <div className="pointer-events-none absolute -end-8 -top-8 h-28 w-28 rounded-full bg-white/10 blur-xl" />
+        <div className="pointer-events-none absolute -bottom-10 -start-6 h-24 w-24 rounded-full bg-white/5 blur-lg" />
+        <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); onClose(); }}
+            className="absolute end-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-on-primary backdrop-blur-sm transition-all hover:bg-white/30 active:scale-90"
+            aria-label="إغلاق"
+        >
+            <X size={18} />
+        </button>
+        <div className="relative z-10 flex items-center gap-4 pe-12">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-xl font-bold ring-2 ring-white/30 shadow-lg backdrop-blur-sm text-on-primary">
+                {(parent.name || '?').charAt(0)}
+            </div>
+            <div className="min-w-0">
+                <h2 className="truncate text-base font-bold text-on-primary">{parent.name}</h2>
+                <p className="mt-0.5 flex items-center gap-1.5 text-[10px] font-medium text-white/70">
+                    <Users size={9} />
+                    {childrenCount} {childrenCount === 1 ? 'ابن' : 'أبناء'} مسجلين
+                </p>
+                <div className="mt-1.5 flex items-center gap-1.5">
                     {hasOverdue && (
-                        <span className="flex items-center gap-1 px-1.5 py-0.5 bg-error-soft/80 text-error text-[8px] font-bold rounded"><AlertTriangle size={8} /> متأخرات</span>
+                        <span className="flex items-center gap-1 rounded-lg bg-error-soft px-1.5 py-0.5 text-[8px] font-bold text-error"><AlertTriangle size={8} /> متأخرات</span>
                     )}
                     <span className={cn(
-                        "flex items-center gap-1 px-1.5 py-0.5 text-[8px] font-bold rounded",
-                        childrenCount > 0 ? 'bg-success-soft text-on-success' : 'bg-surface text-muted'
+                        "flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[8px] font-bold",
+                        childrenCount > 0 ? 'bg-success-soft text-success' : 'bg-surface text-muted'
                     )}>
                         <span className={cn("w-1 h-1 rounded-full", childrenCount > 0 ? 'bg-success' : 'bg-muted')} />
                         {childrenCount > 0 ? 'نشط' : 'غير نشط'}
@@ -280,8 +270,7 @@ const ParentHeader = ({ parent, hasOverdue, childrenCount, onClose }: {
             </div>
         </div>
     </div>
-    );
-};
+);
 
 const TabsBar = ({ tab, onTabChange }: { tab: TabKey; onTabChange: (t: TabKey) => void }) => (
     <div className="flex border-b border-border bg-card px-3">
@@ -302,6 +291,15 @@ const TabsBar = ({ tab, onTabChange }: { tab: TabKey; onTabChange: (t: TabKey) =
 
 export const ParentDrawer = ({ parent, details, onClose, onEdit, onDelete, onWhatsApp, onCall, inline = false }: ParentDrawerProps) => {
     const [tab, setTab] = useState<TabKey>('overview');
+
+    useEffect(() => {
+        if (!parent) return;
+        const handleEscape = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        document.addEventListener('keydown', handleEscape);
+        return () => document.removeEventListener('keydown', handleEscape);
+    }, [parent, onClose]);
 
     if (!parent) return null;
 
