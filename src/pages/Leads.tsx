@@ -651,11 +651,6 @@ export const Leads = () => {
                 </motion.button>
               )}
             </div>
-            <div className="mt-2 flex">
-              <span className="rounded-lg border border-border bg-surface px-2 py-1 text-[10px] font-bold text-muted">
-                النتائج: {filteredLeads.length}
-              </span>
-            </div>
           </div>
 
           {/* Content */}

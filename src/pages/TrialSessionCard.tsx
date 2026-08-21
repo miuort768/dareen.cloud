@@ -32,10 +32,10 @@ interface TrialSessionCardProps {
 }
 
 const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string }> = {
-  pending: { label: '�������', dot: 'bg-warning', bg: 'bg-warning-soft', text: 'text-warning' },
-  completed: { label: '��� �����', dot: 'bg-success', bg: 'bg-success-soft', text: 'text-success' },
-  cancelled: { label: '�����', dot: 'bg-error', bg: 'bg-error-soft', text: 'text-error' },
-  converted: { label: '�����', dot: 'bg-primary', bg: 'bg-primary-soft', text: 'text-primary' },
+  pending: { label: 'بانتظار', dot: 'bg-warning', bg: 'bg-warning-soft', text: 'text-warning' },
+  completed: { label: 'تمت بنجاح', dot: 'bg-success', bg: 'bg-success-soft', text: 'text-success' },
+  cancelled: { label: 'ملغية', dot: 'bg-error', bg: 'bg-error-soft', text: 'text-error' },
+  converted: { label: 'محولة', dot: 'bg-primary', bg: 'bg-primary-soft', text: 'text-primary' },
 }
 
 const avatarGradients = [
@@ -54,7 +54,7 @@ const getAvatarGradient = (name: string) => {
 
 const formatPhone = (phone: string) => {
   if (!phone) return ''
-  if (phone.length > 8) return `${phone.slice(0, 4)}���${phone.slice(-3)}`
+  if (phone.length > 8) return `${phone.slice(0, 4)}•••${phone.slice(-3)}`
   return phone
 }
 
@@ -133,29 +133,29 @@ export const TrialSessionCard = ({
         {/* Session info: stacked on mobile, 3 columns on sm+ */}
         <div className="mb-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
           <div className="rounded-xl border border-primary-soft bg-primary-soft p-2.5 text-right">
-            <p className="mb-1 text-[10px] font-bold text-primary">������</p>
+            <p className="mb-1 text-[10px] font-bold text-primary">المادة</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <BookOpen size={12} className="text-primary" />
               </div>
               <span className="truncate text-[11px] font-extrabold text-main">
-                {t.subject || '�'}
+                {t.subject || '—'}
               </span>
             </div>
           </div>
           <div className="rounded-xl border border-success-soft bg-success-soft p-2.5 text-right">
-            <p className="mb-1 text-[10px] font-bold text-success">�������</p>
+            <p className="mb-1 text-[10px] font-bold text-success">المعلمة</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <GraduationCap size={12} className="text-success" />
               </div>
               <span className="truncate text-[11px] font-extrabold text-main">
-                {t.teacherName || '�'}
+                {t.teacherName || '—'}
               </span>
             </div>
           </div>
           <div className="rounded-xl border border-warning-soft bg-warning-soft p-2.5 text-right">
-            <p className="mb-1 text-[10px] font-bold text-warning">��� �������</p>
+            <p className="mb-1 text-[10px] font-bold text-warning">رقم التواصل</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <Phone size={12} className="text-warning" />
@@ -194,7 +194,7 @@ export const TrialSessionCard = ({
                     className="mt-1 inline-flex items-center gap-1 text-[10px] font-black text-warning"
                   >
                     <ChevronUp size={10} />
-                    ���
+                    أقل
                   </button>
                 </div>
               </div>
@@ -213,7 +213,7 @@ export const TrialSessionCard = ({
       <div
         className="border-t border-border bg-surface px-4 py-3 md:hidden dark:bg-card"
         role="toolbar"
-        aria-label="������� �����"
+        aria-label="إجراءات الحصة"
       >
         <div className="grid grid-cols-2 gap-2">
           {onWhatsApp && (
@@ -223,9 +223,9 @@ export const TrialSessionCard = ({
                 onWhatsApp(t.parentPhone)
               }}
               className={cn(actionBtnBase, 'bg-success-soft text-success hover:bg-success-light')}
-              aria-label="������"
+              aria-label="واتساب"
             >
-              <MessageSquare size={13} /> ������
+              <MessageSquare size={13} /> واتساب
             </button>
           )}
           {onCall && (
@@ -235,9 +235,9 @@ export const TrialSessionCard = ({
                 onCall(t.parentPhone)
               }}
               className={cn(actionBtnBase, 'bg-info-soft text-info hover:bg-info-light')}
-              aria-label="�����"
+              aria-label="اتصال"
             >
-              <Phone size={13} /> �����
+              <Phone size={13} /> اتصال
             </button>
           )}
           <button
@@ -246,9 +246,9 @@ export const TrialSessionCard = ({
               onEdit(t)
             }}
             className={cn(actionBtnBase, 'bg-primary-soft text-primary hover:bg-primary-light')}
-            aria-label="�����"
+            aria-label="تعديل"
           >
-            <Pencil size={13} /> �����
+            <Pencil size={13} /> تعديل
           </button>
           {onPaid && (
             <button
@@ -263,9 +263,9 @@ export const TrialSessionCard = ({
                   ? 'cursor-default bg-success-soft text-success'
                   : 'border-success bg-success text-on-success shadow-sm hover:bg-success-dark',
               )}
-              aria-label="������"
+              aria-label="مدفوعة"
             >
-              <CircleDollarSign size={14} /> {isPaid ? '�� �����' : '���'}
+              <CircleDollarSign size={14} /> {isPaid ? 'تم الدفع' : 'دفع'}
             </button>
           )}
         </div>
@@ -278,9 +278,9 @@ export const TrialSessionCard = ({
             actionBtnBase,
             'mt-2 w-full border-error bg-error text-on-error shadow-sm hover:bg-error-hover',
           )}
-          aria-label="���"
+          aria-label="حذف"
         >
-          <Trash2 size={14} /> ���
+          <Trash2 size={14} /> حذف
         </button>
       </div>
 
@@ -288,7 +288,7 @@ export const TrialSessionCard = ({
       <div
         className="hidden items-center justify-between gap-2 border-t border-border bg-surface px-4 py-3 md:flex dark:bg-card"
         role="toolbar"
-        aria-label="������� �����"
+        aria-label="إجراءات الحصة"
       >
         <div className="flex items-center gap-2">
           {onCall && (
@@ -298,9 +298,9 @@ export const TrialSessionCard = ({
                 onCall(t.parentPhone)
               }}
               className={cn(actionBtnBase, 'bg-info-soft text-info hover:bg-info-light')}
-              aria-label="�����"
+              aria-label="اتصال"
             >
-              <Phone size={13} /> �����
+              <Phone size={13} /> اتصال
             </button>
           )}
           {onWhatsApp && (
@@ -310,9 +310,9 @@ export const TrialSessionCard = ({
                 onWhatsApp(t.parentPhone)
               }}
               className={cn(actionBtnBase, 'bg-success-soft text-success hover:bg-success-light')}
-              aria-label="������"
+              aria-label="واتساب"
             >
-              <MessageSquare size={13} /> ������
+              <MessageSquare size={13} /> واتساب
             </button>
           )}
           <button
@@ -321,9 +321,9 @@ export const TrialSessionCard = ({
               onEdit(t)
             }}
             className={cn(actionBtnBase, 'bg-primary-soft text-primary hover:bg-primary-light')}
-            aria-label="�����"
+            aria-label="تعديل"
           >
-            <Pencil size={13} /> �����
+            <Pencil size={13} /> تعديل
           </button>
         </div>
 
@@ -341,9 +341,9 @@ export const TrialSessionCard = ({
                   ? 'cursor-default bg-success-soft text-success'
                   : 'border-success bg-success text-on-success shadow-sm hover:bg-success-dark',
               )}
-              aria-label="������"
+              aria-label="مدفوعة"
             >
-              <CircleDollarSign size={14} /> {isPaid ? '�� �����' : '���'}
+              <CircleDollarSign size={14} /> {isPaid ? 'تم الدفع' : 'دفع'}
             </button>
           )}
           <button
@@ -355,9 +355,9 @@ export const TrialSessionCard = ({
               actionBtnBase,
               'border-error bg-error text-on-error shadow-sm hover:bg-error-hover',
             )}
-            aria-label="���"
+            aria-label="حذف"
           >
-            <Trash2 size={14} /> ���
+            <Trash2 size={14} /> حذف
           </button>
         </div>
       </div>

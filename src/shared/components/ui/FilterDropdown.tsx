@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 
@@ -58,6 +59,7 @@ export const FilterDropdown = ({
           hasSelection
             ? 'border-primary/30 bg-primary-soft text-primary'
             : 'border-border bg-surface text-main hover:border-primary/20',
+          open && 'border-primary ring-2 ring-primary/10',
         )}
       >
         {Icon && <Icon size={13} className="text-muted" />}
@@ -71,40 +73,47 @@ export const FilterDropdown = ({
         />
       </button>
 
-      {open && (
-        <div
-          role="listbox"
-          className="absolute start-0 z-50 mt-1.5 min-w-[170px] overflow-hidden rounded-xl border border-border bg-card py-1 shadow-elevation-2"
-        >
-          {items.map((item) => {
-            const isActive = item.key === value
-            return (
-              <button
-                key={item.key || 'all'}
-                type="button"
-                role="option"
-                aria-selected={isActive}
-                onClick={() => {
-                  onChange(item.key)
-                  setOpen(false)
-                }}
-                className={cn(
-                  'flex w-full items-center gap-2 px-3.5 py-2.5 text-start text-[11px] font-bold transition-colors duration-fast hover:bg-hover',
-                  isActive ? 'text-primary' : 'text-main',
-                )}
-              >
-                {item.dot ? (
-                  <span className={cn('h-1.5 w-1.5 shrink-0 rounded-full', item.dot)} />
-                ) : (
-                  <span className="h-1.5 w-1.5 shrink-0" />
-                )}
-                <span className="flex-1">{item.label}</span>
-                {isActive && <Check size={13} className="shrink-0 text-primary" />}
-              </button>
-            )
-          })}
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="listbox"
+            initial={{ opacity: 0, y: -6, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.97 }}
+            transition={{ duration: 0.16, ease: 'easeOut' }}
+            style={{ transformOrigin: 'top center' }}
+            className="absolute start-0 z-50 mt-1.5 max-h-[280px] min-w-[170px] overflow-y-auto rounded-xl border border-border bg-card py-1.5 shadow-elevation-3"
+          >
+            {items.map((item) => {
+              const isActive = item.key === value
+              return (
+                <button
+                  key={item.key || 'all'}
+                  type="button"
+                  role="option"
+                  aria-selected={isActive}
+                  onClick={() => {
+                    onChange(item.key)
+                    setOpen(false)
+                  }}
+                  className={cn(
+                    'flex w-full items-center gap-2 px-3.5 py-2.5 text-start text-[11px] font-bold transition-colors duration-fast hover:bg-hover',
+                    isActive ? 'bg-primary-soft text-primary' : 'text-main',
+                  )}
+                >
+                  {item.dot ? (
+                    <span className={cn('h-1.5 w-1.5 shrink-0 rounded-full', item.dot)} />
+                  ) : (
+                    <span className="h-1.5 w-1.5 shrink-0" />
+                  )}
+                  <span className="flex-1">{item.label}</span>
+                  {isActive && <Check size={13} className="shrink-0 text-primary" />}
+                </button>
+              )
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

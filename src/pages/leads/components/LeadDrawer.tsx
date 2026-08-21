@@ -16,10 +16,10 @@ const formatRelativeTime = (dateStr: string) => {
     const now = new Date(); const date = new Date(dateStr);
     const diffMs = now.getTime() - date.getTime();
     const diffMins = Math.floor(diffMs / 60000); const diffHours = Math.floor(diffMins / 60); const diffDays = Math.floor(diffHours / 24);
-    if (diffMins < 1) return '����';
-    if (diffMins < 60) return `��� ${diffMins} �����`;
-    if (diffHours < 24) return `��� ${diffHours} ����`;
-    if (diffDays < 7) return `��� ${diffDays} ����`;
+    if (diffMins < 1) return 'الآن';
+    if (diffMins < 60) return `منذ ${diffMins} دقيقة`;
+    if (diffHours < 24) return `منذ ${diffHours} ساعة`;
+    if (diffDays < 7) return `منذ ${diffDays} أيام`;
     return date.toLocaleDateString('ar-SA');
 };
 
@@ -30,11 +30,11 @@ interface TimelineEvent {
 
 const getTimelineEvents = (lead: Lead): TimelineEvent[] => {
     const events: TimelineEvent[] = [];
-    events.push({ id: '1', type: 'created', label: '�� ����� ������', date: lead.createdAt, icon: UserPlus, color: 'text-info', bg: 'bg-info-soft' });
-    if (lead.status === 'contacted') events.push({ id: '2', type: 'called', label: '�� ������� �������', date: lead.updatedAt || lead.createdAt, icon: Phone, color: 'text-warning', bg: 'bg-warning-soft' });
-    if (lead.status === 'interested') events.push({ id: '3', type: 'note_added', label: '���� ������', date: lead.updatedAt || lead.createdAt, icon: Tag, color: 'text-success', bg: 'bg-success-soft' });
-    if (lead.status === 'trial') events.push({ id: '4', type: 'note_added', label: '��� �������', date: lead.updatedAt || lead.createdAt, icon: Calendar, color: 'text-primary', bg: 'bg-primary-soft' });
-    if (lead.status === 'converted') events.push({ id: '5', type: 'converted', label: '�� ������� ��� �����', date: lead.updatedAt || lead.createdAt, icon: CheckCircle2, color: 'text-info', bg: 'bg-info-soft' });
+    events.push({ id: '1', type: 'created', label: 'تم تسجيل العميل', date: lead.createdAt, icon: UserPlus, color: 'text-info', bg: 'bg-info-soft' });
+    if (lead.status === 'contacted') events.push({ id: '2', type: 'called', label: 'تم الاتصال بالعميل', date: lead.updatedAt || lead.createdAt, icon: Phone, color: 'text-warning', bg: 'bg-warning-soft' });
+    if (lead.status === 'interested') events.push({ id: '3', type: 'note_added', label: 'أبدى اهتمام', date: lead.updatedAt || lead.createdAt, icon: Tag, color: 'text-success', bg: 'bg-success-soft' });
+    if (lead.status === 'trial') events.push({ id: '4', type: 'note_added', label: 'حصة تجريبية', date: lead.updatedAt || lead.createdAt, icon: Calendar, color: 'text-primary', bg: 'bg-primary-soft' });
+    if (lead.status === 'converted') events.push({ id: '5', type: 'converted', label: 'تم التحويل إلى مشترك', date: lead.updatedAt || lead.createdAt, icon: CheckCircle2, color: 'text-info', bg: 'bg-info-soft' });
     return events;
 };
 
@@ -81,11 +81,11 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                     <div className="flex items-center gap-3">
                         <div className="relative">
                             <div className={cn('rounded-full ring-2 ring-offset-2 ring-offset-transparent', statusRingColor[lead.status as LeadStatus])}>
-                                <GradientAvatar name={lead.studentName || '�'} size="md" />
+                                <GradientAvatar name={lead.studentName || 'ع'} size="md" />
                             </div>
                         </div>
                         <div>
-                            <h3 className="text-[13px] font-bold text-on-primary">{lead.studentName || '���� ���� ���'}</h3>
+                            <h3 className="text-[13px] font-bold text-on-primary">{lead.studentName || 'عميل بدون اسم'}</h3>
                             <div className="flex items-center gap-1.5 mt-0.5">
                                 <span className={cn("inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[9px] font-bold", cfg.bg, cfg.color, cfg.darkBg, cfg.darkText)}>
                                     <span className={cn("w-1.5 h-1.5 rounded-full", cfg.dot)} />
@@ -97,7 +97,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                     </div>
                     <button ref={closeRef} onClick={onClose}
                         className="w-8 h-8 flex items-center justify-center bg-white/15 hover:bg-white/25 rounded-xl transition-all"
-                        aria-label="�����">
+                        aria-label="إغلاق">
                         <X size={14} className="text-on-primary" />
                     </button>
                 </div>
@@ -107,7 +107,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                     <div className="space-y-3 mb-4">
                         <div className="grid grid-cols-2 gap-3">
                             <div className="p-3 rounded-xl border border-primary-soft bg-primary-soft">
-                                <div className="text-[10px] font-bold text-primary mb-1">������</div>
+                                <div className="text-[10px] font-bold text-primary mb-1">الهاتف</div>
                                 {isEditing ? (
                                     <input value={editData.phone} onChange={(e) => setEditData({ ...editData, phone: e.target.value })} className="w-full px-2 py-1 text-[13px] font-bold text-main bg-card border border-border rounded-lg outline-none focus:border-primary" dir="ltr" style={{ textAlign: 'right' }} />
                                 ) : (
@@ -115,34 +115,34 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                                 )}
                             </div>
                             <div className="p-3 rounded-xl border border-success-soft bg-success-soft">
-                                <div className="text-[10px] font-bold text-success mb-1">������</div>
+                                <div className="text-[10px] font-bold text-success mb-1">المادة</div>
                                 {isEditing ? (
                                     <input value={editData.subject} onChange={(e) => setEditData({ ...editData, subject: e.target.value })} className="w-full px-2 py-1 text-[13px] font-bold text-main bg-card border border-border rounded-lg outline-none focus:border-primary" />
                                 ) : (
-                                    <p className="text-[13px] font-bold text-main">{lead.subject || '�'}</p>
+                                    <p className="text-[13px] font-bold text-main">{lead.subject || '—'}</p>
                                 )}
                             </div>
                             <div className="p-3 rounded-xl border border-info-soft bg-info-soft">
-                                <div className="text-[10px] font-bold text-info mb-1">������</div>
+                                <div className="text-[10px] font-bold text-info mb-1">المنهج</div>
                                 {isEditing ? (
                                     <input value={editData.curriculum} onChange={(e) => setEditData({ ...editData, curriculum: e.target.value })} className="w-full px-2 py-1 text-[13px] font-bold text-main bg-card border border-border rounded-lg outline-none focus:border-primary" />
                                 ) : (
-                                    <p className="text-[13px] font-bold text-main">{lead.curriculum || '�'}</p>
+                                    <p className="text-[13px] font-bold text-main">{lead.curriculum || '—'}</p>
                                 )}
                             </div>
                             <div className="p-3 rounded-xl bg-surface">
-                                <div className="text-[10px] text-muted mb-1">��������</div>
+                                <div className="text-[10px] text-muted mb-1">الأولوية</div>
                                 <div className="flex items-center gap-1.5">
                                     <span className={cn("px-2 py-0.5 rounded-lg text-[10px] font-bold", priority.bg, priority.color, priority.darkBg, priority.darkText)}>{priority.label}</span>
                                 </div>
                             </div>
                         </div>
                         <div className="p-3 rounded-xl border border-warning-soft bg-warning-soft">
-                            <div className="text-[10px] font-bold text-warning mb-1">�������</div>
+                            <div className="text-[10px] font-bold text-warning mb-1">ملاحظات</div>
                             {isEditing ? (
                                 <textarea value={editData.notes} onChange={(e) => setEditData({ ...editData, notes: e.target.value })} rows={2} className="w-full px-2 py-1 text-[13px] font-bold text-main bg-card border border-border rounded-lg outline-none focus:border-primary resize-none" />
                             ) : (
-                                <p className="text-[13px] text-main leading-relaxed">{lead.notes || '�� ���� �������'}</p>
+                                <p className="text-[13px] text-main leading-relaxed">{lead.notes || 'لا توجد ملاحظات'}</p>
                             )}
                         </div>
                     </div>
@@ -152,26 +152,26 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                         {isEditing ? (
                             <>
                                 <Button onClick={handleSave} variant="primary" size="sm" className="flex-1">
-                                    <Save size={12} /> ���
+                                    <Save size={12} /> حفظ
                                 </Button>
                                 <Button onClick={() => setIsEditing(false)} variant="secondary" size="sm" className="flex-1">
-                                    �����
+                                    إلغاء
                                 </Button>
                             </>
                         ) : (
                             <>
                                 <Button onClick={() => window.open(`tel:${lead.phone}`)} variant="primary" size="sm">
-                                    <Phone size={12} /> �����
+                                    <Phone size={12} /> اتصال
                                 </Button>
                                 <Button onClick={() => window.open(`https://wa.me/${lead.phone.replace(/[^0-9]/g, '')}`, '_blank')} variant="success" size="sm">
-                                    <MessageSquare size={12} /> ������
+                                    <MessageSquare size={12} /> واتساب
                                 </Button>
                                 <Button onClick={() => setIsEditing(true)} variant="secondary" size="sm">
-                                    <Edit size={12} /> �����
+                                    <Edit size={12} /> تعديل
                                 </Button>
                                 {lead.status !== 'converted' && (
                                     <Button onClick={() => updateMutation.mutate({ id: lead.id, updates: { status: 'converted' as LeadStatus } })} variant="premium" size="sm">
-                                        <CheckCircle2 size={12} /> �����
+                                        <CheckCircle2 size={12} /> تحويل
                                     </Button>
                                 )}
                             </>
@@ -181,7 +181,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
 
                 {/* Timeline */}
                 <div className="px-4 pb-4">
-                    <h4 className="text-[11px] font-bold text-muted mb-2">��������</h4>
+                    <h4 className="text-[11px] font-bold text-muted mb-2">النشاطات</h4>
                     <div className="space-y-2">
                         {timeline.map((event) => {
                             const Icon = event.icon;
