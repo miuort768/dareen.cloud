@@ -7,6 +7,7 @@ import { api, safeArray } from '../lib/api';
 import { useShowNotification, useAcademyName } from '../context/AppContext';
 import { confirm } from '../lib/confirmDialog';
 import { AnnouncementCard } from './AnnouncementCard';
+import { ParentAnnouncements } from './ParentAnnouncements';
 import { AnnouncementFormModal } from './AnnouncementFormModal';
 import { cn } from '../lib/utils';
 import { TeacherDashboardHeader } from './TeacherDashboardHeader';
@@ -141,6 +142,11 @@ export const Announcements = () => {
         { icon: Plus, label: 'إعلان جديد', onClick: () => { setEditingAnnouncement(null); setFormData({ title: '', content: '', type: 'general', isActive: true }); setIsModalOpen(true); } },
         { icon: Trash2, label: 'حذف الكل', onClick: handleDeleteAll },
     ], [announcements]);
+
+    // Non-admin roles (teacher/parent) get the student-facing announcements design
+    if (currentUser && currentUser.role !== 'admin') {
+        return <ParentAnnouncements />
+    }
 
     return (
         <>

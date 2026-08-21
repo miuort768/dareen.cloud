@@ -261,13 +261,13 @@ export const ParentAnnouncements = () => {
                   </div>
 
                   <a
-                    href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`الإبلاغ عن مشكلة: ${ann.title}`)}`}
+                    href={`https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}?text=${encodeURIComponent(`مرحباً ${academyName}،\nلدي استفسار بخصوص الإعلان: «${ann.title}» المنشور بتاريخ ${format(new Date(ann.date), 'dd/MM/yyyy')}.\nشكراً لكم.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 rounded-xl border border-primary px-4 py-1.5 text-micro font-bold text-primary transition-all hover:bg-primary-hover hover:text-on-primary active:scale-95"
                   >
                     <MessageCircle size={14} />
-                    إبلاغ
+                    استفسار
                   </a>
                 </div>
               </motion.div>
