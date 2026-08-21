@@ -55,9 +55,12 @@ const getAvatarGradient = (name: string) => {
 
 const formatPhone = (phone: string) => {
   if (!phone) return ''
-  if (phone.length > 8) return `${phone.slice(0, 4)}...${phone.slice(-3)}`
+  if (phone.length > 8) return `${phone.slice(0, 4)}•••${phone.slice(-3)}`
   return phone
 }
+
+const actionBtnBase =
+  'flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-[11px] font-extrabold transition-all active:scale-95'
 
 export const TrialSessionCard = ({
   session: t,
@@ -79,13 +82,14 @@ export const TrialSessionCard = ({
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -2 }}
       className={cn(
-        'group overflow-hidden rounded-2xl border border-border bg-card text-right font-dash transition-all duration-300 hover:shadow-elevation-2',
+        'group overflow-hidden rounded-2xl border border-border bg-card text-right font-dash shadow-elevation-0 transition-all duration-300 hover:shadow-elevation-1',
         onCardClick && 'cursor-pointer',
       )}
       dir="rtl"
     >
       <div className="cursor-pointer p-4 pb-3" onClick={onCardClick}>
-        <div className="mb-4 flex items-center justify-between">
+        {/* Header: student + status | date/time */}
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-3">
             <div
               className={cn(
@@ -110,7 +114,7 @@ export const TrialSessionCard = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] text-muted">
+          <div className="flex items-center gap-2 text-[11px] font-bold text-muted">
             <span className="inline-flex items-center gap-1">
               <Calendar size={11} />
               {t.date}
@@ -127,8 +131,9 @@ export const TrialSessionCard = ({
           </div>
         </div>
 
-        <div className="mb-3 grid grid-cols-3 gap-2.5">
-          <div className="bg-surface/80 dark:bg-card/90 border-border/80 rounded-xl border p-2.5 text-right">
+        {/* Session info: stacked on mobile, 3 columns on sm+ */}
+        <div className="mb-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+          <div className="rounded-xl border border-border/80 bg-surface/80 p-2.5 text-right dark:bg-card/90">
             <p className="mb-1 text-[10px] font-bold text-muted">المادة</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary/15">
@@ -139,10 +144,10 @@ export const TrialSessionCard = ({
               </span>
             </div>
           </div>
-          <div className="bg-surface/80 dark:bg-card/90 border-border/80 rounded-xl border p-2.5 text-right">
+          <div className="rounded-xl border border-border/80 bg-surface/80 p-2.5 text-right dark:bg-card/90">
             <p className="mb-1 text-[10px] font-bold text-muted">المعلمة</p>
             <div className="flex items-center justify-start gap-1.5">
-              <div className="bg-success/15 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-success/15">
                 <GraduationCap size={12} className="text-success" />
               </div>
               <span className="truncate text-[11px] font-extrabold text-main">
@@ -150,10 +155,10 @@ export const TrialSessionCard = ({
               </span>
             </div>
           </div>
-          <div className="bg-surface/80 dark:bg-card/90 border-border/80 rounded-xl border p-2.5 text-right">
+          <div className="rounded-xl border border-border/80 bg-surface/80 p-2.5 text-right dark:bg-card/90">
             <p className="mb-1 text-[10px] font-bold text-muted">رقم التواصل</p>
             <div className="flex items-center justify-start gap-1.5">
-              <div className="bg-warning/15 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-warning/15">
                 <Phone size={12} className="text-warning" />
               </div>
               <span className="truncate font-mono text-[11px] font-extrabold text-main" dir="ltr">
@@ -163,11 +168,14 @@ export const TrialSessionCard = ({
           </div>
         </div>
 
+        {/* Notes accordion */}
         {t.notes && (
           <div
             className={cn(
-              'mb-2 cursor-pointer rounded-xl text-[11px] transition-all',
-              showNotes ? 'bg-warning/15 dark:bg-warning/25 border-warning/40 border-2 p-3' : '',
+              'cursor-pointer rounded-xl text-[11px] transition-all',
+              showNotes
+                ? 'border-2 border-warning/40 bg-warning/15 p-3 dark:bg-warning/25'
+                : 'border border-warning/30 bg-warning/10 dark:bg-warning/20',
             )}
             onClick={(e) => {
               e.stopPropagation()
@@ -192,7 +200,7 @@ export const TrialSessionCard = ({
                 </div>
               </div>
             ) : (
-              <div className="bg-warning/10 dark:bg-warning/20 border-warning/30 flex items-center gap-1.5 rounded-lg border px-3 py-2 font-semibold text-main">
+              <div className="flex items-center gap-1.5 px-1 py-1.5 font-semibold text-main">
                 <MessageCircle size={13} className="shrink-0 text-warning" />
                 <span className="line-clamp-1 flex-1 text-right">{t.notes}</span>
                 <ChevronDown size={11} className="shrink-0 text-warning" />
@@ -202,19 +210,95 @@ export const TrialSessionCard = ({
         )}
       </div>
 
+      {/* Mobile actions: 2-col grid + full-width delete */}
       <div
-        className="flex items-center justify-between gap-2 border-t border-border bg-surface px-4 py-3 dark:bg-card"
+        className="border-t border-border bg-surface px-4 py-3 md:hidden dark:bg-card"
         role="toolbar"
         aria-label="إجراءات الحصة"
       >
-        <div className="flex flex-1 flex-wrap items-center gap-2">
+        <div className="grid grid-cols-2 gap-2">
+          {onWhatsApp && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onWhatsApp(t.parentPhone)
+              }}
+              className={cn(actionBtnBase, 'border-success/20 bg-success/10 text-success hover:bg-success/20')}
+              aria-label="واتساب"
+            >
+              <MessageSquare size={13} /> واتساب
+            </button>
+          )}
           {onCall && (
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 onCall(t.parentPhone)
               }}
-              className="bg-info/15 border-info/30 hover:bg-info/25 flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-[11px] font-extrabold text-info transition-all active:scale-95"
+              className={cn(actionBtnBase, 'border-info/20 bg-info/10 text-info hover:bg-info/20')}
+              aria-label="اتصال"
+            >
+              <Phone size={13} /> اتصال
+            </button>
+          )}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              onEdit(t)
+            }}
+            className={cn(actionBtnBase, 'border-primary/20 bg-primary/10 text-primary hover:bg-primary/20')}
+            aria-label="تعديل"
+          >
+            <Pencil size={13} /> تعديل
+          </button>
+          {onPaid && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onPaid(t.id)
+              }}
+              disabled={isPaid}
+              className={cn(
+                actionBtnBase,
+                isPaid
+                  ? 'cursor-default border-success/40 bg-success/15 text-success'
+                  : 'border-success bg-success text-on-success shadow-sm shadow-success/20 hover:bg-success-dark',
+              )}
+              aria-label="مدفوعة"
+            >
+              <CircleDollarSign size={14} /> {isPaid ? 'تم الدفع' : 'دفع'}
+            </button>
+          )}
+        </div>
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            onDelete(t.id)
+          }}
+          className={cn(
+            actionBtnBase,
+            'mt-2 w-full border-error bg-error text-on-error shadow-sm shadow-error/20 hover:bg-error-hover',
+          )}
+          aria-label="حذف"
+        >
+          <Trash2 size={14} /> حذف
+        </button>
+      </div>
+
+      {/* Desktop actions: single row */}
+      <div
+        className="hidden items-center justify-between gap-2 border-t border-border bg-surface px-4 py-3 md:flex dark:bg-card"
+        role="toolbar"
+        aria-label="إجراءات الحصة"
+      >
+        <div className="flex items-center gap-2">
+          {onCall && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                onCall(t.parentPhone)
+              }}
+              className={cn(actionBtnBase, 'border-info/20 bg-info/10 text-info hover:bg-info/20')}
               aria-label="اتصال"
             >
               <Phone size={13} /> اتصال
@@ -226,7 +310,7 @@ export const TrialSessionCard = ({
                 e.stopPropagation()
                 onWhatsApp(t.parentPhone)
               }}
-              className="bg-success/15 border-success/30 hover:bg-success/25 flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2 text-[11px] font-extrabold text-success transition-all active:scale-95"
+              className={cn(actionBtnBase, 'border-success/20 bg-success/10 text-success hover:bg-success/20')}
               aria-label="واتساب"
             >
               <MessageSquare size={13} /> واتساب
@@ -237,7 +321,7 @@ export const TrialSessionCard = ({
               e.stopPropagation()
               onEdit(t)
             }}
-            className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-[11px] font-extrabold text-main transition-all hover:bg-hover active:scale-95"
+            className={cn(actionBtnBase, 'border-primary/20 bg-primary/10 text-primary hover:bg-primary/20')}
             aria-label="تعديل"
           >
             <Pencil size={13} /> تعديل
@@ -253,10 +337,10 @@ export const TrialSessionCard = ({
               }}
               disabled={isPaid}
               className={cn(
-                'flex items-center gap-1.5 rounded-xl border-2 px-3 py-2 text-[11px] font-extrabold shadow-sm transition-all active:scale-95',
+                actionBtnBase,
                 isPaid
-                  ? 'border-success/40 bg-success/15 cursor-default text-success'
-                  : 'shadow-success/20 border-success bg-success text-on-success hover:bg-success-dark',
+                  ? 'cursor-default border-success/40 bg-success/15 text-success'
+                  : 'border-success bg-success text-on-success shadow-sm shadow-success/20 hover:bg-success-dark',
               )}
               aria-label="مدفوعة"
             >
@@ -268,7 +352,10 @@ export const TrialSessionCard = ({
               e.stopPropagation()
               onDelete(t.id)
             }}
-            className="shadow-error/20 flex items-center gap-1.5 rounded-xl border-2 border-error bg-error px-3 py-2 text-[11px] font-extrabold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
+            className={cn(
+              actionBtnBase,
+              'border-error bg-error text-on-error shadow-sm shadow-error/20 hover:bg-error-hover',
+            )}
             aria-label="حذف"
           >
             <Trash2 size={14} /> حذف

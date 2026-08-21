@@ -27,6 +27,7 @@ import { ErrorBanner } from '../shared/components/ui/ErrorState'
 import { TrialSessionCard } from './TrialSessionCard'
 import { TrialSessionFormModal } from './TrialSessionFormModal'
 import { TrialSessionDrawer } from './TrialSessionDrawer'
+import { TrialSessionFilterDropdown } from './TrialSessionFilterDropdown'
 import { useUIStore } from '../store/uiStore'
 import { useAcademyName } from '../context/AppContext'
 import { Skeleton } from '../shared/components/ui/Skeleton'
@@ -98,43 +99,12 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } },
 }
 
-const statusFilters = [
-  {
-    key: 'pending',
-    label: 'بانتظار',
-    color: 'text-warning font-black',
-    bg: 'bg-warning/20 border-warning/40',
-    activeBg: 'bg-warning',
-    activeText: 'text-on-warning font-black',
-    dot: 'bg-warning',
-  },
-  {
-    key: 'completed',
-    label: 'تمت',
-    color: 'text-success font-black',
-    bg: 'bg-success/20 border-success/40',
-    activeBg: 'bg-success',
-    activeText: 'text-on-success font-black',
-    dot: 'bg-success',
-  },
-  {
-    key: 'cancelled',
-    label: 'ملغية',
-    color: 'text-error font-black',
-    bg: 'bg-error/20 border-error/40',
-    activeBg: 'bg-error',
-    activeText: 'text-on-error font-black',
-    dot: 'bg-error',
-  },
-  {
-    key: 'converted',
-    label: 'محولة',
-    color: 'text-info font-black',
-    bg: 'bg-info/20 border-info/40',
-    activeBg: 'bg-info',
-    activeText: 'text-on-info font-black',
-    dot: 'bg-info',
-  },
+const statusFilterItems = [
+  { key: '', label: 'الكل' },
+  { key: 'pending', label: 'بانتظار', dot: 'bg-warning' },
+  { key: 'completed', label: 'تمت', dot: 'bg-success' },
+  { key: 'cancelled', label: 'ملغية', dot: 'bg-error' },
+  { key: 'converted', label: 'محولة', dot: 'bg-primary' },
 ]
 
 const TrialSessionsSkeleton = () => (
@@ -171,15 +141,14 @@ const TrialSessionsSkeleton = () => (
       </div>
       {/* Toolbar skeleton */}
       <div className="mb-4 rounded-2xl border border-border bg-card p-4 lg:p-5">
-        <Skeleton className="mb-3 h-11 w-full rounded-xl" />
-        <div className="flex gap-2">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Skeleton
-              key={i}
-              className="h-8 shrink-0 rounded-lg"
-              style={{ width: `${60 + Math.random() * 30}px` }}
-            />
-          ))}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Skeleton className="h-11 flex-1 rounded-xl" />
+          <Skeleton className="h-9 w-16 shrink-0 rounded-xl" />
+          <Skeleton className="h-10 w-12 shrink-0 rounded-xl" />
+        </div>
+        <div className="mt-3 flex gap-2">
+          <Skeleton className="h-10 w-24 shrink-0 rounded-xl" />
+          <Skeleton className="h-10 w-28 shrink-0 rounded-xl" />
         </div>
       </div>
       {/* Cards skeleton */}
@@ -440,44 +409,83 @@ export const TrialSessions = () => {
       <div className="relative z-10 mx-auto max-w-page px-4 md:px-6">
         {/* ===== HEADER ===== */}
         <motion.div variants={itemVariants} className="pb-2 pt-4">
-          {/* Title row */}
-          <div className="flex items-center justify-between">
+          {/* Mobile layout */}
+          <div className="md:hidden">
             <div className="flex items-center gap-2.5">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-md shadow-primary/20">
+                <CalendarDays size={20} className="text-on-primary" />
+              </div>
               <div>
-                <h1 className="font-outfit text-lg font-black text-main md:text-xl">جلسات المراجعة</h1>
+                <h1 className="font-outfit text-lg font-black text-main">جلسات المراجعة</h1>
                 <p className="text-[11px] text-muted">{stats?.total || 0} حصة مسجلة في النظام</p>
               </div>
             </div>
-          </div>
-          {/* Action buttons row — matches Image 2 */}
-          <div className="mt-4 flex items-center gap-2">
             <button
               onClick={() => {
                 setEditingId(null)
                 resetForm()
                 setShowModal(true)
               }}
-              className="flex flex-1 h-11 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-sm shadow-primary/10 transition-all hover:bg-primary-hover active:scale-95"
+              className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-4 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all hover:shadow-lg hover:shadow-primary/30 active:scale-95"
             >
               <Plus size={16} /> جدولة جديدة
             </button>
-            <button
-              onClick={() => {
-                setConfirmDeleteAll(true)
-                setDeleteAllTyped('')
-              }}
-              className="flex flex-1 h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-md transition-all hover:bg-error-hover active:scale-95"
-            >
-              <Trash2 size={16} /> حذف الكل
-            </button>
-            <button className="flex flex-1 h-11 items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 text-xs font-bold text-muted transition-all hover:border-primary/20 hover:text-main">
-              <Download size={16} /> تحميل التقرير
-            </button>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <button className="flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95">
+                <Download size={16} /> تحميل التقرير
+              </button>
+              <button
+                onClick={() => {
+                  setConfirmDeleteAll(true)
+                  setDeleteAllTyped('')
+                }}
+                className="flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm shadow-error/20 transition-all hover:bg-error-hover active:scale-95"
+              >
+                <Trash2 size={16} /> حذف الكل
+              </button>
+            </div>
+          </div>
+
+          {/* Desktop layout */}
+          <div className="hidden items-center justify-between gap-4 md:flex">
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-md shadow-primary/25">
+                <CalendarDays size={22} className="text-on-primary" />
+              </div>
+              <div>
+                <h1 className="font-outfit text-xl font-black text-main">جلسات المراجعة</h1>
+                <p className="text-[11px] text-muted">{stats?.total || 0} حصة مسجلة في النظام</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button className="flex h-10 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95">
+                <Download size={15} /> تحميل التقرير
+              </button>
+              <button
+                onClick={() => {
+                  setConfirmDeleteAll(true)
+                  setDeleteAllTyped('')
+                }}
+                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm shadow-error/20 transition-all hover:bg-error-hover active:scale-95"
+              >
+                <Trash2 size={15} /> حذف الكل
+              </button>
+              <button
+                onClick={() => {
+                  setEditingId(null)
+                  resetForm()
+                  setShowModal(true)
+                }}
+                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-5 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all hover:shadow-lg hover:shadow-primary/30 active:scale-95"
+              >
+                <Plus size={15} /> جدولة جديدة
+              </button>
+            </div>
           </div>
         </motion.div>
 
         {/* ===== KPI STATS ===== */}
-        <motion.div variants={itemVariants} className="mb-5 grid grid-cols-2 gap-3">
+        <motion.div variants={itemVariants} className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
           {[
             {
               label: 'قيد الانتظار',
@@ -486,14 +494,6 @@ export const TrialSessions = () => {
               icon: Clock,
               color: 'text-warning',
               iconBg: 'bg-warning-soft',
-            },
-            {
-              label: 'معدل التحويل',
-              value: `${conversionRate}%`,
-              sub: `${stats?.converted || 0} تحويل`,
-              icon: TrendingUp,
-              color: 'text-primary',
-              iconBg: 'bg-primary-soft',
             },
             {
               label: 'إجمالي الحصص',
@@ -511,13 +511,21 @@ export const TrialSessions = () => {
               color: 'text-success',
               iconBg: 'bg-success/10',
             },
+            {
+              label: 'معدل التحويل',
+              value: `${conversionRate}%`,
+              sub: 'من إجمالي الحصص',
+              icon: TrendingUp,
+              color: 'text-primary',
+              iconBg: 'bg-primary-soft',
+            },
           ].map((stat, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
-              className="rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:shadow-elevation-1"
+              className="rounded-2xl border border-border bg-card p-4 shadow-elevation-0 transition-all duration-300 hover:shadow-elevation-1"
             >
               <div className="mb-3 flex items-center justify-between">
                 <span className="truncate text-xs font-bold text-main">{stat.label}</span>
@@ -583,103 +591,40 @@ export const TrialSessions = () => {
               </div>
             </div>
 
-            {/* Status filter pills */}
-            <div className="scrollbar-none mt-3 flex items-center gap-2 overflow-x-auto">
-              <motion.button
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setFilterStatus('')}
-                className={cn(
-                  'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 text-[10px] font-bold transition-all duration-200',
-                  !filterStatus
-                    ? 'border-primary bg-primary text-on-primary shadow-sm shadow-primary/10'
-                    : 'border-border/60 hover:border-current/40 border bg-primary-soft text-primary',
-                )}
-              >
-                الكل
-                <span
-                  className={cn(
-                    'min-w-[16px] rounded-md px-1.5 py-0.5 text-center text-[9px] font-bold',
-                    !filterStatus ? 'bg-white/20' : 'border-border/60 border bg-surface text-muted',
-                  )}
-                >
-                  {trials.length}
-                </span>
-              </motion.button>
-              {statusFilters.map((sf) => {
-                const isActive = filterStatus === sf.key
-                const count = trials.filter((t: TrialSession) => t.status === sf.key).length
-                return (
-                  <motion.button
-                    key={sf.key}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setFilterStatus(isActive ? '' : sf.key)}
-                    className={cn(
-                      'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 text-[10px] font-bold transition-all duration-200',
-                      isActive
-                        ? `${sf.activeBg} ${sf.activeText} border-current/20 shadow-sm`
-                        : `${sf.bg} ${sf.color} border-border/60 hover:border-current/40 border`,
-                    )}
-                  >
-                    <span className={cn('h-1.5 w-1.5 rounded-full', sf.dot)} />
-                    {sf.label}
-                    <span
-                      className={cn(
-                        'min-w-[16px] rounded-md px-1.5 py-0.5 text-center text-[9px] font-bold',
-                        isActive ? 'bg-white/20' : 'border-border/60 border bg-surface text-muted',
-                      )}
-                    >
-                      {count}
-                    </span>
-                  </motion.button>
-                )
-              })}
-              {filterStatus && (
+            {/* Filter dropdowns: status + subject */}
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <TrialSessionFilterDropdown
+                value={filterStatus}
+                items={statusFilterItems}
+                onChange={setFilterStatus}
+              />
+              {subjects.length > 0 && (
+                <TrialSessionFilterDropdown
+                  value={filterSubject}
+                  items={[
+                    { key: '', label: 'كل المواد' },
+                    ...subjects.map((s) => ({ key: s, label: s })),
+                  ]}
+                  onChange={setFilterSubject}
+                  icon={BookOpen}
+                />
+              )}
+              {(filterStatus || filterSubject) && (
                 <motion.button
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => setFilterStatus('')}
-                  className="hover:bg-error/20 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-error-soft text-error transition-all"
+                  onClick={() => {
+                    setFilterStatus('')
+                    setFilterSubject('')
+                  }}
+                  className="hover:bg-error/20 flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all"
                 >
-                  <X size={13} />
+                  <X size={13} /> مسح الفلاتر
                 </motion.button>
               )}
             </div>
-
-            {/* Subject filter — pills */}
-            {subjects.length > 0 && (
-              <div className="scrollbar-none mt-2 flex items-center gap-2 overflow-x-auto pb-1">
-                <CalendarDays size={14} className="shrink-0 text-muted ms-1" />
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setFilterSubject('')}
-                  className={cn(
-                    'shrink-0 rounded-lg border px-4 py-1.5 text-[11px] font-bold transition-all duration-200',
-                    !filterSubject
-                      ? 'border-primary bg-primary text-on-primary shadow-sm shadow-primary/10'
-                      : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
-                  )}
-                >
-                  كل المواد
-                </motion.button>
-                {subjects.map((subj) => (
-                  <motion.button
-                    key={subj}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setFilterSubject(subj)}
-                    className={cn(
-                      'shrink-0 rounded-lg border px-4 py-1.5 text-[11px] font-bold transition-all duration-200',
-                      filterSubject === subj
-                        ? 'border-primary bg-primary text-on-primary shadow-sm shadow-primary/10'
-                        : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
-                    )}
-                  >
-                    {subj}
-                  </motion.button>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Cards List / Inline Modal / Inline Drawer */}
