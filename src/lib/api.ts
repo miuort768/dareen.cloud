@@ -120,9 +120,17 @@ class ApiClient {
     }
 
     if (!response.ok) {
-      let errorMessage = 'حدث خطأ ما في الاتصال بالسيرفر'
+      let errorMessage =
+        response.status >= 500
+          ? 'الخدمة غير متاحة مؤقتًا، يرجى المحاولة بعد قليل'
+          : 'حدث خطأ ما في الاتصال بالسيرفر'
       try {
         const text = await response.text()
+        const looksLikeHtml = text.trim().startsWith('<')
+        if (looksLikeHtml) {
+          // 502/504 gateway HTML page — keep the friendly default message
+          throw new Error(errorMessage)
+        }
         try {
           const error = JSON.parse(text)
           errorMessage = error.error || error.message || errorMessage
@@ -132,10 +140,12 @@ class ApiClient {
               error.details.map((d: { field: string; message: string }) => d.message).join(' | ')
           }
         } catch (e) {
+          if (e instanceof Error && e.message === errorMessage) throw e
           console.warn(e)
-          errorMessage = text || response.statusText || errorMessage
+          errorMessage = text && text.length < 200 ? text : response.statusText || errorMessage
         }
       } catch (e) {
+        if (e instanceof Error && e.message === errorMessage) throw e
         console.warn(e)
         errorMessage = response.statusText || errorMessage
       }

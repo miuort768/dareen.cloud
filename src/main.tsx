@@ -38,6 +38,19 @@ const persister: Persister = {
   },
 }
 
+// Stale-bundle guard: after a new deploy, old chunks referenced by the loaded
+// page no longer exist. Vite emits this event on preload failure — reload once
+// to fetch the fresh index.html instead of crashing.
+window.addEventListener('vite:preloadError', (e) => {
+  e.preventDefault()
+  const key = 'dareen_chunk_reload_at'
+  const last = Number(sessionStorage.getItem(key) || 0)
+  if (Date.now() - last > 10000) {
+    sessionStorage.setItem(key, String(Date.now()))
+    window.location.reload()
+  }
+})
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>

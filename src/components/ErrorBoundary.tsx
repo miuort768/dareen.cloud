@@ -14,6 +14,22 @@ export class ErrorBoundary extends Component<Props, State> {
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo) {
         console.error('ErrorBoundary caught:', error, errorInfo);
+        // Stale-bundle after a new deploy: old index.html references removed chunks.
+        // Reload once to pick up the fresh build instead of showing a dead screen.
+        const msg = error?.message || '';
+        const isChunkError =
+            msg.includes('Failed to fetch dynamically imported module') ||
+            msg.includes('Importing a module script failed') ||
+            msg.includes('error loading dynamically imported module') ||
+            msg.includes('Loading CSS chunk');
+        if (isChunkError) {
+            const key = 'dareen_chunk_reload_at';
+            const last = Number(sessionStorage.getItem(key) || 0);
+            if (Date.now() - last > 10000) {
+                sessionStorage.setItem(key, String(Date.now()));
+                window.location.reload();
+            }
+        }
     }
 
     render() {
