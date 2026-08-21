@@ -20,6 +20,15 @@ interface AppointmentEvent {
     subject: string; curriculum: string; day: string; hour: string; period: string; time: string; isPM: boolean;
 }
 
+const teacherNameOf = (enrollment: { teacher: unknown; teacherId?: string | number }): string => {
+    const t = enrollment.teacher;
+    if (typeof t === 'string') return t.trim();
+    if (t && typeof t === 'object' && 'name' in (t as Record<string, unknown>)) {
+        return String((t as { name?: unknown }).name ?? '').trim();
+    }
+    return '';
+};
+
 const particles = Array.from({ length: 8 }, (_, i) => ({
     id: i, x: Math.random() * 100, y: Math.random() * 100,
     size: Math.random() * 5 + 2, duration: Math.random() * 6 + 4, delay: Math.random() * 3,
@@ -88,17 +97,18 @@ export const Appointments = () => {
     const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
     const allAppointments: AppointmentEvent[] = (students || []).flatMap(student =>
         (student.enrollments || [])
-            .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch || enrollment.teacherId === currentUser.id)
+            .filter(enrollment => currentUser?.role !== 'teacher' || teacherNameOf(enrollment) === teacherToMatch || enrollment.teacherId === currentUser.id)
             .flatMap(enrollment =>
                 (enrollment.schedule || []).map(slot => {
                     const normalizedPeriod = (slot.period === 'am' || slot.period === 'صباحاً' || slot.period === 'صباحا' || slot.period === 'ص') ? 'ص' : 'م';
                     const isPM = !(slot.period === 'am' || slot.period === 'صباحاً' || slot.period === 'صباحا' || slot.period === 'ص');
                     const normHour = String(parseInt(String(slot.hour).trim(), 10) || '');
+                    const tName = teacherNameOf(enrollment);
                     return {
-                        id: `${student.id}-${enrollment.teacher}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
+                        id: `${student.id}-${tName}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
                         studentName: student.name,
                         studentGrade: student.grade,
-                        teacherName: (enrollment.teacher || '').trim(),
+                        teacherName: tName,
                         subject: enrollment.subject,
                         curriculum: enrollment.curr,
                         day: normalizeDayName(slot.day),
@@ -165,9 +175,9 @@ export const Appointments = () => {
 
     const kpiCards = useMemo(() => [
         { label: 'إجمالي المواعيد', value: totalAppointments, icon: Calendar, gradient: 'from-primary/20 to-primary/5', iconBg: 'bg-primary/10 text-primary', accent: 'bg-primary' },
-        { label: 'مواعيد اليوم', value: todayAppointments, icon: Clock, gradient: 'from-success/20 to-success/5', iconBg: 'bg-success/10 text-success', accent: 'bg-success' },
-        { label: 'المتبقي اليوم', value: remainingToday, icon: BarChart3, gradient: 'from-warning/20 to-warning/5', iconBg: 'bg-warning/10 text-warning', accent: 'bg-warning' },
-        { label: 'تم الإنجاز', value: completedCount, icon: CheckCircle, gradient: 'from-info/20 to-info/5', iconBg: 'bg-info/10 text-info', accent: 'bg-info' },
+        { label: 'مواعيد اليوم', value: todayAppointments, icon: Clock, gradient: 'from-success-soft to-background dark:from-success-soft dark:to-card', iconBg: 'bg-white/50 text-success dark:bg-white/10', accent: 'bg-success' },
+        { label: 'المتبقي اليوم', value: remainingToday, icon: BarChart3, gradient: 'from-warning-soft to-background dark:from-warning-soft dark:to-card', iconBg: 'bg-white/50 text-warning dark:bg-white/10', accent: 'bg-warning' },
+        { label: 'تم الإنجاز', value: completedCount, icon: CheckCircle, gradient: 'from-info-soft to-background dark:from-info-soft dark:to-card', iconBg: 'bg-white/50 text-info dark:bg-white/10', accent: 'bg-info' },
     ], [totalAppointments, todayAppointments, remainingToday, completedCount]);
 
     const handleCompleteAll = () => {
@@ -240,7 +250,7 @@ export const Appointments = () => {
                             const Icon = kpi.icon;
                             return (
                                 <motion.div key={kpi.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
-                                    whileHover={{ scale: 1.02, y: -2 }} className={cn("relative overflow-hidden rounded-xl bg-gradient-to-br border border-border/50 p-4", kpi.gradient)}>
+                                    whileHover={{ scale: 1.02, y: -2 }} className={cn("relative overflow-hidden rounded-xl bg-gradient-to-br border border-border p-4", kpi.gradient)}>
                                     <div className="flex items-center justify-between mb-3">
                                         <div className={cn("p-2 rounded-lg", kpi.iconBg)}><Icon size={16} /></div>
                                         <div className={cn("h-1 w-12 rounded-full", kpi.accent)} />

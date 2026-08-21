@@ -1,5 +1,5 @@
-import { Calendar, Clock, User, ShieldCheck, CheckCircle2, BookOpen, PartyPopper, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar, Clock, User, ShieldCheck, CheckCircle2, BookOpen, PartyPopper } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { cn } from '../../lib/utils';
 
 interface AppointmentEvent {
@@ -23,10 +23,7 @@ interface AppointmentScheduleGridProps {
     isPending?: boolean;
 }
 
-// Flatten all appointments from all days in order
-function flattenAppointments(appointmentsByDay: { day: string; appointments: AppointmentEvent[] }[]): AppointmentEvent[] {
-    return appointmentsByDay.flatMap(d => d.appointments);
-}
+const todayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
 
 export const AppointmentScheduleGrid = ({
     appointmentsByDay,
@@ -34,10 +31,8 @@ export const AppointmentScheduleGrid = ({
     onCompleteSession,
     isPending = false,
 }: AppointmentScheduleGridProps) => {
-    const allApps = flattenAppointments(appointmentsByDay);
-    const total = allApps.length;
+    const total = appointmentsByDay.reduce((s, d) => s + d.appointments.length, 0);
 
-    // All done — show thank-you card
     if (total === 0) {
         return (
             <motion.div
@@ -49,141 +44,123 @@ export const AppointmentScheduleGrid = ({
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                    className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 bg-success/10"
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 bg-success-soft"
                 >
                     <PartyPopper size={40} className="text-success" />
                 </motion.div>
                 <h3 className="font-bold text-main text-xl mb-2">أحسنت! 🎉</h3>
                 <p className="text-muted text-sm font-bold max-w-xs">
-                    لقد أتممت جميع المواعيد لهذا اليوم. عمل رائع!
+                    لقد أتممت جميع المواعيد. عمل رائع!
                 </p>
             </motion.div>
         );
     }
 
-    const current = allApps[0];
-    const remaining = total;
-    // We don't have a "totalOriginal" here so we show remaining count
-
     return (
-        <div className="flex flex-col gap-4">
-            {/* Progress info */}
+        <div className="space-y-4">
+            {/* Summary bar */}
             <div className="flex items-center justify-between px-1">
-                <span className="text-xs font-bold text-muted">
-                    المواعيد المتبقية
-                </span>
-                <span className="text-xs font-bold text-primary bg-primary-soft px-2.5 py-0.5 rounded-lg">
-                    {remaining} موعد
+                <span className="text-xs font-bold text-muted">جدول الأسبوع الكامل</span>
+                <span className="text-xs font-bold text-primary bg-primary-soft px-2.5 py-0.5 rounded-lg tabular-nums">
+                    {total} موعد
                 </span>
             </div>
 
-            {/* Single appointment card */}
-            <AnimatePresence mode="wait">
-                <motion.div
-                    key={current.id}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 30 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    className="bg-card border border-border rounded-2xl overflow-hidden"
-                >
-                    {/* Card header with day + time */}
-                    <div className="px-5 py-3 bg-primary flex items-center justify-between">
-                        <div>
-                            <p className="text-on-primary/60 text-xs font-bold mb-0.5">الموعد الحالي</p>
-                            <h3 className="text-on-primary font-bold text-base">{current.day}</h3>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/15">
-                                <Clock size={14} className="text-on-primary/80" />
-                                <span className="font-bold text-on-primary tabular-nums">{current.time}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Card body */}
-                    <div className="p-5 space-y-3">
-                        {/* Student */}
-                        <div
-                            className="flex items-center justify-between p-3.5 rounded-xl bg-primary-soft border-s-[3px] border-s-primary cursor-pointer hover:bg-primary/10 transition-colors"
-                            onClick={() => onSelectAppointment(current)}
-                        >
-                            <div>
-                                <label className="block text-micro font-bold text-muted mb-0.5">الطالب</label>
-                                <h4 className="text-sm font-bold text-main">{current.studentName}</h4>
-                                <span className="text-micro font-bold text-primary">{current.studentGrade}</span>
-                            </div>
-                            <User size={20} className="text-primary/50" />
-                        </div>
-
-                        {/* Teacher */}
-                        <div className="flex items-center justify-between p-3.5 rounded-xl bg-success-soft border-s-[3px] border-s-success">
-                            <div>
-                                <label className="block text-micro font-bold text-muted mb-0.5">المعلمة</label>
-                                <h4 className="text-sm font-bold text-main">{current.teacherName}</h4>
-                            </div>
-                            <ShieldCheck size={20} className="text-success/50" />
-                        </div>
-
-                        {/* Subject */}
-                        <div className="flex items-center justify-between p-3.5 rounded-xl bg-warning-soft border-s-[3px] border-s-warning">
-                            <div>
-                                <label className="block text-micro font-bold text-muted mb-0.5">المادة</label>
-                                <h4 className="text-sm font-bold text-main">{current.subject}</h4>
-                                {current.curriculum && (
-                                    <span className="text-micro font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg bg-warning-soft text-warning">
-                                        {current.curriculum}
+            {appointmentsByDay.map(({ day, appointments }) => {
+                const isToday = day === todayName;
+                return (
+                    <motion.div
+                        key={day}
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className={cn(
+                            'bg-card border rounded-2xl overflow-hidden',
+                            isToday ? 'border-primary shadow-md shadow-primary/10' : 'border-border',
+                        )}
+                    >
+                        {/* Day header */}
+                        <div className={cn(
+                            'px-4 py-2.5 border-b flex items-center justify-between',
+                            isToday ? 'bg-gradient-to-l from-primary to-primary-deep border-primary' : 'bg-surface border-border',
+                        )}>
+                            <div className="flex items-center gap-2">
+                                <Calendar size={13} className={isToday ? 'text-on-primary' : 'text-muted'} />
+                                <h3 className={cn('text-xs font-bold', isToday ? 'text-on-primary' : 'text-main')}>
+                                    {day}
+                                </h3>
+                                {isToday && (
+                                    <span className="rounded-lg bg-white/20 px-1.5 py-0.5 text-[9px] font-bold text-on-primary">
+                                        اليوم
                                     </span>
                                 )}
                             </div>
-                            <BookOpen size={20} className="text-warning/50" />
+                            <span className={cn(
+                                'text-micro font-bold px-2 py-0.5 rounded-lg tabular-nums',
+                                isToday ? 'bg-white/15 text-on-primary' : appointments.length > 0 ? 'bg-primary-soft text-primary' : 'bg-border text-muted',
+                            )}>
+                                {appointments.length} موعد
+                            </span>
                         </div>
 
-                        {/* Complete button */}
-                        <button
-                            onClick={(e) => onCompleteSession(current.id, e)}
-                            disabled={isPending}
-                            className={cn(
-                                'w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm transition-all active:scale-95',
-                                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                                isPending
-                                    ? 'bg-success/60 text-on-success cursor-not-allowed'
-                                    : 'bg-success hover:brightness-90 text-on-success'
-                            )}
-                        >
-                            <CheckCircle2 size={18} />
-                            {isPending ? 'جاري التسجيل...' : 'إتمام الحصة'}
-                        </button>
-                    </div>
-                </motion.div>
-            </AnimatePresence>
+                        {/* Day appointments */}
+                        {appointments.length > 0 ? (
+                            <div className="divide-y divide-border">
+                                {appointments.map((app) => (
+                                    <div
+                                        key={app.id}
+                                        onClick={() => onSelectAppointment(app)}
+                                        className="flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors hover:bg-hover"
+                                    >
+                                        {/* Time chip */}
+                                        <div className="flex h-11 w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-primary-soft">
+                                            <Clock size={10} className="mb-0.5 text-primary" />
+                                            <span className="text-[10px] font-black tabular-nums text-primary">{app.time}</span>
+                                        </div>
 
-            {/* Upcoming appointments preview */}
-            {allApps.length > 1 && (
-                <div className="bg-card border border-border rounded-2xl overflow-hidden">
-                    <div className="px-4 py-2.5 border-b border-border flex items-center gap-2 bg-surface">
-                        <Calendar size={13} className="text-muted" />
-                        <span className="text-xs font-bold text-muted">المواعيد القادمة ({allApps.length - 1})</span>
-                    </div>
-                    <div className="p-3 flex flex-col gap-2 max-h-64 overflow-y-auto">
-                        {allApps.slice(1).map((app, i) => (
-                            <div
-                                key={app.id}
-                                className="flex items-center gap-3 p-2.5 rounded-xl border border-border bg-surface"
-                            >
-                                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                                    <span className="text-xs font-bold text-primary tabular-nums">{i + 2}</span>
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-xs font-bold text-main truncate">{app.studentName}</p>
-                                    <p className="text-micro font-bold text-muted truncate">{app.subject} • {app.day} {app.time}</p>
-                                </div>
-                                <span className="text-micro font-bold text-muted shrink-0">{app.teacherName}</span>
+                                        {/* Info */}
+                                        <div className="min-w-0 flex-1">
+                                            <p className="truncate text-sm font-bold text-main">{app.studentName}</p>
+                                            <p className="mt-0.5 flex items-center gap-1 truncate text-[11px] font-medium text-muted">
+                                                <BookOpen size={9} className="shrink-0" />
+                                                {app.subject}
+                                                {app.curriculum ? ` · ${app.curriculum}` : ''}
+                                            </p>
+                                            <p className="mt-0.5 flex items-center gap-1 truncate text-[10px] font-bold text-info">
+                                                <ShieldCheck size={9} className="shrink-0" />
+                                                {app.teacherName || 'غير محددة'}
+                                            </p>
+                                        </div>
+
+                                        {/* Grade + complete */}
+                                        <div className="flex shrink-0 items-center gap-2">
+                                            {app.studentGrade && (
+                                                <span className="hidden rounded-lg bg-surface px-2 py-0.5 text-[9px] font-bold text-muted lg:inline-block">
+                                                    {app.studentGrade}
+                                                </span>
+                                            )}
+                                            <button
+                                                onClick={(e) => onCompleteSession(app.id, e)}
+                                                disabled={isPending}
+                                                aria-label={`إتمام موعد ${app.studentName}`}
+                                                className="flex items-center gap-1 rounded-xl bg-success px-2.5 py-1.5 text-micro font-bold text-on-success transition-all active:scale-95 hover:brightness-90 disabled:opacity-50"
+                                            >
+                                                <CheckCircle2 size={12} />
+                                                إتمام
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                </div>
-            )}
+                        ) : (
+                            <div className="flex items-center justify-center gap-2 py-5 text-micro font-bold text-muted">
+                                <User size={12} className="opacity-40" />
+                                لا توجد مواعيد في هذا اليوم
+                            </div>
+                        )}
+                    </motion.div>
+                );
+            })}
         </div>
     );
 };

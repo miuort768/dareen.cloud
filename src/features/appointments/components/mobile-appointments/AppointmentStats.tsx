@@ -18,15 +18,15 @@ export const AppointmentStats = ({
         <p className="text-lg font-bold tabular-nums leading-none text-primary">{todayCount}</p>
         <p className="mt-1 text-micro font-bold text-primary/70">اليوم</p>
       </div>
-      <div className="border-success/50 rounded-2xl border bg-card p-3 text-center">
+      <div className="border-success rounded-2xl border bg-card p-3 text-center">
         <p className="text-lg font-bold tabular-nums leading-none text-success">
           {totalCount - completedCount}
         </p>
-        <p className="text-success/70 mt-1 text-micro font-bold">المتبقي</p>
+        <p className="text-success opacity-70 mt-1 text-micro font-bold">المتبقي</p>
       </div>
-      <div className="border-info/50 rounded-2xl border bg-card p-3 text-center">
+      <div className="border-info rounded-2xl border bg-card p-3 text-center">
         <p className="text-lg font-bold tabular-nums leading-none text-primary">{totalCount}</p>
-        <p className="text-info/70 mt-1 text-micro font-bold">الإجمالي</p>
+        <p className="text-info opacity-70 mt-1 text-micro font-bold">الإجمالي</p>
       </div>
     </div>
   </motion.div>
