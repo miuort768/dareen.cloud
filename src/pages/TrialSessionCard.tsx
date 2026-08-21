@@ -133,10 +133,10 @@ export const TrialSessionCard = ({
 
         {/* Session info: stacked on mobile, 3 columns on sm+ */}
         <div className="mb-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-          <div className="rounded-xl border border-border/80 bg-surface/80 p-2.5 text-right dark:bg-card/90">
-            <p className="mb-1 text-[10px] font-bold text-muted">المادة</p>
+          <div className="rounded-xl border border-primary/25 bg-primary/10 p-2.5 text-right dark:bg-primary/15">
+            <p className="mb-1 text-[10px] font-bold text-primary/80">المادة</p>
             <div className="flex items-center justify-start gap-1.5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary/15">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary/20">
                 <BookOpen size={12} className="text-primary" />
               </div>
               <span className="truncate text-[11px] font-extrabold text-main">
@@ -144,10 +144,10 @@ export const TrialSessionCard = ({
               </span>
             </div>
           </div>
-          <div className="rounded-xl border border-border/80 bg-surface/80 p-2.5 text-right dark:bg-card/90">
-            <p className="mb-1 text-[10px] font-bold text-muted">المعلمة</p>
+          <div className="rounded-xl border border-success/25 bg-success/10 p-2.5 text-right dark:bg-success/15">
+            <p className="mb-1 text-[10px] font-bold text-success/80">المعلمة</p>
             <div className="flex items-center justify-start gap-1.5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-success/15">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-success/20">
                 <GraduationCap size={12} className="text-success" />
               </div>
               <span className="truncate text-[11px] font-extrabold text-main">
@@ -155,10 +155,10 @@ export const TrialSessionCard = ({
               </span>
             </div>
           </div>
-          <div className="rounded-xl border border-border/80 bg-surface/80 p-2.5 text-right dark:bg-card/90">
-            <p className="mb-1 text-[10px] font-bold text-muted">رقم التواصل</p>
+          <div className="rounded-xl border border-warning/25 bg-warning/10 p-2.5 text-right dark:bg-warning/15">
+            <p className="mb-1 text-[10px] font-bold text-warning/80">رقم التواصل</p>
             <div className="flex items-center justify-start gap-1.5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-warning/15">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-warning/20">
                 <Phone size={12} className="text-warning" />
               </div>
               <span className="truncate font-mono text-[11px] font-extrabold text-main" dir="ltr">

@@ -79,10 +79,10 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
             className="p-2.5 sm:p-4"
         >
             <div className="bg-card border border-border rounded-2xl overflow-hidden" dir="rtl">
-                <div className="shrink-0 px-5 py-4 flex items-center justify-between border-b border-border/50">
-                    <span className="text-[13px] font-bold text-main">تفاصيل الحصة</span>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-surface hover:bg-hover rounded-xl transition-all" aria-label="إغلاق">
-                        <X size={14} className="text-muted" />
+                <div className="flex shrink-0 items-center justify-between bg-gradient-to-l from-primary to-primary-deep px-5 py-4">
+                    <span className="text-[13px] font-bold text-on-primary">تفاصيل الحصة</span>
+                    <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 transition-all hover:bg-white/25" aria-label="إغلاق">
+                        <X size={14} className="text-on-primary" />
                     </button>
                 </div>
 
@@ -185,21 +185,21 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                     <div className="p-5 space-y-2">
                         <h3 className="text-[11px] font-bold text-muted mb-3">الإجراءات</h3>
                         <div className="grid grid-cols-2 gap-2">
-                            <button onClick={() => onCall(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 border border-success/20 text-success text-xs font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
+                            <button onClick={() => onCall(session.parentPhone)} className="flex items-center justify-center gap-2 rounded-xl border border-info/20 bg-info/10 py-3 text-xs font-bold text-info transition-all hover:bg-info/20 active:scale-[0.98]">
                                 <Phone size={14} /> اتصال
                             </button>
-                            <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 border border-success/20 text-success text-xs font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
+                            <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 rounded-xl border border-success/20 bg-success/10 py-3 text-xs font-bold text-success transition-all hover:bg-success/20 active:scale-[0.98]">
                                 <MessageSquare size={14} /> واتساب
                             </button>
                             {session.status === 'pending' && (
-                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-primary/10 border border-primary/20 text-primary text-xs font-bold hover:bg-primary/20 transition-all active:scale-[0.98] disabled:opacity-50 col-span-2">
+                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="col-span-2 flex items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/10 py-3 text-xs font-bold text-primary transition-all hover:bg-primary/20 active:scale-[0.98] disabled:opacity-50">
                                     <UserPlus size={14} /> {isConverting ? 'جاري التحويل...' : 'تحويل إلى طالب'}
                                 </button>
                             )}
-                            <button onClick={() => { onEdit(session); onClose(); }} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-surface border border-border text-muted text-xs font-bold hover:bg-hover transition-all active:scale-[0.98]">
+                            <button onClick={() => { onEdit(session); onClose(); }} className="flex items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/10 py-3 text-xs font-bold text-primary transition-all hover:bg-primary/20 active:scale-[0.98]">
                                 <Pencil size={14} /> تعديل
                             </button>
-                            <button onClick={() => onPaid(session.id)} className="flex items-center justify-center gap-2 py-3 rounded-xl bg-success/10 border border-success/20 text-success text-xs font-bold hover:bg-success/20 transition-all active:scale-[0.98]">
+                            <button onClick={() => onPaid(session.id)} className="flex items-center justify-center gap-2 rounded-xl border border-warning/20 bg-warning/10 py-3 text-xs font-bold text-warning transition-all hover:bg-warning/20 active:scale-[0.98]">
                                 <CircleDollarSign size={14} /> مدفوعة
                             </button>
                         </div>

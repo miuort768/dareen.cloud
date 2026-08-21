@@ -493,7 +493,8 @@ export const TrialSessions = () => {
               sub: 'بانتظار الموعد',
               icon: Clock,
               color: 'text-warning',
-              iconBg: 'bg-warning-soft',
+              iconBg: 'bg-warning/20',
+              card: 'border-warning/30 bg-warning/10 dark:bg-warning/15',
             },
             {
               label: 'إجمالي الحصص',
@@ -501,7 +502,8 @@ export const TrialSessions = () => {
               sub: 'جميع الحصص',
               icon: BookOpen,
               color: 'text-primary',
-              iconBg: 'bg-primary-soft',
+              iconBg: 'bg-primary/20',
+              card: 'border-primary/30 bg-primary/10 dark:bg-primary/15',
             },
             {
               label: 'تمت بنجاح',
@@ -509,15 +511,17 @@ export const TrialSessions = () => {
               sub: 'حصة ناجحة',
               icon: CheckCircle2,
               color: 'text-success',
-              iconBg: 'bg-success/10',
+              iconBg: 'bg-success/20',
+              card: 'border-success/30 bg-success/10 dark:bg-success/15',
             },
             {
               label: 'معدل التحويل',
               value: `${conversionRate}%`,
               sub: 'من إجمالي الحصص',
               icon: TrendingUp,
-              color: 'text-primary',
-              iconBg: 'bg-primary-soft',
+              color: 'text-info',
+              iconBg: 'bg-info/20',
+              card: 'border-info/30 bg-info/10 dark:bg-info/15',
             },
           ].map((stat, i) => (
             <motion.div
@@ -525,7 +529,10 @@ export const TrialSessions = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
-              className="rounded-2xl border border-border bg-card p-4 shadow-elevation-0 transition-all duration-300 hover:shadow-elevation-1"
+              className={cn(
+                'rounded-2xl border p-4 shadow-elevation-0 transition-all duration-300 hover:shadow-elevation-1',
+                stat.card,
+              )}
             >
               <div className="mb-3 flex items-center justify-between">
                 <span className="truncate text-xs font-bold text-main">{stat.label}</span>
@@ -584,15 +591,10 @@ export const TrialSessions = () => {
                 {showPaid ? <Eye size={13} /> : <EyeOff size={13} />}
                 <span className="hidden sm:inline">المدفوعة</span>
               </button>
-              <div className="shrink-0 rounded-xl border border-border bg-surface px-3 py-2.5">
-                <span className="text-[13px] font-bold tabular-nums text-main">
-                  {filtered.length}
-                </span>
-              </div>
             </div>
 
-            {/* Filter dropdowns: status + subject */}
-            <div className="mt-3 flex flex-wrap items-center gap-2">
+            {/* Filter dropdowns: status + subject — full width, each half */}
+            <div className="mt-3 grid grid-cols-2 gap-2">
               <FilterDropdown
                 value={filterStatus}
                 items={statusFilterItems}
@@ -619,7 +621,7 @@ export const TrialSessions = () => {
                     setFilterStatus('')
                     setFilterSubject('')
                   }}
-                  className="hover:bg-error/20 flex h-10 shrink-0 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all"
+                  className="hover:bg-error/20 col-span-2 flex h-10 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all"
                 >
                   <X size={13} /> مسح الفلاتر
                 </motion.button>

@@ -47,25 +47,24 @@ export const TrialSessionFormModal = ({
       className="overflow-hidden rounded-none border-2 border-primary/30 bg-card shadow-2xl"
       dir="rtl"
     >
-      <div className="border-border/50 relative flex items-center justify-between overflow-hidden border-b px-5 py-4">
-        <div className="absolute inset-0 bg-primary/5" />
+      <div className="relative flex items-center justify-between overflow-hidden bg-gradient-to-l from-primary to-primary-deep px-5 py-4">
         <div className="relative z-10 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10">
-            <CalendarDays size={18} className="text-primary" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20 ring-2 ring-white/30">
+            <CalendarDays size={18} className="text-on-primary" />
           </div>
           <div>
-            <h2 className="text-[13px] font-bold text-main">
+            <h2 className="text-[13px] font-bold text-on-primary">
               {editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}
             </h2>
-            <p className="text-muted/60 mt-0.5 text-[10px]">أدخل بيانات الحصة التجريبية</p>
+            <p className="mt-0.5 text-[10px] text-on-primary/80">أدخل بيانات الحصة التجريبية</p>
           </div>
         </div>
         <button
           onClick={onClose}
-          className="relative z-10 flex h-8 w-8 items-center justify-center rounded-xl bg-surface transition-all hover:bg-hover"
+          className="relative z-10 flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 transition-all hover:bg-white/25"
           aria-label="إغلاق"
         >
-          <X size={14} className="text-muted" />
+          <X size={14} className="text-on-primary" />
         </button>
       </div>
 
