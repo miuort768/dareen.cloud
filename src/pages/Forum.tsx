@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { MessageSquare, Plus, Users, ThumbsUp, MessageCircle, Filter } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -53,6 +53,7 @@ export const Forum = () => {
   const [newPostContent, setNewPostContent] = useState('')
   const [commentTexts, setCommentTexts] = useState<Record<string, string>>({})
   const [viewingComments, setViewingComments] = useState<Record<string, boolean>>({})
+  const toggleCooldownRef = useRef<Record<string, number>>({})
   const [showMenuPostId, setShowMenuPostId] = useState<string | null>(null)
 
   useEffect(() => {
@@ -115,6 +116,11 @@ export const Forum = () => {
   }
 
   const toggleComments = async (postId: string) => {
+    // Guard against double-fire (double tap / duplicated events) which would
+    // open the section and immediately close it again.
+    const now = Date.now()
+    if (now - (toggleCooldownRef.current[postId] || 0) < 400) return
+    toggleCooldownRef.current[postId] = now
     if (!viewingComments[postId]) {
       try {
         const data = await api.get<Comment[]>(`/forum/${postId}/comments`)

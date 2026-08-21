@@ -25,12 +25,12 @@ export interface Post {
 type CommentNode = { comment: Comment; replies: CommentNode[] };
 
 export const buildThreadedComments = (comments: Comment[]): CommentNode[] => {
-    if (!comments) return [];
+    if (!Array.isArray(comments)) return [];
     const nodes: CommentNode[] = [];
     const handledIds = new Set<string>();
 
     comments.forEach(c => {
-        if (!c.content.trim().startsWith('@')) {
+        if (!(c.content || '').trim().startsWith('@')) {
             nodes.push({ comment: c, replies: [] });
             handledIds.add(c.id);
         }
@@ -40,7 +40,7 @@ export const buildThreadedComments = (comments: Comment[]): CommentNode[] => {
         if (!handledIds.has(c.id)) {
             let foundParent = false;
             for (const node of nodes) {
-                if (c.content.trim().startsWith(`@${node.comment.authorName}`)) {
+                if ((c.content || '').trim().startsWith(`@${node.comment.authorName}`)) {
                     node.replies.push({ comment: c, replies: [] });
                     handledIds.add(c.id);
                     foundParent = true;
@@ -49,7 +49,7 @@ export const buildThreadedComments = (comments: Comment[]): CommentNode[] => {
             }
             if (!foundParent) {
                 for (const node of nodes) {
-                    const isReplyToReply = node.replies.some(r => c.content.trim().startsWith(`@${r.comment.authorName}`));
+                    const isReplyToReply = node.replies.some(r => (c.content || '').trim().startsWith(`@${r.comment.authorName}`));
                     if (isReplyToReply) {
                         node.replies.push({ comment: c, replies: [] });
                         handledIds.add(c.id);

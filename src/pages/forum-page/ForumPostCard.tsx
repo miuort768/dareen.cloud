@@ -270,7 +270,7 @@ export const ForumPostCard = ({
       {viewingComments[post.id] && (
         <div className="bg-surface/50 border-t border-border p-4 md:p-5">
           <div className="space-y-1">
-            {buildThreadedComments(post.comments || []).map((node) => {
+            {buildThreadedComments(Array.isArray(post.comments) ? post.comments : []).map((node) => {
               const commentAuthorName = formatDisplayName(node.comment.authorName, node.comment.authorRole)
               return (
               <div key={node.comment.id} className="group/comment">
