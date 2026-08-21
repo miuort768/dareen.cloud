@@ -30,7 +30,7 @@ import { TeacherStudentCard } from '../features/attendance/components/TeacherStu
 import { AttendanceHistoryModal } from '../features/attendance/components/AttendanceHistoryModal'
 import type { PeriodFilter } from '../features/attendance/components/AttendanceFilters'
 import { RescheduleModal } from '../features/attendance/components/RescheduleModal'
-import { useAttendance } from '../features/attendance/hooks/useAttendance'
+import { useAttendance, teacherNameOf } from '../features/attendance/hooks/useAttendance'
 import { MobileAttendance } from '../features/attendance/components/MobileAttendance'
 import type { Student, Enrollment } from '../features/attendance/types'
 import { generateWhatsAppLink } from '../lib/whatsapp'
@@ -189,7 +189,7 @@ export const Attendance = () => {
     const result = await logAttendance({
       studentId: student.id,
       studentName: student.name || 'غير محدد',
-      teacherName: enrollment.teacher || currentUser?.teacherName || currentUser?.name || '',
+      teacherName: teacherNameOf(enrollment) || currentUser?.teacherName || currentUser?.name || '',
       teacherId: enrollment.teacherId,
       subject: enrollment.subject,
       date: logDate,

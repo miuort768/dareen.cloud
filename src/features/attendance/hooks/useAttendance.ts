@@ -11,6 +11,15 @@ import type {
   ScheduleSlot,
 } from '../types'
 
+export const teacherNameOf = (enrollment: { teacher: unknown }): string => {
+  const t = enrollment.teacher
+  if (typeof t === 'string') return t.trim()
+  if (t && typeof t === 'object' && 'name' in (t as Record<string, unknown>)) {
+    return String((t as { name?: unknown }).name ?? '').trim()
+  }
+  return ''
+}
+
 export const useAttendance = (
   currentUser: GlobalUser | null,
   date: string,
@@ -207,7 +216,7 @@ export const useAttendance = (
     const matchedEnrollments = students.flatMap((s) =>
       (s.enrollments || [])
         .filter((en) => {
-          const enTeacherName = (en.teacher || '').trim().toLowerCase()
+          const enTeacherName = teacherNameOf(en).toLowerCase()
           // Match by ID if available, otherwise fallback to robust name matching
           const isIdMatch = tidToMatch && en.teacherId === tidToMatch
           const isNameMatch = enTeacherName === nameToMatch
@@ -236,7 +245,7 @@ export const useAttendance = (
 
   const uniqueTeachers = useMemo(() => {
     return Array.from(
-      new Set(students.flatMap((s) => s.enrollments?.map((e) => (e.teacher || '').trim()) || [])),
+      new Set(students.flatMap((s) => s.enrollments?.map((e) => teacherNameOf(e)) || [])),
     )
       .filter(Boolean)
       .sort()
@@ -255,7 +264,7 @@ export const useAttendance = (
       // Start from enrollments — ensures all students appear even without sessions
       const teacherEnrollments = students.flatMap((s) =>
         (s.enrollments || [])
-          .filter((en) => (en.teacher || '').trim() === teacherName)
+          .filter((en) => teacherNameOf(en) === teacherName)
           .map((en) => ({ student: s, enrollment: en })),
       )
 

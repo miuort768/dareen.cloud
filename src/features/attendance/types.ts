@@ -24,7 +24,7 @@ export interface Session {
 
 export interface Enrollment {
   id?: string
-  teacher: string
+  teacher: string | { id?: string | number; name?: string }
   teacherId?: string
   subject: string
   sessionsTotal: number

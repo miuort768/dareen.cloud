@@ -36,6 +36,14 @@ import {
 } from './mobile-attendance'
 import { normalizeDayName } from '../utils/slotUtils'
 
+const teacherNameOf = (enrollment: { teacher: unknown }): string => {
+  const t = enrollment.teacher
+  if (typeof t === 'string') return t.trim()
+  if (t && typeof t === 'object' && 'name' in (t as Record<string, unknown>)) {
+    return String((t as { name?: unknown }).name ?? '').trim()
+  }
+  return ''
+}
 export const MobileAttendance = () => {
   const currentUser = useCurrentUser()
   const showNotification = useShowNotification()
@@ -180,7 +188,7 @@ export const MobileAttendance = () => {
     const result = await logAttendance({
       studentId: student.id,
       studentName: student.name || 'غير محدد',
-      teacherName: enrollment.teacher || currentUser?.teacherName || currentUser?.name || '',
+      teacherName: teacherNameOf(enrollment) || currentUser?.teacherName || currentUser?.name || '',
       teacherId: enrollment.teacherId,
       subject: enrollment.subject,
       date: logDate,
@@ -201,7 +209,7 @@ export const MobileAttendance = () => {
         const waLink = generateWhatsAppLink(student.parentPhone, whatsappTemplate, {
           Student: student.name,
           Subject: enrollment.subject,
-          Teacher: enrollment.teacher,
+          Teacher: teacherNameOf(enrollment),
           Date: logDate,
           Price: calculatedPrice?.toString() || '0',
         })
@@ -262,7 +270,7 @@ export const MobileAttendance = () => {
       const result = await logAttendance({
         studentId: student.id,
         studentName: student.name,
-        teacherName: enrollment.teacher,
+        teacherName: teacherNameOf(enrollment),
         teacherId: enrollment.teacherId,
         subject: enrollment.subject,
         date: logDate,
