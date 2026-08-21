@@ -653,39 +653,37 @@ export const TrialSessions = () => {
               )}
             </div>
 
-            {/* Subject filter — dropdown */}
+            {/* Subject filter — pills */}
             {subjects.length > 0 && (
-              <div className="mt-3 flex items-center gap-2">
-                <CalendarDays size={13} className="shrink-0 text-muted" />
-                <div className="relative flex-1 sm:max-w-[220px]">
-                  <select
-                    value={filterSubject}
-                    onChange={(e) => setFilterSubject(e.target.value)}
-                    aria-label="تصفية حسب المادة"
-                    className="h-9 w-full appearance-none rounded-xl border border-border bg-surface pe-8 ps-3 text-[12px] font-bold text-main outline-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              <div className="scrollbar-none mt-2 flex items-center gap-2 overflow-x-auto pb-1">
+                <CalendarDays size={14} className="shrink-0 text-muted ms-1" />
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setFilterSubject('')}
+                  className={cn(
+                    'shrink-0 rounded-lg border px-4 py-1.5 text-[11px] font-bold transition-all duration-200',
+                    !filterSubject
+                      ? 'border-primary bg-primary text-on-primary shadow-sm shadow-primary/10'
+                      : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
+                  )}
+                >
+                  كل المواد
+                </motion.button>
+                {subjects.map((subj) => (
+                  <motion.button
+                    key={subj}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setFilterSubject(subj)}
+                    className={cn(
+                      'shrink-0 rounded-lg border px-4 py-1.5 text-[11px] font-bold transition-all duration-200',
+                      filterSubject === subj
+                        ? 'border-primary bg-primary text-on-primary shadow-sm shadow-primary/10'
+                        : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
+                    )}
                   >
-                    <option value="">كل المواد</option>
-                    {subjects.map((subj) => (
-                      <option key={subj} value={subj}>
-                        {subj}
-                      </option>
-                    ))}
-                  </select>
-                  <span className="pointer-events-none absolute end-2.5 top-1/2 -translate-y-1/2 text-muted">
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
-                      <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                    </svg>
-                  </span>
-                </div>
-                {filterSubject && (
-                  <button
-                    onClick={() => setFilterSubject('')}
-                    aria-label="إزالة فلتر المادة"
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-error-soft text-error transition-all hover:bg-error/20"
-                  >
-                    <X size={13} />
-                  </button>
-                )}
+                    {subj}
+                  </motion.button>
+                ))}
               </div>
             )}
           </div>

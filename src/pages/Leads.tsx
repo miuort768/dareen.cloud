@@ -473,81 +473,81 @@ export const Leads = () => {
       <div className="relative z-10 mx-auto max-w-page px-4 md:px-6">
         {/* ===== HEADER ===== */}
         <div className="pb-2 pt-4">
-          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4 }}
+              className="flex items-center justify-between"
             >
-              <div className="mb-1 flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft">
-                  <Users size={16} className="text-primary" />
-                </div>
+              <div className="flex items-center gap-2.5">
                 <div>
                   <h1 className="font-outfit text-lg font-black text-main md:text-xl">
-                    العملاء المهتمين
+                    العملاء المحتملون
                   </h1>
                   <p className="text-[11px] text-muted">إدارة طلبات التسجيل والعملاء المتوقعين</p>
                 </div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-sm shadow-primary/20">
+                  <Users size={20} />
+                </div>
               </div>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="flex items-center gap-2"
-            >
-              <button
-                onClick={() => setShowLost(!showLost)}
-                className={cn(
-                  'flex h-9 items-center justify-center gap-1.5 rounded-xl border px-3.5 text-[11px] font-bold transition-all duration-200',
-                  showLost
-                    ? 'bg-error/10 border-error/20 text-error'
-                    : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
-                )}
-              >
-                {showLost ? <Eye size={13} /> : <EyeOff size={13} />}
-                <span className="hidden sm:inline">{showLost ? 'النشطاء' : 'المفقودين'}</span>
-              </button>
-              <button
-                onClick={() => setConfirmDeleteAll(true)}
-                className="shadow-error/20 flex h-9 items-center justify-center gap-1.5 rounded-xl bg-error px-3.5 text-[11px] font-bold text-on-error shadow-sm transition-all duration-200 hover:bg-error-hover"
-                title="حذف جميع العملاء"
-              >
-                <Trash2 size={13} />
-                <span className="hidden sm:inline">حذف الكل</span>
-              </button>
-              <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-9 px-4 text-[11px]">
-                <Plus size={13} /> جديد
-              </PrimaryBtn>
-            </motion.div>
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="mt-4 flex items-center gap-2"
+          >
+            <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="flex-1 h-11 text-xs">
+              <Plus size={16} /> عميل جديد
+            </PrimaryBtn>
+            <button
+              onClick={() => setConfirmDeleteAll(true)}
+              className="flex-1 flex h-11 items-center justify-center gap-2 rounded-xl border border-error/20 bg-surface px-4 text-xs font-bold text-error transition-all hover:bg-error-soft"
+            >
+              <Trash2 size={16} /> حذف
+            </button>
+            <button
+              onClick={() => setShowLost(!showLost)}
+              className="flex-1 flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 text-xs font-bold text-muted transition-all hover:text-main"
+            >
+              {showLost ? <Eye size={16} /> : <EyeOff size={16} />} إخفاء
+            </button>
+          </motion.div>
         </div>
 
         {/* ===== KPI STATS ===== */}
-        <div className="mb-5 grid grid-cols-3 gap-3">
+        <div className="mb-5 grid grid-cols-2 gap-3">
           {[
             {
-              label: 'عملاء جدد',
-              value: statusCounts['new'] || 0,
-              sub: 'بانتظار المتابعة',
+              label: 'إجمالي العملاء',
+              value: stats?.total || 0,
+              sub: `${activeCount} نشط`,
               icon: Users,
               delay: 0.15,
             },
             {
-              label: 'قيد المتابعة',
-              value: (statusCounts['contacted'] || 0) + (statusCounts['follow_up'] || 0),
-              sub: 'جاري التواصل',
+              label: 'عملاء جدد',
+              value: statusCounts['new'] || 0,
+              sub: 'هذا الشهر',
               icon: Activity,
               delay: 0.2,
               accent: true,
             },
             {
               label: 'تم التحويل',
-              value: statusCounts['converted'] || 0,
-              sub: 'مشتركين فعليين',
+              value: stats?.converted || 0,
+              sub: 'إلى مشتركين',
               icon: Phone,
               delay: 0.25,
+            },
+            {
+              label: 'معدل التحويل',
+              value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`,
+              sub: 'معدل النجاح',
+              icon: BarChart3,
+              delay: 0.3,
             },
           ].map((stat, i) => (
             <motion.div
