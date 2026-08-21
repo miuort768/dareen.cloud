@@ -111,7 +111,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
 
   const teacherPoints = (teacher: Teacher): number => teacher.points ?? 0;
 
-  const thClass = "px-5 py-3 font-bold text-[10px] tracking-wider text-muted select-none cursor-pointer hover:text-main transition-colors";
+  const thClass = "px-5 py-3 font-bold text-[10px] tracking-wider text-on-primary/80 select-none cursor-pointer hover:text-on-primary transition-colors";
   const thInnerClass = "flex items-center gap-1";
 
   if (teachers.length === 0) {
@@ -130,7 +130,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
         <div className="overflow-x-auto">
           <table className="w-full text-start border-collapse">
             <thead className="sticky top-0 z-20">
-              <tr className="bg-surface border-b border-border">
+              <tr className="bg-gradient-to-l from-primary to-primary-deep">
                 <th className={thClass} onClick={() => toggleSort('name')}>
                   <div className={thInnerClass}><SortIcon field="name" /> المعلمة</div>
                 </th>
@@ -216,17 +216,17 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                           </button>
                         </Tooltip>
                         <Tooltip label="إشعار">
-                          <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center text-muted hover:bg-warning-soft hover:text-warning rounded-xl transition-all" aria-label="إرسال إشعار">
+                          <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-warning/10 text-warning hover:bg-warning/20 rounded-xl transition-all active:scale-95" aria-label="إرسال إشعار">
                             <Bell size={13} />
                           </button>
                         </Tooltip>
                         <Tooltip label="محادثة">
-                          <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center text-muted hover:bg-info-soft hover:text-info rounded-xl transition-all" aria-label="مراسلة">
+                          <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-info/10 text-info hover:bg-info/20 rounded-xl transition-all active:scale-95" aria-label="مراسلة">
                             <MessageCircle size={13} />
                           </button>
                         </Tooltip>
                         <Tooltip label="حذف">
-                          <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center text-muted hover:bg-error-soft hover:text-error rounded-xl transition-all" aria-label="حذف">
+                          <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-error/10 text-error hover:bg-error/20 rounded-xl transition-all active:scale-95" aria-label="حذف">
                             <Trash2 size={13} />
                           </button>
                         </Tooltip>
@@ -288,19 +288,19 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                   <span className="text-[9px] text-muted block mt-0.5">{getCurrencySymbol(teacher.currency)} / حصة</span>
                 </div>
               </div>
-              <div className="flex items-center gap-1.5">
-                <Tooltip label="محادثة">
-                  <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex-1 h-8 rounded-xl bg-primary text-on-primary text-[10px] font-bold active:scale-95 transition-transform">مراسلة</button>
-                </Tooltip>
-                <Tooltip label="إشعار">
-                  <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center rounded-xl bg-warning-soft text-warning active:bg-hover transition-colors" aria-label="إرسال إشعار"><Bell size={13} /></button>
-                </Tooltip>
-                <Tooltip label="تعديل">
-                  <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-success/10 text-success rounded-xl active:bg-hover transition-colors" aria-label="تعديل"><Edit size={13} /></button>
-                </Tooltip>
-                <Tooltip label="حذف">
-                  <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center rounded-xl bg-error-soft text-error active:bg-hover transition-colors" aria-label="حذف"><Trash2 size={13} /></button>
-                </Tooltip>
+              <div className="mt-1 grid grid-cols-4 gap-2">
+                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-info/10 text-info text-[10px] font-bold active:scale-95 transition-transform" aria-label="مراسلة">
+                  <MessageCircle size={12} /> مراسلة
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-warning/10 text-warning text-[10px] font-bold active:scale-95 transition-transform" aria-label="إرسال إشعار">
+                  <Bell size={12} /> إشعار
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-primary/10 text-primary text-[10px] font-bold active:scale-95 transition-transform" aria-label="تعديل">
+                  <Edit size={12} /> تعديل
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-error/10 text-error text-[10px] font-bold active:scale-95 transition-transform" aria-label="حذف">
+                  <Trash2 size={12} /> حذف
+                </button>
               </div>
             </motion.div>
           );

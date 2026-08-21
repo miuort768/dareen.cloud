@@ -1,28 +1,28 @@
 import { useEffect, useRef, useState } from 'react'
 import { Check, ChevronDown } from 'lucide-react'
-import { cn } from '../lib/utils'
+import { cn } from '../../../lib/utils'
 
-export interface TrialFilterItem {
+export interface FilterItem {
   key: string
   label: string
   dot?: string
 }
 
-interface TrialSessionFilterDropdownProps {
+interface FilterDropdownProps {
   value: string
-  items: TrialFilterItem[]
+  items: FilterItem[]
   onChange: (key: string) => void
   icon?: React.ComponentType<{ size?: number; className?: string }>
   className?: string
 }
 
-export const TrialSessionFilterDropdown = ({
+export const FilterDropdown = ({
   value,
   items,
   onChange,
   icon: Icon,
   className,
-}: TrialSessionFilterDropdownProps) => {
+}: FilterDropdownProps) => {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 

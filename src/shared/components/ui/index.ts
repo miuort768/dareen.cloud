@@ -34,6 +34,8 @@ export { IconButton } from './IconButton';
 export type { IconButtonProps } from './IconButton';
 export { FilterPill } from './FilterPill';
 export type { FilterPillProps } from './FilterPill';
+export { FilterDropdown } from './FilterDropdown';
+export type { FilterItem } from './FilterDropdown';
 export { FAB } from './FAB';
 export type { FABProps } from './FAB';
 export { ActionButton, ActionRow } from './ActionRow';

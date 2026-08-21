@@ -1,5 +1,6 @@
-import { Search, Plus, X, Upload, Trash2, FileSpreadsheet, FileText } from 'lucide-react'
+import { Search, Plus, X, Upload, Trash2, FileSpreadsheet, FileText, BookOpen, SlidersHorizontal } from 'lucide-react'
 import { cn } from '../../../lib/utils'
+import { FilterDropdown } from '../../../shared/components/ui'
 
 interface TeacherToolbarProps {
   searchTerm: string
@@ -19,31 +20,11 @@ interface TeacherToolbarProps {
   filteredCount: number
 }
 
-const subjectColorMap: Record<string, string> = {
-  رياضيات: 'text-primary bg-primary/10 ring-primary/20',
-  عربي: 'text-success bg-success/10 ring-success/20',
-  'اللغة العربية': 'text-success bg-success/10 ring-success/20',
-  علوم: 'text-info bg-info-soft ring-info/20',
-  إنجليزي: 'text-warning bg-warning/10 ring-warning/20',
-  'اللغة الانجليزية': 'text-warning bg-warning/10 ring-warning/20',
-  فيزياء: 'text-accent bg-accent/10 ring-accent/20',
-  كيمياء: 'text-error bg-error/10 ring-error/20',
-  لغات: 'text-accent bg-accent/10 ring-accent/20',
-  'اللغة الفرنسية': 'text-accent bg-accent/10 ring-accent/20',
-  'اللغة الاسبانية': 'text-info bg-info-soft ring-info/20',
-  أدبي: 'text-warning bg-warning/10 ring-warning/20',
-  دراسات: 'text-success bg-success/10 ring-success/20',
-  قرآن: 'text-primary bg-primary/10 ring-primary/20',
-  قران: 'text-primary bg-primary/10 ring-primary/20',
-  شرعية: 'text-success bg-success/10 ring-success/20',
-  اجتماعيات: 'text-warning bg-warning/10 ring-warning/20',
-}
-
-const getSubjectStyle = (subject?: string) => {
-  if (!subject) return 'text-muted bg-surface ring-border'
-  const key = Object.keys(subjectColorMap).find((k) => subject.includes(k) || k.includes(subject))
-  return key ? subjectColorMap[key] : 'text-info bg-info-soft ring-info/20'
-}
+const statusFilterItems = [
+  { key: '', label: 'الكل' },
+  { key: 'active', label: 'نشطة', dot: 'bg-success' },
+  { key: 'inactive', label: 'متوقفة', dot: 'bg-error' },
+]
 
 export const TeacherToolbar = ({
   searchTerm,
@@ -63,6 +44,12 @@ export const TeacherToolbar = ({
   filteredCount,
 }: TeacherToolbarProps) => {
   const showFilters = subjects.length > 0 || totalTeachers > 0
+
+  const subjectItems = [
+    { key: '', label: 'كل المواد' },
+    ...subjects.map((subj) => ({ key: subj, label: subj })),
+  ]
+
   return (
     <div className="space-y-3 rounded-2xl border border-border bg-card p-3 shadow-elevation-1">
       {/* Search + Actions Row */}
@@ -122,7 +109,7 @@ export const TeacherToolbar = ({
         </div>
       </div>
 
-      {/* Chips Filters */}
+      {/* Dropdown Filters */}
       {showFilters && (
         <div className="flex flex-wrap items-center gap-2">
           {/* نتائج */}
@@ -132,60 +119,21 @@ export const TeacherToolbar = ({
 
           {/* تخصص */}
           {subjects.length > 0 && (
-            <div className="flex flex-wrap items-center gap-1">
-              <button
-                onClick={() => onFilterSubjectChange('')}
-                className={cn(
-                  'rounded-lg px-2.5 py-1 text-[9px] font-bold ring-1 transition-all',
-                  !filterSubject
-                    ? 'bg-primary text-on-primary ring-primary/30'
-                    : 'bg-surface text-muted ring-border hover:bg-hover',
-                )}
-              >
-                الكل
-              </button>
-              {subjects.map((subj) => (
-                <button
-                  key={subj}
-                  onClick={() => onFilterSubjectChange(filterSubject === subj ? '' : subj)}
-                  className={cn(
-                    'rounded-lg px-2.5 py-1 text-[9px] font-bold ring-1 transition-all',
-                    filterSubject === subj
-                      ? getSubjectStyle(subj)
-                      : 'bg-surface text-muted ring-border hover:bg-hover',
-                  )}
-                >
-                  {subj}
-                </button>
-              ))}
-            </div>
+            <FilterDropdown
+              value={filterSubject}
+              items={subjectItems}
+              onChange={onFilterSubjectChange}
+              icon={BookOpen}
+            />
           )}
 
           {/* الحالة */}
-          <div className="flex items-center gap-1">
-            <span className="text-[9px] text-muted">|</span>
-            {['', 'active', 'inactive'].map((status) => {
-              const label = status === '' ? 'الكل' : status === 'active' ? 'نشطة' : 'متوقفة'
-              const isActive = filterStatus === status
-              const dot =
-                status === 'active' ? 'bg-success' : status === 'inactive' ? 'bg-error' : ''
-              return (
-                <button
-                  key={status}
-                  onClick={() => onFilterStatusChange(isActive ? '' : status)}
-                  className={cn(
-                    'inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[9px] font-bold ring-1 transition-all',
-                    isActive
-                      ? 'bg-primary text-on-primary ring-primary/30'
-                      : 'bg-surface text-muted ring-border hover:bg-hover',
-                  )}
-                >
-                  {dot && <span className={cn('h-1.5 w-1.5 rounded-full', dot)} />}
-                  {label}
-                </button>
-              )
-            })}
-          </div>
+          <FilterDropdown
+            value={filterStatus}
+            items={statusFilterItems}
+            onChange={onFilterStatusChange}
+            icon={SlidersHorizontal}
+          />
         </div>
       )}
     </div>

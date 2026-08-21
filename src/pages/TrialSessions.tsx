@@ -27,7 +27,7 @@ import { ErrorBanner } from '../shared/components/ui/ErrorState'
 import { TrialSessionCard } from './TrialSessionCard'
 import { TrialSessionFormModal } from './TrialSessionFormModal'
 import { TrialSessionDrawer } from './TrialSessionDrawer'
-import { TrialSessionFilterDropdown } from './TrialSessionFilterDropdown'
+import { FilterDropdown } from '../shared/components/ui'
 import { useUIStore } from '../store/uiStore'
 import { useAcademyName } from '../context/AppContext'
 import { Skeleton } from '../shared/components/ui/Skeleton'
@@ -593,13 +593,13 @@ export const TrialSessions = () => {
 
             {/* Filter dropdowns: status + subject */}
             <div className="mt-3 flex flex-wrap items-center gap-2">
-              <TrialSessionFilterDropdown
+              <FilterDropdown
                 value={filterStatus}
                 items={statusFilterItems}
                 onChange={setFilterStatus}
               />
               {subjects.length > 0 && (
-                <TrialSessionFilterDropdown
+                <FilterDropdown
                   value={filterSubject}
                   items={[
                     { key: '', label: 'كل المواد' },

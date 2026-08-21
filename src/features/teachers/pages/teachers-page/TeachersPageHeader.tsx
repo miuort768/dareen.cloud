@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Plus, X, Users, BookOpen, DollarSign, ChevronLeft } from 'lucide-react'
+import { Plus, X, Users, BookOpen, DollarSign, GraduationCap } from 'lucide-react'
 import { cn } from '../../../../lib/utils'
 
 interface TeachersPageHeaderProps {
@@ -68,14 +68,26 @@ export const TeachersPageHeader = ({
         </div>
         <div className="grid grid-cols-3 gap-2">
           {[
-            { icon: Users, value: totalTeachers, label: 'عدد المعلمات' },
-            { icon: BookOpen, value: uniqueSubjects, label: 'عدد التخصصات' },
-            { icon: DollarSign, value: `${averagePrice.toLocaleString()} ج.م`, label: 'متوسط السعر' },
+            {
+              icon: Users,
+              value: totalTeachers,
+              label: 'عدد المعلمات',
+              box: 'border-white/10 bg-white/10 dark:border-amber-500/30 dark:bg-zinc-900/90',
+            },
+            {
+              icon: BookOpen,
+              value: uniqueSubjects,
+              label: 'عدد التخصصات',
+              box: 'border-success/40 bg-success/25 dark:bg-success/15',
+            },
+            {
+              icon: DollarSign,
+              value: `${averagePrice.toLocaleString()} ج.م`,
+              label: 'متوسط السعر',
+              box: 'border-warning/40 bg-warning/25 dark:bg-warning/15',
+            },
           ].map((item, i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-white/10 bg-white/10 p-3 backdrop-blur-sm dark:border-amber-500/30 dark:bg-zinc-900/90"
-            >
+            <div key={i} className={cn('rounded-xl border p-3 backdrop-blur-sm', item.box)}>
               <div className="mb-0.5 flex items-center gap-1.5">
                 <item.icon size={12} className="text-white/80 dark:text-amber-400" />
                 <span className="text-sm font-black tabular-nums text-white dark:text-amber-300">
@@ -89,7 +101,7 @@ export const TeachersPageHeader = ({
       </div>
     </motion.div>
 
-    {/* ====== MOBILE (< md): clean white card design matching image ====== */}
+    {/* ====== MOBILE (< md): colored gradient stat cards ====== */}
     <div className="space-y-3 md:hidden">
       {/* Title + add button */}
       <div className="flex items-center justify-between">
@@ -106,9 +118,7 @@ export const TeachersPageHeader = ({
           onClick={onToggleForm}
           className={cn(
             'flex h-10 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-bold transition-all active:scale-[0.97]',
-            showAddForm
-              ? 'border border-border bg-surface text-main'
-              : 'bg-primary text-on-primary',
+            showAddForm ? 'border border-border bg-surface text-main' : 'bg-primary text-on-primary',
           )}
         >
           {showAddForm ? <X size={15} /> : <Plus size={15} />}
@@ -116,69 +126,58 @@ export const TeachersPageHeader = ({
         </button>
       </div>
 
-      {/* 3 stat cards */}
+      {/* 3 colored stat cards */}
       <div className="grid grid-cols-3 gap-2">
-        <div className="flex flex-col items-center rounded-2xl border border-border bg-card p-3 text-center shadow-sm">
-          <p className="mb-2 text-[10px] font-bold text-main">عدد المعلمات</p>
+        <div className="flex flex-col items-center rounded-2xl bg-gradient-to-br from-primary to-primary-deep p-3 text-center shadow-md shadow-primary/25">
+          <p className="mb-2 text-[10px] font-bold text-on-primary/90">عدد المعلمات</p>
           <div className="flex items-center gap-1.5">
-            <span className="font-outfit text-xl font-black text-primary">{totalTeachers}</span>
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-soft">
-              <Users size={13} className="text-primary" />
+            <span className="font-outfit text-xl font-black tabular-nums text-on-primary">
+              {totalTeachers}
+            </span>
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20">
+              <Users size={13} className="text-on-primary" />
             </div>
           </div>
-          <p className="mt-1.5 text-[9px] text-muted">معلمة نشطة</p>
+          <p className="mt-1.5 text-[9px] font-medium text-on-primary/70">معلمة نشطة</p>
         </div>
-        <div className="flex flex-col items-center rounded-2xl border border-border bg-card p-3 text-center shadow-sm">
-          <p className="mb-2 text-[10px] font-bold text-main">عدد التخصصات</p>
+        <div className="flex flex-col items-center rounded-2xl bg-gradient-to-br from-success to-success-dark p-3 text-center shadow-md shadow-success/25">
+          <p className="mb-2 text-[10px] font-bold text-on-success/90">عدد التخصصات</p>
           <div className="flex items-center gap-1.5">
-            <span className="font-outfit text-xl font-black text-primary">{uniqueSubjects}</span>
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-soft">
-              <BookOpen size={13} className="text-primary" />
+            <span className="font-outfit text-xl font-black tabular-nums text-on-success">
+              {uniqueSubjects}
+            </span>
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20">
+              <BookOpen size={13} className="text-on-success" />
             </div>
           </div>
-          <p className="mt-1.5 text-[9px] text-muted">تخصصات مختلفة</p>
+          <p className="mt-1.5 text-[9px] font-medium text-on-success/70">تخصصات مختلفة</p>
         </div>
-        <div className="flex flex-col items-center rounded-2xl border border-border bg-card p-3 text-center shadow-sm">
-          <p className="mb-2 text-[10px] font-bold text-main">متوسط السعر</p>
+        <div className="flex flex-col items-center rounded-2xl bg-gradient-to-br from-warning to-warning-dark p-3 text-center shadow-md shadow-warning/25">
+          <p className="mb-2 text-[10px] font-bold text-on-warning/90">متوسط السعر</p>
           <div className="flex items-center gap-1">
-            <span className="font-outfit text-xl font-black text-warning">{averagePrice}</span>
-            <span className="text-[10px] font-bold text-warning">ج.م</span>
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-warning-soft">
-              <DollarSign size={13} className="text-warning" />
+            <span className="font-outfit text-xl font-black tabular-nums text-on-warning">
+              {averagePrice}
+            </span>
+            <span className="text-[10px] font-bold text-on-warning">ج.م</span>
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20">
+              <DollarSign size={13} className="text-on-warning" />
             </div>
           </div>
-          <p className="mt-1.5 text-[9px] text-muted">ج.م / حصة</p>
-        </div>
-      </div>
-
-      {/* Teachers / Students summary */}
-      <div className="flex flex-col gap-1 rounded-2xl border border-border bg-card p-2 shadow-sm">
-        <div className="flex items-center justify-between rounded-xl p-3 hover:bg-surface">
-          <ChevronLeft size={16} className="text-muted" />
-          <div className="flex flex-1 items-center justify-end gap-3 pe-3">
-            <div className="text-end">
-              <div className="font-outfit text-lg font-black text-primary">{totalTeachers}</div>
-              <div className="text-[10px] font-bold text-muted">المعلمات</div>
-            </div>
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-              <Users size={18} className="text-primary" />
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center justify-between rounded-xl bg-success-soft p-3">
-          <ChevronLeft size={16} className="text-muted" />
-          <div className="flex flex-1 items-center justify-end gap-3 pe-3">
-            <div className="text-end">
-              <div className="font-outfit text-lg font-black text-success">{totalStudents}</div>
-              <div className="text-[10px] font-bold text-muted">الطلاب</div>
-            </div>
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success/20">
-              <Users size={18} className="text-success" />
-            </div>
-          </div>
+          <p className="mt-1.5 text-[9px] font-medium text-on-warning/70">ج.م / حصة</p>
         </div>
       </div>
     </div>
+
+    {/* ====== Summary badges — above search field, aligned left (end in RTL) ====== */}
+    <div className="flex items-center justify-end gap-2">
+      <span className="inline-flex items-center gap-1.5 rounded-xl border border-primary/20 bg-primary-soft px-3 py-1.5 text-[11px] font-bold text-primary">
+        <Users size={13} />
+        المعلمات <span className="tabular-nums">{totalTeachers}</span>
+      </span>
+      <span className="inline-flex items-center gap-1.5 rounded-xl border border-success/20 bg-success-soft px-3 py-1.5 text-[11px] font-bold text-success">
+        <GraduationCap size={13} />
+        الطلاب <span className="tabular-nums">{totalStudents}</span>
+      </span>
+    </div>
   </>
 )
-
