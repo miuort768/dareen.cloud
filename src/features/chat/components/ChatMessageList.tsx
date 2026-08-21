@@ -41,7 +41,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
 
     if (isMessagesError) {
         return (
-            <div className="flex-1 relative z-10">
+            <div className="min-h-0 flex-1 relative z-10">
                 <div className="flex items-center justify-center h-full text-muted text-sm px-4">
                     تعذر تحميل الرسائل. حاول مرة أخرى.
                 </div>
@@ -51,7 +51,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
 
     if (isLoadingMessages) {
         return (
-            <div className="flex-1 relative z-10">
+            <div className="min-h-0 flex-1 relative z-10">
                 <div className="flex items-center justify-center h-full">
                     <div className="w-8 h-8 border-2 border-success-soft border-t-success rounded-full animate-spin" />
                 </div>
@@ -61,7 +61,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
 
     if (filteredMessages.length === 0) {
         return (
-            <div className="flex-1 relative z-10">
+            <div className="min-h-0 flex-1 relative z-10">
                 <div className="flex items-center justify-center h-full text-muted text-sm px-4">
                     {searchQuery ? 'لا توجد رسائل مطابقة للبحث.' : 'لا توجد رسائل بعد. ابدأ المحادثة الآن.'}
                 </div>
@@ -70,7 +70,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
     }
 
     return (
-        <div className="flex-1 relative z-10">
+        <div className="min-h-0 flex-1 relative z-10">
             <Virtuoso
                 ref={virtuosoRef}
                 data={filteredMessages}
@@ -78,7 +78,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
                 followOutput="smooth"
                 className="custom-scrollbar"
                 style={{ height: '100%', width: '100%' }}
-                components={{ Footer: () => <div className="h-4" /> }}
+                components={{ Footer: () => <div className="h-6" /> }}
                 atBottomStateChange={(atBottom) => setShowScrollBottom(!atBottom)}
                 itemContent={(index, msg) => {
                     const isMe = String(msg.senderId) === String(currentUserId);

@@ -32,7 +32,7 @@ export const ChatInputFooter = ({ newMessage, onMessageChange, onSend, isSending
     };
 
     return (
-        <footer className="bg-surface dark:bg-card px-3 py-3 z-10 flex items-center gap-3">
+        <footer className="z-10 flex shrink-0 items-center gap-3 bg-surface px-3 py-3 dark:bg-card">
             <div className="flex-1 relative flex items-center">
                 <textarea
                     aria-label="اكتب رسالة"
