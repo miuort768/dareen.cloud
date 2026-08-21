@@ -110,7 +110,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
             <h3 className="text-sm font-bold text-on-primary">
               {editId ? 'تعديل بيانات المعلمة' : 'إضافة معلمة جديدة'}
             </h3>
-            <p className="text-on-primary/70 mt-0.5 text-xs">
+            <p className="text-white/80 mt-0.5 text-xs">
               {editId ? 'تحديث المعلومات' : 'إدخال بيانات المعلمة'}
             </p>
           </div>

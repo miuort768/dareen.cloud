@@ -45,17 +45,17 @@ const secondaryStats = [
   {
     label: 'الطلاب', icon: UserPlus,
     value: (p: TeacherStatsProps) => p.totalStudents,
-    bg: 'bg-success-soft', text: 'text-success', iconBg: 'bg-success/10', ring: 'ring-success/20',
+    bg: 'bg-success-soft', text: 'text-success', iconBg: 'bg-white/50 dark:bg-white/10', ring: '',
   },
   {
     label: 'التخصصات', icon: BookOpen,
     value: (p: TeacherStatsProps) => p.uniqueSubjects,
-    bg: 'bg-info-soft', text: 'text-info', iconBg: 'bg-info/10', ring: 'ring-info/20',
+    bg: 'bg-info-soft', text: 'text-info', iconBg: 'bg-white/50 dark:bg-white/10', ring: '',
   },
   {
     label: 'متوسط السعر', icon: DollarSign,
     value: (p: TeacherStatsProps) => `${p.averagePrice} ج.م`,
-    bg: 'bg-warning-soft', text: 'text-warning', iconBg: 'bg-warning/10', ring: 'ring-warning/20',
+    bg: 'bg-warning-soft', text: 'text-warning', iconBg: 'bg-white/50 dark:bg-white/10', ring: '',
   },
 ];
 

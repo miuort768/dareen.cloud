@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { X, CalendarDays, ChevronDown } from 'lucide-react'
 
 interface TrialSessionForm {
@@ -23,7 +23,7 @@ interface TrialSessionFormModalProps {
 }
 
 const inputClass =
-  'w-full bg-surface border border-border px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted/40 font-bold'
+  'w-full bg-surface border border-border px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted font-bold'
 const labelClass = 'text-[11px] font-bold text-muted mb-1.5 block'
 const selectWrapperClass = 'relative'
 
@@ -126,7 +126,7 @@ export const TrialSessionFormModal = ({
                   ),
                 )}
               </select>
-              <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted">
+              <div className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-muted">
                 <ChevronDown size={14} />
               </div>
             </div>

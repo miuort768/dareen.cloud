@@ -117,7 +117,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
   if (teachers.length === 0) {
     return (
       <div className="py-24 text-center">
-        <GraduationCap size={48} className="mx-auto mb-4 text-muted/40" />
+        <GraduationCap size={48} className="mx-auto mb-4 text-muted opacity-40" />
         <p className="text-xs text-muted">لا توجد بيانات معلمات حالياً</p>
       </div>
     );
@@ -154,7 +154,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border/50">
+            <tbody className="divide-y divide-border">
               {sorted.map((teacher) => {
                 const isSelected = selectedId === teacher.id;
                 const status = computeStatus(teacher);

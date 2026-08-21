@@ -113,7 +113,7 @@ export const TeacherDetails = ({
                             </div>
                             <div className="text-start">
                                 <p className={cn("text-sm transition-all", showActivity ? "text-on-primary" : "text-main group-hover:text-primary")}>سجل النشاطات المفصل</p>
-                                <p className={cn("text-xs mt-0.5", showActivity ? "text-on-primary/70" : "text-primary")}>عرض آخر {teacherSessions.length} عملية</p>
+                                <p className={cn("text-xs mt-0.5", showActivity ? "text-white/80" : "text-primary")}>عرض آخر {teacherSessions.length} عملية</p>
                             </div>
                         </div>
                         <ChevronDown size={16} className={cn("transition-transform", showActivity && "rotate-180")} />

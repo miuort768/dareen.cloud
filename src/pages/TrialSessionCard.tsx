@@ -32,10 +32,10 @@ interface TrialSessionCardProps {
 }
 
 const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string }> = {
-  pending: { label: 'ÈÇäÊÙÇÑ', dot: 'bg-warning', bg: 'bg-warning-soft', text: 'text-warning' },
-  completed: { label: 'ÊãÊ ÈäÌÇÍ', dot: 'bg-success', bg: 'bg-success-soft', text: 'text-success' },
-  cancelled: { label: 'ãáÛíÉ', dot: 'bg-error', bg: 'bg-error-soft', text: 'text-error' },
-  converted: { label: 'ãÍæáÉ', dot: 'bg-primary', bg: 'bg-primary-soft', text: 'text-primary' },
+  pending: { label: 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', dot: 'bg-warning', bg: 'bg-warning-soft', text: 'text-warning' },
+  completed: { label: 'ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½', dot: 'bg-success', bg: 'bg-success-soft', text: 'text-success' },
+  cancelled: { label: 'ï¿½ï¿½ï¿½ï¿½ï¿½', dot: 'bg-error', bg: 'bg-error-soft', text: 'text-error' },
+  converted: { label: 'ï¿½ï¿½ï¿½ï¿½ï¿½', dot: 'bg-primary', bg: 'bg-primary-soft', text: 'text-primary' },
 }
 
 const avatarGradients = [
@@ -54,7 +54,7 @@ const getAvatarGradient = (name: string) => {
 
 const formatPhone = (phone: string) => {
   if (!phone) return ''
-  if (phone.length > 8) return `${phone.slice(0, 4)}•••${phone.slice(-3)}`
+  if (phone.length > 8) return `${phone.slice(0, 4)}ï¿½ï¿½ï¿½${phone.slice(-3)}`
   return phone
 }
 
@@ -120,7 +120,7 @@ export const TrialSessionCard = ({
             </span>
             {t.time && (
               <>
-                <span className="text-muted/30">|</span>
+                <span className="text-muted opacity-30">|</span>
                 <span className="inline-flex items-center gap-1">
                   <Clock size={11} />
                   {t.time}
@@ -133,29 +133,29 @@ export const TrialSessionCard = ({
         {/* Session info: stacked on mobile, 3 columns on sm+ */}
         <div className="mb-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
           <div className="rounded-xl border border-primary-soft bg-primary-soft p-2.5 text-right">
-            <p className="mb-1 text-[10px] font-bold text-primary">ÇáãÇÏÉ</p>
+            <p className="mb-1 text-[10px] font-bold text-primary">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <BookOpen size={12} className="text-primary" />
               </div>
               <span className="truncate text-[11px] font-extrabold text-main">
-                {t.subject || '—'}
+                {t.subject || 'ï¿½'}
               </span>
             </div>
           </div>
           <div className="rounded-xl border border-success-soft bg-success-soft p-2.5 text-right">
-            <p className="mb-1 text-[10px] font-bold text-success">ÇáãÚáãÉ</p>
+            <p className="mb-1 text-[10px] font-bold text-success">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <GraduationCap size={12} className="text-success" />
               </div>
               <span className="truncate text-[11px] font-extrabold text-main">
-                {t.teacherName || '—'}
+                {t.teacherName || 'ï¿½'}
               </span>
             </div>
           </div>
           <div className="rounded-xl border border-warning-soft bg-warning-soft p-2.5 text-right">
-            <p className="mb-1 text-[10px] font-bold text-warning">ÑÞã ÇáÊæÇÕá</p>
+            <p className="mb-1 text-[10px] font-bold text-warning">ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <Phone size={12} className="text-warning" />
@@ -194,7 +194,7 @@ export const TrialSessionCard = ({
                     className="mt-1 inline-flex items-center gap-1 text-[10px] font-black text-warning"
                   >
                     <ChevronUp size={10} />
-                    ÃÞá
+                    ï¿½ï¿½ï¿½
                   </button>
                 </div>
               </div>
@@ -213,7 +213,7 @@ export const TrialSessionCard = ({
       <div
         className="border-t border-border bg-surface px-4 py-3 md:hidden dark:bg-card"
         role="toolbar"
-        aria-label="ÅÌÑÇÁÇÊ ÇáÍÕÉ"
+        aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½"
       >
         <div className="grid grid-cols-2 gap-2">
           {onWhatsApp && (
@@ -223,9 +223,9 @@ export const TrialSessionCard = ({
                 onWhatsApp(t.parentPhone)
               }}
               className={cn(actionBtnBase, 'bg-success-soft text-success hover:bg-success-light')}
-              aria-label="æÇÊÓÇÈ"
+              aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
             >
-              <MessageSquare size={13} /> æÇÊÓÇÈ
+              <MessageSquare size={13} /> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             </button>
           )}
           {onCall && (
@@ -235,9 +235,9 @@ export const TrialSessionCard = ({
                 onCall(t.parentPhone)
               }}
               className={cn(actionBtnBase, 'bg-info-soft text-info hover:bg-info-light')}
-              aria-label="ÇÊÕÇá"
+              aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½"
             >
-              <Phone size={13} /> ÇÊÕÇá
+              <Phone size={13} /> ï¿½ï¿½ï¿½ï¿½ï¿½
             </button>
           )}
           <button
@@ -246,9 +246,9 @@ export const TrialSessionCard = ({
               onEdit(t)
             }}
             className={cn(actionBtnBase, 'bg-primary-soft text-primary hover:bg-primary-light')}
-            aria-label="ÊÚÏíá"
+            aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½"
           >
-            <Pencil size={13} /> ÊÚÏíá
+            <Pencil size={13} /> ï¿½ï¿½ï¿½ï¿½ï¿½
           </button>
           {onPaid && (
             <button
@@ -261,11 +261,11 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'border-success bg-success text-on-success shadow-sm shadow-success/20 hover:bg-success-dark',
+                  : 'border-success bg-success text-on-success shadow-sm hover:bg-success-dark',
               )}
-              aria-label="ãÏÝæÚÉ"
+              aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
             >
-              <CircleDollarSign size={14} /> {isPaid ? 'Êã ÇáÏÝÚ' : 'ÏÝÚ'}
+              <CircleDollarSign size={14} /> {isPaid ? 'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½' : 'ï¿½ï¿½ï¿½'}
             </button>
           )}
         </div>
@@ -276,11 +276,11 @@ export const TrialSessionCard = ({
           }}
           className={cn(
             actionBtnBase,
-            'mt-2 w-full border-error bg-error text-on-error shadow-sm shadow-error/20 hover:bg-error-hover',
+            'mt-2 w-full border-error bg-error text-on-error shadow-sm hover:bg-error-hover',
           )}
-          aria-label="ÍÐÝ"
+          aria-label="ï¿½ï¿½ï¿½"
         >
-          <Trash2 size={14} /> ÍÐÝ
+          <Trash2 size={14} /> ï¿½ï¿½ï¿½
         </button>
       </div>
 
@@ -288,7 +288,7 @@ export const TrialSessionCard = ({
       <div
         className="hidden items-center justify-between gap-2 border-t border-border bg-surface px-4 py-3 md:flex dark:bg-card"
         role="toolbar"
-        aria-label="ÅÌÑÇÁÇÊ ÇáÍÕÉ"
+        aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½"
       >
         <div className="flex items-center gap-2">
           {onCall && (
@@ -298,9 +298,9 @@ export const TrialSessionCard = ({
                 onCall(t.parentPhone)
               }}
               className={cn(actionBtnBase, 'bg-info-soft text-info hover:bg-info-light')}
-              aria-label="ÇÊÕÇá"
+              aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½"
             >
-              <Phone size={13} /> ÇÊÕÇá
+              <Phone size={13} /> ï¿½ï¿½ï¿½ï¿½ï¿½
             </button>
           )}
           {onWhatsApp && (
@@ -310,9 +310,9 @@ export const TrialSessionCard = ({
                 onWhatsApp(t.parentPhone)
               }}
               className={cn(actionBtnBase, 'bg-success-soft text-success hover:bg-success-light')}
-              aria-label="æÇÊÓÇÈ"
+              aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
             >
-              <MessageSquare size={13} /> æÇÊÓÇÈ
+              <MessageSquare size={13} /> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             </button>
           )}
           <button
@@ -321,9 +321,9 @@ export const TrialSessionCard = ({
               onEdit(t)
             }}
             className={cn(actionBtnBase, 'bg-primary-soft text-primary hover:bg-primary-light')}
-            aria-label="ÊÚÏíá"
+            aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½"
           >
-            <Pencil size={13} /> ÊÚÏíá
+            <Pencil size={13} /> ï¿½ï¿½ï¿½ï¿½ï¿½
           </button>
         </div>
 
@@ -339,11 +339,11 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'border-success bg-success text-on-success shadow-sm shadow-success/20 hover:bg-success-dark',
+                  : 'border-success bg-success text-on-success shadow-sm hover:bg-success-dark',
               )}
-              aria-label="ãÏÝæÚÉ"
+              aria-label="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"
             >
-              <CircleDollarSign size={14} /> {isPaid ? 'Êã ÇáÏÝÚ' : 'ÏÝÚ'}
+              <CircleDollarSign size={14} /> {isPaid ? 'ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½' : 'ï¿½ï¿½ï¿½'}
             </button>
           )}
           <button
@@ -353,11 +353,11 @@ export const TrialSessionCard = ({
             }}
             className={cn(
               actionBtnBase,
-              'border-error bg-error text-on-error shadow-sm shadow-error/20 hover:bg-error-hover',
+              'border-error bg-error text-on-error shadow-sm hover:bg-error-hover',
             )}
-            aria-label="ÍÐÝ"
+            aria-label="ï¿½ï¿½ï¿½"
           >
-            <Trash2 size={14} /> ÍÐÝ
+            <Trash2 size={14} /> ï¿½ï¿½ï¿½
           </button>
         </div>
       </div>

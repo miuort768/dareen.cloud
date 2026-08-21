@@ -439,7 +439,7 @@ export const TrialSessions = () => {
                   setConfirmDeleteAll(true)
                   setDeleteAllTyped('')
                 }}
-                className="flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm shadow-error/20 transition-all hover:bg-error-hover active:scale-95"
+                className="flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
               >
                 <Trash2 size={16} /> حذف الكل
               </button>
@@ -466,7 +466,7 @@ export const TrialSessions = () => {
                   setConfirmDeleteAll(true)
                   setDeleteAllTyped('')
                 }}
-                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm shadow-error/20 transition-all hover:bg-error-hover active:scale-95"
+                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
               >
                 <Trash2 size={15} /> حذف الكل
               </button>
@@ -559,20 +559,20 @@ export const TrialSessions = () => {
               <div className="relative flex-1">
                 <Search
                   size={15}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-muted"
+                  className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
                 />
                 <input
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="بحث باسم الطالب أو رقم الهاتف..."
                   aria-label="بحث عن حصة"
-                  className="h-11 w-full rounded-xl border border-border bg-surface pl-10 pr-10 text-[13px] text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-11 w-full rounded-xl border border-border bg-surface ps-10 pe-10 text-[13px] text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 />
                 {search && (
                   <button
                     aria-label="مسح البحث"
                     onClick={() => setSearch('')}
-                    className="absolute left-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-lg text-muted transition-all hover:text-main"
+                    className="absolute end-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-lg text-muted transition-all hover:text-main"
                   >
                     <X size={13} />
                   </button>
@@ -583,7 +583,7 @@ export const TrialSessions = () => {
                 className={cn(
                   'flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all duration-200',
                   showPaid
-                    ? 'bg-success/10 border-success/20 text-success'
+                    ? 'bg-success-soft border-success-soft text-success'
                     : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
                 )}
                 aria-label={showPaid ? 'إظهار غير المدفوعة' : 'إظهار المدفوعة'}
@@ -840,7 +840,7 @@ export const TrialSessions = () => {
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
-                className="border-error/50 hidden w-full max-w-sm overflow-hidden rounded-none border-2 bg-card shadow-2xl md:block"
+                className="border-error hidden w-full max-w-sm overflow-hidden rounded-none border-2 bg-card shadow-2xl md:block"
               >
                 <div className="flex items-center justify-between bg-error px-5 py-4">
                   <div className="flex items-center gap-3">
@@ -851,7 +851,7 @@ export const TrialSessions = () => {
                   </div>
                   <button
                     onClick={() => setConfirmId(null)}
-                    className="bg-error/15 hover:bg-error/25 flex h-8 w-8 items-center justify-center rounded-full text-error transition-all"
+                    className="bg-white/15 hover:bg-white/25 flex h-8 w-8 items-center justify-center rounded-full text-on-error transition-all"
                     aria-label="إغلاق"
                   >
                     <X size={14} />
@@ -895,7 +895,7 @@ export const TrialSessions = () => {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: '100%', opacity: 0 }}
                 transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="border-error/50 w-full overflow-hidden rounded-none border-2 bg-card shadow-2xl md:max-w-sm"
+                className="border-error w-full overflow-hidden rounded-none border-2 bg-card shadow-2xl md:max-w-sm"
               >
                 <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-border md:hidden" />
                 <div className="flex items-center justify-between bg-error px-5 py-5">
@@ -905,14 +905,14 @@ export const TrialSessions = () => {
                     </div>
                     <div>
                       <h3 className="text-sm font-bold text-on-error">حذف جميع الحصص</h3>
-                      <p className="text-on-error/70 mt-0.5 text-[10px]">
+                      <p className="text-white/70 mt-0.5 text-[10px]">
                         لا يمكن التراجع عن هذا الإجراء
                       </p>
                     </div>
                   </div>
                   <button
                     onClick={() => setConfirmDeleteAll(false)}
-                    className="bg-error/15 hover:bg-error/25 flex h-8 w-8 items-center justify-center rounded-full text-error transition-all"
+                    className="bg-white/15 hover:bg-white/25 flex h-8 w-8 items-center justify-center rounded-full text-on-error transition-all"
                     aria-label="إغلاق"
                   >
                     <X size={14} />
@@ -940,7 +940,7 @@ export const TrialSessions = () => {
                       value={deleteAllTyped}
                       onChange={(e) => setDeleteAllTyped(e.target.value)}
                       placeholder="dareen"
-                      className="focus-visible:ring-error/10 placeholder:text-muted/40 w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-[13px] font-black tracking-widest text-main outline-none transition-all duration-200 focus-visible:border-error focus-visible:ring-2"
+                      className="focus-visible:ring-error-soft placeholder:text-muted w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-[13px] font-black tracking-widest text-main outline-none transition-all duration-200 focus-visible:border-error focus-visible:ring-2"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && deleteAllTyped.trim().toLowerCase() === 'dareen')
                           deleteAllMutation.mutate()
@@ -964,7 +964,7 @@ export const TrialSessions = () => {
                       deleteAllMutation.isPending ||
                       deleteAllTyped.trim().toLowerCase() !== 'dareen'
                     }
-                    className="shadow-error/20 flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {deleteAllMutation.isPending ? 'جاري الحذف...' : 'حذف الكل'}
                   </button>
