@@ -9,6 +9,7 @@ import {
   Wallet,
   User,
   CalendarDays,
+  Calendar,
 } from 'lucide-react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDarkMode } from '../../shared/hooks/useDarkMode'
@@ -25,6 +26,7 @@ interface ParentDashboardHeaderProps {
 const navTabs = [
   { id: 'home', label: 'الرئيسية', icon: Home, path: '/parent-dashboard' },
   { id: 'children', label: 'أبنائي', icon: Users, path: '/parent-students' },
+  { id: 'schedule', label: 'الجداول', icon: Calendar, path: '/schedule' },
   { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
   { id: 'payments', label: 'سجل الدفع', icon: Wallet, path: '/parent-payment-history' },
   { id: 'announcements', label: 'الإعلانات', icon: Bell, path: '/parent-announcements' },

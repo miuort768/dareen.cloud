@@ -19,6 +19,7 @@ import { MobileSchedule } from '../components/MobileSchedule'
 import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page'
 import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader'
 import { StudentDashboardHeader } from '../../../pages/student-dashboard/StudentDashboardHeader'
+import { ParentDashboardHeader } from '../../../pages/parent-dashboard/ParentDashboardHeader'
 import { cn } from '../../../lib/utils'
 import { to24Minutes, normalizeDayName } from '../../attendance/utils/slotUtils'
 
@@ -354,6 +355,11 @@ export const Schedule = () => {
       {isStudent && (
         <div className="hidden md:block">
           <StudentDashboardHeader logout={logout} />
+        </div>
+      )}
+      {currentUser?.role === 'parent' && (
+        <div className="hidden md:block">
+          <ParentDashboardHeader logout={logout} />
         </div>
       )}
       <div className="mx-auto hidden max-w-page px-2 md:block">
