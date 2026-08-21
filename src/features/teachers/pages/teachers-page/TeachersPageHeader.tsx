@@ -72,28 +72,37 @@ export const TeachersPageHeader = ({
               value: totalTeachers,
               label: 'عدد المعلمات',
               box: 'border-white/10 bg-white/10',
+              iconColor: 'text-white/80',
+              valueColor: 'text-white',
+              labelColor: 'text-white/70',
             },
             {
               icon: BookOpen,
               value: uniqueSubjects,
               label: 'عدد التخصصات',
-              box: 'bg-success-soft',
+              box: 'border-success-soft bg-success-soft',
+              iconColor: 'text-success',
+              valueColor: 'text-success',
+              labelColor: 'text-success-dark',
             },
             {
               icon: DollarSign,
               value: `${averagePrice.toLocaleString()} ج.م`,
               label: 'متوسط السعر',
-              box: 'bg-warning-soft',
+              box: 'border-warning-soft bg-warning-soft',
+              iconColor: 'text-warning',
+              valueColor: 'text-warning',
+              labelColor: 'text-warning-dark',
             },
           ].map((item, i) => (
             <div key={i} className={cn('rounded-xl border p-3 backdrop-blur-sm', item.box)}>
               <div className="mb-0.5 flex items-center gap-1.5">
-                <item.icon size={12} className="text-white/80" />
-                <span className="text-sm font-black tabular-nums text-white">
+                <item.icon size={12} className={item.iconColor} />
+                <span className={cn('text-sm font-black tabular-nums', item.valueColor)}>
                   {item.value}
                 </span>
               </div>
-              <p className="text-[9px] font-bold text-white/70">{item.label}</p>
+              <p className={cn('text-[9px] font-bold', item.labelColor)}>{item.label}</p>
             </div>
           ))}
         </div>

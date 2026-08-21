@@ -17,7 +17,6 @@ interface TeacherToolbarProps {
   filterStatus: string
   onFilterStatusChange: (value: string) => void
   totalTeachers: number
-  filteredCount: number
 }
 
 const statusFilterItems = [
@@ -41,7 +40,6 @@ export const TeacherToolbar = ({
   filterStatus,
   onFilterStatusChange,
   totalTeachers,
-  filteredCount,
 }: TeacherToolbarProps) => {
   const showFilters = subjects.length > 0 || totalTeachers > 0
 
@@ -137,11 +135,6 @@ export const TeacherToolbar = ({
                 className="col-span-2"
               />
             )}
-          </div>
-          <div className="flex">
-            <span className="rounded-lg border border-border bg-surface px-2 py-1 text-[10px] font-bold text-muted">
-              النتائج: {filteredCount} / {totalTeachers}
-            </span>
           </div>
         </div>
       )}

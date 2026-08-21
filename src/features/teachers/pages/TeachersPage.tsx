@@ -425,7 +425,6 @@ export const Teachers = () => {
           filterStatus={filterStatus}
           onFilterStatusChange={setFilterStatus}
           totalTeachers={teachers.length}
-          filteredCount={filteredTeachers.length}
         />
         <input
           ref={fileInputRef}
