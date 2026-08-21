@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CalendarDays, Search, Loader2, Sparkles, Clock, GraduationCap, BookOpen, Users } from 'lucide-react'
+import { CalendarDays, Search, Loader2, Sparkles, Clock, GraduationCap, BookOpen, Users, ChevronLeft } from 'lucide-react'
 import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { triggerHaptic } from '../../../lib/haptics'
