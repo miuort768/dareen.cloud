@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { BookOpen, TrendingUp, Activity, MessageSquare } from 'lucide-react'
+import { BookOpen, TrendingUp, Activity, MessageSquare, Radio, Play } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { api } from '../../../lib/api'
 import type { Student, Enrollment, ScheduleSlot } from '../types'
