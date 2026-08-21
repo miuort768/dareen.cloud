@@ -1,12 +1,11 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CalendarDays, Search, Loader2, Sparkles, Clock, ChevronLeft, GraduationCap, BookOpen } from 'lucide-react'
+import { CalendarDays, Search, Loader2, Sparkles, Clock, GraduationCap, BookOpen, Users } from 'lucide-react'
 import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { triggerHaptic } from '../../../lib/haptics'
 import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile'
-import { MobileScheduleDetailsSheet } from './mobile-schedule'
 import { normalizeDayName, to24Minutes } from '../../attendance/utils/slotUtils'
 
 interface TeacherRef {
@@ -71,7 +70,6 @@ export const MobileSchedule = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const todayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' })
   const [selectedDay, setSelectedDay] = useState(todayName)
-  const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
 
   const isStudent = currentUser?.role === 'student'
   const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim()
@@ -182,7 +180,10 @@ export const MobileSchedule = () => {
     )
   }, [dayEvents, todayName])
 
-  const selectedEvent = dayEvents.find((e) => e.id === selectedEventId) || null
+  const openInAppointments = () => {
+    triggerHaptic('light')
+    navigate('/appointments')
+  }
 
   return (
     <MobilePage>
@@ -213,29 +214,35 @@ export const MobileSchedule = () => {
 
         {/* ===== HERO ===== */}
         <div className="px-3 pt-1">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-lg shadow-primary/20">
+          <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-lg shadow-primary/20 md:rounded-3xl">
             <div className="absolute -end-8 -top-8 h-28 w-28 rounded-full bg-white/10 blur-xl" />
             <div className="absolute -bottom-10 -start-6 h-24 w-24 rounded-full bg-white/5 blur-lg" />
             <div className="relative z-10">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="mb-1 flex items-center gap-1.5">
-                    <CalendarDays size={12} className="text-white/70" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">
-                      {todayName}
+              <div className="mb-1 flex items-center gap-1.5">
+                <CalendarDays size={12} className="text-white/70" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">
+                  {todayName}
+                </span>
+              </div>
+              <h1 className="font-outfit text-xl font-black text-on-primary">جدول الحصص</h1>
+
+              {/* Stats strip */}
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                {[
+                  { value: countsByDay[todayName] || 0, label: 'حصة اليوم' },
+                  { value: allEvents.length, label: 'هذا الأسبوع' },
+                  { value: uniqueTeachers.length, label: 'معلمة' },
+                ].map((s, i) => (
+                  <div
+                    key={i}
+                    className="flex flex-col items-center rounded-none bg-white/15 py-2 backdrop-blur-sm"
+                  >
+                    <span className="text-base font-black tabular-nums text-on-primary">
+                      {s.value}
                     </span>
+                    <span className="text-[9px] font-bold text-white/70">{s.label}</span>
                   </div>
-                  <h1 className="font-outfit text-xl font-black text-on-primary">جدول الحصص</h1>
-                  <p className="mt-0.5 text-[11px] font-medium text-white/70">
-                    {allEvents.length} حصة مسجلة هذا الأسبوع
-                  </p>
-                </div>
-                <div className="flex flex-col items-center rounded-2xl bg-white/15 px-3 py-2 backdrop-blur-sm">
-                  <span className="text-xl font-black tabular-nums text-on-primary">
-                    {countsByDay[todayName] || 0}
-                  </span>
-                  <span className="text-[9px] font-bold text-white/70">حصة اليوم</span>
-                </div>
+                ))}
               </div>
 
               {/* Search */}
@@ -314,7 +321,7 @@ export const MobileSchedule = () => {
               exit={{ opacity: 0, y: -8 }}
               className="mx-3 mt-2"
             >
-              <div className="flex items-center gap-2.5 rounded-2xl border border-success-soft bg-success-soft p-2.5">
+              <div className="flex items-center gap-2.5 rounded-none border border-success-soft bg-success-soft p-2.5 md:rounded-2xl">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/60 dark:bg-white/10">
                   <Sparkles size={14} className="text-success" />
                 </div>
@@ -351,11 +358,8 @@ export const MobileSchedule = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: Math.min(idx * 0.04, 0.4), duration: 0.25 }}
                     whileTap={{ scale: 0.97 }}
-                    onClick={() => {
-                      triggerHaptic('light')
-                      setSelectedEventId(event.id)
-                    }}
-                    className={`cursor-pointer overflow-hidden rounded-2xl border border-border border-e-[3px] bg-card shadow-sm transition-colors ${ts.bar}`}
+                    onClick={openInAppointments}
+                    className={`cursor-pointer overflow-hidden rounded-none border border-border border-e-[3px] bg-card shadow-sm transition-colors md:rounded-2xl ${ts.bar}`}
                   >
                     <div className="flex items-center gap-3 p-3">
                       {/* Avatar */}
@@ -403,7 +407,7 @@ export const MobileSchedule = () => {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="rounded-3xl border border-dashed border-border bg-card py-14 text-center"
+              className="rounded-none border border-dashed border-border bg-card py-14 text-center md:rounded-3xl"
             >
               <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft">
                 <CalendarDays size={26} className="text-primary" strokeWidth={1.5} />
@@ -417,23 +421,6 @@ export const MobileSchedule = () => {
             </motion.div>
           )}
         </div>
-
-        {/* Details sheet */}
-        <MobileScheduleDetailsSheet
-          showDetails={!!selectedEvent}
-          event={selectedEvent}
-          onClose={() => setSelectedEventId(null)}
-          onStartSession={() => {
-            triggerHaptic('light')
-            navigate('/appointments')
-            setSelectedEventId(null)
-          }}
-          onViewStudent={() => {
-            triggerHaptic('light')
-            navigate('/students')
-            setSelectedEventId(null)
-          }}
-        />
       </div>
     </MobilePage>
   )

@@ -577,8 +577,8 @@ export const Schedule = () => {
         onViewStudent={() => navigate('/students')}
       />
 
-      {/* FAB — square with rounded corners (not circle) */}
-      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+      {/* FAB — desktop only (print + day filters) */}
+      <div className="fixed bottom-6 end-6 z-50 hidden flex-col items-end gap-3 md:flex">
         <AnimatePresence>
           {fabOpen &&
             fabActions.map((action, i) => (
