@@ -1,4 +1,4 @@
-ï»¿import { memo } from 'react';
+import { memo } from 'react';
 import { Virtuoso } from 'react-virtuoso';
 import { Phone, MessageSquare, CheckCircle2, Trash2, Search } from 'lucide-react';
 import type { Lead, LeadStatus } from '../../../features/crm/types';
@@ -18,10 +18,10 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
             <div className="hidden lg:block">
                 <div className="py-20 text-center">
                     <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary-soft flex items-center justify-center">
-                        <Search size={28} className="text-primary/40" />
+                        <Search size={28} className="text-primary opacity-40" />
                     </div>
-                    <p className="text-sm font-bold text-main">Ù„Ø§ ØªÙˆØ¬Ø¯ Ù†ØªØ§Ø¦Ø¬</p>
-                    <p className="text-xs text-muted mt-1">Ù„Ø§ ÙŠÙˆØ¬Ø¯ Ø¹Ù…Ù„Ø§Ø¡ Ù…ØªØ·Ø§Ø¨Ù‚ÙˆÙ† Ù…Ø¹ Ù…Ø¹Ø§ÙŠÙŠØ± Ø§Ù„Ø¨Ø­Ø«</p>
+                    <p className="text-sm font-bold text-main">áÇ ÊæÌÏ äÊÇÆÌ</p>
+                    <p className="text-xs text-muted mt-1">áÇ íæÌÏ ÚãáÇÁ ãÊØÇÈÞæä ãÚ ãÚÇííÑ ÇáÈÍË</p>
                 </div>
             </div>
         );
@@ -33,26 +33,26 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                 style={{ height: Math.min(filteredLeads.length * 56 + 60, 600) }}
                 data={filteredLeads}
                 fixedHeaderContent={() => (
-                    <div className="flex items-center px-5 py-3 bg-surface/50 border-b border-border">
-                        <div className="w-[22%] px-2 font-bold text-[11px] tracking-wide text-muted text-end">Ø§Ù„Ø¹Ù…ÙŠÙ„</div>
-                        <div className="w-[13%] px-2 font-bold text-[11px] tracking-wide text-muted text-end">Ø§Ù„ØªÙˆØ§ØµÙ„</div>
-                        <div className="w-[13%] px-2 font-bold text-[11px] tracking-wide text-muted text-end">Ø§Ù„Ù…Ø§Ø¯Ø©</div>
-                        <div className="w-[14%] px-2 font-bold text-[11px] tracking-wide text-muted text-end">Ø§Ù„Ø­Ø§Ù„Ø©</div>
-                        <div className="w-[10%] px-1 font-bold text-[11px] tracking-wide text-muted text-center">Ø§Ù„Ø£ÙˆÙ„ÙˆÙŠØ©</div>
-                        <div className="w-[28%] px-2 font-bold text-[11px] tracking-wide text-muted text-center">Ø§Ù„Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª</div>
+                    <div className="flex items-center px-5 py-3 bg-gradient-to-l from-primary to-primary-deep">
+                        <div className="w-[22%] px-2 font-bold text-[11px] tracking-wide text-on-primary text-end">ÇáÚãíá</div>
+                        <div className="w-[13%] px-2 font-bold text-[11px] tracking-wide text-on-primary text-end">ÇáÊæÇÕá</div>
+                        <div className="w-[13%] px-2 font-bold text-[11px] tracking-wide text-on-primary text-end">ÇáãÇÏÉ</div>
+                        <div className="w-[14%] px-2 font-bold text-[11px] tracking-wide text-on-primary text-end">ÇáÍÇáÉ</div>
+                        <div className="w-[10%] px-1 font-bold text-[11px] tracking-wide text-on-primary text-center">ÇáÃæáæíÉ</div>
+                        <div className="w-[28%] px-2 font-bold text-[11px] tracking-wide text-on-primary text-center">ÇáÅÌÑÇÁÇÊ</div>
                     </div>
                 )}
                 itemContent={(index, lead) => {
                     const priority = getPriority(lead.priority);
                     return (
                         <div onClick={() => onLeadClick(lead)}
-                            className="flex items-center px-5 py-3.5 cursor-pointer border-b border-border/40 group transition-all duration-200 hover:bg-hover/50">
+                            className="flex items-center px-5 py-3.5 cursor-pointer border-b border-border group transition-all duration-200 hover:bg-hover">
                             <div className="w-[22%] flex items-center gap-3 min-w-0 px-2">
-                                <GradientAvatar name={lead.studentName || 'Ø¹'} size="sm" />
+                                <GradientAvatar name={lead.studentName || 'Ú'} size="sm" />
                                 <div className="min-w-0">
-                                    <h4 className="font-bold text-[13px] text-main truncate">{lead.studentName || 'Ø¹Ù…ÙŠÙ„ Ø¨Ø¯ÙˆÙ† Ø§Ø³Ù…'}</h4>
+                                    <h4 className="font-bold text-[13px] text-main truncate">{lead.studentName || 'Úãíá ÈÏæä ÇÓã'}</h4>
                                     {lead.source && (
-                                        <span className="text-[10px] font-medium text-info bg-info/10 px-1.5 py-px rounded mt-0.5 inline-block">{lead.source}</span>
+                                        <span className="text-[10px] font-medium text-info bg-info-soft px-1.5 py-px rounded mt-0.5 inline-block">{lead.source}</span>
                                     )}
                                 </div>
                             </div>
@@ -67,7 +67,7 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                 <select
                                     className="px-2.5 py-1.5 text-[10px] font-bold border border-border outline-none cursor-pointer rounded-lg bg-surface transition-all text-main"
                                     value={lead.status}
-                                    aria-label="Ø­Ø§Ù„Ø© Ø§Ù„Ø¹Ù…ÙŠÙ„"
+                                    aria-label="ÍÇáÉ ÇáÚãíá"
                                     onChange={(e) => updateMutation.mutate({ id: lead.id, updates: { status: e.target.value as LeadStatus } })}
                                     onClick={(e) => e.stopPropagation()}>
                                     {(['new', 'contacted', 'interested', 'trial', 'converted', 'lost'] as LeadStatus[]).map((key) => (
@@ -84,10 +84,10 @@ export const LeadTable = memo(({ filteredLeads, updateMutation, handleMarkLost, 
                                 </span>
                             </div>
                             <div className="w-[28%] flex items-center justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                <ActionBtn onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} icon={Phone} label="Ø§ØªØµØ§Ù„" color="success" title="Ø§ØªØµØ§Ù„" />
-                                <ActionBtn onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} icon={MessageSquare} label="ÙˆØ§ØªØ³Ø§Ø¨" color="success" title="ÙˆØ§ØªØ³Ø§Ø¨" />
-                                <ActionBtn onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }} icon={CheckCircle2} label="ØªÙ…" color="info" title="ØªÙ… Ø§Ù„ØªØ­ÙˆÙŠÙ„" />
-                                <ActionBtn onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }} icon={Trash2} label="Ø­Ø°Ù" color="error" title="Ø­Ø°Ù Ø§Ù„Ø¹Ù…ÙŠÙ„" />
+                                <ActionBtn onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} icon={Phone} label="ÇÊÕÇá" color="success" title="ÇÊÕÇá" />
+                                <ActionBtn onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} icon={MessageSquare} label="æÇÊÓÇÈ" color="success" title="æÇÊÓÇÈ" />
+                                <ActionBtn onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }} icon={CheckCircle2} label="Êã" color="info" title="Êã ÇáÊÍæíá" />
+                                <ActionBtn onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }} icon={Trash2} label="ÍÐÝ" color="error" title="ÍÐÝ ÇáÚãíá" />
                             </div>
                         </div>
                     );

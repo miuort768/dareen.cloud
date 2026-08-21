@@ -1,4 +1,4 @@
-﻿import { Skeleton } from '../../../shared/components/ui/Skeleton';
+import { Skeleton } from '../../../shared/components/ui/Skeleton';
 
 export const LeadsSkeleton = () => (
     <div className="bg-background min-h-screen pb-24" dir="rtl">
@@ -21,7 +21,7 @@ export const LeadsSkeleton = () => (
             </div>
 
             {/* KPI skeleton */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
                 {Array.from({ length: 4 }).map((_, i) => (
                     <div key={i} className="bg-card border border-border rounded-2xl p-3.5">
                         <div className="flex items-center gap-1.5 mb-2">
@@ -37,14 +37,10 @@ export const LeadsSkeleton = () => (
             {/* Main content card skeleton */}
             <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-elevation-1 dark:shadow-none">
                 <div className="p-4 lg:p-5 border-b border-border">
-                    <div className="flex items-center gap-3">
-                        <div className="flex-1"><Skeleton className="h-11 w-full rounded-xl" /></div>
-                        <Skeleton className="h-11 w-14 shrink-0 rounded-xl" />
-                    </div>
-                    <div className="flex items-center gap-2 mt-3">
-                        {Array.from({ length: 6 }).map((_, i) => (
-                            <Skeleton key={i} className="h-8 rounded-lg shrink-0" style={{ width: i === 0 ? '60px' : `${60 + Math.random() * 30}px` }} />
-                        ))}
+                    <Skeleton className="h-11 w-full rounded-xl" />
+                    <div className="grid grid-cols-2 gap-2 mt-3">
+                        <Skeleton className="h-11 rounded-xl" />
+                        <Skeleton className="h-11 rounded-xl" />
                     </div>
                 </div>
 
@@ -79,13 +75,13 @@ export const LeadsSkeleton = () => (
 
                 {/* Table skeleton (desktop) */}
                 <div className="hidden lg:block">
-                    <div className="bg-surface/50 px-5 py-3 border-b border-border flex gap-4">
+                    <div className="bg-gradient-to-l from-primary to-primary-deep px-5 py-3 border-b border-border flex gap-4">
                         {Array.from({ length: 6 }).map((_, i) => (
                             <Skeleton key={i} className="h-3 rounded-md" style={{ flex: i === 0 ? '22%' : i === 5 ? '25%' : '15%' }} />
                         ))}
                     </div>
                     {Array.from({ length: 5 }).map((_, i) => (
-                        <div key={i} className="px-5 py-3.5 border-b border-border/40 flex items-center gap-4">
+                        <div key={i} className="px-5 py-3.5 border-b border-border flex items-center gap-4">
                             <div className="w-[22%] flex items-center gap-3">
                                 <Skeleton className="w-8 h-8 rounded-full shrink-0" />
                                 <Skeleton className="h-3.5 flex-1 rounded-md" />

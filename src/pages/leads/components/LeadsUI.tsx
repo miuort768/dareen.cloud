@@ -164,7 +164,7 @@ export const statusColors: Record<
   new: {
     label: 'جديد',
     color: 'text-info font-bold',
-    bg: 'bg-info/15',
+    bg: 'bg-info-soft',
     activeBg: 'bg-info',
     activeText: 'text-on-info',
     dot: 'bg-info',
@@ -174,7 +174,7 @@ export const statusColors: Record<
   contacted: {
     label: 'تم الاتصال',
     color: 'text-warning font-bold',
-    bg: 'bg-warning/15',
+    bg: 'bg-warning-soft',
     activeBg: 'bg-warning',
     activeText: 'text-on-warning',
     dot: 'bg-warning',
@@ -184,7 +184,7 @@ export const statusColors: Record<
   interested: {
     label: 'مهتم',
     color: 'text-success font-bold',
-    bg: 'bg-success/15',
+    bg: 'bg-success-soft',
     activeBg: 'bg-success',
     activeText: 'text-on-success',
     dot: 'bg-success',
@@ -194,7 +194,7 @@ export const statusColors: Record<
   trial: {
     label: 'حصة تجريبية',
     color: 'text-primary font-bold',
-    bg: 'bg-primary/15',
+    bg: 'bg-primary-soft',
     activeBg: 'bg-primary',
     activeText: 'text-on-primary',
     dot: 'bg-primary',
@@ -204,7 +204,7 @@ export const statusColors: Record<
   converted: {
     label: 'محول',
     color: 'text-info font-bold',
-    bg: 'bg-info/15',
+    bg: 'bg-info-soft',
     activeBg: 'bg-info',
     activeText: 'text-on-info',
     dot: 'bg-info',
@@ -214,7 +214,7 @@ export const statusColors: Record<
   lost: {
     label: 'مفقود',
     color: 'text-error font-bold',
-    bg: 'bg-error/15',
+    bg: 'bg-error-soft',
     activeBg: 'bg-error',
     activeText: 'text-on-error',
     dot: 'bg-error',
@@ -249,16 +249,16 @@ export const priorityConfig: Record<
   high: {
     label: 'عالية',
     color: 'text-error',
-    bg: 'bg-error/10',
-    darkBg: 'dark:bg-error/15',
-    darkText: 'dark:text-error',
+    bg: 'bg-error-soft',
+    darkBg: '',
+    darkText: '',
   },
   medium: {
     label: 'متوسطة',
     color: 'text-warning',
-    bg: 'bg-warning/10',
-    darkBg: 'dark:bg-warning/15',
-    darkText: 'dark:text-warning',
+    bg: 'bg-warning-soft',
+    darkBg: '',
+    darkText: '',
   },
   low: {
     label: 'منخفضة',

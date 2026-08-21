@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { X, UserPlus } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PrimaryBtn } from './LeadsUI'
@@ -21,7 +21,7 @@ interface AddLeadModalProps {
 }
 
 const inputClass =
-  'w-full bg-surface border border-border px-3.5 py-3 text-[13px] outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted/60 font-bold'
+  'w-full bg-surface border border-border px-3.5 py-3 text-[13px] outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted font-bold'
 const labelClass = 'text-[11px] font-bold text-muted mb-1.5 block'
 
 export const AddLeadModal = ({
@@ -67,7 +67,7 @@ export const AddLeadModal = ({
               </div>
               <button
                 onClick={() => setIsAddModalOpen(false)}
-                className="bg-error/15 hover:bg-error/25 flex h-8 w-8 items-center justify-center rounded-full text-error transition-all"
+                className="bg-white/15 hover:bg-white/25 flex h-8 w-8 items-center justify-center rounded-full text-on-error transition-all"
                 aria-label="إغلاق"
               >
                 <X size={14} />
