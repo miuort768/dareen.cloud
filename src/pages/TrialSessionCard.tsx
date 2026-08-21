@@ -81,7 +81,7 @@ export const TrialSessionCard = ({
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -2 }}
       className={cn(
-        'group overflow-hidden rounded-2xl border border-border bg-card text-right font-dash shadow-elevation-0 transition-all duration-300 hover:shadow-elevation-1',
+        'group overflow-hidden rounded-none border border-border bg-card text-right font-dash shadow-elevation-0 transition-all duration-300 hover:shadow-elevation-1 md:rounded-2xl',
         onCardClick && 'cursor-pointer',
       )}
       dir="rtl"
@@ -261,7 +261,7 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'border-success bg-success text-on-success shadow-sm hover:bg-success-dark',
+                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md shadow-success/25 hover:shadow-lg hover:shadow-success/30',
               )}
               aria-label="مدفوعة"
             >
@@ -339,7 +339,7 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'border-success bg-success text-on-success shadow-sm hover:bg-success-dark',
+                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md shadow-success/25 hover:shadow-lg hover:shadow-success/30',
               )}
               aria-label="مدفوعة"
             >

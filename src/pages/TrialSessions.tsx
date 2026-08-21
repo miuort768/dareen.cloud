@@ -341,6 +341,48 @@ export const TrialSessions = () => {
     showNotification('تم تحديد كمدفوع', 'success')
   }
 
+  const handleExportReport = () => {
+    const statusLabels: Record<string, string> = {
+      pending: 'قيد الانتظار',
+      completed: 'تمت بنجاح',
+      cancelled: 'ملغية',
+      converted: 'محولة',
+    }
+    const headers = [
+      'الطالب',
+      'هاتف ولي الأمر',
+      'المادة',
+      'المعلمة',
+      'التاريخ',
+      'الوقت',
+      'الحالة',
+      'ملاحظات',
+    ]
+    const rows = filtered.map((t: TrialSession) => [
+      t.studentName,
+      t.parentPhone,
+      t.subject,
+      t.teacherName || '',
+      t.date,
+      t.time || '',
+      statusLabels[t.status] || t.status,
+      (t.notes || '').replace(/\r?\n/g, ' '),
+    ])
+    const escapeCell = (v: string) => `"${String(v).replace(/"/g, '""')}"`
+    const csv =
+      '\uFEFF' + [headers, ...rows].map((r) => r.map(escapeCell).join(',')).join('\r\n')
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `تقرير-جلسات-المراجعة-${new Date().toISOString().slice(0, 10)}.csv`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+    showNotification('تم تحميل التقرير بنجاح', 'success')
+  }
+
   const subjects = [
     ...new Set(trials.map((t: TrialSession) => t.subject).filter(Boolean)),
   ] as string[]
@@ -431,7 +473,10 @@ export const TrialSessions = () => {
               <Plus size={16} /> جدولة جديدة
             </button>
             <div className="mt-2 grid grid-cols-2 gap-2">
-              <button className="flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95">
+              <button
+                onClick={handleExportReport}
+                className="flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95"
+              >
                 <Download size={16} /> تحميل التقرير
               </button>
               <button
@@ -458,7 +503,10 @@ export const TrialSessions = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button className="flex h-10 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95">
+              <button
+                onClick={handleExportReport}
+                className="flex h-10 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95"
+              >
                 <Download size={15} /> تحميل التقرير
               </button>
               <button
