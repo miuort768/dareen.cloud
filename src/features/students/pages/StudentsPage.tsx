@@ -282,32 +282,32 @@ export const Students = () => {
         label: 'إجمالي الطلاب',
         value: allStudents.length,
         icon: Users,
-        gradient: 'from-primary/15 to-primary/5 dark:from-primary/25 dark:to-primary/10',
-        iconBg: 'bg-primary/10 text-primary ring-primary/20',
+        gradient: 'from-primary-soft to-background dark:from-primary-soft dark:to-card',
+        iconBg: 'bg-white/50 text-primary ring-primary-soft dark:bg-white/10',
         accent: 'bg-primary',
       },
       {
         label: 'الاشتراكات النشطة',
         value: activeEnrollments,
         icon: BookOpen,
-        gradient: 'from-success/15 to-success/5 dark:from-success/25 dark:to-success/10',
-        iconBg: 'bg-success/10 text-success ring-success/20',
+        gradient: 'from-success-soft to-background dark:from-success-soft dark:to-card',
+        iconBg: 'bg-white/50 text-success ring-success-soft dark:bg-white/10',
         accent: 'bg-success',
       },
       {
         label: 'حصص مكتملة',
         value: completedSessions,
         icon: Star,
-        gradient: 'from-warning/15 to-warning/5 dark:from-warning/25 dark:to-warning/10',
-        iconBg: 'bg-warning/10 text-warning ring-warning/20',
+        gradient: 'from-warning-soft to-background dark:from-warning-soft dark:to-card',
+        iconBg: 'bg-white/50 text-warning ring-warning-soft dark:bg-white/10',
         accent: 'bg-warning',
       },
       {
         label: 'متوسط الحصص للطالب',
         value: averageSessions,
         icon: GraduationCap,
-        gradient: 'from-info/15 to-info/5 dark:from-info/25 dark:to-info/10',
-        iconBg: 'bg-info/10 text-info ring-info/20',
+        gradient: 'from-info-soft to-background dark:from-info-soft dark:to-card',
+        iconBg: 'bg-white/50 text-info ring-info-soft dark:bg-white/10',
         accent: 'bg-info',
       },
     ],
@@ -353,7 +353,7 @@ export const Students = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 shadow-xl dark:border-primary/30 dark:from-primary/90 dark:via-primary-deep dark:to-primary-hover md:p-8"
+          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 shadow-xl dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover md:p-8"
         >
           {particles.map((p) => (
             <motion.div
@@ -423,7 +423,7 @@ export const Students = () => {
                   transition={{ delay: 0.1 + i * 0.05 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'relative overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br p-4 transition-all duration-300 hover:shadow-elevation-2',
+                    'relative overflow-hidden rounded-none border border-border bg-gradient-to-br p-4 transition-all duration-300 hover:shadow-elevation-2',
                     stat.gradient,
                   )}
                 >
@@ -475,7 +475,7 @@ export const Students = () => {
           {isDeletingAll && (
             <div className="bg-error-soft/60 flex flex-col gap-4 rounded-2xl border border-error-soft p-4 md:p-5">
               <div className="flex items-center gap-3">
-                <div className="bg-error/10 rounded-xl p-2 text-error">
+                <div className="bg-error-soft rounded-xl p-2 text-error">
                   <ShieldAlert size={18} />
                 </div>
                 <div>
@@ -498,7 +498,7 @@ export const Students = () => {
                   }}
                   placeholder="أدخل كلمة المرور التحذيرية"
                   aria-label="كلمة المرور التحذيرية لحذف جميع الطلاب"
-                  className="border-error/30 focus:ring-error/10 w-full rounded-xl border bg-surface px-3 py-2 text-xs font-normal text-main transition-all placeholder:text-muted focus:border-error focus:outline-none focus:ring-2 sm:max-w-xs"
+                  className="border-error-soft focus:ring-error-soft w-full rounded-xl border bg-surface px-3 py-2 text-xs font-normal text-main transition-all placeholder:text-muted focus:border-error focus:outline-none focus:ring-2 sm:max-w-xs"
                 />
                 <button
                   onClick={handleDeleteAll}

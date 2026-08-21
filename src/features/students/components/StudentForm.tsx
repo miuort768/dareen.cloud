@@ -62,7 +62,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                     </div>
                     <div>
                         <h3 className="text-xl font-bold text-on-primary tracking-tight">{initialData ? 'تعديل بيانات الطالب' : 'إدراج طالب جديد'}</h3>
-                        <p className="text-micro text-on-primary/80 font-normal mt-1">
+                        <p className="text-micro text-white/80 font-normal mt-1">
                             {initialData ? 'أرشفة وتحديث السجل' : 'فتح سجل أكاديمي جديد'}
                         </p>
                     </div>
@@ -71,7 +71,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                     <button 
                         type="button" 
                         onClick={onCancel}
-                        className="w-10 h-10 flex items-center justify-center text-on-primary/70 hover:bg-white/15 transition-all"
+                        className="w-10 h-10 flex items-center justify-center text-white/70 hover:bg-white/15 transition-all"
                     >
                         <X size={20} />
                     </button>
@@ -82,7 +82,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 {/* Basic Info Section */}
                 <div className="space-y-6">
                     <div className="flex items-center gap-3 pb-3 border-b border-border">
-                        <div className="w-8 h-8 flex items-center justify-center bg-info-soft ring-1 ring-info/20 rounded-xl">
+                        <div className="w-8 h-8 flex items-center justify-center bg-info-soft ring-1 ring-info-soft rounded-xl">
                             <Info size={16} className="text-primary" />
                         </div>
                         <h4 className="text-xs font-bold text-main uppercase tracking-tight">بيانات التعريف الأساسية</h4>

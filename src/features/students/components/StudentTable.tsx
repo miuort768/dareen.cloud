@@ -28,17 +28,17 @@ const Tooltip = ({ label, children }: { label: string; children: React.ReactNode
 
 const gradeColors: Record<string, { bg: string; text: string; ring: string }> = {
   أول: { bg: 'bg-primary/10', text: 'text-primary', ring: 'ring-primary/20' },
-  ثاني: { bg: 'bg-success/10', text: 'text-success', ring: 'ring-success/20' },
-  ثالث: { bg: 'bg-info/10', text: 'text-info', ring: 'ring-info/20' },
-  رابع: { bg: 'bg-warning/10', text: 'text-warning', ring: 'ring-warning/20' },
-  خامس: { bg: 'bg-accent/10', text: 'text-accent', ring: 'ring-accent/20' },
-  سادس: { bg: 'bg-error/10', text: 'text-error', ring: 'ring-error/20' },
+  ثاني: { bg: 'bg-success-soft', text: 'text-success', ring: 'ring-success-soft' },
+  ثالث: { bg: 'bg-info-soft', text: 'text-info', ring: 'ring-info-soft' },
+  رابع: { bg: 'bg-warning-soft', text: 'text-warning', ring: 'ring-warning-soft' },
+  خامس: { bg: 'bg-accent-soft', text: 'text-accent', ring: 'ring-accent-soft' },
+  سادس: { bg: 'bg-error-soft', text: 'text-error', ring: 'ring-error-soft' },
 };
 
 const getGradeColor = (grade?: string) => {
   if (!grade) return { bg: 'bg-primary-soft', text: 'text-primary', ring: 'ring-primary/20' };
   const key = Object.keys(gradeColors).find(k => grade.includes(k));
-  return key ? gradeColors[key] : { bg: 'bg-info-soft', text: 'text-info', ring: 'ring-info/20' };
+  return key ? gradeColors[key] : { bg: 'bg-info-soft', text: 'text-info', ring: 'ring-info-soft' };
 };
 
 export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDelete, onNotify }: StudentTableProps) => {
@@ -234,7 +234,7 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
           </div>
         </div>
         <div className="grid grid-cols-3 gap-2">
-          <div className="text-center p-2 bg-primary-soft/50 rounded-xl">
+          <div className="text-center p-2 bg-primary-soft rounded-xl">
             <span className="text-[9px] font-bold text-muted block">العقود</span>
             <span className="text-xs font-bold text-primary">{student.enrollments?.length || 0}</span>
           </div>
@@ -261,9 +261,9 @@ export const StudentTable = memo(({ students, selectedId, onSelect, onEdit, onDe
   if (students.length === 0) {
     return (
       <div className="py-16 text-center bg-card border border-border rounded-2xl">
-        <GraduationCap size={48} className="mx-auto mb-3 text-muted/20" />
+        <GraduationCap size={48} className="mx-auto mb-3 text-muted opacity-20" />
         <p className="text-sm font-bold text-muted">لا توجد بيانات طلاب حالياً</p>
-        <p className="text-[10px] text-muted/60 mt-1">قم بإضافة طالب جديد للبدء</p>
+        <p className="text-[10px] text-muted opacity-60 mt-1">قم بإضافة طالب جديد للبدء</p>
       </div>
     );
   }

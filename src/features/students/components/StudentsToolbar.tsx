@@ -205,7 +205,7 @@ export const StudentsToolbar = ({
             onClick={onDeleteAll}
             className={cn(
               btnClass,
-              'border-error/30 hover:bg-error/10 border bg-error-soft text-error',
+              'border-error-soft hover:bg-error-light border bg-error-soft text-error',
             )}
           >
             <Trash2 size={12} />

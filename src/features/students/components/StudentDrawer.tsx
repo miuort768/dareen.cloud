@@ -65,17 +65,17 @@ const getAvatarGradient = (name: string) => {
 
 const gradeColors: Record<string, string> = {
   أول: 'text-primary bg-primary/10 ring-primary/20',
-  ثاني: 'text-success bg-success/10 ring-success/20',
-  ثالث: 'text-info bg-info/10 ring-info/20',
-  رابع: 'text-warning bg-warning/10 ring-warning/20',
-  خامس: 'text-accent bg-accent/10 ring-accent/20',
-  سادس: 'text-error bg-error/10 ring-error/20',
+  ثاني: 'text-success bg-success-soft ring-success-soft',
+  ثالث: 'text-info bg-info-soft ring-info-soft',
+  رابع: 'text-warning bg-warning-soft ring-warning-soft',
+  خامس: 'text-accent bg-accent-soft ring-accent-soft',
+  سادس: 'text-error bg-error-soft ring-error-soft',
 }
 
 const getGradeStyle = (grade?: string) => {
-  if (!grade) return 'text-info bg-info-soft ring-info/20'
+  if (!grade) return 'text-info bg-info-soft ring-info-soft'
   const key = Object.keys(gradeColors).find((k) => grade.includes(k))
-  return key ? gradeColors[key] : 'text-info bg-info-soft ring-info/20'
+  return key ? gradeColors[key] : 'text-info bg-info-soft ring-info-soft'
 }
 
 const getNextLevel = (xp: number) => {
@@ -183,17 +183,17 @@ export const StudentDrawer = ({
           dir="rtl"
         >
           {/* Header */}
-          <div className="sticky top-0 z-20 border-b border-border bg-card">
+          <div className="sticky top-0 z-20 bg-gradient-to-l from-primary to-primary-deep">
             <div className="flex items-center justify-between p-4">
               <button
                 onClick={onClose}
-                className="flex h-8 items-center gap-1 rounded-none px-3 text-xs font-bold text-muted transition-colors hover:bg-surface"
+                className="flex h-8 items-center gap-1 rounded-lg bg-white/15 px-3 text-xs font-bold text-on-primary transition-colors hover:bg-white/25"
                 aria-label="رجوع"
               >
                 <ChevronLeft size={14} />
                 رجوع
               </button>
-              <span className="text-xs font-bold text-muted">بيانات الطالب</span>
+              <span className="text-xs font-bold text-on-primary">بيانات الطالب</span>
               <div className="w-8" />
             </div>
           </div>
@@ -215,7 +215,7 @@ export const StudentDrawer = ({
                 <div className="flex items-center gap-2">
                   <h2 className="truncate text-base font-bold text-main">{student.name}</h2>
                   {streakDays >= 3 && (
-                    <span className="bg-warning/10 ring-warning/20 inline-flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[9px] font-bold text-warning ring-1">
+                    <span className="bg-warning-soft ring-warning-soft inline-flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[9px] font-bold text-warning ring-1">
                       <Flame size={9} /> {streakDays}
                     </span>
                   )}
@@ -230,12 +230,12 @@ export const StudentDrawer = ({
                     <GraduationCap size={10} />
                     {student.grade}
                   </span>
-                  <span className="bg-warning/10 ring-warning/20 inline-flex items-center gap-1 rounded-lg px-2.5 py-0.5 text-[10px] font-bold text-warning ring-1">
+                  <span className="bg-warning-soft ring-warning-soft inline-flex items-center gap-1 rounded-lg px-2.5 py-0.5 text-[10px] font-bold text-warning ring-1">
                     <Star size={10} />
                     {points} XP
                   </span>
                   {student.enrollments && student.enrollments.length > 0 && (
-                    <span className="ring-info/20 inline-flex items-center gap-1 rounded-lg bg-info-soft px-2.5 py-0.5 text-[10px] font-bold text-info ring-1">
+                    <span className="ring-info-soft inline-flex items-center gap-1 rounded-lg bg-info-soft px-2.5 py-0.5 text-[10px] font-bold text-info ring-1">
                       <BookOpen size={10} />
                       {student.enrollments.length} برامج
                     </span>
@@ -300,7 +300,7 @@ export const StudentDrawer = ({
 
                   {level.nextLabel && (
                     <div className="space-y-1.5">
-                      <div className="ring-border/50 h-2.5 overflow-hidden rounded-full bg-white/50 ring-1 dark:bg-white/5">
+                      <div className="ring-border h-2.5 overflow-hidden rounded-full bg-white/50 ring-1 dark:bg-white/5">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${level.progress}%` }}
@@ -324,7 +324,7 @@ export const StudentDrawer = ({
 
                   {streakDays > 0 && (
                     <div className="mt-3 flex items-center gap-2 border-t border-border pt-3">
-                      <div className="bg-warning/10 flex items-center gap-1.5 rounded-xl px-2.5 py-1.5">
+                      <div className="bg-warning-soft flex items-center gap-1.5 rounded-xl px-2.5 py-1.5">
                         <Flame size={14} className="text-warning" />
                         <span className="text-[10px] font-bold text-warning">{streakDays} يوم</span>
                       </div>
@@ -364,10 +364,10 @@ export const StudentDrawer = ({
                     },
                   ].map((item, i) => {
                     const colorMap: Record<string, string> = {
-                      success: 'text-success bg-success-soft ring-success/20',
-                      info: 'text-info bg-info-soft ring-info/20',
+                      success: 'text-success bg-success-soft ring-success-soft',
+                      info: 'text-info bg-info-soft ring-info-soft',
                       primary: 'text-primary bg-primary-soft ring-primary/20',
-                      warning: 'text-warning bg-warning-soft ring-warning/20',
+                      warning: 'text-warning bg-warning-soft ring-warning-soft',
                     }
                     const Icon = item.icon
                     return (
@@ -459,7 +459,7 @@ export const StudentDrawer = ({
                 <div className="grid grid-cols-2 gap-2">
                   <a
                     href={`tel:${student.parentPhone}`}
-                    className="bg-success/10 border-success/20 hover:bg-success/20 flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-bold text-success transition-all active:scale-[0.98]"
+                    className="bg-success-soft border-success-soft hover:bg-success-light flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-bold text-success transition-all active:scale-[0.98]"
                   >
                     <Phone size={13} /> اتصال
                   </a>
@@ -467,7 +467,7 @@ export const StudentDrawer = ({
                     href={`https://wa.me/${student.parentPhone?.replace(/[^0-9]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-success/10 border-success/20 hover:bg-success/20 flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-bold text-success transition-all active:scale-[0.98]"
+                    className="bg-success-soft border-success-soft hover:bg-success-light flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-bold text-success transition-all active:scale-[0.98]"
                   >
                     <MessageSquare size={13} /> واتساب
                   </a>
@@ -516,7 +516,7 @@ export const StudentDrawer = ({
                             </div>
                           </div>
                           {isLow && (
-                            <span className="ring-error/20 animate-pulse rounded-lg bg-error-soft px-2 py-0.5 text-[9px] font-bold text-error ring-1">
+                            <span className="ring-error-soft animate-pulse rounded-lg bg-error-soft px-2 py-0.5 text-[9px] font-bold text-error ring-1">
                               رصيد منخفض
                             </span>
                           )}
@@ -532,8 +532,8 @@ export const StudentDrawer = ({
                                 idx < used
                                   ? 'bg-success'
                                   : idx === used
-                                    ? 'ring-warning/50 bg-warning ring-1'
-                                    : 'bg-border/50',
+                                    ? 'ring-warning bg-warning ring-1'
+                                    : 'bg-border',
                               )}
                             />
                           ))}
@@ -544,7 +544,7 @@ export const StudentDrawer = ({
 
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex-1">
-                            <div className="ring-border/50 h-1.5 overflow-hidden rounded-full bg-surface ring-1">
+                            <div className="ring-border h-1.5 overflow-hidden rounded-full bg-surface ring-1">
                               <motion.div
                                 initial={{ width: 0 }}
                                 animate={{ width: `${progress}%` }}
@@ -646,10 +646,10 @@ export const StudentDrawer = ({
                               className={cn(
                                 'z-10 flex h-8 w-8 items-center justify-center rounded-xl ring-2 ring-card',
                                 isCompleted
-                                  ? 'bg-success/10 text-success'
+                                  ? 'bg-success-soft text-success'
                                   : isCancelled
-                                    ? 'bg-error/10 text-error'
-                                    : 'bg-warning/10 text-warning',
+                                    ? 'bg-error-soft text-error'
+                                    : 'bg-warning-soft text-warning',
                               )}
                             >
                               {isCompleted ? (
@@ -664,7 +664,7 @@ export const StudentDrawer = ({
                               <div
                                 className={cn(
                                   'min-h-[8px] w-px flex-1',
-                                  isCompleted ? 'bg-success/20 dark:bg-success/50' : 'bg-border',
+                                  isCompleted ? 'bg-success-soft' : 'bg-border',
                                 )}
                               />
                             )}
