@@ -1,15 +1,13 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Loader2,
   Sparkles,
   Clock,
   BookOpen,
-  Plus,
   CalendarDays,
   GraduationCap,
   Users,
-  Filter,
   CheckCircle2,
   PartyPopper,
 } from 'lucide-react'
@@ -96,8 +94,6 @@ export const Schedule = () => {
   const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null)
   const [, setShowDetails] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [fabOpen, setFabOpen] = useState(false)
-  const printRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
 
   const todayDayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' })
@@ -130,14 +126,22 @@ export const Schedule = () => {
         setStudents([me] as unknown as Student[])
       } else {
         const data = await api.get<Record<string, unknown>[]>('/students')
-        setStudents(Array.isArray(data) ? data : data.data || [])
+        let list = Array.isArray(data) ? data : data.data || []
+        if (currentUser?.role === 'parent') {
+          const myPhone = String(currentUser.phone || '').replace(/[^0-9]/g, '')
+          list = list.filter((s: Record<string, unknown>) => {
+            const p = String(s.parentPhone || '').replace(/[^0-9]/g, '')
+            return myPhone.length > 0 && (p === myPhone || p.endsWith(myPhone) || myPhone.endsWith(p))
+          })
+        }
+        setStudents(list as unknown as Student[])
       }
     } catch (error) {
       console.error('Error fetching data', error)
     } finally {
       setLoading(false)
     }
-  }, [isStudent])
+  }, [isStudent, currentUser])
 
   useEffect(() => {
     fetchData()
@@ -156,13 +160,14 @@ export const Schedule = () => {
   }, [currentWeekOffset])
 
   const allEvents: ScheduleEvent[] = useMemo(() => {
+    const teacherToMatchLower = teacherToMatch.toLowerCase()
     return students.flatMap((student) =>
       (student.enrollments || [])
         .filter(
           (enrollment) =>
             !isTeacher ||
-            teacherNameOf(enrollment) === teacherToMatch ||
-            enrollment.teacherId === currentUser.id,
+            teacherNameOf(enrollment).toLowerCase() === teacherToMatchLower ||
+            String(enrollment.teacherId ?? '') === String(currentUser?.id ?? ''),
         )
         .flatMap((enrollment) =>
           (enrollment.schedule || []).map((slot) => {
@@ -172,6 +177,8 @@ export const Schedule = () => {
               normalizedPeriod.startsWith('صباح')
             const sId = student.id
             const tName = teacherNameOf(enrollment)
+            const hourMatch = /(\d{1,2})/.exec(String(slot.hour ?? ''))
+            const hourNum = hourMatch ? hourMatch[1] : ''
             return {
               id: `${sId}-${tName}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
               studentId: sId,
@@ -181,9 +188,9 @@ export const Schedule = () => {
               subject: enrollment.subject,
               curriculum: enrollment.curr,
               day: normalizeDayName(slot.day),
-              hour: String(parseInt(String(slot.hour).trim(), 10) || ''),
+              hour: hourNum,
               period: isAM ? 'am' : 'pm',
-              time: `${String(parseInt(String(slot.hour).trim(), 10) || '')}:00 ${isAM ? 'ص' : 'م'}`,
+              time: `${hourNum}:00 ${isAM ? 'ص' : 'م'}`,
               studentPoints: student.totalPoints || 0,
             }
           }),
@@ -192,7 +199,7 @@ export const Schedule = () => {
   }, [students, isTeacher, teacherToMatch, currentUser?.id])
 
   const uniqueTeachers = useMemo(
-    () => Array.from(new Set(allEvents.map((e) => e.teacherName))).sort(),
+    () => Array.from(new Set(allEvents.map((e) => e.teacherName).filter(Boolean))).sort(),
     [allEvents],
   )
   const uniqueSubjects = useMemo(
@@ -262,9 +269,7 @@ export const Schedule = () => {
       ? ((todayQueue.length - remainingQueue.length) / todayQueue.length) * 100
       : 0
 
-  const handlePrint = () => {
-    window.print()
-  }
+
 
   const handleSelectEvent = (event: ScheduleEvent) => {
     setSelectedEvent(event)
@@ -309,13 +314,6 @@ export const Schedule = () => {
     [weekStats],
   )
 
-  const fabActions = useMemo(
-    () => [
-      { icon: CalendarDays, label: 'اليوم', onClick: () => setFilterDay(todayDayName) },
-      { icon: Filter, label: 'كل الأيام', onClick: () => setFilterDay('all') },
-    ],
-    [todayDayName],
-  )
 
   if (loading)
     return (
@@ -367,7 +365,6 @@ export const Schedule = () => {
             todayDayName={todayDayName}
             weekLabel={weekLabel}
             onWeekChange={(d) => setCurrentWeekOffset((v) => v + d)}
-            onPrint={handlePrint}
             stats={weekStats}
           />
         </div>
@@ -549,7 +546,7 @@ export const Schedule = () => {
           </motion.div>
         )}
 
-        <div ref={printRef} id="printable-schedule">
+        <div>
           <ScheduleGrid
             filteredEvents={filteredEvents}
             uniqueTeachers={uniqueTeachers}
@@ -577,99 +574,7 @@ export const Schedule = () => {
         onViewStudent={() => navigate('/students')}
       />
 
-      {/* FAB — desktop only (print + day filters) */}
-      <div className="fixed bottom-6 end-6 z-50 hidden flex-col items-end gap-3 md:flex">
-        <AnimatePresence>
-          {fabOpen &&
-            fabActions.map((action, i) => (
-              <motion.div
-                key={action.label}
-                initial={{ opacity: 0, scale: 0.3, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.3, y: 20 }}
-                transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
-                className="flex items-center gap-2"
-              >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
-                  {action.label}
-                </span>
-                <button
-                  onClick={() => {
-                    action.onClick()
-                    setFabOpen(false)
-                  }}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
-                >
-                  <action.icon size={18} />
-                </button>
-              </motion.div>
-            ))}
-        </AnimatePresence>
 
-        {/* Print button (separate, always visible) */}
-        <motion.button
-          onClick={handlePrint}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          title="طباعة الجدول"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface text-main shadow-md transition-all hover:bg-hover"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-            <path d="M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6" />
-            <rect x="6" y="14" width="12" height="8" rx="1" />
-          </svg>
-        </motion.button>
-
-        <motion.button
-          onClick={() => setFabOpen(!fabOpen)}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-xl text-on-primary shadow-xl transition-all',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
-          )}
-        >
-          <Plus size={24} />
-        </motion.button>
-      </div>
-
-      <style>{`
-        @media print {
-          body * { visibility: hidden !important; }
-          #printable-schedule,
-          #printable-schedule * { visibility: visible !important; }
-          #printable-schedule {
-            position: fixed !important;
-            inset: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 8px !important;
-            border: none !important;
-            box-shadow: none !important;
-            overflow: visible !important;
-            background: white !important;
-            z-index: 9999 !important;
-          }
-          #printable-schedule .no-print { display: none !important; }
-          #printable-schedule [class*="overflow-x-auto"] { overflow: visible !important; }
-          #printable-schedule [class*="min-w-"] { min-width: 0 !important; width: 100% !important; }
-          #printable-schedule [class*="min-h-[80px]"] { min-height: 40px !important; }
-          #printable-schedule { font-size: 8px !important; }
-          @page { size: landscape; margin: 0.5cm; }
-        }
-      `}</style>
     </div>
   )
 }

@@ -188,11 +188,11 @@ export const ScheduleHeader = ({
             <select
               value={filterDay}
               onChange={(e) => onDayChange(e.target.value)}
-              className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary ${
+              className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
                 filterDay !== 'all' ? 'border-primary text-primary' : 'border-border'
               }`}
             >
-              <option value="all">كل الأيام</option>
+              <option className="bg-card text-main" value="all">كل الأيام</option>
               {DAYS_OF_WEEK.map((day) => (
                 <option key={day} value={day}>
                   {day}
@@ -210,13 +210,13 @@ export const ScheduleHeader = ({
             <select
               value={filterTeacher}
               onChange={(e) => onTeacherChange(e.target.value)}
-              className={`h-8 max-w-[160px] appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary ${
+              className={`h-8 max-w-[160px] appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
                 filterTeacher !== 'all' ? 'border-primary text-primary' : 'border-border'
               }`}
             >
-              <option value="all">كل المعلمات</option>
-              {uniqueTeachers.map((t) => (
-                <option key={t} value={t}>
+              <option className="bg-card text-main" value="all">كل المعلمات</option>
+              {uniqueTeachers.filter(Boolean).map((t) => (
+                <option key={t} value={t} className="bg-card text-main">
                   {t}
                 </option>
               ))}
@@ -232,13 +232,13 @@ export const ScheduleHeader = ({
             <select
               value={filterSubject}
               onChange={(e) => onSubjectChange(e.target.value)}
-              className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary ${
+              className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
                 filterSubject !== 'all' ? 'border-primary text-primary' : 'border-border'
               }`}
             >
-              <option value="all">كل المواد</option>
+              <option className="bg-card text-main" value="all">كل المواد</option>
               {uniqueSubjects.map((s) => (
-                <option key={s} value={s}>
+                <option key={s} value={s} className="bg-card text-main">
                   {s}
                 </option>
               ))}

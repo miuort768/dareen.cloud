@@ -201,7 +201,9 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
                 <div className="rounded-xl bg-surface p-3">
                   <GraduationCap size={12} className="mb-1 text-muted" />
                   <p className="text-[9px] font-bold text-muted">المعلمة</p>
-                  <p className="mt-0.5 text-xs font-bold text-main">{event.teacherName}</p>
+                  <p className="mt-0.5 text-xs font-bold text-main">
+                    {event.teacherName || 'غير محددة'}
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-2 rounded-xl bg-surface p-3">

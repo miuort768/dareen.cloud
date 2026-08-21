@@ -82,19 +82,26 @@ export const MobileSchedule = () => {
         if (mountedRef.current) setStudents([me] as unknown as Student[])
       } else {
         const raw = await api.get<unknown>('/students')
-        if (mountedRef.current)
-          setStudents(
-            Array.isArray(raw)
-              ? (raw as Student[])
-              : (raw as { data?: Student[] } | null)?.data || [],
-          )
+        if (mountedRef.current) {
+          let list = Array.isArray(raw)
+            ? (raw as Student[])
+            : (raw as { data?: Student[] } | null)?.data || []
+          if (currentUser?.role === 'parent') {
+            const myPhone = String(currentUser.phone || '').replace(/[^0-9]/g, '')
+            list = list.filter((s) => {
+              const p = String(s.parentPhone || '').replace(/[^0-9]/g, '')
+              return myPhone.length > 0 && (p === myPhone || p.endsWith(myPhone) || myPhone.endsWith(p))
+            })
+          }
+          setStudents(list)
+        }
       }
     } catch (error) {
       console.error('Error fetching data', error)
     } finally {
       if (mountedRef.current) setLoading(false)
     }
-  }, [isStudent])
+  }, [isStudent, currentUser])
 
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: fetchData })
 
@@ -106,13 +113,14 @@ export const MobileSchedule = () => {
   }, [fetchData])
 
   const allEvents: ScheduleEvent[] = useMemo(() => {
+    const teacherToMatchLower = teacherToMatch.toLowerCase()
     return students.flatMap((student) =>
       (student.enrollments || [])
         .filter(
           (enrollment) =>
             currentUser?.role !== 'teacher' ||
-            teacherNameOf(enrollment) === teacherToMatch ||
-            enrollment.teacherId === currentUser.id,
+            teacherNameOf(enrollment).toLowerCase() === teacherToMatchLower ||
+            String(enrollment.teacherId ?? '') === String(currentUser?.id ?? ''),
         )
         .flatMap((enrollment) =>
           (enrollment.schedule || []).map((slot) => {
@@ -120,7 +128,8 @@ export const MobileSchedule = () => {
             const isAM =
               ['am', 'صباحاً', 'صباحا', 'ص', 'am.', 'a.m', 'a.m.'].includes(normalizedPeriod) ||
               normalizedPeriod.startsWith('صباح')
-            const hourNum = String(parseInt(String(slot.hour).trim(), 10) || '')
+            const hourMatch = /(\d{1,2})/.exec(String(slot.hour ?? ''))
+            const hourNum = hourMatch ? hourMatch[1] : ''
             return {
               id: `${student.id}-${teacherNameOf(enrollment)}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
               studentId: student.id,
