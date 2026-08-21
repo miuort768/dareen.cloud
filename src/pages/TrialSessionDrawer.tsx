@@ -15,10 +15,10 @@ interface TrialSessionDrawerProps {
 }
 
 const statusConfig: Record<string, { label: string; dot: string; text: string; bg: string }> = {
-    pending: { label: 'بانتظار', dot: 'bg-warning', text: 'text-warning', bg: 'bg-warning/15' },
-    completed: { label: 'تمت بنجاح', dot: 'bg-success', text: 'text-success', bg: 'bg-success/15' },
-    cancelled: { label: 'ملغية', dot: 'bg-error', text: 'text-error', bg: 'bg-error/15' },
-    converted: { label: 'محولة', dot: 'bg-primary', text: 'text-primary', bg: 'bg-primary/15' },
+    pending: { label: 'بانتظار', dot: 'bg-warning', text: 'text-warning', bg: 'bg-warning-soft' },
+    completed: { label: 'تمت بنجاح', dot: 'bg-success', text: 'text-success', bg: 'bg-success-soft' },
+    cancelled: { label: 'ملغية', dot: 'bg-error', text: 'text-error', bg: 'bg-error-soft' },
+    converted: { label: 'محولة', dot: 'bg-primary', text: 'text-primary', bg: 'bg-primary-soft' },
 };
 
 const avatarGradients = [
@@ -27,7 +27,6 @@ const avatarGradients = [
     { g: 'from-warning to-warning-dark', on: 'text-on-warning' },
     { g: 'from-error to-error-dark', on: 'text-on-error' },
     { g: 'from-info to-info-dark', on: 'text-on-info' },
-    { g: 'from-chart-4 to-chart-4/80', on: 'text-white' },
 ];
 
 const getAvatarGradient = (name: string) => {
@@ -57,9 +56,9 @@ const generateTimeline = (session: TrialSession) => {
 };
 
 const variantStyles: Record<string, { dot: string; iconBg: string; iconText: string; line: string }> = {
-    success: { dot: 'bg-success', iconBg: 'bg-success/10', iconText: 'text-success', line: 'bg-success/20' },
-    info: { dot: 'bg-primary', iconBg: 'bg-primary/10', iconText: 'text-primary', line: 'bg-primary/20' },
-    warning: { dot: 'bg-warning', iconBg: 'bg-warning/10', iconText: 'text-warning', line: 'bg-warning/20' },
+    success: { dot: 'bg-success', iconBg: 'bg-success-soft', iconText: 'text-success', line: 'bg-success' },
+    info: { dot: 'bg-primary', iconBg: 'bg-primary-soft', iconText: 'text-primary', line: 'bg-primary' },
+    warning: { dot: 'bg-warning', iconBg: 'bg-warning-soft', iconText: 'text-warning', line: 'bg-warning' },
     muted: { dot: 'bg-muted', iconBg: 'bg-surface', iconText: 'text-muted', line: 'bg-border' },
 };
 
@@ -173,7 +172,7 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                     {session.notes && (
                         <div className="p-5 border-b border-border">
                             <h3 className="text-[11px] font-bold text-muted mb-3">الملاحظات</h3>
-                            <div className="p-4 rounded-xl bg-warning/5 border border-warning/15">
+                            <div className="rounded-xl border border-warning-soft bg-warning-soft p-4">
                                 <div className="flex items-start gap-2">
                                     <MessageCircle size={14} className="text-warning shrink-0 mt-0.5" />
                                     <p className="text-xs text-muted leading-relaxed">{session.notes}</p>
@@ -185,21 +184,21 @@ export const TrialSessionDrawer = ({ session, onClose, onCall, onWhatsApp, onCon
                     <div className="p-5 space-y-2">
                         <h3 className="text-[11px] font-bold text-muted mb-3">الإجراءات</h3>
                         <div className="grid grid-cols-2 gap-2">
-                            <button onClick={() => onCall(session.parentPhone)} className="flex items-center justify-center gap-2 rounded-xl border border-info/20 bg-info/10 py-3 text-xs font-bold text-info transition-all hover:bg-info/20 active:scale-[0.98]">
+                            <button onClick={() => onCall(session.parentPhone)} className="flex items-center justify-center gap-2 rounded-xl bg-info-soft py-3 text-xs font-bold text-info transition-all hover:bg-info-light active:scale-[0.98]">
                                 <Phone size={14} /> اتصال
                             </button>
-                            <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 rounded-xl border border-success/20 bg-success/10 py-3 text-xs font-bold text-success transition-all hover:bg-success/20 active:scale-[0.98]">
+                            <button onClick={() => onWhatsApp(session.parentPhone)} className="flex items-center justify-center gap-2 rounded-xl bg-success-soft py-3 text-xs font-bold text-success transition-all hover:bg-success-light active:scale-[0.98]">
                                 <MessageSquare size={14} /> واتساب
                             </button>
                             {session.status === 'pending' && (
-                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="col-span-2 flex items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/10 py-3 text-xs font-bold text-primary transition-all hover:bg-primary/20 active:scale-[0.98] disabled:opacity-50">
+                                <button onClick={() => onConvert(session.id)} disabled={isConverting} className="col-span-2 flex items-center justify-center gap-2 rounded-xl bg-primary-soft py-3 text-xs font-bold text-primary transition-all hover:bg-primary-light active:scale-[0.98] disabled:opacity-50">
                                     <UserPlus size={14} /> {isConverting ? 'جاري التحويل...' : 'تحويل إلى طالب'}
                                 </button>
                             )}
-                            <button onClick={() => { onEdit(session); onClose(); }} className="flex items-center justify-center gap-2 rounded-xl border border-primary/20 bg-primary/10 py-3 text-xs font-bold text-primary transition-all hover:bg-primary/20 active:scale-[0.98]">
+                            <button onClick={() => { onEdit(session); onClose(); }} className="flex items-center justify-center gap-2 rounded-xl bg-primary-soft py-3 text-xs font-bold text-primary transition-all hover:bg-primary-light active:scale-[0.98]">
                                 <Pencil size={14} /> تعديل
                             </button>
-                            <button onClick={() => onPaid(session.id)} className="flex items-center justify-center gap-2 rounded-xl border border-warning/20 bg-warning/10 py-3 text-xs font-bold text-warning transition-all hover:bg-warning/20 active:scale-[0.98]">
+                            <button onClick={() => onPaid(session.id)} className="flex items-center justify-center gap-2 rounded-xl bg-warning-soft py-3 text-xs font-bold text-warning transition-all hover:bg-warning-light active:scale-[0.98]">
                                 <CircleDollarSign size={14} /> مدفوعة
                             </button>
                         </div>

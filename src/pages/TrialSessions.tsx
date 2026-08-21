@@ -493,8 +493,8 @@ export const TrialSessions = () => {
               sub: 'بانتظار الموعد',
               icon: Clock,
               color: 'text-warning',
-              iconBg: 'bg-warning/20',
-              card: 'border-warning/30 bg-warning/10 dark:bg-warning/15',
+              iconBg: 'bg-white/50 dark:bg-white/10',
+              card: 'border-warning-soft bg-warning-soft',
             },
             {
               label: 'إجمالي الحصص',
@@ -502,8 +502,8 @@ export const TrialSessions = () => {
               sub: 'جميع الحصص',
               icon: BookOpen,
               color: 'text-primary',
-              iconBg: 'bg-primary/20',
-              card: 'border-primary/30 bg-primary/10 dark:bg-primary/15',
+              iconBg: 'bg-white/50 dark:bg-white/10',
+              card: 'border-primary-soft bg-primary-soft',
             },
             {
               label: 'تمت بنجاح',
@@ -511,8 +511,8 @@ export const TrialSessions = () => {
               sub: 'حصة ناجحة',
               icon: CheckCircle2,
               color: 'text-success',
-              iconBg: 'bg-success/20',
-              card: 'border-success/30 bg-success/10 dark:bg-success/15',
+              iconBg: 'bg-white/50 dark:bg-white/10',
+              card: 'border-success-soft bg-success-soft',
             },
             {
               label: 'معدل التحويل',
@@ -520,8 +520,8 @@ export const TrialSessions = () => {
               sub: 'من إجمالي الحصص',
               icon: TrendingUp,
               color: 'text-info',
-              iconBg: 'bg-info/20',
-              card: 'border-info/30 bg-info/10 dark:bg-info/15',
+              iconBg: 'bg-white/50 dark:bg-white/10',
+              card: 'border-info-soft bg-info-soft',
             },
           ].map((stat, i) => (
             <motion.div
@@ -621,7 +621,7 @@ export const TrialSessions = () => {
                     setFilterStatus('')
                     setFilterSubject('')
                   }}
-                  className="hover:bg-error/20 col-span-2 flex h-10 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all"
+                  className="hover:bg-error-light col-span-2 flex h-10 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all"
                 >
                   <X size={13} /> مسح الفلاتر
                 </motion.button>

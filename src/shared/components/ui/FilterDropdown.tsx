@@ -54,7 +54,7 @@ export const FilterDropdown = ({
         aria-haspopup="listbox"
         aria-label={`فلتر: ${displayLabel}`}
         className={cn(
-          'flex h-10 w-full items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all duration-200',
+          'flex h-11 w-full items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all duration-200',
           hasSelection
             ? 'border-primary/30 bg-primary-soft text-primary'
             : 'border-border bg-surface text-main hover:border-primary/20',

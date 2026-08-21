@@ -1,4 +1,4 @@
-ï»¿import { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   Phone,
@@ -32,10 +32,10 @@ interface TrialSessionCardProps {
 }
 
 const statusConfig: Record<string, { label: string; dot: string; bg: string; text: string }> = {
-  pending: { label: 'Ø¨Ø§Ù†ØªØ¸Ø§Ø±', dot: 'bg-warning', bg: 'bg-warning/15', text: 'text-warning' },
-  completed: { label: 'ØªÙ…Øª Ø¨Ù†Ø¬Ø§Ø­', dot: 'bg-success', bg: 'bg-success/15', text: 'text-success' },
-  cancelled: { label: 'Ù…Ù„ØºÙŠØ©', dot: 'bg-error', bg: 'bg-error/15', text: 'text-error' },
-  converted: { label: 'Ù…Ø­ÙˆÙ„Ø©', dot: 'bg-primary', bg: 'bg-primary/15', text: 'text-primary' },
+  pending: { label: 'ÈÇäÊÙÇÑ', dot: 'bg-warning', bg: 'bg-warning-soft', text: 'text-warning' },
+  completed: { label: 'ÊãÊ ÈäÌÇÍ', dot: 'bg-success', bg: 'bg-success-soft', text: 'text-success' },
+  cancelled: { label: 'ãáÛíÉ', dot: 'bg-error', bg: 'bg-error-soft', text: 'text-error' },
+  converted: { label: 'ãÍæáÉ', dot: 'bg-primary', bg: 'bg-primary-soft', text: 'text-primary' },
 }
 
 const avatarGradients = [
@@ -44,7 +44,6 @@ const avatarGradients = [
   { g: 'from-warning to-warning-dark', on: 'text-on-warning' },
   { g: 'from-error to-error-dark', on: 'text-on-error' },
   { g: 'from-info to-info-dark', on: 'text-on-info' },
-  { g: 'from-chart-4 to-chart-4/80', on: 'text-white' },
 ]
 
 const getAvatarGradient = (name: string) => {
@@ -55,12 +54,12 @@ const getAvatarGradient = (name: string) => {
 
 const formatPhone = (phone: string) => {
   if (!phone) return ''
-  if (phone.length > 8) return `${phone.slice(0, 4)}â€¢â€¢â€¢${phone.slice(-3)}`
+  if (phone.length > 8) return `${phone.slice(0, 4)}•••${phone.slice(-3)}`
   return phone
 }
 
 const actionBtnBase =
-  'flex items-center justify-center gap-1.5 rounded-xl border px-3 py-2.5 text-[11px] font-extrabold transition-all active:scale-95'
+  'flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-[11px] font-extrabold transition-all active:scale-95'
 
 export const TrialSessionCard = ({
   session: t,
@@ -133,32 +132,32 @@ export const TrialSessionCard = ({
 
         {/* Session info: stacked on mobile, 3 columns on sm+ */}
         <div className="mb-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-          <div className="rounded-xl border border-primary/25 bg-primary/10 p-2.5 text-right dark:bg-primary/15">
-            <p className="mb-1 text-[10px] font-bold text-primary/80">Ø§Ù„Ù…Ø§Ø¯Ø©</p>
+          <div className="rounded-xl border border-primary-soft bg-primary-soft p-2.5 text-right">
+            <p className="mb-1 text-[10px] font-bold text-primary">ÇáãÇÏÉ</p>
             <div className="flex items-center justify-start gap-1.5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary/20">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <BookOpen size={12} className="text-primary" />
               </div>
               <span className="truncate text-[11px] font-extrabold text-main">
-                {t.subject || 'â€”'}
+                {t.subject || '—'}
               </span>
             </div>
           </div>
-          <div className="rounded-xl border border-success/25 bg-success/10 p-2.5 text-right dark:bg-success/15">
-            <p className="mb-1 text-[10px] font-bold text-success/80">Ø§Ù„Ù…Ø¹Ù„Ù…Ø©</p>
+          <div className="rounded-xl border border-success-soft bg-success-soft p-2.5 text-right">
+            <p className="mb-1 text-[10px] font-bold text-success">ÇáãÚáãÉ</p>
             <div className="flex items-center justify-start gap-1.5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-success/20">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <GraduationCap size={12} className="text-success" />
               </div>
               <span className="truncate text-[11px] font-extrabold text-main">
-                {t.teacherName || 'â€”'}
+                {t.teacherName || '—'}
               </span>
             </div>
           </div>
-          <div className="rounded-xl border border-warning/25 bg-warning/10 p-2.5 text-right dark:bg-warning/15">
-            <p className="mb-1 text-[10px] font-bold text-warning/80">Ø±Ù‚Ù… Ø§Ù„ØªÙˆØ§ØµÙ„</p>
+          <div className="rounded-xl border border-warning-soft bg-warning-soft p-2.5 text-right">
+            <p className="mb-1 text-[10px] font-bold text-warning">ÑŞã ÇáÊæÇÕá</p>
             <div className="flex items-center justify-start gap-1.5">
-              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-warning/20">
+              <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <Phone size={12} className="text-warning" />
               </div>
               <span className="truncate font-mono text-[11px] font-extrabold text-main" dir="ltr">
@@ -174,8 +173,8 @@ export const TrialSessionCard = ({
             className={cn(
               'cursor-pointer rounded-xl text-[11px] transition-all',
               showNotes
-                ? 'border-2 border-warning/40 bg-warning/15 p-3 dark:bg-warning/25'
-                : 'border border-warning/30 bg-warning/10 dark:bg-warning/20',
+                ? 'border-2 border-warning bg-warning-soft p-3'
+                : 'border border-warning-soft bg-warning-soft',
             )}
             onClick={(e) => {
               e.stopPropagation()
@@ -195,7 +194,7 @@ export const TrialSessionCard = ({
                     className="mt-1 inline-flex items-center gap-1 text-[10px] font-black text-warning"
                   >
                     <ChevronUp size={10} />
-                    Ø£Ù‚Ù„
+                    ÃŞá
                   </button>
                 </div>
               </div>
@@ -214,7 +213,7 @@ export const TrialSessionCard = ({
       <div
         className="border-t border-border bg-surface px-4 py-3 md:hidden dark:bg-card"
         role="toolbar"
-        aria-label="Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª Ø§Ù„Ø­ØµØ©"
+        aria-label="ÅÌÑÇÁÇÊ ÇáÍÕÉ"
       >
         <div className="grid grid-cols-2 gap-2">
           {onWhatsApp && (
@@ -223,10 +222,10 @@ export const TrialSessionCard = ({
                 e.stopPropagation()
                 onWhatsApp(t.parentPhone)
               }}
-              className={cn(actionBtnBase, 'border-success/20 bg-success/10 text-success hover:bg-success/20')}
-              aria-label="ÙˆØ§ØªØ³Ø§Ø¨"
+              className={cn(actionBtnBase, 'bg-success-soft text-success hover:bg-success-light')}
+              aria-label="æÇÊÓÇÈ"
             >
-              <MessageSquare size={13} /> ÙˆØ§ØªØ³Ø§Ø¨
+              <MessageSquare size={13} /> æÇÊÓÇÈ
             </button>
           )}
           {onCall && (
@@ -235,10 +234,10 @@ export const TrialSessionCard = ({
                 e.stopPropagation()
                 onCall(t.parentPhone)
               }}
-              className={cn(actionBtnBase, 'border-info/20 bg-info/10 text-info hover:bg-info/20')}
-              aria-label="Ø§ØªØµØ§Ù„"
+              className={cn(actionBtnBase, 'bg-info-soft text-info hover:bg-info-light')}
+              aria-label="ÇÊÕÇá"
             >
-              <Phone size={13} /> Ø§ØªØµØ§Ù„
+              <Phone size={13} /> ÇÊÕÇá
             </button>
           )}
           <button
@@ -246,10 +245,10 @@ export const TrialSessionCard = ({
               e.stopPropagation()
               onEdit(t)
             }}
-            className={cn(actionBtnBase, 'border-primary/20 bg-primary/10 text-primary hover:bg-primary/20')}
-            aria-label="ØªØ¹Ø¯ÙŠÙ„"
+            className={cn(actionBtnBase, 'bg-primary-soft text-primary hover:bg-primary-light')}
+            aria-label="ÊÚÏíá"
           >
-            <Pencil size={13} /> ØªØ¹Ø¯ÙŠÙ„
+            <Pencil size={13} /> ÊÚÏíá
           </button>
           {onPaid && (
             <button
@@ -261,12 +260,12 @@ export const TrialSessionCard = ({
               className={cn(
                 actionBtnBase,
                 isPaid
-                  ? 'cursor-default border-success/40 bg-success/15 text-success'
+                  ? 'cursor-default bg-success-soft text-success'
                   : 'border-success bg-success text-on-success shadow-sm shadow-success/20 hover:bg-success-dark',
               )}
-              aria-label="Ù…Ø¯ÙÙˆØ¹Ø©"
+              aria-label="ãÏİæÚÉ"
             >
-              <CircleDollarSign size={14} /> {isPaid ? 'ØªÙ… Ø§Ù„Ø¯ÙØ¹' : 'Ø¯ÙØ¹'}
+              <CircleDollarSign size={14} /> {isPaid ? 'Êã ÇáÏİÚ' : 'ÏİÚ'}
             </button>
           )}
         </div>
@@ -279,9 +278,9 @@ export const TrialSessionCard = ({
             actionBtnBase,
             'mt-2 w-full border-error bg-error text-on-error shadow-sm shadow-error/20 hover:bg-error-hover',
           )}
-          aria-label="Ø­Ø°Ù"
+          aria-label="ÍĞİ"
         >
-          <Trash2 size={14} /> Ø­Ø°Ù
+          <Trash2 size={14} /> ÍĞİ
         </button>
       </div>
 
@@ -289,7 +288,7 @@ export const TrialSessionCard = ({
       <div
         className="hidden items-center justify-between gap-2 border-t border-border bg-surface px-4 py-3 md:flex dark:bg-card"
         role="toolbar"
-        aria-label="Ø¥Ø¬Ø±Ø§Ø¡Ø§Øª Ø§Ù„Ø­ØµØ©"
+        aria-label="ÅÌÑÇÁÇÊ ÇáÍÕÉ"
       >
         <div className="flex items-center gap-2">
           {onCall && (
@@ -298,10 +297,10 @@ export const TrialSessionCard = ({
                 e.stopPropagation()
                 onCall(t.parentPhone)
               }}
-              className={cn(actionBtnBase, 'border-info/20 bg-info/10 text-info hover:bg-info/20')}
-              aria-label="Ø§ØªØµØ§Ù„"
+              className={cn(actionBtnBase, 'bg-info-soft text-info hover:bg-info-light')}
+              aria-label="ÇÊÕÇá"
             >
-              <Phone size={13} /> Ø§ØªØµØ§Ù„
+              <Phone size={13} /> ÇÊÕÇá
             </button>
           )}
           {onWhatsApp && (
@@ -310,10 +309,10 @@ export const TrialSessionCard = ({
                 e.stopPropagation()
                 onWhatsApp(t.parentPhone)
               }}
-              className={cn(actionBtnBase, 'border-success/20 bg-success/10 text-success hover:bg-success/20')}
-              aria-label="ÙˆØ§ØªØ³Ø§Ø¨"
+              className={cn(actionBtnBase, 'bg-success-soft text-success hover:bg-success-light')}
+              aria-label="æÇÊÓÇÈ"
             >
-              <MessageSquare size={13} /> ÙˆØ§ØªØ³Ø§Ø¨
+              <MessageSquare size={13} /> æÇÊÓÇÈ
             </button>
           )}
           <button
@@ -321,10 +320,10 @@ export const TrialSessionCard = ({
               e.stopPropagation()
               onEdit(t)
             }}
-            className={cn(actionBtnBase, 'border-primary/20 bg-primary/10 text-primary hover:bg-primary/20')}
-            aria-label="ØªØ¹Ø¯ÙŠÙ„"
+            className={cn(actionBtnBase, 'bg-primary-soft text-primary hover:bg-primary-light')}
+            aria-label="ÊÚÏíá"
           >
-            <Pencil size={13} /> ØªØ¹Ø¯ÙŠÙ„
+            <Pencil size={13} /> ÊÚÏíá
           </button>
         </div>
 
@@ -339,12 +338,12 @@ export const TrialSessionCard = ({
               className={cn(
                 actionBtnBase,
                 isPaid
-                  ? 'cursor-default border-success/40 bg-success/15 text-success'
+                  ? 'cursor-default bg-success-soft text-success'
                   : 'border-success bg-success text-on-success shadow-sm shadow-success/20 hover:bg-success-dark',
               )}
-              aria-label="Ù…Ø¯ÙÙˆØ¹Ø©"
+              aria-label="ãÏİæÚÉ"
             >
-              <CircleDollarSign size={14} /> {isPaid ? 'ØªÙ… Ø§Ù„Ø¯ÙØ¹' : 'Ø¯ÙØ¹'}
+              <CircleDollarSign size={14} /> {isPaid ? 'Êã ÇáÏİÚ' : 'ÏİÚ'}
             </button>
           )}
           <button
@@ -356,9 +355,9 @@ export const TrialSessionCard = ({
               actionBtnBase,
               'border-error bg-error text-on-error shadow-sm shadow-error/20 hover:bg-error-hover',
             )}
-            aria-label="Ø­Ø°Ù"
+            aria-label="ÍĞİ"
           >
-            <Trash2 size={14} /> Ø­Ø°Ù
+            <Trash2 size={14} /> ÍĞİ
           </button>
         </div>
       </div>

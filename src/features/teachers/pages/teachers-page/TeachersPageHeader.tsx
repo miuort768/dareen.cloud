@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Plus, X, Users, BookOpen, DollarSign, GraduationCap } from 'lucide-react'
+import { Plus, X, Users, BookOpen, DollarSign } from 'lucide-react'
 import { cn } from '../../../../lib/utils'
 
 interface TeachersPageHeaderProps {
@@ -17,7 +17,6 @@ export const TeachersPageHeader = ({
   averagePrice,
   showAddForm,
   onToggleForm,
-  totalStudents = 0,
 }: TeachersPageHeaderProps) => (
   <>
     {/* ====== DESKTOP (md+): original gradient banner ====== */}
@@ -78,13 +77,13 @@ export const TeachersPageHeader = ({
               icon: BookOpen,
               value: uniqueSubjects,
               label: 'عدد التخصصات',
-              box: 'border-success/40 bg-success/25 dark:bg-success/15',
+              box: 'bg-success-soft',
             },
             {
               icon: DollarSign,
               value: `${averagePrice.toLocaleString()} ج.م`,
               label: 'متوسط السعر',
-              box: 'border-warning/40 bg-warning/25 dark:bg-warning/15',
+              box: 'bg-warning-soft',
             },
           ].map((item, i) => (
             <div key={i} className={cn('rounded-xl border p-3 backdrop-blur-sm', item.box)}>
@@ -129,7 +128,7 @@ export const TeachersPageHeader = ({
       {/* 3 colored stat cards */}
       <div className="grid grid-cols-3 gap-2">
         <div className="flex flex-col items-center rounded-2xl bg-gradient-to-br from-primary to-primary-deep p-3 text-center shadow-md shadow-primary/25">
-          <p className="mb-2 text-[10px] font-bold text-on-primary/90">عدد المعلمات</p>
+          <p className="mb-2 text-[10px] font-bold text-on-primary">عدد المعلمات</p>
           <div className="flex items-center gap-1.5">
             <span className="font-outfit text-xl font-black tabular-nums text-on-primary">
               {totalTeachers}
@@ -138,10 +137,10 @@ export const TeachersPageHeader = ({
               <Users size={13} className="text-on-primary" />
             </div>
           </div>
-          <p className="mt-1.5 text-[9px] font-medium text-on-primary/70">معلمة نشطة</p>
+          <p className="mt-1.5 text-[9px] font-medium text-white/70">معلمة نشطة</p>
         </div>
         <div className="flex flex-col items-center rounded-2xl bg-gradient-to-br from-success to-success-dark p-3 text-center shadow-md shadow-success/25">
-          <p className="mb-2 text-[10px] font-bold text-on-success/90">عدد التخصصات</p>
+          <p className="mb-2 text-[10px] font-bold text-on-success">عدد التخصصات</p>
           <div className="flex items-center gap-1.5">
             <span className="font-outfit text-xl font-black tabular-nums text-on-success">
               {uniqueSubjects}
@@ -150,10 +149,10 @@ export const TeachersPageHeader = ({
               <BookOpen size={13} className="text-on-success" />
             </div>
           </div>
-          <p className="mt-1.5 text-[9px] font-medium text-on-success/70">تخصصات مختلفة</p>
+          <p className="mt-1.5 text-[9px] font-medium text-white/70">تخصصات مختلفة</p>
         </div>
         <div className="flex flex-col items-center rounded-2xl bg-gradient-to-br from-warning to-warning-dark p-3 text-center shadow-md shadow-warning/25">
-          <p className="mb-2 text-[10px] font-bold text-on-warning/90">متوسط السعر</p>
+          <p className="mb-2 text-[10px] font-bold text-on-warning">متوسط السعر</p>
           <div className="flex items-center gap-1">
             <span className="font-outfit text-xl font-black tabular-nums text-on-warning">
               {averagePrice}
@@ -163,21 +162,9 @@ export const TeachersPageHeader = ({
               <DollarSign size={13} className="text-on-warning" />
             </div>
           </div>
-          <p className="mt-1.5 text-[9px] font-medium text-on-warning/70">ج.م / حصة</p>
+          <p className="mt-1.5 text-[9px] font-medium text-white/70">ج.م / حصة</p>
         </div>
       </div>
-    </div>
-
-    {/* ====== Summary badges — above search field, aligned left (end in RTL) ====== */}
-    <div className="flex items-center justify-end gap-2">
-      <span className="inline-flex items-center gap-1.5 rounded-xl border border-primary/20 bg-primary-soft px-3 py-1.5 text-[11px] font-bold text-primary">
-        <Users size={13} />
-        المعلمات <span className="tabular-nums">{totalTeachers}</span>
-      </span>
-      <span className="inline-flex items-center gap-1.5 rounded-xl border border-success/20 bg-success-soft px-3 py-1.5 text-[11px] font-bold text-success">
-        <GraduationCap size={13} />
-        الطلاب <span className="tabular-nums">{totalStudents}</span>
-      </span>
     </div>
   </>
 )

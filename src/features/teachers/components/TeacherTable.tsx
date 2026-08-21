@@ -20,29 +20,29 @@ type SortField = 'name' | 'subject' | 'students' | 'price';
 type SortDir = 'asc' | 'desc';
 
 const subjectColorMap: Record<string, string> = {
-  رياضيات: 'text-primary bg-primary/10 ring-primary/20',
-  عربي: 'text-success bg-success/10 ring-success/20',
-  'اللغة العربية': 'text-success bg-success/10 ring-success/20',
-  علوم: 'text-info bg-info-soft ring-info/20',
-  إنجليزي: 'text-warning bg-warning/10 ring-warning/20',
-  'اللغة الانجليزية': 'text-warning bg-warning/10 ring-warning/20',
-  فيزياء: 'text-accent bg-accent/10 ring-accent/20',
-  كيمياء: 'text-error bg-error/10 ring-error/20',
-  لغات: 'text-accent bg-accent/10 ring-accent/20',
-  'اللغة الفرنسية': 'text-accent bg-accent/10 ring-accent/20',
-  'اللغة الاسبانية': 'text-info bg-info-soft ring-info/20',
-  أدبي: 'text-warning bg-warning/10 ring-warning/20',
-  دراسات: 'text-success bg-success/10 ring-success/20',
-  قرآن: 'text-primary bg-primary/10 ring-primary/20',
-  قران: 'text-primary bg-primary/10 ring-primary/20',
-  شرعية: 'text-success bg-success/10 ring-success/20',
-  اجتماعيات: 'text-warning bg-warning/10 ring-warning/20',
+  رياضيات: 'text-primary bg-primary-soft ring-primary-soft',
+  عربي: 'text-success bg-success-soft ring-success-soft',
+  'اللغة العربية': 'text-success bg-success-soft ring-success-soft',
+  علوم: 'text-info bg-info-soft ring-info-soft',
+  إنجليزي: 'text-warning bg-warning-soft ring-warning-soft',
+  'اللغة الانجليزية': 'text-warning bg-warning-soft ring-warning-soft',
+  فيزياء: 'text-accent bg-accent-soft ring-accent-soft',
+  كيمياء: 'text-error bg-error-soft ring-error-soft',
+  لغات: 'text-accent bg-accent-soft ring-accent-soft',
+  'اللغة الفرنسية': 'text-accent bg-accent-soft ring-accent-soft',
+  'اللغة الاسبانية': 'text-info bg-info-soft ring-info-soft',
+  أدبي: 'text-warning bg-warning-soft ring-warning-soft',
+  دراسات: 'text-success bg-success-soft ring-success-soft',
+  قرآن: 'text-primary bg-primary-soft ring-primary-soft',
+  قران: 'text-primary bg-primary-soft ring-primary-soft',
+  شرعية: 'text-success bg-success-soft ring-success-soft',
+  اجتماعيات: 'text-warning bg-warning-soft ring-warning-soft',
 };
 
 const getSubjectStyle = (subject?: string) => {
   if (!subject) return 'text-muted bg-surface ring-border';
   const key = Object.keys(subjectColorMap).find(k => subject.includes(k) || k.includes(subject));
-  return key ? subjectColorMap[key] : 'text-info bg-info-soft ring-info/20';
+  return key ? subjectColorMap[key] : 'text-info bg-info-soft ring-info-soft';
 };
 
 const currencySymbolMap: Record<string, string> = {
@@ -105,13 +105,13 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
 
   const computeStatus = (teacher: Teacher): { label: string; dot: string; text: string } => {
     const count = studentCounts[teacher.name] || 0;
-    if (count > 0) return { label: 'نشطة', dot: 'bg-success', text: 'text-success bg-success/10 ring-success/20' };
-    return { label: 'متوقفة', dot: 'bg-error', text: 'text-error bg-error/10 ring-error/20' };
+    if (count > 0) return { label: 'نشطة', dot: 'bg-success', text: 'text-success bg-success-soft ring-success-soft' };
+    return { label: 'متوقفة', dot: 'bg-error', text: 'text-error bg-error-soft ring-error-soft' };
   };
 
   const teacherPoints = (teacher: Teacher): number => teacher.points ?? 0;
 
-  const thClass = "px-5 py-3 font-bold text-[10px] tracking-wider text-on-primary/80 select-none cursor-pointer hover:text-on-primary transition-colors";
+  const thClass = "px-5 py-3 font-bold text-[10px] tracking-wider text-on-primary select-none cursor-pointer transition-colors";
   const thInnerClass = "flex items-center gap-1";
 
   if (teachers.length === 0) {
@@ -198,7 +198,7 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                       </span>
                     </td>
                     <td className="px-5 py-4 text-center">
-                      <span className="w-7 h-7 inline-flex items-center justify-center font-bold text-xs rounded-lg bg-info-soft text-info ring-1 ring-info/20">
+                      <span className="w-7 h-7 inline-flex items-center justify-center font-bold text-xs rounded-lg bg-info-soft text-info ring-1 ring-info-soft">
                         {studentCounts[teacher.name] || 0}
                       </span>
                     </td>
@@ -216,17 +216,17 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                           </button>
                         </Tooltip>
                         <Tooltip label="إشعار">
-                          <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-warning/10 text-warning hover:bg-warning/20 rounded-xl transition-all active:scale-95" aria-label="إرسال إشعار">
+                          <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-warning-soft text-warning hover:bg-warning-light rounded-xl transition-all active:scale-95" aria-label="إرسال إشعار">
                             <Bell size={13} />
                           </button>
                         </Tooltip>
                         <Tooltip label="محادثة">
-                          <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-info/10 text-info hover:bg-info/20 rounded-xl transition-all active:scale-95" aria-label="مراسلة">
+                          <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-info-soft text-info hover:bg-info-light rounded-xl transition-all active:scale-95" aria-label="مراسلة">
                             <MessageCircle size={13} />
                           </button>
                         </Tooltip>
                         <Tooltip label="حذف">
-                          <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-error/10 text-error hover:bg-error/20 rounded-xl transition-all active:scale-95" aria-label="حذف">
+                          <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="min-w-[34px] min-h-[34px] flex items-center justify-center bg-error-soft text-error hover:bg-error-light rounded-xl transition-all active:scale-95" aria-label="حذف">
                             <Trash2 size={13} />
                           </button>
                         </Tooltip>
@@ -289,16 +289,16 @@ export const TeacherTable = memo(({ teachers, onEdit, onDelete, onSelect, onChat
                 </div>
               </div>
               <div className="mt-1 grid grid-cols-4 gap-2">
-                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-info/10 text-info text-[10px] font-bold active:scale-95 transition-transform" aria-label="مراسلة">
+                <button onClick={(e) => { e.stopPropagation(); onChat(teacher.id); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-info-soft text-info text-[10px] font-bold active:scale-95 transition-transform" aria-label="مراسلة">
                   <MessageCircle size={12} /> مراسلة
                 </button>
-                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-warning/10 text-warning text-[10px] font-bold active:scale-95 transition-transform" aria-label="إرسال إشعار">
+                <button onClick={(e) => { e.stopPropagation(); onNotify(teacher); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-warning-soft text-warning text-[10px] font-bold active:scale-95 transition-transform" aria-label="إرسال إشعار">
                   <Bell size={12} /> إشعار
                 </button>
-                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-primary/10 text-primary text-[10px] font-bold active:scale-95 transition-transform" aria-label="تعديل">
+                <button onClick={(e) => { e.stopPropagation(); onEdit(teacher); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-primary-soft text-primary text-[10px] font-bold active:scale-95 transition-transform" aria-label="تعديل">
                   <Edit size={12} /> تعديل
                 </button>
-                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-error/10 text-error text-[10px] font-bold active:scale-95 transition-transform" aria-label="حذف">
+                <button onClick={(e) => { e.stopPropagation(); onDelete(teacher.id); }} className="flex h-9 items-center justify-center gap-1 rounded-xl bg-error-soft text-error text-[10px] font-bold active:scale-95 transition-transform" aria-label="حذف">
                   <Trash2 size={12} /> حذف
                 </button>
               </div>

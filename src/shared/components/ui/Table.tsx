@@ -96,7 +96,7 @@ function TableInner<T>({
 
   const thClass = headerVariant === 'surface'
     ? 'text-muted'
-    : 'text-on-primary/80';
+    : 'text-on-primary';
 
   const renderHeader = () => (
     <thead>

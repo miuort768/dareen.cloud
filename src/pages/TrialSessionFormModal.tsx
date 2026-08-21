@@ -56,7 +56,7 @@ export const TrialSessionFormModal = ({
             <h2 className="text-[13px] font-bold text-on-primary">
               {editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}
             </h2>
-            <p className="mt-0.5 text-[10px] text-on-primary/80">أدخل بيانات الحصة التجريبية</p>
+            <p className="mt-0.5 text-[10px] text-white/80">أدخل بيانات الحصة التجريبية</p>
           </div>
         </div>
         <button
