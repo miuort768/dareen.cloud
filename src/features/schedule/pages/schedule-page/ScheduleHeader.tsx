@@ -254,7 +254,7 @@ export const ScheduleHeader = ({
                 onSubjectChange('all')
                 onSearchChange('')
               }}
-              className="border-error/30 flex h-8 items-center gap-1 rounded-lg border bg-error-soft px-3 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-error"
+              className="border-error-soft flex h-8 items-center gap-1 rounded-lg border bg-error-soft px-3 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-error"
             >
               <span>مسح ({activeFiltersCount})</span>
             </button>

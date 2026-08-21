@@ -46,7 +46,7 @@ export const ScheduleDetailsModal = ({
         </h3>
         <button
           onClick={onClose}
-          className="text-on-primary/60 flex h-8 w-8 items-center justify-center rounded-xl transition-colors hover:bg-white/15 hover:text-on-primary"
+          className="text-white/60 flex h-8 w-8 items-center justify-center rounded-xl transition-colors hover:bg-white/15 hover:text-on-primary"
           aria-label="إغلاق"
         >
           <X size={16} />

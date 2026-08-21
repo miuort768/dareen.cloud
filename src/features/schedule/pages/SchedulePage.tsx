@@ -33,7 +33,7 @@ interface Student {
   totalPoints?: number
 }
 interface Enrollment {
-  teacher: string
+  teacher: string | { id?: string | number; name?: string }
   subject: string
   curr: string
   sessionsTotal: number
@@ -62,6 +62,15 @@ interface ScheduleEvent {
 }
 
 const DAYS = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
+
+const teacherNameOf = (enrollment: Enrollment): string => {
+  const t: unknown = enrollment.teacher
+  if (typeof t === 'string') return t.trim()
+  if (t && typeof t === 'object' && 'name' in (t as Record<string, unknown>)) {
+    return String((t as { name?: unknown }).name ?? '').trim()
+  }
+  return ''
+}
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
   id: i,
@@ -152,7 +161,7 @@ export const Schedule = () => {
         .filter(
           (enrollment) =>
             !isTeacher ||
-            (enrollment.teacher || '').trim() === teacherToMatch ||
+            teacherNameOf(enrollment) === teacherToMatch ||
             enrollment.teacherId === currentUser.id,
         )
         .flatMap((enrollment) =>
@@ -162,12 +171,13 @@ export const Schedule = () => {
               ['am', 'صباحاً', 'صباحا', 'ص', 'am.', 'a.m', 'a.m.'].includes(normalizedPeriod) ||
               normalizedPeriod.startsWith('صباح')
             const sId = student.id
+            const tName = teacherNameOf(enrollment)
             return {
-              id: `${sId}-${enrollment.teacher}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
+              id: `${sId}-${tName}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
               studentId: sId,
               studentName: student.name,
               studentGrade: student.grade,
-              teacherName: (enrollment.teacher || '').trim(),
+              teacherName: tName,
               subject: enrollment.subject,
               curriculum: enrollment.curr,
               day: normalizeDayName(slot.day),
@@ -275,24 +285,24 @@ export const Schedule = () => {
         label: 'المعلمات',
         value: weekStats.teachers,
         icon: GraduationCap,
-        gradient: 'from-success/20 to-success/5',
-        iconBg: 'bg-success/10 text-success',
+        gradient: 'from-success-soft to-background dark:from-success-soft dark:to-card',
+        iconBg: 'bg-white/50 text-success dark:bg-white/10',
         accent: 'bg-success',
       },
       {
         label: 'الطلاب',
         value: weekStats.students,
         icon: Users,
-        gradient: 'from-warning/20 to-warning/5',
-        iconBg: 'bg-warning/10 text-warning',
+        gradient: 'from-warning-soft to-background dark:from-warning-soft dark:to-card',
+        iconBg: 'bg-white/50 text-warning dark:bg-white/10',
         accent: 'bg-warning',
       },
       {
         label: 'الأيام',
         value: DAYS.length,
         icon: CalendarDays,
-        gradient: 'from-info/20 to-info/5',
-        iconBg: 'bg-info/10 text-info',
+        gradient: 'from-info-soft to-background dark:from-info-soft dark:to-card',
+        iconBg: 'bg-white/50 text-info dark:bg-white/10',
         accent: 'bg-info',
       },
     ],
@@ -378,7 +388,7 @@ export const Schedule = () => {
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
+                    'border-border relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
                     kpi.gradient,
                   )}
                 >
@@ -410,13 +420,13 @@ export const Schedule = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="from-success/20 via-success/10 border-success/20 relative overflow-hidden rounded-2xl border bg-gradient-to-br to-background p-6 text-center"
+                  className="border-success-soft relative overflow-hidden rounded-2xl border bg-gradient-to-br from-success-soft via-background to-background p-6 text-center"
                 >
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring', damping: 12, delay: 0.1 }}
-                    className="bg-success/15 mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full"
+                    className="bg-success-soft mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full"
                   >
                     <PartyPopper size={28} className="text-success" />
                   </motion.div>
@@ -435,7 +445,7 @@ export const Schedule = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="border-border/60 rounded-2xl border bg-card p-4"
+                  className="border-border rounded-2xl border bg-card p-4"
                 >
                   {/* Progress bar */}
                   <div className="mb-3 flex items-center justify-between">
@@ -513,7 +523,7 @@ export const Schedule = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-3"
           >
-            <div className="border-border/60 flex items-center justify-between rounded-xl border bg-card p-3">
+            <div className="border-border flex items-center justify-between rounded-xl border bg-card p-3">
               <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-soft text-primary">
                   <Sparkles size={14} />

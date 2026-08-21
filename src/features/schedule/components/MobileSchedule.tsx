@@ -1,15 +1,18 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { CalendarDays, Search, Loader2, Sparkles } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { CalendarDays, Search, Loader2, Sparkles, Clock, ChevronLeft, GraduationCap, BookOpen } from 'lucide-react'
 import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { triggerHaptic } from '../../../lib/haptics'
 import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile'
-import { MobileScheduleDayChips, MobileScheduleDetailsSheet } from './mobile-schedule'
-import { normalizeDayName } from '../../attendance/utils/slotUtils'
-import { fadeUpStatic } from '../../../shared/animations/fadeUp'
+import { MobileScheduleDetailsSheet } from './mobile-schedule'
+import { normalizeDayName, to24Minutes } from '../../attendance/utils/slotUtils'
 
+interface TeacherRef {
+  id?: string | number
+  name?: string
+}
 interface Student {
   id: string
   name: string
@@ -17,7 +20,7 @@ interface Student {
   enrollments: Enrollment[]
 }
 interface Enrollment {
-  teacher: string
+  teacher: string | TeacherRef
   subject: string
   curr: string
   schedule: ScheduleSlot[]
@@ -40,66 +43,24 @@ interface ScheduleEvent {
   hour: string
   period: string
   time: string
-  isPM: boolean
 }
 
-const TIME_SLOTS = [
-  { hour: 8, period: 'am', label: '8:00 ص' },
-  { hour: 9, period: 'am', label: '9:00 ص' },
-  { hour: 10, period: 'am', label: '10:00 ص' },
-  { hour: 11, period: 'am', label: '11:00 ص' },
-  { hour: 12, period: 'pm', label: '12:00 م' },
-  { hour: 1, period: 'pm', label: '1:00 م' },
-  { hour: 2, period: 'pm', label: '2:00 م' },
-  { hour: 3, period: 'pm', label: '3:00 م' },
-  { hour: 4, period: 'pm', label: '4:00 م' },
-  { hour: 5, period: 'pm', label: '5:00 م' },
-  { hour: 6, period: 'pm', label: '6:00 م' },
-  { hour: 7, period: 'pm', label: '7:00 م' },
-  { hour: 8, period: 'pm', label: '8:00 م' },
-  { hour: 9, period: 'pm', label: '9:00 م' },
-  { hour: 10, period: 'pm', label: '10:00 م' },
+const DAYS = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
+
+const TEACHER_PALETTE = [
+  { text: 'text-primary', soft: 'bg-primary-soft', bar: 'border-e-primary', chip: 'bg-primary' },
+  { text: 'text-success', soft: 'bg-success-soft', bar: 'border-e-success', chip: 'bg-success' },
+  { text: 'text-info', soft: 'bg-info-soft', bar: 'border-e-info', chip: 'bg-info' },
 ]
 
-const TEACHER_STYLES = [
-  {
-    text: 'text-primary',
-    bg: 'bg-primary',
-    bgLight: 'bg-primary-soft',
-    border: 'border-e-primary',
-  },
-  {
-    text: 'text-success',
-    bg: 'bg-success',
-    bgLight: 'bg-success-soft',
-    border: 'border-e-success',
-  },
-  {
-    text: 'text-warning',
-    bg: 'bg-warning',
-    bgLight: 'bg-warning-soft',
-    border: 'border-e-warning',
-  },
-  { text: 'text-error', bg: 'bg-error', bgLight: 'bg-error-soft', border: 'border-e-error' },
-  {
-    text: 'text-success',
-    bg: 'bg-success',
-    bgLight: 'bg-success-soft',
-    border: 'border-e-success',
-  },
-  {
-    text: 'text-primary',
-    bg: 'bg-primary',
-    bgLight: 'bg-primary-soft',
-    border: 'border-e-primary',
-  },
-  {
-    text: 'text-warning',
-    bg: 'bg-warning',
-    bgLight: 'bg-warning-soft',
-    border: 'border-e-warning',
-  },
-]
+const teacherNameOf = (enrollment: Enrollment): string => {
+  const t: unknown = enrollment.teacher
+  if (typeof t === 'string') return t.trim()
+  if (t && typeof t === 'object' && 'name' in (t as Record<string, unknown>)) {
+    return String((t as TeacherRef).name ?? '').trim()
+  }
+  return ''
+}
 
 export const MobileSchedule = () => {
   const currentUser = useCurrentUser()
@@ -110,10 +71,10 @@ export const MobileSchedule = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const todayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' })
   const [selectedDay, setSelectedDay] = useState(todayName)
-  const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null)
-  const [showDetails, setShowDetails] = useState(false)
+  const [selectedEventId, setSelectedEventId] = useState<string | null>(null)
 
   const isStudent = currentUser?.role === 'student'
+  const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim()
 
   const fetchData = useCallback(async () => {
     try {
@@ -146,14 +107,13 @@ export const MobileSchedule = () => {
     }
   }, [fetchData])
 
-  const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim()
   const allEvents: ScheduleEvent[] = useMemo(() => {
     return students.flatMap((student) =>
       (student.enrollments || [])
         .filter(
           (enrollment) =>
             currentUser?.role !== 'teacher' ||
-            (enrollment.teacher || '').trim() === teacherToMatch ||
+            teacherNameOf(enrollment) === teacherToMatch ||
             enrollment.teacherId === currentUser.id,
         )
         .flatMap((enrollment) =>
@@ -162,59 +122,72 @@ export const MobileSchedule = () => {
             const isAM =
               ['am', 'صباحاً', 'صباحا', 'ص', 'am.', 'a.m', 'a.m.'].includes(normalizedPeriod) ||
               normalizedPeriod.startsWith('صباح')
+            const hourNum = String(parseInt(String(slot.hour).trim(), 10) || '')
             return {
-              id: `${student.id}-${enrollment.teacher}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
+              id: `${student.id}-${teacherNameOf(enrollment)}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
               studentId: student.id,
               studentName: student.name,
               studentGrade: student.grade,
-              teacherName: (enrollment.teacher || '').trim(),
+              teacherName: teacherNameOf(enrollment),
               subject: enrollment.subject,
               curriculum: enrollment.curr,
               day: normalizeDayName(slot.day),
-              hour: String(parseInt(String(slot.hour).trim(), 10) || ''),
+              hour: hourNum,
               period: isAM ? 'am' : 'pm',
-              time: `${String(parseInt(String(slot.hour).trim(), 10) || '')}:00 ${isAM ? 'ص' : 'م'}`,
-              isPM: !isAM,
+              time: `${hourNum}:00 ${isAM ? 'ص' : 'م'}`,
             }
           }),
         ),
     )
   }, [students, currentUser, teacherToMatch])
 
+  const countsByDay = useMemo(() => {
+    const map: Record<string, number> = {}
+    for (const e of allEvents) map[e.day] = (map[e.day] || 0) + 1
+    return map
+  }, [allEvents])
+
   const uniqueTeachers = useMemo(
-    () => Array.from(new Set(allEvents.map((e) => e.teacherName))),
+    () => Array.from(new Set(allEvents.map((e) => e.teacherName))).sort(),
     [allEvents],
   )
-  const filteredEvents = useMemo(() => {
-    return allEvents
-      .filter((event) => {
-        const matchesDay = event.day === selectedDay
-        const matchesSearch =
-          !searchTerm ||
-          event.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          event.teacherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          event.subject.toLowerCase().includes(searchTerm.toLowerCase())
-        return matchesDay && matchesSearch
-      })
-      .sort((a, b) => {
-        const timeA = Number(a.hour) + (a.isPM && Number(a.hour) !== 12 ? 12 : 0)
-        const timeB = Number(b.hour) + (b.isPM && Number(b.hour) !== 12 ? 12 : 0)
-        return timeA - timeB
-      })
-  }, [allEvents, selectedDay, searchTerm])
 
-  const getDayEventsAtTime = (events: ScheduleEvent[], hour: number, period: string) =>
-    events.filter((e) => Number(e.hour) === hour && e.period === period)
   const getTeacherStyle = (teacherName: string) => {
     const idx = uniqueTeachers.indexOf(teacherName)
-    return TEACHER_STYLES[Math.max(0, idx) % TEACHER_STYLES.length]!
+    return TEACHER_PALETTE[(idx < 0 ? 0 : idx) % TEACHER_PALETTE.length]!
   }
 
-  const totalToday = allEvents.filter((e) => e.day === selectedDay).length
+  const dayEvents = useMemo(() => {
+    const q = searchTerm.trim().toLowerCase()
+    return allEvents
+      .filter((e) => e.day === selectedDay)
+      .filter(
+        (e) =>
+          !q ||
+          e.studentName.toLowerCase().includes(q) ||
+          e.teacherName.toLowerCase().includes(q) ||
+          e.subject.toLowerCase().includes(q),
+      )
+      .sort((a, b) => to24Minutes(a.hour, a.period) - to24Minutes(b.hour, b.period))
+  }, [allEvents, selectedDay, searchTerm])
+
+  const nextSession = useMemo(() => {
+    const now = new Date()
+    const currentMinutes = now.getHours() * 60 + now.getMinutes()
+    return (
+      dayEvents
+        .filter((e) => e.day !== todayName || to24Minutes(e.hour, e.period) >= currentMinutes)
+        .filter((e) => e.day === todayName)
+        .sort((a, b) => to24Minutes(a.hour, a.period) - to24Minutes(b.hour, b.period))[0] || null
+    )
+  }, [dayEvents, todayName])
+
+  const selectedEvent = dayEvents.find((e) => e.id === selectedEventId) || null
 
   return (
     <MobilePage>
       <div {...handlers}>
+        {/* Pull-to-refresh indicator */}
         <motion.div
           initial={{ height: pullDistance }}
           animate={{ height: isRefreshing ? 50 : pullDistance }}
@@ -237,124 +210,228 @@ export const MobileSchedule = () => {
             )}
           </div>
         </motion.div>
-        <div className="px-4 pb-1 pt-3">
-          <div className="relative">
-            <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-            <input
-              type="text"
-              aria-label="بحث"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="ابحث عن طالب أو معلمة أو مادة..."
-              className="w-full rounded-2xl border border-border bg-card py-2.5 pe-8 ps-8 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary"
-            />
-          </div>
-        </div>
-        <MobileScheduleDayChips
-          selectedDay={selectedDay}
-          onDayChange={(day) => {
-            triggerHaptic('light')
-            setSelectedDay(day)
-            setSearchTerm('')
-          }}
-          todayName={todayName}
-        />
-        <motion.div {...fadeUpStatic} className="px-4 pb-2">
-          <div className="flex items-center justify-between rounded-2xl border border-border bg-card p-3">
-            <div className="flex items-center gap-2">
-              <CalendarDays size={14} className="text-primary" strokeWidth={1.5} />
-              <span className="text-micro font-bold text-muted">{selectedDay}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold tabular-nums text-primary">{totalToday}</span>
-              <span className="text-micro font-bold text-muted">حصة</span>
-            </div>
-          </div>
-        </motion.div>
-        <div className="space-y-1 px-4">
-          {loading && students.length === 0 ? (
-            <MobileSkeleton rows={5} />
-          ) : filteredEvents.length > 0 ? (
-            TIME_SLOTS.map((slot, slotIdx) => {
-              const slotEvents = getDayEventsAtTime(filteredEvents, slot.hour, slot.period)
-              if (slotEvents.length === 0) return null
-              return (
-                <motion.div
-                  key={`${slot.hour}-${slot.period}`}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: slotIdx * 0.02, duration: 0.3 }}
-                  className="flex gap-3"
-                >
-                  <div className="w-14 shrink-0 pt-1.5 text-center">
-                    <span className="text-micro font-bold tabular-nums text-muted">
-                      {slot.label}
+
+        {/* ===== HERO ===== */}
+        <div className="px-3 pt-1">
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-lg shadow-primary/20">
+            <div className="absolute -end-8 -top-8 h-28 w-28 rounded-full bg-white/10 blur-xl" />
+            <div className="absolute -bottom-10 -start-6 h-24 w-24 rounded-full bg-white/5 blur-lg" />
+            <div className="relative z-10">
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="mb-1 flex items-center gap-1.5">
+                    <CalendarDays size={12} className="text-white/70" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">
+                      {todayName}
                     </span>
                   </div>
-                  <div className="flex-1 space-y-1.5 pb-2">
-                    {slotEvents.map((event) => {
-                      const ts = getTeacherStyle(event.teacherName)
-                      return (
-                        <motion.div
-                          key={event.id}
-                          whileTap={{ scale: 0.97 }}
-                          onClick={() => {
-                            triggerHaptic('light')
-                            setSelectedEvent(event)
-                            setShowDetails(true)
-                          }}
-                          className={`cursor-pointer rounded-2xl border-e-[3px] bg-card p-3 transition-all active:scale-[0.97] ${ts.border}`}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                              <div
-                                className={`flex h-7 w-7 items-center justify-center rounded-xl text-micro font-semibold text-on-primary ${ts.bg}`}
-                              >
-                                {event.studentName.charAt(0)}
-                              </div>
-                              <div>
-                                <p className="text-xs font-bold leading-tight text-main">
-                                  {event.studentName}
-                                </p>
-                                <p className="text-micro font-bold text-muted">{event.subject}</p>
-                              </div>
-                            </div>
-                            <span
-                              className={`rounded-lg px-1.5 py-0.5 text-micro font-bold ${ts.bgLight} ${ts.text}`}
-                            >
-                              {event.teacherName}
-                            </span>
-                          </div>
-                        </motion.div>
-                      )
-                    })}
-                  </div>
-                </motion.div>
-              )
-            })
-          ) : (
-            <div className="rounded-2xl border border-dashed border-border bg-card py-16 text-center">
-              <CalendarDays size={28} className="mx-auto mb-2 text-muted" strokeWidth={1.5} />
-              <p className="text-xs font-bold text-muted">لا توجد حصص في هذا اليوم</p>
-              <p className="mt-1 text-micro font-medium text-muted">
-                اختر يوماً آخر من الأيام أعلاه
-              </p>
+                  <h1 className="font-outfit text-xl font-black text-on-primary">جدول الحصص</h1>
+                  <p className="mt-0.5 text-[11px] font-medium text-white/70">
+                    {allEvents.length} حصة مسجلة هذا الأسبوع
+                  </p>
+                </div>
+                <div className="flex flex-col items-center rounded-2xl bg-white/15 px-3 py-2 backdrop-blur-sm">
+                  <span className="text-xl font-black tabular-nums text-on-primary">
+                    {countsByDay[todayName] || 0}
+                  </span>
+                  <span className="text-[9px] font-bold text-white/70">حصة اليوم</span>
+                </div>
+              </div>
+
+              {/* Search */}
+              <div className="relative mt-3">
+                <Search
+                  size={13}
+                  className="absolute start-3 top-1/2 -translate-y-1/2 text-white/50"
+                />
+                <input
+                  type="text"
+                  aria-label="بحث في الجدول"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="ابحث عن طالب أو معلمة أو مادة..."
+                  className="w-full rounded-2xl border border-white/20 bg-white/15 py-2.5 pe-3 ps-9 text-xs font-bold text-white outline-none backdrop-blur-sm transition-all placeholder:text-white/50 focus:border-white/40 focus:bg-white/20"
+                />
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* ===== DAY CHIPS ===== */}
+        <div className="custom-scrollbar overflow-x-auto px-3 pb-1 pt-3" dir="ltr">
+          <div className="flex min-w-max gap-1.5" dir="rtl">
+            {DAYS.map((day) => {
+              const isActive = day === selectedDay
+              const isToday = day === todayName
+              const count = countsByDay[day] || 0
+              return (
+                <motion.button
+                  key={day}
+                  whileTap={{ scale: 0.93 }}
+                  onClick={() => {
+                    triggerHaptic('light')
+                    setSelectedDay(day)
+                  }}
+                  className={`flex flex-col items-center gap-0.5 rounded-2xl border px-3.5 py-2 transition-all ${
+                    isActive
+                      ? 'border-primary bg-primary shadow-md shadow-primary/25'
+                      : 'border-border bg-card'
+                  }`}
+                >
+                  <span
+                    className={`flex items-center gap-1 text-micro font-bold ${
+                      isActive ? 'text-on-primary' : 'text-main'
+                    }`}
+                  >
+                    {day}
+                    {isToday && (
+                      <span
+                        className={`inline-block h-1.5 w-1.5 rounded-full ${
+                          isActive ? 'bg-white' : 'bg-primary'
+                        }`}
+                      />
+                    )}
+                  </span>
+                  <span
+                    className={`text-[9px] font-bold tabular-nums ${
+                      isActive ? 'text-white/80' : 'text-muted'
+                    }`}
+                  >
+                    {count} حصة
+                  </span>
+                </motion.button>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* ===== NEXT SESSION BANNER ===== */}
+        <AnimatePresence>
+          {nextSession && !searchTerm && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              className="mx-3 mt-2"
+            >
+              <div className="flex items-center gap-2.5 rounded-2xl border border-success-soft bg-success-soft p-2.5">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/60 dark:bg-white/10">
+                  <Sparkles size={14} className="text-success" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[9px] font-bold text-success">الحصة القادمة اليوم</p>
+                  <p className="truncate text-xs font-bold text-main">
+                    {nextSession.studentName} · {nextSession.time}
+                  </p>
+                </div>
+                <Clock size={14} className="shrink-0 text-success" />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* ===== SESSIONS TIMELINE ===== */}
+        <div className="px-3 pb-4 pt-3">
+          {loading && students.length === 0 ? (
+            <MobileSkeleton rows={6} />
+          ) : dayEvents.length > 0 ? (
+            <div className="space-y-2">
+              <div className="mb-2 flex items-center justify-between px-1">
+                <span className="text-micro font-bold text-muted">حصص {selectedDay}</span>
+                <span className="rounded-lg bg-surface px-2 py-0.5 text-[10px] font-bold tabular-nums text-muted">
+                  {dayEvents.length}
+                </span>
+              </div>
+              {dayEvents.map((event, idx) => {
+                const ts = getTeacherStyle(event.teacherName)
+                return (
+                  <motion.div
+                    key={event.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: Math.min(idx * 0.04, 0.4), duration: 0.25 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => {
+                      triggerHaptic('light')
+                      setSelectedEventId(event.id)
+                    }}
+                    className={`cursor-pointer overflow-hidden rounded-2xl border border-border border-e-[3px] bg-card shadow-sm transition-colors ${ts.bar}`}
+                  >
+                    <div className="flex items-center gap-3 p-3">
+                      {/* Avatar */}
+                      <div
+                        className={`flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-2xl ${ts.soft}`}
+                      >
+                        <span className={`text-sm font-black ${ts.text}`}>
+                          {event.studentName.charAt(0)}
+                        </span>
+                        <span className="text-[8px] font-bold text-muted">{event.time}</span>
+                      </div>
+
+                      {/* Info */}
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-bold leading-tight text-main">
+                          {event.studentName}
+                        </p>
+                        <p className="mt-0.5 flex items-center gap-1 truncate text-[11px] font-medium text-muted">
+                          <BookOpen size={9} className="shrink-0" />
+                          {event.subject}
+                          {event.curriculum ? ` · ${event.curriculum}` : ''}
+                        </p>
+                        <div className="mt-1.5 flex items-center gap-1.5">
+                          <span
+                            className={`inline-flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[9px] font-bold ${ts.soft} ${ts.text}`}
+                          >
+                            <GraduationCap size={9} />
+                            {event.teacherName || 'غير محددة'}
+                          </span>
+                          {event.studentGrade && (
+                            <span className="rounded-lg bg-surface px-1.5 py-0.5 text-[9px] font-bold text-muted">
+                              {event.studentGrade}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <ChevronLeft size={16} className="shrink-0 text-muted" />
+                    </div>
+                  </motion.div>
+                )
+              })}
+            </div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="rounded-3xl border border-dashed border-border bg-card py-14 text-center"
+            >
+              <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft">
+                <CalendarDays size={26} className="text-primary" strokeWidth={1.5} />
+              </div>
+              <p className="text-sm font-bold text-main">
+                {searchTerm ? 'لا توجد نتائج مطابقة' : 'لا توجد حصص في هذا اليوم'}
+              </p>
+              <p className="mt-1 text-xs font-medium text-muted">
+                {searchTerm ? 'جرّب كلمة بحث أخرى' : 'اختر يوماً آخر من الأيام أعلاه'}
+              </p>
+            </motion.div>
           )}
         </div>
+
+        {/* Details sheet */}
         <MobileScheduleDetailsSheet
-          showDetails={showDetails}
+          showDetails={!!selectedEvent}
           event={selectedEvent}
-          onClose={() => setShowDetails(false)}
+          onClose={() => setSelectedEventId(null)}
           onStartSession={() => {
             triggerHaptic('light')
             navigate('/appointments')
-            setShowDetails(false)
+            setSelectedEventId(null)
           }}
           onViewStudent={() => {
             triggerHaptic('light')
             navigate('/students')
-            setShowDetails(false)
+            setSelectedEventId(null)
           }}
         />
       </div>
