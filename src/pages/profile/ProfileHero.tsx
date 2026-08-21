@@ -11,6 +11,8 @@ interface ProfileHeroProps {
   points?: number
   attendanceRate?: number
   stats?: { attendanceRate?: number; studentsCount?: number; [key: string]: any }
+  hideNavButtons?: boolean
+  onEditName?: () => void
 }
 
 const ROLE_CONFIG = {
@@ -28,7 +30,7 @@ const ROLE_CONFIG = {
   },
 }
 
-export const ProfileHero = ({ name, role, subtitle, rank, points, attendanceRate, stats }: ProfileHeroProps) => {
+export const ProfileHero = ({ name, role, subtitle, rank, points, attendanceRate, stats, hideNavButtons = false, onEditName }: ProfileHeroProps) => {
   const navigate = useNavigate()
   const config = ROLE_CONFIG[role]
   const currentUser = useCurrentUser()
@@ -70,15 +72,27 @@ export const ProfileHero = ({ name, role, subtitle, rank, points, attendanceRate
 
       {/* Top bar */}
       <div className="relative z-10 mb-8 flex items-center justify-between">
-        <button
-          onClick={() => navigate(config.dashboard)}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-surface px-4 py-2 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-95"
-        >
-          <ArrowRight size={14} />
-          لوحة التحكم
-        </button>
+        {!hideNavButtons && (
+          <button
+            onClick={() => navigate(config.dashboard)}
+            className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-surface px-4 py-2 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-95"
+          >
+            <ArrowRight size={14} />
+            لوحة التحكم
+          </button>
+        )}
         <div className="flex items-center gap-2">
-          {canAccessSettings && (
+          {onEditName && (
+            <button
+              onClick={onEditName}
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-surface transition-all hover:bg-hover active:scale-95"
+              aria-label="تعديل الاسم"
+              title="تعديل الاسم"
+            >
+              <Edit3 size={14} className="text-muted" />
+            </button>
+          )}
+          {!hideNavButtons && canAccessSettings && (
             <button
               onClick={() => navigate('/settings')}
               className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-surface transition-all hover:bg-hover active:scale-95"
@@ -86,12 +100,14 @@ export const ProfileHero = ({ name, role, subtitle, rank, points, attendanceRate
               <Edit3 size={14} className="text-muted" />
             </button>
           )}
-          <button
-            onClick={handleShare}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-surface transition-all hover:bg-hover active:scale-95"
-          >
-            <Share2 size={14} className="text-muted" />
-          </button>
+          {!hideNavButtons && (
+            <button
+              onClick={handleShare}
+              className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-surface transition-all hover:bg-hover active:scale-95"
+            >
+              <Share2 size={14} className="text-muted" />
+            </button>
+          )}
         </div>
       </div>
 

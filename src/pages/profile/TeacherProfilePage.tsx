@@ -129,22 +129,30 @@ export const TeacherProfilePage = () => {
 
     const points = teacherData?.points || dashboardStats?.teacherPoints || 0;
     const rank = getRankByPoints(points, TEACHER_RANKS);
+    const [editingName, setEditingName] = useState(false);
+    const [nameDraft, setNameDraft] = useState('');
+    const [isSavingName, setIsSavingName] = useState(false);
+
+    const handleSaveName = async () => {
+        const trimmed = nameDraft.trim();
+        if (!trimmed || isSavingName) return;
+        setIsSavingName(true);
+        try {
+            await api.put('/teachers/me', { name: trimmed });
+            setTeacherData((prev) => (prev ? { ...prev, name: trimmed } : prev));
+            setEditingName(false);
+        } catch (e) {
+            console.error('Error updating name:', e);
+        } finally {
+            setIsSavingName(false);
+        }
+    };
 
     const infoFields = [
         { icon: <BookOpen size={13} className="text-primary" />, label: 'المادة', value: teacherData?.subject || '—' },
         { icon: <Phone size={13} className="text-success" />, label: 'رقم الهاتف', value: teacherData?.phone1 || '—' },
         { icon: <Mail size={13} className="text-info" />, label: 'البريد الإلكتروني', value: teacherData?.email || '—' },
         { icon: <DollarSign size={13} className="text-warning" />, label: 'سعر الحصة', value: teacherData?.price ? `${teacherData.price} ${CURRENCY_SYMBOL}` : '—' },
-    ];
-
-    const teachingFields = [
-        { icon: <BookOpen size={13} className="text-primary" />, label: 'المواد', value: teacherData?.subject || '—' },
-        { icon: <GraduationCap size={13} className="text-info" />, label: 'المرحلة التعليمية', value: teacherData?.stage || '—' },
-        { icon: <CalendarDays size={13} className="text-warning" />, label: 'الأيام المتاحة', value: teacherData?.availableDays?.join('، ') || '—' },
-        { icon: <Clock size={13} className="text-success" />, label: 'الساعات المتاحة', value: teacherData?.availableHours || '—' },
-        { icon: <Globe size={13} className="text-info" />, label: 'لغة التدريس', value: teacherData?.teachingLang || 'العربية' },
-        { icon: <FileText size={13} className="text-primary" />, label: 'طريقة التدريس', value: teacherData?.teachingMethod || '—' },
-        { icon: <Laptop size={13} className="text-success" />, label: 'نوع التدريس', value: teacherData?.teachingMode || 'أونلاين' },
     ];
 
     const achievements = [
@@ -206,7 +214,7 @@ export const TeacherProfilePage = () => {
                 </div>
             )}
 <div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6">
-                <motion.div {...stagger(0)}>
+                <motion.div {...stagger(0)} className="space-y-4 md:space-y-6">
                     <ProfileHero
                         name={name}
                         role="teacher"
@@ -214,6 +222,11 @@ export const TeacherProfilePage = () => {
                         points={points}
                         rank={rank}
                         stats={dashboardStats || undefined}
+                        hideNavButtons
+                        onEditName={() => {
+                            setNameDraft(name);
+                            setEditingName(true);
+                        }}
                     />
                     <ProfileBottomMotivation
                         icon={<Target size={28} />}
@@ -226,41 +239,26 @@ export const TeacherProfilePage = () => {
                     />
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                     <StatCard icon={<Users size={18} className="text-primary" />} value={dashboardStats?.studentsCount ?? 0} label="إجمالي الطلاب" color="primary" trend={{ value: 12, isUp: true }} />
-                    <StatCard icon={<BookOpen size={18} className="text-success" />} value={teacherData?.subject || '—'} label="المواد" color="success" />
                     <StatCard icon={<Play size={18} className="text-info" />} value={dashboardStats?.completedSessions ?? 0} label="الحصص المنفذة" color="info" trend={{ value: 8, isUp: true }} />
                     <StatCard icon={<Star size={18} className="text-warning" />} value={points} label="النقاط" color="warning" trend={{ value: 15, isUp: true }} />
                     <StatCard icon={<DollarSign size={18} className="text-error" />} value={teacherData?.price ?? 0} label={`سعر الحصة`} color="error" />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <motion.div {...stagger(2)} className="space-y-4 md:space-y-6">
-                        <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
-                            <h3 className="text-base font-bold text-main mb-4 flex items-center gap-2">
-                                <UserCheck size={16} className="text-primary" />
-                                المعلومات الشخصية
-                            </h3>
-                            <div className="space-y-2.5">
-                                {infoFields.map((f, i) => <InfoRow key={i} icon={f.icon} label={f.label} value={f.value} />)}
-                            </div>
+                <motion.div {...stagger(2)} className="space-y-4 md:space-y-6">
+                    <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
+                        <h3 className="text-base font-bold text-main mb-4 flex items-center gap-2">
+                            <UserCheck size={16} className="text-primary" />
+                            المعلومات الشخصية
+                        </h3>
+                        <div className="space-y-2.5">
+                            {infoFields.map((f, i) => <InfoRow key={i} icon={f.icon} label={f.label} value={f.value} />)}
                         </div>
+                    </div>
 
-                        <PaymentSettingsSection />
-                    </motion.div>
-
-                    <motion.div {...stagger(3)} className="space-y-4 md:space-y-6">
-                        <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
-                            <h3 className="text-base font-bold text-main mb-4 flex items-center gap-2">
-                                <GraduationCap size={16} className="text-primary" />
-                                معلومات التدريس
-                            </h3>
-                            <div className="space-y-2.5">
-                                {teachingFields.map((f, i) => <InfoRow key={i} icon={f.icon} label={f.label} value={f.value} />)}
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
+                    <PaymentSettingsSection />
+                </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <motion.div {...stagger(4)}>
@@ -270,19 +268,41 @@ export const TeacherProfilePage = () => {
                         <ProfileReviews reviews={reviews} />
                     </motion.div>
                 </div>
-
-                <motion.div {...stagger(6)}>
-                    <ProfileBottomMotivation
-                        icon={<Target size={28} />}
-                        title="استمر في التدريس!"
-                        description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد وصلت إلى أعلى المراتب! استمر في التألق'}
-                        progress={nextRank ? Math.round((points / 1000) * 100) : 100}
-                        progressLabel="التقدم نحو الرتبة التالية"
-                        targetLabel={nextRank ? `${nextRank.needed} نقطة متبقية` : 'أحسنت!'}
-                        color="primary"
-                    />
-                </motion.div>
             </div>
+
+            {/* Edit name modal */}
+            {editingName && (
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm" onClick={() => setEditingName(false)}>
+                    <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-5 shadow-elevation-2" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="mb-4 text-sm font-bold text-main">تعديل الاسم</h3>
+                        <input
+                            type="text"
+                            value={nameDraft}
+                            onChange={(e) => setNameDraft(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handleSaveName(); }}
+                            placeholder="أدخل الاسم الجديد"
+                            aria-label="الاسم"
+                            autoFocus
+                            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
+                        />
+                        <div className="mt-4 flex gap-2">
+                            <button
+                                onClick={() => setEditingName(false)}
+                                className="flex-1 rounded-xl bg-surface py-2.5 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-95"
+                            >
+                                إلغاء
+                            </button>
+                            <button
+                                onClick={handleSaveName}
+                                disabled={!nameDraft.trim() || isSavingName}
+                                className="flex-1 rounded-xl bg-primary py-2.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95 disabled:opacity-50"
+                            >
+                                {isSavingName ? 'جاري الحفظ...' : 'حفظ'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
