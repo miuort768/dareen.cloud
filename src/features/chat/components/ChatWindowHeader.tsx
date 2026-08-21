@@ -16,14 +16,16 @@ interface ChatWindowHeaderProps {
     onToggleMoreMenu: () => void;
     onDeleteConversation: () => void;
     typingInThisConv: { conversationId: string; name: string }[];
+    messageSearch: string;
+    onMessageSearchChange: (value: string) => void;
 }
 
 export const ChatWindowHeader = ({
     selectedConv, currentUser, openGroupSettings, menuRef,
-    onBack, showMoreMenu, onToggleMoreMenu, onDeleteConversation, typingInThisConv
+    onBack, showMoreMenu, onToggleMoreMenu, onDeleteConversation, typingInThisConv,
+    messageSearch, onMessageSearchChange
 }: ChatWindowHeaderProps) => {
     const [showSearchBar, setShowSearchBar] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
 
     return (
         <header className="sticky top-0 h-[60px] shrink-0 bg-surface dark:bg-card flex items-center justify-between px-4 z-[50] shadow-sm">
@@ -59,12 +61,12 @@ export const ChatWindowHeader = ({
                 <div className="flex items-center gap-5 text-muted">
                     <div className={cn("flex items-center bg-white/10 dark:bg-background/20 rounded-full px-3 py-1 transition-all", showSearchBar ? "w-40 md:w-64 opacity-100" : "w-0 opacity-0 overflow-hidden p-0")}>
                         {showSearchBar && (
-                            <input type="text" placeholder="بحث..." aria-label="بحث في الرسائل" value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
+                            <input type="text" placeholder="بحث..." aria-label="بحث في الرسائل" value={messageSearch}
+                                onChange={(e) => onMessageSearchChange(e.target.value)}
                                 className="bg-transparent border-none text-xs text-start w-full focus:ring-0 placeholder:text-muted" autoFocus />
                         )}
                     </div>
-                    <button onClick={() => { setShowSearchBar(!showSearchBar); if (showSearchBar) setSearchQuery(''); }}
+                    <button onClick={() => { setShowSearchBar(!showSearchBar); if (showSearchBar) onMessageSearchChange(''); }}
                         className={cn("p-2 rounded-full transition-colors", showSearchBar ? "bg-primary text-on-primary" : "hover:bg-black/5 dark:hover:bg-white/5")}>
                         <Search size={20} />
                     </button>
@@ -76,15 +78,17 @@ export const ChatWindowHeader = ({
                             {showMoreMenu && (
                                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
                                     className="absolute top-full end-0 mt-2 w-48 bg-card shadow-sm z-[100] py-2 rounded-md">
-                                    <button onClick={() => { openGroupSettings(); onToggleMoreMenu(); }}
-                                        className="w-full text-start px-4 py-3 text-sm text-muted hover:bg-hover transition-colors">
-                                        معلومات المحادثة
-                                    </button>
                                     {selectedConv.isGroup && (
-                                        <button onClick={() => { openGroupSettings(); onToggleMoreMenu(); }}
-                                            className="w-full text-start px-4 py-3 text-sm text-muted dark:text-main hover:bg-hover transition-colors font-normal">
-                                            تعديل المجموعة
-                                        </button>
+                                        <>
+                                            <button onClick={() => { openGroupSettings(); onToggleMoreMenu(); }}
+                                                className="w-full text-start px-4 py-3 text-sm text-muted hover:bg-hover transition-colors">
+                                                معلومات المحادثة
+                                            </button>
+                                            <button onClick={() => { openGroupSettings(); onToggleMoreMenu(); }}
+                                                className="w-full text-start px-4 py-3 text-sm text-muted dark:text-main hover:bg-hover transition-colors font-normal">
+                                                تعديل المجموعة
+                                            </button>
+                                        </>
                                     )}
                                     <button onClick={() => { onDeleteConversation(); onToggleMoreMenu(); }}
                                         className="w-full text-start px-4 py-3 text-sm text-error hover:bg-hover transition-colors">

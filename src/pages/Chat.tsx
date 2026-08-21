@@ -176,7 +176,7 @@ export const Chat = () => {
     >
       <div className="relative hidden shrink-0 flex-row items-center justify-between gap-4 overflow-hidden border-b border-border bg-background px-4 py-6 md:px-8 lg:flex">
         <div className="relative z-10 flex items-center gap-4">
-          <div className="border-success/30 h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 bg-surface">
+          <div className="border-success-soft h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 bg-surface">
             <Image
               src="/chat-avatar.webp"
               alt="الشعار"
@@ -189,7 +189,7 @@ export const Chat = () => {
           <div>
             <div className="flex flex-col">
               <h1 className="text-lg font-medium uppercase tracking-tighter text-main md:text-2xl">
-                محادثات {selectedConv?.id ? '(' + selectedConv.id.substring(0, 8) + ')' : ''}
+                {selectedConv ? `محادثات - ${selectedConv.displayName}` : 'محادثات'}
               </h1>
               <p className="mt-0.5 text-xs font-light uppercase tracking-widest text-muted md:text-sm">
                 تواصل آمن ومباشر

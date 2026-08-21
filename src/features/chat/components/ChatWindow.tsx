@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useChatStore } from '../../../store/chatStore';
 import { useChatUIStore } from '../../../store/chatUIStore';
 import type { Conversation, ChatMessage } from '../../../types/chat.types';
@@ -35,6 +35,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
     const setItemToDelete = useChatUIStore(s => s.setItemToDelete);
     const setShowDeleteConfirm = useChatUIStore(s => s.setShowDeleteConfirm);
     const typingUsers = useChatStore(s => s.typingUsers);
+    const [messageSearch, setMessageSearch] = useState('');
+
+    useEffect(() => {
+        setMessageSearch('');
+    }, [selectedConv?.id]);
 
     useEffect(() => {
         if (selectedConv?.id && 'unreadCount' in selectedConv && selectedConv.unreadCount > 0) {
@@ -64,6 +69,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 onToggleMoreMenu={() => setShowMoreMenu(!showMoreMenu)}
                 onDeleteConversation={() => { setDeleteType('conversation'); setItemToDelete(selectedConv); setShowDeleteConfirm(true); }}
                 typingInThisConv={typingInThisConv}
+                messageSearch={messageSearch}
+                onMessageSearchChange={setMessageSearch}
             />
 
             <ChatMessageList
@@ -72,6 +79,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
                 isMessagesError={isMessagesError}
                 isGroup={selectedConv.isGroup}
                 currentUserId={currentUser?.id}
+                searchQuery={messageSearch}
             />
 
             <ChatInputFooter

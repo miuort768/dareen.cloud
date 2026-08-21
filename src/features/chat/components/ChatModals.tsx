@@ -95,7 +95,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                       : 'بدء محادثة'}
                 </h3>
                 {isCreatingGroup && step === 'select' && (
-                  <p className="text-on-primary/80 text-xs">
+                  <p className="text-white/80 text-xs">
                     {selectedUsers.length} من {availableUsers.length} مختار
                   </p>
                 )}
@@ -124,7 +124,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
                 {/* Selected Chips Horizontal List */}
                 {selectedUsers.length > 0 && (
-                  <div className="custom-scrollbar bg-background/50 dark:bg-card/50 flex min-h-[85px] shrink-0 grow-0 gap-3 overflow-x-auto border-b border-border p-3">
+                  <div className="custom-scrollbar bg-surface dark:bg-card flex min-h-[85px] shrink-0 grow-0 gap-3 overflow-x-auto border-b border-border p-3">
                     {selectedUsersObjects.map((user) => (
                       <div
                         key={user.id}
@@ -252,7 +252,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                       onChange={(e) => setGroupName(e.target.value)}
                       placeholder="اسم المجموعة..."
                       aria-label="اسم المجموعة"
-                      className="border-success/30 w-full border-b-2 bg-transparent py-3 text-start text-lg font-normal text-main outline-none transition-colors focus:border-success"
+                      className="border-success-soft w-full border-b-2 bg-transparent py-3 text-start text-lg font-normal text-main outline-none transition-colors focus:border-success"
                     />
                     <div className="mt-1 flex justify-start">
                       <span className="text-micro font-normal text-muted">

@@ -13,21 +13,25 @@ interface ChatMessageListProps {
     isMessagesError?: boolean;
     isGroup: boolean;
     currentUserId?: string;
+    searchQuery?: string;
 }
 
-export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, isGroup, currentUserId }: ChatMessageListProps) => {
+export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, isGroup, currentUserId, searchQuery }: ChatMessageListProps) => {
     const virtuosoRef = useRef<{ scrollToIndex: (params: { index: number; behavior?: ScrollBehavior }) => void }>(null);
     const [showScrollBottom, setShowScrollBottom] = useState(false);
 
     const filteredMessages = useMemo(() => {
-        return [...messages].sort((a, b) => {
+        const q = (searchQuery || '').trim().toLowerCase();
+        const sorted = [...messages].sort((a, b) => {
             const timeA = new Date(a.timestamp).getTime();
             const timeB = new Date(b.timestamp).getTime();
             if (isNaN(timeA)) return 1;
             if (isNaN(timeB)) return -1;
             return timeA - timeB;
         });
-    }, [messages]);
+        if (!q) return sorted;
+        return sorted.filter((m) => (m.content || '').toLowerCase().includes(q));
+    }, [messages, searchQuery]);
 
     const scrollToBottom = () => {
         if (filteredMessages.length > 0) {
@@ -49,7 +53,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
         return (
             <div className="flex-1 relative z-10">
                 <div className="flex items-center justify-center h-full">
-                    <div className="w-8 h-8 border-2 border-success/30 border-t-success rounded-full animate-spin" />
+                    <div className="w-8 h-8 border-2 border-success-soft border-t-success rounded-full animate-spin" />
                 </div>
             </div>
         );
@@ -59,7 +63,7 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
         return (
             <div className="flex-1 relative z-10">
                 <div className="flex items-center justify-center h-full text-muted text-sm px-4">
-                    لا توجد رسائل بعد. ابدأ المحادثة الآن.
+                    {searchQuery ? 'لا توجد رسائل مطابقة للبحث.' : 'لا توجد رسائل بعد. ابدأ المحادثة الآن.'}
                 </div>
             </div>
         );
@@ -92,11 +96,11 @@ export const ChatMessageList = ({ messages, isLoadingMessages, isMessagesError, 
                                     {msg.content}
                                 </div>
                                 <div className="flex items-center justify-end gap-1 mt-1">
-                                    <span className={cn("text-[10px]", isMe ? "text-on-primary/80" : "text-muted")}>
+                                    <span className={cn("text-[10px]", isMe ? "text-white/80" : "text-muted")}>
                                         {msg.timestamp && !isNaN(new Date(msg.timestamp).getTime()) ? format(new Date(msg.timestamp), 'h:mm a', { locale: ar }) : '--:--'}
                                     </span>
                                     {isMe && (
-                                        <div>{msg.readAt ? <CheckCheck size={14} className="text-on-primary" /> : <CheckCheck size={14} className="text-on-primary/60" />}</div>
+                                        <div>{msg.readAt ? <CheckCheck size={14} className="text-on-primary" /> : <CheckCheck size={14} className="text-white/60" />}</div>
                                     )}
                                 </div>
                             </div>
