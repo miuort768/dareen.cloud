@@ -155,6 +155,13 @@ export const Sidebar = memo(
 
     const filteredNavigation = navigation.filter((item) => {
       if (!currentUser) return false
+      const isCommonAccess = [
+        'schedule',
+        'announcements',
+        'parent_announcements',
+        'appointments',
+        'forum',
+      ].includes(item.id)
       if (currentUser.permissions?.includes('*')) {
         if (
           [
@@ -178,20 +185,32 @@ export const Sidebar = memo(
             'parent_students',
             'parent_announcements',
             'parent_payment_history',
-            'forum',
-          ].includes(item.id)
+          ].includes(item.id) ||
+          isCommonAccess
         )
           return true
       }
       if (currentUser.role === 'student') {
         if (item.id === 'dashboard') return false
-        if (['student_dashboard', 'chat', 'forum', 'parent_announcements'].includes(item.id))
+        if (item.id === 'student_dashboard' || ['chat'].includes(item.id) || isCommonAccess)
           return true
       }
-      if (item.id === 'dashboard' && currentUser.role === 'teacher') return true
-      if (item.id === 'forum' && currentUser.role === 'teacher') return true
-      if (item.id === 'teacher_payment_history' && currentUser.role === 'teacher') return true
-      if (item.id === 'evaluations' && currentUser.role === 'teacher') return true
+      if (currentUser.role === 'teacher') {
+        if (item.id === 'dashboard') return true
+        if (
+          [
+            'evaluations',
+            'schedule',
+            'announcements',
+            'finance',
+            'teacher_invoices',
+            'appointments',
+            'forum',
+            'teacher_payment_history',
+          ].includes(item.id)
+        )
+          return true
+      }
       return currentUser.permissions?.includes(item.id)
     })
 
