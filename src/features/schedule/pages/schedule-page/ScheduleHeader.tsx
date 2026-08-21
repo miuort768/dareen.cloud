@@ -21,10 +21,11 @@ interface ScheduleHeaderProps {
   onSubjectChange: (v: string) => void
   uniqueTeachers: string[]
   uniqueSubjects: string[]
+  showTeacherSubjectFilters?: boolean
   todayDayName: string
   weekLabel: string
   onWeekChange: (direction: -1 | 1) => void
-  onPrint: () => void
+  onPrint?: () => void
   stats: { sessions: number; teachers: number; students: number }
 }
 
@@ -41,6 +42,7 @@ export const ScheduleHeader = ({
   onSubjectChange,
   uniqueTeachers,
   uniqueSubjects,
+  showTeacherSubjectFilters = false,
   todayDayName,
   weekLabel,
   onWeekChange,
@@ -201,49 +203,53 @@ export const ScheduleHeader = ({
             </select>
           </div>
 
-          {/* Teacher select */}
-          <div className="relative">
-            <GraduationCap
-              size={11}
-              className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
-            />
-            <select
-              value={filterTeacher}
-              onChange={(e) => onTeacherChange(e.target.value)}
-              className={`h-8 max-w-[160px] appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
-                filterTeacher !== 'all' ? 'border-primary text-primary' : 'border-border'
-              }`}
-            >
-              <option className="bg-card text-main" value="all">كل المعلمات</option>
-              {uniqueTeachers.filter(Boolean).map((t) => (
-                <option key={t} value={t} className="bg-card text-main">
-                  {t}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Teacher select — admin only */}
+          {showTeacherSubjectFilters && (
+            <div className="relative">
+              <GraduationCap
+                size={11}
+                className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
+              />
+              <select
+                value={filterTeacher}
+                onChange={(e) => onTeacherChange(e.target.value)}
+                className={`h-8 max-w-[160px] appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+                  filterTeacher !== 'all' ? 'border-primary text-primary' : 'border-border'
+                }`}
+              >
+                <option className="bg-card text-main" value="all">كل المعلمات</option>
+                {uniqueTeachers.filter(Boolean).map((t) => (
+                  <option key={t} value={t} className="bg-card text-main">
+                    {t}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
-          {/* Subject select */}
-          <div className="relative">
-            <BookOpen
-              size={11}
-              className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
-            />
-            <select
-              value={filterSubject}
-              onChange={(e) => onSubjectChange(e.target.value)}
-              className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
-                filterSubject !== 'all' ? 'border-primary text-primary' : 'border-border'
-              }`}
-            >
-              <option className="bg-card text-main" value="all">كل المواد</option>
-              {uniqueSubjects.map((s) => (
-                <option key={s} value={s} className="bg-card text-main">
-                  {s}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Subject select — admin only */}
+          {showTeacherSubjectFilters && (
+            <div className="relative">
+              <BookOpen
+                size={11}
+                className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
+              />
+              <select
+                value={filterSubject}
+                onChange={(e) => onSubjectChange(e.target.value)}
+                className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
+                  filterSubject !== 'all' ? 'border-primary text-primary' : 'border-border'
+                }`}
+              >
+                <option className="bg-card text-main" value="all">كل المواد</option>
+                {uniqueSubjects.map((s) => (
+                  <option key={s} value={s} className="bg-card text-main">
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {/* Clear filters */}
           {activeFiltersCount > 0 && (

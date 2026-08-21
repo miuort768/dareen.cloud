@@ -80,20 +80,17 @@ export const MobileSchedule = () => {
       if (isStudent) {
         const me = await api.get<unknown>('/student-portal/me')
         if (mountedRef.current) setStudents([me] as unknown as Student[])
+      } else if (currentUser?.role === 'parent') {
+        const children = await api.get<unknown>('/parents/my-children')
+        if (mountedRef.current) setStudents(Array.isArray(children) ? (children as Student[]) : [])
       } else {
         const raw = await api.get<unknown>('/students')
         if (mountedRef.current) {
-          let list = Array.isArray(raw)
-            ? (raw as Student[])
-            : (raw as { data?: Student[] } | null)?.data || []
-          if (currentUser?.role === 'parent') {
-            const myPhone = String(currentUser.phone || '').replace(/[^0-9]/g, '')
-            list = list.filter((s) => {
-              const p = String(s.parentPhone || '').replace(/[^0-9]/g, '')
-              return myPhone.length > 0 && (p === myPhone || p.endsWith(myPhone) || myPhone.endsWith(p))
-            })
-          }
-          setStudents(list)
+          setStudents(
+            Array.isArray(raw)
+              ? (raw as Student[])
+              : (raw as { data?: Student[] } | null)?.data || [],
+          )
         }
       }
     } catch (error) {

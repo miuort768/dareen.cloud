@@ -63,10 +63,13 @@ const DAYS = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 
 
 const teacherNameOf = (enrollment: Enrollment): string => {
   const t: unknown = enrollment.teacher
-  if (typeof t === 'string') return t.trim()
+  if (typeof t === 'string' && t.trim()) return t.trim()
   if (t && typeof t === 'object' && 'name' in (t as Record<string, unknown>)) {
-    return String((t as { name?: unknown }).name ?? '').trim()
+    const n = String((t as { name?: unknown }).name ?? '').trim()
+    if (n) return n
   }
+  const fallback = (enrollment as unknown as { teacherName?: unknown }).teacherName
+  if (typeof fallback === 'string' && fallback.trim()) return fallback.trim()
   return ''
 }
 
@@ -100,7 +103,7 @@ export const Schedule = () => {
   const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim()
   const isTeacher = currentUser?.role === 'teacher'
   const isStudent = currentUser?.role === 'student'
-  const isAdmin = !isTeacher && !isStudent
+  const isAdmin = currentUser?.role === 'admin'
   const logout = useLogout()
 
   // Completed sessions (daily reset via same API as Appointments)
@@ -124,17 +127,12 @@ export const Schedule = () => {
       if (isStudent) {
         const me = await api.get<Record<string, unknown>>('/student-portal/me')
         setStudents([me] as unknown as Student[])
+      } else if (currentUser?.role === 'parent') {
+        const children = await api.get<Record<string, unknown>[]>('/parents/my-children')
+        setStudents(Array.isArray(children) ? children : [])
       } else {
         const data = await api.get<Record<string, unknown>[]>('/students')
-        let list = Array.isArray(data) ? data : data.data || []
-        if (currentUser?.role === 'parent') {
-          const myPhone = String(currentUser.phone || '').replace(/[^0-9]/g, '')
-          list = list.filter((s: Record<string, unknown>) => {
-            const p = String(s.parentPhone || '').replace(/[^0-9]/g, '')
-            return myPhone.length > 0 && (p === myPhone || p.endsWith(myPhone) || myPhone.endsWith(p))
-          })
-        }
-        setStudents(list as unknown as Student[])
+        setStudents(Array.isArray(data) ? data : data.data || [])
       }
     } catch (error) {
       console.error('Error fetching data', error)
@@ -206,6 +204,29 @@ export const Schedule = () => {
     () => Array.from(new Set(allEvents.map((e) => e.subject))).sort(),
     [allEvents],
   )
+
+  // Real teacher names from the Teachers page — used for the admin filter dropdown
+  const { data: teachersList = [] } = useQuery({
+    queryKey: ['schedule-teachers-list'],
+    queryFn: async () => {
+      const data = await api.get<unknown>('/teachers')
+      const arr = Array.isArray(data) ? data : (data as { data?: unknown[] })?.data || []
+      return arr
+        .map((t: unknown) => {
+          const tt = t as { name?: unknown; teacherName?: unknown }
+          const n =
+            typeof tt.name === 'string'
+              ? tt.name.trim()
+              : typeof tt.teacherName === 'string'
+                ? tt.teacherName.trim()
+                : ''
+          return n
+        })
+        .filter(Boolean)
+        .sort()
+    },
+    enabled: isAdmin,
+  })
 
   const filteredEvents = useMemo(() => {
     return allEvents.filter((event) => {
@@ -360,8 +381,9 @@ export const Schedule = () => {
             onTeacherChange={setFilterTeacher}
             filterSubject={filterSubject}
             onSubjectChange={setFilterSubject}
-            uniqueTeachers={uniqueTeachers}
+            uniqueTeachers={teachersList.length > 0 ? teachersList : uniqueTeachers}
             uniqueSubjects={uniqueSubjects}
+            showTeacherSubjectFilters={isAdmin}
             todayDayName={todayDayName}
             weekLabel={weekLabel}
             onWeekChange={(d) => setCurrentWeekOffset((v) => v + d)}
