@@ -16,8 +16,8 @@ interface Announcement {
 
 interface AnnouncementCardProps {
     announcement: Announcement;
-    onEdit: (ann: Announcement) => void;
-    onDelete: (id: string) => void;
+    onEdit?: (ann: Announcement) => void;
+    onDelete?: (id: string) => void;
 }
 
 const getTypeMeta = (type: string) => {
@@ -54,14 +54,20 @@ export const AnnouncementCard = ({ announcement: ann, onEdit, onDelete }: Announ
                             <p className="font-bold text-micro text-muted">{format(new Date(ann.date), 'dd MMMM yyyy', { locale: ar })}</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                        <button onClick={() => onEdit(ann)} aria-label="تعديل الإعلان" className="w-8 h-8 bg-surface text-muted flex items-center justify-center border border-border hover:bg-primary hover:text-on-primary transition-all rounded-xl active:scale-90">
-                            <Edit3 size={13} />
-                        </button>
-                        <button onClick={() => onDelete(ann.id)} aria-label="حذف الإعلان" className="w-8 h-8 bg-surface text-error flex items-center justify-center border border-border hover:bg-error hover:text-on-error transition-all rounded-xl active:scale-90">
-                            <Trash2 size={13} />
-                        </button>
-                    </div>
+                    {(onEdit || onDelete) && (
+                        <div className="flex items-center gap-1.5">
+                            {onEdit && (
+                                <button onClick={() => onEdit(ann)} aria-label="تعديل الإعلان" className="w-8 h-8 bg-surface text-muted flex items-center justify-center border border-border hover:bg-primary hover:text-on-primary transition-all rounded-xl active:scale-90">
+                                    <Edit3 size={13} />
+                                </button>
+                            )}
+                            {onDelete && (
+                                <button onClick={() => onDelete(ann.id)} aria-label="حذف الإعلان" className="w-8 h-8 bg-surface text-error flex items-center justify-center border border-border hover:bg-error hover:text-on-error transition-all rounded-xl active:scale-90">
+                                    <Trash2 size={13} />
+                                </button>
+                            )}
+                        </div>
+                    )}
                 </div>
                 <div className="space-y-2 md:space-y-3">
                     <h3 className="text-sm md:text-base font-bold text-main leading-tight">{ann.title}</h3>

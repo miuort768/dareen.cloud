@@ -19,7 +19,7 @@ export const AnnouncementFormModal = ({ isOpen, editingAnnouncement, formData, o
             <div className="relative w-full max-w-lg bg-card border border-border rounded-none shadow-2xl">
                 <div className="p-5 bg-primary text-on-primary flex items-center justify-between rounded-none">
                     <div className="flex items-center gap-3">
-                        <Megaphone size={18} className="text-on-primary/70" />
+                        <Megaphone size={18} className="text-white/70" />
                         <h3 className="font-bold text-xs">{editingAnnouncement ? 'تعديل الإعلان الحالي' : 'إضافة إعلان جديد'}</h3>
                     </div>
                     <button onClick={onClose} className="w-7 h-7 flex items-center justify-center rounded-none bg-white/10 hover:bg-error transition-all" aria-label="إغلاق"><X size={16} /></button>
