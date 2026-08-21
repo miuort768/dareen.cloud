@@ -5,7 +5,6 @@ import {
   Bell,
   Home,
   Calendar,
-  MessageSquare,
   User,
   MessageCircle,
   CalendarDays,
@@ -26,7 +25,6 @@ const navTabs = [
   { id: 'home', label: 'الرئيسية', icon: Home, path: '/student-dashboard' },
   { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/schedule' },
   { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
-  { id: 'chat', label: 'الرسائل', icon: MessageSquare, path: '/chat' },
   { id: 'announcements', label: 'الإعلانات', icon: Bell, path: '/parent-announcements' },
   { id: 'profile', label: 'الحساب', icon: User, path: '/student-profile' },
 ]
