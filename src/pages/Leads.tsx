@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import {
   Search,
   Plus,
@@ -485,7 +485,7 @@ export const Leads = () => {
                 </div>
                 <div>
                   <h1 className="font-outfit text-lg font-black text-main md:text-xl">
-                    العملاء المحتملون
+                    العملاء المهتمين
                   </h1>
                   <p className="text-[11px] text-muted">إدارة طلبات التسجيل والعملاء المتوقعين</p>
                 </div>
@@ -525,36 +525,29 @@ export const Leads = () => {
         </div>
 
         {/* ===== KPI STATS ===== */}
-        <div className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-4">
+        <div className="mb-5 grid grid-cols-3 gap-3">
           {[
             {
-              label: 'إجمالي العملاء',
-              value: stats?.total || 0,
-              sub: `${activeCount} نشط`,
+              label: 'عملاء جدد',
+              value: statusCounts['new'] || 0,
+              sub: 'بانتظار المتابعة',
               icon: Users,
               delay: 0.15,
             },
             {
-              label: 'عملاء جدد',
-              value: stats?.new || 0,
-              sub: 'هذا الشهر',
+              label: 'قيد المتابعة',
+              value: (statusCounts['contacted'] || 0) + (statusCounts['follow_up'] || 0),
+              sub: 'جاري التواصل',
               icon: Activity,
               delay: 0.2,
               accent: true,
             },
             {
               label: 'تم التحويل',
-              value: stats?.converted || 0,
-              sub: 'إلى مشتركين',
+              value: statusCounts['converted'] || 0,
+              sub: 'مشتركين فعليين',
               icon: Phone,
               delay: 0.25,
-            },
-            {
-              label: 'معدل التحويل',
-              value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`,
-              sub: 'معدل النجاح',
-              icon: BarChart3,
-              delay: 0.3,
             },
           ].map((stat, i) => (
             <motion.div

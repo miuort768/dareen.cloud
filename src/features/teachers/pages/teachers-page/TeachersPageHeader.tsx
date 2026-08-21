@@ -62,7 +62,7 @@ export const TeachersPageHeader = ({
             'flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[11px] font-black shadow-lg transition-all active:scale-[0.97]',
             showAddForm
               ? 'bg-white/25 text-white hover:bg-white/35 dark:border dark:border-amber-500/40 dark:bg-amber-500/20 dark:text-amber-300'
-              : 'bg-white text-primary shadow-amber-500/20 hover:bg-white/95 dark:bg-amber-500 dark:text-zinc-950 dark:hover:bg-amber-400',
+              : 'bg-white text-primary shadow-amber-500/20 hover:bg-white/95 dark:bg-accent dark:text-on-accent dark:hover:bg-accent-hover',
           )}
         >
           {showAddForm ? <X size={13} /> : <Plus size={13} />}

@@ -231,7 +231,7 @@ export const DesktopLibraryLanding = ({
       {/* ===== TOP HEADING ===== */}
       <section className="mb-5 text-center">
         <h1 className="mb-3 font-heading text-3xl font-black text-main lg:text-4xl">
-          مركز ملفات <span className="text-primary">{academyName}</span> السابعة
+          مركز ملفات <span className="text-primary">{academyName}</span>
         </h1>
         <p className="mx-auto max-w-lg text-sm font-medium leading-relaxed text-muted lg:text-base">
           دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل في

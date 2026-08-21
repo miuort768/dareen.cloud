@@ -91,7 +91,7 @@ export const MobileHero = ({
                   rel="noopener noreferrer"
                   className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-[11px] font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
                 >
-                  طلب حصة مجانية فردية
+                  حصة مجانية فردية
                 </a>
                 <a
                   href="#mobile-categories"
@@ -316,8 +316,6 @@ export const DesktopHero = ({
                   <span className="relative z-10 text-accent">{academyName}</span>
                   <span className="bg-accent/20 absolute inset-x-0 -bottom-1 -z-0 h-3 rounded-full blur-[2px]" />
                 </span>
-                <br />
-                السابعة
               </h1>
 
               <p className="mb-8 max-w-md text-base font-medium leading-relaxed text-white/60 lg:text-lg">
@@ -493,7 +491,7 @@ export const DesktopHero = ({
 
   // For other views (curriculums, grades, languages)
   return (
-    <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 lg:flex-row lg:gap-12">
+    <div className="mx-auto flex w-full flex-col items-center gap-8 lg:flex-row lg:gap-12">
       <div className="w-full text-center lg:w-[55%] lg:text-start">
         <div className="mb-5 inline-flex items-center gap-2 rounded-2xl border border-primary/20 bg-primary-soft px-4 py-2">
           <BookOpen size={13} className="text-primary" />

@@ -38,6 +38,7 @@ export const useChatSocketInit = () => {
         if (!audioRef.current) {
             try {
                 audioRef.current = new Audio('/notification.ogg');
+                audioRef.current.volume = 0.4;
             } catch (e) {
                 console.error('Audio initialization failed', e);
             }
@@ -142,7 +143,13 @@ export const useChatSocketInit = () => {
             queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
         };
 
-        const handleConnect = () => setIsConnected(true);
+        const handleConnect = () => {
+            setIsConnected(true);
+            queryClient.invalidateQueries({ queryKey: ['conversations', currentUserId] });
+            if (activeConvRef.current) {
+                queryClient.invalidateQueries({ queryKey: ['messages', activeConvRef.current] });
+            }
+        };
         const handleDisconnect = () => setIsConnected(false);
 
         setIsConnected(socket.connected);

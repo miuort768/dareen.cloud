@@ -163,8 +163,8 @@ export const SelectionGrid = ({
         </div>
 
         {/* Grid */}
-        <div className="mx-auto max-w-4xl">
-          <div className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mx-auto w-full px-6 lg:px-10">
+          <div className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {view === 'classrooms' &&
               currentClassrooms.map((cls) => (
                 <button

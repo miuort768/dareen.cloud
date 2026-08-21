@@ -47,7 +47,7 @@ export const getFilteredCourses = (category: string) =>
 
 export const heroSlides = [
   {
-    title: 'منصة دارين السابعة',
+    title: 'منصة دارين',
     subtitle: 'دروس خصوصية فردية اونلاين',
     desc: 'أفضل المعلمين وأحدث التقنيات لتفوق أبنائكم.',
     image: '/hero-child.png',

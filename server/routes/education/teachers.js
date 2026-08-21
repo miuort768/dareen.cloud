@@ -177,7 +177,7 @@ router.get('/:id/activity', authMiddleware, checkRole(['admin']), async (req, re
           ]
         },
         select: { lastLoginAt: true, updatedAt: true },
-        orderBy: { lastLoginAt: 'desc' },
+        orderBy: { lastLoginAt: { sort: 'desc', nulls: 'last' } },
       }),
       prisma.message.findFirst({
         where: { senderId: req.params.id },

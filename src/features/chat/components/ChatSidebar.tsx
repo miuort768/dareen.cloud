@@ -57,10 +57,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             />
           </div>
           <div className="flex flex-col text-start">
-            <span className="text-sm font-normal leading-tight text-main">
+            <span className="text-xs font-semibold leading-tight text-main">
               واتساب دارين السابعة
             </span>
-            <span className="text-micro font-thin text-muted">تواصل أسهل وأسرع</span>
+            <span className="text-[10px] font-thin text-muted">تواصل أسهل وأسرع</span>
           </div>
 
           <div className="ms-3 flex items-center gap-1.5 border-s border-border ps-2 dark:border-white/10">

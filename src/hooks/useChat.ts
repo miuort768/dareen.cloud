@@ -24,7 +24,7 @@ export const useMessages = (conversationId?: string) => {
             return api.get<ChatMessage[]>(`/chat/conversations/${conversationId}/messages`);
         },
         enabled: !!conversationId,
-        staleTime: 300000,
+        staleTime: 10000,
     });
 };
 

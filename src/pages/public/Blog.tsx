@@ -428,7 +428,7 @@ export const Blog = () => {
               setSearchParams={setSearchParams}
             />
           ) : isHeroView ? (
-            <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="container relative z-10 mx-auto max-w-[1400px] px-6 lg:px-10">
               <DesktopHero
                 view={view}
                 gridItems={gridItems}
@@ -438,7 +438,7 @@ export const Blog = () => {
               />
             </div>
           ) : view === 'results' || view === 'language-sections' ? (
-            <div className="mx-auto max-w-6xl">
+            <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
               <BlogBreadcrumb
                 items={breadcrumbItems}
                 currentName={currentSubjectName}
