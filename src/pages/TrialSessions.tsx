@@ -440,49 +440,53 @@ export const TrialSessions = () => {
       <div className="relative z-10 mx-auto max-w-page px-4 md:px-6">
         {/* ===== HEADER ===== */}
         <motion.div variants={itemVariants} className="pb-2 pt-4">
-          <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          {/* Title row */}
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft">
-                <BookOpen size={16} className="text-primary" />
-              </div>
               <div>
-                <h1 className="font-outfit text-lg font-black text-main md:text-xl">
-                  جلسات المراجعة
-                </h1>
+                <h1 className="font-outfit text-lg font-black text-main md:text-xl">جلسات المراجعة</h1>
                 <p className="text-[11px] text-muted">{stats?.total || 0} حصة مسجلة في النظام</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => {
-                  setConfirmDeleteAll(true)
-                  setDeleteAllTyped('')
-                }}
-                className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-error bg-error px-3.5 text-[11px] font-extrabold text-on-error shadow-md transition-all duration-200 hover:bg-error-hover active:scale-95"
-                title="حذف جميع الحصص"
-              >
-                <Trash2 size={13} /> حذف الكل
-              </button>
-              <button
-                onClick={() => {
-                  setEditingId(null)
-                  resetForm()
-                  setShowModal(true)
-                }}
-                className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-primary px-4 text-[11px] font-bold text-on-primary shadow-sm shadow-primary/10 transition-all duration-200 hover:bg-primary-hover active:scale-95"
-              >
-                <Plus size={13} /> جدولة جديدة
-              </button>
-              <button className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-border bg-surface px-4 text-[11px] font-bold text-muted transition-all duration-200 hover:border-primary/20 hover:text-main">
-                <Download size={13} /> تحميل التقرير
-              </button>
-            </div>
+          </div>
+          {/* Action buttons row — matches Image 2 */}
+          <div className="mt-4 flex items-center gap-2">
+            <button
+              onClick={() => {
+                setEditingId(null)
+                resetForm()
+                setShowModal(true)
+              }}
+              className="flex flex-1 h-11 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-sm shadow-primary/10 transition-all hover:bg-primary-hover active:scale-95"
+            >
+              <Plus size={16} /> جدولة جديدة
+            </button>
+            <button
+              onClick={() => {
+                setConfirmDeleteAll(true)
+                setDeleteAllTyped('')
+              }}
+              className="flex flex-1 h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-md transition-all hover:bg-error-hover active:scale-95"
+            >
+              <Trash2 size={16} /> حذف الكل
+            </button>
+            <button className="flex flex-1 h-11 items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 text-xs font-bold text-muted transition-all hover:border-primary/20 hover:text-main">
+              <Download size={16} /> تحميل التقرير
+            </button>
           </div>
         </motion.div>
 
         {/* ===== KPI STATS ===== */}
-        <motion.div variants={itemVariants} className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <motion.div variants={itemVariants} className="mb-5 grid grid-cols-2 gap-3">
           {[
+            {
+              label: 'قيد الانتظار',
+              value: stats?.pending || 0,
+              sub: 'بانتظار الموعد',
+              icon: Clock,
+              color: 'text-warning',
+              iconBg: 'bg-warning-soft',
+            },
             {
               label: 'معدل التحويل',
               value: `${conversionRate}%`,
@@ -492,12 +496,12 @@ export const TrialSessions = () => {
               iconBg: 'bg-primary-soft',
             },
             {
-              label: 'قيد الانتظار',
-              value: stats?.pending || 0,
-              sub: 'بانتظار الموعد',
-              icon: Clock,
-              color: 'text-warning',
-              iconBg: 'bg-warning/10',
+              label: 'إجمالي الحصص',
+              value: stats?.total || 0,
+              sub: 'جميع الحصص',
+              icon: BookOpen,
+              color: 'text-primary',
+              iconBg: 'bg-primary-soft',
             },
             {
               label: 'تمت بنجاح',
@@ -507,31 +511,21 @@ export const TrialSessions = () => {
               color: 'text-success',
               iconBg: 'bg-success/10',
             },
-            {
-              label: 'إجمالي الحصص',
-              value: stats?.total || 0,
-              sub: 'جميع الحصص',
-              icon: BookOpen,
-              color: 'text-primary',
-              iconBg: 'bg-primary-soft',
-            },
           ].map((stat, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
-              className="rounded-2xl border border-border bg-card p-3.5 transition-all duration-300 hover:shadow-elevation-1"
+              className="rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:shadow-elevation-1"
             >
-              <div className="mb-2 flex items-center gap-1.5">
-                <div
-                  className={cn('flex h-7 w-7 items-center justify-center rounded-lg', stat.iconBg)}
-                >
-                  <stat.icon size={12} className={stat.color} />
+              <div className="mb-3 flex items-center justify-between">
+                <span className="truncate text-xs font-bold text-main">{stat.label}</span>
+                <div className={cn('flex h-8 w-8 items-center justify-center rounded-xl', stat.iconBg)}>
+                  <stat.icon size={14} className={stat.color} />
                 </div>
-                <span className="truncate text-[10px] font-medium text-muted">{stat.label}</span>
               </div>
-              <div className={cn('font-outfit text-xl font-black tabular-nums', stat.color)}>
+              <div className={cn('font-outfit text-2xl font-black tabular-nums', stat.color)}>
                 {typeof stat.value === 'number' ? <Counter value={stat.value} /> : stat.value}
               </div>
               <div className="mt-1 text-[10px] font-medium text-muted">{stat.sub}</div>

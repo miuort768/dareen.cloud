@@ -397,12 +397,7 @@ export const Teachers = () => {
             setShowAddForm(!showAddForm)
             if (showAddForm) setEditId(null)
           }}
-        />
-        <TeacherStats
-          totalTeachers={teachers.length}
-          totalStudents={totalStudentsCount}
-          uniqueSubjects={subjectsList.length}
-          averagePrice={averagePrice}
+          totalStudents={students.length}
         />
         <TeacherToolbar
           searchTerm={searchTerm}

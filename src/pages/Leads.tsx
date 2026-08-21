@@ -516,7 +516,6 @@ export const Leads = () => {
           </motion.div>
         </div>
 
-        {/* ===== KPI STATS ===== */}
         <div className="mb-5 grid grid-cols-2 gap-3">
           {[
             {
@@ -524,6 +523,9 @@ export const Leads = () => {
               value: stats?.total || 0,
               sub: `${activeCount} نشط`,
               icon: Users,
+              iconBg: 'bg-primary-soft',
+              iconColor: 'text-primary',
+              valueColor: 'text-main',
               delay: 0.15,
             },
             {
@@ -531,14 +533,20 @@ export const Leads = () => {
               value: statusCounts['new'] || 0,
               sub: 'هذا الشهر',
               icon: Activity,
-              delay: 0.2,
+              iconBg: 'bg-primary-soft',
+              iconColor: 'text-primary',
+              valueColor: 'text-main',
               accent: true,
+              delay: 0.2,
             },
             {
               label: 'تم التحويل',
               value: stats?.converted || 0,
               sub: 'إلى مشتركين',
               icon: Phone,
+              iconBg: 'bg-primary-soft',
+              iconColor: 'text-primary',
+              valueColor: 'text-main',
               delay: 0.25,
             },
             {
@@ -546,6 +554,9 @@ export const Leads = () => {
               value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`,
               sub: 'معدل النجاح',
               icon: BarChart3,
+              iconBg: 'bg-primary-soft',
+              iconColor: 'text-primary',
+              valueColor: 'text-main',
               delay: 0.3,
             },
           ].map((stat, i) => (
@@ -554,23 +565,19 @@ export const Leads = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: stat.delay }}
-              className="rounded-2xl border border-border bg-card p-3.5 transition-all duration-300 hover:shadow-elevation-1"
+              className="rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:shadow-elevation-1"
             >
-              <div className="mb-2 flex items-center gap-1.5 text-[10px] text-muted">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-soft">
-                  <stat.icon size={12} className="text-primary" />
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-xs font-bold text-main">{stat.label}</span>
+                <div className={cn('flex h-8 w-8 items-center justify-center rounded-xl', stat.iconBg)}>
+                  <stat.icon size={14} className={stat.iconColor} />
                 </div>
-                <span className="truncate font-medium">{stat.label}</span>
               </div>
-              <div className="font-outfit text-xl font-black tabular-nums text-main">
+              <div className={cn('font-outfit text-2xl font-black tabular-nums', stat.valueColor)}>
                 {stat.value}
               </div>
-              <div
-                className={cn(
-                  'mt-1 text-[10px] font-medium',
-                  stat.accent ? 'text-success' : 'text-muted',
-                )}
-              >
+              <div className={cn('mt-1 flex items-center gap-1 text-[10px] font-medium', stat.accent ? 'text-success' : 'text-muted')}>
+                {stat.accent && <span>↗</span>}
                 {stat.sub}
               </div>
             </motion.div>
