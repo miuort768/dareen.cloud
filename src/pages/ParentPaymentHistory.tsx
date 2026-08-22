@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CheckCircle, Clock, AlertCircle, FileText, ArrowLeft, Wallet, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -168,6 +168,7 @@ export const ParentPaymentHistory = () => {
 
     const isEmpty = invoices.length === 0;
     const noResults = filteredInvoices.length === 0 && !isEmpty;
+    const reportCurrency = invoices[0]?.currency || CURRENCY_SYMBOL;
 
     if (authLoading || loading) {
         return (
@@ -238,7 +239,7 @@ export const ParentPaymentHistory = () => {
                             className="text-3xl font-bold text-main dark:text-main tabular-nums tracking-tight"
                         >
                             {stats.total.toLocaleString()}{' '}
-                            <span className="text-sm text-muted dark:text-main/40 font-bold me-1">{CURRENCY_SYMBOL}</span>
+                            <span className="text-sm text-muted dark:text-main/40 font-bold me-1">{reportCurrency}</span>
                         </motion.p>
                         <div className="flex items-center justify-center gap-3 mt-3">
                             <div className="flex items-center gap-1">
@@ -307,7 +308,7 @@ export const ParentPaymentHistory = () => {
                                         <p className="text-[9px] font-bold text-muted dark:text-main/40">{kpi.title}</p>
                                         <p className="text-sm font-bold text-main dark:text-main tabular-nums leading-none mt-0.5">
                                             {kpi.value.toLocaleString()}{' '}
-                                            <span className="text-[8px] text-muted dark:text-main/40 font-bold">{CURRENCY_SYMBOL}</span>
+                                            <span className="text-[8px] text-muted dark:text-main/40 font-bold">{reportCurrency}</span>
                                         </p>
                                         <p className="text-[8px] font-bold text-muted dark:text-main/40 mt-1">{kpi.count} فاتورة</p>
                                     </div>
@@ -427,7 +428,7 @@ export const ParentPaymentHistory = () => {
                                                 </td>
                                                 <td className="px-4 py-3 text-center font-mono text-[10px] font-bold text-main dark:text-main tabular-nums">
                                                     {inv.amount.toLocaleString()}{' '}
-                                                    <span className="text-[8px] text-muted dark:text-main/40">{CURRENCY_SYMBOL}</span>
+                                                    <span className="text-[8px] text-muted dark:text-main/40">{inv.currency || CURRENCY_SYMBOL}</span>
                                                 </td>
                                                 <td className="px-4 py-3 text-center text-[8px] text-muted dark:text-main/40">{inv.date}</td>
                                                 <td className="px-4 py-3 text-center text-[8px] text-muted dark:text-main/40">{inv.dueDate}</td>
@@ -499,7 +500,7 @@ export const ParentPaymentHistory = () => {
                                                     <p className="text-[7px] font-bold text-muted dark:text-main/40 mb-0.5">المبلغ</p>
                                                     <span className="font-mono text-xs font-bold text-main dark:text-main tabular-nums">
                                                         {inv.amount.toLocaleString()}{' '}
-                                                        <span className="text-[8px] text-muted dark:text-main/40">{CURRENCY_SYMBOL}</span>
+                                                        <span className="text-[8px] text-muted dark:text-main/40">{inv.currency || CURRENCY_SYMBOL}</span>
                                                     </span>
                                                 </div>
                                                 <div className="w-px h-5 bg-border/40 dark:bg-white/10" />

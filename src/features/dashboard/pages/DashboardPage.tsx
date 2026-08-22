@@ -48,7 +48,7 @@ export const Dashboard = () => {
         fetchDashboardData
     } = useDashboardData(currentUser);
 
-    const [view, setView] = useState<'standard' | 'executive'>('standard');
+    const [view, setView] = useState<'standard' | 'executive'>('executive');
 
     if (!currentUser || (!currentUser.permissions?.includes('*') && !currentUser.permissions?.includes('dashboard'))) {
         return (

@@ -300,7 +300,7 @@ export const TeacherInvoices = () => {
         paymentMethod: invoice.paymentMethod,
         status: invoice.status,
         personalExpenses: invoice.personalExpenses ? invoice.personalExpenses.toString() : '',
-        currency: invoice.currency || 'SAR',
+        currency: invoice.currency || 'EGP',
       })
       setShowForm(true)
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -337,7 +337,7 @@ export const TeacherInvoices = () => {
         paymentMethod: formData.paymentMethod,
         status: formData.status,
         personalExpenses: personalExpValue,
-        currency: formData.currency || 'SAR',
+        currency: formData.currency || 'EGP',
         date: new Date().toISOString().split('T')[0],
       }
       try {

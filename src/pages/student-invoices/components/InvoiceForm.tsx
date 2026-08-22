@@ -101,7 +101,7 @@ export const InvoiceForm = ({
         <div>
           <FieldLabel>العملة</FieldLabel>
           <select
-            value={formData.currency || 'SAR'}
+            value={formData.currency || 'EGP'}
             aria-label="العملة"
             onChange={e => setFormData({ ...formData, currency: e.target.value })}
             className={inputClasses}

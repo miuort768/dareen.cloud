@@ -48,7 +48,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
         price: String(initialData.price),
         username: initialData.username || '',
         password: initialData.password || '',
-        currency: initialData.currency || 'SAR',
+        currency: initialData.currency || 'EGP',
         points: String(initialData.points ?? 0),
       })
       setEnableLogin(!!initialData.username)
@@ -60,7 +60,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
     onSubmit({
       ...formData,
       price: Number(formData.price),
-      currency: formData.currency || 'SAR',
+      currency: formData.currency || 'EGP',
       username: enableLogin ? formData.username : '',
       password: enableLogin ? formData.password : '',
       points: Number(formData.points),

@@ -15,6 +15,7 @@ interface InvoicePreviewModalProps {
         dueDate: string;
         description: string;
         status: 'paid' | 'pending' | 'overdue';
+        currency?: string;
         notes?: string;
         items?: { description: string; date?: string; amount: number }[];
     };
@@ -153,7 +154,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                                                 </td>
                                                 {!hidePricing && (
                                                     <td className="py-3 text-end text-xs font-medium font-mono text-main">
-                                                        {item.amount.toLocaleString()} <span className="text-micro">{CURRENCY_SYMBOL}</span>
+                                                        {item.amount.toLocaleString()} <span className="text-micro">{invoice.currency || CURRENCY_SYMBOL}</span>
                                                     </td>
                                                 )}
                                             </tr>
@@ -175,7 +176,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                         {!hidePricing && (
                             <div className="w-full max-w-[200px] flex justify-between items-center px-2 py-3 bg-surface">
                                 <span className="text-xs font-medium uppercase tracking-widest">الإجمالي</span>
-                                <span className="text-lg font-medium font-mono text-main">{invoice.amount.toLocaleString()} {CURRENCY_SYMBOL}</span>
+                                <span className="text-lg font-medium font-mono text-main">{invoice.amount.toLocaleString()} {invoice.currency || CURRENCY_SYMBOL}</span>
                             </div>
                         )}
                     </div>

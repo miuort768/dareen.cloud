@@ -37,7 +37,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                 curriculum: normalizeCurriculum(initialData.curriculum || ''),
                 notes: initialData.notes || '',
                 sessionPrice: String(initialData.sessionPrice || 0),
-                currency: initialData.currency || 'SAR',
+                currency: initialData.currency || 'EGP',
                 username: initialData.username || '',
                 password: '' 
             });
