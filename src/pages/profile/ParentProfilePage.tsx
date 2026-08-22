@@ -149,9 +149,28 @@ export const ParentProfilePage = () => {
     const infoFields = [
         { icon: <User size={13} className="text-primary" />, label: 'الاسم', value: currentUser?.name || currentUser?.username || 'ولي الأمر' },
         { icon: <Phone size={13} className="text-success" />, label: 'رقم الهاتف', value: currentUser?.username || '—' },
-        { icon: <Mail size={13} className="text-info" />, label: 'البريد الإلكتروني', value: currentUser?.username ? `${currentUser.username}@dareen.com` : '—' },
         { icon: <Users size={13} className="text-warning" />, label: 'عدد الأبناء', value: `${children.length}` },
     ];
+
+    const [editingName, setEditingName] = useState(false);
+    const [nameDraft, setNameDraft] = useState('');
+    const [isSavingName, setIsSavingName] = useState(false);
+    const [nameOverride, setNameOverride] = useState<string | null>(null);
+
+    const handleSaveName = async () => {
+        const trimmed = nameDraft.trim();
+        if (!trimmed || isSavingName) return;
+        setIsSavingName(true);
+        try {
+            await api.put('/parents/me', { name: trimmed });
+            setNameOverride(trimmed);
+            setEditingName(false);
+        } catch (e) {
+            console.error('Error updating name:', e);
+        } finally {
+            setIsSavingName(false);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -168,7 +187,7 @@ export const ParentProfilePage = () => {
         );
     }
 
-    const name = currentUser?.name || currentUser?.username || 'ولي الأمر';
+    const name = nameOverride || currentUser?.name || currentUser?.username || 'ولي الأمر';
 
     return (
         <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
@@ -183,6 +202,11 @@ export const ParentProfilePage = () => {
                         subtitle={`${children.length} ${children.length === 1 ? 'ابن' : 'أبناء'} مسجلين`}
                         points={totalPoints}
                         rank={rank}
+                        hideNavButtons
+                        onEditName={() => {
+                            setNameDraft(name);
+                            setEditingName(true);
+                        }}
                     />
                 </motion.div>
 
@@ -265,6 +289,40 @@ export const ParentProfilePage = () => {
                     />
                 </motion.div>
             </div>
+
+            {/* Edit name modal */}
+            {editingName && (
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm" onClick={() => setEditingName(false)}>
+                    <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-5 shadow-elevation-2" onClick={(e) => e.stopPropagation()}>
+                        <h3 className="mb-4 text-sm font-bold text-main">تعديل الاسم</h3>
+                        <input
+                            type="text"
+                            value={nameDraft}
+                            onChange={(e) => setNameDraft(e.target.value)}
+                            onKeyDown={(e) => { if (e.key === 'Enter') handleSaveName(); }}
+                            placeholder="أدخل الاسم الجديد"
+                            aria-label="الاسم"
+                            autoFocus
+                            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
+                        />
+                        <div className="mt-4 flex gap-2">
+                            <button
+                                onClick={() => setEditingName(false)}
+                                className="flex-1 rounded-xl bg-surface py-2.5 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-95"
+                            >
+                                إلغاء
+                            </button>
+                            <button
+                                onClick={handleSaveName}
+                                disabled={!nameDraft.trim() || isSavingName}
+                                className="flex-1 rounded-xl bg-primary py-2.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95 disabled:opacity-50"
+                            >
+                                {isSavingName ? 'جاري الحفظ...' : 'حفظ'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
