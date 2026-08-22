@@ -9,11 +9,8 @@ import {
   Phone,
   User,
   CalendarDays,
-  CheckCircle2,
   Play,
   Flame,
-  XCircle,
-  Calendar,
 } from 'lucide-react'
 import { api } from '../../lib/api'
 import { useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext'
@@ -23,7 +20,6 @@ import { StudentDashboardHeader } from '../student-dashboard/StudentDashboardHea
 import { ProfileHero } from './ProfileHero'
 import { ProfileAchievements } from './ProfileAchievements'
 import { ProfileProgress } from './ProfileProgress'
-import { ProfileRecentActivity } from './ProfileRecentActivity'
 import { ProfileBottomMotivation } from './ProfileBottomMotivation'
 
 interface StudentData {
@@ -165,28 +161,6 @@ export const StudentProfilePage = () => {
     { label: 'النقاط', value: Math.min(Math.round((points / 1000) * 100), 100) },
   ]
 
-  const activities = sessions.slice(0, 5).map((s, i) => ({
-    id: s.id || `act-${i}`,
-    icon:
-      s.status === 'completed' ? (
-        <CheckCircle2 size={14} className="text-success" />
-      ) : s.status === 'cancelled' ? (
-        <XCircle size={14} className="text-error" />
-      ) : (
-        <Calendar size={14} className="text-info" />
-      ),
-    title:
-      s.status === 'completed'
-        ? `تم إنهاء حصة ${s.subject || ''}`
-        : s.status === 'cancelled'
-          ? `تم إلغاء حصة ${s.subject || ''}`
-          : `حصة ${s.subject || ''} مجدولة`,
-    description: s.teacherName ? `مع ${s.teacherName}` : undefined,
-    timestamp: s.date || `منذ ${i + 1} أيام`,
-    type: (s.status === 'completed' ? 'success' : s.status === 'cancelled' ? 'warning' : 'info') as
-      'success' | 'warning' | 'info',
-  }))
-
   const infoFields = [
     {
       icon: <User size={13} className="text-primary" />,
@@ -214,9 +188,9 @@ export const StudentProfilePage = () => {
       value: studentData?.parentPhone || '—',
     },
     {
-      icon: <CalendarDays size={13} className="text-info" />,
-      label: 'المدينة',
-      value: studentData?.city || '—',
+      icon: <Trophy size={13} className="text-warning" />,
+      label: 'الرتبة',
+      value: rank?.name || '—',
     },
   ]
 
@@ -242,6 +216,25 @@ export const StudentProfilePage = () => {
 
   const name = studentData?.name || currentUser?.name || 'الطالب'
 
+  const [editingName, setEditingName] = useState(false)
+  const [nameDraft, setNameDraft] = useState('')
+  const [isSavingName, setIsSavingName] = useState(false)
+
+  const handleSaveName = async () => {
+    const trimmed = nameDraft.trim()
+    if (!trimmed || isSavingName) return
+    setIsSavingName(true)
+    try {
+      await api.put('/student-portal/me', { name: trimmed })
+      setStudentData((prev) => (prev ? { ...prev, name: trimmed } : prev))
+      setEditingName(false)
+    } catch (e) {
+      console.error('Error updating name:', e)
+    } finally {
+      setIsSavingName(false)
+    }
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-background" dir="rtl">
       <div className="hidden md:block">
@@ -255,9 +248,46 @@ export const StudentProfilePage = () => {
         subtitle={`${studentData?.grade || ''} ${studentData?.curriculum ? `• ${studentData.curriculum}` : ''}`}
         rank={rank}
         attendanceRate={stats.attendanceRate}
+        hideNavButtons
+        onEditName={() => {
+          setNameDraft(name)
+          setEditingName(true)
+        }}
       />
 
       <div className="mx-auto max-w-page space-y-4 px-4 pb-24 pt-4">
+        {/* Motivation — directly under hero */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05, duration: 0.4 }}
+        >
+          <ProfileBottomMotivation
+            icon={<Target size={22} />}
+            title={
+              nextRank.next
+                ? `تبقى ${nextRank.pointsNeeded} نقطة للوصول إلى ${nextRank.next.name}`
+                : 'أحسنت! وصلت لأعلى المراتب'
+            }
+            description={
+              nextRank.next
+                ? 'واصل التعلم واجمع النقاط لتصل إلى الرتبة التالية'
+                : `أنت نجم ${academyName}!`
+            }
+            progress={
+              nextRank.next
+                ? Math.min(
+                    Math.round((points / (points + (nextRank.pointsNeeded || 1))) * 100),
+                    100,
+                  )
+                : 100
+            }
+            progressLabel="التقدم نحو الرتبة التالية"
+            targetLabel={nextRank.next ? `${nextRank.pointsNeeded} نقطة متبقية` : 'أحسنت!'}
+            color={nextRank.next ? 'primary' : 'success'}
+          />
+        </motion.div>
+
         {/* Stats — horizontal scroll */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -406,50 +436,49 @@ export const StudentProfilePage = () => {
         >
           <ProfileProgress items={progressItems} />
         </motion.div>
-
-        {/* Recent Activity */}
-        {activities.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.4 }}
-          >
-            <ProfileRecentActivity activities={activities} />
-          </motion.div>
-        )}
-
-        {/* Motivation */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.4 }}
-        >
-          <ProfileBottomMotivation
-            icon={<Target size={22} />}
-            title={
-              nextRank.next
-                ? `تبقى ${nextRank.pointsNeeded} نقطة للوصول إلى ${nextRank.next.name}`
-                : 'أحسنت! وصلت لأعلى المراتب'
-            }
-            description={
-              nextRank.next
-                ? 'واصل التعلم واجمع النقاط لتصل إلى الرتبة التالية'
-                : `أنت نجم ${academyName}!`
-            }
-            progress={
-              nextRank.next
-                ? Math.min(
-                    Math.round((points / (points + (nextRank.pointsNeeded || 1))) * 100),
-                    100,
-                  )
-                : 100
-            }
-            progressLabel="التقدم نحو الرتبة التالية"
-            targetLabel={nextRank.next ? `${nextRank.pointsNeeded} نقطة متبقية` : 'أحسنت!'}
-            color={nextRank.next ? 'primary' : 'success'}
-          />
-        </motion.div>
       </div>
+
+      {/* Edit name modal */}
+      {editingName && (
+        <div
+          className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+          onClick={() => setEditingName(false)}
+        >
+          <div
+            className="w-full max-w-sm rounded-2xl border border-border bg-card p-5 shadow-elevation-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="mb-4 text-sm font-bold text-main">تعديل الاسم</h3>
+            <input
+              type="text"
+              value={nameDraft}
+              onChange={(e) => setNameDraft(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSaveName()
+              }}
+              placeholder="أدخل الاسم الجديد"
+              aria-label="الاسم"
+              autoFocus
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
+            />
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() => setEditingName(false)}
+                className="flex-1 rounded-xl bg-surface py-2.5 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-95"
+              >
+                إلغاء
+              </button>
+              <button
+                onClick={handleSaveName}
+                disabled={!nameDraft.trim() || isSavingName}
+                className="flex-1 rounded-xl bg-primary py-2.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95 disabled:opacity-50"
+              >
+                {isSavingName ? 'جاري الحفظ...' : 'حفظ'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
