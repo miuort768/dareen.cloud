@@ -42,7 +42,7 @@ export const EvaluationsHeader = ({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
-      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-primary dark:via-accent dark:to-primary-deep"
+      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 pt-5 md:p-6 dark:from-primary dark:via-primary-deep dark:to-primary-hover"
     >
       <div className="absolute inset-0 opacity-[0.06]">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
