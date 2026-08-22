@@ -24,6 +24,7 @@ interface StudentDashboardHeaderProps {
 const navTabs = [
   { id: 'home', label: 'الرئيسية', icon: Home, path: '/student-dashboard' },
   { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/schedule' },
+  { id: 'appointments', label: 'المواعيد', icon: CalendarDays, path: '/appointments' },
   { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
   { id: 'announcements', label: 'الإعلانات', icon: Bell, path: '/parent-announcements' },
   { id: 'profile', label: 'الحساب', icon: User, path: '/student-profile' },

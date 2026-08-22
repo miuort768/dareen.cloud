@@ -23,6 +23,10 @@ export const MobileAppointments = () => {
     const { data: students = [], isLoading: loading } = useQuery<Student[]>({
         queryKey: ['appointments-students'],
         queryFn: async () => {
+            if (currentUser?.role === 'student') {
+                const me = await api.get<unknown>('/student-portal/me');
+                return [me] as Student[];
+            }
             const raw = await api.get<unknown>('/students');
             return Array.isArray(raw) ? (raw as Student[]) : ((raw as { data?: Student[] } | null)?.data || []);
         },
@@ -45,6 +49,7 @@ export const MobileAppointments = () => {
             return sessions || [];
         },
         refetchInterval: 15000,
+        enabled: currentUser?.role === 'admin' || currentUser?.role === 'teacher',
     });
 
     const completeMutation = useMutation({
@@ -56,6 +61,7 @@ export const MobileAppointments = () => {
         onRefresh: () => queryClient.invalidateQueries({ queryKey: ['appointments-students'] }),
     });
 
+    const canComplete = currentUser?.role === 'admin' || currentUser?.role === 'teacher';
     const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
 
     const allAppointments: AppointmentEvent[] = useMemo(() =>
@@ -130,6 +136,7 @@ export const MobileAppointments = () => {
                             uniqueTeachers={uniqueTeachers} />
                         <AppointmentListView activeTab={activeTab} appointmentsByDay={appointmentsByDay}
                             onComplete={handleCompleteSession}
+                            canComplete={canComplete}
                             onSelect={(app) => { triggerHaptic('light'); setSelectedAppointment(app); setShowDetails(true); }} />
                     </>
                 )}

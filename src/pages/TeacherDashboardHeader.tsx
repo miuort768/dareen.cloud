@@ -29,6 +29,7 @@ const navTabs = [
   { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/schedule' },
   { id: 'attendance', label: 'الحضور والغياب', icon: UserCheck, path: '/attendance' },
   { id: 'tasks', label: 'المهام', icon: ListTodo, path: '/tasks' },
+  { id: 'appointments', label: 'المواعيد', icon: CalendarDays, path: '/appointments' },
   { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
   { id: 'evaluations', label: 'التقييمات', icon: Award, path: '/evaluations' },
   { id: 'payments', label: 'سجل الدفع', icon: Wallet, path: '/teacher-payment-history' },

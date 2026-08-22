@@ -21,6 +21,7 @@ interface AppointmentScheduleGridProps {
     onSelectAppointment: (appointment: AppointmentEvent) => void;
     onCompleteSession: (id: string, e: React.MouseEvent) => void;
     isPending?: boolean;
+    canComplete?: boolean;
 }
 
 const todayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
@@ -30,6 +31,7 @@ export const AppointmentScheduleGrid = ({
     onSelectAppointment,
     onCompleteSession,
     isPending = false,
+    canComplete = true,
 }: AppointmentScheduleGridProps) => {
     const total = appointmentsByDay.reduce((s, d) => s + d.appointments.length, 0);
 
@@ -139,15 +141,17 @@ export const AppointmentScheduleGrid = ({
                                                     {app.studentGrade}
                                                 </span>
                                             )}
-                                            <button
-                                                onClick={(e) => onCompleteSession(app.id, e)}
-                                                disabled={isPending}
-                                                aria-label={`إتمام موعد ${app.studentName}`}
-                                                className="flex items-center gap-1 rounded-xl bg-success px-2.5 py-1.5 text-micro font-bold text-on-success transition-all active:scale-95 hover:brightness-90 disabled:opacity-50"
-                                            >
-                                                <CheckCircle2 size={12} />
-                                                إتمام
-                                            </button>
+                                            {canComplete && (
+                                                <button
+                                                    onClick={(e) => onCompleteSession(app.id, e)}
+                                                    disabled={isPending}
+                                                    aria-label={`إتمام موعد ${app.studentName}`}
+                                                    className="flex items-center gap-1 rounded-xl bg-success px-2.5 py-1.5 text-micro font-bold text-on-success transition-all active:scale-95 hover:brightness-90 disabled:opacity-50"
+                                                >
+                                                    <CheckCircle2 size={12} />
+                                                    إتمام
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

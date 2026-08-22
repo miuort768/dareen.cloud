@@ -14,9 +14,10 @@ interface AppointmentListViewProps {
     appointmentsByDay: DayGroup[];
     onComplete: (id: string, e: React.MouseEvent) => void;
     onSelect: (app: AppointmentEvent) => void;
+    canComplete?: boolean;
 }
 
-export const AppointmentListView = ({ activeTab, appointmentsByDay, onComplete, onSelect }: AppointmentListViewProps) => (
+export const AppointmentListView = ({ activeTab, appointmentsByDay, onComplete, onSelect, canComplete = true }: AppointmentListViewProps) => (
     <div className="px-4 space-y-3">
         <AnimatePresence mode="wait">
             <motion.div key={activeTab} initial={{ opacity: 0, y: 12 }}
@@ -50,12 +51,14 @@ export const AppointmentListView = ({ activeTab, appointmentsByDay, onComplete, 
                                         </span>
                                     }
                                     trailing={activeTab === 'upcoming' ? (
-                                        <button
-                                            onClick={(e) => onComplete(app.id, e)}
-                                            className="px-2.5 py-1 bg-success text-on-success text-micro font-bold rounded-xl flex items-center gap-1 transition-transform active:scale-95"
-                                        >
-                                            <CheckCircle2 size={10} strokeWidth={1.5} /> إتمام
-                                        </button>
+                                        canComplete ? (
+                                            <button
+                                                onClick={(e) => onComplete(app.id, e)}
+                                                className="px-2.5 py-1 bg-success text-on-success text-micro font-bold rounded-xl flex items-center gap-1 transition-transform active:scale-95"
+                                            >
+                                                <CheckCircle2 size={10} strokeWidth={1.5} /> إتمام
+                                            </button>
+                                        ) : null
                                     ) : (
                                         <span className="text-micro font-bold px-2 py-0.5 rounded-lg bg-success-soft text-success">تم</span>
                                     )}

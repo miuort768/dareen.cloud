@@ -28,6 +28,7 @@ const navTabs = [
   { id: 'children', label: 'أبنائي', icon: Users, path: '/parent-students' },
   { id: 'schedule', label: 'الجداول', icon: Calendar, path: '/schedule' },
   { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
+  { id: 'appointments', label: 'المواعيد', icon: CalendarDays, path: '/appointments' },
   { id: 'payments', label: 'سجل الدفع', icon: Wallet, path: '/parent-payment-history' },
   { id: 'announcements', label: 'الإعلانات', icon: Bell, path: '/parent-announcements' },
   { id: 'profile', label: 'الحساب', icon: User, path: '/parent-profile' },

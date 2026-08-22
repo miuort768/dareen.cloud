@@ -55,10 +55,16 @@ export const Appointments = () => {
     const { data: students = [], isLoading: loading, error: queryError } = useQuery({
         queryKey: ['appointments-students'],
         queryFn: async () => {
+            if (currentUser?.role === 'student') {
+                const me = await api.get('/student-portal/me');
+                return [me];
+            }
             const data = await api.get('/students');
             return Array.isArray(data) ? data : (data.data || []);
         },
     });
+
+    const canComplete = currentUser?.role === 'admin' || currentUser?.role === 'teacher';
 
     const { data: completedSessionIds = [] } = useQuery({
         queryKey: ['completed-sessions'],
@@ -77,6 +83,7 @@ export const Appointments = () => {
             return sessions || [];
         },
         refetchInterval: 15000,
+        enabled: canComplete,
     });
 
     const completeMutation = useMutation({
@@ -192,8 +199,8 @@ export const Appointments = () => {
 
     const fabActions = useMemo(() => [
         { icon: Calendar, label: 'مواعيد اليوم', onClick: () => { const today = new Date().toLocaleDateString('ar-EG', { weekday: 'long' }); setFilterDay(today); } },
-        { icon: CheckCircle, label: 'إتمام الكل', onClick: handleCompleteAll },
-    ], [allAppointments, completedSessionIds, completeMutation]);
+        ...(canComplete ? [{ icon: CheckCircle, label: 'إتمام الكل', onClick: handleCompleteAll }] : []),
+    ], [allAppointments, completedSessionIds, completeMutation, canComplete]);
 
     if (loading) return <PageLoader />;
 
@@ -278,6 +285,7 @@ export const Appointments = () => {
                             onSelectAppointment={handleSelectAppointment}
                             onCompleteSession={handleCompleteSession}
                             isPending={completeMutation.isPending}
+                            canComplete={canComplete}
                         />
                     </motion.div>
                     <AppointmentDetailPanel appointment={selectedAppointment} showDetails={showDetails} onClose={handleCloseDetails} />
