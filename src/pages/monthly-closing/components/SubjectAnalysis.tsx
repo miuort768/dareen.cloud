@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart3 } from 'lucide-react';
+import { BarChart3, AlertTriangle } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { SectionCard, SectionTitle } from './ClosingUI';
 import { ProgressBar } from '../../../shared/components/ui';
@@ -8,7 +8,9 @@ interface SubjectData {
     name: string;
     profit: number;
     income: number;
+    payout?: number;
     sessionsCount: number;
+    hasMixedCurrency?: boolean;
 }
 
 interface SubjectAnalysisProps {
@@ -42,12 +44,21 @@ export const SubjectAnalysis = React.memo(({ subjectAnalysis, reportCurrency = '
                             <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-primary-soft text-primary">
                                 <span className="text-xs font-semibold">{String(subj.name).charAt(0)}</span>
                             </div>
-                            <h3 className="text-xs font-bold text-main">{subj.name}</h3>
+                            <div className="flex-1 min-w-0">
+                                <h3 className="text-xs font-bold text-main truncate">{subj.name}</h3>
+                                {subj.hasMixedCurrency && (
+                                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-warning mt-0.5">
+                                        <AlertTriangle size={9} /> عملات متعددة
+                                    </span>
+                                )}
+                            </div>
                         </div>
                         <div className="space-y-2">
                             <div className="flex justify-between items-center text-micro">
                                 <span className="text-muted font-bold">صافي الربح</span>
-                                <span className="font-semibold text-primary">{subj.profit.toLocaleString()} {reportCurrency}</span>
+                                <span className={`font-semibold ${subj.hasMixedCurrency ? 'text-warning' : 'text-primary'}`}>
+                                    {subj.profit.toLocaleString()} {subj.hasMixedCurrency ? '~' : ''}{reportCurrency}
+                                </span>
                             </div>
                             <ProgressBar value={subj.income > 0 ? Math.min(100, (subj.profit / subj.income) * 100) : 0} variant="primary" size="sm" />
                             <div className="flex justify-between items-center text-micro text-muted mt-1">

@@ -50,6 +50,8 @@ export const StudentInvoices = () => {
         return matchesSearch && matchesStatus;
     }), [invoices, searchTerm, filterStatus]);
 
+    const studentCurrency = invoices.length > 0 && invoices[0].currency ? invoices[0].currency : CURRENCY_SYMBOL;
+
     const stats = useMemo(() => ({
         total: invoices.reduce((sum, i) => sum + i.amount, 0),
         paid: invoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.amount, 0),
@@ -116,7 +118,7 @@ export const StudentInvoices = () => {
                                             <Icon size={16} className={kpi.color} />
                                         </div>
                                     </div>
-                                    <p className="text-2xl font-bold text-main tabular-nums">{kpi.value.toLocaleString()} <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span></p>
+                                    <p className="text-2xl font-bold text-main tabular-nums">{kpi.value.toLocaleString()} <span className="text-xs text-muted">{studentCurrency}</span></p>
                                     <p className="text-[11px] text-muted mt-1">{kpi.label} · {kpi.count} فاتورة</p>
                                 </motion.div>
                             );
@@ -165,7 +167,7 @@ export const StudentInvoices = () => {
                                     <motion.tr key={inv.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.03 }}
                                         className="hover:bg-surface/50 transition-colors">
                                         <td className="px-4 py-3"><span className="text-sm font-bold text-main">{inv.description}</span></td>
-                                        <td className="px-4 py-3 text-center"><span className="font-mono text-sm font-bold text-main tabular-nums">{inv.amount.toLocaleString()} <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span></span></td>
+                                        <td className="px-4 py-3 text-center"><span className="font-mono text-sm font-bold text-main tabular-nums">{inv.amount.toLocaleString()} <span className="text-xs text-muted">{inv.currency || CURRENCY_SYMBOL}</span></span></td>
                                         <td className="px-4 py-3 text-center text-xs text-muted">{inv.date}</td>
                                         <td className="px-4 py-3 text-center text-xs text-muted">{inv.dueDate}</td>
                                         <td className="px-4 py-3 text-center">
@@ -205,7 +207,7 @@ export const StudentInvoices = () => {
                                 <div className="flex items-center gap-4">
                                     <div>
                                         <p className="text-[10px] text-muted mb-0.5">المبلغ</p>
-                                        <span className="font-mono text-sm font-bold text-main tabular-nums">{inv.amount.toLocaleString()} <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span></span>
+                                        <span className="font-mono text-sm font-bold text-main tabular-nums">{inv.amount.toLocaleString()} <span className="text-xs text-muted">{inv.currency || CURRENCY_SYMBOL}</span></span>
                                     </div>
                                     <div className="w-px h-8 bg-border" />
                                     <div>

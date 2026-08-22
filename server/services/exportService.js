@@ -129,12 +129,16 @@ async function fetchSessions({ q, from, to, teacherId, status }) {
     if (from || to) where.date = buildDateFilter(from, to);
     if (teacherId) where.teacherId = teacherId;
     if (status) where.status = status;
-    return prisma.session.findMany({
+    const sessions = await prisma.session.findMany({
         where,
         select: { id: true, studentName: true, teacherName: true, subject: true,
-                  date: true, time: true, status: true, price: true, teacherPrice: true },
+                  date: true, time: true, status: true, price: true, studentCurrency: true, teacherPrice: true },
         orderBy: { date: 'desc' },
     });
+    return sessions.map(s => ({
+        ...s,
+        priceStr: `${s.price} ${s.studentCurrency || 'EGP'}`
+    }));
 }
 
 async function fetchInvoices({ q, from, to, type, status }) {
@@ -143,23 +147,31 @@ async function fetchInvoices({ q, from, to, type, status }) {
         if (q) where.teacherName = { contains: q };
         if (from || to) where.date = buildDateFilter(from, to);
         if (status) where.status = status;
-        return prisma.teacherInvoice.findMany({
+        const invoices = await prisma.teacherInvoice.findMany({
             where,
             select: { id: true, teacherName: true, specialization: true,
-                      amount: true, status: true, date: true, paymentMethod: true },
+                      amount: true, currency: true, status: true, date: true, paymentMethod: true },
             orderBy: { date: 'desc' },
         });
+        return invoices.map(inv => ({
+            ...inv,
+            amountStr: `${inv.amount} ${inv.currency || 'EGP'}`,
+        }));
     }
     const where = {};
     if (q) where.studentName = { contains: q };
     if (from || to) where.date = buildDateFilter(from, to);
     if (status) where.status = status;
-    return prisma.studentInvoice.findMany({
+    const invoices = await prisma.studentInvoice.findMany({
         where,
-        select: { id: true, studentName: true, amount: true, status: true,
+        select: { id: true, studentName: true, amount: true, currency: true, status: true,
                   date: true, dueDate: true, paymentMethod: true },
         orderBy: { date: 'desc' },
     });
+    return invoices.map(inv => ({
+        ...inv,
+        amountStr: `${inv.amount} ${inv.currency || 'EGP'}`,
+    }));
 }
 
 async function fetchFinance({ from, to }) {
@@ -167,26 +179,31 @@ async function fetchFinance({ from, to }) {
     const [transactions, teacherInvoices, studentInvoices, sessions] = await Promise.all([
         prisma.manualTransaction.findMany({
             where: dateFilter ? { date: dateFilter } : {},
-            select: { id: true, type: true, category: true, amount: true, date: true, description: true },
+            select: { id: true, type: true, category: true, amount: true, currency: true, date: true, description: true },
             orderBy: { date: 'desc' },
         }),
         prisma.teacherInvoice.findMany({
             where: Object.assign({}, dateFilter ? { date: dateFilter } : {}),
-            select: { id: true, teacherName: true, amount: true, status: true, date: true },
+            select: { id: true, teacherName: true, amount: true, currency: true, status: true, date: true },
             orderBy: { date: 'desc' },
         }),
         prisma.studentInvoice.findMany({
             where: Object.assign({}, dateFilter ? { date: dateFilter } : {}),
-            select: { id: true, studentName: true, amount: true, status: true, date: true },
+            select: { id: true, studentName: true, amount: true, currency: true, status: true, date: true },
             orderBy: { date: 'desc' },
         }),
         prisma.session.findMany({
             where: Object.assign({}, dateFilter ? { date: dateFilter } : {}),
-            select: { id: true, studentName: true, teacherName: true, date: true, price: true, teacherPrice: true, status: true },
+            select: { id: true, studentName: true, teacherName: true, date: true, price: true, studentCurrency: true, teacherPrice: true, status: true },
             orderBy: { date: 'desc' },
         }),
     ]);
-    return { transactions, teacherInvoices, studentInvoices, sessions };
+    return {
+        transactions: transactions.map(t => ({ ...t, amountStr: `${t.amount} ${t.currency || 'EGP'}` })),
+        teacherInvoices: teacherInvoices.map(i => ({ ...i, amountStr: `${i.amount} ${i.currency || 'EGP'}` })),
+        studentInvoices: studentInvoices.map(i => ({ ...i, amountStr: `${i.amount} ${i.currency || 'EGP'}` })),
+        sessions: sessions.map(s => ({ ...s, priceStr: `${s.price} ${s.studentCurrency || 'EGP'}` }))
+    };
 }
 
 async function fetchAttendance({ from, to, teacherId }) {
@@ -247,19 +264,19 @@ const COLUMNS = {
         { header: 'التاريخ', key: 'date', width: 15 },
         { header: 'الوقت', key: 'time', width: 10 },
         { header: 'الحالة', key: 'status', width: 12 },
-        { header: 'السعر', key: 'price', width: 10 },
+        { header: 'السعر', key: 'priceStr', width: 15 },
     ],
     teacherInvoices: [
         { header: 'اسم المعلم', key: 'teacherName', width: 20 },
         { header: 'التخصص', key: 'specialization', width: 15 },
-        { header: 'المبلغ', key: 'amount', width: 12 },
+        { header: 'المبلغ', key: 'amountStr', width: 15 },
         { header: 'الحالة', key: 'status', width: 12 },
         { header: 'التاريخ', key: 'date', width: 15 },
         { header: 'طريقة الدفع', key: 'paymentMethod', width: 15 },
     ],
     studentInvoices: [
         { header: 'اسم الطالب', key: 'studentName', width: 20 },
-        { header: 'المبلغ', key: 'amount', width: 12 },
+        { header: 'المبلغ', key: 'amountStr', width: 15 },
         { header: 'الحالة', key: 'status', width: 12 },
         { header: 'التاريخ', key: 'date', width: 15 },
         { header: 'تاريخ الاستحقاق', key: 'dueDate', width: 15 },
@@ -318,7 +335,7 @@ async function generateExcel(entity, filters) {
         sheet.columns = [
             { header: 'النوع', key: 'type', width: 15 },
             { header: 'التصنيف', key: 'category', width: 15 },
-            { header: 'المبلغ', key: 'amount', width: 12 },
+            { header: 'المبلغ', key: 'amountStr', width: 15 },
             { header: 'التاريخ', key: 'date', width: 15 },
             { header: 'الوصف', key: 'description', width: 30 },
         ];
@@ -326,12 +343,12 @@ async function generateExcel(entity, filters) {
         sheet.addRow({});
         sheet.addRow({ type: '— فواتير المعلمين —' });
         data.teacherInvoices.forEach(i => sheet.addRow({
-            type: i.teacherName, category: 'فاتورة معلم', amount: i.amount, date: i.date, description: i.status
+            type: i.teacherName, category: 'فاتورة معلم', amountStr: i.amountStr, date: i.date, description: i.status
         }));
         sheet.addRow({});
         sheet.addRow({ type: '— فواتير الطلاب —' });
         data.studentInvoices.forEach(i => sheet.addRow({
-            type: i.studentName, category: 'فاتورة طالب', amount: i.amount, date: i.date, description: i.status
+            type: i.studentName, category: 'فاتورة طالب', amountStr: i.amountStr, date: i.date, description: i.status
         }));
     } else {
         sheet.columns = COLUMNS[entity]
@@ -433,26 +450,26 @@ async function generatePDF(entity, filters) {
         if (entity === 'finance' && data && data.transactions) {
             const financeCols = [
                 { header: 'النوع', key: 'description', width: 20 },
-                { header: 'المبلغ', key: 'amount', width: 12 },
+                { header: 'المبلغ', key: 'amountStr', width: 15 },
                 { header: 'التاريخ', key: 'date', width: 15 },
             ];
 
             doc.fontSize(12).text(reshape('المعاملات'), { align: 'right' });
             doc.moveDown(0.5);
             drawTable(doc, financeCols, data.transactions.map(t => ({
-                description: t.description || t.type, amount: t.amount, date: t.date
+                description: t.description || t.type, amountStr: t.amountStr, date: t.date
             })), arabicFontPath);
 
             doc.fontSize(12).text(reshape('فواتير المعلمين'), { align: 'right' });
             doc.moveDown(0.5);
             drawTable(doc, financeCols, data.teacherInvoices.map(i => ({
-                description: i.teacherName, amount: i.amount, date: i.date
+                description: i.teacherName, amountStr: i.amountStr, date: i.date
             })), arabicFontPath);
 
             doc.fontSize(12).text(reshape('فواتير الطلاب'), { align: 'right' });
             doc.moveDown(0.5);
             drawTable(doc, financeCols, data.studentInvoices.map(i => ({
-                description: i.studentName, amount: i.amount, date: i.date
+                description: i.studentName, amountStr: i.amountStr, date: i.date
             })), arabicFontPath);
         } else {
             const rows = Array.isArray(data) ? data : [];

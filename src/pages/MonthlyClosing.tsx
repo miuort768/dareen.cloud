@@ -84,8 +84,8 @@ export const MonthlyClosing = () => {
     const { data: studentInvoices, isLoading: invoicesLoading } = useQuery({
         queryKey: ['student-invoices-closing'],
         queryFn: async () => {
-            const resp = await api.get<{ id: string; studentName: string; amount: number; date: string; status: string }[]>('/studentInvoices');
-            return Array.isArray(resp) ? resp : (resp as { data?: { id: string; studentName: string; amount: number; date: string; status: string }[] }).data || [];
+            const resp = await api.get<{ id: string; studentName: string; amount: number; currency?: string; date: string; status: string }[]>('/studentInvoices');
+            return Array.isArray(resp) ? resp : (resp as { data?: { id: string; studentName: string; amount: number; currency?: string; date: string; status: string }[] }).data || [];
         }
     });
 
@@ -108,6 +108,7 @@ export const MonthlyClosing = () => {
                 const student = students?.find(s => s.id === curr.studentId || s.name?.trim().toLowerCase() === curr.studentName?.trim().toLowerCase());
                 price = Number(student?.sessionPrice) || 0;
             }
+            // Convert to teacher currency basis (EGP) for comparison — if studentCurrency is different, note it
             return acc + price;
         }, 0);
         const payout = subjectSessions.reduce((acc, curr) => {
@@ -118,7 +119,9 @@ export const MonthlyClosing = () => {
             }
             return acc + tPrice;
         }, 0);
-        return { name: subj, income, payout, profit: income - payout, sessionsCount: subjectSessions.length };
+        // Check if any sessions have mixed currencies (student currency != EGP)
+        const hasMixedCurrency = subjectSessions.some(s => s.studentCurrency && s.studentCurrency !== 'EGP');
+        return { name: subj, income, payout, profit: income - payout, sessionsCount: subjectSessions.length, hasMixedCurrency };
     }).sort((a, b) => b.profit - a.profit);
 
     const teacherPerformance = teachers?.map(teacher => {

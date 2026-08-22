@@ -11,6 +11,7 @@ interface StudentInvoice {
     studentName: string;
     description?: string;
     amount: number;
+    currency?: string;
     date: string;
     status: string;
 }
@@ -68,7 +69,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                     <span className="text-micro text-muted font-medium line-clamp-1">{item.description}</span>
                                 </td>
                                 <td className="px-4 py-4 text-center font-bold text-xs text-success">
-                                    {item.amount.toLocaleString()} {CURRENCY_SYMBOL}
+                                    {item.amount.toLocaleString()} {item.currency || CURRENCY_SYMBOL}
                                 </td>
                                 <td className="px-4 py-4 text-center text-micro text-muted font-mono">{item.date}</td>
                                 <td className="px-4 py-4 text-center">
@@ -97,7 +98,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({ studentInvoi
                                 <span className="block font-bold text-xs text-main leading-tight truncate">{item.studentName}</span>
                                 <span className="text-micro text-muted font-medium line-clamp-1">{item.description}</span>
                             </div>
-                            <span className="text-xs font-bold text-success me-2">{item.amount.toLocaleString()} {CURRENCY_SYMBOL}</span>
+                            <span className="text-xs font-bold text-success me-2">{item.amount.toLocaleString()} {item.currency || CURRENCY_SYMBOL}</span>
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="text-micro text-muted font-mono">{item.date}</span>
