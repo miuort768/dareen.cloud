@@ -26,6 +26,7 @@ import { LeadCards } from './leads/components/LeadCards'
 import { LeadsSkeleton } from './leads/components/LeadsSkeleton'
 import { LeadDrawer } from './leads/components/LeadDrawer'
 import { FilterDropdown } from '../shared/components/ui'
+import { MobilePageHeader } from '../shared/components/mobile'
 import { useUIStore } from '../store/uiStore'
 import { useAcademyName } from '../context/AppContext'
 import { cn } from '../lib/utils'
@@ -482,7 +483,46 @@ export const Leads = () => {
     >
       <div className="relative z-10 mx-auto max-w-page px-4 md:px-6">
         {/* ===== HEADER ===== */}
-        <div className="pb-2 pt-4">
+        {/* Mobile: unified page header + prioritized actions */}
+        <div className="pt-3 md:hidden">
+          <MobilePageHeader
+            title="العملاء المحتملون"
+            subtitle="إدارة طلبات التسجيل والمتوقعين"
+            icon={<Users size={20} />}
+            action={
+              <button
+                onClick={() => setIsAddModalOpen(true)}
+                aria-label="عميل جديد"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all active:scale-95"
+              >
+                <Plus size={16} /> جديد
+              </button>
+            }
+          />
+          <div className="mt-3 flex items-center gap-2">
+            <button
+              onClick={() => setShowLost(!showLost)}
+              className={cn(
+                'flex h-11 flex-1 items-center justify-center gap-2 rounded-xl border text-xs font-bold transition-all active:scale-95',
+                showLost
+                  ? 'border-transparent bg-error-soft text-error'
+                  : 'border-border bg-surface text-muted hover:text-main',
+              )}
+            >
+              {showLost ? <Eye size={16} /> : <EyeOff size={16} />} مفقودين
+            </button>
+            <button
+              onClick={() => setConfirmDeleteAll(true)}
+              aria-label="حذف جميع العملاء"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-error text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
+            >
+              <Trash2 size={16} />
+            </button>
+          </div>
+        </div>
+
+        {/* Desktop header */}
+        <div className="hidden pb-2 pt-4 md:block">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
