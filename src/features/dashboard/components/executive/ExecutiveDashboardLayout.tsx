@@ -35,7 +35,7 @@ const Section = ({ children, className }: { children: React.ReactNode; className
 );
 
 export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
-    const { data, isLoading, error, refetch } = useExecutiveDashboard();
+    const { data, isLoading, error, refetch, isFetching } = useExecutiveDashboard();
 
     if (isLoading) {
         return (
@@ -84,10 +84,11 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
         >
             {/* Header */}
             <Section>
-                <div className="relative overflow-hidden rounded-2xl p-6 md:p-8 bg-primary font-dash">
-                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+                <div className="relative overflow-hidden rounded-2xl p-4 md:p-6 bg-gradient-to-l from-primary to-primary-deep font-dash shadow-md shadow-primary/20">
+                    <div className="pointer-events-none absolute -end-10 -top-10 h-32 w-32 rounded-full bg-white/10 blur-xl" />
+                    <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+                            <div className="w-12 h-12 rounded-xl bg-white/15 ring-2 ring-white/30 flex items-center justify-center shrink-0">
                                 <TrendingUp size={22} className="text-on-primary" />
                             </div>
                             <div className="space-y-1">
@@ -95,11 +96,20 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
                                 <p className="text-sm text-on-primary/70">نظرة شاملة على أداء المنشأة</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2.5">
                             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 text-on-primary text-xs font-semibold tabular-nums">
                                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                                 مباشر
                             </div>
+                            <button
+                                onClick={() => refetch()}
+                                disabled={isFetching}
+                                aria-label="تحديث البيانات"
+                                title="تحديث البيانات"
+                                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-on-primary transition-all hover:bg-white/20 active:scale-95 disabled:opacity-50"
+                            >
+                                <RefreshCw size={14} className={isFetching ? 'animate-spin' : ''} />
+                            </button>
                         </div>
                     </div>
                 </div>

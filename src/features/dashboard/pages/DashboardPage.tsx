@@ -121,7 +121,8 @@ export const Dashboard = () => {
                     {/* Desktop */}
                     <div className="hidden md:block max-w-page mx-auto px-6 relative z-10">
 
-                        {/* ── Hero ── */}
+                    {/* ── Hero (standard view only) ── */}
+                    {view === 'standard' && (
                         <div className="pt-6 pb-4 max-w-5xl mx-auto">
                             <HeroSection currentUser={currentUser} stats={stats} />
                             {academicYear && (
@@ -133,6 +134,15 @@ export const Dashboard = () => {
                                 </div>
                             )}
                         </div>
+                    )}
+                    {view === 'executive' && academicYear && (
+                        <div className="flex justify-end pt-5">
+                            <span className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-soft text-primary text-[11px] font-bold rounded-lg">
+                                <CalendarDays size={13} />
+                                السنة الدراسية: {academicYear}
+                            </span>
+                        </div>
+                    )}
 
                         {/* ── View Toggle ── */}
                         {currentUser.permissions?.includes('*') && (
