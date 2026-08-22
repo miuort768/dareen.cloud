@@ -350,6 +350,26 @@ export const Students = () => {
   return (
     <div className="relative min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
       <div className="relative z-10 mx-auto max-w-page space-y-4 px-2">
+        {/* Mobile compact header */}
+        <div className="pt-3 md:hidden">
+          <MobilePageHeader
+            title="إدارة الطلاب"
+            subtitle="الطلاب والاشتراكات والجلسات"
+            icon={<GraduationCap size={20} />}
+            action={
+              <button
+                onClick={() => {
+                  setEditId(null);
+                  setShowAddForm(true);
+                }}
+                aria-label="إضافة طالب"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all active:scale-95"
+              >
+                <Plus size={16} /> طالب
+              </button>
+            }
+          />
+        </div>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -369,7 +389,7 @@ export const Students = () => {
               }}
             />
           ))}
-          <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="relative z-10 hidden flex-col gap-4 md:flex md:flex-row md:items-center md:justify-between">
             <div>
               <div className="mb-2 flex items-center gap-2">
                 <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
