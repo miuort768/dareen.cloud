@@ -1,10 +1,24 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-    Phone, Mail, BookOpen, Users, Play, DollarSign, MapPin, FileText,
-    CalendarDays, Clock, GraduationCap, Globe, Laptop, UserCheck,
-    Star, Trophy, Target, TrendingUp, Edit3,
-    Flame, CheckCircle2, BarChart3, UserPlus
+  Phone,
+  Mail,
+  BookOpen,
+  Users,
+  Play,
+  DollarSign,
+  Star,
+  Trophy,
+  Target,
+  Edit3,
+  CalendarDays,
+  Clock,
+  UserCheck,
+  FileText,
+  CheckCircle2,
+  BarChart3,
+  UserPlus,
+  Activity
 } from 'lucide-react';
 import { api } from '../../lib/api';
 import { useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext';
@@ -12,306 +26,342 @@ import { CURRENCY_SYMBOL } from '../../config/constants';
 import { getRankByPoints, TEACHER_RANKS } from '../../shared/utils/ranks';
 import { Skeleton } from '../../shared/components/ui';
 import { TeacherDashboardHeader } from '../TeacherDashboardHeader';
-import { ProfileHero } from './ProfileHero';
-import { ProfileAchievements } from './ProfileAchievements';
-import { ProfileProgress } from './ProfileProgress';
-import { ProfileRecentActivity } from './ProfileRecentActivity';
-import { ProfileReviews } from './ProfileReviews';
-import { ProfileBottomMotivation } from './ProfileBottomMotivation';
 import { PaymentSettingsSection } from './PaymentSettingsSection';
 import type { DashboardStats } from '../../features/dashboard/types';
 
-const stagger = (i: number) => ({
-    initial: { opacity: 0, y: 16 },
-    animate: { opacity: 1, y: 0 },
-    transition: { delay: i * 0.04, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] },
-});
-
 interface TeacherData {
-    id: string;
-    name: string;
-    phone1: string;
-    phone2?: string;
-    subject: string;
-    price: number;
-    email?: string;
-    points?: number;
-    city?: string;
-    biography?: string;
-    stage?: string;
-    availableDays?: string[];
-    availableHours?: string;
-    teachingLang?: string;
-    teachingMethod?: string;
-    teachingMode?: string;
+  id: string;
+  name: string;
+  phone1: string;
+  phone2?: string;
+  subject: string;
+  price: number;
+  email?: string;
+  points?: number;
+  city?: string;
+  biography?: string;
+  stage?: string;
 }
 
-const fadeUp = (delay: number) => ({
-    initial: { opacity: 0, y: 16 },
-    animate: { opacity: 1, y: 0 },
-    transition: { delay, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
-});
-
-const StatCard = ({ icon, value, label, trend, color = 'primary' }: {
-    icon: React.ReactNode; value: string | number; label: string; trend?: { value: number; isUp: boolean }; color?: string;
-}) => {
-    const colorMap: Record<string, { bg: string; ring: string; text: string }> = {
-        primary: { bg: 'bg-primary/10', ring: 'ring-primary/20', text: 'text-primary' },
-        success: { bg: 'bg-success/10', ring: 'ring-success/20', text: 'text-success' },
-        warning: { bg: 'bg-warning/10', ring: 'ring-warning/20', text: 'text-warning' },
-        info: { bg: 'bg-info/10', ring: 'ring-info/20', text: 'text-info' },
-        error: { bg: 'bg-error/10', ring: 'ring-error/20', text: 'text-error' },
-    };
-    const c = colorMap[color] || colorMap.primary;
-
-    return (
-        <motion.div variants={fadeUp(0)} className="group bg-card border border-border rounded-2xl p-4 md:p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
-            <div className="flex items-start justify-between mb-2.5">
-                <div className={`w-10 h-10 rounded-xl ring-1 ${c.ring} ${c.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                    {icon}
-                </div>
-                {trend && (
-                    <div className={`flex items-center gap-0.5 px-1.5 py-0.5 rounded-lg text-[10px] font-bold ${trend.isUp ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
-                        {trend.isUp ? <TrendingUp size={9} /> : <TrendingUp size={9} className="rotate-180" />}
-                        <span>{trend.value}%</span>
-                    </div>
-                )}
-            </div>
-            <p className="text-xl md:text-[26px] font-bold tabular-nums text-main leading-none mb-0.5">{value}</p>
-            <p className="text-[11px] text-muted font-medium">{label}</p>
-        </motion.div>
-    );
+const stagger = { animate: { transition: { staggerChildren: 0.05 } } };
+const item = {
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] } }
 };
-
-const InfoRow = ({ icon, label, value, onEdit }: { icon: React.ReactNode; label: string; value: string; onEdit?: () => void }) => (
-    <div className="flex items-center gap-3 p-3 bg-surface rounded-xl border border-border/50 group hover:border-border transition-colors">
-        <div className="w-9 h-9 rounded-xl bg-card border border-border flex items-center justify-center shrink-0">
-            {icon}
-        </div>
-        <div className="flex-1 min-w-0">
-            <p className="text-[10px] text-muted font-medium">{label}</p>
-            <p className="text-xs font-bold text-main truncate">{value || '—'}</p>
-        </div>
-        {onEdit && (
-            <button onClick={onEdit} className="w-7 h-7 rounded-lg hover:bg-border/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all" aria-label="تعديل">
-                <Edit3 size={11} className="text-muted" />
-            </button>
-        )}
-    </div>
-);
 
 export const TeacherProfilePage = () => {
-    const academyName = useAcademyName();
-    useEffect(() => { document.title = `الملف الشخصي | ${academyName}`; }, [academyName]);
-    const currentUser = useCurrentUser();
-    const logout = useLogout();
-    const [teacherData, setTeacherData] = useState<TeacherData | null>(null);
-    const [dashboardStats] = useState<DashboardStats | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+  const academyName = useAcademyName();
+  useEffect(() => {
+    document.title = `الملف الشخصي | ${academyName}`;
+  }, [academyName]);
 
-    useEffect(() => {
-        let cancelled = false;
-        const fetchAll = async () => {
-            try {
-                setIsLoading(true);
-                const me = await api.get<TeacherData>('/teachers/me');
-                if (cancelled) return;
-                setTeacherData(me);
-            } catch (e) {
-                console.error('Error fetching teacher profile:', e);
-            } finally {
-                if (!cancelled) setIsLoading(false);
-            }
-        };
-        if (currentUser?.role === 'teacher') fetchAll();
-        return () => { cancelled = true; };
-    }, [currentUser]);
+  const currentUser = useCurrentUser();
+  const logout = useLogout();
+  const [teacherData, setTeacherData] = useState<TeacherData | null>(null);
+  const [dashboardStats] = useState<DashboardStats | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [editingName, setEditingName] = useState(false);
+  const [nameDraft, setNameDraft] = useState('');
+  const [isSavingName, setIsSavingName] = useState(false);
 
-    const points = teacherData?.points || dashboardStats?.teacherPoints || 0;
-    const rank = getRankByPoints(points, TEACHER_RANKS);
-    const [editingName, setEditingName] = useState(false);
-    const [nameDraft, setNameDraft] = useState('');
-    const [isSavingName, setIsSavingName] = useState(false);
-
-    const handleSaveName = async () => {
-        const trimmed = nameDraft.trim();
-        if (!trimmed || isSavingName) return;
-        setIsSavingName(true);
-        try {
-            await api.put('/teachers/me', { name: trimmed });
-            setTeacherData((prev) => (prev ? { ...prev, name: trimmed } : prev));
-            setEditingName(false);
-        } catch (e) {
-            console.error('Error updating name:', e);
-        } finally {
-            setIsSavingName(false);
-        }
+  useEffect(() => {
+    let cancelled = false;
+    const fetchAll = async () => {
+      try {
+        setIsLoading(true);
+        const me = await api.get<TeacherData>('/teachers/me');
+        if (cancelled) return;
+        setTeacherData(me);
+      } catch (e) {
+        console.error('Error fetching teacher profile:', e);
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
     };
+    if (currentUser?.role === 'teacher') fetchAll();
+    return () => {
+      cancelled = true;
+    };
+  }, [currentUser]);
 
-    const infoFields = [
-        { icon: <BookOpen size={13} className="text-primary" />, label: 'المادة', value: teacherData?.subject || '—' },
-        { icon: <Phone size={13} className="text-success" />, label: 'رقم الهاتف', value: teacherData?.phone1 || '—' },
-        { icon: <Mail size={13} className="text-info" />, label: 'البريد الإلكتروني', value: teacherData?.email || '—' },
-        { icon: <DollarSign size={13} className="text-warning" />, label: 'سعر الحصة', value: teacherData?.price ? `${teacherData.price} ${CURRENCY_SYMBOL}` : '—' },
-    ];
+  const points = teacherData?.points || dashboardStats?.teacherPoints || 0;
+  const rank = getRankByPoints(points, TEACHER_RANKS);
+  const nextRankNeeded = points < 1000 ? 1000 - points : 0;
+  const nextRankName = 'المعلمة الذهبية';
 
-    const achievements = [
-        { id: '1', icon: <Trophy size={20} className="text-warning" />, title: 'المعلمة الذهبية', unlocked: points >= 1000, progress: Math.min(Math.round((points / 1000) * 100), 100) },
-        { id: '2', icon: <Star size={20} className="text-warning" />, title: '500 نقطة', unlocked: points >= 500, progress: Math.min(Math.round((points / 500) * 100), 100) },
-        { id: '3', icon: <GraduationCap size={20} className="text-info" />, title: 'أول 100 طالب', unlocked: (dashboardStats?.studentsCount || 0) >= 100, progress: Math.min(Math.round(((dashboardStats?.studentsCount || 0) / 100) * 100), 100) },
-        { id: '4', icon: <Flame size={20} className="text-error" />, title: '30 يوم نشاط', unlocked: false, progress: 40 },
-        { id: '5', icon: <BookOpen size={20} className="text-primary" />, title: '100 حصة', unlocked: (dashboardStats?.completedSessions || 0) >= 100, progress: Math.min(Math.round(((dashboardStats?.completedSessions || 0) / 100) * 100), 100) },
-    ];
-
-    const progressItems = [
-        { label: 'تقدم التدريس', value: Math.min(Math.round(((dashboardStats?.completedSessions || 0) / Math.max(dashboardStats?.totalSessions || 1, 1)) * 100), 100) },
-        { label: 'الحضور', value: dashboardStats?.attendanceRate || 0 },
-        { label: 'رضا الطلاب', value: 88 },
-        { label: 'اكتمال الملف الشخصي', value: teacherData?.biography ? 90 : 65 },
-    ];
-
-    const activities = [
-        { id: 'a1', icon: <UserPlus size={14} className="text-success" />, title: 'تمت إضافة طالب جديد', description: 'أحمد محمد — مادة الرياضيات', timestamp: 'منذ ساعتين', type: 'success' as const },
-        { id: 'a2', icon: <CheckCircle2 size={14} className="text-info" />, title: 'تم إنهاء حصة الرياضيات', description: 'مع محمد علي — 60 دقيقة', timestamp: 'منذ 4 ساعات', type: 'info' as const },
-        { id: 'a3', icon: <FileText size={14} className="text-muted" />, title: 'تم تحديث الملف الشخصي', description: 'تم إضافة السيرة الذاتية', timestamp: 'منذ يوم', type: 'default' as const },
-        { id: 'a4', icon: <Trophy size={14} className="text-success" />, title: 'تم الحصول على شارة جديدة', description: 'المعلمة الذهبية — 1000 نقطة', timestamp: 'منذ 3 أيام', type: 'success' as const },
-        { id: 'a5', icon: <BarChart3 size={14} className="text-warning" />, title: 'تقرير الأداء الشهري', description: 'تم إصدار تقييم شهر يونيو', timestamp: 'منذ 5 أيام', type: 'warning' as const },
-    ];
-
-    const reviews = [
-        { id: 'r1', studentName: 'سارة أحمد', rating: 5, text: 'معلمة ممتازة، أسلوبها في الشرح سهل ومبسط. ابنتي تحب حصصها كثيراً.', date: '١٥ يونيو ٢٠٢٦' },
-        { id: 'r2', studentName: 'محمد علي', rating: 5, text: 'أفضل معلمة تعاملتها معها، صبورة ومخلصة.', date: '١٠ يونيو ٢٠٢٦' },
-        { id: 'r3', studentName: 'نورة خالد', rating: 4, text: 'مستوى ممتاز في التدريس، تفاعل رائع مع الطلاب.', date: '٥ يونيو ٢٠٢٦' },
-    ];
-
-    const nextRank = points < 1000 ? { name: 'المعلمة الذهبية', needed: 1000 - points } : null;
-
-    if (isLoading) {
-        return (
-            <div className="min-h-screen bg-background" dir="rtl">
-                {currentUser?.role === 'teacher' && (
-                    <div className="hidden md:block">
-                        <TeacherDashboardHeader logout={logout} />
-                    </div>
-                )}
-                <div className="max-w-page mx-auto px-4 pt-4 space-y-4">
-                    <Skeleton className="h-52 rounded-3xl" />
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3"><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /><Skeleton className="h-28 rounded-2xl" /></div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4"><Skeleton className="h-56 rounded-2xl" /><Skeleton className="h-56 rounded-2xl" /></div>
-                    <Skeleton className="h-40 rounded-2xl" />
-                </div>
-            </div>
-        );
+  const handleSaveName = async () => {
+    const trimmed = nameDraft.trim();
+    if (!trimmed || isSavingName) return;
+    setIsSavingName(true);
+    try {
+      await api.put('/teachers/me', { name: trimmed });
+      setTeacherData((prev) => (prev ? { ...prev, name: trimmed } : prev));
+      setEditingName(false);
+    } catch (e) {
+      console.error('Error updating name:', e);
+    } finally {
+      setIsSavingName(false);
     }
+  };
 
-    const name = teacherData?.name || currentUser?.name || 'المعلمة';
+  const reviews = [
+    { id: 'r1', studentName: 'سارة أحمد', rating: 5, text: 'معلمة ممتازة، أسلوبها في الشرح سهل ومبسط.', date: '١٥ يونيو ٢٠٢٦' },
+    { id: 'r2', studentName: 'محمد علي', rating: 5, text: 'أفضل معلمة تعاملتها معها، صبورة ومخلصة.', date: '١٠ يونيو ٢٠٢٦' },
+  ];
 
+  const activities = [
+    { id: 'a1', icon: <UserPlus size={14} className="text-success" />, title: 'طالب جديد', description: 'أحمد محمد', time: 'منذ ساعتين' },
+    { id: 'a2', icon: <CheckCircle2 size={14} className="text-info" />, title: 'إنهاء حصة', description: 'مع محمد علي', time: 'منذ 4 ساعات' },
+    { id: 'a3', icon: <Trophy size={14} className="text-warning" />, title: 'شارة جديدة', description: 'المعلمة الذهبية', time: 'منذ يومين' },
+  ];
+
+  if (isLoading) {
     return (
-        <div className="min-h-screen bg-background overflow-x-hidden" dir="rtl">
-            {currentUser?.role === 'teacher' && (
-                <div className="hidden md:block">
-                    <TeacherDashboardHeader logout={logout} />
-                </div>
-            )}
-            <div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6 md:pt-6">
-                <ProfileHero
-                    name={name}
-                    role="teacher"
-                    subtitle={teacherData?.subject || ''}
-                    points={points}
-                    rank={rank}
-                    stats={dashboardStats || undefined}
-                    hideNavButtons
-                    onEditName={() => {
-                        setNameDraft(name);
-                        setEditingName(true);
-                    }}
-                />
-
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-[320px_1fr] lg:grid-cols-[360px_1fr] md:gap-6">
-                    {/* Right Column (Sidebar) */}
-                    <motion.div {...stagger(1)} className="space-y-4 md:space-y-6">
-                        <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
-                            <h3 className="text-base font-bold text-main mb-4 flex items-center gap-2">
-                                <UserCheck size={16} className="text-primary" />
-                                المعلومات الشخصية
-                            </h3>
-                            <div className="space-y-2.5">
-                                {infoFields.map((f, i) => <InfoRow key={i} icon={f.icon} label={f.label} value={f.value} />)}
-                            </div>
-                        </div>
-
-                        <ProfileBottomMotivation
-                            icon={<Target size={28} />}
-                            title="استمر في التدريس!"
-                            description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد وصلت إلى أعلى المراتب! استمر في التألق'}
-                            progress={nextRank ? Math.round((points / 1000) * 100) : 100}
-                            progressLabel="التقدم نحو الرتبة التالية"
-                            targetLabel={nextRank ? `${nextRank.needed} نقطة متبقية` : 'أحسنت!'}
-                            color="primary"
-                        />
-                        
-                        <PaymentSettingsSection />
-                    </motion.div>
-
-                    {/* Left Column (Main Content) */}
-                    <div className="space-y-4 md:space-y-6">
-                        <motion.div {...stagger(2)} className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-                            <StatCard icon={<Users size={18} className="text-primary" />} value={dashboardStats?.studentsCount ?? 0} label="إجمالي الطلاب" color="primary" trend={{ value: 12, isUp: true }} />
-                            <StatCard icon={<Play size={18} className="text-info" />} value={dashboardStats?.completedSessions ?? 0} label="الحصص المنفذة" color="info" trend={{ value: 8, isUp: true }} />
-                            <StatCard icon={<Star size={18} className="text-warning" />} value={points} label="النقاط" color="warning" trend={{ value: 15, isUp: true }} />
-                            <StatCard icon={<DollarSign size={18} className="text-error" />} value={teacherData?.price ?? 0} label={`سعر الحصة`} color="error" />
-                        </motion.div>
-
-                        <motion.div {...stagger(3)}>
-                            <ProfileAchievements achievements={achievements} />
-                        </motion.div>
-
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-                            <motion.div {...stagger(4)}>
-                                <ProfileRecentActivity activities={activities} />
-                            </motion.div>
-                            <motion.div {...stagger(5)}>
-                                <ProfileReviews reviews={reviews} />
-                            </motion.div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Edit name modal */}
-            {editingName && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm" onClick={() => setEditingName(false)}>
-                    <div className="w-full max-w-sm rounded-2xl border border-border bg-card p-5 shadow-elevation-2" onClick={(e) => e.stopPropagation()}>
-                        <h3 className="mb-4 text-sm font-bold text-main">تعديل الاسم</h3>
-                        <input
-                            type="text"
-                            value={nameDraft}
-                            onChange={(e) => setNameDraft(e.target.value)}
-                            onKeyDown={(e) => { if (e.key === 'Enter') handleSaveName(); }}
-                            placeholder="أدخل الاسم الجديد"
-                            aria-label="الاسم"
-                            autoFocus
-                            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
-                        />
-                        <div className="mt-4 flex gap-2">
-                            <button
-                                onClick={() => setEditingName(false)}
-                                className="flex-1 rounded-xl bg-surface py-2.5 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-95"
-                            >
-                                إلغاء
-                            </button>
-                            <button
-                                onClick={handleSaveName}
-                                disabled={!nameDraft.trim() || isSavingName}
-                                className="flex-1 rounded-xl bg-primary py-2.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95 disabled:opacity-50"
-                            >
-                                {isSavingName ? 'جاري الحفظ...' : 'حفظ'}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+      <div className="min-h-screen bg-background" dir="rtl">
+        {currentUser?.role === 'teacher' && <div className="hidden md:block"><TeacherDashboardHeader logout={logout} /></div>}
+        <div className="mx-auto max-w-page p-4 md:p-8 space-y-6">
+          <Skeleton className="h-40 rounded-3xl" />
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            <Skeleton className="h-96 rounded-2xl xl:col-span-1" />
+            <Skeleton className="h-96 rounded-2xl xl:col-span-2" />
+          </div>
         </div>
+      </div>
     );
+  }
+
+  const name = teacherData?.name || currentUser?.name || 'المعلمة';
+
+  return (
+    <div className="min-h-screen bg-background overflow-x-hidden pb-24" dir="rtl">
+      {currentUser?.role === 'teacher' && (
+        <div className="hidden md:block">
+          <TeacherDashboardHeader logout={logout} />
+        </div>
+      )}
+
+      <motion.div 
+        initial="initial" 
+        animate="animate" 
+        variants={stagger}
+        className="mx-auto max-w-page px-4 pt-6 md:p-8 space-y-6 md:space-y-8"
+      >
+        {/* Modern ID Header */}
+        <motion.div variants={item} className="relative bg-card border border-border rounded-3xl p-6 md:p-8 overflow-hidden shadow-sm flex flex-col md:flex-row gap-8 items-start md:items-center">
+          <div className="absolute top-0 end-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+          
+          <div className="flex items-center gap-5 z-10 w-full md:w-auto">
+            <div className="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-2xl bg-primary-soft border border-primary/20 flex items-center justify-center text-primary text-3xl font-black relative group">
+              {name.charAt(0)}
+              <button 
+                onClick={() => { setNameDraft(name); setEditingName(true); }}
+                className="absolute -bottom-2 -end-2 w-8 h-8 rounded-xl bg-surface border border-border flex items-center justify-center text-muted hover:text-main shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <Edit3 size={12} />
+              </button>
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded border border-border bg-surface text-muted uppercase tracking-wider">ملف المعلم</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded border border-warning/20 bg-warning/10 text-warning flex items-center gap-1">
+                  <Star size={10} className="fill-warning" />
+                  {rank?.name || 'معلم متميز'}
+                </span>
+              </div>
+              <h1 className="text-2xl md:text-3xl font-black text-main truncate">{name}</h1>
+              <p className="text-sm font-bold text-muted mt-1 flex items-center gap-1.5">
+                <BookOpen size={16} />
+                {teacherData?.subject || 'مادة غير محددة'}
+              </p>
+            </div>
+          </div>
+
+          <div className="hidden md:block flex-1" />
+
+          {/* Core Metrics Strip */}
+          <div className="grid grid-cols-3 gap-4 md:gap-8 z-10 bg-surface/50 p-4 md:px-8 md:py-5 rounded-2xl border border-border/50 w-full md:w-auto">
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold text-muted uppercase tracking-wider mb-1">الطلاب</span>
+              <span className="text-xl md:text-2xl font-black text-main tabular-nums">{dashboardStats?.studentsCount || 0}</span>
+            </div>
+            <div className="flex flex-col border-s border-border ps-4 md:ps-8">
+              <span className="text-[10px] font-bold text-muted uppercase tracking-wider mb-1">الحصص</span>
+              <span className="text-xl md:text-2xl font-black text-main tabular-nums">{dashboardStats?.completedSessions || 0}</span>
+            </div>
+            <div className="flex flex-col border-s border-border ps-4 md:ps-8">
+              <span className="text-[10px] font-bold text-muted uppercase tracking-wider mb-1">السعر</span>
+              <span className="text-xl md:text-2xl font-black text-success tabular-nums flex items-end gap-1">
+                {teacherData?.price || 0}
+                <span className="text-[10px] font-bold text-muted mb-1">{CURRENCY_SYMBOL}</span>
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 md:gap-8">
+          
+          {/* Left Sidebar (1/3) */}
+          <div className="space-y-6 md:space-y-8">
+            
+            {/* Rank Progress */}
+            <motion.div variants={item} className="bg-card border border-border rounded-2xl p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xs font-bold text-muted uppercase tracking-wider">تقدم الرتبة</h3>
+                <Target size={14} className="text-muted" />
+              </div>
+              
+              <div className="flex items-end justify-between mb-2">
+                <div>
+                  <p className="text-2xl font-black text-main tabular-nums leading-none mb-1">{points}</p>
+                  <p className="text-[10px] font-bold text-muted">النقاط الحالية</p>
+                </div>
+                {nextRankNeeded > 0 && (
+                  <div className="text-end">
+                    <p className="text-sm font-bold text-main leading-none mb-1">{nextRankName}</p>
+                    <p className="text-[10px] font-bold text-muted">الرتبة القادمة</p>
+                  </div>
+                )}
+              </div>
+              
+              <div className="w-full h-1.5 bg-surface rounded-full overflow-hidden mt-4">
+                <div 
+                  className="h-full bg-primary transition-all duration-1000 ease-out rounded-full"
+                  style={{ width: `${nextRankNeeded > 0 ? Math.min((points / 1000) * 100, 100) : 100}%` }}
+                />
+              </div>
+            </motion.div>
+
+            {/* Contact & Setup */}
+            <motion.div variants={item} className="bg-card border border-border rounded-2xl p-6 shadow-sm">
+              <h3 className="text-xs font-bold text-muted uppercase tracking-wider mb-5">بيانات الاتصال</h3>
+              <div className="space-y-4 mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center shrink-0">
+                    <Phone size={14} className="text-main" />
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold text-muted uppercase tracking-wider mb-0.5">رقم الهاتف الأساسي</p>
+                    <p className="text-xs font-bold text-main">{teacherData?.phone1 || 'غير متوفر'}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-surface border border-border flex items-center justify-center shrink-0">
+                    <Mail size={14} className="text-main" />
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-bold text-muted uppercase tracking-wider mb-0.5">البريد الإلكتروني</p>
+                    <p className="text-xs font-bold text-main truncate max-w-[200px]">{teacherData?.email || 'غير متوفر'}</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="border-t border-border pt-6 mt-6">
+                <h3 className="text-xs font-bold text-muted uppercase tracking-wider mb-5">الإعدادات المالية</h3>
+                <PaymentSettingsSection />
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Main Content (2/3) */}
+          <div className="xl:col-span-2 space-y-6 md:space-y-8">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {/* Activity Timeline */}
+              <motion.div variants={item} className="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-sm font-bold text-main flex items-center gap-2">
+                    <ActivityIcon />
+                    النشاط الأخير
+                  </h3>
+                </div>
+                
+                <div className="space-y-4">
+                  {activities.map((act, i) => (
+                    <div key={act.id} className="flex gap-4">
+                      <div className="flex flex-col items-center">
+                        <div className="w-8 h-8 rounded-full bg-surface border border-border flex items-center justify-center z-10 relative">
+                          {act.icon}
+                        </div>
+                        {i !== activities.length - 1 && <div className="w-px h-full bg-border mt-2" />}
+                      </div>
+                      <div className="pb-4">
+                        <h4 className="text-sm font-bold text-main">{act.title}</h4>
+                        <p className="text-[11px] font-bold text-muted mt-0.5">{act.description}</p>
+                        <p className="text-[9px] text-muted mt-1 opacity-70">{act.time}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Reviews Overview */}
+              <motion.div variants={item} className="bg-card border border-border rounded-2xl p-6 md:p-8 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-sm font-bold text-main flex items-center gap-2">
+                    <Star size={16} className="text-warning fill-warning" />
+                    أحدث التقييمات
+                  </h3>
+                </div>
+                
+                <div className="space-y-4">
+                  {reviews.map((rev) => (
+                    <div key={rev.id} className="bg-surface border border-border rounded-xl p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-bold text-main">{rev.studentName}</span>
+                        <div className="flex items-center gap-0.5 text-warning">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <Star key={i} size={10} className={i < rev.rating ? "fill-warning" : "text-border fill-transparent"} />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-muted leading-relaxed line-clamp-2">{rev.text}</p>
+                      <span className="text-[9px] font-bold text-muted/50 mt-2 block">{rev.date}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+            
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Edit name modal */}
+      {editingName && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm" onClick={() => setEditingName(false)}>
+          <div className="w-full max-w-sm rounded-3xl border border-border bg-card p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <h3 className="mb-4 text-sm font-black text-main">تعديل الاسم</h3>
+            <input
+              type="text"
+              value={nameDraft}
+              onChange={(e) => setNameDraft(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter') handleSaveName(); }}
+              placeholder="أدخل الاسم الجديد"
+              aria-label="الاسم"
+              autoFocus
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
+            />
+            <div className="mt-5 flex gap-3">
+              <button
+                onClick={() => setEditingName(false)}
+                className="flex-1 rounded-xl bg-surface py-3 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-95"
+              >
+                إلغاء
+              </button>
+              <button
+                onClick={handleSaveName}
+                disabled={!nameDraft.trim() || isSavingName}
+                className="flex-1 rounded-xl bg-primary py-3 text-xs font-black text-on-primary transition-all hover:bg-primary-hover active:scale-95 disabled:opacity-50"
+              >
+                {isSavingName ? 'جاري الحفظ...' : 'حفظ التغييرات'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
+
+const ActivityIcon = () => <Activity size={16} className="text-info" />;

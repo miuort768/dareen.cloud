@@ -130,7 +130,7 @@ export const StudentDashboardMobile = ({
 
   return (
     <div
-      className="min-h-screen overflow-x-hidden bg-background transition-colors duration-300 dark:bg-background"
+      className="min-h-screen overflow-x-hidden bg-surface transition-colors duration-300 dark:bg-background"
       dir="rtl"
       {...handlers}
     >
