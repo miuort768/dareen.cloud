@@ -19,6 +19,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 
 import { Skeleton } from '../../../shared/components/ui'
+import { MobilePageHeader } from '../../../shared/components/mobile'
 import { SendNotificationModal } from '../../../shared/components/SendNotificationModal'
 import { ConfirmModal } from '../../../shared/components/ConfirmModal'
 import { StudentForm } from '../components/StudentForm'
