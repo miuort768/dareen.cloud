@@ -353,7 +353,7 @@ export const Students = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 shadow-xl dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover md:p-8"
+          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 pt-5 shadow-xl md:p-8 dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover md:p-8"
         >
           {particles.map((p) => (
             <motion.div
