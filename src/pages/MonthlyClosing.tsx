@@ -94,7 +94,7 @@ export const MonthlyClosing = () => {
 
     const payrollData = teachers?.map(teacher => {
         const teacherSessions = filteredSessions.filter(s => s.teacherName?.trim() === teacher.name?.trim() && s.status === 'completed');
-        const baseAmount = teacherSessions.reduce((acc, curr) => acc + (curr.teacherPrice || teacher.price || 0), 0);
+        const baseAmount = teacherSessions.reduce((acc, curr) => acc + (Number(curr.teacherPrice) || Number(teacher.price) || 0), 0);
         const adjustment = teacherAdjustments[teacher.id] || 0;
         return { ...teacher, sessionsCount: teacherSessions.length, baseAmount, adjustment, totalAmount: baseAmount + adjustment, sessionsList: teacherSessions };
     }).sort((a, b) => b.totalAmount - a.totalAmount) || [];
@@ -102,8 +102,22 @@ export const MonthlyClosing = () => {
     const subjectsList = Array.from(new Set(filteredSessions.map(s => s.subject))).filter(Boolean);
     const subjectAnalysis = subjectsList.map(subj => {
         const subjectSessions = filteredSessions.filter(s => s.subject === subj && s.status === 'completed');
-        const income = subjectSessions.reduce((acc, curr) => acc + (curr.price || 0), 0);
-        const payout = subjectSessions.reduce((acc, curr) => acc + (curr.teacherPrice || 0), 0);
+        const income = subjectSessions.reduce((acc, curr) => {
+            let price = Number(curr.price) || 0;
+            if (price === 0) {
+                const student = students?.find(s => s.id === curr.studentId || s.name?.trim().toLowerCase() === curr.studentName?.trim().toLowerCase());
+                price = Number(student?.sessionPrice) || 0;
+            }
+            return acc + price;
+        }, 0);
+        const payout = subjectSessions.reduce((acc, curr) => {
+            let tPrice = Number(curr.teacherPrice) || 0;
+            if (tPrice === 0) {
+                const teacher = teachers?.find(t => t.id === curr.teacherId || t.name?.trim().toLowerCase() === curr.teacherName?.trim().toLowerCase());
+                tPrice = Number(teacher?.price) || 0;
+            }
+            return acc + tPrice;
+        }, 0);
         return { name: subj, income, payout, profit: income - payout, sessionsCount: subjectSessions.length };
     }).sort((a, b) => b.profit - a.profit);
 
@@ -126,12 +140,30 @@ export const MonthlyClosing = () => {
     ).filter(item => item.isLow).sort((a, b) => a.remaining - b.remaining) || [];
 
     const validSessions = filteredSessions.filter(s => s.status !== 'cancelled');
-    const totalProjectedIncome = validSessions.reduce((acc, curr) => acc + (Number(curr.price) || 0), 0);
+    const totalProjectedIncome = validSessions.reduce((acc, curr) => {
+        let price = Number(curr.price) || 0;
+        if (price === 0) {
+            const student = students?.find(s => s.id === curr.studentId || s.name?.trim().toLowerCase() === curr.studentName?.trim().toLowerCase());
+            price = Number(student?.sessionPrice) || 0;
+        }
+        return acc + price;
+    }, 0);
     const totalActualCollections = (studentInvoices || [])
         .filter((inv: { date: string; status: string }) => inv.date >= startDate && inv.date <= endDate && ['paid', 'مدفوعة', 'تم الدفع'].includes((inv.status || '').toLowerCase()))
         .reduce((acc: number, curr: { amount: number }) => acc + (Number(curr.amount) || 0), 0);
+        
     const totalTeacherPayout = payrollData.reduce((acc, curr) => acc + (Number(curr.totalAmount) || 0), 0);
-    const netProjectedProfit = totalProjectedIncome - totalTeacherPayout;
+    
+    const totalProjectedPayout = validSessions.reduce((acc, curr) => {
+        let tPrice = Number(curr.teacherPrice) || 0;
+        if (tPrice === 0) {
+            const teacher = teachers?.find(t => t.id === curr.teacherId || t.name?.trim().toLowerCase() === curr.teacherName?.trim().toLowerCase());
+            tPrice = Number(teacher?.price) || 0;
+        }
+        return acc + tPrice;
+    }, 0);
+
+    const netProjectedProfit = totalProjectedIncome - totalProjectedPayout;
     const netActualCashFlow = totalActualCollections - totalTeacherPayout;
 
     if (isLoading) return <PageLoader />;

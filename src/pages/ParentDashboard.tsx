@@ -32,9 +32,10 @@ export const ParentDashboard = () => {
                 try { return await api.get<unknown[]>(`/parents/child-sessions/${s.id}`) || []; }
                 catch { failedChildren++; return []; }
             });
+            // Points log may be forbidden for parents on some backends — degrade silently.
             const logsPromises = students.map(async s => {
                 try { return await api.get<unknown[]>(`/student-portal/me/points-log?studentId=${s.id}`) || []; }
-                catch { failedChildren++; return []; }
+                catch { return []; }
             });
 
             const [allSessionsResults, allLogsResults] = await Promise.all([

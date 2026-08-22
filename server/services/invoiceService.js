@@ -433,6 +433,9 @@ async function getInvoiceStats(filters = {}) {
       if (to) { teacherWhere.date = { ...teacherWhere.date, lte: to }; studentWhere.date = { ...studentWhere.date, lte: to }; }
     }
 
+    const currencyService = require('./currencyService');
+    const reportCurrency = await currencyService.getReportCurrency();
+
     const [teacherInvoices, studentInvoices, teacherCount, studentCount] = await Promise.all([
       prisma.teacherInvoice.findMany({ where: teacherWhere }),
       prisma.studentInvoice.findMany({ where: studentWhere }),
@@ -440,14 +443,23 @@ async function getInvoiceStats(filters = {}) {
       prisma.studentInvoice.count({ where: studentWhere }),
     ]);
 
-    const teacherTotal = teacherInvoices.reduce((sum, inv) => sum + inv.amount, 0);
-    const studentTotal = studentInvoices.reduce((sum, inv) => sum + inv.amount, 0);
+    const convertedTeacherInvoices = await Promise.all(teacherInvoices.map(async inv => ({
+      ...inv,
+      convertedAmount: await currencyService.convert(inv.amount, inv.currency || 'EGP', reportCurrency)
+    })));
+    const convertedStudentInvoices = await Promise.all(studentInvoices.map(async inv => ({
+      ...inv,
+      convertedAmount: await currencyService.convert(inv.amount, inv.currency || 'EGP', reportCurrency)
+    })));
 
-    const teacherByStatus = groupBy(teacherInvoices, 'status');
-    const studentByStatus = groupBy(studentInvoices, 'status');
+    const teacherTotal = convertedTeacherInvoices.reduce((sum, inv) => sum + inv.convertedAmount, 0);
+    const studentTotal = convertedStudentInvoices.reduce((sum, inv) => sum + inv.convertedAmount, 0);
 
-    const teacherPaid = teacherInvoices.filter(i => i.status === 'paid').reduce((s, i) => s + i.amount, 0);
-    const studentPaid = studentInvoices.filter(i => i.status === 'paid').reduce((s, i) => s + i.amount, 0);
+    const teacherByStatus = groupByConverted(convertedTeacherInvoices, 'status');
+    const studentByStatus = groupByConverted(convertedStudentInvoices, 'status');
+
+    const teacherPaid = convertedTeacherInvoices.filter(i => i.status === 'paid').reduce((s, i) => s + i.convertedAmount, 0);
+    const studentPaid = convertedStudentInvoices.filter(i => i.status === 'paid').reduce((s, i) => s + i.convertedAmount, 0);
 
     return {
       count: { teacher: teacherCount, student: studentCount, total: teacherCount + studentCount },
@@ -464,6 +476,18 @@ async function getInvoiceStats(filters = {}) {
 function formatStudentInvoice(inv) {
   if (!inv) return inv;
   return { ...inv, items: inv.items ? parseItems(inv.items) : [] };
+}
+
+function groupByConverted(arr, key) {
+  const map = new Map();
+  for (const item of arr) {
+    const k = item[key] || 'unknown';
+    const existing = map.get(k) || { count: 0, amount: 0 };
+    existing.count += 1;
+    existing.amount += (item.convertedAmount !== undefined ? item.convertedAmount : item.amount);
+    map.set(k, existing);
+  }
+  return map;
 }
 
 function groupBy(arr, key) {

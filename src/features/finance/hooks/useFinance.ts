@@ -171,12 +171,12 @@ export const useFinance = () => {
     }
 
     // Client-side fallback: filter ALL items by reportCurrency to avoid mixing currencies.
-    // The client has no access to exchange rates, so amounts in other currencies are excluded.
+    // The client has no access to exchange rates, so amounts in other currencies are excluded for income.
     const curFilter = (cur?: string) => (cur || 'EGP') === reportCurrency
-    const completedSessions = sessions.filter(
-      (s) => s.status === 'completed' && curFilter(s.studentCurrency),
-    )
+    const allCompletedSessions = sessions.filter((s) => s.status === 'completed')
+    const completedSessions = allCompletedSessions.filter((s) => curFilter(s.studentCurrency))
     const monthSessions = completedSessions.filter((s) => isSameMonth(s.date))
+    const allMonthSessions = allCompletedSessions.filter((s) => isSameMonth(s.date))
 
     const filteredInvoices = invoices.filter((i) => curFilter(i.currency))
     const filteredManualTx = manualTransactions.filter((t) => curFilter(t.currency))
@@ -194,12 +194,13 @@ export const useFinance = () => {
         .filter((t) => t.type === 'income' && t.status === 'completed' && isSameMonth(t.date))
         .reduce((sum, t) => sum + (Number(t.amount) || 0), 0)
 
-    const automatedLaborCost = completedSessions.reduce(
+    // Labor cost must include ALL sessions, regardless of student currency, because the teacher expense is still owed.
+    const automatedLaborCost = allCompletedSessions.reduce(
       (sum, s) => sum + (Number(s.teacherPrice) || 0),
       0,
     )
 
-    const monthAutomatedLaborCost = monthSessions.reduce(
+    const monthAutomatedLaborCost = allMonthSessions.reduce(
       (sum, s) => sum + (Number(s.teacherPrice) || 0),
       0,
     )

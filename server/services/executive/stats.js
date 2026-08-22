@@ -28,20 +28,43 @@ async function getStats() {
         prisma.evaluation.findMany({ select: { rating: true, studentId: true } }),
         prisma.studentInvoice.findMany({ where: { status: { in: ['overdue', 'pending'] } } }),
         prisma.teacherInvoice.findMany(),
-        prisma.session.findMany({ where: { status: 'completed' }, select: { id: true, teacherName: true, subject: true, price: true, date: true } }),
+        prisma.session.findMany({ where: { status: 'completed' }, select: { id: true, studentId: true, studentName: true, teacherName: true, subject: true, price: true, date: true } }),
     ]);
 
     const completedToday = sessionsToday.filter(s => ['completed', 'مكتملة'].includes(s.status?.toLowerCase()));
     const cancelledToday = sessionsToday.filter(s => ['cancelled', 'ملغاة'].includes(s.status?.toLowerCase()));
     const scheduledToday = sessionsToday.filter(s => ['scheduled', 'مجدولة'].includes(s.status?.toLowerCase()));
 
-    const todayRevenue = completedToday.reduce((sum, s) => sum + (Number(s.price) || 0), 0)
-        + transactionsToday.filter(t => t.type === 'income').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+    const currencyService = require('../currencyService');
+    const reportCurrency = await currencyService.getReportCurrency();
 
-    const cashToday = transactionsToday.filter(t => t.type === 'income').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+    const todayRevenueRaw = await Promise.all(completedToday.map(async s => {
+        let price = Number(s.price) || 0;
+        let currency = s.studentCurrency || 'EGP';
+        if (price === 0) {
+            const stu = students.find(x => x.id === s.studentId || x.name?.trim().toLowerCase() === s.studentName?.trim().toLowerCase());
+            price = Number(stu?.sessionPrice) || 0;
+            currency = stu?.currency || 'EGP';
+        }
+        return currencyService.convert(price, currency, reportCurrency);
+    }));
+    
+    const todayTransIncome = await Promise.all(transactionsToday.filter(t => t.type === 'income').map(t => 
+        currencyService.convert(Number(t.amount) || 0, t.currency || 'EGP', reportCurrency)
+    ));
 
-    const todayExpenses = fixedExpenses.reduce((sum, f) => sum + (Number(f.amount) || 0), 0) / 30
-        + transactionsToday.filter(t => t.type === 'expense').reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+    const todayRevenue = todayRevenueRaw.reduce((a, b) => a + b, 0) + todayTransIncome.reduce((a, b) => a + b, 0);
+
+    const cashToday = todayTransIncome.reduce((a, b) => a + b, 0);
+
+    const todayFixedExp = await Promise.all(fixedExpenses.map(f => 
+        currencyService.convert(Number(f.amount) || 0, f.currency || 'EGP', reportCurrency)
+    ));
+    const todayTransExp = await Promise.all(transactionsToday.filter(t => t.type === 'expense').map(t => 
+        currencyService.convert(Number(t.amount) || 0, t.currency || 'EGP', reportCurrency)
+    ));
+
+    const todayExpenses = (todayFixedExp.reduce((a, b) => a + b, 0) / 30) + todayTransExp.reduce((a, b) => a + b, 0);
 
     const todayProfit = todayRevenue - todayExpenses;
 
@@ -59,8 +82,16 @@ async function getStats() {
 
     const subjectRevenue = {};
     for (const s of allSessions) {
+        let price = Number(s.price) || 0;
+        let currency = s.studentCurrency || 'EGP';
+        if (price === 0) {
+            const stu = students.find(x => x.id === s.studentId || x.name?.trim().toLowerCase() === s.studentName?.trim().toLowerCase());
+            price = Number(stu?.sessionPrice) || 0;
+            currency = stu?.currency || 'EGP';
+        }
+        const convertedPrice = await currencyService.convert(price, currency, reportCurrency);
         const subj = s.subject || 'غير محدد';
-        subjectRevenue[subj] = (subjectRevenue[subj] || 0) + (Number(s.price) || 0);
+        subjectRevenue[subj] = (subjectRevenue[subj] || 0) + convertedPrice;
     }
     const mostProfitableSubject = Object.entries(subjectRevenue)
         .sort((a, b) => b[1] - a[1])[0] || ['—', 0];
