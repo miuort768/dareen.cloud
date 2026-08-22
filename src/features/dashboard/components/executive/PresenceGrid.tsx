@@ -23,7 +23,7 @@ const ROLE_LABELS: Record<string, string> = {
 };
 
 function getInitials(name: string): string {
-    return name.charAt(0).toUpperCase();
+    return (name || '?').charAt(0).toUpperCase();
 }
 
 export const PresenceGrid = memo(function PresenceGrid({ users, total }: { users: PresenceUser[]; total: number }) {
@@ -75,7 +75,7 @@ export const PresenceGrid = memo(function PresenceGrid({ users, total }: { users
                                 )}
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-[11px] font-bold text-main truncate">{user.name}</p>
+                                <p className="text-[11px] font-bold text-main truncate">{user.name || 'مستخدم'}</p>
                                 <p className="text-[10px] text-muted">
                                     {ROLE_LABELS[user.role] || user.role}
                                     {user.teachingSubject && ` · ${user.teachingSubject}`}
