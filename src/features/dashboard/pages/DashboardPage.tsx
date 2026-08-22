@@ -104,28 +104,14 @@ export const Dashboard = () => {
                     {/* Desktop */}
                     <div className="hidden md:block max-w-page mx-auto px-6 relative z-10">
 
-                        {/* Welcome bar */}
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-5">
-                            <div className="flex items-center gap-3">
-                                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep text-sm font-bold text-on-primary shadow-md shadow-primary/20">
-                                    {(currentUser?.name || '?').charAt(0)}
-                                </div>
-                                <div>
-                                    <h1 className="text-lg font-black leading-tight text-main">
-                                        أهلاً {(currentUser?.name || 'المدير').split(' ')[0]}
-                                    </h1>
-                                    <p className="text-[11px] font-medium text-muted">
-                                        نظرة شاملة على أداء المنشأة اليوم
-                                    </p>
-                                </div>
-                            </div>
-                            {academicYear && (
+                        {academicYear && (
+                            <div className="flex justify-end pt-5">
                                 <span className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-soft text-primary text-[11px] font-bold rounded-lg">
                                     <CalendarDays size={13} />
                                     السنة الدراسية: {academicYear}
                                 </span>
-                            )}
-                        </div>
+                            </div>
+                        )}
 
                         <ExecutiveDashboard />
                     </div>
