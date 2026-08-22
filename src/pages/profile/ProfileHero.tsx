@@ -66,7 +66,7 @@ export const ProfileHero = ({ name, role, subtitle, rank, points, attendanceRate
   const offset = circumference - (progressValue / 100) * circumference
 
   return (
-    <div className="relative overflow-hidden rounded-b-[2.5rem] border-b border-x border-border/70 bg-card p-6 shadow-elevation-1 transition-all duration-300 md:p-8" dir="rtl">
+    <div className="relative overflow-hidden rounded-3xl border border-border/70 bg-card p-6 shadow-sm transition-all duration-300 md:p-8" dir="rtl">
       <div className="pointer-events-none absolute -end-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -start-24 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
 

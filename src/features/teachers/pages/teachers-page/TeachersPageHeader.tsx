@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Plus, X, Users, BookOpen, DollarSign } from 'lucide-react'
 import { cn } from '../../../../lib/utils'
+import { MobilePageHeader } from '../../../../shared/components/mobile'
 
 interface TeachersPageHeaderProps {
   totalTeachers: number
@@ -110,29 +111,27 @@ export const TeachersPageHeader = ({
     </motion.div>
 
     {/* ====== MOBILE (< md): colored gradient stat cards ====== */}
-    <div className="space-y-3 md:hidden">
+    <div className="space-y-3 px-1 md:hidden">
       {/* Title + add button */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-card shadow-sm">
-            <Users size={20} className="text-primary" />
-          </div>
-          <div>
-            <h1 className="font-outfit text-lg font-black text-main">إدارة المعلمات</h1>
-            <p className="text-[11px] text-muted">{totalTeachers} معلمة نشطة</p>
-          </div>
-        </div>
-        <button
-          onClick={onToggleForm}
-          className={cn(
-            'flex h-10 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-bold transition-all active:scale-[0.97]',
-            showAddForm ? 'border border-border bg-surface text-main' : 'bg-primary text-on-primary',
-          )}
-        >
-          {showAddForm ? <X size={15} /> : <Plus size={15} />}
-          {showAddForm ? 'إلغاء' : 'إضافة'}
-        </button>
-      </div>
+      <MobilePageHeader
+        title="إدارة المعلمات"
+        subtitle={`${totalTeachers} معلمة نشطة`}
+        icon={<Users size={20} />}
+        action={
+          <button
+            onClick={onToggleForm}
+            className={cn(
+              'flex h-11 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-bold transition-all active:scale-[0.97]',
+              showAddForm
+                ? 'border border-border bg-surface text-main'
+                : 'bg-primary text-on-primary shadow-md shadow-primary/25',
+            )}
+          >
+            {showAddForm ? <X size={15} /> : <Plus size={15} />}
+            {showAddForm ? 'إلغاء' : 'إضافة'}
+          </button>
+        }
+      />
 
       {/* 3 colored stat cards */}
       <div className="grid grid-cols-3 gap-2">
