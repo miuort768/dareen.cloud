@@ -213,60 +213,69 @@ export const TeacherProfilePage = () => {
                     <TeacherDashboardHeader logout={logout} />
                 </div>
             )}
-<div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6">
-                <motion.div {...stagger(0)} className="space-y-4 md:space-y-6">
-                    <ProfileHero
-                        name={name}
-                        role="teacher"
-                        subtitle={teacherData?.subject || ''}
-                        points={points}
-                        rank={rank}
-                        stats={dashboardStats || undefined}
-                        hideNavButtons
-                        onEditName={() => {
-                            setNameDraft(name);
-                            setEditingName(true);
-                        }}
-                    />
-                    <ProfileBottomMotivation
-                        icon={<Target size={28} />}
-                        title="استمر في التدريس!"
-                        description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد وصلت إلى أعلى المراتب! استمر في التألق'}
-                        progress={nextRank ? Math.round((points / 1000) * 100) : 100}
-                        progressLabel="التقدم نحو الرتبة التالية"
-                        targetLabel={nextRank ? `${nextRank.needed} نقطة متبقية` : 'أحسنت!'}
-                        color="primary"
-                    />
-                </motion.div>
+            <div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6 md:pt-6">
+                <ProfileHero
+                    name={name}
+                    role="teacher"
+                    subtitle={teacherData?.subject || ''}
+                    points={points}
+                    rank={rank}
+                    stats={dashboardStats || undefined}
+                    hideNavButtons
+                    onEditName={() => {
+                        setNameDraft(name);
+                        setEditingName(true);
+                    }}
+                />
 
-                <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-                    <StatCard icon={<Users size={18} className="text-primary" />} value={dashboardStats?.studentsCount ?? 0} label="إجمالي الطلاب" color="primary" trend={{ value: 12, isUp: true }} />
-                    <StatCard icon={<Play size={18} className="text-info" />} value={dashboardStats?.completedSessions ?? 0} label="الحصص المنفذة" color="info" trend={{ value: 8, isUp: true }} />
-                    <StatCard icon={<Star size={18} className="text-warning" />} value={points} label="النقاط" color="warning" trend={{ value: 15, isUp: true }} />
-                    <StatCard icon={<DollarSign size={18} className="text-error" />} value={teacherData?.price ?? 0} label={`سعر الحصة`} color="error" />
-                </div>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-[320px_1fr] lg:grid-cols-[360px_1fr] md:gap-6">
+                    {/* Right Column (Sidebar) */}
+                    <motion.div {...stagger(1)} className="space-y-4 md:space-y-6">
+                        <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
+                            <h3 className="text-base font-bold text-main mb-4 flex items-center gap-2">
+                                <UserCheck size={16} className="text-primary" />
+                                المعلومات الشخصية
+                            </h3>
+                            <div className="space-y-2.5">
+                                {infoFields.map((f, i) => <InfoRow key={i} icon={f.icon} label={f.label} value={f.value} />)}
+                            </div>
+                        </div>
 
-                <motion.div {...stagger(2)} className="space-y-4 md:space-y-6">
-                    <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
-                        <h3 className="text-base font-bold text-main mb-4 flex items-center gap-2">
-                            <UserCheck size={16} className="text-primary" />
-                            المعلومات الشخصية
-                        </h3>
-                        <div className="space-y-2.5">
-                            {infoFields.map((f, i) => <InfoRow key={i} icon={f.icon} label={f.label} value={f.value} />)}
+                        <ProfileBottomMotivation
+                            icon={<Target size={28} />}
+                            title="استمر في التدريس!"
+                            description={nextRank ? `تبقى ${nextRank.needed} نقطة فقط للوصول إلى ${nextRank.name}` : 'لقد وصلت إلى أعلى المراتب! استمر في التألق'}
+                            progress={nextRank ? Math.round((points / 1000) * 100) : 100}
+                            progressLabel="التقدم نحو الرتبة التالية"
+                            targetLabel={nextRank ? `${nextRank.needed} نقطة متبقية` : 'أحسنت!'}
+                            color="primary"
+                        />
+                        
+                        <PaymentSettingsSection />
+                    </motion.div>
+
+                    {/* Left Column (Main Content) */}
+                    <div className="space-y-4 md:space-y-6">
+                        <motion.div {...stagger(2)} className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+                            <StatCard icon={<Users size={18} className="text-primary" />} value={dashboardStats?.studentsCount ?? 0} label="إجمالي الطلاب" color="primary" trend={{ value: 12, isUp: true }} />
+                            <StatCard icon={<Play size={18} className="text-info" />} value={dashboardStats?.completedSessions ?? 0} label="الحصص المنفذة" color="info" trend={{ value: 8, isUp: true }} />
+                            <StatCard icon={<Star size={18} className="text-warning" />} value={points} label="النقاط" color="warning" trend={{ value: 15, isUp: true }} />
+                            <StatCard icon={<DollarSign size={18} className="text-error" />} value={teacherData?.price ?? 0} label={`سعر الحصة`} color="error" />
+                        </motion.div>
+
+                        <motion.div {...stagger(3)}>
+                            <ProfileAchievements achievements={achievements} />
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                            <motion.div {...stagger(4)}>
+                                <ProfileRecentActivity activities={activities} />
+                            </motion.div>
+                            <motion.div {...stagger(5)}>
+                                <ProfileReviews reviews={reviews} />
+                            </motion.div>
                         </div>
                     </div>
-
-                    <PaymentSettingsSection />
-                </motion.div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <motion.div {...stagger(4)}>
-                        <ProfileRecentActivity activities={activities} />
-                    </motion.div>
-                    <motion.div {...stagger(5)}>
-                        <ProfileReviews reviews={reviews} />
-                    </motion.div>
                 </div>
             </div>
 

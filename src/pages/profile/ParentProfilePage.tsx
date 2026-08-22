@@ -194,30 +194,23 @@ export const ParentProfilePage = () => {
             <div className="hidden md:block">
                 <ParentDashboardHeader logout={logout} />
             </div>
-            <div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6">
-                <motion.div {...stagger(0)}>
-                    <ProfileHero
-                        name={name}
-                        role="parent"
-                        subtitle={`${children.length} ${children.length === 1 ? 'ابن' : 'أبناء'} مسجلين`}
-                        points={totalPoints}
-                        rank={rank}
-                        hideNavButtons
-                        onEditName={() => {
-                            setNameDraft(name);
-                            setEditingName(true);
-                        }}
-                    />
-                </motion.div>
+            <div className="max-w-page mx-auto px-4 pt-4 pb-24 space-y-4 md:space-y-6 md:pt-6">
+                <ProfileHero
+                    name={name}
+                    role="parent"
+                    subtitle={`${children.length} ${children.length === 1 ? 'ابن' : 'أبناء'} مسجلين`}
+                    points={totalPoints}
+                    rank={rank}
+                    hideNavButtons
+                    onEditName={() => {
+                        setNameDraft(name);
+                        setEditingName(true);
+                    }}
+                />
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    <StatCard icon={<Users size={18} className="text-primary" />} value={children.length} label="الأبناء" color="primary" trend={{ value: 100, isUp: true }} />
-                    <StatCard icon={<BookOpen size={18} className="text-success" />} value={totalSubjects} label="المواد المسجلة" color="success" />
-                    <StatCard icon={<Star size={18} className="text-warning" />} value={totalPoints} label="النقاط العائلية" color="warning" trend={{ value: Math.min(Math.round((totalPoints / Math.max(totalPoints, 10)) * 100), 100), isUp: true }} />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                    <motion.div {...stagger(2)} className="space-y-4 md:space-y-6">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-[320px_1fr] lg:grid-cols-[360px_1fr] md:gap-6">
+                    {/* Right Column (Sidebar) */}
+                    <motion.div {...stagger(1)} className="space-y-4 md:space-y-6">
                         <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
                             <h3 className="text-base font-bold text-main mb-4 flex items-center gap-2">
                                 <User size={16} className="text-primary" />
@@ -228,8 +221,27 @@ export const ParentProfilePage = () => {
                             </div>
                         </div>
 
+                        <ProfileBottomMotivation
+                            icon={<Users size={28} />}
+                            title="أنت عائلة ملهمة!"
+                            description={`${children.length > 1 ? 'أبناؤك' : 'ابنك'} يتقدمون بفضل متابعتك المستمرة — استمر في دعمهم لتحقيق المزيد`}
+                            progress={Math.min(Math.round((totalPoints / 1000) * 100), 100)}
+                            progressLabel="النقاط العائلية"
+                            targetLabel={totalPoints < 1000 ? `${1000 - totalPoints} نقطة للوصول إلى العائلة الذهبية` : 'أحسنتم!'}
+                            color="primary"
+                        />
+                    </motion.div>
+
+                    {/* Left Column (Main Content) */}
+                    <div className="space-y-4 md:space-y-6">
+                        <motion.div {...stagger(2)} className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
+                            <StatCard icon={<Users size={18} className="text-primary" />} value={children.length} label="الأبناء" color="primary" trend={{ value: 100, isUp: true }} />
+                            <StatCard icon={<BookOpen size={18} className="text-success" />} value={totalSubjects} label="المواد المسجلة" color="success" />
+                            <StatCard icon={<Star size={18} className="text-warning" />} value={totalPoints} label="النقاط العائلية" color="warning" trend={{ value: Math.min(Math.round((totalPoints / Math.max(totalPoints, 10)) * 100), 100), isUp: true }} />
+                        </motion.div>
+
                         {childrenStats.length > 0 && (
-                            <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
+                            <motion.div {...stagger(3)} className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm">
                                 <div className="flex items-center justify-between mb-4">
                                     <h3 className="text-base font-bold text-main flex items-center gap-2">
                                         <Heart size={16} className="text-error" />
@@ -242,52 +254,44 @@ export const ParentProfilePage = () => {
                                         عرض الكل <ChevronLeft size={12} />
                                     </button>
                                 </div>
-                                <div className="space-y-2.5">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {childrenStats.map((child) => (
-                                        <div key={child.id} className="p-3 bg-surface rounded-xl border border-border">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <div className="w-10 h-10 rounded-xl bg-primary-soft flex items-center justify-center shrink-0">
-                                                    <span className="text-sm font-bold text-primary">{(child.name || 'ط').charAt(0)}</span>
+                                        <div key={child.id} className="p-4 bg-surface rounded-xl border border-border transition-colors hover:border-border">
+                                            <div className="flex items-center gap-3 mb-3">
+                                                <div className="w-12 h-12 rounded-xl bg-primary-soft flex items-center justify-center shrink-0">
+                                                    <span className="text-base font-bold text-primary">{(child.name || 'ط').charAt(0)}</span>
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-xs font-bold text-main truncate">{child.name}</p>
-                                                    <div className="flex items-center gap-2 text-[10px] text-muted">
+                                                    <p className="text-sm font-bold text-main truncate">{child.name}</p>
+                                                    <div className="flex items-center gap-2 text-xs text-muted mt-0.5">
                                                         {child.grade && <span>{child.grade}</span>}
                                                         <span>• {child.subjectCount} {child.subjectCount === 1 ? 'مادة' : 'مواد'}</span>
                                                     </div>
                                                 </div>
-                                                <span className="text-[10px] font-bold text-primary bg-primary-soft px-2 py-0.5 rounded-lg">{child.progress}%</span>
+                                                <span className="text-[11px] font-bold text-primary bg-primary-soft px-2.5 py-1 rounded-lg">{child.progress}%</span>
                                             </div>
-                                            <div className="w-full h-1.5 bg-border rounded-full overflow-hidden">
+                                            <div className="w-full h-2 bg-border rounded-full overflow-hidden">
                                                 <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `${Math.min(child.progress, 100)}%` }} />
                                             </div>
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </motion.div>
                         )}
-                    </motion.div>
 
-                    <motion.div {...stagger(3)} className="space-y-4 md:space-y-6">
-                        <ProfileAchievements achievements={achievements} title="إنجازات العائلة" />
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                            <motion.div {...stagger(4)}>
+                                <ProfileAchievements achievements={achievements} title="إنجازات العائلة" />
+                            </motion.div>
 
-                        {activities.length > 0 && (
-                            <ProfileRecentActivity activities={activities} title="آخر النشاطات" />
-                        )}
-                    </motion.div>
+                            {activities.length > 0 && (
+                                <motion.div {...stagger(5)}>
+                                    <ProfileRecentActivity activities={activities} title="آخر النشاطات" />
+                                </motion.div>
+                            )}
+                        </div>
+                    </div>
                 </div>
-
-                <motion.div {...stagger(4)}>
-                    <ProfileBottomMotivation
-                        icon={<Users size={28} />}
-                        title="أنت عائلة ملهمة!"
-                        description={`${children.length > 1 ? 'أبناؤك' : 'ابنك'} يتقدمون بفضل متابعتك المستمرة — استمر في دعمهم لتحقيق المزيد`}
-                        progress={Math.min(Math.round((totalPoints / 1000) * 100), 100)}
-                        progressLabel="النقاط العائلية"
-                        targetLabel={totalPoints < 1000 ? `${1000 - totalPoints} نقطة للوصول إلى العائلة الذهبية` : 'أحسنتم!'}
-                        color="primary"
-                    />
-                </motion.div>
             </div>
 
             {/* Edit name modal */}
