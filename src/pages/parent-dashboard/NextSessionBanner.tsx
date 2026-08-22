@@ -1,4 +1,4 @@
-﻿import { Clock, MapPin, GraduationCap, Calendar } from 'lucide-react';
+import { Clock, MapPin, GraduationCap, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 
@@ -9,7 +9,7 @@ interface NextSessionBannerProps {
 export const NextSessionBanner = ({ todayTasks }: NextSessionBannerProps) => {
     if (todayTasks.length === 0) {
         return (
-            <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-6 md:p-7 transition-colors duration-300">
+            <div className="rounded-3xl bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 p-6 md:p-7 transition-colors duration-300">
                 <div className="flex flex-col md:flex-row items-center gap-5">
                     <div className="w-14 h-14 rounded-xl bg-primary-soft dark:bg-primary/10 flex items-center justify-center shrink-0">
                         <Calendar size={24} className="text-primary dark:text-primary" />
@@ -26,7 +26,7 @@ export const NextSessionBanner = ({ todayTasks }: NextSessionBannerProps) => {
     const next = todayTasks[0];
 
     return (
-        <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border overflow-hidden transition-all duration-300 hover:shadow-elevation-1">
+        <div className="rounded-3xl bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 overflow-hidden transition-all duration-300 hover:shadow-elevation-1">
             <div className="p-5 md:p-6">
                 <div className="flex items-center gap-2 mb-4">
                     <div className="w-8 h-8 rounded-lg bg-primary-soft dark:bg-primary/10 flex items-center justify-center">

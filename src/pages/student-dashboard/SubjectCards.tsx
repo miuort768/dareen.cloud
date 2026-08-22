@@ -1,4 +1,4 @@
-﻿import { BookOpen, User } from 'lucide-react';
+import { BookOpen, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Enrollment } from './types';
 
@@ -34,7 +34,7 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
                     return (
                     <div
                         key={en.id || idx}
-                        className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-4 hover:shadow-elevation-1 transition-all duration-200"
+                        className="bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 rounded-3xl p-4 hover:shadow-elevation-1 transition-all duration-200"
                     >
                             <div className="flex items-center gap-3 mb-3">
                                 <div className={`w-10 h-10 rounded-xl ${color.bg} flex items-center justify-center shrink-0`}>

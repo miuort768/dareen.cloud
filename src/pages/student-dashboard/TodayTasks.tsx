@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { CheckCircle, Circle, BookOpen, FileText, ClipboardList } from 'lucide-react';
 import type { TodayTask } from './types';
 
@@ -28,7 +28,7 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
     const completedCount = tasks.filter(t => completedIds.has(t.id)).length;
 
     return (
-        <div className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-5 transition-colors duration-300">
+        <div className="bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 rounded-3xl p-5 transition-colors duration-300">
             <div className="flex items-center justify-between mb-4">
                 <span className="text-[11px] font-bold text-primary dark:text-primary bg-primary-soft dark:bg-primary/10 px-2.5 py-1 rounded-lg">
                     {completedCount}/{tasks.length}

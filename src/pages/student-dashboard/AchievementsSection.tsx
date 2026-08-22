@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Trophy, Star, Flame, BookOpen, Lock } from 'lucide-react';
 import type { Rank } from '../../shared/utils/ranks';
 
@@ -19,7 +19,7 @@ export const AchievementsSection = ({ points, nextRank }: AchievementsSectionPro
     ];
 
     return (
-        <div className="rounded-2xl bg-surface dark:bg-card border border-border dark:border-border p-5 md:p-6 transition-colors duration-300">
+        <div className="rounded-3xl bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 p-5 md:p-6 transition-colors duration-300">
             <div className="flex items-center gap-2 mb-5">
                 <div className="w-8 h-8 rounded-lg bg-warning-soft dark:bg-warning/10 flex items-center justify-center">
                     <Trophy size={16} className="text-warning dark:text-warning" />

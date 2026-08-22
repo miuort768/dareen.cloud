@@ -1,4 +1,4 @@
-﻿import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, BookOpen, Clock, TrendingUp, Users } from 'lucide-react';
 import type { Student } from '../../types';
 
@@ -12,7 +12,7 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
     if (kids.length === 0) return null;
 
     return (
-        <div className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-5 transition-colors duration-300">
+        <div className="bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 rounded-3xl p-5 transition-colors duration-300">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     <div className="w-9 h-9 rounded-lg bg-primary-soft dark:bg-primary/10 flex items-center justify-center">

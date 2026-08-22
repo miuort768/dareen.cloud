@@ -1,4 +1,4 @@
-﻿import { FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import type { Student } from '../../types';
 
 interface HomeworkNotesProps {
@@ -10,7 +10,7 @@ export const HomeworkNotes = ({ children: kids }: HomeworkNotesProps) => {
     if (!hasNotes) return null;
 
     return (
-        <div className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-5 transition-colors duration-300">
+        <div className="bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 rounded-3xl p-5 transition-colors duration-300">
             <div className="flex items-center gap-2 mb-4">
                 <div className="w-7 h-7 rounded-lg bg-warning-soft dark:bg-warning/10 flex items-center justify-center">
                     <FileText size={13} className="text-warning dark:text-warning" />

@@ -1,4 +1,4 @@
-﻿import { MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 
 interface SupportBannerProps {
     adminPhone: string | undefined;
@@ -8,7 +8,7 @@ export const SupportBanner = ({ adminPhone }: SupportBannerProps) => {
     const whatsappUrl = `https://wa.me/${(adminPhone?.replace(/\D/g, '') || '').replace(/^0/, '20') || '200000000000'}`;
 
     return (
-        <div className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-5 transition-colors duration-300">
+        <div className="bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 rounded-3xl p-5 transition-colors duration-300">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="text-center sm:text-start">
                     <h4 className="text-sm font-bold text-main dark:text-main mb-0.5">هل تحتاج لمساعدة؟</h4>

@@ -1,4 +1,4 @@
-﻿import { Star, Clock } from 'lucide-react';
+import { Star, Clock } from 'lucide-react';
 import type { PointLog } from './types';
 
 interface RecentActivityProps {
@@ -9,7 +9,7 @@ export const RecentActivity = ({ pointLogs }: RecentActivityProps) => {
     const recent = pointLogs.slice(0, 5);
 
     return (
-        <div className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-5 transition-colors duration-300">
+        <div className="bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 rounded-3xl p-5 transition-colors duration-300">
             <h3 className="text-sm font-bold text-main dark:text-main mb-4">آخر النشاطات</h3>
 
             <div className="relative">

@@ -40,9 +40,9 @@ export const HeroSection = ({
   const offset = circumference - (attendanceRate / 100) * circumference
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-border/70 bg-card p-6 shadow-elevation-1 transition-all duration-300 md:p-8">
-      <div className="pointer-events-none absolute -end-24 -top-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-24 -start-24 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
+    <div className="relative overflow-hidden rounded-[2rem] border border-border/50 bg-gradient-to-br from-primary-light via-primary-soft to-card p-6 shadow-sm transition-all duration-300 dark:border-primary/30 dark:from-card dark:via-surface dark:to-card md:p-8">
+      <div className="pointer-events-none absolute -end-24 -top-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl dark:bg-primary/10" />
+      <div className="pointer-events-none absolute -bottom-24 -start-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl dark:bg-primary/5" />
 
       <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div className="min-w-0 flex-1">

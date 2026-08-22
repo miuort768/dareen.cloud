@@ -1,4 +1,4 @@
-﻿import { CheckCircle2, XCircle, BookOpen, CalendarDays } from 'lucide-react'
+import { CheckCircle2, XCircle, BookOpen, CalendarDays } from 'lucide-react'
 import { format, startOfWeek } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { ARABIC_DAYS } from '../../shared/constants/days'
@@ -87,7 +87,7 @@ export const TodaySummary = ({ sessions, todayTasks }: TodaySummaryProps) => {
         return (
           <div
             key={card.key}
-            className="rounded-2xl border border-border bg-surface p-4 transition-all duration-300 hover:shadow-elevation-1 dark:border-border dark:bg-card md:p-5"
+            className="rounded-3xl border border-border/50 bg-surface p-4 shadow-sm transition-all duration-300 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card md:p-5"
           >
             <div className="mb-3 flex items-start justify-between">
               <div className={`h-10 w-10 rounded-xl ${card.bg} flex items-center justify-center`}>

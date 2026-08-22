@@ -1,4 +1,4 @@
-﻿import { Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import type { ActiveTimerSession } from './types';
 
 interface ActiveTimersBannerProps {
@@ -15,7 +15,7 @@ export const ActiveTimersBanner = ({ activeTimers, children: kids, formatTime }:
             {activeTimers.map((session) => {
                 const child = kids.find(c => c.id === session.studentId);
                 return (
-                    <div key={session.id} className="bg-surface dark:bg-card border border-border dark:border-border rounded-2xl p-4 transition-colors duration-300">
+                    <div key={session.id} className="bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 rounded-3xl p-4 transition-colors duration-300">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-xl bg-warning-soft dark:bg-warning/10 flex items-center justify-center animate-pulse">

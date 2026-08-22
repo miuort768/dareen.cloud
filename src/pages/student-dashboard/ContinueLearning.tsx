@@ -1,4 +1,4 @@
-﻿import { BookOpen, ArrowLeft } from 'lucide-react'
+import { BookOpen, ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import type { Enrollment } from './types'
 
@@ -37,7 +37,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
           return (
             <div
               key={en.id || idx}
-              className="min-w-[200px] shrink-0 snap-start rounded-2xl border border-border bg-surface p-4 transition-all duration-200 hover:shadow-elevation-1 dark:border-border dark:bg-card"
+              className="min-w-[200px] shrink-0 snap-start rounded-3xl border border-border/50 bg-surface shadow-sm p-4 transition-all duration-200 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card"
             >
               <div className="mb-3 flex items-center gap-2">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
