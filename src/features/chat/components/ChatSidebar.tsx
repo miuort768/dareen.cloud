@@ -44,9 +44,9 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         selectedConv ? 'hidden lg:flex' : 'flex',
       )}
     >
-      <div className="border-border flex h-[60px] shrink-0 items-center justify-between border-b bg-surface px-4 dark:border-white/5 dark:bg-card">
+      <div className="flex h-[60px] shrink-0 items-center justify-between border-b border-border bg-surface px-4 dark:border-white/5 dark:bg-card">
         <div className="flex items-center gap-2">
-          <div className="border-success-soft h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 shadow-sm">
+          <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-success-soft shadow-sm">
             <Image
               src="/chat-avatar.webp"
               alt="avatar"
@@ -93,7 +93,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   e.stopPropagation()
                   onDeleteAll()
                 }}
-                className="dark:hover:bg-error-soft relative flex cursor-pointer items-center justify-center rounded-full p-2 text-error transition-all hover:bg-error-light"
+                className="relative flex cursor-pointer items-center justify-center rounded-full p-2 text-error transition-all hover:bg-error-light dark:hover:bg-error-soft"
                 title="حذف جميع المحادثات"
               >
                 <Trash2 size={22} strokeWidth={2.5} />
@@ -112,7 +112,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             placeholder="البحث أو بدء دردشة جديدة"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="placeholder:text-muted flex-1 border-0 bg-transparent px-4 py-1 text-start text-sm font-medium text-main ring-0 focus:outline-none focus:ring-0"
+            className="flex-1 border-0 bg-transparent px-4 py-1 text-start text-sm font-medium text-main ring-0 placeholder:text-muted focus:outline-none focus:ring-0"
           />
         </div>
       </div>
@@ -145,7 +145,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   </div>
                 </div>
 
-                <div className="border-border mt-1 min-w-0 flex-1 border-b pb-3 text-start">
+                <div className="mt-1 min-w-0 flex-1 border-b border-border pb-3 text-start">
                   <div className="mb-0.5 flex items-center justify-between">
                     <div className="flex items-center gap-1.5 overflow-hidden">
                       {conv.isGroup && <ShieldCheck size={14} className="shrink-0 text-muted" />}
@@ -200,7 +200,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         )}
       </div>
 
-      <div className="dark:bg-card border-success-soft sticky bottom-0 z-[100] w-full border-t bg-white/80 p-3 text-center">
+      <div className="sticky bottom-0 z-[100] w-full border-t border-success-soft bg-white/80 p-3 text-center dark:bg-card">
         <div className="flex items-center justify-center gap-2">
           <ShieldCheck size={14} className="animate-pulse text-success" />
           <span className="text-micro font-semibold uppercase tracking-label text-success">
