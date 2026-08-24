@@ -41,7 +41,7 @@ import { useUnreadStore } from '../../store/unreadStore'
 import { SessionCallAlert } from '../ui/SessionCallAlert'
 import { ActiveSessionBanner } from '../ui/ActiveSessionBanner'
 import { SidebarDesktop } from './SidebarDesktop'
-import { SidebarMobile } from './SidebarMobile'
+import { MobileQuickAccess } from './MobileQuickAccess'
 
 export interface NavItem {
   name: string
@@ -317,7 +317,7 @@ export const Sidebar = memo(
           onToggleCollapse={() => setCollapsed(!collapsed)}
           onLogout={handleLogout}
         />
-        <SidebarMobile
+        <MobileQuickAccess
           navigation={filteredNavigation}
           mobileMenuOpen={mobileMenuOpenState}
           totalUnreadCount={totalUnreadCount}

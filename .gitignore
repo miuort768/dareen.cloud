@@ -70,3 +70,5 @@ stderr2.log
 stdout2.log
 server_test.log
 server_test_error.log
+
+e2e/artifacts/
