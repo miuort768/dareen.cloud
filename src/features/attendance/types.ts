@@ -35,6 +35,7 @@ export interface Enrollment {
   isFrozen?: boolean
   frozenReason?: string
   nextSessionNotes?: string
+  curriculum?: string
 }
 
 export interface Student extends Omit<GlobalStudent, 'enrollments'> {

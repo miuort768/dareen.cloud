@@ -30,14 +30,14 @@ describe('LibraryConfig', () => {
   it('gradesMap has entries for all curriculums', () => {
     curriculums.forEach((c) => {
       expect(gradesMap[c.id]).toBeDefined()
-      expect(gradesMap[c.id].length).toBeGreaterThan(0)
+      expect(gradesMap[c.id]?.length).toBeGreaterThan(0)
     })
   })
 
   it('subjectsMap has entries for primary, middle, secondary', () => {
-    expect(subjectsMap.primary.length).toBeGreaterThan(0)
-    expect(subjectsMap.middle.length).toBeGreaterThan(0)
-    expect(subjectsMap.secondary.length).toBeGreaterThan(0)
+    expect(subjectsMap.primary?.length).toBeGreaterThan(0)
+    expect(subjectsMap.middle?.length).toBeGreaterThan(0)
+    expect(subjectsMap.secondary?.length).toBeGreaterThan(0)
   })
 
   it('subjectNameMap has unique names', () => {
@@ -48,8 +48,8 @@ describe('LibraryConfig', () => {
   })
 
   it('classroomsMap has correct structure', () => {
-    expect(classroomsMap.kuwait.primary).toEqual(['1', '2', '3', '4', '5'])
-    expect(classroomsMap.saudi.secondary).toEqual(['10', '11', '12'])
+    expect(classroomsMap.kuwait?.primary).toEqual(['1', '2', '3', '4', '5'])
+    expect(classroomsMap.saudi?.secondary).toEqual(['10', '11', '12'])
   })
 
   it('directTypes contains foundation and more', () => {

@@ -1,6 +1,13 @@
-﻿import { AlertCircle, Clock, AlertTriangle, Info, ChevronLeft, BellRing } from 'lucide-react'
+﻿import {
+  AlertCircle,
+  Clock,
+  AlertTriangle,
+  Info,
+  ChevronLeft,
+  BellRing,
+  type LucideIcon,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { ComponentType } from 'react'
 import type { LowBalanceStudent } from '../types'
 
 interface FocusStudent {
@@ -23,7 +30,7 @@ export const SmartNotifications = ({
   const low = lowBalanceStudents.filter((s) => s.remainingSessions > 0 && s.remainingSessions <= 2)
 
   const alerts: {
-    icon: ComponentType<{ className?: string; size?: number }>
+    icon: LucideIcon
     border: string
     bg: string
     text: string

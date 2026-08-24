@@ -9,6 +9,8 @@ interface TimelineSession {
   time: string
   subject: string
   status: string
+  studentGrade?: string
+  curriculum?: string
 }
 
 interface NextSessionHeroProps {
@@ -21,7 +23,7 @@ const parseTime = (t?: string) => {
     .trim()
   const match = raw.match(/(\d{1,2})\s*[:.]?\s*(\d{0,2})/)
   if (!match) return { h: 0, m: 0 }
-  let h = parseInt(match[1], 10) || 0
+  let h = (match[1] ? parseInt(match[1], 10) : 0) || 0
   const m = match[2] ? parseInt(match[2], 10) || 0 : 0
   const lower = raw.toLowerCase()
   if (lower.includes('pm') && h < 12) h += 12

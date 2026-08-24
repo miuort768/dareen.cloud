@@ -147,7 +147,12 @@ export const useDashboardData = (currentUser: User | null) => {
     const studentInvoices = getSafeArray(studentInvoicesQuery.data) as StudentInvoice[]
     const transactions = getSafeArray(transactionsQuery.data) as Transaction[]
     const fixedExpenses = getSafeArray(fixedExpensesQuery.data) as FixedExpense[]
-    const evaluations = getSafeArray(evaluationsQuery.data) as Record<string, unknown>[]
+    const evaluations = getSafeArray(evaluationsQuery.data) as {
+      studentId: string
+      teacherId?: string
+      date?: string
+      rating?: string
+    }[]
 
     const isTeacher = currentUser.role === 'teacher'
     const teacherName = currentUser.teacherName || currentUser.name
@@ -165,11 +170,13 @@ export const useDashboardData = (currentUser: User | null) => {
 
     const filteredStudents = isTeacher
       ? students.filter((s: Student) =>
-          s.enrollments?.some(
-            (e: { teacherId: string }) =>
-              e.teacher?.trim().toLowerCase() === normalizedCurrentUserTeacherName ||
-              (e.teacherId && e.teacherId === currentUser.id),
-          ),
+          s.enrollments?.some((e: Enrollment) => {
+            const tName = typeof e.teacher === 'string' ? e.teacher.trim().toLowerCase() : ''
+            return (
+              tName === normalizedCurrentUserTeacherName ||
+              (!!e.teacherId && e.teacherId === currentUser.id)
+            )
+          }),
         )
       : students
 
@@ -318,15 +325,13 @@ export const useDashboardData = (currentUser: User | null) => {
       const attendanceRate = stuSessions.length >= 3 ? stuCompleted.length / stuSessions.length : 1
 
       const stuEvals = isTeacher
-        ? evaluations.filter(
-            (e: { studentId: string; teacherId: string }) =>
-              e.studentId === s.id && e.teacherId === currentUser.id,
-          )
-        : evaluations.filter((e: { studentId: string }) => e.studentId === s.id)
+        ? evaluations.filter((e) => e.studentId === s.id && e.teacherId === currentUser.id)
+        : evaluations.filter((e) => e.studentId === s.id)
       const lastEval = [...stuEvals].sort((a, b) => (b.date || '').localeCompare(a.date || ''))[0]
       const needsEval =
         stuCompleted.length > 0 &&
-        (!lastEval || now.getTime() - new Date(lastEval.date).getTime() > 7 * 24 * 60 * 60 * 1000)
+        (!lastEval?.date ||
+          now.getTime() - new Date(lastEval.date).getTime() > 7 * 24 * 60 * 60 * 1000)
 
       if (attendanceRate < 0.7) {
         focusStudentsList.push({
@@ -417,7 +422,9 @@ export const useDashboardData = (currentUser: User | null) => {
             (t) =>
               t.teacherId === currentUser.id &&
               t.type === 'badge_suggestion' &&
-              ['pending', 'قيد الانتظار', 'جديدة', 'new'].includes(t.status?.toLowerCase()),
+              ['pending', 'في انتظار الموافقة', 'جديدة', 'new'].includes(
+                String(t.status ?? '').toLowerCase(),
+              ),
           ).length
         : undefined,
       bestStudentName:
@@ -444,7 +451,7 @@ export const useDashboardData = (currentUser: User | null) => {
             // Also add schedule-based upcoming sessions from enrollments
             const existingStudentIds = new Set(
               sessionTimeline
-                .filter((s) => s.status === 'scheduled' || s.status === 'in-progress')
+                .filter((s) => s.status === 'scheduled' || String(s.status) === 'in-progress')
                 .map((s) => s.studentId),
             )
 
@@ -500,10 +507,16 @@ export const useDashboardData = (currentUser: User | null) => {
       todaySessions: filteredSessions.filter((s: Session) => s.date === today),
       monthlyData: chartData,
       lowBalanceStudents: lowBalance,
-      tasks: (getSafeArray(tasksQuery.data) as { status?: string }[]).filter((t) =>
-        ['pending', 'قيد الانتظار', 'جديدة', 'new', 'in-progress', 'جاري التنفيذ', 'جاري'].includes(
-          t.status?.toLowerCase(),
-        ),
+      tasks: (getSafeArray(tasksQuery.data) as unknown as DashboardTask[]).filter((t) =>
+        [
+          'pending',
+          'في انتظار الموافقة',
+          'جديدة',
+          'new',
+          'in-progress',
+          'قيد التنفيذ',
+          'جاري',
+        ].includes(String(t.status ?? '').toLowerCase()),
       ),
       topStudents: isTeacher
         ? filteredStudents
@@ -563,7 +576,7 @@ export const useDashboardData = (currentUser: User | null) => {
     focusStudents: processedData?.focusStudents || [],
     loading: isLoading,
     rawStudents: getSafeArray(studentsQuery.data),
-    rawSessions: getSafeArray(sessionsQuery.data),
+    rawSessions: getSafeArray(sessionsQuery.data) as Session[],
     rawStudentInvoices: getSafeArray(studentInvoicesQuery.data),
     fetchDashboardData: () => queryClient.invalidateQueries(), // Or specific keys
     updateSessionStatus: (id: string, status: 'scheduled' | 'completed' | 'cancelled') =>

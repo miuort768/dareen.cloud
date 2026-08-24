@@ -15,7 +15,7 @@ interface NotificationsCenterProps {
   lowBalanceStudents: LowBalanceStudent[]
   students: Record<string, unknown>[]
   sessions: Record<string, unknown>[]
-  studentInvoices: Record<string, unknown>[]
+  studentInvoices: { status?: string; date?: string; created_at?: string }[]
 }
 
 type AlertItem = {
@@ -91,10 +91,12 @@ export const NotificationsCenter = ({
       }
     })
     const overdueInvoices = studentInvoices.filter((inv) => {
-      if (!['unpaid', 'pending', 'overdue'].includes(inv.status?.toLowerCase())) return false
+      const st = inv.status?.toLowerCase()
+      if (!st || !['unpaid', 'pending', 'overdue'].includes(st)) return false
       const now = Date.now()
       const sevenDays = 7 * 24 * 60 * 60 * 1000
-      const created = new Date(inv.date || inv.created_at || 0).getTime()
+      const rawDate = inv.date || inv.created_at
+      const created = rawDate ? new Date(rawDate).getTime() : 0
       return now - created > sevenDays
     })
     if (overdueInvoices.length > 0) {

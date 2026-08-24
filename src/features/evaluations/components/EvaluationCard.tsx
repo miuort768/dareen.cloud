@@ -25,7 +25,7 @@ const avatarGradients = [
 const getAvatarGradient = (name: string) => {
   let hash = 0
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash)
-  return avatarGradients[Math.abs(hash) % avatarGradients.length]
+  return avatarGradients[Math.abs(hash) % avatarGradients.length]!
 }
 
 const getAvgRating = (studentEvals: Evaluation[]) => {
@@ -90,9 +90,7 @@ export const EvaluationCard = ({
                   gradient.g,
                 )}
               >
-                <h4 className="truncate text-sm font-bold text-white">
-                  {student.name}
-                </h4>
+                <h4 className="truncate text-sm font-bold text-white">{student.name}</h4>
                 {student.grade && (
                   <>
                     <span className="h-3 w-px shrink-0 bg-white/40" />

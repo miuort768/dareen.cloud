@@ -7,6 +7,7 @@ import {
   ArrowUpRight,
   ArrowDownRight,
 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
 interface FinanceStatsProps {
   totalIncome: number
@@ -66,7 +67,7 @@ const KPICard = ({
 }: {
   title: string
   value: number
-  icon: React.ComponentType<{ size?: number }>
+  icon: LucideIcon
   monthValue: number
   gradient: string
   on: string

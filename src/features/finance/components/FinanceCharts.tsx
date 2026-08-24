@@ -50,7 +50,7 @@ const aggregateByPeriod = (data: MonthlyData[], period: Period): MonthlyData[] =
     const chunk = data.slice(i, i + chunkSize)
     result.push({
       month:
-        chunk.length > 1 ? `${chunk[0].month}-${chunk[chunk.length - 1].month}` : chunk[0].month,
+        chunk.length > 1 ? `${chunk[0]!.month}-${chunk[chunk.length - 1]!.month}` : chunk[0]!.month,
       income: chunk.reduce((s, d) => s + d.income, 0),
       expense: chunk.reduce((s, d) => s + d.expense, 0),
     })

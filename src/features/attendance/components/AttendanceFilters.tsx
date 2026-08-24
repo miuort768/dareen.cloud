@@ -8,6 +8,7 @@ import {
   Filter,
   BookOpen,
 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
 export type PeriodFilter = 'today' | 'week' | 'month' | 'custom'
 
@@ -30,10 +31,7 @@ interface AttendanceFiltersProps {
   onCustomEndChange?: (value: string) => void
 }
 
-const periodLabels: Record<
-  PeriodFilter,
-  { label: string; icon: React.ComponentType<{ size?: number }> }
-> = {
+const periodLabels: Record<PeriodFilter, { label: string; icon: LucideIcon }> = {
   today: { label: 'اليوم', icon: CalendarDays },
   week: { label: 'أسبوع', icon: CalendarDays },
   month: { label: 'شهر', icon: CalendarDays },

@@ -22,11 +22,13 @@ export const Layout = () => {
   const touchStartX = useRef(0)
   const handleTouchStart = (e: React.TouchEvent) => {
     if (location.pathname !== '/') {
-      touchStartX.current = e.touches[0].clientX
+      touchStartX.current = e.touches[0]?.clientX ?? 0
     }
   }
   const handleTouchEnd = (e: React.TouchEvent) => {
-    const diff = e.changedTouches[0].clientX - touchStartX.current
+    const endTouch = e.changedTouches[0]
+    if (!endTouch) return
+    const diff = endTouch.clientX - touchStartX.current
     if (diff > 80 && location.pathname !== '/') {
       triggerHaptic('light')
       navigate(-1)

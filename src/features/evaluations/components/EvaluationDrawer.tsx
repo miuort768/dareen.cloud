@@ -38,7 +38,7 @@ const avatarGradients = [
 const getAvatarGradient = (name: string) => {
   let hash = 0
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash)
-  return avatarGradients[Math.abs(hash) % avatarGradients.length]
+  return avatarGradients[Math.abs(hash) % avatarGradients.length]!
 }
 
 export const EvaluationDrawer = ({
@@ -213,7 +213,9 @@ export const EvaluationDrawer = ({
                     >
                       <div className="min-w-0">
                         <p className="truncate text-[11px] font-bold text-main">{en.subject}</p>
-                        <p className="text-[9px] text-muted">{en.teacher}</p>
+                        <p className="text-[9px] text-muted">
+                          {typeof en.teacher === 'string' ? en.teacher : en.teacher?.name}
+                        </p>
                       </div>
                       <p className="shrink-0 text-[11px] font-bold tabular-nums text-main">
                         {en.sessionsUsed}/{en.sessionsTotal}

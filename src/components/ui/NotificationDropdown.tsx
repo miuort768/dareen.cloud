@@ -48,6 +48,7 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
     if (!notificationsEnabled || notifications.length === 0) return
 
     const latestNotif = notifications[0]
+    if (!latestNotif) return
     if (!latestNotif.read && latestNotif.id !== lastNotifIdRef.current) {
       if (lastNotifIdRef.current !== null) {
         showNotification(`إشعار جديد: ${latestNotif.title}`, 'info')

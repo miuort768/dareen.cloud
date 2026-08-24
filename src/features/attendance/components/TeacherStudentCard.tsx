@@ -7,6 +7,8 @@ import type { Student, Enrollment, ScheduleSlot } from '../types'
 import { ProgressBar } from '../../../shared/components/ui'
 import { StudentCardTimer } from './StudentCardTimer'
 import { StudentScheduleEditor } from './StudentScheduleEditor'
+import { startLiveSession } from '../../../services/liveSessionService'
+import { useShowNotification } from '../../../context/useApp'
 
 interface TeacherStudentCardProps {
   student: Student
@@ -66,7 +68,8 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
   const [timerRunning, setTimerRunning] = useState(false)
   const [timerSeconds, setTimerSeconds] = useState(0)
-  const timerIntervalRef = useRef<ReturnType<typeof setInterval>>(null)
+  const timerIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const showNotification = useShowNotification()
 
   React.useEffect(() => {
     const saved = localStorage.getItem(`active_timer_${student.id}`)

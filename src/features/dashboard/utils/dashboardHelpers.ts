@@ -116,7 +116,7 @@ export const computeLowBalanceStudents = (
           studentName: s.name || '',
           subject: en.subject || '',
           remainingSessions: remaining,
-          teacherName: en.teacher,
+          teacherName: typeof en.teacher === 'string' ? en.teacher : (en.teacher?.name ?? ''),
           parentPhone: (isTeacher ? '••••••••' : s.parentPhone) || '',
         })
         anticipatedByCurrency[cur] = (anticipatedByCurrency[cur] || 0) + price * 8
@@ -140,7 +140,7 @@ export const computeChartData = (
   students: Student[] = [],
 ): DashboardMonthData[] => {
   return last6Months.map((month) => {
-    const [y, m] = month.split('-').map(Number)
+    const [y = 0, m = 0] = month.split('-').map(Number)
     const isTargetMonth = (dateStr: string) => {
       if (!dateStr) return false
       const d = new Date(dateStr)
