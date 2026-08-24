@@ -1,21 +1,26 @@
-import React from 'react';
-import { TrendingUp, TrendingDown } from 'lucide-react';
-import { cn } from '../../../lib/utils';
+import React from 'react'
+import { TrendingUp, TrendingDown } from 'lucide-react'
+import { cn } from '../../../lib/utils'
 
 export interface StatCardProps {
-  title: string;
-  value: string | number;
-  icon?: React.ComponentType<{ size?: number; className?: string }>;
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'error' | 'info';
-  trend?: { value: number; isUp: boolean; label?: string };
-  unit?: string;
-  badge?: string;
-  subtitle?: string;
-  loading?: boolean;
-  className?: string;
+  title: string
+  value: string | number
+  icon?: React.ComponentType<{ size?: number; className?: string }>
+  variant?: 'default' | 'primary' | 'success' | 'warning' | 'error' | 'info'
+  trend?: { value: number; isUp: boolean; label?: string }
+  unit?: string
+  badge?: string
+  subtitle?: string
+  loading?: boolean
+  className?: string
 }
 
-const styles: Record<string, { card: string; icon: string; value: string; title: string; trend: string; skeleton: string }> = {
+type StatVariant = NonNullable<StatCardProps['variant']>
+
+const styles: Record<
+  StatVariant,
+  { card: string; icon: string; value: string; title: string; trend: string; skeleton: string }
+> = {
   default: {
     card: 'bg-card border border-border text-main',
     icon: 'bg-primary-soft text-primary',
@@ -64,7 +69,7 @@ const styles: Record<string, { card: string; icon: string; value: string; title:
     trend: 'text-on-info opacity-80',
     skeleton: 'bg-white/20',
   },
-};
+}
 
 export const StatCard = ({
   title,
@@ -78,17 +83,19 @@ export const StatCard = ({
   loading = false,
   className,
 }: StatCardProps) => {
-  const s = styles[variant];
+  const s = styles[variant]
 
   return (
-    <div className={cn(
-      'relative p-4 rounded-2xl shadow-sm transition-colors duration-slow hover:shadow-md hover:-translate-y-0.5',
-      s.card,
-      className
-    )}>
+    <div
+      className={cn(
+        'relative rounded-2xl p-4 shadow-sm transition-colors duration-slow hover:-translate-y-0.5 hover:shadow-md',
+        s.card,
+        className,
+      )}
+    >
       {loading ? (
-        <div className="space-y-3 animate-pulse">
-          <div className={cn('w-10 h-10 rounded-xl', s.skeleton)} />
+        <div className="animate-pulse space-y-3">
+          <div className={cn('h-10 w-10 rounded-xl', s.skeleton)} />
           <div className="space-y-2">
             <div className={cn('h-3 w-20 rounded', s.skeleton)} />
             <div className={cn('h-7 w-28 rounded', s.skeleton)} />
@@ -98,34 +105,42 @@ export const StatCard = ({
         <>
           <div className="flex items-start justify-between gap-2">
             {Icon && (
-              <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center shrink-0', s.icon)}>
+              <div
+                className={cn(
+                  'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl',
+                  s.icon,
+                )}
+              >
                 <Icon size={18} />
               </div>
             )}
             {badge && (
-              <span className={cn('text-micro font-bold px-2 py-0.5 rounded-lg shrink-0', s.title)}>
+              <span className={cn('shrink-0 rounded-lg px-2 py-0.5 text-micro font-bold', s.title)}>
                 {badge}
               </span>
             )}
           </div>
 
           <div className="mt-3 min-w-0">
-            <p className={cn('text-2xl font-black tabular-nums tracking-tight leading-none', s.value)}>
+            <p
+              className={cn(
+                'text-2xl font-black tabular-nums leading-none tracking-tight',
+                s.value,
+              )}
+            >
               {value ?? '—'}
-              {unit && <span className={cn('text-xs font-bold ms-1', s.title)}>{unit}</span>}
+              {unit && <span className={cn('ms-1 text-xs font-bold', s.title)}>{unit}</span>}
             </p>
-            <p className={cn('text-xs font-medium mt-1 truncate', s.title)}>
-              {title}
-            </p>
+            <p className={cn('mt-1 truncate text-xs font-medium', s.title)}>{title}</p>
             {subtitle && (
-              <p className={cn('text-micro font-medium mt-0.5 truncate opacity-60', s.title)}>
+              <p className={cn('mt-0.5 truncate text-micro font-medium opacity-60', s.title)}>
                 {subtitle}
               </p>
             )}
           </div>
 
           {trend && (
-            <div className={cn('flex items-center gap-1 mt-2 text-xs font-semibold', s.trend)}>
+            <div className={cn('mt-2 flex items-center gap-1 text-xs font-semibold', s.trend)}>
               <span>{trend.isUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}</span>
               <span>{trend.value}%</span>
               {trend.label && <span className="opacity-60">{trend.label}</span>}
@@ -134,7 +149,7 @@ export const StatCard = ({
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-StatCard.displayName = 'StatCard';
+StatCard.displayName = 'StatCard'

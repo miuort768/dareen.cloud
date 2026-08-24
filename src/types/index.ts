@@ -16,6 +16,7 @@ export interface Enrollment {
   isFrozen?: boolean
   frozenReason?: string
   nextSessionNotes?: string
+  teacherName?: string
 }
 
 export interface ScheduleSlot {
@@ -38,6 +39,11 @@ export interface Student {
   parent?: { id: string; name: string; phone: string } | null
   totalPoints?: number
   badges?: string
+  status?: 'scheduled' | 'completed' | 'cancelled'
+  date?: string
+  subject?: string
+  studentId?: string
+  startedAt?: string | null
 }
 
 export interface Teacher {

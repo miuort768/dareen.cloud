@@ -1,53 +1,44 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
-
-
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { ChevronLeft } from 'lucide-react'
 
 export interface BreadcrumbItem {
-  label: string;
-  href?: string;
-  onClick?: () => void;
-  icon?: React.ReactNode;
+  label: string
+  href?: string
+  onClick?: () => void
+  icon?: React.ReactNode
 }
 
 export interface BreadcrumbProps {
-  items: BreadcrumbItem[];
-  separator?: 'chevron' | 'slash' | React.ReactNode;
-  className?: string;
+  items: BreadcrumbItem[]
+  separator?: 'chevron' | 'slash' | React.ComponentType
+  className?: string
 }
 
-const DefaultSeparator = () => (
-  <ChevronLeft size={14} className="text-muted shrink-0" />
-);
+const DefaultSeparator = () => <ChevronLeft size={14} className="shrink-0 text-muted" />
 
-const SlashSeparator = () => (
-  <span className="text-muted select-none shrink-0">/</span>
-);
+const SlashSeparator = () => <span className="shrink-0 select-none text-muted">/</span>
 
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({
   items,
   separator = 'chevron',
   className,
 }) => {
-  const SeparatorComponent = separator === 'slash'
-    ? SlashSeparator
-    : separator === 'chevron'
-      ? DefaultSeparator
-      : separator;
+  const SeparatorComponent =
+    separator === 'slash' ? SlashSeparator : separator === 'chevron' ? DefaultSeparator : separator
 
-  const isLast = (index: number) => index === items.length - 1;
+  const isLast = (index: number) => index === items.length - 1
 
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <ol className="flex items-center flex-wrap gap-1">
+      <ol className="flex flex-wrap items-center gap-1">
         {items.map((item, index) => (
           <li key={`${item.label}-${index}`} className="flex items-center gap-1">
             {index > 0 && <SeparatorComponent />}
             {isLast(index) ? (
               <span
                 aria-current="page"
-                className="text-sm font-bold text-primary truncate max-w-[200px] inline-flex items-center gap-1"
+                className="inline-flex max-w-[200px] items-center gap-1 truncate text-sm font-bold text-primary"
               >
                 {item.icon && <span className="shrink-0">{item.icon}</span>}
                 {item.label}
@@ -55,7 +46,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
             ) : item.href ? (
               <Link
                 to={item.href}
-                className="text-sm text-muted hover:text-main transition-colors inline-flex items-center gap-1 truncate max-w-[160px]"
+                className="inline-flex max-w-[160px] items-center gap-1 truncate text-sm text-muted transition-colors hover:text-main"
               >
                 {item.icon && <span className="shrink-0">{item.icon}</span>}
                 {item.label}
@@ -63,13 +54,13 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
             ) : item.onClick ? (
               <button
                 onClick={item.onClick}
-                className="text-sm text-muted hover:text-main transition-colors inline-flex items-center gap-1 truncate max-w-[160px]"
+                className="inline-flex max-w-[160px] items-center gap-1 truncate text-sm text-muted transition-colors hover:text-main"
               >
                 {item.icon && <span className="shrink-0">{item.icon}</span>}
                 {item.label}
               </button>
             ) : (
-              <span className="text-sm text-muted inline-flex items-center gap-1 truncate max-w-[160px]">
+              <span className="inline-flex max-w-[160px] items-center gap-1 truncate text-sm text-muted">
                 {item.icon && <span className="shrink-0">{item.icon}</span>}
                 {item.label}
               </span>
@@ -78,7 +69,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
         ))}
       </ol>
     </nav>
-  );
-};
+  )
+}
 
-Breadcrumb.displayName = 'Breadcrumb';
+Breadcrumb.displayName = 'Breadcrumb'

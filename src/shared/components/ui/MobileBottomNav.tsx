@@ -1,22 +1,22 @@
-import { useNavigate, useLocation } from 'react-router-dom';
-import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '../../../lib/utils';
-import { triggerHaptic } from '../../../lib/haptics';
+import { useNavigate, useLocation } from 'react-router-dom'
+import { createPortal } from 'react-dom'
+import { motion } from 'framer-motion'
+import { cn } from '../../../lib/utils'
+import { triggerHaptic } from '../../../lib/haptics'
 
 export interface MobileBottomNavItem {
-  id: string;
-  label: string;
-  icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>;
-  path: string;
-  isCenter?: boolean;
+  id: string
+  label: string
+  icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>
+  path: string
+  isCenter?: boolean
 }
 
 interface MobileBottomNavProps {
-  items: MobileBottomNavItem[];
-  activeTab?: string;
-  onTabChange?: (id: string) => void;
-  layoutId?: string;
+  items: MobileBottomNavItem[]
+  activeTab?: string
+  onTabChange?: (id: string) => void
+  layoutId?: string
 }
 
 export const MobileBottomNav = ({
@@ -29,23 +29,18 @@ export const MobileBottomNav = ({
   const location = useLocation()
 
   return createPortal(
-    <nav
-      className="fixed bottom-0 end-0 start-0 z-50 md:hidden"
-      aria-label="التنقل الرئيسي للهاتف"
-    >
+    <nav className="fixed bottom-0 end-0 start-0 z-50 md:hidden" aria-label="التنقل الرئيسي للهاتف">
       <div
         className="px-3 pt-1"
         style={{ paddingBottom: 'max(0.65rem, env(safe-area-inset-bottom))' }}
       >
-        <div className="relative rounded-[26px] border border-border/50 bg-card/90 backdrop-blur-2xl shadow-elevation-3 dark:border-white/10 dark:bg-background/90">
+        <div className="border-border/50 bg-card/90 dark:bg-background/90 relative rounded-[26px] border shadow-elevation-3 backdrop-blur-2xl dark:border-white/10">
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
           <div className="relative flex h-[66px] items-center justify-around px-1.5">
             {items.map((item) => {
               const Icon = item.icon
-              const isActive = activeTab
-                ? activeTab === item.id
-                : location.pathname === item.path
+              const isActive = activeTab ? activeTab === item.id : location.pathname === item.path
               const isCenter = item.isCenter
 
               return (
@@ -61,8 +56,10 @@ export const MobileBottomNav = ({
                     }
                   }}
                   className={cn(
-                    'relative flex touch-manipulation items-center justify-center rounded-2xl transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                    isCenter ? 'h-[54px] w-[54px] -mt-5' : 'min-h-[48px] flex-1 flex-col gap-1 py-1.5',
+                    'relative flex touch-manipulation items-center justify-center rounded-2xl outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-focus',
+                    isCenter
+                      ? '-mt-5 h-[54px] w-[54px]'
+                      : 'min-h-[48px] flex-1 flex-col gap-1 py-1.5',
                   )}
                 >
                   {isCenter ? (
@@ -80,7 +77,7 @@ export const MobileBottomNav = ({
                         <motion.div
                           layoutId={layoutId}
                           transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                          className="absolute inset-x-1 inset-y-1 rounded-xl bg-primary/12 dark:bg-primary/20"
+                          className="bg-primary/12 absolute inset-x-1 inset-y-1 rounded-xl dark:bg-primary/20"
                         />
                       )}
                       <div className="relative z-10 flex items-center justify-center">

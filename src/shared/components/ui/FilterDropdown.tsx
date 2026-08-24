@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check, ChevronDown } from 'lucide-react'
+import { Check, ChevronDown, type LucideIcon } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 
 export interface FilterItem {
@@ -13,7 +13,7 @@ interface FilterDropdownProps {
   value: string
   items: FilterItem[]
   onChange: (key: string) => void
-  icon?: React.ComponentType<{ size?: number; className?: string }>
+  icon?: LucideIcon
   className?: string
 }
 
@@ -63,9 +63,7 @@ export const FilterDropdown = ({
         )}
       >
         {Icon && <Icon size={13} className="text-muted" />}
-        {activeItem?.dot && (
-          <span className={cn('h-1.5 w-1.5 rounded-full', activeItem.dot)} />
-        )}
+        {activeItem?.dot && <span className={cn('h-1.5 w-1.5 rounded-full', activeItem.dot)} />}
         {displayLabel}
         <ChevronDown
           size={13}

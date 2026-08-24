@@ -1,17 +1,18 @@
-import { useState, type ImgHTMLAttributes } from 'react';
-import { cn } from '../../../lib/utils';
+import { useState, type ImgHTMLAttributes } from 'react'
+import { cn } from '../../../lib/utils'
 
 const FALLBACK_SRC =
-  'data:image/svg+xml,' + encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="var(--border)" width="400" height="300"/><text fill="var(--text-dim)" font-family="sans-serif" font-size="14" text-anchor="middle" x="200" y="155">تعذر تحميل الصورة</text></svg>'
-  );
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect fill="var(--border)" width="400" height="300"/><text fill="var(--text-dim)" font-family="sans-serif" font-size="14" text-anchor="middle" x="200" y="155">تعذر تحميل الصورة</text></svg>',
+  )
 
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
-  withSkeleton?: boolean;
-  imgClassName?: string;
-  srcSet?: string;
-  sizes?: string;
-  webpSrc?: string;
+  withSkeleton?: boolean
+  imgClassName?: string
+  srcSet?: string
+  sizes?: string
+  webpSrc?: string
 }
 
 export const Image = ({
@@ -26,14 +27,14 @@ export const Image = ({
   webpSrc,
   ...props
 }: ImageProps) => {
-  const [error, setError] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false)
+  const [loaded, setLoaded] = useState(false)
 
   if (webpSrc) {
     return (
       <div className={cn('relative overflow-hidden', className)}>
         {withSkeleton && !loaded && (
-          <div className="absolute inset-0 animate-pulse bg-surface rounded-inherit" />
+          <div className="rounded-inherit absolute inset-0 animate-pulse bg-surface" />
         )}
         <picture>
           <source srcSet={webpSrc} type="image/webp" />
@@ -46,32 +47,32 @@ export const Image = ({
             decoding={decoding}
             onError={(e) => {
               if (!error) {
-                setError(true);
-                e.currentTarget.src = FALLBACK_SRC;
+                setError(true)
+                e.currentTarget.src = FALLBACK_SRC
               }
-              props.onError?.(e);
+              props.onError?.(e)
             }}
-            onLoad={() => {
-              setLoaded(true);
-              props.onLoad?.();
+            onLoad={(e) => {
+              setLoaded(true)
+              props.onLoad?.(e)
             }}
             className={cn(
-              'w-full h-full object-cover',
+              'h-full w-full object-cover',
               imgClassName,
               withSkeleton && !loaded && 'opacity-0',
               loaded && 'opacity-100 transition-opacity duration-slow',
-              error && 'opacity-80'
+              error && 'opacity-80',
             )}
           />
         </picture>
       </div>
-    );
+    )
   }
 
   return (
     <div className={cn('relative overflow-hidden', className)}>
       {withSkeleton && !loaded && (
-        <div className="absolute inset-0 animate-pulse bg-surface rounded-inherit" />
+        <div className="rounded-inherit absolute inset-0 animate-pulse bg-surface" />
       )}
       <img
         {...props}
@@ -82,23 +83,23 @@ export const Image = ({
         decoding={decoding}
         onError={(e) => {
           if (!error) {
-            setError(true);
-            e.currentTarget.src = FALLBACK_SRC;
+            setError(true)
+            e.currentTarget.src = FALLBACK_SRC
           }
-          props.onError?.(e);
+          props.onError?.(e)
         }}
-        onLoad={() => {
-          setLoaded(true);
-          props.onLoad?.();
+        onLoad={(e) => {
+          setLoaded(true)
+          props.onLoad?.(e)
         }}
         className={cn(
-          'w-full h-full object-cover',
+          'h-full w-full object-cover',
           imgClassName,
           withSkeleton && !loaded && 'opacity-0',
           loaded && 'opacity-100 transition-opacity duration-slow',
-          error && 'opacity-80'
+          error && 'opacity-80',
         )}
       />
     </div>
-  );
-};
+  )
+}

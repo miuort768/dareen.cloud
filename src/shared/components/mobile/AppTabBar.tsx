@@ -81,7 +81,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
     tabs.find(
       (t) =>
         location.pathname === t.path || (t.path !== '/' && location.pathname.startsWith(t.path)),
-    )?.id ?? tabs[0].id
+    )?.id ?? tabs[0]?.id
 
   const handleTab = (tab: TabItem) => {
     if (location.pathname === tab.path) return
@@ -100,7 +100,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
         className="px-3 pt-1"
         style={{ paddingBottom: 'max(0.65rem, env(safe-area-inset-bottom))' }}
       >
-        <div className="relative overflow-hidden rounded-[26px] border border-border/50 bg-card/90 backdrop-blur-2xl shadow-elevation-3 dark:border-white/10 dark:bg-background/90">
+        <div className="border-border/50 bg-card/90 dark:bg-background/90 relative overflow-hidden rounded-[26px] border shadow-elevation-3 backdrop-blur-2xl dark:border-white/10">
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
           <div className="flex h-[66px] items-center justify-between px-1.5">
@@ -115,7 +115,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
                   aria-label={tab.label}
                   aria-current={isActive ? 'page' : undefined}
                   className={cn(
-                    'relative flex min-h-[48px] flex-1 flex-col items-center justify-center gap-1 rounded-2xl transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    'relative flex min-h-[48px] flex-1 flex-col items-center justify-center gap-1 rounded-2xl outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-focus',
                     isActive ? 'text-primary' : 'text-muted hover:text-main',
                   )}
                 >
@@ -123,7 +123,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
                     <motion.div
                       layoutId="app-tab-active-pill"
                       transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                      className="absolute inset-x-1 inset-y-1 rounded-xl bg-primary/12 dark:bg-primary/20"
+                      className="bg-primary/12 absolute inset-x-1 inset-y-1 rounded-xl dark:bg-primary/20"
                     />
                   )}
 
@@ -153,7 +153,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
             <button
               onClick={handleMore}
               aria-label="المزيد"
-              className="relative flex min-h-[48px] flex-1 flex-col items-center justify-center gap-1 rounded-2xl transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-focus text-muted hover:text-main"
+              className="relative flex min-h-[48px] flex-1 flex-col items-center justify-center gap-1 rounded-2xl text-muted outline-none transition-all duration-300 hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
             >
               <div className="relative z-10 flex items-center justify-center">
                 <MoreHorizontal size={20} strokeWidth={1.7} className="text-muted" />

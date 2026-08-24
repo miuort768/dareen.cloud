@@ -64,12 +64,15 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       if (e.key === 'Tab' && containerRef.current) {
         const f = containerRef.current.querySelectorAll<HTMLElement>(FOCUSABLE)
         if (f.length < 2) return
-        if (e.shiftKey && document.activeElement === f[0]) {
+        const first = f[0]
+        const last = f[f.length - 1]
+        if (!first || !last) return
+        if (e.shiftKey && document.activeElement === first) {
           e.preventDefault()
-          f[f.length - 1].focus()
-        } else if (!e.shiftKey && document.activeElement === f[f.length - 1]) {
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
           e.preventDefault()
-          f[0].focus()
+          first.focus()
         }
       }
     },
@@ -111,11 +114,11 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
 
         <div className="relative p-6">
           {/* Close button */}
-            <button
-              onClick={onClose}
-              className="absolute start-4 top-4 flex h-8 w-8 items-center justify-center rounded-none bg-error text-on-error transition-all hover:bg-error-hover hover:scale-110 active:scale-95"
-              aria-label="إغلاق"
-            >
+          <button
+            onClick={onClose}
+            className="absolute start-4 top-4 flex h-8 w-8 items-center justify-center rounded-none bg-error text-on-error transition-all hover:scale-110 hover:bg-error-hover active:scale-95"
+            aria-label="إغلاق"
+          >
             <X size={16} />
           </button>
 

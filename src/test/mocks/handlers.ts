@@ -71,7 +71,9 @@ export const handlers = [
     const body = (await request.json()) as Partial<(typeof db.students)[number]>
     const idx = db.students.findIndex((s) => s.id === params.id)
     if (idx === -1) return HttpResponse.json({ error: 'غير موجود' }, { status: 404 })
-    db.students[idx] = { ...db.students[idx], ...body }
+    const existing = db.students[idx]
+    if (!existing) return HttpResponse.json({ error: 'غير موجود' }, { status: 404 })
+    db.students[idx] = { ...existing, ...body }
     return HttpResponse.json(db.students[idx])
   }),
 
@@ -98,7 +100,9 @@ export const handlers = [
     const body = (await request.json()) as Partial<(typeof db.teachers)[number]>
     const idx = db.teachers.findIndex((t) => t.id === params.id)
     if (idx === -1) return HttpResponse.json({ error: 'غير موجود' }, { status: 404 })
-    db.teachers[idx] = { ...db.teachers[idx], ...body }
+    const existing = db.teachers[idx]
+    if (!existing) return HttpResponse.json({ error: 'غير موجود' }, { status: 404 })
+    db.teachers[idx] = { ...existing, ...body }
     return HttpResponse.json(db.teachers[idx])
   }),
 
@@ -123,7 +127,9 @@ export const handlers = [
     const body = (await request.json()) as Partial<(typeof db.sessions)[number]>
     const idx = db.sessions.findIndex((s) => s.id === params.id)
     if (idx === -1) return HttpResponse.json({ error: 'غير موجود' }, { status: 404 })
-    db.sessions[idx] = { ...db.sessions[idx], ...body }
+    const existing = db.sessions[idx]
+    if (!existing) return HttpResponse.json({ error: 'غير موجود' }, { status: 404 })
+    db.sessions[idx] = { ...existing, ...body }
     return HttpResponse.json(db.sessions[idx])
   }),
 
