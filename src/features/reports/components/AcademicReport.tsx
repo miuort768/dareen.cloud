@@ -1,4 +1,5 @@
 import { BarChart3, BookOpen, Users } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import React from 'react'
 import {
   BarChart,
@@ -55,7 +56,7 @@ const SectionHeader = ({
   label,
   sub,
 }: {
-  icon: React.ComponentType<{ size?: number }>
+  icon: LucideIcon
   label: string
   sub?: string
 }) => (
@@ -84,7 +85,7 @@ const CustomTooltip = ({
       <div className="rounded-xl border border-border bg-card px-4 py-3 shadow-xl" dir="rtl">
         <p className="mb-1 text-micro font-bold text-muted">{label}</p>
         <p className="text-lg font-bold tabular-nums text-main">
-          {payload[0].value} <span className="text-micro text-muted">طالب</span>
+          {payload[0]!.value} <span className="text-micro text-muted">طالب</span>
         </p>
       </div>
     )

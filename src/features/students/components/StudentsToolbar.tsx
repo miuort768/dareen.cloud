@@ -77,7 +77,7 @@ export const StudentsToolbar = ({
         showNotification('الملف فارغ', 'error')
         return
       }
-      const headers = rows[0].map((h) => h.toLowerCase())
+      const headers = rows[0]?.map((h) => h.toLowerCase()) ?? []
       const hasHeader = headers.some((h) =>
         [
           'name',
@@ -205,7 +205,7 @@ export const StudentsToolbar = ({
             onClick={onDeleteAll}
             className={cn(
               btnClass,
-              'border-error-soft hover:bg-error-light border bg-error-soft text-error',
+              'border border-error-soft bg-error-soft text-error hover:bg-error-light',
             )}
           >
             <Trash2 size={12} />

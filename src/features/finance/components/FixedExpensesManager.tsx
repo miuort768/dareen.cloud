@@ -7,7 +7,6 @@ import {
   Building2,
   Home,
   Wrench,
-  MoreHorizontal,
   RotateCcw,
   Trash2,
   Code2,
@@ -15,6 +14,7 @@ import {
   XCircle,
   HelpCircle,
 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import type { FixedExpense } from '../../../types'
 import { CURRENCY_SYMBOL } from '../../../config/constants'
 
@@ -26,7 +26,7 @@ interface FixedExpensesManagerProps {
 }
 
 interface CategoryCfg {
-  icon: React.ComponentType<{ size?: number; className?: string }>
+  icon: LucideIcon
   gradient: string
   on: string
   accentBorder: string
@@ -158,18 +158,18 @@ const ExpenseCard = ({
       <div className="mb-3 flex items-center justify-between gap-2.5">
         <div className="flex items-center gap-2.5">
           <div
-            className={`h-9 w-9 rounded-xl ${cfg.gradient} flex items-center justify-center ${cfg.on} shadow-sm shrink-0`}
+            className={`h-9 w-9 rounded-xl ${cfg.gradient} flex items-center justify-center ${cfg.on} shrink-0 shadow-sm`}
           >
             <Icon size={16} />
           </div>
           <div>
-            <span className="text-xs font-bold text-main block">{expense.name}</span>
-            <span className="text-[10px] text-muted block">مصروف تشغيلي</span>
+            <span className="block text-xs font-bold text-main">{expense.name}</span>
+            <span className="block text-[10px] text-muted">مصروف تشغيلي</span>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 mt-1">
+      <div className="mt-1 flex items-center gap-2">
         <div className="relative flex-1">
           <input
             type="number"
@@ -182,7 +182,7 @@ const ExpenseCard = ({
             onBlur={() => onUpdate(expense.id, val)}
           />
         </div>
-        <span className="text-xs font-bold text-primary shrink-0">{CURRENCY_SYMBOL}</span>
+        <span className="shrink-0 text-xs font-bold text-primary">{CURRENCY_SYMBOL}</span>
       </div>
 
       {Number(val) > 0 && (
@@ -226,13 +226,13 @@ export const FixedExpensesManager = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onConvertAll}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95 shadow-sm"
+            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
           >
             <RotateCcw size={13} /> ترحيل للمعاملات
           </button>
           <button
             onClick={onClearAll}
-            className="border-error/30 bg-error-soft hover:bg-error/15 flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold text-error transition-all active:scale-95"
+            className="border-error/30 hover:bg-error/15 flex items-center gap-1.5 rounded-xl border bg-error-soft px-3 py-2 text-xs font-bold text-error transition-all active:scale-95"
           >
             <Trash2 size={13} /> تصفير المبالغ
           </button>

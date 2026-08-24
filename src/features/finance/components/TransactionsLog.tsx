@@ -24,7 +24,7 @@ interface Transaction {
   amount: number
   date: string
   studentName?: string
-  status?: 'pending' | 'completed' | 'cancelled'
+  status?: string
   invoiceNumber?: string
   paymentMethod?: string
 }
@@ -61,7 +61,7 @@ const TransactionRow = ({
     <motion.div
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="border-border/60 hover:border-primary/40 group relative overflow-hidden rounded-2xl border bg-card transition-all shadow-sm hover:shadow-md"
+      className="border-border/60 group relative overflow-hidden rounded-2xl border bg-card shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
     >
       {/* Main row */}
       <div
@@ -71,7 +71,7 @@ const TransactionRow = ({
         tabIndex={0}
         onKeyDown={(e) => e.key === 'Enter' && setExpanded(!expanded)}
       >
-        <div className="flex items-center gap-3 min-w-0 flex-1">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
           {/* Avatar icon */}
           <div
             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-105 ${
@@ -86,7 +86,7 @@ const TransactionRow = ({
             <div className="flex items-center gap-2">
               <h4 className="truncate text-xs font-bold text-main">{t.description}</h4>
               {t.category && (
-                <span className="shrink-0 rounded-lg bg-surface border border-border/50 px-2 py-0.5 text-[10px] font-bold text-muted">
+                <span className="border-border/50 shrink-0 rounded-lg border bg-surface px-2 py-0.5 text-[10px] font-bold text-muted">
                   {t.category}
                 </span>
               )}
@@ -107,14 +107,18 @@ const TransactionRow = ({
         </div>
 
         {/* Amount & Status */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex shrink-0 items-center gap-3">
           <div className="text-end">
-            <p className={`text-sm font-extrabold tabular-nums ${isIncome ? 'text-success' : 'text-error'}`}>
+            <p
+              className={`text-sm font-extrabold tabular-nums ${isIncome ? 'text-success' : 'text-error'}`}
+            >
               {isIncome ? '+' : '-'}
               {(t.amount ?? 0).toLocaleString()} {currency}
             </p>
             {badge && (
-              <span className={`mt-0.5 inline-block rounded-md px-1.5 py-0.5 text-[9px] font-bold ${badge.cls}`}>
+              <span
+                className={`mt-0.5 inline-block rounded-md px-1.5 py-0.5 text-[9px] font-bold ${badge.cls}`}
+              >
                 {badge.label}
               </span>
             )}
@@ -149,9 +153,9 @@ const TransactionRow = ({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="overflow-hidden bg-surface/50 border-t border-border/40"
+            className="bg-surface/50 border-border/40 overflow-hidden border-t"
           >
-            <div className="p-3.5 space-y-2 text-xs text-muted">
+            <div className="space-y-2 p-3.5 text-xs text-muted">
               {t.invoiceNumber && (
                 <div className="flex items-center gap-2">
                   <FileText size={13} className="text-primary" />
@@ -206,7 +210,9 @@ export const TransactionsLog = ({
 
   const stats = useMemo(() => {
     const inc = filtered.filter((t) => t.type === 'income').reduce((s, t) => s + (t.amount || 0), 0)
-    const exp = filtered.filter((t) => t.type === 'expense').reduce((s, t) => s + (t.amount || 0), 0)
+    const exp = filtered
+      .filter((t) => t.type === 'expense')
+      .reduce((s, t) => s + (t.amount || 0), 0)
     return { inc, exp }
   }, [filtered])
 
@@ -229,7 +235,7 @@ export const TransactionsLog = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onAddTransaction}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95 shadow-sm"
+            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
           >
             <Plus size={14} /> إضافة معاملة
           </button>
@@ -237,7 +243,7 @@ export const TransactionsLog = ({
       </div>
 
       {/* Filter Toolbar */}
-      <div className="border-b border-border/40 bg-surface/50 p-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="border-border/40 bg-surface/50 flex flex-col items-center justify-between gap-3 border-b p-3 sm:flex-row">
         {/* Search Input */}
         <div className="relative w-full sm:w-64">
           <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
@@ -249,19 +255,21 @@ export const TransactionsLog = ({
               setSearchQuery(e.target.value)
               setPage(1)
             }}
-            className="w-full rounded-xl border border-border bg-card py-2 pe-3 ps-8 text-xs font-bold text-main outline-none focus:border-primary focus:ring-2 focus:ring-focus transition-all"
+            className="w-full rounded-xl border border-border bg-card py-2 pe-3 ps-8 text-xs font-bold text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
           />
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-1 bg-card p-1 rounded-xl border border-border w-full sm:w-auto justify-center">
+        <div className="flex w-full items-center justify-center gap-1 rounded-xl border border-border bg-card p-1 sm:w-auto">
           <button
             onClick={() => {
               setFilterType('all')
               setPage(1)
             }}
             className={`rounded-lg px-3 py-1 text-xs font-bold transition-all ${
-              filterType === 'all' ? 'bg-primary text-on-primary shadow-xs' : 'text-muted hover:text-main'
+              filterType === 'all'
+                ? 'shadow-xs bg-primary text-on-primary'
+                : 'text-muted hover:text-main'
             }`}
           >
             الكل ({transactions.length})
@@ -272,7 +280,9 @@ export const TransactionsLog = ({
               setPage(1)
             }}
             className={`rounded-lg px-3 py-1 text-xs font-bold transition-all ${
-              filterType === 'income' ? 'bg-success text-on-success shadow-xs' : 'text-muted hover:text-main'
+              filterType === 'income'
+                ? 'shadow-xs bg-success text-on-success'
+                : 'text-muted hover:text-main'
             }`}
           >
             إيرادات (+{stats.inc.toLocaleString()})
@@ -283,7 +293,9 @@ export const TransactionsLog = ({
               setPage(1)
             }}
             className={`rounded-lg px-3 py-1 text-xs font-bold transition-all ${
-              filterType === 'expense' ? 'bg-error text-on-error shadow-xs' : 'text-muted hover:text-main'
+              filterType === 'expense'
+                ? 'shadow-xs bg-error text-on-error'
+                : 'text-muted hover:text-main'
             }`}
           >
             مصروفات (-{stats.exp.toLocaleString()})
@@ -294,7 +306,7 @@ export const TransactionsLog = ({
       {/* Rows List */}
       <div className="space-y-2.5 p-4">
         {paged.length === 0 ? (
-          <div className="py-12 text-center border border-dashed border-border rounded-2xl bg-surface/30">
+          <div className="bg-surface/30 rounded-2xl border border-dashed border-border py-12 text-center">
             <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-surface text-muted">
               <Filter size={20} />
             </div>

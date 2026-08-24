@@ -130,10 +130,14 @@ export const Schedule = () => {
         setStudents([me] as unknown as Student[])
       } else if (currentUser?.role === 'parent') {
         const children = await api.get<Record<string, unknown>[]>('/parents/my-children')
-        setStudents(Array.isArray(children) ? children : [])
+        setStudents((Array.isArray(children) ? children : []) as unknown as Student[])
       } else {
         const data = await api.get<Record<string, unknown>[]>('/students')
-        setStudents(Array.isArray(data) ? data : data.data || [])
+        setStudents(
+          Array.isArray(data)
+            ? (data as unknown as Student[])
+            : (((data as { data?: Record<string, unknown>[] }).data || []) as unknown as Student[]),
+        )
       }
     } catch (error) {
       console.error('Error fetching data', error)
@@ -177,7 +181,7 @@ export const Schedule = () => {
             const sId = student.id
             const tName = teacherNameOf(enrollment)
             const hourMatch = /(\d{1,2})/.exec(String(slot.hour ?? ''))
-            const hourNum = hourMatch ? hourMatch[1] : ''
+            const hourNum = hourMatch?.[1] ?? ''
             return {
               id: `${sId}-${tName}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
               studentId: sId,
@@ -291,8 +295,6 @@ export const Schedule = () => {
       ? ((todayQueue.length - remainingQueue.length) / todayQueue.length) * 100
       : 0
 
-
-
   const handleSelectEvent = (event: ScheduleEvent) => {
     setSelectedEvent(event)
     setShowDetails(true)
@@ -335,7 +337,6 @@ export const Schedule = () => {
     ],
     [weekStats],
   )
-
 
   if (loading)
     return (
@@ -413,7 +414,7 @@ export const Schedule = () => {
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'border-border relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
+                    'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
                     kpi.gradient,
                   )}
                 >
@@ -445,13 +446,13 @@ export const Schedule = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="border-success-soft relative overflow-hidden rounded-2xl border bg-gradient-to-br from-success-soft via-background to-background p-6 text-center"
+                  className="relative overflow-hidden rounded-2xl border border-success-soft bg-gradient-to-br from-success-soft via-background to-background p-6 text-center"
                 >
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring', damping: 12, delay: 0.1 }}
-                    className="bg-success-soft mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full"
+                    className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-success-soft"
                   >
                     <PartyPopper size={28} className="text-success" />
                   </motion.div>
@@ -470,7 +471,7 @@ export const Schedule = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="border-border rounded-2xl border bg-card p-4"
+                  className="rounded-2xl border border-border bg-card p-4"
                 >
                   {/* Progress bar */}
                   <div className="mb-3 flex items-center justify-between">
@@ -548,7 +549,7 @@ export const Schedule = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-3"
           >
-            <div className="border-border flex items-center justify-between rounded-xl border bg-card p-3">
+            <div className="flex items-center justify-between rounded-xl border border-border bg-card p-3">
               <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-soft text-primary">
                   <Sparkles size={14} />
@@ -601,8 +602,6 @@ export const Schedule = () => {
         }}
         onViewStudent={() => navigate('/students')}
       />
-
-
     </div>
   )
 }

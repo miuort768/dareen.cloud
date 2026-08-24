@@ -11,6 +11,9 @@ interface FinanceStats {
   [key: string]: unknown
 }
 
+type ChartMonthlyPoint = { month: string; income: number; expense: number }
+type ChartPiePoint = { name: string; value: number; fill?: string }
+
 export const useFinance = () => {
   const [sessions, setSessions] = useState<Session[]>([])
   const [invoices, setInvoices] = useState<TeacherInvoice[]>([])
@@ -228,8 +231,7 @@ export const useFinance = () => {
     const monthInvoiceExpenses = filteredInvoices
       .filter(
         (i) =>
-          ['paid', 'مدفوعة', 'تم الدفع'].includes(i.status?.toLowerCase()) &&
-          isSameMonth(i.date),
+          ['paid', 'مدفوعة', 'تم الدفع'].includes(i.status?.toLowerCase()) && isSameMonth(i.date),
       )
       .reduce(
         (sum, i) => sum + Math.max((Number(i.amount) || 0) - (Number(i.personalExpenses) || 0), 0),
@@ -325,11 +327,11 @@ export const useFinance = () => {
       .reverse()
   }, [allTransactions])
 
-  const chartData = useMemo(() => {
+  const chartData = useMemo<{ monthlyData: ChartMonthlyPoint[]; pieData: ChartPiePoint[] }>(() => {
     if (serverStats && filterMonth === 'all') {
       return {
-        monthlyData: serverStats.monthlyData,
-        pieData: serverStats.pieData,
+        monthlyData: serverStats.monthlyData as ChartMonthlyPoint[],
+        pieData: serverStats.pieData as ChartPiePoint[],
       }
     }
 

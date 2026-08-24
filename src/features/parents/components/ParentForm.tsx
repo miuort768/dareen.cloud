@@ -1,5 +1,6 @@
 import React from 'react'
 import { User, Save, ShieldCheck, X, Phone } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 
 interface ParentFormProps {
@@ -19,8 +20,9 @@ interface ParentFormProps {
 const InputField = ({
   label,
   icon: Icon,
+  className,
   ...props
-}: { label: string; icon: React.ComponentType<{ size?: number }> } & Record<string, unknown>) => (
+}: { label: string; icon: LucideIcon } & React.InputHTMLAttributes<HTMLInputElement>) => (
   <div className="space-y-1.5">
     <label className="ms-1 text-micro font-medium uppercase tracking-widest text-muted">
       {label}
@@ -33,7 +35,7 @@ const InputField = ({
         {...props}
         className={cn(
           'w-full rounded-xl border border-border bg-surface py-3 pe-4 ps-12 text-xs font-normal outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10',
-          props.className,
+          className,
         )}
       />
     </div>
@@ -59,7 +61,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
               <h3 className="text-sm font-bold uppercase tracking-widest text-on-primary">
                 {isEdit ? 'تحديث ملف ولي الأمر' : 'تسجيل ولي أمر جديد بالنظام'}
               </h3>
-              <p className="text-white/70 mt-0.5 text-micro font-normal uppercase tracking-widest">
+              <p className="mt-0.5 text-micro font-normal uppercase tracking-widest text-white/70">
                 تأكد من صحة البيانات لضمان وصول الإشعارات
               </p>
             </div>

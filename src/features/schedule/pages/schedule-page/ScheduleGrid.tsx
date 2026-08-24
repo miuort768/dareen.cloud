@@ -112,7 +112,8 @@ const getSubjectColor = (subject: string): SubjectColors => {
   const normalized = subject?.trim() || ''
   return (
     SUBJECT_COLORS[normalized] ||
-    FALLBACK_COLORS[Math.abs(normalized.length) % FALLBACK_COLORS.length]
+    FALLBACK_COLORS[Math.abs(normalized.length) % FALLBACK_COLORS.length] ||
+    FALLBACK_COLORS[0]!
   )
 }
 
@@ -163,14 +164,14 @@ const MultiEventModal = ({
           </button>
         </div>
         {/* Time badge */}
-        <div className="border-border flex items-center gap-1.5 border-b bg-surface px-4 py-2">
+        <div className="flex items-center gap-1.5 border-b border-border bg-surface px-4 py-2">
           <Clock size={11} className="text-muted" />
           <span className="text-[11px] font-bold text-muted">
             {events[0]?.time} — {events[0]?.day}
           </span>
         </div>
         {/* Events list */}
-        <div className="divide-border max-h-72 divide-y overflow-y-auto">
+        <div className="max-h-72 divide-y divide-border overflow-y-auto">
           {events.map((event) => {
             const c = getSubjectColor(event.subject)
             return (
@@ -345,16 +346,16 @@ export const ScheduleGrid = ({
         />
       )}
 
-      <div className="border-border relative mt-4 overflow-hidden rounded-xl border bg-surface shadow-sm">
+      <div className="relative mt-4 overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
         <div className="custom-scrollbar overflow-x-auto">
           <div className="relative min-w-[1000px]">
             {/* Sticky header row */}
-            <div className="border-border shadow-xs sticky top-0 z-30 grid grid-cols-[100px_repeat(7,1fr)] border-b bg-surface">
-              <div className="border-border sticky start-0 z-10 border-e bg-surface p-3 text-[9px] font-bold text-muted" />
+            <div className="shadow-xs sticky top-0 z-30 grid grid-cols-[100px_repeat(7,1fr)] border-b border-border bg-surface">
+              <div className="sticky start-0 z-10 border-e border-border bg-surface p-3 text-[9px] font-bold text-muted" />
               {DAYS_OF_WEEK.map((day) => (
                 <div
                   key={day}
-                  className={`border-border border-e bg-surface p-2.5 text-center last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''}`}
+                  className={`border-e border-border bg-surface p-2.5 text-center last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''}`}
                 >
                   <div className="text-xs font-bold text-main">{day}</div>
                   <div
@@ -379,7 +380,7 @@ export const ScheduleGrid = ({
                   className={`grid grid-cols-[100px_repeat(7,1fr)] ${slotIdx % 2 === 0 ? 'bg-surface' : 'bg-background/20'}`}
                 >
                   {/* Time label */}
-                  <div className="border-border border-border sticky start-0 z-10 flex flex-col items-center justify-center border-b border-e bg-surface p-1.5">
+                  <div className="sticky start-0 z-10 flex flex-col items-center justify-center border-b border-e border-border bg-surface p-1.5">
                     <Clock size={10} className="text-muted" />
                     <span className="mt-0.5 text-[10px] font-bold tabular-nums text-muted">
                       {slot.label}
@@ -394,7 +395,7 @@ export const ScheduleGrid = ({
                     return (
                       <div
                         key={`${day}-${slot.hour}`}
-                        className={`border-border border-border relative min-h-[80px] border-b border-e p-1 transition-colors last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''} group`}
+                        className={`relative min-h-[80px] border-b border-e border-border p-1 transition-colors last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''} group`}
                       >
                         {count === 0 ? (
                           <div className="flex h-full cursor-pointer flex-col items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
@@ -406,8 +407,8 @@ export const ScheduleGrid = ({
                         ) : count === 1 ? (
                           <div className="h-full p-0.5">
                             <EventCard
-                              event={dayEvents[0]}
-                              onSelect={() => onSelectEvent(dayEvents[0])}
+                              event={dayEvents[0]!}
+                              onSelect={() => onSelectEvent(dayEvents[0]!)}
                             />
                           </div>
                         ) : /* Multiple events: show compact list if ≤2, otherwise multi-card */
@@ -442,14 +443,14 @@ export const ScheduleGrid = ({
         </div>
 
         {/* Legend */}
-        <div className="border-border bg-surface no-print flex flex-wrap items-center gap-2 border-t p-3">
+        <div className="no-print flex flex-wrap items-center gap-2 border-t border-border bg-surface p-3">
           <span className="ms-1 text-[9px] font-bold text-muted">دليل المواد:</span>
           {Object.entries(SUBJECT_COLORS)
             .slice(0, 8)
             .map(([subject, colors]) => (
               <div
                 key={subject}
-                className="border-border flex items-center gap-1 rounded-none border bg-card px-1.5 py-0.5"
+                className="flex items-center gap-1 rounded-none border border-border bg-card px-1.5 py-0.5"
               >
                 <div className={`h-1.5 w-1.5 rounded-full ${colors.bar}`} />
                 <span className="text-[7px] font-bold text-muted">{subject}</span>

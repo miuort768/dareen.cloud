@@ -28,7 +28,7 @@ export const MaintenanceModal = ({
 
   const isEnabled = maintenanceTarget
   const handleConfirm = () => {
-    setMaintenanceMode(isEnabled).then(() => {
+    Promise.resolve(setMaintenanceMode(isEnabled)).then(() => {
       setShowMaintenanceModal(false)
       setInput('')
       setMaintenanceTarget(isEnabled)

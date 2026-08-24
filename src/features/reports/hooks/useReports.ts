@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { reportsService } from '../services/reportsService'
 import { safeArray } from '../../../lib/api'
 import type { ReportData, ReportType } from '../types'
+import type { Student, Session, StudentInvoice } from '../../../types'
 
 const EMPTY_DATA: ReportData = { students: [], sessions: [], invoices: [] }
 
@@ -26,9 +27,9 @@ export const useReports = () => {
     const prevMonthStr = prevMonthDate.toISOString().slice(0, 7)
 
     // General Arrays
-    const students = safeArray(data.students)
-    const sessions = safeArray(data.sessions)
-    const invoices = safeArray(data.invoices)
+    const students = safeArray<Student>(data.students)
+    const sessions = safeArray<Session>(data.sessions)
+    const invoices = safeArray<StudentInvoice>(data.invoices)
 
     const totalStudents = students.length
     const totalEnrollments = students.reduce((sum, s) => sum + (s.enrollments?.length || 0), 0)
@@ -63,9 +64,12 @@ export const useReports = () => {
       .filter((s) => s.status === 'completed' && s.date?.startsWith(prevMonthStr))
       .reduce((sum, s) => sum + (Number(s.price) || 0), 0)
 
-    const revenueGrowth = prevMonthRevenue > 0
-      ? Math.round(((monthRevenue - prevMonthRevenue) / prevMonthRevenue) * 100)
-      : monthRevenue > 0 ? 100 : 0
+    const revenueGrowth =
+      prevMonthRevenue > 0
+        ? Math.round(((monthRevenue - prevMonthRevenue) / prevMonthRevenue) * 100)
+        : monthRevenue > 0
+          ? 100
+          : 0
 
     const monthTeacherCost = sessions
       .filter((s) => s.status === 'completed' && s.date?.startsWith(currentMonthStr))
@@ -87,7 +91,7 @@ export const useReports = () => {
         [
           ...sessions.map((s) => s.date?.slice(0, 7)),
           ...invoices.map((inv) => inv.date?.slice(0, 7)),
-        ].filter(Boolean),
+        ].filter((m): m is string => Boolean(m)),
       ),
     )
       .sort()
@@ -130,7 +134,10 @@ export const useReports = () => {
       (acc, s) => {
         const raw = s.grade
         const gradeKey =
-          !raw || String(raw).trim() === '' || String(raw).toLowerCase() === 'null' || String(raw).toLowerCase() === 'undefined'
+          !raw ||
+          String(raw).trim() === '' ||
+          String(raw).toLowerCase() === 'null' ||
+          String(raw).toLowerCase() === 'undefined'
             ? 'غير محدد'
             : String(raw).trim()
         acc[gradeKey] = (acc[gradeKey] || 0) + 1
@@ -147,13 +154,13 @@ export const useReports = () => {
     // Teacher Performance
     const teacherPerformance = sessions.reduce(
       (acc, s) => {
-        const teacher = (s.teacherName && s.teacherName.trim()) ? s.teacherName.trim() : 'غير محدد'
+        const teacher = s.teacherName && s.teacherName.trim() ? s.teacherName.trim() : 'غير محدد'
         if (!acc[teacher]) {
           acc[teacher] = { total: 0, completed: 0, cancelled: 0 }
         }
-        acc[teacher].total++
-        if (s.status === 'completed') acc[teacher].completed++
-        if (s.status === 'cancelled') acc[teacher].cancelled++
+        acc[teacher]!.total++
+        if (s.status === 'completed') acc[teacher]!.completed++
+        if (s.status === 'cancelled') acc[teacher]!.cancelled++
         return acc
       },
       {} as Record<string, { total: number; completed: number; cancelled: number }>,
@@ -167,13 +174,17 @@ export const useReports = () => {
 
     // Student Progress
     const studentProgressData = students.map((student) => {
-      const tSessions = student.enrollments?.reduce((sum, e) => sum + (e.sessionsTotal || 0), 0) || 0
+      const tSessions =
+        student.enrollments?.reduce((sum, e) => sum + (e.sessionsTotal || 0), 0) || 0
       const uSessions = student.enrollments?.reduce((sum, e) => sum + (e.sessionsUsed || 0), 0) || 0
       const progress = tSessions > 0 ? Math.round((uSessions / tSessions) * 100) : 0
 
       const rawGrade = student.grade
       const grade =
-        !rawGrade || String(rawGrade).trim() === '' || String(rawGrade).toLowerCase() === 'null' || String(rawGrade).toLowerCase() === 'undefined'
+        !rawGrade ||
+        String(rawGrade).trim() === '' ||
+        String(rawGrade).toLowerCase() === 'null' ||
+        String(rawGrade).toLowerCase() === 'undefined'
           ? 'غير محدد'
           : String(rawGrade).trim()
 

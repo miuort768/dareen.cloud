@@ -10,6 +10,7 @@ import {
   Medal,
   Award,
 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import {
   AreaChart,
   Area,
@@ -22,7 +23,7 @@ import {
 import { cn } from '../../../lib/utils'
 
 interface AttendanceReportProps {
-  monthlySessionsData: { month: string; sessions: number; completed: number }[]
+  monthlySessionsData: { month: string; completed: number; cancelled: number; total: number }[]
   teacherPerformanceData: {
     teacher: string
     completed: number
@@ -45,7 +46,7 @@ const SectionHeader = ({
   label,
   sub,
 }: {
-  icon: React.ComponentType<{ size?: number }>
+  icon: LucideIcon
   label: string
   sub?: string
 }) => (
@@ -66,7 +67,7 @@ const CustomTooltip = ({
   label,
 }: {
   active?: boolean
-  payload?: { value: number; color?: string }[]
+  payload?: { name?: string; value: number; color?: string; stroke?: string; fill?: string }[]
   label?: string
 }) => {
   if (active && payload && payload.length) {
@@ -78,21 +79,26 @@ const CustomTooltip = ({
         <p className="mb-2 border-b border-border pb-1 text-micro font-medium uppercase text-muted">
           {label}
         </p>
-        {payload.map((entry: { name?: string; value: number; color?: string }, i: number) => (
-          <div
-            key={`report-${i}`}
-            className="mb-1 flex items-center justify-between gap-4 last:mb-0"
-          >
-            <div className="flex items-center gap-1.5">
-              <div
-                className="h-2 w-2 rounded-sm"
-                style={{ backgroundColor: entry.stroke || entry.fill }}
-              />
-              <span className="text-micro font-normal text-muted">{entry.name}</span>
+        {payload.map(
+          (
+            entry: { name?: string; value: number; color?: string; stroke?: string; fill?: string },
+            i: number,
+          ) => (
+            <div
+              key={`report-${i}`}
+              className="mb-1 flex items-center justify-between gap-4 last:mb-0"
+            >
+              <div className="flex items-center gap-1.5">
+                <div
+                  className="h-2 w-2 rounded-sm"
+                  style={{ backgroundColor: entry.stroke || entry.fill }}
+                />
+                <span className="text-micro font-normal text-muted">{entry.name}</span>
+              </div>
+              <span className="font-mono text-sm font-medium text-main">{entry.value}</span>
             </div>
-            <span className="font-mono text-sm font-medium text-main">{entry.value}</span>
-          </div>
-        ))}
+          ),
+        )}
       </div>
     )
   }

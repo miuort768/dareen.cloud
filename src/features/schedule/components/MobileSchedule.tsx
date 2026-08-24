@@ -1,7 +1,16 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CalendarDays, Search, Loader2, Sparkles, Clock, GraduationCap, BookOpen, Users, ChevronLeft } from 'lucide-react'
+import {
+  CalendarDays,
+  Search,
+  Loader2,
+  Sparkles,
+  Clock,
+  GraduationCap,
+  BookOpen,
+  ChevronLeft,
+} from 'lucide-react'
 import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { triggerHaptic } from '../../../lib/haptics'
@@ -126,7 +135,7 @@ export const MobileSchedule = () => {
               ['am', 'صباحاً', 'صباحا', 'ص', 'am.', 'a.m', 'a.m.'].includes(normalizedPeriod) ||
               normalizedPeriod.startsWith('صباح')
             const hourMatch = /(\d{1,2})/.exec(String(slot.hour ?? ''))
-            const hourNum = hourMatch ? hourMatch[1] : ''
+            const hourNum = hourMatch?.[1] ?? ''
             return {
               id: `${student.id}-${teacherNameOf(enrollment)}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
               studentId: student.id,
@@ -365,7 +374,7 @@ export const MobileSchedule = () => {
                     transition={{ delay: Math.min(idx * 0.04, 0.4), duration: 0.25 }}
                     whileTap={{ scale: 0.97 }}
                     onClick={openInAppointments}
-                    className={`cursor-pointer overflow-hidden rounded-none border border-border border-e-[3px] bg-card shadow-sm transition-colors md:rounded-2xl ${ts.bar}`}
+                    className={`cursor-pointer overflow-hidden rounded-none border border-e-[3px] border-border bg-card shadow-sm transition-colors md:rounded-2xl ${ts.bar}`}
                   >
                     <div className="flex items-center gap-3 p-3">
                       {/* Avatar */}

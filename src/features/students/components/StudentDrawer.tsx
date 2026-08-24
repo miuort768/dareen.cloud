@@ -21,6 +21,7 @@ import {
 } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { getCurrencySymbol } from '../../../config/constants'
+import type { LucideIcon } from 'lucide-react'
 import type { Student, ScheduleSlot } from '../types'
 import type { Teacher } from '../../teachers/types'
 import { EnrollmentForm } from './EnrollmentForm'
@@ -60,7 +61,7 @@ const avatarGradients = [
 const getAvatarGradient = (name: string) => {
   let hash = 0
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash)
-  return avatarGradients[Math.abs(hash) % avatarGradients.length]
+  return avatarGradients[Math.abs(hash) % avatarGradients.length]!
 }
 
 const gradeColors: Record<string, string> = {
@@ -108,7 +109,7 @@ const getNextLevel = (xp: number) => {
   return { current: 5000, next: 5000, label: 'أسطوري', nextLabel: null, progress: 100 }
 }
 
-const tabs: { key: TabKey; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
+const tabs: { key: TabKey; label: string; icon: LucideIcon }[] = [
   { key: 'overview', label: 'نظرة عامة', icon: Trophy },
   { key: 'programs', label: 'البرامج', icon: BookOpen },
   { key: 'timeline', label: 'النشاطات', icon: Clock },
@@ -215,7 +216,7 @@ export const StudentDrawer = ({
                 <div className="flex items-center gap-2">
                   <h2 className="truncate text-base font-bold text-main">{student.name}</h2>
                   {streakDays >= 3 && (
-                    <span className="bg-warning-soft ring-warning-soft inline-flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[9px] font-bold text-warning ring-1">
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-1.5 py-0.5 text-[9px] font-bold text-warning ring-1 ring-warning-soft">
                       <Flame size={9} /> {streakDays}
                     </span>
                   )}
@@ -230,12 +231,12 @@ export const StudentDrawer = ({
                     <GraduationCap size={10} />
                     {student.grade}
                   </span>
-                  <span className="bg-warning-soft ring-warning-soft inline-flex items-center gap-1 rounded-lg px-2.5 py-0.5 text-[10px] font-bold text-warning ring-1">
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-2.5 py-0.5 text-[10px] font-bold text-warning ring-1 ring-warning-soft">
                     <Star size={10} />
                     {points} XP
                   </span>
                   {student.enrollments && student.enrollments.length > 0 && (
-                    <span className="ring-info-soft inline-flex items-center gap-1 rounded-lg bg-info-soft px-2.5 py-0.5 text-[10px] font-bold text-info ring-1">
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-info-soft px-2.5 py-0.5 text-[10px] font-bold text-info ring-1 ring-info-soft">
                       <BookOpen size={10} />
                       {student.enrollments.length} برامج
                     </span>
@@ -300,7 +301,7 @@ export const StudentDrawer = ({
 
                   {level.nextLabel && (
                     <div className="space-y-1.5">
-                      <div className="ring-border h-2.5 overflow-hidden rounded-full bg-white/50 ring-1 dark:bg-white/5">
+                      <div className="h-2.5 overflow-hidden rounded-full bg-white/50 ring-1 ring-border dark:bg-white/5">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${level.progress}%` }}
@@ -324,7 +325,7 @@ export const StudentDrawer = ({
 
                   {streakDays > 0 && (
                     <div className="mt-3 flex items-center gap-2 border-t border-border pt-3">
-                      <div className="bg-warning-soft flex items-center gap-1.5 rounded-xl px-2.5 py-1.5">
+                      <div className="flex items-center gap-1.5 rounded-xl bg-warning-soft px-2.5 py-1.5">
                         <Flame size={14} className="text-warning" />
                         <span className="text-[10px] font-bold text-warning">{streakDays} يوم</span>
                       </div>
@@ -459,7 +460,7 @@ export const StudentDrawer = ({
                 <div className="grid grid-cols-2 gap-2">
                   <a
                     href={`tel:${student.parentPhone}`}
-                    className="bg-success-soft border-success-soft hover:bg-success-light flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-bold text-success transition-all active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-success-soft bg-success-soft py-2.5 text-[10px] font-bold text-success transition-all hover:bg-success-light active:scale-[0.98]"
                   >
                     <Phone size={13} /> اتصال
                   </a>
@@ -467,7 +468,7 @@ export const StudentDrawer = ({
                     href={`https://wa.me/${student.parentPhone?.replace(/[^0-9]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-success-soft border-success-soft hover:bg-success-light flex items-center justify-center gap-2 rounded-xl border py-2.5 text-[10px] font-bold text-success transition-all active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 rounded-xl border border-success-soft bg-success-soft py-2.5 text-[10px] font-bold text-success transition-all hover:bg-success-light active:scale-[0.98]"
                   >
                     <MessageSquare size={13} /> واتساب
                   </a>
@@ -516,7 +517,7 @@ export const StudentDrawer = ({
                             </div>
                           </div>
                           {isLow && (
-                            <span className="ring-error-soft animate-pulse rounded-lg bg-error-soft px-2 py-0.5 text-[9px] font-bold text-error ring-1">
+                            <span className="animate-pulse rounded-lg bg-error-soft px-2 py-0.5 text-[9px] font-bold text-error ring-1 ring-error-soft">
                               رصيد منخفض
                             </span>
                           )}
@@ -532,7 +533,7 @@ export const StudentDrawer = ({
                                 idx < used
                                   ? 'bg-success'
                                   : idx === used
-                                    ? 'ring-warning bg-warning ring-1'
+                                    ? 'bg-warning ring-1 ring-warning'
                                     : 'bg-border',
                               )}
                             />
@@ -544,7 +545,7 @@ export const StudentDrawer = ({
 
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex-1">
-                            <div className="ring-border h-1.5 overflow-hidden rounded-full bg-surface ring-1">
+                            <div className="h-1.5 overflow-hidden rounded-full bg-surface ring-1 ring-border">
                               <motion.div
                                 initial={{ width: 0 }}
                                 animate={{ width: `${progress}%` }}

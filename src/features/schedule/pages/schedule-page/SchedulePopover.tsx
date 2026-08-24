@@ -72,7 +72,12 @@ const FALLBACKS = [
 
 const getSC = (subject: string) =>
   SUBJECT_COLORS[subject?.trim() || ''] ||
-  FALLBACKS[Math.abs((subject?.trim() || '').length) % FALLBACKS.length]
+  FALLBACKS[Math.abs((subject?.trim() || '').length) % FALLBACKS.length] || {
+    bg: '',
+    text: '',
+    on: '',
+    chip: '',
+  }
 
 interface SchedulePopoverProps {
   event: ScheduleEvent | null
