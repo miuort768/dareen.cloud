@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { MessageSquare, Plus, Users, ThumbsUp, MessageCircle, Filter } from 'lucide-react'
+import { MessageSquare, Plus, Users, ThumbsUp, MessageCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { EmptyState } from '../shared/components/ui/EmptyState'
 import { useSearchParams } from 'react-router-dom'
@@ -18,15 +18,6 @@ import { TeacherDashboardHeader } from './TeacherDashboardHeader'
 import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader'
 import { StudentDashboardHeader } from './student-dashboard/StudentDashboardHeader'
 import { cn } from '../lib/utils'
-
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
 
 export const Forum = () => {
   const academyName = useAcademyName()
@@ -66,7 +57,7 @@ export const Forum = () => {
   const handleCreatePost = async () => {
     if (!newPostContent.trim()) return
     try {
-      const data = await api.post<Record<string, unknown>>('/forum', { content: newPostContent })
+      const data = await api.post<{ message?: string }>('/forum', { content: newPostContent })
       showNotification(data.message || 'تم إنشاء المنشور', 'success')
       setNewPostContent('')
       queryClient.invalidateQueries({ queryKey: ['forum'] })
@@ -160,7 +151,7 @@ export const Forum = () => {
     }
   }
 
-  const handleDeleteComment = async (postId: string, commentId: string) => {
+  const handleDeleteComment = async (_postId: string, commentId: string) => {
     if (!(await confirm('هل أنت متأكد من حذف هذا التعليق؟'))) return
     try {
       await api.delete(`/forum/comments/${commentId}`)
@@ -216,7 +207,7 @@ export const Forum = () => {
     if (q) {
       list = list.filter(
         (p) =>
-          (p.title || '').toLowerCase().includes(q) ||
+          ('title' in p && typeof p.title === 'string' ? p.title : '').toLowerCase().includes(q) ||
           (p.content || '').toLowerCase().includes(q) ||
           (p.authorName || '').toLowerCase().includes(q),
       )
@@ -297,7 +288,7 @@ export const Forum = () => {
         icon: Plus,
         label: 'منشور جديد',
         onClick: () => {
-          document.querySelector('[data-create-post] textarea')?.focus()
+          document.querySelector<HTMLTextAreaElement>('[data-create-post] textarea')?.focus()
         },
       },
       {
@@ -321,7 +312,10 @@ export const Forum = () => {
   )
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-background pb-8 md:pb-12 font-sans" dir="rtl">
+    <div
+      className="relative min-h-full overflow-x-hidden bg-background pb-8 font-sans md:pb-12"
+      dir="rtl"
+    >
       {currentUser?.role === 'teacher' && (
         <div className="hidden md:block">
           <TeacherDashboardHeader logout={logout} />
@@ -375,14 +369,14 @@ export const Forum = () => {
 
         {/* Sort indicator banner */}
         {sortMode !== 'latest' && (
-          <div className="mx-auto max-w-[700px] px-4 mb-3 flex items-center justify-between bg-primary/10 border border-primary/30 p-2.5 rounded-xl text-xs font-bold text-primary">
+          <div className="mx-auto mb-3 flex max-w-[700px] items-center justify-between rounded-xl border border-primary/30 bg-primary/10 p-2.5 px-4 text-xs font-bold text-primary">
             <span>
               يتم الآن عرض المنشورات بحسب:{' '}
               {sortMode === 'most_liked' ? 'الأكثر إعجاباً 👍' : 'الأكثر تعليقاً 💬'}
             </span>
             <button
               onClick={() => setSortMode('latest')}
-              className="text-micro bg-primary text-on-primary px-2.5 py-1 rounded-lg hover:bg-primary-hover transition-all"
+              className="rounded-lg bg-primary px-2.5 py-1 text-micro text-on-primary transition-all hover:bg-primary-hover"
             >
               إعادة تعيين الفرز
             </button>
@@ -420,7 +414,17 @@ export const Forum = () => {
                     isHighlighted={isHighlighted}
                     isAdmin={isAdmin}
                     currentUserId={currentUser?.id || ''}
-                    currentUserName={currentUser?.name || currentUser?.teacherName || (currentUser?.role === 'parent' ? 'ولي أمر' : currentUser?.role === 'teacher' ? 'معلمة' : currentUser?.role === 'admin' ? 'إدارة المنصة' : currentUser?.username || 'عضو المنتدى')}
+                    currentUserName={
+                      currentUser?.name ||
+                      currentUser?.teacherName ||
+                      (currentUser?.role === 'parent'
+                        ? 'ولي أمر'
+                        : currentUser?.role === 'teacher'
+                          ? 'معلمة'
+                          : currentUser?.role === 'admin'
+                            ? 'إدارة المنصة'
+                            : currentUser?.username || 'عضو المنتدى')
+                    }
                     showMenuPostId={showMenuPostId}
                     setShowMenuPostId={setShowMenuPostId}
                     onVote={handleVote}
@@ -445,7 +449,7 @@ export const Forum = () => {
       </div>
 
       {/* Floating Action (+) Button - Hidden on mobile screens */}
-      <div className="hidden md:flex fixed bottom-8 end-8 z-50 flex-col items-end gap-3">
+      <div className="fixed bottom-8 end-8 z-50 hidden flex-col items-end gap-3 md:flex">
         <AnimatePresence>
           {fabOpen &&
             fabActions.map((action, i) => (
@@ -465,7 +469,7 @@ export const Forum = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-12 w-12 items-center justify-center rounded-card border border-border/30 bg-primary text-on-primary shadow-elevation-2 transition-all hover:bg-primary-hover hover:shadow-elevation-3 active:scale-95"
+                  className="border-border/30 flex h-12 w-12 items-center justify-center rounded-card border bg-primary text-on-primary shadow-elevation-2 transition-all hover:bg-primary-hover hover:shadow-elevation-3 active:scale-95"
                 >
                   <action.icon size={20} />
                 </button>
@@ -478,8 +482,8 @@ export const Forum = () => {
           whileTap={{ scale: 0.95 }}
           aria-label="إضافة منشور جديد أو فرز المنشورات"
           className={cn(
-            'flex h-14 w-14 items-center justify-center rounded-card text-on-primary shadow-elevation-3 transition-all border border-border/20',
-            fabOpen ? 'rotate-45 bg-error hover:bg-error/90' : 'bg-primary hover:bg-primary-hover',
+            'border-border/20 flex h-14 w-14 items-center justify-center rounded-card border text-on-primary shadow-elevation-3 transition-all',
+            fabOpen ? 'hover:bg-error/90 rotate-45 bg-error' : 'bg-primary hover:bg-primary-hover',
           )}
         >
           <Plus size={26} />

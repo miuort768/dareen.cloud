@@ -18,7 +18,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { crmService } from '../features/crm/services/crmService'
 import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
-import type { Lead, LeadStatus } from '../features/crm/types'
+import type { Lead, LeadStatus, LeadPriority } from '../features/crm/types'
 import { ErrorBanner } from '../shared/components/ui/ErrorState'
 import { PrimaryBtn, statusColors } from './leads/components/LeadsUI'
 import { LeadTable } from './leads/components/LeadTable'
@@ -71,12 +71,12 @@ const ConfirmDeleteModal = ({
             </div>
             <div>
               <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
-              <p className="text-white/70 mt-0.5 text-[10px]">لا يمكن التراجع عن هذا الإجراء</p>
+              <p className="mt-0.5 text-[10px] text-white/70">لا يمكن التراجع عن هذا الإجراء</p>
             </div>
           </div>
           <button
             onClick={onCancel}
-            className="bg-white/15 hover:bg-white/25 flex h-8 w-8 items-center justify-center rounded-full text-on-error transition-all"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-error transition-all hover:bg-white/25"
             aria-label="إغلاق"
           >
             <X size={14} />
@@ -144,12 +144,12 @@ const ConfirmDeleteAllModal = ({
             </div>
             <div>
               <h3 className="text-sm font-bold text-on-error">حذف جميع العملاء</h3>
-              <p className="text-white/70 mt-0.5 text-[10px]">لا يمكن التراجع عن هذا الإجراء</p>
+              <p className="mt-0.5 text-[10px] text-white/70">لا يمكن التراجع عن هذا الإجراء</p>
             </div>
           </div>
           <button
             onClick={onCancel}
-            className="bg-white/15 hover:bg-white/25 flex h-8 w-8 items-center justify-center rounded-full text-on-error transition-all"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-error transition-all hover:bg-white/25"
             aria-label="إغلاق"
           >
             <X size={14} />
@@ -174,7 +174,7 @@ const ConfirmDeleteAllModal = ({
               value={typed}
               onChange={(e) => setTyped(e.target.value)}
               placeholder="dareen"
-              className="focus-visible:ring-error-soft placeholder:text-muted w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-[13px] font-black tracking-widest text-main outline-none transition-all duration-200 focus-visible:border-error focus-visible:ring-2"
+              className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-[13px] font-black tracking-widest text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && verified) onConfirm()
               }}
@@ -214,8 +214,11 @@ const AddLeadModalInline = ({
   addMutation,
   onClose,
 }: {
-  formRef: React.RefObject<HTMLFormElement | null>
-  addMutation: { mutate: (data: Record<string, unknown>) => void; isPending: boolean }
+  formRef: React.RefObject<HTMLFormElement>
+  addMutation: {
+    mutate: (data: Omit<Lead, 'id' | 'createdAt'>) => void
+    isPending: boolean
+  }
   onClose: () => void
 }) => (
   <motion.div
@@ -237,7 +240,7 @@ const AddLeadModalInline = ({
         </div>
         <button
           onClick={onClose}
-          className="bg-white/15 hover:bg-white/25 flex h-8 w-8 items-center justify-center rounded-full text-on-primary transition-all"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-primary transition-all hover:bg-white/25"
           aria-label="إغلاق"
         >
           <X size={14} />
@@ -256,7 +259,7 @@ const AddLeadModalInline = ({
             subject: g('subject'),
             curriculum: g('curriculum'),
             status: 'new',
-            priority: g('priority'),
+            priority: g('priority') as LeadPriority,
             notes: g('notes'),
           })
         }}
@@ -523,24 +526,24 @@ export const Leads = () => {
 
         {/* Desktop header */}
         <div className="hidden pb-2 pt-4 md:block">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4 }}
-              className="flex items-center justify-between"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary shadow-sm shadow-primary/20">
-                  <Users size={20} />
-                </div>
-                <div>
-                  <h1 className="font-outfit text-lg font-black text-main md:text-xl">
-                    العملاء المحتملون
-                  </h1>
-                  <p className="text-[11px] text-muted">إدارة طلبات التسجيل والعملاء المتوقعين</p>
-                </div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+            className="flex items-center justify-between"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary shadow-sm shadow-primary/20">
+                <Users size={20} />
               </div>
-            </motion.div>
+              <div>
+                <h1 className="font-outfit text-lg font-black text-main md:text-xl">
+                  العملاء المحتملون
+                </h1>
+                <p className="text-[11px] text-muted">إدارة طلبات التسجيل والعملاء المتوقعين</p>
+              </div>
+            </div>
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -548,19 +551,19 @@ export const Leads = () => {
             transition={{ duration: 0.4, delay: 0.1 }}
             className="mt-4 flex items-center gap-2"
           >
-            <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="flex-1 h-11 text-xs">
+            <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-11 flex-1 text-xs">
               <Plus size={16} /> عميل جديد
             </PrimaryBtn>
             <button
               onClick={() => setConfirmDeleteAll(true)}
-              className="flex-1 flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-bold text-main shadow-sm transition-all hover:bg-error-hover active:scale-95"
+              className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-bold text-main shadow-sm transition-all hover:bg-error-hover active:scale-95"
             >
               <Trash2 size={16} /> حذف
             </button>
             <button
               onClick={() => setShowLost(!showLost)}
               className={cn(
-                'flex-1 flex h-11 items-center justify-center gap-2 rounded-xl border px-4 text-xs font-bold transition-all active:scale-95',
+                'flex h-11 flex-1 items-center justify-center gap-2 rounded-xl border px-4 text-xs font-bold transition-all active:scale-95',
                 showLost
                   ? 'border-transparent bg-error-soft text-error'
                   : 'border-border bg-surface text-muted hover:text-main',
@@ -627,14 +630,23 @@ export const Leads = () => {
             >
               <div className="mb-3 flex items-center justify-between">
                 <span className="text-xs font-bold text-main">{stat.label}</span>
-                <div className={cn('flex h-8 w-8 items-center justify-center rounded-xl bg-white/50 dark:bg-white/10')}>
+                <div
+                  className={cn(
+                    'flex h-8 w-8 items-center justify-center rounded-xl bg-white/50 dark:bg-white/10',
+                  )}
+                >
                   <stat.icon size={14} className={stat.iconColor} />
                 </div>
               </div>
               <div className={cn('font-outfit text-2xl font-black tabular-nums', stat.valueColor)}>
                 {stat.value}
               </div>
-              <div className={cn('mt-1 flex items-center gap-1 text-[10px] font-medium', stat.accent ? 'text-success' : 'text-muted')}>
+              <div
+                className={cn(
+                  'mt-1 flex items-center gap-1 text-[10px] font-medium',
+                  stat.accent ? 'text-success' : 'text-muted',
+                )}
+              >
                 {stat.accent && <span>↗</span>}
                 {stat.sub}
               </div>

@@ -15,6 +15,8 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '../lib/utils'
 import { StatCard } from '../shared/components/ui'
+import type { StatCardProps } from '../shared/components/ui'
+import type { ComponentType } from 'react'
 import { api, safeArray } from '../lib/api'
 import { confirm } from '../lib/confirmDialog'
 import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext'
@@ -42,6 +44,11 @@ const particles = Array.from({ length: 8 }, (_, i) => ({
   duration: Math.random() * 6 + 4,
   delay: Math.random() * 3,
 }))
+
+type StatIcon = NonNullable<StatCardProps['icon']>
+const adaptIcon =
+  (Source: ComponentType<{ size?: number | string; className?: string }>): StatIcon =>
+  ({ size = 24, className }) => <Source size={size} className={className} />
 
 export const Tasks = () => {
   const academyName = useAcademyName()
@@ -72,7 +79,7 @@ export const Tasks = () => {
     title: '',
     description: '',
     priority: 'medium',
-    dueDate: new Date().toISOString().split('T')[0],
+    dueDate: new Date().toISOString().split('T')[0] ?? '',
     category: 'عام',
   })
 
@@ -86,7 +93,7 @@ export const Tasks = () => {
         title: '',
         description: '',
         priority: 'medium',
-        dueDate: new Date().toISOString().split('T')[0],
+        dueDate: new Date().toISOString().split('T')[0] ?? '',
         category: 'عام',
       })
     } catch (error) {
@@ -310,25 +317,25 @@ export const Tasks = () => {
               <StatCard
                 title="مهام معلقة"
                 value={stats.pending}
-                icon={AlertCircle}
+                icon={adaptIcon(AlertCircle)}
                 variant="warning"
               />
               <StatCard
                 title="قيد التنفيذ"
                 value={stats.inProgress}
-                icon={RefreshCcw}
+                icon={adaptIcon(RefreshCcw)}
                 variant="primary"
               />
               <StatCard
                 title="نسبة الإنجاز"
                 value={`${stats.score}%`}
-                icon={TrendingUp}
+                icon={adaptIcon(TrendingUp)}
                 variant="success"
               />
               <StatCard
                 title="تم الإنجاز"
                 value={stats.completed}
-                icon={CheckCircle2}
+                icon={adaptIcon(CheckCircle2)}
                 variant="info"
               />
             </div>

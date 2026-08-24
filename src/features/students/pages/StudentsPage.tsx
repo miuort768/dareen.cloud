@@ -28,7 +28,7 @@ import { StudentDrawer } from '../components/StudentDrawer'
 import { StudentsToolbar } from '../components/StudentsToolbar'
 import { generateSessionDates } from '../utils/sessionUtils'
 import { periodLabel } from '../../attendance/utils/slotUtils'
-import type { Student, ScheduleSlot } from '../types'
+import type { Student, Enrollment, ScheduleSlot } from '../types'
 import { cn } from '../../../lib/utils'
 
 const DELETE_ALL_PASSWORD = 'dareen'
@@ -95,11 +95,6 @@ export const Students = () => {
     updateStudent,
     deleteAllStudentsAsync,
   } = useStudents()
-
-  const uniqueGrades = useMemo(
-    () => [...new Set(allStudents.map((s) => s.grade).filter(Boolean))].sort() as string[],
-    [allStudents],
-  )
 
   const students = useMemo(() => {
     const term = searchTerm.toLowerCase().trim()
@@ -183,7 +178,7 @@ export const Students = () => {
     setIsAddingEnrollment(true)
 
     try {
-      const created = await api.post('/enrollments', {
+      const created = await api.post<Enrollment>('/enrollments', {
         studentId: student.id,
         teacherId: enrollData.teacherId || null,
         teacher: enrollData.teacher,
@@ -212,7 +207,7 @@ export const Students = () => {
       showNotification('تم إضافة الاشتراك والجلسات بنجاح', 'success')
     } catch (error) {
       console.error('Error adding enrollment:', error)
-      showNotification(error?.message || 'فشل إضافة الاشتراك', 'error')
+      showNotification(error instanceof Error ? error.message : 'فشل إضافة الاشتراك', 'error')
     } finally {
       setIsAddingEnrollment(false)
     }
@@ -331,6 +326,8 @@ export const Students = () => {
     [],
   )
 
+  const drawerStudentId = drawerStudent?.id
+
   if (loading) {
     return (
       <div className="relative min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
@@ -360,8 +357,8 @@ export const Students = () => {
             action={
               <button
                 onClick={() => {
-                  setEditId(null);
-                  setShowAddForm(true);
+                  setEditId(null)
+                  setShowAddForm(true)
                 }}
                 aria-label="إضافة طالب"
                 className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all active:scale-95"
@@ -374,7 +371,7 @@ export const Students = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 pt-5 shadow-xl md:p-8 dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover md:p-8"
+          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 pt-5 shadow-xl dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover md:p-8"
         >
           {particles.map((p) => (
             <motion.div
@@ -452,7 +449,12 @@ export const Students = () => {
                     <div className={cn('h-full rounded-full', stat.accent)} />
                   </div>
                   <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl ring-1', stat.iconBg)}>
+                    <div
+                      className={cn(
+                        'flex h-10 w-10 items-center justify-center rounded-xl ring-1',
+                        stat.iconBg,
+                      )}
+                    >
                       <Icon size={18} />
                     </div>
                   </div>
@@ -477,7 +479,6 @@ export const Students = () => {
             <div className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1 md:p-6">
               <StudentForm
                 initialData={editId ? allStudents.find((s) => s.id === editId) : null}
-                teachers={teachers}
                 onSubmit={handleAddOrUpdateStudent}
                 onCancel={() => {
                   setShowAddForm(false)
@@ -496,7 +497,7 @@ export const Students = () => {
           {isDeletingAll && (
             <div className="bg-error-soft/60 flex flex-col gap-4 rounded-2xl border border-error-soft p-4 md:p-5">
               <div className="flex items-center gap-3">
-                <div className="bg-error-soft rounded-xl p-2 text-error">
+                <div className="rounded-xl bg-error-soft p-2 text-error">
                   <ShieldAlert size={18} />
                 </div>
                 <div>
@@ -519,7 +520,7 @@ export const Students = () => {
                   }}
                   placeholder="أدخل كلمة المرور التحذيرية"
                   aria-label="كلمة المرور التحذيرية لحذف جميع الطلاب"
-                  className="border-error-soft focus:ring-error-soft w-full rounded-xl border bg-surface px-3 py-2 text-xs font-normal text-main transition-all placeholder:text-muted focus:border-error focus:outline-none focus:ring-2 sm:max-w-xs"
+                  className="w-full rounded-xl border border-error-soft bg-surface px-3 py-2 text-xs font-normal text-main transition-all placeholder:text-muted focus:border-error focus:outline-none focus:ring-2 focus:ring-error-soft sm:max-w-xs"
                 />
                 <button
                   onClick={handleDeleteAll}
@@ -574,7 +575,7 @@ export const Students = () => {
               onDelete={(id) => setDeletingId(id)}
               onSelect={(student) => setDrawerStudent(student)}
               onNotify={(student) => setNotifyingStudent(student)}
-              selectedId={drawerStudent?.id}
+              selectedId={drawerStudentId}
             />
           ) : (
             <motion.div
@@ -599,7 +600,6 @@ export const Students = () => {
 
       <SendNotificationModal
         isOpen={!!notifyingStudent}
-        title="إرسال إشعار للطالب"
         recipientName={notifyingStudent?.name || ''}
         onSend={handleSendStudentNotification}
         onClose={() => setNotifyingStudent(null)}
@@ -607,7 +607,6 @@ export const Students = () => {
 
       <SendNotificationModal
         isOpen={broadcastOpen}
-        title="بث إشعار لجميع الطلاب"
         recipientName=""
         onSend={handleSendBroadcastNotification}
         onClose={() => setBroadcastOpen(false)}

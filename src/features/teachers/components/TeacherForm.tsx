@@ -1,5 +1,18 @@
 import { useState, useEffect } from 'react'
-import { Plus, Edit3, Save, Key, Info, User, Phone, Tag, DollarSign, X, Award } from 'lucide-react'
+import {
+  Plus,
+  Edit3,
+  Save,
+  Key,
+  Info,
+  User,
+  Phone,
+  Tag,
+  DollarSign,
+  X,
+  Award,
+  type LucideIcon,
+} from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { CURRENCY_OPTIONS } from '../../../config/constants'
 import type { Teacher } from '../types'
@@ -80,11 +93,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
       setFormData((prev) => ({ ...prev, username: `teacher_${rand}` }))
       return
     }
-    const cleaned = formData.name
-      .trim()
-      .split(' ')[0]
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, '')
+    const cleaned = formData.name.trim().split(' ')[0] ?? ''.toLowerCase().replace(/[^a-z0-9]/g, '')
     const base = cleaned.length >= 2 ? cleaned : 'teacher'
     setFormData((prev) => ({
       ...prev,
@@ -110,7 +119,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
             <h3 className="text-sm font-bold text-on-primary">
               {editId ? 'تعديل بيانات المعلمة' : 'إضافة معلمة جديدة'}
             </h3>
-            <p className="text-white/80 mt-0.5 text-xs">
+            <p className="mt-0.5 text-xs text-white/80">
               {editId ? 'تحديث المعلومات' : 'إدخال بيانات المعلمة'}
             </p>
           </div>
@@ -343,7 +352,7 @@ const FormInput = ({
   dir = 'rtl',
 }: {
   label: string
-  icon: React.ComponentType<{ size?: number }>
+  icon?: LucideIcon
   placeholder?: string
   value: string
   onChange: (val: string) => void

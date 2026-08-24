@@ -40,7 +40,7 @@ export const AdminBlog = () => {
     queryFn: () => api.get('/blog?all=true'),
     select: (data) =>
       safeArray<BlogPost>(data).map((post) => {
-        const raw = post as Record<string, unknown>
+        const raw = post as unknown as Record<string, unknown>
         return {
           ...post,
           fileSize: post.fileSize || (raw.file_size as string),

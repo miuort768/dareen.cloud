@@ -22,13 +22,14 @@ import type {
   LowBalanceStudent,
   DashboardTask,
 } from '../features/dashboard/types'
+import type { Session } from '../types'
 import type { User } from '../types/auth'
 import { useState } from 'react'
 
 interface TeacherDashboardDesktopProps {
   currentUser: User | null
   stats: DashboardStatsType
-  rawSessions: unknown[]
+  rawSessions: Session[]
   tasks: DashboardTask[]
   lowBalanceStudents: LowBalanceStudent[]
   focusStudents: { id: string; name: string; reason: string; type: string }[]
@@ -57,6 +58,7 @@ export const TeacherDashboardDesktop = ({
     name?: string
     grade?: string
     notes?: string
+    curriculum?: string
     totalPoints?: number
   } | null>(null)
   const [selectedStudentForReport, setSelectedStudentForReport] = useState<{
@@ -98,10 +100,9 @@ export const TeacherDashboardDesktop = ({
         {/* ════════════════════════════════════════
             Main Grid Layout (3 Columns)
            ════════════════════════════════════════ */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Left Column (Main Content - span 2) */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6 lg:col-span-2">
             <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
               <LiveSessions />
             </div>
@@ -112,7 +113,7 @@ export const TeacherDashboardDesktop = ({
               </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
                 <AttendanceChart rate={stats.attendanceRate} />
               </div>
@@ -165,21 +166,18 @@ export const TeacherDashboardDesktop = ({
           </div>
         </div>
 
-        {briefingStudent && (
+        {briefingStudent && briefingStudent.id && briefingStudent.name && briefingStudent.grade && (
           <StudentQuickBrief
             isOpen={!!briefingStudent}
             onClose={() => setBriefingStudent(null)}
             onGenerateReport={(student) => {
               const studentSessions = rawSessions.filter(
-                (s: Record<string, unknown>) =>
+                (s: Session & { studentID?: string }) =>
                   s.studentId === student.id || s.studentID === student.id,
               )
-              const completed = studentSessions.filter(
-                (s: Record<string, unknown>) => s.status === 'completed',
-              ).length
+              const completed = studentSessions.filter((s) => s.status === 'completed').length
               const total = studentSessions.filter(
-                (s: Record<string, unknown>) =>
-                  s.status === 'completed' || s.status === 'cancelled',
+                (s) => s.status === 'completed' || s.status === 'cancelled',
               ).length
               setSelectedStudentForReport({
                 id: student.id,
@@ -193,7 +191,18 @@ export const TeacherDashboardDesktop = ({
               })
               setBriefingStudent(null)
             }}
-            student={briefingStudent}
+            student={
+              briefingStudent.id && briefingStudent.name && briefingStudent.grade
+                ? {
+                    id: briefingStudent.id,
+                    name: briefingStudent.name,
+                    grade: briefingStudent.grade,
+                    notes: briefingStudent.notes,
+                    curriculum: briefingStudent.curriculum,
+                    totalPoints: briefingStudent.totalPoints,
+                  }
+                : null
+            }
             recentSessions={[]}
           />
         )}

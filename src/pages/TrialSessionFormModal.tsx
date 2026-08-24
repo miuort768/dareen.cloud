@@ -15,7 +15,7 @@ interface TrialSessionForm {
 interface TrialSessionFormModalProps {
   editingId: string | null
   form: TrialSessionForm
-  teachers: Record<string, unknown>[]
+  teachers: { id: string; name: string }[]
   isSaving: boolean
   onChange: (form: TrialSessionForm) => void
   onSubmit: (e: React.FormEvent) => void
@@ -110,7 +110,7 @@ export const TrialSessionFormModal = ({
                 value={form.teacherName}
                 onChange={(e) => {
                   const t = (Array.isArray(teachers) ? teachers : []).find(
-                    (t: { id: string; name: string }) => t.name === e.target.value,
+                    (t) => t.name === e.target.value,
                   )
                   onChange({ ...form, teacherName: e.target.value, teacherId: t?.id || '' })
                 }}
@@ -118,13 +118,11 @@ export const TrialSessionFormModal = ({
                 className={inputClass + ' appearance-none'}
               >
                 <option value="">اختر معلمة</option>
-                {(Array.isArray(teachers) ? teachers : []).map(
-                  (t: { id: string; name: string }) => (
-                    <option key={t.id} value={t.name}>
-                      {t.name}
-                    </option>
-                  ),
-                )}
+                {(Array.isArray(teachers) ? teachers : []).map((t) => (
+                  <option key={t.id} value={t.name}>
+                    {t.name}
+                  </option>
+                ))}
               </select>
               <div className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-muted">
                 <ChevronDown size={14} />

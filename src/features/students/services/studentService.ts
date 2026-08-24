@@ -1,29 +1,31 @@
-import { api } from '../../../lib/api';
-import type { Student, StudentInvoice } from '../types';
+import { api } from '../../../lib/api'
+import type { Student, StudentInvoice } from '../types'
 
 export const studentService = {
-    getAll: async (searchTerm?: string): Promise<Student[]> => {
-        const data = await api.get<Student[] | { data: Student[] }>(`/students${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`);
-        return data.data || data; // Handle both paginated and non-paginated fallbacks
-    },
+  getAll: async (searchTerm?: string): Promise<Student[]> => {
+    const data = await api.get<Student[] | { data: Student[] }>(
+      `/students${searchTerm ? `?q=${encodeURIComponent(searchTerm)}` : ''}`,
+    )
+    return Array.isArray(data) ? data : data.data || [] // Handle both paginated and non-paginated fallbacks
+  },
 
-    create: async (student: Omit<Student, 'id'>): Promise<Student> => {
-        return api.post<Student>('/students', { ...student, enrollments: student.enrollments || [] });
-    },
+  create: async (student: Omit<Student, 'id'>): Promise<Student> => {
+    return api.post<Student>('/students', { ...student, enrollments: student.enrollments || [] })
+  },
 
-    update: async (student: Student): Promise<Student> => {
-        return api.put<Student>(`/students/${student.id}`, student);
-    },
+  update: async (student: Student): Promise<Student> => {
+    return api.put<Student>(`/students/${student.id}`, student)
+  },
 
-    delete: async (id: string): Promise<void> => {
-        return api.delete(`/students/${id}`);
-    },
+  delete: async (id: string): Promise<void> => {
+    return api.delete(`/students/${id}`)
+  },
 
-    deleteAll: async (password?: string): Promise<void> => {
-        return api.delete('/students', { headers: password ? { 'X-Delete-Password': password } : {} });
-    },
+  deleteAll: async (password?: string): Promise<void> => {
+    return api.delete('/students', { headers: password ? { 'X-Delete-Password': password } : {} })
+  },
 
-    createInvoice: async (invoice: Omit<StudentInvoice, 'id'>): Promise<StudentInvoice> => {
-        return api.post<StudentInvoice>('/studentInvoices', invoice);
-    }
-};
+  createInvoice: async (invoice: Omit<StudentInvoice, 'id'>): Promise<StudentInvoice> => {
+    return api.post<StudentInvoice>('/studentInvoices', invoice)
+  },
+}

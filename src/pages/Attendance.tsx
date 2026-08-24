@@ -210,7 +210,7 @@ export const Attendance = () => {
         const waLink = generateWhatsAppLink(student.parentPhone, whatsappTemplate, {
           Student: student.name,
           Subject: enrollment.subject,
-          Teacher: enrollment.teacher,
+          Teacher: String(enrollment.teacher),
           Date: logDate,
           Price: calculatedPrice?.toString() || '0',
         })
@@ -516,7 +516,10 @@ export const Attendance = () => {
               <div className="space-y-4">
                 <SectionCard className="overflow-hidden p-0">
                   <div className="flex flex-col items-center justify-between gap-4 border-b border-border px-4 py-2 md:flex-row">
-                    <SectionTitle icon={Activity} label="حصص الطلاب المقررة" />
+                    <SectionTitle
+                      icon={Activity as React.ComponentType<{ size?: number }>}
+                      label="حصص الطلاب المقررة"
+                    />
                     <div className="relative w-full md:w-[400px]">
                       <Search
                         size={14}

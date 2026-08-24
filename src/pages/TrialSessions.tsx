@@ -17,7 +17,7 @@ import {
   ChevronRight,
   Trash2,
 } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { cn } from '../lib/utils'
 import { api } from '../lib/api'
 import { socketService } from '../lib/socket'
@@ -94,7 +94,7 @@ const containerVariants = {
   visible: { opacity: 1, transition: { staggerChildren: 0.05 } },
 }
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 12 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] } },
 }
@@ -229,7 +229,7 @@ export const TrialSessions = () => {
 
   const { data: teachers = [] } = useQuery({
     queryKey: ['teachers'],
-    queryFn: () => api.get<Record<string, unknown>[]>('/teachers'),
+    queryFn: () => api.get<{ id: string; name: string }[]>('/teachers'),
   })
 
   const { data: stats } = useQuery<StatsData>({
@@ -369,8 +369,7 @@ export const TrialSessions = () => {
       (t.notes || '').replace(/\r?\n/g, ' '),
     ])
     const escapeCell = (v: string) => `"${String(v).replace(/"/g, '""')}"`
-    const csv =
-      '\uFEFF' + [headers, ...rows].map((r) => r.map(escapeCell).join(',')).join('\r\n')
+    const csv = '\uFEFF' + [headers, ...rows].map((r) => r.map(escapeCell).join(',')).join('\r\n')
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
@@ -578,13 +577,15 @@ export const TrialSessions = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
               className={cn(
-                'rounded-2xl border p-4 shadow-elevation-0 transition-all duration-300 hover:shadow-elevation-1',
+                'shadow-elevation-0 rounded-2xl border p-4 transition-all duration-300 hover:shadow-elevation-1',
                 stat.card,
               )}
             >
               <div className="mb-3 flex items-center justify-between">
                 <span className="truncate text-xs font-bold text-main">{stat.label}</span>
-                <div className={cn('flex h-8 w-8 items-center justify-center rounded-xl', stat.iconBg)}>
+                <div
+                  className={cn('flex h-8 w-8 items-center justify-center rounded-xl', stat.iconBg)}
+                >
                   <stat.icon size={14} className={stat.color} />
                 </div>
               </div>
@@ -614,7 +615,7 @@ export const TrialSessions = () => {
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="بحث باسم الطالب أو رقم الهاتف..."
                   aria-label="بحث عن حصة"
-                  className="h-11 w-full rounded-xl border border-border bg-surface ps-10 pe-10 text-[13px] text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-[13px] text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 />
                 {search && (
                   <button
@@ -631,7 +632,7 @@ export const TrialSessions = () => {
                 className={cn(
                   'flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all duration-200',
                   showPaid
-                    ? 'bg-success-soft border-success-soft text-success'
+                    ? 'border-success-soft bg-success-soft text-success'
                     : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
                 )}
                 aria-label={showPaid ? 'إظهار غير المدفوعة' : 'إظهار المدفوعة'}
@@ -669,7 +670,7 @@ export const TrialSessions = () => {
                     setFilterStatus('')
                     setFilterSubject('')
                   }}
-                  className="hover:bg-error-light col-span-2 flex h-10 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all"
+                  className="col-span-2 flex h-10 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all hover:bg-error-light"
                 >
                   <X size={13} /> مسح الفلاتر
                 </motion.button>
@@ -888,7 +889,7 @@ export const TrialSessions = () => {
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
-                className="border-error hidden w-full max-w-sm overflow-hidden rounded-none border-2 bg-card shadow-2xl md:block"
+                className="hidden w-full max-w-sm overflow-hidden rounded-none border-2 border-error bg-card shadow-2xl md:block"
               >
                 <div className="flex items-center justify-between bg-error px-5 py-4">
                   <div className="flex items-center gap-3">
@@ -899,7 +900,7 @@ export const TrialSessions = () => {
                   </div>
                   <button
                     onClick={() => setConfirmId(null)}
-                    className="bg-white/15 hover:bg-white/25 flex h-8 w-8 items-center justify-center rounded-full text-on-error transition-all"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-error transition-all hover:bg-white/25"
                     aria-label="إغلاق"
                   >
                     <X size={14} />
@@ -943,7 +944,7 @@ export const TrialSessions = () => {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: '100%', opacity: 0 }}
                 transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="border-error w-full overflow-hidden rounded-none border-2 bg-card shadow-2xl md:max-w-sm"
+                className="w-full overflow-hidden rounded-none border-2 border-error bg-card shadow-2xl md:max-w-sm"
               >
                 <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-border md:hidden" />
                 <div className="flex items-center justify-between bg-error px-5 py-5">
@@ -953,14 +954,14 @@ export const TrialSessions = () => {
                     </div>
                     <div>
                       <h3 className="text-sm font-bold text-on-error">حذف جميع الحصص</h3>
-                      <p className="text-white/70 mt-0.5 text-[10px]">
+                      <p className="mt-0.5 text-[10px] text-white/70">
                         لا يمكن التراجع عن هذا الإجراء
                       </p>
                     </div>
                   </div>
                   <button
                     onClick={() => setConfirmDeleteAll(false)}
-                    className="bg-white/15 hover:bg-white/25 flex h-8 w-8 items-center justify-center rounded-full text-on-error transition-all"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-error transition-all hover:bg-white/25"
                     aria-label="إغلاق"
                   >
                     <X size={14} />
@@ -988,7 +989,7 @@ export const TrialSessions = () => {
                       value={deleteAllTyped}
                       onChange={(e) => setDeleteAllTyped(e.target.value)}
                       placeholder="dareen"
-                      className="focus-visible:ring-error-soft placeholder:text-muted w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-[13px] font-black tracking-widest text-main outline-none transition-all duration-200 focus-visible:border-error focus-visible:ring-2"
+                      className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-[13px] font-black tracking-widest text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && deleteAllTyped.trim().toLowerCase() === 'dareen')
                           deleteAllMutation.mutate()

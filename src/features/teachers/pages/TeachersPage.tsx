@@ -9,7 +9,6 @@ import { api } from '../../../lib/api'
 import { confirm } from '../../../lib/confirmDialog'
 import { Skeleton } from '../../../shared/components/ui/Skeleton'
 import { downloadExport } from '../../../lib/download'
-import { TeacherStats } from '../components/TeacherStats'
 import { TeacherToolbar } from '../components/TeacherToolbar'
 import { TeacherForm } from '../components/TeacherForm'
 import { TeacherTable } from '../components/TeacherTable'
@@ -72,7 +71,7 @@ export const Teachers = () => {
   const [showDetails, setShowDetails] = useState(false)
 
   const [editId, setEditId] = useState<string | null>(null)
-  const [logDate] = useState(new Date().toISOString().split('T')[0])
+  const [logDate] = useState(new Date().toISOString().split('T')[0] ?? '')
   const [secureModalData, setSecureModalData] = useState<{
     student: Student
     enrollment: Enrollment
@@ -98,18 +97,6 @@ export const Teachers = () => {
         : 0,
     [teachers],
   )
-  const totalStudentsCount = useMemo(() => {
-    const matched = new Set<string>()
-    for (const s of students) {
-      for (const en of s.enrollments || []) {
-        if (teachers.some((t) => matchesTeacher(en, t))) {
-          matched.add(s.id)
-          break
-        }
-      }
-    }
-    return matched.size
-  }, [students, teachers])
   const studentCounts = useMemo(() => {
     const counts: Record<string, number> = {}
     for (const t of teachers) counts[t.name] = 0
@@ -268,7 +255,7 @@ export const Teachers = () => {
             l.split(',').map((c) => c.trim().replace(/^["']|["']$/g, '')),
           )
           const dataRows = rows.slice(
-            rows.length > 1 && rows[0].some((h) => /name|الاسم/i.test(h)) ? 1 : 0,
+            rows.length > 1 && !!rows[0] && rows[0].some((h) => /name|اسم/i.test(h)) ? 1 : 0,
           )
           parsedData = dataRows
             .filter((r) => r.length >= 1 && r[0])

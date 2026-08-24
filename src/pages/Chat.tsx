@@ -142,7 +142,12 @@ export const Chat = () => {
     if (!itemToDelete) return
     setIsDeleting(true)
     try {
-      if (deleteType === 'conversation' && itemToDelete && itemToDelete.id) {
+      if (
+        deleteType === 'conversation' &&
+        itemToDelete &&
+        'id' in itemToDelete &&
+        itemToDelete.id
+      ) {
         await deleteConversation(itemToDelete.id)
         if (selectedConv?.id === itemToDelete.id) setSelectedConv(null)
       } else if (deleteType === 'all_conversations') {
@@ -176,7 +181,7 @@ export const Chat = () => {
     >
       <div className="relative hidden shrink-0 flex-row items-center justify-between gap-4 overflow-hidden border-b border-border bg-background px-4 py-6 md:px-8 lg:flex">
         <div className="relative z-10 flex items-center gap-4">
-          <div className="border-success-soft h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 bg-surface">
+          <div className="h-12 w-12 shrink-0 overflow-hidden rounded-full border-2 border-success-soft bg-surface">
             <Image
               src="/chat-avatar.webp"
               alt="الشعار"

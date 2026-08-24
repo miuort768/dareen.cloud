@@ -3,55 +3,53 @@
  */
 
 export const requestNotificationPermission = async (): Promise<boolean> => {
-    if (!('Notification' in window)) {
-        console.warn('This browser does not support desktop notifications');
-        return false;
-    }
+  if (!('Notification' in window)) {
+    console.warn('This browser does not support desktop notifications')
+    return false
+  }
 
-    if (Notification.permission === 'granted') {
-        return true;
-    }
+  if (Notification.permission === 'granted') {
+    return true
+  }
 
-    if (Notification.permission !== 'denied') {
-        const permission = await Notification.requestPermission();
-        return permission === 'granted';
-    }
+  if (Notification.permission !== 'denied') {
+    const permission = await Notification.requestPermission()
+    return permission === 'granted'
+  }
 
-    return false;
-};
+  return false
+}
 
 export const sendNativeNotification = async (title: string, options?: NotificationOptions) => {
-    if (!('Notification' in window) || Notification.permission !== 'granted') {
-        return;
+  if (!('Notification' in window) || Notification.permission !== 'granted') {
+    return
+  }
+
+  try {
+    const defaultOptions: NotificationOptions & { vibrate?: number[] } = {
+      icon: '/logo.png',
+      badge: '/logo.png',
+      silent: false,
+      vibrate: [200, 100, 200],
+      ...options,
     }
 
-    try {
-        const defaultOptions: Record<string, unknown> = {
-            icon: '/logo.png',
-            badge: '/logo.png',
-            silent: false,
-            vibrate: [200, 100, 200],
-            ...options
-        } as NotificationOptions & { vibrate?: number[] };
-
-        // Prefer Service Worker registration for better mobile/background support
-        if ('serviceWorker' in navigator) {
-            const registration = await navigator.serviceWorker.ready;
-            if (registration) {
-                await registration.showNotification(title, defaultOptions);
-                return;
-            }
-        }
-
-        // Fallback to standard Browser Notification
-        const notification = new Notification(title, defaultOptions);
-        notification.onclick = () => {
-            window.focus();
-            notification.close();
-        };
-    } catch (error) {
-        console.error('Error sending native notification:', error);
+    // Prefer Service Worker registration for better mobile/background support
+    if ('serviceWorker' in navigator) {
+      const registration = await navigator.serviceWorker.ready
+      if (registration) {
+        await registration.showNotification(title, defaultOptions)
+        return
+      }
     }
-};
 
-
+    // Fallback to standard Browser Notification
+    const notification = new Notification(title, defaultOptions)
+    notification.onclick = () => {
+      window.focus()
+      notification.close()
+    }
+  } catch (error) {
+    console.error('Error sending native notification:', error)
+  }
+}

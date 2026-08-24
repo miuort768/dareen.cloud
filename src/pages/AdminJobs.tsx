@@ -17,6 +17,7 @@ import {
   Inbox,
   X,
   FileText,
+  type LucideIcon,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { api, safeArray } from '../lib/api'
@@ -76,7 +77,8 @@ function exportToCsv(apps: JobApp[]) {
   const bom = '﻿'
   const newLine = '\n'
   const csv =
-    bom + [headers.join(','), ...rows.map((r) => r.map((c) => '"' + c + '"').join(','))].join(newLine)
+    bom +
+    [headers.join(','), ...rows.map((r) => r.map((c) => '"' + c + '"').join(','))].join(newLine)
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
@@ -139,13 +141,6 @@ export const AdminJobs = () => {
   const handleDelete = async (id: string) => {
     const confirmed = await confirm(
       'هل أنت متأكد من حذف طلب التوظيف هذا؟ لا يمكن التراجع عن هذا الإجراء.',
-      {
-        title: 'حذف الطلب',
-        confirmText: 'حذف',
-        cancelText: 'تراجع',
-        isDestructive: true,
-        icon: <Trash2 size={28} />,
-      },
     )
     if (!confirmed) return
     try {
@@ -159,13 +154,6 @@ export const AdminJobs = () => {
   const handleDeleteAll = async () => {
     const confirmed = await confirm(
       'هل أنت متأكد من حذف جميع الطلبات؟ لا يمكن التراجع عن هذا الإجراء.',
-      {
-        title: 'حذف جميع الطلبات',
-        confirmText: 'حذف الكل',
-        cancelText: 'تراجع',
-        isDestructive: true,
-        icon: <Trash2 size={28} />,
-      },
     )
     if (!confirmed) return
     try {
@@ -609,7 +597,7 @@ const DetailRow = ({
   phoneLink,
   whatsappLink,
 }: {
-  icon: React.FC<{ size?: number; className?: string }>
+  icon: LucideIcon
   label: string
   value: string
   contacted?: boolean

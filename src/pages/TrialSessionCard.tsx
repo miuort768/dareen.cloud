@@ -49,7 +49,7 @@ const avatarGradients = [
 const getAvatarGradient = (name: string) => {
   let hash = 0
   for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash)
-  return avatarGradients[Math.abs(hash) % avatarGradients.length]
+  return avatarGradients[Math.abs(hash) % avatarGradients.length] ?? avatarGradients[0]!
 }
 
 const formatPhone = (phone: string) => {
@@ -72,7 +72,8 @@ export const TrialSessionCard = ({
   isPaid,
 }: TrialSessionCardProps) => {
   const [showNotes, setShowNotes] = useState(false)
-  const cfg = statusConfig[t.status] || statusConfig.pending
+  const cfg = statusConfig[t.status] ||
+    statusConfig.pending || { label: '', dot: '', bg: '', text: '' }
   const gradient = getAvatarGradient(t.studentName)
 
   return (
@@ -81,7 +82,7 @@ export const TrialSessionCard = ({
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -2 }}
       className={cn(
-        'group overflow-hidden rounded-none border border-border bg-card text-right font-dash shadow-elevation-0 transition-all duration-300 hover:shadow-elevation-1 md:rounded-2xl',
+        'shadow-elevation-0 group overflow-hidden rounded-none border border-border bg-card text-right font-dash transition-all duration-300 hover:shadow-elevation-1 md:rounded-2xl',
         onCardClick && 'cursor-pointer',
       )}
       dir="rtl"
@@ -211,7 +212,7 @@ export const TrialSessionCard = ({
 
       {/* Mobile actions: 2-col grid + full-width delete */}
       <div
-        className="border-t border-border bg-surface px-4 py-3 md:hidden dark:bg-card"
+        className="border-t border-border bg-surface px-4 py-3 dark:bg-card md:hidden"
         role="toolbar"
         aria-label="إجراءات الحصة"
       >
@@ -261,7 +262,7 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md shadow-success/25 hover:shadow-lg hover:shadow-success/30',
+                  : 'shadow-success/25 hover:shadow-success/30 border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md hover:shadow-lg',
               )}
               aria-label="مدفوعة"
             >
@@ -286,7 +287,7 @@ export const TrialSessionCard = ({
 
       {/* Desktop actions: single row */}
       <div
-        className="hidden items-center justify-between gap-2 border-t border-border bg-surface px-4 py-3 md:flex dark:bg-card"
+        className="hidden items-center justify-between gap-2 border-t border-border bg-surface px-4 py-3 dark:bg-card md:flex"
         role="toolbar"
         aria-label="إجراءات الحصة"
       >
@@ -339,7 +340,7 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md shadow-success/25 hover:shadow-lg hover:shadow-success/30',
+                  : 'shadow-success/25 hover:shadow-success/30 border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md hover:shadow-lg',
               )}
               aria-label="مدفوعة"
             >
