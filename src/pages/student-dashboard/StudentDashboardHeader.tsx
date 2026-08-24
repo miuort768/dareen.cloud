@@ -36,7 +36,8 @@ export const StudentDashboardHeader = ({ logout }: StudentDashboardHeaderProps) 
   const currentUser = useCurrentUser()
   const academicYear = useAcademicYear()
   const [theme, setTheme] = useDarkMode()
-  const firstName = (currentUser?.name || currentUser?.username || 'الطالب').split(' ')[0]
+  const firstName =
+    (currentUser?.name || currentUser?.username || 'الطالب').split(' ')[0] ?? 'الطالب'
 
   return (
     <header className="bg-surface/95 dark:bg-card/95 sticky top-0 z-[100] border-b border-border backdrop-blur-xl transition-colors duration-300 dark:border-border">

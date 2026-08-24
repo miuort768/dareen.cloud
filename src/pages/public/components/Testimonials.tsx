@@ -38,7 +38,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                 <div className="relative z-10 flex h-full flex-grow flex-col">
                   <div className="mb-4 flex items-center justify-between">
                     <div className="rounded-full bg-success-dark px-3 py-1 text-micro font-black text-on-success dark:bg-primary dark:text-on-primary">
-                      {reviews[currentIndex].name}
+                      {reviews[currentIndex]?.name}
                     </div>
                     <div className="flex gap-0.5 text-warning dark:text-primary">
                       {[1, 2, 3, 4, 5].map((s) => (
@@ -49,7 +49,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
 
                   <div className="flex-grow">
                     <p className="text-xs font-medium italic leading-relaxed text-muted dark:text-muted">
-                      "{reviews[currentIndex].content}"
+                      "{reviews[currentIndex]?.content}"
                     </p>
                   </div>
                 </div>

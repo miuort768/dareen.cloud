@@ -54,7 +54,7 @@ export const TodaySummary = ({ sessions, todayTasks }: TodaySummaryProps) => {
   const weekStart = startOfWeek(new Date(), { weekStartsOn: 0 })
   const weeklyCompleted = sessions.filter((s) => {
     if (s.status !== 'completed') return false
-    const sessionDate = (s as Record<string, unknown>).date
+    const sessionDate = s.date
     if (!sessionDate || typeof sessionDate !== 'string') return false
     try {
       return new Date(sessionDate) >= weekStart
@@ -64,7 +64,7 @@ export const TodaySummary = ({ sessions, todayTasks }: TodaySummaryProps) => {
   }).length
 
   const dayIndex = new Date().getDay()
-  const todayName = ARABIC_DAYS[dayIndex]
+  const todayName = ARABIC_DAYS[dayIndex] ?? ''
 
   const values: Record<string, { value: string | number; subtitle?: string }> = {
     present: {
@@ -84,10 +84,11 @@ export const TodaySummary = ({ sessions, todayTasks }: TodaySummaryProps) => {
       {cards.map((card) => {
         const Icon = card.icon
         const val = values[card.key]
+        if (!val) return null
         return (
           <div
             key={card.key}
-            className="rounded-3xl border border-border/50 bg-surface p-4 shadow-sm transition-all duration-300 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card md:p-5"
+            className="border-border/50 rounded-3xl border bg-surface p-4 shadow-sm transition-all duration-300 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card md:p-5"
           >
             <div className="mb-3 flex items-start justify-between">
               <div className={`h-10 w-10 rounded-xl ${card.bg} flex items-center justify-center`}>

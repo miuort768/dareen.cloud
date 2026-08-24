@@ -87,6 +87,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
           {features.map((f, i) => {
             const Icon = featureIcons[i]
             const vc = variantClasses[f.variant]
+            if (!Icon || !vc) return null
             return (
               <motion.div
                 key={f.title}
@@ -177,6 +178,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
           {features.map((f, i) => {
             const Icon = featureIcons[i]
             const vc = variantClasses[f.variant]
+            if (!Icon || !vc) return null
             return (
               <motion.div
                 key={f.title}

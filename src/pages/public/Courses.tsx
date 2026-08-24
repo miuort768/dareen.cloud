@@ -1,4 +1,5 @@
 ﻿import { useState, useMemo } from 'react'
+import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { MobileHeader } from '../../components/public/MobileHeader'
 import { PublicFooter } from '../../components/public/PublicFooter'
@@ -15,14 +16,14 @@ const parseStudentCount = (s: string) => {
   return s.includes('k') || s.includes('K') ? Math.round(n * 1000) : Math.round(n)
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.06 },
   },
 }
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,

@@ -1,13 +1,16 @@
+import type { Dispatch, SetStateAction } from 'react'
 import { Plus, BookMarked, Settings } from 'lucide-react'
 
 interface BlogHeaderProps {
   handleOpenModal: () => void
   showSettings: boolean
-  setShowSettings: (v: boolean) => void
+  setShowSettings: Dispatch<SetStateAction<boolean>>
   libraryWhatsapp: string
   setLibraryWhatsapp: (v: string) => void
   libraryTelegram: string
   setLibraryTelegram: (v: string) => void
+  savedWhatsapp?: string
+  savedTelegram?: string
   savingSettings: boolean
   handleSaveSettings: () => Promise<void>
   handleCancelSettings: () => void

@@ -30,7 +30,7 @@ const ProgressBar = ({
   max: number
 }) => {
   const percent = max > 0 ? Math.min(Math.round((value / max) * 100), 100) : 0
-  const c = colorMap[color] || colorMap.primary
+  const c = colorMap[color] || colorMap.primary!
 
   return (
     <div className="space-y-2">
@@ -79,7 +79,7 @@ export const AcademicPerformance = ({
   const totalSubjects = kids.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)
 
   return (
-    <div className="rounded-3xl border border-border/50 bg-surface shadow-sm p-5 transition-colors duration-300 dark:border-primary/20 dark:bg-card md:p-6">
+    <div className="border-border/50 rounded-3xl border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card md:p-6">
       <h3 className="mb-5 text-base font-bold text-main dark:text-main">التقدم الأكاديمي</h3>
 
       <div className="space-y-4">

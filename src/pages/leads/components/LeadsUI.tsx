@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { ActionButton } from '../../../shared/components/ui/ActionRow'
+import type { LucideIcon } from 'lucide-react'
 import type { LeadStatus, LeadPriority } from '../../../features/crm/types'
 
 const avatarColors = ['bg-primary', 'bg-info', 'bg-success', 'bg-warning', 'bg-error', 'bg-accent']
@@ -136,10 +137,7 @@ export const StatCard = ({
   )
 }
 
-export const statusIconComponents: Record<
-  LeadStatus | 'all',
-  React.ComponentType<{ size?: number; className?: string }>
-> = {
+export const statusIconComponents: Record<LeadStatus | 'all', LucideIcon> = {
   all: BarChart3,
   new: UserPlus,
   contacted: Phone,

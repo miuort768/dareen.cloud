@@ -58,12 +58,14 @@ export const Blog = () => {
       const res = await api.get<
         { posts?: BlogPost[]; data?: BlogPost[]; totalPages?: number } | BlogPost[]
       >('/blog?page=1&limit=12')
-      const posts = res?.posts || res?.data || (Array.isArray(res) ? res : [])
-      return { posts, totalPages: res?.totalPages || 1 }
+      const meta = Array.isArray(res) ? null : res
+      const posts = meta?.posts || meta?.data || []
+      return { posts, totalPages: meta?.totalPages || 1 }
     },
   })
 
-  const basePosts = postsData?.posts?.length > 0 ? postsData.posts : staticPosts
+  const basePosts =
+    postsData && postsData.posts && postsData.posts.length > 0 ? postsData.posts : staticPosts
   const totalPages = postsData?.totalPages || 1
 
   const [allPosts, setAllPosts] = useState<typeof staticPosts>([])
@@ -183,11 +185,11 @@ export const Blog = () => {
   const currentLevelName =
     gradesMap[selectedCurriculum]?.find((g) => g.id === selectedLevel)?.name || ''
   const currentSubjectName =
-    (subjectsMap[selectedLevel] || subjectsMap.middle).find((s) => s.id === selectedSubject)
+    (subjectsMap[selectedLevel] || subjectsMap.middle || []).find((s) => s.id === selectedSubject)
       ?.name || ''
   const currentGrades = gradesMap[selectedCurriculum] || []
   const currentClassrooms = classroomsMap[selectedCurriculum]?.[selectedLevel] || []
-  const currentSubjects = subjectsMap[selectedLevel] || subjectsMap.middle
+  const currentSubjects = subjectsMap[selectedLevel] || subjectsMap.middle || []
   const termLabel = selectedTerm === '1' ? 'ترم أول' : selectedTerm === '2' ? 'ترم ثاني' : 'الكل'
 
   const filteredPosts =
@@ -242,7 +244,8 @@ export const Blog = () => {
       const res = await api.get<{ posts?: BlogPost[]; data?: BlogPost[] } | BlogPost[]>(
         `/blog?page=${nextPage}&limit=12`,
       )
-      const fetchedPosts = res?.posts || res?.data || (Array.isArray(res) ? res : [])
+      const meta = Array.isArray(res) ? null : res
+      const fetchedPosts = meta?.posts || meta?.data || []
       setAllPosts((prev) => [...prev, ...fetchedPosts])
       setPage(nextPage)
     } catch (e) {

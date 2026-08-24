@@ -1,32 +1,23 @@
-import { Plus, Edit, Check, X } from 'lucide-react';
-import { SectionCard, SectionTitle, FieldLabel, PrimaryBtn } from './InvoiceUI';
+import { Plus, Edit, Check, X } from 'lucide-react'
+import { SectionCard, SectionTitle, FieldLabel, PrimaryBtn } from './InvoiceUI'
+import type { TeacherInvoiceFormData, InvoiceStatus } from '../../../types/invoice'
 
 interface Teacher {
-    id: string;
-    name: string;
-    subject?: string;
-}
-
-interface TeacherInvoiceFormData {
-    teacherId: string;
-    teacher: string;
-    specialization: string;
-    amount: string;
-    paymentMethod: string;
-    status: string;
-    personalExpenses: string;
+  id: string
+  name: string
+  subject?: string
 }
 
 interface InvoiceFormProps {
-    showForm: boolean;
-    editingId: string | null;
-    formData: TeacherInvoiceFormData;
-    setFormData: React.Dispatch<React.SetStateAction<TeacherInvoiceFormData>>;
-    handleSubmit: (e: React.FormEvent) => Promise<void>;
-    handleCancel: () => void;
-    teachers: Teacher[];
-    isSaving: boolean;
-    INVOICE_STATUS: Record<string, string>;
+  showForm: boolean
+  editingId: string | null
+  formData: TeacherInvoiceFormData
+  setFormData: React.Dispatch<React.SetStateAction<TeacherInvoiceFormData>>
+  handleSubmit: (e: React.FormEvent) => Promise<void>
+  handleCancel: () => void
+  teachers: Teacher[]
+  isSaving: boolean
+  INVOICE_STATUS: Record<string, string>
 }
 
 const inputClasses = [
@@ -34,17 +25,24 @@ const inputClasses = [
   'px-3 py-2 text-xs font-bold text-main',
   'focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/50',
   'transition-all duration-200 rounded-xl',
-].join(' ');
+].join(' ')
 
 export const InvoiceForm = ({
-  showForm, editingId, formData, setFormData,
-  handleSubmit, handleCancel, teachers, isSaving, INVOICE_STATUS
+  showForm,
+  editingId,
+  formData,
+  setFormData,
+  handleSubmit,
+  handleCancel,
+  teachers,
+  isSaving,
+  INVOICE_STATUS,
 }: InvoiceFormProps) => {
-  if (!showForm) return null;
+  if (!showForm) return null
 
   return (
     <SectionCard className="mb-4 motion-safe:animate-[fadeIn_0.3s_ease-out]">
-      <div className="flex items-center justify-between mb-1">
+      <div className="mb-1 flex items-center justify-between">
         <SectionTitle
           icon={editingId ? Edit : Plus}
           label={editingId ? 'تعديل فاتورة' : 'إضافة فاتورة جديدة'}
@@ -54,31 +52,41 @@ export const InvoiceForm = ({
           type="button"
           onClick={handleCancel}
           aria-label="إغلاق"
-          className="w-8 h-8 flex items-center justify-center text-muted hover:text-muted hover:bg-surface transition-all rounded-xl"
+          className="flex h-8 w-8 items-center justify-center rounded-xl text-muted transition-all hover:bg-surface hover:text-muted"
         >
           <X size={16} />
         </button>
       </div>
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4"
+      >
         <div>
           <FieldLabel>المعلمة *</FieldLabel>
           <select
             required
             value={formData.teacherId}
             aria-label="المعلمة"
-            onChange={e => {
-              const t = teachers.find(t => t.id === e.target.value);
+            onChange={(e) => {
+              const t = teachers.find((t) => t.id === e.target.value)
               if (t) {
-                setFormData({ ...formData, teacherId: t.id, teacher: t.name, specialization: t.subject || formData.specialization });
+                setFormData({
+                  ...formData,
+                  teacherId: t.id,
+                  teacher: t.name,
+                  specialization: t.subject || formData.specialization,
+                })
               } else {
-                setFormData({ ...formData, teacherId: e.target.value });
+                setFormData({ ...formData, teacherId: e.target.value })
               }
             }}
             className={inputClasses}
           >
             <option value="">-- اختر المعلمة --</option>
-            {teachers.map(t => (
-              <option key={t.id} value={t.id}>{t.name}</option>
+            {teachers.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name}
+              </option>
             ))}
             <option value="other">أخرى (إدخال يدوي)</option>
           </select>
@@ -89,7 +97,7 @@ export const InvoiceForm = ({
             <input
               required
               value={formData.teacher}
-              onChange={e => setFormData({ ...formData, teacher: e.target.value })}
+              onChange={(e) => setFormData({ ...formData, teacher: e.target.value })}
               placeholder="اسم المعلمة"
               className={inputClasses}
             />
@@ -100,7 +108,7 @@ export const InvoiceForm = ({
           <input
             required
             value={formData.specialization}
-            onChange={e => setFormData({ ...formData, specialization: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
             placeholder="التخصص"
             className={inputClasses}
           />
@@ -111,7 +119,7 @@ export const InvoiceForm = ({
             type="number"
             required
             value={formData.amount}
-            onChange={e => setFormData({ ...formData, amount: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
             placeholder="0"
             className={inputClasses}
           />
@@ -121,7 +129,7 @@ export const InvoiceForm = ({
           <select
             value={formData.currency}
             aria-label="العملة"
-            onChange={e => setFormData({ ...formData, currency: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
             className={inputClasses}
           >
             <option value="KWD">د.ك (KWD)</option>
@@ -138,7 +146,7 @@ export const InvoiceForm = ({
           <FieldLabel>وسيلة الدفع</FieldLabel>
           <input
             value={formData.paymentMethod}
-            onChange={e => setFormData({ ...formData, paymentMethod: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
             placeholder="نقدي / تحويل"
             className={inputClasses}
           />
@@ -148,7 +156,7 @@ export const InvoiceForm = ({
           <input
             type="number"
             value={formData.personalExpenses}
-            onChange={e => setFormData({ ...formData, personalExpenses: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, personalExpenses: e.target.value })}
             placeholder="0"
             className={inputClasses}
           />
@@ -158,20 +166,22 @@ export const InvoiceForm = ({
           <select
             value={formData.status}
             aria-label="حالة الفاتورة"
-            onChange={e => setFormData({ ...formData, status: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, status: e.target.value as InvoiceStatus })}
             className={inputClasses}
           >
-            {Object.values(INVOICE_STATUS).map(status => (
-              <option key={status} value={status}>{status}</option>
+            {Object.values(INVOICE_STATUS).map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
             ))}
           </select>
         </div>
-        <div className="md:col-span-1 lg:col-span-1 flex flex-col justify-end">
+        <div className="flex flex-col justify-end md:col-span-1 lg:col-span-1">
           <PrimaryBtn type="submit" loading={isSaving} className="w-full">
             <Check size={14} /> {editingId ? 'حفظ التعديلات' : 'حفظ الفاتورة'}
           </PrimaryBtn>
         </div>
       </form>
     </SectionCard>
-  );
-};
+  )
+}
