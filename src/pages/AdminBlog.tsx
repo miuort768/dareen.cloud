@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useShowNotification, useAcademyName } from '../context/AppContext'
 import { api, safeArray } from '../lib/api'
@@ -129,7 +129,7 @@ export const AdminBlog = () => {
     }
   }
 
-  const handleDeleteAll = async () => {
+  const handleDeleteAll = useCallback(async () => {
     if (
       !(await confirm({
         message: 'هل أنت متأكد من حذف جميع المقالات؟ هذا الإجراء لا يمكن التراجع عنه.',
@@ -146,7 +146,7 @@ export const AdminBlog = () => {
       console.error(e)
       showNotification('حدث خطأ في الحذف', 'error')
     }
-  }
+  }, [showNotification, queryClient])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

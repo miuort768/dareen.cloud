@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Megaphone, Plus, Bell, Calendar, Filter, Trash2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -127,7 +127,7 @@ export const Announcements = () => {
     deleteMutation.mutate(id)
   }
 
-  const handleDeleteAll = async () => {
+  const handleDeleteAll = useCallback(async () => {
     if (announcements.length === 0) {
       showNotification('لا توجد إعلانات لحذفها', 'info')
       return
@@ -142,7 +142,7 @@ export const Announcements = () => {
       console.error(e)
       showNotification('حدث خطأ أثناء حذف الإعلانات', 'error')
     }
-  }
+  }, [announcements, queryClient, showNotification])
 
   const kpiCards = useMemo(
     () => [
@@ -195,7 +195,7 @@ export const Announcements = () => {
       },
       { icon: Trash2, label: 'حذف الكل', onClick: handleDeleteAll },
     ],
-    [announcements],
+    [handleDeleteAll],
   )
 
   // Non-admin roles (teacher/parent) get the student-facing announcements design

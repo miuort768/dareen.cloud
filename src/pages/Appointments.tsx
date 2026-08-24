@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
 import { api } from '../lib/api'
@@ -252,7 +252,7 @@ export const Appointments = () => {
     [totalAppointments, todayAppointments, remainingToday, completedCount],
   )
 
-  const handleCompleteAll = () => {
+  const handleCompleteAll = useCallback(() => {
     const remaining = allAppointments.filter((a) => !completedSessionIds.includes(a.id))
     if (remaining.length === 0) {
       showNotification('لا توجد مواعيد متبقية', 'info')
@@ -260,7 +260,7 @@ export const Appointments = () => {
     }
     remaining.forEach((a) => completeMutation.mutate(a.id))
     showNotification(`جاري تسجيل إتمام ${remaining.length} حصة`, 'success')
-  }
+  }, [allAppointments, completedSessionIds, completeMutation, showNotification])
 
   const fabActions = useMemo(
     () => [
@@ -276,7 +276,7 @@ export const Appointments = () => {
         ? [{ icon: CheckCircle, label: 'إتمام الكل', onClick: handleCompleteAll }]
         : []),
     ],
-    [allAppointments, completedSessionIds, completeMutation, canComplete],
+    [canComplete, handleCompleteAll],
   )
 
   if (loading) return <PageLoader />

@@ -1,7 +1,7 @@
-﻿import { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { parentsService } from '../services/parentsService'
-import type { Parent, Enrollment, Student } from '../../../types'
+import type { Parent, Enrollment } from '../../../types'
 import type { FamilyScheduleItem } from '../types'
 import { useShowNotification } from '../../../context/AppContext'
 import { canonicalPhone } from '../../../lib/phone'
@@ -54,7 +54,7 @@ export const useParents = () => {
     mutationFn: parentsService.addParent,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['parents'] })
-      showNotification('طھظ…طھ ط§ظ„ط¹ظ…ظ„ظٹط© ط¨ظ†ط¬ط§ط­', 'success')
+      showNotification('تمت العملية بنجاح', 'success')
     },
   })
 
@@ -63,7 +63,7 @@ export const useParents = () => {
       parentsService.updateParent(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['parents'] })
-      showNotification('طھظ… ط§ظ„طھط­ط¯ظٹط« ط¨ظ†ط¬ط§ط­', 'success')
+      showNotification('تم التحديث بنجاح', 'success')
     },
   })
 
@@ -72,7 +72,7 @@ export const useParents = () => {
       parentsService.deleteParent(id, password),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['parents'] })
-      showNotification('طھظ… ط§ظ„ط­ط°ظپ ط¨ظ†ط¬ط§ط­', 'success')
+      showNotification('تم الحذف بنجاح', 'success')
     },
   })
 
@@ -89,12 +89,9 @@ export const useParents = () => {
       setShowAddForm(false)
       setNewParent({ name: '', phone: '', phone2: '', username: '', password: '' })
     } catch (error) {
-      console.error('Error saving parent', error)
       const err = error as { response?: { data?: { details?: string } }; message?: string }
-      showNotification(
-        err.response?.data?.details || err.message || 'ظپط´ظ„ ظپظٹ ط­ظپط¸ ط§ظ„ط¨ظٹط§ظ†ط§طھ',
-        'error',
-      )
+      console.error('Error saving parent', error)
+      showNotification(err.response?.data?.details || err.message || 'فشل حفظ البيانات', 'error')
     }
   }
 
@@ -113,10 +110,9 @@ export const useParents = () => {
   const handleDeleteParent = (id: string) => {
     setConfirmModal({
       show: true,
-      title: 'طھط£ظƒظٹط¯ ط¹ظ…ظ„ظٹط© ط§ظ„ط­ط°ظپ',
-      message:
-        'ظ‡ط°ط§ ط§ظ„ط¥ط¬ط±ط§ط، ط³ظٹط­ط°ظپ ظˆظ„ظٹ ط§ظ„ط£ظ…ط± ظ†ظ‡ط§ط¦ظٹط§ظ‹. ط£ط¯ط®ظ„ ظƒظ„ظ…ط© ط§ظ„ظ…ط±ظˆط± ط§ظ„طھط­ط°ظٹط±ظٹط© ظ„ظ„ظ…طھط§ط¨ط¹ط©.',
-      confirmText: 'ظ†ط¹ظ…طŒ ط­ط°ظپ',
+      title: 'تأكيد عملية الحذف',
+      message: 'هذا الإجراء سيحذف ولي الأمر نهائياً. أدخل كلمة المرور التحذيرية للمتابعة.',
+      confirmText: 'نعم، حذف',
       variant: 'danger',
       action: async (password) => {
         await deleteMutation.mutateAsync({ id, password })
@@ -136,17 +132,58 @@ export const useParents = () => {
     const newParentsList: Omit<Parent, 'id'>[] = []
     const seenPhones = new Set()
 
+    // Grade ranking map
+    const gradeRank: Record<string, number> = {
+      تمهيدي: 0,
+      روضة: 0,
+      kg1: 0,
+      kg2: 0,
+      الأول: 1,
+      'الصف الأول': 1,
+      '1': 1,
+      الثاني: 2,
+      'الصف الثاني': 2,
+      '2': 2,
+      الثالث: 3,
+      'الصف الثالث': 3,
+      '3': 3,
+      الرابع: 4,
+      'الصف الرابع': 4,
+      '4': 4,
+      الخامس: 5,
+      'الصف الخامس': 5,
+      '5': 5,
+      السادس: 6,
+      'الصف السادس': 6,
+      '6': 6,
+      السابع: 7,
+      'الصف السابع': 7,
+      '7': 7,
+      الثامن: 8,
+      'الصف الثامن': 8,
+      '8': 8,
+      التاسع: 9,
+      'الصف التاسع': 9,
+      '9': 9,
+      العاشر: 10,
+      'الصف العاشر': 10,
+      '10': 10,
+      'الحادي عشر': 11,
+      'الصف الحادي عشر': 11,
+      '11': 11,
+      'الثاني عشر': 12,
+      'الصف الثاني عشر': 12,
+      '12': 12,
+      توجيهي: 12,
+    }
+
     // Group students by normalized parent phone
     const studentsByPhone: Record<string, typeof students> = {}
     for (const s of students) {
       const canonical = canonicalPhone(s.parentPhone || '')
       if (canonical && !existingPhones.has(canonical)) {
-        const group = studentsByPhone[canonical]
-        if (group) {
-          group.push(s)
-        } else {
-          studentsByPhone[canonical] = [s]
-        }
+        const group = studentsByPhone[canonical] ?? (studentsByPhone[canonical] = [])
+        group.push(s)
       }
     }
 
@@ -154,69 +191,20 @@ export const useParents = () => {
     for (const [phone, familyStudents] of Object.entries(studentsByPhone)) {
       if (!seenPhones.has(phone)) {
         seenPhones.add(phone)
-        // Grade ranking map
-        const gradeRank: Record<string, number> = {
-          تمهيدي: 0,
-          روضة: 0,
-          kg1: 0,
-          kg2: 0,
-          الأول: 1,
-          'الصف الأول': 1,
-          '1': 1,
-          الثاني: 2,
-          'الصف الثاني': 2,
-          '2': 2,
-          الثالث: 3,
-          'الصف الثالث': 3,
-          '3': 3,
-          الرابع: 4,
-          'الصف الرابع': 4,
-          '4': 4,
-          الخامس: 5,
-          'الصف الخامس': 5,
-          '5': 5,
-          السادس: 6,
-          'الصف السادس': 6,
-          '6': 6,
-          السابع: 7,
-          'الصف السابع': 7,
-          '7': 7,
-          الثامن: 8,
-          'الصف الثامن': 8,
-          '8': 8,
-          التاسع: 9,
-          'الصف التاسع': 9,
-          '9': 9,
-          العاشر: 10,
-          'الصف العاشر': 10,
-          '10': 10,
-          'الحادي عشر': 11,
-          'الصف الحادي عشر': 11,
-          '11': 11,
-          'الثاني عشر': 12,
-          'الصف الثاني عشر': 12,
-          '12': 12,
-          توجيهي: 12,
-        }
         // Find oldest student
-        const gradeRankOf = (st: { grade?: string } | undefined): number => {
+        const gradeRankOf = (st?: { grade?: string }): number => {
           const normalized = (st?.grade ?? '').trim()
           const direct = gradeRank[normalized]
           if (direct !== undefined) return direct
           const match = normalized.match(/\d+/)
           return match ? parseInt(match[0], 10) : -1
         }
-        let oldestStudent = familyStudents.length > 0 ? familyStudents[0] : undefined
-        for (const s of familyStudents as Student[]) {
-          if (!oldestStudent || !s) continue
-          if (gradeRankOf(s) > gradeRankOf(oldestStudent)) {
-            oldestStudent = s
-          }
-        }
-        if (!oldestStudent) continue
+        const oldestStudent = familyStudents.reduce((prev, current) =>
+          gradeRankOf(current) > gradeRankOf(prev) ? current : prev,
+        )
 
         newParentsList.push({
-          name: `ظˆظ„ظٹ ط£ظ…ط± ${oldestStudent.name}`,
+          name: `ولي أمر ${oldestStudent.name}`,
           phone: phone,
           phone2: '',
         })
@@ -226,10 +214,9 @@ export const useParents = () => {
     if (newParentsList.length === 0) {
       setConfirmModal({
         show: true,
-        title: 'ط§ظ„ط§ط³طھظٹط±ط§ط¯ ظ…ظ† ط§ظ„ط·ظ„ط§ط¨',
-        message:
-          'ظ„ط§ ظٹظˆط¬ط¯ ط£ظˆظ„ظٹط§ط، ط£ظ…ظˆط± ط¬ط¯ط¯ ظ„ظ„ط§ط³طھظٹط±ط§ط¯ ظ…ظ† ظ‚ط§ط¦ظ…ط© ط§ظ„ط·ظ„ط§ط¨ ط­ط§ظ„ظٹط§ظ‹.',
-        confirmText: 'ط­ط³ظ†ط§ظ‹',
+        title: 'الاستيراد من الطلاب',
+        message: 'لا يوجد أولياء أمور جدد للاستيراد من قائمة الطلاب حالياً.',
+        confirmText: 'حسناً',
         variant: 'primary',
         action: null,
       })
@@ -238,9 +225,9 @@ export const useParents = () => {
 
     setConfirmModal({
       show: true,
-      title: 'طھط£ظƒظٹط¯ ط§ظ„ط§ط³طھظٹط±ط§ط¯',
-      message: `طھظ… ط§ظ„ط¹ط«ظˆط± ط¹ظ„ظ‰ ${newParentsList.length} ظˆظ„ظٹ ط£ظ…ط± ط¬ط¯ظٹط¯ ظپظٹ ظ‚ط§ط¦ظ…ط© ط§ظ„ط·ظ„ط§ط¨. ظ‡ظ„ طھط±ظٹط¯ ط§ط³طھظٹط±ط§ط¯ظ‡ظ… طھظ„ظ‚ط§ط¦ظٹط§ظ‹طں`,
-      confirmText: 'ط¨ط¯ط، ط§ظ„ط§ط³طھظٹط±ط§ط¯',
+      title: 'تأكيد الاستيراد',
+      message: `تم العثور على ${newParentsList.length} ولي أمر جديد في قائمة الطلاب. هل تريد استيرادهم تلقائياً؟`,
+      confirmText: 'بدء الاستيراد',
       variant: 'primary',
       action: async () => {
         const { successCount, failCount, errors } =
@@ -251,17 +238,17 @@ export const useParents = () => {
         setTimeout(() => {
           let message =
             failCount === 0
-              ? `طھظ… ط§ط³طھظٹط±ط§ط¯ ${successCount} ظˆظ„ظٹ ط£ظ…ط± ط¨ظ†ط¬ط§ط­.`
-              : `طھظ… ط§ط³طھظٹط±ط§ط¯ ${successCount} ظˆظ„ظٹ ط£ظ…ط±طŒ ظˆظپط´ظ„ ط§ط³طھظٹط±ط§ط¯ ${failCount}.`
+              ? `تم استيراد ${successCount} ولي أمر بنجاح.`
+              : `تم استيراد ${successCount} ولي أمر، وفشل استيراد ${failCount}.`
           if (failCount > 0 && errors.length > 0) {
             const firstErrors = Array.from(new Set(errors)).slice(0, 3)
-            message += `\nط§ظ„ط£ط³ط¨ط§ط¨: ${firstErrors.join(' | ')}`
+            message += `\nالأسباب: ${firstErrors.join(' | ')}`
           }
           setConfirmModal({
             show: true,
-            title: 'ظ†طھظٹط¬ط© ط§ظ„ط§ط³طھظٹط±ط§ط¯',
+            title: 'نتيجة الاستيراد',
             message,
-            confirmText: 'ط¥ط؛ظ„ط§ظ‚',
+            confirmText: 'إغلاق',
             variant: 'primary',
             action: null,
           })
@@ -282,13 +269,10 @@ export const useParents = () => {
       link.click()
       document.body.removeChild(link)
       URL.revokeObjectURL(url)
-      showNotification(
-        'طھظ… طھطµط¯ظٹط± ط¨ظٹط§ظ†ط§طھ ط£ظˆظ„ظٹط§ط، ط§ظ„ط£ظ…ظˆط± ط¨ظ†ط¬ط§ط­',
-        'success',
-      )
+      showNotification('تم تصدير بيانات أولياء الأمور بنجاح', 'success')
     } catch (e) {
       console.error(e)
-      showNotification('ط­ط¯ط« ط®ط·ط£ ط£ط«ظ†ط§ط، طھطµط¯ظٹط± ط§ظ„ط¨ظٹط§ظ†ط§طھ', 'error')
+      showNotification('حدث خطأ أثناء تصدير البيانات', 'error')
     }
   }
 
@@ -319,18 +303,10 @@ export const useParents = () => {
       (s) => samePhone(selectedParent.phone, s.parentPhone) || s.parent?.id === selectedParent.id,
     )
 
-    const DAY_ORDER = [
-      'ط§ظ„ط³ط¨طھ',
-      'ط§ظ„ط£ط­ط¯',
-      'ط§ظ„ط§ط«ظ†ظٹظ†',
-      'ط§ظ„ط«ظ„ط§ط«ط§ط،',
-      'ط§ظ„ط£ط±ط¨ط¹ط§ط،',
-      'ط§ظ„ط®ظ…ظٹط³',
-      'ط§ظ„ط¬ظ…ط¹ط©',
-    ]
+    const DAY_ORDER = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
     const toMinutes = (h: string) => {
-      const [hh = '', mm = '0'] = String(h || '').split(':')
-      const mins = parseInt(hh, 10) * 60 + parseInt(mm, 10)
+      const [hh, mm = '0'] = String(h || '').split(':')
+      const mins = parseInt(hh ?? '0', 10) * 60 + parseInt(mm ?? '0', 10)
       return Number.isNaN(mins) ? 0 : mins
     }
     const teacherNameOf = (en: Enrollment) => {
@@ -346,7 +322,7 @@ export const useParents = () => {
           (en.schedule || []).map((sch) => ({
             ...sch,
             studentName: child.name,
-            subject: en.subject || 'ط¨ط¯ظˆظ† ط¹ظ†ظˆط§ظ†',
+            subject: en.subject || 'بدون عنوان',
             teacherName: teacherNameOf(en),
           })),
         ),

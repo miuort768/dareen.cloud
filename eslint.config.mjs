@@ -22,6 +22,9 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      // Prettier (semi:false) inserts leading `;` for ASI protection on
+      // `(`/`[`-leading statements; it owns semicolon placement.
+      'no-extra-semi': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },

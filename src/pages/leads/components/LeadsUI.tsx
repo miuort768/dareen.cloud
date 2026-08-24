@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components -- constants/variants exported beside the component (intentional UI pattern) */
 import React, { useEffect, useState, useRef } from 'react'
 import {
   TrendingUp,

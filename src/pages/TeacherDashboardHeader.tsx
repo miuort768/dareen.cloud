@@ -1,4 +1,4 @@
-﻿import {
+import {
   LogOut,
   Sun,
   Moon,
@@ -25,16 +25,16 @@ interface TeacherDashboardHeaderProps {
 }
 
 const navTabs = [
-  { id: 'home', label: 'ط§ظ„ط±ط¦ظٹط³ظٹط©', icon: Home, path: '/teacher-dashboard' },
-  { id: 'schedule', label: 'ط§ظ„ط¬ط¯ظˆظ„', icon: Calendar, path: '/schedule' },
-  { id: 'attendance', label: 'ط§ظ„ط­ط¶ظˆط± ظˆط§ظ„ط؛ظٹط§ط¨', icon: UserCheck, path: '/attendance' },
-  { id: 'tasks', label: 'ط§ظ„ظ…ظ‡ط§ظ…', icon: ListTodo, path: '/tasks' },
-  { id: 'appointments', label: 'ط§ظ„ظ…ظˆط§ط¹ظٹط¯', icon: CalendarDays, path: '/appointments' },
-  { id: 'forum', label: 'ط§ظ„ظ…ظ†طھط¯ظ‰', icon: MessageCircle, path: '/forum' },
-  { id: 'evaluations', label: 'ط§ظ„طھظ‚ظٹظٹظ…ط§طھ', icon: Award, path: '/evaluations' },
-  { id: 'payments', label: 'ط³ط¬ظ„ ط§ظ„ط¯ظپط¹', icon: Wallet, path: '/teacher-payment-history' },
-  { id: 'announcements', label: 'ط§ظ„ط¥ط¹ظ„ط§ظ†ط§طھ', icon: Bell, path: '/announcements' },
-  { id: 'profile', label: 'ط§ظ„ط­ط³ط§ط¨', icon: User, path: '/teacher-profile' },
+  { id: 'home', label: 'الرئيسية', icon: Home, path: '/teacher-dashboard' },
+  { id: 'schedule', label: 'الجدول', icon: Calendar, path: '/schedule' },
+  { id: 'attendance', label: 'الحضور والغياب', icon: UserCheck, path: '/attendance' },
+  { id: 'tasks', label: 'المهام', icon: ListTodo, path: '/tasks' },
+  { id: 'appointments', label: 'المواعيد', icon: CalendarDays, path: '/appointments' },
+  { id: 'forum', label: 'المنتدى', icon: MessageCircle, path: '/forum' },
+  { id: 'evaluations', label: 'التقييمات', icon: Award, path: '/evaluations' },
+  { id: 'payments', label: 'سجل الدفع', icon: Wallet, path: '/teacher-payment-history' },
+  { id: 'announcements', label: 'الإعلانات', icon: Bell, path: '/announcements' },
+  { id: 'profile', label: 'الحساب', icon: User, path: '/teacher-profile' },
 ]
 
 export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) => {
@@ -43,8 +43,7 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
   const currentUser = useCurrentUser()
   const academicYear = useAcademicYear()
   const [theme, setTheme] = useDarkMode()
-  const firstName =
-    (currentUser?.name || currentUser?.username || 'ط§ظ„ظ…ط¹ظ„ظ…ط©').split(' ')[0] ?? ''
+  const firstName = (currentUser?.name || currentUser?.username || 'المعلمة').split(' ')[0]
 
   return (
     <header className="bg-surface/90 dark:bg-surface/90 sticky top-0 z-[100] border-b border-border backdrop-blur-xl transition-colors duration-500 dark:border-primary/20">
@@ -53,19 +52,19 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
           <button
             onClick={() => navigate('/teacher-profile')}
             className="-m-1 flex items-center gap-3 rounded-lg p-1 text-start transition-all duration-200 hover:bg-hover active:scale-[0.98]"
-            aria-label="ط§ظ„ظ…ظ„ظپ ط§ظ„ط´ط®طµظٹ"
+            aria-label="الملف الشخصي"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-elevation-1 dark:bg-primary">
               <span className="text-sm font-bold text-on-primary dark:text-on-primary">
-                {firstName.charAt(0)}
+                {(firstName ?? '').charAt(0)}
               </span>
             </div>
             <div className="hidden sm:block">
               <h1 className="text-sm font-bold leading-tight text-main dark:text-main">
-                ط£ظ‡ظ„ط§ظ‹ ط¨ظƒ {firstName}
+                أهلاً بك {firstName}
               </h1>
               <p className="text-[11px] font-medium text-muted dark:text-muted">
-                ظ†ط¸ط±ط© ط¹ط§ظ…ط© ط¹ظ„ظ‰ ط­طµطµظƒ ط§ظ„ظٹظˆظ…
+                نظرة عامة على حصصك اليوم
               </p>
             </div>
           </button>
@@ -86,15 +85,15 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
                   <Moon size={16} strokeWidth={1.5} />
                 )
               }
-              label={theme === 'dark' ? 'ط§ظ„ظˆط¶ط¹ ط§ظ„ظ†ظ‡ط§ط±ظٹ' : 'ط§ظ„ظˆط¶ط¹ ط§ظ„ظ„ظٹظ„ظٹ'}
+              label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             />
             <IconButton
               icon={<LogOut size={16} strokeWidth={1.5} />}
-              label="طھط³ط¬ظٹظ„ ط§ظ„ط®ط±ظˆط¬"
+              label="تسجيل الخروج"
               variant="error"
               onClick={async () => {
-                if (await confirm('ظ‡ظ„ ط£ظ†طھ ظ…طھط£ظƒط¯ ظ…ظ† طھط³ط¬ظٹظ„ ط§ظ„ط®ط±ظˆط¬طں')) logout()
+                if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout()
               }}
             />
           </div>

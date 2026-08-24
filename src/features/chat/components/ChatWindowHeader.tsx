@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { ChevronRight, Search, MoreVertical } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Image } from '../../../shared/components/ui'
@@ -15,7 +15,7 @@ interface ChatWindowHeaderProps {
   showMoreMenu: boolean
   onToggleMoreMenu: () => void
   onDeleteConversation: () => void
-  typingInThisConv: { conversationId: string; userName: string }[]
+  typingInThisConv: { conversationId: string; name: string }[]
   messageSearch: string
   onMessageSearchChange: (value: string) => void
 }
@@ -83,12 +83,10 @@ export const ChatWindowHeader = ({
             {selectedConv.displayName}
           </h2>
           {typingInThisConv.length > 0 ? (
-            <span className="animate-pulse text-xs font-normal text-success">
-              ط¬ط§ط±ظٹ ط§ظ„ظƒطھط§ط¨ط©...
-            </span>
+            <span className="animate-pulse text-xs font-normal text-success">جاري الكتابة...</span>
           ) : (
             <span className="text-xs font-normal text-muted">
-              {selectedConv.isGroup ? 'ظ…ط¬ظ…ظˆط¹ط©' : 'ظ…ط­ط§ط¯ط«ط© ظ…ط¨ط§ط´ط±ط©'}
+              {selectedConv.isGroup ? 'مجموعة' : 'محادثة مباشرة'}
             </span>
           )}
         </div>
@@ -105,8 +103,8 @@ export const ChatWindowHeader = ({
             {showSearchBar && (
               <input
                 type="text"
-                placeholder="ط¨ط­ط«..."
-                aria-label="ط¨ط­ط« ظپظٹ ط§ظ„ط±ط³ط§ط¦ظ„"
+                placeholder="بحث..."
+                aria-label="بحث في الرسائل"
                 value={messageSearch}
                 onChange={(e) => onMessageSearchChange(e.target.value)}
                 className="w-full border-none bg-transparent text-start text-xs placeholder:text-muted focus:ring-0"
@@ -151,7 +149,7 @@ export const ChatWindowHeader = ({
                         }}
                         className="w-full px-4 py-3 text-start text-sm text-muted transition-colors hover:bg-hover"
                       >
-                        ظ…ط¹ظ„ظˆظ…ط§طھ ط§ظ„ظ…ط­ط§ط¯ط«ط©
+                        معلومات المحادثة
                       </button>
                       <button
                         onClick={() => {
@@ -160,7 +158,7 @@ export const ChatWindowHeader = ({
                         }}
                         className="w-full px-4 py-3 text-start text-sm font-normal text-muted transition-colors hover:bg-hover dark:text-main"
                       >
-                        طھط¹ط¯ظٹظ„ ط§ظ„ظ…ط¬ظ…ظˆط¹ط©
+                        تعديل المجموعة
                       </button>
                     </>
                   )}
@@ -171,7 +169,7 @@ export const ChatWindowHeader = ({
                     }}
                     className="w-full px-4 py-3 text-start text-sm text-error transition-colors hover:bg-hover"
                   >
-                    ط­ط°ظپ ط§ظ„ط¯ط±ط¯ط´ط©
+                    حذف الدردشة
                   </button>
                 </motion.div>
               )}

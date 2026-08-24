@@ -87,7 +87,10 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           setItemToDelete(selectedConv)
           setShowDeleteConfirm(true)
         }}
-        typingInThisConv={typingInThisConv}
+        typingInThisConv={typingInThisConv.map((t) => ({
+          conversationId: t.conversationId,
+          name: t.userName,
+        }))}
         messageSearch={messageSearch}
         onMessageSearchChange={setMessageSearch}
       />
