@@ -1,127 +1,168 @@
-import { motion } from 'framer-motion';
-import { Phone, MessageSquare, Trash2, Search, Clock, Calendar } from 'lucide-react';
-import type { Lead, LeadStatus } from '../../../features/crm/types';
-import { GradientAvatar, StatusChip, getPriority, getLeadAge } from './LeadsUI';
-import { cn } from '../../../lib/utils';
+import { motion } from 'framer-motion'
+import { Phone, MessageSquare, Trash2, Search, Clock, CalendarCheck, FileText } from 'lucide-react'
+import type { Lead, LeadStatus } from '../../../features/crm/types'
+import { GradientAvatar, StatusChip, getPriority, getLeadAge } from './LeadsUI'
+import { cn } from '../../../lib/utils'
 
 interface LeadCardsProps {
-    filteredLeads: Lead[];
-    updateMutation: { mutate: (args: { id: string; updates: Partial<Lead> }) => void };
-    handleMarkLost: (id: string) => void;
-    onLeadClick: (lead: Lead) => void;
+  filteredLeads: Lead[]
+  updateMutation: { mutate: (args: { id: string; updates: Partial<Lead> }) => void }
+  handleMarkLost: (id: string) => void
+  onLeadClick: (lead: Lead) => void
 }
 
-const statusBorderColor: Record<LeadStatus, string> = {
-    new: 'border-t-info', contacted: 'border-t-warning', interested: 'border-t-success',
-    trial: 'border-t-primary', converted: 'border-t-info', lost: 'border-t-error',
-};
-
-export const LeadCards = ({ filteredLeads, updateMutation, handleMarkLost, onLeadClick }: LeadCardsProps) => {
-    return (
-        <div className="lg:hidden">
-            {filteredLeads.length === 0 ? (
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="py-20 text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary-soft flex items-center justify-center">
-                        <Search size={28} className="text-primary opacity-40" />
+export const LeadCards = ({
+  filteredLeads,
+  updateMutation,
+  handleMarkLost,
+  onLeadClick,
+}: LeadCardsProps) => {
+  return (
+    <div className="lg:hidden">
+      {filteredLeads.length === 0 ? (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="py-20 text-center"
+        >
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft">
+            <Search size={28} className="text-primary opacity-40" />
+          </div>
+          <p className="mb-1 text-sm font-bold text-main">لا توجد نتائج</p>
+          <p className="text-xs text-muted">لا يوجد عملاء متطابقون مع معايير البحث</p>
+        </motion.div>
+      ) : (
+        <div className="space-y-3 p-3">
+          {filteredLeads.map((lead, idx) => {
+            const priority = getPriority(lead.priority)
+            const age = getLeadAge(lead.createdAt)
+            return (
+              <motion.article
+                key={lead.id}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.04, duration: 0.3 }}
+                onClick={() => onLeadClick(lead)}
+                className="cursor-pointer overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-transform duration-200 active:scale-[0.99] dark:shadow-none"
+              >
+                {/* Identity */}
+                <div className="flex items-start justify-between gap-2 px-4 pt-4">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <GradientAvatar name={lead.studentName || 'ع'} size="md" />
+                    <div className="min-w-0">
+                      <h4 className="truncate text-sm font-black text-main">
+                        {lead.studentName || 'عميل بدون اسم'}
+                      </h4>
+                      <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                        <StatusChip status={lead.status as LeadStatus} size="sm" />
+                        <span
+                          className={cn(
+                            'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-bold',
+                            priority.bg,
+                            priority.color,
+                            priority.darkBg,
+                            priority.darkText,
+                          )}
+                        >
+                          {priority.label}
+                        </span>
+                      </div>
                     </div>
-                    <p className="text-sm font-bold text-main mb-1">لا توجد نتائج</p>
-                    <p className="text-xs text-muted">لا يوجد عملاء متطابقون مع معايير البحث</p>
-                </motion.div>
-            ) : (
-                <div className="p-3 space-y-2.5">
-                    {filteredLeads.map((lead, idx) => {
-                        const priority = getPriority(lead.priority);
-                        const age = getLeadAge(lead.createdAt);
-                        return (
-                            <motion.div
-                                key={lead.id}
-                                initial={{ opacity: 0, y: 15 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.04, duration: 0.3 }}
-                                onClick={() => onLeadClick(lead)}
-                                className={cn(
-                                    'bg-card border border-border rounded-none active:scale-[0.98] transition-all duration-200 cursor-pointer overflow-hidden shadow-sm',
-                                    'border-t-[3px]',
-                                    statusBorderColor[lead.status as LeadStatus]
-                                )}
-                            >
-                                {/* Header */}
-                                <div className="flex items-start justify-between px-4 pt-4 pb-2">
-                                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                                        <div className="relative">
-                                            <GradientAvatar name={lead.studentName || 'ع'} size="md" />
-                                        </div>
-                                        <div className="min-w-0 flex-1">
-                                            <div className="flex items-center gap-2">
-                                                <h4 className="font-bold text-[13px] text-main truncate">{lead.studentName || 'عميل بدون اسم'}</h4>
-                                                <StatusChip status={lead.status as LeadStatus} size="sm" />
-                                            </div>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <span className="text-[11px] text-muted font-mono">{lead.phone}</span>
-                                                <span className="text-[11px] text-border">•</span>
-                                                <span className="flex items-center gap-1 text-[10px] text-muted">
-                                                    <Clock size={8} />
-                                                    {age.text}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-1 shrink-0">
-                                        <span className={cn(
-                                            'inline-flex items-center gap-1 px-2 py-0.5 text-[9px] font-bold rounded-lg',
-                                            priority.bg, priority.color, priority.darkBg, priority.darkText,
-                                        )}>
-                                            {priority.label}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Tags */}
-                                <div className="px-4 pb-2 flex items-center gap-1.5 flex-wrap">
-                                    {lead.subject && (
-                                        <span className="text-[10px] text-muted bg-surface px-2 py-0.5 rounded-full">{lead.subject}</span>
-                                    )}
-                                    {lead.curriculum && (
-                                        <span className="text-[10px] text-muted bg-surface px-2 py-0.5 rounded-full">{lead.curriculum}</span>
-                                    )}
-                                    {lead.source && (
-                                        <span className="text-[10px] text-info bg-info-soft px-2 py-0.5 rounded-full">{lead.source}</span>
-                                    )}
-                                </div>
-
-                                {/* Notes */}
-                                {lead.notes && (
-                                    <div className="mx-4 mb-3 bg-warning-soft border border-warning-soft px-3 py-2 rounded-xl">
-                                        <p className="text-[11px] text-muted leading-relaxed line-clamp-2">{lead.notes}</p>
-                                    </div>
-                                )}
-
-                                {/* Actions footer */}
-                                <div className="border-t border-border px-4 py-2.5 flex items-center justify-between bg-surface">
-                                    <div className="flex items-center gap-2">
-                                        <button onClick={(e) => { e.stopPropagation(); window.open(`tel:${lead.phone}`); }} aria-label="اتصال هاتفي"
-                                            className="flex items-center justify-center w-8 h-8 rounded-xl bg-success-soft hover:bg-success-light text-success transition-all active:scale-95">
-                                            <Phone size={14} />
-                                        </button>
-                                        <button onClick={(e) => { e.stopPropagation(); window.open(`https://wa.me/${lead.phone}`, '_blank'); }} aria-label="رسالة واتساب"
-                                            className="flex items-center justify-center w-8 h-8 rounded-xl bg-success-soft hover:bg-success-light text-success transition-all active:scale-95">
-                                            <MessageSquare size={14} />
-                                        </button>
-                                        <button onClick={(e) => { e.stopPropagation(); updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } }); }} aria-label="تحويل العميل"
-                                            className="flex items-center justify-center w-8 h-8 rounded-xl bg-info-soft hover:bg-info-light text-info transition-all active:scale-95">
-                                            <Calendar size={14} />
-                                        </button>
-                                        <button onClick={(e) => { e.stopPropagation(); handleMarkLost(lead.id); }} aria-label="حذف العميل"
-                                            className="flex items-center justify-center w-8 h-8 rounded-xl bg-error-soft hover:bg-error-light text-error transition-all active:scale-95">
-                                            <Trash2 size={14} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        );
-                    })}
+                  </div>
+                  <span className="flex shrink-0 items-center gap-1 pt-1 text-[10px] font-medium text-muted">
+                    <Clock size={10} />
+                    {age.text}
+                  </span>
                 </div>
-            )}
+
+                {/* Phone */}
+                <div className="mx-4 mt-3 flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2.5">
+                  <Phone size={13} className="shrink-0 text-muted" />
+                  <span dir="ltr" className="text-xs font-bold tracking-wide text-main">
+                    {lead.phone}
+                  </span>
+                </div>
+
+                {/* Tags */}
+                {(lead.subject || lead.curriculum || lead.source) && (
+                  <div className="flex flex-wrap items-center gap-1.5 px-4 pt-2.5">
+                    {lead.curriculum && (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2 py-1 text-[10px] font-bold text-muted">
+                        <FileText size={9} />
+                        {lead.curriculum}
+                      </span>
+                    )}
+                    {lead.subject && (
+                      <span className="rounded-full bg-primary-soft px-2 py-1 text-[10px] font-bold text-primary">
+                        {lead.subject}
+                      </span>
+                    )}
+                    {lead.source && (
+                      <span className="rounded-full bg-info-soft px-2 py-1 text-[10px] font-bold text-info">
+                        {lead.source}
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                {/* Notes */}
+                {lead.notes && (
+                  <div className="mx-4 mt-2.5 rounded-xl bg-success-soft px-3 py-2.5">
+                    <p className="line-clamp-2 text-[11px] font-medium leading-relaxed text-main">
+                      "{lead.notes}"
+                    </p>
+                  </div>
+                )}
+
+                {/* Actions */}
+                <div className="bg-surface/50 mt-3.5 flex items-center gap-2 border-t border-border px-4 py-3">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.open(`tel:${lead.phone}`)
+                    }}
+                    aria-label="اتصال مباشر"
+                    className="flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-main text-xs font-black text-background shadow-sm transition-all hover:opacity-90 active:scale-[0.97]"
+                  >
+                    <Phone size={14} />
+                    اتصال مباشر
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.open(`https://wa.me/${lead.phone}`, '_blank')
+                    }}
+                    aria-label="رسالة واتساب"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft text-success transition-all hover:bg-success-light active:scale-95"
+                  >
+                    <MessageSquare size={15} />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } })
+                    }}
+                    aria-label="تحويل إلى مشترك"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-info-soft text-info transition-all hover:bg-info-light active:scale-95"
+                  >
+                    <CalendarCheck size={15} />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleMarkLost(lead.id)
+                    }}
+                    aria-label="نقل إلى المفقودين"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-error-soft text-error transition-all hover:bg-error-light active:scale-95"
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                </div>
+              </motion.article>
+            )
+          })}
         </div>
-    );
-};
+      )}
+    </div>
+  )
+}

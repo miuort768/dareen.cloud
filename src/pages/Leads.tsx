@@ -12,6 +12,7 @@ import {
   Users,
   UserPlus,
   Trash2,
+  ArchiveX,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
@@ -475,6 +476,54 @@ export const Leads = () => {
   }
 
   const activeCount = leads.filter((l: Lead) => l.status !== 'lost').length
+  const lostCount = leads.length - activeCount
+
+  const lostBanner = (
+    <div
+      className={cn(
+        'flex flex-1 items-center gap-2 rounded-2xl p-2.5 shadow-sm transition-colors duration-200',
+        showLost ? 'bg-error-soft text-error' : 'bg-error text-on-error',
+      )}
+    >
+      <div
+        className={cn(
+          'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl',
+          showLost ? 'bg-error/15' : 'bg-white/15',
+        )}
+      >
+        <ArchiveX size={16} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="text-xs font-black">المفقودون</p>
+        <p className={cn('text-[10px]', showLost ? 'text-error/80' : 'text-white/75')}>
+          {lostCount} عميل مؤرشف
+        </p>
+      </div>
+      <button
+        onClick={() => setShowLost(!showLost)}
+        aria-pressed={showLost}
+        className={cn(
+          'flex h-9 shrink-0 items-center gap-1.5 rounded-xl px-3 text-[11px] font-bold transition-all active:scale-95',
+          showLost
+            ? 'bg-error text-on-error hover:bg-error-hover'
+            : 'bg-white/20 hover:bg-white/30',
+        )}
+      >
+        {showLost ? <Eye size={14} /> : <EyeOff size={14} />}
+        {showLost ? 'إخفاء' : 'عرض'}
+      </button>
+      <button
+        onClick={() => setConfirmDeleteAll(true)}
+        aria-label="حذف جميع العملاء"
+        className={cn(
+          'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all active:scale-95',
+          showLost ? 'bg-error/15 hover:bg-error/25' : 'bg-white/15 hover:bg-white/25',
+        )}
+      >
+        <Trash2 size={15} />
+      </button>
+    </div>
+  )
 
   return (
     <motion.div
@@ -502,26 +551,7 @@ export const Leads = () => {
               </button>
             }
           />
-          <div className="mt-3 flex items-center gap-2">
-            <button
-              onClick={() => setShowLost(!showLost)}
-              className={cn(
-                'flex h-11 flex-1 items-center justify-center gap-2 rounded-xl border text-xs font-bold transition-all active:scale-95',
-                showLost
-                  ? 'border-transparent bg-error-soft text-error'
-                  : 'border-border bg-surface text-muted hover:text-main',
-              )}
-            >
-              {showLost ? <Eye size={16} /> : <EyeOff size={16} />} مفقودين
-            </button>
-            <button
-              onClick={() => setConfirmDeleteAll(true)}
-              aria-label="حذف جميع العملاء"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-error text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
-            >
-              <Trash2 size={16} />
-            </button>
-          </div>
+          <div className="mt-3">{lostBanner}</div>
         </div>
 
         {/* Desktop header */}
@@ -543,34 +573,18 @@ export const Leads = () => {
                 <p className="text-[11px] text-muted">إدارة طلبات التسجيل والعملاء المتوقعين</p>
               </div>
             </div>
+            <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-11 px-5 text-xs">
+              <Plus size={16} /> عميل جديد
+            </PrimaryBtn>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="mt-4 flex items-center gap-2"
+            className="mt-4"
           >
-            <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-11 flex-1 text-xs">
-              <Plus size={16} /> عميل جديد
-            </PrimaryBtn>
-            <button
-              onClick={() => setConfirmDeleteAll(true)}
-              className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-bold text-main shadow-sm transition-all hover:bg-error-hover active:scale-95"
-            >
-              <Trash2 size={16} /> حذف
-            </button>
-            <button
-              onClick={() => setShowLost(!showLost)}
-              className={cn(
-                'flex h-11 flex-1 items-center justify-center gap-2 rounded-xl border px-4 text-xs font-bold transition-all active:scale-95',
-                showLost
-                  ? 'border-transparent bg-error-soft text-error'
-                  : 'border-border bg-surface text-muted hover:text-main',
-              )}
-            >
-              {showLost ? <Eye size={16} /> : <EyeOff size={16} />} مفقودين
-            </button>
+            {lostBanner}
           </motion.div>
         </div>
 
@@ -581,7 +595,8 @@ export const Leads = () => {
               value: stats?.total || 0,
               sub: `${activeCount} نشط`,
               icon: Users,
-              card: 'border-primary-soft bg-primary-soft',
+              card: 'border-border bg-card',
+              chip: 'bg-primary-soft',
               iconColor: 'text-primary',
               valueColor: 'text-primary',
               delay: 0.15,
@@ -591,7 +606,8 @@ export const Leads = () => {
               value: statusCounts['new'] || 0,
               sub: 'هذا الشهر',
               icon: Activity,
-              card: 'border-info-soft bg-info-soft',
+              card: 'border-border bg-card',
+              chip: 'bg-info-soft',
               iconColor: 'text-info',
               valueColor: 'text-info',
               accent: true,
@@ -603,6 +619,7 @@ export const Leads = () => {
               sub: 'إلى مشتركين',
               icon: Phone,
               card: 'border-success-soft bg-success-soft',
+              chip: 'bg-white/50 dark:bg-white/10',
               iconColor: 'text-success',
               valueColor: 'text-success',
               delay: 0.25,
@@ -610,9 +627,10 @@ export const Leads = () => {
             {
               label: 'معدل التحويل',
               value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`,
-              sub: 'معدل النجاح',
+              sub: 'من إجمالي العملاء',
               icon: BarChart3,
               card: 'border-warning-soft bg-warning-soft',
+              chip: 'bg-white/50 dark:bg-white/10',
               iconColor: 'text-warning',
               valueColor: 'text-warning',
               delay: 0.3,
@@ -631,9 +649,7 @@ export const Leads = () => {
               <div className="mb-3 flex items-center justify-between">
                 <span className="text-xs font-bold text-main">{stat.label}</span>
                 <div
-                  className={cn(
-                    'flex h-8 w-8 items-center justify-center rounded-xl bg-white/50 dark:bg-white/10',
-                  )}
+                  className={cn('flex h-8 w-8 items-center justify-center rounded-xl', stat.chip)}
                 >
                   <stat.icon size={14} className={stat.iconColor} />
                 </div>
