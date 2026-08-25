@@ -23,7 +23,14 @@ interface Notification {
   link?: string
 }
 
-export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolean }) => {
+export const NotificationDropdown = ({
+  showLabel = false,
+  tray = false,
+}: {
+  showLabel?: boolean
+  /** Fixed viewport tray (top corner) — use when anchored positioning is clipped/unreliable */
+  tray?: boolean
+}) => {
   const notificationsEnabled = useNotificationsEnabled()
   const currentUser = useCurrentUser()
   const showNotification = useShowNotification()
@@ -158,9 +165,17 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
       {isOpen && (
         <div
           id="notification-panel"
-          className="fixed inset-x-2 top-[70px] z-[200] w-auto rounded-none border-2 border-border bg-card shadow-[var(--shadow-panel)] duration-300 animate-in fade-in slide-in-from-top-2 md:absolute md:inset-auto md:end-0 md:top-full md:mt-3 md:w-[400px]"
+          className={cn(
+            'z-[200] duration-300 animate-in fade-in slide-in-from-top-2',
+            tray
+              ? // Fixed tray — viewport anchored, immune to ancestor clipping (chat sidebar)
+                'fixed inset-x-2 bottom-4 top-[calc(66px+var(--safe-area-top))] flex w-auto flex-col rounded-2xl border border-border bg-card shadow-elevation-3 md:inset-x-auto md:bottom-auto md:end-4 md:h-fit md:w-[400px]'
+              : 'fixed inset-x-2 top-[70px] w-auto rounded-none border-2 border-border bg-card shadow-[var(--shadow-panel)] md:absolute md:inset-auto md:end-0 md:top-full md:mt-3 md:w-[400px]',
+          )}
         >
-          <div className="absolute -top-[10px] end-4 hidden h-4 w-4 rotate-45 border-e-2 border-t-2 border-border bg-card md:end-8 md:block" />
+          {!tray && (
+            <div className="absolute -top-[10px] end-4 hidden h-4 w-4 rotate-45 border-e-2 border-t-2 border-border bg-card md:end-8 md:block" />
+          )}
 
           {/* Header */}
 
@@ -225,7 +240,12 @@ export const NotificationDropdown = ({ showLabel = false }: { showLabel?: boolea
           )}
 
           {/* Notifications List */}
-          <div className="custom-scrollbar max-h-[70vh] overflow-y-auto md:max-h-96">
+          <div
+            className={cn(
+              'custom-scrollbar overflow-y-auto',
+              tray ? 'min-h-0 flex-1 md:max-h-96' : 'max-h-[70vh] md:max-h-96',
+            )}
+          >
             {!notificationsEnabled ? (
               <div className="p-12 text-center">
                 <AlertCircle size={48} className="mx-auto mb-3 text-warning opacity-50" />

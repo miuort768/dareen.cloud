@@ -70,7 +70,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             >
               <Sun size={18} />
             </button>
-            <NotificationDropdown />
+            <NotificationDropdown tray />
           </div>
         </div>
 
