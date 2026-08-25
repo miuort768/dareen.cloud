@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { MessageSquare, Plus, Users, ThumbsUp, MessageCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { EmptyState } from '../shared/components/ui/EmptyState'
+import { Skeleton, SkeletonText } from '../shared/components/ui/Skeleton'
 import { useSearchParams } from 'react-router-dom'
 import { api, safeArray } from '../lib/api'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
@@ -10,6 +11,16 @@ import { confirm } from '../lib/confirmDialog'
 import type { Comment, Post } from '../features/forum/types'
 import { ForumHeader, ForumCreatePost, ForumPostCard, ForumHelpBanner } from './forum-page'
 import { cn } from '../lib/utils'
+
+type SortMode = 'latest' | 'most_liked' | 'most_commented'
+
+const SORT_OPTIONS: { value: SortMode; label: string }[] = [
+  { value: 'latest', label: 'الأحدث' },
+  { value: 'most_liked', label: 'الأكثر إعجاباً' },
+  { value: 'most_commented', label: 'الأكثر تعليقاً' },
+]
+
+const COLUMN = 'mx-auto max-w-[700px] px-2.5 sm:px-4'
 
 export const Forum = () => {
   const academyName = useAcademyName()
@@ -28,7 +39,7 @@ export const Forum = () => {
     queryKey: ['forum'],
     queryFn: () => api.get<Post[]>('/forum'),
     select: (data) => safeArray<Post>(data),
-    refetchInterval: 3000,
+    refetchInterval: 15000,
     refetchOnWindowFocus: true,
   })
 
@@ -111,7 +122,7 @@ export const Forum = () => {
         )
       } catch (e) {
         console.error(e)
-        showNotification('فشل تحميل المنشورات', 'error')
+        showNotification('فشل تحميل التعليقات', 'error')
       }
     }
     setViewingComments((prev: Record<string, boolean>) => ({ ...prev, [postId]: !prev[postId] }))
@@ -164,7 +175,7 @@ export const Forum = () => {
     }
   }
 
-  const [sortMode, setSortMode] = useState<'latest' | 'most_liked' | 'most_commented'>('latest')
+  const [sortMode, setSortMode] = useState<SortMode>('latest')
 
   const handleEditPost = async (postId: string, newContent: string) => {
     if (!isAdmin) return
@@ -241,33 +252,25 @@ export const Forum = () => {
         label: 'إجمالي المنشورات',
         value: posts.length,
         icon: MessageSquare,
-        gradient: 'from-primary/20 to-primary/5',
         iconBg: 'bg-primary/10 text-primary',
-        accent: 'bg-primary',
       },
       {
         label: 'إجمالي الإعجابات',
         value: totalUpvotes,
         icon: ThumbsUp,
-        gradient: 'from-success/20 to-success/5',
-        iconBg: 'bg-success/10 text-success',
-        accent: 'bg-success',
+        iconBg: 'bg-success-soft text-success',
       },
       {
         label: 'التعليقات',
         value: totalComments,
         icon: MessageCircle,
-        gradient: 'from-warning/20 to-warning/5',
-        iconBg: 'bg-warning/10 text-warning',
-        accent: 'bg-warning',
+        iconBg: 'bg-warning-soft text-warning',
       },
       {
         label: 'المشاركون',
         value: totalParticipants,
         icon: Users,
-        gradient: 'from-info/20 to-info/5',
-        iconBg: 'bg-info/10 text-info',
-        accent: 'bg-info',
+        iconBg: 'bg-info-soft text-info',
       },
     ],
     [posts, totalUpvotes, totalComments, totalParticipants],
@@ -307,9 +310,6 @@ export const Forum = () => {
       className="relative min-h-full overflow-x-hidden bg-background pb-8 font-sans md:pb-12"
       dir="rtl"
     >
-      {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
-      {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
-      {currentUser?.role === 'student' && <div className="hidden md:block"></div>}
       <div className="relative z-10 pt-2">
         <ForumHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} />
         <motion.div
@@ -317,7 +317,7 @@ export const Forum = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="mx-auto mb-4 grid max-w-[700px] grid-cols-2 gap-3 px-2.5 sm:px-4 md:grid-cols-4">
+          <div className={cn(COLUMN, 'mb-4 grid grid-cols-2 gap-3 md:grid-cols-4')}>
             {kpiCards.map((kpi, i) => {
               const Icon = kpi.icon
               return (
@@ -326,17 +326,13 @@ export const Forum = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  className={cn(
-                    'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
-                    kpi.gradient,
-                  )}
+                  whileHover={{ y: -2 }}
+                  className="relative overflow-hidden rounded-card border border-border bg-card p-4"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-lg p-2', kpi.iconBg)}>
                       <Icon size={16} />
                     </div>
-                    <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
                   </div>
                   <p className="mb-1 text-xs text-muted">{kpi.label}</p>
                   <p className="text-2xl font-bold text-main">{kpi.value}</p>
@@ -346,23 +342,50 @@ export const Forum = () => {
           </div>
         </motion.div>
 
+        {/* Mobile sort control — the FAB is desktop-only */}
+        <div
+          className={cn(COLUMN, 'mb-3 flex items-center gap-2 md:hidden')}
+          role="group"
+          aria-label="ترتيب المنشورات"
+        >
+          {SORT_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              onClick={() => setSortMode(opt.value)}
+              aria-pressed={sortMode === opt.value}
+              className={cn(
+                'flex-1 rounded-card border px-2 py-1.5 text-micro font-bold transition-colors duration-fast',
+                sortMode === opt.value
+                  ? 'border-primary bg-primary text-on-primary'
+                  : 'border-border bg-card text-muted hover:border-hover hover:text-main',
+              )}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
         {/* Sort indicator banner */}
         {sortMode !== 'latest' && (
-          <div className="mx-auto mb-3 flex max-w-[700px] items-center justify-between rounded-xl border border-primary/30 bg-primary/10 p-2.5 px-4 text-xs font-bold text-primary">
+          <div
+            className={cn(
+              COLUMN,
+              'mb-3 flex items-center justify-between rounded-xl border border-primary/30 bg-primary/10 p-2.5 text-xs font-bold text-primary',
+            )}
+          >
             <span>
-              يتم الآن عرض المنشورات بحسب:{' '}
-              {sortMode === 'most_liked' ? 'الأكثر إعجاباً 👍' : 'الأكثر تعليقاً 💬'}
+              يتم الآن عرض المنشورات بحسب: {SORT_OPTIONS.find((o) => o.value === sortMode)?.label}
             </span>
             <button
               onClick={() => setSortMode('latest')}
-              className="rounded-lg bg-primary px-2.5 py-1 text-micro text-on-primary transition-all hover:bg-primary-hover"
+              className="rounded-lg bg-primary px-2.5 py-1 text-micro text-on-primary transition-colors duration-fast hover:bg-primary-hover"
             >
               إعادة تعيين الفرز
             </button>
           </div>
         )}
 
-        <div className="mx-auto max-w-[700px] space-y-6 px-2.5 sm:px-4" data-create-post>
+        <div className={cn(COLUMN, 'space-y-6')} data-create-post>
           <ForumCreatePost
             newPostContent={newPostContent}
             setNewPostContent={setNewPostContent}
@@ -371,7 +394,19 @@ export const Forum = () => {
           {loading ? (
             <div className="space-y-6">
               {[1, 2, 3].map((i) => (
-                <div key={`skel-${i}`} className="h-48 animate-pulse rounded-card bg-card" />
+                <div
+                  key={`skel-${i}`}
+                  className="space-y-4 rounded-card border border-border bg-card p-4 md:p-5"
+                >
+                  <div className="flex items-center gap-3">
+                    <Skeleton className="h-11 w-11 rounded-card" />
+                    <div className="flex-1 space-y-1.5">
+                      <Skeleton className="h-3 w-28" />
+                      <Skeleton className="h-2 w-20" />
+                    </div>
+                  </div>
+                  <SkeletonText lines={3} />
+                </div>
               ))}
             </div>
           ) : sortedPosts.length === 0 ? (
@@ -383,7 +418,8 @@ export const Forum = () => {
           ) : (
             <div className="space-y-6">
               {sortedPosts.map((post: Post) => {
-                const isLiked = post.upvotes.includes(currentUser?.id || '')
+                const isLiked =
+                  Array.isArray(post.upvotes) && post.upvotes.includes(currentUser?.id || '')
                 const isHighlighted = post.id === highlightedPostId
                 return (
                   <ForumPostCard
@@ -448,7 +484,7 @@ export const Forum = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="border-border/30 flex h-12 w-12 items-center justify-center rounded-card border bg-primary text-on-primary shadow-elevation-2 transition-all hover:bg-primary-hover hover:shadow-elevation-3 active:scale-95"
+                  className="flex h-12 w-12 items-center justify-center rounded-card border border-divider bg-primary text-on-primary shadow-elevation-2 transition-[background-color,box-shadow,transform] duration-fast hover:bg-primary-hover hover:shadow-elevation-3 active:scale-95"
                 >
                   <action.icon size={20} />
                 </button>
@@ -461,8 +497,8 @@ export const Forum = () => {
           whileTap={{ scale: 0.95 }}
           aria-label="إضافة منشور جديد أو فرز المنشورات"
           className={cn(
-            'border-border/20 flex h-14 w-14 items-center justify-center rounded-card border text-on-primary shadow-elevation-3 transition-all',
-            fabOpen ? 'hover:bg-error/90 rotate-45 bg-error' : 'bg-primary hover:bg-primary-hover',
+            'flex h-14 w-14 items-center justify-center rounded-card border border-divider text-on-primary shadow-elevation-3 transition-[background-color,box-shadow,transform] duration-fast',
+            fabOpen ? 'rotate-45 bg-error hover:bg-error' : 'bg-primary hover:bg-primary-hover',
           )}
         >
           <Plus size={26} />

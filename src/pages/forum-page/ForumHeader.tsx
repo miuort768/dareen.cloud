@@ -14,16 +14,13 @@ export const ForumHeader = ({ searchTerm = '', onSearchChange }: ForumHeaderProp
         <h1 className="mb-2 text-3xl font-bold leading-tight text-on-primary">
           منتدى {academyName}
         </h1>
-        <p className="text-on-primary/80 max-w-md text-sm font-medium leading-relaxed">
+        <p className="max-w-md text-sm font-medium leading-relaxed text-white/80">
           مساحة للنقاش وتبادل الخبرات بين معلمات وأولياء الأمور والطلاب.
         </p>
 
         {/* Search — visible on all screen sizes */}
         <div className="relative mt-5 w-full max-w-md">
-          <Search
-            size={14}
-            className="absolute start-3.5 top-1/2 -translate-y-1/2 text-white/60"
-          />
+          <Search size={14} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-white/60" />
           <input
             type="text"
             aria-label="بحث في المنتدى"
