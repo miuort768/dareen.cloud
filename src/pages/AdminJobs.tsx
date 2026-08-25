@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+﻿import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   Briefcase,
@@ -17,6 +17,7 @@ import {
   Inbox,
   X,
   FileText,
+  AlertTriangle,
   type LucideIcon,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -24,10 +25,11 @@ import { api, safeArray } from '../lib/api'
 import { downloadExport } from '../lib/download'
 import { confirm } from '../lib/confirmDialog'
 import { SUBJECTS } from '../data/subjects'
-import { useAcademyName, useIsLoading } from '../context/AppContext'
+import { useAcademyName, useIsLoading, useShowNotification } from '../context/AppContext'
 import { cn } from '../lib/utils'
 import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
+import { Skeleton, SkeletonText } from '../shared/components/ui/Skeleton'
 
 interface JobApp {
   id: string
@@ -67,12 +69,33 @@ function formatDate12h(dateStr: string) {
 }
 
 function exportToCsv(apps: JobApp[]) {
-  const headers = ['الاسم', 'رقم الهاتف', 'المناهج', 'سنوات الخبرة']
+  const headers = [
+    'الاسم',
+    'الهاتف',
+    'واتساب',
+    'المنصب',
+    'المادة',
+    'المؤهل',
+    'التقدير',
+    'سنة التخرج',
+    'خبرة أون لاين',
+    'المناهج',
+    'الحالة',
+    'التاريخ',
+  ]
   const rows = apps.map((a) => [
     a.name || '',
     a.phone || '',
-    a.curriculums || '-',
+    a.whatsapp || '',
+    a.position || '',
+    a.subject || '',
+    a.qualification || '',
+    a.grade || '',
+    a.graduationYear || '',
     a.onlineYears || '0',
+    a.curriculums || '',
+    a.contacted ? 'تم التواصل' : 'بانتظار التواصل',
+    formatDate12h(a.createdAt),
   ])
   const bom = '﻿'
   const newLine = '\n'
@@ -91,14 +114,14 @@ function exportToCsv(apps: JobApp[]) {
 }
 
 const subjectColorMap: Record<string, string> = {
-  'القرآن الكريم': 'bg-success/10 text-success border-success/30',
-  'المواد الشرعية': 'bg-success/10 text-success border-success/30',
+  'القرآن الكريم': 'bg-success-soft text-success border-success-soft',
+  'المواد الشرعية': 'bg-success-soft text-success border-success-soft',
   'اللغة العربية': 'bg-primary/10 text-primary border-primary/30',
-  'اللغة الإنجليزية': 'bg-info/10 text-info border-info/30',
-  'اللغة الفرنسية': 'bg-info/10 text-info border-info/30',
-  الرياضيات: 'bg-warning/10 text-warning border-warning/30',
-  'الدراسات الاجتماعية': 'bg-accent/10 text-accent border-accent/30',
-  'العلوم أو فروعها': 'bg-info/10 text-info border-info/30',
+  'اللغة الإنجليزية': 'bg-info-soft text-info border-info-soft',
+  'اللغة الفرنسية': 'bg-info-soft text-info border-info-soft',
+  الرياضيات: 'bg-warning-soft text-warning border-warning-soft',
+  'الدراسات الاجتماعية': 'bg-accent-soft text-accent border-accent-soft',
+  'العلوم أو فروعها': 'bg-info-soft text-info border-info-soft',
 }
 
 function getSubjectColor(subject: string): string {
@@ -112,8 +135,13 @@ export const AdminJobs = () => {
   }, [academyName])
   const queryClient = useQueryClient()
   const authLoading = useIsLoading()
+  const showNotification = useShowNotification()
 
-  const { data: apps = [], isLoading: loading } = useQuery<JobApp[]>({
+  const {
+    data: apps = [],
+    isLoading: loading,
+    error: queryError,
+  } = useQuery<JobApp[]>({
     queryKey: ['jobs'],
     queryFn: () => api.get('/jobs'),
     select: (data) =>
@@ -122,6 +150,7 @@ export const AdminJobs = () => {
     retry: 1,
     refetchInterval: 30000,
   })
+  const error = queryError?.message || null
 
   const [search, setSearch] = useState('')
   const [subjectFilter, setSubjectFilter] = useState('')
@@ -152,14 +181,13 @@ export const AdminJobs = () => {
   }
 
   const handleDeleteAll = async () => {
+    if (apps.length === 0) return
     const confirmed = await confirm(
       'هل أنت متأكد من حذف جميع الطلبات؟ لا يمكن التراجع عن هذا الإجراء.',
     )
     if (!confirmed) return
     try {
-      for (const app of filtered) {
-        await api.delete('/jobs/' + app.id)
-      }
+      await Promise.allSettled(apps.map((app) => api.delete('/jobs/' + app.id)))
       queryClient.invalidateQueries({ queryKey: ['jobs'] })
     } catch (err) {
       console.error(err)
@@ -175,16 +203,27 @@ export const AdminJobs = () => {
     }
   }
 
+  const handleExportPdf = () => {
+    downloadExport('jobs', 'pdf').catch((e: Error) => {
+      showNotification(e.message || 'فشل تصدير PDF', 'error')
+    })
+  }
+
+  const retryFetch = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['jobs'] })
+  }, [queryClient])
+
   const filtered = useMemo(() => {
     return apps.filter((a) => {
       const q = search.trim().toLowerCase()
       if (!q && !subjectFilter) return true
+      const phone = (a.phone || '').replace(/\s/g, '')
       const matchesSearch =
         !q ||
-        a.name.toLowerCase().includes(q) ||
-        a.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
+        (a.name || '').toLowerCase().includes(q) ||
+        phone.includes(q.replace(/\s/g, '')) ||
         (a.whatsapp || '').replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
-        a.position.toLowerCase().includes(q)
+        (a.position || '').toLowerCase().includes(q)
       const matchesSubject = !subjectFilter || a.subject === subjectFilter
       return matchesSearch && matchesSubject
     })
@@ -205,31 +244,27 @@ export const AdminJobs = () => {
         icon: Briefcase,
         color: 'text-primary',
         bg: 'bg-primary/10',
-        border: 'border-primary/20',
       },
       {
         label: 'بانتظار التواصل',
         value: pendingCount,
         icon: Inbox,
         color: 'text-warning',
-        bg: 'bg-warning/10',
-        border: 'border-warning/20',
+        bg: 'bg-warning-soft',
       },
       {
         label: 'تم التواصل',
         value: contactedCount,
         icon: CheckCircle2,
         color: 'text-success',
-        bg: 'bg-success/10',
-        border: 'border-success/20',
+        bg: 'bg-success-soft',
       },
       {
         label: 'المواد',
         value: uniqueSubjects,
         icon: BookOpen,
         color: 'text-info',
-        bg: 'bg-info/10',
-        border: 'border-info/20',
+        bg: 'bg-info-soft',
       },
     ],
     [apps, pendingCount, contactedCount, uniqueSubjects],
@@ -251,7 +286,7 @@ export const AdminJobs = () => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="-mx-4 border-b border-border bg-gradient-to-l from-primary/5 via-transparent to-primary/10 px-4 pb-5 pt-6 sm:-mx-6 sm:px-6"
+          className="border-b border-border pb-5 pt-6"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
@@ -263,24 +298,24 @@ export const AdminJobs = () => {
                 <p className="mt-0.5 text-xs text-muted">إدارة طلبات المتقدمين للوظائف</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => exportToCsv(filtered)}
-                className="flex items-center gap-2 rounded-none border border-border bg-card px-4 py-2.5 text-xs font-bold text-muted transition-all duration-200 hover:border-primary/20 hover:bg-hover active:scale-[0.98]"
+                className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.98]"
               >
                 <Download size={14} />
                 <span>تصدير CSV</span>
               </button>
               <button
-                onClick={() => downloadExport('jobs', 'pdf').catch((e: Error) => alert(e.message))}
-                className="border-error/20 bg-error/5 hover:border-error/30 hover:bg-error/10 flex items-center gap-2 rounded-none border px-4 py-2.5 text-xs font-bold text-error transition-all duration-200 active:scale-[0.98]"
+                onClick={handleExportPdf}
+                className="flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-xs font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover active:scale-[0.98]"
               >
                 <FileText size={14} />
                 <span>تصدير PDF</span>
               </button>
               <button
                 onClick={handleDeleteAll}
-                className="hover:bg-error/5 hover:border-error/30 flex items-center gap-2 rounded-none border border-border bg-card px-4 py-2.5 text-xs font-bold text-error transition-all duration-200 active:scale-[0.98]"
+                className="flex items-center gap-2 rounded-xl bg-error px-4 py-2.5 text-xs font-bold text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-[0.98]"
               >
                 <Trash2 size={14} />
                 <span>حذف الكل</span>
@@ -304,10 +339,7 @@ export const AdminJobs = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 + i * 0.04 }}
                   whileHover={{ y: -2 }}
-                  className={cn(
-                    'rounded-none border bg-card p-4 transition-all duration-200 hover:shadow-elevation-1',
-                    kpi.border,
-                  )}
+                  className="rounded-xl border border-border bg-card p-4 transition-shadow duration-normal hover:shadow-elevation-1"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div
@@ -317,7 +349,7 @@ export const AdminJobs = () => {
                     </div>
                   </div>
                   <p className="text-2xl font-bold text-main">{kpi.value}</p>
-                  <p className="mt-1 text-[11px] text-muted">{kpi.label}</p>
+                  <p className="mt-1 text-micro text-muted">{kpi.label}</p>
                 </motion.div>
               )
             })}
@@ -335,11 +367,12 @@ export const AdminJobs = () => {
               <button
                 key={pill.key}
                 onClick={() => setSubjectFilter(pill.key)}
+                aria-pressed={subjectFilter === pill.key}
                 className={cn(
-                  'shrink-0 rounded-full border px-3.5 py-2 text-[11px] font-bold transition-all duration-200 active:scale-[0.97]',
+                  'shrink-0 rounded-full border px-3.5 py-2 text-micro font-bold transition-colors duration-fast active:scale-[0.97]',
                   subjectFilter === pill.key
-                    ? 'border-primary bg-primary text-on-primary shadow-sm'
-                    : pill.color + ' hover:shadow-sm',
+                    ? 'border-primary bg-primary text-on-primary'
+                    : pill.color + ' hover:border-primary/30',
                 )}
               >
                 {pill.label}
@@ -362,12 +395,12 @@ export const AdminJobs = () => {
               placeholder="ابحث بالاسم أو الهاتف أو المنصب..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="placeholder:text-muted/60 w-full rounded-none border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+              className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main transition-colors duration-fast focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
             />
             {search && (
               <button
                 onClick={() => setSearch('')}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-main"
+                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors duration-fast hover:text-main"
                 aria-label="مسح البحث"
               >
                 <X size={14} />
@@ -385,30 +418,46 @@ export const AdminJobs = () => {
             {loading ? (
               <div className="space-y-3">
                 {[1, 2, 3].map((i) => (
-                  <div
-                    key={`skel-${i}`}
-                    className="animate-pulse rounded-none border border-border bg-card p-5"
-                  >
+                  <div key={`skel-${i}`} className="rounded-xl border border-border bg-card p-5">
                     <div className="mb-4 flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-xl bg-surface" />
+                      <Skeleton className="h-10 w-10 rounded-xl" />
                       <div className="flex-1 space-y-2">
-                        <div className="h-3 w-1/3 rounded-lg bg-surface" />
-                        <div className="h-2.5 w-1/4 rounded-lg bg-surface" />
+                        <Skeleton className="h-3 w-1/3 rounded-lg" />
+                        <Skeleton className="h-2.5 w-1/4 rounded-lg" />
                       </div>
                     </div>
+                    <SkeletonText lines={2} className="mb-3" />
                     <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                       {[1, 2, 3, 4].map((j) => (
-                        <div key={j} className="h-8 rounded-lg bg-surface" />
+                        <Skeleton key={j} className="h-8 rounded-lg" />
                       ))}
                     </div>
                   </div>
                 ))}
               </div>
+            ) : error ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="rounded-xl border border-error-soft bg-card p-8 text-center"
+              >
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-error-soft">
+                  <AlertTriangle size={20} className="text-error" />
+                </div>
+                <p className="text-xs font-bold text-error">{error}</p>
+                <button
+                  type="button"
+                  onClick={retryFetch}
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.97]"
+                >
+                  إعادة تحميل
+                </button>
+              </motion.div>
             ) : apps.length === 0 ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="rounded-none border border-dashed border-border bg-card p-10 text-center"
+                className="rounded-xl border border-dashed border-border bg-card p-10 text-center"
               >
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
                   <Briefcase size={24} className="text-primary" />
@@ -420,7 +469,7 @@ export const AdminJobs = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="rounded-none border border-dashed border-border bg-card p-10 text-center"
+                className="rounded-xl border border-dashed border-border bg-card p-10 text-center"
               >
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
                   <Search size={24} className="text-primary" />
@@ -439,9 +488,9 @@ export const AdminJobs = () => {
                     exit={{ opacity: 0, y: -10, transition: { duration: 0.15 } }}
                     transition={{ duration: 0.2, delay: index * 0.02 }}
                     className={cn(
-                      'overflow-hidden rounded-none border border-border bg-card transition-all duration-200 hover:shadow-elevation-1',
+                      'overflow-hidden rounded-xl border border-border bg-card transition-shadow duration-normal hover:shadow-elevation-1',
                       app.contacted
-                        ? 'border-r-success/40 border-r-4 opacity-60'
+                        ? 'border-r-4 border-r-success'
                         : 'border-r-4 border-r-primary/40',
                     )}
                   >
@@ -460,7 +509,7 @@ export const AdminJobs = () => {
                                 app.contacted ? 'text-muted' : 'text-primary',
                               )}
                             >
-                              {app.name.charAt(0)}
+                              {(app.name || '?').charAt(0)}
                             </span>
                           </div>
                           <div className="min-w-0">
@@ -474,7 +523,7 @@ export const AdminJobs = () => {
                             </h3>
                             <p
                               className={cn(
-                                'truncate text-[11px] font-bold',
+                                'truncate text-micro font-bold',
                                 app.contacted ? 'text-muted' : 'text-primary',
                               )}
                             >
@@ -483,23 +532,20 @@ export const AdminJobs = () => {
                           </div>
                         </div>
                         <div className="flex shrink-0 items-center gap-1.5">
-                          <button
-                            onClick={() => handleContacted(app.id)}
-                            className={cn(
-                              'flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-bold transition-all duration-200 active:scale-95',
-                              app.contacted
-                                ? 'bg-success/10 border-success/30 border text-success'
-                                : 'bg-success/10 border-success/20 hover:bg-success/20 border text-success',
-                            )}
-                            title="تم التواصل"
-                            aria-label="تم التواصل"
-                          >
-                            <CheckCircle2 size={13} />
-                            <span>تم التواصل</span>
-                          </button>
+                          {!app.contacted && (
+                            <button
+                              onClick={() => handleContacted(app.id)}
+                              className="flex items-center gap-1.5 rounded-lg bg-success px-3 py-1.5 text-micro font-bold text-on-success transition-colors duration-fast hover:bg-success-hover active:scale-95"
+                              title="تم التواصل"
+                              aria-label="تم التواصل"
+                            >
+                              <CheckCircle2 size={13} />
+                              <span>تم التواصل</span>
+                            </button>
+                          )}
                           <button
                             onClick={() => handleDelete(app.id)}
-                            className="bg-error/10 border-error/20 hover:bg-error/20 flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[11px] font-bold text-error transition-all duration-200 active:scale-95"
+                            className="flex items-center gap-1.5 rounded-lg bg-error px-3 py-1.5 text-micro font-bold text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-95"
                             aria-label="حذف الطلب"
                           >
                             <Trash2 size={13} />
@@ -570,8 +616,8 @@ export const AdminJobs = () => {
                             />
                           </div>
                           <div className="min-w-0">
-                            <p className="mb-0.5 text-[10px] font-bold text-muted">المناهج</p>
-                            <span className="text-[10px] font-bold text-main">
+                            <p className="mb-0.5 text-micro font-bold text-muted">المناهج</p>
+                            <span className="text-micro font-bold text-main">
                               {app.curriculums || '-'}
                             </span>
                           </div>
@@ -604,17 +650,17 @@ const DetailRow = ({
   phoneLink?: boolean
   whatsappLink?: boolean
 }) => {
-  const cleanPhone = value.replace(/\s/g, '')
+  const cleanPhone = (value || '').replace(/\s/g, '')
   const content = (
-    <div className={cn('flex items-center gap-2', contacted && 'opacity-50')}>
+    <div className="flex items-center gap-2">
       <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-lg bg-primary/10">
         <Icon size={10} className={contacted ? 'text-muted' : 'text-primary'} />
       </div>
       <div className="min-w-0">
-        <p className="text-[10px] font-bold text-muted">{label}</p>
+        <p className="text-micro font-bold text-muted">{label}</p>
         <span
           className={cn(
-            'block truncate text-[10px] font-bold',
+            'block truncate text-micro font-bold',
             contacted ? 'text-muted' : 'text-main',
           )}
         >
@@ -631,7 +677,7 @@ const DetailRow = ({
           href={'https://wa.me/' + cleanPhone.replace(/^\+/, '')}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 text-[10px] font-bold text-success hover:underline"
+          className="flex items-center gap-1 text-micro font-bold text-success hover:underline"
         >
           {content}
         </a>
