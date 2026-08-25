@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import {
   Search,
   Plus,
@@ -48,7 +49,7 @@ const ConfirmDeleteModal = ({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [onCancel])
 
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -89,7 +90,10 @@ const ConfirmDeleteModal = ({
             المفقودين ولن يظهر مرة أخرى.
           </p>
         </div>
-        <div className="flex gap-2 p-5 pt-0">
+        <div
+          className="flex gap-2 p-5 pt-0"
+          style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
+        >
           <button
             ref={cancelRef}
             type="button"
@@ -106,7 +110,8 @@ const ConfirmDeleteModal = ({
           </button>
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body,
   )
 }
 
@@ -121,7 +126,7 @@ const ConfirmDeleteAllModal = ({
 }) => {
   const [typed, setTyped] = useState('')
   const verified = typed.trim().toLowerCase() === 'dareen'
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -182,7 +187,10 @@ const ConfirmDeleteAllModal = ({
             />
           </div>
         </div>
-        <div className="flex gap-2 p-5 pt-0">
+        <div
+          className="flex gap-2 p-5 pt-0"
+          style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
+        >
           <button
             type="button"
             onClick={onCancel}
@@ -199,7 +207,8 @@ const ConfirmDeleteAllModal = ({
           </button>
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body,
   )
 }
 

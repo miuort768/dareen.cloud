@@ -89,7 +89,7 @@ export const MobileQuickAccess = ({
         </div>
 
         {/* Header */}
-        <div className="flex shrink-0 items-center gap-2.5 px-4 pb-3 pt-1.5">
+        <div className="flex shrink-0 items-center gap-2.5 px-4 pb-2 pt-1.5">
           <Image
             src="/dareen_logo_new.webp"
             alt=""
@@ -129,11 +129,11 @@ export const MobileQuickAccess = ({
             >
               <motion.p
                 variants={item}
-                className="mb-2 text-micro font-black uppercase tracking-label text-muted"
+                className="mb-1 text-micro font-black uppercase tracking-label text-muted"
               >
                 الأكثر استخدامًا
               </motion.p>
-              <div className="grid grid-cols-4 gap-2">
+              <div className="grid grid-cols-4 gap-1.5">
                 {featured.map((navItem, i) => {
                   const Icon = navItem.icon
                   return (
@@ -144,7 +144,7 @@ export const MobileQuickAccess = ({
                         aria-label={navItem.name}
                         className={({ isActive }) =>
                           cn(
-                            'group flex touch-manipulation flex-col items-center gap-1.5 rounded-2xl border p-2 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95]',
+                            'group flex touch-manipulation flex-col items-center gap-1 rounded-2xl border p-1.5 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95]',
                             isActive
                               ? 'bg-primary-soft/60 border-primary/40 dark:bg-primary/15'
                               : 'border-border/60 bg-surface hover:bg-hover dark:bg-card',
@@ -153,7 +153,7 @@ export const MobileQuickAccess = ({
                       >
                         <span
                           className={cn(
-                            'flex h-11 w-full items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-105',
+                            'flex h-9 w-full items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-105',
                             TILE_STYLES[i % TILE_STYLES.length],
                           )}
                         >
@@ -176,16 +176,16 @@ export const MobileQuickAccess = ({
               initial="hidden"
               animate="show"
               transition={{ delayChildren: 0.1 }}
-              className="mt-3.5"
+              className="mt-2.5"
               aria-label="جميع الصفحات"
             >
               <motion.p
                 variants={item}
-                className="mb-1.5 text-micro font-black uppercase tracking-label text-muted"
+                className="mb-1 text-micro font-black uppercase tracking-label text-muted"
               >
                 جميع الصفحات
               </motion.p>
-              <div className="space-y-0.5">
+              <div>
                 {rest.map((navItem) => {
                   const Icon = navItem.icon
                   return (
@@ -195,15 +195,15 @@ export const MobileQuickAccess = ({
                         onClick={onCloseMenu}
                         className={({ isActive }) =>
                           cn(
-                            'flex items-center gap-2.5 rounded-xl px-2 py-2 outline-none transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-focus',
+                            'flex items-center gap-2 rounded-xl px-2 py-1.5 outline-none transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-focus',
                             isActive
                               ? 'bg-primary-soft font-bold text-primary'
                               : 'text-muted hover:bg-hover hover:text-main',
                           )
                         }
                       >
-                        <span className="border-border/60 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border bg-card">
-                          <Icon size={16} strokeWidth={1.8} />
+                        <span className="border-border/60 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border bg-card">
+                          <Icon size={15} strokeWidth={1.8} />
                         </span>
                         <span className="min-w-0 flex-1 truncate text-sm font-medium">
                           {navItem.name}
