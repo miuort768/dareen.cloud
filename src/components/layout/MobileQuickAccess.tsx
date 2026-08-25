@@ -84,12 +84,12 @@ export const MobileQuickAccess = ({
         </SheetDescription>
 
         {/* Grabber */}
-        <div className="flex shrink-0 justify-center pt-2.5">
+        <div className="flex shrink-0 justify-center pt-2">
           <div className="h-1.5 w-11 rounded-full bg-border" />
         </div>
 
         {/* Header */}
-        <div className="flex shrink-0 items-center gap-3 px-5 pb-4 pt-2">
+        <div className="flex shrink-0 items-center gap-2.5 px-4 pb-3 pt-1.5">
           <Image
             src="/dareen_logo_new.webp"
             alt=""
@@ -119,7 +119,7 @@ export const MobileQuickAccess = ({
         </div>
 
         {/* Scrollable body */}
-        <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto px-5 pb-2">
+        <div className="custom-scrollbar min-h-0 flex-1 overflow-y-auto px-4 pb-1">
           {featured.length > 0 && (
             <motion.section
               variants={container}
@@ -129,11 +129,11 @@ export const MobileQuickAccess = ({
             >
               <motion.p
                 variants={item}
-                className="mb-2.5 text-micro font-black uppercase tracking-label text-muted"
+                className="mb-2 text-micro font-black uppercase tracking-label text-muted"
               >
                 الأكثر استخدامًا
               </motion.p>
-              <div className="grid grid-cols-4 gap-2.5">
+              <div className="grid grid-cols-4 gap-2">
                 {featured.map((navItem, i) => {
                   const Icon = navItem.icon
                   return (
@@ -144,7 +144,7 @@ export const MobileQuickAccess = ({
                         aria-label={navItem.name}
                         className={({ isActive }) =>
                           cn(
-                            'group flex touch-manipulation flex-col items-center gap-2 rounded-2xl border p-2.5 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95]',
+                            'group flex touch-manipulation flex-col items-center gap-1.5 rounded-2xl border p-2 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95]',
                             isActive
                               ? 'bg-primary-soft/60 border-primary/40 dark:bg-primary/15'
                               : 'border-border/60 bg-surface hover:bg-hover dark:bg-card',
@@ -153,7 +153,7 @@ export const MobileQuickAccess = ({
                       >
                         <span
                           className={cn(
-                            'flex h-12 w-full items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-105',
+                            'flex h-11 w-full items-center justify-center rounded-xl transition-transform duration-200 group-hover:scale-105',
                             TILE_STYLES[i % TILE_STYLES.length],
                           )}
                         >
@@ -176,12 +176,12 @@ export const MobileQuickAccess = ({
               initial="hidden"
               animate="show"
               transition={{ delayChildren: 0.1 }}
-              className="mt-5"
+              className="mt-3.5"
               aria-label="جميع الصفحات"
             >
               <motion.p
                 variants={item}
-                className="mb-2 text-micro font-black uppercase tracking-label text-muted"
+                className="mb-1.5 text-micro font-black uppercase tracking-label text-muted"
               >
                 جميع الصفحات
               </motion.p>
@@ -195,15 +195,15 @@ export const MobileQuickAccess = ({
                         onClick={onCloseMenu}
                         className={({ isActive }) =>
                           cn(
-                            'flex items-center gap-3 rounded-xl px-2.5 py-2.5 outline-none transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-focus',
+                            'flex items-center gap-2.5 rounded-xl px-2 py-2 outline-none transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-focus',
                             isActive
                               ? 'bg-primary-soft font-bold text-primary'
                               : 'text-muted hover:bg-hover hover:text-main',
                           )
                         }
                       >
-                        <span className="border-border/60 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border bg-card">
-                          <Icon size={17} strokeWidth={1.8} />
+                        <span className="border-border/60 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border bg-card">
+                          <Icon size={16} strokeWidth={1.8} />
                         </span>
                         <span className="min-w-0 flex-1 truncate text-sm font-medium">
                           {navItem.name}
@@ -227,14 +227,14 @@ export const MobileQuickAccess = ({
         </div>
 
         {/* Footer */}
-        <div className="border-border/60 shrink-0 border-t p-3 dark:border-white/10">
+        <div className="border-border/60 shrink-0 border-t p-2.5 dark:border-white/10">
           <Button
             variant="destructive"
             onClick={() => {
               onLogout()
               onCloseMenu()
             }}
-            className="h-11 w-full gap-2 rounded-xl"
+            className="h-10 w-full gap-2 rounded-xl"
           >
             <LogOut size={16} className="rtl:rotate-180" />
             <span>تسجيل الخروج</span>
