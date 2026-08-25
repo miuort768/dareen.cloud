@@ -40,7 +40,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
   return (
     <div
       className={cn(
-        'relative flex w-full max-w-full shrink-0 flex-col overflow-hidden overflow-x-hidden border-s border-border bg-card lg:w-[400px]',
+        'relative flex w-full max-w-full shrink-0 flex-col overflow-hidden overflow-x-hidden border-e border-border bg-card lg:w-[400px]',
         selectedConv ? 'hidden lg:flex' : 'flex',
       )}
     >
@@ -103,7 +103,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         </div>
       </div>
 
-      <div className="border-b border-border bg-white p-2 dark:border-white/5 dark:bg-card">
+      <div className="border-b border-border bg-card p-2 dark:border-white/5 dark:bg-card">
         <div className="relative flex items-center rounded-lg border-0 bg-hover px-3 py-1.5 outline-none ring-0 transition-colors dark:bg-card">
           <Search className="me-3 shrink-0 text-muted" size={18} />
           <input

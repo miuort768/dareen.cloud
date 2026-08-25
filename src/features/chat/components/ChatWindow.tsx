@@ -65,12 +65,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   return (
     <div className="relative flex h-full flex-1 flex-col overflow-hidden bg-background dark:bg-card">
       <div
-        className="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.1]"
+        className="absolute inset-0 z-0 opacity-[0.5] dark:opacity-[0.08]"
         style={{
-          backgroundImage:
-            'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")',
+          backgroundImage: 'radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0)',
           backgroundRepeat: 'repeat',
-          backgroundSize: '400px',
+          backgroundSize: '22px 22px',
         }}
       />
 

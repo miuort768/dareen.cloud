@@ -173,10 +173,11 @@ export const Chat = () => {
   return (
     <div
       dir="rtl"
+      style={{ paddingTop: 'var(--safe-area-top, 0px)' }}
       className={cn(
         'flex flex-col overflow-hidden bg-card',
         'fixed inset-x-0 top-0 z-10 transition-all duration-300 lg:relative lg:inset-auto lg:bottom-auto lg:h-screen lg:w-full',
-        selectedConv ? 'bottom-0' : 'bottom-[88px]',
+        selectedConv ? 'bottom-0' : 'bottom-[max(76px,calc(64px+env(safe-area-inset-bottom)))]',
       )}
     >
       <div className="relative hidden shrink-0 flex-row items-center justify-between gap-4 overflow-hidden border-b border-border bg-background px-4 py-6 md:px-8 lg:flex">
@@ -228,13 +229,13 @@ export const Chat = () => {
             markAsRead={markAsRead}
           />
         ) : (
-          <div className="relative hidden flex-1 flex-col items-center justify-center border-e border-border bg-background lg:flex">
+          <div className="relative hidden flex-1 flex-col items-center justify-center border-s border-border bg-background lg:flex">
             <div
-              className="absolute inset-0 opacity-[0.03]"
+              className="absolute inset-0 opacity-[0.04]"
               style={{
                 backgroundImage:
-                  'url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png")',
-                backgroundSize: '400px',
+                  'radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0)',
+                backgroundSize: '22px 22px',
               }}
             />
 
