@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Users } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { api } from '../../../lib/api'
@@ -132,7 +132,6 @@ export const ParentStudents = () => {
   if (isLoading)
     return (
       <div className="min-h-screen bg-background pb-24" dir="rtl">
-        {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
         <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
           <Skeleton className="h-16 w-full rounded-2xl" />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -152,7 +151,6 @@ export const ParentStudents = () => {
       className="min-h-screen bg-background pb-24"
       dir="rtl"
     >
-      {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
       <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
         <ParentsStudentHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

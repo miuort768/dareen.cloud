@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageLoader } from '../components/ui/PageLoader'
-import { useCurrentUser, useAcademyName } from '../context/AppContext'
+import { useCurrentUser, useAcademyName, useLogout } from '../context/AppContext'
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData'
 import { TeacherDashboardDesktop } from './TeacherDashboardDesktop'
 import { TeacherDashboardMobile } from './TeacherDashboardMobile'
@@ -12,6 +12,7 @@ export const TeacherDashboard = () => {
     document.title = `لوحة تحكم المعلمة | ${academyName}`
   }, [academyName])
   const currentUser = useCurrentUser()
+  const logout = useLogout()
   const navigate = useNavigate()
   const {
     stats,

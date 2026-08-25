@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
-import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext'
+import { useCurrentUser, useAcademyName } from '../context/AppContext'
 import { Skeleton } from '../shared/components/ui'
 import type { StudentDashboardData, Session, PointLog } from './student-dashboard/types'
 import { StudentDashboardDesktop } from './student-dashboard/StudentDashboardDesktop'
@@ -13,7 +13,6 @@ export const StudentDashboard = () => {
     document.title = `لوحة تحكم الطالب | ${academyName}`
   }, [academyName])
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const queryClient = useQueryClient()
 
   const { data, isLoading, error } = useQuery<{
@@ -106,7 +105,6 @@ export const StudentDashboard = () => {
           studentData={studentData}
           sessions={sessions}
           pointLogs={pointLogs}
-          logout={logout}
           onRefresh={() =>
             queryClient.invalidateQueries({ queryKey: ['student-dashboard', currentUser?.id] })
           }

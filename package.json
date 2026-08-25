@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "typecheck": "tsc -b",
     "build": "node scripts/convert-webp.mjs && vite build",
     "lint": "eslint .",
     "preview": "vite preview",

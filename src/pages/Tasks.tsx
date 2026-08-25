@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+﻿import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   AlertCircle,
@@ -158,24 +158,24 @@ export const Tasks = () => {
         label: 'معلقة',
         value: stats.pending,
         icon: Clock,
-        gradient: 'from-warning/20 to-warning/5',
-        iconBg: 'bg-warning/10 text-warning',
+        gradient: 'from-warning-soft to-transparent',
+        iconBg: 'bg-warning-soft text-warning',
         accent: 'bg-warning',
       },
       {
         label: 'قيد التنفيذ',
         value: stats.inProgress,
         icon: RefreshCcw,
-        gradient: 'from-info/20 to-info/5',
-        iconBg: 'bg-info/10 text-info',
+        gradient: 'from-info-soft to-transparent',
+        iconBg: 'bg-info-soft text-info',
         accent: 'bg-info',
       },
       {
         label: 'تم الإنجاز',
         value: stats.completed,
         icon: CheckCircle2,
-        gradient: 'from-success/20 to-success/5',
-        iconBg: 'bg-success/10 text-success',
+        gradient: 'from-success-soft to-transparent',
+        iconBg: 'bg-success-soft text-success',
         accent: 'bg-success',
       },
     ],
@@ -218,7 +218,6 @@ export const Tasks = () => {
         <MobileTasks />
       </div>
       <div className="relative hidden min-h-full bg-background pb-24 md:block" dir="rtl">
-        {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
         <div className="mx-auto max-w-page space-y-4 px-3">
           <motion.div
             initial={{ opacity: 0 }}
@@ -283,7 +282,7 @@ export const Tasks = () => {
                     transition={{ delay: 0.12 + i * 0.06 }}
                     whileHover={{ scale: 1.02, y: -2 }}
                     className={cn(
-                      'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
+                      'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
                       kpi.gradient,
                     )}
                   >

@@ -68,7 +68,8 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
   return (
     <div className="space-y-1.5" dir="rtl">
       {todaySessions.slice(0, 5).map((s) => {
-        const st = STATUS_STYLE[s.status || 'scheduled'] || STATUS_STYLE.scheduled
+        const st = STATUS_STYLE[s.status || 'scheduled'] ??
+          STATUS_STYLE.scheduled ?? { badge: 'bg-surface text-muted', label: s.status || '' }
         return (
           <div
             key={s.id}
@@ -119,7 +120,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
       {lowBalanceCount > 0 && (
         <Link
           to="/students"
-          className="border-error/25 bg-error-soft/60 flex items-center gap-2.5 rounded-xl border p-2.5 outline-none transition-colors hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus"
+          className="flex items-center gap-2.5 rounded-xl border border-error-soft bg-error-soft p-2.5 outline-none transition-colors hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus"
         >
           <span className="flex h-[26px] w-[50px] shrink-0 items-center justify-center rounded-lg bg-card">
             <BatteryLow size={13} strokeWidth={1.9} className="text-error" />
