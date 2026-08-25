@@ -177,6 +177,7 @@ const ProtectedRoute = ({
     const isCommonAccess = [
       'schedule',
       'announcements',
+      'attendance',
       'parent_announcements',
       'appointments',
       'forum',
@@ -194,6 +195,7 @@ const ProtectedRoute = ({
         'dashboard',
         'evaluations',
         'schedule',
+        'attendance',
         'announcements',
         'finance',
         'teacher_invoices',

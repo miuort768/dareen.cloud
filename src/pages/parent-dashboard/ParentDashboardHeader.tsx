@@ -17,7 +17,6 @@ import { useCurrentUser, useAcademicYear } from '../../context/AppContext'
 import { confirm } from '../../lib/confirmDialog'
 import { cn } from '../../lib/utils'
 import { Image } from '../../shared/components/ui'
-import { IconButton } from '../../shared/components/ui/IconButton'
 
 interface ParentDashboardHeaderProps {
   logout: () => void
@@ -44,15 +43,15 @@ export const ParentDashboardHeader = ({ logout }: ParentDashboardHeaderProps) =>
     (currentUser?.name || currentUser?.username || 'ولي الأمر').split(' ')[0] ?? 'ولي الأمر'
 
   return (
-    <header className="bg-surface/95 dark:bg-card/95 sticky top-0 z-[100] border-b border-border backdrop-blur-xl transition-colors duration-300 dark:border-border">
+    <header className="border-border/70 bg-background/85 sticky top-0 z-[100] w-full border-b backdrop-blur-xl transition-colors duration-300 dark:border-white/5">
       <div className="mx-auto max-w-page">
         <div className="flex h-16 items-center justify-between px-2.5 sm:px-4 md:px-6">
           <div className="flex items-center gap-3">
             <Image
               src="/dareen_logo_new.webp"
               alt="دارين السابعة"
-              className="h-9 w-9 shrink-0 rounded-xl"
-              imgClassName="object-contain"
+              className="border-border/60 h-9 w-9 shrink-0 overflow-hidden rounded-xl border bg-card shadow-sm dark:border-white/5"
+              imgClassName="object-contain scale-[1.28]"
             />
             <button
               onClick={() => navigate('/parent-profile')}
@@ -80,26 +79,24 @@ export const ParentDashboardHeader = ({ logout }: ParentDashboardHeaderProps) =>
             </span>
           )}
 
-          <div className="flex items-center gap-1.5">
-            <IconButton
-              icon={
-                theme === 'dark' ? (
-                  <Sun size={16} strokeWidth={1.5} />
-                ) : (
-                  <Moon size={16} strokeWidth={1.5} />
-                )
-              }
-              label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+          <div className="border-border/70 flex items-center gap-0.5 rounded-full border bg-card p-1 shadow-sm dark:border-white/5">
+            <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            />
-            <IconButton
-              icon={<LogOut size={16} strokeWidth={1.5} />}
-              label="تسجيل الخروج"
-              variant="error"
+              aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-hover hover:text-main active:scale-95"
+            >
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
+            <div className="bg-border/60 h-5 w-px" />
+            <button
               onClick={async () => {
                 if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout()
               }}
-            />
+              aria-label="تسجيل الخروج"
+              className="dark:hover:bg-error/20 flex h-8 w-8 items-center justify-center rounded-full text-error transition-colors hover:bg-error-light active:scale-95"
+            >
+              <LogOut size={15} />
+            </button>
           </div>
         </div>
 

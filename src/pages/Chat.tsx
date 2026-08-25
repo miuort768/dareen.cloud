@@ -176,7 +176,7 @@ export const Chat = () => {
       className={cn(
         'flex flex-col overflow-hidden bg-card',
         'fixed inset-x-0 top-0 z-10 transition-all duration-300 lg:relative lg:inset-auto lg:bottom-auto lg:h-screen lg:w-full',
-        selectedConv ? 'bottom-0' : 'bottom-[70px]',
+        selectedConv ? 'bottom-0' : 'bottom-[88px]',
       )}
     >
       <div className="relative hidden shrink-0 flex-row items-center justify-between gap-4 overflow-hidden border-b border-border bg-background px-4 py-6 md:px-8 lg:flex">

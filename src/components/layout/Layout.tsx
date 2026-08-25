@@ -86,9 +86,7 @@ export const Layout = () => {
         </main>
       </div>
 
-      {!isChatOnly && !location.pathname.includes('/chat') && (
-        <AppTabBar onMore={() => setMobileMenuOpen(true)} />
-      )}
+      {!isChatOnly && <AppTabBar onMore={() => setMobileMenuOpen(true)} />}
     </div>
   )
 }
