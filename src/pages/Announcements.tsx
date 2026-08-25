@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Megaphone, Plus, Bell, Calendar, Filter, Trash2 } from 'lucide-react'
+import { Megaphone, Plus, Bell, Calendar, EyeOff, Trash2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { EmptyState } from '../shared/components/ui/EmptyState'
 import { api, safeArray } from '../lib/api'
@@ -161,7 +161,7 @@ export const Announcements = () => {
       {
         label: 'غير النشطة',
         value: announcements.filter((a) => !a.isActive).length,
-        icon: Filter,
+        icon: EyeOff,
         gradient: 'from-warning-soft to-background dark:from-warning-soft dark:to-card',
         iconBg: 'bg-white/50 text-warning dark:bg-white/10',
         accent: 'bg-warning',
@@ -200,191 +200,211 @@ export const Announcements = () => {
   }
 
   return (
-    <>
-      {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
-      {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
-      {currentUser?.role === 'student' && <div className="hidden md:block"></div>}
-      <div className="relative min-h-full overflow-x-hidden pb-24" dir="rtl">
-        <div className="mx-auto max-w-page px-2">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="relative mb-4 overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover md:p-8"
-          >
-            {particles.map((p) => (
-              <motion.div
-                key={p.id}
-                className="pointer-events-none absolute rounded-full bg-white/10"
-                style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-                animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-                transition={{
-                  duration: p.duration,
-                  repeat: Infinity,
-                  delay: p.delay,
-                  ease: 'easeInOut',
-                }}
-              />
-            ))}
-            <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                    <Megaphone className="text-white" size={20} />
-                  </div>
-                  <span className="text-xs font-medium text-white/70">
-                    {isAdmin
-                      ? 'الإدارة'
-                      : currentUser?.role === 'teacher'
-                        ? 'للمعلمات'
-                        : 'لأولياء الأمور والطلاب'}
-                  </span>
+    <div className="relative min-h-full overflow-x-hidden pb-2" dir="rtl">
+      <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-xl dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover"
+        >
+          <div className="absolute inset-0 opacity-[0.06]">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern
+                  id="ann-hero-grid"
+                  x="0"
+                  y="0"
+                  width="28"
+                  height="28"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="2" cy="2" r="1" fill="white" />
+                  <circle cx="16" cy="16" r="0.8" fill="white" opacity="0.4" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#ann-hero-grid)" />
+            </svg>
+          </div>
+          {particles.map((p) => (
+            <motion.div
+              key={p.id}
+              className="pointer-events-none absolute rounded-full bg-white/10"
+              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
+              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
+              transition={{
+                duration: p.duration,
+                repeat: Infinity,
+                delay: p.delay,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+          <div className="relative z-10 flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between md:p-7">
+            <div>
+              <div className="mb-2.5 flex items-center gap-2.5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/25 backdrop-blur-sm">
+                  <Megaphone size={18} className="text-on-primary" />
                 </div>
-                <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">الإعلانات</h1>
-                <p className="text-sm text-white/70">
-                  {isAdmin ? 'نشر وإدارة الإعلانات والتنبيهات' : 'آخر الإعلانات والتنبيهات المهمة'}
+                <span className="rounded-lg bg-white/10 px-2.5 py-1 text-micro font-bold text-white/80">
+                  الإدارة
+                </span>
+              </div>
+              <h1 className="mb-1 text-2xl font-black tracking-tight text-on-primary md:text-3xl">
+                الإعلانات
+              </h1>
+              <p className="text-xs font-medium text-white/70 md:text-sm">
+                نشر وإدارة الإعلانات والتنبيهات
+              </p>
+            </div>
+            <div className="hidden items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm md:flex">
+              <div className="text-center">
+                <p className="mb-1 text-xs text-white/60">الإجمالي</p>
+                <p className="text-2xl font-bold text-white">{announcements.length}</p>
+              </div>
+              <div className="h-10 w-px bg-white/10" />
+              <div className="text-center">
+                <p className="mb-1 text-xs text-white/60">النشطة</p>
+                <p className="text-2xl font-bold text-white">
+                  {announcements.filter((a) => a.isActive).length}
                 </p>
               </div>
-              {isAdmin && (
-                <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
-                  <div className="text-center">
-                    <p className="mb-1 text-xs text-white/60">الإجمالي</p>
-                    <p className="text-2xl font-bold text-white">{announcements.length}</p>
-                  </div>
-                  <div className="h-10 w-px bg-white/10" />
-                  <div className="text-center">
-                    <p className="mb-1 text-xs text-white/60">النشطة</p>
-                    <p className="text-2xl font-bold text-white">
-                      {announcements.filter((a) => a.isActive).length}
-                    </p>
-                  </div>
-                </div>
-              )}
             </div>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {isAdmin && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              data-kpi
-            >
-              <div className="mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-                {kpiCards.map((kpi, i) => {
-                  const Icon = kpi.icon
-                  return (
-                    <motion.div
-                      key={kpi.label}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.12 + i * 0.06 }}
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      className={cn(
-                        'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
-                        kpi.gradient,
-                      )}
-                    >
-                      <div className="mb-3 flex items-center justify-between">
-                        <div className={cn('rounded-lg p-2', kpi.iconBg)}>
-                          <Icon size={16} />
-                        </div>
-                        <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
-                      </div>
-                      <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                      <p className="text-2xl font-bold text-main">{kpi.value}</p>
-                    </motion.div>
-                  )
-                })}
-              </div>
-            </motion.div>
-          )}
-
+        {isAdmin && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.1 }}
+            data-kpi
           >
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
-              {visibleAnnouncements.map((ann, idx) => (
-                <motion.div
-                  key={ann.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.03 * idx }}
-                >
-                  <AnnouncementCard
-                    announcement={ann}
-                    onEdit={isAdmin ? openEdit : undefined}
-                    onDelete={isAdmin ? handleDelete : undefined}
-                  />
-                </motion.div>
-              ))}
-              {visibleAnnouncements.length === 0 && !isLoading && (
-                <EmptyState
-                  icon={Megaphone}
-                  title="لا توجد إعلانات بعد"
-                  className="col-span-full rounded-2xl border border-dashed border-border bg-card"
-                />
-              )}
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+              {kpiCards.map((kpi, i) => {
+                const Icon = kpi.icon
+                return (
+                  <motion.div
+                    key={kpi.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.12 + i * 0.06 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className={cn(
+                      'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
+                      kpi.gradient,
+                    )}
+                  >
+                    <div className="absolute inset-x-0 top-0 h-0.5">
+                      <div className={cn('h-full rounded-full', kpi.accent)} />
+                    </div>
+                    <div className="mb-3 flex items-center justify-between">
+                      <div className={cn('rounded-lg p-2', kpi.iconBg)}>
+                        <Icon size={16} />
+                      </div>
+                    </div>
+                    <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
+                    <p className="mt-0.5 text-xs text-muted">{kpi.label}</p>
+                  </motion.div>
+                )
+              })}
             </div>
           </motion.div>
-
-          <AnnouncementFormModal
-            isOpen={isModalOpen}
-            editingAnnouncement={editingAnnouncement}
-            formData={formData}
-            onChange={(data) => setFormData((prev) => ({ ...prev, ...data }))}
-            onClose={() => {
-              setIsModalOpen(false)
-              setEditingAnnouncement(null)
-              setFormData({ title: '', content: '', type: 'general', isActive: true })
-            }}
-            onSubmit={handleSave}
-          />
-        </div>
-
-        {isAdmin && (
-          <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
-            <AnimatePresence>
-              {fabOpen &&
-                fabActions.map((action, i) => (
-                  <motion.div
-                    key={action.label}
-                    initial={{ opacity: 0, scale: 0.3, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.3, y: 20 }}
-                    transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
-                    className="flex items-center gap-2"
-                  >
-                    <span className="whitespace-nowrap rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
-                      {action.label}
-                    </span>
-                    <button
-                      onClick={() => {
-                        action.onClick()
-                        setFabOpen(false)
-                      }}
-                      className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl active:scale-95"
-                    >
-                      <action.icon size={18} />
-                    </button>
-                  </motion.div>
-                ))}
-            </AnimatePresence>
-            <motion.button
-              onClick={() => setFabOpen(!fabOpen)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={cn(
-                'flex h-12 w-12 items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all',
-                fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
-              )}
-            >
-              <Plus size={24} />
-            </motion.button>
-          </div>
         )}
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+            {visibleAnnouncements.map((ann, idx) => (
+              <motion.div
+                key={ann.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.03 * idx }}
+              >
+                <AnnouncementCard
+                  announcement={ann}
+                  onEdit={isAdmin ? openEdit : undefined}
+                  onDelete={isAdmin ? handleDelete : undefined}
+                />
+              </motion.div>
+            ))}
+            {visibleAnnouncements.length === 0 && !isLoading && (
+              <EmptyState
+                icon={Megaphone}
+                title="لا توجد إعلانات بعد"
+                className="col-span-full rounded-2xl border border-dashed border-border bg-card"
+              />
+            )}
+          </div>
+        </motion.div>
+
+        <AnnouncementFormModal
+          isOpen={isModalOpen}
+          editingAnnouncement={editingAnnouncement}
+          formData={formData}
+          onChange={(data) => setFormData((prev) => ({ ...prev, ...data }))}
+          onClose={() => {
+            setIsModalOpen(false)
+            setEditingAnnouncement(null)
+            setFormData({ title: '', content: '', type: 'general', isActive: true })
+          }}
+          onSubmit={handleSave}
+        />
       </div>
-    </>
+
+      {isAdmin && (
+        <div
+          className="fixed end-4 z-50 flex flex-col items-end gap-3 md:end-8"
+          style={{ bottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}
+        >
+          <AnimatePresence>
+            {fabOpen &&
+              fabActions.map((action, i) => (
+                <motion.div
+                  key={action.label}
+                  initial={{ opacity: 0, scale: 0.3, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.3, y: 20 }}
+                  transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
+                  className="flex items-center gap-2"
+                >
+                  <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                    {action.label}
+                  </span>
+                  <button
+                    onClick={() => {
+                      action.onClick()
+                      setFabOpen(false)
+                    }}
+                    aria-label={action.label}
+                    className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-elevation-2 transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  >
+                    <action.icon size={18} />
+                  </button>
+                </motion.div>
+              ))}
+          </AnimatePresence>
+          <motion.button
+            onClick={() => setFabOpen(!fabOpen)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label={fabOpen ? 'إغلاق القائمة' : 'خيارات الإعلانات'}
+            aria-expanded={fabOpen}
+            className={cn(
+              'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-elevation-3 transition-colors focus-visible:ring-2 focus-visible:ring-focus',
+              fabOpen ? 'bg-error' : 'bg-primary',
+            )}
+          >
+            <Plus
+              size={24}
+              className={cn('transition-transform duration-normal', fabOpen && 'rotate-45')}
+            />
+          </motion.button>
+        </div>
+      )}
+    </div>
   )
 }
