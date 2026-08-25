@@ -155,7 +155,7 @@ export const ParentDashboard = () => {
     return (
       <div className="min-h-screen bg-background dark:bg-background" dir="rtl">
         <div className="sticky top-0 z-[100] border-b border-border bg-surface dark:border-border dark:bg-card">
-          <div className="mx-auto flex max-w-page items-center justify-between px-4 pb-3 pt-4 md:px-6">
+          <div className="mx-auto flex max-w-page items-center justify-between px-2.5 pb-3 pt-4 sm:px-4 md:px-6">
             <div className="flex items-center gap-3">
               <Skeleton className="h-9 w-9 rounded-xl" />
               <div className="space-y-1.5">
@@ -170,7 +170,7 @@ export const ParentDashboard = () => {
             </div>
           </div>
         </div>
-        <div className="mx-auto max-w-page space-y-6 px-4 pt-6">
+        <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4">
           <Skeleton className="h-44 rounded-2xl" />
           <div className="grid grid-cols-2 gap-4">
             <Skeleton className="h-32 rounded-2xl" />

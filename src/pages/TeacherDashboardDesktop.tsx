@@ -77,7 +77,7 @@ export const TeacherDashboardDesktop = ({
   return (
     <>
       <TeacherDashboardHeader logout={logout} />
-      <div className="mx-auto max-w-page space-y-3 px-4 pb-28 pt-4 md:space-y-4">
+      <div className="mx-auto max-w-page space-y-3 px-2.5 pb-28 pt-4 sm:px-4 md:space-y-4">
         <motion.div {...fadeUp(0.04)}>
           {nextSession ? (
             <NextSessionHero timeline={timeline} />

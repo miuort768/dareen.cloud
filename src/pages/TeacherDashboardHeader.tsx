@@ -48,7 +48,7 @@ export const TeacherDashboardHeader = ({ logout }: TeacherDashboardHeaderProps) 
   return (
     <header className="bg-surface/90 dark:bg-surface/90 sticky top-0 z-[100] border-b border-border backdrop-blur-xl transition-colors duration-500 dark:border-primary/20">
       <div className="mx-auto max-w-page">
-        <div className="flex h-16 items-center justify-between px-4 md:px-5">
+        <div className="flex h-16 items-center justify-between px-2.5 sm:px-4 md:px-5">
           <button
             onClick={() => navigate('/teacher-profile')}
             className="-m-1 flex items-center gap-3 rounded-lg p-1 text-start transition-all duration-200 hover:bg-hover active:scale-[0.98]"

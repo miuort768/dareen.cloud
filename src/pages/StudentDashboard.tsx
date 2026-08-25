@@ -52,7 +52,7 @@ export const StudentDashboard = () => {
             <Skeleton className="h-8 w-8 rounded-xl" />
           </div>
         </div>
-        <div className="mx-auto max-w-page space-y-6 px-4 pt-6">
+        <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4">
           <Skeleton className="h-44 rounded-2xl" />
           <Skeleton className="h-32 rounded-2xl" />
           <div className="grid grid-cols-2 gap-4">

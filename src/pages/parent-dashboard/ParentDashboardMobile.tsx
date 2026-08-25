@@ -104,7 +104,7 @@ export const ParentDashboardMobile = ({
 
       <ParentDashboardHeader logout={logout} />
 
-      <main className="mx-auto max-w-page space-y-4 px-4 pb-28 pt-4">
+      <main className="mx-auto max-w-page space-y-4 px-2.5 pb-28 pt-4 sm:px-4">
         <motion.div {...fadeUp(0)}>
           <HeroSection
             name={currentUser?.name || currentUser?.username || 'ولي الأمر'}

@@ -79,7 +79,7 @@ export const ParentDashboardDesktop = ({
     >
       <ParentDashboardHeader logout={logout} />
 
-      <main className="mx-auto max-w-page space-y-6 px-4 pb-12 pt-6 md:px-6">
+      <main className="mx-auto max-w-page space-y-6 px-2.5 pb-12 pt-6 sm:px-4 md:px-6">
         <motion.div {...fadeUp(0)}>
           <HeroSection
             name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
