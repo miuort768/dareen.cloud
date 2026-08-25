@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { LogOut, CalendarDays, ChevronLeft, Sparkles } from 'lucide-react'
+import { LogOut, CalendarDays, ChevronLeft, Sparkles, X } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Image } from '../../shared/components/ui'
 import { Button } from '../ui/button'
@@ -28,28 +28,10 @@ interface MobileQuickAccessProps {
 
 /** Priority page-ids per role — matched against permission-filtered navigation */
 const FEATURED_BY_ROLE: Record<string, string[]> = {
-  admin: [
-    'students',
-    'teachers',
-    'parents',
-    'finance',
-    'schedule',
-    'announcements',
-    'reports',
-    'tasks',
-  ],
-  teacher: [
-    'attendance',
-    'evaluations',
-    'schedule',
-    'teacher_invoices',
-    'teacher_payment_history',
-    'tasks',
-    'announcements',
-    'forum',
-  ],
-  parent: ['parent_students', 'parent_announcements', 'chat', 'dashboard'],
-  student: ['forum', 'schedule', 'chat'],
+  admin: ['students', 'teachers', 'parents', 'finance'],
+  teacher: ['attendance', 'evaluations', 'schedule', 'teacher_invoices'],
+  parent: ['parent_students', 'parent_announcements', 'chat', 'parent_payment_history'],
+  student: ['student_dashboard', 'forum', 'schedule', 'chat'],
 }
 
 const TILE_STYLES = [
@@ -86,7 +68,7 @@ export const MobileQuickAccess = ({
   const featured = priorityIds
     .map((id) => byId.get(id))
     .filter((n): n is NavItem => Boolean(n))
-    .slice(0, 8)
+    .slice(0, 4)
   const featuredIds = new Set(featured.map((f) => f.id))
   const rest = navigation.filter((n) => !featuredIds.has(n.id))
 
@@ -127,6 +109,13 @@ export const MobileQuickAccess = ({
               {academicYear}
             </span>
           )}
+          <button
+            onClick={onCloseMenu}
+            aria-label="إغلاق القائمة"
+            className="border-error/20 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border bg-error-soft text-error shadow-sm outline-none transition-all duration-200 hover:bg-error hover:text-on-error hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          >
+            <X size={18} strokeWidth={2.2} />
+          </button>
         </div>
 
         {/* Scrollable body */}
@@ -240,12 +229,12 @@ export const MobileQuickAccess = ({
         {/* Footer */}
         <div className="border-border/60 shrink-0 border-t p-3 dark:border-white/10">
           <Button
-            variant="outline"
+            variant="destructive"
             onClick={() => {
               onLogout()
               onCloseMenu()
             }}
-            className="border-error/30 dark:hover:bg-error/20 mx-auto flex w-full items-center justify-center gap-2 text-error hover:bg-error-light"
+            className="h-11 w-full gap-2 rounded-xl"
           >
             <LogOut size={16} className="rtl:rotate-180" />
             <span>تسجيل الخروج</span>
