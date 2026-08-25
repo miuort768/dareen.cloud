@@ -432,7 +432,7 @@ export const TrialSessions = () => {
   if (isTrialsError) {
     return (
       <div className="min-h-screen bg-background pb-24" dir="rtl">
-        <div className="mx-auto max-w-page px-4 pt-6 md:px-6 md:pt-10">
+        <div className="mx-auto max-w-page px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
           <ErrorBanner />
         </div>
       </div>
@@ -447,7 +447,7 @@ export const TrialSessions = () => {
       className="min-h-screen bg-background pb-24"
       dir="rtl"
     >
-      <div className="relative z-10 mx-auto max-w-page px-4 md:px-6">
+      <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
         {/* ===== HEADER ===== */}
         <motion.div variants={itemVariants} className="pb-2 pt-4">
           {/* Mobile layout */}

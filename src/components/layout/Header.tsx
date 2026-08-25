@@ -62,7 +62,7 @@ export const Header = memo(() => {
   // Dashboard paths where role-specific headers are used instead
   const dashboardPaths = ['/teacher-dashboard', '/student-dashboard', '/parent-dashboard', '/chat']
   const isOnDashboard = dashboardPaths.some(
-    (p) => location.pathname === p || location.pathname.startsWith(`${p}/`)
+    (p) => location.pathname === p || location.pathname.startsWith(`${p}/`),
   )
   // Hide general header:
   // 1. On mobile: for dashboard paths (role headers render inside the page)
@@ -109,7 +109,7 @@ export const Header = memo(() => {
         'transition-all duration-300',
       )}
     >
-      <div className="mx-auto flex h-full max-w-page items-center justify-between px-4 lg:px-8">
+      <div className="mx-auto flex h-full max-w-page items-center justify-between px-2.5 sm:px-4 lg:px-8">
         <div className="flex min-w-0 flex-1 items-center gap-4">
           <Image
             src="/dareen_logo_new.webp"

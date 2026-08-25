@@ -2,7 +2,7 @@ import { Skeleton } from '../../../shared/components/ui/Skeleton'
 
 export const LeadsSkeleton = () => (
   <div className="min-h-screen bg-background pb-24" dir="rtl">
-    <div className="relative z-10 mx-auto max-w-page px-4">
+    <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4">
       {/* Header skeleton */}
       <div className="pb-2 pt-4">
         <div className="flex items-center justify-between">

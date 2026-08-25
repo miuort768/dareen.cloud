@@ -96,12 +96,12 @@ export const Finance = () => {
 
   return (
     <div className="relative min-h-full overflow-x-hidden pb-28" dir="rtl">
-      <div className="mx-auto max-w-page space-y-6 px-4 md:px-6">
+      <div className="mx-auto max-w-page space-y-6 px-2.5 sm:px-4 md:px-6">
         {/* Hero Banner */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover dark:from-slate-950 dark:via-indigo-950/90 dark:to-slate-950 border border-transparent dark:border-primary/20 p-6 md:p-8"
+          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 dark:border-primary/20 dark:from-slate-950 dark:via-indigo-950/90 dark:to-slate-950 md:p-8"
         >
           <div className="absolute inset-0 opacity-[0.04]">
             <svg width="100%" height="100%">
@@ -284,7 +284,7 @@ export const Finance = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-13 w-13 items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all',
+            'h-13 w-13 flex items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >
