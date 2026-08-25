@@ -1,18 +1,20 @@
 import { memo } from 'react'
 import { motion, type Variants } from 'framer-motion'
+import { CalendarDays, RefreshCw, AlertCircle } from 'lucide-react'
 import { useExecutiveDashboard } from '../../hooks/useExecutiveDashboard'
 import { BusinessPulse } from './BusinessPulse'
-import { ExecutiveKPI } from './ExecutiveKPI'
+import { TodayMoney } from './TodayMoney'
+import { AttentionTiles } from './AttentionTiles'
+import { OpsMetrics } from './ExecutiveKPI'
 import { ExecutiveAlerts } from './ExecutiveAlerts'
 import { UpcomingTimeline } from './UpcomingTimeline'
 import { PresenceGrid } from './PresenceGrid'
-import { SystemStatus } from './SystemStatus'
+import { SystemStatusBar } from './SystemStatusBar'
 import { ActivityFeed } from './ActivityFeed'
 import { InsightsPanel } from './InsightsPanel'
 import { QuickActionsGrid } from './QuickActionsGrid'
 import { SectionErrorBoundary } from '../../../../shared/components/ui'
 import { Skeleton } from '@/components/ui/skeleton'
-import { TrendingUp, RefreshCw, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -34,24 +36,44 @@ const Section = ({ children, className }: { children: React.ReactNode; className
   </motion.div>
 )
 
-export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
+const formatToday = () => {
+  try {
+    return new Intl.DateTimeFormat('ar-EG-u-nu-latn', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    }).format(new Date())
+  } catch {
+    return new Date().toLocaleDateString()
+  }
+}
+
+interface ExecutiveDashboardProps {
+  academicYear?: string
+}
+
+export const ExecutiveDashboard = memo(function ExecutiveDashboard({
+  academicYear,
+}: ExecutiveDashboardProps) {
   const { data, isLoading, error, refetch, isFetching } = useExecutiveDashboard()
 
   if (isLoading) {
     return (
-      <div className="space-y-6" dir="rtl">
-        <Skeleton className="h-[120px] rounded-2xl" />
+      <div className="space-y-5" dir="rtl">
+        <Skeleton className="h-12 rounded-2xl" />
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-          <div className="lg:col-span-3">
-            <Skeleton className="h-[200px] rounded-2xl" />
+          <div className="lg:col-span-4">
+            <Skeleton className="h-[220px] rounded-2xl" />
           </div>
-          <div className="lg:col-span-9">
-            <Skeleton className="h-[200px] rounded-2xl" />
+          <div className="lg:col-span-8">
+            <Skeleton className="h-[220px] rounded-2xl" />
           </div>
         </div>
+        <Skeleton className="h-[76px] rounded-2xl" />
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
-            <Skeleton key={`skel-${i}`} className="h-[280px] rounded-2xl" />
+            <Skeleton key={`skel-${i}`} className="h-[300px] rounded-2xl" />
           ))}
         </div>
       </div>
@@ -95,64 +117,82 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
     activity = [],
   } = data
 
+  const criticalCount = alerts.critical?.length ?? 0
+
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-6"
+      className="space-y-5"
       dir="rtl"
     >
-      {/* Header */}
+      {/* Header strip */}
       <Section>
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-l from-primary to-primary-deep p-4 font-dash shadow-md shadow-primary/20 md:p-6">
-          <div className="pointer-events-none absolute -end-10 -top-10 h-32 w-32 rounded-full bg-white/10 blur-xl" />
-          <div className="relative z-10 flex flex-col justify-between gap-4 md:flex-row md:items-center">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/15 ring-2 ring-white/30">
-                <TrendingUp size={22} className="text-on-primary" />
-              </div>
-              <div className="space-y-1">
-                <h1 className="text-xl font-bold leading-tight text-on-primary md:text-2xl">
-                  لوحة القيادة التنفيذية
-                </h1>
-                <p className="text-on-primary/70 text-sm">نظرة شاملة على أداء المنشأة</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2.5">
-              <div className="flex items-center gap-1.5 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold tabular-nums text-on-primary">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
-                مباشر
-              </div>
-              <button
-                onClick={() => refetch()}
-                disabled={isFetching}
-                aria-label="تحديث البيانات"
-                title="تحديث البيانات"
-                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-on-primary transition-all hover:bg-white/20 active:scale-95 disabled:opacity-50"
-              >
-                <RefreshCw size={14} className={isFetching ? 'animate-spin' : ''} />
-              </button>
-            </div>
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 font-dash">
+          <div className="flex items-center gap-2">
+            <CalendarDays size={16} strokeWidth={1.9} className="text-primary" />
+            <h1 className="text-sm font-black tracking-tight text-main md:text-base">
+              {formatToday()}
+            </h1>
+            {academicYear && (
+              <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
+                {academicYear}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 py-1.5 text-[10px] font-bold tabular-nums text-muted">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+              </span>
+              مباشر
+            </span>
+            {criticalCount > 0 && (
+              <span className="border-error/25 rounded-lg border bg-error-soft px-2.5 py-1.5 text-[10px] font-black tabular-nums text-error">
+                {criticalCount} تنبيه حرج
+              </span>
+            )}
+            <button
+              onClick={() => refetch()}
+              disabled={isFetching}
+              aria-label="تحديث البيانات"
+              title="تحديث البيانات"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-card text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+            >
+              <RefreshCw size={13} className={isFetching ? 'animate-spin' : ''} />
+            </button>
           </div>
         </div>
       </Section>
 
-      {/* Pulse + KPIs */}
+      {/* Pulse + money today */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-4">
           <Section>
             <BusinessPulse pulse={pulse} />
           </Section>
         </div>
-        <div className="lg:col-span-9">
+        <div className="lg:col-span-8">
           <Section>
-            <ExecutiveKPI stats={stats} />
+            <TodayMoney stats={stats} />
+            <div className="mt-4">
+              <p className="mb-2.5 font-dash text-micro font-black uppercase tracking-label text-muted">
+                تحتاج انتباهك
+              </p>
+              <AttentionTiles stats={stats} />
+            </div>
           </Section>
         </div>
       </div>
 
-      {/* Alerts + Upcoming + Presence */}
+      {/* Operations */}
+      <Section>
+        <OpsMetrics stats={stats} />
+      </Section>
+
+      {/* Live context */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
         <Section>
           <ExecutiveAlerts alerts={alerts} />
@@ -168,22 +208,28 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard() {
         </Section>
       </div>
 
-      {/* System + Activity + Insights */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-        <Section>
-          <SystemStatus health={health} />
-        </Section>
-        <Section>
-          <ActivityFeed items={activity} />
-        </Section>
-        <Section>
-          <InsightsPanel stats={stats} />
-        </Section>
+      {/* Context */}
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+        <div className="lg:col-span-7">
+          <Section>
+            <ActivityFeed items={activity} />
+          </Section>
+        </div>
+        <div className="lg:col-span-5">
+          <Section>
+            <InsightsPanel stats={stats} />
+          </Section>
+        </div>
       </div>
 
-      {/* Quick Actions */}
+      {/* Quick actions */}
       <Section>
         <QuickActionsGrid />
+      </Section>
+
+      {/* System footer strip */}
+      <Section>
+        <SystemStatusBar health={health} />
       </Section>
     </motion.div>
   )

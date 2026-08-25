@@ -7,7 +7,7 @@ import { MobileDashboardView } from '../components/MobileDashboardView'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { AlertCircle, CalendarDays } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 import { useAcademicYear } from '../../../context/useApp'
 
 const containerVariants = {
@@ -112,16 +112,7 @@ export const Dashboard = () => {
         >
           {/* Desktop */}
           <div className="relative z-10 mx-auto hidden max-w-page px-6 md:block">
-            {academicYear && (
-              <div className="flex justify-end pt-5">
-                <span className="flex items-center gap-1.5 rounded-lg bg-primary-soft px-3 py-1.5 text-[11px] font-bold text-primary">
-                  <CalendarDays size={13} />
-                  السنة الدراسية: {academicYear}
-                </span>
-              </div>
-            )}
-
-            <ExecutiveDashboard />
+            <ExecutiveDashboard academicYear={academicYear} />
           </div>
 
           {/* Mobile */}

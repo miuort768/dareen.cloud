@@ -1,6 +1,7 @@
 import { memo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import type { ExecutiveAlerts as AlertsType } from '../../services/executiveService'
-import { AlertTriangle, XCircle, Info, Clock, Bell } from 'lucide-react'
+import { AlertTriangle, XCircle, Info, Clock, Bell, ChevronLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const SEVERITY_CONFIG: Record<
@@ -38,6 +39,14 @@ const SEVERITY_CONFIG: Record<
 }
 
 type SeverityKey = keyof typeof SEVERITY_CONFIG
+
+function actionRouteFor(message: string): string | null {
+  if (/فاتورة|تحصيل|دفعة/.test(message)) return '/student-invoices'
+  if (/رصيد|جلسات قليلة/.test(message)) return '/students'
+  if (/غياب|حضور/.test(message)) return '/attendance'
+  if (/جدول|موعد|تأخير/.test(message)) return '/schedule'
+  return null
+}
 
 export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alerts: AlertsType }) {
   const [filter, setFilter] = useState<SeverityKey | 'all'>('all')
@@ -110,14 +119,9 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
           const cfg = SEVERITY_CONFIG[alert.severity] ||
             SEVERITY_CONFIG.info || { icon: Info, rowBg: '', text: '', dot: '', label: '' }
           const Icon = cfg.icon
-          return (
-            <div
-              key={`alert-${i}`}
-              className={cn(
-                'flex items-start gap-2.5 rounded-xl border p-3 transition-colors',
-                cfg.rowBg,
-              )}
-            >
+          const actionTo = actionRouteFor(alert.message)
+          const body = (
+            <>
               <div className="relative mt-0.5 shrink-0">
                 <Icon size={14} className={cfg.text} />
                 <span
@@ -128,9 +132,38 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
                 <p className="text-[11px] font-bold leading-relaxed text-main">{alert.message}</p>
                 {alert.time && <p className="mt-0.5 text-[10px] text-muted">{alert.time}</p>}
               </div>
-              {alert.count && (
-                <span className="shrink-0 text-[10px] font-bold text-muted">+{alert.count}</span>
+              {actionTo ? (
+                <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-bold text-primary">
+                  متابعة
+                  <ChevronLeft size={11} className="rtl:rotate-180" />
+                </span>
+              ) : (
+                alert.count && (
+                  <span className="shrink-0 text-[10px] font-bold text-muted">+{alert.count}</span>
+                )
               )}
+            </>
+          )
+          const rowClass = cn(
+            'flex items-start gap-2.5 rounded-xl border p-3 transition-colors',
+            cfg.rowBg,
+            actionTo && 'hover:border-primary/30 hover:bg-card',
+          )
+
+          return actionTo ? (
+            <Link
+              key={`alert-${i}`}
+              to={actionTo}
+              className={cn(
+                rowClass,
+                'block outline-none focus-visible:ring-2 focus-visible:ring-focus',
+              )}
+            >
+              {body}
+            </Link>
+          ) : (
+            <div key={`alert-${i}`} className={rowClass}>
+              {body}
             </div>
           )
         })}
