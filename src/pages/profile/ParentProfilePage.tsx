@@ -14,10 +14,9 @@ import {
   Edit3,
 } from 'lucide-react'
 import { api } from '../../lib/api'
-import { useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext'
+import { useCurrentUser, useAcademyName } from '../../context/AppContext'
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { Skeleton } from '../../shared/components/ui'
-import { ParentDashboardHeader } from '../parent-dashboard/ParentDashboardHeader'
 import type { Student } from '../../types'
 
 interface PointLog {
@@ -41,7 +40,6 @@ export const ParentProfilePage = () => {
   }, [academyName])
 
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const navigate = useNavigate()
   const [children, setChildren] = useState<Student[]>([])
   const [pointLogs, setPointLogs] = useState<PointLog[]>([])
@@ -131,9 +129,7 @@ export const ParentProfilePage = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background" dir="rtl">
-        <div className="hidden md:block">
-          <ParentDashboardHeader logout={logout} />
-        </div>
+        <div className="hidden md:block"></div>
         <div className="mx-auto max-w-page space-y-6 p-4 md:p-8">
           <Skeleton className="h-40 rounded-3xl" />
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
@@ -147,9 +143,7 @@ export const ParentProfilePage = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background pb-24" dir="rtl">
-      <div className="hidden md:block">
-        <ParentDashboardHeader logout={logout} />
-      </div>
+      <div className="hidden md:block"></div>
 
       <motion.div
         initial="initial"

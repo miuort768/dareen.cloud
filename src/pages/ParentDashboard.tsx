@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../lib/api'
-import { useCurrentUser, useAdminPhone, useLogout, useAcademyName } from '../context/AppContext'
+import { useCurrentUser, useAdminPhone, useAcademyName } from '../context/AppContext'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { Skeleton } from '../shared/components/ui'
@@ -17,7 +17,6 @@ export const ParentDashboard = () => {
   }, [academyName])
   const currentUser = useCurrentUser()
   const adminPhone = useAdminPhone()
-  const logout = useLogout()
 
   const [partialError, setPartialError] = useState<string | null>(null)
 
@@ -213,7 +212,6 @@ export const ParentDashboard = () => {
     activeTimers,
     todayTasks,
     formatTime,
-    logout,
     onRefresh: () => refetch(),
   }
 

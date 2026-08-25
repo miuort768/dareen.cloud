@@ -11,7 +11,6 @@ import type {
   NextSession,
   TodayTask,
 } from './types'
-import { StudentDashboardHeader } from './StudentDashboardHeader'
 import { HeroSection } from './HeroSection'
 import { NextSessionCard } from './NextSessionCard'
 import { TodayTasks } from './TodayTasks'
@@ -21,7 +20,6 @@ import { ContinueLearning } from './ContinueLearning'
 import { InvoicesCard } from './InvoicesCard'
 import { AchievementsSection } from './AchievementsSection'
 import { RecentActivity } from './RecentActivity'
-import { useLogout } from '../../context/AppContext'
 import { normalizeDayName } from '../../features/attendance/utils/slotUtils'
 
 interface StudentDashboardDesktopProps {
@@ -36,8 +34,6 @@ export const StudentDashboardDesktop = ({
   sessions,
   pointLogs,
 }: StudentDashboardDesktopProps) => {
-  const logout = useLogout()
-
   const enrollments = studentData?.enrollments || []
   const points = studentData?.totalPoints || 0
   const rank = getRankByPoints(points, STUDENT_RANKS)
@@ -126,8 +122,6 @@ export const StudentDashboardDesktop = ({
       className="min-h-screen bg-background transition-colors duration-300 dark:bg-background"
       dir="rtl"
     >
-      <StudentDashboardHeader logout={logout} />
-
       <main className="mx-auto max-w-page space-y-6 px-2.5 pb-12 pt-6 sm:px-4 md:px-6">
         <motion.div {...fadeUp(0)}>
           <HeroSection

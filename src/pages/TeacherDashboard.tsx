@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageLoader } from '../components/ui/PageLoader'
-import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext'
+import { useCurrentUser, useAcademyName } from '../context/AppContext'
 import { useDashboardData } from '../features/dashboard/hooks/useDashboardData'
 import { TeacherDashboardDesktop } from './TeacherDashboardDesktop'
 import { TeacherDashboardMobile } from './TeacherDashboardMobile'
@@ -12,7 +12,6 @@ export const TeacherDashboard = () => {
     document.title = `لوحة تحكم المعلمة | ${academyName}`
   }, [academyName])
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const navigate = useNavigate()
   const {
     stats,
@@ -49,7 +48,6 @@ export const TeacherDashboard = () => {
           lowBalanceStudents={lowBalanceStudents}
           focusStudents={focusStudents}
           timeline={timeline}
-          logout={logout}
         />
       </div>
       <div className="block md:hidden">

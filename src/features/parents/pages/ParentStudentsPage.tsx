@@ -3,8 +3,6 @@ import { Users } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { api } from '../../../lib/api'
 import { Skeleton } from '../../../shared/components/ui'
-import { useCurrentUser, useLogout } from '../../../context/AppContext'
-import { ParentDashboardHeader } from '../../../pages/parent-dashboard/ParentDashboardHeader'
 import { ParentsStudentHeader } from '../components/ParentsStudentHeader'
 import { ParentStudentCard } from '../components/ParentStudentCard'
 import { SessionsModal } from '../components/SessionsModal'
@@ -50,8 +48,6 @@ export const ParentStudents = () => {
   useEffect(() => {
     document.title = 'أطفالي | دارين السابعة للتعليم والتدريب'
   }, [])
-  const currentUser = useCurrentUser()
-  const logout = useLogout()
   const [students, setStudents] = useState<ParentStudent[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
@@ -136,11 +132,7 @@ export const ParentStudents = () => {
   if (isLoading)
     return (
       <div className="min-h-screen bg-background pb-24" dir="rtl">
-        {currentUser?.role === 'parent' && (
-          <div className="hidden md:block">
-            <ParentDashboardHeader logout={logout} />
-          </div>
-        )}
+        {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
         <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
           <Skeleton className="h-16 w-full rounded-2xl" />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -160,11 +152,7 @@ export const ParentStudents = () => {
       className="min-h-screen bg-background pb-24"
       dir="rtl"
     >
-      {currentUser?.role === 'parent' && (
-        <div className="hidden md:block">
-          <ParentDashboardHeader logout={logout} />
-        </div>
-      )}
+      {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
       <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
         <ParentsStudentHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -20,10 +20,6 @@ import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import type { LucideIcon } from 'lucide-react'
 import { Skeleton } from '../shared/components/ui'
-import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader'
-import { StudentDashboardHeader } from './student-dashboard/StudentDashboardHeader'
-import { TeacherDashboardHeader } from './TeacherDashboardHeader'
-import { useCurrentUser, useLogout } from '../context/AppContext'
 
 const TYPE_CONFIG: Record<
   string,
@@ -80,8 +76,6 @@ export const ParentAnnouncements = () => {
     document.title = `الإعلانات | ${academyName}`
   }, [academyName])
   const adminPhone = useAdminPhone()
-  const currentUser = useCurrentUser()
-  const logout = useLogout()
   const [searchQuery, setSearchQuery] = useState('')
   const [filterType, setFilterType] = useState<string>('all')
 
@@ -124,21 +118,9 @@ export const ParentAnnouncements = () => {
 
   return (
     <>
-      {currentUser?.role === 'teacher' && (
-        <div className="hidden md:block">
-          <TeacherDashboardHeader logout={logout} />
-        </div>
-      )}
-      {currentUser?.role === 'parent' && (
-        <div className="hidden md:block">
-          <ParentDashboardHeader logout={logout} />
-        </div>
-      )}
-      {currentUser?.role === 'student' && (
-        <div className="hidden md:block">
-          <StudentDashboardHeader logout={logout} />
-        </div>
-      )}
+      {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
+      {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
+      {currentUser?.role === 'student' && <div className="hidden md:block"></div>}
       <div className="min-h-full space-y-6 px-2 pb-32 pt-6 lg:px-8" dir="rtl">
         <div className="rounded-2xl border border-border bg-card px-4 py-6 md:px-6 md:py-8">
           <div className="mb-3 flex items-center gap-3">

@@ -19,11 +19,10 @@ import type { StatCardProps } from '../shared/components/ui'
 import type { ComponentType } from 'react'
 import { api, safeArray } from '../lib/api'
 import { confirm } from '../lib/confirmDialog'
-import { useCurrentUser, useLogout, useAcademyName } from '../context/AppContext'
+import { useAcademyName } from '../context/AppContext'
 import { PageLoader } from '../components/ui/PageLoader'
 import { TaskCard, EmptyTaskState } from './TaskCard'
 import { TaskFormModal } from './TaskFormModal'
-import { TeacherDashboardHeader } from './TeacherDashboardHeader'
 import { MobileTasks } from '../features/tasks/components/MobileTasks'
 
 export interface Task {
@@ -55,8 +54,6 @@ export const Tasks = () => {
   useEffect(() => {
     document.title = `المهام | ${academyName}`
   }, [academyName])
-  const currentUser = useCurrentUser()
-  const logout = useLogout()
   const [filterPriority, setFilterPriority] = useState<'all' | 'high' | 'medium' | 'low'>('all')
   const [searchTerm, setSearchTerm] = useState('')
   const [fabOpen, setFabOpen] = useState(false)
@@ -221,11 +218,7 @@ export const Tasks = () => {
         <MobileTasks />
       </div>
       <div className="relative hidden min-h-full bg-background pb-24 md:block" dir="rtl">
-        {currentUser?.role === 'teacher' && (
-          <div className="hidden md:block">
-            <TeacherDashboardHeader logout={logout} />
-          </div>
-        )}
+        {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
         <div className="mx-auto max-w-page space-y-4 px-3">
           <motion.div
             initial={{ opacity: 0 }}

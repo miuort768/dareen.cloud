@@ -16,10 +16,9 @@ import {
   Clock,
 } from 'lucide-react'
 import { api } from '../../lib/api'
-import { useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext'
+import { useCurrentUser, useAcademyName } from '../../context/AppContext'
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { Skeleton } from '../../shared/components/ui'
-import { StudentDashboardHeader } from '../student-dashboard/StudentDashboardHeader'
 
 interface StudentData {
   id?: string
@@ -66,7 +65,6 @@ export const StudentProfilePage = () => {
   }, [academyName])
 
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const [studentData, setStudentData] = useState<StudentData | null>(null)
   const [sessions, setSessions] = useState<Session[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -124,9 +122,7 @@ export const StudentProfilePage = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background" dir="rtl">
-        <div className="hidden md:block">
-          <StudentDashboardHeader logout={logout} />
-        </div>
+        <div className="hidden md:block"></div>
         <div className="mx-auto max-w-page space-y-6 p-4 md:p-8">
           <Skeleton className="h-40 rounded-3xl" />
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
@@ -143,9 +139,7 @@ export const StudentProfilePage = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background pb-24" dir="rtl">
-      <div className="hidden md:block">
-        <StudentDashboardHeader logout={logout} />
-      </div>
+      <div className="hidden md:block"></div>
 
       <motion.div
         initial="initial"

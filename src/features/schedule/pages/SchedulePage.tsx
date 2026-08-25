@@ -13,13 +13,10 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useCurrentUser, useLogout } from '../../../context/AppContext'
+import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { MobileSchedule } from '../components/MobileSchedule'
 import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page'
-import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader'
-import { StudentDashboardHeader } from '../../../pages/student-dashboard/StudentDashboardHeader'
-import { ParentDashboardHeader } from '../../../pages/parent-dashboard/ParentDashboardHeader'
 import { cn } from '../../../lib/utils'
 import { to24Minutes, normalizeDayName } from '../../attendance/utils/slotUtils'
 
@@ -105,7 +102,6 @@ export const Schedule = () => {
   const isTeacher = currentUser?.role === 'teacher'
   const isStudent = currentUser?.role === 'student'
   const isAdmin = currentUser?.role === 'admin'
-  const logout = useLogout()
 
   // Completed sessions (daily reset via same API as Appointments)
   const { data: completedSessionIds = [] } = useQuery({
@@ -348,21 +344,9 @@ export const Schedule = () => {
 
   return (
     <div className="relative min-h-full pb-24" dir="rtl">
-      {isTeacher && (
-        <div className="hidden md:block">
-          <TeacherDashboardHeader logout={logout} />
-        </div>
-      )}
-      {isStudent && (
-        <div className="hidden md:block">
-          <StudentDashboardHeader logout={logout} />
-        </div>
-      )}
-      {currentUser?.role === 'parent' && (
-        <div className="hidden md:block">
-          <ParentDashboardHeader logout={logout} />
-        </div>
-      )}
+      {isTeacher && <div className="hidden md:block"></div>}
+      {isStudent && <div className="hidden md:block"></div>}
+      {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
       <div className="mx-auto hidden max-w-page px-2 md:block">
         <div className="relative overflow-hidden rounded-2xl">
           {particles.map((p) => (

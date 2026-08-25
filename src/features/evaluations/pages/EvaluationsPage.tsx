@@ -3,13 +3,12 @@ import { User, Users, Plus, Award } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api, safeArray } from '../../../lib/api'
-import { useCurrentUser, useLogout } from '../../../context/AppContext'
+import { useCurrentUser } from '../../../context/AppContext'
 import { confirm } from '../../../lib/confirmDialog'
 import { EvaluationsHeader } from '../components/EvaluationsHeader'
 import { EvaluationCard } from '../components/EvaluationCard'
 import { EvaluationDrawer } from '../components/EvaluationDrawer'
 import { EvaluationFormModal } from '../components/EvaluationFormModal'
-import { TeacherDashboardHeader } from '../../../pages/TeacherDashboardHeader'
 import type { Student, Evaluation } from '../../../types'
 import { cn } from '../../../lib/utils'
 
@@ -18,7 +17,6 @@ export const Evaluations = () => {
     document.title = 'التقييمات | دارين السابعة للتعليم والتدريب'
   }, [])
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const queryClient = useQueryClient()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [profileStudent, setProfileStudent] = useState<Student | null>(null)
@@ -209,11 +207,7 @@ export const Evaluations = () => {
 
   return (
     <div className="relative min-h-full overflow-x-hidden bg-background pb-24 font-sans" dir="rtl">
-      {currentUser?.role === 'teacher' && (
-        <div className="hidden md:block">
-          <TeacherDashboardHeader logout={logout} />
-        </div>
-      )}
+      {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
       <div className="relative z-10 mx-auto max-w-page space-y-3 px-2">
         <EvaluationsHeader
           stats={stats}

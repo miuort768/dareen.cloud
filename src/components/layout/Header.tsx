@@ -1,11 +1,12 @@
-import { Sun, Moon, User, MessageSquare, Search, ChevronDown, Command } from 'lucide-react'
+import { Sun, Moon, User, MessageSquare, Search, ChevronDown, Command, LogOut } from 'lucide-react'
 import { useState, useEffect, memo, useRef } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { useDarkMode } from '../../shared/hooks/useDarkMode'
-import { useCurrentUser } from '../../context/AppContext'
+import { useCurrentUser, useLogout } from '../../context/AppContext'
 import { NotificationDropdown } from '../ui/NotificationDropdown'
 import { Image } from '../../shared/components/ui'
 import { cn } from '../../lib/utils'
+import { confirm } from '../../lib/confirmDialog'
 import { useUnreadStore } from '../../store/unreadStore'
 
 const routeMeta: Record<string, { title: string; subtitle: string }> = {
@@ -74,6 +75,7 @@ export const Header = memo(() => {
   const location = useLocation()
   const navigate = useNavigate()
   const currentUser = useCurrentUser()
+  const logout = useLogout()
   const totalUnreadCount = useUnreadStore((s) => s.totalUnreadCount)
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024)
   const [searchQuery, setSearchQuery] = useState('')
@@ -96,21 +98,6 @@ export const Header = memo(() => {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
-
-  const dashboardPaths = ['/teacher-dashboard', '/student-dashboard', '/parent-dashboard', '/chat']
-  const isOnDashboard = dashboardPaths.some(
-    (p) => location.pathname === p || location.pathname.startsWith(`${p}/`),
-  )
-  const isRoleSpecificPath =
-    location.pathname === '/forum' ||
-    location.pathname === '/announcements' ||
-    location.pathname === '/parent-announcements'
-
-  if (
-    (!isDesktop && isOnDashboard) ||
-    (isDesktop && currentUser?.role !== 'admin' && isRoleSpecificPath)
-  )
-    return null
 
   const getPageMeta = (path: string) => {
     const basePath = '/' + path.split('/')[1]
@@ -228,6 +215,18 @@ export const Header = memo(() => {
             </Link>
 
             <NotificationDropdown />
+
+            <div className="bg-border/60 h-5 w-px" />
+
+            <button
+              onClick={async () => {
+                if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout()
+              }}
+              aria-label="تسجيل الخروج"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-error transition-colors hover:bg-error-light active:scale-95"
+            >
+              <LogOut size={15} />
+            </button>
           </div>
 
           {/* User chip */}

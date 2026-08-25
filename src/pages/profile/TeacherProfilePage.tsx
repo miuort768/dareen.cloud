@@ -13,11 +13,10 @@ import {
   Activity,
 } from 'lucide-react'
 import { api } from '../../lib/api'
-import { useCurrentUser, useLogout, useAcademyName } from '../../context/AppContext'
+import { useCurrentUser, useAcademyName } from '../../context/AppContext'
 import { CURRENCY_SYMBOL } from '../../config/constants'
 import { getRankByPoints, TEACHER_RANKS } from '../../shared/utils/ranks'
 import { Skeleton } from '../../shared/components/ui'
-import { TeacherDashboardHeader } from '../TeacherDashboardHeader'
 import { PaymentSettingsSection } from './PaymentSettingsSection'
 import type { DashboardStats } from '../../features/dashboard/types'
 
@@ -48,7 +47,6 @@ export const TeacherProfilePage = () => {
   }, [academyName])
 
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const [teacherData, setTeacherData] = useState<TeacherData | null>(null)
   const [dashboardStats] = useState<DashboardStats | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -140,11 +138,7 @@ export const TeacherProfilePage = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background" dir="rtl">
-        {currentUser?.role === 'teacher' && (
-          <div className="hidden md:block">
-            <TeacherDashboardHeader logout={logout} />
-          </div>
-        )}
+        {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
         <div className="mx-auto max-w-page space-y-6 p-4 md:p-8">
           <Skeleton className="h-40 rounded-3xl" />
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
@@ -160,11 +154,7 @@ export const TeacherProfilePage = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background pb-24" dir="rtl">
-      {currentUser?.role === 'teacher' && (
-        <div className="hidden md:block">
-          <TeacherDashboardHeader logout={logout} />
-        </div>
-      )}
+      {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
 
       <motion.div
         initial="initial"

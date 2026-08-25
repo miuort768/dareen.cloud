@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { Wallet, ArrowLeft } from 'lucide-react'
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { fadeUp } from '../../shared/animations/fadeUp'
-import { ParentDashboardHeader } from './ParentDashboardHeader'
 import { HeroSection } from './HeroSection'
 import { ChildrenCards } from './ChildrenCards'
 import { TodaySummary } from './TodaySummary'
@@ -33,7 +32,6 @@ interface ParentDashboardDesktopProps {
     period: string
   }[]
   formatTime: (startedAt: string | null | undefined) => string
-  logout: () => void
   onRefresh: () => void
 }
 
@@ -46,7 +44,6 @@ export const ParentDashboardDesktop = ({
   activeTimers,
   todayTasks,
   formatTime,
-  logout,
 }: ParentDashboardDesktopProps) => {
   const navigate = useNavigate()
 
@@ -77,8 +74,6 @@ export const ParentDashboardDesktop = ({
       className="min-h-screen bg-background transition-colors duration-300 dark:bg-background"
       dir="rtl"
     >
-      <ParentDashboardHeader logout={logout} />
-
       <main className="mx-auto max-w-page space-y-6 px-2.5 pb-12 pt-6 sm:px-4 md:px-6">
         <motion.div {...fadeUp(0)}>
           <HeroSection

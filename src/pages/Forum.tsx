@@ -5,18 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { EmptyState } from '../shared/components/ui/EmptyState'
 import { useSearchParams } from 'react-router-dom'
 import { api, safeArray } from '../lib/api'
-import {
-  useCurrentUser,
-  useShowNotification,
-  useLogout,
-  useAcademyName,
-} from '../context/AppContext'
+import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
 import { confirm } from '../lib/confirmDialog'
 import type { Comment, Post } from '../features/forum/types'
 import { ForumHeader, ForumCreatePost, ForumPostCard, ForumHelpBanner } from './forum-page'
-import { TeacherDashboardHeader } from './TeacherDashboardHeader'
-import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader'
-import { StudentDashboardHeader } from './student-dashboard/StudentDashboardHeader'
 import { cn } from '../lib/utils'
 
 export const Forum = () => {
@@ -25,7 +17,6 @@ export const Forum = () => {
     document.title = `المنتدى | ${academyName} للتعليم والتدريب`
   }, [academyName])
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const showNotification = useShowNotification()
   const isAdmin = currentUser?.role === 'admin'
   const [searchParams] = useSearchParams()
@@ -316,21 +307,9 @@ export const Forum = () => {
       className="relative min-h-full overflow-x-hidden bg-background pb-8 font-sans md:pb-12"
       dir="rtl"
     >
-      {currentUser?.role === 'teacher' && (
-        <div className="hidden md:block">
-          <TeacherDashboardHeader logout={logout} />
-        </div>
-      )}
-      {currentUser?.role === 'parent' && (
-        <div className="hidden md:block">
-          <ParentDashboardHeader logout={logout} />
-        </div>
-      )}
-      {currentUser?.role === 'student' && (
-        <div className="hidden md:block">
-          <StudentDashboardHeader logout={logout} />
-        </div>
-      )}
+      {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
+      {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
+      {currentUser?.role === 'student' && <div className="hidden md:block"></div>}
       <div className="relative z-10 pt-2">
         <ForumHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} />
         <motion.div

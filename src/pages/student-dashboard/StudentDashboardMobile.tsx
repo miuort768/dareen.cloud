@@ -24,7 +24,6 @@ import { normalizeDayName } from '../../features/attendance/utils/slotUtils'
 import { InvoicesCard } from './InvoicesCard'
 import { AchievementsSection } from './AchievementsSection'
 import { RecentActivity } from './RecentActivity'
-import { StudentDashboardHeader } from './StudentDashboardHeader'
 import type { User } from '../../types/auth'
 
 interface StudentDashboardMobileProps {
@@ -32,7 +31,6 @@ interface StudentDashboardMobileProps {
   studentData: StudentDashboardData | null
   sessions: Session[]
   pointLogs: PointLog[]
-  logout: () => void
   onRefresh: () => void
 }
 
@@ -40,7 +38,6 @@ export const StudentDashboardMobile = ({
   studentData,
   sessions,
   pointLogs,
-  logout,
   onRefresh,
 }: StudentDashboardMobileProps) => {
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh })
@@ -154,8 +151,6 @@ export const StudentDashboardMobile = ({
           )}
         </div>
       </motion.div>
-
-      <StudentDashboardHeader logout={logout} />
 
       <main className="mx-auto max-w-page space-y-4 px-2.5 pb-28 pt-4 sm:px-4">
         <motion.div {...fadeUp(0)}>

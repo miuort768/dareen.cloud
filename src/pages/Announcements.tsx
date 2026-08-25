@@ -10,10 +10,7 @@ import { AnnouncementCard } from './AnnouncementCard'
 import { ParentAnnouncements } from './ParentAnnouncements'
 import { AnnouncementFormModal } from './AnnouncementFormModal'
 import { cn } from '../lib/utils'
-import { TeacherDashboardHeader } from './TeacherDashboardHeader'
-import { ParentDashboardHeader } from './parent-dashboard/ParentDashboardHeader'
-import { StudentDashboardHeader } from './student-dashboard/StudentDashboardHeader'
-import { useCurrentUser, useLogout } from '../context/AppContext'
+import { useCurrentUser } from '../context/AppContext'
 
 type AnnouncementType = 'general' | 'urgent' | 'holiday' | 'event'
 
@@ -42,7 +39,6 @@ export const Announcements = () => {
   }, [academyName])
   const showNotification = useShowNotification()
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const queryClient = useQueryClient()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null)
@@ -205,21 +201,9 @@ export const Announcements = () => {
 
   return (
     <>
-      {currentUser?.role === 'teacher' && (
-        <div className="hidden md:block">
-          <TeacherDashboardHeader logout={logout} />
-        </div>
-      )}
-      {currentUser?.role === 'parent' && (
-        <div className="hidden md:block">
-          <ParentDashboardHeader logout={logout} />
-        </div>
-      )}
-      {currentUser?.role === 'student' && (
-        <div className="hidden md:block">
-          <StudentDashboardHeader logout={logout} />
-        </div>
-      )}
+      {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
+      {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
+      {currentUser?.role === 'student' && <div className="hidden md:block"></div>}
       <div className="relative min-h-full overflow-x-hidden pb-24" dir="rtl">
         <div className="mx-auto max-w-page px-2">
           <motion.div

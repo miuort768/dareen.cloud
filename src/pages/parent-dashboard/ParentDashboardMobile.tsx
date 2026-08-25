@@ -5,7 +5,6 @@ import { Wallet, ArrowLeft, Loader2, RefreshCw } from 'lucide-react'
 import { getRankByPoints, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { usePullToRefresh } from '../../shared/components/mobile/usePullToRefresh'
 import { fadeUp } from '../../shared/animations/fadeUp'
-import { ParentDashboardHeader } from './ParentDashboardHeader'
 import { HeroSection } from './HeroSection'
 import { ChildrenCards } from './ChildrenCards'
 import { TodaySummary } from './TodaySummary'
@@ -34,7 +33,6 @@ interface ParentDashboardMobileProps {
     period: string
   }[]
   formatTime: (startedAt: string | null | undefined) => string
-  logout: () => void
   onRefresh: () => void
 }
 
@@ -47,7 +45,6 @@ export const ParentDashboardMobile = ({
   activeTimers,
   todayTasks,
   formatTime,
-  logout,
   onRefresh,
 }: ParentDashboardMobileProps) => {
   const navigate = useNavigate()
@@ -101,8 +98,6 @@ export const ParentDashboardMobile = ({
           )}
         </div>
       </motion.div>
-
-      <ParentDashboardHeader logout={logout} />
 
       <main className="mx-auto max-w-page space-y-4 px-2.5 pb-28 pt-4 sm:px-4">
         <motion.div {...fadeUp(0)}>

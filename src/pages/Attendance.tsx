@@ -17,7 +17,6 @@ import {
   useShowNotification,
   useWhatsappAutoNotify,
   useWhatsappTemplate,
-  useLogout,
   useAcademyName,
 } from '../context/AppContext'
 import { ConfirmModal } from '../shared/components/ConfirmModal'
@@ -40,7 +39,6 @@ import {
   BulkAttendanceButton,
   AdminTeacherGroupList,
 } from './attendance-page'
-import { TeacherDashboardHeader } from './TeacherDashboardHeader'
 import { cn } from '../lib/utils'
 
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
@@ -60,7 +58,6 @@ export const Attendance = () => {
     document.title = `الحضور والغياب | ${academyName}`
   }, [academyName])
   const currentUser = useCurrentUser()
-  const logout = useLogout()
   const showNotification = useShowNotification()
   const whatsappAutoNotify = useWhatsappAutoNotify()
   const whatsappTemplate = useWhatsappTemplate()
@@ -329,7 +326,6 @@ export const Attendance = () => {
 
       {/* Desktop view */}
       <div className="hidden md:block">
-        {currentUser?.role === 'teacher' && <TeacherDashboardHeader logout={logout} />}
         <div className="mx-auto max-w-page space-y-4 px-2">
           {/* Hero */}
           <motion.div
