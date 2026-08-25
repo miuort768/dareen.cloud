@@ -15,6 +15,7 @@ import {
   Megaphone,
   Loader2,
   ShieldAlert,
+  Search,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -330,15 +331,16 @@ export const Students = () => {
 
   if (loading) {
     return (
-      <div className="relative min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
-        <div className="relative z-10 mx-auto max-w-page space-y-4 px-2">
-          <Skeleton className="h-36 w-full rounded-2xl" />
-          <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+      <div className="relative min-h-full bg-background" dir="rtl">
+        <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+          <Skeleton className="h-14 w-full rounded-2xl" />
+          <Skeleton className="h-12 w-full rounded-xl" />
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {Array.from({ length: 4 }).map((_, i) => (
-              <Skeleton key={i} className="h-20 rounded-2xl" />
+              <Skeleton key={i} className="h-24 rounded-2xl" />
             ))}
           </div>
-          <Skeleton className="h-10 w-full rounded-2xl" />
+          <Skeleton className="h-[52px] w-full rounded-2xl" />
           <Skeleton className="h-96 w-full rounded-2xl" />
         </div>
       </div>
@@ -346,10 +348,10 @@ export const Students = () => {
   }
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
-      <div className="relative z-10 mx-auto max-w-page space-y-4 px-2">
+    <div className="relative min-h-full bg-background pb-2" dir="rtl">
+      <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
         {/* Mobile compact header */}
-        <div className="pt-3 md:hidden">
+        <div className="md:hidden">
           <MobilePageHeader
             title="إدارة الطلاب"
             subtitle="الطلاب والاشتراكات والجلسات"
@@ -361,17 +363,29 @@ export const Students = () => {
                   setShowAddForm(true)
                 }}
                 aria-label="إضافة طالب"
-                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all active:scale-95"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-colors active:scale-95"
               >
                 <Plus size={16} /> طالب
               </button>
             }
           />
         </div>
+        {/* Mobile search */}
+        <div className="relative md:hidden">
+          <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={16} />
+          <input
+            type="text"
+            aria-label="بحث عن طالب"
+            placeholder="ابحث بالاسم أو الهاتف أو المرحلة..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full rounded-xl border border-border bg-card py-3 pe-3 ps-10 text-xs font-bold text-main shadow-elevation-1 outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+          />
+        </div>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 pt-5 shadow-xl dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover md:p-8"
+          className="relative hidden overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-8 shadow-xl dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover md:block"
         >
           {particles.map((p) => (
             <motion.div
@@ -441,7 +455,7 @@ export const Students = () => {
                   transition={{ delay: 0.1 + i * 0.05 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'relative overflow-hidden rounded-none border border-border bg-gradient-to-br p-4 transition-all duration-300 hover:shadow-elevation-2',
+                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
                     stat.gradient,
                   )}
                 >
@@ -632,7 +646,10 @@ export const Students = () => {
         onClose={() => setDeletingId(null)}
       />
 
-      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+      <div
+        className="fixed end-4 z-50 flex flex-col items-end gap-3 md:end-8"
+        style={{ bottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}
+      >
         <AnimatePresence>
           {fabOpen &&
             fabActions.map((action, i) => (
@@ -652,7 +669,8 @@ export const Students = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                  aria-label={action.label}
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-elevation-2 transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <action.icon size={18} />
                 </button>
@@ -663,12 +681,17 @@ export const Students = () => {
           onClick={() => setFabOpen(!fabOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          aria-label={fabOpen ? 'إغلاق القائمة' : 'خيارات الطلاب'}
+          aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-xl text-on-primary shadow-xl transition-all',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
+            'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-elevation-3 transition-colors focus-visible:ring-2 focus-visible:ring-focus',
+            fabOpen ? 'bg-error' : 'bg-primary',
           )}
         >
-          <Plus size={24} />
+          <Plus
+            size={24}
+            className={cn('transition-transform duration-normal', fabOpen && 'rotate-45')}
+          />
         </motion.button>
       </div>
     </div>

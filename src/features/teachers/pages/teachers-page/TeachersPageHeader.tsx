@@ -30,7 +30,14 @@ export const TeachersPageHeader = ({
       <div className="absolute inset-0 opacity-[0.06]">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="tch-hero-grid" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
+            <pattern
+              id="tch-hero-grid"
+              x="0"
+              y="0"
+              width="28"
+              height="28"
+              patternUnits="userSpaceOnUse"
+            >
               <circle cx="2" cy="2" r="1" fill="white" />
               <circle cx="16" cy="16" r="0.8" fill="white" opacity="0.4" />
             </pattern>
@@ -48,9 +55,7 @@ export const TeachersPageHeader = ({
               <h1 className="text-base font-extrabold text-on-primary md:text-lg">
                 إدارة المعلمات
               </h1>
-              <p className="text-[11px] font-bold text-white/80">
-                {totalTeachers} معلمة نشطة
-              </p>
+              <p className="text-[11px] font-bold text-white/80">{totalTeachers} معلمة نشطة</p>
             </div>
           </div>
           <button
@@ -138,9 +143,7 @@ export const TeachersPageHeader = ({
         <div className="flex flex-col items-center rounded-2xl bg-gradient-to-br from-primary to-primary-deep p-3 text-center shadow-md shadow-primary/25">
           <p className="mb-2 text-[10px] font-bold text-on-primary">عدد المعلمات</p>
           <div className="flex items-center gap-1.5">
-            <span className="font-outfit text-xl font-black tabular-nums text-on-primary">
-              {totalTeachers}
-            </span>
+            <span className="text-xl font-black tabular-nums text-on-primary">{totalTeachers}</span>
             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20">
               <Users size={13} className="text-on-primary" />
             </div>
@@ -150,7 +153,7 @@ export const TeachersPageHeader = ({
         <div className="flex flex-col items-center rounded-2xl bg-gradient-to-br from-success to-success-dark p-3 text-center shadow-md shadow-success">
           <p className="mb-2 text-[10px] font-bold text-on-success">عدد التخصصات</p>
           <div className="flex items-center gap-1.5">
-            <span className="font-outfit text-xl font-black tabular-nums text-on-success">
+            <span className="text-xl font-black tabular-nums text-on-success">
               {uniqueSubjects}
             </span>
             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20">
@@ -162,9 +165,7 @@ export const TeachersPageHeader = ({
         <div className="flex flex-col items-center rounded-2xl bg-gradient-to-br from-warning to-warning-dark p-3 text-center shadow-md shadow-warning">
           <p className="mb-2 text-[10px] font-bold text-on-warning">متوسط السعر</p>
           <div className="flex items-center gap-1">
-            <span className="font-outfit text-xl font-black tabular-nums text-on-warning">
-              {averagePrice}
-            </span>
+            <span className="text-xl font-black tabular-nums text-on-warning">{averagePrice}</span>
             <span className="text-[10px] font-bold text-on-warning">ج.م</span>
             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/20">
               <DollarSign size={13} className="text-on-warning" />

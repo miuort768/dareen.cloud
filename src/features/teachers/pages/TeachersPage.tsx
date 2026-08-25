@@ -352,16 +352,11 @@ export const Teachers = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen bg-background pb-24" dir="rtl">
-        <div className="relative z-10 mx-auto max-w-page space-y-3 px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
-          <Skeleton className="h-[140px] rounded-2xl" />
-          <div className="grid grid-cols-3 gap-2">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Skeleton key={i} className="h-16 rounded-2xl" />
-            ))}
-          </div>
-          <Skeleton className="h-[90px] rounded-2xl" />
-          <Skeleton className="h-[300px] rounded-2xl" />
+      <div className="min-h-screen bg-background" dir="rtl">
+        <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+          <Skeleton className="h-[104px] rounded-2xl" />
+          <Skeleton className="h-[150px] rounded-2xl" />
+          <Skeleton className="h-[320px] rounded-2xl" />
         </div>
       </div>
     )
@@ -371,10 +366,10 @@ export const Teachers = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="min-h-screen bg-background pb-24"
+      className="min-h-screen bg-background pb-2"
       dir="rtl"
     >
-      <div className="relative z-10 mx-auto max-w-page space-y-3 px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
+      <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
         <TeachersPageHeader
           totalTeachers={teachers.length}
           uniqueSubjects={subjectsList.length}

@@ -52,7 +52,7 @@ export const ParentsHeader = ({
     initial={{ opacity: 0, y: 12 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.35 }}
-    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-xl dark:from-primary dark:via-primary-deep dark:to-primary-hover dark:border dark:border-primary/20"
+    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-xl dark:border dark:border-primary/20 dark:from-primary dark:via-primary-deep dark:to-primary-hover"
   >
     <div className="absolute inset-0 opacity-[0.06]">
       <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -115,11 +115,12 @@ export const ParentsHeader = ({
           <button
             onClick={onToggleAddForm}
             className={cn(
-              'flex h-8 items-center gap-1.5 rounded-xl px-3 text-[10px] font-bold shadow-lg transition-all active:scale-[0.97] md:h-9 md:px-4 md:text-[11px]',
+              'flex h-10 items-center gap-1.5 rounded-xl px-3.5 text-xs font-bold shadow-lg transition-colors focus-visible:ring-2 focus-visible:ring-white/60 active:scale-[0.97] md:h-9 md:px-4 md:text-[11px]',
               showAddForm ? 'bg-error text-on-error' : 'bg-white/20 text-white hover:bg-white/30',
             )}
           >
-            {showAddForm ? <X size={12} /> : <UserPlus size={12} />}
+            {showAddForm ? <X size={14} /> : <UserPlus size={14} />}
+            <span className="sm:hidden">{showAddForm ? 'إلغاء' : 'إضافة'}</span>
             <span className="hidden sm:inline">{showAddForm ? 'إلغاء' : 'إضافة ولي أمر'}</span>
           </button>
         </div>
@@ -158,23 +159,24 @@ export const ParentsHeader = ({
       {/* Search + Filters */}
       <div className="flex flex-col gap-2 md:flex-row">
         <div className="relative flex-1">
-          <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/40" />
+          <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/40" />
           <input
             type="text"
             aria-label="بحث عن ولي أمر"
             placeholder="ابحث بالاسم أو الهاتف..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full rounded-xl border border-white/20 bg-white/15 py-2.5 pe-3 ps-9 text-[11px] font-bold text-white outline-none backdrop-blur-sm transition-all placeholder:text-white/40 focus:border-white/40 focus:bg-white/20"
+            className="h-11 w-full rounded-xl border border-white/20 bg-white/15 pe-3 ps-10 text-xs font-bold text-white outline-none backdrop-blur-sm transition-colors placeholder:text-white/40 focus-visible:border-white/40 focus-visible:bg-white/20 focus-visible:ring-2 focus-visible:ring-white/30 md:h-10"
           />
         </div>
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5">
           {statusFilters.map((f) => (
             <button
               key={f.value}
               onClick={() => onFilterStatusChange(f.value)}
+              aria-pressed={filterStatus === f.value}
               className={cn(
-                'whitespace-nowrap rounded-lg px-2.5 py-1.5 text-[10px] font-bold transition-all',
+                'flex h-9 min-w-[44px] items-center justify-center whitespace-nowrap rounded-lg px-3 text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-white/60 active:scale-[0.97]',
                 filterStatus === f.value
                   ? 'bg-white text-primary shadow-sm'
                   : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white',

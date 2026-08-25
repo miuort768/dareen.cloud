@@ -12,6 +12,7 @@ import { ParentDrawer } from '../features/parents/components/ParentDrawer'
 import { ParentForm } from '../features/parents/components/ParentForm'
 import { useParents } from '../features/parents/hooks/useParents'
 import { ConfirmModal } from '../shared/components/ConfirmModal'
+import { Skeleton } from '../shared/components/ui/Skeleton'
 import { canonicalPhone } from '../lib/phone'
 
 const samePhone = (a?: string | null, b?: string | null) => {
@@ -116,9 +117,11 @@ export const Parents = () => {
 
   if (state.loading) {
     return (
-      <div className="min-h-full animate-pulse space-y-3 bg-background p-3 md:p-4">
-        <div className="h-44 rounded-2xl bg-card" />
-        <div className="h-64 rounded-2xl bg-card" />
+      <div className="min-h-full bg-background" dir="rtl">
+        <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+          <Skeleton className="h-44 rounded-2xl" />
+          <Skeleton className="h-64 rounded-2xl" />
+        </div>
       </div>
     )
   }
@@ -128,10 +131,10 @@ export const Parents = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="relative min-h-full overflow-x-hidden bg-background pb-20 font-sans"
+      className="relative min-h-full overflow-x-hidden bg-background pb-2 font-sans"
       dir="rtl"
     >
-      <div className="relative z-10 mx-auto max-w-page px-2">
+      <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
         <div className="relative overflow-hidden rounded-2xl">
           {particles.map((p) => (
             <motion.div
@@ -178,7 +181,7 @@ export const Parents = () => {
           />
         </div>
 
-        <div className="space-y-3 py-3">
+        <div className="space-y-4 md:space-y-5">
           <AnimatePresence>
             {state.showAddForm && (
               <motion.div
@@ -263,7 +266,10 @@ export const Parents = () => {
         }
       />
 
-      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+      <div
+        className="fixed end-4 z-50 flex flex-col items-end gap-3 md:end-8"
+        style={{ bottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}
+      >
         <AnimatePresence>
           {fabOpen &&
             fabActions.map((action, i) => (
@@ -283,7 +289,8 @@ export const Parents = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                  aria-label={action.label}
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-elevation-2 transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <action.icon size={18} />
                 </button>
@@ -294,12 +301,17 @@ export const Parents = () => {
           onClick={() => setFabOpen(!fabOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          aria-label={fabOpen ? 'إغلاق القائمة' : 'خيارات أولياء الأمور'}
+          aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-xl text-on-primary shadow-xl transition-all',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
+            'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-elevation-3 transition-colors focus-visible:ring-2 focus-visible:ring-focus',
+            fabOpen ? 'bg-error' : 'bg-primary',
           )}
         >
-          <Plus size={24} />
+          <Plus
+            size={24}
+            className={cn('transition-transform duration-normal', fabOpen && 'rotate-45')}
+          />
         </motion.button>
       </div>
     </motion.div>
