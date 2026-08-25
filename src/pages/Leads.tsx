@@ -468,7 +468,7 @@ export const Leads = () => {
   if (isLeadsError) {
     return (
       <div className="min-h-screen bg-background pb-24" dir="rtl">
-        <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
+        <div className="relative mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
           <ErrorBanner className="mt-6 md:mt-10" />
         </div>
       </div>
@@ -588,7 +588,7 @@ export const Leads = () => {
           </motion.div>
         </div>
 
-        <div className="mb-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+        <div className="mb-4 mt-3 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
           {[
             {
               label: 'إجمالي العملاء',
@@ -761,7 +761,7 @@ export const Leads = () => {
         {/* FAB */}
         <motion.button
           onClick={() => setIsAddModalOpen(true)}
-          className="fixed bottom-6 left-6 z-40 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-hover active:scale-95 md:bottom-8 md:left-8 md:h-14 md:w-14"
+          className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-6 z-50 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-hover active:scale-95 md:bottom-8 md:end-8 md:h-14 md:w-14"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة عميل"
