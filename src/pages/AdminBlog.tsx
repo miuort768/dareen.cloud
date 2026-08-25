@@ -115,6 +115,7 @@ export const AdminBlog = () => {
       setContentPart2('')
     }
     setIsModalOpen(true)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleDelete = async (id: string) => {
@@ -233,11 +234,15 @@ export const AdminBlog = () => {
     setLibraryTelegram(savedTelegram)
   }
 
-  const filteredPosts = posts.filter(
-    (post) =>
-      (post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.category.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (!filterType || post.contentType === filterType),
+  const filteredPosts = useMemo(
+    () =>
+      posts.filter(
+        (post) =>
+          ((post.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (post.category || '').toLowerCase().includes(searchTerm.toLowerCase())) &&
+          (!filterType || post.contentType === filterType),
+      ),
+    [posts, searchTerm, filterType],
   )
 
   const kpiCards = useMemo(
@@ -286,23 +291,36 @@ export const AdminBlog = () => {
         label: 'حذف الكل',
         onClick: () => handleDeleteAll(),
       },
-      {
-        icon: Star,
-        label: 'المميزة',
-        onClick: () => setFilterType(filterType === '' ? 'notes' : ''),
-      },
     ],
-    [filterType, handleDeleteAll],
+    [handleDeleteAll],
   )
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-24" dir="rtl">
-      <div className="mx-auto max-w-page space-y-3 px-2">
+    <div className="relative min-h-full overflow-x-hidden pb-2" dir="rtl">
+      <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="via-error/90 relative overflow-hidden rounded-2xl bg-gradient-to-br from-error to-error-hover p-6 md:p-8"
+          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-error to-error-hover shadow-xl"
         >
+          <div className="absolute inset-0 opacity-[0.06]">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern
+                  id="blog-hero-grid"
+                  x="0"
+                  y="0"
+                  width="28"
+                  height="28"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="2" cy="2" r="1" fill="white" />
+                  <circle cx="16" cy="16" r="0.8" fill="white" opacity="0.4" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#blog-hero-grid)" />
+            </svg>
+          </div>
           {particles.map((p) => (
             <motion.div
               key={p.id}
@@ -317,18 +335,24 @@ export const AdminBlog = () => {
               }}
             />
           ))}
-          <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="relative z-10 flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between md:p-7">
             <div>
-              <div className="mb-2 flex items-center gap-2">
-                <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                  <BookMarked className="text-white" size={20} />
+              <div className="mb-2.5 flex items-center gap-2.5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/25 backdrop-blur-sm">
+                  <BookMarked size={18} className="text-on-error" />
                 </div>
-                <span className="text-xs font-medium text-white/70">المدونة</span>
+                <span className="rounded-lg bg-white/10 px-2.5 py-1 text-micro font-bold text-white/80">
+                  المدونة
+                </span>
               </div>
-              <h1 className="mb-1 text-2xl font-bold text-on-error md:text-3xl">المقالات</h1>
-              <p className="text-sm text-white/70">إدارة المقالات والدروس التعليمية</p>
+              <h1 className="mb-1 text-2xl font-black tracking-tight text-on-error md:text-3xl">
+                المقالات
+              </h1>
+              <p className="text-xs font-medium text-white/70 md:text-sm">
+                إدارة المقالات والدروس التعليمية
+              </p>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
+            <div className="hidden items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm md:flex">
               <div className="text-center">
                 <p className="mb-1 text-xs text-white/60">المقالات</p>
                 <p className="text-2xl font-bold text-white">{posts.length}</p>
@@ -360,18 +384,20 @@ export const AdminBlog = () => {
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
+                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
                     kpi.gradient,
                   )}
                 >
+                  <div className="absolute inset-x-0 top-0 h-0.5">
+                    <div className={cn('h-full rounded-full', kpi.accent)} />
+                  </div>
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-lg p-2', kpi.iconBg)}>
                       <Icon size={16} />
                     </div>
-                    <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
                   </div>
-                  <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                  <p className="text-2xl font-bold text-main">{kpi.value}</p>
+                  <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
+                  <p className="mt-0.5 text-xs text-muted">{kpi.label}</p>
                 </motion.div>
               )
             })}
@@ -427,7 +453,10 @@ export const AdminBlog = () => {
         )}
       </div>
 
-      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+      <div
+        className="fixed end-4 z-50 flex flex-col items-end gap-3 md:end-8"
+        style={{ bottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}
+      >
         <AnimatePresence>
           {fabOpen &&
             fabActions.map((action, i) => (
@@ -448,7 +477,12 @@ export const AdminBlog = () => {
                     setFabOpen(false)
                   }}
                   aria-label={action.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-error text-on-error shadow-lg transition-all duration-200 hover:bg-error-hover hover:shadow-xl active:scale-95"
+                  className={cn(
+                    'flex h-11 w-11 items-center justify-center rounded-xl border text-main shadow-elevation-2 transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+                    action.label === 'حذف الكل'
+                      ? 'border-error/30 bg-error-soft text-error hover:bg-error hover:text-on-error'
+                      : 'border-border bg-card hover:bg-hover',
+                  )}
                 >
                   <action.icon size={18} />
                 </button>
@@ -460,12 +494,15 @@ export const AdminBlog = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-xl text-on-error shadow-xl transition-all duration-200',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-error',
+            'flex h-14 w-14 items-center justify-center rounded-2xl bg-error text-on-error shadow-elevation-3 transition-colors focus-visible:ring-2 focus-visible:ring-focus',
           )}
-          aria-label={fabOpen ? 'إغلاق' : 'إضافة'}
+          aria-label={fabOpen ? 'إغلاق القائمة' : 'خيارات المقالات'}
+          aria-expanded={fabOpen}
         >
-          <Plus size={24} />
+          <Plus
+            size={24}
+            className={cn('transition-transform duration-normal', fabOpen && 'rotate-45')}
+          />
         </motion.button>
       </div>
     </div>

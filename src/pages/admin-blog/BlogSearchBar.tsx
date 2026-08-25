@@ -22,25 +22,26 @@ export const BlogSearchBar = ({
   filterType,
   setFilterType,
 }: BlogSearchBarProps) => (
-  <div className="space-y-4 rounded-2xl border border-border bg-card p-4">
-    <div className="relative flex-grow">
-      <Search className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" size={20} />
+  <div className="space-y-3 rounded-2xl border border-border bg-card p-3.5">
+    <div className="relative">
+      <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" size={16} />
       <input
         type="text"
         aria-label="بحث عن مقالات"
         placeholder="بحث عن مقالات أو تصنيفات..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="bg-primary-soft/30 w-full rounded-xl border border-border py-3 ps-12 text-sm font-bold outline-none transition-all focus:outline-none focus:ring-2 focus:ring-focus"
+        className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft md:h-12 md:text-sm"
       />
     </div>
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="flex flex-wrap items-center gap-1.5">
       {filters.map((btn) => (
         <button
           key={btn.key}
           onClick={() => setFilterType(btn.key)}
+          aria-pressed={filterType === btn.key}
           className={cn(
-            'rounded-lg px-3.5 py-2 text-xs font-semibold transition-all duration-200 active:scale-[0.97]',
+            'flex h-9 items-center justify-center whitespace-nowrap rounded-lg px-3.5 text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
             filterType === btn.key
               ? 'bg-error text-on-error shadow-sm'
               : 'border border-border bg-card text-muted hover:bg-hover',
