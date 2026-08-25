@@ -1,7 +1,7 @@
 import { test } from '@playwright/test'
 
 const ROUTES = [
-  '/dashboard/admin-dashboard',
+  '/admin-dashboard',
   '/dashboard/teachers',
   '/dashboard/students',
   '/dashboard/parents',
