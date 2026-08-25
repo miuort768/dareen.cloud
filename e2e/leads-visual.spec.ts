@@ -85,11 +85,11 @@ test('capture redesigned leads page (mocked API)', async ({ page, context }) => 
 
   // catch-all FIRST (later registrations take precedence)
   await context.route('**/api/**', (r) => r.fulfill({ json: {} }))
+  await context.route('**/api/leads**', (r) => r.fulfill({ json: MOCK_LEADS }))
+  await context.route('**/api/leads/all**', (r) => r.fulfill({ json: { success: true } }))
   await context.route('**/api/leads/stats**', (r) =>
     r.fulfill({ json: { total: 63, converted: 13, conversionRate: 20.6, active: 51 } }),
   )
-  await context.route('**/api/leads/all**', (r) => r.fulfill({ json: { success: true } }))
-  await context.route('**/api/leads**', (r) => r.fulfill({ json: MOCK_LEADS }))
   await context.route('**/api/auth/**', (r) =>
     r.fulfill({
       json: { valid: true, user: FAKE_ADMIN.state.currentUser, token: 'e2e-fake-token' },
