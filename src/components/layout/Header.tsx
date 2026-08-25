@@ -1,15 +1,14 @@
-import { Sun, Moon, User, MessageSquare, Search } from 'lucide-react'
-import { useState, useEffect, memo } from 'react'
+import { Sun, Moon, User, MessageSquare, Search, Menu, ChevronDown, Command } from 'lucide-react'
+import { useState, useEffect, memo, useRef } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { useDarkMode } from '../../shared/hooks/useDarkMode'
 import { useCurrentUser } from '../../context/AppContext'
 import { NotificationDropdown } from '../ui/NotificationDropdown'
-import { Button } from '../ui/button'
 import { Image } from '../../shared/components/ui'
 import { cn } from '../../lib/utils'
 import { useUnreadStore } from '../../store/unreadStore'
 
-const routeMeta: Record<string, { title: string; subtitle: string; icon?: string }> = {
+const routeMeta: Record<string, { title: string; subtitle: string }> = {
   '/dashboard': { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب' },
   '/admin-dashboard': { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب' },
   '/teacher-dashboard': { title: 'نظرة عامة', subtitle: 'متابعة أداء الأكاديمية وإحصائيات الطلاب' },
@@ -44,7 +43,37 @@ const routeMeta: Record<string, { title: string; subtitle: string; icon?: string
   '/parent-profile': { title: 'الملف الشخصي', subtitle: 'معلومات حسابك الشخصي' },
 }
 
-export const Header = memo(() => {
+const SEARCH_ROUTES: [string, string][] = [
+  ['الطلاب', '/students'],
+  ['المعلمات', '/teachers'],
+  ['المالية', '/finance'],
+  ['الفواتير', '/student-invoices'],
+  ['فواتير المعلمات', '/teacher-invoices'],
+  ['الحضور', '/attendance'],
+  ['الجداول', '/schedule'],
+  ['الأجندة', '/agenda'],
+  ['المواعيد', '/appointments'],
+  ['المهام', '/tasks'],
+  ['الإعلانات', '/announcements'],
+  ['المحادثات', '/chat'],
+  ['الدردشة', '/chat'],
+  ['التقارير', '/reports'],
+  ['الإعدادات', '/settings'],
+  ['المنتدى', '/forum'],
+  ['العملاء', '/leads'],
+  ['الجلسات', '/trial-sessions'],
+  ['الرسائل', '/admin-contacts'],
+  ['التوظيف', '/admin-jobs'],
+  ['التقييمات', '/evaluations'],
+  ['الإغلاق', '/monthly-closing'],
+  ['أولياء', '/parents'],
+]
+
+interface HeaderProps {
+  onMenu?: () => void
+}
+
+export const Header = memo(({ onMenu }: HeaderProps) => {
   const [theme, setTheme] = useDarkMode()
   const location = useLocation()
   const navigate = useNavigate()
@@ -52,6 +81,7 @@ export const Header = memo(() => {
   const totalUnreadCount = useUnreadStore((s) => s.totalUnreadCount)
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024)
   const [searchQuery, setSearchQuery] = useState('')
+  const searchRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 1024)
@@ -59,14 +89,22 @@ export const Header = memo(() => {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Dashboard paths where role-specific headers are used instead
+  // Ctrl/⌘+K focuses the search
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        searchRef.current?.focus()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
   const dashboardPaths = ['/teacher-dashboard', '/student-dashboard', '/parent-dashboard', '/chat']
   const isOnDashboard = dashboardPaths.some(
     (p) => location.pathname === p || location.pathname.startsWith(`${p}/`),
   )
-  // Hide general header:
-  // 1. On mobile: for dashboard paths (role headers render inside the page)
-  // 2. On all screens: for non-admin on desktop for paths where role-specific headers render (/forum, /announcements, /parent-announcements)
   const isRoleSpecificPath =
     location.pathname === '/forum' ||
     location.pathname === '/announcements' ||
@@ -98,158 +136,139 @@ export const Header = memo(() => {
           ? '/student-profile'
           : '/teacher-profile'
 
+  const firstName = currentUser?.name?.split(' ')[0] ?? ''
+
+  const runSearch = () => {
+    const q = searchQuery.trim()
+    if (!q) return
+    const match = SEARCH_ROUTES.find(([k]) => q.includes(k))
+    navigate(match ? match[1] : '/students')
+    setSearchQuery('')
+    searchRef.current?.blur()
+  }
+
   return (
     <header
       className={cn(
-        'sticky top-0 z-40 w-full',
-        'h-16 lg:h-[72px]',
-        'bg-surface dark:bg-card',
-        'border-b border-border backdrop-blur-xl',
-        'dark:border-indigo-500/15 dark:shadow-[0_1px_16px_rgba(99,102,241,0.12)]',
+        'border-border/70 bg-background/85 sticky top-0 z-40 w-full border-b backdrop-blur-xl',
         'transition-all duration-300',
       )}
     >
-      <div className="mx-auto flex h-full max-w-page items-center justify-between px-2.5 sm:px-4 lg:px-8">
-        <div className="flex min-w-0 flex-1 items-center gap-4">
-          <Image
-            src="/dareen_logo_new.webp"
-            alt="دارين السابعة"
-            className="hidden h-9 w-9 shrink-0 rounded-xl sm:block"
-            imgClassName="object-contain"
-          />
-          {meta && (
-            <div className="min-w-0">
-              <h1 className="truncate text-sm font-extrabold leading-tight text-main lg:text-base">
-                {meta.title}
-              </h1>
-              {isDesktop && meta.subtitle && (
-                <p className="mt-0.5 truncate text-[11px] leading-snug text-muted">
-                  {meta.subtitle}
-                </p>
-              )}
-            </div>
+      <div className="mx-auto flex h-14 max-w-page items-center gap-2 px-2.5 sm:px-4 md:h-16 lg:h-[68px] lg:gap-4 lg:px-8">
+        {/* ===== Start: menu + identity ===== */}
+        <div className="flex min-w-0 flex-1 items-center gap-2 lg:gap-3">
+          {onMenu && (
+            <button
+              onClick={onMenu}
+              aria-label="فتح القائمة"
+              className="border-border/70 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border bg-card text-main shadow-sm transition-all hover:bg-hover active:scale-95 lg:hidden"
+            >
+              <Menu size={17} />
+            </button>
           )}
+
+          <Link to="/admin-dashboard" aria-label="الرئيسية" className="shrink-0">
+            <Image
+              src="/dareen_logo_new.webp"
+              alt="دارين السابعة"
+              className="border-border/60 h-9 w-9 rounded-xl border bg-card shadow-sm lg:h-10 lg:w-10"
+              imgClassName="object-contain p-0.5"
+            />
+          </Link>
+
+          <div className="bg-border/60 hidden h-6 w-px shrink-0 lg:block" />
+
+          <div className="min-w-0">
+            <h1 className="truncate text-sm font-black leading-tight text-main md:text-[15px] lg:text-base">
+              {meta.title}
+            </h1>
+            {isDesktop && (
+              <p className="mt-0.5 truncate text-[11px] leading-snug text-muted">{meta.subtitle}</p>
+            )}
+          </div>
         </div>
 
-        <div className="flex shrink-0 items-center gap-2 lg:gap-3">
+        {/* ===== End: actions ===== */}
+        <div className="flex shrink-0 items-center gap-1.5 lg:gap-2.5">
+          {/* Desktop search */}
           {isDesktop && (
-            <>
-              <div className="relative hidden items-center xl:flex">
-                <Search size={16} className="pointer-events-none absolute right-3 text-muted" />
-                <input
-                  type="text"
-                  placeholder="بحث..."
-                  aria-label="بحث"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && searchQuery.trim()) {
-                      const q = searchQuery.trim()
-                      const routes: [string, string][] = [
-                        ['الطلاب', '/students'],
-                        ['المعلمات', '/teachers'],
-                        ['المالية', '/finance'],
-                        ['الفواتير', '/student-invoices'],
-                        ['فواتير المعلمات', '/teacher-invoices'],
-                        ['الحضور', '/attendance'],
-                        ['الجداول', '/schedule'],
-                        ['الأجندة', '/agenda'],
-                        ['المواعيد', '/appointments'],
-                        ['المهام', '/tasks'],
-                        ['الإعلانات', '/announcements'],
-                        ['المحادثات', '/chat'],
-                        ['الدردشة', '/chat'],
-                        ['التقارير', '/reports'],
-                        ['الإعدادات', '/settings'],
-                        ['المنتدى', '/forum'],
-                        ['العملاء', '/leads'],
-                        ['الجلسات', '/trial-sessions'],
-                        ['الرسائل', '/admin-contacts'],
-                        ['التوظيف', '/admin-jobs'],
-                        ['التقييمات', '/evaluations'],
-                        ['الإغلاق', '/monthly-closing'],
-                        ['أولياء', '/parents'],
-                      ]
-                      const match = routes.find(([k]) => q.includes(k))
-                      navigate(match ? match[1] : '/students')
-                      setSearchQuery('')
-                    }
-                  }}
-                  className="h-9 w-[200px] rounded-xl border border-border bg-background pl-3 pr-9 text-xs text-main outline-none transition-colors placeholder:text-muted focus:border-primary"
-                />
-              </div>
-
-              <div className="flex items-center gap-px rounded-xl border border-border bg-background p-0.5">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                  className="hover:bg-accent/10 h-8 gap-1.5 rounded-lg px-2.5 text-muted hover:text-main"
-                >
-                  {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-                  <span className="hidden text-xs font-medium sm:inline">
-                    {theme === 'dark' ? 'النهار' : 'الليل'}
-                  </span>
-                </Button>
-
-                <div className="bg-border/60 h-5 w-px" />
-
-                <NotificationDropdown showLabel />
-
-                <div className="bg-border/60 h-5 w-px" />
-
-                <Link
-                  to="/chat"
-                  className={cn(
-                    'relative flex h-8 items-center justify-center gap-1.5 rounded-lg px-2.5',
-                    'hover:bg-accent/10 text-muted transition-colors hover:text-main',
-                  )}
-                >
-                  <MessageSquare size={15} />
-                  <span className="hidden text-xs font-medium sm:inline">الدردشة</span>
-                  {totalUnreadCount > 0 && (
-                    <span className="absolute -start-1 -top-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[9px] font-black leading-none text-on-error">
-                      {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
-                    </span>
-                  )}
-                </Link>
-              </div>
-            </>
-          )}
-
-          {!isDesktop && (
-            <div className="flex items-center gap-px rounded-xl border border-border bg-background p-0.5">
-              <Link
-                to="/chat"
-                aria-label="الدردشة"
-                className={cn(
-                  'relative flex h-8 w-8 items-center justify-center rounded-lg',
-                  'hover:bg-accent/10 text-muted transition-colors hover:text-main',
-                )}
-              >
-                <MessageSquare size={17} />
-                {totalUnreadCount > 0 && (
-                  <span className="absolute -start-1 -top-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[9px] font-black leading-none text-on-error">
-                    {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
-                  </span>
-                )}
-              </Link>
-              <NotificationDropdown />
+            <div className="relative hidden lg:block">
+              <Search
+                size={15}
+                className="pointer-events-none absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
+              />
+              <input
+                ref={searchRef}
+                type="text"
+                placeholder="بحث سريع..."
+                aria-label="بحث سريع في الصفحات"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') runSearch()
+                  if (e.key === 'Escape') searchRef.current?.blur()
+                }}
+                className="border-border/70 h-10 w-52 rounded-full border bg-surface pe-16 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:w-64 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 xl:w-64"
+              />
+              <kbd className="border-border/70 pointer-events-none absolute end-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md border bg-background px-1.5 py-0.5 text-[9px] font-bold text-muted">
+                <Command size={9} />K
+              </kbd>
             </div>
           )}
 
-          <Link to={userLink} className="shrink-0" aria-label="الملف الشخصي">
-            <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-primary transition-all hover:shadow-md">
+          {/* Icon actions */}
+          <div className="border-border/70 flex items-center gap-0.5 rounded-full border bg-card p-1 shadow-sm">
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-hover hover:text-main active:scale-95"
+            >
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
+
+            <div className="bg-border/60 h-5 w-px" />
+
+            <Link
+              to="/chat"
+              aria-label="الدردشة"
+              className="relative flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-hover hover:text-main active:scale-95"
+            >
+              <MessageSquare size={15} />
+              {totalUnreadCount > 0 && (
+                <span className="absolute -top-0.5 start-0 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[9px] font-black leading-none text-on-error">
+                  {totalUnreadCount > 99 ? '+99' : totalUnreadCount}
+                </span>
+              )}
+            </Link>
+
+            <NotificationDropdown />
+          </div>
+
+          {/* User chip */}
+          <Link
+            to={userLink}
+            aria-label="الملف الشخصي"
+            className="border-border/70 flex h-10 items-center gap-2 rounded-full border bg-card py-1 pe-1 ps-1 shadow-sm transition-all hover:bg-hover hover:shadow-md active:scale-[0.97] lg:pe-2.5"
+          >
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-on-primary">
               {currentUser?.avatar ? (
                 <img
                   src={currentUser.avatar}
-                  alt={currentUser.name}
-                  className="h-full w-full rounded-lg object-cover"
+                  alt=""
+                  className="h-full w-full object-cover"
+                  loading="lazy"
                 />
               ) : (
-                <User size={15} className="text-on-primary" />
+                <User size={15} />
               )}
-            </div>
+            </span>
+            <span className="hidden min-w-0 lg:block">
+              <span className="block max-w-[90px] truncate text-xs font-black leading-tight text-main">
+                {firstName}
+              </span>
+              <span className="block text-[9px] font-bold leading-tight text-muted">حسابي</span>
+            </span>
+            <ChevronDown size={13} className="hidden shrink-0 text-muted lg:block" />
           </Link>
         </div>
       </div>
