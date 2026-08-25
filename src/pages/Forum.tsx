@@ -338,7 +338,7 @@ export const Forum = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="mx-auto mb-4 grid max-w-[700px] grid-cols-2 gap-3 px-4 md:grid-cols-4">
+          <div className="mx-auto mb-4 grid max-w-[700px] grid-cols-2 gap-3 px-2.5 sm:px-4 md:grid-cols-4">
             {kpiCards.map((kpi, i) => {
               const Icon = kpi.icon
               return (
@@ -383,7 +383,7 @@ export const Forum = () => {
           </div>
         )}
 
-        <div className="mx-auto max-w-[700px] space-y-6 px-4" data-create-post>
+        <div className="mx-auto max-w-[700px] space-y-6 px-2.5 sm:px-4" data-create-post>
           <ForumCreatePost
             newPostContent={newPostContent}
             setNewPostContent={setNewPostContent}

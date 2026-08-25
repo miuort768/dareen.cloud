@@ -170,7 +170,7 @@ export const TeacherProfilePage = () => {
         initial="initial"
         animate="animate"
         variants={stagger}
-        className="mx-auto max-w-page space-y-6 px-4 pt-6 md:space-y-8 md:p-8"
+        className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4 md:space-y-8 md:p-8"
       >
         {/* Modern ID Header */}
         <motion.div

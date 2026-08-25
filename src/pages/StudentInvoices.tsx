@@ -114,7 +114,7 @@ export const StudentInvoices = () => {
   if (loading) {
     return (
       <div className="min-h-full pb-8" dir="rtl">
-        <div className="mx-auto max-w-5xl space-y-4 px-4 pt-6 sm:px-6">
+        <div className="mx-auto max-w-5xl space-y-4 px-2.5 pt-6 sm:px-6">
           <div className="flex items-center gap-3">
             <Skeleton className="h-11 w-11 rounded-xl" />
             <div className="space-y-2">
@@ -136,7 +136,7 @@ export const StudentInvoices = () => {
 
   return (
     <div className="min-h-full pb-8" dir="rtl">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+      <div className="mx-auto max-w-5xl px-2.5 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}

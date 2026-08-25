@@ -353,7 +353,7 @@ export const Teachers = () => {
   if (loading)
     return (
       <div className="min-h-screen bg-background pb-24" dir="rtl">
-        <div className="relative z-10 mx-auto max-w-page space-y-3 px-4 pt-6 md:px-6 md:pt-10">
+        <div className="relative z-10 mx-auto max-w-page space-y-3 px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
           <Skeleton className="h-[140px] rounded-2xl" />
           <div className="grid grid-cols-3 gap-2">
             {Array.from({ length: 3 }).map((_, i) => (
@@ -374,7 +374,7 @@ export const Teachers = () => {
       className="min-h-screen bg-background pb-24"
       dir="rtl"
     >
-      <div className="relative z-10 mx-auto max-w-page space-y-3 px-4 pt-6 md:px-6 md:pt-10">
+      <div className="relative z-10 mx-auto max-w-page space-y-3 px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
         <TeachersPageHeader
           totalTeachers={teachers.length}
           uniqueSubjects={subjectsList.length}
