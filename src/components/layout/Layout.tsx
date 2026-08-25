@@ -66,9 +66,7 @@ export const Layout = () => {
       )}
 
       <div className="flex min-w-0 max-w-full flex-1 flex-col transition-all duration-300">
-        {!isChatOnly && !location.pathname.includes('/chat') && (
-          <Header onMenu={() => setMobileMenuOpen(true)} />
-        )}
+        {!isChatOnly && !location.pathname.includes('/chat') && <Header />}
 
         <main
           className={cn(
