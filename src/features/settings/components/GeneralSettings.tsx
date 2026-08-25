@@ -224,10 +224,13 @@ export const GeneralSettings = ({
               className="text-center"
             />
           </div>
-          <p className={cn('flex-1 text-[11px] font-bold text-muted md:pb-2')}>
+          <p className={cn('flex-1 text-[11px] font-bold text-muted')}>
             يتم تجميد حساب الطالب تلقائياً بعد غياب متواصل عن الحصص لمدة هذا العدد من الأيام، ويُرسل
             تنبيه لولي الأمر قبل التجميد.
           </p>
+          <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving}>
+            <CheckCircle2 size={14} /> حفظ
+          </PrimaryBtn>
         </div>
       </SectionCard>
     </div>

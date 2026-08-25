@@ -61,26 +61,15 @@ export const AcademyInfoSection = ({
             />
           </div>
           <div>
-            <FieldLabel>رقم الهاتف</FieldLabel>
+            <FieldLabel>رقم الهاتف (واتساب)</FieldLabel>
             <div className="relative">
               <Phone size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
               <InputField
                 value={localAdminPhone}
                 onChange={(e) => setLocalAdminPhone(e.target.value)}
                 className="ps-9"
+                dir="ltr"
                 placeholder="مثال: 201015098836"
-              />
-            </div>
-          </div>
-          <div>
-            <FieldLabel>رقم الواتساب</FieldLabel>
-            <div className="relative">
-              <Phone size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
-              <InputField
-                value={localAdminPhone}
-                onChange={(e) => setLocalAdminPhone(e.target.value)}
-                className="ps-9"
-                placeholder="رقم الواتساب"
               />
             </div>
           </div>

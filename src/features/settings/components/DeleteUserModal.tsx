@@ -19,19 +19,26 @@ export const DeleteUserModal = ({
   const target = showDeleteModal
 
   return (
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4 animate-in fade-in">
-      <div className="w-full max-w-sm border border-border bg-card p-6">
+    <div
+      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4 animate-in fade-in"
+      onClick={() => setShowDeleteModal(false)}
+    >
+      <div
+        className="w-full max-w-sm rounded-2xl border border-border bg-card p-6 shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+        dir="rtl"
+      >
         <div className="mb-4 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center bg-error-soft">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-error-soft">
             <Trash2 size={18} className="text-error" />
           </div>
           <div>
-            <p className="text-sm font-normal text-main">تأكيد حذف المستخدم</p>
+            <p className="text-sm font-bold text-main">تأكيد حذف المستخدم</p>
             <p className="mt-0.5 text-micro text-muted">هذا الإجراء نهائي</p>
           </div>
         </div>
         <p className="mb-4 text-xs text-muted">
-          هل أنت متأكد من حذف "<span className="font-normal text-main">{target.username}</span>"؟
+          هل أنت متأكد من حذف "<span className="font-bold text-main">{target.username}</span>"؟
         </p>
         <div className="flex gap-2">
           <SecondaryBtn onClick={() => setShowDeleteModal(false)} className="flex-1">
@@ -43,7 +50,7 @@ export const DeleteUserModal = ({
               setShowDeleteModal(false)
               showNotify('تم حذف المستخدم')
             }}
-            className="flex-1 bg-error py-2 text-xs font-normal text-on-error transition-all hover:bg-error-hover"
+            className="flex-1 rounded-xl bg-error py-2.5 text-xs font-bold text-on-error transition-all hover:bg-error-hover active:scale-[0.97]"
           >
             تأكيد الحذف
           </button>

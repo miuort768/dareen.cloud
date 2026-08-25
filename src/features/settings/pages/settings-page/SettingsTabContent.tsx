@@ -66,8 +66,6 @@ interface SettingsTabContentProps {
   setLocalFooterInstagram: (v: string) => void
   academyAddress: string
   setAcademyAddress: (v: string) => void
-  academyEmail: string
-  setAcademyEmail: (v: string) => void
   localHeroBanners: string[]
   setLocalHeroBanners: (v: string[]) => void
   themeColor: string
@@ -243,8 +241,6 @@ export const SettingsTabContent = (props: SettingsTabContentProps) => {
           setLocalWhatsappTemplate={props.setLocalWhatsappTemplate}
           setWhatsappTemplate={props.setWhatsappTemplate}
           showNotify={props.showNotify}
-          academyEmail={props.academyEmail}
-          setAcademyEmail={props.setAcademyEmail}
         />
       )
     case 'mobile':

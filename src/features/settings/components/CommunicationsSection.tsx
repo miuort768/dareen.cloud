@@ -1,96 +1,78 @@
-import { Mail, MessageSquare, Video, Globe } from 'lucide-react';
-import { SectionCard, SectionTitle, FieldLabel, InputField, TextAreaField, ToggleRow, PrimaryBtn } from './SettingsUI';
+import { MessageSquare } from 'lucide-react'
+import {
+  SectionCard,
+  SectionTitle,
+  FieldLabel,
+  TextAreaField,
+  ToggleRow,
+  PrimaryBtn,
+} from './SettingsUI'
 
 export const CommunicationsSection = ({
-    whatsappAutoNotify, setWhatsappAutoNotify,
-    localWhatsappTemplate, setLocalWhatsappTemplate,
-    setWhatsappTemplate, showNotify,
-    academyEmail, setAcademyEmail,
+  whatsappAutoNotify,
+  setWhatsappAutoNotify,
+  localWhatsappTemplate,
+  setLocalWhatsappTemplate,
+  setWhatsappTemplate,
+  showNotify,
 }: {
-    whatsappAutoNotify: boolean; setWhatsappAutoNotify: (v: boolean) => void;
-    localWhatsappTemplate: string; setLocalWhatsappTemplate: (v: string) => void;
-    setWhatsappTemplate: (v: string) => void; showNotify: (msg: string) => void;
-    academyEmail: string; setAcademyEmail: (v: string) => void;
+  whatsappAutoNotify: boolean
+  setWhatsappAutoNotify: (v: boolean) => void
+  localWhatsappTemplate: string
+  setLocalWhatsappTemplate: (v: string) => void
+  setWhatsappTemplate: (v: string) => void
+  showNotify: (msg: string) => void
 }) => {
-    const handleSaveWhatsappTemplate = () => {
-        setWhatsappTemplate(localWhatsappTemplate);
-        showNotify('تم حفظ قالب واتساب');
-    };
+  const handleSaveWhatsappTemplate = () => {
+    if (!localWhatsappTemplate.trim()) {
+      showNotify('أدخل قالب الرسالة أولاً')
+      return
+    }
+    if (!localWhatsappTemplate.includes('{student}')) {
+      showNotify('يجب أن يحتوي القالب على المتغير {student}')
+      return
+    }
+    setWhatsappTemplate(localWhatsappTemplate)
+    showNotify('تم حفظ قالب واتساب')
+  }
 
-    return (
-        <div className="space-y-5">
-            <SectionCard>
-                <SectionTitle icon={Mail} label="البريد الإلكتروني" sub="إعدادات SMTP للمراسلات" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <FieldLabel>خادم SMTP</FieldLabel>
-                        <InputField placeholder="smtp.gmail.com" />
-                    </div>
-                    <div>
-                        <FieldLabel>المنفذ</FieldLabel>
-                        <InputField placeholder="587" />
-                    </div>
-                    <div>
-                        <FieldLabel>البريد الإلكتروني</FieldLabel>
-                        <InputField value={academyEmail} onChange={e => setAcademyEmail(e.target.value)} placeholder="noreply@dareen.com" />
-                    </div>
-                    <div>
-                        <FieldLabel>كلمة المرور</FieldLabel>
-                        <InputField type="password" placeholder="••••••••" />
-                    </div>
-                </div>
-                <div className="mt-4 flex justify-end">
-                    <PrimaryBtn onClick={() => showNotify('تم حفظ إعدادات البريد')}>حفظ إعدادات البريد</PrimaryBtn>
-                </div>
-            </SectionCard>
-
-            <SectionCard>
-                <SectionTitle icon={MessageSquare} label="واتساب" sub="إعدادات الإشعارات عبر واتساب وقوالب الرسائل" />
-                <div className="space-y-4">
-                    <ToggleRow
-                        icon={MessageSquare} label="الإشعار التلقائي عبر واتساب"
-                        sub="إرسال إشعارات تلقائية للطلاب وأولياء الأمور"
-                        checked={whatsappAutoNotify} onChange={() => setWhatsappAutoNotify(!whatsappAutoNotify)}
-                    />
-                    <div>
-                        <FieldLabel>قالب رسالة واتساب</FieldLabel>
-                        <TextAreaField value={localWhatsappTemplate} onChange={e => setLocalWhatsappTemplate(e.target.value)} rows={4} placeholder="أهلاً {student}، تذكير بحصة {subject} غداً الساعة {time}" />
-                    </div>
-                    <div className="flex justify-end">
-                        <PrimaryBtn onClick={handleSaveWhatsappTemplate}>حفظ قالب واتساب</PrimaryBtn>
-                    </div>
-                </div>
-            </SectionCard>
-
-            <SectionCard>
-                <SectionTitle icon={Video} label="Google Meet" sub="إعدادات الاجتماعات الافتراضية" />
-                <div className="space-y-4">
-                    <div>
-                        <FieldLabel>رابط Google Meet الافتراضي</FieldLabel>
-                        <InputField placeholder="https://meet.google.com/xxx-xxxx-xxx" />
-                    </div>
-                    <div className="flex justify-end">
-                        <PrimaryBtn onClick={() => showNotify('تم حفظ إعدادات Google Meet')}>حفظ</PrimaryBtn>
-                    </div>
-                </div>
-            </SectionCard>
-
-            <SectionCard>
-                <SectionTitle icon={Globe} label="الرسائل النصية (SMS)" sub="إعدادات بوابة الرسائل النصية" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <FieldLabel>اسم المرسل</FieldLabel>
-                        <InputField placeholder="Dareen" />
-                    </div>
-                    <div>
-                        <FieldLabel>API Key</FieldLabel>
-                        <InputField type="password" placeholder="••••••••" />
-                    </div>
-                </div>
-                <div className="mt-4 flex justify-end">
-                    <PrimaryBtn onClick={() => showNotify('تم حفظ إعدادات SMS')}>حفظ</PrimaryBtn>
-                </div>
-            </SectionCard>
+  return (
+    <div className="space-y-5">
+      <SectionCard>
+        <SectionTitle
+          icon={MessageSquare}
+          label="واتساب"
+          sub="إعدادات الإشعارات التلقائية وقوالب الرسائل"
+        />
+        <div className="space-y-4">
+          <ToggleRow
+            icon={MessageSquare}
+            label="الإشعار التلقائي عبر واتساب"
+            sub="إرسال إشعار لولي الأمر عند تسجيل حضور الطالب"
+            checked={whatsappAutoNotify}
+            onChange={() => setWhatsappAutoNotify(!whatsappAutoNotify)}
+          />
+          <div>
+            <FieldLabel>قالب رسالة واتساب</FieldLabel>
+            <TextAreaField
+              value={localWhatsappTemplate}
+              onChange={(e) => setLocalWhatsappTemplate(e.target.value)}
+              rows={4}
+              placeholder="أهلاً {student}، تذكير بحصة {subject} غداً الساعة {time}"
+            />
+            <p className="mt-2 text-[11px] font-bold text-muted">
+              المتغيرات المتاحة: <span className="font-mono text-primary">{'{student}'}</span> اسم
+              الطالب · <span className="font-mono text-primary">{'{subject}'}</span> المادة ·{' '}
+              <span className="font-mono text-primary">{'{teacher}'}</span> المعلمة ·{' '}
+              <span className="font-mono text-primary">{'{date}'}</span> التاريخ ·{' '}
+              <span className="font-mono text-primary">{'{price}'}</span> السعر
+            </p>
+          </div>
+          <div className="flex justify-end">
+            <PrimaryBtn onClick={handleSaveWhatsappTemplate}>حفظ قالب واتساب</PrimaryBtn>
+          </div>
         </div>
-    );
-};
+      </SectionCard>
+    </div>
+  )
+}

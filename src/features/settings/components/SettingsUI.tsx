@@ -146,10 +146,10 @@ export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () =
         : 'bg-border/60 hover:bg-border',
     )}
   >
-    <div
+    <span
       className={cn(
         'absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-300',
-        checked ? 'translate-x-5' : 'translate-x-0.5',
+        checked ? 'start-[1.375rem]' : 'start-0.5',
       )}
     />
   </button>

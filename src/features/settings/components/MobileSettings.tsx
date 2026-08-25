@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { MessageSquare, Plus, Trash2, Save } from 'lucide-react'
 import { SectionCard, SectionTitle, InputField, PrimaryBtn, DangerBtn } from './SettingsUI'
 
@@ -19,13 +19,23 @@ export const MobileSettings = ({
 }: MobileSettingsProps) => {
   const [entries, setEntries] = useState<WhatsAppEntry[]>(() => {
     try {
-      return JSON.parse(whatsappNumbers)
+      const parsed = JSON.parse(whatsappNumbers)
+      return Array.isArray(parsed) ? parsed : []
     } catch (e) {
       console.warn(e)
       return []
     }
   })
   const [saving, setSaving] = useState(false)
+
+  useEffect(() => {
+    try {
+      const parsed = JSON.parse(whatsappNumbers)
+      if (Array.isArray(parsed)) setEntries(parsed)
+    } catch (e) {
+      console.warn(e)
+    }
+  }, [whatsappNumbers])
 
   const updateEntry = (i: number, field: keyof WhatsAppEntry, value: string) => {
     const next = [...entries]
