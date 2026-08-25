@@ -151,24 +151,16 @@ export const NotificationsCenter = ({
       className="rounded-2xl border border-border bg-card p-5 font-dash shadow-sm dark:border-border dark:bg-card"
       dir="rtl"
     >
-      {/* Header */}
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-warning-soft dark:bg-primary/10">
-            <Bell size={16} className="text-warning dark:text-primary" />
-          </div>
-          <div>
-            <h3 className="text-sm font-bold text-main dark:text-main">التنبيهات</h3>
-            <p className="text-[10px] text-muted dark:text-muted">مراقبة الأنظمة</p>
-          </div>
-        </div>
+      {/* Tabs */}
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <p className="text-[10px] font-bold text-muted">مراقبة الأنظمة</p>
         <div className="flex gap-0.5 rounded-lg bg-surface p-0.5 dark:bg-hover" role="tablist">
           <button
             role="tab"
             aria-selected={activeTab === 'smart'}
             onClick={() => setActiveTab('smart')}
             className={cn(
-              'flex min-h-[44px] items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
+              'flex min-h-[36px] items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
               activeTab === 'smart'
                 ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary'
                 : 'text-muted hover:text-main dark:text-muted dark:hover:text-main',
@@ -182,7 +174,7 @@ export const NotificationsCenter = ({
             aria-selected={activeTab === 'room'}
             onClick={() => setActiveTab('room')}
             className={cn(
-              'flex min-h-[44px] items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
+              'flex min-h-[36px] items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
               activeTab === 'room'
                 ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary'
                 : 'text-muted hover:text-main dark:text-muted dark:hover:text-main',

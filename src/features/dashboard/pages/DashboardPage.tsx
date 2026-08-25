@@ -91,14 +91,24 @@ export const Dashboard = () => {
             </div>
           </div>
 
-          <div className="block space-y-4 px-2.5 pt-4 sm:px-4 md:hidden">
-            <Skeleton className="h-[160px] rounded-2xl" />
-            <div className="flex gap-3 overflow-hidden">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <Skeleton key={`skel-mob-${i}`} className="h-24 w-[140px] shrink-0 rounded-2xl" />
+          <div className="block space-y-4 px-4 pt-3 sm:px-4 md:hidden">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <Skeleton className="h-3 w-24" />
+                <Skeleton className="h-6 w-40" />
+              </div>
+              <Skeleton className="h-[54px] w-[54px] rounded-full" />
+            </div>
+            <div className="flex gap-2.5 overflow-hidden">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Skeleton
+                  key={`skel-mob-${i}`}
+                  className="h-[88px] w-[108px] shrink-0 rounded-2xl"
+                />
               ))}
             </div>
-            <Skeleton className="h-[200px] rounded-2xl" />
+            <Skeleton className="h-[120px] rounded-2xl" />
+            <Skeleton className="h-[180px] rounded-2xl" />
           </div>
         </motion.div>
       ) : (

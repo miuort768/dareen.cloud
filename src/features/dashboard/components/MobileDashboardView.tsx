@@ -2,26 +2,29 @@
 import {
   Loader2,
   Sparkles,
-  LayoutDashboard,
   Zap,
   CalendarCheck,
   Wallet,
   BellRing,
   Activity,
-  ShieldCheck,
+  UserPlus,
+  Receipt,
+  UserCheck,
+  ListTodo,
 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import type { Session } from '../../../types'
 import type { User } from '../../../types/auth'
 import type { DashboardStats, DashboardMonthData, DashboardTask, LowBalanceStudent } from '../types'
 import { MobileSectionHeader, usePullToRefresh } from '../../../shared/components/mobile'
+import { cn } from '@/lib/utils'
 import { HeroSection } from './HeroSection'
-import { KPICards } from './KPICards'
-import { QuickActions } from './QuickActions'
+import { StatChipsRow } from './StatChipsRow'
 import { TodaysFocus } from './TodaysFocus'
+import { MoneyStrip } from './MoneyStrip'
 import { FinanceOverview } from './FinanceOverview'
 import { NotificationsCenter } from './NotificationsCenter'
 import { ActivityTimeline } from './ActivityTimeline'
-import { SystemHealth } from './SystemHealth'
 
 type LooseTask = { status?: string }
 
@@ -43,9 +46,22 @@ const asRecordList = (list: unknown[]) => list as Record<string, unknown>[]
 const asTimelineSessions = (list: unknown[]) =>
   list as { id: string; studentName: string; date?: string; status?: string }[]
 
+const ACTIONS = [
+  { label: 'طالب جديد', icon: UserPlus, path: '/students', tone: 'bg-primary-soft text-primary' },
+  {
+    label: 'فاتورة',
+    icon: Receipt,
+    path: '/student-invoices',
+    tone: 'bg-success-soft text-success',
+  },
+  { label: 'الحضور', icon: UserCheck, path: '/attendance', tone: 'bg-info-soft text-info' },
+  { label: 'المهام', icon: ListTodo, path: '/tasks', tone: 'bg-warning-soft text-warning' },
+]
+
 /**
  * Native-feel single-scroll home for the admin dashboard on mobile:
- * pull-to-refresh, greeting hero, then labeled sections.
+ * pull-to-refresh, compact greeting header, snap stat carousel,
+ * app-launcher actions, unified focus timeline, wallet strip + chart.
  */
 export const MobileDashboardView = ({
   currentUser,
@@ -59,16 +75,16 @@ export const MobileDashboardView = ({
   rawStudentInvoices,
   onRefresh,
 }: MobileDashboardViewProps) => {
+  const navigate = useNavigate()
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh })
 
   return (
     <div {...handlers} className="min-h-full pb-6" dir="rtl">
-      {/* Pull to refresh */}
       <motion.div
         animate={{ height: isRefreshing ? 48 : pullDistance }}
         className="flex items-center justify-center overflow-hidden"
       >
-        <div className="flex items-center gap-2.5 text-xs font-bold text-primary dark:text-primary">
+        <div className="flex items-center gap-2.5 text-xs font-bold text-primary">
           {isRefreshing ? (
             <>
               <Loader2 size={16} className="animate-spin" />
@@ -80,45 +96,77 @@ export const MobileDashboardView = ({
               <span>أفلت للتحديث</span>
             </>
           ) : (
-            <span className="text-muted dark:text-dim">اسحب للتحديث</span>
+            <span className="text-muted">اسحب للتحديث</span>
           )}
         </div>
       </motion.div>
 
-      <div className="space-y-4 px-3 pt-2">
+      <div className="space-y-4 px-4 pt-1">
         <HeroSection currentUser={currentUser} stats={stats} />
 
-        <section className="rounded-2xl border border-border bg-card p-4 shadow-sm dark:bg-card">
+        <StatChipsRow stats={stats} />
+
+        <section className="rounded-2xl border border-border bg-card p-3 shadow-elevation-1">
+          <MobileSectionHeader title="إجراءات سريعة" icon={Zap} className="mb-2.5 px-0.5" />
+          <div className="grid grid-cols-4 gap-1.5">
+            {ACTIONS.map((action) => {
+              const Icon = action.icon
+              return (
+                <button
+                  key={action.label}
+                  onClick={() => navigate(action.path)}
+                  aria-label={action.label}
+                  className="flex flex-col items-center gap-1.5 rounded-xl py-2.5 outline-none transition-all duration-200 hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.94]"
+                >
+                  <span
+                    className={cn(
+                      'flex h-11 w-11 items-center justify-center rounded-2xl',
+                      action.tone,
+                    )}
+                  >
+                    <Icon size={19} strokeWidth={1.9} />
+                  </span>
+                  <span className="text-[10px] font-bold leading-none text-main">
+                    {action.label}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </section>
+
+        <section>
           <MobileSectionHeader
-            title="المؤشرات الرئيسية"
-            subtitle="أبرز أرقام الأكاديمية"
-            icon={LayoutDashboard}
-            className="mb-3"
+            title="تركيز اليوم"
+            subtitle={`${todaySessions.length} حصة · ${tasks.length} مهمة`}
+            icon={CalendarCheck}
+            className="mb-2"
           />
-          <KPICards stats={stats} />
-        </section>
-
-        <section className="rounded-2xl border border-border bg-card p-4 shadow-sm dark:bg-card">
-          <MobileSectionHeader title="إجراءات سريعة" icon={Zap} className="mb-3" />
-          <QuickActions />
-        </section>
-
-        <section className="rounded-2xl border border-border bg-card p-4 shadow-sm dark:bg-card">
-          <MobileSectionHeader title="تركيز اليوم" icon={CalendarCheck} className="mb-3" />
           <TodaysFocus
-            todaySessions={todaySessions}
+            todaySessions={todaySessions.map((s) => ({
+              id: s.id,
+              studentName: s.studentName || '',
+              time: s.time || '',
+              subject: s.subject,
+              status: s.status,
+            }))}
             tasks={asTasks(tasks)}
             lowBalanceCount={stats.lowBalanceCount}
           />
         </section>
 
-        <section className="rounded-2xl border border-border bg-card p-4 shadow-sm dark:bg-card">
-          <MobileSectionHeader title="الملخص المالي" icon={Wallet} className="mb-3" />
-          <FinanceOverview monthlyData={monthlyData} />
+        <section>
+          <MobileSectionHeader title="المالية" icon={Wallet} className="mb-2" />
+          <MoneyStrip stats={stats} />
+          {monthlyData.length > 0 && (
+            <div className="mt-2.5">
+              <FinanceOverview monthlyData={monthlyData} showHeader={false} compact />
+            </div>
+          )}
         </section>
 
-        <section className="rounded-2xl border border-border bg-card p-4 shadow-sm dark:bg-card">
-          <MobileSectionHeader title="الإشعارات" icon={BellRing} className="mb-3" />
+        <section>
+          <MobileSectionHeader title="التنبيهات" icon={BellRing} className="mb-2" />
           <NotificationsCenter
             tasks={asTasks(tasks)}
             lowBalanceStudents={lowBalanceStudents}
@@ -128,14 +176,9 @@ export const MobileDashboardView = ({
           />
         </section>
 
-        <section className="rounded-2xl border border-border bg-card p-4 shadow-sm dark:bg-card">
-          <MobileSectionHeader title="النشاطات" icon={Activity} className="mb-3" />
+        <section>
+          <MobileSectionHeader title="سجل النشاطات" icon={Activity} className="mb-2" />
           <ActivityTimeline sessions={asTimelineSessions(rawSessions)} tasks={asTasks(tasks)} />
-        </section>
-
-        <section className="rounded-2xl border border-border bg-card p-4 shadow-sm dark:bg-card">
-          <MobileSectionHeader title="سلامة النظام" icon={ShieldCheck} className="mb-3" />
-          <SystemHealth stats={stats} />
         </section>
       </div>
     </div>
