@@ -14,6 +14,7 @@ import {
   MailOpen,
   Calendar,
   X,
+  AlertTriangle,
 } from 'lucide-react'
 import { api, safeArray } from '../lib/api'
 import { confirm } from '../lib/confirmDialog'
@@ -22,6 +23,7 @@ import { useIsLoading, useAcademyName } from '../context/AppContext'
 import { cn } from '../lib/utils'
 import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
+import { Skeleton, SkeletonText } from '../shared/components/ui/Skeleton'
 
 interface ContactMsg {
   id: string
@@ -51,7 +53,7 @@ function exportToCsv(messages: ContactMsg[]) {
     (m.message || '').replace(/\n/g, ' '),
     formatDateNumeric(m.createdAt),
   ])
-  const bom = '\uFEFF'
+  const bom = '﻿'
   const csv =
     bom + [headers.join(','), ...rows.map((r) => r.map((c) => `"${c}"`).join(','))].join('\n')
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
@@ -105,14 +107,9 @@ export const AdminContacts = () => {
     }
   }, [readIds])
 
-  const markAsRead = useCallback(
-    (id: string) => {
-      if (readIds.includes(id)) return
-      setReadIds((prev) => [...prev, id])
-      queryClient.invalidateQueries({ queryKey: ['contacts'] })
-    },
-    [readIds, queryClient],
-  )
+  const markAsRead = useCallback((id: string) => {
+    setReadIds((prev) => (prev.includes(id) ? prev : [...prev, id]))
+  }, [])
 
   useEffect(() => {
     const socket = socketService.connect()
@@ -140,27 +137,31 @@ export const AdminContacts = () => {
   }
 
   const handleDeleteAll = async () => {
+    if (messages.length === 0) return
     const confirmed = await confirm(
       'هل أنت متأكد من حذف جميع الرسائل؟ لن يمكن التراجع عن هذا الإجراء.',
     )
     if (!confirmed) return
     try {
-      for (const m of messages) {
-        await api.delete(`/contact/${m.id}`)
-      }
+      await Promise.allSettled(messages.map((m) => api.delete(`/contact/${m.id}`)))
       queryClient.invalidateQueries({ queryKey: ['contacts'] })
     } catch (err) {
       console.error(err)
     }
   }
 
+  const retryFetch = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ['contacts'] })
+  }, [queryClient])
+
   const filtered = useMemo(() => {
     return messages.filter((m) => {
       const q = search.trim().toLowerCase()
+      const phone = (m.phone || '').replace(/\s/g, '')
       const matchesSearch =
         !q ||
         (m.name || '').toLowerCase().includes(q) ||
-        m.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
+        phone.includes(q.replace(/\s/g, '')) ||
         (m.subject || '').toLowerCase().includes(q) ||
         (m.message || '').toLowerCase().includes(q) ||
         (m.curriculum || '').toLowerCase().includes(q)
@@ -187,7 +188,7 @@ export const AdminContacts = () => {
     [messages],
   )
   const withPhoneCount = useMemo(
-    () => messages.filter((m) => m.phone?.replace(/\D/g, '').length >= 7).length,
+    () => messages.filter((m) => (m.phone || '').replace(/\D/g, '').length >= 7).length,
     [messages],
   )
   const uniqueSubjects = useMemo(
@@ -209,21 +210,21 @@ export const AdminContacts = () => {
         value: todayCount,
         icon: Calendar,
         color: 'text-info',
-        bg: 'bg-info/10',
+        bg: 'bg-info-soft',
       },
       {
         label: 'بها هواتف',
         value: withPhoneCount,
         icon: Phone,
         color: 'text-success',
-        bg: 'bg-success/10',
+        bg: 'bg-success-soft',
       },
       {
         label: 'المواضيع',
         value: uniqueSubjects,
         icon: BookOpen,
         color: 'text-warning',
-        bg: 'bg-warning/10',
+        bg: 'bg-warning-soft',
       },
     ],
     [messages, todayCount, withPhoneCount, uniqueSubjects],
@@ -249,23 +250,21 @@ export const AdminContacts = () => {
                 <Mail size={20} className="text-primary" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-main dark:text-main">رسائل التواصل</h1>
-                <p className="mt-0.5 text-xs text-muted dark:text-muted">
-                  إدارة ومتابعة رسائل الزوار والعملاء
-                </p>
+                <h1 className="text-xl font-bold text-main">رسائل التواصل</h1>
+                <p className="mt-0.5 text-xs text-muted">إدارة ومتابعة رسائل الزوار والعملاء</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => exportToCsv(filtered)}
-                className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-xs font-bold text-muted transition-all duration-200 hover:border-primary/20 hover:bg-hover active:scale-[0.98] dark:border-border dark:bg-card dark:text-muted dark:hover:border-border dark:hover:bg-hover"
+                className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.98]"
               >
                 <Download size={14} />
                 <span className="hidden sm:inline">تصدير</span>
               </button>
               <button
                 onClick={handleDeleteAll}
-                className="hover:bg-error/5 hover:border-error/30 flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-xs font-bold text-error transition-all duration-200 active:scale-[0.98] dark:border-border dark:bg-card"
+                className="flex items-center gap-2 rounded-xl bg-error px-4 py-2.5 text-xs font-bold text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-[0.98]"
               >
                 <Trash2 size={14} />
                 <span className="hidden sm:inline">حذف الكل</span>
@@ -289,7 +288,7 @@ export const AdminContacts = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 + i * 0.04 }}
                   whileHover={{ y: -2 }}
-                  className="rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:shadow-sm dark:border-border dark:bg-card"
+                  className="rounded-xl border border-border bg-card p-4"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div
@@ -298,8 +297,8 @@ export const AdminContacts = () => {
                       <Icon size={16} className={kpi.color} />
                     </div>
                   </div>
-                  <p className="text-2xl font-bold text-main dark:text-main">{kpi.value}</p>
-                  <p className="mt-1 text-[11px] text-muted dark:text-muted">{kpi.label}</p>
+                  <p className="text-2xl font-bold text-main">{kpi.value}</p>
+                  <p className="mt-1 text-micro text-muted">{kpi.label}</p>
                 </motion.div>
               )
             })}
@@ -313,22 +312,19 @@ export const AdminContacts = () => {
           className="mb-4"
         >
           <div className="relative mb-3">
-            <Search
-              className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted dark:text-muted"
-              size={15}
-            />
+            <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" size={15} />
             <input
               type="text"
               aria-label="بحث في الرسائل"
               placeholder="بحث بالاسم أو الهاتف أو الموضوع..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="placeholder:text-muted/60 dark:placeholder:text-muted/60 w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 dark:border-border dark:bg-card dark:text-main"
+              className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main transition-colors duration-fast focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
             />
             {search && (
               <button
                 onClick={() => setSearch('')}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-main dark:text-muted dark:hover:text-main"
+                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors duration-fast hover:text-main"
                 aria-label="مسح البحث"
               >
                 <X size={14} />
@@ -341,20 +337,21 @@ export const AdminContacts = () => {
                 key={pill.key}
                 type="button"
                 onClick={() => setFilterRead(pill.key)}
+                aria-pressed={filterRead === pill.key}
                 className={cn(
-                  'inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-[11px] font-bold transition-all duration-200 active:scale-[0.97]',
+                  'inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold transition-colors duration-fast active:scale-[0.97]',
                   filterRead === pill.key
-                    ? 'bg-primary text-on-primary shadow-sm'
-                    : 'border border-border bg-card text-muted hover:border-primary/30 hover:text-main dark:border-border dark:bg-card dark:text-muted dark:hover:border-border dark:hover:text-main',
+                    ? 'bg-primary text-on-primary'
+                    : 'border border-border bg-card text-muted hover:border-primary/30 hover:text-main',
                 )}
               >
                 {pill.label}
                 <span
                   className={cn(
-                    'inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full px-1 text-[9px]',
+                    'inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full px-1 text-micro',
                     filterRead === pill.key
-                      ? 'bg-on-primary/20 text-on-primary'
-                      : 'bg-border/50 text-muted',
+                      ? 'bg-white/20 text-on-primary'
+                      : 'bg-divider text-muted',
                   )}
                 >
                   {pill.count}
@@ -373,21 +370,18 @@ export const AdminContacts = () => {
             {loading ? (
               <div className="space-y-3">
                 {[1, 2, 3].map((i) => (
-                  <div
-                    key={`skel-${i}`}
-                    className="animate-pulse rounded-xl border border-border bg-card p-5 dark:border-border dark:bg-card"
-                  >
+                  <div key={`skel-${i}`} className="rounded-xl border border-border bg-card p-5">
                     <div className="mb-4 flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-surface dark:bg-hover" />
+                      <Skeleton className="h-9 w-9 rounded-xl" />
                       <div className="flex-1 space-y-2">
-                        <div className="h-3 w-1/3 rounded-lg bg-surface dark:bg-hover" />
-                        <div className="h-2.5 w-1/4 rounded-lg bg-surface dark:bg-hover" />
+                        <Skeleton className="h-3 w-1/3 rounded-lg" />
+                        <Skeleton className="h-2.5 w-1/4 rounded-lg" />
                       </div>
                     </div>
-                    <div className="mb-3 h-16 rounded-lg bg-surface dark:bg-hover" />
+                    <SkeletonText lines={3} className="mb-3" />
                     <div className="flex gap-2">
-                      <div className="h-6 w-20 rounded-lg bg-surface dark:bg-hover" />
-                      <div className="h-6 w-24 rounded-lg bg-surface dark:bg-hover" />
+                      <Skeleton className="h-6 w-20 rounded-lg" />
+                      <Skeleton className="h-6 w-24 rounded-lg" />
                     </div>
                   </div>
                 ))}
@@ -396,16 +390,16 @@ export const AdminContacts = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="border-error/30 rounded-xl border bg-card p-8 text-center dark:bg-card"
+                className="rounded-xl border border-error-soft bg-card p-8 text-center"
               >
-                <div className="bg-error/10 mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl">
-                  <Trash2 size={20} className="text-error" />
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-error-soft">
+                  <AlertTriangle size={20} className="text-error" />
                 </div>
                 <p className="text-xs font-bold text-error">{error}</p>
                 <button
                   type="button"
-                  onClick={() => window.location.reload()}
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-[11px] font-bold text-on-primary transition-all duration-200 hover:bg-primary-hover active:scale-[0.97]"
+                  onClick={retryFetch}
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.97]"
                 >
                   إعادة تحميل
                 </button>
@@ -414,15 +408,15 @@ export const AdminContacts = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="rounded-xl border border-dashed border-border bg-card p-10 text-center dark:border-border dark:bg-card"
+                className="rounded-xl border border-dashed border-border bg-card p-10 text-center"
               >
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
                   <Inbox size={24} className="text-primary" />
                 </div>
-                <p className="mb-1 text-sm font-bold text-main dark:text-main">
+                <p className="mb-1 text-sm font-bold text-main">
                   {messages.length === 0 ? 'لا توجد رسائل' : 'لا توجد نتائج'}
                 </p>
-                <p className="text-xs text-muted dark:text-muted">
+                <p className="text-xs text-muted">
                   {messages.length === 0
                     ? 'ستظهر رسائل الزوار هنا'
                     : 'جرّب تغيير كلمة البحث أو الفلتر'}
@@ -432,6 +426,7 @@ export const AdminContacts = () => {
               <AnimatePresence>
                 {filtered.map((msg, index) => {
                   const isMsgRead = readIds.includes(msg.id)
+                  const safePhone = msg.phone || ''
                   return (
                     <motion.div
                       key={msg.id}
@@ -441,8 +436,8 @@ export const AdminContacts = () => {
                       exit={{ opacity: 0, y: -10, transition: { duration: 0.15 } }}
                       transition={{ duration: 0.2, delay: index * 0.02 }}
                       className={cn(
-                        'overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:shadow-sm dark:border-border dark:bg-card',
-                        !isMsgRead && 'border-primary/20 dark:border-primary/20',
+                        'overflow-hidden rounded-xl border border-border bg-card transition-shadow duration-normal hover:shadow-elevation-1',
+                        !isMsgRead && 'border-primary/20',
                       )}
                     >
                       <div className="p-4 sm:p-5">
@@ -451,7 +446,7 @@ export const AdminContacts = () => {
                             <div
                               className={cn(
                                 'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl',
-                                isMsgRead ? 'bg-success/10' : 'bg-primary/10',
+                                isMsgRead ? 'bg-success-soft' : 'bg-primary/10',
                               )}
                             >
                               <User
@@ -461,48 +456,52 @@ export const AdminContacts = () => {
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center gap-2">
-                                <h3 className="truncate text-sm font-bold text-main dark:text-main">
+                                <h3 className="truncate text-sm font-bold text-main">
                                   {msg.name || 'بدون اسم'}
                                 </h3>
                                 {!isMsgRead && (
                                   <span className="h-2 w-2 shrink-0 rounded-full bg-primary" />
                                 )}
                                 {isMsgRead && (
-                                  <span className="bg-success/10 rounded-lg px-1.5 py-0.5 text-[9px] font-bold text-success">
+                                  <span className="rounded-lg bg-success-soft px-1.5 py-0.5 text-micro font-bold text-success">
                                     مقروءة
                                   </span>
                                 )}
                               </div>
-                              <p className="truncate text-[11px] text-muted dark:text-muted">
+                              <p className="truncate text-micro text-muted">
                                 {msg.subject || 'بدون موضوع'}
                               </p>
                             </div>
                           </div>
                           <div className="flex shrink-0 items-center gap-1.5">
-                            <a
-                              href={`tel:${msg.phone.replace(/\s/g, '')}`}
-                              className="bg-success/10 hover:bg-success/20 flex h-8 w-8 items-center justify-center rounded-lg text-success transition-all duration-200 active:scale-95"
-                              aria-label={`اتصال بـ ${msg.phone}`}
-                            >
-                              <Phone size={14} />
-                            </a>
-                            <a
-                              href={`https://wa.me/${msg.phone.replace(/\D/g, '')}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="bg-success/10 hover:bg-success/20 flex h-8 w-8 items-center justify-center rounded-lg text-success transition-all duration-200 active:scale-95"
-                              aria-label="مراسلة عبر واتساب"
-                            >
-                              <MessageCircle size={14} />
-                            </a>
+                            {safePhone.replace(/\D/g, '') && (
+                              <>
+                                <a
+                                  href={`tel:${safePhone.replace(/\s/g, '')}`}
+                                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-success-soft text-success transition-colors duration-fast hover:bg-success hover:text-on-success active:scale-95"
+                                  aria-label={`اتصال بـ ${safePhone}`}
+                                >
+                                  <Phone size={14} />
+                                </a>
+                                <a
+                                  href={`https://wa.me/${safePhone.replace(/\D/g, '')}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-success-soft text-success transition-colors duration-fast hover:bg-success hover:text-on-success active:scale-95"
+                                  aria-label="مراسلة عبر واتساب"
+                                >
+                                  <MessageCircle size={14} />
+                                </a>
+                              </>
+                            )}
                             <button
                               type="button"
                               onClick={() => markAsRead(msg.id)}
                               className={cn(
-                                'flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-200 active:scale-95',
+                                'flex h-8 w-8 items-center justify-center rounded-lg transition-colors duration-fast active:scale-95',
                                 isMsgRead
-                                  ? 'bg-success/10 hover:bg-success/20 text-success'
-                                  : 'bg-surface text-muted hover:bg-hover dark:bg-hover dark:text-muted dark:hover:bg-hover',
+                                  ? 'bg-success-soft text-success hover:bg-success hover:text-on-success'
+                                  : 'bg-surface text-muted hover:bg-hover',
                               )}
                               aria-label={isMsgRead ? 'مقروءة' : 'تحديد كمقروءة'}
                             >
@@ -511,7 +510,7 @@ export const AdminContacts = () => {
                             <button
                               type="button"
                               onClick={() => handleDelete(msg.id)}
-                              className="bg-error/10 hover:bg-error/20 flex h-8 w-8 items-center justify-center rounded-lg text-error transition-all duration-200 active:scale-95"
+                              className="flex h-8 w-8 items-center justify-center rounded-lg bg-error-soft text-error transition-colors duration-fast hover:bg-error hover:text-on-error active:scale-95"
                               aria-label="حذف الرسالة"
                             >
                               <Trash2 size={14} />
@@ -519,22 +518,22 @@ export const AdminContacts = () => {
                           </div>
                         </div>
 
-                        <div className="border-border/30 mb-3 rounded-xl border bg-background p-3.5 dark:border-border dark:bg-hover">
-                          <p className="whitespace-pre-wrap text-xs font-bold leading-relaxed text-main dark:text-main">
+                        <div className="mb-3 rounded-xl border border-divider bg-background p-3.5">
+                          <p className="whitespace-pre-wrap text-xs font-bold leading-relaxed text-main">
                             {msg.message || 'لا توجد رسالة'}
                           </p>
                         </div>
 
                         <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="bg-success/10 inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-success">
-                            <span className="max-w-[120px] truncate">{msg.phone}</span>
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-success-soft px-2 py-1 text-micro font-bold text-success">
+                            <span className="max-w-[120px] truncate">{safePhone}</span>
                             <Phone size={10} />
                           </span>
-                          <span className="inline-flex items-center gap-1 rounded-lg bg-primary/10 px-2 py-1 text-[10px] font-bold text-primary">
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-primary/10 px-2 py-1 text-micro font-bold text-primary">
                             <span className="max-w-[100px] truncate">{msg.curriculum || '-'}</span>
                             <BookOpen size={10} />
                           </span>
-                          <span className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1 text-[10px] font-bold text-muted dark:border-border dark:bg-hover dark:text-muted">
+                          <span className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1 text-micro font-bold text-muted">
                             <span>{formatDateNumeric(msg.createdAt)}</span>
                             <Clock size={10} />
                           </span>
