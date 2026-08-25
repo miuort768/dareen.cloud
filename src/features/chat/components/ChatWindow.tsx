@@ -52,13 +52,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   useEffect(() => {
     if (selectedConv?.id && 'unreadCount' in selectedConv && (selectedConv.unreadCount ?? 0) > 0) {
       markAsRead(selectedConv.id)
-    } else if (selectedConv?.id && messages.length > 0) {
-      const lastMsg = messages[messages.length - 1]
-      if (lastMsg && lastMsg.senderId !== currentUser?.id) {
-        markAsRead(selectedConv.id)
-      }
     }
-  }, [selectedConv, messages, markAsRead, currentUser?.id])
+  }, [selectedConv, markAsRead])
 
   const typingInThisConv = typingUsers.filter((u) => u.conversationId === selectedConv.id)
 

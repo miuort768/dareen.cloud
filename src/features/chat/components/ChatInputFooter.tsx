@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { Send } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import type { User } from '../../../types/auth'
@@ -23,6 +23,15 @@ export const ChatInputFooter = ({
   onTyping,
 }: ChatInputFooterProps) => {
   const lastTypingEmitRef = useRef(0)
+
+  useEffect(() => {
+    return () => {
+      if (lastTypingEmitRef.current > 0 && currentUser && conversationId) {
+        onTyping(conversationId, false, currentUser.name)
+      }
+      lastTypingEmitRef.current = 0
+    }
+  }, [conversationId, currentUser, onTyping])
 
   const handleChange = (val: string) => {
     onMessageChange(val)

@@ -95,7 +95,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                       : 'بدء محادثة'}
                 </h3>
                 {isCreatingGroup && step === 'select' && (
-                  <p className="text-white/80 text-xs">
+                  <p className="text-xs text-white/80">
                     {selectedUsers.length} من {availableUsers.length} مختار
                   </p>
                 )}
@@ -124,7 +124,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
                 {/* Selected Chips Horizontal List */}
                 {selectedUsers.length > 0 && (
-                  <div className="custom-scrollbar bg-surface dark:bg-card flex min-h-[85px] shrink-0 grow-0 gap-3 overflow-x-auto border-b border-border p-3">
+                  <div className="custom-scrollbar flex min-h-[85px] shrink-0 grow-0 gap-3 overflow-x-auto border-b border-border bg-surface p-3 dark:bg-card">
                     {selectedUsersObjects.map((user) => (
                       <div
                         key={user.id}
@@ -232,7 +232,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                   <div className="absolute bottom-6 end-6 duration-300 animate-in fade-in slide-in-from-bottom-5">
                     <button
                       onClick={handleNextStep}
-                      className="rounded-none bg-success p-4 text-on-success shadow-sm transition-all hover:scale-110 active:scale-95"
+                      className="rounded-full bg-success p-4 text-on-success shadow-md transition-all hover:brightness-95 active:scale-95"
                       aria-label="التالي"
                     >
                       <ChevronLeft size={32} />
@@ -249,10 +249,11 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                       type="text"
                       value={groupName}
                       autoFocus
+                      maxLength={25}
                       onChange={(e) => setGroupName(e.target.value)}
                       placeholder="اسم المجموعة..."
                       aria-label="اسم المجموعة"
-                      className="border-success-soft w-full border-b-2 bg-transparent py-3 text-start text-lg font-normal text-main outline-none transition-colors focus:border-success"
+                      className="w-full border-b-2 border-success-soft bg-transparent py-3 text-start text-lg font-normal text-main outline-none transition-colors focus:border-success"
                     />
                     <div className="mt-1 flex justify-start">
                       <span className="text-micro font-normal text-muted">
@@ -335,13 +336,13 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                   setShowDeleteConfirm(false)
                   setItemToDelete(null)
                 }}
-                className="flex-1 rounded-lg bg-surface py-3 font-normal dark:bg-hover dark:text-main"
+                className="flex-1 rounded-lg bg-surface py-3 font-bold text-main transition-colors hover:bg-hover dark:bg-hover dark:text-muted dark:hover:text-main"
               >
                 إلغاء
               </button>
               <button
                 onClick={handleDeleteAction}
-                className="flex-1 rounded-lg bg-error py-3 font-normal text-on-error"
+                className="flex-1 rounded-lg bg-error py-3 font-bold text-on-error transition-all hover:bg-error-hover active:scale-[0.98]"
               >
                 حذف الآن
               </button>

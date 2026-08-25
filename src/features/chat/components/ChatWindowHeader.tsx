@@ -38,7 +38,11 @@ export const ChatWindowHeader = ({
   return (
     <header className="sticky top-0 z-[50] flex h-[60px] shrink-0 items-center justify-between bg-surface px-4 shadow-sm dark:bg-card">
       <div className="flex items-center gap-3">
-        <button onClick={onBack} className="p-1 text-muted lg:hidden">
+        <button
+          onClick={onBack}
+          aria-label="رجوع لقائمة المحادثات"
+          className="p-1 text-muted lg:hidden"
+        >
           <ChevronRight size={24} />
         </button>
 
@@ -117,6 +121,7 @@ export const ChatWindowHeader = ({
               setShowSearchBar(!showSearchBar)
               if (showSearchBar) onMessageSearchChange('')
             }}
+            aria-label={showSearchBar ? 'إغلاق البحث' : 'بحث في الرسائل'}
             className={cn(
               'rounded-full p-2 transition-colors',
               showSearchBar
@@ -129,6 +134,7 @@ export const ChatWindowHeader = ({
           <div className="relative" ref={menuRef}>
             <button
               onClick={onToggleMoreMenu}
+              aria-label="خيارات المحادثة"
               className="rounded-full p-2 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
             >
               <MoreVertical size={20} />
@@ -141,26 +147,15 @@ export const ChatWindowHeader = ({
                   className="absolute end-0 top-full z-[100] mt-2 w-48 rounded-md bg-card py-2 shadow-sm"
                 >
                   {selectedConv.isGroup && (
-                    <>
-                      <button
-                        onClick={() => {
-                          openGroupSettings()
-                          onToggleMoreMenu()
-                        }}
-                        className="w-full px-4 py-3 text-start text-sm text-muted transition-colors hover:bg-hover"
-                      >
-                        معلومات المحادثة
-                      </button>
-                      <button
-                        onClick={() => {
-                          openGroupSettings()
-                          onToggleMoreMenu()
-                        }}
-                        className="w-full px-4 py-3 text-start text-sm font-normal text-muted transition-colors hover:bg-hover dark:text-main"
-                      >
-                        تعديل المجموعة
-                      </button>
-                    </>
+                    <button
+                      onClick={() => {
+                        openGroupSettings()
+                        onToggleMoreMenu()
+                      }}
+                      className="w-full px-4 py-3 text-start text-sm font-medium text-main transition-colors hover:bg-hover"
+                    >
+                      تعديل المجموعة
+                    </button>
                   )}
                   <button
                     onClick={() => {
