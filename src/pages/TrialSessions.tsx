@@ -27,7 +27,6 @@ import { ErrorBanner } from '../shared/components/ui/ErrorState'
 import { TrialSessionCard } from './TrialSessionCard'
 import { TrialSessionFormModal } from './TrialSessionFormModal'
 import { TrialSessionDrawer } from './TrialSessionDrawer'
-import { FilterDropdown } from '../shared/components/ui'
 import { useUIStore } from '../store/uiStore'
 import { useAcademyName } from '../context/AppContext'
 import { Skeleton } from '../shared/components/ui/Skeleton'
@@ -108,7 +107,7 @@ const statusFilterItems = [
 ]
 
 const TrialSessionsSkeleton = () => (
-  <div className="min-h-screen bg-background pb-24" dir="rtl">
+  <div className="min-h-full bg-background pb-4 md:pb-8" dir="rtl">
     <div className="mx-auto max-w-page px-3">
       {/* Header skeleton */}
       <div className="pb-2 pt-4">
@@ -431,7 +430,7 @@ export const TrialSessions = () => {
 
   if (isTrialsError) {
     return (
-      <div className="min-h-screen bg-background pb-24" dir="rtl">
+      <div className="min-h-full bg-background pb-4 md:pb-8" dir="rtl">
         <div className="mx-auto max-w-page px-2.5 pt-6 sm:px-4 md:px-6 md:pt-10">
           <ErrorBanner />
         </div>
@@ -444,7 +443,7 @@ export const TrialSessions = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="min-h-screen bg-background pb-24"
+      className="min-h-full bg-background pb-4 md:pb-8"
       dir="rtl"
     >
       <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
@@ -642,38 +641,65 @@ export const TrialSessions = () => {
               </button>
             </div>
 
-            {/* Filter dropdowns: status + subject — full width, each half */}
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <FilterDropdown
-                value={filterStatus}
-                items={statusFilterItems}
-                onChange={setFilterStatus}
-              />
+            {/* Filter chips: status + subject */}
+            <div className="mt-3 space-y-2">
+              <div className="no-scrollbar flex gap-1.5 overflow-x-auto">
+                {statusFilterItems.map((item) => {
+                  const isActive = filterStatus === item.key
+                  return (
+                    <button
+                      key={item.key || 'all'}
+                      onClick={() => setFilterStatus(item.key)}
+                      aria-pressed={isActive}
+                      className={cn(
+                        'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all active:scale-95',
+                        isActive
+                          ? 'border-primary bg-primary text-on-primary shadow-sm'
+                          : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
+                      )}
+                    >
+                      {item.dot && (
+                        <span className={cn('h-1.5 w-1.5 shrink-0 rounded-full', item.dot)} />
+                      )}
+                      {item.label}
+                    </button>
+                  )
+                })}
+              </div>
               {subjects.length > 0 && (
-                <FilterDropdown
-                  value={filterSubject}
-                  items={[
-                    { key: '', label: 'كل المواد' },
-                    ...subjects.map((s) => ({ key: s, label: s })),
-                  ]}
-                  onChange={setFilterSubject}
-                  icon={BookOpen}
-                />
-              )}
-              {(filterStatus || filterSubject) && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => {
-                    setFilterStatus('')
-                    setFilterSubject('')
-                  }}
-                  className="col-span-2 flex h-10 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all hover:bg-error-light"
-                >
-                  <X size={13} /> مسح الفلاتر
-                </motion.button>
+                <div className="no-scrollbar flex gap-1.5 overflow-x-auto">
+                  <button
+                    onClick={() => setFilterSubject('')}
+                    aria-pressed={filterSubject === ''}
+                    className={cn(
+                      'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all active:scale-95',
+                      filterSubject === ''
+                        ? 'border-primary bg-primary text-on-primary shadow-sm'
+                        : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
+                    )}
+                  >
+                    <BookOpen size={12} />
+                    كل المواد
+                  </button>
+                  {subjects.map((s) => {
+                    const isActive = filterSubject === s
+                    return (
+                      <button
+                        key={s}
+                        onClick={() => setFilterSubject(s)}
+                        aria-pressed={isActive}
+                        className={cn(
+                          'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all active:scale-95',
+                          isActive
+                            ? 'border-primary bg-primary text-on-primary shadow-sm'
+                            : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
+                        )}
+                      >
+                        {s}
+                      </button>
+                    )
+                  })}
+                </div>
               )}
             </div>
           </div>

@@ -26,7 +26,6 @@ import { LeadTable } from './leads/components/LeadTable'
 import { LeadCards } from './leads/components/LeadCards'
 import { LeadsSkeleton } from './leads/components/LeadsSkeleton'
 import { LeadDrawer } from './leads/components/LeadDrawer'
-import { FilterDropdown } from '../shared/components/ui'
 import { MobilePageHeader } from '../shared/components/mobile'
 import { useUIStore } from '../store/uiStore'
 import { useAcademyName } from '../context/AppContext'
@@ -467,7 +466,7 @@ export const Leads = () => {
 
   if (isLeadsError) {
     return (
-      <div className="min-h-screen bg-background pb-24" dir="rtl">
+      <div className="min-h-full bg-background" dir="rtl">
         <div className="relative mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
           <ErrorBanner className="mt-6 md:mt-10" />
         </div>
@@ -496,7 +495,7 @@ export const Leads = () => {
       <div className="min-w-0 flex-1">
         <p className="text-xs font-black">المفقودون</p>
         <p className={cn('text-[10px]', showLost ? 'text-error/80' : 'text-white/75')}>
-          {lostCount} عميل مؤرشف
+          {lostCount} عميل مفقود
         </p>
       </div>
       <button
@@ -693,26 +692,28 @@ export const Leads = () => {
             )}
           </div>
 
-          {/* Filter dropdown */}
-          <div className="mt-2.5 grid grid-cols-2 gap-2">
-            <FilterDropdown
-              value={filterStatus}
-              items={filterItems}
-              onChange={(k) => setFilterStatus(k as LeadStatus | 'all')}
-              className={filterStatus === 'all' ? 'col-span-2' : ''}
-            />
-            {filterStatus !== 'all' && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setFilterStatus('all')}
-                className="flex h-11 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all hover:bg-error-light"
-              >
-                <X size={13} /> مسح الفلاتر
-              </motion.button>
-            )}
+          {/* Status filter chips */}
+          <div className="no-scrollbar mt-2.5 flex gap-1.5 overflow-x-auto">
+            {filterItems.map((item) => {
+              const isActive = filterStatus === item.key
+              const cfg = item.key !== 'all' ? statusColors[item.key as LeadStatus] : null
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => setFilterStatus(item.key as LeadStatus | 'all')}
+                  aria-pressed={isActive}
+                  className={cn(
+                    'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all active:scale-95',
+                    isActive
+                      ? 'border-primary bg-primary text-on-primary shadow-sm'
+                      : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
+                  )}
+                >
+                  {cfg && <span className={cn('h-1.5 w-1.5 shrink-0 rounded-full', cfg.dot)} />}
+                  {item.label}
+                </button>
+              )
+            })}
           </div>
         </div>
 

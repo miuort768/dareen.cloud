@@ -37,20 +37,19 @@ export const TrialSessionFormModal = ({
   onClose,
 }: TrialSessionFormModalProps) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
+    initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: 20 }}
-    transition={{ duration: 0.3 }}
-    className="p-2.5 sm:p-4"
+    exit={{ opacity: 0, y: 10 }}
+    className="p-4"
   >
     <div
-      className="overflow-hidden rounded-none border-2 border-primary/30 bg-card shadow-2xl"
+      className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 dark:shadow-none"
       dir="rtl"
     >
       <div className="relative flex items-center justify-between overflow-hidden bg-gradient-to-l from-primary to-primary-deep px-5 py-4">
         <div className="relative z-10 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20 ring-2 ring-white/30">
-            <CalendarDays size={18} className="text-on-primary" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 ring-2 ring-white/30">
+            <CalendarDays size={16} className="text-on-primary" />
           </div>
           <div>
             <h2 className="text-[13px] font-bold text-on-primary">
@@ -61,15 +60,15 @@ export const TrialSessionFormModal = ({
         </div>
         <button
           onClick={onClose}
-          className="relative z-10 flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 transition-all hover:bg-white/25"
+          className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-primary transition-all hover:bg-white/25"
           aria-label="إغلاق"
         >
           <X size={14} className="text-on-primary" />
         </button>
       </div>
 
-      <form onSubmit={onSubmit} className="space-y-4 p-5">
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+      <form onSubmit={onSubmit} className="space-y-3 p-5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="space-y-1">
             <label className={labelClass}>اسم الطالب</label>
             <input
@@ -93,7 +92,7 @@ export const TrialSessionFormModal = ({
             />
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="space-y-1">
             <label className={labelClass}>المادة</label>
             <input
@@ -130,7 +129,7 @@ export const TrialSessionFormModal = ({
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <div className="space-y-1">
             <label className={labelClass}>التاريخ</label>
             <input
@@ -161,18 +160,18 @@ export const TrialSessionFormModal = ({
             placeholder="اكتب أي تفاصيل..."
           />
         </div>
-        <div className="flex gap-3 pb-4 pt-2">
+        <div className="flex gap-3 pt-1">
           <button
             type="submit"
             disabled={isSaving}
-            className="flex-1 rounded-xl bg-gradient-to-l from-primary to-primary-deep py-3.5 text-[13px] font-bold text-on-primary shadow-md shadow-primary/15 transition-all active:scale-[0.98] disabled:opacity-50"
+            className="flex-1 rounded-xl bg-primary py-3 text-[13px] font-bold text-on-primary shadow-sm shadow-primary/10 transition-all hover:bg-primary-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSaving ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 rounded-xl bg-surface py-3.5 text-[11px] font-bold text-muted transition-all hover:bg-hover active:scale-[0.98]"
+            className="flex-1 rounded-xl bg-surface py-3 text-[11px] font-bold text-muted transition-all hover:bg-hover"
           >
             إلغاء
           </button>
