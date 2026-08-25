@@ -46,7 +46,7 @@ export const LeadCards = ({
                 className="cursor-pointer overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-transform duration-200 active:scale-[0.99] dark:shadow-none"
               >
                 {/* Identity */}
-                <div className="flex items-start justify-between gap-2 px-4 pt-4">
+                <div className="flex items-start justify-between gap-2 px-3.5 pt-3.5">
                   <div className="flex min-w-0 items-center gap-3">
                     <GradientAvatar name={lead.studentName || 'ع'} size="md" />
                     <div className="min-w-0">
@@ -76,7 +76,7 @@ export const LeadCards = ({
                 </div>
 
                 {/* Phone */}
-                <div className="mx-4 mt-3 flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2.5">
+                <div className="mx-3.5 mt-3 flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2.5">
                   <Phone size={13} className="shrink-0 text-muted" />
                   <span dir="ltr" className="text-xs font-bold tracking-wide text-main">
                     {lead.phone}
@@ -85,7 +85,7 @@ export const LeadCards = ({
 
                 {/* Tags */}
                 {(lead.subject || lead.curriculum || lead.source) && (
-                  <div className="flex flex-wrap items-center gap-1.5 px-4 pt-2.5">
+                  <div className="flex flex-wrap items-center gap-1.5 px-3.5 pt-2.5">
                     {lead.curriculum && (
                       <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface px-2 py-1 text-[10px] font-bold text-muted">
                         <FileText size={9} />
@@ -107,7 +107,7 @@ export const LeadCards = ({
 
                 {/* Notes */}
                 {lead.notes && (
-                  <div className="mx-4 mt-2.5 rounded-xl bg-success-soft px-3 py-2.5">
+                  <div className="mx-3.5 mt-2.5 rounded-xl bg-success-soft px-3 py-2.5">
                     <p className="line-clamp-2 text-[11px] font-medium leading-relaxed text-main">
                       "{lead.notes}"
                     </p>
@@ -115,7 +115,7 @@ export const LeadCards = ({
                 )}
 
                 {/* Actions */}
-                <div className="bg-surface/50 mt-3.5 flex items-center gap-2 border-t border-border px-4 py-3">
+                <div className="bg-surface/50 mt-3.5 flex items-center gap-2 border-t border-border px-3.5 py-3">
                   <button
                     onClick={(e) => {
                       e.stopPropagation()

@@ -533,7 +533,7 @@ export const Leads = () => {
       className="min-h-screen bg-background pb-24"
       dir="rtl"
     >
-      <div className="relative z-10 mx-auto max-w-page px-4 md:px-6">
+      <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
         {/* ===== HEADER ===== */}
         {/* Mobile: unified page header + prioritized actions */}
         <div className="pt-3 md:hidden">
@@ -588,7 +588,7 @@ export const Leads = () => {
           </motion.div>
         </div>
 
-        <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="mb-4 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
           {[
             {
               label: 'إجمالي العملاء',
@@ -670,91 +670,92 @@ export const Leads = () => {
           ))}
         </div>
 
-        {/* ===== MAIN CONTENT ===== */}
-        <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 dark:shadow-none">
-          {/* Toolbar */}
-          <div className="border-b border-border p-4 lg:p-5">
-            <div className="relative">
-              <Search
-                size={15}
-                className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
-              />
-              <input
-                type="text"
-                placeholder="ابحث بالاسم أو رقم الهاتف..."
-                aria-label="بحث عن عميل"
-                className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-[13px] text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              {searchTerm && (
-                <button
-                  aria-label="مسح البحث"
-                  onClick={() => setSearchTerm('')}
-                  className="absolute end-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-lg text-muted transition-all hover:text-main"
-                >
-                  <X size={13} />
-                </button>
-              )}
-            </div>
-
-            {/* Filter dropdown */}
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <FilterDropdown
-                value={filterStatus}
-                items={filterItems}
-                onChange={(k) => setFilterStatus(k as LeadStatus | 'all')}
-                className={filterStatus === 'all' ? 'col-span-2' : ''}
-              />
-              {filterStatus !== 'all' && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={() => setFilterStatus('all')}
-                  className="flex h-11 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all hover:bg-error-light"
-                >
-                  <X size={13} /> مسح الفلاتر
-                </motion.button>
-              )}
-            </div>
-          </div>
-
-          {/* Content */}
-          <div>
-            {isDrawerOpen && selectedLead ? (
-              <LeadDrawer
-                lead={selectedLead}
-                onClose={() => {
-                  setIsDrawerOpen(false)
-                  setSelectedLead(null)
-                }}
-                updateMutation={updateMutation}
-              />
-            ) : isAddModalOpen ? (
-              <AddLeadModalInline
-                formRef={formRef}
-                addMutation={addMutation}
-                onClose={() => setIsAddModalOpen(false)}
-              />
-            ) : (
-              <>
-                <LeadTable
-                  filteredLeads={filteredLeads}
-                  updateMutation={updateMutation}
-                  handleMarkLost={handleMarkLost}
-                  onLeadClick={handleOpenDrawer}
-                />
-                <LeadCards
-                  filteredLeads={filteredLeads}
-                  updateMutation={updateMutation}
-                  handleMarkLost={handleMarkLost}
-                  onLeadClick={handleOpenDrawer}
-                />
-              </>
+        {/* ===== TOOLBAR ===== */}
+        <div className="rounded-2xl border border-border bg-card p-3 shadow-elevation-1 dark:shadow-none sm:p-4">
+          <div className="relative">
+            <Search size={15} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" />
+            <input
+              type="text"
+              placeholder="ابحث بالاسم أو رقم الهاتف..."
+              aria-label="بحث عن عميل"
+              className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-[13px] text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <button
+                aria-label="مسح البحث"
+                onClick={() => setSearchTerm('')}
+                className="absolute end-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-lg text-muted transition-all hover:text-main"
+              >
+                <X size={13} />
+              </button>
             )}
           </div>
+
+          {/* Filter dropdown */}
+          <div className="mt-2.5 grid grid-cols-2 gap-2">
+            <FilterDropdown
+              value={filterStatus}
+              items={filterItems}
+              onChange={(k) => setFilterStatus(k as LeadStatus | 'all')}
+              className={filterStatus === 'all' ? 'col-span-2' : ''}
+            />
+            {filterStatus !== 'all' && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setFilterStatus('all')}
+                className="flex h-11 items-center justify-center gap-1.5 rounded-xl bg-error-soft px-3 text-[11px] font-bold text-error transition-all hover:bg-error-light"
+              >
+                <X size={13} /> مسح الفلاتر
+              </motion.button>
+            )}
+          </div>
+        </div>
+
+        {/* ===== LIST ===== */}
+        <div className="mt-4">
+          <div className="mb-2.5 flex items-center justify-between px-0.5">
+            <h2 className="text-sm font-black text-main">قائمة العملاء</h2>
+            <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-bold text-primary">
+              النتائج: {filteredLeads.length}
+            </span>
+          </div>
+
+          {isDrawerOpen && selectedLead ? (
+            <LeadDrawer
+              lead={selectedLead}
+              onClose={() => {
+                setIsDrawerOpen(false)
+                setSelectedLead(null)
+              }}
+              updateMutation={updateMutation}
+            />
+          ) : isAddModalOpen ? (
+            <AddLeadModalInline
+              formRef={formRef}
+              addMutation={addMutation}
+              onClose={() => setIsAddModalOpen(false)}
+            />
+          ) : (
+            <>
+              <LeadTable
+                filteredLeads={filteredLeads}
+                updateMutation={updateMutation}
+                handleMarkLost={handleMarkLost}
+                onLeadClick={handleOpenDrawer}
+              />
+              <LeadCards
+                filteredLeads={filteredLeads}
+                updateMutation={updateMutation}
+                handleMarkLost={handleMarkLost}
+                onLeadClick={handleOpenDrawer}
+              />
+            </>
+          )}
         </div>
 
         {/* FAB */}
