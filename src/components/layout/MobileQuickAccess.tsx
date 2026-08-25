@@ -29,7 +29,7 @@ interface MobileQuickAccessProps {
 /** Priority page-ids per role — matched against permission-filtered navigation */
 const FEATURED_BY_ROLE: Record<string, string[]> = {
   admin: ['students', 'teachers', 'parents', 'finance'],
-  teacher: ['attendance', 'evaluations', 'schedule', 'teacher_invoices'],
+  teacher: ['attendance', 'evaluations', 'schedule'],
   parent: ['parent_students', 'parent_announcements', 'chat', 'parent_payment_history'],
   student: ['student_dashboard', 'forum', 'schedule', 'chat'],
 }
@@ -76,7 +76,7 @@ export const MobileQuickAccess = ({
     <Sheet open={mobileMenuOpen} onOpenChange={(open) => !open && onCloseMenu()}>
       <SheetContent
         side="bottom"
-        className="border-border/60 flex max-h-[88dvh] flex-col gap-0 rounded-t-[28px] border p-0 dark:border-white/10 sm:max-w-none"
+        className="flex max-h-[88dvh] flex-col gap-0 rounded-t-[28px] border border-border p-0 dark:border-white/10 sm:max-w-none"
       >
         <SheetTitle className="sr-only">قائمة الوصول السريع</SheetTitle>
         <SheetDescription className="sr-only">
@@ -112,7 +112,7 @@ export const MobileQuickAccess = ({
           <button
             onClick={onCloseMenu}
             aria-label="إغلاق القائمة"
-            className="border-error/20 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border bg-error-soft text-error shadow-sm outline-none transition-all duration-200 hover:bg-error hover:text-on-error hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-error-soft bg-error-soft text-error shadow-sm outline-none transition-all duration-200 hover:bg-error hover:text-on-error hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <X size={18} strokeWidth={2.2} />
           </button>
@@ -146,8 +146,8 @@ export const MobileQuickAccess = ({
                           cn(
                             'group flex touch-manipulation flex-col items-center gap-1 rounded-2xl border p-1.5 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95]',
                             isActive
-                              ? 'bg-primary-soft/60 border-primary/40 dark:bg-primary/15'
-                              : 'border-border/60 bg-surface hover:bg-hover dark:bg-card',
+                              ? 'border-primary/40 bg-primary-soft dark:bg-primary/15'
+                              : 'border-border bg-surface hover:bg-hover dark:bg-card',
                           )
                         }
                       >
@@ -202,7 +202,7 @@ export const MobileQuickAccess = ({
                           )
                         }
                       >
-                        <span className="border-border/60 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border bg-card">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-border bg-card">
                           <Icon size={15} strokeWidth={1.8} />
                         </span>
                         <span className="min-w-0 flex-1 truncate text-sm font-medium">
@@ -227,7 +227,7 @@ export const MobileQuickAccess = ({
         </div>
 
         {/* Footer */}
-        <div className="border-border/60 shrink-0 border-t p-2.5 dark:border-white/10">
+        <div className="shrink-0 border-t border-border p-2.5 dark:border-white/10">
           <Button
             variant="destructive"
             onClick={() => {

@@ -197,8 +197,6 @@ const ProtectedRoute = ({
         'schedule',
         'attendance',
         'announcements',
-        'finance',
-        'teacher_invoices',
         'appointments',
         'forum',
       ].includes(permission)
@@ -248,7 +246,7 @@ function App() {
           dir="rtl"
         >
           <div className="w-full max-w-md space-y-4 rounded-2xl border border-border bg-white p-8 text-center shadow-2xl dark:bg-surface">
-            <div className="dark:bg-warning/30 mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-warning-light">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-warning-light dark:bg-warning-soft">
               <Loader2 size={28} className="animate-spin text-warning" />
             </div>
             <h2 className="text-xl font-bold text-main">يستغرق التحميل وقتاً أطول من المعتاد</h2>
@@ -288,7 +286,7 @@ function App() {
                     window.location.reload()
                   }
                 }}
-                className="shadow-error/20 rounded-xl bg-error px-6 py-2.5 text-sm font-bold text-on-error shadow-lg transition-colors hover:bg-error hover:text-on-error"
+                className="rounded-xl bg-error px-6 py-2.5 text-sm font-bold text-on-error shadow-lg transition-colors hover:bg-error hover:text-on-error"
               >
                 مسح التخزين وإعادة التحميل
               </button>
@@ -654,7 +652,7 @@ function App() {
                 <Route
                   path="teacher-payment-history"
                   element={
-                    <ProtectedRoute permission="dashboard">
+                    <ProtectedRoute permission="admin">
                       <TeacherPaymentHistory />
                     </ProtectedRoute>
                   }

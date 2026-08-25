@@ -197,18 +197,7 @@ export const Sidebar = memo(
       }
       if (currentUser.role === 'teacher') {
         if (item.id === 'dashboard') return true
-        if (
-          [
-            'evaluations',
-            'schedule',
-            'announcements',
-            'finance',
-            'teacher_invoices',
-            'appointments',
-            'forum',
-            'teacher_payment_history',
-          ].includes(item.id)
-        )
+        if (['evaluations', 'schedule', 'announcements', 'appointments', 'forum'].includes(item.id))
           return true
       }
       return currentUser.permissions?.includes(item.id)
