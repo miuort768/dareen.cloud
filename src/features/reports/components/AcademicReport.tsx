@@ -26,9 +26,6 @@ interface AcademicReportProps {
     id: string
     name: string
     grade: string
-    subject: string
-    attendanceRate: number
-    sessionsCount: number
     progress?: number
     totalEnrollments?: number
     totalSessions?: number
@@ -166,7 +163,7 @@ export const AcademicReport = React.memo(
             />
             <div className="max-h-64 space-y-2.5 overflow-y-auto p-4">
               {subjectPieData.length > 0 ? (
-                subjectPieData
+                [...subjectPieData]
                   .sort((a, b) => b.value - a.value)
                   .map((entry, index) => {
                     const pct = Math.round((entry.value / totalEnrollments) * 100)

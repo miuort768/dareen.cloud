@@ -765,3 +765,35 @@ html, body {
   border-radius: 0;
   box-shadow: 16px -16px 0 0 var(--bg-card);
 }
+/* Print Styles — Reports */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #printable-reports,
+  #printable-reports * {
+    visibility: visible;
+  }
+
+  #printable-reports {
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    width: 100% !important;
+    margin: 0;
+    padding: 0;
+    overflow: visible !important;
+  }
+
+  #printable-reports .no-print,
+  #printable-reports button {
+    display: none !important;
+  }
+
+  #printable-reports .rounded-2xl,
+  #printable-reports .rounded-card {
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+}

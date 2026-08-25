@@ -1,5 +1,6 @@
 import { TrendingUp, TrendingDown, DollarSign, FileText, Percent } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { cn } from '../../../lib/utils'
 
 interface FinancialReportProps {
   totalRevenue: number
@@ -15,7 +16,7 @@ const FinancialCard = ({
   value,
   subValue,
   icon: Icon,
-  color,
+  iconBgClass,
   textClass,
   subTextClass,
   currency,
@@ -25,7 +26,7 @@ const FinancialCard = ({
   value: number | string
   subValue: number | string
   icon: LucideIcon
-  color: string
+  iconBgClass: string
   textClass: string
   subTextClass?: string
   currency?: string
@@ -33,7 +34,7 @@ const FinancialCard = ({
 }) => (
   <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
     <div className="mb-3 flex items-center gap-2">
-      <div className="rounded-xl p-2" style={{ backgroundColor: `${color}15` }}>
+      <div className={cn('rounded-xl p-2', iconBgClass)}>
         <Icon size={16} className={textClass} />
       </div>
       <h3 className="text-xs font-bold text-muted">{title}</h3>
@@ -74,7 +75,7 @@ export const FinancialReport = ({
           value={totalRevenue}
           subValue={monthRevenue}
           icon={TrendingUp}
-          color="var(--bg-success)"
+          iconBgClass="bg-success-soft"
           textClass="text-success"
           subTextClass="text-success"
           currency={reportCurrency}
@@ -84,7 +85,7 @@ export const FinancialReport = ({
           value={totalExpenses}
           subValue={monthExpenses}
           icon={TrendingDown}
-          color="var(--bg-error)"
+          iconBgClass="bg-error-soft"
           textClass="text-error"
           subTextClass="text-error"
           currency={reportCurrency}
@@ -94,7 +95,7 @@ export const FinancialReport = ({
           value={netProfit}
           subValue={monthNetProfit}
           icon={DollarSign}
-          color="var(--bg-primary)"
+          iconBgClass="bg-primary-soft"
           textClass="text-primary"
           subTextClass="text-primary"
           currency={reportCurrency}
@@ -104,7 +105,7 @@ export const FinancialReport = ({
           value={overallMargin}
           subValue={monthMargin}
           icon={Percent}
-          color="var(--bg-info)"
+          iconBgClass="bg-info-soft"
           textClass="text-info"
           subTextClass="text-info"
           isPercentage
