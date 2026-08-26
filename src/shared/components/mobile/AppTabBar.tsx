@@ -32,16 +32,16 @@ const TEACHER_TABS: TabItem[] = [
   { id: 'attendance', label: 'الحضور', icon: UserCheck, path: '/attendance' },
 ]
 
+// ملاحظة: ولي الأمر والطالب لا يملكان صلاحية مسار /attendance
+// (ProtectedRoute يعيد توجيههم إلى "/") — حضور أبنائهم متاح داخل لوحة الولي نفسها.
 const PARENT_TABS: TabItem[] = [
   { id: 'home', label: 'الرئيسية', icon: Home, path: '/parent-dashboard' },
   { id: 'chat', label: 'الدردشة', icon: MessageSquare, path: '/chat' },
-  { id: 'attendance', label: 'الحضور', icon: UserCheck, path: '/attendance' },
 ]
 
 const STUDENT_TABS: TabItem[] = [
   { id: 'home', label: 'الرئيسية', icon: Home, path: '/student-dashboard' },
   { id: 'chat', label: 'الدردشة', icon: MessageSquare, path: '/chat' },
-  { id: 'attendance', label: 'الحضور', icon: UserCheck, path: '/attendance' },
 ]
 
 export const AppTabBar = ({ onMore }: AppTabBarProps) => {
@@ -93,7 +93,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
         className="px-3 pt-1"
         style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
       >
-        <div className="border-border/60 bg-card/90 dark:bg-background/90 relative overflow-hidden rounded-[26px] border shadow-elevation-3 backdrop-blur-2xl dark:border-white/10">
+        <div className="relative overflow-hidden rounded-[26px] border border-border bg-card shadow-elevation-3 backdrop-blur-2xl dark:border-white/10 dark:bg-background">
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
           <div className="flex h-[60px] items-stretch gap-1 px-1.5 py-2">

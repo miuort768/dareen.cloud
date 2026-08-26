@@ -233,7 +233,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         />
 
         {/* Notes */}
-        <div className="border-warning/10 bg-warning-soft/40 rounded-xl border p-3">
+        <div className="rounded-xl border border-warning-soft bg-warning-soft p-3">
           <div className="mb-2 flex items-center justify-between">
             <h5 className="flex items-center gap-1.5 text-micro font-bold uppercase text-warning">
               <MessageSquare size={12} /> ملاحظات

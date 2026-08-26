@@ -12,15 +12,10 @@ import {
   UserCheck,
 } from 'lucide-react'
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import {
-  useCurrentUser,
-  useShowNotification,
-  useWhatsappAutoNotify,
-  useWhatsappTemplate,
-  useAcademyName,
-} from '../context/AppContext'
+import { useCurrentUser, useAcademyName } from '../context/AppContext'
 import { ConfirmModal } from '../shared/components/ConfirmModal'
 import { SecureAttendanceModal } from '../shared/components/SecureAttendanceModal'
+import { SkeletonCard } from '../shared/components/ui'
 import { AttendanceStats } from '../features/attendance/components/AttendanceStats'
 import { AttendanceHeader } from '../features/attendance/components/AttendanceHeader'
 import { AttendanceFilters } from '../features/attendance/components/AttendanceFilters'
@@ -29,10 +24,11 @@ import { TeacherStudentCard } from '../features/attendance/components/TeacherStu
 import { AttendanceHistoryModal } from '../features/attendance/components/AttendanceHistoryModal'
 import type { PeriodFilter } from '../features/attendance/components/AttendanceFilters'
 import { RescheduleModal } from '../features/attendance/components/RescheduleModal'
-import { useAttendance, teacherNameOf } from '../features/attendance/hooks/useAttendance'
+import { useAttendance } from '../features/attendance/hooks/useAttendance'
+import { useAttendanceLogger } from '../features/attendance/hooks/useAttendanceLogger'
+import { getPeriodRange, getPeriodLabel } from '../features/attendance/utils/periodRange'
 import { MobileAttendance } from '../features/attendance/components/MobileAttendance'
 import type { Student, Enrollment } from '../features/attendance/types'
-import { generateWhatsAppLink } from '../lib/whatsapp'
 import {
   SectionCard,
   SectionTitle,
@@ -58,9 +54,6 @@ export const Attendance = () => {
     document.title = `الحضور والغياب | ${academyName}`
   }, [academyName])
   const currentUser = useCurrentUser()
-  const showNotification = useShowNotification()
-  const whatsappAutoNotify = useWhatsappAutoNotify()
-  const whatsappTemplate = useWhatsappTemplate()
   const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'))
   const [searchTerm, setSearchTerm] = useState('')
   const [filterStatus, setFilterStatus] = useState<string>('all')
@@ -70,55 +63,17 @@ export const Attendance = () => {
   const [customStartDate, setCustomStartDate] = useState('')
   const [customEndDate, setCustomEndDate] = useState('')
   const [fabOpen, setFabOpen] = useState(false)
-  const [isLogging, setIsLogging] = useState(false)
 
-  const dateRange = useMemo(() => {
-    const d = new Date(date)
-    switch (periodFilter) {
-      case 'today':
-        return { start: date, end: date }
-      case 'week': {
-        const day = d.getDay()
-        const diff = day === 0 ? 6 : day - 1
-        const mon = new Date(d)
-        mon.setDate(d.getDate() - diff)
-        const sun = new Date(d)
-        sun.setDate(mon.getDate() + 6)
-        return {
-          start: mon.toLocaleDateString('en-CA'),
-          end: sun.toLocaleDateString('en-CA'),
-        }
-      }
-      case 'month':
-        return {
-          start: new Date(d.getFullYear(), d.getMonth(), 1).toLocaleDateString('en-CA'),
-          end: new Date(d.getFullYear(), d.getMonth() + 1, 0).toLocaleDateString('en-CA'),
-        }
-      case 'custom':
-        return { start: customStartDate || date, end: customEndDate || date }
-      default:
-        return { start: date, end: date }
-    }
-  }, [date, periodFilter, customStartDate, customEndDate])
-
-  const periodLabel = useMemo(() => {
-    switch (periodFilter) {
-      case 'today':
-        return 'اليوم'
-      case 'week':
-        return 'الأسبوع'
-      case 'month':
-        return 'الشهر'
-      case 'custom':
-        return 'الفترة'
-      default:
-        return 'اليوم'
-    }
-  }, [periodFilter])
+  const dateRange = useMemo(
+    () => getPeriodRange(date, periodFilter, customStartDate, customEndDate),
+    [date, periodFilter, customStartDate, customEndDate],
+  )
+  const periodLabel = useMemo(() => getPeriodLabel(periodFilter), [periodFilter])
 
   const {
     students,
     allSessions,
+    loading,
     logAttendance,
     updateSchedule,
     updateEnrollmentNotes,
@@ -133,11 +88,10 @@ export const Attendance = () => {
     teacherStats,
   } = useAttendance(currentUser, date, dateRange)
 
+  const { logDate, setLogDate, secureModalData, openSecureLog, closeSecureLog, handleConfirmLog } =
+    useAttendanceLogger({ allSessions, logAttendance })
+
   const [rescheduleData, setRescheduleData] = useState<{
-    student: Student
-    enrollment: Enrollment
-  } | null>(null)
-  const [secureModalData, setSecureModalData] = useState<{
     student: Student
     enrollment: Enrollment
   } | null>(null)
@@ -153,75 +107,6 @@ export const Attendance = () => {
     enrollment: Enrollment
     slotIndex: number
   } | null>(null)
-  const [logDate, setLogDate] = useState(new Date().toLocaleDateString('en-CA'))
-
-  const handleConfirmLog = async (
-    status: 'completed' | 'cancelled',
-    topics?: string,
-    homework?: string,
-    needsCompensation?: boolean,
-  ) => {
-    if (!secureModalData || !logDate || isLogging) return false
-    setIsLogging(true)
-    const { student, enrollment } = secureModalData
-    const alreadyLogged = allSessions.some(
-      (s) => s.studentId === student.id && s.subject === enrollment.subject && s.date === logDate,
-    )
-    if (alreadyLogged) {
-      showNotification('الحصة مسجلة بالفعل لهذا الطالب والمادة في هذا التاريخ', 'warning')
-      setSecureModalData(null)
-      setIsLogging(false)
-      return true
-    }
-    const now = new Date()
-    const currentTime = now.toLocaleTimeString('ar-EG', {
-      hour: 'numeric',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true,
-    })
-    const calculatedPrice = enrollment.price
-      ? enrollment.price - (enrollment.discount || 0)
-      : undefined
-    const result = await logAttendance({
-      studentId: student.id,
-      studentName: student.name || 'غير محدد',
-      teacherName: teacherNameOf(enrollment) || currentUser?.teacherName || currentUser?.name || '',
-      teacherId: enrollment.teacherId,
-      subject: enrollment.subject,
-      date: logDate,
-      time: currentTime,
-      status,
-      day: new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' }),
-      topics,
-      homework,
-      needsCompensation,
-      price: calculatedPrice,
-    })
-    if (result.success) {
-      showNotification(
-        `تم تسجيل ${student.name} (${status === 'completed' ? 'حضور' : 'غياب'})`,
-        'success',
-      )
-      if (whatsappAutoNotify && status === 'completed' && student.parentPhone) {
-        const waLink = generateWhatsAppLink(student.parentPhone, whatsappTemplate, {
-          Student: student.name,
-          Subject: enrollment.subject,
-          Teacher: String(enrollment.teacher),
-          Date: logDate,
-          Price: calculatedPrice?.toString() || '0',
-        })
-        window.open(waLink, '_blank')
-      }
-      setSecureModalData(null)
-      setIsLogging(false)
-      return true
-    } else {
-      showNotification(result.error || 'فشل تسجيل الحصة', 'error')
-      setIsLogging(false)
-      return false
-    }
-  }
 
   const handleViewHistory = useCallback(
     (studentId: string, studentName: string, grade?: string, subject?: string) => {
@@ -256,6 +141,16 @@ export const Attendance = () => {
   })
 
   const isTeacher = currentUser?.role === 'teacher'
+
+  const filteredTeacherEnrollments = useMemo(
+    () =>
+      (matchedEnrollments || []).filter(
+        (me) =>
+          (me.student.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (me.enrollment.subject || '').toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    [matchedEnrollments, searchTerm],
+  )
 
   const kpiCards = useMemo(
     () => [
@@ -334,7 +229,7 @@ export const Attendance = () => {
             className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary p-6 md:p-8"
           >
             <div className="absolute inset-0 opacity-[0.06]">
-              <svg width="100%" height="100%">
+              <svg width="100%" height="100%" aria-hidden="true">
                 <defs>
                   <pattern
                     id="att-hero-grid"
@@ -355,7 +250,7 @@ export const Attendance = () => {
               <div>
                 <div className="mb-2 flex items-center gap-2">
                   <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                    <UserCheck className="text-white" size={20} />
+                    <UserCheck className="text-on-primary" size={20} />
                   </div>
                   <span className="text-xs font-medium text-white/70">نظام الحضور والغياب</span>
                 </div>
@@ -367,21 +262,21 @@ export const Attendance = () => {
               <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
                 <div className="text-center">
                   <p className="mb-1 text-xs text-white/60">إجمالي الحضور</p>
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-2xl font-bold text-on-primary">
                     <AnimatedCounter value={stats.totalCompleted} />
                   </div>
                 </div>
                 <div className="h-10 w-px bg-white/10" />
                 <div className="text-center">
                   <p className="mb-1 text-xs text-white/60">الغياب</p>
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-2xl font-bold text-on-primary">
                     <AnimatedCounter value={stats.totalCancelled} />
                   </div>
                 </div>
                 <div className="h-10 w-px bg-white/10" />
                 <div className="text-center">
                   <p className="mb-1 text-xs text-white/60">المقررة</p>
-                  <div className="text-2xl font-bold text-white">
+                  <div className="text-2xl font-bold text-on-primary">
                     <AnimatedCounter value={stats.todayTotal} />
                   </div>
                 </div>
@@ -509,118 +404,98 @@ export const Attendance = () => {
             transition={{ delay: 0.35 }}
           >
             {isTeacher ? (
-              <div className="space-y-4">
-                <SectionCard className="overflow-hidden p-0">
-                  <div className="flex flex-col items-center justify-between gap-4 border-b border-border px-4 py-2 md:flex-row">
-                    <SectionTitle
-                      icon={Activity as React.ComponentType<{ size?: number }>}
-                      label="حصص الطلاب المقررة"
+              <SectionCard className="overflow-hidden p-0">
+                <div className="flex flex-col items-center justify-between gap-4 border-b border-border px-4 py-2 md:flex-row">
+                  <SectionTitle
+                    icon={Activity as React.ComponentType<{ size?: number }>}
+                    label="حصص الطلاب المقررة"
+                  />
+                  <div className="relative w-full md:w-[400px]">
+                    <Search
+                      size={14}
+                      className="absolute start-4 top-1/2 -translate-y-1/2 text-muted"
                     />
-                    <div className="relative w-full md:w-[400px]">
-                      <Search
-                        size={14}
-                        className="absolute start-4 top-1/2 -translate-y-1/2 text-muted"
-                      />
-                      <input
-                        type="text"
-                        aria-label="بحث"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        placeholder="ابحث باسم الطالب أو المادة..."
-                        className="w-full rounded-xl border border-border bg-surface py-2 pe-4 ps-10 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
-                      />
+                    <input
+                      type="text"
+                      aria-label="بحث"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      placeholder="ابحث باسم الطالب أو المادة..."
+                      className="w-full rounded-xl border border-border bg-surface py-2 pe-4 ps-10 text-xs font-bold transition-all focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
+                  {loading ? (
+                    Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={`sk-${i}`} />)
+                  ) : filteredTeacherEnrollments.length > 0 ? (
+                    filteredTeacherEnrollments.map(({ student, enrollment }, idx) => (
+                      <motion.div
+                        key={`${student.id}-${enrollment.id || enrollment.subject || idx}`}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.04 * idx }}
+                      >
+                        <TeacherStudentCard
+                          student={student}
+                          enrollment={enrollment}
+                          actualSessionsUsed={enrollment.sessionsUsed}
+                          onUpdateSchedule={updateSchedule}
+                          onLogAttendance={(s, e) => openSecureLog(s, e)}
+                          onViewHistory={(id, name, grade, subject, curriculum) =>
+                            setHistoryStudent({
+                              id,
+                              name,
+                              grade,
+                              subject,
+                              curriculum,
+                            })
+                          }
+                          onDeleteSlot={(s, e, i) =>
+                            setDeletingSlot({
+                              student: s,
+                              enrollment: e,
+                              slotIndex: i,
+                            })
+                          }
+                          onUpdateNotes={updateEnrollmentNotes}
+                          onReschedule={(s, e) =>
+                            setRescheduleData({
+                              student: s,
+                              enrollment: e,
+                            })
+                          }
+                          logDate={logDate}
+                          onDateChange={setLogDate}
+                        />
+                      </motion.div>
+                    ))
+                  ) : (
+                    <div className="col-span-full py-16 text-center">
+                      <Users className="mx-auto mb-2 text-muted" size={32} strokeWidth={1.5} />
+                      <p className="text-xs font-bold text-muted">لا يوجد طلاب متاحون</p>
                     </div>
-                  </div>
-                  <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
-                    {(matchedEnrollments || []).filter(
-                      (me) =>
-                        (me.student.name || '')
-                          .toLowerCase()
-                          .includes((searchTerm || '').toLowerCase()) ||
-                        (me.enrollment.subject || '')
-                          .toLowerCase()
-                          .includes((searchTerm || '').toLowerCase()),
-                    ).length > 0 ? (
-                      (matchedEnrollments || [])
-                        .filter(
-                          (me) =>
-                            (me.student.name || '')
-                              .toLowerCase()
-                              .includes((searchTerm || '').toLowerCase()) ||
-                            (me.enrollment.subject || '')
-                              .toLowerCase()
-                              .includes((searchTerm || '').toLowerCase()),
-                        )
-                        .map(({ student, enrollment }, idx) => (
-                          <motion.div
-                            key={`${student.id}-${enrollment.id || enrollment.subject || idx}`}
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.04 * idx }}
-                          >
-                            <TeacherStudentCard
-                              student={student}
-                              enrollment={enrollment}
-                              actualSessionsUsed={enrollment.sessionsUsed}
-                              onUpdateSchedule={updateSchedule}
-                              onLogAttendance={(s, e) =>
-                                setSecureModalData({
-                                  student: s,
-                                  enrollment: e,
-                                })
-                              }
-                              onViewHistory={(id, name, grade, subject, curriculum) =>
-                                setHistoryStudent({
-                                  id,
-                                  name,
-                                  grade,
-                                  subject,
-                                  curriculum,
-                                })
-                              }
-                              onDeleteSlot={(s, e, i) =>
-                                setDeletingSlot({
-                                  student: s,
-                                  enrollment: e,
-                                  slotIndex: i,
-                                })
-                              }
-                              onUpdateNotes={updateEnrollmentNotes}
-                              onReschedule={(s, e) =>
-                                setRescheduleData({
-                                  student: s,
-                                  enrollment: e,
-                                })
-                              }
-                              logDate={logDate}
-                              onDateChange={setLogDate}
-                            />
-                          </motion.div>
-                        ))
-                    ) : (
-                      <div className="col-span-full py-16 text-center">
-                        <Users className="mx-auto mb-2 text-primary/20" size={32} />
-                        <p className="text-xs font-bold text-muted">لا يوجد طلاب متاحون</p>
-                      </div>
-                    )}
-                  </div>
-                </SectionCard>
+                  )}
+                </div>
+              </SectionCard>
+            ) : loading && teacherAttendanceRates.length === 0 ? (
+              <div className="grid grid-cols-1 gap-4">
+                <SkeletonCard />
+                <SkeletonCard />
               </div>
             ) : (
-              <>
-                <AdminTeacherGroupList
-                  teacherAttendanceRates={teacherAttendanceRates}
-                  filterTeacher={filterTeacher}
-                  filterSubject={filterSubject}
-                  onViewHistory={handleViewHistory}
-                />
-              </>
+              <AdminTeacherGroupList
+                teacherAttendanceRates={teacherAttendanceRates}
+                filterTeacher={filterTeacher}
+                filterSubject={filterSubject}
+                onViewHistory={handleViewHistory}
+              />
             )}
           </motion.div>
 
           <SecureAttendanceModal
             isOpen={!!secureModalData}
-            onClose={() => setSecureModalData(null)}
+            onClose={closeSecureLog}
             onConfirm={handleConfirmLog}
             studentName={secureModalData?.student.name || ''}
             date={logDate}
@@ -697,7 +572,8 @@ export const Attendance = () => {
                         action.onClick()
                         setFabOpen(false)
                       }}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                      aria-label={action.label}
+                      className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     >
                       <action.icon size={18} />
                     </button>
@@ -708,8 +584,10 @@ export const Attendance = () => {
               onClick={() => setFabOpen(!fabOpen)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              aria-label={fabOpen ? 'إغلاق الإجراءات السريعة' : 'إجراءات سريعة'}
+              aria-expanded={fabOpen}
               className={cn(
-                'flex h-12 w-12 items-center justify-center rounded-full shadow-xl transition-all',
+                'flex h-12 w-12 items-center justify-center rounded-full shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                 fabOpen ? 'rotate-45 bg-error text-on-error' : 'bg-primary text-on-primary',
               )}
             >

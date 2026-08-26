@@ -163,7 +163,7 @@ export const AttendanceHistoryModal = ({
             <Clock size={14} className="text-on-primary" />
             <div className="min-w-0">
               <h3 className="truncate text-xs font-bold text-on-primary">سجل الحضور</h3>
-              <p className="text-on-primary/70 truncate text-[10px]">{studentName}</p>
+              <p className="truncate text-[10px] text-white/70">{studentName}</p>
             </div>
           </div>
           <button
@@ -212,7 +212,7 @@ export const AttendanceHistoryModal = ({
                   key={session.id}
                   className={cn(
                     'rounded-lg border bg-surface p-2.5',
-                    session.status === 'completed' ? 'border-success/20' : 'border-error/20',
+                    session.status === 'completed' ? 'border-success-soft' : 'border-error-soft',
                   )}
                 >
                   {editingSession?.id === session.id ? (
@@ -333,7 +333,7 @@ export const AttendanceHistoryModal = ({
             </div>
           ) : (
             <div className="flex flex-col items-center py-8 text-center">
-              <AlertCircle size={20} className="text-muted/30 mb-1.5" />
+              <AlertCircle size={20} className="mb-1.5 text-muted" />
               <p className="text-[10px] text-muted">لا يوجد سجلات حضور سابقة</p>
             </div>
           )}

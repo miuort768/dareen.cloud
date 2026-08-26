@@ -59,18 +59,6 @@ export const useAttendance = (
     fetchAll()
   }, [date, fetchAll])
 
-  const updateStatus = async (id: string, newStatus: Session['status']) => {
-    try {
-      await attendanceService.updateSessionStatus(id, newStatus)
-      setAllSessions((prev) => prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s)))
-      fetchAll() // Refresh to ensure consistency
-      return true
-    } catch (error) {
-      console.error('Error updating status', error)
-      return false
-    }
-  }
-
   const logAttendance = async (
     sessionData: Omit<Session, 'id'>,
   ): Promise<{ success: boolean; error?: string }> => {
@@ -352,7 +340,6 @@ export const useAttendance = (
     students,
     allSessions,
     loading,
-    updateStatus,
     logAttendance,
     updateSchedule,
     updateEnrollmentNotes,

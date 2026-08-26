@@ -29,7 +29,7 @@ const Counter = ({ value, suffix = '' }: { value: number; suffix?: string }) => 
     className="tabular-nums"
   >
     {value.toLocaleString('ar-EG')}
-    {suffix && <span className="text-on-primary/60 me-1 text-micro font-bold">{suffix}</span>}
+    {suffix && <span className="me-1 text-micro font-bold text-white/60">{suffix}</span>}
   </motion.span>
 )
 
@@ -282,7 +282,7 @@ export const AttendanceStats = ({
 
       {/* Rate cards — attendance % + absence % */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="border-success/20 bg-success-soft/30 rounded-2xl border p-4">
+        <div className="rounded-2xl border border-success-soft bg-success-soft p-4">
           <div className="mb-2 flex items-center justify-between">
             <CheckCircle2 size={14} className="text-success" />
             <TrendBadge value={trendCompleted} label="مقارنة" />
@@ -292,7 +292,7 @@ export const AttendanceStats = ({
             <span className="text-sm">%</span>
           </p>
           <p className="mt-0.5 text-[10px] font-bold text-muted">نسبة الحضور</p>
-          <div className="bg-success/10 mt-2 h-1.5 overflow-hidden rounded-full">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-success-soft">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${attendanceRate}%` }}
@@ -301,7 +301,7 @@ export const AttendanceStats = ({
             />
           </div>
         </div>
-        <div className="border-error/20 bg-error-soft/30 rounded-2xl border p-4">
+        <div className="rounded-2xl border border-error-soft bg-error-soft p-4">
           <div className="mb-2 flex items-center justify-between">
             <XCircle size={14} className="text-error" />
             <TrendBadge value={trendCancelled} label="مقارنة" />
@@ -311,7 +311,7 @@ export const AttendanceStats = ({
             <span className="text-sm">%</span>
           </p>
           <p className="mt-0.5 text-[10px] font-bold text-muted">نسبة الغياب</p>
-          <div className="bg-error/10 mt-2 h-1.5 overflow-hidden rounded-full">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-error-soft">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${absenceRate}%` }}

@@ -1,6 +1,11 @@
 import { History, TrendingUp, TrendingDown, Minus, Users } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { SectionCard } from './StyledComponents'
+import {
+  getRateColor,
+  getRateBg,
+  getRateBarColor,
+} from '../../features/attendance/utils/rateStyles'
 import type { TeacherAttendanceRate } from '../../features/attendance/types'
 
 interface AdminTeacherGroupListProps {
@@ -8,24 +13,6 @@ interface AdminTeacherGroupListProps {
   filterTeacher: string
   filterSubject?: string
   onViewHistory: (studentId: string, studentName: string, grade?: string, subject?: string) => void
-}
-
-const getRateColor = (rate: number) => {
-  if (rate >= 80) return 'text-success'
-  if (rate >= 60) return 'text-warning'
-  return 'text-error'
-}
-
-const getRateBg = (rate: number) => {
-  if (rate >= 80) return 'bg-success-soft'
-  if (rate >= 60) return 'bg-warning-soft'
-  return 'bg-error-soft'
-}
-
-const getRateBarColor = (rate: number) => {
-  if (rate >= 80) return 'bg-success'
-  if (rate >= 60) return 'bg-warning'
-  return 'bg-error'
 }
 
 const getGradeDisplay = (studentName: string) => {
@@ -76,7 +63,7 @@ export const AdminTeacherGroupList = ({
                 </div>
                 <div>
                   <h3 className="text-xs font-bold text-on-primary">{teacher.teacherName}</h3>
-                  <p className="text-on-primary/70 text-[10px] font-bold">
+                  <p className="text-[10px] font-bold text-white/70">
                     {filteredStudents.length} طالب
                   </p>
                 </div>
@@ -100,7 +87,7 @@ export const AdminTeacherGroupList = ({
                   {teacher.rate}%
                 </div>
                 {/* Session counts */}
-                <div className="text-on-primary/70 flex items-center gap-2 text-[10px] font-bold">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-white/70">
                   <span className="flex items-center gap-1">
                     <span className="h-1.5 w-1.5 rounded-full bg-success" />
                     {teacher.completed}
@@ -121,7 +108,7 @@ export const AdminTeacherGroupList = ({
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
-                  <tr className="bg-surface/50 border-b border-border">
+                  <tr className="border-b border-border bg-surface">
                     <th className="px-4 py-2.5 text-start text-[10px] font-bold text-muted">
                       الطالب
                     </th>
@@ -147,8 +134,8 @@ export const AdminTeacherGroupList = ({
                     <tr
                       key={`${student.studentId}-${student.subject}-${idx}`}
                       className={cn(
-                        'border-border/50 hover:bg-surface/30 border-b transition-colors',
-                        idx % 2 === 0 && 'bg-surface/10',
+                        'border-b border-border transition-colors hover:bg-surface',
+                        idx % 2 === 0 && 'bg-surface',
                       )}
                     >
                       <td className="px-4 py-2.5">
