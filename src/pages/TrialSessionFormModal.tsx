@@ -114,7 +114,7 @@ export const TrialSessionFormModal = ({
                   onChange({ ...form, teacherName: e.target.value, teacherId: t?.id || '' })
                 }}
                 aria-label="اختيار المعلمة"
-                className={inputClass + ' appearance-none'}
+                className={inputClass + 'appearance-none'}
               >
                 <option value="">اختر معلمة</option>
                 {(Array.isArray(teachers) ? teachers : []).map((t) => (
@@ -156,7 +156,7 @@ export const TrialSessionFormModal = ({
             value={form.notes}
             onChange={(e) => onChange({ ...form, notes: e.target.value })}
             rows={2}
-            className={inputClass + ' resize-none'}
+            className={inputClass + 'resize-none'}
             placeholder="اكتب أي تفاصيل..."
           />
         </div>

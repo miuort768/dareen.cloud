@@ -57,11 +57,11 @@ const TYPE_STYLES: Record<TypeId, TypeStyle> = {
     iconWrap: 'bg-warning-soft',
     iconColor: 'text-warning',
     dot: 'bg-warning',
-    gradient: 'from-warning/5 to-transparent',
+    gradient: 'from-warning-soft to-transparent',
     linkColor: 'text-warning',
     countColor: 'text-warning',
     cardBg: 'bg-card',
-    cardBorder: 'border-border hover:border-warning/40',
+    cardBorder: 'border-border hover:border-warning',
   },
   solutions: {
     desc: 'حلول كاملة وموثوقة لكتب المناهج',
@@ -70,11 +70,11 @@ const TYPE_STYLES: Record<TypeId, TypeStyle> = {
     iconWrap: 'bg-success-soft',
     iconColor: 'text-success',
     dot: 'bg-success',
-    gradient: 'from-success/5 to-transparent',
+    gradient: 'from-success-soft to-transparent',
     linkColor: 'text-success',
     countColor: 'text-success',
     cardBg: 'bg-card',
-    cardBorder: 'border-border hover:border-success/40',
+    cardBorder: 'border-border hover:border-success',
   },
   notes: {
     desc: 'مذكرات وملخصات جاهزة للتحميل المباشر',
@@ -83,11 +83,11 @@ const TYPE_STYLES: Record<TypeId, TypeStyle> = {
     iconWrap: 'bg-info-soft',
     iconColor: 'text-info',
     dot: 'bg-info',
-    gradient: 'from-info/5 to-transparent',
+    gradient: 'from-info-soft to-transparent',
     linkColor: 'text-info',
     countColor: 'text-info',
     cardBg: 'bg-card',
-    cardBorder: 'border-border hover:border-info/40',
+    cardBorder: 'border-border hover:border-info',
   },
   more: {
     desc: 'مزيد من الموارد والأدوات التعليمية المتنوعة',
@@ -327,7 +327,7 @@ export const DesktopLibraryLanding = ({
 
       {/* ===== SEARCH BAR ===== */}
       <section className="mb-6">
-        <div className="bg-primary-soft/50 rounded-2xl border border-primary/15 p-5 shadow-elevation-1 dark:bg-primary/5 lg:rounded-none">
+        <div className="rounded-2xl border border-primary/15 bg-primary-soft p-5 shadow-elevation-1 dark:bg-primary/5 lg:rounded-none">
           <div className="flex items-center gap-4">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary">
               <Search size={18} />
@@ -444,7 +444,7 @@ export const DesktopLibraryLanding = ({
                         required
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
-                        className="focus:ring-accent/30 w-full appearance-none rounded-xl border border-white/10 bg-white/[0.07] py-2.5 pe-9 ps-8 text-sm text-white outline-none transition-all placeholder:text-white/30 focus:border-accent focus:ring-2"
+                        className="w-full appearance-none rounded-xl border border-white/10 bg-white/[0.07] py-2.5 pe-9 ps-8 text-sm text-white outline-none transition-all placeholder:text-white/30 focus:border-accent focus:ring-2 focus:ring-accent-soft"
                       >
                         <option value="" disabled className="text-main">
                           اختر الدولة
@@ -482,7 +482,7 @@ export const DesktopLibraryLanding = ({
                         value={phone}
                         onChange={(e) => setPhone(normalizePhoneInput(e.target.value))}
                         placeholder="5xxxxxxxx"
-                        className="focus:ring-accent/30 w-full rounded-xl border border-white/10 bg-white/[0.07] py-2.5 pe-4 ps-8 text-sm text-white outline-none transition-all placeholder:text-white/30 focus:border-accent focus:ring-2"
+                        className="w-full rounded-xl border border-white/10 bg-white/[0.07] py-2.5 pe-4 ps-8 text-sm text-white outline-none transition-all placeholder:text-white/30 focus:border-accent focus:ring-2 focus:ring-accent-soft"
                       />
                     </div>
                   </div>
@@ -610,7 +610,7 @@ export const DesktopLibraryLanding = ({
       <section className="mt-14">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <div className="border-warning/10 mb-3 inline-flex items-center gap-2 rounded-full border bg-warning-soft px-3 py-1">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-warning-soft bg-warning-soft px-3 py-1">
               <Languages size={12} className="text-warning" />
               <span className="text-[10px] font-extrabold text-warning">تعلم بمفردك</span>
             </div>
@@ -638,10 +638,10 @@ export const DesktopLibraryLanding = ({
                   return next
                 })
               }}
-              className="hover:border-warning/40 group relative cursor-pointer overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
+              className="group relative cursor-pointer overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:border-warning hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
             >
               <div className="absolute bottom-0 end-0 top-0 w-1 rounded-l-xl bg-warning opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <div className="from-warning/5 absolute inset-0 bg-gradient-to-br to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-gradient-to-br from-warning-soft to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="relative z-10">
                 <div className="mb-3 flex items-center justify-between">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-warning-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
@@ -671,7 +671,7 @@ export const DesktopLibraryLanding = ({
       <section className="mt-14">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <div className="border-success/10 mb-3 inline-flex items-center gap-2 rounded-full border bg-success-soft px-3 py-1">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-success-soft bg-success-soft px-3 py-1">
               <CheckCircle size={12} className="text-success" />
               <span className="text-[10px] font-extrabold text-success">حلول الكتب والمذكرات</span>
             </div>

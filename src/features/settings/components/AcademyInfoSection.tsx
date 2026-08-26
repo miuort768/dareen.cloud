@@ -103,7 +103,7 @@ export const AcademyInfoSection = ({
         </div>
       </div>
 
-      <div className="border-border/20 mt-6 border-t pt-5">
+      <div className="mt-6 border-t border-divider pt-5">
         <h4 className="mb-4 text-sm font-bold text-main">روابط التطبيقات</h4>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <div>
@@ -142,7 +142,7 @@ export const AcademyInfoSection = ({
         setLocalFooterInstagram={setLocalFooterInstagram}
       />
 
-      <div className="border-border/20 mt-6 flex justify-end border-t pt-5">
+      <div className="mt-6 flex justify-end border-t border-divider pt-5">
         <PrimaryBtn onClick={handleSaveGeneral} loading={isSaving}>
           حفظ معلومات المعهد
         </PrimaryBtn>

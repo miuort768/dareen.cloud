@@ -262,7 +262,7 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'shadow-success/25 hover:shadow-success/30 border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md hover:shadow-lg',
+                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md hover:shadow-lg',
               )}
               aria-label="مدفوعة"
             >
@@ -340,7 +340,7 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'shadow-success/25 hover:shadow-success/30 border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md hover:shadow-lg',
+                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md hover:shadow-lg',
               )}
               aria-label="مدفوعة"
             >

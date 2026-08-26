@@ -97,7 +97,7 @@ export const TeacherToolbar = ({
           </button>
           <button
             onClick={onDeleteAll}
-            className="border-error/30 flex h-10 flex-1 items-center justify-center rounded-xl border bg-error-soft font-bold text-error transition-colors hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-9 sm:w-9 sm:flex-none"
+            className="flex h-10 flex-1 items-center justify-center rounded-xl border border-error-soft bg-error-soft font-bold text-error transition-colors hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-9 sm:w-9 sm:flex-none"
             aria-label="حذف الكل"
           >
             <Trash2 size={15} />

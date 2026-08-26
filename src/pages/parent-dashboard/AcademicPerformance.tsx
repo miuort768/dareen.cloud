@@ -10,10 +10,10 @@ interface AcademicPerformanceProps {
 }
 
 const colorMap: Record<string, { bg: string; bar: string; text: string }> = {
-  success: { bg: 'bg-success-soft dark:bg-success/10', bar: 'bg-success', text: 'text-success' },
-  info: { bg: 'bg-info-soft dark:bg-info/10', bar: 'bg-info', text: 'text-info' },
+  success: { bg: 'bg-success-soft dark:bg-success-soft', bar: 'bg-success', text: 'text-success' },
+  info: { bg: 'bg-info-soft dark:bg-info-soft', bar: 'bg-info', text: 'text-info' },
   primary: { bg: 'bg-primary-soft dark:bg-primary/10', bar: 'bg-primary', text: 'text-primary' },
-  warning: { bg: 'bg-warning-soft dark:bg-warning/10', bar: 'bg-warning', text: 'text-warning' },
+  warning: { bg: 'bg-warning-soft dark:bg-warning-soft', bar: 'bg-warning', text: 'text-warning' },
 }
 
 const ProgressBar = ({
@@ -79,7 +79,7 @@ export const AcademicPerformance = ({
   const totalSubjects = kids.reduce((sum, c) => sum + (c.enrollments?.length || 0), 0)
 
   return (
-    <div className="border-border/50 rounded-3xl border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card md:p-6">
+    <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card md:p-6">
       <h3 className="mb-5 text-base font-bold text-main dark:text-main">التقدم الأكاديمي</h3>
 
       <div className="space-y-4">

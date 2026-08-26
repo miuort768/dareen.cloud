@@ -79,7 +79,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
       <SectionTitle icon={Clock} label="أوقات العمل" sub="تحديد ساعات العمل وفترات الراحة" />
 
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="border-border/20 rounded-xl border bg-background p-4">
+        <div className="rounded-xl border border-divider bg-background p-4">
           <FieldLabel>مدة الجلسة (دقيقة)</FieldLabel>
           <InputField
             type="number"
@@ -87,7 +87,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
             onChange={(e) => setSessionDuration(e.target.value)}
           />
         </div>
-        <div className="border-border/20 rounded-xl border bg-background p-4">
+        <div className="rounded-xl border border-divider bg-background p-4">
           <FieldLabel>بداية الاستراحة</FieldLabel>
           <InputField
             type="time"
@@ -95,7 +95,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
             onChange={(e) => setBreakStart(e.target.value)}
           />
         </div>
-        <div className="border-border/20 rounded-xl border bg-background p-4">
+        <div className="rounded-xl border border-divider bg-background p-4">
           <FieldLabel>نهاية الاستراحة</FieldLabel>
           <InputField type="time" value={breakEnd} onChange={(e) => setBreakEnd(e.target.value)} />
         </div>
@@ -105,7 +105,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
         {schedule.map((d) => (
           <div
             key={d.day}
-            className="border-border/20 hover:border-border/40 flex items-center gap-3 rounded-xl border bg-background p-3 transition-colors"
+            className="flex items-center gap-3 rounded-xl border border-divider bg-background p-3 transition-colors hover:border-divider"
           >
             <button
               onClick={() => toggleDay(d.day)}
@@ -145,7 +145,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
         ))}
       </div>
 
-      <div className="border-border/20 mt-6 flex justify-end border-t pt-5">
+      <div className="mt-6 flex justify-end border-t border-divider pt-5">
         <PrimaryBtn onClick={handleSave} loading={isSaving}>
           حفظ أوقات العمل
         </PrimaryBtn>

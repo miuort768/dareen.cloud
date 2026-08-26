@@ -76,7 +76,7 @@ const KPICard = ({
 }) => (
   <motion.div
     whileHover={{ scale: 1.01, y: -1 }}
-    className="border-border/60 relative overflow-hidden rounded-2xl border bg-card shadow-sm transition-all hover:shadow-md"
+    className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:shadow-md"
   >
     <div className={`absolute inset-0 opacity-[0.03] ${gradient}`} />
     <div className={`absolute left-0 right-0 top-0 h-0.5 ${gradient}`} />
@@ -91,7 +91,7 @@ const KPICard = ({
       <p className="mt-0.5 text-lg font-bold leading-none text-main">
         <Counter value={value} />
       </p>
-      <div className="border-border/40 mt-2 flex items-center gap-1.5 border-t pt-2">
+      <div className="mt-2 flex items-center gap-1.5 border-t border-divider pt-2">
         <span className="text-[8px] font-bold text-muted">الشهر</span>
         <span className="text-[10px] font-bold tabular-nums text-main">
           <Counter value={monthValue} />
@@ -123,7 +123,7 @@ export const FinanceStats = ({
         value={totalIncome}
         icon={TrendingUp}
         monthValue={monthIncome}
-        gradient="bg-gradient-to-r from-success/80 to-success"
+        gradient="bg-gradient-to-r from-success to-success"
         on="text-on-success"
         trend={Math.round(incomeTrend)}
       />
@@ -132,7 +132,7 @@ export const FinanceStats = ({
         value={totalExpenses}
         icon={TrendingDown}
         monthValue={monthExpenses}
-        gradient="bg-gradient-to-r from-error/80 to-error"
+        gradient="bg-gradient-to-r from-error to-error"
         on="text-on-error"
         trend={Math.round(expenseTrend)}
       />
@@ -141,7 +141,7 @@ export const FinanceStats = ({
         value={totalFixedExpenses}
         icon={Wallet}
         monthValue={totalFixedExpenses}
-        gradient="bg-gradient-to-r from-warning/80 to-warning"
+        gradient="bg-gradient-to-r from-warning to-warning"
         on="text-on-warning"
       />
       <KPICard

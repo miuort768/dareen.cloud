@@ -1,16 +1,29 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, GraduationCap, LogIn, Sun, Bed, Home, BookOpen, Book, Info, Phone, LayoutDashboard } from 'lucide-react';
-import { PublicNavbar } from './PublicNavbar';
-import { useDarkMode } from '../../shared/hooks/useDarkMode';
-import { useIsAuthenticated } from '../../context/useApp';
-import { useAcademyName } from '../../context/AppContext';
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import {
+  Menu,
+  X,
+  GraduationCap,
+  LogIn,
+  Sun,
+  Bed,
+  Home,
+  BookOpen,
+  Book,
+  Info,
+  Phone,
+  LayoutDashboard,
+} from 'lucide-react'
+import { PublicNavbar } from './PublicNavbar'
+import { useDarkMode } from '../../shared/hooks/useDarkMode'
+import { useIsAuthenticated } from '../../context/useApp'
+import { useAcademyName } from '../../context/AppContext'
 
 export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useDarkMode();
-  const isAuthenticated = useIsAuthenticated();
-  const academyName = useAcademyName();
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [theme, setTheme] = useDarkMode()
+  const isAuthenticated = useIsAuthenticated()
+  const academyName = useAcademyName()
 
   const navItems = [
     { label: 'الرئيسية', path: '/', icon: Home },
@@ -18,59 +31,94 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
     { label: 'المكتبة', path: '/books', icon: Book },
     { label: 'من نحن', path: '/about', icon: Info },
     { label: 'اتصل بنا', path: '/contact', icon: Phone },
-  ];
+  ]
 
   return (
     <>
       <div className="hidden md:block">
         <PublicNavbar />
       </div>
-      <header className="md:hidden flex items-center justify-between px-2 pt-3 pb-2 bg-surface dark:bg-black">
+      <header className="flex items-center justify-between bg-surface px-2 pb-2 pt-3 dark:bg-black md:hidden">
         <div className="flex items-center gap-1">
           <Link to="/" className="flex items-center gap-2">
-          <div className="w-11 h-11 rounded-[16px] bg-gradient-to-br from-primary to-primary dark:from-primary dark:to-warning flex items-center justify-center shadow-lg shadow-primary/20 dark:shadow-primary/20 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent w-[150%] h-full animate-shine pointer-events-none z-0"></div>
-            <GraduationCap className="w-6 h-6 text-on-primary dark:text-on-primary relative z-10" />
-          </div>
-          <div>
-                            <p className="text-base font-black text-main dark:text-main leading-tight">{academyName}</p>
-                            <p className="text-micro font-bold leading-tight text-main dark:text-soft">أفضل مدرسة افتراضية</p>
-                            <p className="text-micro text-main dark:text-muted leading-tight mt-0.5">Dareen for Education & Online Learning</p>
-          </div>
-        </Link>
+            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-[16px] bg-gradient-to-br from-primary to-primary shadow-lg shadow-primary/20 dark:from-primary dark:to-warning dark:shadow-primary/20">
+              <div className="animate-shine pointer-events-none absolute inset-0 z-0 h-full w-[150%] bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+              <GraduationCap className="relative z-10 h-6 w-6 text-on-primary dark:text-on-primary" />
+            </div>
+            <div>
+              <p className="text-base font-black leading-tight text-main dark:text-main">
+                {academyName}
+              </p>
+              <p className="dark:text-soft text-micro font-bold leading-tight text-main">
+                أفضل مدرسة افتراضية
+              </p>
+              <p className="mt-0.5 text-micro leading-tight text-main dark:text-muted">
+                Dareen for Education & Online Learning
+              </p>
+            </div>
+          </Link>
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'} className={`w-10 h-10 rounded-full bg-surface dark:bg-card shadow-sm border border-border dark:border-primary/30 flex items-center justify-center shrink-0 ${hideThemeToggle ? 'hidden' : ''}`}>
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-primary" /> : <Bed className="w-4 h-4 text-primary" />}
+          <button
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-surface shadow-sm dark:border-primary/30 dark:bg-card ${hideThemeToggle ? 'hidden' : ''}`}
+          >
+            {theme === 'dark' ? (
+              <Sun className="h-4 w-4 text-primary" />
+            ) : (
+              <Bed className="h-4 w-4 text-primary" />
+            )}
           </button>
           <div className="relative">
-          <button onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'} className="w-10 h-10 rounded-full bg-surface dark:bg-card shadow-sm border border-border dark:border-primary/30 flex items-center justify-center">
-            {menuOpen ? <X className="w-5 h-5 text-muted dark:text-primary" /> : <Menu className="w-5 h-5 text-muted dark:text-primary" />}
-          </button>
-          {menuOpen && (
-            <div className="absolute top-12 end-0 bg-surface dark:bg-card rounded-2xl shadow-2xl border border-border dark:border-primary/30 z-50 min-w-[180px]">
-              {navItems.map((item) => (
-                <Link key={item.path} to={item.path} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-main dark:text-main hover:bg-primary-soft dark:hover:bg-primary/10 hover:text-primary dark:hover:text-primary transition-colors border-b border-border dark:border-primary/20 last:border-0 whitespace-nowrap">
-                  <item.icon size={16} className="shrink-0 dark:text-primary" />
-                  {item.label}
-                </Link>
-              ))}
-              {isAuthenticated ? (
-                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-primary dark:text-primary hover:bg-info-light dark:hover:bg-primary/10 transition-colors border-t border-border dark:border-primary/20">
-                  <LayoutDashboard size={14} />
-                  لوحة التحكم
-                </Link>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface shadow-sm dark:border-primary/30 dark:bg-card"
+            >
+              {menuOpen ? (
+                <X className="h-5 w-5 text-muted dark:text-primary" />
               ) : (
-                <Link to="/login" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-primary dark:text-primary hover:bg-info-light dark:hover:bg-primary/10 transition-colors border-t border-border dark:border-primary/20">
-                  <LogIn size={14} />
-                  تسجيل الدخول
-                </Link>
+                <Menu className="h-5 w-5 text-muted dark:text-primary" />
               )}
-            </div>
-          )}
-        </div>
+            </button>
+            {menuOpen && (
+              <div className="absolute end-0 top-12 z-50 min-w-[180px] rounded-2xl border border-border bg-surface shadow-2xl dark:border-primary/30 dark:bg-card">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 whitespace-nowrap border-b border-border px-4 py-3 text-xs font-bold text-main transition-colors last:border-0 hover:bg-primary-soft hover:text-primary dark:border-primary/20 dark:text-main dark:hover:bg-primary/10 dark:hover:text-primary"
+                  >
+                    <item.icon size={16} className="shrink-0 dark:text-primary" />
+                    {item.label}
+                  </Link>
+                ))}
+                {isAuthenticated ? (
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 border-t border-border px-4 py-3 text-xs font-bold text-primary transition-colors hover:bg-info-light dark:border-primary/20 dark:text-primary dark:hover:bg-primary/10"
+                  >
+                    <LayoutDashboard size={14} />
+                    لوحة التحكم
+                  </Link>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 border-t border-border px-4 py-3 text-xs font-bold text-primary transition-colors hover:bg-info-light dark:border-primary/20 dark:text-primary dark:hover:bg-primary/10"
+                  >
+                    <LogIn size={14} />
+                    تسجيل الدخول
+                  </Link>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </header>
     </>
-  );
-};
+  )
+}

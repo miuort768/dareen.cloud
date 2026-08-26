@@ -77,7 +77,7 @@ export const ActivityTimeline = ({ sessions, tasks }: ActivityTimelineProps) => 
     >
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="dark:bg-info/10 flex h-9 w-9 items-center justify-center rounded-xl bg-info-soft">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-info-soft dark:bg-info-soft">
             <Clock size={16} className="text-info" />
           </div>
           <div>

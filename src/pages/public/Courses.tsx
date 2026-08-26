@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
 import { MobileHeader } from '../../components/public/MobileHeader'
@@ -135,14 +135,14 @@ export const Courses = () => {
       <main className="relative flex-grow overflow-x-clip pb-6 md:pb-10 md:pt-32">
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <div className="absolute right-[-10%] top-[-15%] h-[60%] w-[60%] rounded-full bg-gradient-to-br from-primary/5 to-primary/5 blur-[140px] dark:from-primary/[0.05] dark:to-primary/[0.05]" />
-          <div className="from-info/3 to-primary/3 absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr blur-[120px] dark:from-primary/[0.03] dark:to-primary/[0.03]" />
+          <div className="to-primary/3 absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr from-info-soft blur-[120px] dark:from-primary/[0.03] dark:to-primary/[0.03]" />
           <div className="absolute left-[50%] top-[40%] h-[1px] w-[80%] translate-x-[-50%] bg-gradient-to-r from-transparent via-primary/10 to-transparent dark:via-primary/20" />
         </div>
 
         <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll animation="fadeUp">
             <div className="mb-4 text-center md:mb-6">
-              <div className="bg-primary-soft/60 mb-2 inline-flex items-center gap-2 rounded-full border border-primary px-4 py-1.5 backdrop-blur-sm dark:border-primary/30 dark:bg-primary/15 md:mb-6">
+              <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-primary bg-primary-soft px-4 py-1.5 backdrop-blur-sm dark:border-primary/30 dark:bg-primary/15 md:mb-6">
                 <Sparkles size={13} className="text-primary dark:text-primary" />
                 <span className="text-micro font-black text-primary dark:text-primary">
                   استكشف مسيرتك التعليمية
@@ -181,7 +181,7 @@ export const Courses = () => {
                   onClick={() => setActiveCategory(cat.value)}
                   className={`flex cursor-pointer items-center gap-2 rounded-card px-4 py-2.5 text-xs font-black transition-all duration-300 ${
                     activeCategory === cat.value
-                      ? 'shadow-card/20 bg-primary-active text-on-primary shadow-lg dark:bg-primary dark:text-on-primary dark:shadow-primary/20'
+                      ? 'bg-primary-active text-on-primary shadow-lg dark:bg-primary dark:text-on-primary dark:shadow-primary/20'
                       : 'border border-border bg-surface text-muted hover:border-primary/30 hover:text-main hover:shadow-md dark:border-primary/20 dark:bg-card dark:text-muted dark:hover:border-primary/40 dark:hover:text-main'
                   }`}
                 >
@@ -236,7 +236,7 @@ export const Courses = () => {
                     </div>
 
                     <div className="absolute bottom-3 end-3 z-10">
-                      <div className="bg-surface/90 dark:bg-card/90 flex items-center gap-1 rounded-lg px-2 py-1 shadow-sm backdrop-blur-sm">
+                      <div className="flex items-center gap-1 rounded-lg bg-surface px-2 py-1 shadow-sm backdrop-blur-sm dark:bg-card">
                         <StarRating rating={course.rating} />
                       </div>
                     </div>
@@ -277,7 +277,7 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="shadow-success/20 hover:shadow-success/30 mx-3 mb-3 flex items-center justify-center gap-2 rounded-card bg-success py-2.5 text-xs font-black text-on-success shadow-lg transition-all duration-300 hover:bg-success-dark active:scale-[0.97] dark:bg-primary dark:text-on-primary dark:shadow-lg dark:shadow-primary/20 dark:hover:bg-warning"
+                    className="mx-3 mb-3 flex items-center justify-center gap-2 rounded-card bg-success py-2.5 text-xs font-black text-on-success shadow-lg transition-all duration-300 hover:bg-success-dark active:scale-[0.97] dark:bg-primary dark:text-on-primary dark:shadow-lg dark:shadow-primary/20 dark:hover:bg-warning"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب

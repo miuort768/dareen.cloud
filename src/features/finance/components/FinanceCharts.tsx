@@ -76,7 +76,7 @@ export const FinanceCharts = ({
       dir="rtl"
     >
       {/* Area chart — spans 3 cols */}
-      <div className="border-border/60 rounded-2xl border bg-card p-3.5 shadow-sm lg:col-span-3">
+      <div className="rounded-2xl border border-border bg-card p-3.5 shadow-sm lg:col-span-3">
         <div className="mb-3 flex items-center justify-between">
           <div>
             <h3 className="text-xs font-bold text-main">تحليل التدفق النقدي</h3>
@@ -107,7 +107,7 @@ export const FinanceCharts = ({
             <span className="text-[8px] font-bold text-muted">إيرادات</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="bg-error/70 h-0.5 w-3 rounded" />
+            <div className="h-0.5 w-3 rounded bg-error" />
             <span className="text-[8px] font-bold text-muted">مصروفات</span>
           </div>
         </div>
@@ -149,10 +149,10 @@ export const FinanceCharts = ({
                   if (!active || !payload?.length) return null
                   return (
                     <div
-                      className="border-border/60 min-w-[140px] rounded-xl border bg-card px-3 py-2.5 shadow-elevation-2"
+                      className="min-w-[140px] rounded-xl border border-border bg-card px-3 py-2.5 shadow-elevation-2"
                       dir="rtl"
                     >
-                      <p className="border-border/40 mb-1.5 border-b pb-1 text-[9px] font-bold text-main">
+                      <p className="mb-1.5 border-b border-divider pb-1 text-[9px] font-bold text-main">
                         {label}
                       </p>
                       <div className="space-y-1">
@@ -167,7 +167,7 @@ export const FinanceCharts = ({
                         </div>
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex items-center gap-1">
-                            <TrendingDown size={9} className="text-error/70" />
+                            <TrendingDown size={9} className="text-error" />
                             <span className="text-[8px] font-bold text-muted">مصروفات</span>
                           </div>
                           <span className="text-xs font-bold tabular-nums text-main">
@@ -204,7 +204,7 @@ export const FinanceCharts = ({
       </div>
 
       {/* Donut chart — spans 2 cols */}
-      <div className="border-border/60 rounded-2xl border bg-card p-3.5 shadow-sm lg:col-span-2">
+      <div className="rounded-2xl border border-border bg-card p-3.5 shadow-sm lg:col-span-2">
         <h3 className="mb-3 text-xs font-bold text-main">تصنيف المصروفات</h3>
         <div className="flex h-[calc(100%-2rem)] flex-col items-center justify-center">
           <div className="relative h-36 w-full" dir="ltr">
@@ -235,7 +235,7 @@ export const FinanceCharts = ({
                           const d = payload[0].payload
                           return (
                             <div
-                              className="border-border/60 rounded-xl border bg-card px-2.5 py-1.5 shadow-elevation-2"
+                              className="rounded-xl border border-border bg-card px-2.5 py-1.5 shadow-elevation-2"
                               dir="rtl"
                             >
                               <p className="text-[8px] font-bold text-muted">{d.name}</p>

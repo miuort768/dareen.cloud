@@ -40,7 +40,7 @@ export const TodayMoney = memo(function TodayMoney({ stats }: { stats: Executive
       className="grid grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card font-dash sm:grid-cols-3"
       dir="rtl"
     >
-      <div className="bg-primary-soft/40 relative border-divider sm:border-e">
+      <div className="relative border-divider bg-primary-soft sm:border-e">
         <MoneyStat
           icon={Wallet}
           label="إيرادات اليوم"

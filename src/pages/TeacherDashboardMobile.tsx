@@ -125,7 +125,7 @@ export const TeacherDashboardMobile = ({
       {/* Frosted Glass Header */}
       <div
         className={cn(
-          'border-border/50 sticky top-0 z-50 border-b bg-gradient-to-br from-primary-light via-primary-soft to-surface backdrop-blur-xl transition-all duration-500 dark:border-border dark:from-card dark:via-surface dark:to-background',
+          'sticky top-0 z-50 border-b border-border bg-gradient-to-br from-primary-light via-primary-soft to-surface backdrop-blur-xl transition-all duration-500 dark:border-border dark:from-card dark:via-surface dark:to-background',
         )}
       >
         <div className="px-5 pb-4 pt-5">
@@ -165,7 +165,7 @@ export const TeacherDashboardMobile = ({
               {logout && (
                 <button
                   onClick={logout}
-                  className="dark:bg-error/10 flex h-9 w-9 items-center justify-center rounded-xl bg-error-soft"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-error-soft dark:bg-error-soft"
                   aria-label="تسجيل الخروج"
                 >
                   <LogOut size={15} className="text-error dark:text-error" />
@@ -175,7 +175,7 @@ export const TeacherDashboardMobile = ({
           </div>
           {/* Stats row */}
           <div className="mt-3 flex items-center gap-2">
-            <div className="border-border/50 bg-surface/70 flex flex-1 items-center gap-2 rounded-2xl border px-3 py-2.5 shadow-sm dark:border-border dark:bg-primary/10">
+            <div className="flex flex-1 items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-2.5 shadow-sm dark:border-border dark:bg-primary/10">
               <Clock size={13} className="shrink-0 text-primary dark:text-primary" />
               <div className="flex items-baseline gap-1">
                 <span className="text-base font-bold text-main dark:text-main">
@@ -184,7 +184,7 @@ export const TeacherDashboardMobile = ({
                 <span className="text-[11px] font-medium text-muted dark:text-muted">حصة</span>
               </div>
             </div>
-            <div className="border-border/50 bg-surface/70 flex flex-1 items-center gap-2 rounded-2xl border px-3 py-2.5 shadow-sm dark:border-border dark:bg-primary/10">
+            <div className="flex flex-1 items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-2.5 shadow-sm dark:border-border dark:bg-primary/10">
               <Users size={13} className="shrink-0 text-info dark:text-primary" />
               <div className="flex items-baseline gap-1">
                 <span className="text-base font-bold text-main dark:text-main">
@@ -193,7 +193,7 @@ export const TeacherDashboardMobile = ({
                 <span className="text-[11px] font-medium text-muted dark:text-muted">طالب</span>
               </div>
             </div>
-            <div className="border-border/50 bg-surface/70 flex flex-1 items-center gap-2 rounded-2xl border px-3 py-2.5 shadow-sm dark:border-border dark:bg-primary/10">
+            <div className="flex flex-1 items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-2.5 shadow-sm dark:border-border dark:bg-primary/10">
               <Award size={13} className="shrink-0 text-success dark:text-primary" />
               <div className="flex items-baseline gap-1">
                 <span className="text-base font-bold text-main dark:text-main">
@@ -219,20 +219,20 @@ export const TeacherDashboardMobile = ({
             {activeTab === 'home' && (
               <div className="space-y-4">
                 {nextSession && (
-                  <div className="border-border/50 rounded-3xl border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
+                  <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
                     <NextSessionHero timeline={timeline} />
                   </div>
                 )}
                 <div className="px-1">
                   <QuickActions showQuickLinks={true} />
                 </div>
-                <div className="border-border/50 rounded-3xl border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
+                <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
                   <button
                     onClick={() => navigate('/teacher-payment-history')}
                     className="flex w-full items-center gap-3 py-1 text-start transition-all duration-200 hover:opacity-80 active:scale-[0.99]"
                     aria-label="سجل الدفعات"
                   >
-                    <div className="dark:bg-success/10 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-success-soft">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-success-soft dark:bg-success-soft">
                       <Wallet size={16} className="text-success dark:text-success" />
                     </div>
                     <div className="min-w-0 flex-1">
@@ -249,11 +249,11 @@ export const TeacherDashboardMobile = ({
                     <Sparkles size={14} className="text-warning dark:text-warning" />
                     <h2 className="text-sm font-bold text-main dark:text-main">الإعلانات</h2>
                   </div>
-                  <div className="border-border/50 rounded-3xl border bg-surface p-3.5 shadow-sm dark:border-primary/20 dark:bg-card">
+                  <div className="rounded-3xl border border-border bg-surface p-3.5 shadow-sm dark:border-primary/20 dark:bg-card">
                     <ModernAnnouncements />
                   </div>
                 </section>
-                <div className="border-border/50 rounded-3xl border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
+                <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
                   <SmartNotifications
                     lowBalanceStudents={lowBalanceStudents}
                     focusStudents={focusStudents || []}
@@ -269,7 +269,7 @@ export const TeacherDashboardMobile = ({
                       <Sparkles size={14} className="text-info dark:text-info" />
                       <h2 className="text-sm font-bold text-main dark:text-main">الجدول اليومي</h2>
                     </div>
-                    <div className="border-border/50 rounded-3xl border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
+                    <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
                       <TeacherSessionTimeline
                         sessions={timeline}
                         onStudentClick={setBriefingStudent}
@@ -289,7 +289,7 @@ export const TeacherDashboardMobile = ({
             {activeTab === 'reports' && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="border-border/50 rounded-3xl border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
+                  <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
                     <FinancialSnapshot
                       monthNetProfit={stats.monthNetProfit}
                       monthRevenue={stats.monthRevenue}
@@ -297,7 +297,7 @@ export const TeacherDashboardMobile = ({
                       currency={stats.currency}
                     />
                   </div>
-                  <div className="border-border/50 rounded-3xl border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
+                  <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
                     <AttendanceChart rate={stats.attendanceRate} />
                   </div>
                 </div>
@@ -308,7 +308,7 @@ export const TeacherDashboardMobile = ({
                       الإنجازات التعليمية
                     </h2>
                   </div>
-                  <div className="border-border/50 rounded-3xl border bg-surface p-3.5 shadow-sm dark:border-primary/20 dark:bg-card">
+                  <div className="rounded-3xl border border-border bg-surface p-3.5 shadow-sm dark:border-primary/20 dark:bg-card">
                     <TeacherAchievements
                       stats={stats}
                       lowBalanceStudents={lowBalanceStudents}
@@ -321,7 +321,7 @@ export const TeacherDashboardMobile = ({
                     <Sparkles size={14} className="text-error dark:text-error" />
                     <h2 className="text-sm font-bold text-main dark:text-main">المهام والطلبات</h2>
                   </div>
-                  <div className="border-border/50 rounded-3xl border bg-surface p-3.5 shadow-sm dark:border-primary/20 dark:bg-card">
+                  <div className="rounded-3xl border border-border bg-surface p-3.5 shadow-sm dark:border-primary/20 dark:bg-card">
                     <TasksAndRequests tasks={tasks} />
                   </div>
                 </section>
@@ -330,7 +330,7 @@ export const TeacherDashboardMobile = ({
                     <Sparkles size={14} className="text-warning dark:text-warning" />
                     <h2 className="text-sm font-bold text-main dark:text-main">الأكثر حضوراً</h2>
                   </div>
-                  <div className="border-border/50 rounded-3xl border bg-surface p-3.5 shadow-sm dark:border-primary/20 dark:bg-card">
+                  <div className="rounded-3xl border border-border bg-surface p-3.5 shadow-sm dark:border-primary/20 dark:bg-card">
                     <TopAttendanceStudents
                       sessions={rawSessions}
                       onStudentClick={setBriefingStudent}

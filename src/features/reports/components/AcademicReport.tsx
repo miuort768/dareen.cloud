@@ -58,7 +58,7 @@ const SectionHeader = ({
   sub?: string
 }) => (
   <div className="flex items-center gap-3 border-b border-border bg-surface px-5 py-4">
-    <div className="bg-chart-4/10 flex h-8 w-8 items-center justify-center rounded-xl">
+    <div className="flex h-8 w-8 items-center justify-center rounded-xl">
       <Icon size={15} className="text-chart-4" />
     </div>
     <div>
@@ -220,21 +220,21 @@ export const AcademicReport = React.memo(
               value: totalStudents,
               icon: Users,
               textClass: 'text-chart-1',
-              bgClass: 'bg-chart-1/10',
+              bgClass: '',
             },
             {
               label: 'إجمالي الاشتراكات',
               value: totalEnrollments,
               icon: BookOpen,
               textClass: 'text-chart-2',
-              bgClass: 'bg-chart-2/10',
+              bgClass: '',
             },
             {
               label: 'المواد الأكاديمية',
               value: uniqueSubjects,
               icon: BarChart3,
               textClass: 'text-chart-4',
-              bgClass: 'bg-chart-4/10',
+              bgClass: '',
             },
           ].map((item, i) => (
             <div key={`report-${i}`} className="rounded-card border border-border bg-card p-4">

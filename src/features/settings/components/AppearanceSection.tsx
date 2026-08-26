@@ -16,8 +16,8 @@ export const AppearanceSection = ({
   setThemeColor,
 }: AppearanceSectionProps) => {
   return (
-    <section className="border-border/20 rounded-2xl border bg-card p-5 shadow-sm md:p-6">
-      <div className="border-border/20 mb-6 flex items-center gap-3 border-b pb-4">
+    <section className="rounded-2xl border border-divider bg-card p-5 shadow-sm md:p-6">
+      <div className="mb-6 flex items-center gap-3 border-b border-divider pb-4">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 shadow-sm">
           <Palette size={18} className="text-primary" />
         </div>
@@ -29,7 +29,7 @@ export const AppearanceSection = ({
       </div>
 
       <div className="space-y-6">
-        <div className="border-border/20 hover:border-border/40 flex items-center justify-between rounded-xl border bg-background p-4 transition-colors">
+        <div className="flex items-center justify-between rounded-xl border border-divider bg-background p-4 transition-colors hover:border-divider">
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
               {theme === 'dark' ? (
@@ -49,7 +49,7 @@ export const AppearanceSection = ({
               'relative h-7 w-12 shrink-0 rounded-full transition-all duration-300',
               theme === 'dark'
                 ? 'bg-gradient-to-r from-primary to-primary-active shadow-sm shadow-primary/30'
-                : 'bg-border/60 hover:bg-border',
+                : 'bg-divider hover:bg-border',
             )}
           >
             <span
@@ -80,7 +80,7 @@ export const AppearanceSection = ({
                       'flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300',
                       isActive
                         ? 'scale-110 shadow-md ring-2 ring-primary ring-offset-2 ring-offset-card'
-                        : 'ring-border/40 ring-1 hover:shadow-sm hover:ring-border',
+                        : 'ring-1 ring-divider hover:shadow-sm hover:ring-border',
                     )}
                   >
                     <div

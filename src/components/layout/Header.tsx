@@ -133,7 +133,7 @@ export const Header = memo(() => {
   return (
     <header
       className={cn(
-        'border-border/70 bg-background/85 sticky top-0 z-40 w-full border-b backdrop-blur-xl dark:border-white/5',
+        'sticky top-0 z-40 w-full border-b border-border bg-background backdrop-blur-xl dark:border-white/5',
         'transition-all duration-300',
       )}
     >
@@ -144,12 +144,12 @@ export const Header = memo(() => {
             <Image
               src="/dareen_logo_new.webp"
               alt="دارين السابعة"
-              className="border-border/60 h-9 w-9 overflow-hidden rounded-xl border bg-card shadow-sm dark:border-white/5 lg:h-10 lg:w-10"
+              className="h-9 w-9 overflow-hidden rounded-xl border border-border bg-card shadow-sm dark:border-white/5 lg:h-10 lg:w-10"
               imgClassName="object-contain scale-[1.28]"
             />
           </Link>
 
-          <div className="bg-border/60 hidden h-6 w-px shrink-0 lg:block" />
+          <div className="hidden h-6 w-px shrink-0 bg-divider lg:block" />
 
           <div className="min-w-0">
             <h1 className="truncate text-sm font-black leading-tight text-main md:text-[15px] lg:text-base">
@@ -181,16 +181,16 @@ export const Header = memo(() => {
                   if (e.key === 'Enter') runSearch()
                   if (e.key === 'Escape') searchRef.current?.blur()
                 }}
-                className="border-border/70 h-10 w-52 rounded-full border bg-surface pe-16 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:w-64 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 dark:border-white/5 xl:w-64"
+                className="h-10 w-52 rounded-full border border-border bg-surface pe-16 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:w-64 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 dark:border-white/5 xl:w-64"
               />
-              <kbd className="border-border/70 pointer-events-none absolute end-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md border bg-background px-1.5 py-0.5 text-[9px] font-bold text-muted dark:border-white/5">
+              <kbd className="pointer-events-none absolute end-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md border border-border bg-background px-1.5 py-0.5 text-[9px] font-bold text-muted dark:border-white/5">
                 <Command size={9} />K
               </kbd>
             </div>
           )}
 
           {/* Icon actions */}
-          <div className="border-border/70 flex items-center gap-0.5 rounded-full border bg-card p-1 shadow-sm dark:border-white/5">
+          <div className="flex items-center gap-0.5 rounded-full border border-border bg-card p-1 shadow-sm dark:border-white/5">
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
@@ -199,7 +199,7 @@ export const Header = memo(() => {
               {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
             </button>
 
-            <div className="bg-border/60 h-5 w-px" />
+            <div className="h-5 w-px bg-divider" />
 
             <Link
               to="/chat"
@@ -216,7 +216,7 @@ export const Header = memo(() => {
 
             <NotificationDropdown />
 
-            <div className="bg-border/60 h-5 w-px" />
+            <div className="h-5 w-px bg-divider" />
 
             <button
               onClick={async () => {
@@ -233,7 +233,7 @@ export const Header = memo(() => {
           <Link
             to={userLink}
             aria-label="الملف الشخصي"
-            className="border-border/70 flex h-10 items-center gap-2 rounded-full border bg-card py-1 pe-1 ps-1 shadow-sm transition-all hover:bg-hover hover:shadow-md active:scale-[0.97] dark:border-white/5 lg:pe-2.5"
+            className="flex h-10 items-center gap-2 rounded-full border border-border bg-card py-1 pe-1 ps-1 shadow-sm transition-all hover:bg-hover hover:shadow-md active:scale-[0.97] dark:border-white/5 lg:pe-2.5"
           >
             <span className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-on-primary">
               {currentUser?.avatar ? (

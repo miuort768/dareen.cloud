@@ -31,7 +31,7 @@ export const SecureActionModal = ({
       }}
     >
       <div
-        className="border-error/40 w-full max-w-md rounded-2xl border bg-card p-6 shadow-xl"
+        className="w-full max-w-md rounded-2xl border border-error bg-card p-6 shadow-xl"
         onClick={(e) => e.stopPropagation()}
         dir="rtl"
       >
@@ -45,7 +45,7 @@ export const SecureActionModal = ({
           <div className="mt-2 w-full space-y-3 rounded-xl border border-border bg-surface p-4 text-start">
             <p className="text-xs font-bold text-muted">اكتب للتأكيد:</p>
             <div
-              className="border-error/40 select-all rounded-lg border bg-error-soft py-1.5 text-center text-xs font-black text-error"
+              className="select-all rounded-lg border border-error bg-error-soft py-1.5 text-center text-xs font-black text-error"
               dir="ltr"
             >
               {secureAction.confirmWord}

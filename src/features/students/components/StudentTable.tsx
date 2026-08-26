@@ -355,11 +355,11 @@ export const StudentTable = memo(
                 {student.enrollments?.length || 0}
               </span>
             </div>
-            <div className="bg-success-soft/50 rounded-xl p-2 text-center">
+            <div className="rounded-xl bg-success-soft p-2 text-center">
               <span className="block text-[9px] font-bold text-muted">المستخدم</span>
               <span className="text-xs font-bold text-success">{totalUsed}</span>
             </div>
-            <div className="bg-warning-soft/50 rounded-xl p-2 text-center">
+            <div className="rounded-xl bg-warning-soft p-2 text-center">
               <span className="block text-[9px] font-bold text-muted">الرصيد</span>
               <span
                 className={cn('text-xs font-bold', hasLowBalance ? 'text-error' : 'text-warning')}

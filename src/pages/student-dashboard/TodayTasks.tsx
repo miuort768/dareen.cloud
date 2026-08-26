@@ -14,19 +14,19 @@ const typeConfig: Record<
     icon: FileText,
     label: 'واجب',
     color: 'text-warning',
-    bg: 'bg-warning-soft dark:bg-warning/10',
+    bg: 'bg-warning-soft dark:bg-warning-soft',
   },
   review: {
     icon: ClipboardList,
     label: 'مراجعة',
     color: 'text-info',
-    bg: 'bg-info-soft dark:bg-info/10',
+    bg: 'bg-info-soft dark:bg-info-soft',
   },
   quiz: {
     icon: ClipboardList,
     label: 'اختبار',
     color: 'text-error',
-    bg: 'bg-error-soft dark:bg-error/10',
+    bg: 'bg-error-soft dark:bg-error-soft',
   },
   session: {
     icon: BookOpen,
@@ -51,7 +51,7 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
   const completedCount = tasks.filter((t) => completedIds.has(t.id)).length
 
   return (
-    <div className="border-border/50 rounded-3xl border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card">
+    <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card">
       <div className="mb-4 flex items-center justify-between">
         <span className="rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary dark:bg-primary/10 dark:text-primary">
           {completedCount}/{tasks.length}

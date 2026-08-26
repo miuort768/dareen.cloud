@@ -152,7 +152,7 @@ export const Finance = () => {
           {/* Summary bar */}
           <div className="relative z-10 mt-5 grid grid-cols-3 gap-3 border-t border-white/10 pt-5">
             <div className="flex items-center gap-2">
-              <div className="bg-success/20 rounded-lg p-1.5">
+              <div className="rounded-lg bg-success-soft p-1.5">
                 <ArrowUpRight className="text-success" size={14} />
               </div>
               <div>
@@ -164,7 +164,7 @@ export const Finance = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="bg-error/20 rounded-lg p-1.5">
+              <div className="rounded-lg bg-error-soft p-1.5">
                 <ArrowDownRight className="text-error" size={14} />
               </div>
               <div>
@@ -176,7 +176,7 @@ export const Finance = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="bg-info/20 rounded-lg p-1.5">
+              <div className="rounded-lg bg-info-soft p-1.5">
                 <Wallet className="text-info" size={14} />
               </div>
               <div>

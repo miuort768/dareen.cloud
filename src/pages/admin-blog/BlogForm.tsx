@@ -271,7 +271,7 @@ export const BlogForm = ({
               />
             </div>
             <div className="flex flex-col gap-4">
-              <div className="bg-surface/50 flex items-center justify-between rounded-xl border border-border p-3">
+              <div className="flex items-center justify-between rounded-xl border border-border bg-surface p-3">
                 <span className="text-micro font-bold text-muted">
                   إظهار أزرار التحميل والمشاهدة
                 </span>
@@ -382,7 +382,7 @@ export const BlogForm = ({
         <BlogFormSeoSection currentPost={currentPost} onSet={set} />
 
         <div
-          className="bg-card/95 sticky bottom-0 z-10 -mx-4 -mb-4 mt-1 flex items-center justify-end gap-2 border-t border-border px-4 py-3 backdrop-blur-md"
+          className="sticky bottom-0 z-10 -mx-4 -mb-4 mt-1 flex items-center justify-end gap-2 border-t border-border bg-card px-4 py-3 backdrop-blur-md"
           style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
         >
           <button

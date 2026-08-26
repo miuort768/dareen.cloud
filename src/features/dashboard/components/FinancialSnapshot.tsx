@@ -24,7 +24,7 @@ export const FinancialSnapshot = ({
       icon: TrendingUp,
       color: 'text-success',
       bg: 'bg-success-soft',
-      border: 'border-success/30',
+      border: 'border-success-soft',
       valueColor: 'text-success',
     },
     {

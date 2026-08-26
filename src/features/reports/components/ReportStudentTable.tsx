@@ -41,7 +41,7 @@ export const ReportStudentTable = React.memo(
       <div className="overflow-hidden rounded-card border border-border bg-card">
         <div className="flex flex-col justify-between gap-3 border-b border-border bg-surface px-5 py-4 md:flex-row md:items-center">
           <div className="flex items-center gap-3">
-            <div className="bg-chart-4/10 flex h-8 w-8 items-center justify-center rounded-xl">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl">
               <Activity size={15} className="text-chart-4" />
             </div>
             <div>
@@ -104,14 +104,14 @@ export const ReportStudentTable = React.memo(
                       </td>
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-2.5">
-                          <div className="bg-chart-4/10 flex h-7 w-7 items-center justify-center rounded-xl text-micro font-semibold text-chart-4">
+                          <div className="flex h-7 w-7 items-center justify-center rounded-xl text-micro font-semibold text-chart-4">
                             {student.name.charAt(0)}
                           </div>
                           <span className="text-xs font-bold text-main">{student.name}</span>
                         </div>
                       </td>
                       <td className="px-5 py-3 text-center">
-                        <span className="bg-chart-4/10 inline-flex rounded-lg px-2 py-0.5 text-micro font-bold text-chart-4">
+                        <span className="inline-flex rounded-lg px-2 py-0.5 text-micro font-bold text-chart-4">
                           {student.grade}
                         </span>
                       </td>
@@ -146,7 +146,7 @@ export const ReportStudentTable = React.memo(
               ) : (
                 <tr>
                   <td colSpan={7} className="px-6 py-16 text-center">
-                    <div className="bg-muted/10 mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl">
+                    <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-hover">
                       <Users size={22} className="text-muted" />
                     </div>
                     <p className="text-xs font-bold text-muted">لا توجد نتائج</p>
@@ -165,7 +165,7 @@ export const ReportStudentTable = React.memo(
               const { progBg, progText } = renderProgressBar(prog)
               return (
                 <div key={student.id} className="flex items-center gap-3 p-4">
-                  <div className="bg-chart-4/10 relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-chart-4">
+                  <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-chart-4">
                     {student.name.charAt(0)}
                     <span className="absolute -start-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-chart-4 text-micro font-bold text-on-primary">
                       {globalIdx}
@@ -179,7 +179,7 @@ export const ReportStudentTable = React.memo(
                       </span>
                     </div>
                     <div className="mb-1.5 flex items-center gap-2">
-                      <span className="bg-chart-4/10 rounded-lg px-1.5 py-0.5 text-micro font-bold text-chart-4">
+                      <span className="rounded-lg px-1.5 py-0.5 text-micro font-bold text-chart-4">
                         {student.grade}
                       </span>
                       <span className="text-micro font-bold text-muted">
@@ -198,7 +198,7 @@ export const ReportStudentTable = React.memo(
             })
           ) : (
             <div className="py-12 text-center">
-              <div className="bg-muted/10 mx-auto mb-2 flex h-11 w-11 items-center justify-center rounded-xl">
+              <div className="mx-auto mb-2 flex h-11 w-11 items-center justify-center rounded-xl bg-hover">
                 <Users size={20} className="text-muted" />
               </div>
               <p className="text-xs font-bold text-muted">لا توجد نتائج</p>

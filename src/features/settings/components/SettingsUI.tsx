@@ -72,7 +72,7 @@ export const SectionCard = ({
 }) => (
   <div
     className={cn(
-      'border-border/20 rounded-2xl border bg-card p-5 md:p-6',
+      'rounded-2xl border border-divider bg-card p-5 md:p-6',
       'shadow-sm transition-all duration-300 hover:shadow-md',
       className,
     )}
@@ -90,7 +90,7 @@ export const SectionTitle = ({
   label: string
   sub?: string
 }) => (
-  <div className="border-border/20 mb-5 flex items-center gap-3 border-b pb-4">
+  <div className="mb-5 flex items-center gap-3 border-b border-divider pb-4">
     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 shadow-sm">
       <Icon size={18} className="text-primary" />
     </div>
@@ -110,11 +110,11 @@ export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) =
   <input
     {...props}
     className={cn(
-      'border-border/30 w-full border bg-background',
+      'w-full border border-divider bg-background',
       'px-4 py-3 text-sm font-bold text-main',
       'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10',
       'rounded-xl transition-all duration-200',
-      'placeholder:text-muted/50',
+      'text-dim',
       props.className,
     )}
   />
@@ -124,11 +124,11 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
   <textarea
     {...props}
     className={cn(
-      'border-border/30 w-full border bg-background',
+      'w-full border border-divider bg-background',
       'resize-none px-4 py-3 text-sm font-bold text-main',
       'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10',
       'rounded-xl transition-all duration-200',
-      'placeholder:text-muted/50',
+      'text-dim',
       props.className,
     )}
   />
@@ -143,7 +143,7 @@ export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () =
       'relative h-6 w-11 shrink-0 rounded-full transition-all duration-300',
       checked
         ? 'bg-gradient-to-r from-primary to-primary-active shadow-sm shadow-primary/30'
-        : 'bg-border/60 hover:bg-border',
+        : 'bg-divider hover:bg-border',
     )}
   >
     <span
@@ -194,7 +194,7 @@ export const SecondaryBtn = ({
   <button
     onClick={onClick}
     className={cn(
-      'border-border/30 flex items-center justify-center gap-2 border bg-card',
+      'flex items-center justify-center gap-2 border border-divider bg-card',
       'text-muted hover:border-border hover:bg-surface hover:text-main',
       'rounded-xl px-5 py-2.5 text-xs font-bold',
       'transition-all duration-200 active:scale-[0.97]',
@@ -217,8 +217,8 @@ export const DangerBtn = ({
   <button
     onClick={onClick}
     className={cn(
-      'from-error/10 to-error/5 flex items-center justify-center gap-2 bg-gradient-to-br',
-      'border-error/30 border-2 hover:border-error hover:from-error hover:to-error-dark',
+      'flex items-center justify-center gap-2 bg-gradient-to-br from-error-soft to-transparent',
+      'border-2 border-error-soft hover:border-error hover:from-error hover:to-error-dark',
       'rounded-xl px-5 py-2.5 text-xs font-bold text-error hover:text-on-error',
       'shadow-sm transition-all duration-200 hover:shadow-md active:scale-[0.97]',
       className,
@@ -241,7 +241,7 @@ export const ToggleRow = ({
   checked: boolean
   onChange: () => void
 }) => (
-  <div className="border-border/20 hover:border-border/40 flex items-center justify-between rounded-xl border bg-background px-4 py-3 transition-colors duration-200">
+  <div className="flex items-center justify-between rounded-xl border border-divider bg-background px-4 py-3 transition-colors duration-200 hover:border-divider">
     <div className="flex items-center gap-3">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
         <Icon size={15} className="text-primary" />

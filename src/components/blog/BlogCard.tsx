@@ -125,7 +125,7 @@ export const FoundationCard = ({
                     (foundationBtnState.postId !== post.id ||
                       foundationBtnState.type !== 'download')
                   }
-                  className="hover:bg-warning-hover inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-warning py-2.5 text-[11px] font-extrabold text-on-warning transition-all duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-warning py-2.5 text-[11px] font-extrabold text-on-warning transition-all duration-200 hover:bg-warning-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Download size={13} />
                   <span>
@@ -208,7 +208,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
           />
           <div className="absolute start-3 top-3 z-10">
             <span
-              className={`rounded-xl px-2.5 py-1 text-[10px] font-extrabold ${isCoursesStyle ? 'bg-gradient-to-br from-error to-primary text-on-primary' : 'bg-card/90 border border-border text-primary backdrop-blur-sm'}`}
+              className={`rounded-xl px-2.5 py-1 text-[10px] font-extrabold ${isCoursesStyle ? 'bg-gradient-to-br from-error to-primary text-on-primary' : 'border border-border bg-card text-primary backdrop-blur-sm'}`}
             >
               {subjectNameMap[post.subject ?? ''] || post.category}
             </span>

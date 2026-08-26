@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { cn } from '../../../lib/utils'
 import { FormField, useFormField } from './FormField'
 
@@ -34,15 +34,15 @@ const InputInner = React.forwardRef<HTMLInputElement, InputProps>(
           id={id}
           type={type}
           className={cn(
-            'border-border/70 w-full rounded-xl border bg-card font-medium outline-none transition-all duration-normal',
+            'w-full rounded-xl border border-border bg-card font-medium outline-none transition-all duration-normal',
             'focus:border-primary/60 focus:shadow-sm focus:ring-2 focus:ring-primary/10',
             'hover:border-border-strong',
-            'placeholder:text-dim/50',
+            'placeholder:text-dim',
             'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-45',
             sizeStyles[sz],
             leftIcon ? 'ps-10' : '',
             rightIcon ? 'pe-12' : '',
-            error ? 'border-error/70 focus:ring-error/10 focus:border-error' : '',
+            error ? 'border-error focus:border-error focus:ring-error-soft' : '',
             className,
           )}
           aria-invalid={!!error}

@@ -8,10 +8,10 @@ interface SubjectCardsProps {
 
 const subjectColors = [
   { bg: 'bg-primary-soft dark:bg-primary/10', text: 'text-primary', bar: 'bg-primary' },
-  { bg: 'bg-success-soft dark:bg-success/10', text: 'text-success', bar: 'bg-success' },
-  { bg: 'bg-info-soft dark:bg-info/10', text: 'text-info', bar: 'bg-info' },
-  { bg: 'bg-warning-soft dark:bg-warning/10', text: 'text-warning', bar: 'bg-warning' },
-  { bg: 'bg-error-soft dark:bg-error/10', text: 'text-error', bar: 'bg-error' },
+  { bg: 'bg-success-soft dark:bg-success-soft', text: 'text-success', bar: 'bg-success' },
+  { bg: 'bg-info-soft dark:bg-info-soft', text: 'text-info', bar: 'bg-info' },
+  { bg: 'bg-warning-soft dark:bg-warning-soft', text: 'text-warning', bar: 'bg-warning' },
+  { bg: 'bg-error-soft dark:bg-error-soft', text: 'text-error', bar: 'bg-error' },
 ]
 
 export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
@@ -39,7 +39,7 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
           return (
             <div
               key={en.id || idx}
-              className="border-border/50 rounded-3xl border bg-surface p-4 shadow-sm transition-all duration-200 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card"
+              className="rounded-3xl border border-border bg-surface p-4 shadow-sm transition-all duration-200 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card"
             >
               <div className="mb-3 flex items-center gap-3">
                 <div

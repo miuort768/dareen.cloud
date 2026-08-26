@@ -509,7 +509,7 @@ export const Students = () => {
           transition={{ delay: 0.25 }}
         >
           {isDeletingAll && (
-            <div className="bg-error-soft/60 flex flex-col gap-4 rounded-2xl border border-error-soft p-4 md:p-5">
+            <div className="flex flex-col gap-4 rounded-2xl border border-error-soft bg-error-soft p-4 md:p-5">
               <div className="flex items-center gap-3">
                 <div className="rounded-xl bg-error-soft p-2 text-error">
                   <ShieldAlert size={18} />

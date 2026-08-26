@@ -7,7 +7,7 @@ interface BlogFormSeoSectionProps {
 }
 
 export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionProps) => (
-  <div className="bg-primary-soft/50 rounded-2xl border border-primary/10 p-4">
+  <div className="rounded-2xl border border-primary/10 bg-primary-soft p-4">
     <p className="mb-4 text-micro font-bold text-primary">
       إعدادات SEO — ظهور المقال في محركات البحث
     </p>

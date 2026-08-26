@@ -52,7 +52,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
         <SectionTitle icon={Wallet} label="سجل التحصيلات النقدية" sub="مدفوعات الطلاب المسجلة" />
       </div>
       {saveError && (
-        <div className="bg-error/10 border-b border-border px-4 py-2 text-micro font-bold text-error">
+        <div className="border-b border-border bg-error-soft px-4 py-2 text-micro font-bold text-error">
           {saveError}
         </div>
       )}
@@ -75,7 +75,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
             {(studentInvoices || [])
               .filter((inv) => inv.date >= startDate && inv.date <= endDate)
               .map((item) => (
-                <tr key={item.id} className="hover:bg-surface/50 transition-colors">
+                <tr key={item.id} className="transition-colors hover:bg-surface">
                   <td className="px-4 py-4">
                     <span className="mb-0.5 block text-xs font-bold text-main">
                       {item.studentName}

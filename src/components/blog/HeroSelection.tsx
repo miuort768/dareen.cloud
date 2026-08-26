@@ -31,10 +31,10 @@ export const MobileHero = ({
     return (
       <div className="pb-6">
         {/* Hero Banner */}
-        <div className="border-border/20 relative mb-4 overflow-hidden rounded-[1.75rem] border bg-primary-deep dark:bg-card">
+        <div className="relative mb-4 overflow-hidden rounded-[1.75rem] border border-divider bg-primary-deep dark:bg-card">
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
             <div className="absolute start-[-30%] top-[-50%] h-[120%] w-[80%] rounded-full bg-gradient-to-br from-white/[0.04] to-transparent blur-[60px]" />
-            <div className="from-accent/8 absolute bottom-[-30%] end-[-20%] h-[100%] w-[70%] rounded-full bg-gradient-to-tl to-transparent blur-[50px]" />
+            <div className="absolute bottom-[-30%] end-[-20%] h-[100%] w-[70%] rounded-full bg-gradient-to-tl from-transparent to-transparent blur-[50px]" />
           </div>
 
           <div className="relative p-5">
@@ -205,19 +205,19 @@ export const MobileHero = ({
         <h2 className="mb-1 text-xl font-black leading-tight text-on-primary">
           {view === 'curriculums' ? (
             <>
-              اختر <span className="text-on-primary/80">المنهج</span>
+              اختر <span className="text-white/80">المنهج</span>
             </>
           ) : view === 'languages' ? (
             <>
-              اختر <span className="text-on-primary/80">اللغة</span>
+              اختر <span className="text-white/80">اللغة</span>
             </>
           ) : (
             <>
-              اختر <span className="text-on-primary/80">المرحلة</span>
+              اختر <span className="text-white/80">المرحلة</span>
             </>
           )}
         </h2>
-        <p className="text-on-primary/70 text-xs font-medium leading-relaxed">
+        <p className="text-xs font-medium leading-relaxed text-white/70">
           {view === 'curriculums'
             ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج`
             : view === 'languages'
@@ -283,10 +283,10 @@ export const DesktopHero = ({
     return (
       <div className="relative z-10 mx-auto max-w-[1400px] px-6 py-8 lg:px-10 lg:py-10">
         {/* Hero Section */}
-        <section className="border-border/20 relative min-h-[420px] overflow-hidden rounded-2xl border bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card lg:rounded-none">
+        <section className="relative min-h-[420px] overflow-hidden rounded-2xl border border-divider bg-gradient-to-bl from-primary-deep via-primary to-primary-deep dark:from-card dark:via-card dark:to-card lg:rounded-none">
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
             <div className="absolute start-[-15%] top-[-40%] h-[120%] w-[70%] animate-[pulse_8s_ease-in-out_infinite] rounded-full bg-gradient-to-br from-white/[0.04] to-transparent blur-[100px]" />
-            <div className="from-accent/10 absolute bottom-[-30%] end-[-10%] h-[100%] w-[60%] animate-[pulse_6s_ease-in-out_infinite_1s] rounded-full bg-gradient-to-tl to-transparent blur-[80px]" />
+            <div className="absolute bottom-[-30%] end-[-10%] h-[100%] w-[60%] animate-[pulse_6s_ease-in-out_infinite_1s] rounded-full bg-gradient-to-tl from-transparent to-transparent blur-[80px]" />
             <div
               className="absolute inset-0 opacity-[0.04]"
               style={{
@@ -314,7 +314,7 @@ export const DesktopHero = ({
                 مركز ملفات
                 <span className="relative mx-3 inline-block">
                   <span className="relative z-10 text-accent">{academyName}</span>
-                  <span className="bg-accent/20 absolute inset-x-0 -bottom-1 -z-0 h-3 rounded-full blur-[2px]" />
+                  <span className="absolute inset-x-0 -bottom-1 -z-0 h-3 rounded-full bg-accent-soft blur-[2px]" />
                 </span>
               </h1>
 
@@ -363,7 +363,7 @@ export const DesktopHero = ({
             {/* Right image area */}
             <div className="relative min-h-[250px] overflow-hidden lg:min-h-full">
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-transparent via-white/[0.03] to-white/[0.06]" />
-              <div className="bg-accent/10 pointer-events-none absolute end-[10%] top-[15%] h-56 w-56 animate-[pulse_7s_ease-in-out_infinite] rounded-full blur-[80px]" />
+              <div className="pointer-events-none absolute end-[10%] top-[15%] h-56 w-56 animate-[pulse_7s_ease-in-out_infinite] rounded-full bg-accent-soft blur-[80px]" />
 
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                 <div className="h-[300px] w-[300px] animate-[spin_30s_linear_infinite] rounded-full border border-dashed border-white/[0.06] lg:h-[350px] lg:w-[350px]" />
@@ -385,7 +385,7 @@ export const DesktopHero = ({
               {/* Floating cards */}
               <div className="pointer-events-none absolute start-[5%] top-[10%] animate-[float_6s_ease-in-out_infinite] rounded-2xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] backdrop-blur-md">
                 <div className="flex items-center gap-2.5">
-                  <span className="bg-success/20 flex h-8 w-8 items-center justify-center rounded-xl">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-success-soft">
                     <CheckCircle size={14} className="text-success" />
                   </span>
                   <div>
@@ -396,7 +396,7 @@ export const DesktopHero = ({
               </div>
               <div className="pointer-events-none absolute bottom-[15%] end-[3%] animate-[float_7s_ease-in-out_infinite_1s] rounded-2xl border border-white/10 bg-white/10 px-4 py-3 shadow-[0_8px_32px_rgba(0,0,0,0.15)] backdrop-blur-md">
                 <div className="flex items-center gap-2.5">
-                  <span className="bg-info/20 flex h-8 w-8 items-center justify-center rounded-xl">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-info-soft">
                     <Languages size={14} className="text-info" />
                   </span>
                   <div>
@@ -573,7 +573,7 @@ export const DesktopHero = ({
       <div className="hidden w-full justify-center lg:flex lg:w-[45%]">
         <div className="relative flex aspect-[3/4] w-full max-w-[420px] items-center justify-center">
           <div className="animate-spin-slow pointer-events-none absolute inset-[12%] rounded-full border-[1.5px] border-dashed border-primary/30"></div>
-          <div className="border-accent/20 animate-reverse-spin-slow pointer-events-none absolute inset-[17%] rounded-full border-[1.5px] border-dashed"></div>
+          <div className="animate-reverse-spin-slow pointer-events-none absolute inset-[17%] rounded-full border-[1.5px] border-dashed border-accent-soft"></div>
           <div className="pointer-events-none absolute inset-0 animate-pulse rounded-full bg-gradient-to-br from-primary/15 to-primary/10 blur-3xl"></div>
           <picture className="flex h-full w-full items-center justify-center">
             <source srcSet="/book3.webp" type="image/webp" />

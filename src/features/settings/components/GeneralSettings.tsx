@@ -164,7 +164,7 @@ export const GeneralSettings = ({
                 <select
                   value={localCurrency}
                   onChange={(e) => setLocalCurrency(e.target.value)}
-                  className="border-border/30 w-full rounded-xl border bg-background px-3 py-3 text-sm font-bold text-main transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                  className="w-full rounded-xl border border-divider bg-background px-3 py-3 text-sm font-bold text-main transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
                 >
                   {ALLOWED_CURRENCIES.map((c) => (
                     <option key={c.code} value={c.code}>
@@ -184,7 +184,7 @@ export const GeneralSettings = ({
               </div>
             </div>
 
-            <div className="border-border/20 rounded-xl border bg-background p-4">
+            <div className="rounded-xl border border-divider bg-background p-4">
               <ToggleRow
                 icon={Lock}
                 label="قفل التاريخ القديم"

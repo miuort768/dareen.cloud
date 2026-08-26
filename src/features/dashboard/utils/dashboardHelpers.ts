@@ -119,12 +119,16 @@ export const computeLowBalanceStudents = (
           teacherName: typeof en.teacher === 'string' ? en.teacher : (en.teacher?.name ?? ''),
           parentPhone: (isTeacher ? '••••••••' : s.parentPhone) || '',
         })
-        anticipatedByCurrency[cur] = (anticipatedByCurrency[cur] || 0) + price * 8
+        // المتوقع الحقيقي = المتبقي فعليًا × سعر الحصة (لا رقم سحري)
+        anticipatedByCurrency[cur] =
+          (anticipatedByCurrency[cur] || 0) + price * Math.max(remaining, 0)
       }
     })
   })
 
-  const anticipatedCollection = Object.values(anticipatedByCurrency).reduce((a, b) => a + b, 0)
+  // لا يجمع عملات مختلفة معًا — يأخذ أكبر مجموعة عملة فقط
+  const topCurrency = Object.entries(anticipatedByCurrency).sort((a, b) => b[1] - a[1])[0]
+  const anticipatedCollection = topCurrency ? Math.round(topCurrency[1]) : 0
 
   return { lowBalance, anticipatedCollection }
 }

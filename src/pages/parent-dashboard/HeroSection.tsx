@@ -40,7 +40,7 @@ export const HeroSection = ({
   const offset = circumference - (attendanceRate / 100) * circumference
 
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-border/50 bg-gradient-to-br from-primary-light via-primary-soft to-card p-6 shadow-sm transition-all duration-300 dark:border-primary/30 dark:from-card dark:via-surface dark:to-card md:p-8">
+    <div className="relative overflow-hidden rounded-[2rem] border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card p-6 shadow-sm transition-all duration-300 dark:border-primary/30 dark:from-card dark:via-surface dark:to-card md:p-8">
       <div className="pointer-events-none absolute -end-24 -top-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl dark:bg-primary/10" />
       <div className="pointer-events-none absolute -bottom-24 -start-24 h-72 w-72 rounded-full bg-primary/10 blur-3xl dark:bg-primary/5" />
 
@@ -58,8 +58,8 @@ export const HeroSection = ({
           </h1>
 
           <p className="text-sm font-bold text-muted">
-            {children.length} {children.length === 1 ? 'ابن مسجّل' : 'أبناء مسجلين'} • {totalEnrollments}{' '}
-            {totalEnrollments === 1 ? 'مادة دراسية' : 'مواد دراسية'}
+            {children.length} {children.length === 1 ? 'ابن مسجّل' : 'أبناء مسجلين'} •{' '}
+            {totalEnrollments} {totalEnrollments === 1 ? 'مادة دراسية' : 'مواد دراسية'}
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export const HeroSection = ({
                 r={radius}
                 fill="none"
                 stroke="currentColor"
-                className="text-border/50"
+                className="text-border"
                 strokeWidth="8"
               />
               <circle
@@ -89,7 +89,7 @@ export const HeroSection = ({
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-2xl font-black text-main tabular-nums">{attendanceRate}%</span>
+              <span className="text-2xl font-black tabular-nums text-main">{attendanceRate}%</span>
               <span className="text-[10px] font-bold text-muted">متوسط الحضور</span>
             </div>
           </div>
@@ -101,17 +101,17 @@ export const HeroSection = ({
               </div>
               <div>
                 <p className="text-[10px] font-bold text-muted">التقدم الدراسي</p>
-                <p className="text-base font-black text-main tabular-nums">{academicProgress}%</p>
+                <p className="text-base font-black tabular-nums text-main">{academicProgress}%</p>
               </div>
             </div>
 
             <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface px-4 py-2.5 shadow-sm">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-info/10 text-info">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-info-soft text-info">
                 <Users size={16} />
               </div>
               <div>
                 <p className="text-[10px] font-bold text-muted">عدد الأبناء</p>
-                <p className="text-base font-black text-main tabular-nums">{children.length}</p>
+                <p className="text-base font-black tabular-nums text-main">{children.length}</p>
               </div>
             </div>
           </div>

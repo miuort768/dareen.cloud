@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   Radio,
@@ -167,7 +167,7 @@ export const LiveSessions = () => {
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="dark:bg-success/10 flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft dark:bg-success-soft">
               <Radio size={16} className="text-success" />
             </div>
             {sessions.length > 0 && (
@@ -181,7 +181,7 @@ export const LiveSessions = () => {
             <div className="flex items-center gap-2">
               <h3 className="text-[13px] font-bold text-main">الحصص المباشرة</h3>
               {sessions.length > 0 && (
-                <span className="dark:bg-success/10 inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-bold text-success">
+                <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-bold text-success dark:bg-success-soft">
                   <span className="h-1.5 w-1.5 rounded-full bg-success" />
                   مباشر
                 </span>
@@ -208,14 +208,14 @@ export const LiveSessions = () => {
 
       {/* Error */}
       {displayError && (
-        <div className="border-error/20 dark:border-error/20 dark:bg-error/10 mb-3 flex items-center justify-between rounded-xl border bg-error-soft p-3">
+        <div className="mb-3 flex items-center justify-between rounded-xl border border-error-soft bg-error-soft p-3 dark:border-error-soft dark:bg-error-soft">
           <div className="flex items-center gap-2">
             <AlertCircle size={14} className="shrink-0 text-error" />
             <span className="text-xs font-medium text-error">{displayError}</span>
           </div>
           <button
             onClick={() => refetch()}
-            className="hover:bg-error/10 dark:hover:bg-error/15 flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-error transition-colors"
+            className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-error transition-colors hover:bg-error-soft dark:hover:bg-error-soft"
           >
             <RefreshCcw size={11} /> إعادة
           </button>
@@ -228,12 +228,12 @@ export const LiveSessions = () => {
           <Loader2 className="animate-spin text-primary" size={20} />
         </div>
       ) : sessions.length === 0 ? (
-        <div className="bg-surface/50 rounded-2xl border border-dashed border-border py-10 text-center">
+        <div className="rounded-2xl border border-dashed border-border bg-surface py-10 text-center">
           <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/10">
             <Video size={24} className="text-primary/40 dark:text-primary/30" />
           </div>
           <p className="text-[13px] font-bold text-muted">لا توجد حصص مباشرة حالياً</p>
-          <p className="text-muted/60 mt-1 text-[11px] dark:text-dim">ابدأ حصتك بضغطة واحدة</p>
+          <p className="mt-1 text-[11px] text-muted dark:text-dim">ابدأ حصتك بضغطة واحدة</p>
           {isTeacher && (
             <Button
               onClick={() => setShowCreateDialog(true)}
@@ -252,12 +252,12 @@ export const LiveSessions = () => {
               className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-md hover:shadow-primary/5 dark:border-primary/15 dark:hover:border-primary/25"
             >
               {/* Live indicator bar */}
-              <div className="via-success/60 h-0.5 bg-gradient-to-l from-success to-transparent" />
+              <div className="h-0.5 bg-gradient-to-l from-success via-success to-transparent" />
 
               <div className="flex items-center gap-3 p-4">
                 {/* Live pulse icon */}
                 <div className="relative shrink-0">
-                  <div className="dark:bg-success/10 flex h-11 w-11 items-center justify-center rounded-xl bg-success-soft">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-success-soft dark:bg-success-soft">
                     <Radio size={15} className="text-success" />
                   </div>
                   <span className="absolute -start-0.5 -top-0.5 h-3 w-3">
@@ -340,7 +340,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => endSession(session.id)}
-                      className="text-error/60 hover:border-error/30 dark:border-error/15 dark:hover:bg-error/10 flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border transition-all hover:bg-error-soft hover:text-error"
+                      className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border text-error transition-all hover:border-error-soft hover:bg-error-soft hover:text-error dark:border-error-soft dark:hover:bg-error-soft"
                       title="إنهاء الحصة"
                       aria-label="إنهاء الحصة"
                     >
@@ -424,7 +424,7 @@ export const LiveSessions = () => {
                     href="https://meet.google.com/new"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="border-success/20 hover:bg-success/10 dark:bg-success/10 dark:hover:bg-success/15 flex items-center gap-1 whitespace-nowrap rounded-xl border bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors"
+                    className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors hover:bg-success-soft dark:bg-success-soft dark:hover:bg-success-soft"
                     title="إنشاء رابط Google Meet جديد"
                   >
                     <LinkIcon size={14} /> إنشاء

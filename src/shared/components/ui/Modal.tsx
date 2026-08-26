@@ -85,7 +85,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="bg-background/40 dark:bg-background/60 absolute inset-0 backdrop-blur-sm"
+            className="absolute inset-0 bg-background backdrop-blur-sm dark:bg-background"
           />
 
           <motion.div

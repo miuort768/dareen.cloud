@@ -125,7 +125,7 @@ export const ScheduleHeader = ({
       {/* Controls toolbar — redesigned for better visual consistency */}
       <div className="rounded-xl border border-border bg-card shadow-sm">
         {/* Row 1: Search + Week Navigation */}
-        <div className="border-border/50 flex items-center gap-3 border-b px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-border px-4 py-3">
           {/* Search */}
           <div className="relative flex-1">
             <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
@@ -194,7 +194,9 @@ export const ScheduleHeader = ({
                 filterDay !== 'all' ? 'border-primary text-primary' : 'border-border'
               }`}
             >
-              <option className="bg-card text-main" value="all">كل الأيام</option>
+              <option className="bg-card text-main" value="all">
+                كل الأيام
+              </option>
               {DAYS_OF_WEEK.map((day) => (
                 <option key={day} value={day}>
                   {day}
@@ -217,7 +219,9 @@ export const ScheduleHeader = ({
                   filterTeacher !== 'all' ? 'border-primary text-primary' : 'border-border'
                 }`}
               >
-                <option className="bg-card text-main" value="all">كل المعلمات</option>
+                <option className="bg-card text-main" value="all">
+                  كل المعلمات
+                </option>
                 {uniqueTeachers.filter(Boolean).map((t) => (
                   <option key={t} value={t} className="bg-card text-main">
                     {t}
@@ -241,7 +245,9 @@ export const ScheduleHeader = ({
                   filterSubject !== 'all' ? 'border-primary text-primary' : 'border-border'
                 }`}
               >
-                <option className="bg-card text-main" value="all">كل المواد</option>
+                <option className="bg-card text-main" value="all">
+                  كل المواد
+                </option>
                 {uniqueSubjects.map((s) => (
                   <option key={s} value={s} className="bg-card text-main">
                     {s}
@@ -260,7 +266,7 @@ export const ScheduleHeader = ({
                 onSubjectChange('all')
                 onSearchChange('')
               }}
-              className="border-error-soft flex h-8 items-center gap-1 rounded-lg border bg-error-soft px-3 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-error"
+              className="flex h-8 items-center gap-1 rounded-lg border border-error-soft bg-error-soft px-3 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-error"
             >
               <span>مسح ({activeFiltersCount})</span>
             </button>

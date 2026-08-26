@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Clock, ClipboardCheck, Mic, Sparkles, Star } from 'lucide-react'
 import { Image } from '../../../shared/components/ui'
@@ -43,13 +43,13 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
     <>
       {/* Desktop version */}
       <section className="relative hidden overflow-hidden bg-surface pb-6 pt-4 transition-colors duration-500 dark:bg-background md:block md:pt-6">
-        <div className="bg-accent/5 pointer-events-none absolute end-0 top-0 h-64 w-64 rounded-full blur-[100px] dark:bg-primary/10" />
+        <div className="pointer-events-none absolute end-0 top-0 h-64 w-64 rounded-full bg-accent-soft blur-[100px] dark:bg-primary/10" />
         <div className="pointer-events-none absolute bottom-0 start-0 h-48 w-48 rounded-full bg-primary/5 blur-[80px] dark:bg-primary/10" />
         <div className="container relative z-10 mx-auto px-4 md:px-8">
           <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-success bg-success-soft shadow-sm dark:border-primary/40 dark:bg-card">
             <div className="flex flex-col items-center justify-center gap-4 p-6 md:p-10 lg:flex-row lg:gap-16">
               <div className="w-full text-center lg:w-1/2">
-                <div className="border-success/50 mx-auto mb-4 inline-flex items-center gap-2 rounded-full border bg-white/80 px-4 py-1.5 dark:border-primary/40 dark:bg-primary/15">
+                <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-success bg-white/80 px-4 py-1.5 dark:border-primary/40 dark:bg-primary/15">
                   <span className="h-2 w-2 animate-pulse rounded-full bg-success dark:bg-primary"></span>
                   <span className="text-xs font-bold text-success-dark dark:text-primary">
                     برامج تحفيظ متميزة
@@ -212,7 +212,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
       <section className="relative block overflow-hidden bg-surface pb-4 pt-2 transition-colors duration-500 dark:bg-background md:hidden">
         <LeafDecoration />
 
-        <div className="bg-accent/10 pointer-events-none absolute -end-20 top-40 h-64 w-64 rounded-full blur-[100px] dark:bg-primary/10"></div>
+        <div className="pointer-events-none absolute -end-20 top-40 h-64 w-64 rounded-full bg-accent-soft blur-[100px] dark:bg-primary/10"></div>
         <div className="pointer-events-none absolute -start-20 bottom-40 h-80 w-80 rounded-full bg-primary/10 blur-[120px] dark:bg-primary/10"></div>
 
         <div className="relative z-10 px-5">

@@ -218,7 +218,7 @@ export const ParentDashboard = () => {
   return (
     <>
       {partialError && (
-        <div className="border-warning/20 border-b bg-warning-soft px-4 py-2 text-center">
+        <div className="border-b border-warning-soft bg-warning-soft px-4 py-2 text-center">
           <p className="text-xs font-medium text-warning">{partialError}</p>
         </div>
       )}

@@ -18,7 +18,7 @@ export const HeroSection = ({
 }: HeroSectionProps) => {
   return (
     <section className="relative overflow-hidden bg-surface pb-4 pt-20 transition-colors duration-500 dark:bg-background md:pb-4 md:pt-28">
-      <div className="bg-accent/5 pointer-events-none absolute end-0 top-0 h-64 w-64 rounded-full blur-[100px] dark:bg-primary/10" />
+      <div className="pointer-events-none absolute end-0 top-0 h-64 w-64 rounded-full bg-accent-soft blur-[100px] dark:bg-primary/10" />
       <div className="pointer-events-none absolute bottom-0 start-0 h-48 w-48 rounded-full bg-primary/5 blur-[80px] dark:bg-primary/10" />
       <div className="container mx-auto px-4">
         <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-primary-soft via-primary-soft to-card shadow-sm dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
@@ -94,9 +94,9 @@ export const HeroSection = ({
             <div className="relative z-10 flex justify-center lg:mb-0 lg:w-[40%]">
               <div className="relative flex aspect-auto w-full max-w-[220px] items-center justify-center lg:aspect-[4/5] lg:max-w-[375px]">
                 <div className="animate-spin-slow pointer-events-none absolute inset-[2%] rounded-full border-[1px] border-dashed border-primary/40 dark:border-primary/40"></div>
-                <div className="border-accent/20 dark:border-warning/30 animate-reverse-spin-slow pointer-events-none absolute inset-[4%] rounded-full border-[1px] border-dashed"></div>
+                <div className="animate-reverse-spin-slow pointer-events-none absolute inset-[4%] rounded-full border-[1px] border-dashed border-accent-soft dark:border-warning-soft"></div>
 
-                <div className="to-accent/20 dark:to-warning/10 absolute inset-0 animate-pulse rounded-[3rem] bg-gradient-to-br from-primary/20 blur-2xl dark:from-primary/20"></div>
+                <div className="absolute inset-0 animate-pulse rounded-[3rem] bg-gradient-to-br from-primary/20 to-accent-soft blur-2xl dark:from-primary/20 dark:to-transparent"></div>
                 <picture>
                   <source srcSet="/hero-child.webp" type="image/webp" />
                   <source srcSet="/hero-child.avif" type="image/avif" />

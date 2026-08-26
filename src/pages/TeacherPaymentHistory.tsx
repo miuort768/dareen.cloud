@@ -35,25 +35,25 @@ const statusConfig = (status: string) => {
       return {
         label: 'مدفوعة',
         icon: CheckCircle,
-        cls: 'bg-success/10 text-success border-success/20',
+        cls: 'bg-success-soft text-success border-success-soft',
       }
     case INVOICE_STATUS.PROCESSING:
       return {
         label: 'قيد المعالجة',
         icon: Clock,
-        cls: 'bg-warning/10 text-warning border-warning/20',
+        cls: 'bg-warning-soft text-warning border-warning-soft',
       }
     case INVOICE_STATUS.REVIEWED:
       return {
         label: 'تمت المراجعة',
         icon: AlertTriangle,
-        cls: 'bg-info/10 text-info border-info/20',
+        cls: 'bg-info-soft text-info border-info-soft',
       }
     default:
       return {
         label: 'غير مدفوعة',
         icon: AlertTriangle,
-        cls: 'bg-error/10 text-error border-error/20',
+        cls: 'bg-error-soft text-error border-error-soft',
       }
   }
 }
@@ -172,24 +172,24 @@ export const TeacherPaymentHistory = () => {
         label: 'مدفوعة',
         value: paidCount,
         icon: CheckCircle,
-        gradient: 'from-success/20 to-success/5',
-        iconBg: 'bg-success/10 text-success',
+        gradient: 'from-success-soft to-transparent',
+        iconBg: 'bg-success-soft text-success',
         accent: 'bg-success',
       },
       {
         label: 'قيد المعالجة',
         value: pendingCount,
         icon: Clock,
-        gradient: 'from-warning/20 to-warning/5',
-        iconBg: 'bg-warning/10 text-warning',
+        gradient: 'from-warning-soft to-transparent',
+        iconBg: 'bg-warning-soft text-warning',
         accent: 'bg-warning',
       },
       {
         label: 'غير مدفوعة',
         value: overdueCount,
         icon: AlertTriangle,
-        gradient: 'from-error/20 to-error/5',
-        iconBg: 'bg-error/10 text-error',
+        gradient: 'from-error-soft to-transparent',
+        iconBg: 'bg-error-soft text-error',
         accent: 'bg-error',
       },
     ],
@@ -306,7 +306,7 @@ export const TeacherPaymentHistory = () => {
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
+                    'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
                     kpi.gradient,
                   )}
                 >
@@ -388,10 +388,10 @@ export const TeacherPaymentHistory = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
         >
-          <div className="border-border/30 hidden overflow-hidden rounded-2xl border bg-card shadow-sm transition-shadow hover:shadow-md md:block">
+          <div className="hidden overflow-hidden rounded-2xl border border-divider bg-card shadow-sm transition-shadow hover:shadow-md md:block">
             <table className="w-full border-collapse text-start">
               <thead>
-                <tr className="bg-surface/50 border-border/30 border-b">
+                <tr className="border-b border-divider bg-surface">
                   <th className="px-5 py-3.5 text-start text-[10px] font-bold text-muted">
                     التخصص
                   </th>
@@ -409,13 +409,13 @@ export const TeacherPaymentHistory = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-border/20 divide-y">
+              <tbody className="divide-y divide-divider">
                 {filteredInvoices.length > 0 ? (
                   filteredInvoices.map((inv) => {
                     const status = statusConfig(inv.status)
                     const StatusIcon = status.icon
                     return (
-                      <tr key={inv.id} className="hover:bg-surface/30 transition-colors">
+                      <tr key={inv.id} className="transition-colors hover:bg-surface">
                         <td className="px-5 py-3.5">
                           <span className="text-xs font-bold text-main">
                             {inv.specialization || '—'}
@@ -473,7 +473,7 @@ export const TeacherPaymentHistory = () => {
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.04 }}
-                    className="border-border/30 rounded-2xl border bg-card p-4 shadow-sm transition-all hover:shadow-md"
+                    className="rounded-2xl border border-divider bg-card p-4 shadow-sm transition-all hover:shadow-md"
                   >
                     <div className="mb-3 flex items-center justify-between">
                       <div className="flex items-center gap-3">
@@ -498,7 +498,7 @@ export const TeacherPaymentHistory = () => {
                         {status.label}
                       </span>
                     </div>
-                    <div className="border-border/20 flex items-center justify-between border-t pt-3">
+                    <div className="flex items-center justify-between border-t border-divider pt-3">
                       <div className="flex items-center gap-2">
                         <DollarSign size={12} className="text-muted" />
                         <span className="font-mono text-sm font-bold tabular-nums text-main">
@@ -512,7 +512,7 @@ export const TeacherPaymentHistory = () => {
                 )
               })
             ) : (
-              <div className="border-border/30 rounded-2xl border border-dashed bg-card py-16 text-center">
+              <div className="rounded-2xl border border-dashed border-divider bg-card py-16 text-center">
                 <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft text-primary">
                   <FileText size={20} />
                 </div>

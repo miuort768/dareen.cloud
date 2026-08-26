@@ -43,8 +43,8 @@ export const SmartNotifications = ({
   if (expired.length > 0) {
     alerts.push({
       icon: AlertCircle,
-      border: 'border-error dark:border-error/40',
-      bg: 'bg-error-soft dark:bg-error/10',
+      border: 'border-error dark:border-error',
+      bg: 'bg-error-soft dark:bg-error-soft',
       text: 'text-error dark:text-error',
       iconColor: 'text-error dark:text-error',
       accent: 'bg-error dark:bg-error',
@@ -60,8 +60,8 @@ export const SmartNotifications = ({
   if (low.length > 0) {
     alerts.push({
       icon: Clock,
-      border: 'border-warning dark:border-warning/40',
-      bg: 'bg-warning-soft dark:bg-warning/10',
+      border: 'border-warning dark:border-warning',
+      bg: 'bg-warning-soft dark:bg-warning-soft',
       text: 'text-warning dark:text-warning',
       iconColor: 'text-warning dark:text-warning',
       accent: 'bg-warning dark:bg-warning',
@@ -77,8 +77,8 @@ export const SmartNotifications = ({
   focusStudents.slice(0, 3).forEach((f) => {
     alerts.push({
       icon: AlertTriangle,
-      border: 'border-warning dark:border-warning/40',
-      bg: 'bg-warning-soft dark:bg-warning/10',
+      border: 'border-warning dark:border-warning',
+      bg: 'bg-warning-soft dark:bg-warning-soft',
       text: 'text-warning dark:text-warning',
       iconColor: 'text-warning dark:text-warning',
       accent: 'bg-warning dark:bg-warning',
@@ -90,8 +90,8 @@ export const SmartNotifications = ({
   if (alerts.length === 0) {
     alerts.push({
       icon: Info,
-      border: 'border-success dark:border-success/40',
-      bg: 'bg-success-soft dark:bg-success/10',
+      border: 'border-success dark:border-success',
+      bg: 'bg-success-soft dark:bg-success-soft',
       text: 'text-success dark:text-success',
       iconColor: 'text-success dark:text-success',
       accent: 'bg-success dark:bg-success',
@@ -115,8 +115,8 @@ export const SmartNotifications = ({
               className={cn(
                 'rounded px-1.5 py-0.5 text-[10px] font-bold',
                 expired.length > 0
-                  ? 'dark:bg-error/15 bg-error-soft text-error dark:text-error'
-                  : 'dark:bg-warning/15 bg-warning-soft text-warning dark:text-warning',
+                  ? 'bg-error-soft text-error dark:bg-error-soft dark:text-error'
+                  : 'bg-warning-soft text-warning dark:bg-warning-soft dark:text-warning',
               )}
             >
               {urgencyLabel}

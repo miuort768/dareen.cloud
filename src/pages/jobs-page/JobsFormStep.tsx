@@ -143,10 +143,10 @@ export const JobsFormStep = ({
               <label
                 key={s}
                 onClick={() => onSubjectChange(s)}
-                className={`flex min-h-[60px] cursor-pointer items-center gap-3 rounded-card border p-4 transition-all md:min-h-[68px] md:p-5 ${form.subject === s ? 'border-2 border-primary bg-primary-soft' : 'border-border/50 bg-card hover:border-border'}`}
+                className={`flex min-h-[60px] cursor-pointer items-center gap-3 rounded-card border p-4 transition-all md:min-h-[68px] md:p-5 ${form.subject === s ? 'border-2 border-primary bg-primary-soft' : 'border-border bg-card hover:border-border'}`}
               >
                 <div
-                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${form.subject === s ? 'border-primary' : 'border-border/50'}`}
+                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${form.subject === s ? 'border-primary' : 'border-border'}`}
                 >
                   {form.subject === s && <div className="h-2.5 w-2.5 rounded-full bg-primary" />}
                 </div>
@@ -197,7 +197,7 @@ export const JobsFormStep = ({
               value={form.curriculums}
               onChange={onChange}
               onKeyDown={onKeyDown}
-              className="border-border/60 min-h-[90px] w-full touch-manipulation resize-none rounded-xl border bg-card p-4 text-sm text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus md:min-h-[120px] md:text-base"
+              className="min-h-[90px] w-full touch-manipulation resize-none rounded-xl border border-border bg-card p-4 text-sm text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus md:min-h-[120px] md:text-base"
               placeholder="منهج كويتي - سعودي - قطري - عماني ..."
             />
           </div>

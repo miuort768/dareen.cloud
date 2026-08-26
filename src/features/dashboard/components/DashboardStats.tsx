@@ -1,13 +1,13 @@
-﻿import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
   Users,
   BookOpen,
   CalendarCheck,
   CheckCircle2,
   GraduationCap,
+  DollarSign,
   TrendingUp,
   TrendingDown,
-  DollarSign,
   type LucideIcon,
 } from 'lucide-react'
 import { CURRENCY_SYMBOL } from '../../../config/constants'
@@ -33,22 +33,27 @@ const colorMap: Record<string, { bg: string; text: string; light: string; ring: 
     bg: 'bg-primary/10 dark:bg-primary/10',
     text: 'text-primary dark:text-primary',
     light: 'bg-primary/[0.04] dark:bg-primary/[0.04]',
-    ring: 'ring-primary/20 dark:ring-accent/20',
+    ring: 'ring-primary/20 dark:ring-accent-soft',
   },
   success: {
-    bg: 'bg-success/10',
+    bg: 'bg-success-soft',
     text: 'text-success',
     light: 'bg-success/[0.04]',
-    ring: 'ring-success/20',
+    ring: 'ring-success-soft',
   },
-  info: { bg: 'bg-info/10', text: 'text-info', light: 'bg-info/[0.04]', ring: 'ring-info/20' },
+  info: { bg: 'bg-info-soft', text: 'text-info', light: 'bg-info/[0.04]', ring: 'ring-info-soft' },
   warning: {
-    bg: 'bg-warning/10',
+    bg: 'bg-warning-soft',
     text: 'text-warning',
     light: 'bg-warning/[0.04]',
-    ring: 'ring-warning/20',
+    ring: 'ring-warning-soft',
   },
-  error: { bg: 'bg-error/10', text: 'text-error', light: 'bg-error/[0.04]', ring: 'ring-error/20' },
+  error: {
+    bg: 'bg-error-soft',
+    text: 'text-error',
+    light: 'bg-error/[0.04]',
+    ring: 'ring-error-soft',
+  },
 }
 
 const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
@@ -70,7 +75,7 @@ const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
         </div>
         {item.trend && (
           <div
-            className={`flex items-center gap-0.5 rounded-lg px-1.5 py-0.5 text-[10px] font-bold ${item.trend.isUp ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}
+            className={`flex items-center gap-0.5 rounded-lg px-1.5 py-0.5 text-[10px] font-bold ${item.trend.isUp ? 'bg-success-soft text-success' : 'bg-error-soft text-error'}`}
           >
             {item.trend.isUp ? <TrendingUp size={9} /> : <TrendingDown size={9} />}
             <span>{item.trend.value}%</span>
@@ -88,40 +93,7 @@ const StatCard = ({ item, index }: { item: StatCardData; index: number }) => {
 }
 
 export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
-  const studentTrend =
-    stats.studentsCount > 0
-      ? {
-          value: Math.round((stats.studentsCount / Math.max(stats.studentsCount - 3, 1) - 1) * 100),
-          isUp: true,
-        }
-      : undefined
-  const enrollmentTrend =
-    stats.totalEnrollments > 0
-      ? {
-          value: Math.round(
-            (stats.totalEnrollments / Math.max(stats.totalEnrollments - 5, 1) - 1) * 100,
-          ),
-          isUp: true,
-        }
-      : undefined
-  const sessionsTrend =
-    stats.weekTotalSessions && stats.weekTotalSessions > 0
-      ? {
-          value: Math.round(
-            (stats.todaySessions / Math.max(stats.weekTotalSessions / 7, 1)) * 100 - 100,
-          ),
-          isUp: stats.todaySessions > (stats.weekTotalSessions || 0) / 7,
-        }
-      : undefined
-  const completedTrend =
-    stats.monthCompletedSessions && stats.monthCompletedSessions > 0
-      ? {
-          value: Math.round(
-            (stats.completedSessions / Math.max(stats.monthCompletedSessions / 30, 1)) * 100 - 100,
-          ),
-          isUp: true,
-        }
-      : undefined
+  // لا اتجاهات مُختلقة — النظام لا يحتفظ بسابعة سابقة للمقارنة، فلا شارات Trend
 
   const cards: StatCardData[] = [
     {
@@ -129,28 +101,24 @@ export const DashboardStats = ({ stats, isTeacher }: DashboardStatsProps) => {
       value: stats.studentsCount,
       icon: Users,
       color: 'primary',
-      trend: studentTrend,
     },
     {
       title: 'الاشتراكات النشطة',
       value: stats.totalEnrollments,
       icon: BookOpen,
       color: 'success',
-      trend: enrollmentTrend,
     },
     {
       title: 'حصص اليوم',
       value: stats.todaySessions,
       icon: CalendarCheck,
       color: 'info',
-      trend: sessionsTrend,
     },
     {
       title: 'الحصص المنفذة',
       value: stats.completedSessions,
       icon: CheckCircle2,
       color: 'success',
-      trend: completedTrend,
     },
   ]
 

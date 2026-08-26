@@ -10,9 +10,9 @@ export const HomeworkNotes = ({ children: kids }: HomeworkNotesProps) => {
   if (!hasNotes) return null
 
   return (
-    <div className="border-border/50 rounded-3xl border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card">
+    <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card">
       <div className="mb-4 flex items-center gap-2">
-        <div className="dark:bg-warning/10 flex h-7 w-7 items-center justify-center rounded-lg bg-warning-soft">
+        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-warning-soft dark:bg-warning-soft">
           <FileText size={13} className="text-warning dark:text-warning" />
         </div>
         <h3 className="text-sm font-bold text-main dark:text-main">الواجبات والملاحظات</h3>

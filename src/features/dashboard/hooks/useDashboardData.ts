@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useQueries, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQueries, useQueryClient } from '@tanstack/react-query'
 import { api } from '../../../lib/api'
 import type { User } from '../../../types/auth'
 import type {
@@ -118,21 +118,7 @@ export const useDashboardData = (currentUser: User | null) => {
   ] = results
 
   const isLoading = results.some((r) => r.isLoading)
-
-  const updateSessionStatusMutation = useMutation({
-    mutationFn: async ({
-      id,
-      status,
-    }: {
-      id: string
-      status: 'scheduled' | 'completed' | 'cancelled'
-    }) => {
-      return api.patch(`/sessions/${id}`, { status })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['sessions'] })
-    },
-  })
+  const hasErrors = results.some((r) => r.isError)
 
   // Process Data
   const processedData = useMemo(() => {
@@ -182,7 +168,7 @@ export const useDashboardData = (currentUser: User | null) => {
 
     // 2. Dates
     const now = new Date()
-    const today = now.toISOString().split('T')[0]
+    const today = new Date().toLocaleDateString('en-CA') // تاريخ محلي صحيح قرب منتصف الليل
     const dayNames = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت']
     const currentDayName = dayNames[now.getDay()]
 
@@ -388,12 +374,6 @@ export const useDashboardData = (currentUser: User | null) => {
         filteredSessions.length > 0
           ? Math.round((completedSessions.length / filteredSessions.length) * 100)
           : 0,
-      pendingInvoices: studentInvoices.filter((inv: StudentInvoice) =>
-        ['pending', 'overdue', 'معلقة', 'غير مدفوعة', 'متأخرة'].includes(inv.status?.toLowerCase()),
-      ).length,
-      paidInvoices: studentInvoices.filter((inv: StudentInvoice) =>
-        ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()),
-      ).length,
       lowBalanceCount: lowBalance.length,
       expectedCollection: anticipatedCollection,
       currency: targetCurrency,
@@ -401,7 +381,19 @@ export const useDashboardData = (currentUser: User | null) => {
       monthCompletedSessions: monthComplete.length,
       monthTotalSessions: filteredSessions.filter(
         (s: Session) =>
-          isSameMonth(s.date, now) && (s.status === 'scheduled' || s.status === 'completed'),
+          isSameMonth(s.date, now) &&
+          ['scheduled', 'مجدولة', 'completed', 'مكتملة', 'تم الإنجاز'].includes(
+            s.status?.toLowerCase() || '',
+          ),
+      ).length,
+
+      pendingInvoices: studentInvoices.filter((inv: StudentInvoice) =>
+        ['pending', 'overdue', 'unpaid', 'معلقة', 'غير مدفوعة', 'متأخرة', 'غير مدفوع'].includes(
+          inv.status?.toLowerCase(),
+        ),
+      ).length,
+      paidInvoices: studentInvoices.filter((inv: StudentInvoice) =>
+        ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()),
       ).length,
 
       teacherPoints: isTeacher
@@ -578,8 +570,8 @@ export const useDashboardData = (currentUser: User | null) => {
     rawStudents: getSafeArray(studentsQuery.data),
     rawSessions: getSafeArray(sessionsQuery.data) as Session[],
     rawStudentInvoices: getSafeArray(studentInvoicesQuery.data),
-    fetchDashboardData: () => queryClient.invalidateQueries(), // Or specific keys
-    updateSessionStatus: (id: string, status: 'scheduled' | 'completed' | 'cancelled') =>
-      updateSessionStatusMutation.mutateAsync({ id, status }),
+    isLoading,
+    hasErrors,
+    fetchDashboardData: () => queryClient.invalidateQueries(),
   }
 }

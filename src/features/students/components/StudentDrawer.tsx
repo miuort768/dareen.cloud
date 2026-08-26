@@ -283,7 +283,7 @@ export const StudentDrawer = ({
                 <div className="rounded-2xl border border-border bg-surface p-4">
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="to-warning-hover flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-warning shadow-sm">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-warning to-warning-hover shadow-sm">
                         <Trophy size={16} className="text-on-warning" />
                       </div>
                       <div>
@@ -306,7 +306,7 @@ export const StudentDrawer = ({
                           initial={{ width: 0 }}
                           animate={{ width: `${level.progress}%` }}
                           transition={{ duration: 0.8, ease: 'easeOut' }}
-                          className="via-warning-hover h-full rounded-full bg-gradient-to-l from-warning to-warning"
+                          className="h-full rounded-full bg-gradient-to-l from-warning via-warning-hover to-warning"
                         />
                       </div>
                       <div className="flex items-center justify-between">

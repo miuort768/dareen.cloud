@@ -51,7 +51,7 @@ const SectionHeader = ({
   sub?: string
 }) => (
   <div className="flex items-center gap-3 border-b border-border px-5 py-4">
-    <div className="bg-chart-3/10 flex h-8 w-8 items-center justify-center rounded-xl">
+    <div className="flex h-8 w-8 items-center justify-center rounded-xl">
       <Icon size={15} className="text-chart-3" />
     </div>
     <div>
@@ -122,7 +122,7 @@ export const AttendanceReport = React.memo(
               label: 'إجمالي الحصص',
               value: totalSessions,
               icon: Calendar,
-              bgClass: 'bg-chart-6/10',
+              bgClass: '',
               textClass: 'text-chart-6',
               sub: 'كل الأشهر',
             },
@@ -130,7 +130,7 @@ export const AttendanceReport = React.memo(
               label: 'حصص مكتملة',
               value: totalCompleted,
               icon: CheckCircle2,
-              bgClass: 'bg-chart-3/10',
+              bgClass: '',
               textClass: 'text-chart-3',
               sub: 'حضور فعلي',
             },
@@ -138,7 +138,7 @@ export const AttendanceReport = React.memo(
               label: 'حصص ملغية',
               value: totalCancelled,
               icon: XCircle,
-              bgClass: 'bg-chart-5/10',
+              bgClass: '',
               textClass: 'text-chart-5',
               sub: 'غياب/إلغاء',
             },
@@ -146,7 +146,7 @@ export const AttendanceReport = React.memo(
               label: 'معدل الحضور',
               value: `${overallRate}%`,
               icon: TrendingUp,
-              bgClass: 'bg-chart-4/10',
+              bgClass: '',
               textClass: 'text-chart-4',
               sub: 'نسبة النجاح الكلية',
             },
@@ -300,7 +300,7 @@ export const AttendanceReport = React.memo(
                       ) : index === 1 ? (
                         <Medal size={12} className="text-muted" />
                       ) : index === 2 ? (
-                        <Award size={12} className="text-warning/60" />
+                        <Award size={12} className="text-warning" />
                       ) : null
                     return (
                       <tr key={index} className="transition-colors hover:bg-hover">
@@ -311,7 +311,7 @@ export const AttendanceReport = React.memo(
                         </td>
                         <td className="px-5 py-3">
                           <div className="flex items-center gap-2.5">
-                            <div className="bg-chart-3/10 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-semibold text-chart-3">
+                            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-semibold text-chart-3">
                               {teacher.teacher.charAt(0)}
                             </div>
                             <span className="text-xs font-bold text-main">{teacher.teacher}</span>
@@ -364,11 +364,11 @@ export const AttendanceReport = React.memo(
                   ) : index === 1 ? (
                     <Medal size={14} className="text-muted" />
                   ) : index === 2 ? (
-                    <Award size={14} className="text-warning/60" />
+                    <Award size={14} className="text-warning" />
                   ) : null
                 return (
                   <div key={index} className="flex items-center gap-3 p-4">
-                    <div className="bg-chart-3/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-chart-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-semibold text-chart-3">
                       {medalIcon || teacher.teacher.charAt(0)}
                     </div>
                     <div className="min-w-0 flex-1">

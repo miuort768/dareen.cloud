@@ -122,7 +122,7 @@ export const NotificationDropdown = ({
     switch (type) {
       case 'live':
         return (
-          <div className="dark:bg-success/30 dark:border-success/50 flex h-8 w-8 animate-pulse items-center justify-center rounded-lg border border-success bg-success-light">
+          <div className="flex h-8 w-8 animate-pulse items-center justify-center rounded-lg border border-success bg-success-light dark:border-success dark:bg-success-soft">
             <Smartphone className="text-success" size={16} />
           </div>
         )
@@ -143,7 +143,7 @@ export const NotificationDropdown = ({
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
           'relative flex h-8 items-center justify-center gap-1.5 rounded-lg px-2.5 transition-all duration-200',
-          'hover:bg-accent/10 text-muted hover:text-main',
+          'text-muted hover:bg-accent-soft hover:text-main',
         )}
         aria-label="إظهار الإشعارات"
         aria-expanded={isOpen}
@@ -256,8 +256,8 @@ export const NotificationDropdown = ({
               notifications.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`dark:hover:bg-card/50 cursor-pointer border-b border-border p-4 transition-none hover:bg-surface ${
-                    !notification.read ? 'bg-info-light/50 dark:bg-info/10' : ''
+                  className={`cursor-pointer border-b border-border p-4 transition-none hover:bg-surface dark:hover:bg-card ${
+                    !notification.read ? 'bg-info-light dark:bg-info-soft' : ''
                   }`}
                   onClick={() => {
                     markAsRead(notification.id)
@@ -296,7 +296,7 @@ export const NotificationDropdown = ({
                             e.stopPropagation()
                             deleteNotification(notification.id)
                           }}
-                          className="hover:bg-error/10 rounded-full p-1 text-muted transition-colors hover:text-error"
+                          className="rounded-full p-1 text-muted transition-colors hover:bg-error-soft hover:text-error"
                           aria-label="حذف"
                         >
                           <Trash2 size={14} />

@@ -52,7 +52,7 @@ export const TeacherSessionTimeline = ({
             </p>
           </div>
         </div>
-        <div className="dark:bg-success/10 flex items-center gap-1.5 rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-bold text-success dark:text-success">
+        <div className="flex items-center gap-1.5 rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-bold text-success dark:bg-success-soft dark:text-success">
           <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-success dark:bg-success" />
           مباشر
         </div>
@@ -84,9 +84,9 @@ export const TeacherSessionTimeline = ({
                 className={cn(
                   'group/card relative w-[280px] min-w-[280px] shrink-0 cursor-pointer snap-center rounded-xl border p-4 transition-all md:w-[calc(33.333%-14px)]',
                   isCompleted
-                    ? 'dark:bg-success/5 dark:border-success/20 border-success bg-success-soft'
+                    ? 'border-success bg-success-soft dark:border-success-soft dark:bg-success-soft'
                     : isCancelled
-                      ? 'dark:bg-error/5 dark:border-error/20 border-error bg-error-soft'
+                      ? 'border-error bg-error-soft dark:border-error-soft dark:bg-error-soft'
                       : 'border-border bg-surface hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-sm dark:border-border dark:bg-card dark:hover:border-border',
                 )}
               >
@@ -95,9 +95,9 @@ export const TeacherSessionTimeline = ({
                     className={cn(
                       'rounded-lg px-2 py-0.5 text-[11px] font-bold tabular-nums',
                       isCompleted
-                        ? 'dark:bg-success/10 bg-success-soft text-success dark:text-success'
+                        ? 'bg-success-soft text-success dark:bg-success-soft dark:text-success'
                         : isCancelled
-                          ? 'dark:bg-error/10 bg-error-soft text-error dark:text-error'
+                          ? 'bg-error-soft text-error dark:bg-error-soft dark:text-error'
                           : 'bg-primary/10 text-primary dark:bg-primary/10 dark:text-primary',
                     )}
                   >
@@ -185,7 +185,7 @@ export const TeacherSessionTimeline = ({
                   'h-2 w-2 rounded-full transition-all',
                   i === currentPage
                     ? 'w-6 bg-primary dark:bg-primary'
-                    : 'bg-muted/30 dark:bg-muted/20 hover:bg-muted/50 dark:hover:bg-muted/30',
+                    : 'bg-hover hover:bg-hover dark:bg-hover dark:hover:bg-hover',
                 )}
                 aria-label={`صفحة ${i + 1}`}
               />

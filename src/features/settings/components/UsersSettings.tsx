@@ -106,7 +106,7 @@ export const UsersSettings = ({
           </div>
         </div>
 
-        <div className="border-border/20 mt-4 border-t pt-4">
+        <div className="mt-4 border-t border-divider pt-4">
           <p className="mb-2 flex items-center gap-1.5 text-[11px] font-bold text-primary">
             <Shield size={11} /> قوالب صلاحيات سريعة
           </p>
@@ -115,7 +115,7 @@ export const UsersSettings = ({
               <button
                 key={role.label}
                 onClick={() => setNewUser({ ...newUser, permissions: role.perms })}
-                className="border-border/20 rounded-lg border bg-background px-3 py-1.5 text-[11px] font-bold text-muted transition-all hover:bg-primary-soft hover:text-primary"
+                className="rounded-lg border border-divider bg-background px-3 py-1.5 text-[11px] font-bold text-muted transition-all hover:bg-primary-soft hover:text-primary"
               >
                 {role.label}
               </button>
@@ -123,7 +123,7 @@ export const UsersSettings = ({
           </div>
         </div>
 
-        <div className="border-border/20 mt-4 border-t pt-4">
+        <div className="mt-4 border-t border-divider pt-4">
           <p className="mb-3 flex items-center gap-1.5 text-[11px] font-bold text-primary">
             <Shield size={11} /> تخصيص يدوي — كل صفحات النظام
           </p>
@@ -142,7 +142,7 @@ export const UsersSettings = ({
                           'flex items-center gap-1.5 rounded-lg border px-2.5 py-2 text-start text-[11px] font-bold transition-all',
                           isSelected
                             ? 'border-primary bg-primary text-on-primary shadow-sm'
-                            : 'border-border/20 bg-card text-muted hover:border-primary/50 hover:text-main',
+                            : 'border-divider bg-card text-muted hover:border-primary/50 hover:text-main',
                         )}
                       >
                         {isSelected && <Check size={11} className="shrink-0" />}
@@ -156,7 +156,7 @@ export const UsersSettings = ({
           </div>
         </div>
 
-        <div className="border-border/20 mt-5 flex flex-col gap-2 border-t pt-5 sm:flex-row">
+        <div className="mt-5 flex flex-col gap-2 border-t border-divider pt-5 sm:flex-row">
           <PrimaryBtn onClick={handleUserAction} className="flex-1">
             <UserPlus size={13} /> {editingUserId ? 'تحديث الحساب' : 'إنشاء حساب'}
           </PrimaryBtn>
@@ -185,7 +185,7 @@ export const UsersSettings = ({
           {users.map((u) => (
             <div
               key={u.id}
-              className="border-border/20 group rounded-xl border bg-card p-4 transition-all duration-200 hover:border-primary/30 hover:shadow-sm"
+              className="group rounded-xl border border-divider bg-card p-4 transition-all duration-200 hover:border-primary/30 hover:shadow-sm"
             >
               <div className="mb-3 flex items-start justify-between">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-sm font-bold text-primary">
@@ -201,7 +201,7 @@ export const UsersSettings = ({
                         permissions: u.permissions || [],
                       })
                     }}
-                    className="border-border/30 rounded-lg border bg-background p-2 text-muted transition-all hover:border-primary hover:text-primary"
+                    className="rounded-lg border border-divider bg-background p-2 text-muted transition-all hover:border-primary hover:text-primary"
                     title="تعديل"
                   >
                     <Edit size={13} />
@@ -209,7 +209,7 @@ export const UsersSettings = ({
                   {u.id !== user?.id && (
                     <button
                       onClick={() => setShowDeleteModal(u)}
-                      className="border-error/20 hover:bg-error/20 rounded-lg border bg-error-soft p-2 text-error transition-all"
+                      className="rounded-lg border border-error-soft bg-error-soft p-2 text-error transition-all hover:bg-error"
                       title="حذف"
                     >
                       <Trash2 size={13} />
@@ -224,11 +224,11 @@ export const UsersSettings = ({
                   ? 'Admin كامل'
                   : `${u.permissions?.length || 0} صلاحيات`}
               </p>
-              <div className="border-border/20 mt-3 flex flex-wrap gap-1 border-t pt-3">
+              <div className="mt-3 flex flex-wrap gap-1 border-t border-divider pt-3">
                 {u.permissions?.slice(0, 3).map((p) => (
                   <span
                     key={p}
-                    className="border-border/20 rounded-md border bg-background px-2 py-0.5 text-[11px] text-muted"
+                    className="rounded-md border border-divider bg-background px-2 py-0.5 text-[11px] text-muted"
                   >
                     {p}
                   </span>

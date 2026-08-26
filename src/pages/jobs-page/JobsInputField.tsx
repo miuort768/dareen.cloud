@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+﻿import { forwardRef } from 'react'
 import type { LucideIcon } from 'lucide-react'
 
 interface InputFieldProps {
@@ -35,7 +35,7 @@ export const JobsInputField = forwardRef<HTMLInputElement, InputFieldProps>(
         <Icon size={12} className="shrink-0 text-primary" />
         {label}
         {required && <span className="text-error">*</span>}
-        {!required && <span className="text-xs text-muted">(اختياري)</span>}
+        {!required && <span className="text-xs text-muted">(ط§ط®طھظٹط§ط±ظٹ)</span>}
       </label>
       <input
         ref={ref}
@@ -47,7 +47,7 @@ export const JobsInputField = forwardRef<HTMLInputElement, InputFieldProps>(
         required={required}
         inputMode={inputMode}
         autoComplete={autoComplete}
-        className="border-border/60 w-full touch-manipulation rounded-xl border bg-card px-4 py-3 text-sm text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus"
+        className="w-full touch-manipulation rounded-xl border border-border bg-card px-4 py-3 text-sm text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus"
       />
     </div>
   ),

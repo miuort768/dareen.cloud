@@ -39,9 +39,9 @@ interface TransactionsLogProps {
 const PER_PAGE = 8
 
 const STATUS_BADGE: Record<string, { label: string; cls: string }> = {
-  completed: { label: 'مكتمل', cls: 'bg-success/10 text-success border border-success/20' },
-  pending: { label: 'معلق', cls: 'bg-warning/10 text-warning border border-warning/20' },
-  cancelled: { label: 'ملغي', cls: 'bg-error/10 text-error border border-error/20' },
+  completed: { label: 'مكتمل', cls: 'bg-success-soft text-success border border-success-soft' },
+  pending: { label: 'معلق', cls: 'bg-warning-soft text-warning border border-warning-soft' },
+  cancelled: { label: 'ملغي', cls: 'bg-error-soft text-error border border-error-soft' },
 }
 
 const TransactionRow = ({
@@ -61,7 +61,7 @@ const TransactionRow = ({
     <motion.div
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="border-border/60 group relative overflow-hidden rounded-2xl border bg-card shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
+      className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
     >
       {/* Main row */}
       <div
@@ -75,7 +75,7 @@ const TransactionRow = ({
           {/* Avatar icon */}
           <div
             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-transform group-hover:scale-105 ${
-              isIncome ? 'bg-success/15 text-success' : 'bg-error/15 text-error'
+              isIncome ? 'bg-success-soft text-success' : 'bg-error-soft text-error'
             }`}
           >
             {isIncome ? <ArrowUpRight size={18} /> : <ArrowDownRight size={18} />}
@@ -86,7 +86,7 @@ const TransactionRow = ({
             <div className="flex items-center gap-2">
               <h4 className="truncate text-xs font-bold text-main">{t.description}</h4>
               {t.category && (
-                <span className="border-border/50 shrink-0 rounded-lg border bg-surface px-2 py-0.5 text-[10px] font-bold text-muted">
+                <span className="shrink-0 rounded-lg border border-border bg-surface px-2 py-0.5 text-[10px] font-bold text-muted">
                   {t.category}
                 </span>
               )}
@@ -153,7 +153,7 @@ const TransactionRow = ({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="bg-surface/50 border-border/40 overflow-hidden border-t"
+            className="overflow-hidden border-t border-divider bg-surface"
           >
             <div className="space-y-2 p-3.5 text-xs text-muted">
               {t.invoiceNumber && (
@@ -217,9 +217,9 @@ export const TransactionsLog = ({
   }, [filtered])
 
   return (
-    <div className="border-border/60 overflow-hidden rounded-2xl border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
       {/* Header */}
-      <div className="border-border/40 flex flex-col justify-between gap-3 border-b p-4 md:flex-row md:items-center">
+      <div className="flex flex-col justify-between gap-3 border-b border-divider p-4 md:flex-row md:items-center">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-sm">
             <Receipt size={18} />
@@ -243,7 +243,7 @@ export const TransactionsLog = ({
       </div>
 
       {/* Filter Toolbar */}
-      <div className="border-border/40 bg-surface/50 flex flex-col items-center justify-between gap-3 border-b p-3 sm:flex-row">
+      <div className="flex flex-col items-center justify-between gap-3 border-b border-divider bg-surface p-3 sm:flex-row">
         {/* Search Input */}
         <div className="relative w-full sm:w-64">
           <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
@@ -306,7 +306,7 @@ export const TransactionsLog = ({
       {/* Rows List */}
       <div className="space-y-2.5 p-4">
         {paged.length === 0 ? (
-          <div className="bg-surface/30 rounded-2xl border border-dashed border-border py-12 text-center">
+          <div className="rounded-2xl border border-dashed border-border bg-surface py-12 text-center">
             <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-surface text-muted">
               <Filter size={20} />
             </div>

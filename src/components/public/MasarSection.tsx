@@ -28,7 +28,7 @@ export const MasarSection = () => {
     <>
       {/* ─── Desktop version ─── */}
       <section className="relative hidden overflow-hidden bg-surface py-4 transition-colors duration-500 dark:bg-black md:block">
-        <div className="bg-accent/5 pointer-events-none absolute end-0 top-0 h-64 w-64 rounded-full blur-[100px] dark:bg-primary/[0.08]" />
+        <div className="pointer-events-none absolute end-0 top-0 h-64 w-64 rounded-full bg-accent-soft blur-[100px] dark:bg-primary/[0.08]" />
         <div className="pointer-events-none absolute bottom-0 start-0 h-48 w-48 rounded-full bg-primary/5 blur-[80px] dark:bg-primary/[0.05]" />
         <div className="container relative z-10 mx-auto px-4">
           <div className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-white/5 bg-gradient-to-br from-primary via-primary-hover to-primary shadow-2xl dark:border-primary/30 dark:from-surface dark:via-card dark:to-surface">
@@ -117,7 +117,7 @@ export const MasarSection = () => {
 
       {/* ─── Mobile version ─── */}
       <section className="relative block overflow-hidden bg-surface pb-4 pt-3 transition-colors duration-500 dark:bg-black md:hidden">
-        <div className="bg-accent/10 pointer-events-none absolute -start-20 top-20 h-60 w-60 rounded-full blur-[100px] dark:bg-primary/[0.08]"></div>
+        <div className="pointer-events-none absolute -start-20 top-20 h-60 w-60 rounded-full bg-accent-soft blur-[100px] dark:bg-primary/[0.08]"></div>
         <div className="pointer-events-none absolute -end-20 bottom-40 h-72 w-72 rounded-full bg-primary/10 blur-[120px] dark:bg-primary/[0.05]"></div>
 
         <div className="relative z-10 px-4">
@@ -137,7 +137,7 @@ export const MasarSection = () => {
             </picture>
           </div>
 
-          <div className="border-border/80 mb-5 flex items-center justify-between rounded-2xl border bg-surface p-5 shadow-sm dark:border-primary/30 dark:bg-card">
+          <div className="mb-5 flex items-center justify-between rounded-2xl border border-border bg-surface p-5 shadow-sm dark:border-primary/30 dark:bg-card">
             <div>
               <h2 className="text-lg font-black text-main dark:text-main">بوابة الكتب والملخصات</h2>
               <p className="mt-0.5 text-xs font-medium text-muted dark:text-muted">
@@ -189,7 +189,7 @@ export const MasarSection = () => {
           </div>
 
           <div className="grid grid-cols-3 gap-4">
-            <div className="border-border/80 rounded-2xl border bg-surface p-4 text-center shadow-sm dark:border-primary/20 dark:bg-card">
+            <div className="rounded-2xl border border-border bg-surface p-4 text-center shadow-sm dark:border-primary/20 dark:bg-card">
               <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/15">
                 <Shield size={20} className="text-primary dark:text-primary" />
               </div>
@@ -197,7 +197,7 @@ export const MasarSection = () => {
                 جودة مضمونة
               </span>
             </div>
-            <div className="border-border/80 rounded-2xl border bg-surface p-4 text-center shadow-sm dark:border-primary/20 dark:bg-card">
+            <div className="rounded-2xl border border-border bg-surface p-4 text-center shadow-sm dark:border-primary/20 dark:bg-card">
               <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-success-light dark:bg-primary/15">
                 <BadgeCheck size={20} className="text-success dark:text-primary" />
               </div>
@@ -205,7 +205,7 @@ export const MasarSection = () => {
                 محتوى موثوق
               </span>
             </div>
-            <div className="border-border/80 rounded-2xl border bg-surface p-4 text-center shadow-sm dark:border-primary/20 dark:bg-card">
+            <div className="rounded-2xl border border-border bg-surface p-4 text-center shadow-sm dark:border-primary/20 dark:bg-card">
               <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-warning-light dark:bg-primary/15">
                 <Headphones size={20} className="text-warning dark:text-primary" />
               </div>

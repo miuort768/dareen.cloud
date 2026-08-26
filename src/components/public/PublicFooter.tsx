@@ -19,8 +19,8 @@ export const PublicFooter = () => {
       <div className="pointer-events-none absolute inset-0 opacity-10 dark:opacity-[0.04]">
         <div className="absolute -right-[20%] -top-[50%] h-[80%] w-[80%] rounded-full bg-primary-soft blur-[120px] dark:bg-primary"></div>
         <div className="absolute -bottom-[50%] -left-[20%] h-[80%] w-[80%] rounded-full bg-primary-soft blur-[120px] dark:bg-primary"></div>
-        <div className="border-border/20 absolute end-10 top-10 h-20 w-20 rotate-45 border dark:border-primary/10"></div>
-        <div className="border-border/20 absolute bottom-20 start-10 h-32 w-32 -rotate-12 border dark:border-primary/10"></div>
+        <div className="absolute end-10 top-10 h-20 w-20 rotate-45 border border-divider dark:border-primary/10"></div>
+        <div className="absolute bottom-20 start-10 h-32 w-32 -rotate-12 border border-divider dark:border-primary/10"></div>
       </div>
 
       <div className="container relative z-10 mx-auto px-6">
@@ -35,7 +35,7 @@ export const PublicFooter = () => {
                 {academyName}
               </span>
             </div>
-            <p className="dark:text-warning/60 border-s-2 border-border ps-4 text-sm leading-relaxed text-muted dark:border-primary/30 lg:text-xs">
+            <p className="border-s-2 border-border ps-4 text-sm leading-relaxed text-muted dark:border-primary/30 dark:text-warning lg:text-xs">
               {footerDescription ||
                 'نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعليم.'}
             </p>
@@ -56,7 +56,7 @@ export const PublicFooter = () => {
                 <li key={idx}>
                   <Link
                     to={link.path}
-                    className="dark:text-main/60 flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent dark:hover:text-primary"
+                    className="flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent dark:text-main dark:hover:text-primary"
                   >
                     <span className="text-accent dark:text-primary">›</span> {link.name}
                   </Link>
@@ -72,11 +72,11 @@ export const PublicFooter = () => {
               تواصل معنا
             </h3>
             <ul className="space-y-4">
-              <li className="dark:text-main/60 flex items-start gap-3 text-sm text-muted">
+              <li className="flex items-start gap-3 text-sm text-muted dark:text-main">
                 <MapPin className="h-5 w-5 shrink-0 text-accent dark:text-primary" />
                 <span>{footerAddress || 'بني سويف - مصر'}</span>
               </li>
-              <li className="dark:text-main/60 flex items-center gap-3 text-sm text-muted">
+              <li className="flex items-center gap-3 text-sm text-muted dark:text-main">
                 <Phone className="h-5 w-5 shrink-0 text-accent dark:text-primary" />
                 <a
                   href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
@@ -88,7 +88,7 @@ export const PublicFooter = () => {
                   +{adminPhone?.replace(/\D/g, '') || '965000000000'}
                 </a>
               </li>
-              <li className="dark:text-main/60 flex items-center gap-3 text-sm text-muted">
+              <li className="flex items-center gap-3 text-sm text-muted dark:text-main">
                 <Instagram className="h-5 w-5 shrink-0 text-accent dark:text-primary" />
                 <a
                   href={`https://www.instagram.com/${instagramHandle}/`}
@@ -128,7 +128,7 @@ export const PublicFooter = () => {
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-3 border-t border-border pt-5 dark:border-primary/15 md:flex-row md:gap-4 md:pt-6">
           <div className="text-center md:text-start">
-            <p className="dark:text-main/40 text-sm text-muted">
+            <p className="text-sm text-muted dark:text-muted">
               &copy; {new Date().getFullYear()}{' '}
               <span className="font-medium text-main dark:text-main">{academyName}</span>. جميع
               الحقوق محفوظة.
@@ -148,9 +148,9 @@ export const PublicFooter = () => {
               }}
               className="group relative inline-flex cursor-pointer items-center gap-2 overflow-hidden border border-primary-active bg-gradient-to-r from-primary to-primary-hover px-4 py-2 dark:border-primary/30 dark:from-primary dark:to-primary"
             >
-              <div className="via-on-primary/10 pointer-events-none absolute inset-0 z-0 h-full w-full animate-shine-slow bg-gradient-to-r from-transparent to-transparent dark:via-white/10"></div>
+              <div className="pointer-events-none absolute inset-0 z-0 h-full w-full animate-shine-slow bg-gradient-to-r from-transparent via-white/10 to-transparent dark:via-white/10"></div>
               <span className="relative z-10 h-1.5 w-1.5 animate-pulse bg-accent dark:bg-card"></span>
-              <span className="text-on-primary/80 dark:text-card/70 relative z-10 font-heading text-micro font-bold tracking-wide">
+              <span className="relative z-10 font-heading text-micro font-bold tracking-wide text-white/80 dark:text-card">
                 تصميم وتطوير
               </span>
               <span className="relative z-10 font-heading text-micro font-black text-on-primary dark:text-card">
@@ -163,13 +163,13 @@ export const PublicFooter = () => {
           <div className="flex items-center justify-center gap-6 md:justify-end">
             <Link
               to="/privacy-policy"
-              className="dark:text-main/40 text-sm text-muted transition-colors hover:text-accent dark:hover:text-primary"
+              className="text-sm text-muted transition-colors hover:text-accent dark:text-muted dark:hover:text-primary"
             >
               سياسة الخصوصية
             </Link>
             <Link
               to="/refund-policy"
-              className="dark:text-main/40 text-sm text-muted transition-colors hover:text-accent dark:hover:text-primary"
+              className="text-sm text-muted transition-colors hover:text-accent dark:text-muted dark:hover:text-primary"
             >
               سياسة الاسترجاع والإلغاء
             </Link>

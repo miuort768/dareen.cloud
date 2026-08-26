@@ -75,7 +75,7 @@ export const AboutCTA = () => {
                       </span>
                     </h2>
 
-                    <p className="text-on-primary/70 dark:text-main/50 mx-auto mb-8 max-w-2xl text-sm font-medium leading-relaxed md:text-base lg:mx-0">
+                    <p className="mx-auto mb-8 max-w-2xl text-sm font-medium leading-relaxed text-white/70 dark:text-muted md:text-base lg:mx-0">
                       انضم إلى آلاف الطلاب الذين بدؤوا رحلتهم نحو التميز الحقيقي مع دارين السابعة.
                       مستقبلك المشرق يبدأ بقرار واحد تتخذه الآن.
                     </p>
@@ -95,7 +95,7 @@ export const AboutCTA = () => {
                       <Link
                         to={isAuthenticated ? '/dashboard' : '/login'}
                         onClick={() => window.scrollTo(0, 0)}
-                        className="text-on-primary/85 group flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-10 py-4 text-base font-black backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 dark:border-primary/25 dark:bg-white/5 dark:text-primary"
+                        className="group flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-10 py-4 text-base font-black text-white/85 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1 dark:border-primary/25 dark:bg-white/5 dark:text-primary"
                       >
                         <span>{isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}</span>
                       </Link>
@@ -124,7 +124,7 @@ export const AboutCTA = () => {
                           <span className="mb-1 block text-3xl font-black tracking-tight text-on-primary dark:text-main md:text-4xl">
                             5k+
                           </span>
-                          <span className="text-on-primary/90 dark:text-main/40 text-micro font-black">
+                          <span className="text-micro font-black text-white/90 dark:text-muted">
                             طالب فعال
                           </span>
                         </div>
@@ -150,7 +150,7 @@ export const AboutCTA = () => {
                           <span className="mb-1 block text-3xl font-black tracking-tight text-on-primary dark:text-main md:text-4xl">
                             97.3%
                           </span>
-                          <span className="text-on-primary/90 dark:text-main/40 text-micro font-black">
+                          <span className="text-micro font-black text-white/90 dark:text-muted">
                             نسبة نجاح
                           </span>
                         </div>

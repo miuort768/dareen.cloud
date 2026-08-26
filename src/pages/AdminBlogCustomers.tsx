@@ -9,19 +9,20 @@ import {
   Clock,
   Globe,
   Inbox,
+  AlertCircle,
   Calendar,
   Users,
   BookOpen,
   TrendingUp,
 } from 'lucide-react'
-import { BLOG_COUNTRIES } from '../components/blog/blogCustomers'
+import { BLOG_COUNTRIES, COUNTRY_CURRICULUM } from '../components/blog/blogCustomers'
+import type { BlogCustomer } from '../components/blog/blogCustomers'
 import { api, safeArray } from '../lib/api'
 import { confirm } from '../lib/confirmDialog'
 import { motion } from 'framer-motion'
 import { useIsLoading, useAcademyName } from '../context/AppContext'
 import { cn } from '../lib/utils'
-import { COUNTRY_CURRICULUM } from '../components/blog/blogCustomers'
-import type { BlogCustomer } from '../components/blog/blogCustomers'
+import { Skeleton } from '../shared/components/ui'
 
 interface CountryStyle {
   badge: string
@@ -78,6 +79,12 @@ const FALLBACK_STYLE: CountryStyle = {
 
 const getCountryStyle = (country: string) => COUNTRY_STYLES[country] || FALLBACK_STYLE
 
+const CONTACT_LINK_CLASS =
+  'inline-flex min-h-[44px] items-center justify-center gap-1 rounded-lg bg-success-soft px-2.5 py-2 text-[10px] font-bold text-success transition-colors hover:bg-success-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95'
+
+const FILTER_CHIP_CLASS =
+  'flex h-9 items-center justify-center whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]'
+
 export const AdminBlogCustomers = () => {
   const academyName = useAcademyName()
   useEffect(() => {
@@ -89,10 +96,12 @@ export const AdminBlogCustomers = () => {
     data: customers = [],
     isLoading: loading,
     error: queryError,
+    refetch,
   } = useQuery<BlogCustomer[], Error>({
     queryKey: ['blog-customers'],
     queryFn: () => api.get('/blog-customers'),
-    select: (data) => safeArray<BlogCustomer>(data),
+    select: (data) =>
+      safeArray<BlogCustomer>(data).map((c) => ({ ...c, phone: String(c.phone ?? '') })),
     enabled: !authLoading,
   })
   const error = queryError?.message || null
@@ -117,16 +126,20 @@ export const AdminBlogCustomers = () => {
     }
   }
 
-  const filtered = customers.filter((c) => {
-    const q = search.trim().toLowerCase()
-    if (countryFilter && c.country !== countryFilter) return false
-    if (!q) return true
-    return (
-      (c.country || '').toLowerCase().includes(q) ||
-      c.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
-      (COUNTRY_CURRICULUM[c.country] || '').toLowerCase().includes(q)
-    )
-  })
+  const filtered = useMemo(
+    () =>
+      customers.filter((c) => {
+        const q = search.trim().toLowerCase()
+        if (countryFilter && c.country !== countryFilter) return false
+        if (!q) return true
+        return (
+          (c.country || '').toLowerCase().includes(q) ||
+          c.phone.replace(/\s/g, '').includes(q.replace(/\s/g, '')) ||
+          (COUNTRY_CURRICULUM[c.country] || '').toLowerCase().includes(q)
+        )
+      }),
+    [customers, search, countryFilter],
+  )
 
   const formatDate = (dateStr: string) => {
     const d = new Date(dateStr)
@@ -210,7 +223,7 @@ export const AdminBlogCustomers = () => {
           className="relative mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
         >
           <div className="pointer-events-none absolute -end-16 -top-16 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
-          <div className="bg-success-soft/50 pointer-events-none absolute -bottom-20 -start-10 h-56 w-56 rounded-full blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -start-10 h-56 w-56 rounded-full bg-success-soft blur-3xl" />
           <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <div className="mb-2 flex items-center gap-2">
@@ -275,8 +288,8 @@ export const AdminBlogCustomers = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="mb-3">
-            <div className="relative mb-3">
+          <div className="mb-3 space-y-3 rounded-2xl border border-border bg-card p-3.5">
+            <div className="relative">
               <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={13} />
               <input
                 type="text"
@@ -284,14 +297,16 @@ export const AdminBlogCustomers = () => {
                 aria-label="ابحث في عملاء المدونة"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="bg-primary-soft/30 w-full rounded-xl border border-border py-3 pe-3 ps-9 text-xs font-bold text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus"
+                className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
               />
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
               <button
+                type="button"
                 onClick={() => setCountryFilter('')}
+                aria-pressed={countryFilter === ''}
                 className={cn(
-                  'rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-200 active:scale-[0.97]',
+                  FILTER_CHIP_CLASS,
                   countryFilter === ''
                     ? 'bg-primary text-on-primary shadow-sm'
                     : 'border border-border bg-card text-muted hover:bg-hover',
@@ -302,9 +317,11 @@ export const AdminBlogCustomers = () => {
               {BLOG_COUNTRIES.map((c) => (
                 <button
                   key={c}
+                  type="button"
                   onClick={() => setCountryFilter(c)}
+                  aria-pressed={countryFilter === c}
                   className={cn(
-                    'rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-200 active:scale-[0.97]',
+                    FILTER_CHIP_CLASS,
                     countryFilter === c
                       ? 'bg-primary text-on-primary shadow-sm'
                       : 'border border-border bg-card text-muted hover:bg-hover',
@@ -324,12 +341,27 @@ export const AdminBlogCustomers = () => {
         >
           <div className="space-y-3">
             {loading ? (
-              <div className="space-y-3">
-                {[1, 2, 3].map((i) => (
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                {[1, 2, 3, 4].map((i) => (
                   <div
                     key={`skel-${i}`}
-                    className="h-28 animate-pulse rounded-none border border-border bg-card"
-                  />
+                    className="rounded-xl border border-border bg-card p-4 md:p-5"
+                  >
+                    <div className="mb-3 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Skeleton className="h-9 w-9 rounded-lg" />
+                        <div className="space-y-1.5">
+                          <Skeleton className="h-3 w-20" />
+                          <Skeleton className="h-2.5 w-14" />
+                        </div>
+                      </div>
+                      <Skeleton className="hidden h-9 w-24 rounded-lg sm:block" />
+                    </div>
+                    <div className="flex gap-1.5">
+                      <Skeleton className="h-6 w-32 rounded-lg" />
+                      <Skeleton className="h-6 w-24 rounded-lg" />
+                    </div>
+                  </div>
                 ))}
               </div>
             ) : error ? (
@@ -339,15 +371,15 @@ export const AdminBlogCustomers = () => {
                 className="rounded-2xl border border-error bg-card p-6 text-center"
               >
                 <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-error-soft">
-                  <Trash2 size={20} className="text-error" />
+                  <AlertCircle size={20} className="text-error" />
                 </div>
                 <p className="text-xs font-bold text-error">{error}</p>
                 <button
                   type="button"
-                  onClick={() => window.location.reload()}
-                  className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-[10px] font-semibold text-on-primary transition-all duration-200 hover:bg-primary-hover active:scale-[0.97]"
+                  onClick={() => void refetch()}
+                  className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-[10px] font-semibold text-on-primary transition-colors hover:bg-primary-hover active:scale-[0.97]"
                 >
-                  إعادة تحميل
+                  إعادة المحاولة
                 </button>
               </motion.div>
             ) : filtered.length === 0 ? (
@@ -372,7 +404,7 @@ export const AdminBlogCustomers = () => {
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.2, delay: index * 0.03 }}
-                      className="group overflow-hidden rounded-none border border-border bg-card shadow-sm transition-all duration-200 hover:border-primary/50 hover:shadow-md"
+                      className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-200 hover:border-primary/50 hover:shadow-md"
                     >
                       <div className="h-0.5 w-full bg-gradient-to-r from-primary to-primary-light" />
                       <div className="relative z-10 p-4 md:p-5">
@@ -380,7 +412,7 @@ export const AdminBlogCustomers = () => {
                           <div className="flex min-w-0 items-center gap-3">
                             <div
                               className={cn(
-                                'flex h-9 w-9 shrink-0 items-center justify-center rounded-none',
+                                'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg',
                                 style.iconBg,
                               )}
                             >
@@ -396,7 +428,7 @@ export const AdminBlogCustomers = () => {
                           <div className="flex shrink-0 flex-wrap items-center gap-1.5">
                             <a
                               href={`tel:${cust.phone}`}
-                              className="dark:bg-success/15 inline-flex min-h-[44px] items-center justify-center gap-1 rounded-none bg-success-soft px-2.5 py-2 text-[10px] font-bold text-success transition-all hover:bg-success-light active:scale-95 dark:text-success"
+                              className={CONTACT_LINK_CLASS}
                               aria-label={`اتصال بـ ${cust.phone}`}
                             >
                               <Phone size={13} />
@@ -405,7 +437,7 @@ export const AdminBlogCustomers = () => {
                               href={`https://wa.me/${cust.phone.replace(/\D/g, '')}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="dark:bg-success/15 inline-flex min-h-[44px] items-center justify-center gap-1 rounded-none bg-success-soft px-2.5 py-2 text-[10px] font-bold text-success transition-all hover:bg-success-light active:scale-95 dark:text-success"
+                              className={CONTACT_LINK_CLASS}
                               aria-label="مراسلة عبر واتساب"
                             >
                               <MessageCircle size={13} />
@@ -413,7 +445,7 @@ export const AdminBlogCustomers = () => {
                             <button
                               type="button"
                               onClick={() => handleDelete(cust.id)}
-                              className="dark:bg-error/15 inline-flex min-h-[44px] items-center justify-center gap-1 rounded-none bg-error-soft px-2.5 py-2 text-[10px] font-semibold text-error transition-all duration-200 hover:bg-error-light active:scale-95 dark:text-error"
+                              className="inline-flex min-h-[44px] items-center justify-center gap-1 rounded-lg bg-error-soft px-2.5 py-2 text-[10px] font-semibold text-error transition-colors hover:bg-error-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                               aria-label="حذف العميل"
                             >
                               <Trash2 size={13} />
@@ -423,7 +455,7 @@ export const AdminBlogCustomers = () => {
 
                         <div className="flex flex-wrap items-center gap-1.5">
                           <span
-                            className="inline-flex items-center gap-1 rounded-none bg-background px-2 py-1 text-[10px] font-bold text-main"
+                            className="inline-flex items-center gap-1 rounded-lg bg-background px-2 py-1 text-[10px] font-bold text-main"
                             dir="ltr"
                           >
                             <span className="max-w-[140px] truncate">{cust.phone}</span>
@@ -431,7 +463,7 @@ export const AdminBlogCustomers = () => {
                           </span>
                           <span
                             className={cn(
-                              'inline-flex items-center gap-1 rounded-none px-2 py-1 text-[10px] font-bold',
+                              'inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold',
                               style.badge,
                             )}
                           >

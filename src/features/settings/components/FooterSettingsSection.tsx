@@ -1,34 +1,55 @@
-import { Info } from 'lucide-react';
-import { FieldLabel, InputField, TextAreaField } from './SettingsUI';
+import { Info } from 'lucide-react'
+import { FieldLabel, InputField, TextAreaField } from './SettingsUI'
 
 interface FooterSettingsSectionProps {
-    localFooterDescription: string; setLocalFooterDescription: (v: string) => void;
-    localFooterAddress: string; setLocalFooterAddress: (v: string) => void;
-    localFooterInstagram: string; setLocalFooterInstagram: (v: string) => void;
+  localFooterDescription: string
+  setLocalFooterDescription: (v: string) => void
+  localFooterAddress: string
+  setLocalFooterAddress: (v: string) => void
+  localFooterInstagram: string
+  setLocalFooterInstagram: (v: string) => void
 }
 
 export const FooterSettingsSection = ({
-    localFooterDescription, setLocalFooterDescription,
-    localFooterAddress, setLocalFooterAddress,
-    localFooterInstagram, setLocalFooterInstagram,
+  localFooterDescription,
+  setLocalFooterDescription,
+  localFooterAddress,
+  setLocalFooterAddress,
+  localFooterInstagram,
+  setLocalFooterInstagram,
 }: FooterSettingsSectionProps) => (
-    <div className="mt-6 pt-5 border-t border-border/20">
-        <h4 className="font-bold text-sm text-main mb-4 flex items-center gap-2">
-            <Info size={14} className="text-primary" /> تعديل الفوتر (الموقع العام)
-        </h4>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div className="md:col-span-2">
-                <FieldLabel>وصف الفوتر</FieldLabel>
-                <TextAreaField value={localFooterDescription} onChange={e => setLocalFooterDescription(e.target.value)} rows={2} placeholder="نبذة قصيرة تظهر أسفل الموقع" />
-            </div>
-            <div>
-                <FieldLabel>عنوان الفوتر</FieldLabel>
-                <InputField value={localFooterAddress} onChange={e => setLocalFooterAddress(e.target.value)} placeholder="مثال: بني سويف - مصر" />
-            </div>
-            <div>
-                <FieldLabel>حساب انستجرام</FieldLabel>
-                <InputField value={localFooterInstagram} onChange={e => setLocalFooterInstagram(e.target.value)} placeholder="daren_school" dir="ltr" className="font-mono" />
-            </div>
-        </div>
+  <div className="mt-6 border-t border-divider pt-5">
+    <h4 className="mb-4 flex items-center gap-2 text-sm font-bold text-main">
+      <Info size={14} className="text-primary" /> تعديل الفوتر (الموقع العام)
+    </h4>
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+      <div className="md:col-span-2">
+        <FieldLabel>وصف الفوتر</FieldLabel>
+        <TextAreaField
+          value={localFooterDescription}
+          onChange={(e) => setLocalFooterDescription(e.target.value)}
+          rows={2}
+          placeholder="نبذة قصيرة تظهر أسفل الموقع"
+        />
+      </div>
+      <div>
+        <FieldLabel>عنوان الفوتر</FieldLabel>
+        <InputField
+          value={localFooterAddress}
+          onChange={(e) => setLocalFooterAddress(e.target.value)}
+          placeholder="مثال: بني سويف - مصر"
+        />
+      </div>
+      <div>
+        <FieldLabel>حساب انستجرام</FieldLabel>
+        <InputField
+          value={localFooterInstagram}
+          onChange={(e) => setLocalFooterInstagram(e.target.value)}
+          placeholder="daren_school"
+          dir="ltr"
+          className="font-mono"
+        />
+      </div>
     </div>
-);
+  </div>
+)

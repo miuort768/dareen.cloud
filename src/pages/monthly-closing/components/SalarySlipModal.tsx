@@ -45,7 +45,7 @@ export const SalarySlipModal = ({
   return (
     <div
       ref={containerRef}
-      className="bg-background/40 fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-background p-4 backdrop-blur-sm"
       dir="rtl"
       role="dialog"
       aria-modal="true"
@@ -60,14 +60,14 @@ export const SalarySlipModal = ({
             </div>
             <div>
               <h2 className="text-sm font-bold">قسيمة راتب المعلمة</h2>
-              <p className="text-on-primary/70 text-micro font-medium tracking-wider">
+              <p className="text-micro font-medium tracking-wider text-white/70">
                 سجل مالي معتمد • {month}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="hover:bg-error/20 flex h-8 w-8 items-center justify-center rounded-xl text-error transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-xl text-error transition-colors hover:bg-error"
             aria-label="إغلاق"
           >
             <X size={18} />
@@ -96,7 +96,7 @@ export const SalarySlipModal = ({
               <p className="mb-1 text-micro font-bold uppercase text-muted">إجمالي الحصص</p>
               <p className="font-mono text-2xl font-bold text-main">{teacher.sessionsCount}</p>
             </div>
-            <div className="bg-primary-soft/30 rounded-xl border border-primary-soft p-4">
+            <div className="rounded-xl border border-primary-soft bg-primary-soft p-4">
               <p className="mb-1 text-micro font-bold uppercase text-primary">صافي المستحق</p>
               <div className="flex items-baseline gap-1">
                 <p className="font-mono text-2xl font-bold text-primary">
@@ -128,7 +128,7 @@ export const SalarySlipModal = ({
                         s: { date: string; studentName: string; teacherPrice?: number },
                         idx: number,
                       ) => (
-                        <tr key={idx} className="hover:bg-hover/50 transition-colors">
+                        <tr key={idx} className="transition-colors hover:bg-hover">
                           <td className="p-2.5 font-mono text-muted">{s.date}</td>
                           <td className="p-2.5 font-bold text-main">{s.studentName}</td>
                           <td className="p-2.5 text-center font-mono font-bold text-success">

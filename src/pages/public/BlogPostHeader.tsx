@@ -154,13 +154,13 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
       (post.curriculum || post.level || post.grade || post.term || post.subject) && (
         <div className="mb-4 flex flex-wrap gap-2">
           {post.curriculum && (
-            <span className="border-info/50 inline-flex items-center gap-1 rounded-lg border bg-info-light px-3 py-1.5 text-xs font-bold text-info">
+            <span className="inline-flex items-center gap-1 rounded-lg border border-info bg-info-light px-3 py-1.5 text-xs font-bold text-info">
               <BookOpen size={12} />
               {curriculumNames[post.curriculum] || post.curriculum}
             </span>
           )}
           {post.level && (
-            <span className="border-success/50 inline-flex items-center gap-1 rounded-lg border bg-success-light px-3 py-1.5 text-xs font-bold text-success">
+            <span className="inline-flex items-center gap-1 rounded-lg border border-success bg-success-light px-3 py-1.5 text-xs font-bold text-success">
               <GraduationCap size={12} />
               {levelNames[post.level] || post.level}
             </span>
@@ -172,13 +172,13 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
             </span>
           )}
           {post.term && (
-            <span className="border-warning/50 inline-flex items-center gap-1 rounded-lg border bg-warning-light px-3 py-1.5 text-xs font-bold text-warning">
+            <span className="inline-flex items-center gap-1 rounded-lg border border-warning bg-warning-light px-3 py-1.5 text-xs font-bold text-warning">
               <Tag size={12} />
               {termNames[post.term] || post.term}
             </span>
           )}
           {post.subject && (
-            <span className="border-error/50 inline-flex items-center gap-1 rounded-lg border bg-error-light px-3 py-1.5 text-xs font-bold text-error">
+            <span className="inline-flex items-center gap-1 rounded-lg border border-error bg-error-light px-3 py-1.5 text-xs font-bold text-error">
               <BookOpen size={12} />
               {subjectNames[post.subject] || post.subject}
             </span>

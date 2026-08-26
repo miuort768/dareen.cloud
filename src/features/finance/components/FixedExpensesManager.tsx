@@ -55,27 +55,27 @@ const CATEGORY_RULES: { keywords: string[]; cfg: CategoryCfg }[] = [
     keywords: ['كهرباء', 'طاقة'],
     cfg: {
       icon: Zap,
-      gradient: 'bg-gradient-to-br from-warning/90 to-warning',
+      gradient: 'bg-gradient-to-br from-warning to-warning',
       on: 'text-on-warning',
-      accentBorder: 'border-warning/40',
+      accentBorder: 'border-warning',
     },
   },
   {
     keywords: ['انترنت', 'نت', 'شبكة'],
     cfg: {
       icon: Wifi,
-      gradient: 'bg-gradient-to-br from-info/90 to-info',
+      gradient: 'bg-gradient-to-br from-info to-info',
       on: 'text-on-info',
-      accentBorder: 'border-info/40',
+      accentBorder: 'border-info',
     },
   },
   {
     keywords: ['تسويق', 'اعلان', 'إعلان', 'نثريات'],
     cfg: {
       icon: Megaphone,
-      gradient: 'bg-gradient-to-br from-error/90 to-error',
+      gradient: 'bg-gradient-to-br from-error to-error',
       on: 'text-on-error',
-      accentBorder: 'border-error/40',
+      accentBorder: 'border-error',
     },
   },
   {
@@ -91,18 +91,18 @@ const CATEGORY_RULES: { keywords: string[]; cfg: CategoryCfg }[] = [
     keywords: ['مكتب', 'ادوات'],
     cfg: {
       icon: Home,
-      gradient: 'bg-gradient-to-br from-success/90 to-success',
+      gradient: 'bg-gradient-to-br from-success to-success',
       on: 'text-on-success',
-      accentBorder: 'border-success/40',
+      accentBorder: 'border-success',
     },
   },
   {
     keywords: ['صيانة', 'اصلاح'],
     cfg: {
       icon: Wrench,
-      gradient: 'bg-gradient-to-br from-accent/90 to-accent',
+      gradient: 'bg-gradient-to-br from-accent to-accent',
       on: 'text-on-accent',
-      accentBorder: 'border-accent/40',
+      accentBorder: 'border-accent',
     },
   },
   {
@@ -153,7 +153,7 @@ const ExpenseCard = ({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.02, y: -2 }}
-      className={`border-border/60 relative flex flex-col justify-between overflow-hidden rounded-2xl border bg-card p-4 shadow-sm transition-all hover:shadow-md ${cfg.accentBorder}`}
+      className={`relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm transition-all hover:shadow-md ${cfg.accentBorder}`}
     >
       <div className="mb-3 flex items-center justify-between gap-2.5">
         <div className="flex items-center gap-2.5">
@@ -175,7 +175,7 @@ const ExpenseCard = ({
             type="number"
             aria-label={`مبلغ ${expense.name}`}
             step="any"
-            className="border-border/70 w-full rounded-xl border bg-surface px-3 py-2 text-xs font-bold text-main outline-none transition-all [appearance:textfield] focus:border-primary focus:ring-2 focus:ring-focus [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-bold text-main outline-none transition-all [appearance:textfield] focus:border-primary focus:ring-2 focus:ring-focus [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             placeholder="0"
             value={val}
             onChange={(e) => setVal(e.target.value)}
@@ -208,8 +208,8 @@ export const FixedExpensesManager = ({
   const total = expenses.reduce((s, e) => s + (Number(e.amount) || 0), 0)
 
   return (
-    <div className="border-border/60 overflow-hidden rounded-2xl border bg-card shadow-sm">
-      <div className="border-border/40 flex flex-col justify-between gap-3 border-b p-4 md:flex-row md:items-center">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+      <div className="flex flex-col justify-between gap-3 border-b border-divider p-4 md:flex-row md:items-center">
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-sm">
             <Building2 size={18} />
@@ -232,7 +232,7 @@ export const FixedExpensesManager = ({
           </button>
           <button
             onClick={onClearAll}
-            className="border-error/30 hover:bg-error/15 flex items-center gap-1.5 rounded-xl border bg-error-soft px-3 py-2 text-xs font-bold text-error transition-all active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl border border-error-soft bg-error-soft px-3 py-2 text-xs font-bold text-error transition-all hover:bg-error-soft active:scale-95"
           >
             <Trash2 size={13} /> تصفير المبالغ
           </button>

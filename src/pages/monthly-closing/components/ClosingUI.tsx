@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -11,7 +11,7 @@ export const SectionCard = ({
   children: React.ReactNode
   className?: string
 }) => (
-  <div className={cn('border-border/30 rounded-2xl border bg-card shadow-sm', className)}>
+  <div className={cn('rounded-2xl border border-divider bg-card shadow-sm', className)}>
     {children}
   </div>
 )
@@ -71,7 +71,7 @@ export const SecondaryBtn = ({
   <button
     onClick={onClick}
     className={cn(
-      'border-border/30 flex items-center justify-center gap-2 rounded-xl border bg-card px-3 py-2 text-xs font-bold text-muted transition-all hover:bg-surface active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border border-divider bg-card px-3 py-2 text-xs font-bold text-muted transition-all hover:bg-surface active:scale-[0.97]',
       className,
     )}
   >
@@ -86,14 +86,18 @@ const kpiAccentMap = {
     bar: 'bg-primary',
   },
   success: {
-    gradient: 'from-success/20 to-success/5',
-    bg: 'bg-success/10 text-success',
+    gradient: 'from-success-soft to-transparent',
+    bg: 'bg-success-soft text-success',
     bar: 'bg-success',
   },
-  error: { gradient: 'from-error/20 to-error/5', bg: 'bg-error/10 text-error', bar: 'bg-error' },
+  error: {
+    gradient: 'from-error-soft to-transparent',
+    bg: 'bg-error-soft text-error',
+    bar: 'bg-error',
+  },
   warning: {
-    gradient: 'from-warning/20 to-warning/5',
-    bg: 'bg-warning/10 text-warning',
+    gradient: 'from-warning-soft to-transparent',
+    bg: 'bg-warning-soft text-warning',
     bar: 'bg-warning',
   },
 }
@@ -118,7 +122,7 @@ export const KpiCard = ({
     <motion.div
       whileHover={{ scale: 1.02, y: -2 }}
       className={cn(
-        'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
+        'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
         s.gradient,
       )}
     >
@@ -143,7 +147,7 @@ export const KpiCard = ({
           <div
             className={cn(
               'inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-xs font-bold',
-              trend.positive ? 'bg-success/10 text-success' : 'bg-error/10 text-error',
+              trend.positive ? 'bg-success-soft text-success' : 'bg-error-soft text-error',
             )}
           >
             {trend.positive ? <TrendingUp size={12} /> : <TrendingDown size={12} />}{' '}
@@ -152,7 +156,7 @@ export const KpiCard = ({
         )}
       </div>
       {subValue && (
-        <p className="border-border/30 mt-2 border-t pt-2 text-xs text-muted">{subValue}</p>
+        <p className="mt-2 border-t border-divider pt-2 text-xs text-muted">{subValue}</p>
       )}
     </motion.div>
   )

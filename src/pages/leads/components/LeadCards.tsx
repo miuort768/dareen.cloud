@@ -115,7 +115,7 @@ export const LeadCards = ({
                 )}
 
                 {/* Actions */}
-                <div className="bg-surface/50 mt-3.5 flex items-center gap-2 border-t border-border px-3.5 py-3">
+                <div className="mt-3.5 flex items-center gap-2 border-t border-border bg-surface px-3.5 py-3">
                   <button
                     onClick={(e) => {
                       e.stopPropagation()

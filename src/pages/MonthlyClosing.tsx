@@ -124,17 +124,16 @@ export const MonthlyClosing = () => {
   const { data: studentInvoices, isLoading: invoicesLoading } = useQuery({
     queryKey: ['student-invoices-closing'],
     queryFn: async () => {
-      const resp =
-        await api.get<
-          {
-            id: string
-            studentName: string
-            amount: number
-            currency?: string
-            date: string
-            status: string
-          }[]
-        >('/studentInvoices')
+      const resp = await api.get<
+        {
+          id: string
+          studentName: string
+          amount: number
+          currency?: string
+          date: string
+          status: string
+        }[]
+      >('/studentInvoices')
       return Array.isArray(resp)
         ? resp
         : (
@@ -435,7 +434,7 @@ export const MonthlyClosing = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
         >
-          <div className="border-border/30 no-scrollbar mb-4 flex gap-1 overflow-x-auto rounded-2xl border bg-card p-1 shadow-sm">
+          <div className="no-scrollbar mb-4 flex gap-1 overflow-x-auto rounded-2xl border border-divider bg-card p-1 shadow-sm">
             {TABS.map((tab) => (
               <button
                 key={tab.id}

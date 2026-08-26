@@ -48,7 +48,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
   return (
     <section className="relative overflow-hidden bg-surface pb-0 pt-4 transition-colors duration-500 dark:bg-card md:pt-10">
       {/* Gold glow decorations */}
-      <div className="bg-accent/5 pointer-events-none absolute -start-40 -top-40 h-80 w-80 rounded-full blur-[100px] dark:bg-primary/[0.04]" />
+      <div className="pointer-events-none absolute -start-40 -top-40 h-80 w-80 rounded-full bg-accent-soft blur-[100px] dark:bg-primary/[0.04]" />
       <div className="pointer-events-none absolute -bottom-40 -end-40 h-80 w-80 rounded-full bg-primary/5 blur-[100px] dark:bg-primary/[0.04]" />
       <div className="bg-primary/3 pointer-events-none absolute end-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full blur-[120px] dark:bg-primary/[0.02]" />
 

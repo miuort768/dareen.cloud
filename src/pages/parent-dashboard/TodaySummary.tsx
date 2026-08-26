@@ -22,21 +22,21 @@ const cards = [
     icon: CheckCircle2,
     label: 'حاضر',
     color: 'text-success',
-    bg: 'bg-success-soft dark:bg-success/10',
+    bg: 'bg-success-soft dark:bg-success-soft',
   },
   {
     key: 'absent',
     icon: XCircle,
     label: 'غائب',
     color: 'text-error',
-    bg: 'bg-error-soft dark:bg-error/10',
+    bg: 'bg-error-soft dark:bg-error-soft',
   },
   {
     key: 'lessons',
     icon: BookOpen,
     label: 'الدروس',
     color: 'text-info',
-    bg: 'bg-info-soft dark:bg-info/10',
+    bg: 'bg-info-soft dark:bg-info-soft',
   },
   {
     key: 'day',
@@ -88,7 +88,7 @@ export const TodaySummary = ({ sessions, todayTasks }: TodaySummaryProps) => {
         return (
           <div
             key={card.key}
-            className="border-border/50 rounded-3xl border bg-surface p-4 shadow-sm transition-all duration-300 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card md:p-5"
+            className="rounded-3xl border border-border bg-surface p-4 shadow-sm transition-all duration-300 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card md:p-5"
           >
             <div className="mb-3 flex items-start justify-between">
               <div className={`h-10 w-10 rounded-xl ${card.bg} flex items-center justify-center`}>

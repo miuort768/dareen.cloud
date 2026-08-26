@@ -31,9 +31,9 @@ interface StudentInvoice {
 }
 
 const statusConfig = {
-  paid: { label: 'مدفوعة', icon: CheckCircle, color: 'text-success', bg: 'bg-success/10' },
-  pending: { label: 'معلقة', icon: Clock, color: 'text-warning', bg: 'bg-warning/10' },
-  overdue: { label: 'متأخرة', icon: AlertCircle, color: 'text-error', bg: 'bg-error/10' },
+  paid: { label: 'مدفوعة', icon: CheckCircle, color: 'text-success', bg: 'bg-success-soft' },
+  pending: { label: 'معلقة', icon: Clock, color: 'text-warning', bg: 'bg-warning-soft' },
+  overdue: { label: 'متأخرة', icon: AlertCircle, color: 'text-error', bg: 'bg-error-soft' },
 } as const
 
 export const StudentInvoices = () => {
@@ -89,7 +89,7 @@ export const StudentInvoices = () => {
         count: stats.paidCount,
         icon: CheckCircle,
         color: 'text-success',
-        bg: 'bg-success/10',
+        bg: 'bg-success-soft',
       },
       {
         label: 'معلقة',
@@ -97,7 +97,7 @@ export const StudentInvoices = () => {
         count: stats.pendingCount,
         icon: Clock,
         color: 'text-warning',
-        bg: 'bg-warning/10',
+        bg: 'bg-warning-soft',
       },
       {
         label: 'متأخرة',
@@ -105,7 +105,7 @@ export const StudentInvoices = () => {
         count: stats.overdueCount,
         icon: AlertCircle,
         color: 'text-error',
-        bg: 'bg-error/10',
+        bg: 'bg-error-soft',
       },
     ],
     [stats],
@@ -216,7 +216,7 @@ export const StudentInvoices = () => {
                 placeholder="بحث بالبيان..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="placeholder:text-muted/60 w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
+                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-dim text-main outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
               />
               {searchTerm && (
                 <button
@@ -272,7 +272,7 @@ export const StudentInvoices = () => {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.03 }}
-                      className="hover:bg-surface/50 transition-colors"
+                      className="transition-colors hover:bg-surface"
                     >
                       <td className="px-4 py-3">
                         <span className="text-sm font-bold text-main">{inv.description}</span>

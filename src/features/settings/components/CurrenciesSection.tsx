@@ -111,7 +111,7 @@ export const CurrenciesSection = ({
         sub="إدارة العملات المدعومة وأسعار الصرف"
       />
 
-      <div className="border-border/20 mb-5 flex w-fit gap-1 rounded-xl border bg-background p-1">
+      <div className="mb-5 flex w-fit gap-1 rounded-xl border border-divider bg-background p-1">
         <button
           onClick={() => setActiveTab('currencies')}
           className={cn(
@@ -141,10 +141,10 @@ export const CurrenciesSection = ({
             سعودي، قطري، عماني، درهم إماراتي).
           </div>
 
-          <div className="border-border/20 overflow-x-auto rounded-xl border">
+          <div className="overflow-x-auto rounded-xl border border-divider">
             <table className="w-full text-xs">
               <thead>
-                <tr className="border-border/20 border-b bg-background">
+                <tr className="border-b border-divider bg-background">
                   <th className="px-4 py-3 text-start font-bold text-muted">الرمز</th>
                   <th className="px-4 py-3 text-start font-bold text-muted">الاسم</th>
                   <th className="px-4 py-3 text-start font-bold text-muted">العلامة</th>
@@ -156,7 +156,7 @@ export const CurrenciesSection = ({
                 {visibleCurrencies.map((c) => (
                   <tr
                     key={c.code}
-                    className="border-border/10 border-b transition-colors hover:bg-background"
+                    className="border-b border-divider transition-colors hover:bg-background"
                   >
                     <td className="px-4 py-3 font-bold text-main">{c.code}</td>
                     <td className="px-4 py-3 text-muted">{c.name}</td>
@@ -212,7 +212,7 @@ export const CurrenciesSection = ({
 
       {activeTab === 'rates' && (
         <>
-          <div className="border-border/20 mb-5 grid grid-cols-1 gap-3 rounded-xl border bg-background p-4 md:grid-cols-6">
+          <div className="mb-5 grid grid-cols-1 gap-3 rounded-xl border border-divider bg-background p-4 md:grid-cols-6">
             <InputField
               value={newRate.fromCurrency}
               onChange={(e) => setNewRate((p) => ({ ...p, fromCurrency: e.target.value }))}
@@ -247,10 +247,10 @@ export const CurrenciesSection = ({
             </PrimaryBtn>
           </div>
 
-          <div className="border-border/20 max-h-80 overflow-x-auto overflow-y-auto rounded-xl border">
+          <div className="max-h-80 overflow-x-auto overflow-y-auto rounded-xl border border-divider">
             <table className="w-full text-xs">
               <thead>
-                <tr className="border-border/20 border-b bg-background">
+                <tr className="border-b border-divider bg-background">
                   <th className="px-4 py-3 text-start font-bold text-muted">من</th>
                   <th className="px-4 py-3 text-start font-bold text-muted">إلى</th>
                   <th className="px-4 py-3 text-start font-bold text-muted">الشراء</th>
@@ -263,7 +263,7 @@ export const CurrenciesSection = ({
                 {rates.map((r) => (
                   <tr
                     key={r.id}
-                    className="border-border/10 border-b transition-colors hover:bg-background"
+                    className="border-b border-divider transition-colors hover:bg-background"
                   >
                     <td className="px-4 py-3 font-bold text-main">{r.fromCurrency}</td>
                     <td className="px-4 py-3 font-bold text-main">{r.toCurrency}</td>

@@ -122,8 +122,8 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
               className={cn(
                 'flex flex-col items-center gap-2 rounded-xl border-2 p-3.5 transition-all',
                 status === 'completed'
-                  ? 'bg-success/10 border-success text-success'
-                  : 'hover:border-success/50 border-border bg-surface text-muted',
+                  ? 'border-success bg-success-soft text-success'
+                  : 'border-border bg-surface text-muted hover:border-success',
               )}
             >
               <CheckCircle2
@@ -137,8 +137,8 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
               className={cn(
                 'flex flex-col items-center gap-2 rounded-xl border-2 p-3.5 transition-all',
                 status === 'cancelled'
-                  ? 'bg-error/10 border-error text-error'
-                  : 'hover:border-error/50 border-border bg-surface text-muted',
+                  ? 'border-error bg-error-soft text-error'
+                  : 'border-border bg-surface text-muted hover:border-error',
               )}
             >
               <XCircle size={22} className={status === 'cancelled' ? 'text-error' : 'text-dim'} />
@@ -159,7 +159,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                 <textarea
                   id="attendance-topics"
                   placeholder="مثلاً: مراجعة سورة البقرة، أول 10 آيات..."
-                  className="focus:ring-success/20 w-full resize-none rounded-xl border border-border bg-surface p-3 text-xs font-medium leading-relaxed transition-all focus:border-success focus:ring-1 dark:bg-hover dark:text-main"
+                  className="w-full resize-none rounded-xl border border-border bg-surface p-3 text-xs font-medium leading-relaxed transition-all focus:border-success focus:ring-1 focus:ring-success-soft dark:bg-hover dark:text-main"
                   rows={2}
                   value={topics}
                   onChange={(e) => setTopics(e.target.value)}
@@ -176,7 +176,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                   id="attendance-homework"
                   type="text"
                   placeholder="مثلاً: حفظ الجزء الثاني من الصفحة..."
-                  className="focus:ring-warning/20 w-full rounded-xl border border-border bg-surface p-3 text-xs font-medium transition-all focus:border-warning focus:ring-1 dark:bg-hover dark:text-main"
+                  className="w-full rounded-xl border border-border bg-surface p-3 text-xs font-medium transition-all focus:border-warning focus:ring-1 focus:ring-warning-soft dark:bg-hover dark:text-main"
                   value={homework}
                   onChange={(e) => setHomework(e.target.value)}
                 />
@@ -187,7 +187,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
           {/* Cancelled checkbox */}
           {status === 'cancelled' && (
             <div className="mb-5 duration-200 animate-in fade-in slide-in-from-top-2">
-              <label className="bg-error/5 border-error/20 hover:bg-error/10 flex cursor-pointer items-center gap-3 rounded-xl border p-3.5 transition-colors">
+              <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-error-soft bg-error-soft p-3.5 transition-colors hover:bg-error-soft">
                 <input
                   type="checkbox"
                   checked={needsCompensation}
@@ -224,7 +224,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
               className={cn(
                 'w-full rounded-xl border bg-surface p-3 text-center font-mono text-xs font-medium tracking-widest outline-none transition-all focus:ring-1 dark:bg-hover dark:text-main',
                 error
-                  ? 'focus:ring-error/20 border-error'
+                  ? 'border-error focus:ring-error-soft'
                   : 'border-border focus:border-primary focus:ring-primary/20',
               )}
               autoFocus

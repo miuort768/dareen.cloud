@@ -62,7 +62,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
     return (
       <div className="space-y-5" dir="rtl">
         <Skeleton className="h-12 rounded-2xl" />
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Skeleton className="h-[220px] rounded-2xl" />
           </div>
@@ -71,7 +71,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
           </div>
         </div>
         <Skeleton className="h-[76px] rounded-2xl" />
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 3 }).map((_, i) => (
             <Skeleton key={`skel-${i}`} className="h-[300px] rounded-2xl" />
           ))}
@@ -150,7 +150,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
               مباشر
             </span>
             {criticalCount > 0 && (
-              <span className="border-error/25 rounded-lg border bg-error-soft px-2.5 py-1.5 text-[10px] font-black tabular-nums text-error">
+              <span className="rounded-lg border border-error-soft bg-error-soft px-2.5 py-1.5 text-[10px] font-black tabular-nums text-error">
                 {criticalCount} تنبيه حرج
               </span>
             )}
@@ -168,7 +168,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
       </Section>
 
       {/* Pulse + money today */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <Section>
             <BusinessPulse pulse={pulse} />
@@ -193,7 +193,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
       </Section>
 
       {/* Live context */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <Section>
           <ExecutiveAlerts alerts={alerts} />
         </Section>
@@ -209,7 +209,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
       </div>
 
       {/* Context */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <Section>
             <ActivityFeed items={activity} />

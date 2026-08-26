@@ -215,7 +215,7 @@ export const Agenda = () => {
         />
 
         {/* Quick Filters */}
-        <div className="border-border/50 mx-2 mb-3 rounded-2xl border bg-surface p-2">
+        <div className="mx-2 mb-3 rounded-2xl border border-border bg-surface p-2">
           <div className="no-scrollbar flex gap-1.5 overflow-x-auto">
             {DAYS.map((day) => (
               <button
@@ -242,7 +242,7 @@ export const Agenda = () => {
               placeholder="بحث عن طالب..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="border-border/50 w-full rounded-xl border bg-surface py-2.5 pe-3 ps-8 text-xs font-bold text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none"
+              className="w-full rounded-xl border border-border bg-surface py-2.5 pe-3 ps-8 text-xs font-bold text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none"
             />
           </div>
         </div>
@@ -255,7 +255,7 @@ export const Agenda = () => {
                 key={app.id}
                 className={cn(
                   'group relative overflow-hidden rounded-2xl border bg-surface shadow-sm transition-all',
-                  app.isDone ? 'border-success/30' : 'hover:border-warning/50 border-border',
+                  app.isDone ? 'border-success-soft' : 'border-border hover:border-warning',
                 )}
               >
                 {/* Status Stripe */}

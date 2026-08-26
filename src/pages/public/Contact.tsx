@@ -56,8 +56,8 @@ export const Contact = () => {
       value: adminPhone,
       href: `https://wa.me/${whatsappNumber}`,
       gradient: 'from-success to-info',
-      bg: 'bg-success-light dark:bg-success/10',
-      border: 'border-success dark:border-success/20',
+      bg: 'bg-success-light dark:bg-success-soft',
+      border: 'border-success dark:border-success-soft',
       iconColor: 'text-success',
     },
     {
@@ -76,8 +76,8 @@ export const Contact = () => {
       value: 'بني سويف — مصر',
       href: '#',
       gradient: 'from-warning to-warning',
-      bg: 'bg-warning-light dark:bg-warning/10',
-      border: 'border-warning dark:border-warning/20',
+      bg: 'bg-warning-light dark:bg-warning-soft',
+      border: 'border-warning dark:border-warning-soft',
       iconColor: 'text-warning',
     },
   ]
@@ -120,13 +120,13 @@ export const Contact = () => {
       <main className="relative flex-grow overflow-hidden pb-2 md:pt-28">
         {/* Subtle background glows */}
         <div className="pointer-events-none absolute start-0 top-0 h-[500px] w-[500px] -translate-y-1/2 translate-x-1/3 rounded-none bg-primary/5 blur-[120px]" />
-        <div className="bg-success/5 pointer-events-none absolute bottom-0 end-0 h-[400px] w-[400px] -translate-x-1/3 translate-y-1/3 rounded-none blur-[100px]" />
+        <div className="pointer-events-none absolute bottom-0 end-0 h-[400px] w-[400px] -translate-x-1/3 translate-y-1/3 rounded-none bg-success-soft blur-[100px]" />
 
         <div className="container relative z-10 mx-auto max-w-5xl px-4">
           {/* ── Hero Header ── */}
           <AnimateOnScroll animation="fadeUp">
             <div className="mb-6 text-center">
-              <div className="bg-primary-soft/60 mb-1 inline-flex items-center gap-2 rounded-full border border-primary px-4 py-1.5 backdrop-blur-sm dark:border-primary/20 dark:bg-primary/10 md:mb-5">
+              <div className="mb-1 inline-flex items-center gap-2 rounded-full border border-primary bg-primary-soft px-4 py-1.5 backdrop-blur-sm dark:border-primary/20 dark:bg-primary/10 md:mb-5">
                 <Sparkles size={13} className="text-primary" />
                 <span className="mt-[3px] text-micro font-black text-primary md:mt-0">
                   نحن في خدمتك
@@ -197,7 +197,7 @@ export const Contact = () => {
                   <form onSubmit={handleSubmit} className="space-y-4">
                     {formState === 'error' && (
                       <div
-                        className="dark:bg-error/10 dark:border-error/20 border border-error bg-error-light p-4 text-center"
+                        className="border border-error bg-error-light p-4 text-center dark:border-error-soft dark:bg-error-soft"
                         role="alert"
                         aria-live="assertive"
                       >
@@ -351,7 +351,7 @@ export const Contact = () => {
                         href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="shadow-success/20 flex items-center justify-center gap-2 rounded-none bg-success py-3.5 text-sm font-black text-on-success shadow-lg transition-all hover:bg-success-dark"
+                        className="flex items-center justify-center gap-2 rounded-none bg-success py-3.5 text-sm font-black text-on-success shadow-lg transition-all hover:bg-success-dark"
                       >
                         <MessageCircle size={16} />
                         <span>تواصل واتساب</span>

@@ -1,13 +1,13 @@
-import React from 'react';
-import { cn } from '../../../lib/utils';
-import { triggerHaptic } from '../../../lib/haptics';
+﻿import React from 'react'
+import { cn } from '../../../lib/utils'
+import { triggerHaptic } from '../../../lib/haptics'
 
 export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'error';
-  size?: 'sm' | 'md';
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
+  variant?: 'default' | 'error'
+  size?: 'sm' | 'md'
+  icon: React.ReactNode
+  label: string
+  active?: boolean
 }
 
 const variants = {
@@ -18,20 +18,23 @@ const variants = {
   error:
     'bg-card dark:bg-card border border-border dark:border-primary/20' +
     ' text-muted dark:text-muted' +
-    ' hover:bg-error/10 hover:text-error dark:hover:bg-error/15 dark:hover:text-error',
-};
+    ' hover:bg-error-soft hover:text-error dark:hover:bg-error-soft dark:hover:text-error',
+}
 
 const sizes = {
   sm: 'w-9 h-9',
   md: 'w-10 h-10',
-};
+}
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ className, variant = 'default', size = 'md', icon, label, active, onClick, ...props }, ref) => {
+  (
+    { className, variant = 'default', size = 'md', icon, label, active, onClick, ...props },
+    ref,
+  ) => {
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-      triggerHaptic('light');
-      onClick?.(e);
-    };
+      triggerHaptic('light')
+      onClick?.(e)
+    }
 
     return (
       <button
@@ -43,19 +46,19 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
           'transition-all duration-200',
           'active:scale-95',
           'focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
-          'disabled:opacity-40 disabled:pointer-events-none disabled:scale-100',
+          'disabled:pointer-events-none disabled:scale-100 disabled:opacity-40',
           '[&_svg]:pointer-events-none',
           variants[variant],
           sizes[size],
           active && 'bg-primary/10 text-primary dark:bg-primary/15 dark:text-primary',
-          className
+          className,
         )}
         {...props}
       >
         {icon}
       </button>
-    );
-  }
-);
+    )
+  },
+)
 
-IconButton.displayName = 'IconButton';
+IconButton.displayName = 'IconButton'

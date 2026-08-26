@@ -123,7 +123,7 @@ export const AttendanceModal = ({
                 return (
                   <div
                     key={idx}
-                    className="hover:border-success/30 group relative overflow-hidden rounded-xl border border-border bg-surface p-5 transition-all hover:shadow-elevation-1"
+                    className="group relative overflow-hidden rounded-xl border border-border bg-surface p-5 transition-all hover:border-success-soft hover:shadow-elevation-1"
                   >
                     <div className="mb-4 flex items-start justify-between">
                       <div>

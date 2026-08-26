@@ -313,7 +313,7 @@ const AddLeadModalInline = ({
           <textarea
             name="notes"
             rows={2}
-            className={inputClass + ' resize-none'}
+            className={inputClass + 'resize-none'}
             placeholder="اكتب أي تفاصيل..."
           />
         </div>
@@ -496,14 +496,14 @@ export const Leads = () => {
       <div
         className={cn(
           'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl',
-          showLost ? 'bg-error/15' : 'bg-white/15',
+          showLost ? 'bg-error-soft' : 'bg-white/15',
         )}
       >
         <ArchiveX size={16} />
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-xs font-black">المفقودون</p>
-        <p className={cn('text-[10px]', showLost ? 'text-error/80' : 'text-white/75')}>
+        <p className={cn('text-[10px]', showLost ? 'text-error' : 'text-white/75')}>
           {lostCount} عميل مفقود
         </p>
       </div>
@@ -525,7 +525,7 @@ export const Leads = () => {
         aria-label="حذف جميع العملاء"
         className={cn(
           'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all active:scale-95',
-          showLost ? 'bg-error/15 hover:bg-error/25' : 'bg-white/15 hover:bg-white/25',
+          showLost ? 'bg-error-soft hover:bg-error' : 'bg-white/15 hover:bg-white/25',
         )}
       >
         <Trash2 size={15} />

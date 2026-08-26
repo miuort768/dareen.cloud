@@ -59,7 +59,7 @@ export const Settings = () => {
           </div>
           <div className="flex items-center gap-2">
             {h.maintenanceMode && (
-              <span className="border-warning/30 flex items-center gap-1.5 rounded-lg border bg-warning-soft px-2.5 py-1.5 text-[10px] font-black text-warning-dark">
+              <span className="flex items-center gap-1.5 rounded-lg border border-warning-soft bg-warning-soft px-2.5 py-1.5 text-[10px] font-black text-warning-dark">
                 <Wrench size={11} />
                 وضع الصيانة مفعّل
               </span>

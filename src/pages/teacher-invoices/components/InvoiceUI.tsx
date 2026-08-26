@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
 import { RefreshCw, type LucideIcon } from 'lucide-react'
 
@@ -11,7 +11,7 @@ export const SectionCard = ({
 }) => (
   <div
     className={cn(
-      'border-border/30 rounded-2xl border bg-card shadow-sm transition-all hover:shadow-md',
+      'rounded-2xl border border-divider bg-card shadow-sm transition-all hover:shadow-md',
       className,
     )}
   >
@@ -86,7 +86,7 @@ export const SecondaryBtn = ({
     title={title}
     onClick={onClick}
     className={cn(
-      'border-border/40 flex items-center justify-center gap-2 rounded-xl border bg-card px-4 py-2.5 text-xs font-bold text-muted transition-all hover:bg-surface hover:text-main active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border border-divider bg-card px-4 py-2.5 text-xs font-bold text-muted transition-all hover:bg-surface hover:text-main active:scale-[0.97]',
       className,
     )}
   >
@@ -109,7 +109,7 @@ export const DangerBtn = ({
     title={title}
     onClick={onClick}
     className={cn(
-      'border-error/30 bg-error/10 flex items-center justify-center gap-2 rounded-xl border-2 px-4 py-2.5 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-primary active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border-2 border-error-soft bg-error-soft px-4 py-2.5 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-primary active:scale-[0.97]',
       className,
     )}
   >
@@ -124,21 +124,25 @@ const kpiAccentMap = {
     accent: 'bg-primary',
   },
   success: {
-    gradient: 'from-success/20 to-success/5',
-    iconBg: 'bg-success/10 text-success',
+    gradient: 'from-success-soft to-transparent',
+    iconBg: 'bg-success-soft text-success',
     accent: 'bg-success',
   },
   error: {
-    gradient: 'from-error/20 to-error/5',
-    iconBg: 'bg-error/10 text-error',
+    gradient: 'from-error-soft to-transparent',
+    iconBg: 'bg-error-soft text-error',
     accent: 'bg-error',
   },
   warning: {
-    gradient: 'from-warning/20 to-warning/5',
-    iconBg: 'bg-warning/10 text-warning',
+    gradient: 'from-warning-soft to-transparent',
+    iconBg: 'bg-warning-soft text-warning',
     accent: 'bg-warning',
   },
-  info: { gradient: 'from-info/20 to-info/5', iconBg: 'bg-info/10 text-info', accent: 'bg-info' },
+  info: {
+    gradient: 'from-info-soft to-transparent',
+    iconBg: 'bg-info-soft text-info',
+    accent: 'bg-info',
+  },
 }
 
 export const KpiCard = ({
@@ -157,7 +161,7 @@ export const KpiCard = ({
     <motion.div
       whileHover={{ scale: 1.02, y: -2 }}
       className={cn(
-        'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-3.5',
+        'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-3.5',
         style.gradient,
       )}
     >

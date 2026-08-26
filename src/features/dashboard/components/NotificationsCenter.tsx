@@ -1,11 +1,10 @@
-﻿import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import { Bell, Zap, AlertTriangle, CheckCircle2, Phone, Info } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { cn } from '../../../lib/utils'
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders'
 import { useAdminPhone } from '../../../context/AppContext'
-import { api } from '../../../lib/api'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import type { DashboardTask as Task, LowBalanceStudent } from '../types'
@@ -39,19 +38,6 @@ export const NotificationsCenter = ({
   const adminPhone = useAdminPhone()
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<'smart' | 'room'>('smart')
-  const [, setDismissedIds] = useState<string[]>([])
-
-  useEffect(() => {
-    const fetchDismissed = async () => {
-      try {
-        const data = await api.get<string[]>('/system/dismissed-notifications')
-        if (Array.isArray(data)) setDismissedIds(data)
-      } catch {
-        // non-critical background fetch
-      }
-    }
-    fetchDismissed()
-  }, [])
 
   const smartAlerts = useMemo(() => {
     const result: {
@@ -200,7 +186,7 @@ export const NotificationsCenter = ({
           {smartAlerts.length > 0 ? (
             <div className="relative">
               <div className="absolute bottom-2 start-[15px] top-2 w-px bg-divider" />
-              {smartAlerts.map((alert, idx) => (
+              {smartAlerts.map((alert) => (
                 <div key={alert.id} className="relative flex gap-3 pb-3">
                   <div
                     className={cn(
@@ -229,9 +215,6 @@ export const NotificationsCenter = ({
                       <h3 className="text-[11px] font-bold text-main dark:text-main">
                         {alert.title}
                       </h3>
-                      <span className="shrink-0 text-[9px] text-muted dark:text-dim">
-                        {idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}
-                      </span>
                     </div>
                     <p className="mt-0.5 line-clamp-1 text-[10px] text-muted dark:text-muted">
                       {alert.desc}
@@ -245,7 +228,7 @@ export const NotificationsCenter = ({
               <div className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-lg bg-success-soft ring-2 ring-card dark:ring-card">
                 <CheckCircle2 size={14} className="text-success" />
               </div>
-              <div className="bg-success-soft/50 dark:bg-success/5 min-w-0 flex-1 rounded-xl border border-border p-3 dark:border-border">
+              <div className="min-w-0 flex-1 rounded-xl border border-border bg-success-soft p-3 dark:border-border dark:bg-success-soft">
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="text-[11px] font-bold text-success">كل الأنظمة تعمل</h3>
                   <span className="shrink-0 text-[9px] text-muted dark:text-dim">الآن</span>
@@ -265,7 +248,7 @@ export const NotificationsCenter = ({
           {roomAlerts.length > 0 ? (
             <div className="relative">
               <div className="absolute bottom-2 start-[15px] top-2 w-px bg-divider dark:bg-primary/20" />
-              {roomAlerts.map((alert, idx) => (
+              {roomAlerts.map((alert) => (
                 <div key={alert.id} className="relative flex gap-3 pb-3">
                   <div className="z-10 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-lg bg-primary-soft ring-2 ring-card dark:bg-primary/10 dark:ring-card">
                     <alert.icon size={12} className="text-primary dark:text-primary" />
@@ -275,9 +258,6 @@ export const NotificationsCenter = ({
                       <h4 className="truncate text-[11px] font-bold text-main dark:text-main">
                         {alert.title}
                       </h4>
-                      <span className="shrink-0 text-[9px] text-muted dark:text-dim">
-                        {idx === 0 ? 'الآن' : `منذ ${idx}${idx === 1 ? ' دقيقة' : ' دقائق'}`}
-                      </span>
                     </div>
                     <p className="line-clamp-1 text-[10px] text-muted dark:text-muted">
                       {alert.description}
@@ -311,7 +291,7 @@ export const NotificationsCenter = ({
               <div className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-lg bg-success-soft ring-2 ring-card dark:ring-card">
                 <Info size={14} className="text-success" />
               </div>
-              <div className="bg-success-soft/50 dark:bg-success/5 min-w-0 flex-1 rounded-xl border border-border p-3 dark:border-border">
+              <div className="min-w-0 flex-1 rounded-xl border border-border bg-success-soft p-3 dark:border-border dark:bg-success-soft">
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="text-[11px] font-bold text-success">كل الأنظمة تعمل</h3>
                   <span className="shrink-0 text-[9px] text-muted dark:text-dim">الآن</span>

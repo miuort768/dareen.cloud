@@ -68,7 +68,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
       />
 
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="border-border/20 rounded-xl border bg-background p-4">
+        <div className="rounded-xl border border-divider bg-background p-4">
           <FieldLabel>نقاط لكل جلسة</FieldLabel>
           <InputField
             type="number"
@@ -76,7 +76,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
             onChange={(e) => setPointsPerSession(e.target.value)}
           />
         </div>
-        <div className="border-border/20 rounded-xl border bg-background p-4">
+        <div className="rounded-xl border border-divider bg-background p-4">
           <FieldLabel>مكافأة التقييم</FieldLabel>
           <InputField
             type="number"
@@ -89,7 +89,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
       <div className="mb-6">
         <FieldLabel>حدود الشارات</FieldLabel>
         <div className="mt-1 grid grid-cols-1 gap-3 md:grid-cols-3">
-          <div className="border-border/20 rounded-xl border bg-background p-4">
+          <div className="rounded-xl border border-divider bg-background p-4">
             <div className="mb-2 flex items-center gap-2">
               <Star size={14} className="text-warning" />
               <span className="text-xs font-bold text-main">الشارة البرونزية</span>
@@ -100,7 +100,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
               onChange={(e) => setBadgeThreshold1(e.target.value)}
             />
           </div>
-          <div className="border-border/20 rounded-xl border bg-background p-4">
+          <div className="rounded-xl border border-divider bg-background p-4">
             <div className="mb-2 flex items-center gap-2">
               <Trophy size={14} className="text-info" />
               <span className="text-xs font-bold text-main">الشارة الفضية</span>
@@ -111,7 +111,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
               onChange={(e) => setBadgeThreshold2(e.target.value)}
             />
           </div>
-          <div className="border-border/20 rounded-xl border bg-background p-4">
+          <div className="rounded-xl border border-divider bg-background p-4">
             <div className="mb-2 flex items-center gap-2">
               <Award size={14} className="text-primary" />
               <span className="text-xs font-bold text-main">الشارة الذهبية</span>
@@ -141,7 +141,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
         />
       </div>
 
-      <div className="border-border/20 mt-6 flex justify-end border-t pt-5">
+      <div className="mt-6 flex justify-end border-t border-divider pt-5">
         <PrimaryBtn onClick={handleSave} loading={isSaving}>
           حفظ إعدادات المكافآت
         </PrimaryBtn>

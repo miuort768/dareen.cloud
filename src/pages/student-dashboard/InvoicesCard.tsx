@@ -48,7 +48,7 @@ export const InvoicesCard = () => {
   const totalPending = pending.reduce((sum, i) => sum + i.amount, 0)
 
   return (
-    <div className="rounded-3xl border border-border/50 shadow-sm bg-surface p-5 transition-colors duration-300 dark:border-primary/20 dark:bg-card">
+    <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card">
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">

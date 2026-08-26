@@ -36,13 +36,13 @@ export const PoliciesSettings = ({
     <SectionCard>
       <SectionTitle icon={Lock} label="حماية السجلات والقيود" sub="ضمانات النظام" />
       <div className="space-y-4">
-        <div className="border-border/20 rounded-xl border bg-background p-4">
+        <div className="rounded-xl border border-divider bg-background p-4">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               <p className="flex items-center gap-1.5 text-xs font-bold text-error">
                 <AlertCircle size={13} /> قفل التعديل بأثر رجعي
               </p>
-              <p className="text-error/70 mt-1.5 text-[11px] leading-relaxed">
+              <p className="mt-1.5 text-[11px] leading-relaxed text-error">
                 يمنع الموظفين من إضافة أو تعديل حصص في تواريخ قديمة لضمان دقة السجلات المالية.
               </p>
             </div>
@@ -57,7 +57,7 @@ export const PoliciesSettings = ({
           </div>
         </div>
 
-        <div className="border-border/20 border-t pt-3">
+        <div className="border-t border-divider pt-3">
           <p className="mb-3 flex items-center gap-1.5 text-xs font-bold text-primary">
             <Wallet size={13} /> سياسة حساب العمولات
           </p>
@@ -76,20 +76,20 @@ export const PoliciesSettings = ({
                   'rounded-xl border p-3.5 text-start transition-all',
                   teacherCommissionType === opt.id
                     ? 'border-primary bg-primary text-on-primary shadow-sm'
-                    : 'border-border/20 bg-background text-muted hover:border-primary/50',
+                    : 'border-divider bg-background text-muted hover:border-primary/50',
                 )}
               >
                 <p className="text-xs font-bold">{opt.label}</p>
                 <p
                   className={cn(
                     'mt-0.5 text-[11px]',
-                    teacherCommissionType === opt.id ? 'text-on-primary/60' : 'text-muted',
+                    teacherCommissionType === opt.id ? 'text-white/60' : 'text-muted',
                   )}
                 >
                   {opt.sub}
                 </p>
                 {teacherCommissionType === opt.id && (
-                  <CheckCircle2 size={12} className="text-on-primary/70 mt-1.5" />
+                  <CheckCircle2 size={12} className="mt-1.5 text-white/70" />
                 )}
               </button>
             ))}
@@ -101,9 +101,9 @@ export const PoliciesSettings = ({
     <SectionCard>
       <SectionTitle icon={Snowflake} label="سياسة الحضور والغياب" sub="آلية التجميد التلقائي" />
       <div className="space-y-4">
-        <div className="border-border/20 rounded-xl border bg-background p-4">
+        <div className="rounded-xl border border-divider bg-background p-4">
           <p className="mb-1 text-xs font-bold text-info">حد الغياب المسموح</p>
-          <p className="text-info/70 mb-3 text-[11px] leading-relaxed">
+          <p className="mb-3 text-[11px] leading-relaxed text-info">
             إذا تجاوز الطالب هذا العدد من مرات الغياب المتعاقبة، يتم تجميد اشتراكه تلقائياً.
           </p>
           <div className="flex items-center gap-3">
@@ -128,14 +128,14 @@ export const PoliciesSettings = ({
           </div>
         </div>
 
-        <div className="border-error/10 rounded-xl border bg-background p-4">
+        <div className="rounded-xl border border-error-soft bg-background p-4">
           <div className="mb-2 flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-error-soft">
               <Archive size={14} className="text-error" />
             </div>
             <div>
               <p className="text-xs font-bold text-error">إقفال الشهر المالي</p>
-              <p className="text-error/60 text-[11px]">منطقة الخطر</p>
+              <p className="text-[11px] text-error">منطقة الخطر</p>
             </div>
           </div>
           <p className="mb-3 text-[11px] leading-relaxed text-muted">

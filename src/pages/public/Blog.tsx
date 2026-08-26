@@ -302,7 +302,7 @@ export const Blog = () => {
             badge: 'مذكرة تأسيسية',
             icon: Zap,
             sourceText: 'text-warning hover:text-warning',
-            fileSizeBadge: 'bg-warning-light text-warning border-warning/50',
+            fileSizeBadge: 'bg-warning-light text-warning border-warning',
           }
         : {
             gradient: 'from-primary to-primary',
@@ -422,7 +422,7 @@ export const Blog = () => {
         >
           <div className="pointer-events-none absolute inset-0 z-0">
             <div className="absolute right-[-10%] top-[-15%] h-[60%] w-[60%] rounded-full bg-gradient-to-br from-primary/5 to-transparent blur-[140px]" />
-            <div className="from-info/3 absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr to-transparent blur-[120px]" />
+            <div className="absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr from-info-soft to-transparent blur-[120px]" />
           </div>
           {view === 'types' ? (
             <DesktopLibraryLanding

@@ -115,11 +115,11 @@ export const AAbdullah = () => {
           {...sectionDelay(2)}
           className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-primary-active p-6 text-main shadow-xl md:p-8"
         >
-          <div className="bg-accent-soft/50 absolute left-[-30px] top-[-30px] h-32 w-32 rounded-full" />
-          <div className="bg-accent-soft/40 absolute bottom-[-20px] right-[30%] h-24 w-24 rounded-full" />
+          <div className="absolute left-[-30px] top-[-30px] h-32 w-32 rounded-full bg-accent-soft" />
+          <div className="absolute bottom-[-20px] right-[30%] h-24 w-24 rounded-full bg-accent-soft" />
           <div className="relative z-10 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="bg-accent-soft/80 flex h-10 w-10 items-center justify-center rounded-xl backdrop-blur-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft backdrop-blur-sm">
                 <VTargetArrow size={20} className="text-accent dark:text-on-primary" />
               </div>
               <h2 className="text-lg font-semibold text-accent dark:text-on-primary">الرؤية</h2>
@@ -140,7 +140,7 @@ export const AAbdullah = () => {
               return (
                 <div
                   key={`item-${i}`}
-                  className="border-border/10 space-y-2 rounded-2xl border bg-white p-4 text-center shadow-sm dark:bg-card"
+                  className="space-y-2 rounded-2xl border border-divider bg-white p-4 text-center shadow-sm dark:bg-card"
                 >
                   <div
                     className={`mx-auto flex h-10 w-10 items-center justify-center rounded-xl ${v.bgClass}`}
@@ -161,7 +161,7 @@ export const AAbdullah = () => {
           className="space-y-4 rounded-none border-s-4 border-accent bg-white p-6 shadow-sm dark:bg-card md:p-8"
         >
           <div className="flex items-center gap-3">
-            <div className="bg-accent-soft/70 flex h-10 w-10 items-center justify-center rounded-xl">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
               <VHeart size={20} className="text-accent" />
             </div>
             <h2 className="text-lg font-semibold text-primary">
@@ -219,11 +219,11 @@ export const AAbdullah = () => {
           {...sectionDelay(5)}
           className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-primary-active p-6 text-main shadow-xl md:p-8"
         >
-          <div className="bg-accent-soft/40 absolute right-[-40px] top-[-40px] h-48 w-48 rounded-full" />
-          <div className="bg-accent-soft/20 absolute bottom-[-30px] left-[20%] h-36 w-36 rounded-full" />
-          <div className="bg-accent-soft/10 absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full" />
+          <div className="absolute right-[-40px] top-[-40px] h-48 w-48 rounded-full bg-accent-soft" />
+          <div className="absolute bottom-[-30px] left-[20%] h-36 w-36 rounded-full bg-accent-soft" />
+          <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-soft" />
           <div className="relative z-10 space-y-5">
-            <div className="bg-accent/15 border-accent/30 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold tracking-wide text-accent dark:text-on-primary">
+            <div className="inline-flex items-center gap-2 rounded-full border border-accent-soft bg-accent-soft px-4 py-1.5 text-xs font-bold tracking-wide text-accent dark:text-on-primary">
               <VHeart size={14} className="fill-current text-accent dark:text-on-primary" />
               <span>رسالتي لكم</span>
               <VHeart size={14} className="fill-current text-accent dark:text-on-primary" />

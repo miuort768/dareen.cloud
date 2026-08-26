@@ -478,17 +478,17 @@ export const TeacherInvoices = () => {
               const Icon = kpi.icon
               const gradientMap = {
                 primary: 'from-primary/20 to-primary/5',
-                success: 'from-success/20 to-success/5',
-                info: 'from-info/20 to-info/5',
-                error: 'from-error/20 to-error/5',
-                warning: 'from-warning/20 to-warning/5',
+                success: 'from-success-soft to-transparent',
+                info: 'from-info-soft to-transparent',
+                error: 'from-error-soft to-transparent',
+                warning: 'from-warning-soft to-transparent',
               }
               const iconBgMap = {
                 primary: 'bg-primary/10 text-primary',
-                success: 'bg-success/10 text-success',
-                info: 'bg-info/10 text-info',
-                error: 'bg-error/10 text-error',
-                warning: 'bg-warning/10 text-warning',
+                success: 'bg-success-soft text-success',
+                info: 'bg-info-soft text-info',
+                error: 'bg-error-soft text-error',
+                warning: 'bg-warning-soft text-warning',
               }
               return (
                 <motion.div
@@ -498,7 +498,7 @@ export const TeacherInvoices = () => {
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'border-border/50 relative overflow-hidden rounded-xl border bg-gradient-to-br p-4',
+                    'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
                     gradientMap[kpi.accent],
                   )}
                 >
@@ -533,7 +533,7 @@ export const TeacherInvoices = () => {
           transition={{ delay: 0.2 }}
         >
           <div className="mb-4 flex flex-wrap items-center gap-3">
-            <div className="border-border/30 flex items-center gap-2 rounded-xl border bg-card px-3 py-2">
+            <div className="flex items-center gap-2 rounded-xl border border-divider bg-card px-3 py-2">
               <input
                 aria-label="تاريخ البداية"
                 type="date"
@@ -557,13 +557,13 @@ export const TeacherInvoices = () => {
                 placeholder="بحث باسم المعلمة..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="border-border/30 placeholder:text-muted/60 flex-1 rounded-xl border bg-card px-3.5 py-2 text-xs font-bold text-main transition-all focus:border-primary focus:outline-none"
+                className="flex-1 rounded-xl border border-divider bg-card px-3.5 py-2 text-xs font-bold text-dim text-main transition-all focus:border-primary focus:outline-none"
               />
               <select
                 aria-label="فلترة الحالة"
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="border-border/30 cursor-pointer appearance-none rounded-xl border bg-card px-3 py-2 text-xs font-bold text-main transition-all focus:border-primary focus:outline-none"
+                className="cursor-pointer appearance-none rounded-xl border border-divider bg-card px-3 py-2 text-xs font-bold text-main transition-all focus:border-primary focus:outline-none"
               >
                 <option value="all">الكل</option>
                 <option value={INVOICE_STATUS.PAID}>مدفوعة</option>

@@ -1,43 +1,45 @@
-import { Star, Clock } from 'lucide-react';
-import type { PointLog } from './types';
+import { Star, Clock } from 'lucide-react'
+import type { PointLog } from './types'
 
 interface RecentActivityProps {
-    pointLogs: PointLog[];
+  pointLogs: PointLog[]
 }
 
 export const RecentActivity = ({ pointLogs }: RecentActivityProps) => {
-    const recent = pointLogs.slice(0, 5);
+  const recent = pointLogs.slice(0, 5)
 
-    return (
-        <div className="bg-surface dark:bg-card border border-border/50 shadow-sm dark:border-primary/20 rounded-3xl p-5 transition-colors duration-300">
-            <h3 className="text-sm font-bold text-main dark:text-main mb-4">آخر النشاطات</h3>
+  return (
+    <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card">
+      <h3 className="mb-4 text-sm font-bold text-main dark:text-main">آخر النشاطات</h3>
 
-            <div className="relative">
-                <div className="absolute top-0 bottom-0 end-[11px] w-px bg-border dark:bg-border" />
+      <div className="relative">
+        <div className="absolute bottom-0 end-[11px] top-0 w-px bg-border dark:bg-border" />
 
-                <div className="space-y-3">
-                    {recent.map((log, i) => (
-                        <div key={log.id || `log-${i}`} className="flex items-start gap-3 relative">
-                            <div className="w-6 h-6 rounded-lg bg-success-soft dark:bg-success/10 flex items-center justify-center shrink-0 z-10">
-                                <Star size={11} className="text-success dark:text-success" />
-                            </div>
-                            <div className="flex-1 min-w-0 flex items-center justify-between gap-2">
-                                <div className="min-w-0">
-                                    <p className="text-xs font-bold text-main dark:text-main truncate">{log.action}</p>
-                                    {log.date && (
-                                        <p className="text-[11px] text-muted dark:text-muted flex items-center gap-1 mt-0.5">
-                                            <Clock size={9} /> {log.date}
-                                        </p>
-                                    )}
-                                </div>
-                                <span className="text-xs font-bold text-success bg-success-soft dark:bg-success/10 px-2 py-0.5 rounded-lg shrink-0">
-                                    +{log.amount}
-                                </span>
-                            </div>
-                        </div>
-                    ))}
+        <div className="space-y-3">
+          {recent.map((log, i) => (
+            <div key={log.id || `log-${i}`} className="relative flex items-start gap-3">
+              <div className="z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-success-soft dark:bg-success-soft">
+                <Star size={11} className="text-success dark:text-success" />
+              </div>
+              <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="truncate text-xs font-bold text-main dark:text-main">
+                    {log.action}
+                  </p>
+                  {log.date && (
+                    <p className="mt-0.5 flex items-center gap-1 text-[11px] text-muted dark:text-muted">
+                      <Clock size={9} /> {log.date}
+                    </p>
+                  )}
                 </div>
+                <span className="shrink-0 rounded-lg bg-success-soft px-2 py-0.5 text-xs font-bold text-success dark:bg-success-soft">
+                  +{log.amount}
+                </span>
+              </div>
             </div>
+          ))}
         </div>
-    );
-};
+      </div>
+    </div>
+  )
+}

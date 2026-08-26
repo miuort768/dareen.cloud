@@ -25,7 +25,7 @@ const processContent = (text: unknown, alt?: string): string => {
     const trimmed = line.trim()
     const imgRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|svg))$/i
     if (imgRegex.test(trimmed)) {
-      return `<img src="${trimmed}" alt="${alt || ''}" loading="lazy" class="w-full h-auto my-8" onerror="this.style.display='none'" />`
+      return `<img src="${trimmed}"alt="${alt || ''}"loading="lazy"class="w-full h-auto my-8"onerror="this.style.display='none'" />`
     }
     return line
   })

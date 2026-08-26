@@ -275,7 +275,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                 className={cn(
                   'mb-4 flex h-16 w-16 items-center justify-center rounded-2xl',
                   isDestructive
-                    ? 'dark:bg-error/10 bg-error-light text-error'
+                    ? 'bg-error-light text-error dark:bg-error-soft'
                     : 'bg-primary-soft text-primary dark:bg-primary/10',
                 )}
               >
@@ -294,7 +294,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                   className={cn(
                     'h-12 w-full rounded-xl text-sm font-bold transition-all active:scale-[0.98]',
                     isDestructive
-                      ? 'shadow-error/20 bg-error text-on-error shadow-lg hover:bg-error'
+                      ? 'bg-error text-on-error shadow-lg hover:bg-error'
                       : 'bg-primary text-on-primary shadow-lg shadow-primary/20 hover:bg-primary',
                   )}
                 >

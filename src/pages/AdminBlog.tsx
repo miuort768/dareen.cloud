@@ -259,24 +259,24 @@ export const AdminBlog = () => {
         label: 'المميزة',
         value: posts.filter((p) => p.isFeatured).length,
         icon: Star,
-        gradient: 'from-warning/20 to-warning/5',
-        iconBg: 'bg-warning/10 text-warning',
+        gradient: 'from-warning-soft to-transparent',
+        iconBg: 'bg-warning-soft text-warning',
         accent: 'bg-warning',
       },
       {
         label: 'إجمالي المشاهدات',
         value: formatViews(posts.reduce((s, p) => s + (p.views || 0), 0)),
         icon: Eye,
-        gradient: 'from-success/20 to-success/5',
-        iconBg: 'bg-success/10 text-success',
+        gradient: 'from-success-soft to-transparent',
+        iconBg: 'bg-success-soft text-success',
         accent: 'bg-success',
       },
       {
         label: 'فوق مليون مشاهدة',
         value: posts.filter((p) => (p.views || 0) >= 1_000_000).length,
         icon: FileText,
-        gradient: 'from-info/20 to-info/5',
-        iconBg: 'bg-info/10 text-info',
+        gradient: 'from-info-soft to-transparent',
+        iconBg: 'bg-info-soft text-info',
         accent: 'bg-info',
       },
     ],
@@ -480,7 +480,7 @@ export const AdminBlog = () => {
                   className={cn(
                     'flex h-11 w-11 items-center justify-center rounded-xl border text-main shadow-elevation-2 transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                     action.label === 'حذف الكل'
-                      ? 'border-error/30 bg-error-soft text-error hover:bg-error hover:text-on-error'
+                      ? 'border-error-soft bg-error-soft text-error hover:bg-error hover:text-on-error'
                       : 'border-border bg-card hover:bg-hover',
                   )}
                 >

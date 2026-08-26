@@ -38,7 +38,7 @@ export const DeleteUserModal = ({
           </div>
         </div>
         <p className="mb-4 text-xs text-muted">
-          هل أنت متأكد من حذف "<span className="font-bold text-main">{target.username}</span>"؟
+          هل أنت متأكد من حذف"<span className="font-bold text-main">{target.username}</span>"؟
         </p>
         <div className="flex gap-2">
           <SecondaryBtn onClick={() => setShowDeleteModal(false)} className="flex-1">

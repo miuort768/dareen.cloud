@@ -88,7 +88,7 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
               transition={{ delay: i * 0.05, duration: 0.3 }}
               className={cn(
                 'flex h-full w-full flex-col items-center gap-3 rounded-2xl p-4 text-center',
-                'border-border/50 border bg-card dark:border-border dark:bg-card',
+                'border border-border bg-card dark:border-border dark:bg-card',
                 'hover:border-primary/30 hover:shadow-sm dark:hover:border-border',
                 'active:scale-[0.97]',
                 'group transition-all duration-200',
@@ -127,6 +127,8 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
           <div className="grid grid-cols-2 gap-3 md:hidden">
             {actions.map((action, i) => {
               const Icon = action.icon
+              if (!showQuickLinks) return null
+
               return (
                 <button
                   key={`action-${i}`}
@@ -139,7 +141,7 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
                     transition={{ delay: i * 0.05, duration: 0.3 }}
                     className={cn(
                       'flex w-full items-center gap-3 rounded-2xl p-3.5',
-                      'border-border/50 border bg-surface dark:border-border dark:bg-card',
+                      'border border-border bg-surface dark:border-border dark:bg-card',
                       'group transition-all duration-200 active:scale-[0.97]',
                     )}
                   >

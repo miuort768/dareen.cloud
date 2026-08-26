@@ -108,7 +108,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
         onClick={onClose}
       ></div>
 
-      <div className="border-error/50 relative w-full max-w-md overflow-hidden rounded-none border-2 bg-card shadow-elevation-3 duration-200 animate-in zoom-in-95 dark:bg-card">
+      <div className="relative w-full max-w-md overflow-hidden rounded-none border-2 border-error bg-card shadow-elevation-3 duration-200 animate-in zoom-in-95 dark:bg-card">
         {/* Accent bar */}
         <div className={cn('h-1 w-full', isDestructive ? 'bg-error' : 'bg-primary')}></div>
 
@@ -128,7 +128,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
               className={cn(
                 'mb-5 flex h-16 w-16 items-center justify-center rounded-none',
                 isDestructive
-                  ? 'bg-error/10 dark:bg-error/15 text-error'
+                  ? 'bg-error-soft text-error dark:bg-error-soft'
                   : 'bg-primary/10 text-primary dark:bg-primary/15',
               )}
             >
@@ -169,7 +169,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                     className={cn(
                       'w-full rounded-none border bg-surface py-2.5 pe-3 ps-9 text-xs font-bold text-main outline-none transition-all focus:ring-2',
                       passwordError
-                        ? 'focus:ring-error/20 border-error focus:border-error'
+                        ? 'border-error focus:border-error focus:ring-error-soft'
                         : 'border-border focus:border-primary focus:ring-focus',
                     )}
                   />

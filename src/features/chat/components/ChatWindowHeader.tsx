@@ -100,7 +100,7 @@ export const ChatWindowHeader = ({
         <div className="flex items-center gap-5 text-muted">
           <div
             className={cn(
-              'dark:bg-background/20 flex items-center rounded-full bg-white/10 px-3 py-1 transition-all',
+              'flex items-center rounded-full bg-white/10 px-3 py-1 transition-all dark:bg-background',
               showSearchBar ? 'w-40 opacity-100 md:w-64' : 'w-0 overflow-hidden p-0 opacity-0',
             )}
           >

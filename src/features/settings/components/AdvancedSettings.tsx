@@ -84,7 +84,7 @@ export const AdvancedSettings = ({
             <button
               key={tag}
               onClick={() => setLocalWhatsappTemplate((prev) => prev + ' ' + tag)}
-              className="border-border/20 rounded-lg border bg-background px-3 py-1.5 font-mono text-[11px] font-bold text-muted transition-all hover:bg-info-soft hover:text-info"
+              className="rounded-lg border border-divider bg-background px-3 py-1.5 font-mono text-[11px] font-bold text-muted transition-all hover:bg-info-soft hover:text-info"
             >
               {tag}
             </button>
@@ -110,7 +110,7 @@ export const AdvancedSettings = ({
         sub="إعدادات التذكير قبل الحصة"
       />
       <div className="space-y-3">
-        <div className="border-border/20 rounded-xl border bg-background p-4">
+        <div className="rounded-xl border border-divider bg-background p-4">
           <FieldLabel>إرسال تذكير قبل الحصة بـ (دقائق)</FieldLabel>
           <InputField
             type="number"
@@ -157,7 +157,7 @@ export const AdvancedSettings = ({
         </PrimaryBtn>
       </div>
 
-      <div className="border-border/20 mt-4 border-t pt-4">
+      <div className="mt-4 border-t border-divider pt-4">
         <DangerBtn
           className="w-full"
           onClick={() =>

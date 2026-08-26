@@ -143,8 +143,8 @@ export const StartLiveSessionDialog = ({
               </button>
             </div>
 
-            <div className="dark:bg-success/10 border-success/30 flex flex-col items-center gap-3 rounded-2xl border bg-success-soft p-5 text-center">
-              <div className="bg-success/15 flex h-14 w-14 items-center justify-center rounded-2xl">
+            <div className="flex flex-col items-center gap-3 rounded-2xl border border-success-soft bg-success-soft p-5 text-center dark:bg-success-soft">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-success-soft">
                 <CheckCircle2 size={26} className="text-success" />
               </div>
               <p className="text-[13px] font-bold leading-relaxed text-main dark:text-main">
@@ -317,7 +317,7 @@ export const StartLiveSessionDialog = ({
                     href="https://meet.google.com/new"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-success/10 border-success/20 hover:bg-success/20 flex items-center gap-1 whitespace-nowrap rounded-xl border px-3 py-3 text-[11px] font-bold text-success transition-colors"
+                    className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors hover:bg-success"
                     title="إنشاء رابط Google Meet جديد"
                   >
                     <LinkIcon size={14} /> إنشاء

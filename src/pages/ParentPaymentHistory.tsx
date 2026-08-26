@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Search,
@@ -41,39 +41,39 @@ const PARTICLES = Array.from({ length: 8 }, (_, i) => ({
 
 const statusConfig = {
   paid: {
-    label: 'ظ…ط¯ظپظˆط¹ط©',
+    label: 'مدفوعة',
     icon: CheckCircle,
     textCls: 'text-success',
-    bgCls: 'bg-success/10 dark:bg-success/15',
-    borderCls: 'border-success/30 dark:border-success/20',
+    bgCls: 'bg-success-soft dark:bg-success-soft',
+    borderCls: 'border-success-soft dark:border-success-soft',
   },
   pending: {
-    label: 'ظ…ط¹ظ„ظ‚ط©',
+    label: 'معلقة',
     icon: Clock,
     textCls: 'text-warning',
-    bgCls: 'bg-warning/10 dark:bg-warning/15',
-    borderCls: 'border-warning/30 dark:border-warning/20',
+    bgCls: 'bg-warning-soft dark:bg-warning-soft',
+    borderCls: 'border-warning-soft dark:border-warning-soft',
   },
   overdue: {
-    label: 'ظ…طھط£ط®ط±ط©',
+    label: 'متأخرة',
     icon: AlertCircle,
     textCls: 'text-error',
-    bgCls: 'bg-error/10 dark:bg-error/15',
-    borderCls: 'border-error/30 dark:border-error/20',
+    bgCls: 'bg-error-soft dark:bg-error-soft',
+    borderCls: 'border-error-soft dark:border-error-soft',
   },
 } as const
 
 type FilterStatus = 'all' | 'paid' | 'pending' | 'overdue'
 
 const STATUS_PILLS: { key: FilterStatus; label: string }[] = [
-  { key: 'all', label: 'ط§ظ„ظƒظ„' },
-  { key: 'paid', label: 'ظ…ط¯ظپظˆط¹ط©' },
-  { key: 'pending', label: 'ظ…ط¹ظ„ظ‚ط©' },
-  { key: 'overdue', label: 'ظ…طھط£ط®ط±ط©' },
+  { key: 'all', label: 'الكل' },
+  { key: 'paid', label: 'مدفوعة' },
+  { key: 'pending', label: 'معلقة' },
+  { key: 'overdue', label: 'متأخرة' },
 ]
 
 const HeroSkeleton = () => (
-  <div className="from-success/10 via-success/[6%] border-border/60 relative overflow-hidden border-b bg-gradient-to-br to-background dark:border-white/[0.06] dark:from-surface dark:via-hover dark:to-surface">
+  <div className="via-success/[6%] relative overflow-hidden border-b border-border bg-gradient-to-br from-success-soft to-background dark:border-white/[0.06] dark:from-surface dark:via-hover dark:to-surface">
     <div className="mx-auto max-w-page px-2.5 pb-8 pt-4 sm:px-4">
       <div className="mb-6 flex items-center gap-2.5">
         <Skeleton className="h-8 w-8 rounded-xl" />
@@ -101,7 +101,7 @@ const KpiSkeleton = () => (
     {[1, 2, 3].map((i) => (
       <div
         key={i}
-        className="dark:bg-card/80 rounded-2xl border border-border bg-card p-3.5 shadow-sm dark:border-white/[0.06]"
+        className="rounded-2xl border border-border bg-card p-3.5 shadow-sm dark:border-white/[0.06] dark:bg-card"
       >
         <div className="flex items-start gap-3">
           <Skeleton className="h-8 w-8 shrink-0 rounded-xl" />
@@ -121,7 +121,7 @@ const ListSkeleton = () => (
     {[1, 2, 3].map((i) => (
       <div
         key={i}
-        className="dark:bg-card/80 rounded-2xl border border-border bg-card p-4 shadow-sm dark:border-white/[0.06]"
+        className="rounded-2xl border border-border bg-card p-4 shadow-sm dark:border-white/[0.06] dark:bg-card"
       >
         <div className="mb-3 flex items-center justify-between">
           <Skeleton className="h-3 w-28 rounded-lg" />
@@ -142,7 +142,7 @@ const ListSkeleton = () => (
 
 export const ParentPaymentHistory = () => {
   useEffect(() => {
-    document.title = 'ط³ط¬ظ„ ط§ظ„ط¯ظپط¹ط§طھ | ظˆظ„ظٹ ط§ظ„ط£ظ…ط±'
+    document.title = 'سجل الدفعات | ولي الأمر'
   }, [])
   const navigate = useNavigate()
   const showNotification = useShowNotification()
@@ -171,7 +171,7 @@ export const ParentPaymentHistory = () => {
         setInvoices(allInv.filter((inv) => childIds.has(inv.studentId)))
       } catch (error) {
         console.error('Error fetching payment data:', error)
-        if (!cancelled) showNotification('ظپط´ظ„ طھط­ظ…ظٹظ„ ط³ط¬ظ„ ط§ظ„ط¯ظپط¹ط§طھ', 'error')
+        if (!cancelled) showNotification('فشل تحميل سجل الدفعات', 'error')
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -231,12 +231,12 @@ export const ParentPaymentHistory = () => {
       dir="rtl"
     >
       {/* Hero */}
-      <div className="from-success/10 via-success/[6%] border-border/60 relative overflow-hidden border-b bg-gradient-to-br to-background dark:border-white/[0.06] dark:from-surface dark:via-hover dark:to-surface">
+      <div className="via-success/[6%] relative overflow-hidden border-b border-border bg-gradient-to-br from-success-soft to-background dark:border-white/[0.06] dark:from-surface dark:via-hover dark:to-surface">
         <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-20">
           {PARTICLES.map((p) => (
             <motion.div
               key={p.id}
-              className="bg-success/30 absolute rounded-full"
+              className="absolute rounded-full bg-success-soft"
               style={{ left: `${p.x}%`, top: `${p.y}%`, width: p.size, height: p.size }}
               animate={{ y: [0, -30, 0], opacity: [0.1, 0.45, 0.1] }}
               transition={{
@@ -255,18 +255,16 @@ export const ParentPaymentHistory = () => {
                 <Wallet size={16} />
               </div>
               <div>
-                <h1 className="text-sm font-bold text-main dark:text-main">
-                  ط³ط¬ظ„ ط§ظ„ط¯ظپط¹ط§طھ
-                </h1>
-                <p className="dark:text-main/40 text-[8px] text-muted">
-                  ظپظˆط§طھظٹط± ط£ط¨ظ†ط§ط¦ظƒ ظˆظ…ط¯ظپظˆط¹ط§طھظƒ
+                <h1 className="text-sm font-bold text-main dark:text-main">سجل الدفعات</h1>
+                <p className="text-[8px] text-muted dark:text-muted">
+                  متابعة فواتير ومستحقات أبنائك
                 </p>
               </div>
             </div>
             <button
               onClick={() => navigate(-1)}
-              className="dark:text-main/40 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-muted transition-all hover:bg-surface hover:text-main dark:border-white/[0.06] dark:bg-white/[0.06] dark:hover:bg-white/[0.1] dark:hover:text-white"
-              aria-label="ط±ط¬ظˆط¹"
+              className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-muted transition-all hover:bg-surface hover:text-main dark:border-white/[0.06] dark:bg-white/[0.06] dark:text-muted dark:hover:bg-white/[0.1] dark:hover:text-white"
+              aria-label="رجوع"
             >
               <ArrowLeft size={14} />
             </button>
@@ -278,9 +276,7 @@ export const ParentPaymentHistory = () => {
             transition={{ delay: 0.1 }}
             className="py-4 text-center"
           >
-            <p className="dark:text-main/40 mb-1 text-[9px] font-bold text-muted">
-              ط¥ط¬ظ…ط§ظ„ظٹ ط§ظ„ظپظˆط§طھظٹط±
-            </p>
+            <p className="mb-1 text-[9px] font-bold text-muted dark:text-muted">إجمالي الفواتير</p>
             <motion.p
               initial={{ scale: 0.9 }}
               animate={{ scale: 1 }}
@@ -288,30 +284,29 @@ export const ParentPaymentHistory = () => {
               className="text-3xl font-bold tabular-nums tracking-tight text-main dark:text-main"
             >
               {stats.total.toLocaleString()}{' '}
-              <span className="dark:text-main/40 me-1 text-sm font-bold text-muted">
+              <span className="me-1 text-sm font-bold text-muted dark:text-muted">
                 {reportCurrency}
               </span>
             </motion.p>
             <div className="mt-3 flex items-center justify-center gap-3">
               <div className="flex items-center gap-1">
                 <CheckCircle size={10} className="text-success" />
-                <span className="dark:text-main/40 text-[8px] font-bold text-muted">
-                  ظ…ط¯ظپظˆط¹ط©: <span className="text-main dark:text-main">{stats.paidCount}</span>
+                <span className="text-[8px] font-bold text-muted dark:text-muted">
+                  مدفوعة: <span className="text-main dark:text-main">{stats.paidCount}</span>
                 </span>
               </div>
-              <div className="bg-border/60 h-3 w-px dark:bg-white/10" />
+              <div className="h-3 w-px bg-divider dark:bg-white/10" />
               <div className="flex items-center gap-1">
                 <Clock size={10} className="text-warning" />
-                <span className="dark:text-main/40 text-[8px] font-bold text-muted">
-                  ظ…ط¹ظ„ظ‚ط©: <span className="text-main dark:text-main">{stats.pendingCount}</span>
+                <span className="text-[8px] font-bold text-muted dark:text-muted">
+                  معلقة: <span className="text-main dark:text-main">{stats.pendingCount}</span>
                 </span>
               </div>
-              <div className="bg-border/60 h-3 w-px dark:bg-white/10" />
+              <div className="h-3 w-px bg-divider dark:bg-white/10" />
               <div className="flex items-center gap-1">
                 <AlertCircle size={10} className="text-error" />
-                <span className="dark:text-main/40 text-[8px] font-bold text-muted">
-                  ظ…طھط£ط®ط±ط©:{' '}
-                  <span className="text-main dark:text-main">{stats.overdueCount}</span>
+                <span className="text-[8px] font-bold text-muted dark:text-muted">
+                  متأخرة: <span className="text-main dark:text-main">{stats.overdueCount}</span>
                 </span>
               </div>
             </div>
@@ -330,21 +325,21 @@ export const ParentPaymentHistory = () => {
         >
           {[
             {
-              title: 'ظ…ط¯ظپظˆط¹ط©',
+              title: 'مدفوعة',
               value: stats.paid,
               count: stats.paidCount,
               icon: CheckCircle,
               accent: 'success' as const,
             },
             {
-              title: 'ظ…ط¹ظ„ظ‚ط©',
+              title: 'معلقة',
               value: stats.pending,
               count: stats.pendingCount,
               icon: Clock,
               accent: 'warning' as const,
             },
             {
-              title: 'ظ…طھط£ط®ط±ط©',
+              title: 'متأخرة',
               value: stats.overdue,
               count: stats.overdueCount,
               icon: AlertCircle,
@@ -352,21 +347,22 @@ export const ParentPaymentHistory = () => {
             },
           ].map((kpi) => {
             const gradients = {
-              success: 'from-success/20 to-success/5 dark:from-surface dark:to-transparent',
-              warning: 'from-warning/20 to-warning/5 dark:from-primary-soft dark:to-transparent',
-              error: 'from-error/20 to-error/5 dark:from-error-soft dark:to-transparent',
+              success: 'from-success-soft to-transparent dark:from-surface dark:to-transparent',
+              warning:
+                'from-warning-soft to-transparent dark:from-primary-soft dark:to-transparent',
+              error: 'from-error-soft to-transparent dark:from-error-soft dark:to-transparent',
             }
             const iconBg = {
-              success: 'bg-success/10 text-success dark:bg-success/15 dark:text-success',
-              warning: 'bg-warning/10 text-warning dark:bg-warning/15 dark:text-warning',
-              error: 'bg-error/10 text-error dark:bg-error/15 dark:text-error',
+              success: 'bg-success-soft text-success dark:bg-success-soft dark:text-success',
+              warning: 'bg-warning-soft text-warning dark:bg-warning-soft dark:text-warning',
+              error: 'bg-error-soft text-error dark:bg-error-soft dark:text-error',
             }
             const Icon = kpi.icon
             return (
               <motion.div
                 key={kpi.title}
                 whileHover={{ scale: 1.01, y: -1 }}
-                className="dark:bg-card/80 relative overflow-hidden rounded-2xl border border-border bg-card p-3.5 shadow-sm transition-all hover:shadow-md dark:border-white/[0.06]"
+                className="relative overflow-hidden rounded-2xl border border-border bg-card p-3.5 shadow-sm transition-all hover:shadow-md dark:border-white/[0.06] dark:bg-card"
               >
                 <div
                   className={`absolute inset-0 bg-gradient-to-br opacity-[0.03] ${gradients[kpi.accent]}`}
@@ -381,15 +377,15 @@ export const ParentPaymentHistory = () => {
                     <Icon size={14} />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="dark:text-main/40 text-[9px] font-bold text-muted">{kpi.title}</p>
+                    <p className="text-[9px] font-bold text-muted dark:text-muted">{kpi.title}</p>
                     <p className="mt-0.5 text-sm font-bold tabular-nums leading-none text-main dark:text-main">
                       {kpi.value.toLocaleString()}{' '}
-                      <span className="dark:text-main/40 text-[8px] font-bold text-muted">
+                      <span className="text-[8px] font-bold text-muted dark:text-muted">
                         {reportCurrency}
                       </span>
                     </p>
-                    <p className="dark:text-main/40 mt-1 text-[8px] font-bold text-muted">
-                      {kpi.count} ظپط§طھظˆط±ط©
+                    <p className="mt-1 text-[8px] font-bold text-muted dark:text-muted">
+                      {kpi.count} فاتورة
                     </p>
                   </div>
                 </div>
@@ -416,7 +412,7 @@ export const ParentPaymentHistory = () => {
                   className={`rounded-xl px-3 py-1.5 text-[10px] font-bold transition-all ${
                     active
                       ? 'bg-gradient-to-l from-primary to-primary-deep text-on-primary shadow-sm dark:from-primary dark:to-accent'
-                      : 'dark:text-main/40 border border-border bg-card text-muted hover:bg-surface dark:border-white/[0.06] dark:bg-white/[0.06] dark:hover:bg-white/[0.1]'
+                      : 'border border-border bg-card text-muted hover:bg-surface dark:border-white/[0.06] dark:bg-white/[0.06] dark:text-muted dark:hover:bg-white/[0.1]'
                   }`}
                 >
                   {pill.label}
@@ -434,10 +430,10 @@ export const ParentPaymentHistory = () => {
                   className={`whitespace-nowrap rounded-xl px-2.5 py-1.5 text-[10px] font-bold transition-all ${
                     filterChild === 'all'
                       ? 'bg-gradient-to-l from-primary to-primary-deep text-on-primary shadow-sm dark:from-primary dark:to-accent'
-                      : 'dark:text-main/40 border border-border bg-card text-muted hover:bg-surface dark:border-white/[0.06] dark:bg-white/[0.06] dark:hover:bg-white/[0.1]'
+                      : 'border border-border bg-card text-muted hover:bg-surface dark:border-white/[0.06] dark:bg-white/[0.06] dark:text-muted dark:hover:bg-white/[0.1]'
                   }`}
                 >
-                  ط§ظ„ظƒظ„
+                  الكل
                 </button>
                 {children.map((c) => (
                   <button
@@ -446,7 +442,7 @@ export const ParentPaymentHistory = () => {
                     className={`whitespace-nowrap rounded-xl px-2.5 py-1.5 text-[10px] font-bold transition-all ${
                       filterChild === c.id
                         ? 'bg-gradient-to-l from-primary to-primary-deep text-on-primary shadow-sm dark:from-primary dark:to-accent'
-                        : 'dark:text-main/40 border border-border bg-card text-muted hover:bg-surface dark:border-white/[0.06] dark:bg-white/[0.06] dark:hover:bg-white/[0.1]'
+                        : 'border border-border bg-card text-muted hover:bg-surface dark:border-white/[0.06] dark:bg-white/[0.06] dark:text-muted dark:hover:bg-white/[0.1]'
                     }`}
                   >
                     {c.name}
@@ -456,12 +452,12 @@ export const ParentPaymentHistory = () => {
             )}
             <div className="relative flex-1">
               <Search
-                className="dark:text-main/40 absolute start-3 top-1/2 -translate-y-1/2 text-muted"
+                className="absolute start-3 top-1/2 -translate-y-1/2 text-muted dark:text-muted"
                 size={12}
               />
               <input
-                aria-label="ط¨ط­ط«"
-                placeholder="ط¨ط­ط«..."
+                aria-label="بحث"
+                placeholder="بحث..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full rounded-xl border border-border bg-card py-2 pe-3 ps-8 text-[10px] font-bold text-main outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 dark:border-white/[0.06] dark:bg-white/[0.06] dark:text-main dark:placeholder:text-white/30"
@@ -475,32 +471,32 @@ export const ParentPaymentHistory = () => {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="dark:bg-card/80 hidden overflow-hidden rounded-2xl border border-border bg-card shadow-sm dark:border-white/[0.06] md:block"
+          className="hidden overflow-hidden rounded-2xl border border-border bg-card shadow-sm dark:border-white/[0.06] dark:bg-card md:block"
         >
           <table className="w-full border-collapse text-start">
             <thead>
-              <tr className="border-border/40 border-b bg-surface dark:border-white/[0.06] dark:bg-white/[0.04]">
-                <th className="dark:text-main/40 px-4 py-3 text-start text-[8px] font-bold text-muted">
-                  ط§ظ„ط§ط¨ظ†
+              <tr className="border-b border-divider bg-surface dark:border-white/[0.06] dark:bg-white/[0.04]">
+                <th className="px-4 py-3 text-start text-[8px] font-bold text-muted dark:text-muted">
+                  الطالب
                 </th>
-                <th className="dark:text-main/40 px-4 py-3 text-start text-[8px] font-bold text-muted">
-                  ط§ظ„ط¨ظٹط§ظ†
+                <th className="px-4 py-3 text-start text-[8px] font-bold text-muted dark:text-muted">
+                  الوصف
                 </th>
-                <th className="dark:text-main/40 px-4 py-3 text-center text-[8px] font-bold text-muted">
-                  ط§ظ„ظ…ط¨ظ„ط؛
+                <th className="px-4 py-3 text-center text-[8px] font-bold text-muted dark:text-muted">
+                  المبلغ
                 </th>
-                <th className="dark:text-main/40 px-4 py-3 text-center text-[8px] font-bold text-muted">
-                  ط§ظ„طھط§ط±ظٹط®
+                <th className="px-4 py-3 text-center text-[8px] font-bold text-muted dark:text-muted">
+                  التاريخ
                 </th>
-                <th className="dark:text-main/40 px-4 py-3 text-center text-[8px] font-bold text-muted">
-                  ط§ظ„ط§ط³طھط­ظ‚ط§ظ‚
+                <th className="px-4 py-3 text-center text-[8px] font-bold text-muted dark:text-muted">
+                  الحالة
                 </th>
-                <th className="dark:text-main/40 px-4 py-3 text-center text-[8px] font-bold text-muted">
-                  ط§ظ„ط­ط§ظ„ط©
+                <th className="px-4 py-3 text-center text-[8px] font-bold text-muted dark:text-muted">
+                  تاريخ الاستحقاق
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-border/40 divide-y dark:divide-white/[0.06]">
+            <tbody className="divide-y divide-divider dark:divide-white/[0.06]">
               <AnimatePresence>
                 {filteredInvoices.length > 0 ? (
                   filteredInvoices.map((inv, i) => {
@@ -513,7 +509,7 @@ export const ParentPaymentHistory = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -6 }}
                         transition={{ delay: i * 0.03 }}
-                        className="hover:bg-surface/50 transition-colors dark:hover:bg-white/[0.03]"
+                        className="transition-colors hover:bg-surface dark:hover:bg-white/[0.03]"
                       >
                         <td className="px-4 py-3">
                           <span className="text-[10px] font-bold text-main dark:text-main">
@@ -527,14 +523,14 @@ export const ParentPaymentHistory = () => {
                         </td>
                         <td className="px-4 py-3 text-center font-mono text-[10px] font-bold tabular-nums text-main dark:text-main">
                           {inv.amount.toLocaleString()}{' '}
-                          <span className="dark:text-main/40 text-[8px] text-muted">
+                          <span className="text-[8px] text-muted dark:text-muted">
                             {inv.currency || CURRENCY_SYMBOL}
                           </span>
                         </td>
-                        <td className="dark:text-main/40 px-4 py-3 text-center text-[8px] text-muted">
+                        <td className="px-4 py-3 text-center text-[8px] text-muted dark:text-muted">
                           {inv.date}
                         </td>
-                        <td className="dark:text-main/40 px-4 py-3 text-center text-[8px] text-muted">
+                        <td className="px-4 py-3 text-center text-[8px] text-muted dark:text-muted">
                           {inv.dueDate}
                         </td>
                         <td className="px-4 py-3 text-center">
@@ -554,10 +550,8 @@ export const ParentPaymentHistory = () => {
                       <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary">
                         <FileText size={18} />
                       </div>
-                      <p className="dark:text-main/40 text-[10px] font-bold text-muted">
-                        {noResults
-                          ? 'ظ„ط§ طھظˆط¬ط¯ ظ†طھط§ط¦ط¬ ظ…ط·ط§ط¨ظ‚ط©'
-                          : 'ظ„ط§ طھظˆط¬ط¯ ظپظˆط§طھظٹط± ط¨ط¹ط¯'}
+                      <p className="text-[10px] font-bold text-muted dark:text-muted">
+                        {noResults ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
                       </p>
                     </td>
                   </tr>
@@ -581,7 +575,7 @@ export const ParentPaymentHistory = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ delay: i * 0.04 }}
-                    className="dark:bg-card/80 rounded-2xl border border-border bg-card p-3.5 shadow-sm dark:border-white/[0.06]"
+                    className="rounded-2xl border border-border bg-card p-3.5 shadow-sm dark:border-white/[0.06] dark:bg-card"
                   >
                     {/* Top Row */}
                     <div className="mb-2.5 flex items-center justify-between">
@@ -593,7 +587,7 @@ export const ParentPaymentHistory = () => {
                           <p className="truncate text-[10px] font-bold text-main dark:text-main">
                             {inv.description}
                           </p>
-                          <p className="dark:text-main/40 flex items-center gap-1 text-[7px] text-muted">
+                          <p className="flex items-center gap-1 text-[7px] text-muted dark:text-muted">
                             <Users size={8} />
                             {inv.studentName}
                           </p>
@@ -610,22 +604,22 @@ export const ParentPaymentHistory = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div>
-                          <p className="dark:text-main/40 mb-0.5 text-[7px] font-bold text-muted">
-                            ط§ظ„ظ…ط¨ظ„ط؛
+                          <p className="mb-0.5 text-[7px] font-bold text-muted dark:text-muted">
+                            المبلغ
                           </p>
                           <span className="font-mono text-xs font-bold tabular-nums text-main dark:text-main">
                             {inv.amount.toLocaleString()}{' '}
-                            <span className="dark:text-main/40 text-[8px] text-muted">
+                            <span className="text-[8px] text-muted dark:text-muted">
                               {inv.currency || CURRENCY_SYMBOL}
                             </span>
                           </span>
                         </div>
-                        <div className="bg-border/40 h-5 w-px dark:bg-white/10" />
+                        <div className="h-5 w-px bg-divider dark:bg-white/10" />
                         <div>
-                          <p className="dark:text-main/40 mb-0.5 text-[7px] font-bold text-muted">
-                            ط§ظ„ط§ط³طھط­ظ‚ط§ظ‚
+                          <p className="mb-0.5 text-[7px] font-bold text-muted dark:text-muted">
+                            الاستحقاق
                           </p>
-                          <span className="dark:text-main/40 text-[8px] text-muted">
+                          <span className="text-[8px] text-muted dark:text-muted">
                             {inv.dueDate}
                           </span>
                         </div>
@@ -635,14 +629,12 @@ export const ParentPaymentHistory = () => {
                 )
               })
             ) : (
-              <div className="dark:bg-card/80 rounded-2xl border border-dashed border-border bg-card py-16 text-center dark:border-white/[0.06]">
+              <div className="rounded-2xl border border-dashed border-border bg-card py-16 text-center dark:border-white/[0.06] dark:bg-card">
                 <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary dark:bg-primary/10">
                   <FileText size={18} />
                 </div>
-                <p className="dark:text-main/40 text-[10px] font-bold text-muted">
-                  {noResults
-                    ? 'ظ„ط§ طھظˆط¬ط¯ ظ†طھط§ط¦ط¬ ظ…ط·ط§ط¨ظ‚ط©'
-                    : 'ظ„ط§ طھظˆط¬ط¯ ظپظˆط§طھظٹط± ط¨ط¹ط¯'}
+                <p className="text-[10px] font-bold text-muted dark:text-muted">
+                  {noResults ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
                 </p>
               </div>
             )}

@@ -93,9 +93,9 @@ export const SelectionGrid = ({
               <button
                 type="button"
                 onClick={() => onSelectTerm('1')}
-                className="border-success/15 hover:border-success/30 flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border bg-success-soft p-4 text-main transition-all duration-200 hover:shadow-elevation-1 active:scale-[0.97]"
+                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-success-soft bg-success-soft p-4 text-main transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 active:scale-[0.97]"
               >
-                <div className="bg-success/10 flex h-10 w-10 items-center justify-center rounded-xl">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft">
                   <BookOpen size={18} className="text-success" />
                 </div>
                 <span className="text-xs font-extrabold">ترم أول</span>
@@ -103,9 +103,9 @@ export const SelectionGrid = ({
               <button
                 type="button"
                 onClick={() => onSelectTerm('2')}
-                className="border-success/15 hover:border-success/30 flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border bg-success-soft p-4 text-main transition-all duration-200 hover:shadow-elevation-1 active:scale-[0.97]"
+                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-success-soft bg-success-soft p-4 text-main transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 active:scale-[0.97]"
               >
-                <div className="bg-success/10 flex h-10 w-10 items-center justify-center rounded-xl">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft">
                   <BookOpen size={18} className="text-success" />
                 </div>
                 <span className="text-xs font-extrabold">ترم ثاني</span>
@@ -122,9 +122,9 @@ export const SelectionGrid = ({
                   onSelectSubject(subj.id)
                   window.scrollTo(0, 0)
                 }}
-                className="border-info/15 hover:border-info/30 flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border bg-info-soft p-4 text-main transition-all duration-200 hover:shadow-elevation-1 active:scale-[0.97]"
+                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-info-soft bg-info-soft p-4 text-main transition-all duration-200 hover:border-info-soft hover:shadow-elevation-1 active:scale-[0.97]"
               >
-                <div className="bg-info/10 flex h-10 w-10 items-center justify-center rounded-xl">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-info-soft">
                   <BookOpen size={18} className="text-info" />
                 </div>
                 <span className="text-center text-xs font-extrabold">{subj.name}</span>
@@ -187,9 +187,9 @@ export const SelectionGrid = ({
                 <button
                   type="button"
                   onClick={() => onSelectTerm('1')}
-                  className="border-success/15 hover:border-success/30 flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border bg-success-soft px-3 py-6 text-main transition-all duration-200 hover:shadow-elevation-1 active:scale-[0.97]"
+                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-success-soft bg-success-soft px-3 py-6 text-main transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 active:scale-[0.97]"
                 >
-                  <div className="bg-success/10 flex h-12 w-12 items-center justify-center rounded-xl">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-success-soft">
                     <BookOpen size={22} className="text-success" />
                   </div>
                   <span className="text-sm font-extrabold">ترم أول</span>
@@ -197,9 +197,9 @@ export const SelectionGrid = ({
                 <button
                   type="button"
                   onClick={() => onSelectTerm('2')}
-                  className="border-success/15 hover:border-success/30 flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border bg-success-soft px-3 py-6 text-main transition-all duration-200 hover:shadow-elevation-1 active:scale-[0.97]"
+                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-success-soft bg-success-soft px-3 py-6 text-main transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 active:scale-[0.97]"
                 >
-                  <div className="bg-success/10 flex h-12 w-12 items-center justify-center rounded-xl">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-success-soft">
                     <BookOpen size={22} className="text-success" />
                   </div>
                   <span className="text-sm font-extrabold">ترم ثاني</span>
@@ -216,9 +216,9 @@ export const SelectionGrid = ({
                     onSelectSubject(subj.id)
                     window.scrollTo(0, 0)
                   }}
-                  className="border-info/15 hover:border-info/30 flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border bg-info-soft px-3 py-6 text-main transition-all duration-200 hover:shadow-elevation-1 active:scale-[0.97]"
+                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-info-soft bg-info-soft px-3 py-6 text-main transition-all duration-200 hover:border-info-soft hover:shadow-elevation-1 active:scale-[0.97]"
                 >
-                  <div className="bg-info/10 flex h-12 w-12 items-center justify-center rounded-xl">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-info-soft">
                     <BookOpen size={22} className="text-info" />
                   </div>
                   <span className="text-center text-sm font-extrabold">{subj.name}</span>

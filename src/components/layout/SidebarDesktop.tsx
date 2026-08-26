@@ -101,7 +101,7 @@ export const SidebarDesktop = ({
     {/* Logo */}
     <div
       className={cn(
-        'border-border/50 flex shrink-0 items-center border-b transition-all duration-300',
+        'flex shrink-0 items-center border-b border-border transition-all duration-300',
         collapsed ? 'h-11 justify-center px-0' : 'h-14 justify-between px-5',
       )}
     >
@@ -164,7 +164,7 @@ export const SidebarDesktop = ({
               collapsed ? 'h-0 opacity-0' : 'h-auto opacity-100',
             )}
           >
-            <span className="text-muted/50 block px-5 py-1.5 text-[10px] font-bold uppercase tracking-widest">
+            <span className="block px-5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-muted">
               {section.label}
             </span>
           </div>
@@ -181,7 +181,7 @@ export const SidebarDesktop = ({
     </nav>
 
     {/* User profile + actions */}
-    <div className="border-border/50 shrink-0 border-t">
+    <div className="shrink-0 border-t border-border">
       {user && (
         <NavLink
           to={getProfileLink(user.role)}
@@ -245,7 +245,7 @@ export const SidebarDesktop = ({
         <button
           onClick={onLogout}
           className={cn(
-            'text-error/70 flex w-full items-center gap-2.5 rounded-xl transition-all duration-200 hover:bg-error-soft hover:text-error',
+            'flex w-full items-center gap-2.5 rounded-xl text-error transition-all duration-200 hover:bg-error-soft hover:text-error',
             collapsed ? 'justify-center px-0 py-1.5' : 'px-3 py-2',
           )}
         >

@@ -78,13 +78,11 @@ export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
       <div className="relative z-10">
         <div className="mb-3 flex items-center gap-2">
           <div className="h-2 w-2 animate-pulse rounded-full bg-success" />
-          <span className="dark:text-on-primary/70 text-micro font-bold text-white/70">
-            الحصة القادمة
-          </span>
+          <span className="text-micro font-bold text-white/70">الحصة القادمة</span>
         </div>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <div className="bg-on-primary/15 dark:bg-on-primary/15 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15">
             <GraduationCap size={24} className="text-white dark:text-on-primary" />
           </div>
 
@@ -92,24 +90,20 @@ export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
             <h2 className="mb-0.5 text-lg font-bold leading-tight text-on-primary">
               {nextSession?.subject || ''}
             </h2>
-            <p className="dark:text-on-primary/70 text-sm font-medium text-white/70">
-              {nextSession?.studentName || ''}
-            </p>
+            <p className="text-sm font-medium text-white/70">{nextSession?.studentName || ''}</p>
             {nextSession?.studentGrade && (
-              <p className="dark:text-on-primary/60 text-[10px] font-medium text-white/60">
+              <p className="text-[10px] font-medium text-white/60">
                 Grade: {nextSession.studentGrade}
               </p>
             )}
             {nextSession?.curriculum && (
-              <p className="dark:text-on-primary/60 text-[10px] font-medium text-white/60">
-                {nextSession.curriculum}
-              </p>
+              <p className="text-[10px] font-medium text-white/60">{nextSession.curriculum}</p>
             )}
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="bg-on-primary/15 dark:bg-on-primary/15 flex items-center gap-2 rounded-xl px-3 py-2">
-              <Clock size={15} className="dark:text-on-primary/70 text-white/80" />
+            <div className="flex items-center gap-2 rounded-xl bg-white/15 px-3 py-2">
+              <Clock size={15} className="text-white/70 text-white/80" />
               <span className={cn('text-xl font-bold tabular-nums tracking-wider text-white')}>
                 {isNow ? 'الآن' : timeLeft}
               </span>
@@ -118,9 +112,7 @@ export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
         </div>
 
         <div className="mt-4 flex items-center justify-between">
-          <span className="dark:text-on-primary/60 text-sm font-medium text-white/60">
-            {nextSession?.time || ''}
-          </span>
+          <span className="text-sm font-medium text-white/60">{nextSession?.time || ''}</span>
         </div>
       </div>
     </div>

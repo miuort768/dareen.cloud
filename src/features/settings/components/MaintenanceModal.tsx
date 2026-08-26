@@ -42,7 +42,7 @@ export const MaintenanceModal = ({
       dir="rtl"
     >
       <div className="w-full max-w-md overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
-        <div className="border-border/20 space-y-4 border-b p-6 text-center">
+        <div className="space-y-4 border-b border-divider p-6 text-center">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft">
             <Image
               src="/dareen_logo_new.webp"
@@ -65,7 +65,7 @@ export const MaintenanceModal = ({
 
         <div className="space-y-4 p-6">
           <div className="grid grid-cols-2 gap-3">
-            <div className="border-border/20 flex flex-col items-center gap-2 rounded-xl border bg-background p-4">
+            <div className="flex flex-col items-center gap-2 rounded-xl border border-divider bg-background p-4">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-error-soft text-error">
                 <Lock size={16} />
               </div>
@@ -73,7 +73,7 @@ export const MaintenanceModal = ({
                 {isEnabled ? 'تعطيل الدخول' : 'السماح بالدخول'}
               </p>
             </div>
-            <div className="border-border/20 flex flex-col items-center gap-2 rounded-xl border bg-background p-4">
+            <div className="flex flex-col items-center gap-2 rounded-xl border border-divider bg-background p-4">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-warning-soft text-warning">
                 <Users size={16} />
               </div>
@@ -83,7 +83,7 @@ export const MaintenanceModal = ({
             </div>
           </div>
 
-          <div className="border-border/20 space-y-3 rounded-xl border bg-surface p-4">
+          <div className="space-y-3 rounded-xl border border-divider bg-surface p-4">
             <p className="flex items-center gap-1.5 text-xs font-bold text-muted">
               <ShieldCheck size={13} className="text-primary" />
               اكتب{' '}
@@ -97,7 +97,7 @@ export const MaintenanceModal = ({
               onChange={(e) => setInput(e.target.value)}
               placeholder="اكتب dareen..."
               dir="ltr"
-              className="border-border/30 placeholder:text-muted/50 w-full rounded-xl border bg-background px-4 py-3 text-center font-mono text-sm font-bold text-main transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+              className="w-full rounded-xl border border-divider bg-background px-4 py-3 text-center font-mono text-sm font-bold text-dim text-main transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
             />
           </div>
 
@@ -107,7 +107,7 @@ export const MaintenanceModal = ({
                 setShowMaintenanceModal(false)
                 setInput('')
               }}
-              className="border-border/30 flex-1 rounded-xl border py-3 text-xs font-bold text-muted transition-all hover:bg-surface hover:text-main active:scale-[0.97]"
+              className="flex-1 rounded-xl border border-divider py-3 text-xs font-bold text-muted transition-all hover:bg-surface hover:text-main active:scale-[0.97]"
             >
               تراجع
             </button>

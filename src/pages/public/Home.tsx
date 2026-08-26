@@ -128,7 +128,7 @@ export const Home = () => {
             <Play className="h-2.5 w-2.5 shrink-0 dark:text-primary" /> تحميل مذكرات مجانية
           </Link>
         </div>
-        <section className="border-border/50 relative mb-4 overflow-hidden rounded-card border bg-gradient-to-br from-primary-light via-primary-soft to-card shadow-sm dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
+        <section className="relative mb-4 overflow-hidden rounded-card border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card shadow-sm dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
           {heroSlides.map((slide, i) => (
             <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
@@ -166,7 +166,7 @@ export const Home = () => {
                   </div>
                 </div>
                 <div className="relative shrink-0">
-                  <div className="bg-primary-light/50 absolute inset-0 rounded-full blur-xl dark:bg-primary/10" />
+                  <div className="absolute inset-0 rounded-full bg-primary-light blur-xl dark:bg-primary/10" />
                   <div className="relative w-[90px]">
                     {i === 0 ? (
                       <picture>

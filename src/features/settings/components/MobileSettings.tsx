@@ -81,7 +81,7 @@ export const MobileSettings = ({
           {entries.map((entry, i) => (
             <div
               key={`setting-${i}`}
-              className="border-border/20 flex items-start gap-2 rounded-xl border bg-background p-4"
+              className="flex items-start gap-2 rounded-xl border border-divider bg-background p-4"
             >
               <div className="flex-1 space-y-2">
                 <InputField
@@ -104,7 +104,7 @@ export const MobileSettings = ({
         <div className="mt-4 flex items-center gap-2">
           <PrimaryBtn
             onClick={addEntry}
-            className="!border-border/30 !border !bg-background !text-primary !shadow-none hover:!bg-surface"
+            className="!border !border-divider !bg-background !text-primary !shadow-none hover:!bg-surface"
           >
             <Plus size={14} /> إضافة رقم
           </PrimaryBtn>

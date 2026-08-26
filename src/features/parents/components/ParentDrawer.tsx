@@ -242,7 +242,7 @@ const OverviewTab = ({
       </button>
       <button
         onClick={handleWhatsApp}
-        className="hover:bg-warning-hover dark:hover:bg-warning-hover flex items-center justify-center gap-2 rounded-xl bg-warning py-2.5 text-[10px] font-bold text-on-warning transition-all active:scale-95 dark:bg-warning dark:text-on-warning"
+        className="flex items-center justify-center gap-2 rounded-xl bg-warning py-2.5 text-[10px] font-bold text-on-warning transition-all hover:bg-warning-hover active:scale-95 dark:bg-warning dark:text-on-warning dark:hover:bg-warning-hover"
       >
         <MessageCircle size={12} /> واتساب
       </button>

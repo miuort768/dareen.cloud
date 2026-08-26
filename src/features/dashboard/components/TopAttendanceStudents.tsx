@@ -77,8 +77,16 @@ export const TopAttendanceStudents = ({
           topPresentStudents.map((stu, i) => (
             <div
               key={`att-${i}`}
+              role="button"
+              tabIndex={0}
               onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
-              className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-background p-2 transition-all hover:border-warning dark:border-border dark:bg-card dark:hover:border-border"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  onStudentClick?.({ id: stu.id, name: stu.name })
+                }
+              }}
+              className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-background p-2 transition-all hover:border-warning focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-card dark:hover:border-border"
             >
               <div className="flex items-center gap-2">
                 <div
