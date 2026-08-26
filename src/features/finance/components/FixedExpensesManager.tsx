@@ -46,9 +46,9 @@ const CATEGORY_RULES: { keywords: string[]; cfg: CategoryCfg }[] = [
     keywords: ['بونص', 'المدير', 'مكافأة', 'مدير'],
     cfg: {
       icon: Award,
-      gradient: 'bg-gradient-to-br from-amber-500/90 to-amber-600',
-      on: 'text-white',
-      accentBorder: 'border-amber-500/40',
+      gradient: 'bg-gradient-to-br from-warning/90 to-warning',
+      on: 'text-on-warning',
+      accentBorder: 'border-warning/40',
     },
   },
   {
@@ -82,9 +82,9 @@ const CATEGORY_RULES: { keywords: string[]; cfg: CategoryCfg }[] = [
     keywords: ['ايجار', 'إيجار', 'مقر', 'مركز'],
     cfg: {
       icon: Building2,
-      gradient: 'bg-gradient-to-br from-purple-500/90 to-purple-600',
-      on: 'text-white',
-      accentBorder: 'border-purple-500/40',
+      gradient: 'bg-gradient-to-br from-primary/90 to-primary',
+      on: 'text-on-primary',
+      accentBorder: 'border-primary/40',
     },
   },
   {
@@ -109,9 +109,9 @@ const CATEGORY_RULES: { keywords: string[]; cfg: CategoryCfg }[] = [
     keywords: ['ملغية', 'إلغاء', 'الغاء'],
     cfg: {
       icon: XCircle,
-      gradient: 'bg-gradient-to-br from-rose-500/90 to-rose-600',
-      on: 'text-white',
-      accentBorder: 'border-rose-500/40',
+      gradient: 'bg-gradient-to-br from-error/90 to-error',
+      on: 'text-on-error',
+      accentBorder: 'border-error/40',
     },
   },
 ]
