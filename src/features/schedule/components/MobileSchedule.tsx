@@ -10,6 +10,7 @@ import {
   GraduationCap,
   BookOpen,
   ChevronLeft,
+  X,
 } from 'lucide-react'
 import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
@@ -227,54 +228,56 @@ export const MobileSchedule = () => {
           </div>
         </motion.div>
 
-        {/* ===== HERO ===== */}
-        <div className="px-3 pt-1">
-          <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-lg shadow-primary/20 md:rounded-3xl">
-            <div className="absolute -end-8 -top-8 h-28 w-28 rounded-full bg-white/10 blur-xl" />
-            <div className="absolute -bottom-10 -start-6 h-24 w-24 rounded-full bg-white/5 blur-lg" />
-            <div className="relative z-10">
-              <div className="mb-1 flex items-center gap-1.5">
-                <CalendarDays size={12} className="text-white/70" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-white/70">
-                  {todayName}
-                </span>
+        {/* ===== HEADER ===== */}
+        <div className="px-3 pt-2">
+          <div className="rounded-2xl border border-border bg-card p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="flex items-center gap-1.5 text-micro font-bold text-muted">
+                  <CalendarDays size={12} />
+                  اليوم · {todayName}
+                </p>
+                <h1 className="mt-1 text-2xl font-black tracking-tight text-main">جدول الحصص</h1>
               </div>
-              <h1 className="font-outfit text-xl font-black text-on-primary">جدول الحصص</h1>
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
+                <CalendarDays size={20} />
+              </div>
+            </div>
 
-              {/* Stats strip */}
-              <div className="mt-3 grid grid-cols-3 gap-2">
-                {[
-                  { value: countsByDay[todayName] || 0, label: 'حصة اليوم' },
-                  { value: allEvents.length, label: 'هذا الأسبوع' },
-                  { value: uniqueTeachers.length, label: 'معلمة' },
-                ].map((s, i) => (
-                  <div
-                    key={i}
-                    className="flex flex-col items-center rounded-none bg-white/15 py-2 backdrop-blur-sm"
-                  >
-                    <span className="text-base font-black tabular-nums text-on-primary">
-                      {s.value}
-                    </span>
-                    <span className="text-[9px] font-bold text-white/70">{s.label}</span>
-                  </div>
-                ))}
-              </div>
+            {/* Stats strip */}
+            <div className="mt-3 grid grid-cols-3 divide-x divide-x-reverse divide-divider rounded-xl bg-surface py-2.5">
+              {[
+                { value: countsByDay[todayName] || 0, label: 'حصة اليوم' },
+                { value: allEvents.length, label: 'هذا الأسبوع' },
+                { value: uniqueTeachers.length, label: 'معلمة' },
+              ].map((s) => (
+                <div key={s.label} className="flex flex-col items-center px-1 text-center">
+                  <span className="text-base font-black tabular-nums text-main">{s.value}</span>
+                  <span className="mt-0.5 text-micro font-medium text-muted">{s.label}</span>
+                </div>
+              ))}
+            </div>
 
-              {/* Search */}
-              <div className="relative mt-3">
-                <Search
-                  size={13}
-                  className="absolute start-3 top-1/2 -translate-y-1/2 text-white/50"
-                />
-                <input
-                  type="text"
-                  aria-label="بحث في الجدول"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="ابحث عن طالب أو معلمة أو مادة..."
-                  className="w-full rounded-2xl border border-white/20 bg-white/15 py-2.5 pe-3 ps-9 text-xs font-bold text-white outline-none backdrop-blur-sm transition-all placeholder:text-white/50 focus:border-white/40 focus:bg-white/20"
-                />
-              </div>
+            {/* Search */}
+            <div className="relative mt-3">
+              <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
+              <input
+                type="text"
+                aria-label="بحث في الجدول"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="ابحث عن طالب أو معلمة أو مادة..."
+                className="w-full rounded-xl border border-border bg-background py-2.5 pe-9 ps-9 text-xs font-bold text-main outline-none transition-colors duration-fast placeholder:font-medium placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10"
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm('')}
+                  aria-label="مسح البحث"
+                  className="absolute end-2.5 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-md text-muted transition-colors duration-fast hover:text-main"
+                >
+                  <X size={13} />
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -289,19 +292,20 @@ export const MobileSchedule = () => {
               return (
                 <motion.button
                   key={day}
-                  whileTap={{ scale: 0.93 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => {
                     triggerHaptic('light')
                     setSelectedDay(day)
                   }}
-                  className={`flex flex-col items-center gap-0.5 rounded-2xl border px-3.5 py-2 transition-all ${
+                  aria-pressed={isActive}
+                  className={`flex min-w-[68px] flex-col items-center gap-0.5 rounded-xl border px-3 py-1.5 transition-colors duration-fast ${
                     isActive
-                      ? 'border-primary bg-primary shadow-md shadow-primary/25'
-                      : 'border-border bg-card'
+                      ? 'border-primary bg-primary'
+                      : 'border-border bg-card hover:border-primary/30'
                   }`}
                 >
                   <span
-                    className={`flex items-center gap-1 text-micro font-bold ${
+                    className={`flex items-center gap-1 text-xs font-bold ${
                       isActive ? 'text-on-primary' : 'text-main'
                     }`}
                   >
@@ -315,8 +319,8 @@ export const MobileSchedule = () => {
                     )}
                   </span>
                   <span
-                    className={`text-[9px] font-bold tabular-nums ${
-                      isActive ? 'text-white/80' : 'text-muted'
+                    className={`text-micro font-bold tabular-nums ${
+                      isActive ? 'text-on-primary/75' : 'text-muted'
                     }`}
                   >
                     {count} حصة
@@ -336,12 +340,12 @@ export const MobileSchedule = () => {
               exit={{ opacity: 0, y: -8 }}
               className="mx-3 mt-2"
             >
-              <div className="flex items-center gap-2.5 rounded-none border border-success-soft bg-success-soft p-2.5 md:rounded-2xl">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/60 dark:bg-white/10">
-                  <Sparkles size={14} className="text-success" />
+              <div className="border-success/20 flex items-center gap-2.5 rounded-xl border bg-success-soft p-2.5">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-card text-success">
+                  <Sparkles size={14} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[9px] font-bold text-success">الحصة القادمة اليوم</p>
+                  <p className="text-micro font-bold text-success">الحصة القادمة اليوم</p>
                   <p className="truncate text-xs font-bold text-main">
                     {nextSession.studentName} · {nextSession.time}
                   </p>
@@ -360,7 +364,7 @@ export const MobileSchedule = () => {
             <div className="space-y-2">
               <div className="mb-2 flex items-center justify-between px-1">
                 <span className="text-micro font-bold text-muted">حصص {selectedDay}</span>
-                <span className="rounded-lg bg-surface px-2 py-0.5 text-[10px] font-bold tabular-nums text-muted">
+                <span className="rounded-lg bg-surface px-2 py-0.5 text-micro font-bold tabular-nums text-muted">
                   {dayEvents.length}
                 </span>
               </div>
@@ -372,19 +376,28 @@ export const MobileSchedule = () => {
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: Math.min(idx * 0.04, 0.4), duration: 0.25 }}
-                    whileTap={{ scale: 0.97 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={openInAppointments}
-                    className={`cursor-pointer overflow-hidden rounded-none border border-e-[3px] border-border bg-card shadow-sm transition-colors md:rounded-2xl ${ts.bar}`}
+                    className={`cursor-pointer overflow-hidden rounded-xl border border-e-[3px] border-border bg-card transition-colors duration-fast hover:border-border ${ts.bar}`}
                   >
                     <div className="flex items-center gap-3 p-3">
+                      {/* Time gutter */}
+                      <div className="w-11 shrink-0 text-center">
+                        <p className="text-sm font-black tabular-nums leading-none text-main">
+                          {event.time.split(':')[0]}
+                        </p>
+                        <p className="mt-1 text-micro font-bold text-muted">
+                          {event.time.includes('ص') ? 'صباحاً' : 'مساءً'}
+                        </p>
+                      </div>
+
                       {/* Avatar */}
                       <div
-                        className={`flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-2xl ${ts.soft}`}
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${ts.soft}`}
                       >
                         <span className={`text-sm font-black ${ts.text}`}>
                           {event.studentName.charAt(0)}
                         </span>
-                        <span className="text-[8px] font-bold text-muted">{event.time}</span>
                       </div>
 
                       {/* Info */}
@@ -392,20 +405,20 @@ export const MobileSchedule = () => {
                         <p className="truncate text-sm font-bold leading-tight text-main">
                           {event.studentName}
                         </p>
-                        <p className="mt-0.5 flex items-center gap-1 truncate text-[11px] font-medium text-muted">
-                          <BookOpen size={9} className="shrink-0" />
+                        <p className="mt-0.5 flex items-center gap-1 truncate text-micro font-medium text-muted">
+                          <BookOpen size={10} className="shrink-0" />
                           {event.subject}
                           {event.curriculum ? ` · ${event.curriculum}` : ''}
                         </p>
                         <div className="mt-1.5 flex items-center gap-1.5">
                           <span
-                            className={`inline-flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[9px] font-bold ${ts.soft} ${ts.text}`}
+                            className={`inline-flex max-w-full items-center gap-1 truncate rounded-lg px-1.5 py-0.5 text-micro font-bold ${ts.soft} ${ts.text}`}
                           >
-                            <GraduationCap size={9} />
-                            {event.teacherName || 'غير محددة'}
+                            <GraduationCap size={10} className="shrink-0" />
+                            <span className="truncate">{event.teacherName || 'غير محددة'}</span>
                           </span>
                           {event.studentGrade && (
-                            <span className="rounded-lg bg-surface px-1.5 py-0.5 text-[9px] font-bold text-muted">
+                            <span className="shrink-0 rounded-lg bg-surface px-1.5 py-0.5 text-micro font-bold text-muted">
                               {event.studentGrade}
                             </span>
                           )}
@@ -420,11 +433,11 @@ export const MobileSchedule = () => {
             </div>
           ) : (
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="rounded-none border border-dashed border-border bg-card py-14 text-center md:rounded-3xl"
+              className="rounded-xl border border-dashed border-border bg-card py-14 text-center"
             >
-              <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft">
+              <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-xl bg-primary-soft">
                 <CalendarDays size={26} className="text-primary" strokeWidth={1.5} />
               </div>
               <p className="text-sm font-bold text-main">
