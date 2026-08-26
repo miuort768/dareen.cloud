@@ -228,9 +228,9 @@ const EventCard = ({ event, onSelect }: { event: ScheduleEvent; onSelect: () => 
         <div className="mb-1 flex items-center gap-1.5">
           <span className={`flex items-center gap-1 px-1.5 py-0.5 ${c.soft}`}>
             <span className={`h-1.5 w-1.5 rounded-full ${c.bar}`} />
-            <span className={`text-[7px] font-bold ${c.text} leading-none`}>{event.subject}</span>
+            <span className={`text-micro font-bold ${c.text} leading-none`}>{event.subject}</span>
           </span>
-          <span className="me-auto flex items-center gap-1 text-[7px] font-bold tabular-nums text-muted">
+          <span className="me-auto flex items-center gap-1 text-micro font-bold tabular-nums text-muted">
             <Clock size={8} />
             {event.time}
           </span>
@@ -303,9 +303,9 @@ const CurrentTimeLine = () => {
       style={{ top: `${pct * 100}%` }}
     >
       <div className="flex items-center gap-1.5">
-        <div className="h-2 w-2 shrink-0 rounded-full bg-error shadow-[0_0_6px_rgba(239,68,68,0.6)]" />
+        <div className="h-2 w-2 shrink-0 rounded-full bg-error" />
         <div className="h-px flex-1 bg-error" />
-        <span className="ms-auto rounded-sm bg-card px-1 py-0.5 text-[7px] font-bold text-error shadow-sm">
+        <span className="ms-auto rounded-sm bg-card px-1 py-0.5 text-micro font-bold text-error shadow-sm">
           {nowLabel}
         </span>
       </div>
@@ -377,7 +377,7 @@ export const ScheduleGrid = ({
               return (
                 <div
                   key={`${slot.hour}-${slot.period}`}
-                  className={`grid grid-cols-[100px_repeat(7,1fr)] ${slotIdx % 2 === 0 ? 'bg-surface' : 'bg-background/20'}`}
+                  className={`grid grid-cols-[100px_repeat(7,1fr)] ${slotIdx % 2 === 0 ? 'bg-surface' : 'bg-background'}`}
                 >
                   {/* Time label */}
                   <div className="sticky start-0 z-10 flex flex-col items-center justify-center border-b border-e border-border bg-surface p-1.5">
@@ -453,19 +453,19 @@ export const ScheduleGrid = ({
                 className="flex items-center gap-1 rounded-none border border-border bg-card px-1.5 py-0.5"
               >
                 <div className={`h-1.5 w-1.5 rounded-full ${colors.bar}`} />
-                <span className="text-[7px] font-bold text-muted">{subject}</span>
+                <span className="text-micro font-bold text-muted">{subject}</span>
               </div>
             ))}
           {uniqueTeachers.length > 0 && (
             <>
               <span className="me-1 ms-2 text-[9px] font-bold text-muted">|</span>
-              <span className="flex items-center gap-1 text-[7px] text-muted">
+              <span className="flex items-center gap-1 text-micro text-muted">
                 <GraduationCap size={8} />
                 {uniqueTeachers.length} معلمة
               </span>
             </>
           )}
-          <span className="me-auto text-[7px] text-muted">{filteredEvents.length} حصة</span>
+          <span className="me-auto text-micro text-muted">{filteredEvents.length} حصة</span>
         </div>
       </div>
     </>

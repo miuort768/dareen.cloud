@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   X,
@@ -10,7 +10,6 @@ import {
   Send,
   CheckCircle2,
 } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 import { useCurrentUser } from '@/context/AppContext'
@@ -30,67 +29,36 @@ interface ScheduleEvent {
   studentPoints?: number
 }
 
-const SUBJECT_COLORS: Record<string, { bg: string; text: string; on: string; chip: string }> = {
-  رياضيات: {
-    bg: 'bg-primary',
-    text: 'text-primary',
-    on: 'text-on-primary',
-    chip: 'bg-primary/[12%]',
-  },
-  علوم: { bg: 'bg-success', text: 'text-success', on: 'text-on-success', chip: 'bg-success/[12%]' },
-  عربي: { bg: 'bg-warning', text: 'text-warning', on: 'text-on-warning', chip: 'bg-warning/[12%]' },
-  انجليزي: { bg: 'bg-info', text: 'text-info', on: 'text-on-info', chip: 'bg-info/[12%]' },
-  دين: { bg: 'bg-accent', text: 'text-accent', on: 'text-on-accent', chip: 'bg-accent/[12%]' },
-  تاريخ: { bg: 'bg-error', text: 'text-error', on: 'text-on-error', chip: 'bg-error/[12%]' },
-  قرآن: { bg: 'bg-accent', text: 'text-accent', on: 'text-on-accent', chip: 'bg-accent/[12%]' },
-  قواعد: {
-    bg: 'bg-primary',
-    text: 'text-primary',
-    on: 'text-on-primary',
-    chip: 'bg-primary/[12%]',
-  },
-  بلاغة: { bg: 'bg-info', text: 'text-info', on: 'text-on-info', chip: 'bg-info/[12%]' },
-  فقه: { bg: 'bg-success', text: 'text-success', on: 'text-on-success', chip: 'bg-success/[12%]' },
-  توحيد: { bg: 'bg-accent', text: 'text-accent', on: 'text-on-accent', chip: 'bg-accent/[12%]' },
-  تفسير: {
-    bg: 'bg-warning',
-    text: 'text-warning',
-    on: 'text-on-warning',
-    chip: 'bg-warning/[12%]',
-  },
-  نحو: { bg: 'bg-error', text: 'text-error', on: 'text-on-error', chip: 'bg-error/[12%]' },
-}
-
-const FALLBACKS = [
-  { bg: 'bg-primary', text: 'text-primary', on: 'text-on-primary', chip: 'bg-primary/[12%]' },
-  { bg: 'bg-success', text: 'text-success', on: 'text-on-success', chip: 'bg-success/[12%]' },
-  { bg: 'bg-warning', text: 'text-warning', on: 'text-on-warning', chip: 'bg-warning/[12%]' },
-  { bg: 'bg-info', text: 'text-info', on: 'text-on-info', chip: 'bg-info/[12%]' },
-  { bg: 'bg-accent', text: 'text-accent', on: 'text-on-accent', chip: 'bg-accent/[12%]' },
-  { bg: 'bg-error', text: 'text-error', on: 'text-on-error', chip: 'bg-error/[12%]' },
-]
-
-const getSC = (subject: string) =>
-  SUBJECT_COLORS[subject?.trim() || ''] ||
-  FALLBACKS[Math.abs((subject?.trim() || '').length) % FALLBACKS.length] || {
-    bg: '',
-    text: '',
-    on: '',
-    chip: '',
-  }
-
-interface SchedulePopoverProps {
+export const SchedulePopover = ({
+  event,
+  onClose,
+}: {
   event: ScheduleEvent | null
   onClose: () => void
-  onViewStudent: () => void
-}
-
-export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
+}) => {
   const currentUser = useCurrentUser()
+  const isAdmin = currentUser?.role === 'admin'
   const queryClient = useQueryClient()
   const [noteText, setNoteText] = useState('')
   const [showNoteInput, setShowNoteInput] = useState(false)
   const [sent, setSent] = useState(false)
+
+  useEffect(() => {
+    if (!event) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [event, onClose])
+
+  useEffect(() => {
+    if (!event) {
+      setNoteText('')
+      setShowNoteInput(false)
+      setSent(false)
+    }
+  }, [event])
 
   const sendNoteMutation = useMutation({
     mutationFn: (note: string) =>
@@ -112,7 +80,6 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
   })
 
   if (!event) return null
-  const c = getSC(event.subject)
 
   const handleSendNote = () => {
     if (!noteText.trim()) return
@@ -121,7 +88,7 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
 
   return (
     <AnimatePresence>
-      {/* Full-screen backdrop — click outside to close */}
+      {/* Full-screen backdrop — click outside or Escape to close */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -131,9 +98,7 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
         onClick={onClose}
         role="dialog"
         aria-modal="true"
-        onKeyDown={(e) => {
-          if (e.key === 'Escape') onClose()
-        }}
+        aria-label={`تفاصيل حصة ${event.subject}`}
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 10 }}
@@ -143,9 +108,9 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
           className="w-full max-w-sm"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2">
-            {/* Header gradient */}
-            <div className={`relative p-4 pb-5 ${c.bg}`}>
+          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-3">
+            {/* Header */}
+            <div className="relative bg-primary p-4 pb-5">
               <div className="absolute inset-0 opacity-10">
                 <svg width="100%" height="100%">
                   <defs>
@@ -169,15 +134,16 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
                     <BookOpen size={18} className="text-white" />
                   </div>
                   <div>
-                    <h3 className={cn('text-sm font-bold', c.on)}>{event.subject}</h3>
-                    <p className="mt-0.5 text-[10px] text-white/70">
+                    <h3 className="text-sm font-bold text-on-primary">{event.subject}</h3>
+                    <p className="text-on-primary/70 mt-0.5 text-micro">
                       {event.curriculum || 'المنهج العام'}
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={onClose}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg text-white/60 transition-colors hover:bg-white/15 hover:text-white"
+                  autoFocus
+                  className="text-on-primary/60 flex h-7 w-7 items-center justify-center rounded-lg transition-colors duration-fast hover:bg-white/15 hover:text-white"
                   aria-label="إغلاق"
                 >
                   <X size={14} />
@@ -187,7 +153,7 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
                 <div className="relative z-10 mt-2 flex items-center gap-1.5">
                   <div className="flex items-center gap-1 rounded-lg bg-white/15 px-2 py-0.5">
                     <Star size={8} className="text-warning" fill="currentColor" />
-                    <span className="text-[9px] font-bold text-white">
+                    <span className="text-micro font-bold text-white">
                       {event.studentPoints} نقطة
                     </span>
                   </div>
@@ -200,12 +166,12 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
               <div className="grid grid-cols-2 gap-2">
                 <div className="rounded-xl bg-surface p-3">
                   <User size={12} className="mb-1 text-muted" />
-                  <p className="text-[9px] font-bold text-muted">الطالب</p>
+                  <p className="text-micro font-bold text-muted">الطالب</p>
                   <p className="mt-0.5 text-xs font-bold text-main">{event.studentName}</p>
                 </div>
                 <div className="rounded-xl bg-surface p-3">
                   <GraduationCap size={12} className="mb-1 text-muted" />
-                  <p className="text-[9px] font-bold text-muted">المعلمة</p>
+                  <p className="text-micro font-bold text-muted">المعلمة</p>
                   <p className="mt-0.5 text-xs font-bold text-main">
                     {event.teacherName || 'غير محددة'}
                   </p>
@@ -214,7 +180,7 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
               <div className="flex items-center gap-2 rounded-xl bg-surface p-3">
                 <CalendarDays size={12} className="shrink-0 text-muted" />
                 <div>
-                  <p className="text-[9px] font-bold text-muted">الموعد</p>
+                  <p className="text-micro font-bold text-muted">الموعد</p>
                   <p className="mt-0.5 text-xs font-bold text-main">
                     {event.day} — {event.time}
                   </p>
@@ -224,15 +190,15 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
                 <div className="flex items-center gap-2 rounded-xl bg-surface p-3">
                   <Star size={12} className="shrink-0 text-muted" />
                   <div>
-                    <p className="text-[9px] font-bold text-muted">الصف</p>
+                    <p className="text-micro font-bold text-muted">الصف</p>
                     <p className="mt-0.5 text-xs font-bold text-main">{event.studentGrade}</p>
                   </div>
                 </div>
               )}
 
-              {/* Note input */}
+              {/* Note input — admin only */}
               <AnimatePresence>
-                {showNoteInput && (
+                {isAdmin && showNoteInput && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
@@ -266,38 +232,40 @@ export const SchedulePopover = ({ event, onClose }: SchedulePopoverProps) => {
               </AnimatePresence>
             </div>
 
-            {/* Actions */}
-            <div className="flex gap-2 p-4 pt-0">
-              {showNoteInput ? (
-                <>
+            {/* Actions — admin only */}
+            {isAdmin && (
+              <div className="flex gap-2 p-4 pt-0">
+                {showNoteInput ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        setShowNoteInput(false)
+                        setNoteText('')
+                      }}
+                      className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-4 text-micro font-bold text-main transition-colors duration-fast hover:bg-hover active:scale-95"
+                    >
+                      إلغاء
+                    </button>
+                    <button
+                      onClick={handleSendNote}
+                      disabled={!noteText.trim() || sendNoteMutation.isPending}
+                      className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-95 disabled:opacity-50"
+                    >
+                      <Send size={12} />
+                      {sendNoteMutation.isPending ? 'جاري الإرسال...' : 'إرسال الملاحظة'}
+                    </button>
+                  </>
+                ) : (
                   <button
-                    onClick={() => {
-                      setShowNoteInput(false)
-                      setNoteText('')
-                    }}
-                    className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-4 text-[10px] font-bold text-main transition-all hover:bg-hover active:scale-95"
-                  >
-                    إلغاء
-                  </button>
-                  <button
-                    onClick={handleSendNote}
-                    disabled={!noteText.trim() || sendNoteMutation.isPending}
-                    className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-[10px] font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95 disabled:opacity-50"
+                    onClick={() => setShowNoteInput(true)}
+                    className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-95"
                   >
                     <Send size={12} />
-                    {sendNoteMutation.isPending ? 'جاري الإرسال...' : 'إرسال الملاحظة'}
+                    إرسال ملاحظة للطالب
                   </button>
-                </>
-              ) : (
-                <button
-                  onClick={() => setShowNoteInput(true)}
-                  className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-[10px] font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95"
-                >
-                  <Send size={12} />
-                  إرسال ملاحظة
-                </button>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </div>
         </motion.div>
       </motion.div>

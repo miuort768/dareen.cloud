@@ -1,5 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+﻿import { useState, useEffect, useMemo, useCallback } from 'react'
 import {
   Loader2,
   Sparkles,
@@ -95,7 +94,15 @@ export const Schedule = () => {
   const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null)
   const [, setShowDetails] = useState(false)
   const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches,
+  )
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const onChange = () => setIsMobile(mq.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
 
   const todayDayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' })
   const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim()
@@ -111,6 +118,7 @@ export const Schedule = () => {
       return (sessions || []) as string[]
     },
     refetchInterval: 15000,
+    enabled: isAdmin || isTeacher,
   })
 
   const completeMutation = useMutation({
@@ -302,33 +310,25 @@ export const Schedule = () => {
         label: 'إجمالي الحصص',
         value: weekStats.sessions,
         icon: BookOpen,
-        gradient: 'from-primary/20 to-primary/5',
         iconBg: 'bg-primary/10 text-primary',
-        accent: 'bg-primary',
       },
       {
         label: 'المعلمات',
         value: weekStats.teachers,
         icon: GraduationCap,
-        gradient: 'from-success-soft to-background dark:from-success-soft dark:to-card',
-        iconBg: 'bg-white/50 text-success dark:bg-white/10',
-        accent: 'bg-success',
+        iconBg: 'bg-success-soft text-success',
       },
       {
         label: 'الطلاب',
         value: weekStats.students,
         icon: Users,
-        gradient: 'from-warning-soft to-background dark:from-warning-soft dark:to-card',
-        iconBg: 'bg-white/50 text-warning dark:bg-white/10',
-        accent: 'bg-warning',
+        iconBg: 'bg-warning-soft text-warning',
       },
       {
         label: 'الأيام',
         value: DAYS.length,
         icon: CalendarDays,
-        gradient: 'from-info-soft to-background dark:from-info-soft dark:to-card',
-        iconBg: 'bg-white/50 text-info dark:bg-white/10',
-        accent: 'bg-info',
+        iconBg: 'bg-info-soft text-info',
       },
     ],
     [weekStats],
@@ -344,9 +344,6 @@ export const Schedule = () => {
 
   return (
     <div className="relative min-h-full pb-24" dir="rtl">
-      {isTeacher && <div className="hidden md:block"></div>}
-      {isStudent && <div className="hidden md:block"></div>}
-      {currentUser?.role === 'parent' && <div className="hidden md:block"></div>}
       <div className="mx-auto hidden max-w-page px-2 md:block">
         <div className="relative overflow-hidden rounded-2xl">
           {particles.map((p) => (
@@ -397,16 +394,12 @@ export const Schedule = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className={cn(
-                    'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
-                    kpi.gradient,
-                  )}
+                  className="relative overflow-hidden rounded-xl border border-border bg-card p-4"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-lg p-2', kpi.iconBg)}>
                       <Icon size={16} />
                     </div>
-                    <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
                   </div>
                   <p className="mb-1 text-xs text-muted">{kpi.label}</p>
                   <p className="text-2xl font-bold text-main">{kpi.value}</p>
@@ -430,7 +423,7 @@ export const Schedule = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="relative overflow-hidden rounded-2xl border border-success-soft bg-gradient-to-br from-success-soft via-background to-background p-6 text-center"
+                  className="relative overflow-hidden rounded-2xl border border-success-soft bg-success-soft p-6 text-center"
                 >
                   <motion.div
                     initial={{ scale: 0 }}
@@ -441,7 +434,7 @@ export const Schedule = () => {
                     <PartyPopper size={28} className="text-success" />
                   </motion.div>
                   <h3 className="mb-1 text-lg font-bold text-main">
-                    ماشاء الله! أنهيتِ كل حصص اليوم 🎉
+                    ماشاء الله! أنهيتِ كل حصص اليوم
                   </h3>
                   <p className="text-sm text-muted">أحسنتِ يا معلمة — استمري في التميّز</p>
                   <div className="mt-3 flex items-center justify-center gap-2 text-xs font-bold text-success">
@@ -526,7 +519,7 @@ export const Schedule = () => {
           </motion.div>
         )}
 
-        {/* Next session banner — shown for admin and student (NOT for teacher) */}
+        {/* Next session banner — shown for students & parents */}
         {!isTeacher && !isAdmin && nextSession && (
           <motion.div
             initial={{ opacity: 0, y: -8 }}
@@ -574,9 +567,7 @@ export const Schedule = () => {
         )}
       </div>
 
-      <div className="block md:hidden">
-        <MobileSchedule />
-      </div>
+      {isMobile && <MobileSchedule />}
 
       <SchedulePopover
         event={selectedEvent}
@@ -584,7 +575,6 @@ export const Schedule = () => {
           setShowDetails(false)
           setSelectedEvent(null)
         }}
-        onViewStudent={() => navigate('/students')}
       />
     </div>
   )

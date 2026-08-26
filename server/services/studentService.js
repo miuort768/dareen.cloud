@@ -24,7 +24,8 @@ function mapStudent(s, isTeacher = false) {
   const enrollments = (s.enrollments || []).map(mapEnrollment);
   if (isTeacher) {
     const { sessionPrice, ...rest } = safe;
-    return { ...rest, sessionPrice: 0, enrollments: enrollments.map(e => { const { price, ...er } = e; return er; }) };
+    const parentSafe = rest.parent ? { id: rest.parent.id, name: rest.parent.name } : rest.parent;
+    return { ...rest, parent: parentSafe, sessionPrice: 0, enrollments: enrollments.map(e => { const { price, ...er } = e; return er; }) };
   }
   return { ...safe, enrollments };
 }
