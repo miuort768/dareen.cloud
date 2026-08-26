@@ -169,7 +169,6 @@ export const Sidebar = memo(
             'parent_students',
             'parent_announcements',
             'student_dashboard',
-            'tasks',
             'parent_payment_history',
           ].includes(item.id)
         )

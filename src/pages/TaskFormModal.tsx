@@ -1,97 +1,147 @@
-import { Plus, X, Sparkles, ShieldCheck, ChevronDown } from 'lucide-react';
-
-interface TaskFormData {
-    title: string;
-    description: string;
-    priority: 'low' | 'medium' | 'high';
-    dueDate: string;
-    category: string;
-}
+import { useEffect, useRef } from 'react'
+import { Plus, X, Sparkles, ShieldCheck, ChevronDown } from 'lucide-react'
+import type { NewTaskDraft } from './Tasks'
 
 interface TaskFormModalProps {
-    data: TaskFormData;
-    onChange: (data: TaskFormData) => void;
-    onSubmit: (e: React.FormEvent) => void;
-    onClose: () => void;
+  data: NewTaskDraft
+  onChange: (data: NewTaskDraft) => void
+  onSubmit: (e: React.FormEvent) => void
+  onClose: () => void
 }
 
-export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormModalProps) => (
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-black/40 animate-in fade-in duration-300">
-        <div className="bg-card rounded-card w-full max-w-lg shadow-soft overflow-hidden border border-border">
-            <div className="p-5 border-b border-border flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-primary rounded-card flex items-center justify-center shadow-sm">
-                        <Plus size={16} className="text-on-primary" />
-                    </div>
-                    <div>
-                        <h3 className="text-sm font-bold text-main">إنشاء مهمة جديدة</h3>
-                        <p className="text-micro font-bold text-muted uppercase tracking-wider">إضافة مهمة إلى القائمة</p>
-                    </div>
-                </div>
-                <button onClick={onClose} className="p-3 bg-error rounded-card text-on-error hover:bg-error-hover transition-colors">
-                    <X size={22} />
-                </button>
+export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormModalProps) => {
+  const titleRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    titleRef.current?.focus()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="إنشاء مهمة جديدة"
+      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4 duration-300 animate-in fade-in"
+      onKeyDown={(e) => e.key === 'Escape' && onClose()}
+    >
+      <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
+      <div className="relative w-full max-w-lg overflow-hidden rounded-card border border-border bg-card shadow-soft">
+        <div className="flex items-center justify-between border-b border-border p-5">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-card bg-primary shadow-sm">
+              <Plus size={16} className="text-on-primary" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-main">إنشاء مهمة جديدة</h3>
+              <p className="text-micro font-bold uppercase tracking-wider text-muted">
+                إضافة مهمة إلى القائمة
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            aria-label="إغلاق النافذة"
+            className="rounded-card bg-error p-3 text-on-error transition-colors hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          >
+            <X size={22} />
+          </button>
+        </div>
+
+        <form onSubmit={onSubmit} className="space-y-4 p-5">
+          <div className="space-y-3">
+            <div className="space-y-1.5">
+              <label
+                htmlFor="task-title"
+                className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-dim dark:text-muted"
+              >
+                <Sparkles size={10} className="text-primary" /> عنوان المهمة
+              </label>
+              <input
+                ref={titleRef}
+                id="task-title"
+                required
+                type="text"
+                className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                value={data.title}
+                onChange={(e) => onChange({ ...data, title: e.target.value })}
+              />
             </div>
 
-            <form onSubmit={onSubmit} className="p-5 space-y-4">
-                <div className="space-y-3">
-                    <div className="space-y-1.5">
-                        <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider flex items-center gap-1.5">
-                            <Sparkles size={10} className="text-primary" /> عنوان المهمة
-                        </label>
-                        <input
-                            required
-                            type="text"
-                            className="w-full bg-background border border-border rounded-2xl py-2.5 px-4 text-xs font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus transition-all"
-                            value={data.title}
-                            onChange={e => onChange({...data, title: e.target.value})}
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1.5">
-                            <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider">درجة الأولوية</label>
-                            <div className="relative">
-                                <ChevronDown size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted pointer-events-none" />
-                                <select
-                                    className="appearance-none w-full bg-background border border-border rounded-card py-2.5 ps-8 pe-4 text-xs font-bold text-main cursor-pointer focus:outline-none focus:ring-2 focus:ring-focus"
-                                    aria-label="درجة الأولوية"
-                                    value={data.priority}
-                                    onChange={e => onChange({...data, priority: e.target.value as 'high' | 'medium' | 'low'})}
-                                >
-                                    <option value="low">منخفضة</option>
-                                    <option value="medium">متوسطة</option>
-                                    <option value="high">عالية</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="space-y-1.5">
-                            <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider">تاريخ التسليم</label>
-                            <input
-                                type="date"
-                                className="w-full bg-background border border-border rounded-card py-2.5 px-4 text-xs font-bold text-main focus:outline-none focus:ring-2 focus:ring-focus"
-                                value={data.dueDate}
-                                onChange={e => onChange({...data, dueDate: e.target.value})}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="space-y-1.5">
-                        <label className="text-micro font-bold text-dim dark:text-muted uppercase tracking-wider flex items-center gap-1.5">
-                            <ShieldCheck size={10} className="text-primary" /> وصف المهمة
-                        </label>
-                        <textarea
-                            className="w-full bg-background border border-border rounded-card py-2.5 px-4 text-xs font-bold text-main h-24 resize-none focus:outline-none focus:ring-2 focus:ring-focus"
-                            value={data.description}
-                            onChange={e => onChange({...data, description: e.target.value})}
-                        ></textarea>
-                    </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <label
+                  htmlFor="task-priority"
+                  className="text-micro font-bold uppercase tracking-wider text-dim dark:text-muted"
+                >
+                  درجة الأولوية
+                </label>
+                <div className="relative">
+                  <ChevronDown
+                    size={14}
+                    className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted"
+                  />
+                  <select
+                    id="task-priority"
+                    className="w-full cursor-pointer appearance-none rounded-card border border-border bg-background py-2.5 pe-4 ps-8 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                    aria-label="درجة الأولوية"
+                    value={data.priority}
+                    onChange={(e) =>
+                      onChange({ ...data, priority: e.target.value as NewTaskDraft['priority'] })
+                    }
+                  >
+                    <option value="low">منخفضة</option>
+                    <option value="medium">متوسطة</option>
+                    <option value="high">عالية</option>
+                  </select>
                 </div>
+              </div>
+              <div className="space-y-1.5">
+                <label
+                  htmlFor="task-due"
+                  className="text-micro font-bold uppercase tracking-wider text-dim dark:text-muted"
+                >
+                  تاريخ التسليم
+                </label>
+                <input
+                  id="task-due"
+                  type="date"
+                  className="w-full rounded-card border border-border bg-background px-4 py-2.5 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  value={data.dueDate}
+                  onChange={(e) => onChange({ ...data, dueDate: e.target.value })}
+                />
+              </div>
+            </div>
 
-                <button type="submit" className="w-full bg-primary hover:bg-primary-hover text-on-primary py-3 font-bold text-xs uppercase tracking-wider transition-all rounded-card shadow-sm active:scale-[0.98]">
-                    إنشاء مهمة جديدة
-                </button>
-            </form>
-        </div>
+            <div className="space-y-1.5">
+              <label
+                htmlFor="task-desc"
+                className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-wider text-dim dark:text-muted"
+              >
+                <ShieldCheck size={10} className="text-primary" /> وصف المهمة
+              </label>
+              <textarea
+                id="task-desc"
+                className="h-24 w-full resize-none rounded-card border border-border bg-background px-4 py-2.5 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                value={data.description}
+                onChange={(e) => onChange({ ...data, description: e.target.value })}
+              ></textarea>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={!data.title.trim()}
+            className="w-full rounded-card bg-primary py-3 text-xs font-bold uppercase tracking-wider text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+          >
+            إنشاء مهمة جديدة
+          </button>
+        </form>
+      </div>
     </div>
-);
+  )
+}
