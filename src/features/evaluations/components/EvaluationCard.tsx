@@ -1,7 +1,7 @@
 import { Award, Plus, History, Star, Calendar, TrendingUp, User } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { format } from 'date-fns'
-import { RATING_OPTIONS } from '../types/constants'
+import { RATING_OPTIONS, averageRatingOf, getAvatarGradient } from '../types/constants'
 import type { Student, Evaluation } from '../../../types'
 
 interface EvaluationCardProps {
@@ -11,28 +11,6 @@ interface EvaluationCardProps {
   onAddEvaluation: (studentId: string) => void
   onViewHistory: (student: Student) => void
   onViewProfile: (student: Student) => void
-}
-
-const avatarGradients = [
-  { g: 'from-primary to-primary-hover', on: 'text-on-primary' },
-  { g: 'from-success to-success-hover', on: 'text-on-success' },
-  { g: 'from-info to-info-hover', on: 'text-on-info' },
-  { g: 'from-warning to-warning-hover', on: 'text-on-warning' },
-  { g: 'from-error to-error-hover', on: 'text-on-error' },
-  { g: 'from-accent to-accent-hover', on: 'text-on-accent' },
-]
-
-const getAvatarGradient = (name: string) => {
-  let hash = 0
-  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash)
-  return avatarGradients[Math.abs(hash) % avatarGradients.length]!
-}
-
-const getAvgRating = (studentEvals: Evaluation[]) => {
-  if (studentEvals.length === 0) return null
-  const rMap: Record<string, number> = { ممتاز: 5, 'جيد جدًا': 4, جيد: 3, 'يحتاج تحسين': 2 }
-  const avg = studentEvals.reduce((s, ev) => s + (rMap[ev.rating] || 3), 0) / studentEvals.length
-  return Math.round(avg * 10) / 10
 }
 
 export const EvaluationCard = ({
@@ -54,7 +32,7 @@ export const EvaluationCard = ({
     ? RATING_OPTIONS.find((r) => r.value === lastEval.rating) || RATING_OPTIONS[0]
     : null
   const totalStudentXP = studentEvals.reduce((s, ev) => s + (ev.points || 0), 0)
-  const avgRating = getAvgRating(studentEvals)
+  const avgRating = averageRatingOf(studentEvals)
   const totalEnrollments = (student.enrollments || []).length
   const totalSessions = (student.enrollments || []).reduce((s, en) => s + en.sessionsTotal, 0)
   const usedSessions = (student.enrollments || []).reduce((s, en) => s + en.sessionsUsed, 0)
@@ -72,7 +50,7 @@ export const EvaluationCard = ({
 
       {/* Avatar + Name Row */}
       <div className="relative z-10 -mt-5 px-4">
-        <div className="flex items-end justify-between">
+        <div className="flex items-end justify-between gap-2">
           <div className="flex min-w-0 flex-1 items-center gap-3">
             <div
               className={cn(
@@ -94,7 +72,7 @@ export const EvaluationCard = ({
                 {student.grade && (
                   <>
                     <span className="h-3 w-px shrink-0 bg-white/40" />
-                    <span className="shrink-0 truncate text-[10px] font-bold text-white/90">
+                    <span className="shrink-0 truncate text-micro font-bold text-white/90">
                       {student.grade}
                     </span>
                   </>
@@ -102,10 +80,12 @@ export const EvaluationCard = ({
               </div>
             </div>
           </div>
-          <div className="border-warning/15 bg-warning-soft/70 dark:bg-warning-soft/50 flex shrink-0 items-center gap-1 rounded-xl border px-2 py-1">
-            <Award size={11} className="text-warning" />
-            <span className="text-xs font-bold tabular-nums text-warning">{totalStudentXP}</span>
-            <span className="text-warning/60 text-[10px]">XP</span>
+          <div className="dark:border-warning-strong/40 flex shrink-0 items-center gap-1 rounded-xl border border-warning bg-warning-light px-2 py-1 dark:bg-warning-soft">
+            <Award size={11} className="text-warning-strong" />
+            <span className="text-xs font-bold tabular-nums text-warning-strong">
+              {totalStudentXP}
+            </span>
+            <span className="text-micro font-bold text-warning-strong">XP</span>
           </div>
         </div>
       </div>
@@ -123,7 +103,7 @@ export const EvaluationCard = ({
                 {lastRating && (
                   <span
                     className={cn(
-                      'flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-bold',
+                      'flex items-center gap-1 rounded px-1.5 py-0.5 text-micro font-bold',
                       lastRating.pill,
                     )}
                   >
@@ -131,12 +111,12 @@ export const EvaluationCard = ({
                     {lastEval.rating}
                   </span>
                 )}
-                <span className="text-[10px] text-muted">
+                <span className="text-micro text-muted">
                   {format(new Date(lastEval.created_at || lastEval.date), 'dd/MM')}
                 </span>
               </div>
             </div>
-            <div className="dark:bg-surface/80 min-h-[40px] rounded-xl border border-border bg-surface p-2.5">
+            <div className="min-h-[40px] rounded-xl border border-border bg-surface p-2.5">
               <p className="line-clamp-2 text-xs italic leading-relaxed text-muted">
                 &ldquo;{lastEval.notes || 'بدون ملاحظات'}&rdquo;
               </p>
@@ -144,21 +124,19 @@ export const EvaluationCard = ({
 
             {/* Stats Row */}
             <div className="grid grid-cols-3 gap-1.5">
-              <div className="bg-primary-soft/40 dark:bg-primary-soft/30 rounded-xl p-2 text-center">
-                <p className="text-[10px] text-muted">المعدل</p>
+              <div className="rounded-xl bg-primary-soft p-2 text-center dark:bg-primary-soft">
+                <p className="text-micro text-muted">المعدل</p>
                 <p className="text-xs font-bold tabular-nums text-primary dark:text-primary">
                   {avgRating || '—'}
                 </p>
               </div>
-              <div className="bg-success-soft/40 dark:bg-success-soft/30 rounded-xl p-2 text-center">
-                <p className="text-[10px] text-muted">الحضور</p>
-                <p className="text-xs font-bold tabular-nums text-success dark:text-success">
-                  {progress}%
-                </p>
+              <div className="rounded-xl bg-success-soft p-2 text-center dark:bg-success-soft">
+                <p className="text-micro text-muted">الحضور</p>
+                <p className="text-xs font-bold tabular-nums text-success-strong">{progress}%</p>
               </div>
-              <div className="bg-warning-soft/40 dark:bg-warning-soft/30 rounded-xl p-2 text-center">
-                <p className="text-[10px] text-muted">التقييمات</p>
-                <p className="text-xs font-bold tabular-nums text-warning dark:text-warning">
+              <div className="rounded-xl bg-warning-soft p-2 text-center dark:bg-warning-soft">
+                <p className="text-micro text-muted">التقييمات</p>
+                <p className="text-xs font-bold tabular-nums text-warning-strong">
                   {studentEvals.length}
                 </p>
               </div>
@@ -179,19 +157,19 @@ export const EvaluationCard = ({
           </>
         ) : (
           <div className="flex flex-1 flex-col items-center justify-center gap-2 py-4 text-center">
-            <div className="bg-primary-soft/40 dark:bg-primary-soft/30 flex h-10 w-10 items-center justify-center rounded-xl border border-dashed border-primary/20">
-              <Award size={16} className="text-primary/40 dark:text-primary/50" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-dashed border-primary/30 bg-primary-soft dark:bg-primary-soft">
+              <Award size={16} className="text-primary" />
             </div>
             <div>
               <p className="text-xs font-bold text-muted">ابدأ أول تقييم</p>
-              <p className="text-muted/60 mt-0.5 text-[10px]">كل تقييم يزيد XP ويسجل في السجل</p>
+              <p className="mt-0.5 text-micro text-muted">كل تقييم يزيد XP ويسجل في السجل</p>
             </div>
             {totalEnrollments > 0 && (
               <div className="mt-1 flex items-center gap-2">
-                <span className="flex items-center gap-1 text-[10px] text-muted">
+                <span className="flex items-center gap-1 text-micro text-muted">
                   <Calendar size={8} /> {totalEnrollments} مواد
                 </span>
-                <span className="flex items-center gap-1 text-[10px] text-muted">
+                <span className="flex items-center gap-1 text-micro text-muted">
                   <TrendingUp size={8} /> {progress}% حضور
                 </span>
               </div>
@@ -210,7 +188,8 @@ export const EvaluationCard = ({
         {!isParent && (
           <button
             onClick={() => onAddEvaluation(student.id)}
-            className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
+            aria-label={`إضافة تقييم لـ ${student.name}`}
+            className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-micro font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={12} /> تقييم
           </button>
@@ -218,21 +197,22 @@ export const EvaluationCard = ({
         <button
           onClick={() => onViewHistory(student)}
           className={cn(
-            'flex items-center justify-center gap-1 rounded-xl border py-2.5 text-[11px] font-bold transition-all active:scale-95',
+            'flex items-center justify-center gap-1 rounded-xl border py-2.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
             isParent
               ? 'border-primary bg-primary text-on-primary hover:bg-primary-hover'
               : 'border-border bg-surface text-main hover:bg-background',
           )}
         >
           <History size={12} /> السجل
-          <span className="me-0.5 rounded-md bg-primary-soft px-1 py-0.5 text-[9px] font-bold text-primary">
+          <span className="me-0.5 rounded-md bg-primary-soft px-1 py-0.5 text-micro font-bold text-primary">
             {studentEvals.length}
           </span>
         </button>
         {!isParent && (
           <button
             onClick={() => onViewProfile(student)}
-            className="flex items-center justify-center gap-1 rounded-xl border border-border bg-surface py-2.5 text-[11px] font-bold text-main transition-all hover:border-primary/30 hover:bg-background active:scale-95"
+            aria-label={`عرض ملف ${student.name}`}
+            className="flex items-center justify-center gap-1 rounded-xl border border-border bg-surface py-2.5 text-micro font-bold text-main transition-all hover:border-primary/30 hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <User size={12} /> الملف
           </button>

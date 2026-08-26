@@ -1,4 +1,4 @@
-import { Award, Plus, X, Search, Users, Star, TrendingUp, UserCheck, UserX } from 'lucide-react'
+﻿import { Award, Plus, X, Search, Users, Star, TrendingUp, UserCheck, UserX } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
 
@@ -21,11 +21,11 @@ interface EvaluationsHeaderProps {
 }
 
 const filters = [
-  { value: '', label: 'الكل' },
-  { value: 'evaluated', label: 'تم تقييمهم' },
-  { value: 'not-evaluated', label: 'غير مقيمين' },
-  { value: 'highest-xp', label: 'الأعلى XP' },
-  { value: 'lowest-xp', label: 'الأقل XP' },
+  { value: '', label: 'ط§ظ„ظƒظ„' },
+  { value: 'evaluated', label: 'طھظ… طھظ‚ظٹظٹظ…ظ‡ظ…' },
+  { value: 'not-evaluated', label: 'ط؛ظٹط± ظ…ظ‚ظٹظ…ظٹظ†' },
+  { value: 'highest-xp', label: 'ط§ظ„ط£ط¹ظ„ظ‰ XP' },
+  { value: 'lowest-xp', label: 'ط§ظ„ط£ظ‚ظ„ XP' },
 ]
 
 export const EvaluationsHeader = ({
@@ -42,9 +42,9 @@ export const EvaluationsHeader = ({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35 }}
-      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 pt-5 md:p-6 dark:from-primary dark:via-primary-deep dark:to-primary-hover"
+      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 pt-5 md:p-6"
     >
-      <div className="absolute inset-0 opacity-[0.06]">
+      <div className="absolute inset-0 opacity-[0.06]" aria-hidden="true">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern
@@ -66,28 +66,31 @@ export const EvaluationsHeader = ({
         {/* Title Row */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 ring-2 ring-white/30 md:h-10 md:w-10">
-              <Award size={16} className="text-white" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/25 ring-2 ring-white/40 md:h-10 md:w-10">
+              <Award size={16} className="text-on-primary" />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-on-primary md:text-base">تقييم الطلاب</h1>
-              <p className="text-[10px] text-white/70 md:text-[11px]">{stats.totalStudents} طالب</p>
+              <h1 className="text-sm font-bold text-on-primary md:text-base">
+                طھظ‚ظٹظٹظ… ط§ظ„ط·ظ„ط§ط¨
+              </h1>
+              <p className="text-micro font-medium text-white/85">{stats.totalStudents} ط·ط§ظ„ط¨</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 rounded-lg bg-white/15 px-2.5 py-1.5 backdrop-blur-sm">
-              <Award size={11} className="text-warning" />
-              <span className="text-[10px] font-bold tabular-nums text-white">
+            {/* ط´ط§ط±ط© XP â€” ط®ظ„ظپظٹط© ظپط§طھط­ط© طµظ„ط¨ط© ظˆظ†طµ ظƒظ‡ط±ظ…ط§ظ†ظٹ ط؛ط§ظ…ظ‚ ظ…ظ‚ط±ظˆط، */}
+            <div className="flex items-center gap-1 rounded-lg border border-warning bg-warning-light px-2.5 py-1.5 shadow-sm">
+              <Award size={11} className="text-warning-strong" />
+              <span className="text-xs font-bold tabular-nums text-warning-strong">
                 {stats.totalXP.toLocaleString()}
               </span>
-              <span className="text-[8px] text-white/50">XP</span>
+              <span className="text-micro font-black text-warning-strong">XP</span>
             </div>
             {showAddButton && (
               <button
                 onClick={onAddClick}
-                className="flex h-8 items-center gap-1.5 rounded-lg bg-white/20 px-3 text-[10px] font-bold text-white transition-all hover:bg-white/30 active:scale-95"
+                className="flex h-8 items-center gap-1.5 rounded-lg bg-white/20 px-3 text-micro font-bold text-on-primary ring-1 ring-white/40 transition-all hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
-                <Plus size={11} /> تقييم
+                <Plus size={11} /> طھظ‚ظٹظٹظ…
               </button>
             )}
           </div>
@@ -96,43 +99,27 @@ export const EvaluationsHeader = ({
         {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-2 md:grid-cols-5">
           {[
-            {
-              icon: Users,
-              value: stats.totalStudents,
-              label: '\u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0637\u0644\u0627\u0628',
-            },
-            {
-              icon: UserCheck,
-              value: stats.evaluatedCount,
-              label: '\u062a\u0645 \u062a\u0642\u064a\u064a\u0645\u0647\u0645',
-            },
-            {
-              icon: UserX,
-              value: stats.notEvaluatedCount,
-              label: '\u063a\u064a\u0631 \u0645\u0642\u064a\u0645\u064a\u0646',
-            },
-            {
-              icon: Star,
-              value: stats.avgRating,
-              label: '\u0645\u062a\u0648\u0633\u0637 \u0627\u0644\u062a\u0642\u064a\u064a\u0645',
-            },
+            { icon: Users, value: stats.totalStudents, label: 'ط¥ط¬ظ…ط§ظ„ظٹ ط§ظ„ط·ظ„ط§ط¨' },
+            { icon: UserCheck, value: stats.evaluatedCount, label: 'طھظ… طھظ‚ظٹظٹظ…ظ‡ظ…' },
+            { icon: UserX, value: stats.notEvaluatedCount, label: 'ط؛ظٹط± ظ…ظ‚ظٹظ…ظٹظ†' },
+            { icon: Star, value: stats.avgRating, label: 'ظ…طھظˆط³ط· ط§ظ„طھظ‚ظٹظٹظ…' },
             {
               icon: TrendingUp,
               value: `${stats.totalXP.toLocaleString()}`,
-              label: '\u0625\u062c\u0645\u0627\u0644\u064a XP',
+              label: 'ط¥ط¬ظ…ط§ظ„ظٹ XP',
             },
           ].map((item, i) => (
             <div
               key={i}
-              className="rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-sm dark:border-white/10"
+              className="rounded-xl border border-white/25 bg-black/10 p-3 backdrop-blur-sm"
             >
               <div className="mb-0.5 flex items-center gap-1.5">
-                <item.icon size={10} className="text-white/70" />
-                <span className="text-xs font-bold tabular-nums text-white md:text-sm">
+                <item.icon size={11} className="text-white/85" />
+                <span className="text-xs font-bold tabular-nums text-on-primary md:text-sm">
                   {item.value}
                 </span>
               </div>
-              <p className="text-[8px] text-white/60 md:text-[9px]">{item.label}</p>
+              <p className="text-micro font-medium text-white/85">{item.label}</p>
             </div>
           ))}
         </div>
@@ -140,20 +127,20 @@ export const EvaluationsHeader = ({
         {/* Search + Filters */}
         <div className="flex flex-col gap-2 md:flex-row">
           <div className="relative flex-1">
-            <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/40" />
+            <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/75" />
             <input
               type="text"
-              aria-label="بحث عن طالب"
-              placeholder="ابحث بالاسم أو الصف..."
+              aria-label="ط¨ط­ط« ط¹ظ† ط·ط§ظ„ط¨"
+              placeholder="ط§ط¨ط­ط« ط¨ط§ظ„ط§ط³ظ… ط£ظˆ ط§ظ„طµظپ..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full rounded-xl border border-white/20 bg-white/15 px-3 py-2.5 ps-9 text-[11px] font-bold text-white outline-none backdrop-blur-sm transition-all placeholder:text-white/40 focus:border-white/40 focus:bg-white/20"
+              className="w-full rounded-xl border border-white/35 bg-black/15 px-3 py-2.5 ps-9 text-xs font-bold text-on-primary outline-none backdrop-blur-sm transition-all placeholder:text-white/60 focus:border-white/50 focus:bg-black/25 focus-visible:ring-2 focus-visible:ring-focus"
             />
             {searchTerm && (
               <button
-                aria-label="مسح البحث"
+                aria-label="ظ…ط³ط­ ط§ظ„ط¨ط­ط«"
                 onClick={() => onSearchChange('')}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-white/40 transition-colors hover:text-white"
+                className="absolute end-3 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-white/75 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <X size={13} />
               </button>
@@ -164,11 +151,12 @@ export const EvaluationsHeader = ({
               <button
                 key={f.value}
                 onClick={() => onFilterStatusChange(f.value)}
+                aria-pressed={filterStatus === f.value}
                 className={cn(
-                  'shrink-0 whitespace-nowrap rounded-lg px-2.5 py-1.5 text-[10px] font-bold transition-all',
+                  'shrink-0 whitespace-nowrap rounded-lg px-2.5 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                   filterStatus === f.value
-                    ? 'bg-white text-primary shadow-sm'
-                    : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white',
+                    ? 'bg-card text-primary shadow-elevation-1'
+                    : 'border border-white/25 bg-black/10 font-medium text-white/85 hover:bg-black/20 hover:text-white',
                 )}
               >
                 {f.label}

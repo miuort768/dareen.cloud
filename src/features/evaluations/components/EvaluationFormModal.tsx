@@ -51,6 +51,9 @@ export const EvaluationFormModal = ({
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={formData.studentId ? 'تعديل تقييم طالب' : 'إضافة تقييم جديد'}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
@@ -70,13 +73,13 @@ export const EvaluationFormModal = ({
                       ? `تقييم: ${students.find((s) => s.id === formData.studentId)?.name || ''}`
                       : 'إضافة تقييم جديد'}
                   </h3>
-                  <p className="mt-0.5 text-[11px] text-muted">تقييم أداء الطالب</p>
+                  <p className="mt-0.5 text-micro text-muted">تقييم أداء الطالب</p>
                 </div>
               </div>
               <button
                 onClick={onClose}
                 aria-label="إغلاق"
-                className="bg-error/10 flex h-9 w-9 items-center justify-center rounded-xl text-error transition-all hover:bg-error hover:text-on-error"
+                className="flex h-9 w-9 items-center justify-center rounded-xl bg-surface text-muted transition-all hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <X size={16} />
               </button>
@@ -87,8 +90,14 @@ export const EvaluationFormModal = ({
               <form id="evaluation-form" onSubmit={onSubmit} className="space-y-5">
                 {!formData.studentId && (
                   <div>
-                    <label className="mb-2 block text-xs font-bold text-muted">اختر الطالب</label>
+                    <label
+                      htmlFor="eval-student"
+                      className="mb-2 block text-xs font-bold text-muted"
+                    >
+                      اختر الطالب
+                    </label>
                     <select
+                      id="eval-student"
                       value={formData.studentId}
                       onChange={(e) => onChange({ ...formData, studentId: e.target.value })}
                       required
@@ -117,15 +126,16 @@ export const EvaluationFormModal = ({
                           type="button"
                           key={opt.value}
                           onClick={() => onChange({ ...formData, rating: opt.value })}
+                          aria-pressed={isSelected}
                           className={cn(
-                            'flex flex-col items-center justify-center gap-1.5 rounded-xl border-2 p-3 transition-all duration-200',
+                            'flex flex-col items-center justify-center gap-1.5 rounded-xl border-2 p-3 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                             isSelected
                               ? cn(opt.bg, opt.border, opt.color, 'scale-[1.03] shadow-sm')
-                              : 'border-border bg-surface text-muted hover:border-primary/30',
+                              : 'border-border bg-surface text-muted hover:border-primary/30 hover:text-main',
                           )}
                         >
                           <OptIcon size={18} strokeWidth={isSelected ? 2.5 : 2} />
-                          <span className="text-[11px] font-bold leading-none">{opt.value}</span>
+                          <span className="text-micro font-bold leading-none">{opt.value}</span>
                         </button>
                       )
                     })}
@@ -138,25 +148,29 @@ export const EvaluationFormModal = ({
                     <label className="text-xs font-bold text-muted">نقاط المكافأة (XP)</label>
                   </div>
                   <div className="mb-3 flex flex-wrap gap-1.5">
-                    {[5, 10, 15, 20, 25, 30, 50].map((p) => (
-                      <button
-                        key={p}
-                        type="button"
-                        onClick={() => onChange({ ...formData, points: p })}
-                        className={cn(
-                          'rounded-lg border px-3 py-1.5 text-[11px] font-bold transition-all',
-                          formData.points === p
-                            ? 'border-warning bg-warning text-on-warning shadow-sm'
-                            : 'border-warning/20 hover:bg-warning/10 bg-warning-soft text-warning',
-                        )}
-                      >
-                        +{p}
-                      </button>
-                    ))}
+                    {[5, 10, 15, 20, 25, 30, 50].map((p) => {
+                      const isSelected = formData.points === p
+                      return (
+                        <button
+                          key={p}
+                          type="button"
+                          onClick={() => onChange({ ...formData, points: p })}
+                          aria-pressed={isSelected}
+                          className={cn(
+                            'rounded-lg border px-3 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                            isSelected
+                              ? 'border-warning bg-warning-light font-black text-warning-strong shadow-sm dark:bg-warning-soft'
+                              : 'border-border bg-surface text-muted hover:border-warning hover:text-warning-strong',
+                          )}
+                        >
+                          +{p}
+                        </button>
+                      )
+                    })}
                   </div>
                   <div className="flex items-center gap-2.5">
-                    <div className="border-warning/20 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border bg-warning-soft">
-                      <Zap size={16} className="text-warning" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-warning bg-warning-light dark:bg-warning-soft">
+                      <Zap size={16} className="text-warning-strong" />
                     </div>
                     <input
                       type="number"
@@ -170,19 +184,21 @@ export const EvaluationFormModal = ({
                       placeholder="0"
                       min="0"
                       max="50"
-                      className="focus:ring-warning/10 flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-medium text-warning transition-all focus:border-warning focus:outline-none focus:ring-2"
+                      aria-label="عدد النقاط من 0 إلى 50"
+                      className="flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-bold tabular-nums text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus"
                     />
-                    <span className="text-[10px] text-muted">/ 50</span>
+                    <span className="text-micro text-muted">/ 50</span>
                   </div>
-                  <p className="mt-1.5 text-[10px] text-muted">الحد الأقصى 50 نقطة في كل تقييم</p>
+                  <p className="mt-1.5 text-micro text-muted">الحد الأقصى 50 نقطة في كل تقييم</p>
                 </div>
 
                 {/* Notes */}
                 <div>
-                  <label className="mb-2 block text-xs font-bold text-muted">
+                  <label htmlFor="eval-notes" className="mb-2 block text-xs font-bold text-muted">
                     رسالة الإشادة (تظهر لولي الأمر)
                   </label>
                   <textarea
+                    id="eval-notes"
                     value={formData.notes}
                     onChange={(e) => onChange({ ...formData, notes: e.target.value })}
                     rows={3}
@@ -198,7 +214,7 @@ export const EvaluationFormModal = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 rounded-xl border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-hover active:scale-[0.98]"
+                className="flex-1 rounded-xl border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 إلغاء
               </button>
@@ -206,7 +222,7 @@ export const EvaluationFormModal = ({
                 type="submit"
                 form="evaluation-form"
                 disabled={isSubmitting}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.95] disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <CheckCircle2 size={14} /> {isSubmitting ? 'جاري الإرسال...' : 'إرسال التقييم'}
               </button>

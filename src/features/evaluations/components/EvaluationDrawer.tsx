@@ -15,7 +15,7 @@ import {
 import { cn } from '../../../lib/utils'
 import { format } from 'date-fns'
 import { ProgressBar } from '../../../shared/components/ui'
-import { RATING_OPTIONS } from '../types/constants'
+import { RATING_OPTIONS, averageRatingOf, getAvatarGradient } from '../types/constants'
 import type { Student, Evaluation } from '../../../types'
 
 interface EvaluationDrawerProps {
@@ -24,21 +24,6 @@ interface EvaluationDrawerProps {
   canDelete: (ev: Evaluation) => boolean
   onDelete: (id: string) => void
   onClose: () => void
-}
-
-const avatarGradients = [
-  { g: 'from-primary to-primary-hover', on: 'text-on-primary' },
-  { g: 'from-success to-success-hover', on: 'text-on-success' },
-  { g: 'from-info to-info-hover', on: 'text-on-info' },
-  { g: 'from-warning to-warning-hover', on: 'text-on-warning' },
-  { g: 'from-error to-error-hover', on: 'text-on-error' },
-  { g: 'from-accent to-accent-hover', on: 'text-on-accent' },
-]
-
-const getAvatarGradient = (name: string) => {
-  let hash = 0
-  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash)
-  return avatarGradients[Math.abs(hash) % avatarGradients.length]!
 }
 
 export const EvaluationDrawer = ({
@@ -75,15 +60,7 @@ export const EvaluationDrawer = ({
   const usedSessions = (student?.enrollments || []).reduce((s, en) => s + en.sessionsUsed, 0)
   const progress = totalSessions > 0 ? Math.round((usedSessions / totalSessions) * 100) : 0
   const gradient = getAvatarGradient(student?.name || '')
-
-  const rMap: Record<string, number> = { ممتاز: 5, 'جيد جدًا': 4, جيد: 3, 'يحتاج تحسين': 2 }
-  const avgRating =
-    studentEvals.length > 0
-      ? Math.round(
-          (studentEvals.reduce((s, ev) => s + (rMap[ev.rating] || 3), 0) / studentEvals.length) *
-            10,
-        ) / 10
-      : 0
+  const avgRating = averageRatingOf(studentEvals)
 
   return (
     <AnimatePresence>
@@ -99,8 +76,16 @@ export const EvaluationDrawer = ({
             if (e.target === e.currentTarget) onClose()
           }}
         >
-          <div className="absolute inset-0 bg-black/30" />
+          <div
+            className="absolute inset-0 bg-black/30"
+            role="presentation"
+            aria-hidden="true"
+            onClick={onClose}
+          />
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={`ملف التقييمات: ${student?.name}`}
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.92 }}
@@ -108,14 +93,15 @@ export const EvaluationDrawer = ({
             className="relative flex max-h-[75vh] w-full max-w-xs flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2"
             dir="rtl"
           >
-            {/* Compact Header */}
+            {/* Header */}
             <div className={cn('relative overflow-hidden px-4 py-3', gradient.g)}>
               <div className="absolute inset-0 bg-white/10" />
               <button
                 onClick={onClose}
-                className="bg-error/80 absolute end-2 top-2 z-10 flex h-6 w-6 items-center justify-center rounded-md text-white transition-all hover:bg-error"
+                aria-label="إغلاق الملف"
+                className="absolute end-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-lg bg-black/25 text-white backdrop-blur-sm transition-all hover:bg-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
-                <X size={12} />
+                <X size={13} />
               </button>
               <div className="relative z-10 flex items-center gap-3">
                 <div
@@ -128,13 +114,13 @@ export const EvaluationDrawer = ({
                 </div>
                 <div className="min-w-0 flex-1">
                   <h2 className={cn('truncate text-xs font-bold', gradient.on)}>{student?.name}</h2>
-                  <p className="text-[10px] text-white/60">{student?.grade || '—'}</p>
+                  <p className="text-micro font-medium text-white/85">{student?.grade || '—'}</p>
                   <div className="mt-1 flex items-center gap-1.5">
-                    <span className="flex items-center gap-1 rounded bg-white/15 px-1.5 py-0.5 text-[9px] font-bold text-white">
+                    <span className="flex items-center gap-1 rounded bg-black/25 px-1.5 py-0.5 text-micro font-bold text-white backdrop-blur-sm">
                       <Star size={8} /> {avgRating || '—'}
                     </span>
                     {totalXP > 0 && (
-                      <span className="bg-warning/70 flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-bold text-on-warning">
+                      <span className="flex items-center gap-1 rounded bg-warning-light px-1.5 py-0.5 text-micro font-bold text-warning-strong">
                         <Award size={8} /> {totalXP} XP
                       </span>
                     )}
@@ -158,18 +144,18 @@ export const EvaluationDrawer = ({
                     icon: Calendar,
                     value: `${usedSessions}/${totalSessions}`,
                     label: 'الحصص',
-                    color: 'text-info bg-info-soft',
+                    color: 'text-info-strong bg-info-soft',
                   },
                   {
                     icon: TrendingUp,
                     value: `${progress}%`,
                     label: 'الحضور',
-                    color: 'text-success bg-success-soft',
+                    color: 'text-success-strong bg-success-soft',
                   },
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="dark:bg-surface/80 rounded-lg border border-border bg-surface p-2 text-center"
+                    className="rounded-lg border border-border bg-surface p-2 text-center"
                   >
                     <div
                       className={cn(
@@ -179,8 +165,8 @@ export const EvaluationDrawer = ({
                     >
                       <item.icon size={11} />
                     </div>
-                    <p className="text-[11px] font-bold tabular-nums text-main">{item.value}</p>
-                    <p className="text-[8px] text-muted">{item.label}</p>
+                    <p className="text-xs font-bold tabular-nums text-main">{item.value}</p>
+                    <p className="text-micro text-muted">{item.label}</p>
                   </div>
                 ))}
               </div>
@@ -188,7 +174,7 @@ export const EvaluationDrawer = ({
               {/* Progress */}
               {totalSessions > 0 && (
                 <div>
-                  <div className="mb-1 flex justify-between text-[10px] text-muted">
+                  <div className="mb-1 flex justify-between text-micro text-muted">
                     <span>تقدم الحصص</span>
                     <span className="font-bold">{progress}%</span>
                   </div>
@@ -203,21 +189,21 @@ export const EvaluationDrawer = ({
               {/* Enrollments */}
               {(student?.enrollments || []).length > 0 && (
                 <div className="space-y-1.5">
-                  <h5 className="flex items-center gap-1 text-[10px] font-bold text-muted">
+                  <h5 className="flex items-center gap-1 text-micro font-bold text-muted">
                     <GraduationCap size={10} /> المواد
                   </h5>
                   {(student?.enrollments || []).map((en, i) => (
                     <div
                       key={i}
-                      className="dark:bg-surface/80 flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-2"
+                      className="flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-2"
                     >
                       <div className="min-w-0">
-                        <p className="truncate text-[11px] font-bold text-main">{en.subject}</p>
-                        <p className="text-[9px] text-muted">
+                        <p className="truncate text-xs font-bold text-main">{en.subject}</p>
+                        <p className="text-micro text-muted">
                           {typeof en.teacher === 'string' ? en.teacher : en.teacher?.name}
                         </p>
                       </div>
-                      <p className="shrink-0 text-[11px] font-bold tabular-nums text-main">
+                      <p className="shrink-0 text-xs font-bold tabular-nums text-main">
                         {en.sessionsUsed}/{en.sessionsTotal}
                       </p>
                     </div>
@@ -227,9 +213,9 @@ export const EvaluationDrawer = ({
 
               {/* Evaluations History */}
               <div className="space-y-1.5">
-                <h5 className="flex items-center gap-1 text-[10px] font-bold text-muted">
+                <h5 className="flex items-center gap-1 text-micro font-bold text-muted">
                   <History size={10} /> سجل التقييمات
-                  <span className="rounded bg-primary-soft px-1 py-0.5 text-[8px] font-bold text-primary">
+                  <span className="rounded bg-primary-soft px-1 py-0.5 text-micro font-bold text-primary">
                     {studentEvals.length}
                   </span>
                 </h5>
@@ -239,15 +225,12 @@ export const EvaluationDrawer = ({
                       const r =
                         RATING_OPTIONS.find((ro) => ro.value === ev.rating) || RATING_OPTIONS[0]
                       return (
-                        <div
-                          key={ev.id}
-                          className="dark:bg-surface/80 rounded-lg border border-border bg-surface p-2"
-                        >
+                        <div key={ev.id} className="rounded-lg border border-border bg-surface p-2">
                           <div className="mb-1 flex items-center justify-between">
                             <div className="flex items-center gap-1">
                               <span
                                 className={cn(
-                                  'flex items-center gap-0.5 rounded px-1.5 py-0.5 text-[9px] font-bold',
+                                  'flex items-center gap-0.5 rounded px-1.5 py-0.5 text-micro font-bold',
                                   r.pill,
                                 )}
                               >
@@ -255,26 +238,27 @@ export const EvaluationDrawer = ({
                                 {ev.rating}
                               </span>
                               {ev.points > 0 && (
-                                <span className="rounded bg-warning-soft px-1 py-0.5 text-[9px] font-bold text-warning">
+                                <span className="rounded bg-warning-light px-1 py-0.5 text-micro font-bold text-warning-strong dark:bg-warning-soft">
                                   +{ev.points}
                                 </span>
                               )}
                             </div>
                             <div className="flex items-center gap-1">
-                              <span className="text-[9px] text-muted">
+                              <span className="text-micro text-muted">
                                 {format(new Date(ev.created_at || ev.date), 'dd/MM')}
                               </span>
                               {canDelete(ev) && (
                                 <button
                                   onClick={() => onDelete(ev.id)}
-                                  className="rounded p-0.5 text-muted transition-colors hover:text-error"
+                                  aria-label={`حذف تقييم ${format(new Date(ev.created_at || ev.date), 'dd/MM')}`}
+                                  className="rounded p-1 text-muted transition-colors hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                                 >
-                                  <Trash2 size={9} />
+                                  <Trash2 size={11} />
                                 </button>
                               )}
                             </div>
                           </div>
-                          <p className="text-[10px] leading-relaxed text-muted">
+                          <p className="text-micro leading-relaxed text-muted">
                             {ev.notes || 'بدون ملاحظات'}
                           </p>
                         </div>
@@ -283,7 +267,7 @@ export const EvaluationDrawer = ({
                     {studentEvals.length > visibleCount && (
                       <button
                         onClick={() => setVisibleCount((prev) => prev + 3)}
-                        className="dark:bg-surface/80 flex w-full items-center justify-center gap-1 rounded-lg border border-border bg-surface py-2 text-[10px] font-bold text-muted transition-all hover:border-primary/30 hover:text-primary"
+                        className="flex w-full items-center justify-center gap-1 rounded-lg border border-border bg-surface py-2 text-micro font-bold text-muted transition-all hover:border-primary/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                       >
                         <ChevronDown size={12} />
                         المزيد ({studentEvals.length - visibleCount})
@@ -292,8 +276,8 @@ export const EvaluationDrawer = ({
                   </>
                 ) : (
                   <div className="rounded-lg border border-dashed border-border py-6 text-center">
-                    <History size={16} className="text-muted/30 mx-auto mb-1" />
-                    <p className="text-[10px] text-muted">لا يوجد سجل</p>
+                    <History size={16} className="mx-auto mb-1 text-muted" />
+                    <p className="text-micro text-muted">لا يوجد سجل</p>
                   </div>
                 )}
               </div>
@@ -303,7 +287,7 @@ export const EvaluationDrawer = ({
             <div className="border-t border-border px-3 py-2">
               <button
                 onClick={onClose}
-                className="bg-error/10 w-full rounded-lg py-2 text-[10px] font-bold text-error transition-colors hover:bg-error hover:text-on-error"
+                className="w-full rounded-xl border border-border bg-surface py-2.5 text-xs font-bold text-main transition-colors hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 إغلاق
               </button>

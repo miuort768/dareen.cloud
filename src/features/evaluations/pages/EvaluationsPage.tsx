@@ -3,7 +3,7 @@ import { User, Users, Plus, Award } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api, safeArray } from '../../../lib/api'
-import { useCurrentUser } from '../../../context/AppContext'
+import { useCurrentUser, useShowNotification } from '../../../context/AppContext'
 import { confirm } from '../../../lib/confirmDialog'
 import { EvaluationsHeader } from '../components/EvaluationsHeader'
 import { EvaluationCard } from '../components/EvaluationCard'
@@ -11,12 +11,14 @@ import { EvaluationDrawer } from '../components/EvaluationDrawer'
 import { EvaluationFormModal } from '../components/EvaluationFormModal'
 import type { Student, Evaluation } from '../../../types'
 import { cn } from '../../../lib/utils'
+import { ratingValueOf } from '../types/constants'
 
 export const Evaluations = () => {
   useEffect(() => {
     document.title = 'التقييمات | دارين السابعة للتعليم والتدريب'
   }, [])
   const currentUser = useCurrentUser()
+  const showNotification = useShowNotification()
   const queryClient = useQueryClient()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [profileStudent, setProfileStudent] = useState<Student | null>(null)
@@ -26,7 +28,7 @@ export const Evaluations = () => {
   const [fabOpen, setFabOpen] = useState(false)
   const resetForm = () => setFormData({ studentId: '', rating: 'ممتاز', points: 0, notes: '' })
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['evaluations-data', currentUser?.id, currentUser?.role],
     queryFn: async () => {
       if (currentUser?.role === 'parent') {
@@ -55,14 +57,22 @@ export const Evaluations = () => {
     mutationFn: async (payload: Record<string, unknown>) => api.post('/evaluations', payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['evaluations-data'] })
+      queryClient.invalidateQueries({ queryKey: ['evaluations'] })
       setIsModalOpen(false)
       resetForm()
+      showNotification('تم إرسال التقييم بنجاح', 'success')
     },
+    onError: () => showNotification('فشل حفظ التقييم، حاول مرة أخرى', 'error'),
   })
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => api.delete(`/evaluations/${id}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['evaluations-data'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['evaluations-data'] })
+      queryClient.invalidateQueries({ queryKey: ['evaluations'] })
+      showNotification('تم حذف التقييم', 'success')
+    },
+    onError: () => showNotification('فشل حذف التقييم', 'error'),
   })
 
   const teacherStudents = useMemo(() => {
@@ -153,11 +163,10 @@ export const Evaluations = () => {
     const evaluatedIds = new Set(evaluations.map((ev) => ev.studentId))
     const evaluatedCount = teacherStudents.filter((s) => evaluatedIds.has(s.id)).length
     const notEvaluatedCount = teacherStudents.filter((s) => !evaluatedIds.has(s.id)).length
-    const rMap: Record<string, number> = { ممتاز: 5, 'جيد جدًا': 4, جيد: 3, 'يحتاج تحسين': 2 }
-    const avg =
+    const rMapAvg =
       evaluations.length > 0
         ? Math.round(
-            (evaluations.reduce((s, ev) => s + (rMap[ev.rating] || 3), 0) / evaluations.length) *
+            (evaluations.reduce((s, ev) => s + ratingValueOf(ev.rating), 0) / evaluations.length) *
               10,
           ) / 10
         : 0
@@ -165,7 +174,7 @@ export const Evaluations = () => {
       totalStudents: teacherStudents.length,
       evaluatedCount,
       notEvaluatedCount,
-      avgRating: avg > 0 ? avg.toFixed(1) : '—',
+      avgRating: rMapAvg > 0 ? rMapAvg.toFixed(1) : '—',
       totalXP,
     }
   }, [teacherStudents, evaluations, totalXP])
@@ -207,7 +216,6 @@ export const Evaluations = () => {
 
   return (
     <div className="relative min-h-full overflow-x-hidden bg-background pb-24 font-sans" dir="rtl">
-      {currentUser?.role === 'teacher' && <div className="hidden md:block"></div>}
       <div className="relative z-10 mx-auto max-w-page space-y-3 px-2">
         <EvaluationsHeader
           stats={stats}
@@ -225,41 +233,56 @@ export const Evaluations = () => {
           transition={{ delay: 0.15 }}
           data-cards
         >
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {sortedStudents.map((student, idx) => (
-              <motion.div
-                key={student.id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.03 * idx }}
+          {isError ? (
+            <div className="bg-error-soft/50 col-span-full rounded-2xl border border-dashed border-error-soft py-16 text-center">
+              <p className="text-sm font-bold text-main">تعذر تحميل التقييمات</p>
+              <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
+              <button
+                onClick={() => refetch()}
+                className="mx-auto mt-4 block rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
-                <EvaluationCard
-                  student={student}
-                  evaluations={evaluations}
-                  isParent={currentUser?.role === 'parent'}
-                  onAddEvaluation={(studentId) => {
-                    setFormData({ ...formData, studentId })
-                    setIsModalOpen(true)
-                  }}
-                  onViewHistory={setProfileStudent}
-                  onViewProfile={setProfileStudent}
-                />
-              </motion.div>
-            ))}
-            {sortedStudents.length === 0 && (
-              <div className="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface py-16 text-center">
-                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft">
-                  <User size={20} className="text-primary" />
-                </div>
-                <h3 className="mb-1 text-xs font-bold text-main">
-                  {searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون'}
-                </h3>
-                <p className="text-[10px] text-muted">
-                  {searchTerm ? 'جرب كلمات مختلفة' : 'سيظهر الطلاب هنا بعد التسجيل'}
-                </p>
+                إعادة المحاولة
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {sortedStudents.map((student, idx) => (
+                  <motion.div
+                    key={student.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.03 * idx }}
+                  >
+                    <EvaluationCard
+                      student={student}
+                      evaluations={evaluations}
+                      isParent={currentUser?.role === 'parent'}
+                      onAddEvaluation={(studentId) => {
+                        setFormData({ ...formData, studentId })
+                        setIsModalOpen(true)
+                      }}
+                      onViewHistory={setProfileStudent}
+                      onViewProfile={setProfileStudent}
+                    />
+                  </motion.div>
+                ))}
+                {sortedStudents.length === 0 && (
+                  <div className="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface py-16 text-center">
+                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft">
+                      <User size={20} className="text-primary" />
+                    </div>
+                    <h3 className="mb-1 text-xs font-bold text-main">
+                      {searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون'}
+                    </h3>
+                    <p className="text-micro text-muted">
+                      {searchTerm ? 'جرب كلمات مختلفة' : 'سيظهر الطلاب هنا بعد التسجيل'}
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
         </motion.div>
 
         <EvaluationFormModal
@@ -308,7 +331,8 @@ export const Evaluations = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                  aria-label={action.label}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <action.icon size={18} />
                 </button>
@@ -319,9 +343,11 @@ export const Evaluations = () => {
           onClick={() => setFabOpen(!fabOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          aria-label={fabOpen ? 'إغلاق الإجراءات السريعة' : 'إجراءات سريعة'}
+          aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-xl text-on-primary shadow-xl transition-all',
-            fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
+            'flex h-12 w-12 items-center justify-center rounded-xl text-on-primary shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+            fabOpen ? 'rotate-45 bg-error text-on-error' : 'bg-primary',
           )}
         >
           <Plus size={24} />

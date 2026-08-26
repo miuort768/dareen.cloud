@@ -120,12 +120,16 @@ module.exports = {
           hover: 'var(--bg-success-hover, var(--bg-success-dark))',
           soft: 'var(--bg-success-soft)',
           light: 'var(--bg-success-light)',
+          // نص الحالة المقروء (AA فوق الأبيض وعلى soft) — بديل text-success الفاتح جدًا
+          strong: 'var(--text-success)',
         },
         warning: {
           DEFAULT: 'var(--bg-warning)',
           dark: 'var(--text-warning-dark)',
+          hover: 'var(--bg-warning-hover, var(--bg-warning-dark))',
           soft: 'var(--bg-warning-soft)',
           light: 'var(--bg-warning-light)',
+          strong: 'var(--text-warning)',
         },
         error: {
           DEFAULT: 'var(--bg-error)',
@@ -134,12 +138,15 @@ module.exports = {
           dark: 'var(--text-error-dark)',
           soft: 'var(--bg-error-soft)',
           light: 'var(--bg-error-light)',
+          strong: 'var(--text-error)',
         },
         info: {
           DEFAULT: 'var(--bg-info)',
           dark: 'var(--text-info-dark)',
+          hover: 'var(--bg-info-hover, var(--bg-info-dark))',
           soft: 'var(--bg-info-soft)',
           light: 'var(--bg-info-light)',
+          strong: 'var(--text-info-dark)',
         },
         sidebar: {
           DEFAULT: 'var(--sidebar-background)',
