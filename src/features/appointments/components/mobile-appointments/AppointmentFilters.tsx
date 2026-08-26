@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react'
-import { DAYS_OF_WEEK } from './types'
+import { DAYS_OF_WEEK } from '../../types'
 
 interface AppointmentFiltersProps {
   searchTerm: string

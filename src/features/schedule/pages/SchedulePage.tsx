@@ -11,13 +11,14 @@ import {
   PartyPopper,
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { MobileSchedule } from '../components/MobileSchedule'
 import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page'
 import { cn } from '../../../lib/utils'
 import { to24Minutes, normalizeDayName } from '../../attendance/utils/slotUtils'
+import { useCompletedSessions } from '../../appointments/hooks/useAppointments'
 
 interface Student {
   id: string
@@ -84,7 +85,6 @@ export const Schedule = () => {
     document.title = 'الجدول الدراسي | دارين السابعة للتعليم والتدريب'
   }, [])
   const currentUser = useCurrentUser()
-  const queryClient = useQueryClient()
   const [students, setStudents] = useState<Student[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [filterDay, setFilterDay] = useState<string>('all')
@@ -110,21 +110,8 @@ export const Schedule = () => {
   const isStudent = currentUser?.role === 'student'
   const isAdmin = currentUser?.role === 'admin'
 
-  // Completed sessions (daily reset via same API as Appointments)
-  const { data: completedSessionIds = [] } = useQuery({
-    queryKey: ['completed-sessions'],
-    queryFn: async () => {
-      const sessions = await api.get('/appointments/completed-sessions')
-      return (sessions || []) as string[]
-    },
-    refetchInterval: 15000,
-    enabled: isAdmin || isTeacher,
-  })
-
-  const completeMutation = useMutation({
-    mutationFn: (id: string) => api.post('/appointments/completed-sessions', { id }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['completed-sessions'] }),
-  })
+  // Completed sessions — مصدر موحد مشترك مع صفحة المواعيد (نفس الكاش ونفس منطق التصفير)
+  const { completedSessionIds, completeMutation } = useCompletedSessions()
 
   const fetchData = useCallback(async () => {
     try {

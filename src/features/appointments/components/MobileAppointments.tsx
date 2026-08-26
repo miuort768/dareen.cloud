@@ -1,149 +1,215 @@
-import { useState, useMemo } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useCurrentUser } from '../../../context/AppContext';
-import { api } from '../../../lib/api';
-import { triggerHaptic } from '../../../lib/haptics';
-import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile';
-import type { Student, AppointmentEvent } from './mobile-appointments/types';
-import { DAYS_OF_WEEK } from './mobile-appointments/types';
-import { normalizeDayName } from '../../attendance/utils/slotUtils';
-import { AppointmentPullToRefresh, AppointmentStats, AppointmentTabs, AppointmentFilters, AppointmentListView, AppointmentDetailsSheet } from './mobile-appointments';
+import { useState, useMemo } from 'react'
+import { motion } from 'framer-motion'
+import { CalendarCheck2, CheckCircle2, Loader2, RefreshCw, AlertTriangle } from 'lucide-react'
+import { triggerHaptic } from '../../../lib/haptics'
+import { cn } from '../../../lib/utils'
+import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile'
+import {
+  AppointmentsHero,
+  AppointmentListView,
+  AppointmentFilters,
+  AppointmentDetailsSheet,
+} from './mobile-appointments'
+import { DAYS_OF_WEEK, appointmentTimeSort, type AppointmentEvent } from '../types'
+import { useAppointmentsData } from '../hooks/useAppointments'
 
+type Tab = 'upcoming' | 'completed'
+
+/** واجهة الهاتف — تصميم فاخر: Hero بحلقة تقدم اليوم + تبويبات لاصقة + بطاقات بخانة وقت */
 export const MobileAppointments = () => {
-    const currentUser = useCurrentUser();
-    const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState<Tab>('upcoming')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [filterDay, setFilterDay] = useState<string>('all')
+  const [filterTeacher, setFilterTeacher] = useState<string>('all')
+  const [selectedAppointment, setSelectedAppointment] = useState<AppointmentEvent | null>(null)
+  const [showDetails, setShowDetails] = useState(false)
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filterDay, setFilterDay] = useState<string>('all');
-    const [filterTeacher, setFilterTeacher] = useState<string>('all');
-    const [selectedAppointment, setSelectedAppointment] = useState<AppointmentEvent | null>(null);
-    const [showDetails, setShowDetails] = useState(false);
-    const [activeTab, setActiveTab] = useState<'upcoming' | 'completed'>('upcoming');
+  const {
+    loading,
+    isError,
+    refetch,
+    allAppointments,
+    uniqueTeachers,
+    completedSessionIds,
+    completeMutation,
+    canComplete,
+    todayName,
+    stats,
+  } = useAppointmentsData()
 
-    const { data: students = [], isLoading: loading } = useQuery<Student[]>({
-        queryKey: ['appointments-students'],
-        queryFn: async () => {
-            if (currentUser?.role === 'student') {
-                const me = await api.get<unknown>('/student-portal/me');
-                return [me] as Student[];
-            }
-            const raw = await api.get<unknown>('/students');
-            return Array.isArray(raw) ? (raw as Student[]) : ((raw as { data?: Student[] } | null)?.data || []);
-        },
-    });
+  const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: refetch })
 
-    const { data: completedSessionIds = [] } = useQuery<string[]>({
-        queryKey: ['completed-sessions'],
-        queryFn: async () => {
-            if (currentUser?.role === 'admin') {
-                const settings = await api.get<Record<string, unknown>>('/system/settings');
-                const lastResetDate = settings?.last_appointment_reset as string;
-                const todayStr = new Date().toDateString();
-                if (lastResetDate !== todayStr) {
-                    await api.delete('/appointments/completed-sessions/reset');
-                    await api.post('/system/settings', { key: 'last_appointment_reset', value: todayStr });
-                    return [];
-                }
-            }
-            const sessions = await api.get<string[]>('/appointments/completed-sessions');
-            return sessions || [];
-        },
-        refetchInterval: 15000,
-        enabled: currentUser?.role === 'admin' || currentUser?.role === 'teacher',
-    });
+  // القادمة = غير مكتملة (مخفية من السجل)، المكتملة معكوس
+  const filtered = useMemo(() => {
+    const source =
+      activeTab === 'upcoming'
+        ? allAppointments.filter((a) => !completedSessionIds.includes(a.id))
+        : allAppointments.filter((a) => completedSessionIds.includes(a.id))
+    const q = searchTerm.trim().toLowerCase()
+    return source.filter((a) => {
+      const matchesSearch =
+        !q ||
+        a.studentName.toLowerCase().includes(q) ||
+        a.teacherName.toLowerCase().includes(q) ||
+        a.subject.toLowerCase().includes(q)
+      const matchesDay = filterDay === 'all' || a.day === filterDay
+      const matchesTeacher = filterTeacher === 'all' || a.teacherName === filterTeacher
+      return matchesSearch && matchesDay && matchesTeacher
+    })
+  }, [activeTab, allAppointments, completedSessionIds, searchTerm, filterDay, filterTeacher])
 
-    const completeMutation = useMutation({
-        mutationFn: (id: string) => api.post('/appointments/completed-sessions', { id }),
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['completed-sessions'] }),
-    });
+  const appointmentsByDay = useMemo(
+    () =>
+      DAYS_OF_WEEK.map((day) => ({
+        day,
+        appointments: filtered.filter((a) => a.day === day).sort(appointmentTimeSort),
+      })).filter((d) => filterDay === 'all' || d.day === filterDay),
+    [filtered, filterDay],
+  )
 
-    const { isRefreshing, pullDistance, handlers } = usePullToRefresh({
-        onRefresh: () => queryClient.invalidateQueries({ queryKey: ['appointments-students'] }),
-    });
+  const handleCompleteSession = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    triggerHaptic('medium')
+    completeMutation.mutate(id)
+  }
 
-    const canComplete = currentUser?.role === 'admin' || currentUser?.role === 'teacher';
-    const teacherToMatch = (currentUser?.teacherName || currentUser?.name || '').trim();
+  const tabs: { key: Tab; label: string; icon: typeof CalendarCheck2; count: number }[] = [
+    {
+      key: 'upcoming',
+      label: 'القادمة',
+      icon: CalendarCheck2,
+      count: stats.total - stats.completed,
+    },
+    { key: 'completed', label: 'المكتملة', icon: CheckCircle2, count: stats.completed },
+  ]
 
-    const allAppointments: AppointmentEvent[] = useMemo(() =>
-        (students || []).flatMap(student =>
-            (student.enrollments || [])
-                .filter(enrollment => currentUser?.role !== 'teacher' || (enrollment.teacher || '').trim() === teacherToMatch || enrollment.teacherId === currentUser.id)
-                .flatMap(enrollment =>
-                    (enrollment.schedule || []).map(slot => {
-                        const isPM = !(slot.period === 'am' || slot.period === 'صباحاً' || slot.period === 'صباحا' || slot.period === 'ص');
-                        const normalizedPeriod = isPM ? 'م' : 'ص';
-                        const normHour = String(parseInt(String(slot.hour).trim(), 10) || '');
-                        return {
-                            id: `${student.id}-${enrollment.teacher}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
-                            studentName: student.name, studentGrade: student.grade,
-                            teacherName: (enrollment.teacher || '').trim(), subject: enrollment.subject,
-                            curriculum: enrollment.curr, day: normalizeDayName(slot.day),
-                            hour: normHour, period: slot.period,
-                            time: `${normHour} ${normalizedPeriod}`, isPM
-                        };
-                    })
-                )
-        ), [students, currentUser, teacherToMatch]);
+  return (
+    <MobilePage>
+      <div {...handlers}>
+        {/* السحب للتحديث */}
+        <motion.div
+          style={{ height: pullDistance }}
+          animate={{ height: isRefreshing ? 50 : pullDistance }}
+          transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          className="flex w-full items-center justify-center overflow-hidden"
+        >
+          <div className="flex items-center gap-2.5 text-xs font-medium text-primary">
+            {isRefreshing ? (
+              <>
+                <Loader2 size={16} className="animate-spin" strokeWidth={1.5} />
+                <span>جاري التحديث...</span>
+              </>
+            ) : pullDistance > 55 ? (
+              <>
+                <RefreshCw size={16} className="animate-pulse" strokeWidth={1.5} />
+                <span>أفلت للتحديث</span>
+              </>
+            ) : (
+              <span className="text-muted">اسحب للتحديث</span>
+            )}
+          </div>
+        </motion.div>
 
-    const uniqueTeachers = useMemo(() => Array.from(new Set(allAppointments.map(a => a.teacherName))), [allAppointments]);
-    const upcomingAppointments = useMemo(() => allAppointments.filter(a => !completedSessionIds.includes(a.id)), [allAppointments, completedSessionIds]);
-    const completedAppointments = useMemo(() => allAppointments.filter(a => completedSessionIds.includes(a.id)), [allAppointments, completedSessionIds]);
+        {/* بطاقة البطل */}
+        <AppointmentsHero
+          todayTotal={stats.today}
+          remainingToday={stats.remainingToday}
+          totalAppointments={stats.total}
+          completedCount={stats.completed}
+          todayName={todayName}
+        />
+      </div>
 
-    const filteredAppointments = useMemo(() => {
-        const source = activeTab === 'upcoming' ? upcomingAppointments : completedAppointments;
-        return source.filter(a => {
-            const matchesSearch = !searchTerm ||
-                a.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                a.teacherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                a.subject.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesDay = filterDay === 'all' || a.day === filterDay;
-            const matchesTeacher = filterTeacher === 'all' || a.teacherName === filterTeacher;
-            return matchesSearch && matchesDay && matchesTeacher;
-        });
-    }, [activeTab, upcomingAppointments, completedAppointments, searchTerm, filterDay, filterTeacher]);
-
-    const appointmentsByDay = useMemo(() =>
-        DAYS_OF_WEEK.map(day => ({
-            day,
-            appointments: filteredAppointments.filter(a => a.day === day)
-                .sort((a, b) => (Number(a.hour) + (a.isPM && Number(a.hour) !== 12 ? 12 : 0)) - (Number(b.hour) + (b.isPM && Number(b.hour) !== 12 ? 12 : 0)))
-        })).filter(dayObj => filterDay === 'all' || dayObj.day === filterDay), [filteredAppointments, filterDay]);
-
-    const handleCompleteSession = (id: string, e: React.MouseEvent) => {
-        e.stopPropagation();
-        triggerHaptic('medium');
-        completeMutation.mutate(id);
-    };
-
-    const todayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' });
-    const todayCount = upcomingAppointments.filter(a => a.day === todayName).length;
-    const totalCount = allAppointments.length;
-    const completedCount = completedAppointments.length;
-
-    return (
-        <MobilePage>
-            <div {...handlers}>
-                <AppointmentPullToRefresh pullDistance={pullDistance} isRefreshing={isRefreshing} />
-                {loading && students.length === 0 ? (
-                    <MobileSkeleton rows={6} />
-                ) : (
-                    <>
-                        <AppointmentStats todayCount={todayCount} totalCount={totalCount} completedCount={completedCount} />
-                        <AppointmentTabs activeTab={activeTab} onTabChange={setActiveTab} totalCount={totalCount}
-                            completedCount={completedCount} setSearchTerm={setSearchTerm} />
-                        <AppointmentFilters searchTerm={searchTerm} onSearchChange={setSearchTerm} filterDay={filterDay}
-                            onDayChange={setFilterDay} filterTeacher={filterTeacher} onTeacherChange={setFilterTeacher}
-                            uniqueTeachers={uniqueTeachers} />
-                        <AppointmentListView activeTab={activeTab} appointmentsByDay={appointmentsByDay}
-                            onComplete={handleCompleteSession}
-                            canComplete={canComplete}
-                            onSelect={(app) => { triggerHaptic('light'); setSelectedAppointment(app); setShowDetails(true); }} />
-                    </>
+      {/* التبويبات اللاصقة */}
+      <div className="bg-background/95 sticky top-0 z-30 mt-3 px-4 pb-2 pt-2 backdrop-blur-sm">
+        <div className="flex gap-1 rounded-2xl border border-border bg-card p-1">
+          {tabs.map((tab) => (
+            <motion.button
+              key={tab.key}
+              whileTap={{ scale: 0.96 }}
+              onClick={() => {
+                triggerHaptic('light')
+                setActiveTab(tab.key)
+                setSearchTerm('')
+                setFilterDay('all')
+              }}
+              aria-pressed={activeTab === tab.key}
+              className={cn(
+                'relative flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl px-2 py-2.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                activeTab === tab.key
+                  ? 'bg-primary font-bold text-on-primary shadow-elevation-1'
+                  : 'font-bold text-muted hover:text-main',
+              )}
+            >
+              <tab.icon size={14} strokeWidth={1.7} />
+              <span className="text-micro">{tab.label}</span>
+              <span
+                className={cn(
+                  'rounded-full px-1.5 py-0.5 text-micro font-bold tabular-nums leading-none',
+                  activeTab === tab.key ? 'bg-white/20 text-on-primary' : 'bg-surface text-muted',
                 )}
-                <AppointmentDetailsSheet show={showDetails} appointment={selectedAppointment} activeTab={activeTab}
-                    onClose={() => { triggerHaptic('light'); setShowDetails(false); }}
-                    onComplete={handleCompleteSession} />
-            </div>
-        </MobilePage>
-    );
-};
+              >
+                {tab.count}
+              </span>
+            </motion.button>
+          ))}
+        </div>
+      </div>
+
+      {/* البحث والفلاتر */}
+      <AppointmentFilters
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        filterDay={filterDay}
+        onDayChange={setFilterDay}
+        filterTeacher={filterTeacher}
+        onTeacherChange={setFilterTeacher}
+        uniqueTeachers={uniqueTeachers}
+      />
+
+      {/* المحتوى */}
+      <div className="px-4 pb-28">
+        {loading && allAppointments.length === 0 ? (
+          <MobileSkeleton rows={6} />
+        ) : isError ? (
+          <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-10 text-center">
+            <AlertTriangle size={26} className="mx-auto mb-2 text-error" strokeWidth={1.5} />
+            <p className="text-xs font-bold text-main">تعذر تحميل المواعيد</p>
+            <button
+              onClick={() => refetch()}
+              className="mx-auto mt-3 block rounded-xl bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            >
+              إعادة المحاولة
+            </button>
+          </div>
+        ) : (
+          <AppointmentListView
+            activeTab={activeTab}
+            appointmentsByDay={appointmentsByDay}
+            todayName={todayName}
+            onComplete={handleCompleteSession}
+            onSelect={(app) => {
+              triggerHaptic('light')
+              setSelectedAppointment(app)
+              setShowDetails(true)
+            }}
+            canComplete={canComplete}
+          />
+        )}
+      </div>
+
+      {/* ورقة التفاصيل */}
+      <AppointmentDetailsSheet
+        show={showDetails}
+        appointment={selectedAppointment}
+        activeTab={activeTab}
+        canComplete={canComplete}
+        onClose={() => {
+          triggerHaptic('light')
+          setShowDetails(false)
+        }}
+        onComplete={handleCompleteSession}
+      />
+    </MobilePage>
+  )
+}

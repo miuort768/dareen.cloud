@@ -185,7 +185,9 @@ const ProtectedRoute = ({
     const isParentAccess =
       currentUser.role === 'parent' && (permission.startsWith('parent_') || isCommonAccess)
 
-    const isStudentAccess = currentUser.role === 'student' && permission === 'student_dashboard'
+    // المواعيد متاحة للطالب (يظهر له في الشريط الجانبي وتجلب بياناته من بوابة الطالب)
+    const isStudentAccess =
+      currentUser.role === 'student' && ['student_dashboard', 'appointments'].includes(permission)
 
     const isTeacherAccess =
       currentUser.role === 'teacher' &&

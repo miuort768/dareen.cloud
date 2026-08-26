@@ -1,81 +1,80 @@
-import { X, ArrowRight, User, ShieldCheck, BookOpen } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-
-interface AppointmentEvent {
-    id: string;
-    studentName: string;
-    studentGrade: string;
-    teacherName: string;
-    subject: string;
-    curriculum: string;
-    day: string;
-    hour: string;
-    period: string;
-    time: string;
-    isPM: boolean;
-}
+import { X, ArrowRight, User, ShieldCheck, BookOpen } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import type { AppointmentEvent } from '../../features/appointments/types'
 
 interface AppointmentDetailPanelProps {
-    appointment: AppointmentEvent | null;
-    showDetails: boolean;
-    onClose: () => void;
+  appointment: AppointmentEvent | null
+  showDetails: boolean
+  onClose: () => void
 }
 
-export const AppointmentDetailPanel = ({ appointment, showDetails, onClose }: AppointmentDetailPanelProps) => (
-    <AnimatePresence>
-        {showDetails && appointment && (
-            <motion.div
-                initial={window.innerWidth >= 768 ? { opacity: 0, x: 30 } : { opacity: 1, x: 0 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={window.innerWidth >= 768 ? { opacity: 0, x: 30 } : { opacity: 0, x: 0 }}
-                className="bg-card border border-border h-fit sticky top-4 overflow-hidden rounded-2xl"
+export const AppointmentDetailPanel = ({
+  appointment,
+  showDetails,
+  onClose,
+}: AppointmentDetailPanelProps) => (
+  <AnimatePresence>
+    {showDetails && appointment && (
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 30 }}
+        className="sticky top-4 h-fit overflow-hidden rounded-2xl border border-border bg-card"
+      >
+        <div className="flex items-center justify-between rounded-t-2xl bg-primary px-4 py-3 text-on-primary">
+          <div>
+            <p className="text-micro font-bold text-white/60">تفاصيل الموعد</p>
+            <h3 className="text-base font-bold">{appointment.day}</h3>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="rounded-xl bg-white/15 px-3 py-1 text-center">
+              <p className="text-lg font-bold tabular-nums leading-none text-on-primary">
+                {appointment.time}
+              </p>
+            </div>
+            <button
+              onClick={onClose}
+              className="flex h-8 w-8 items-center justify-center rounded-xl text-white/60 transition-all hover:bg-white/15 hover:text-on-primary"
+              aria-label="إغلاق"
             >
-                <div className="px-4 py-3 bg-primary text-on-primary flex items-center justify-between rounded-t-2xl">
-                    <div>
-                        <p className="text-micro font-bold text-white/60">تفاصيل الموعد</p>
-                        <h3 className="font-bold text-base">{appointment.day}</h3>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className="px-3 py-1 text-center rounded-xl bg-white/15">
-                            <p className="font-bold text-lg tabular-nums leading-none text-on-primary">{appointment.time}</p>
-                        </div>
-                        <button onClick={onClose}
-                            className="w-8 h-8 flex items-center justify-center text-white/60 hover:text-on-primary hover:bg-white/15 transition-all rounded-xl"
-                            aria-label="إغلاق">
-                            <X size={14} />
-                        </button>
-                    </div>
-                </div>
-                <div className="p-4 space-y-3">
-                    <div className="flex items-center justify-between p-3 rounded-xl bg-primary-soft border-e-[3px] border-e-primary">
-                        <div>
-                            <label className="block text-micro font-bold text-muted mb-0.5">الطالب</label>
-                            <h4 className="text-sm font-bold text-main">{appointment.studentName}</h4>
-                            <span className="text-micro font-bold text-primary">{appointment.studentGrade}</span>
-                        </div>
-                        <User size={18} className="text-muted" />
-                    </div>
-                    <div className="flex items-center justify-between p-3 rounded-xl bg-success-soft border-e-[3px] border-e-success">
-                        <div>
-                            <label className="block text-micro font-bold text-muted mb-0.5">المعلمة</label>
-                            <h4 className="text-sm font-bold text-main">{appointment.teacherName}</h4>
-                        </div>
-                        <ShieldCheck size={18} className="text-muted" />
-                    </div>
-                    <div className="flex items-center justify-between p-3 rounded-xl bg-warning-soft border-e-[3px] border-e-warning">
-                        <div>
-                            <label className="block text-micro font-bold text-muted mb-0.5">المادة</label>
-                            <h4 className="text-sm font-bold text-main">{appointment.subject}</h4>
-                            <span className="text-micro font-bold px-1.5 py-0.5 mt-1 inline-block rounded-lg bg-warning-soft text-warning">{appointment.curriculum}</span>
-                        </div>
-                        <BookOpen size={18} className="text-muted" />
-                    </div>
-                    <button onClick={onClose}
-                        className="w-full flex items-center justify-center gap-2 py-3 bg-primary text-on-primary font-bold text-xs rounded-xl hover:bg-primary-hover transition-all active:scale-95">
-                        عودة <ArrowRight size={13} />
-                    </button>
-                </div>
-            </motion.div>
-        )}
-    </AnimatePresence>
-);
+              <X size={14} />
+            </button>
+          </div>
+        </div>
+        <div className="space-y-3 p-4">
+          <div className="flex items-center justify-between rounded-xl border-e-[3px] border-e-primary bg-primary-soft p-3">
+            <div>
+              <label className="mb-0.5 block text-micro font-bold text-muted">الطالب</label>
+              <h4 className="text-sm font-bold text-main">{appointment.studentName}</h4>
+              <span className="text-micro font-bold text-primary">{appointment.studentGrade}</span>
+            </div>
+            <User size={18} className="text-muted" />
+          </div>
+          <div className="flex items-center justify-between rounded-xl border-e-[3px] border-e-success bg-success-soft p-3">
+            <div>
+              <label className="mb-0.5 block text-micro font-bold text-muted">المعلمة</label>
+              <h4 className="text-sm font-bold text-main">{appointment.teacherName}</h4>
+            </div>
+            <ShieldCheck size={18} className="text-muted" />
+          </div>
+          <div className="flex items-center justify-between rounded-xl border-e-[3px] border-e-warning bg-warning-soft p-3">
+            <div>
+              <label className="mb-0.5 block text-micro font-bold text-muted">المادة</label>
+              <h4 className="text-sm font-bold text-main">{appointment.subject}</h4>
+              <span className="mt-1 inline-block rounded-lg bg-warning-soft px-1.5 py-0.5 text-micro font-bold text-warning">
+                {appointment.curriculum}
+              </span>
+            </div>
+            <BookOpen size={18} className="text-muted" />
+          </div>
+          <button
+            onClick={onClose}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-95"
+          >
+            عودة <ArrowRight size={13} />
+          </button>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+)
