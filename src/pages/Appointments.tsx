@@ -71,8 +71,13 @@ export const Appointments = () => {
       DAYS_OF_WEEK.map((day) => ({
         day,
         appointments: filteredAppointments.filter((a) => a.day === day).sort(appointmentTimeSort),
-      })).filter((dayObj) => filterDay === 'all' || dayObj.day === filterDay),
-    [filteredAppointments, filterDay],
+      })).filter(
+        // نُخفي الأيام الفارغة لتقليل الضجيج — ما عدا يوم اليوم الحالي
+        (dayObj) =>
+          (filterDay === 'all' || dayObj.day === filterDay) &&
+          (dayObj.appointments.length > 0 || dayObj.day === todayName),
+      ),
+    [filteredAppointments, filterDay, todayName],
   )
 
   const hasActiveFilters = searchTerm !== '' || filterDay !== 'all' || filterTeacher !== 'all'

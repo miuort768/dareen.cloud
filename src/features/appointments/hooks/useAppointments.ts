@@ -124,6 +124,7 @@ export const buildAppointmentEvents = (
 /** الهوك الجامع — يُستخدم في واجهتي سطح المكتب والهاتف */
 export const useAppointmentsData = () => {
   const currentUser = useCurrentUser()
+  const queryClient = useQueryClient()
   const studentsQuery = useAppointmentStudents()
   const { completedSessionIds, completeMutation, canComplete } = useCompletedSessions()
 

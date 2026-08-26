@@ -151,7 +151,7 @@ export const AppointmentScheduleGrid = ({
                     {/* Grade + complete */}
                     <div className="flex shrink-0 items-center gap-2">
                       {app.studentGrade && (
-                        <span className="hidden rounded-lg bg-surface px-2 py-0.5 text-micro font-bold text-muted lg:inline-block">
+                        <span className="hidden rounded-lg bg-surface px-2 py-0.5 text-micro font-bold text-muted md:inline-block">
                           {app.studentGrade}
                         </span>
                       )}

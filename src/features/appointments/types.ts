@@ -1,4 +1,4 @@
-export type { Student, Enrollment, ScheduleSlot } from '../../../types'
+export type { Student, Enrollment, ScheduleSlot } from '../../types'
 
 export interface AppointmentEvent {
   id: string

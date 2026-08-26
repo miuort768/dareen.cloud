@@ -70,7 +70,11 @@ export const MobileTasks = () => {
     },
   })
 
-  const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: refetch })
+  const { isRefreshing, pullDistance, handlers } = usePullToRefresh({
+    onRefresh: async () => {
+      await refetch()
+    },
+  })
 
   const { createTask, updateTaskStatus, deleteTask } = useTaskMutations()
 
