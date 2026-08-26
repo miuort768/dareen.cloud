@@ -177,7 +177,6 @@ const ProtectedRoute = ({
     const isCommonAccess = [
       'schedule',
       'announcements',
-      'attendance',
       'parent_announcements',
       'appointments',
       'forum',
@@ -186,8 +185,7 @@ const ProtectedRoute = ({
     const isParentAccess =
       currentUser.role === 'parent' && (permission.startsWith('parent_') || isCommonAccess)
 
-    const isStudentAccess =
-      currentUser.role === 'student' && (permission.startsWith('student_') || isCommonAccess)
+    const isStudentAccess = currentUser.role === 'student' && permission === 'student_dashboard'
 
     const isTeacherAccess =
       currentUser.role === 'teacher' &&
