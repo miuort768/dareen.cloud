@@ -125,13 +125,13 @@ const DesignSystemPage = lazy(() =>
   })),
 )
 const StudentProfilePage = lazy(() =>
-  import('./pages/profile/StudentProfilePage').then((m) => ({ default: m.StudentProfilePage })),
+  import('./features/profile/StudentAccountPage').then((m) => ({ default: m.StudentAccountPage })),
 )
 const TeacherProfilePage = lazy(() =>
-  import('./pages/profile/TeacherProfilePage').then((m) => ({ default: m.TeacherProfilePage })),
+  import('./features/profile/TeacherAccountPage').then((m) => ({ default: m.TeacherAccountPage })),
 )
 const ParentProfilePage = lazy(() =>
-  import('./pages/profile/ParentProfilePage').then((m) => ({ default: m.ParentProfilePage })),
+  import('./features/profile/ParentAccountPage').then((m) => ({ default: m.ParentAccountPage })),
 )
 const TeacherPaymentHistory = lazy(() =>
   import('./pages/TeacherPaymentHistory').then((m) => ({ default: m.TeacherPaymentHistory })),
