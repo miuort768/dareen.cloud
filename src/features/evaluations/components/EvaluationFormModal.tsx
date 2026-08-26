@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Award, X, CheckCircle2, Zap } from 'lucide-react'
+import { Award, X, CheckCircle2, Zap, Check } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { RATING_OPTIONS } from '../types/constants'
 import type { Student } from '../../../types'
@@ -117,7 +117,7 @@ export const EvaluationFormModal = ({
                 {/* Rating */}
                 <div>
                   <label className="mb-2.5 block text-xs font-bold text-muted">مستوى التميز</label>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                     {RATING_OPTIONS.map((opt) => {
                       const isSelected = formData.rating === opt.value
                       const OptIcon = opt.icon
@@ -128,14 +128,27 @@ export const EvaluationFormModal = ({
                           onClick={() => onChange({ ...formData, rating: opt.value })}
                           aria-pressed={isSelected}
                           className={cn(
-                            'flex flex-col items-center justify-center gap-1.5 rounded-xl border-2 p-3 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                            'relative flex flex-col items-center justify-center gap-2 rounded-xl border-2 px-2 py-3.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                             isSelected
-                              ? cn(opt.bg, opt.border, opt.color, 'scale-[1.03] shadow-sm')
-                              : 'border-border bg-surface text-muted hover:border-primary/30 hover:text-main',
+                              ? cn(opt.bg, opt.border, opt.color)
+                              : 'border-border bg-card text-main hover:border-primary/40',
                           )}
                         >
-                          <OptIcon size={18} strokeWidth={isSelected ? 2.5 : 2} />
-                          <span className="text-micro font-bold leading-none">{opt.value}</span>
+                          {/* علامة التحديد الواضحة — لا اعتماد على اللون فقط */}
+                          {isSelected && (
+                            <motion.span
+                              layoutId="rating-check"
+                              className="absolute end-1.5 top-1.5 flex h-4 w-4 items-center justify-center rounded-full"
+                              style={{ backgroundColor: 'currentColor' }}
+                              aria-hidden="true"
+                            >
+                              <Check size={10} strokeWidth={3.5} className="text-white" />
+                            </motion.span>
+                          )}
+                          <OptIcon size={22} strokeWidth={isSelected ? 2.4 : 1.9} />
+                          <span className="text-center text-xs font-extrabold leading-snug">
+                            {opt.value}
+                          </span>
                         </button>
                       )
                     })}
