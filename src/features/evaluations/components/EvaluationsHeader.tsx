@@ -21,11 +21,11 @@ interface EvaluationsHeaderProps {
 }
 
 const filters = [
-  { value: '', label: 'ط§ظ„ظƒظ„' },
-  { value: 'evaluated', label: 'طھظ… طھظ‚ظٹظٹظ…ظ‡ظ…' },
-  { value: 'not-evaluated', label: 'ط؛ظٹط± ظ…ظ‚ظٹظ…ظٹظ†' },
-  { value: 'highest-xp', label: 'ط§ظ„ط£ط¹ظ„ظ‰ XP' },
-  { value: 'lowest-xp', label: 'ط§ظ„ط£ظ‚ظ„ XP' },
+  { value: '', label: 'الكل' },
+  { value: 'evaluated', label: 'تم تقييمهم' },
+  { value: 'not-evaluated', label: 'غير مقيمين' },
+  { value: 'highest-xp', label: 'الأعلى XP' },
+  { value: 'lowest-xp', label: 'الأقل XP' },
 ]
 
 export const EvaluationsHeader = ({
@@ -70,14 +70,12 @@ export const EvaluationsHeader = ({
               <Award size={16} className="text-on-primary" />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-on-primary md:text-base">
-                طھظ‚ظٹظٹظ… ط§ظ„ط·ظ„ط§ط¨
-              </h1>
-              <p className="text-micro font-medium text-white/85">{stats.totalStudents} ط·ط§ظ„ط¨</p>
+              <h1 className="text-sm font-bold text-on-primary md:text-base">تقييم الطلاب</h1>
+              <p className="text-micro font-medium text-white/85">{stats.totalStudents} طالب</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {/* ط´ط§ط±ط© XP â€” ط®ظ„ظپظٹط© ظپط§طھط­ط© طµظ„ط¨ط© ظˆظ†طµ ظƒظ‡ط±ظ…ط§ظ†ظٹ ط؛ط§ظ…ظ‚ ظ…ظ‚ط±ظˆط، */}
+            {/* شارة XP — خلفية فاتحة صلبة ونص كهرماني غامق مقروء */}
             <div className="flex items-center gap-1 rounded-lg border border-warning bg-warning-light px-2.5 py-1.5 shadow-sm">
               <Award size={11} className="text-warning-strong" />
               <span className="text-xs font-bold tabular-nums text-warning-strong">
@@ -88,9 +86,9 @@ export const EvaluationsHeader = ({
             {showAddButton && (
               <button
                 onClick={onAddClick}
-                className="flex h-8 items-center gap-1.5 rounded-lg bg-white/20 px-3 text-micro font-bold text-on-primary ring-1 ring-white/40 transition-all hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex h-8 items-center gap-1.5 rounded-lg bg-white/20 px-3 text-micro font-bold text-on-primary transition-all hover:bg-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
-                <Plus size={11} /> طھظ‚ظٹظٹظ…
+                <Plus size={11} /> تقييم
               </button>
             )}
           </div>
@@ -99,15 +97,11 @@ export const EvaluationsHeader = ({
         {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-2 md:grid-cols-5">
           {[
-            { icon: Users, value: stats.totalStudents, label: 'ط¥ط¬ظ…ط§ظ„ظٹ ط§ظ„ط·ظ„ط§ط¨' },
-            { icon: UserCheck, value: stats.evaluatedCount, label: 'طھظ… طھظ‚ظٹظٹظ…ظ‡ظ…' },
-            { icon: UserX, value: stats.notEvaluatedCount, label: 'ط؛ظٹط± ظ…ظ‚ظٹظ…ظٹظ†' },
-            { icon: Star, value: stats.avgRating, label: 'ظ…طھظˆط³ط· ط§ظ„طھظ‚ظٹظٹظ…' },
-            {
-              icon: TrendingUp,
-              value: `${stats.totalXP.toLocaleString()}`,
-              label: 'ط¥ط¬ظ…ط§ظ„ظٹ XP',
-            },
+            { icon: Users, value: stats.totalStudents, label: 'إجمالي الطلاب' },
+            { icon: UserCheck, value: stats.evaluatedCount, label: 'تم تقييمهم' },
+            { icon: UserX, value: stats.notEvaluatedCount, label: 'غير مقيمين' },
+            { icon: Star, value: stats.avgRating, label: 'متوسط التقييم' },
+            { icon: TrendingUp, value: `${stats.totalXP.toLocaleString()}`, label: 'إجمالي XP' },
           ].map((item, i) => (
             <div
               key={i}
@@ -130,15 +124,15 @@ export const EvaluationsHeader = ({
             <Search size={13} className="absolute start-3 top-1/2 -translate-y-1/2 text-white/75" />
             <input
               type="text"
-              aria-label="ط¨ط­ط« ط¹ظ† ط·ط§ظ„ط¨"
-              placeholder="ط§ط¨ط­ط« ط¨ط§ظ„ط§ط³ظ… ط£ظˆ ط§ظ„طµظپ..."
+              aria-label="بحث عن طالب"
+              placeholder="ابحث بالاسم أو الصف..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
               className="w-full rounded-xl border border-white/35 bg-black/15 px-3 py-2.5 ps-9 text-xs font-bold text-on-primary outline-none backdrop-blur-sm transition-all placeholder:text-white/60 focus:border-white/50 focus:bg-black/25 focus-visible:ring-2 focus-visible:ring-focus"
             />
             {searchTerm && (
               <button
-                aria-label="ظ…ط³ط­ ط§ظ„ط¨ط­ط«"
+                aria-label="مسح البحث"
                 onClick={() => onSearchChange('')}
                 className="absolute end-3 top-1/2 -translate-y-1/2 rounded-full p-0.5 text-white/75 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >

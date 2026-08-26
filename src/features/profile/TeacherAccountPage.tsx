@@ -1,4 +1,6 @@
 ﻿import { useEffect, useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
+import type { LucideIcon } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import {
   User,
@@ -11,7 +13,6 @@ import {
   Award,
   TrendingUp,
 } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
 import { api } from '../../lib/api'
 import { useCurrentUser, useShowNotification, useLogout } from '../../context/AppContext'
 import {
@@ -54,10 +55,10 @@ export const TeacherAccountPage = () => {
   const [savingName, setSavingName] = useState(false)
 
   useEffect(() => {
-    document.title = 'ط­ط³ط§ط¨ظٹ | ط¯ط§ط±ظٹظ† ط§ظ„ط³ط§ط¨ط¹ط© ظ„ظ„طھط¹ظ„ظٹظ… ظˆط§ظ„طھط¯ط±ظٹط¨'
+    document.title = 'حسابي | دارين السابعة للتعليم والتدريب'
   }, [])
 
-  // ظ†ظپط³ ظ†ط¯ط§ط، ط§ظ„ظ†ط¸ط§ظ… ط§ظ„ط­ط§ظ„ظٹ: GET /teachers/me
+  // نفس نداء النظام الحالي: GET /teachers/me
   const {
     data: teacher,
     isLoading,
@@ -87,17 +88,17 @@ export const TeacherAccountPage = () => {
     )
   }, [points, rank, nextRank])
 
-  /* ط­ظپط¸ ط§ظ„ط§ط³ظ… â€” ظ†ظپط³ endpoint ط§ظ„ظ†ط¸ط§ظ… ط§ظ„ط­ط§ظ„ظٹ */
+  /* حفظ الاسم — نفس endpoint النظام الحالي */
   const handleSaveName = async (newName: string) => {
     setSavingName(true)
     try {
       await api.put('/teachers/me', { name: newName })
-      showNotification('طھظ… طھط­ط¯ظٹط« ط§ظ„ط§ط³ظ… ط¨ظ†ط¬ط§ط­', 'success')
+      showNotification('تم تحديث الاسم بنجاح', 'success')
       setEditOpen(false)
       await refetch()
     } catch (err) {
       console.error('Failed updating name', err)
-      showNotification('طھط¹ط°ط± طھط­ط¯ظٹط« ط§ظ„ط§ط³ظ…طŒ ط­ط§ظˆظ„ ظ…ط¬ط¯ط¯ظ‹ط§', 'error')
+      showNotification('تعذر تحديث الاسم، حاول مجددًا', 'error')
     } finally {
       setSavingName(false)
     }
@@ -118,74 +119,65 @@ export const TeacherAccountPage = () => {
         <div className="space-y-4">
           <AccountHero
             name={displayName}
-            roleLabel="ظ…ط¹ظ„ظ…ط©"
+            roleLabel="معلمة"
             subtitle={teacher?.subject || undefined}
-            metaChips={[
-              teacher?.price != null ? `ط³ط¹ط± ط§ظ„ط­طµط© ${teacher.price} ط¬.ظ…` : '',
-            ].filter(Boolean)}
+            metaChips={[teacher?.price != null ? `سعر الحصة ${teacher.price} ج.م` : ''].filter(
+              Boolean,
+            )}
             onEdit={() => setEditOpen(true)}
           />
 
           <div className="grid gap-4 lg:grid-cols-3">
-            {/* ط§ظ„ظ…ط¹ظ„ظˆظ…ط§طھ ط§ظ„ط£ط³ط§ط³ظٹط© */}
-            <SectionCard title="ط§ظ„ظ…ط¹ظ„ظˆظ…ط§طھ ط§ظ„ط£ط³ط§ط³ظٹط©" icon={User} delay={0.1}>
-              <InfoRow label="ط§ظ„ط§ط³ظ…" value={displayName} icon={User} />
-              <InfoRow label="ط±ظ‚ظ… ط§ظ„ط¬ظˆط§ظ„" value={teacher?.phone1} icon={Phone} mono />
+            {/* المعلومات الأساسية */}
+            <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
+              <InfoRow label="الاسم" value={displayName} icon={User} />
+              <InfoRow label="رقم الجوال" value={teacher?.phone1} icon={Phone} mono />
               {teacher?.phone2 && (
-                <InfoRow label="ط±ظ‚ظ… ط¥ط¶ط§ظپظٹ" value={teacher.phone2} icon={Phone} mono />
+                <InfoRow label="رقم إضافي" value={teacher.phone2} icon={Phone} mono />
               )}
+              <InfoRow label="اسم المستخدم" value={teacher?.username} icon={KeyRound} mono />
+              <InfoRow label="نوع الحساب" value="معلمة" />
               <InfoRow
-                label="ط§ط³ظ… ط§ظ„ظ…ط³طھط®ط¯ظ…"
-                value={teacher?.username}
-                icon={KeyRound}
-                mono
-              />
-              <InfoRow label="ظ†ظˆط¹ ط§ظ„ط­ط³ط§ط¨" value="ظ…ط¹ظ„ظ…ط©" />
-              <InfoRow
-                label="ط­ط§ظ„ط© ط§ظ„ط­ط³ط§ط¨"
+                label="حالة الحساب"
                 value={
                   <span className="inline-flex items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-success-strong">
                     <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-current" />
-                    ظ†ط´ط·
+                    نشط
                   </span>
                 }
                 icon={ShieldCheck}
               />
               <InfoRow
-                label="طھط§ط±ظٹط® ط§ظ„ط§ظ†ط¶ظ…ط§ظ…"
+                label="تاريخ الانضمام"
                 value={formatJoinDate(teacher?.createdAt) || undefined}
                 icon={CalendarDays}
               />
             </SectionCard>
 
-            {/* ط¨ظٹط§ظ†ط§طھ ط§ظ„طھط¯ط±ظٹط³ */}
+            {/* بيانات التدريس */}
             <div className="space-y-4 lg:col-span-2">
               <SectionCard
-                title="ط¨ظٹط§ظ†ط§طھ ط§ظ„طھط¯ط±ظٹط³"
+                title="بيانات التدريس"
                 icon={BookOpen}
-                description="ظ…ط¹ظ„ظˆظ…ط§طھظƒ ط§ظ„طھط¹ظ„ظٹظ…ظٹط© ظپظٹ ط§ظ„ظ…ظ†طµط©"
+                description="معلوماتك التعليمية في المنصة"
                 delay={0.15}
               >
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  <MiniTile label="المادة" value={teacher?.subject || '—'} icon={BookOpen} />
                   <MiniTile
-                    label="ط§ظ„ظ…ط§ط¯ط©"
-                    value={teacher?.subject || 'â€”'}
-                    icon={BookOpen}
-                  />
-                  <MiniTile
-                    label="ط³ط¹ط± ط§ظ„ط­طµط©"
-                    value={teacher?.price != null ? `${teacher.price} ط¬.ظ…` : 'â€”'}
+                    label="سعر الحصة"
+                    value={teacher?.price != null ? `${teacher.price} ج.م` : '—'}
                     icon={Wallet}
                   />
-                  <MiniTile label="ط¥ط¬ظ…ط§ظ„ظٹ ط§ظ„ظ†ظ‚ط§ط·" value={String(points)} icon={Award} />
+                  <MiniTile label="إجمالي النقاط" value={String(points)} icon={Award} />
                 </div>
 
-                {/* ط§ظ„ط±طھط¨ط© ظˆط§ظ„طھظ‚ط¯ظ… â€” ظ…ظ† ظ†ط¸ط§ظ… ط§ظ„ط±طھط¨ ط§ظ„ظ…ظˆط­ط¯ */}
+                {/* الرتبة والتقدم — من نظام الرتب الموحد */}
                 <div className="mt-4 rounded-xl border border-border bg-surface p-3.5">
-                  <div className="mb-2 flex items-center justify-between">
+                  <div className="mb-2 flex items-center justify-between gap-2">
                     <span className="flex items-center gap-2 text-xs font-bold text-main">
                       <RankIcon size={14} className="text-primary" />
-                      ط§ظ„ط±طھط¨ط© ط§ظ„ط­ط§ظ„ظٹط©: <span className="text-primary">{rank.name}</span>
+                      الرتبة الحالية: <span className="text-primary">{rank.name}</span>
                     </span>
                     {nextRank && (
                       <span className="flex items-center gap-1 text-micro font-bold text-muted">
@@ -203,7 +195,7 @@ export const TeacherAccountPage = () => {
                 </div>
               </SectionCard>
 
-              {/* ط·ط±ظ‚ ط§ظ„ط¯ظپط¹ â€” ظ‚ط³ظ… ط±ط¦ظٹط³ظٹ */}
+              {/* طرق الدفع — قسم رئيسي */}
               <PaymentMethodsSection />
             </div>
           </div>
@@ -223,9 +215,7 @@ export const TeacherAccountPage = () => {
   )
 }
 
-/* ---------- ط؛ظ„ط§ظپ ط§ظ„طµظپط­ط© ط§ظ„ظ…ظˆط­ط¯ ---------- */
-
-import type { ReactNode } from 'react'
+/* ---------- غلاف الصفحة الموحد ---------- */
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
@@ -235,7 +225,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   )
 }
 
-/* ---------- ط¨ط·ط§ظ‚ط© ظ…ط¹ظ„ظˆظ…ط© طµط؛ظٹط±ط© ---------- */
+/* ---------- بطاقة معلومة صغيرة ---------- */
 
 export function MiniTile({
   label,

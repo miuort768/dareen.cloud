@@ -165,11 +165,21 @@ html, body {
   }
 
   /* ── Typography Hierarchy ── */
-  h1 { @apply tracking-tight font-black font-heading;  color: rgb(var(--text-main)); line-height: 1.2; }   /* 900 */
-  h2 { @apply tracking-tight font-bold font-heading;   color: rgb(var(--text-main)); line-height: 1.2; }   /* 700 */
-  h3 { @apply tracking-tight font-bold font-sans; color: rgb(var(--text-main)); line-height: 1.4; } /* 700 (Tajawal 600 unsupported) */
-  h4 { @apply tracking-tight font-medium font-sans; color: rgb(var(--text-muted)); line-height: 1.4; }  /* 500 */
-  h5, h6 { @apply tracking-tight font-normal font-sans; color: rgb(var(--text-muted)); line-height: 1.5; } /* 400 */
+  /* أوزان 800 كحد أقصى — الخطوط العربية المحملة (Tajawal/Noto Kufi) لا تملك 900
+     والوزن المصطنع يشوه الحروف. line-height أرحب لتناسب الصاعد/النازل العربي. */
+  h1 { @apply font-extrabold font-heading; color: rgb(var(--text-main)); line-height: 1.35; }  /* 800 */
+  h2 { @apply font-bold font-heading;      color: rgb(var(--text-main)); line-height: 1.35; }  /* 700 */
+  h3 { @apply font-bold font-sans;         color: rgb(var(--text-main)); line-height: 1.45; }
+  h4 { @apply font-medium font-sans;       color: rgb(var(--text-muted)); line-height: 1.45; }
+  h5, h6 { @apply font-normal font-sans;   color: rgb(var(--text-muted)); line-height: 1.5; }
+
+  /* العربية حروفها متصلة — أي تباعد أحرف (خاصة السالب) يفكك الوصل ويشوه الكلام.
+     يُصفَّر داخل سياق RTL فقط، فتبقى النصوص اللاتينية بلا تأثير. */
+  [dir='rtl'] :is(h1, h2, h3, h4, h5, h6),
+  [dir='rtl'] .tracking-tight,
+  [dir='rtl'] .tracking-tighter {
+    letter-spacing: 0 !important;
+  }
   
   body, p { line-height: 1.65; }
   li, td { line-height: 1.5; }

@@ -64,10 +64,10 @@ export const StudentAccountPage = () => {
   const logout = useLogout()
 
   useEffect(() => {
-    document.title = 'ط­ط³ط§ط¨ظٹ | ط¯ط§ط±ظٹظ† ط§ظ„ط³ط§ط¨ط¹ط© ظ„ظ„طھط¹ظ„ظٹظ… ظˆط§ظ„طھط¯ط±ظٹط¨'
+    document.title = 'حسابي | دارين السابعة للتعليم والتدريب'
   }, [])
 
-  // ظ†ظپط³ ظ†ط¯ط§ط، ط§ظ„ظ†ط¸ط§ظ… ط§ظ„ط­ط§ظ„ظٹ: ط¨ظˆط§ط¨ط© ط§ظ„ط·ط§ظ„ط¨
+  // نفس نداء النظام الحالي: بوابة الطالب
   const { data, isLoading, isError, refetch } = useQuery<{
     student: StudentData
     sessions: StudentSession[]
@@ -92,7 +92,7 @@ export const StudentAccountPage = () => {
   const rank = getRankByPoints(points, STUDENT_RANKS)
   const RankIcon = RANK_ICON_MAP[rank.icon] ?? Award
 
-  // ط§ظ„ط¬ظ„ط³ط§طھ ط§ظ„ظ‚ط§ط¯ظ…ط© â€” ظ…ظ† ط¨ظٹط§ظ†ط§طھ ط§ظ„ط¬ظ„ط³ط§طھ ط§ظ„ظپط¹ظ„ظٹط© (ظ…ط¬ط¯ظˆظ„ط© ظپظ‚ط·)
+  // الجلسات القادمة — من بيانات الجلسات الفعلية (مجدولة فقط)
   const upcoming = useMemo(
     () =>
       (data?.sessions || [])
@@ -102,7 +102,7 @@ export const StudentAccountPage = () => {
     [data],
   )
 
-  /* ط§ظ„ط·ط§ظ„ط¨: ظ„ط§ ظٹظˆط¬ط¯ endpoint ط°ط§طھظٹ ظ„طھط¹ط¯ظٹظ„ ط§ظ„ط§ط³ظ… ظپظٹ ط§ظ„ظ†ط¸ط§ظ… â€” ظ„ط§ ظ†ط¶ظٹظپ ظˆط¸ظٹظپط© ط؛ظٹط± ظ…ط¯ط¹ظˆظ…ط© */
+  /* الطالب: لا يوجد endpoint ذاتي لتعديل الاسم في النظام — لا نضيف وظيفة غير مدعومة */
 
   if (isLoading)
     return (
@@ -119,60 +119,47 @@ export const StudentAccountPage = () => {
         <div className="space-y-4">
           <AccountHero
             name={displayName}
-            roleLabel="ط·ط§ظ„ط¨"
+            roleLabel="طالب"
             subtitle={
-              [student?.grade, student?.curriculum].filter(Boolean).join(' آ· ') || undefined
+              [student?.grade, student?.curriculum].filter(Boolean).join(' · ') || undefined
             }
-            metaChips={points > 0 ? [`${points} ظ†ظ‚ط·ط©`, rank.name] : rank ? [rank.name] : []}
+            metaChips={points > 0 ? [`${points} نقطة`, rank.name] : rank.name ? [rank.name] : []}
           />
 
           <div className="grid gap-4 lg:grid-cols-3">
-            {/* ط§ظ„ظ…ط¹ظ„ظˆظ…ط§طھ ط§ظ„ط£ط³ط§ط³ظٹط© */}
-            <SectionCard title="ط§ظ„ظ…ط¹ظ„ظˆظ…ط§طھ ط§ظ„ط£ط³ط§ط³ظٹط©" icon={User} delay={0.1}>
-              <InfoRow label="ط§ظ„ط§ط³ظ…" value={displayName} icon={User} />
+            {/* المعلومات الأساسية */}
+            <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
+              <InfoRow label="الاسم" value={displayName} icon={User} />
+              <InfoRow label="رقم الطالب" value={student?.studentPhone} icon={Phone} mono />
+              <InfoRow label="نوع الحساب" value="طالب" />
               <InfoRow
-                label="ط±ظ‚ظ… ط§ظ„ط·ط§ظ„ط¨"
-                value={student?.studentPhone}
-                icon={Phone}
-                mono
-              />
-              <InfoRow label="ظ†ظˆط¹ ط§ظ„ط­ط³ط§ط¨" value="ط·ط§ظ„ط¨" />
-              <InfoRow
-                label="ط­ط§ظ„ط© ط§ظ„ط­ط³ط§ط¨"
+                label="حالة الحساب"
                 value={
                   <span className="inline-flex items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-success-strong">
                     <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-current" />
-                    ظ†ط´ط·
+                    نشط
                   </span>
                 }
                 icon={ShieldCheck}
               />
             </SectionCard>
 
-            {/* ط§ظ„ط¨ظٹط§ظ†ط§طھ ط§ظ„ط¯ط±ط§ط³ظٹط© */}
+            {/* البيانات الدراسية */}
             <div className="space-y-4 lg:col-span-2">
-              <SectionCard
-                title="ط§ظ„ط¨ظٹط§ظ†ط§طھ ط§ظ„ط¯ط±ط§ط³ظٹط©"
-                icon={GraduationCap}
-                delay={0.15}
-              >
+              <SectionCard title="البيانات الدراسية" icon={GraduationCap} delay={0.15}>
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  <MiniTile label="ط§ظ„طµظپ" value={student?.grade || 'â€”'} icon={GraduationCap} />
-                  <MiniTile
-                    label="ط¹ط¯ط¯ ط§ظ„ظ…ظˆط§ط¯"
-                    value={String(enrollments.length)}
-                    icon={BookOpen}
-                  />
-                  <MiniTile label="ط§ظ„ظ†ظ‚ط§ط·" value={String(points)} icon={Award} />
-                  <MiniTile label="ط§ظ„ط±طھط¨ط©" value={rank.name} icon={RankIcon} />
+                  <MiniTile label="الصف" value={student?.grade || '—'} icon={GraduationCap} />
+                  <MiniTile label="عدد المواد" value={String(enrollments.length)} icon={BookOpen} />
+                  <MiniTile label="النقاط" value={String(points)} icon={Award} />
+                  <MiniTile label="الرتبة" value={rank.name} icon={RankIcon} />
                 </div>
               </SectionCard>
 
-              {/* ط§ظ„ظ…ظˆط§ط¯ ط§ظ„ظ…ط³ط¬ظ„ ط¨ظ‡ط§ */}
+              {/* المواد المسجل بها */}
               <SectionCard
-                title="ط§ظ„ظ…ظˆط§ط¯ ط§ظ„ظ…ط³ط¬ظ‘ظ„ ط¨ظ‡ط§"
+                title="المواد المسجّل بها"
                 icon={BookOpen}
-                description={`${enrollments.length} ظ…ط§ط¯ط©`}
+                description={`${enrollments.length} مادة`}
                 delay={0.18}
               >
                 {enrollments.length > 0 ? (
@@ -189,7 +176,7 @@ export const StudentAccountPage = () => {
                           <div className="mb-1.5 flex items-center justify-between gap-2">
                             <p className="truncate text-xs font-bold text-main">{en.subject}</p>
                             <span className="shrink-0 text-micro font-bold tabular-nums text-muted">
-                              {used}/{total} ط­طµط©
+                              {used}/{total} حصة
                             </span>
                           </div>
                           <ProgressBar value={pct} variant="attendance" />
@@ -204,13 +191,13 @@ export const StudentAccountPage = () => {
                   </div>
                 ) : (
                   <p className="py-6 text-center text-xs font-bold text-muted">
-                    ظ„ط§ طھظˆط¬ط¯ ظ…ظˆط§ط¯ ظ…ط³ط¬ظ„ط©
+                    لا توجد مواد مسجلة
                   </p>
                 )}
               </SectionCard>
 
-              {/* ط§ظ„ط¬ظ„ط³ط§طھ ط§ظ„ظ‚ط§ط¯ظ…ط© */}
-              <SectionCard title="ط§ظ„ط¬ظ„ط³ط§طھ ط§ظ„ظ‚ط§ط¯ظ…ط©" icon={CalendarDays} delay={0.22}>
+              {/* الجلسات القادمة */}
+              <SectionCard title="الجلسات القادمة" icon={CalendarDays} delay={0.22}>
                 {upcoming.length > 0 ? (
                   <div className="space-y-2">
                     {upcoming.map((s) => (
@@ -219,7 +206,7 @@ export const StudentAccountPage = () => {
                         className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface p-3"
                       >
                         <div className="flex min-w-0 items-center gap-2.5">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-micro font-bold tabular-nums text-primary">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
                             <Clock size={13} />
                           </div>
                           <div className="min-w-0">
@@ -238,7 +225,7 @@ export const StudentAccountPage = () => {
                   </div>
                 ) : (
                   <p className="py-6 text-center text-xs font-bold text-muted">
-                    ظ„ط§ طھظˆط¬ط¯ ط¬ظ„ط³ط§طھ ظ‚ط§ط¯ظ…ط© ظ…ط¬ط¯ظˆظ„ط© ط­ط§ظ„ظٹظ‹ط§
+                    لا توجد جلسات قادمة مجدولة حاليًا
                   </p>
                 )}
               </SectionCard>
