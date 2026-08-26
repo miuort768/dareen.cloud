@@ -131,7 +131,7 @@ export const Sidebar = memo(
         id: 'parent_payment_history',
         icon: DollarSign,
       },
-      { name: 'إدارة الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
+      { name: 'الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
       { name: 'إدارة المدونة', href: '/admin/blog', id: 'admin-blog', icon: FileText },
       {
         name: 'عملاء المدونة',
@@ -177,6 +177,8 @@ export const Sidebar = memo(
       }
       if (currentUser.role === 'parent') {
         if (item.id === 'dashboard') return false
+        // ولي الأمر له رابط إعلانات واحد (لوحة الإعلانات) — /announcements للمشرف والمعلم والطالب
+        if (item.id === 'announcements') return false
         if (
           [
             'parent_dashboard',
@@ -191,6 +193,8 @@ export const Sidebar = memo(
       }
       if (currentUser.role === 'student') {
         if (item.id === 'dashboard') return false
+        // الطالب له رابط إعلانات واحد (/announcements) — لوحة الأولياء ليست له
+        if (item.id === 'parent_announcements') return false
         if (item.id === 'student_dashboard' || ['chat'].includes(item.id) || isCommonAccess)
           return true
       }

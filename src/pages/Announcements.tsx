@@ -1,27 +1,16 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Megaphone, Plus, Bell, Calendar, EyeOff, Trash2 } from 'lucide-react'
+import { Megaphone, Plus, Bell, Calendar, EyeOff, Trash2, AlertTriangle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { EmptyState } from '../shared/components/ui/EmptyState'
+import { EmptyState, SkeletonCard } from '../shared/components/ui'
 import { api, safeArray } from '../lib/api'
-import { useShowNotification, useAcademyName } from '../context/AppContext'
+import { useShowNotification, useAcademyName, useCurrentUser } from '../context/AppContext'
 import { confirm } from '../lib/confirmDialog'
 import { AnnouncementCard } from './AnnouncementCard'
 import { ParentAnnouncements } from './ParentAnnouncements'
 import { AnnouncementFormModal } from './AnnouncementFormModal'
 import { cn } from '../lib/utils'
-import { useCurrentUser } from '../context/AppContext'
-
-type AnnouncementType = 'general' | 'urgent' | 'holiday' | 'event'
-
-interface Announcement {
-  id: string
-  title: string
-  content: string
-  type: AnnouncementType
-  date: string
-  isActive: boolean
-}
+import type { Announcement, AnnouncementType } from '../features/announcements/types'
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
   id: i,
@@ -44,17 +33,6 @@ export const Announcements = () => {
   const [editingAnnouncement, setEditingAnnouncement] = useState<Announcement | null>(null)
   const [fabOpen, setFabOpen] = useState(false)
 
-  const openEdit = (ann: Announcement) => {
-    setEditingAnnouncement(ann)
-    setFormData({
-      title: ann.title,
-      content: ann.content,
-      type: ann.type,
-      isActive: ann.isActive,
-    })
-    setIsModalOpen(true)
-  }
-
   const [formData, setFormData] = useState<{
     title: string
     content: string
@@ -67,7 +45,24 @@ export const Announcements = () => {
     isActive: true,
   })
 
-  const { data: announcements = [], isLoading } = useQuery({
+  const openEdit = (ann: Announcement) => {
+    setEditingAnnouncement(ann)
+    setFormData({
+      title: ann.title,
+      content: ann.content,
+      type: ann.type,
+      isActive: ann.isActive,
+    })
+    setIsModalOpen(true)
+  }
+
+  // البيانات من قاعدة البيانات عبر /announcements (React Query) — بلا أي تخزين محلي
+  const {
+    data: announcements = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useQuery({
     queryKey: ['announcements'],
     queryFn: async () => {
       const data = await api.get<Announcement[]>('/announcements')
@@ -77,11 +72,13 @@ export const Announcements = () => {
 
   const isAdmin = currentUser?.role === 'admin'
 
-  // Non-admin roles see ONLY active announcements (read-only)
+  // غير المشرف يرى النشطة فقط (قراءة فقط) — نفس شكل الكاش في كل الصفحات
   const visibleAnnouncements = useMemo(
     () => (isAdmin ? announcements : announcements.filter((a) => a.isActive)),
     [announcements, isAdmin],
   )
+
+  const resetForm = () => setFormData({ title: '', content: '', type: 'general', isActive: true })
 
   const saveMutation = useMutation({
     mutationFn: async ({ payload, id }: { payload: Record<string, unknown>; id?: string }) => {
@@ -92,7 +89,7 @@ export const Announcements = () => {
       queryClient.invalidateQueries({ queryKey: ['announcements'] })
       setIsModalOpen(false)
       setEditingAnnouncement(null)
-      setFormData({ title: '', content: '', type: 'general', isActive: true })
+      resetForm()
       showNotification(
         editingAnnouncement ? 'تم تحديث الإعلان بنجاح' : 'تم نشر الإعلان بنجاح',
         'success',
@@ -123,22 +120,32 @@ export const Announcements = () => {
     deleteMutation.mutate(id)
   }
 
+  const [isDeletingAll, setIsDeletingAll] = useState(false)
+
   const handleDeleteAll = useCallback(async () => {
-    if (announcements.length === 0) {
-      showNotification('لا توجد إعلانات لحذفها', 'info')
-      return
-    }
+    if (isDeletingAll || announcements.length === 0) return
     if (!(await confirm(`هل أنت متأكد من حذف جميع الإعلانات (${announcements.length} إعلان)؟`)))
       return
+    setIsDeletingAll(true)
     try {
-      await Promise.all(announcements.map((a) => api.delete(`/announcements/${a.id}`)))
+      const results = await Promise.allSettled(
+        announcements.map((a) => api.delete(`/announcements/${a.id}`)),
+      )
+      const failed = results.filter((r) => r.status === 'rejected').length
       queryClient.invalidateQueries({ queryKey: ['announcements'] })
-      showNotification('تم حذف جميع الإعلانات بنجاح', 'success')
+      if (failed > 0) {
+        showNotification(`تم الحذف مع فشل ${failed} إعلان، أعد المحاولة`, 'warning')
+      } else {
+        showNotification('تم حذف جميع الإعلانات بنجاح', 'success')
+      }
     } catch (e) {
       console.error(e)
       showNotification('حدث خطأ أثناء حذف الإعلانات', 'error')
+    } finally {
+      setIsDeletingAll(false)
+      setFabOpen(false)
     }
-  }, [announcements, queryClient, showNotification])
+  }, [announcements, isDeletingAll, queryClient, showNotification])
 
   const kpiCards = useMemo(
     () => [
@@ -185,16 +192,16 @@ export const Announcements = () => {
         label: 'إعلان جديد',
         onClick: () => {
           setEditingAnnouncement(null)
-          setFormData({ title: '', content: '', type: 'general', isActive: true })
+          resetForm()
           setIsModalOpen(true)
         },
       },
-      { icon: Trash2, label: 'حذف الكل', onClick: handleDeleteAll },
+      { icon: Trash2, label: 'حذف الكل', onClick: handleDeleteAll, disabled: isDeletingAll },
     ],
-    [handleDeleteAll],
+    [handleDeleteAll, isDeletingAll],
   )
 
-  // Non-admin roles (teacher/parent) get the student-facing announcements design
+  // غير المشرف (معلم/ولي/طالب) يحصل على لوحة الإعلانات للقراءة
   if (currentUser && currentUser.role !== 'admin') {
     return <ParentAnnouncements />
   }
@@ -208,7 +215,7 @@ export const Announcements = () => {
           className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-xl dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover"
         >
           <div className="absolute inset-0 opacity-[0.06]">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <defs>
                 <pattern
                   id="ann-hero-grid"
@@ -228,6 +235,7 @@ export const Announcements = () => {
           {particles.map((p) => (
             <motion.div
               key={p.id}
+              aria-hidden="true"
               className="pointer-events-none absolute rounded-full bg-white/10"
               style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
               animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
@@ -245,7 +253,7 @@ export const Announcements = () => {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/25 backdrop-blur-sm">
                   <Megaphone size={18} className="text-on-primary" />
                 </div>
-                <span className="rounded-lg bg-white/10 px-2.5 py-1 text-micro font-bold text-white/80">
+                <span className="rounded-lg bg-white/10 px-2.5 py-1 text-micro font-bold text-on-primary">
                   الإدارة
                 </span>
               </div>
@@ -259,12 +267,14 @@ export const Announcements = () => {
             <div className="hidden items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm md:flex">
               <div className="text-center">
                 <p className="mb-1 text-xs text-white/60">الإجمالي</p>
-                <p className="text-2xl font-bold text-white">{announcements.length}</p>
+                <p className="text-2xl font-bold tabular-nums text-on-primary">
+                  {announcements.length}
+                </p>
               </div>
               <div className="h-10 w-px bg-white/10" />
               <div className="text-center">
                 <p className="mb-1 text-xs text-white/60">النشطة</p>
-                <p className="text-2xl font-bold text-white">
+                <p className="text-2xl font-bold tabular-nums text-on-primary">
                   {announcements.filter((a) => a.isActive).length}
                 </p>
               </div>
@@ -272,73 +282,89 @@ export const Announcements = () => {
           </div>
         </motion.div>
 
-        {isAdmin && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            data-kpi
-          >
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              {kpiCards.map((kpi, i) => {
-                const Icon = kpi.icon
-                return (
-                  <motion.div
-                    key={kpi.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.12 + i * 0.06 }}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    className={cn(
-                      'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
-                      kpi.gradient,
-                    )}
-                  >
-                    <div className="absolute inset-x-0 top-0 h-0.5">
-                      <div className={cn('h-full rounded-full', kpi.accent)} />
+        {/* KPIs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          data-kpi
+        >
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+            {kpiCards.map((kpi, i) => {
+              const Icon = kpi.icon
+              return (
+                <motion.div
+                  key={kpi.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.12 + i * 0.06 }}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  className={cn(
+                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
+                    kpi.gradient,
+                  )}
+                >
+                  <div className="absolute inset-x-0 top-0 h-0.5">
+                    <div className={cn('h-full rounded-full', kpi.accent)} />
+                  </div>
+                  <div className="mb-3 flex items-center justify-between">
+                    <div className={cn('rounded-lg p-2', kpi.iconBg)}>
+                      <Icon size={16} />
                     </div>
-                    <div className="mb-3 flex items-center justify-between">
-                      <div className={cn('rounded-lg p-2', kpi.iconBg)}>
-                        <Icon size={16} />
-                      </div>
-                    </div>
-                    <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
-                    <p className="mt-0.5 text-xs text-muted">{kpi.label}</p>
-                  </motion.div>
-                )
-              })}
-            </div>
-          </motion.div>
-        )}
+                  </div>
+                  <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
+                  <p className="mt-0.5 text-xs text-muted">{kpi.label}</p>
+                </motion.div>
+              )
+            })}
+          </div>
+        </motion.div>
 
+        {/* المحتوى */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
-            {visibleAnnouncements.map((ann, idx) => (
-              <motion.div
-                key={ann.id}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.03 * idx }}
+          {isError ? (
+            <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-16 text-center">
+              <AlertTriangle size={32} className="mx-auto mb-3 text-error" strokeWidth={1.5} />
+              <p className="text-sm font-bold text-main">تعذر تحميل الإعلانات</p>
+              <button
+                onClick={() => refetch()}
+                className="mx-auto mt-4 block rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
-                <AnnouncementCard
-                  announcement={ann}
-                  onEdit={isAdmin ? openEdit : undefined}
-                  onDelete={isAdmin ? handleDelete : undefined}
+                إعادة المحاولة
+              </button>
+            </div>
+          ) : isLoading ? (
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+              {visibleAnnouncements.map((ann, idx) => (
+                <motion.div
+                  key={ann.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.03 * idx }}
+                >
+                  <AnnouncementCard announcement={ann} onEdit={openEdit} onDelete={handleDelete} />
+                </motion.div>
+              ))}
+              {visibleAnnouncements.length === 0 && (
+                <EmptyState
+                  icon={Megaphone}
+                  title="لا توجد إعلانات بعد"
+                  subtitle="أنشئ أول إعلان من الزر العائم بالأسفل"
+                  className="col-span-full rounded-2xl border border-dashed border-border bg-card"
                 />
-              </motion.div>
-            ))}
-            {visibleAnnouncements.length === 0 && !isLoading && (
-              <EmptyState
-                icon={Megaphone}
-                title="لا توجد إعلانات بعد"
-                className="col-span-full rounded-2xl border border-dashed border-border bg-card"
-              />
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </motion.div>
 
         <AnnouncementFormModal
@@ -349,62 +375,62 @@ export const Announcements = () => {
           onClose={() => {
             setIsModalOpen(false)
             setEditingAnnouncement(null)
-            setFormData({ title: '', content: '', type: 'general', isActive: true })
+            resetForm()
           }}
           onSubmit={handleSave}
         />
       </div>
 
-      {isAdmin && (
-        <div
-          className="fixed end-4 z-50 flex flex-col items-end gap-3 md:end-8"
-          style={{ bottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}
-        >
-          <AnimatePresence>
-            {fabOpen &&
-              fabActions.map((action, i) => (
-                <motion.div
-                  key={action.label}
-                  initial={{ opacity: 0, scale: 0.3, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.3, y: 20 }}
-                  transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
-                  className="flex items-center gap-2"
+      {/* FAB */}
+      <div
+        className="fixed end-4 z-50 flex flex-col items-end gap-3 md:end-8"
+        style={{ bottom: 'calc(96px + env(safe-area-inset-bottom, 0px))' }}
+      >
+        <AnimatePresence>
+          {fabOpen &&
+            fabActions.map((action, i) => (
+              <motion.div
+                key={action.label}
+                initial={{ opacity: 0, scale: 0.3, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.3, y: 20 }}
+                transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
+                className="flex items-center gap-2"
+              >
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                  {action.label}
+                </span>
+                <button
+                  onClick={() => {
+                    action.onClick()
+                    setFabOpen(false)
+                  }}
+                  disabled={'disabled' in action ? action.disabled : false}
+                  aria-label={action.label}
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-elevation-2 transition-colors hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
                 >
-                  <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
-                    {action.label}
-                  </span>
-                  <button
-                    onClick={() => {
-                      action.onClick()
-                      setFabOpen(false)
-                    }}
-                    aria-label={action.label}
-                    className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card text-main shadow-elevation-2 transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
-                  >
-                    <action.icon size={18} />
-                  </button>
-                </motion.div>
-              ))}
-          </AnimatePresence>
-          <motion.button
-            onClick={() => setFabOpen(!fabOpen)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            aria-label={fabOpen ? 'إغلاق القائمة' : 'خيارات الإعلانات'}
-            aria-expanded={fabOpen}
-            className={cn(
-              'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-elevation-3 transition-colors focus-visible:ring-2 focus-visible:ring-focus',
-              fabOpen ? 'bg-error' : 'bg-primary',
-            )}
-          >
-            <Plus
-              size={24}
-              className={cn('transition-transform duration-normal', fabOpen && 'rotate-45')}
-            />
-          </motion.button>
-        </div>
-      )}
+                  <action.icon size={18} />
+                </button>
+              </motion.div>
+            ))}
+        </AnimatePresence>
+        <motion.button
+          onClick={() => setFabOpen(!fabOpen)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label={fabOpen ? 'إغلاق القائمة' : 'خيارات الإعلانات'}
+          aria-expanded={fabOpen}
+          className={cn(
+            'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-elevation-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+            fabOpen ? 'rotate-45 bg-error text-on-error' : 'bg-primary',
+          )}
+        >
+          <Plus
+            size={24}
+            className={cn('transition-transform duration-normal', fabOpen && 'rotate-45')}
+          />
+        </motion.button>
+      </div>
     </div>
   )
 }
