@@ -113,7 +113,7 @@ export const Sidebar = memo(
       { name: 'المواعيد', href: '/appointments', id: 'appointments', icon: CalendarCheck },
       { name: 'التقارير', href: '/reports', id: 'reports', icon: FileText },
       {
-        name: 'فواتير الطلاب',
+        name: currentUser?.role === 'student' ? 'سجل الدفعات' : 'فواتير الطلاب',
         href: '/student-invoices',
         id: 'student_invoices',
         icon: DollarSign,
@@ -195,12 +195,25 @@ export const Sidebar = memo(
         if (item.id === 'dashboard') return false
         // الطالب له رابط إعلانات واحد (/announcements) — لوحة الأولياء ليست له
         if (item.id === 'parent_announcements') return false
-        if (item.id === 'student_dashboard' || ['chat'].includes(item.id) || isCommonAccess)
+        if (
+          item.id === 'student_dashboard' ||
+          ['chat', 'student_invoices'].includes(item.id) ||
+          isCommonAccess
+        )
           return true
       }
       if (currentUser.role === 'teacher') {
         if (item.id === 'dashboard') return true
-        if (['evaluations', 'schedule', 'announcements', 'appointments', 'forum'].includes(item.id))
+        if (
+          [
+            'evaluations',
+            'schedule',
+            'announcements',
+            'appointments',
+            'forum',
+            'teacher_payment_history',
+          ].includes(item.id)
+        )
           return true
       }
       return currentUser.permissions?.includes(item.id)

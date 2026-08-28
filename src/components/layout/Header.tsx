@@ -21,6 +21,8 @@ const routeMeta: Record<string, { title: string; subtitle: string }> = {
   '/finance': { title: 'المالية', subtitle: 'متابعة الإيرادات والمصروفات' },
   '/student-invoices': { title: 'فواتير الطلاب', subtitle: 'متابعة الرسوم والمدفوعات' },
   '/teacher-invoices': { title: 'فواتير المعلمات', subtitle: 'إدارة ومتابعة فواتير المعلمات' },
+  '/teacher-payment-history': { title: 'سجل الدفعات', subtitle: 'سجل مستحقاتك ومدفوعاتك السابقة' },
+  '/parent-payment-history': { title: 'سجل الدفعات', subtitle: 'سجل فواتير ومدفوعات الأبناء' },
   '/attendance': { title: 'الحضور والغياب', subtitle: 'متابعة حضور الطلاب اليومي' },
   '/schedule': { title: 'الجداول الدراسية', subtitle: 'جدول الحصص الأسبوعي' },
   '/agenda': { title: 'الأجندة', subtitle: 'متابعة المواعيد والمهام القادمة' },

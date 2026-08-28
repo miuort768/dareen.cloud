@@ -187,7 +187,9 @@ const ProtectedRoute = ({
     // المواعيد متاحة للطالب (يظهر له في الشريط الجانبي وتجلب بياناته من بوابة الطالب)
     const isStudentAccess =
       currentUser.role === 'student' &&
-      ['student_dashboard', 'appointments', 'announcements'].includes(permission)
+      ['student_dashboard', 'appointments', 'announcements', 'student_invoices'].includes(
+        permission,
+      )
 
     const isTeacherAccess =
       currentUser.role === 'teacher' &&
@@ -199,6 +201,7 @@ const ProtectedRoute = ({
         'announcements',
         'appointments',
         'forum',
+        'teacher_payment_history',
       ].includes(permission)
 
     if (!hasExplicitPermission && !isParentAccess && !isStudentAccess && !isTeacherAccess) {
@@ -652,7 +655,7 @@ function App() {
                 <Route
                   path="teacher-payment-history"
                   element={
-                    <ProtectedRoute permission="admin">
+                    <ProtectedRoute permission="teacher_payment_history">
                       <TeacherPaymentHistory />
                     </ProtectedRoute>
                   }

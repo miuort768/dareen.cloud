@@ -38,7 +38,7 @@ export const InstallPWA = () => {
   const deferredPromptRef = useRef<Event | null>(null)
 
   const isDashboard =
-    /^\/(admin-dashboard|teacher-dashboard|student-dashboard|parent-dashboard|students|teachers|parents|finance|attendance|schedule|appointments|tasks|announcements|forum|settings|evaluations|monthly-closing|reports|leads|trial-sessions|student-invoices|teacher-invoices|admin-blog|admin-contacts|admin-jobs|parent-students|parent-announcements|chat)/.test(
+    /^\/(admin-dashboard|teacher-dashboard|student-dashboard|parent-dashboard|students|teachers|parents|finance|attendance|schedule|appointments|tasks|announcements|forum|settings|evaluations|monthly-closing|reports|leads|trial-sessions|student-invoices|teacher-invoices|teacher-payment-history|parent-payment-history|admin-blog|admin-contacts|admin-jobs|parent-students|parent-announcements|chat)/.test(
       location.pathname,
     )
 
