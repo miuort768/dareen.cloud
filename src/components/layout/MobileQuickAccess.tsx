@@ -1,6 +1,6 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { LogOut, CalendarDays, ChevronLeft, Sparkles, X } from 'lucide-react'
+import { LogOut, CalendarDays, ChevronLeft, Sparkles, X, User } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Image } from '../../shared/components/ui'
 import { Button } from '../ui/button'
@@ -32,6 +32,20 @@ const FEATURED_BY_ROLE: Record<string, string[]> = {
   teacher: ['attendance', 'evaluations', 'schedule'],
   parent: ['parent_students', 'parent_announcements', 'chat', 'parent_payment_history'],
   student: ['student_dashboard', 'forum', 'schedule', 'chat'],
+}
+
+const getProfileLink = (role: string) => {
+  if (role === 'student') return '/student-profile'
+  if (role === 'parent') return '/parent-profile'
+  if (role === 'admin') return '/settings'
+  return '/teacher-profile'
+}
+
+const roleLabels: Record<string, string> = {
+  admin: 'مدير',
+  teacher: 'معلمة',
+  parent: 'ولي أمر',
+  student: 'طالب',
 }
 
 const TILE_STYLES = [
@@ -228,6 +242,38 @@ export const MobileQuickAccess = ({
 
         {/* Footer */}
         <div className="shrink-0 border-t border-border p-2.5 dark:border-white/10">
+          {currentUser && (
+            <Link
+              to={getProfileLink(currentUser.role ?? '')}
+              onClick={onCloseMenu}
+              aria-label="الملف الشخصي"
+              className="mb-1.5 flex w-full items-center gap-2.5 rounded-xl border border-border bg-surface px-3 py-2 text-start outline-none transition-colors duration-150 hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-card"
+            >
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-black text-on-primary">
+                {currentUser.avatar ? (
+                  <img
+                    src={currentUser.avatar}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                ) : currentUser.name ? (
+                  currentUser.name.charAt(0)
+                ) : (
+                  <User size={16} />
+                )}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-xs font-black leading-tight text-main">
+                  {currentUser.name}
+                </span>
+                <span className="block text-[10px] font-bold leading-tight text-muted">
+                  {roleLabels[currentUser.role ?? ''] ?? 'حسابي'} • الملف الشخصي
+                </span>
+              </span>
+              <ChevronLeft size={14} className="shrink-0 opacity-40 rtl:rotate-180" />
+            </Link>
+          )}
           <Button
             variant="destructive"
             onClick={() => {
