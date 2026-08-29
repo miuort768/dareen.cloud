@@ -3,6 +3,7 @@ import type { ExecutiveStats } from '../../services/executiveService'
 import { Lightbulb, TrendingUp, TrendingDown, Target, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CURRENCY_SYMBOL } from '@/config/constants'
+import { AttendanceInsights } from './AttendanceInsights'
 
 type InsightType = 'positive' | 'negative' | 'neutral'
 
@@ -148,12 +149,12 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
 
   return (
     <div
-      className="flex h-full flex-col rounded-2xl border border-border bg-card p-5 font-dash"
+      className="flex h-full flex-col rounded-none border border-border bg-card p-5 font-dash"
       dir="rtl"
     >
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-warning-soft">
+          <div className="flex h-9 w-9 items-center justify-center rounded-none bg-warning-soft">
             <Lightbulb size={16} className="text-warning" />
           </div>
           <div>
@@ -163,13 +164,13 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
         </div>
         <div className="flex items-center gap-1">
           {positives > 0 && (
-            <span className="flex items-center gap-0.5 rounded-lg bg-success-soft px-1.5 py-0.5 text-[10px] font-black tabular-nums text-success">
+            <span className="flex items-center gap-0.5 rounded-none bg-success-soft px-1.5 py-0.5 text-[10px] font-black tabular-nums text-success">
               <TrendingUp size={9} />
               {positives}
             </span>
           )}
           {negatives > 0 && (
-            <span className="flex items-center gap-0.5 rounded-lg bg-error-soft px-1.5 py-0.5 text-[10px] font-black tabular-nums text-error">
+            <span className="flex items-center gap-0.5 rounded-none bg-error-soft px-1.5 py-0.5 text-[10px] font-black tabular-nums text-error">
               <TrendingDown size={9} />
               {negatives}
             </span>
@@ -180,7 +181,7 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
       <div className="flex-1 space-y-2">
         {insights.length === 0 && (
           <div className="py-10 text-center">
-            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-surface">
+            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-none bg-surface">
               <Sparkles size={16} className="text-dim" />
             </div>
             <p className="text-xs font-bold text-muted">لا توجد تحليلات بعد</p>
@@ -194,13 +195,13 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
             <div
               key={`insight-${i}`}
               className={cn(
-                'flex items-start gap-2.5 rounded-xl border border-s-4 border-border bg-surface p-3 transition-colors hover:bg-hover',
+                'flex items-start gap-2.5 rounded-none border border-s-4 border-border bg-surface p-3 transition-colors hover:bg-hover',
                 cfg.accent,
               )}
             >
               <div
                 className={cn(
-                  'flex h-7 w-7 shrink-0 items-center justify-center rounded-lg',
+                  'flex h-7 w-7 shrink-0 items-center justify-center rounded-none',
                   cfg.iconBg,
                 )}
               >
@@ -211,6 +212,8 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
           )
         })}
       </div>
+
+      <AttendanceInsights />
     </div>
   )
 })
