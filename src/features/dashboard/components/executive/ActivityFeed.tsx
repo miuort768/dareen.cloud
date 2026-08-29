@@ -11,6 +11,8 @@ import {
   Lock,
   Clock,
   Settings,
+  LogIn,
+  Video,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -20,6 +22,8 @@ const ICON_MAP: Record<string, typeof History> = {
   students: GraduationCap,
   teachers: UserPlus,
   sessions: History,
+  auth: LogIn,
+  live: Video,
   system: Settings,
   other: History,
   // legacy keys kept as fallback
@@ -58,6 +62,12 @@ const VARIANT_CONFIG: Record<string, { bg: string; text: string; chip: string; l
     chip: 'bg-success-soft text-success',
     label: 'حصص',
   },
+  auth: {
+    bg: 'bg-info-soft',
+    text: 'text-info',
+    chip: 'bg-info-soft text-info',
+    label: 'دخول وخروج',
+  },
   system: {
     bg: 'bg-surface',
     text: 'text-muted',
@@ -87,27 +97,48 @@ const VARIANT_CONFIG: Record<string, { bg: string; text: string; chip: string; l
 }
 
 const ACTION_LABELS: Record<string, string> = {
-  TRANSACTION_CREATE: 'أنشأ معاملة مالية',
-  TRANSACTION_DELETE: 'حذف معاملة مالية',
-  EXPENSE_UPDATE: 'حدّث مصروفًا ثابتًا',
-  INVOICE_CREATE: 'أنشأ فاتورة',
-  INVOICE_UPDATE: 'حدّث فاتورة',
-  INVOICE_DELETE: 'حذف فاتورة',
-  STUDENT_CREATE: 'أضاف طالبًا جديدًا',
-  STUDENT_UPDATE: 'حدّث بيانات طالب',
-  STUDENT_DELETE: 'حذف طالب',
-  TEACHER_CREATE: 'أضاف معلمة جديدة',
-  TEACHER_UPDATE: 'حدّث بيانات معلمة',
-  TEACHER_DELETE: 'حذف معلمة',
-  SESSION_CREATE: 'جدول حصة جديدة',
-  SESSION_UPDATE: 'حدّث حصة',
-  SESSION_DELETE: 'حذف حصة',
-  SETTING_UPDATE: 'عدّل إعدادات النظام',
-  SYSTEM_RESET: 'أجرى إعادة تعيين للنظام',
-  BACKUP_CREATED: 'أنشأ نسخة احتياطية',
-  LOGIN: 'سجّل الدخول',
+  // auth
+  LOGIN_SUCCESS: 'سجّل الدخول',
   LOGIN_FAILED: 'محاولة دخول فاشلة',
   LOGOUT: 'سجّل الخروج',
+  LOGOUT_ALL: 'سجّل الخروج من كل الأجهزة',
+  // live sessions (حضور / انصراف)
+  LIVE_SESSION_START: 'حضور — بدأ حصة مباشرة',
+  LIVE_SESSION_END: 'انصراف — انتهت الحصة',
+  // finance (real audit action names end with D)
+  TRANSACTION_CREATED: 'أنشأ معاملة مالية',
+  TRANSACTION_DELETED: 'حذف معاملة مالية',
+  TRANSACTION_DELETED_ALL: 'حذف كل المعاملات',
+  EXPENSE_UPDATED: 'حدّث مصروفًا ثابتًا',
+  EXPENSE_RESET: 'صفّر المصروفات',
+  INVOICE_CREATED: 'أنشأ فاتورة',
+  INVOICE_UPDATED: 'حدّث فاتورة',
+  INVOICE_DELETED: 'حذف فاتورة',
+  INVOICE_PAID: 'سدد فاتورة',
+  INVOICE_CANCELLED: 'ألغى فاتورة',
+  INVOICE_RESTORED: 'استعاد فاتورة',
+  REFUND_PROCESSED: 'نفّذ استردادًا ماليًا',
+  // students / teachers
+  STUDENT_CREATED: 'أضاف طالبًا جديدًا',
+  STUDENT_UPDATED: 'حدّث بيانات طالب',
+  STUDENT_DELETED: 'حذف طالب',
+  TEACHER_CREATED: 'أضاف معلمة جديدة',
+  TEACHER_UPDATED: 'حدّث بيانات معلمة',
+  TEACHER_DELETED: 'حذف معلمة',
+  TEACHER_SUSPENDED: 'أوقف معلمة',
+  // sessions
+  SESSION_CREATED: 'جدول حصة جديدة',
+  SESSION_UPDATED: 'حدّث حصة',
+  SESSION_DELETED: 'حذف حصة',
+  // system
+  SETTING_UPDATED: 'عدّل إعدادات النظام',
+  SYSTEM_RESET: 'أجرى إعادة تعيين للنظام',
+  BACKUP_CREATED: 'أنشأ نسخة احتياطية',
+  EXPORT_DATA: 'صدّر بيانات',
+  // legacy names (kept as fallback)
+  LOGIN: 'سجّل الدخول',
+  SETTING_UPDATE: 'عدّل إعدادات النظام',
+  TRANSACTION_CREATE: 'أنشأ معاملة مالية',
 }
 
 function formatTimestamp(timestamp: string): string {
@@ -121,7 +152,13 @@ function formatTimestamp(timestamp: string): string {
 }
 
 function actionLabel(item: ServiceItem): string {
-  if (ACTION_LABELS[item.action]) return ACTION_LABELS[item.action]
+  const base = ACTION_LABELS[item.action]
+  if (base) {
+    if (item.action.startsWith('LIVE_SESSION') && item.details) {
+      return `${base} — ${item.details}`
+    }
+    return base
+  }
   if (item.details) return item.details
   return item.action
 }

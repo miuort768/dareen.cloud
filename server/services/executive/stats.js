@@ -148,6 +148,26 @@ async function getStats() {
         return s.status === 'completed' && (now.getTime() - sched.getTime()) > 5 * 60 * 1000;
     }).length;
 
+    // Attendance analytics across all completed sessions
+    const DAY_NAMES = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    const subjectCount = {};
+    const dayCount = {};
+    const hourCount = {};
+    for (const s of allSessions) {
+        if (s.subject) subjectCount[s.subject] = (subjectCount[s.subject] || 0) + 1;
+        const d = new Date(`${s.date}T00:00:00`);
+        if (!isNaN(d.getTime())) {
+            const day = DAY_NAMES[d.getDay()];
+            dayCount[day] = (dayCount[day] || 0) + 1;
+        }
+        const h = parseInt(String(s.time || '').split(':')[0], 10);
+        if (!isNaN(h)) hourCount[h] = (hourCount[h] || 0) + 1;
+    }
+    const topOf = (obj) => Object.entries(obj).sort((a, b) => b[1] - a[1])[0] || null;
+    const topSubject = topOf(subjectCount);
+    const topDay = topOf(dayCount);
+    const topHour = topOf(hourCount);
+
     return {
         todayRevenue: Math.round(todayRevenue * 100) / 100,
         cashToday: Math.round(cashToday * 100) / 100,
@@ -164,6 +184,15 @@ async function getStats() {
         lowSessionStudentsCount: lowSessionStudents.length,
         mostProfitableSubject: { name: mostProfitableSubject[0], revenue: Math.round(mostProfitableSubject[1] * 100) / 100 },
         mostActiveTeacher: { name: mostActiveTeacher[0], sessions: mostActiveTeacher[1] },
+        mostAttendedSubject: topSubject ? { name: topSubject[0], sessions: topSubject[1] } : null,
+        busiestDay: topDay ? { name: topDay[0], sessions: topDay[1] } : null,
+        busiestHour: topHour
+            ? {
+                hour: topHour[0],
+                sessions: topHour[1],
+                share: allSessions.length > 0 ? Math.round((topHour[1] / allSessions.length) * 100) : 0,
+            }
+            : null,
         teachersCount: teachers.length,
         studentsCount: students.length,
     };

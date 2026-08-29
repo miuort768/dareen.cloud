@@ -16,6 +16,9 @@ export interface ExecutiveStats {
   lowSessionStudentsCount: number
   mostProfitableSubject: { name: string; revenue: number }
   mostActiveTeacher: { name: string; sessions: number }
+  mostAttendedSubject?: { name: string; sessions: number } | null
+  busiestDay?: { name: string; sessions: number } | null
+  busiestHour?: { hour: number; sessions: number; share: number } | null
   teachersCount: number
   studentsCount: number
 }

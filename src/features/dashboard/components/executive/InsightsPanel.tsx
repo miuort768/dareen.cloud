@@ -11,6 +11,12 @@ interface Insight {
   type: InsightType
 }
 
+function formatHour(h: number): string {
+  if (h === 0) return '12 ص'
+  if (h === 12) return '12 م'
+  return h < 12 ? `${h} ص` : `${h - 12} م`
+}
+
 function buildInsights(stats: ExecutiveStats): Insight[] {
   const insights: Insight[] = []
 
@@ -39,6 +45,31 @@ function buildInsights(stats: ExecutiveStats): Insight[] {
     insights.push({
       text: `المعلم الأكثر نشاطاً: ${stats.mostActiveTeacher.name} (${stats.mostActiveTeacher.sessions ?? 0} جلسة)`,
       type: 'positive',
+    })
+  }
+
+  if (stats.mostAttendedSubject?.name) {
+    insights.push({
+      text: `أكثر مادة حضوراً: ${stats.mostAttendedSubject.name} (${stats.mostAttendedSubject.sessions ?? 0} حصة)`,
+      type: 'neutral',
+    })
+  }
+
+  if (stats.busiestDay?.name) {
+    insights.push({
+      text: `أكثر يوم حضوراً: ${stats.busiestDay.name} (${stats.busiestDay.sessions ?? 0} حصة)`,
+      type: 'neutral',
+    })
+  }
+
+  if (
+    stats.busiestHour &&
+    stats.busiestHour.hour !== null &&
+    stats.busiestHour.hour !== undefined
+  ) {
+    insights.push({
+      text: `أكثر ساعة إشغالاً: ${formatHour(stats.busiestHour.hour)} — ${stats.busiestHour.share ?? 0}% من الحصص`,
+      type: 'neutral',
     })
   }
 
