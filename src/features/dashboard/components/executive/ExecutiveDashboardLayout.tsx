@@ -194,12 +194,12 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
 
       {/* Pulse + money today */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-3">
           <Section>
             <BusinessPulse pulse={pulse} />
           </Section>
         </div>
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-9">
           <Section>
             <TodayMoney stats={stats} />
             <div className="mt-4">
@@ -215,21 +215,21 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
         <OpsMetrics stats={stats} />
       </Section>
 
-      {/* Live context */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Live context — alerts & upcoming side by side, presence full-width below */}
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Section>
           <ExecutiveAlerts alerts={alerts} />
         </Section>
         <Section>
           <UpcomingTimeline sessions={upcoming} />
         </Section>
-        <Section>
-          <PresenceGrid
-            users={presence}
-            total={(stats?.teachersCount || 0) + (stats?.studentsCount || 0)}
-          />
-        </Section>
       </div>
+      <Section>
+        <PresenceGrid
+          users={presence}
+          total={(stats?.teachersCount || 0) + (stats?.studentsCount || 0)}
+        />
+      </Section>
 
       {/* Context */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">

@@ -36,7 +36,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({
   const sorted = [...sessions].sort((a, b) => a.minutesUntil - b.minutesUntil)
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 font-dash" dir="rtl">
+    <div className="border-info-soft/60 rounded-2xl border bg-card p-5 font-dash" dir="rtl">
       <div className="mb-4 flex items-center gap-2">
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-info-soft">
           <Calendar size={16} className="text-info" />

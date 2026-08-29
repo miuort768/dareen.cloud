@@ -47,21 +47,21 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
   const color = PULSE_COLORS[pulse.status] || 'var(--text-muted)'
   const LabelIcon = PULSE_ICONS[pulse.status] || Activity
 
-  const radius = 56
+  const radius = 42
   const circumference = 2 * Math.PI * radius
   const offset = circumference - (pulse.score / 100) * circumference
 
   return (
     <div
-      className="flex flex-col items-center rounded-2xl border border-border bg-card p-5 font-dash"
+      className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 font-dash"
       dir="rtl"
     >
-      <div className="mb-4 flex items-center gap-2 self-start">
-        <Activity size={16} className="text-primary" />
+      <div className="mb-3 flex items-center gap-2 self-start">
+        <Activity size={15} className="text-primary" />
         <h3 className="text-xs font-bold text-main">مؤشر الأداء</h3>
       </div>
 
-      <div className="relative h-36 w-36">
+      <div className="relative h-28 w-28">
         <svg className="h-full w-full -rotate-90" viewBox="0 0 128 128">
           <circle
             cx="64"
@@ -69,7 +69,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
             r={radius}
             fill="none"
             stroke="var(--border)"
-            strokeWidth="8"
+            strokeWidth="7"
             strokeLinecap="round"
           />
           <circle
@@ -78,7 +78,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
             r={radius}
             fill="none"
             stroke={color}
-            strokeWidth="8"
+            strokeWidth="7"
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
@@ -88,19 +88,19 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span
             className={cn(
-              'text-3xl font-bold tabular-nums',
+              'text-2xl font-bold tabular-nums',
               PULSE_TEXT[pulse.status] || 'text-muted',
             )}
           >
             {pulse.score}
           </span>
-          <span className="mt-0.5 text-[10px] text-muted">/ 100</span>
+          <span className="mt-0.5 text-[9px] text-muted">/ 100</span>
         </div>
       </div>
 
       <span
         className={cn(
-          'mt-3 inline-flex items-center gap-1.5 rounded-xl border px-3 py-1 text-[10px] font-bold',
+          'mt-2.5 inline-flex items-center gap-1.5 rounded-xl border px-3 py-1 text-[10px] font-bold',
           PULSE_BADGE[pulse.status] || 'border-border bg-surface text-muted',
         )}
       >

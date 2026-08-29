@@ -70,7 +70,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
   const filtered = filter === 'all' ? allAlerts : allAlerts.filter((a) => a.severity === filter)
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 font-dash" dir="rtl">
+    <div className="border-warning-soft/60 rounded-2xl border bg-card p-5 font-dash" dir="rtl">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-warning-soft">

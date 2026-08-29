@@ -37,7 +37,7 @@ export const PresenceGrid = memo(function PresenceGrid({
   const onlineCount = users.filter((u) => u.status === 'online').length
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 font-dash" dir="rtl">
+    <div className="border-success-soft/60 rounded-2xl border bg-card p-5 font-dash" dir="rtl">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft">
@@ -56,7 +56,7 @@ export const PresenceGrid = memo(function PresenceGrid({
         </div>
       </div>
 
-      <div className="custom-scrollbar max-h-[320px] space-y-1 overflow-y-auto">
+      <div className="custom-scrollbar grid max-h-[320px] grid-cols-1 gap-1 overflow-y-auto sm:grid-cols-2">
         {users.length === 0 && (
           <div className="py-8 text-center">
             <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-surface">
