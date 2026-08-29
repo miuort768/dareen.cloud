@@ -61,7 +61,7 @@ export const ActivityFeed = ({
   items,
   title,
   subtitle,
-  emptyMessage = 'ظ„ط§ طھظˆط¬ط¯ ظ†ط´ط§ط·ط§طھ ط­ط¯ظٹط«ط©',
+  emptyMessage = 'لا توجد نشاطات حديثة',
   className,
   maxHeight,
   dir = 'rtl',

@@ -12,7 +12,7 @@ interface SuccessModalProps {
 
 export const SuccessModal = ({
   isOpen,
-  title = 'ط¹ظ…ظ„ظٹط© ظ†ط§ط¬ط­ط©',
+  title = 'عملية ناجحة',
   message,
   onClose,
   autoClose = true,

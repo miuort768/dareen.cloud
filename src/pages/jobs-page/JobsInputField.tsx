@@ -35,7 +35,7 @@ export const JobsInputField = forwardRef<HTMLInputElement, InputFieldProps>(
         <Icon size={12} className="shrink-0 text-primary" />
         {label}
         {required && <span className="text-error">*</span>}
-        {!required && <span className="text-xs text-muted">(ط§ط®طھظٹط§ط±ظٹ)</span>}
+        {!required && <span className="text-xs text-muted">(اختياري)</span>}
       </label>
       <input
         ref={ref}

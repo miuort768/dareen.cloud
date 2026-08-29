@@ -22,7 +22,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
       <div className="container relative z-10 mx-auto px-4">
         <div className="mb-4 text-center md:mb-6">
           <h2 className="mb-3 font-heading text-3xl font-black leading-tight text-main dark:text-main md:text-4xl">
-            <span className="text-primary dark:text-primary">ط¢ط±ط§ط، ظٹط¹طھط² ط¨ظ‡ط§</span>
+            <span className="text-primary dark:text-primary">آراء يعتز بها</span>
           </h2>
         </div>
 

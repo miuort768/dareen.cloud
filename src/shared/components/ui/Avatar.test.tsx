@@ -4,23 +4,23 @@ import { Avatar } from './Avatar'
 
 describe('Avatar', () => {
   it('renders with image when src is provided', () => {
-    render(<Avatar src="https://example.com/photo.jpg" name="ط£ط­ظ…ط¯" />)
+    render(<Avatar src="https://example.com/photo.jpg" name="أحمد" />)
     expect(screen.getByRole('img')).toBeInTheDocument()
   })
 
   it('renders alt text on image', () => {
-    render(<Avatar src="/photo.jpg" alt="طµظˆط±ط© ط£ط­ظ…ط¯" name="ط£ط­ظ…ط¯" />)
-    expect(screen.getByAltText('طµظˆط±ط© ط£ط­ظ…ط¯')).toBeInTheDocument()
+    render(<Avatar src="/photo.jpg" alt="صورة أحمد" name="أحمد" />)
+    expect(screen.getByAltText('صورة أحمد')).toBeInTheDocument()
   })
 
   it('falls back to name as alt when alt not provided', () => {
-    render(<Avatar src="/photo.jpg" name="ط£ط­ظ…ط¯" />)
-    expect(screen.getByAltText('ط£ط­ظ…ط¯')).toBeInTheDocument()
+    render(<Avatar src="/photo.jpg" name="أحمد" />)
+    expect(screen.getByAltText('أحمد')).toBeInTheDocument()
   })
 
   it('renders initial letter when no src', () => {
-    render(<Avatar name="ط£ط­ظ…ط¯" />)
-    expect(screen.getByText('ط£')).toBeInTheDocument()
+    render(<Avatar name="أحمد" />)
+    expect(screen.getByText('أ')).toBeInTheDocument()
   })
 
   it('renders question mark when no name and no src', () => {
