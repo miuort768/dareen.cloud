@@ -48,7 +48,7 @@ jobs:
 
   test-server:
     name: Server tests
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -58,6 +58,8 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
+      - name: Generate Prisma client
+        run: cd server && npx prisma generate
       - name: Run server test suite
         run: npm test --prefix server
 

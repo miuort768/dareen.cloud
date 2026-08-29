@@ -1,7 +1,10 @@
 import { http, HttpResponse } from 'msw'
 import { db, makeStudent, makeTeacher, makeSession, makeNotification } from './data'
 
-const API_BASE = 'http://localhost:3001/api'
+// Wildcard base so MSW matches requests regardless of the app's API base URL
+// (VITE_API_URL on dev machines vs relative '/api' on CI — tests must not
+// depend on a local dev server running on port 3001).
+const API_BASE = '*/api'
 
 interface User {
   id: string
