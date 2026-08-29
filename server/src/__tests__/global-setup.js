@@ -24,7 +24,18 @@ function platformPackage() {
 // inside a UTF-8 cluster: initdb dies with `invalid byte sequence for encoding
 // "UTF8": 0xcf 0xc7`. Copying the binaries to a pure-ASCII temp dir fixes this
 // deterministically. (Harmless on Linux.)
-const NATIVE_SRC = path.join(path.dirname(require.resolve(platformPackage())), 'native');
+// native/ location differs per platform build (windows: dist/native,
+// linux: root/native) — walk up from the resolved main entry until found.
+function resolveNativeDir() {
+    let dir = path.dirname(require.resolve(platformPackage()));
+    for (let i = 0; i < 4; i++) {
+        const candidate = path.join(dir, 'native');
+        if (fs.existsSync(candidate)) return candidate;
+        dir = path.dirname(dir);
+    }
+    throw new Error(`native dir not found for ${platformPackage()}`);
+}
+const NATIVE_SRC = resolveNativeDir();
 const PG_ROOT = path.join(os.tmpdir(), 'dareen-pg-native');
 const PG_BIN = path.join(PG_ROOT, 'bin');
 const PG_LOG = path.join(os.tmpdir(), 'dareen-pg.log');
