@@ -35,7 +35,7 @@ export const PublicFooter = () => {
                 {academyName}
               </span>
             </div>
-            <p className="border-s-2 border-border ps-4 text-sm leading-relaxed text-muted dark:border-primary/30 dark:text-warning lg:text-xs">
+            <p className="border-s-2 border-border ps-4 text-xs leading-relaxed text-muted dark:border-primary/30 dark:text-warning">
               {footerDescription ||
                 'نصنع مستقبل أطفالكم من خلال تعليم متميز يجمع بين القيم الأصيلة والأساليب الحديثة. شريككم الموثوق في رحلة التعليم.'}
             </p>

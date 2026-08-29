@@ -149,7 +149,7 @@ export const Courses = () => {
                 </span>
               </div>
 
-              <h1 className="mb-2 font-heading text-2xl font-black leading-tight tracking-tight text-main dark:text-main sm:text-4xl md:mb-4 lg:text-5xl">
+              <h1 className="mb-2 font-heading text-xl font-black leading-tight text-main dark:text-main sm:text-4xl md:mb-4 lg:text-5xl">
                 <span className="text-primary dark:text-primary">دورات</span> {academyName}
               </h1>
 
