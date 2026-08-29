@@ -72,13 +72,13 @@ jobs:
       - name: Deploy to Hostinger VPS
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          password: ${{ secrets.HOSTINGER_PASSWORD }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
           port: 22
           script: |
             set -euo pipefail
-            cd /home/${{ secrets.HOSTINGER_USER }}/darin-app || cd ~/darin-app
+            cd /home/${{ secrets.SSH_USER }}/darin-app || cd ~/darin-app
 
             # 1. Pull latest code deterministically
             git fetch origin main
