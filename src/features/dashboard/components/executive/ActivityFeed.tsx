@@ -10,10 +10,19 @@ import {
   GraduationCap,
   Lock,
   Clock,
+  Settings,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const ICON_MAP: Record<string, typeof History> = {
+  // backend icon values (activity.js getIcon)
+  finance: CreditCard,
+  students: GraduationCap,
+  teachers: UserPlus,
+  sessions: History,
+  system: Settings,
+  other: History,
+  // legacy keys kept as fallback
   person_add: UserPlus,
   payment: CreditCard,
   edit: Edit3,
@@ -24,10 +33,57 @@ const ICON_MAP: Record<string, typeof History> = {
 }
 
 const VARIANT_CONFIG: Record<string, { bg: string; text: string }> = {
+  // backend group values (activity.js getGroup)
+  finance: { bg: 'bg-warning-soft', text: 'text-warning' },
+  students: { bg: 'bg-primary-soft', text: 'text-primary' },
+  teachers: { bg: 'bg-info-soft', text: 'text-info' },
+  sessions: { bg: 'bg-success-soft', text: 'text-success' },
+  system: { bg: 'bg-surface', text: 'text-muted' },
+  other: { bg: 'bg-surface', text: 'text-muted' },
+  // legacy keys kept as fallback
   user: { bg: 'bg-info-soft', text: 'text-info' },
   session: { bg: 'bg-success-soft', text: 'text-success' },
   payment: { bg: 'bg-warning-soft', text: 'text-warning' },
-  system: { bg: 'bg-surface', text: 'text-muted' },
+}
+
+const ACTION_LABELS: Record<string, string> = {
+  TRANSACTION_CREATE: 'أنشأ معاملة مالية',
+  TRANSACTION_DELETE: 'حذف معاملة مالية',
+  EXPENSE_UPDATE: 'حدّث مصروفًا ثابتًا',
+  INVOICE_CREATE: 'أنشأ فاتورة',
+  INVOICE_UPDATE: 'حدّث فاتورة',
+  INVOICE_DELETE: 'حذف فاتورة',
+  STUDENT_CREATE: 'أضاف طالبًا جديدًا',
+  STUDENT_UPDATE: 'حدّث بيانات طالب',
+  STUDENT_DELETE: 'حذف طالب',
+  TEACHER_CREATE: 'أضاف معلمة جديدة',
+  TEACHER_UPDATE: 'حدّث بيانات معلمة',
+  TEACHER_DELETE: 'حذف معلمة',
+  SESSION_CREATE: 'جدول حصة جديدة',
+  SESSION_UPDATE: 'حدّث حصة',
+  SESSION_DELETE: 'حذف حصة',
+  SETTING_UPDATE: 'عدّل إعدادات النظام',
+  SYSTEM_RESET: 'أجرى إعادة تعيين للنظام',
+  BACKUP_CREATED: 'أنشأ نسخة احتياطية',
+  LOGIN: 'سجّل الدخول',
+  LOGIN_FAILED: 'محاولة دخول فاشلة',
+  LOGOUT: 'سجّل الخروج',
+}
+
+function formatTimestamp(timestamp: string): string {
+  const date = new Date(timestamp)
+  if (isNaN(date.getTime())) return timestamp
+  const diffSec = Math.floor((Date.now() - date.getTime()) / 1000)
+  if (diffSec < 60) return 'الآن'
+  if (diffSec < 3600) return `منذ ${Math.floor(diffSec / 60)} د`
+  if (diffSec < 86400) return `منذ ${Math.floor(diffSec / 3600)} س`
+  return date.toLocaleDateString('ar-EG', { day: 'numeric', month: 'short' })
+}
+
+function actionLabel(item: ServiceItem): string {
+  if (ACTION_LABELS[item.action]) return ACTION_LABELS[item.action]
+  if (item.details) return item.details
+  return item.action
 }
 
 export const ActivityFeed = memo(function ActivityFeed({ items }: { items: ServiceItem[] }) {
@@ -70,12 +126,15 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[11px] font-bold text-main">
-                  <span className="text-primary">{item.username}</span> {item.action}
+                  <span className="text-primary">{item.username || 'النظام'}</span>{' '}
+                  {actionLabel(item)}
                 </p>
               </div>
               <div className="flex shrink-0 items-center gap-1">
                 <Clock size={9} className="text-muted" />
-                <span className="text-[9px] tabular-nums text-muted">{item.timestamp}</span>
+                <span className="text-[9px] tabular-nums text-muted">
+                  {formatTimestamp(item.timestamp)}
+                </span>
               </div>
             </div>
           )

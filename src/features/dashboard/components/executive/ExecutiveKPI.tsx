@@ -6,37 +6,44 @@ import { cn } from '@/lib/utils'
 const OPS = (s: ExecutiveStats) => [
   {
     label: 'جلسات نشطة الآن',
-    value: String(s.activeSessions),
+    value: String(s.activeSessions ?? 0),
     icon: BookOpen,
     tone: 'text-success bg-success-soft',
   },
   {
     label: 'نسبة الإشغال',
-    value: `${s.occupancyRate}%`,
+    value: `${s.occupancyRate ?? 0}%`,
     icon: LayoutGrid,
-    tone: s.occupancyRate >= 75 ? 'text-success bg-success-soft' : 'text-warning bg-warning-soft',
+    tone:
+      (s.occupancyRate ?? 0) >= 75
+        ? 'text-success bg-success-soft'
+        : 'text-warning bg-warning-soft',
   },
   {
     label: 'نسبة الحضور',
-    value: `${s.attendanceRate}%`,
+    value: `${s.attendanceRate ?? 0}%`,
     icon: CheckCircle,
-    tone: s.attendanceRate >= 90 ? 'text-success bg-success-soft' : 'text-warning bg-warning-soft',
+    tone:
+      (s.attendanceRate ?? 0) >= 90
+        ? 'text-success bg-success-soft'
+        : 'text-warning bg-warning-soft',
   },
   {
     label: 'متوسط تقييم الحصص',
-    value: s.avgRating.toFixed(1),
+    value: (s.avgRating ?? 0).toFixed(1),
     icon: Star,
     tone: 'text-primary bg-primary-soft',
   },
   {
     label: 'نسبة التجديد',
-    value: `${s.renewalRate}%`,
+    value: `${s.renewalRate ?? 0}%`,
     icon: RefreshCw,
-    tone: s.renewalRate >= 70 ? 'text-success bg-success-soft' : 'text-warning bg-warning-soft',
+    tone:
+      (s.renewalRate ?? 0) >= 70 ? 'text-success bg-success-soft' : 'text-warning bg-warning-soft',
   },
   {
     label: 'طلاب جدد هذا الأسبوع',
-    value: `+${s.newStudentsThisWeek}`,
+    value: `+${s.newStudentsThisWeek ?? 0}`,
     icon: GraduationCap,
     tone: 'text-info bg-info-soft',
   },

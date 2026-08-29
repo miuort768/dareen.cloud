@@ -71,7 +71,7 @@ export const AttentionTiles = memo(function AttentionTiles({ stats }: { stats: E
                   tile.text,
                 )}
               >
-                {tile.value.toLocaleString('en-US')}
+                {(tile.value ?? 0).toLocaleString('en-US')}
               </span>
               <span className="mt-1 block truncate text-[10px] font-bold text-muted">
                 {tile.label}

@@ -178,9 +178,7 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
           <Section>
             <TodayMoney stats={stats} />
             <div className="mt-4">
-              <p className="mb-2.5 font-dash text-micro font-black uppercase tracking-label text-muted">
-                تحتاج انتباهك
-              </p>
+              <p className="mb-2.5 font-dash text-[11px] font-black text-muted">تحتاج انتباهك</p>
               <AttentionTiles stats={stats} />
             </div>
           </Section>

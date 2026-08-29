@@ -27,7 +27,7 @@ const MoneyStat = memo(function MoneyStat({
         <p className="truncate text-[11px] font-bold text-muted">{label}</p>
       </div>
       <p className="font-dash text-xl font-black tabular-nums leading-none tracking-tight text-main md:text-2xl lg:text-[28px]">
-        {value.toLocaleString('en-US')}
+        {(value ?? 0).toLocaleString('en-US')}
         <span className="ms-1.5 text-[11px] font-bold text-dim">{CURRENCY_SYMBOL}</span>
       </p>
     </div>
@@ -37,10 +37,10 @@ const MoneyStat = memo(function MoneyStat({
 export const TodayMoney = memo(function TodayMoney({ stats }: { stats: ExecutiveStats }) {
   return (
     <div
-      className="grid grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card font-dash sm:grid-cols-3"
+      className="grid grid-cols-1 overflow-hidden rounded-2xl border border-border bg-card font-dash lg:grid-cols-3"
       dir="rtl"
     >
-      <div className="relative border-divider bg-primary-soft sm:border-e">
+      <div className="relative border-divider bg-primary-soft lg:border-e">
         <MoneyStat
           icon={Wallet}
           label="إيرادات اليوم"
@@ -49,7 +49,7 @@ export const TodayMoney = memo(function TodayMoney({ stats }: { stats: Executive
           iconBg="bg-card"
         />
       </div>
-      <div className="border-t border-divider sm:border-e sm:border-t-0">
+      <div className="border-t border-divider lg:border-e lg:border-t-0">
         <MoneyStat
           icon={Banknote}
           label="المقبوضات نقدًا"
@@ -58,7 +58,7 @@ export const TodayMoney = memo(function TodayMoney({ stats }: { stats: Executive
           iconBg="bg-success-soft"
         />
       </div>
-      <div className="border-t border-divider sm:border-t-0">
+      <div className="border-t border-divider lg:border-t-0">
         <MoneyStat
           icon={TrendingUp}
           label="صافي ربح اليوم"

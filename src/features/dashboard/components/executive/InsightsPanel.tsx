@@ -30,14 +30,14 @@ function buildInsights(stats: ExecutiveStats): Insight[] {
 
   if (stats.mostProfitableSubject?.name) {
     insights.push({
-      text: `المادة الأكثر ربحاً: ${stats.mostProfitableSubject.name} (${stats.mostProfitableSubject.revenue.toLocaleString()} ${CURRENCY_SYMBOL})`,
+      text: `المادة الأكثر ربحاً: ${stats.mostProfitableSubject.name} (${(stats.mostProfitableSubject.revenue ?? 0).toLocaleString()} ${CURRENCY_SYMBOL})`,
       type: 'positive',
     })
   }
 
   if (stats.mostActiveTeacher?.name) {
     insights.push({
-      text: `المعلم الأكثر نشاطاً: ${stats.mostActiveTeacher.name} (${stats.mostActiveTeacher.sessions} جلسة)`,
+      text: `المعلم الأكثر نشاطاً: ${stats.mostActiveTeacher.name} (${stats.mostActiveTeacher.sessions ?? 0} جلسة)`,
       type: 'positive',
     })
   }
