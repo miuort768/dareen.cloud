@@ -1,14 +1,5 @@
 const os = require('os');
 
-let cacheFallbacks = 0;
-let redisStatus = 'unavailable';
-
-try {
-    const redis = require('../../utils/redis');
-    redisStatus = redis.status();
-    cacheFallbacks = redis.getFallbackCount();
-} catch { /* ignore */ }
-
 async function getHealth() {
     const memory = process.memoryUsage();
     const memUsage = Math.round((memory.rss / os.totalmem()) * 100);
@@ -27,9 +18,19 @@ async function getHealth() {
         dbLatency = -1;
     }
 
+    // Read at request time — capturing at module load reported a stale
+    // pre-connect status forever ('fallback' even when Redis was healthy).
+    let redisStatus = 'fallback';
+    let redisFallbacks = 0;
+    try {
+        const redis = require('../../utils/redis');
+        redisStatus = redis.status();
+        redisFallbacks = redis.getFallbackCount();
+    } catch { /* ignore */ }
+
     return {
         database: { status: dbStatus, latency: dbLatency },
-        redis: { status: redisStatus, fallbacks: cacheFallbacks },
+        redis: { status: redisStatus, fallbacks: redisFallbacks },
         memory: { used: memory.rss, total: os.totalmem(), usagePercent: memUsage },
         cpu: { load: Math.round(cpuLoad * 10) / 10, cores: cpuCount },
         uptime: process.uptime(),

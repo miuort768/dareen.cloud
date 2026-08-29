@@ -13,7 +13,15 @@ export const SystemStatusBar = memo(function SystemStatusBar({ health }: { healt
   if (!health) return null
 
   const dbOk = health.database?.status === 'connected'
-  const redisOk = health.redis?.status === 'connected' && !(health.redis?.fallbacks > 0)
+  const redisStatus = health.redis?.status || 'fallback'
+  const redisOk = redisStatus === 'connected' && !(health.redis?.fallbacks > 0)
+  const redisDetail = redisOk
+    ? 'متصل'
+    : redisStatus === 'fallback'
+      ? 'بديل (ذاكرة)'
+      : health.redis?.fallbacks > 0
+        ? `${health.redis.fallbacks} تجاوز`
+        : 'منقطعة'
   const memPercent = Math.round(health.memory?.usagePercent || 0)
   const cpuLoad = health.cpu?.load || 0
   const uptimeHours = health.uptime ? Math.round(health.uptime / 3600) : 0
@@ -55,8 +63,8 @@ export const SystemStatusBar = memo(function SystemStatusBar({ health }: { healt
         <Item
           icon={Database}
           label="Redis"
-          detail={redisOk ? 'متصل' : `${health.redis?.fallbacks ?? 0} تجاوز`}
-          tone={redisOk ? 'healthy' : health.redis?.fallbacks > 0 ? 'warning' : 'critical'}
+          detail={redisDetail}
+          tone={redisOk ? 'healthy' : 'warning'}
         />
         <Item icon={MemoryStick} label="الذاكرة" detail={`${memPercent}%`} tone={memTone} />
         <Item icon={Cpu} label="المعالج" detail={`${cpuLoad.toFixed(0)}%`} tone={cpuTone} />

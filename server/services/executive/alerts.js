@@ -33,12 +33,15 @@ async function getAlerts() {
         critical.push({ type: 'db_down', message: 'قاعدة البيانات غير متصلة', severity: 'critical' });
     }
 
-    // 🔴 Critical: Redis
+    // 🟠 Warning: Redis (system degrades gracefully to in-memory cache/rate-limit)
     await safe('redis', async () => {
         const redis = require('../../utils/redis');
-        const status = redis.status();
-        if (status !== 'online') {
-            critical.push({ type: 'redis_down', message: 'Redis غير متصل — Queue قد يتأثر', severity: 'critical' });
+        if (!redis.isConnected()) {
+            warning.push({
+                type: 'redis_down',
+                message: 'Redis غير متصل — الكاش وتحديد المعدل يعملان بذاكرة مؤقتة',
+                severity: 'warning',
+            });
         }
     });
 
