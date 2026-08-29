@@ -13,11 +13,36 @@ const {
   listStudentInvoices, getStudentInvoiceById, createStudentInvoice,
   updateStudentInvoice, payStudentInvoice, cancelStudentInvoice,
   refundStudentInvoice, deleteStudentInvoice, restoreStudentInvoice,
-  getInvoiceStats,
+  getInvoiceStats, listMyStudentInvoices, listMyTeacherInvoices,
 } = require('../../services/invoiceService');
 const logger = require('../../utils/logger');
 
 router.use(authMiddleware);
+
+// ---- Self-service ("me") endpoints ----
+// Available to the authenticated owner of the data (student/parent/teacher);
+// admins get the full list. MUST be declared before the admin-only guard below.
+router.get('/me/student', async (req, res) => {
+  try {
+    const invoices = await listMyStudentInvoices(req.user);
+    res.json(invoices);
+  } catch (err) {
+    logger.error('Error fetching my student invoices', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/me/teacher', async (req, res) => {
+  try {
+    const invoices = await listMyTeacherInvoices(req.user);
+    res.json(invoices);
+  } catch (err) {
+    logger.error('Error fetching my teacher invoices', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// ---- Everything below is admin-only management ----
 router.use(checkRole(['admin']));
 
 // ---- Stats ----

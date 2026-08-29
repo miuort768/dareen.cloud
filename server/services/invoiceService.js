@@ -8,6 +8,44 @@ const { parseItems, serializeItems, invalidateInvoiceCache, auditInvoice, checkE
 
 const CK = CACHE_KEYS.invoices;
 
+// ---- Self-service ("me") queries ----
+// Role-aware: students see their own invoices, parents their children's,
+// teachers their own, and admins everything. Used by the dashboard /
+// payment-history pages (declared in routes BEFORE the admin-only guard).
+
+async function listMyStudentInvoices(user) {
+  const where = { deletedAt: null };
+  if (user?.role === 'student') {
+    where.studentId = user.id;
+  } else if (user?.role === 'parent') {
+    const children = await prisma.student.findMany({
+      where: { parentPhone: user.phone || '' },
+      select: { id: true },
+    });
+    where.studentId = { in: children.map((c) => c.id) };
+  }
+  // admin (and any other permitted role) sees all invoices
+  return prisma.studentInvoice.findMany({
+    where,
+    orderBy: [{ date: 'desc' }, { id: 'desc' }],
+  });
+}
+
+async function listMyTeacherInvoices(user) {
+  const where = { deletedAt: null };
+  if (user?.role === 'teacher') {
+    // invoices may reference the account id or the real Teacher row name
+    const tName = (user.teacherName || user.name || '').trim();
+    const or = [{ teacherId: user.id }];
+    if (tName) or.push({ teacherName: { equals: tName, mode: 'insensitive' } });
+    where.OR = or;
+  }
+  return prisma.teacherInvoice.findMany({
+    where,
+    orderBy: [{ date: 'desc' }, { id: 'desc' }],
+  });
+}
+
 // ---- Teacher Invoice Operations ----
 
 async function listTeacherInvoices(query) {
@@ -503,6 +541,7 @@ function groupBy(arr, key) {
 }
 
 module.exports = {
+  listMyStudentInvoices, listMyTeacherInvoices,
   listTeacherInvoices, getTeacherInvoiceById, createTeacherInvoice,
   updateTeacherInvoice, payTeacherInvoice, cancelTeacherInvoice,
   deleteTeacherInvoice, restoreTeacherInvoice,

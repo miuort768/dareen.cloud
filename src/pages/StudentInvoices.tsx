@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
+import { format } from 'date-fns'
+import { ar } from 'date-fns/locale'
 import {
   Search,
   Receipt,
@@ -9,6 +11,7 @@ import {
   AlertCircle,
   FileText,
   Printer,
+  Eye,
   X,
 } from 'lucide-react'
 import { api } from '../lib/api'
@@ -16,51 +19,105 @@ import { useCurrentUser, useAcademyName } from '../context/AppContext'
 import { Skeleton } from '../shared/components/ui'
 import { CURRENCY_SYMBOL } from '../config/constants'
 import { cn } from '../lib/utils'
+import { normalizeInvoiceStatus, INVOICE_STATUS_LABEL, type InvoiceStatus } from '../types/invoice'
 
 interface StudentInvoice {
   id: string
   studentId: string
-  studentName: string
+  studentName?: string
   amount: number
-  description: string
+  description?: string
   date: string
-  dueDate: string
-  status: 'paid' | 'pending' | 'overdue'
+  dueDate?: string
+  status: string
   currency?: string
-  items?: { description: string; date?: string; amount: number }[]
 }
 
-const statusConfig = {
-  paid: { label: 'مدفوعة', icon: CheckCircle, color: 'text-success', bg: 'bg-success-soft' },
-  pending: { label: 'معلقة', icon: Clock, color: 'text-warning', bg: 'bg-warning-soft' },
-  overdue: { label: 'متأخرة', icon: AlertCircle, color: 'text-error', bg: 'bg-error-soft' },
-} as const
+interface StatusConfig {
+  label: string
+  icon: typeof CheckCircle
+  color: string
+  bg: string
+}
+
+const statusConfig: Record<InvoiceStatus, StatusConfig> = {
+  paid: {
+    label: INVOICE_STATUS_LABEL.paid,
+    icon: CheckCircle,
+    color: 'text-success',
+    bg: 'bg-success-soft',
+  },
+  pending: {
+    label: INVOICE_STATUS_LABEL.pending,
+    icon: Clock,
+    color: 'text-warning',
+    bg: 'bg-warning-soft',
+  },
+  reviewed: {
+    label: INVOICE_STATUS_LABEL.reviewed,
+    icon: Eye,
+    color: 'text-info',
+    bg: 'bg-info-soft',
+  },
+  overdue: {
+    label: INVOICE_STATUS_LABEL.overdue,
+    icon: AlertCircle,
+    color: 'text-error',
+    bg: 'bg-error-soft',
+  },
+  partially_paid: {
+    label: INVOICE_STATUS_LABEL.partially_paid,
+    icon: CheckCircle,
+    color: 'text-primary',
+    bg: 'bg-primary-soft',
+  },
+  unpaid: {
+    label: INVOICE_STATUS_LABEL.unpaid,
+    icon: AlertCircle,
+    color: 'text-error',
+    bg: 'bg-error-soft',
+  },
+}
+
+const money = (v: unknown): number => Number(v) || 0
+
+const formatDate = (raw?: string | null): string => {
+  if (!raw) return '—'
+  const d = new Date(raw)
+  if (isNaN(d.getTime())) return raw
+  return format(d, 'd MMM yyyy', { locale: ar })
+}
 
 export const StudentInvoices = () => {
   const academyName = useAcademyName()
+  const isAdmin = useCurrentUser()?.role === 'admin'
   useEffect(() => {
-    document.title = `فواتيري | ${academyName}`
-  }, [academyName])
+    document.title = `${isAdmin ? 'فواتير الطلاب' : 'فواتيري'} | ${academyName}`
+  }, [academyName, isAdmin])
   const currentUser = useCurrentUser()
   const [searchTerm, setSearchTerm] = useState('')
-  const [filterStatus, setFilterStatus] = useState<'all' | 'paid' | 'pending' | 'overdue'>('all')
+  const [filterStatus, setFilterStatus] = useState<'all' | InvoiceStatus>('all')
 
+  // /invoices/me/student is role-aware: students get their own invoices,
+  // parents their children's, admins the full list (server-side scoping).
   const { data: invoices = [], isLoading: loading } = useQuery<StudentInvoice[]>({
-    queryKey: ['student-invoices'],
+    queryKey: ['student-invoices', currentUser?.role],
     queryFn: async () => {
       const data = await api.get<StudentInvoice[]>('/invoices/me/student')
-      const all = Array.isArray(data) ? data : []
-      return all.filter((inv) => inv.studentId === currentUser?.id)
+      return Array.isArray(data) ? data : []
     },
-    enabled: !!currentUser?.id,
+    enabled: !!currentUser,
   })
 
   const filteredInvoices = useMemo(
     () =>
       invoices.filter((inv) => {
-        const matchesSearch = inv.description.toLowerCase().includes(searchTerm.toLowerCase())
-        const matchesStatus = filterStatus === 'all' || inv.status === filterStatus
-        return matchesSearch && matchesStatus
+        const haystack = `${inv.description ?? ''} ${inv.studentName ?? ''}`
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+        const matchesStatus =
+          filterStatus === 'all' || normalizeInvoiceStatus(inv.status) === filterStatus
+        return haystack && matchesStatus
       }),
     [invoices, searchTerm, filterStatus],
   )
@@ -68,18 +125,21 @@ export const StudentInvoices = () => {
   const firstInvoice = invoices[0]
   const studentCurrency = firstInvoice?.currency || CURRENCY_SYMBOL
 
-  const stats = useMemo(
-    () => ({
-      total: invoices.reduce((sum, i) => sum + i.amount, 0),
-      paid: invoices.filter((i) => i.status === 'paid').reduce((sum, i) => sum + i.amount, 0),
-      pending: invoices.filter((i) => i.status === 'pending').reduce((sum, i) => sum + i.amount, 0),
-      overdue: invoices.filter((i) => i.status === 'overdue').reduce((sum, i) => sum + i.amount, 0),
-      paidCount: invoices.filter((i) => i.status === 'paid').length,
-      pendingCount: invoices.filter((i) => i.status === 'pending').length,
-      overdueCount: invoices.filter((i) => i.status === 'overdue').length,
-    }),
-    [invoices],
-  )
+  const stats = useMemo(() => {
+    const normalized = invoices.map((inv) => ({ ...inv, norm: normalizeInvoiceStatus(inv.status) }))
+    const sum = (s: InvoiceStatus) =>
+      normalized.filter((i) => i.norm === s).reduce((acc, i) => acc + money(i.amount), 0)
+    const count = (s: InvoiceStatus) => normalized.filter((i) => i.norm === s).length
+    return {
+      total: normalized.reduce((acc, i) => acc + money(i.amount), 0),
+      paid: sum('paid'),
+      pending: sum('pending'),
+      overdue: sum('overdue'),
+      paidCount: count('paid'),
+      pendingCount: count('pending'),
+      overdueCount: count('overdue'),
+    }
+  }, [invoices])
 
   const kpiCards = useMemo(
     () => [
@@ -144,11 +204,13 @@ export const StudentInvoices = () => {
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft">
                 <Receipt size={20} className="text-primary" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-main">فواتيري</h1>
+                <h1 className="text-xl font-bold text-main">
+                  {isAdmin ? 'فواتير الطلاب' : 'فواتيري'}
+                </h1>
                 <p className="mt-0.5 text-xs text-muted">متابعة الرسوم والمدفوعات الدراسية</p>
               </div>
             </div>
@@ -213,10 +275,10 @@ export const StudentInvoices = () => {
               />
               <input
                 aria-label="بحث في الفواتير"
-                placeholder="بحث بالبيان..."
+                placeholder={isAdmin ? 'بحث بالبيان أو اسم الطالب...' : 'بحث بالبيان...'}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-dim text-main outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
+                className="w-full rounded-xl border border-border bg-card py-3 pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
               />
               {searchTerm && (
                 <button
@@ -237,7 +299,10 @@ export const StudentInvoices = () => {
               <option value="all">الكل</option>
               <option value="paid">مدفوعة</option>
               <option value="pending">معلقة</option>
+              <option value="reviewed">تمت المراجعة</option>
               <option value="overdue">متأخرة</option>
+              <option value="partially_paid">مدفوعة جزئيًا</option>
+              <option value="unpaid">غير مدفوعة</option>
             </select>
           </div>
         </motion.div>
@@ -251,10 +316,16 @@ export const StudentInvoices = () => {
           <table className="w-full border-collapse text-start">
             <thead>
               <tr className="border-b border-border bg-surface">
-                {['البيان', 'المبلغ', 'التاريخ', 'الاستحقاق', 'الحالة'].map((h) => (
+                {(isAdmin
+                  ? ['الطالب', 'البيان', 'المبلغ', 'التاريخ', 'الاستحقاق', 'الحالة']
+                  : ['البيان', 'المبلغ', 'التاريخ', 'الاستحقاق', 'الحالة']
+                ).map((h) => (
                   <th
                     key={h}
-                    className={`px-4 py-3 text-[11px] font-bold text-muted ${h === 'البيان' ? 'text-start' : 'text-center'}`}
+                    className={cn(
+                      'px-4 py-3 text-[11px] font-bold text-muted',
+                      h === 'البيان' || h === 'الطالب' ? 'text-start' : 'text-center',
+                    )}
                   >
                     {h}
                   </th>
@@ -264,7 +335,8 @@ export const StudentInvoices = () => {
             <tbody className="divide-y divide-border">
               {filteredInvoices.length > 0 ? (
                 filteredInvoices.map((inv, i) => {
-                  const status = statusConfig[inv.status]
+                  const norm = normalizeInvoiceStatus(inv.status)
+                  const status = statusConfig[norm]
                   const Icon = status.icon
                   return (
                     <motion.tr
@@ -274,19 +346,37 @@ export const StudentInvoices = () => {
                       transition={{ delay: i * 0.03 }}
                       className="transition-colors hover:bg-surface"
                     >
+                      {isAdmin && (
+                        <td className="px-4 py-3">
+                          <span className="text-sm font-bold text-main">
+                            {inv.studentName || '—'}
+                          </span>
+                        </td>
+                      )}
                       <td className="px-4 py-3">
-                        <span className="text-sm font-bold text-main">{inv.description}</span>
+                        <span className="text-sm font-bold text-main">
+                          {inv.description || '—'}
+                        </span>
                       </td>
                       <td className="px-4 py-3 text-center">
-                        <span className="font-mono text-sm font-bold tabular-nums text-main">
-                          {inv.amount.toLocaleString()}{' '}
+                        <span className="text-sm font-bold tabular-nums text-main">
+                          {money(inv.amount).toLocaleString()}{' '}
                           <span className="text-xs text-muted">
                             {inv.currency || CURRENCY_SYMBOL}
                           </span>
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-center text-xs text-muted">{inv.date}</td>
-                      <td className="px-4 py-3 text-center text-xs text-muted">{inv.dueDate}</td>
+                      <td className="px-4 py-3 text-center text-xs text-muted">
+                        {formatDate(inv.date)}
+                      </td>
+                      <td
+                        className={cn(
+                          'px-4 py-3 text-center text-xs',
+                          norm === 'overdue' ? 'font-bold text-error' : 'text-muted',
+                        )}
+                      >
+                        {formatDate(inv.dueDate)}
+                      </td>
                       <td className="px-4 py-3 text-center">
                         <span
                           className={cn(
@@ -304,8 +394,8 @@ export const StudentInvoices = () => {
                 })
               ) : (
                 <tr>
-                  <td colSpan={5} className="py-16 text-center">
-                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <td colSpan={isAdmin ? 6 : 5} className="py-16 text-center">
+                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
                       <FileText size={20} />
                     </div>
                     <p className="text-sm font-bold text-muted">
@@ -323,7 +413,8 @@ export const StudentInvoices = () => {
         <div className="space-y-3 md:hidden">
           {filteredInvoices.length > 0 ? (
             filteredInvoices.map((inv, i) => {
-              const status = statusConfig[inv.status]
+              const norm = normalizeInvoiceStatus(inv.status)
+              const status = statusConfig[norm]
               const Icon = status.icon
               return (
                 <motion.div
@@ -333,8 +424,17 @@ export const StudentInvoices = () => {
                   transition={{ delay: i * 0.04 }}
                   className="rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:shadow-elevation-1"
                 >
-                  <div className="mb-3 flex items-center justify-between">
-                    <p className="truncate text-sm font-bold text-main">{inv.description}</p>
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <div className="min-w-0">
+                      {isAdmin && inv.studentName && (
+                        <p className="truncate text-[10px] font-bold text-primary">
+                          {inv.studentName}
+                        </p>
+                      )}
+                      <p className="truncate text-sm font-bold text-main">
+                        {inv.description || '—'}
+                      </p>
+                    </div>
                     <span
                       className={cn(
                         'inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold',
@@ -349,8 +449,8 @@ export const StudentInvoices = () => {
                   <div className="flex items-center gap-4">
                     <div>
                       <p className="mb-0.5 text-[10px] text-muted">المبلغ</p>
-                      <span className="font-mono text-sm font-bold tabular-nums text-main">
-                        {inv.amount.toLocaleString()}{' '}
+                      <span className="text-sm font-bold tabular-nums text-main">
+                        {money(inv.amount).toLocaleString()}{' '}
                         <span className="text-xs text-muted">
                           {inv.currency || CURRENCY_SYMBOL}
                         </span>
@@ -359,7 +459,14 @@ export const StudentInvoices = () => {
                     <div className="h-8 w-px bg-border" />
                     <div>
                       <p className="mb-0.5 text-[10px] text-muted">الاستحقاق</p>
-                      <span className="text-xs text-muted">{inv.dueDate}</span>
+                      <span
+                        className={cn(
+                          'text-xs',
+                          norm === 'overdue' ? 'font-bold text-error' : 'text-muted',
+                        )}
+                      >
+                        {formatDate(inv.dueDate)}
+                      </span>
                     </div>
                   </div>
                 </motion.div>
@@ -367,7 +474,7 @@ export const StudentInvoices = () => {
             })
           ) : (
             <div className="rounded-xl border border-dashed border-border bg-card py-16 text-center">
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
                 <FileText size={20} />
               </div>
               <p className="text-sm font-bold text-muted">
