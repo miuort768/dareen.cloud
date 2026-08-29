@@ -102,10 +102,14 @@ const ACTION_LABELS: Record<string, string> = {
   LOGIN_FAILED: 'محاولة دخول فاشلة',
   LOGOUT: 'سجّل الخروج',
   LOGOUT_ALL: 'سجّل الخروج من كل الأجهزة',
+  REFRESH_TOKEN: 'جدّد جلسة الدخول',
+  TOKEN_VERIFIED: 'تحقق من جلسة الدخول',
+  PASSWORD_RESET_REQUESTED: 'طلب استعادة كلمة المرور',
+  PASSWORD_RESET_COMPLETED: 'استعاد كلمة المرور',
   // live sessions (حضور / انصراف)
   LIVE_SESSION_START: 'حضور — بدأ حصة مباشرة',
   LIVE_SESSION_END: 'انصراف — انتهت الحصة',
-  // finance (real audit action names end with D)
+  // finance
   TRANSACTION_CREATED: 'أنشأ معاملة مالية',
   TRANSACTION_DELETED: 'حذف معاملة مالية',
   TRANSACTION_DELETED_ALL: 'حذف كل المعاملات',
@@ -118,23 +122,50 @@ const ACTION_LABELS: Record<string, string> = {
   INVOICE_CANCELLED: 'ألغى فاتورة',
   INVOICE_RESTORED: 'استعاد فاتورة',
   REFUND_PROCESSED: 'نفّذ استردادًا ماليًا',
-  // students / teachers
+  EXPORT_DATA: 'صدّر بيانات',
+  // students / parents
   STUDENT_CREATED: 'أضاف طالبًا جديدًا',
   STUDENT_UPDATED: 'حدّث بيانات طالب',
   STUDENT_DELETED: 'حذف طالب',
+  PARENT_CREATED: 'أضاف ولي أمر جديد',
+  PARENT_UPDATED: 'حدّث بيانات ولي أمر',
+  PARENT_DELETED: 'حذف ولي أمر',
+  PARENT_DELETED_ALL: 'حذف ولي أمر مع أبنائه',
+  // teachers
   TEACHER_CREATED: 'أضاف معلمة جديدة',
   TEACHER_UPDATED: 'حدّث بيانات معلمة',
   TEACHER_DELETED: 'حذف معلمة',
   TEACHER_SUSPENDED: 'أوقف معلمة',
+  // enrollments
+  ENROLLMENT_CREATED: 'أنشأ اشتراكًا جديدًا',
+  ENROLLMENT_UPDATED: 'حدّث اشتراكًا',
+  ENROLLMENT_DELETED: 'حذف اشتراكًا',
+  ENROLLMENT_RESTORED: 'استعاد اشتراكًا',
+  ENROLLMENT_SUSPENDED: 'أوقف اشتراكًا',
   // sessions
   SESSION_CREATED: 'جدول حصة جديدة',
   SESSION_UPDATED: 'حدّث حصة',
   SESSION_DELETED: 'حذف حصة',
+  // users / roles
+  USER_CREATED: 'أنشأ مستخدمًا للنظام',
+  USER_UPDATED: 'حدّث مستخدمًا للنظام',
+  USER_DELETED: 'حذف مستخدمًا للنظام',
+  ROLE_CHANGED: 'غيّر دور مستخدم',
+  PERMISSION_GRANTED: 'منح صلاحية جديدة',
+  PERMISSION_REVOKED: 'سحب صلاحية',
   // system
   SETTING_UPDATED: 'عدّل إعدادات النظام',
   SYSTEM_RESET: 'أجرى إعادة تعيين للنظام',
+  SYSTEM_ERROR: 'حدث خطأ في النظام',
   BACKUP_CREATED: 'أنشأ نسخة احتياطية',
-  EXPORT_DATA: 'صدّر بيانات',
+  // account migration
+  ACCOUNT_CREATED: 'أنشأ حساب دخول',
+  ACCOUNT_LINKED: 'ربط حساب دخول',
+  ACCOUNT_CUTOVER: 'أتم ترحيل حساب دخول',
+  ACCOUNT_SKIPPED_DUPLICATE: 'تخطى حسابًا مكررًا',
+  ACCOUNT_MIGRATION_FAILED: 'فشل في ترحيل حساب',
+  AUTH_SOURCE_ACCOUNTS: 'دخل عبر حساب موحّد',
+  AUTH_SOURCE_LEGACY: 'دخل عبر الحساب القديم',
   // legacy names (kept as fallback)
   LOGIN: 'سجّل الدخول',
   SETTING_UPDATE: 'عدّل إعدادات النظام',
@@ -151,6 +182,7 @@ function formatTimestamp(timestamp: string): string {
   return date.toLocaleDateString('ar-EG', { day: 'numeric', month: 'short' })
 }
 
+// Unknown actions and raw JSON details must never leak English into the feed.
 function actionLabel(item: ServiceItem): string {
   const base = ACTION_LABELS[item.action]
   if (base) {
@@ -159,8 +191,7 @@ function actionLabel(item: ServiceItem): string {
     }
     return base
   }
-  if (item.details) return item.details
-  return item.action
+  return 'نفّذ عملية داخل النظام'
 }
 
 export const ActivityFeed = memo(function ActivityFeed({ items }: { items: ServiceItem[] }) {
