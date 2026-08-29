@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { motion, type Variants } from 'framer-motion'
-import { CalendarDays, RefreshCw, AlertCircle } from 'lucide-react'
+import { CalendarDays, RefreshCw, AlertCircle, AlertTriangle } from 'lucide-react'
 import { useExecutiveDashboard } from '../../hooks/useExecutiveDashboard'
 import { BusinessPulse } from './BusinessPulse'
 import { TodayMoney } from './TodayMoney'
@@ -115,9 +115,21 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
     presence = [],
     upcoming = [],
     activity = [],
+    degraded = [],
   } = data
 
   const criticalCount = alerts.critical?.length ?? 0
+
+  const DEGRADED_LABELS: Record<string, string> = {
+    stats: 'المؤشرات المالية',
+    alerts: 'التنبيهات',
+    pulse: 'مؤشر الأداء',
+    health: 'حالة النظام',
+    presence: 'الحضور المباشر',
+    upcoming: 'الجلسات القادمة',
+    activity: 'النشاطات',
+  }
+  const degradedNames = degraded.map((key) => DEGRADED_LABELS[key] || key).join('، ')
 
   return (
     <motion.div
@@ -166,6 +178,19 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
           </div>
         </div>
       </Section>
+
+      {/* Degraded services strip — server reported partial failures */}
+      {degraded.length > 0 && (
+        <div
+          className="flex items-center gap-2 rounded-xl border border-warning-soft bg-warning-soft px-3.5 py-2.5"
+          role="status"
+        >
+          <AlertTriangle size={14} className="shrink-0 text-warning" />
+          <p className="text-[11px] font-bold text-main">
+            بعض الأقسام تعرض بيانات جزئية بسبب خطأ مؤقت في الخادم: {degradedNames}
+          </p>
+        </div>
+      )}
 
       {/* Pulse + money today */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">

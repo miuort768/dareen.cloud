@@ -1,4 +1,5 @@
 const { prisma } = require('../../utils/prisma');
+const logger = require('../../utils/logger');
 
 const TYPE_GROUPS = {
     finance: ['TRANSACTION_CREATE', 'TRANSACTION_DELETE', 'EXPENSE_UPDATE', 'INVOICE_CREATE', 'INVOICE_UPDATE', 'INVOICE_DELETE'],
@@ -14,28 +15,24 @@ async function getActivity(filter) {
         where.action = { in: TYPE_GROUPS[filter] };
     }
 
-    try {
-        const logs = await prisma.auditLog.findMany({
-            where,
-            orderBy: { timestamp: 'desc' },
-            take: 20,
-        });
+    const logs = await prisma.auditLog.findMany({
+        where,
+        orderBy: { timestamp: 'desc' },
+        take: 20,
+    });
 
-        return logs.map(log => ({
-            id: log.id,
-            userId: log.userId,
-            username: log.username,
-            action: log.action,
-            details: log.details,
-            entityType: log.entityType,
-            entityId: log.entityId,
-            timestamp: log.timestamp,
-            group: getGroup(log.action),
-            icon: getIcon(log.action),
-        }));
-    } catch {
-        return [];
-    }
+    return logs.map(log => ({
+        id: log.id,
+        userId: log.userId,
+        username: log.username,
+        action: log.action,
+        details: log.details,
+        entityType: log.entityType,
+        entityId: log.entityId,
+        timestamp: log.timestamp,
+        group: getGroup(log.action),
+        icon: getIcon(log.action),
+    }));
 }
 
 function getGroup(action) {

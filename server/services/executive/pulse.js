@@ -1,4 +1,5 @@
 const { prisma } = require('../../utils/prisma');
+const logger = require('../../utils/logger');
 const { getStats } = require('./stats');
 
 async function getPulse() {
@@ -8,7 +9,8 @@ async function getPulse() {
     let stats;
     try {
         stats = await getStats();
-    } catch {
+    } catch (err) {
+        logger.warn('[executive] pulse: getStats failed, using degraded stats', err);
         stats = {};
     }
 
@@ -20,7 +22,10 @@ async function getPulse() {
         });
         const dailyAvg = weekSessions.reduce((s, x) => s + (Number(x.price) || 0), 0) / 7;
         profitScore = dailyAvg > 0 ? Math.min(100, Math.round((stats.todayRevenue || 0) / dailyAvg * 50)) : 50;
-    } catch { profitScore = 50; }
+    } catch (err) {
+        logger.warn('[executive] pulse: week sessions query failed, profitScore=50', err);
+        profitScore = 50;
+    }
 
     const attendanceScore = stats.attendanceRate || 100;
     const overdueScore = stats.overdueInvoicesCount > 0
