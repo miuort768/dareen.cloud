@@ -1,0 +1,37 @@
+name: VPS Diagnostics (read-only)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  inspect:
+    name: Inspect VPS deployment setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: SSH diagnostics
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+          script: |
+            echo "=== whoami / cwd ==="
+            whoami; pwd; ls -la ~ | head -20
+            echo "=== darin-app dir ==="
+            ls -la ~/darin-app 2>/dev/null | head -30 || echo "NO ~/darin-app"
+            echo "=== .env presence (names only) ==="
+            ls -la ~/darin-app/.env 2>/dev/null && echo "--- .env KEYS ONLY ---" && grep -oE '^[A-Z_]+' ~/darin-app/.env || echo "no .env in ~/darin-app"
+            echo "=== docker ps ==="
+            docker ps --format '{{.Names}} | {{.Image}} | {{.Ports}} | {{.Status}}' 2>/dev/null || echo "docker not available"
+            echo "=== dokploy traces ==="
+            ls -la /etc/dokploy 2>/dev/null | head -5; docker ps --format '{{.Names}}' 2>/dev/null | grep -i dokploy | head -5
+            echo "=== compose files ==="
+            find ~/darin-app -maxdepth 2 -name 'docker-compose*' 2>/dev/null
+            echo "=== listening ports ==="
+            (ss -tlnp 2>/dev/null || netstat -tlnp 2>/dev/null) | grep -E ':(80|443|3001|5432|6379)\b' | head -10
+            echo "=== app health ==="
+            curl -s -m 3 http://localhost:3001/health || echo "no local:3001 health"
+            echo "=== pm2? ==="
+            pm2 list 2>/dev/null || echo "no pm2"
