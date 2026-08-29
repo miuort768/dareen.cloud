@@ -47,21 +47,21 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
   const color = PULSE_COLORS[pulse.status] || 'var(--text-muted)'
   const LabelIcon = PULSE_ICONS[pulse.status] || Activity
 
-  const radius = 42
+  const radius = 36
   const circumference = 2 * Math.PI * radius
   const offset = circumference - (pulse.score / 100) * circumference
 
   return (
     <div
-      className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 font-dash"
+      className="flex flex-col items-center rounded-2xl border border-border bg-card p-3.5 font-dash"
       dir="rtl"
     >
-      <div className="mb-3 flex items-center gap-2 self-start">
-        <Activity size={15} className="text-primary" />
+      <div className="mb-2.5 flex items-center gap-2 self-start">
+        <Activity size={14} className="text-primary" />
         <h3 className="text-xs font-bold text-main">مؤشر الأداء</h3>
       </div>
 
-      <div className="relative h-28 w-28">
+      <div className="relative h-24 w-24">
         <svg className="h-full w-full -rotate-90" viewBox="0 0 128 128">
           <circle
             cx="64"
@@ -69,7 +69,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
             r={radius}
             fill="none"
             stroke="var(--border)"
-            strokeWidth="7"
+            strokeWidth="6"
             strokeLinecap="round"
           />
           <circle
@@ -78,7 +78,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
             r={radius}
             fill="none"
             stroke={color}
-            strokeWidth="7"
+            strokeWidth="6"
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
@@ -88,7 +88,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span
             className={cn(
-              'text-2xl font-bold tabular-nums',
+              'text-xl font-bold tabular-nums',
               PULSE_TEXT[pulse.status] || 'text-muted',
             )}
           >
@@ -100,7 +100,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
 
       <span
         className={cn(
-          'mt-2.5 inline-flex items-center gap-1.5 rounded-xl border px-3 py-1 text-[10px] font-bold',
+          'mt-2 inline-flex items-center gap-1.5 rounded-xl border px-3 py-1 text-[10px] font-bold',
           PULSE_BADGE[pulse.status] || 'border-border bg-surface text-muted',
         )}
       >

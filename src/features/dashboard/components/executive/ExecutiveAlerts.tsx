@@ -70,7 +70,10 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
   const filtered = filter === 'all' ? allAlerts : allAlerts.filter((a) => a.severity === filter)
 
   return (
-    <div className="border-warning-soft/60 rounded-2xl border bg-card p-5 font-dash" dir="rtl">
+    <div
+      className="border-warning-soft/60 flex h-full flex-col rounded-2xl border bg-card p-5 font-dash"
+      dir="rtl"
+    >
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-warning-soft">
@@ -106,7 +109,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
         })}
       </div>
 
-      <div className="custom-scrollbar max-h-64 space-y-1.5 overflow-y-auto">
+      <div className="custom-scrollbar max-h-64 min-h-32 flex-1 space-y-1.5 overflow-y-auto">
         {filtered.length === 0 && (
           <div className="py-8 text-center">
             <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft">

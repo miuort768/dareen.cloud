@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import type { ExecutiveStats } from '../../services/executiveService'
-import { Lightbulb, TrendingUp, TrendingDown, Target } from 'lucide-react'
+import { Lightbulb, TrendingUp, TrendingDown, Target, Sparkles } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CURRENCY_SYMBOL } from '@/config/constants'
 
@@ -87,51 +87,73 @@ function buildInsights(stats: ExecutiveStats): Insight[] {
 
 const TYPE_CONFIG: Record<
   InsightType,
-  { icon: typeof Lightbulb; textClass: string; bgClass: string; iconBg: string }
+  { icon: typeof Lightbulb; accent: string; iconBg: string; iconText: string }
 > = {
   positive: {
     icon: TrendingUp,
-    textClass: 'text-success',
-    bgClass: 'bg-success-soft border-border',
+    accent: 'border-s-success',
     iconBg: 'bg-success-soft',
+    iconText: 'text-success',
   },
   negative: {
     icon: TrendingDown,
-    textClass: 'text-error',
-    bgClass: 'bg-error-soft border-border',
+    accent: 'border-s-error',
     iconBg: 'bg-error-soft',
+    iconText: 'text-error',
   },
   neutral: {
     icon: Target,
-    textClass: 'text-info',
-    bgClass: 'bg-info-soft border-border',
+    accent: 'border-s-info',
     iconBg: 'bg-info-soft',
+    iconText: 'text-info',
   },
 }
 
 export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: ExecutiveStats }) {
   if (!stats) return null
   const insights = buildInsights(stats)
+  const positives = insights.filter((i) => i.type === 'positive').length
+  const negatives = insights.filter((i) => i.type === 'negative').length
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 font-dash" dir="rtl">
-      <div className="mb-4 flex items-center gap-2">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-warning-soft">
-          <Lightbulb size={16} className="text-warning" />
+    <div
+      className="flex h-full flex-col rounded-2xl border border-border bg-card p-5 font-dash"
+      dir="rtl"
+    >
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-warning-soft">
+            <Lightbulb size={16} className="text-warning" />
+          </div>
+          <div>
+            <h3 className="text-sm font-bold text-main">تحليلات ذكية</h3>
+            <p className="text-[10px] text-muted">رؤى مبنية على بيانات اليوم</p>
+          </div>
         </div>
-        <div>
-          <h3 className="text-sm font-bold text-main">تحليلات ذكية</h3>
-          <p className="text-[10px] text-muted">رؤى وتوصيات</p>
+        <div className="flex items-center gap-1">
+          {positives > 0 && (
+            <span className="flex items-center gap-0.5 rounded-lg bg-success-soft px-1.5 py-0.5 text-[10px] font-black tabular-nums text-success">
+              <TrendingUp size={9} />
+              {positives}
+            </span>
+          )}
+          {negatives > 0 && (
+            <span className="flex items-center gap-0.5 rounded-lg bg-error-soft px-1.5 py-0.5 text-[10px] font-black tabular-nums text-error">
+              <TrendingDown size={9} />
+              {negatives}
+            </span>
+          )}
         </div>
       </div>
 
-      <div className="space-y-2">
+      <div className="flex-1 space-y-2">
         {insights.length === 0 && (
-          <div className="py-8 text-center">
+          <div className="py-10 text-center">
             <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-surface">
-              <Lightbulb size={16} className="text-dim" />
+              <Sparkles size={16} className="text-dim" />
             </div>
-            <p className="text-xs font-bold text-muted">لا توجد تحليلات</p>
+            <p className="text-xs font-bold text-muted">لا توجد تحليلات بعد</p>
+            <p className="mt-0.5 text-[10px] text-dim">ستظهر الرؤى عند توفر بيانات كافية</p>
           </div>
         )}
         {insights.map((insight, i) => {
@@ -141,8 +163,8 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
             <div
               key={`insight-${i}`}
               className={cn(
-                'flex items-start gap-2.5 rounded-xl border p-3 transition-colors',
-                cfg.bgClass,
+                'flex items-start gap-2.5 rounded-xl border border-s-4 border-border bg-surface p-3 transition-colors hover:bg-hover',
+                cfg.accent,
               )}
             >
               <div
@@ -151,9 +173,9 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
                   cfg.iconBg,
                 )}
               >
-                <Icon size={12} className={cfg.textClass} />
+                <Icon size={12} className={cfg.iconText} />
               </div>
-              <p className="text-[11px] leading-relaxed text-main">{insight.text}</p>
+              <p className="pt-1 text-[11px] leading-relaxed text-main">{insight.text}</p>
             </div>
           )
         })}
