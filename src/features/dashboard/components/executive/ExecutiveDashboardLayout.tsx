@@ -215,6 +215,16 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
         <OpsMetrics stats={stats} />
       </Section>
 
+      {/* Quick actions */}
+      <Section>
+        <QuickActionsGrid />
+      </Section>
+
+      {/* System status strip */}
+      <Section>
+        <SystemStatusBar health={health} />
+      </Section>
+
       {/* Live context — alerts & upcoming side by side, presence full-width below */}
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <Section>
@@ -244,16 +254,6 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
           </Section>
         </div>
       </div>
-
-      {/* Quick actions */}
-      <Section>
-        <QuickActionsGrid />
-      </Section>
-
-      {/* System footer strip */}
-      <Section>
-        <SystemStatusBar health={health} />
-      </Section>
     </motion.div>
   )
 })
