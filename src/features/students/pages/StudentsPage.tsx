@@ -58,15 +58,6 @@ function AnimatedCounter({ value, className = '' }: { value: number; className?:
   return <span className={cn('font-bold tabular-nums', className)}>{display}</span>
 }
 
-const particles = Array.from({ length: 10 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 6 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
-
 interface EnrollmentFormData {
   teacherId?: string
   teacher: string
@@ -382,60 +373,46 @@ export const Students = () => {
             className="w-full rounded-xl border border-border bg-card py-3 pe-3 ps-10 text-xs font-bold text-main shadow-elevation-1 outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
           />
         </div>
+        {/* Desktop hero — internally divided: identity | search | count */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative hidden overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-8 shadow-xl dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover md:block"
+          className="relative hidden overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:block md:p-6"
         >
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="absolute rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <div className="relative z-10 hidden flex-col gap-4 md:flex md:flex-row md:items-center md:justify-between">
-            <div>
-              <div className="mb-2 flex items-center gap-2">
-                <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                  <GraduationCap className="text-white" size={20} />
-                </div>
-                <span className="text-xs font-medium text-white/70">إدارة الطلاب</span>
+          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+          <div className="bg-accent/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                <GraduationCap size={22} className="text-on-primary" />
               </div>
-              <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">الطلاب</h1>
-              <p className="text-sm text-white/70">إدارة بيانات الطلاب والاشتراكات والجلسات</p>
+              <div>
+                <h1 className="text-xl font-black leading-tight text-main">إدارة الطلاب</h1>
+                <p className="text-xs text-muted">إدارة بيانات الطلاب والاشتراكات والجلسات</p>
+              </div>
             </div>
-          </div>
-          <div className="relative mt-4">
-            <svg
-              className="absolute start-3 top-1/2 -translate-y-1/2 text-white/40"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <input
-              type="text"
-              aria-label="بحث عن طالب"
-              placeholder="ابحث بالاسم أو الهاتف أو المرحلة..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-xl border border-white/20 bg-white/15 py-2.5 pe-3 ps-9 text-xs font-bold text-white outline-none backdrop-blur-sm transition-all placeholder:text-white/40 focus:border-white/40 focus:bg-white/20"
-            />
+
+            <div className="hidden h-12 w-px bg-border lg:block" />
+
+            <div className="relative w-full lg:max-w-sm lg:flex-1">
+              <Search
+                className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
+                size={15}
+              />
+              <input
+                type="text"
+                aria-label="بحث عن طالب"
+                placeholder="ابحث بالاسم أو الهاتف أو المرحلة..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              />
+            </div>
+
+            <span className="hidden shrink-0 items-center rounded-xl border border-border bg-surface px-3.5 py-2.5 text-[11px] font-bold tabular-nums text-muted lg:inline-flex">
+              {allStudents.length} طالب
+            </span>
           </div>
         </motion.div>
 
@@ -455,7 +432,7 @@ export const Students = () => {
                   transition={{ delay: 0.1 + i * 0.05 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
+                    'relative overflow-hidden rounded-none border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
                     stat.gradient,
                   )}
                 >

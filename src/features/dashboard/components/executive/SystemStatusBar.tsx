@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { Database, MemoryStick, Cpu, Clock3 } from 'lucide-react'
+import { Zap, MemoryStick, Cpu, Clock3 } from 'lucide-react'
 import type { SystemHealth } from '../../services/executiveService'
 import { cn } from '@/lib/utils'
 
@@ -12,7 +12,6 @@ const DOT: Record<string, string> = {
 export const SystemStatusBar = memo(function SystemStatusBar({ health }: { health: SystemHealth }) {
   if (!health) return null
 
-  const dbOk = health.database?.status === 'connected'
   const redisStatus = health.redis?.status || 'fallback'
   const redisOk = redisStatus === 'connected' && !(health.redis?.fallbacks > 0)
   const redisDetail = redisOk
@@ -35,7 +34,7 @@ export const SystemStatusBar = memo(function SystemStatusBar({ health }: { healt
     detail,
     tone,
   }: {
-    icon: typeof Database
+    icon: typeof Zap
     label: string
     detail: string
     tone: string
@@ -55,13 +54,7 @@ export const SystemStatusBar = memo(function SystemStatusBar({ health }: { healt
     >
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5">
         <Item
-          icon={Database}
-          label="قاعدة البيانات"
-          detail={dbOk ? `${health.database?.latency ?? 0}ms` : 'منقطعة'}
-          tone={dbOk ? 'healthy' : 'critical'}
-        />
-        <Item
-          icon={Database}
+          icon={Zap}
           label="Redis"
           detail={redisDetail}
           tone={redisOk ? 'healthy' : 'warning'}

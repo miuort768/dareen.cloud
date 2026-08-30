@@ -29,7 +29,7 @@ const Counter = ({ value, suffix = '' }: { value: number; suffix?: string }) => 
     className="tabular-nums"
   >
     {value.toLocaleString('ar-EG')}
-    {suffix && <span className="me-1 text-micro font-bold text-white/60">{suffix}</span>}
+    {suffix && <span className="me-1 text-micro font-bold text-muted">{suffix}</span>}
   </motion.span>
 )
 
@@ -91,44 +91,28 @@ export const AttendanceStats = ({
         className="mb-4 space-y-3"
         dir="rtl"
       >
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 dark:from-primary-soft dark:to-primary md:p-5">
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 md:p-5">
+          <div className="pointer-events-none absolute -end-14 -top-16 h-44 w-44 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative z-10">
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-[10px] font-bold text-white/70">نسبة الإنجاز الإجمالية</span>
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-[11px] font-bold text-muted">نسبة الإنجاز الإجمالية</span>
               <TooltipWrap text="نسبة الحصص المنعقدة من إجمالي المطلوبة">
-                <Info size={10} className="text-white/50" />
+                <Info size={11} className="text-dim" />
               </TooltipWrap>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-on-primary md:text-3xl">
+              <span className="text-3xl font-black tabular-nums text-primary md:text-4xl">
                 <Counter value={teacherStats.rate} suffix="%" />
               </span>
             </div>
-            <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/15">
+            <div className="mt-3 h-2 overflow-hidden rounded-full bg-border">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${Math.min(teacherStats.rate, 100)}%` }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
-                className="h-full rounded-full bg-white"
+                className="h-full rounded-full bg-primary"
               />
             </div>
-          </div>
-          <div className="absolute inset-0 opacity-[0.04]">
-            <svg width="100%" height="100%">
-              <defs>
-                <pattern
-                  id="tch-stats-grid"
-                  x="0"
-                  y="0"
-                  width="20"
-                  height="20"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <circle cx="2" cy="2" r="1.5" fill="white" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#tch-stats-grid)" />
-            </svg>
           </div>
         </div>
         <div className="grid grid-cols-3 gap-3">
@@ -200,41 +184,40 @@ export const AttendanceStats = ({
       className="mb-4 space-y-3"
       dir="rtl"
     >
-      {/* Main big card */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 dark:from-primary-soft dark:to-primary md:p-5">
+      {/* Main summary card */}
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 md:p-5">
+        <div className="pointer-events-none absolute -end-14 -top-16 h-44 w-44 rounded-full bg-primary/10 blur-3xl" />
         <div className="relative z-10">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-[10px] font-bold text-white/70">
+            <span className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+              <Users size={12} />
               إحصائيات الفترة ({periodLabel || 'اليوم'})
             </span>
-            <div className="flex items-center gap-2">
-              <TooltipWrap text="مجموع جميع الحصص لجميع المعلمات">
-                <Info size={10} className="text-white/50" />
-              </TooltipWrap>
-              <Users size={12} className="text-white/50" />
-            </div>
+            <TooltipWrap text="مجموع جميع الحصص لجميع المعلمات">
+              <Info size={11} className="text-dim" />
+            </TooltipWrap>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-on-primary md:text-3xl">
+            <span className="text-3xl font-black tabular-nums text-main md:text-4xl">
               <Counter value={total} />
             </span>
-            <span className="text-[10px] font-bold text-white/60">حصة</span>
+            <span className="text-xs font-bold text-muted">حصة</span>
           </div>
-          <div className="mt-2 flex items-center gap-3">
-            <div className="flex items-center gap-1">
-              <CheckCircle2 size={10} className="text-white/70" />
-              <span className="text-[9px] text-white/70">{stats.todayCompleted} حضور</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <XCircle size={10} className="text-white/70" />
-              <span className="text-[9px] text-white/70">{stats.todayCancelled} غياب</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Calendar size={10} className="text-white/70" />
-              <span className="text-[9px] text-white/70">{stats.todayScheduled} مجدولة</span>
-            </div>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <span className="flex items-center gap-1 rounded-lg bg-success-soft px-2 py-1 text-[10px] font-bold text-success">
+              <CheckCircle2 size={10} />
+              {stats.todayCompleted} حضور
+            </span>
+            <span className="flex items-center gap-1 rounded-lg bg-error-soft px-2 py-1 text-[10px] font-bold text-error">
+              <XCircle size={10} />
+              {stats.todayCancelled} غياب
+            </span>
+            <span className="flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-1 text-[10px] font-bold text-warning">
+              <Calendar size={10} />
+              {stats.todayScheduled} مجدولة
+            </span>
           </div>
-          <div className="mt-3 flex h-2 gap-0.5 overflow-hidden rounded-full bg-white/15">
+          <div className="mt-3 flex h-2 gap-0.5 overflow-hidden rounded-full bg-border">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${completedPct}%` }}
@@ -255,28 +238,11 @@ export const AttendanceStats = ({
             />
           </div>
           <div className="mt-1.5 flex items-center justify-between">
-            <span className="text-[8px] text-white/50">نسبة الإنجاز: {completedPct}%</span>
-            <span className="text-[8px] text-white/50">
+            <span className="text-[9px] font-bold text-dim">نسبة الإنجاز: {completedPct}%</span>
+            <span className="text-[9px] font-bold text-dim">
               إجمالي الكل: <Counter value={stats.totalCompleted} />
             </span>
           </div>
-        </div>
-        <div className="absolute inset-0 opacity-[0.04]">
-          <svg width="100%" height="100%">
-            <defs>
-              <pattern
-                id="stats-hero-grid"
-                x="0"
-                y="0"
-                width="24"
-                height="24"
-                patternUnits="userSpaceOnUse"
-              >
-                <circle cx="2" cy="2" r="1.5" fill="white" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#stats-hero-grid)" />
-          </svg>
         </div>
       </div>
 
@@ -292,7 +258,7 @@ export const AttendanceStats = ({
             <span className="text-sm">%</span>
           </p>
           <p className="mt-0.5 text-[10px] font-bold text-muted">نسبة الحضور</p>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-success-soft">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-card">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${attendanceRate}%` }}
@@ -311,7 +277,7 @@ export const AttendanceStats = ({
             <span className="text-sm">%</span>
           </p>
           <p className="mt-0.5 text-[10px] font-bold text-muted">نسبة الغياب</p>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-error-soft">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-card">
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${absenceRate}%` }}

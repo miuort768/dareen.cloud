@@ -257,7 +257,7 @@ export const AdminContacts = () => {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => exportToCsv(filtered)}
-                className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.98]"
+                className="flex items-center gap-2 rounded-xl bg-success px-4 py-2.5 text-xs font-bold text-on-success transition-colors duration-fast hover:bg-success-hover active:scale-[0.98]"
               >
                 <Download size={14} />
                 <span className="hidden sm:inline">تصدير</span>

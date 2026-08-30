@@ -71,15 +71,6 @@ const teacherNameOf = (enrollment: Enrollment): string => {
   return ''
 }
 
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
-
 export const Schedule = () => {
   useEffect(() => {
     document.title = 'الجدول الدراسي | دارين السابعة للتعليم والتدريب'
@@ -330,41 +321,25 @@ export const Schedule = () => {
     )
 
   return (
-    <div className="relative min-h-full pb-24" dir="rtl">
+    <div className="relative min-h-full bg-background pb-24" dir="rtl">
       <div className="mx-auto hidden max-w-page px-2 md:block">
-        <div className="relative overflow-hidden rounded-2xl">
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="pointer-events-none absolute z-10 rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <ScheduleHeader
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            filterDay={filterDay}
-            onDayChange={setFilterDay}
-            filterTeacher={filterTeacher}
-            onTeacherChange={setFilterTeacher}
-            filterSubject={filterSubject}
-            onSubjectChange={setFilterSubject}
-            uniqueTeachers={teachersList.length > 0 ? teachersList : uniqueTeachers}
-            uniqueSubjects={uniqueSubjects}
-            showTeacherSubjectFilters={isAdmin}
-            todayDayName={todayDayName}
-            weekLabel={weekLabel}
-            onWeekChange={(d) => setCurrentWeekOffset((v) => v + d)}
-            stats={weekStats}
-          />
-        </div>
+        <ScheduleHeader
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          filterDay={filterDay}
+          onDayChange={setFilterDay}
+          filterTeacher={filterTeacher}
+          onTeacherChange={setFilterTeacher}
+          filterSubject={filterSubject}
+          onSubjectChange={setFilterSubject}
+          uniqueTeachers={teachersList.length > 0 ? teachersList : uniqueTeachers}
+          uniqueSubjects={uniqueSubjects}
+          showTeacherSubjectFilters={isAdmin}
+          todayDayName={todayDayName}
+          weekLabel={weekLabel}
+          onWeekChange={(d) => setCurrentWeekOffset((v) => v + d)}
+          stats={weekStats}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -70,7 +70,11 @@ export const Reports = () => {
   }
 
   return (
-    <div id="printable-reports" className="relative min-h-full overflow-x-hidden pb-24" dir="rtl">
+    <div
+      id="printable-reports"
+      className="relative min-h-full overflow-x-hidden bg-background pb-24"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-page space-y-4 px-2">
         {/* Header strip */}
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5">
@@ -187,36 +191,36 @@ export const Reports = () => {
                     label: 'الطلاب',
                     value: state.totalStudents,
                     icon: Users,
-                    textClass: 'text-chart-1',
-                    bgClass: '',
+                    textClass: 'text-primary',
+                    bgClass: 'bg-primary-soft',
                   },
                   {
                     label: 'الاشتراكات',
                     value: state.totalEnrollments,
                     icon: Award,
-                    textClass: 'text-chart-1',
-                    bgClass: '',
+                    textClass: 'text-info',
+                    bgClass: 'bg-info-soft',
                   },
                   {
                     label: 'المواد',
                     value: uniqueSubjects,
                     icon: BarChart3,
-                    textClass: 'text-chart-4',
-                    bgClass: '',
+                    textClass: 'text-success',
+                    bgClass: 'bg-success-soft',
                   },
                   {
                     label: 'الحصص الكلية',
                     value: state.totalSessions,
                     icon: Calendar,
-                    textClass: 'text-chart-2',
-                    bgClass: '',
+                    textClass: 'text-warning',
+                    bgClass: 'bg-warning-soft',
                   },
                   {
                     label: 'الحصص المكتملة',
                     value: state.completedSessions,
                     icon: CheckCircle2,
-                    textClass: 'text-chart-6',
-                    bgClass: '',
+                    textClass: 'text-success',
+                    bgClass: 'bg-success-soft',
                   },
                   {
                     label: 'الإيرادات',
@@ -226,16 +230,16 @@ export const Reports = () => {
                         : state.totalRevenue) +
                       ' ' +
                       CURRENCY_SYMBOL,
+                    textClass: 'text-primary',
+                    bgClass: 'bg-primary-soft',
                     icon: DollarSign,
-                    textClass: 'text-chart-5',
-                    bgClass: '',
                   },
                   {
                     label: 'نسبة الحضور',
                     value: state.attendanceRate + '%',
                     icon: TrendingUp,
-                    textClass: 'text-chart-3',
-                    bgClass: '',
+                    textClass: 'text-info',
+                    bgClass: 'bg-info-soft',
                   },
                   {
                     label: 'النمو الشهري',

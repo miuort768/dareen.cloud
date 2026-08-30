@@ -79,7 +79,7 @@ export const AttentionTiles = memo(function AttentionTiles({ stats }: { stats: E
             </span>
             <ChevronLeft
               size={14}
-              className="shrink-0 text-dim opacity-0 transition-all duration-200 group-hover:opacity-100 rtl:rotate-180"
+              className="shrink-0 text-dim opacity-0 transition-all duration-200 group-hover:opacity-100"
             />
           </Link>
         )

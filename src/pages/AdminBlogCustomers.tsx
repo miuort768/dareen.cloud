@@ -215,35 +215,44 @@ export const AdminBlogCustomers = () => {
   )
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-24" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
       <div className="mx-auto max-w-page px-2">
+        {/* Hero — internally divided: identity | stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
+          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
         >
-          <div className="pointer-events-none absolute -end-16 -top-16 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-20 -start-10 h-56 w-56 rounded-full bg-success-soft blur-3xl" />
-          <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <div className="mb-2 flex items-center gap-2">
-                <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                  <Mail className="text-white" size={20} />
-                </div>
-                <span className="text-xs font-medium text-white/70">المكتبة التعليمية</span>
+          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+          <div className="bg-success/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                <Mail size={22} className="text-on-primary" />
               </div>
-              <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">عملاء المدونة</h1>
-              <p className="text-sm text-white/70">عملاء النشرة البريدية — الدولة ورقم الهاتف</p>
+              <div>
+                <h1 className="text-xl font-black leading-tight text-main">عملاء المدونة</h1>
+                <p className="mt-0.5 text-xs text-muted">
+                  عملاء النشرة البريدية — الدولة ورقم الهاتف
+                </p>
+              </div>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">الإجمالي</p>
-                <p className="text-2xl font-bold text-white">{customers.length}</p>
+
+            <div className="hidden h-12 w-px bg-border lg:block" />
+
+            <div className="grid flex-1 grid-cols-2 gap-2">
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-xl font-black tabular-nums leading-none text-primary">
+                  {customers.length}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي</p>
               </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">اليوم</p>
-                <p className="text-2xl font-bold text-white">{todayCount}</p>
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-xl font-black tabular-nums leading-none text-success">
+                  {todayCount}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">اليوم</p>
               </div>
             </div>
           </div>

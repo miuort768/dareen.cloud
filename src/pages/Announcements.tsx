@@ -12,15 +12,6 @@ import { AnnouncementFormModal } from './AnnouncementFormModal'
 import { cn } from '../lib/utils'
 import type { Announcement, AnnouncementType } from '../features/announcements/types'
 
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
-
 export const Announcements = () => {
   const academyName = useAcademyName()
   useEffect(() => {
@@ -209,75 +200,58 @@ export const Announcements = () => {
   return (
     <div className="relative min-h-full overflow-x-hidden pb-2" dir="rtl">
       <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+        {/* Hero — internally divided: identity | stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-xl dark:border-primary/40 dark:from-primary dark:via-primary-deep dark:to-primary-hover"
+          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
         >
-          <div className="absolute inset-0 opacity-[0.06]">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <pattern
-                  id="ann-hero-grid"
-                  x="0"
-                  y="0"
-                  width="28"
-                  height="28"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <circle cx="2" cy="2" r="1" fill="white" />
-                  <circle cx="16" cy="16" r="0.8" fill="white" opacity="0.4" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#ann-hero-grid)" />
-            </svg>
-          </div>
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              aria-hidden="true"
-              className="pointer-events-none absolute rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <div className="relative z-10 flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between md:p-7">
-            <div>
-              <div className="mb-2.5 flex items-center gap-2.5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/25 backdrop-blur-sm">
-                  <Megaphone size={18} className="text-on-primary" />
+          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+          <div className="bg-accent/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                <Megaphone size={22} className="text-on-primary" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-xl font-black leading-tight text-main">الإعلانات</h1>
+                  <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
+                    الإدارة
+                  </span>
                 </div>
-                <span className="rounded-lg bg-white/10 px-2.5 py-1 text-micro font-bold text-on-primary">
-                  الإدارة
-                </span>
+                <p className="mt-0.5 text-xs text-muted">نشر وإدارة الإعلانات والتنبيهات</p>
               </div>
-              <h1 className="mb-1 text-2xl font-black tracking-tight text-on-primary md:text-3xl">
-                الإعلانات
-              </h1>
-              <p className="text-xs font-medium text-white/70 md:text-sm">
-                نشر وإدارة الإعلانات والتنبيهات
-              </p>
             </div>
-            <div className="hidden items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm md:flex">
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">الإجمالي</p>
-                <p className="text-2xl font-bold tabular-nums text-on-primary">
-                  {announcements.length}
-                </p>
-              </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">النشطة</p>
-                <p className="text-2xl font-bold tabular-nums text-on-primary">
-                  {announcements.filter((a) => a.isActive).length}
-                </p>
-              </div>
+
+            <div className="hidden h-12 w-px bg-border lg:block" />
+
+            <div className="grid flex-1 grid-cols-2 gap-2">
+              {[
+                {
+                  label: 'الإجمالي',
+                  value: announcements.length,
+                  tone: 'text-primary',
+                  bg: 'bg-surface',
+                },
+                {
+                  label: 'النشطة',
+                  value: announcements.filter((a) => a.isActive).length,
+                  tone: 'text-success',
+                  bg: 'bg-success-soft',
+                },
+              ].map((s) => (
+                <div
+                  key={s.label}
+                  className={cn('rounded-xl border border-border px-3 py-2.5 text-center', s.bg)}
+                >
+                  <p className={cn('text-xl font-black tabular-nums leading-none', s.tone)}>
+                    {s.value}
+                  </p>
+                  <p className="mt-1 text-[10px] font-bold text-muted">{s.label}</p>
+                </div>
+              ))}
             </div>
           </div>
         </motion.div>
@@ -300,7 +274,7 @@ export const Announcements = () => {
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
+                    'relative overflow-hidden rounded-none border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
                     kpi.gradient,
                   )}
                 >

@@ -6,11 +6,9 @@ import {
   Trash2,
   FileSpreadsheet,
   FileText,
-  BookOpen,
-  SlidersHorizontal,
+  ChevronDown,
 } from 'lucide-react'
 import { cn } from '../../../lib/utils'
-import { FilterDropdown } from '../../../shared/components/ui'
 
 interface TeacherToolbarProps {
   searchTerm: string
@@ -29,11 +27,8 @@ interface TeacherToolbarProps {
   totalTeachers: number
 }
 
-const statusFilterItems = [
-  { key: '', label: 'الكل' },
-  { key: 'active', label: 'نشطة', dot: 'bg-success' },
-  { key: 'inactive', label: 'متوقفة', dot: 'bg-error' },
-]
+const selectClass =
+  'h-11 w-full appearance-none rounded-xl border border-border bg-surface ps-3.5 pe-9 text-xs font-bold text-main outline-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10'
 
 export const TeacherToolbar = ({
   searchTerm,
@@ -49,15 +44,7 @@ export const TeacherToolbar = ({
   onFilterSubjectChange,
   filterStatus,
   onFilterStatusChange,
-  totalTeachers,
 }: TeacherToolbarProps) => {
-  const showFilters = subjects.length > 0 || totalTeachers > 0
-
-  const subjectItems = [
-    { key: '', label: 'كل المواد' },
-    ...subjects.map((subj) => ({ key: subj, label: subj })),
-  ]
-
   return (
     <div className="space-y-3 rounded-2xl border border-border bg-card p-3 shadow-elevation-1 sm:p-3.5">
       {/* Search + Actions */}
@@ -117,37 +104,44 @@ export const TeacherToolbar = ({
         </div>
       </div>
 
-      {/* Dropdown Filters — full width, each half */}
-      {showFilters && (
-        <div className="space-y-2">
-          <div className="grid grid-cols-2 gap-2">
-            {subjects.length > 0 ? (
-              <>
-                <FilterDropdown
-                  value={filterSubject}
-                  items={subjectItems}
-                  onChange={onFilterSubjectChange}
-                  icon={BookOpen}
-                />
-                <FilterDropdown
-                  value={filterStatus}
-                  items={statusFilterItems}
-                  onChange={onFilterStatusChange}
-                  icon={SlidersHorizontal}
-                />
-              </>
-            ) : (
-              <FilterDropdown
-                value={filterStatus}
-                items={statusFilterItems}
-                onChange={onFilterStatusChange}
-                icon={SlidersHorizontal}
-                className="col-span-2"
-              />
-            )}
-          </div>
+      {/* Plain select filters */}
+      <div className="grid grid-cols-2 gap-2">
+        <div className="relative">
+          <select
+            value={filterSubject}
+            onChange={(e) => onFilterSubjectChange(e.target.value)}
+            aria-label="فلترة حسب المادة"
+            className={selectClass}
+          >
+            <option value="">كل المواد</option>
+            {subjects.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <ChevronDown
+            size={14}
+            className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-muted"
+          />
         </div>
-      )}
+        <div className="relative">
+          <select
+            value={filterStatus}
+            onChange={(e) => onFilterStatusChange(e.target.value)}
+            aria-label="فلترة حسب الحالة"
+            className={selectClass}
+          >
+            <option value="">كل الحالات</option>
+            <option value="active">نشطة</option>
+            <option value="inactive">متوقفة</option>
+          </select>
+          <ChevronDown
+            size={14}
+            className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-muted"
+          />
+        </div>
+      </div>
     </div>
   )
 }

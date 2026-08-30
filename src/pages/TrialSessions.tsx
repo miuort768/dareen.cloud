@@ -13,6 +13,7 @@ import {
   Eye,
   EyeOff,
   Download,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Trash2,
@@ -194,6 +195,8 @@ export const TrialSessions = () => {
   const [search, setSearch] = useState('')
   const [filterStatus, setFilterStatus] = useState<string>('')
   const [filterSubject, setFilterSubject] = useState<string>('')
+  const [filterTeacher, setFilterTeacher] = useState<string>('')
+  const [sortBy, setSortBy] = useState<'date-desc' | 'date-asc' | 'created-desc'>('date-desc')
   const [showModal, setShowModal] = useState(false)
   const [confirmId, setConfirmId] = useState<string | null>(null)
   const [confirmDeleteAll, setConfirmDeleteAll] = useState(false)
@@ -357,7 +360,7 @@ export const TrialSessions = () => {
       'الحالة',
       'ملاحظات',
     ]
-    const rows = filtered.map((t: TrialSession) => [
+    const rows = sortedFiltered.map((t: TrialSession) => [
       t.studentName,
       t.parentPhone,
       t.subject,
@@ -385,27 +388,57 @@ export const TrialSessions = () => {
     ...new Set(trials.map((t: TrialSession) => t.subject).filter(Boolean)),
   ] as string[]
 
+  const teacherNames = [
+    ...new Set(trials.map((t: TrialSession) => t.teacherName).filter(Boolean)),
+  ] as string[]
+
+  const hasActiveFilters = !!(search || filterStatus || filterSubject || filterTeacher || showPaid)
+
+  const clearAllFilters = () => {
+    setSearch('')
+    setFilterStatus('')
+    setFilterSubject('')
+    setFilterTeacher('')
+    setShowPaid(false)
+  }
+
   const filtered = useMemo(
     () =>
       trials.filter((t: TrialSession) => {
         const isPaid = paidIds.includes(t.id)
         const matchPaidFilter = showPaid ? isPaid : !isPaid
+        const q = search.trim().toLowerCase()
         const matchSearch =
-          !search ||
-          t.studentName.toLowerCase().includes(search.toLowerCase()) ||
-          t.parentPhone.includes(search)
+          !q ||
+          t.studentName.toLowerCase().includes(q) ||
+          t.parentPhone.includes(search) ||
+          (t.subject || '').toLowerCase().includes(q) ||
+          (t.teacherName || '').toLowerCase().includes(q)
         const matchStatus = !filterStatus || t.status === filterStatus
         const matchSubject = !filterSubject || t.subject === filterSubject
-        return matchPaidFilter && matchSearch && matchStatus && matchSubject
+        const matchTeacher = !filterTeacher || t.teacherName === filterTeacher
+        return matchPaidFilter && matchSearch && matchStatus && matchSubject && matchTeacher
       }),
-    [trials, paidIds, showPaid, search, filterStatus, filterSubject],
+    [trials, paidIds, showPaid, search, filterStatus, filterSubject, filterTeacher],
   )
 
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
+  const sortedFiltered = useMemo(() => {
+    const arr = [...filtered]
+    const sessionKey = (t: TrialSession) => `${t.date || ''} ${t.time || ''}`
+    arr.sort((a, b) => {
+      if (sortBy === 'created-desc') return (b.created_at || '').localeCompare(a.created_at || '')
+      return sortBy === 'date-desc'
+        ? sessionKey(b).localeCompare(sessionKey(a))
+        : sessionKey(a).localeCompare(sessionKey(b))
+    })
+    return arr
+  }, [filtered, sortBy])
+
+  const totalPages = Math.ceil(sortedFiltered.length / ITEMS_PER_PAGE)
   const paginatedFiltered = useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE
-    return filtered.slice(start, start + ITEMS_PER_PAGE)
-  }, [filtered, currentPage])
+    return sortedFiltered.slice(start, start + ITEMS_PER_PAGE)
+  }, [sortedFiltered, currentPage])
 
   const paginatedGroups = useMemo(() => {
     const g = new Map<string, TrialSession[]>()
@@ -420,7 +453,7 @@ export const TrialSessions = () => {
 
   useEffect(() => {
     setCurrentPage(1)
-  }, [search, filterStatus, filterSubject, showPaid])
+  }, [search, filterStatus, filterSubject, filterTeacher, sortBy, showPaid])
 
   const conversionRate = stats?.total
     ? Math.round(((stats.completed + (stats.converted || 0)) / stats.total) * 100)
@@ -701,6 +734,58 @@ export const TrialSessions = () => {
                   })}
                 </div>
               )}
+
+              {/* Teacher filter + sort + results summary */}
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <div className="relative">
+                  <select
+                    value={filterTeacher}
+                    onChange={(e) => setFilterTeacher(e.target.value)}
+                    aria-label="فلترة حسب المعلمة"
+                    className="h-9 w-full appearance-none rounded-xl border border-border bg-surface pe-8 ps-3 text-[11px] font-bold text-main outline-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  >
+                    <option value="">كل المعلمات</option>
+                    {teacherNames.map((n) => (
+                      <option key={n} value={n}>
+                        {n}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown
+                    size={12}
+                    className="pointer-events-none absolute end-2.5 top-1/2 -translate-y-1/2 text-muted"
+                  />
+                </div>
+                <div className="relative">
+                  <select
+                    value={sortBy}
+                    onChange={(e) =>
+                      setSortBy(e.target.value as 'date-desc' | 'date-asc' | 'created-desc')
+                    }
+                    aria-label="ترتيب النتائج"
+                    className="h-9 w-full appearance-none rounded-xl border border-border bg-surface pe-8 ps-3 text-[11px] font-bold text-main outline-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  >
+                    <option value="date-desc">تاريخ الحصة (الأحدث)</option>
+                    <option value="date-asc">تاريخ الحصة (الأقدم)</option>
+                    <option value="created-desc">الأحدث إضافة</option>
+                  </select>
+                  <ChevronDown
+                    size={12}
+                    className="pointer-events-none absolute end-2.5 top-1/2 -translate-y-1/2 text-muted"
+                  />
+                </div>
+                <span className="ms-auto text-[11px] font-bold text-muted">
+                  {filtered.length} من {trials.length} حصة
+                </span>
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="flex h-9 items-center gap-1 rounded-xl border border-error-soft bg-error-soft px-3 text-[11px] font-bold text-error transition-all hover:bg-error-light active:scale-95"
+                  >
+                    <X size={12} /> مسح الفلاتر
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -746,29 +831,38 @@ export const TrialSessions = () => {
                   <Users size={28} className="text-primary/40" />
                 </div>
                 <p className="mb-1 text-sm font-bold text-main">
-                  {search || filterStatus || filterSubject
-                    ? 'لا توجد نتائج للبحث'
+                  {hasActiveFilters
+                    ? 'لا توجد نتائج مطابقة'
                     : showPaid
                       ? 'لا توجد حصص مدفوعة'
                       : 'لا توجد حصص تجريبية'}
                 </p>
                 <p className="mb-4 text-[11px] text-muted">
-                  {search || filterStatus || filterSubject
-                    ? 'حاول تغيير معايير البحث'
+                  {hasActiveFilters
+                    ? 'حاول تغيير معايير البحث أو مسح الفلاتر'
                     : showPaid
                       ? 'لم تتم دفع أي حصة بعد'
                       : 'ابدأ بإضافة أول حصة تجريبية'}
                 </p>
-                {!search && !filterStatus && !filterSubject && !showPaid && (
+                {hasActiveFilters ? (
                   <button
-                    onClick={() => {
-                      resetForm()
-                      setShowModal(true)
-                    }}
-                    className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.98]"
+                    onClick={clearAllFilters}
+                    className="inline-flex items-center gap-2 rounded-xl border border-error-soft bg-error-soft px-5 py-2.5 text-xs font-bold text-error transition-all hover:bg-error-light active:scale-[0.98]"
                   >
-                    <Plus size={14} /> إضافة حصة
+                    <X size={14} /> مسح الفلاتر
                   </button>
+                ) : (
+                  !showPaid && (
+                    <button
+                      onClick={() => {
+                        resetForm()
+                        setShowModal(true)
+                      }}
+                      className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.98]"
+                    >
+                      <Plus size={14} /> إضافة حصة
+                    </button>
+                  )
                 )}
               </div>
             ) : (
@@ -807,7 +901,7 @@ export const TrialSessions = () => {
             )}
 
             {/* Pagination */}
-            {totalPages > 1 && filtered.length > 0 && (
+            {totalPages > 1 && sortedFiltered.length > 0 && (
               <div className="mt-6 flex items-center justify-center gap-2 border-t border-border pt-4">
                 <button
                   onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}

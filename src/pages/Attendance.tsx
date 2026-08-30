@@ -222,64 +222,44 @@ export const Attendance = () => {
       {/* Desktop view */}
       <div className="hidden md:block">
         <div className="mx-auto max-w-page space-y-4 px-2">
-          {/* Hero */}
+          {/* Hero — internally divided: identity | stats */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary p-6 md:p-8"
+            className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
           >
-            <div className="absolute inset-0 opacity-[0.06]">
-              <svg width="100%" height="100%" aria-hidden="true">
-                <defs>
-                  <pattern
-                    id="att-hero-grid"
-                    x="0"
-                    y="0"
-                    width="28"
-                    height="28"
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <circle cx="2" cy="2" r="1" fill="white" />
-                    <circle cx="16" cy="16" r="0.8" fill="white" opacity="0.4" />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#att-hero-grid)" />
-              </svg>
-            </div>
-            <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                    <UserCheck className="text-on-primary" size={20} />
-                  </div>
-                  <span className="text-xs font-medium text-white/70">نظام الحضور والغياب</span>
+            <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+            <div className="bg-info/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+
+            <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                  <UserCheck size={22} className="text-on-primary" />
                 </div>
-                <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">
-                  الحضور والغياب
-                </h1>
-                <p className="text-sm text-white/70">متابعة حضور وغياب الطلاب بشكل يومي</p>
+                <div>
+                  <h1 className="text-xl font-black leading-tight text-main">الحضور والغياب</h1>
+                  <p className="text-xs text-muted">متابعة حضور وغياب الطلاب بشكل يومي</p>
+                </div>
               </div>
-              <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
-                <div className="text-center">
-                  <p className="mb-1 text-xs text-white/60">إجمالي الحضور</p>
-                  <div className="text-2xl font-bold text-on-primary">
-                    <AnimatedCounter value={stats.totalCompleted} />
+
+              <div className="hidden h-12 w-px bg-border lg:block" />
+
+              <div className="grid flex-1 grid-cols-3 gap-2">
+                {[
+                  { label: 'إجمالي الحضور', value: stats.totalCompleted, tone: 'text-success' },
+                  { label: 'الغياب', value: stats.totalCancelled, tone: 'text-error' },
+                  { label: 'المقررة', value: stats.todayTotal, tone: 'text-warning' },
+                ].map((s) => (
+                  <div
+                    key={s.label}
+                    className="rounded-xl border border-border bg-surface px-2 py-2.5 text-center"
+                  >
+                    <p className={cn('text-lg font-black tabular-nums leading-none', s.tone)}>
+                      {s.value.toLocaleString('ar-EG')}
+                    </p>
+                    <p className="mt-1 text-[10px] font-bold text-muted">{s.label}</p>
                   </div>
-                </div>
-                <div className="h-10 w-px bg-white/10" />
-                <div className="text-center">
-                  <p className="mb-1 text-xs text-white/60">الغياب</p>
-                  <div className="text-2xl font-bold text-on-primary">
-                    <AnimatedCounter value={stats.totalCancelled} />
-                  </div>
-                </div>
-                <div className="h-10 w-px bg-white/10" />
-                <div className="text-center">
-                  <p className="mb-1 text-xs text-white/60">المقررة</p>
-                  <div className="text-2xl font-bold text-on-primary">
-                    <AnimatedCounter value={stats.todayTotal} />
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </motion.div>

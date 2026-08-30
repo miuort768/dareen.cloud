@@ -138,7 +138,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
               {actionTo ? (
                 <span className="flex shrink-0 items-center gap-0.5 text-[10px] font-bold text-primary">
                   متابعة
-                  <ChevronLeft size={11} className="rtl:rotate-180" />
+                  <ChevronLeft size={11} />
                 </span>
               ) : (
                 alert.count && (

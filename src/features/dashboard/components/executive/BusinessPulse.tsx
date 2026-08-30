@@ -56,7 +56,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
 
   return (
     <div
-      className="flex h-full flex-col rounded-2xl border border-border bg-card p-4 font-dash"
+      className="flex h-full flex-col rounded-2xl border border-border bg-card p-3.5 font-dash"
       dir="rtl"
     >
       {/* Header + status badge */}
@@ -79,7 +79,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
       </div>
 
       {/* Semicircle gauge — fills right → left (RTL) */}
-      <div className="relative mx-auto mt-2 w-full max-w-[210px]">
+      <div className="relative mx-auto mt-1 w-full max-w-[210px]">
         <svg viewBox="0 0 128 76" className="block w-full" aria-hidden="true">
           <path
             d="M 110 68 A 46 46 0 0 0 18 68"
@@ -114,8 +114,8 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
       </div>
 
       {/* Message */}
-      <div className="mt-auto pt-3">
-        <p className="rounded-lg bg-surface p-2.5 text-center text-[10px] leading-relaxed text-muted">
+      <div className="mt-auto pt-2">
+        <p className="rounded-lg bg-surface p-2 text-center text-[10px] leading-relaxed text-muted">
           {pulse.message}
         </p>
       </div>

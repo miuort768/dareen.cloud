@@ -488,7 +488,7 @@ export const AdminJobs = () => {
                     exit={{ opacity: 0, y: -10, transition: { duration: 0.15 } }}
                     transition={{ duration: 0.2, delay: index * 0.02 }}
                     className={cn(
-                      'overflow-hidden rounded-xl border border-border bg-card transition-shadow duration-normal hover:shadow-elevation-1',
+                      'overflow-hidden rounded-none border border-border bg-card transition-shadow duration-normal hover:shadow-elevation-1',
                       app.contacted
                         ? 'border-r-4 border-r-success'
                         : 'border-r-4 border-r-primary/40',

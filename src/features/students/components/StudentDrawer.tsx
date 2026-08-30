@@ -200,11 +200,11 @@ export const StudentDrawer = ({
           </div>
 
           {/* Profile */}
-          <div className="border-b border-border bg-gradient-to-l from-primary/[0.03] to-transparent p-5">
+          <div className="border-b border-border bg-surface p-5">
             <div className="flex items-center gap-4">
               <div
                 className={cn(
-                  'flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br shadow-md ring-2 ring-white/30',
+                  'flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br shadow-md',
                   gradient.g,
                 )}
               >
@@ -216,27 +216,27 @@ export const StudentDrawer = ({
                 <div className="flex items-center gap-2">
                   <h2 className="truncate text-base font-bold text-main">{student.name}</h2>
                   {streakDays >= 3 && (
-                    <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-1.5 py-0.5 text-[9px] font-bold text-warning ring-1 ring-warning-soft">
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-lg bg-warning-soft px-1.5 py-0.5 text-[9px] font-bold text-warning">
                       <Flame size={9} /> {streakDays}
                     </span>
                   )}
                 </div>
-                <div className="mt-1.5 flex flex-wrap items-center gap-2">
+                <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                   <span
                     className={cn(
-                      'inline-flex items-center gap-1 rounded-lg px-2.5 py-0.5 text-[10px] font-bold ring-1',
+                      'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold ring-1',
                       gradeStyle,
                     )}
                   >
                     <GraduationCap size={10} />
                     {student.grade}
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-2.5 py-0.5 text-[10px] font-bold text-warning ring-1 ring-warning-soft">
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-0.5 text-[10px] font-bold text-warning">
                     <Star size={10} />
-                    {points} XP
+                    {points.toLocaleString()} XP
                   </span>
                   {student.enrollments && student.enrollments.length > 0 && (
-                    <span className="inline-flex items-center gap-1 rounded-lg bg-info-soft px-2.5 py-0.5 text-[10px] font-bold text-info ring-1 ring-info-soft">
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-info-soft px-2 py-0.5 text-[10px] font-bold text-info">
                       <BookOpen size={10} />
                       {student.enrollments.length} برامج
                     </span>
@@ -301,7 +301,7 @@ export const StudentDrawer = ({
 
                   {level.nextLabel && (
                     <div className="space-y-1.5">
-                      <div className="h-2.5 overflow-hidden rounded-full bg-white/50 ring-1 ring-border dark:bg-white/5">
+                      <div className="h-2.5 overflow-hidden rounded-full bg-border">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${level.progress}%` }}
@@ -343,39 +343,47 @@ export const StudentDrawer = ({
                       icon: BookOpen,
                       value: totalSessionsUsed,
                       label: 'الحصص المنفذة',
-                      color: 'success',
+                      tone: 'bg-success-soft',
+                      text: 'text-success',
                     },
                     {
                       icon: TrendingUp,
                       value: `${overallAttendance}%`,
                       label: 'نسبة الحضور',
-                      color: 'info',
+                      tone: 'bg-info-soft',
+                      text: 'text-info',
                     },
                     {
                       icon: Users,
                       value: enrollments.length,
                       label: 'البرامج النشطة',
-                      color: 'primary',
+                      tone: 'bg-primary-soft',
+                      text: 'text-primary',
                     },
                     {
                       icon: DollarSign,
                       value: `${student.sessionPrice?.toLocaleString() || 0} ${getCurrencySymbol(student.currency)}`,
                       label: 'سعر الحصة',
-                      color: 'warning',
+                      tone: 'bg-warning-soft',
+                      text: 'text-warning',
                     },
                   ].map((item, i) => {
-                    const colorMap: Record<string, string> = {
-                      success: 'text-success bg-success-soft ring-success-soft',
-                      info: 'text-info bg-info-soft ring-info-soft',
-                      primary: 'text-primary bg-primary-soft ring-primary/20',
-                      warning: 'text-warning bg-warning-soft ring-warning-soft',
-                    }
                     const Icon = item.icon
                     return (
-                      <div key={i} className={cn('rounded-xl p-3 ring-1', colorMap[item.color])}>
-                        <Icon size={14} className="mb-1" />
-                        <p className="text-xs font-bold">{item.value}</p>
-                        <p className="text-[9px] opacity-70">{item.label}</p>
+                      <div key={i} className="rounded-xl border border-border bg-card p-3">
+                        <span
+                          className={cn(
+                            'mb-1.5 flex h-8 w-8 items-center justify-center rounded-lg',
+                            item.tone,
+                            item.text,
+                          )}
+                        >
+                          <Icon size={14} />
+                        </span>
+                        <p className="truncate text-sm font-black tabular-nums text-main">
+                          {item.value}
+                        </p>
+                        <p className="mt-0.5 text-[10px] font-bold text-muted">{item.label}</p>
                       </div>
                     )
                   })}
@@ -460,7 +468,7 @@ export const StudentDrawer = ({
                 <div className="grid grid-cols-2 gap-2">
                   <a
                     href={`tel:${student.parentPhone}`}
-                    className="flex items-center justify-center gap-2 rounded-xl border border-success-soft bg-success-soft py-2.5 text-[10px] font-bold text-success transition-all hover:bg-success-light active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.98]"
                   >
                     <Phone size={13} /> اتصال
                   </a>
@@ -468,7 +476,7 @@ export const StudentDrawer = ({
                     href={`https://wa.me/${student.parentPhone?.replace(/[^0-9]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 rounded-xl border border-success-soft bg-success-soft py-2.5 text-[10px] font-bold text-success transition-all hover:bg-success-light active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[11px] font-bold text-on-success transition-all hover:bg-success-hover active:scale-[0.98]"
                   >
                     <MessageSquare size={13} /> واتساب
                   </a>
@@ -572,22 +580,27 @@ export const StudentDrawer = ({
                         {/* Extra program stats */}
                         <div className="mt-2.5 grid grid-cols-3 gap-1.5 border-t border-border pt-2.5">
                           <div className="text-center">
-                            <p className="text-[9px] font-bold text-success">
-                              {Math.min(100, progress + 10)}%
+                            <p className="text-[10px] font-black tabular-nums text-success">
+                              {used}
                             </p>
-                            <p className="text-[7px] text-muted">حضور</p>
+                            <p className="text-[8px] font-bold text-muted">حصة منفذة</p>
                           </div>
                           <div className="text-center">
-                            <p className="text-[9px] font-bold text-info">
-                              {Math.min(100, progress + 5)}%
+                            <p
+                              className={cn(
+                                'text-[10px] font-black tabular-nums',
+                                isLow ? 'text-error' : 'text-warning',
+                              )}
+                            >
+                              {remaining}
                             </p>
-                            <p className="text-[7px] text-muted">اختبارات</p>
+                            <p className="text-[8px] font-bold text-muted">حصة متبقية</p>
                           </div>
                           <div className="text-center">
-                            <p className="text-[9px] font-bold text-warning">
+                            <p className="text-[10px] font-black text-info">
                               {getCurrencySymbol(en.curr)}
                             </p>
-                            <p className="text-[7px] text-muted">العملة</p>
+                            <p className="text-[8px] font-bold text-muted">العملة</p>
                           </div>
                         </div>
                       </motion.div>

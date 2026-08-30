@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
   Search,
@@ -9,6 +8,7 @@ import {
   BookOpen,
   Filter,
 } from 'lucide-react'
+import { cn } from '../../../../lib/utils'
 
 interface ScheduleHeaderProps {
   searchTerm: string
@@ -48,19 +48,6 @@ export const ScheduleHeader = ({
   onWeekChange,
   stats,
 }: ScheduleHeaderProps) => {
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 6 }, (_, i) => ({
-        id: i,
-        size: 4 + Math.random() * 8,
-        x: 10 + Math.random() * 80,
-        y: 10 + Math.random() * 80,
-        duration: 3 + Math.random() * 3,
-        delay: Math.random() * 2,
-      })),
-    [],
-  )
-
   const activeFiltersCount = [
     filterDay !== 'all',
     filterTeacher !== 'all',
@@ -70,54 +57,44 @@ export const ScheduleHeader = ({
 
   return (
     <div className="mb-4 space-y-3">
-      {/* Hero Banner */}
+      {/* Hero — internally divided: identity | stats */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary/90 to-primary/70 p-6 md:p-8"
+        className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
       >
-        {particles.map((p) => (
-          <motion.div
-            key={p.id}
-            className="absolute rounded-full bg-white/10"
-            style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-            animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-            transition={{
-              duration: p.duration,
-              repeat: Infinity,
-              delay: p.delay,
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
-        <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <div className="mb-2 flex items-center gap-2">
-              <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                <CalendarDays className="text-white" size={20} />
-              </div>
-              <span className="text-xs font-medium text-white/70">نظام الجداول الدراسية</span>
+        <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+        <div className="bg-info/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+
+        <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+              <CalendarDays size={22} className="text-on-primary" />
             </div>
-            <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">
-              الجداول الدراسية
-            </h1>
-            <p className="text-sm text-white/70">جدول الحصص الأسبوعي للمعلمات والطلاب</p>
+            <div>
+              <h1 className="text-xl font-black leading-tight text-main">الجداول الدراسية</h1>
+              <p className="text-xs text-muted">جدول الحصص الأسبوعي للمعلمات والطلاب</p>
+            </div>
           </div>
-          <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
-            <div className="text-center">
-              <p className="mb-1 text-xs text-white/60">الحصص</p>
-              <div className="text-2xl font-bold text-white">{stats.sessions}</div>
-            </div>
-            <div className="h-10 w-px bg-white/10" />
-            <div className="text-center">
-              <p className="mb-1 text-xs text-white/60">المعلمات</p>
-              <div className="text-2xl font-bold text-white">{stats.teachers}</div>
-            </div>
-            <div className="h-10 w-px bg-white/10" />
-            <div className="text-center">
-              <p className="mb-1 text-xs text-white/60">الطلاب</p>
-              <div className="text-2xl font-bold text-white">{stats.students}</div>
-            </div>
+
+          <div className="hidden h-12 w-px bg-border lg:block" />
+
+          <div className="grid flex-1 grid-cols-3 gap-2">
+            {[
+              { label: 'الحصص', value: stats.sessions, tone: 'text-primary' },
+              { label: 'المعلمات', value: stats.teachers, tone: 'text-success' },
+              { label: 'الطلاب', value: stats.students, tone: 'text-warning' },
+            ].map((s) => (
+              <div
+                key={s.label}
+                className="rounded-xl border border-border bg-surface px-2 py-2.5 text-center"
+              >
+                <p className={cn('text-lg font-black tabular-nums leading-none', s.tone)}>
+                  {s.value}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">{s.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </motion.div>
