@@ -1,6 +1,6 @@
 import type { Student, Session, Transaction, TeacherInvoice, Enrollment } from '../../../types'
 import type { LowBalanceStudent, DashboardMonthData } from '../types'
-import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../types/invoice'
+import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
 
 export const getSafeArray = (val: unknown): unknown[] => {
   if (!val) return []
@@ -51,7 +51,7 @@ export const getPaidInv = (list: TeacherInvoice[], currency?: string): number =>
     )
     .reduce((sum: number, inv: TeacherInvoice) => sum + (Number(inv.amount) || 0), 0)
 
-const getManualExp = (list: Transaction[], currency?: string): number =>
+export const getManualExp = (list: Transaction[], currency?: string): number =>
   list
     .filter(
       (t: Transaction) => t.type === 'expense' && (!currency || (t.currency || 'EGP') === currency),

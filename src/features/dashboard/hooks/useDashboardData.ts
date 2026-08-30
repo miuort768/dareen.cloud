@@ -24,7 +24,7 @@ import {
   getManualExp,
 } from '../utils/dashboardHelpers'
 import { normalizeDayName } from '../../attendance/utils/slotUtils'
-import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../types/invoice'
+import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
 
 export const useDashboardData = (currentUser: User | null) => {
   const queryClient = useQueryClient()
