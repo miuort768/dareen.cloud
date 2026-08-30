@@ -42,27 +42,59 @@ export const useReports = () => {
       totalSessions > 0 ? Math.round((completedSessions / totalSessions) * 100) : 0
 
     // Financial calculations
-    const totalRevenue = sessions
-      .filter((s) => s.status === 'completed')
-      .reduce((sum, s) => sum + (Number(s.price) || 0), 0)
+    // Currency policy: reports display EGP — non-EGP sessions excluded (same as dashboard totals).
+    const isEgp = (c?: string) => !c || c === 'EGP'
 
+    const totalRevenue = sessions
+      .filter((s) => s.status === 'completed' && isEgp(s.studentCurrency))
+      .reduce((sum, s) => {
+        let price = Number(s.price) || 0
+        if (price === 0) {
+          const student = students.find((st) => st.id === s.studentId)
+          price = Number(student?.sessionPrice) || 0
+        }
+        return sum + price
+      }, 0)
+
+    // Expenses = what the academy owes teachers for completed sessions.
+    // Labor cost includes ALL sessions regardless of student currency — the teacher
+    // expense is still owed (same policy as the finance page).
+    // NOTE: student invoices are collections (revenue), never expenses.
     const teacherCostFromSessions = sessions
       .filter((s) => s.status === 'completed')
       .reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0)
 
-    const invoiceExpenses = invoices
-      .filter((inv) => ['paid', 'مدفوعة', 'تم الدفع'].includes((inv.status || '').toLowerCase()))
-      .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0)
-
-    const totalExpenses = Math.max(invoiceExpenses, teacherCostFromSessions)
+    const totalExpenses = teacherCostFromSessions
 
     const monthRevenue = sessions
-      .filter((s) => s.status === 'completed' && s.date?.startsWith(currentMonthStr))
-      .reduce((sum, s) => sum + (Number(s.price) || 0), 0)
+      .filter(
+        (s) =>
+          s.status === 'completed' &&
+          s.date?.startsWith(currentMonthStr) &&
+          isEgp(s.studentCurrency),
+      )
+      .reduce((sum, s) => {
+        let price = Number(s.price) || 0
+        if (price === 0) {
+          const student = students.find((st) => st.id === s.studentId)
+          price = Number(student?.sessionPrice) || 0
+        }
+        return sum + price
+      }, 0)
 
     const prevMonthRevenue = sessions
-      .filter((s) => s.status === 'completed' && s.date?.startsWith(prevMonthStr))
-      .reduce((sum, s) => sum + (Number(s.price) || 0), 0)
+      .filter(
+        (s) =>
+          s.status === 'completed' && s.date?.startsWith(prevMonthStr) && isEgp(s.studentCurrency),
+      )
+      .reduce((sum, s) => {
+        let price = Number(s.price) || 0
+        if (price === 0) {
+          const student = students.find((st) => st.id === s.studentId)
+          price = Number(student?.sessionPrice) || 0
+        }
+        return sum + price
+      }, 0)
 
     const revenueGrowth =
       prevMonthRevenue > 0
@@ -75,15 +107,7 @@ export const useReports = () => {
       .filter((s) => s.status === 'completed' && s.date?.startsWith(currentMonthStr))
       .reduce((sum, s) => sum + (Number(s.teacherPrice) || 0), 0)
 
-    const monthInvoiceExpenses = invoices
-      .filter(
-        (inv) =>
-          ['paid', 'مدفوعة', 'تم الدفع'].includes((inv.status || '').toLowerCase()) &&
-          inv.date?.startsWith(currentMonthStr),
-      )
-      .reduce((sum, inv) => sum + (Number(inv.amount) || 0), 0)
-
-    const monthExpenses = Math.max(monthInvoiceExpenses, monthTeacherCost)
+    const monthExpenses = monthTeacherCost
 
     // Months
     const uniqueMonths = Array.from(

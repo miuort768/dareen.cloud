@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { financeService } from '../services/financeService'
 import type { Session, TeacherInvoice, Transaction, FixedExpense } from '../../../types'
 import { CHART_COLORS } from '../types'
+import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
 import { confirm } from '../../../lib/confirmDialog'
 
 interface FinanceStats {
@@ -230,8 +231,7 @@ export const useFinance = () => {
 
     const monthInvoiceExpenses = filteredInvoices
       .filter(
-        (i) =>
-          ['paid', 'مدفوعة', 'تم الدفع'].includes(i.status?.toLowerCase()) && isSameMonth(i.date),
+        (i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID && isSameMonth(i.date),
       )
       .reduce(
         (sum, i) => sum + Math.max((Number(i.amount) || 0) - (Number(i.personalExpenses) || 0), 0),

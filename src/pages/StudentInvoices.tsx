@@ -173,15 +173,9 @@ export const StudentInvoices = () => {
 
   if (loading) {
     return (
-      <div className="min-h-full pb-8" dir="rtl">
+      <div className="min-h-full bg-background pb-8" dir="rtl">
         <div className="mx-auto max-w-5xl space-y-4 px-2.5 pt-6 sm:px-6">
-          <div className="flex items-center gap-3">
-            <Skeleton className="h-11 w-11 rounded-xl" />
-            <div className="space-y-2">
-              <Skeleton className="h-5 w-32 rounded-lg" />
-              <Skeleton className="h-3 w-48 rounded-lg" />
-            </div>
-          </div>
+          <Skeleton className="h-28 rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
             {[1, 2, 3].map((i) => (
               <Skeleton key={i} className="h-24 rounded-xl" />
@@ -195,28 +189,50 @@ export const StudentInvoices = () => {
   }
 
   return (
-    <div className="min-h-full pb-8" dir="rtl">
+    <div className="min-h-full bg-background pb-8" dir="rtl">
       <div className="mx-auto max-w-5xl px-2.5 sm:px-6">
+        {/* Hero — internally divided: identity | stats | print */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="pb-5 pt-6"
+          className="relative mb-5 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm"
         >
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft">
-                <Receipt size={20} className="text-primary" />
+          <div className="pointer-events-none absolute -end-16 -top-20 h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
+          <div className="bg-success/10 pointer-events-none absolute -bottom-16 -start-16 h-40 w-40 rounded-full blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                <Receipt size={22} className="text-on-primary" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-main">
+                <h1 className="text-xl font-black leading-tight text-main">
                   {isAdmin ? 'فواتير الطلاب' : 'فواتيري'}
                 </h1>
                 <p className="mt-0.5 text-xs text-muted">متابعة الرسوم والمدفوعات الدراسية</p>
               </div>
             </div>
+
+            <div className="hidden h-12 w-px bg-border lg:block" />
+
+            <div className="grid flex-1 grid-cols-2 gap-2">
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-primary">
+                  {stats.total.toLocaleString()}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي {studentCurrency}</p>
+              </div>
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-success">
+                  {stats.paidCount}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">فواتير مدفوعة</p>
+              </div>
+            </div>
+
             <button
               onClick={() => window.print()}
-              className="flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 text-xs font-bold text-muted transition-all duration-200 hover:border-primary/20 hover:bg-hover active:scale-[0.98]"
+              className="flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all hover:bg-primary-hover active:scale-[0.98]"
             >
               <Printer size={14} />
               <span className="hidden sm:inline">طباعة</span>
@@ -278,7 +294,7 @@ export const StudentInvoices = () => {
                 placeholder={isAdmin ? 'بحث بالبيان أو اسم الطالب...' : 'بحث بالبيان...'}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-xl border border-border bg-card py-3 pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
+                className="w-full rounded-xl border border-border bg-surface py-3 pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               />
               {searchTerm && (
                 <button
@@ -294,7 +310,7 @@ export const StudentInvoices = () => {
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
               aria-label="تصفية حسب الحالة"
-              className="cursor-pointer appearance-none rounded-xl border border-border bg-card px-4 py-3 text-xs font-bold text-main outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
+              className="h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-200 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
             >
               <option value="all">الكل</option>
               <option value="paid">مدفوعة</option>

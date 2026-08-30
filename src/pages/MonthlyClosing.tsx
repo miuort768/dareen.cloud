@@ -19,6 +19,7 @@ import { attendanceService } from '../features/attendance/services/attendanceSer
 import { teacherService } from '../features/teachers/services/teacherService'
 import { cn } from '../lib/utils'
 import { api, safeGet } from '../lib/api'
+import { INVOICE_STATUS, normalizeInvoiceStatus } from '../types/invoice'
 import { CURRENCY_SYMBOL } from '@/config/constants'
 import { PageLoader } from '../components/ui/PageLoader'
 import { Skeleton } from '../shared/components/ui'
@@ -36,15 +37,6 @@ const SubjectAnalysis = lazy(() => import('./monthly-closing/components/SubjectA
 
 type TabType =
   'payroll' | 'collections' | 'renewals' | 'summary' | 'analysis' | 'teachers' | 'compensation'
-
-const particles = Array.from({ length: 10 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
 
 const TABS = [
   { id: 'payroll', label: 'الرواتب', icon: Receipt },
@@ -271,7 +263,13 @@ export const MonthlyClosing = () => {
       .sort((a, b) => a.remaining - b.remaining) || []
 
   const validSessions = filteredSessions.filter((s) => s.status !== 'cancelled')
-  const totalProjectedIncome = validSessions.reduce((acc, curr) => {
+  // Currency policy (same as dashboard): totals are summed in EGP only —
+  // non-EGP money is counted separately and surfaced as a warning, never mixed.
+  const isEgp = (c?: string | null) => !c || c === 'EGP'
+  let mixedCurrencyCount = 0
+
+  let totalProjectedIncome = 0
+  validSessions.forEach((curr) => {
     let price = Number(curr.price) || 0
     if (price === 0) {
       const student = students?.find(
@@ -281,24 +279,30 @@ export const MonthlyClosing = () => {
       )
       price = Number(student?.sessionPrice) || 0
     }
-    return acc + price
-  }, 0)
-  const totalActualCollections = (studentInvoices || [])
-    .filter(
-      (inv: { date: string; status: string }) =>
-        inv.date >= startDate &&
-        inv.date <= endDate &&
-        ['paid', 'مدفوعة', 'تم الدفع'].includes((inv.status || '').toLowerCase()),
-    )
-    .reduce((acc: number, curr: { amount: number }) => acc + (Number(curr.amount) || 0), 0)
+    if (isEgp(safeGet<string>(curr, 'studentCurrency'))) totalProjectedIncome += price
+    else mixedCurrencyCount += 1
+  })
 
-  const totalTeacherPayout = payrollData.reduce(
-    (acc, curr) => acc + (Number(curr.totalAmount) || 0),
-    0,
+  let totalActualCollections = 0
+  ;(studentInvoices || []).forEach(
+    (inv: { date: string; status: string; amount: number; currency?: string }) => {
+      if (inv.date < startDate || inv.date > endDate) return
+      if (normalizeInvoiceStatus(inv.status) !== INVOICE_STATUS.PAID) return
+      if (isEgp(inv.currency)) totalActualCollections += Number(inv.amount) || 0
+      else mixedCurrencyCount += 1
+    },
   )
 
-  const totalProjectedPayout = validSessions.reduce((acc, curr) => {
+  let totalTeacherPayout = 0
+  payrollData.forEach((curr) => {
+    if (isEgp(curr.currency)) totalTeacherPayout += Number(curr.totalAmount) || 0
+    else mixedCurrencyCount += 1
+  })
+
+  let totalProjectedPayout = 0
+  validSessions.forEach((curr) => {
     let tPrice = Number(curr.teacherPrice) || 0
+    let currency: string | null = null
     if (tPrice === 0) {
       const teacher = teachers?.find(
         (t) =>
@@ -306,9 +310,11 @@ export const MonthlyClosing = () => {
           t.name?.trim().toLowerCase() === curr.teacherName?.trim().toLowerCase(),
       )
       tPrice = Number(teacher?.price) || 0
+      currency = teacher?.currency ?? null
     }
-    return acc + tPrice
-  }, 0)
+    if (isEgp(currency)) totalProjectedPayout += tPrice
+    else mixedCurrencyCount += 1
+  })
 
   const netProjectedProfit = totalProjectedIncome - totalProjectedPayout
   const netActualCashFlow = totalActualCollections - totalTeacherPayout
@@ -316,79 +322,85 @@ export const MonthlyClosing = () => {
   if (isLoading) return <PageLoader />
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-28" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-28" dir="rtl">
       <div className="mx-auto max-w-page px-2">
+        {/* Hero — internally divided: identity | stats | toolbar */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
+          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
         >
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="pointer-events-none absolute rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <div className="mb-2 flex items-center gap-2">
-                <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                  <CalendarCheck className="text-white" size={20} />
+          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+          <div className="bg-success/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                <CalendarCheck size={22} className="text-on-primary" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-xl font-black leading-tight text-main">الإقفال الشهري</h1>
+                  <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
+                    {semesterName}
+                  </span>
                 </div>
-                <span className="text-xs font-medium text-white/70">{semesterName}</span>
+                <p className="mt-0.5 text-xs text-muted">تقرير مالي وإداري شامل عن الشهر</p>
               </div>
-              <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">
-                الإقفال الشهري
-              </h1>
-              <p className="text-sm text-white/70">تقرير مالي وإداري شامل عن الشهر</p>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">صافي الربح</p>
-                <p className="text-2xl font-bold tabular-nums text-white">
-                  {netProjectedProfit.toLocaleString()}{' '}
-                  <span className="text-sm text-white/60">{CURRENCY_SYMBOL}</span>
+
+            <div className="hidden h-12 w-px bg-border lg:block" />
+
+            <div className="grid flex-1 grid-cols-2 gap-2">
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-primary">
+                  {netProjectedProfit.toLocaleString()}
+                  <span className="ms-1 text-[10px] font-bold text-muted">{CURRENCY_SYMBOL}</span>
                 </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">صافي الربح</p>
               </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">الجلسات</p>
-                <p className="text-lg font-bold text-white">{filteredSessions.length}</p>
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-info">
+                  {filteredSessions.length}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">الجلسات</p>
               </div>
             </div>
           </div>
-          <div className="relative z-10 mt-4 flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 py-1.5 backdrop-blur-sm">
+
+          <div className="relative z-10 mt-4 flex flex-wrap items-center gap-2 border-t border-border pt-3.5">
+            <div className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-1.5">
               <input
                 aria-label="تاريخ البداية"
                 type="date"
-                className="w-[95px] border-none bg-transparent text-xs font-bold text-white outline-none [color-scheme:var(--color-scheme)] placeholder:text-white/40"
+                className="w-[120px] border-none bg-transparent text-xs font-bold text-main outline-none dark:[color-scheme:dark]"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
               />
-              <span className="text-white/50">–</span>
+              <span className="text-dim">–</span>
               <input
                 aria-label="تاريخ النهاية"
                 type="date"
-                className="w-[95px] border-none bg-transparent text-xs font-bold text-white outline-none [color-scheme:var(--color-scheme)] placeholder:text-white/40"
+                className="w-[120px] border-none bg-transparent text-xs font-bold text-main outline-none dark:[color-scheme:dark]"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
             <button
               onClick={handleRefresh}
-              className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/10 px-3 py-1.5 text-xs font-bold text-white/80 backdrop-blur-sm transition-all hover:bg-white/20 hover:text-white"
+              className="flex items-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95"
             >
               <RefreshCw size={13} /> تحديث
             </button>
+            {mixedCurrencyCount > 0 && (
+              <span
+                className="flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning"
+                title="بنود بعملات غير الجنيه لا تُضم للأجماليات — تُحول من صفحة الفواتير"
+              >
+                <AlertCircle size={13} />
+                {mixedCurrencyCount} بند بعملة غير محوّلة (غير محتسب)
+              </span>
+            )}
           </div>
         </motion.div>
 

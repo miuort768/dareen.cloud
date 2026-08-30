@@ -245,7 +245,9 @@ export const useDashboardData = (currentUser: User | null) => {
             (t: Transaction) => t.type === 'expense' && (t.currency || 'EGP') === targetCurrency,
           )
           .reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0)
-      : getPaidInv(teacherInvoices) + getManualExp(transactions) + fixedTotal
+      : getPaidInv(teacherInvoices, targetCurrency) +
+        getManualExp(transactions, targetCurrency) +
+        fixedTotal
 
     const monthExpensesValue = isTeacher
       ? getPaidInv(
@@ -262,8 +264,14 @@ export const useDashboardData = (currentUser: User | null) => {
               (t.currency || 'EGP') === targetCurrency,
           )
           .reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0)
-      : getPaidInv(teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date, now))) +
-        getManualExp(transactions.filter((t: Transaction) => isSameMonth(t.date, now))) +
+      : getPaidInv(
+          teacherInvoices.filter((inv: TeacherInvoice) => isSameMonth(inv.date, now)),
+          targetCurrency,
+        ) +
+        getManualExp(
+          transactions.filter((t: Transaction) => isSameMonth(t.date, now)),
+          targetCurrency,
+        ) +
         fixedTotal
 
     const totalNetProfitValue = totalRevenueValue - totalExpensesValue
@@ -285,6 +293,7 @@ export const useDashboardData = (currentUser: User | null) => {
       isTeacher,
       now,
       students,
+      targetCurrency,
     )
 
     // 6. Low Balance

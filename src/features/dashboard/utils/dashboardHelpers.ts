@@ -1,5 +1,6 @@
 import type { Student, Session, Transaction, TeacherInvoice, Enrollment } from '../../../types'
 import type { LowBalanceStudent, DashboardMonthData } from '../types'
+import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../types/invoice'
 
 export const getSafeArray = (val: unknown): unknown[] => {
   if (!val) return []
@@ -34,22 +35,32 @@ const getSessionRev = (s: Session, students: Student[]): number => {
   return Number(stu?.sessionPrice) || 0
 }
 
-const getManualInc = (list: Transaction[]): number =>
+const getManualInc = (list: Transaction[], currency?: string): number =>
   list
-    .filter((t: Transaction) => t.type === 'income')
+    .filter(
+      (t: Transaction) => t.type === 'income' && (!currency || (t.currency || 'EGP') === currency),
+    )
     .reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0)
 
-export const getPaidInv = (list: TeacherInvoice[]): number =>
+export const getPaidInv = (list: TeacherInvoice[], currency?: string): number =>
   list
-    .filter((inv: TeacherInvoice) =>
-      ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()),
+    .filter(
+      (inv: TeacherInvoice) =>
+        normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.PAID &&
+        (!currency || (inv.currency || 'EGP') === currency),
     )
     .reduce((sum: number, inv: TeacherInvoice) => sum + (Number(inv.amount) || 0), 0)
 
-export const getManualExp = (list: Transaction[]): number =>
+const getManualExp = (list: Transaction[], currency?: string): number =>
   list
-    .filter((t: Transaction) => t.type === 'expense')
+    .filter(
+      (t: Transaction) => t.type === 'expense' && (!currency || (t.currency || 'EGP') === currency),
+    )
     .reduce((sum: number, t: Transaction) => sum + (Number(t.amount) || 0), 0)
+
+/** Session revenue currency — falls back to the student's currency, then EGP */
+const getSessionCur = (s: Session, students: Student[]): string =>
+  s.studentCurrency || students.find((st: Student) => st.id === s.studentId)?.currency || 'EGP'
 
 /**
  * Currency-aware revenue sum.
@@ -142,6 +153,7 @@ export const computeChartData = (
   isTeacher: boolean,
   now: Date,
   students: Student[] = [],
+  targetCurrency = 'EGP',
 ): DashboardMonthData[] => {
   return last6Months.map((month) => {
     const [y = 0, m = 0] = month.split('-').map(Number)
@@ -156,13 +168,23 @@ export const computeChartData = (
       ['completed', 'مكتملة', 'تم الإنجاز'].includes(s.status?.toLowerCase()),
     )
 
+    // Currency policy: chart lines sum the target currency only — same as the KPI totals.
     const rev =
-      mComp.reduce((sum: number, s: Session) => sum + getSessionRev(s, students), 0) +
-      getManualInc(transactions.filter((t: Transaction) => isTargetMonth(t.date)))
+      mComp
+        .filter((s: Session) => getSessionCur(s, students) === targetCurrency)
+        .reduce((sum: number, s: Session) => sum + getSessionRev(s, students), 0) +
+      getManualInc(
+        transactions.filter((t: Transaction) => isTargetMonth(t.date)),
+        targetCurrency,
+      )
     const expInv = getPaidInv(
       teacherInvoices.filter((inv: TeacherInvoice) => isTargetMonth(inv.date)),
+      targetCurrency,
     )
-    const expMan = getManualExp(transactions.filter((t: Transaction) => isTargetMonth(t.date)))
+    const expMan = getManualExp(
+      transactions.filter((t: Transaction) => isTargetMonth(t.date)),
+      targetCurrency,
+    )
     const expFixed = y === now.getFullYear() && m === now.getMonth() + 1 ? fixedTotal : 0
 
     const exp = isTeacher ? expInv + expMan : expInv + expMan + expFixed

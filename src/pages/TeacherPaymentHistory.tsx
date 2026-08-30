@@ -5,11 +5,13 @@ import {
   CheckCircle,
   Clock,
   AlertTriangle,
+  FileCheck,
   FileText,
   Wallet,
   BarChart3,
   Filter,
   DollarSign,
+  Printer,
 } from 'lucide-react'
 import { api } from '../lib/api'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
@@ -19,15 +21,6 @@ import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { CURRENCY_SYMBOL } from '../config/constants'
 import { cn } from '../lib/utils'
-
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
 
 const statusConfig = (status: string) => {
   switch (normalizeInvoiceStatus(status)) {
@@ -46,7 +39,7 @@ const statusConfig = (status: string) => {
     case INVOICE_STATUS.REVIEWED:
       return {
         label: 'تمت المراجعة',
-        icon: AlertTriangle,
+        icon: FileCheck,
         cls: 'bg-info-soft text-info border-info-soft',
       }
     default:
@@ -103,10 +96,14 @@ export const TeacherPaymentHistory = () => {
   const filteredInvoices = useMemo(
     () =>
       invoices.filter((inv) => {
+        const q = searchTerm.trim().toLowerCase()
         const matchesSearch =
-          inv.teacher.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          inv.specialization.toLowerCase().includes(searchTerm.toLowerCase())
-        const matchesStatus = filterStatus === 'all' || inv.status === filterStatus
+          !q ||
+          (inv.specialization || '').toLowerCase().includes(q) ||
+          (inv.paymentMethod || '').toLowerCase().includes(q) ||
+          String(inv.amount || '').includes(q)
+        const matchesStatus =
+          filterStatus === 'all' || normalizeInvoiceStatus(inv.status) === filterStatus
         const matchesPeriod =
           period === 'all' ||
           (() => {
@@ -129,7 +126,7 @@ export const TeacherPaymentHistory = () => {
   )
 
   const stats = useMemo(() => {
-    const result = { total: 0, paid: 0, processing: 0, overdue: 0, unpaid: 0 }
+    const result = { total: 0, paid: 0, processing: 0, unpaid: 0 }
     invoices.forEach((inv) => {
       result.total += inv.amount
       const s = normalizeInvoiceStatus(inv.status)
@@ -199,9 +196,9 @@ export const TeacherPaymentHistory = () => {
   const periodOptions = useMemo(
     () => [
       { value: 'all', label: 'جميع الفترات' },
-      { value: 'month', label: 'شهري' },
-      { value: 'quarter', label: 'ربع سنوي' },
-      { value: 'year', label: 'سنوي' },
+      { value: 'month', label: 'هذا الشهر' },
+      { value: 'quarter', label: 'هذا الربع' },
+      { value: 'year', label: 'هذه السنة' },
     ],
     [],
   )
@@ -225,7 +222,7 @@ export const TeacherPaymentHistory = () => {
 
   if (loading) {
     return (
-      <div className="min-h-full overflow-x-hidden pb-24" dir="rtl">
+      <div className="min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
         <div className="mx-auto max-w-page space-y-4 px-2 pt-4">
           <Skeleton className="h-36 rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -240,55 +237,48 @@ export const TeacherPaymentHistory = () => {
   }
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-24" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
       <div className="mx-auto max-w-page px-2">
+        {/* Hero — internally divided: identity | stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
+          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
         >
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="pointer-events-none absolute rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <div className="mb-2 flex items-center gap-2">
-                <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                  <Wallet className="text-white" size={20} />
-                </div>
-                <span className="text-xs font-medium text-white/70">المالية</span>
+          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+          <div className="bg-success/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                <Wallet size={22} className="text-on-primary" />
               </div>
-              <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">سجل الدفعات</h1>
-              <p className="text-sm text-white/70">سجل المدفوعات والمستحقات المالية</p>
+              <div>
+                <h1 className="text-xl font-black leading-tight text-main">سجل الدفعات</h1>
+                <p className="mt-0.5 text-xs text-muted">سجل المدفوعات والمستحقات المالية</p>
+              </div>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">الإجمالي</p>
-                <p className="text-2xl font-bold tabular-nums text-white">
+
+            <div className="hidden h-12 w-px bg-border lg:block" />
+
+            <div className="grid flex-1 grid-cols-2 gap-2">
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-primary">
                   {stats.total.toFixed(3)}
                 </p>
-                <p className="text-[10px] text-white/50">{CURRENCY_SYMBOL}</p>
+                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي {CURRENCY_SYMBOL}</p>
               </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">الفاتورة</p>
-                <p className="text-lg font-bold text-white">{paidCount}</p>
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-success">
+                  {paidCount}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">فواتير مدفوعة</p>
               </div>
             </div>
           </div>
         </motion.div>
 
+        {/* KPI cards */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -324,71 +314,74 @@ export const TeacherPaymentHistory = () => {
           </div>
         </motion.div>
 
+        {/* Toolbar — search + filters + print in one organized card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           data-search
         >
-          <div className="mb-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+          <div className="mb-4 space-y-3 rounded-2xl border border-border bg-card p-3.5">
             <div className="relative">
               <Search className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
               <input
                 aria-label="بحث"
-                placeholder="بحث بالتخصص..."
+                placeholder="بحث بالتخصص أو طريقة الدفع أو المبلغ..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-xl border border-border bg-card py-3 pe-3 ps-9 text-xs font-bold text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none"
+                className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               />
             </div>
-            <div className="relative">
-              <Filter className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" size={14} />
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                aria-label="تصفية"
-                className="w-full cursor-pointer appearance-none rounded-xl border border-border bg-card py-3 pe-3 ps-9 text-xs font-bold text-main transition-all focus:border-primary focus:outline-none"
-              >
-                <option value="all">جميع الحالات</option>
-                <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
-                <option value={INVOICE_STATUS.PROCESSING}>قيد المعالجة</option>
-                <option value={INVOICE_STATUS.REVIEWED}>تمت المراجعة</option>
-                <option value={INVOICE_STATUS.UNPAID}>غير مدفوعة</option>
-              </select>
-            </div>
-          </div>
-          <div className="mb-4 grid grid-cols-2 gap-3">
-            <div>
-              <p className="mb-1 text-[10px] font-bold text-muted">الفترة</p>
-              <select
-                value={period}
-                onChange={(e) => setPeriod(e.target.value)}
-                className="w-full cursor-pointer appearance-none rounded-xl border border-border bg-card py-3 pe-3 ps-3 text-xs font-bold text-main transition-all focus:border-primary focus:outline-none"
-              >
-                {periodOptions.map((p) => (
-                  <option key={p.value} value={p.value}>
-                    {p.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
+            <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+              <div className="relative">
+                <Filter
+                  className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted"
+                  size={14}
+                />
+                <select
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  aria-label="تصفية حسب الحالة"
+                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main transition-all focus-visible:border-primary focus-visible:outline-none"
+                >
+                  <option value="all">جميع الحالات</option>
+                  <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
+                  <option value={INVOICE_STATUS.PROCESSING}>قيد المعالجة</option>
+                  <option value={INVOICE_STATUS.REVIEWED}>تمت المراجعة</option>
+                  <option value={INVOICE_STATUS.UNPAID}>غير مدفوعة</option>
+                </select>
+              </div>
+              <div className="relative">
+                <select
+                  value={period}
+                  onChange={(e) => setPeriod(e.target.value)}
+                  aria-label="تصفية حسب الفترة"
+                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface px-3 text-xs font-bold text-main transition-all focus-visible:border-primary focus-visible:outline-none"
+                >
+                  {periodOptions.map((p) => (
+                    <option key={p.value} value={p.value}>
+                      {p.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <button
                 onClick={() => window.print()}
-                className="w-full rounded-lg bg-primary py-2 text-sm font-medium text-on-primary transition-all"
+                className="col-span-2 flex h-11 items-center justify-center gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.98] lg:col-span-1"
               >
-                طباعة
+                <Printer size={14} /> طباعة
               </button>
             </div>
           </div>
         </motion.div>
 
+        {/* Table (desktop) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
         >
-          <div className="hidden overflow-hidden rounded-2xl border border-divider bg-card shadow-sm transition-shadow hover:shadow-md md:block">
+          <div className="hidden overflow-hidden rounded-2xl border border-divider bg-card shadow-sm md:block">
             <table className="w-full border-collapse text-start">
               <thead>
                 <tr className="border-b border-divider bg-surface">
@@ -451,7 +444,7 @@ export const TeacherPaymentHistory = () => {
                         <FileText size={20} />
                       </div>
                       <p className="text-xs font-bold text-muted">
-                        {searchTerm || filterStatus !== 'all'
+                        {searchTerm || filterStatus !== 'all' || period !== 'all'
                           ? 'لا توجد نتائج مطابقة'
                           : 'لا توجد دفعات بعد'}
                       </p>
@@ -462,6 +455,7 @@ export const TeacherPaymentHistory = () => {
             </table>
           </div>
 
+          {/* Cards (mobile) */}
           <div className="space-y-3 md:hidden">
             {filteredInvoices.length > 0 ? (
               filteredInvoices.map((inv, i) => {
@@ -517,7 +511,7 @@ export const TeacherPaymentHistory = () => {
                   <FileText size={20} />
                 </div>
                 <p className="text-xs font-bold text-muted">
-                  {searchTerm || filterStatus !== 'all'
+                  {searchTerm || filterStatus !== 'all' || period !== 'all'
                     ? 'لا توجد نتائج مطابقة'
                     : 'لا توجد دفعات بعد'}
                 </p>
@@ -527,7 +521,8 @@ export const TeacherPaymentHistory = () => {
         </motion.div>
       </div>
 
-      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+      {/* FAB — mobile only */}
+      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3 md:hidden">
         <AnimatePresence>
           {fabOpen &&
             fabActions.map((action, i) => (
@@ -558,6 +553,8 @@ export const TeacherPaymentHistory = () => {
           onClick={() => setFabOpen(!fabOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          aria-label={fabOpen ? 'إغلاق' : 'إجراءات سريعة'}
+          aria-expanded={fabOpen}
           className={cn(
             'flex h-12 w-12 items-center justify-center rounded-lg text-on-primary shadow-xl transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
