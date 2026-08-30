@@ -39,10 +39,10 @@ export const PoliciesSettings = ({
         <div className="rounded-xl border border-divider bg-background p-4">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
-              <p className="flex items-center gap-1.5 text-xs font-bold text-error">
+              <p className="flex items-center gap-1.5 text-xs font-bold text-warning">
                 <AlertCircle size={13} /> قفل التعديل بأثر رجعي
               </p>
-              <p className="mt-1.5 text-[11px] leading-relaxed text-error">
+              <p className="mt-1.5 text-[11px] leading-relaxed text-warning">
                 يمنع الموظفين من إضافة أو تعديل حصص في تواريخ قديمة لضمان دقة السجلات المالية.
               </p>
             </div>

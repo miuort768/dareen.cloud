@@ -179,7 +179,7 @@ export const GeneralSettings = ({
                   type="number"
                   value={localThreshold}
                   onChange={(e) => setLocalThreshold(Number(e.target.value))}
-                  className="text-center text-error"
+                  className="text-center text-warning"
                 />
               </div>
             </div>

@@ -32,7 +32,7 @@ export const Settings = () => {
 
   if (h.loading)
     return (
-      <div className="mx-auto max-w-page space-y-3 px-2 pt-4">
+      <div className="mx-auto max-w-page space-y-3 bg-background px-2 pt-4">
         <Skeleton className="h-[76px] rounded-2xl" />
         <Skeleton className="h-[56px] rounded-2xl" />
         <Skeleton className="h-64 rounded-2xl" />
@@ -40,7 +40,7 @@ export const Settings = () => {
     )
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-24" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
       <div className="mx-auto max-w-page px-2">
         {/* Header strip */}
         <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5">
