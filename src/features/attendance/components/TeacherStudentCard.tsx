@@ -7,8 +7,7 @@ import type { Student, Enrollment, ScheduleSlot } from '../types'
 import { ProgressBar } from '../../../shared/components/ui'
 import { StudentCardTimer } from './StudentCardTimer'
 import { StudentScheduleEditor } from './StudentScheduleEditor'
-import { startLiveSession } from '../../../services/liveSessionService'
-import { useShowNotification } from '../../../context/useApp'
+import { StartLiveSessionDialog } from '../../dashboard/components/StartLiveSessionDialog'
 
 interface TeacherStudentCardProps {
   student: Student
@@ -69,7 +68,6 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
   const [timerRunning, setTimerRunning] = useState(false)
   const [timerSeconds, setTimerSeconds] = useState(0)
   const timerIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const showNotification = useShowNotification()
 
   React.useEffect(() => {
     const saved = localStorage.getItem(`active_timer_${student.id}`)
@@ -136,23 +134,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
 
   const attendancePercent = en.sessionsTotal > 0 ? (actualSessionsUsed / en.sessionsTotal) * 100 : 0
 
-  const startLiveStream = async () => {
-    const meetingUrl = prompt('أدخل رابط Google Meet أو Zoom:', 'https://meet.google.com/')
-    if (!meetingUrl || !meetingUrl.trim()) return
-    try {
-      const result = await startLiveSession({
-        title: `حصة مباشرة: ${student.name}`,
-        subject: en.subject,
-        meetingProvider: meetingUrl.includes('zoom.us') ? 'zoom' : 'google_meet',
-        meetingUrl: meetingUrl.trim(),
-        targetStudentId: student.id,
-      })
-      if (result?.meetingUrl) window.open(result.meetingUrl, '_blank')
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : ''
-      showNotification(`فشل بدء البث: ${msg}`, 'error')
-    }
-  }
+  const [showLiveDialog, setShowLiveDialog] = useState(false)
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-all hover:shadow-elevation-2">
@@ -253,13 +235,13 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
           />
         </div>
 
-        {/* Live Stream Quick Start */}
+        {/* Live Session Quick Start */}
         <button
-          onClick={startLiveStream}
-          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-error py-3 text-micro font-bold uppercase tracking-widest text-on-error shadow-sm transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          onClick={() => setShowLiveDialog(true)}
+          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-micro font-bold uppercase tracking-widest text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
         >
           <Radio size={14} className="animate-pulse" />
-          <span>بدء بث مباشر مع {student.name.split(' ')[0]}</span>
+          <span>بدء الحصة مع {student.name.split(' ')[0]}</span>
           <Play
             size={10}
             className="fill-current opacity-50 transition-transform group-hover:translate-x-[-2px]"
@@ -305,6 +287,13 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
           </div>
         </div>
       </div>
+
+      <StartLiveSessionDialog
+        open={showLiveDialog}
+        onClose={() => setShowLiveDialog(false)}
+        defaultStudentId={student.id}
+        defaultSubject={en.subject}
+      />
     </div>
   )
 }
