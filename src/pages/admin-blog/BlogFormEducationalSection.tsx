@@ -31,8 +31,8 @@ export const BlogFormEducationalSection = ({
   const isDisabled = currentPost.contentType === 'foundation' || currentPost.contentType === 'more'
 
   return (
-    <div className="rounded-2xl border border-error-soft bg-error-soft p-4">
-      <p className="mb-4 text-micro font-bold text-error">تصنيف تعليمي — سيظهر في صفحة المواد</p>
+    <div className="rounded-2xl border border-primary-soft bg-primary-soft p-4">
+      <p className="mb-4 text-micro font-bold text-primary">تصنيف تعليمي — سيظهر في صفحة المواد</p>
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         <div>
           <label htmlFor="bf-ctype" className="mb-1 block text-micro font-bold text-muted">

@@ -13,15 +13,6 @@ import { BookMarked, Plus, FileText, Eye, Star, Trash2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '../lib/utils'
 
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
-
 const formatViews = (n: number) => {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, '')}M`
   if (n >= 1_000) return `${(n / 1_000).toFixed(1).replace(/\.0$/, '')}K`
@@ -296,73 +287,47 @@ export const AdminBlog = () => {
   )
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-2" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-2" dir="rtl">
       <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+        {/* Hero — internally divided: identity | stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-error to-error-hover shadow-xl"
+          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
         >
-          <div className="absolute inset-0 opacity-[0.06]">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern
-                  id="blog-hero-grid"
-                  x="0"
-                  y="0"
-                  width="28"
-                  height="28"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <circle cx="2" cy="2" r="1" fill="white" />
-                  <circle cx="16" cy="16" r="0.8" fill="white" opacity="0.4" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#blog-hero-grid)" />
-            </svg>
-          </div>
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="pointer-events-none absolute rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <div className="relative z-10 flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between md:p-7">
-            <div>
-              <div className="mb-2.5 flex items-center gap-2.5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/25 backdrop-blur-sm">
-                  <BookMarked size={18} className="text-on-error" />
+          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+          <div className="bg-accent/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                <BookMarked size={22} className="text-on-primary" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-xl font-black leading-tight text-main">المقالات</h1>
+                  <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
+                    المدونة
+                  </span>
                 </div>
-                <span className="rounded-lg bg-white/10 px-2.5 py-1 text-micro font-bold text-white/80">
-                  المدونة
-                </span>
+                <p className="mt-0.5 text-xs text-muted">إدارة المقالات والدروس التعليمية</p>
               </div>
-              <h1 className="mb-1 text-2xl font-black tracking-tight text-on-error md:text-3xl">
-                المقالات
-              </h1>
-              <p className="text-xs font-medium text-white/70 md:text-sm">
-                إدارة المقالات والدروس التعليمية
-              </p>
             </div>
-            <div className="hidden items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm md:flex">
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">المقالات</p>
-                <p className="text-2xl font-bold text-white">{posts.length}</p>
+
+            <div className="hidden h-12 w-px bg-border lg:block" />
+
+            <div className="grid flex-1 grid-cols-2 gap-2">
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-primary">
+                  {posts.length}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">المقالات</p>
               </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">المشاهدات</p>
-                <p className="text-2xl font-bold text-white">
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-success">
                   {formatViews(posts.reduce((s, p) => s + (p.views || 0), 0))}
                 </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">المشاهدات</p>
               </div>
             </div>
           </div>
@@ -494,7 +459,7 @@ export const AdminBlog = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-14 w-14 items-center justify-center rounded-2xl bg-error text-on-error shadow-elevation-3 transition-colors focus-visible:ring-2 focus-visible:ring-focus',
+            'flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 transition-colors focus-visible:ring-2 focus-visible:ring-focus',
           )}
           aria-label={fabOpen ? 'إغلاق القائمة' : 'خيارات المقالات'}
           aria-expanded={fabOpen}

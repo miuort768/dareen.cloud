@@ -215,7 +215,7 @@ export const BlogForm = ({
               type="checkbox"
               checked={currentPost.isNew || false}
               onChange={(e) => set('isNew', e.target.checked)}
-              className="h-4 w-4 rounded border-border text-error focus:ring-focus"
+              className="h-4 w-4 rounded border-border text-primary focus:ring-focus"
             />
             <span className="flex items-center gap-1 text-micro font-bold text-muted">
               <Star size={12} className="text-warning" /> جديد
@@ -395,7 +395,7 @@ export const BlogForm = ({
           <button
             type="submit"
             disabled={submitting}
-            className="flex h-11 items-center gap-2 rounded-xl bg-error px-6 text-xs font-bold text-on-error transition-colors hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-11 items-center gap-2 rounded-xl bg-primary px-6 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save size={16} />}
             {currentPost.id ? 'حفظ التعديلات' : 'نشر المقال'}

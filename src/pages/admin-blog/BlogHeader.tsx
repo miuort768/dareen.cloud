@@ -1,5 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
-import { Plus, BookMarked, Settings } from 'lucide-react'
+import { Plus, Settings } from 'lucide-react'
 
 interface BlogHeaderProps {
   handleOpenModal: () => void
@@ -29,29 +29,21 @@ export const BlogHeader = ({
   handleCancelSettings,
 }: BlogHeaderProps) => (
   <>
-    <div className="rounded-2xl border border-border bg-surface p-3 md:p-4">
+    <div className="rounded-2xl border border-border bg-card p-3 md:p-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-error-soft">
-            <BookMarked size={17} className="text-error" />
-          </div>
-          <div>
-            <h1 className="text-sm font-bold leading-tight text-main">المقالات</h1>
-            <p className="text-[10px] text-muted">إدارة المقالات والدروس</p>
-          </div>
-        </div>
+        <p className="text-xs font-bold text-muted">أدوات الإدارة</p>
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => setShowSettings((s) => !s)}
             aria-label="إعدادات المكتبة"
             aria-expanded={showSettings}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface text-muted transition-colors hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Settings size={15} />
           </button>
           <button
             onClick={handleOpenModal}
-            className="flex h-10 items-center gap-1.5 rounded-xl bg-error px-4 text-xs font-bold text-on-error transition-colors hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex h-10 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={14} /> مقال
           </button>
@@ -102,7 +94,7 @@ export const BlogHeader = ({
           <button
             onClick={handleSaveSettings}
             disabled={savingSettings}
-            className="flex h-9 items-center gap-1.5 rounded-lg bg-error px-4 text-xs font-semibold text-on-error transition-colors hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+            className="flex h-9 items-center gap-1.5 rounded-lg bg-primary px-4 text-xs font-semibold text-on-primary transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
           >
             {savingSettings ? 'جاري الحفظ...' : 'حفظ'}
           </button>

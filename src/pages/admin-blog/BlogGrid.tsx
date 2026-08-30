@@ -48,7 +48,7 @@ export const BlogGrid = ({
   if (filteredPosts.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-border bg-card py-16 text-center">
-        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-error-soft text-error">
+        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
           <BookMarked size={22} />
         </div>
         <p className="text-sm font-bold text-muted">لا توجد مقالات بعد — أضف أول مقال الآن</p>
@@ -76,7 +76,7 @@ export const BlogGrid = ({
               </div>
             )}
             <div className="absolute start-2 top-2">
-              <span className="rounded-lg bg-error px-2 py-1 text-micro font-bold text-on-error shadow-sm">
+              <span className="rounded-lg bg-primary px-2 py-1 text-micro font-bold text-on-primary shadow-sm">
                 {post.category || 'عام'}
               </span>
             </div>
