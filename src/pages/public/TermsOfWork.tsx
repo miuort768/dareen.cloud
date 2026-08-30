@@ -66,7 +66,7 @@ export const TermsOfWork = () => {
             <span className="text-xs font-semibold tracking-label md:text-xs">قوانين العمل</span>
           </div>
 
-          <h1 className="mb-1 font-heading text-lg font-bold leading-tight text-primary dark:text-main md:mb-3 md:text-5xl md:text-main">
+          <h1 className="mb-1 font-heading text-base font-bold leading-tight text-primary dark:text-main md:mb-3 md:text-4xl md:text-main">
             قوانين{' '}
             <span className="inline-block bg-gradient-to-r from-primary to-primary bg-clip-text py-1 text-transparent">
               العمل

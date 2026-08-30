@@ -128,7 +128,7 @@ export const PublicFooter = () => {
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-3 border-t border-border pt-5 dark:border-primary/15 md:flex-row md:gap-4 md:pt-6">
           <div className="text-center md:text-start">
-            <p className="text-sm text-muted dark:text-muted">
+            <p className="text-[11px] text-muted dark:text-muted md:text-sm">
               &copy; {new Date().getFullYear()}{' '}
               <span className="font-medium text-main dark:text-main">{academyName}</span>. جميع
               الحقوق محفوظة.
