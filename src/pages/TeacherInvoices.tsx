@@ -1,15 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  GraduationCap,
-  Plus,
-  RefreshCw,
-  FileText,
-  DollarSign,
-  CheckCircle2,
-  AlertCircle,
-} from 'lucide-react'
+import { GraduationCap, Plus, RefreshCw, FileText } from 'lucide-react'
 import { ConfirmModal } from '../shared/components/ConfirmModal'
 import { api } from '../lib/api'
 import { CURRENCY_SYMBOL } from '../config/constants'
@@ -27,15 +19,6 @@ import { InvoiceForm } from './teacher-invoices/components/InvoiceForm'
 import { InvoiceTable } from './teacher-invoices/components/InvoiceTable'
 import { TeacherInvoicesHeader } from './teacher-invoices/teacher-invoices-page'
 import { cn } from '../lib/utils'
-
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
 
 export const TeacherInvoices = () => {
   const academyName = useAcademyName()
@@ -235,8 +218,13 @@ export const TeacherInvoices = () => {
           (inv.teacher && inv.teacher.trim().toLowerCase() === teacherName?.trim().toLowerCase()),
       )
     return list.filter((invoice) => {
-      const matchesSearch = invoice.teacher.toLowerCase().includes(searchTerm.toLowerCase())
-      const matchesStatus = filterStatus === 'all' || invoice.status === filterStatus
+      const q = searchTerm.trim().toLowerCase()
+      const matchesSearch =
+        !q ||
+        (invoice.teacher || '').toLowerCase().includes(q) ||
+        (invoice.specialization || '').toLowerCase().includes(q)
+      const matchesStatus =
+        filterStatus === 'all' || normalizeInvoiceStatus(invoice.status) === filterStatus
       const matchesDate = !invoice.date || (invoice.date >= startDate && invoice.date <= endDate)
       return matchesSearch && matchesStatus && matchesDate
     })
@@ -257,36 +245,6 @@ export const TeacherInvoices = () => {
       result.totalAmount > 0 ? Math.round((result.unpaidAmount / result.totalAmount) * 100) : 0
     return { totalTeachers: filteredInvoices.length, ...result, unpaidPercentage }
   }, [filteredInvoices])
-
-  const kpiCards = useMemo(
-    () => [
-      {
-        label: 'المعلمات',
-        value: filteredInvoices.length,
-        icon: GraduationCap,
-        accent: 'primary' as const,
-      },
-      {
-        label: 'الإجمالي',
-        value: `${stats.totalAmount.toLocaleString()} ${CURRENCY_SYMBOL}`,
-        icon: DollarSign,
-        accent: 'success' as const,
-      },
-      {
-        label: 'مدفوع',
-        value: `${stats.paidAmount.toLocaleString()} ${CURRENCY_SYMBOL}`,
-        icon: CheckCircle2,
-        accent: 'info' as const,
-      },
-      {
-        label: 'معلق',
-        value: `${stats.unpaidAmount.toLocaleString()} ${CURRENCY_SYMBOL}`,
-        icon: AlertCircle,
-        accent: 'error' as const,
-      },
-    ],
-    [filteredInvoices.length, stats],
-  )
 
   const handleEdit = useCallback(
     (invoice: TeacherInvoice) => {
@@ -418,51 +376,42 @@ export const TeacherInvoices = () => {
   if (loading && invoices.length === 0) return <PageLoader />
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-28" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-28" dir="rtl">
       <div className="mx-auto max-w-page px-2">
+        {/* Hero — internally divided: identity | stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
+          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
         >
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="pointer-events-none absolute rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <div className="mb-2 flex items-center gap-2">
-                <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                  <GraduationCap className="text-white" size={20} />
-                </div>
-                <span className="text-xs font-medium text-white/70">المالية</span>
+          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
+          <div className="bg-success/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                <GraduationCap size={22} className="text-on-primary" />
               </div>
-              <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">
-                فواتير المعلمات
-              </h1>
-              <p className="text-sm text-white/70">إدارة مستحقات المعلمات المالية</p>
+              <div>
+                <h1 className="text-xl font-black leading-tight text-main">فواتير المعلمات</h1>
+                <p className="mt-0.5 text-xs text-muted">إدارة مستحقات المعلمات المالية</p>
+              </div>
             </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">الإجمالي</p>
-                <p className="text-2xl font-bold tabular-nums text-white">
+
+            <div className="hidden h-12 w-px bg-border lg:block" />
+
+            <div className="grid flex-1 grid-cols-2 gap-2">
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-primary">
                   {stats.totalAmount.toLocaleString()}
                 </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي {CURRENCY_SYMBOL}</p>
               </div>
-              <div className="h-10 w-px bg-white/10" />
-              <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">المعلمات</p>
-                <p className="text-lg font-bold text-white">{filteredInvoices.length}</p>
+              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+                <p className="text-lg font-black tabular-nums leading-none text-success">
+                  {filteredInvoices.length}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">فاتورة</p>
               </div>
             </div>
           </div>
@@ -473,117 +422,15 @@ export const TeacherInvoices = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
-            {kpiCards.map((kpi, i) => {
-              const Icon = kpi.icon
-              const gradientMap = {
-                primary: 'from-primary/20 to-primary/5',
-                success: 'from-success-soft to-transparent',
-                info: 'from-info-soft to-transparent',
-                error: 'from-error-soft to-transparent',
-                warning: 'from-warning-soft to-transparent',
-              }
-              const iconBgMap = {
-                primary: 'bg-primary/10 text-primary',
-                success: 'bg-success-soft text-success',
-                info: 'bg-info-soft text-info',
-                error: 'bg-error-soft text-error',
-                warning: 'bg-warning-soft text-warning',
-              }
-              return (
-                <motion.div
-                  key={kpi.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.12 + i * 0.06 }}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  className={cn(
-                    'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
-                    gradientMap[kpi.accent],
-                  )}
-                >
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('rounded-lg p-2', iconBgMap[kpi.accent])}>
-                      <Icon size={16} />
-                    </div>
-                    <div
-                      className={cn(
-                        'h-1 w-12 rounded-full',
-                        kpi.accent === 'primary'
-                          ? 'bg-primary'
-                          : kpi.accent === 'success'
-                            ? 'bg-success'
-                            : kpi.accent === 'info'
-                              ? 'bg-info'
-                              : 'bg-error',
-                      )}
-                    />
-                  </div>
-                  <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                  <p className="text-lg font-bold tabular-nums text-main">{kpi.value}</p>
-                </motion.div>
-              )
-            })}
-          </div>
+          <InvoiceStats stats={stats} />
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="mb-4 flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-2 rounded-xl border border-divider bg-card px-3 py-2">
-              <input
-                aria-label="تاريخ البداية"
-                type="date"
-                className="w-[120px] border-none bg-transparent text-xs font-bold text-main outline-none [color-scheme:var(--color-scheme)]"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-              <span className="text-muted">–</span>
-              <input
-                aria-label="تاريخ النهاية"
-                type="date"
-                className="w-[120px] border-none bg-transparent text-xs font-bold text-main outline-none [color-scheme:var(--color-scheme)]"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-1 items-center gap-2">
-              <input
-                aria-label="بحث باسم المعلمة"
-                type="text"
-                placeholder="بحث باسم المعلمة..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-1 rounded-xl border border-divider bg-card px-3.5 py-2 text-xs font-bold text-dim text-main transition-all focus:border-primary focus:outline-none"
-              />
-              <select
-                aria-label="فلترة الحالة"
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="cursor-pointer appearance-none rounded-xl border border-divider bg-card px-3 py-2 text-xs font-bold text-main transition-all focus:border-primary focus:outline-none"
-              >
-                <option value="all">الكل</option>
-                <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
-                <option value={INVOICE_STATUS.PROCESSING}>قيد المعالجة</option>
-                <option value={INVOICE_STATUS.REVIEWED}>تمت المراجعة</option>
-                <option value={INVOICE_STATUS.UNPAID}>غير مدفوعة</option>
-              </select>
-            </div>
-          </div>
-        </motion.div>
-
-        <InvoiceStats stats={stats} />
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
+          transition={{ delay: 0.15 }}
         >
           <TeacherInvoicesHeader
-            stats={stats}
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
             filterStatus={filterStatus}

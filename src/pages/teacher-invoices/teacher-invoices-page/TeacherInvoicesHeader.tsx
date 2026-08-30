@@ -1,10 +1,8 @@
-import { Search, Calendar, GraduationCap, Plus, X, UserPlus, Trash2, Printer } from 'lucide-react'
+import { Search, Calendar, Plus, X, UserPlus, Trash2, Printer } from 'lucide-react'
 import { INVOICE_STATUS, INVOICE_STATUS_LABEL } from '../../../types/invoice'
-import { CURRENCY_SYMBOL } from '../../../config/constants'
 import { PrimaryBtn, SecondaryBtn, DangerBtn } from '../components/InvoiceUI'
 
 interface TeacherInvoicesHeaderProps {
-  stats: { totalAmount: number }
   searchTerm: string
   onSearchChange: (v: string) => void
   filterStatus: string
@@ -22,7 +20,6 @@ interface TeacherInvoicesHeaderProps {
 }
 
 export const TeacherInvoicesHeader = ({
-  stats,
   searchTerm,
   onSearchChange,
   filterStatus,
@@ -38,21 +35,7 @@ export const TeacherInvoicesHeader = ({
   onPrint,
   isTeacher,
 }: TeacherInvoicesHeaderProps) => (
-  <div className="rounded-2xl border border-border bg-surface p-3 md:p-4">
-    <div className="mb-3 flex items-center justify-between gap-3">
-      <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-          <GraduationCap size={16} className="text-primary" />
-        </div>
-        <div>
-          <h1 className="text-sm font-bold text-main md:text-base">فواتير المعلمات</h1>
-          <p className="text-[10px] font-bold text-muted">إدارة مستحقات المعلمات المالية</p>
-        </div>
-      </div>
-      <span className="whitespace-nowrap rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-bold text-success">
-        {stats.totalAmount.toLocaleString()} {CURRENCY_SYMBOL}
-      </span>
-    </div>
+  <div className="rounded-2xl border border-border bg-card p-3 md:p-4">
     <div className="flex flex-col items-center gap-2 lg:flex-row">
       <div className="flex w-full flex-1 items-center gap-2">
         <div className="relative max-w-md flex-1">
