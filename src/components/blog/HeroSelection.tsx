@@ -77,10 +77,10 @@ export const MobileHero = ({
 
             {/* Content */}
             <div className="min-w-0">
-              <h1 className="mb-1.5 font-heading text-xl font-black leading-tight text-on-primary">
+              <h1 className="mb-1.5 font-heading text-lg font-black leading-tight text-on-primary dark:text-main">
                 مكتبة <span className="text-accent">{academyName}</span>
               </h1>
-              <p className="mb-4 text-[11px] font-medium leading-relaxed text-white/50">
+              <p className="mb-4 text-[10px] font-medium leading-relaxed text-white/50">
                 دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع
                 المراحل في الكويت وقطر والإمارات والسعودية.
               </p>
@@ -95,7 +95,7 @@ export const MobileHero = ({
                 </a>
                 <a
                   href="#mobile-categories"
-                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/10 px-5 py-2.5 text-[11px] font-extrabold text-white backdrop-blur-sm transition-all hover:bg-white/15 active:scale-[0.97] dark:bg-white/5"
+                  className="inline-flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-[11px] font-extrabold text-primary-deep transition-all hover:bg-white/90 active:scale-[0.97]"
                 >
                   تصفح الدورات
                 </a>
@@ -122,7 +122,7 @@ export const MobileHero = ({
               href={`https://wa.me/${libraryWhatsapp.replace(/\D/g, '')}?text=${encodeURIComponent('السلام عليكم، أريد الاستفسار عن المكتبة')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-success-soft py-2.5 text-[11px] font-extrabold text-success transition-all hover:bg-success-light active:scale-[0.97]"
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-success py-2.5 text-[11px] font-extrabold text-on-success transition-all hover:bg-success-hover active:scale-[0.97]"
             >
               <MessageCircle size={13} />
               واتساب
@@ -135,7 +135,7 @@ export const MobileHero = ({
               }
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-info-soft py-2.5 text-[11px] font-extrabold text-info transition-all hover:bg-info-light active:scale-[0.97]"
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-info py-2.5 text-[11px] font-extrabold text-on-info transition-all hover:bg-info-hover active:scale-[0.97]"
             >
               <Send size={13} />
               تيليجرام
@@ -191,39 +191,46 @@ export const MobileHero = ({
   // For other views (curriculums, grades, languages), show selection grid
   return (
     <div className="pb-6">
-      <div className="mb-4 rounded-3xl border border-primary/30 bg-gradient-to-br from-primary via-primary-deep to-primary px-5 pb-4 pt-5 shadow-lg shadow-primary/10 dark:border-border dark:from-card dark:via-card dark:to-card">
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 backdrop-blur-sm">
-          <BookOpen size={10} className="text-on-primary" />
-          <span className="text-[10px] font-extrabold text-on-primary">
+      <div className="relative mb-4 overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-br from-primary via-primary-deep to-primary px-5 pb-5 pt-5 shadow-lg shadow-primary/10 dark:border-border dark:from-card dark:via-card dark:to-card">
+        <div className="pointer-events-none absolute -end-10 -top-12 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+        <div className="bg-accent/20 pointer-events-none absolute -bottom-14 -start-10 h-32 w-32 rounded-full blur-2xl" />
+
+        <div className="relative">
+          <div className="mb-3 flex items-center gap-2.5">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm">
+              <BookOpen size={15} className="text-on-primary dark:text-main" />
+            </span>
+            <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[10px] font-extrabold text-on-primary backdrop-blur-sm dark:text-main">
+              {view === 'curriculums'
+                ? currentTypeName
+                : view === 'languages'
+                  ? 'تعلم اللغة'
+                  : currentCurriculumName}
+            </span>
+          </div>
+          <h2 className="mb-1 text-lg font-black leading-tight text-on-primary dark:text-main">
+            {view === 'curriculums' ? (
+              <>
+                اختر <span className="text-accent">المنهج</span>
+              </>
+            ) : view === 'languages' ? (
+              <>
+                اختر <span className="text-accent">اللغة</span>
+              </>
+            ) : (
+              <>
+                اختر <span className="text-accent">المرحلة</span>
+              </>
+            )}
+          </h2>
+          <p className="text-[11px] font-medium leading-relaxed text-white/70">
             {view === 'curriculums'
-              ? currentTypeName
+              ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج`
               : view === 'languages'
-                ? 'تعلم اللغة'
-                : currentCurriculumName}
-          </span>
+                ? 'اختر اللغة التي تريد تعلمها'
+                : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`}
+          </p>
         </div>
-        <h2 className="mb-1 text-xl font-black leading-tight text-on-primary">
-          {view === 'curriculums' ? (
-            <>
-              اختر <span className="text-white/80">المنهج</span>
-            </>
-          ) : view === 'languages' ? (
-            <>
-              اختر <span className="text-white/80">اللغة</span>
-            </>
-          ) : (
-            <>
-              اختر <span className="text-white/80">المرحلة</span>
-            </>
-          )}
-        </h2>
-        <p className="text-xs font-medium leading-relaxed text-white/70">
-          {view === 'curriculums'
-            ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج`
-            : view === 'languages'
-              ? 'اختر اللغة التي تريد تعلمها'
-              : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`}
-        </p>
       </div>
 
       <div className="mb-5 grid grid-cols-2 gap-2.5">
@@ -310,7 +317,7 @@ export const DesktopHero = ({
                 </span>
               </div>
 
-              <h1 className="mb-5 max-w-xl font-heading text-4xl font-black leading-[1.1] text-on-primary xl:text-5xl 2xl:text-[3.5rem]">
+              <h1 className="mb-5 max-w-xl font-heading text-4xl font-black leading-[1.1] text-on-primary dark:text-main xl:text-5xl 2xl:text-[3.5rem]">
                 مركز ملفات
                 <span className="relative mx-3 inline-block">
                   <span className="relative z-10 text-accent">{academyName}</span>
@@ -318,7 +325,7 @@ export const DesktopHero = ({
                 </span>
               </h1>
 
-              <p className="mb-8 max-w-md text-base font-medium leading-relaxed text-white/60 lg:text-lg">
+              <p className="mb-8 max-w-md text-sm font-medium leading-relaxed text-white/60 lg:text-base">
                 دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع
                 المراحل في الكويت وقطر والإمارات والسعودية.
               </p>
@@ -491,103 +498,117 @@ export const DesktopHero = ({
 
   // For other views (curriculums, grades, languages)
   return (
-    <div className="mx-auto flex w-full flex-col items-center gap-8 lg:flex-row lg:gap-12">
-      <div className="w-full text-center lg:w-[55%] lg:text-start">
-        <div className="mb-5 inline-flex items-center gap-2 rounded-2xl border border-primary/20 bg-primary-soft px-4 py-2">
-          <BookOpen size={13} className="text-primary" />
-          <span className="text-xs font-extrabold text-primary">
-            {view === 'curriculums'
-              ? `تحميل ${currentTypeName}`
-              : view === 'languages'
-                ? 'تعلم اللغة'
-                : currentCurriculumName}
-          </span>
+    <div className="mx-auto w-full">
+      {/* Banner */}
+      <section className="relative overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-bl from-primary-deep via-primary to-primary-deep shadow-lg shadow-primary/10 dark:border-border dark:from-card dark:via-card dark:to-card">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute start-[-15%] top-[-40%] h-[130%] w-[60%] rounded-full bg-white/[0.05] blur-[100px]" />
+          <div className="bg-accent/15 absolute bottom-[-40%] end-[-10%] h-[120%] w-[50%] rounded-full blur-[100px]" />
         </div>
 
-        <h1 className="mb-4 font-heading text-3xl font-black leading-tight text-main sm:text-4xl lg:text-5xl">
-          {view === 'curriculums' ? (
-            <>
-              اختر <span className="text-primary">المنهج</span>
-            </>
-          ) : view === 'languages' ? (
-            <>
-              اختر <span className="text-primary">اللغة</span>
-            </>
-          ) : (
-            <>
-              اختر <span className="text-primary">المرحلة</span>
-            </>
-          )}
-        </h1>
-        <p className="mx-auto mb-8 max-w-lg text-sm font-medium leading-relaxed text-muted sm:text-base lg:mx-0">
-          {view === 'curriculums'
-            ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-            : view === 'languages'
-              ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
-              : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-        </p>
-        <div className="mx-auto grid max-w-lg grid-cols-2 gap-3 lg:mx-0">
-          {(view === 'languages' ? languages.map((l) => ({ ...l, icon: l.icon })) : gridItems).map(
-            (item: GridItem) => (
-              <div key={item.id}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchParams((prev) => {
-                      const next = new URLSearchParams(prev)
-                      if (view === 'curriculums') {
-                        next.set('curriculum', item.id)
-                        next.set('view', 'grades')
-                        ;['grade', 'term', 'subject'].forEach((k) => next.delete(k))
-                      } else if (view === 'languages') {
-                        next.set('language', item.id)
-                        next.set('view', 'language-sections')
-                        ;['curriculum', 'level', 'grade', 'term', 'subject'].forEach((k) =>
-                          next.delete(k),
-                        )
-                      } else {
-                        next.set('level', item.id)
-                        next.set('view', 'classrooms')
-                        ;['term', 'subject'].forEach((k) => next.delete(k))
-                      }
-                      return next
-                    })
-                  }}
-                  className="relative flex w-full cursor-pointer items-center gap-3 overflow-hidden rounded-2xl border border-border bg-card px-4 py-4 text-start text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-elevation-2 active:scale-[0.97]"
-                >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-                    <item.icon size={18} className="text-primary" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="block text-sm font-extrabold leading-tight">{item.name}</span>
-                    {item.sub && (
-                      <span className="block text-[11px] font-medium text-muted">{item.sub}</span>
-                    )}
-                  </div>
-                </button>
+        <div className="relative grid grid-cols-1 items-center gap-6 px-6 py-8 md:grid-cols-[1fr_240px] lg:px-10 lg:py-10">
+          <div className="text-center md:text-start">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3.5 py-1.5 backdrop-blur-sm">
+              <BookOpen size={12} className="text-on-primary dark:text-main" />
+              <span className="text-[11px] font-extrabold text-on-primary dark:text-main">
+                {view === 'curriculums'
+                  ? `تحميل ${currentTypeName}`
+                  : view === 'languages'
+                    ? 'تعلم اللغة'
+                    : currentCurriculumName}
+              </span>
+            </div>
+
+            <h1 className="mb-3 font-heading text-3xl font-black leading-tight text-on-primary dark:text-main lg:text-4xl">
+              {view === 'curriculums' ? (
+                <>
+                  اختر <span className="text-accent">المنهج</span>
+                </>
+              ) : view === 'languages' ? (
+                <>
+                  اختر <span className="text-accent">اللغة</span>
+                </>
+              ) : (
+                <>
+                  اختر <span className="text-accent">المرحلة</span>
+                </>
+              )}
+            </h1>
+            <p className="mx-auto max-w-lg text-sm font-medium leading-relaxed text-white/60 md:mx-0 lg:text-base">
+              {view === 'curriculums'
+                ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+                : view === 'languages'
+                  ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
+                  : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
+            </p>
+          </div>
+
+          <div className="relative hidden h-[190px] items-center justify-center md:flex">
+            <div className="animate-spin-slow pointer-events-none absolute inset-[8%] rounded-full border-[1.5px] border-dashed border-white/20"></div>
+            <div className="animate-reverse-spin-slow pointer-events-none absolute inset-[16%] rounded-full border-[1.5px] border-dashed border-accent-soft"></div>
+            <div className="to-accent/10 pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-white/10 blur-2xl"></div>
+            <picture className="relative z-10 flex h-full w-full items-center justify-center">
+              <source srcSet="/book3.webp" type="image/webp" />
+              <source srcSet="/book3.avif" type="image/avif" />
+              <img
+                src="/book3.png"
+                alt="بوابة دارين السابعة التعليمية"
+                width="380"
+                height="380"
+                loading="lazy"
+                className="h-4/5 w-4/5 object-contain drop-shadow-lg"
+              />
+            </picture>
+          </div>
+        </div>
+      </section>
+
+      {/* Selection grid */}
+      <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-3">
+        {(view === 'languages' ? languages.map((l) => ({ ...l, icon: l.icon })) : gridItems).map(
+          (item: GridItem) => (
+            <button
+              type="button"
+              key={item.id}
+              onClick={() => {
+                setSearchParams((prev) => {
+                  const next = new URLSearchParams(prev)
+                  if (view === 'curriculums') {
+                    next.set('curriculum', item.id)
+                    next.set('view', 'grades')
+                    ;['grade', 'term', 'subject'].forEach((k) => next.delete(k))
+                  } else if (view === 'languages') {
+                    next.set('language', item.id)
+                    next.set('view', 'language-sections')
+                    ;['curriculum', 'level', 'grade', 'term', 'subject'].forEach((k) =>
+                      next.delete(k),
+                    )
+                  } else {
+                    next.set('level', item.id)
+                    next.set('view', 'classrooms')
+                    ;['term', 'subject'].forEach((k) => next.delete(k))
+                  }
+                  return next
+                })
+              }}
+              className="group relative flex w-full cursor-pointer items-center gap-3 overflow-hidden rounded-2xl border border-border bg-card px-4 py-4 text-start text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97]"
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft transition-transform duration-300 group-hover:scale-110">
+                <item.icon size={18} className="text-primary" />
               </div>
-            ),
-          )}
-        </div>
-      </div>
-      <div className="hidden w-full justify-center lg:flex lg:w-[45%]">
-        <div className="relative flex aspect-[3/4] w-full max-w-[420px] items-center justify-center">
-          <div className="animate-spin-slow pointer-events-none absolute inset-[12%] rounded-full border-[1.5px] border-dashed border-primary/30"></div>
-          <div className="animate-reverse-spin-slow pointer-events-none absolute inset-[17%] rounded-full border-[1.5px] border-dashed border-accent-soft"></div>
-          <div className="pointer-events-none absolute inset-0 animate-pulse rounded-full bg-gradient-to-br from-primary/15 to-primary/10 blur-3xl"></div>
-          <picture className="flex h-full w-full items-center justify-center">
-            <source srcSet="/book3.webp" type="image/webp" />
-            <source srcSet="/book3.avif" type="image/avif" />
-            <img
-              src="/book3.png"
-              alt="بوابة دارين السابعة التعليمية"
-              width="380"
-              height="380"
-              loading="lazy"
-              className="relative z-10 h-4/5 w-4/5 object-contain drop-shadow-lg"
-            />
-          </picture>
-        </div>
+              <div className="min-w-0 flex-1">
+                <span className="block text-sm font-extrabold leading-tight">{item.name}</span>
+                {item.sub && (
+                  <span className="block text-[11px] font-medium text-muted">{item.sub}</span>
+                )}
+              </div>
+              <ArrowLeft
+                size={14}
+                className="shrink-0 text-primary opacity-0 transition-all duration-300 group-hover:opacity-100"
+              />
+            </button>
+          ),
+        )}
       </div>
     </div>
   )
