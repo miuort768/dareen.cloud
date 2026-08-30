@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import { GraduationCap, Plus, RefreshCw, FileText } from 'lucide-react'
+import { GraduationCap, Plus, RefreshCw, FileText, AlertCircle } from 'lucide-react'
 import { ConfirmModal } from '../shared/components/ConfirmModal'
 import { api } from '../lib/api'
 import { CURRENCY_SYMBOL } from '../config/constants'
@@ -230,8 +230,22 @@ export const TeacherInvoices = () => {
     })
   }, [invoices, searchTerm, filterStatus, startDate, endDate, isTeacher, teacherName, currentUser])
 
+  // Currency policy: admin scope sums EGP only; teacher scope sums the dominant
+  // currency of their own invoices. Others excluded from totals (warning shown).
+  const { mixedCount, scopedInvoices } = useMemo(() => {
+    const byCur: Record<string, number> = {}
+    invoices.forEach((inv) => {
+      const c = inv.currency || 'EGP'
+      byCur[c] = (byCur[c] || 0) + (Number(inv.amount) || 0)
+    })
+    const entries = Object.entries(byCur).sort((a, b) => b[1] - a[1])
+    const target = isTeacher ? entries[0]?.[0] || 'EGP' : 'EGP'
+    const scoped = invoices.filter((inv) => (inv.currency || 'EGP') === target)
+    return { mixedCount: invoices.length - scoped.length, scopedInvoices: scoped }
+  }, [invoices, isTeacher])
+
   const stats = useMemo(() => {
-    const result = filteredInvoices.reduce(
+    const result = scopedInvoices.reduce(
       (acc, inv) => {
         acc.totalAmount += inv.amount
         acc.personalExpenses += inv.personalExpenses || 0
@@ -243,8 +257,8 @@ export const TeacherInvoices = () => {
     )
     const unpaidPercentage =
       result.totalAmount > 0 ? Math.round((result.unpaidAmount / result.totalAmount) * 100) : 0
-    return { totalTeachers: filteredInvoices.length, ...result, unpaidPercentage }
-  }, [filteredInvoices])
+    return { totalTeachers: scopedInvoices.length, ...result, unpaidPercentage }
+  }, [scopedInvoices])
 
   const handleEdit = useCallback(
     (invoice: TeacherInvoice) => {
@@ -401,7 +415,7 @@ export const TeacherInvoices = () => {
             <div className="hidden h-12 w-px bg-border lg:block" />
 
             <div className="grid flex-1 grid-cols-2 gap-2">
-              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+              <div className="rounded-xl border border-primary-soft bg-primary-soft px-3 py-2.5 text-center">
                 <p className="text-lg font-black tabular-nums leading-none text-primary">
                   {stats.totalAmount.toLocaleString()}
                 </p>
@@ -415,6 +429,13 @@ export const TeacherInvoices = () => {
               </div>
             </div>
           </div>
+
+          {mixedCount > 0 && (
+            <p className="relative z-10 mt-3 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning">
+              <AlertCircle size={13} className="shrink-0" />
+              {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
+            </p>
+          )}
         </motion.div>
 
         <motion.div

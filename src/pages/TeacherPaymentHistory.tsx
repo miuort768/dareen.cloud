@@ -266,7 +266,9 @@ export const TeacherPaymentHistory = () => {
                 <p className="text-lg font-black tabular-nums leading-none text-primary">
                   {stats.total.toFixed(3)}
                 </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي {CURRENCY_SYMBOL}</p>
+                <p className="mt-1 text-[10px] font-bold text-muted">
+                  الإجمالي {invoices[0]?.currency || 'EGP'}
+                </p>
               </div>
               <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
                 <p className="text-lg font-black tabular-nums leading-none text-success">

@@ -122,16 +122,35 @@ export const StudentInvoices = () => {
     [invoices, searchTerm, filterStatus],
   )
 
-  const firstInvoice = invoices[0]
-  const studentCurrency = firstInvoice?.currency || CURRENCY_SYMBOL
+  // Currency policy: admin scope sums EGP only; student/parent scope sums the
+  // dominant currency of their own invoices. Other currencies are excluded from
+  // totals (warning shown) and remain visible in the list.
+  const { primaryCurrency, mixedCount, scopedInvoices } = useMemo(() => {
+    const byCur: Record<string, number> = {}
+    invoices.forEach((inv) => {
+      const c = inv.currency || 'EGP'
+      byCur[c] = (byCur[c] || 0) + (Number(inv.amount) || 0)
+    })
+    const entries = Object.entries(byCur).sort((a, b) => b[1] - a[1])
+    const target = isAdmin ? 'EGP' : entries[0]?.[0] || 'EGP'
+    const scoped = invoices.filter((inv) => (inv.currency || 'EGP') === target)
+    return {
+      primaryCurrency: target,
+      mixedCount: invoices.length - scoped.length,
+      scopedInvoices: scoped,
+    }
+  }, [invoices, isAdmin])
 
   const stats = useMemo(() => {
-    const normalized = invoices.map((inv) => ({ ...inv, norm: normalizeInvoiceStatus(inv.status) }))
+    const normalized = scopedInvoices.map((inv) => ({
+      ...inv,
+      norm: normalizeInvoiceStatus(inv.status),
+    }))
     const sum = (s: InvoiceStatus) =>
-      normalized.filter((i) => i.norm === s).reduce((acc, i) => acc + money(i.amount), 0)
+      normalized.filter((i) => i.norm === s).reduce((acc, i) => acc + (Number(i.amount) || 0), 0)
     const count = (s: InvoiceStatus) => normalized.filter((i) => i.norm === s).length
     return {
-      total: normalized.reduce((acc, i) => acc + money(i.amount), 0),
+      total: normalized.reduce((acc, i) => acc + (Number(i.amount) || 0), 0),
       paid: sum('paid'),
       pending: sum('pending'),
       overdue: sum('overdue'),
@@ -139,7 +158,7 @@ export const StudentInvoices = () => {
       pendingCount: count('pending'),
       overdueCount: count('overdue'),
     }
-  }, [invoices])
+  }, [scopedInvoices])
 
   const kpiCards = useMemo(
     () => [
@@ -216,11 +235,11 @@ export const StudentInvoices = () => {
             <div className="hidden h-12 w-px bg-border lg:block" />
 
             <div className="grid flex-1 grid-cols-2 gap-2">
-              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
+              <div className="rounded-xl border border-primary-soft bg-primary-soft px-3 py-2.5 text-center">
                 <p className="text-lg font-black tabular-nums leading-none text-primary">
                   {stats.total.toLocaleString()}
                 </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي {studentCurrency}</p>
+                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي {primaryCurrency}</p>
               </div>
               <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
                 <p className="text-lg font-black tabular-nums leading-none text-success">
@@ -238,6 +257,13 @@ export const StudentInvoices = () => {
               <span className="hidden sm:inline">طباعة</span>
             </button>
           </div>
+
+          {mixedCount > 0 && (
+            <p className="relative z-10 mt-3 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning">
+              <AlertCircle size={13} className="shrink-0" />
+              {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
+            </p>
+          )}
         </motion.div>
 
         <motion.div
@@ -266,7 +292,7 @@ export const StudentInvoices = () => {
                   </div>
                   <p className="text-2xl font-bold tabular-nums text-main">
                     {kpi.value.toLocaleString()}{' '}
-                    <span className="text-xs text-muted">{studentCurrency}</span>
+                    <span className="text-xs text-muted">{primaryCurrency}</span>
                   </p>
                   <p className="mt-1 text-[11px] text-muted">
                     {kpi.label} · {kpi.count} فاتورة

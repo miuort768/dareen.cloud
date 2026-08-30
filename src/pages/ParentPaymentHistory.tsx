@@ -145,33 +145,51 @@ export const ParentPaymentHistory = () => {
     [invoices, searchTerm, filterStatus, filterChild],
   )
 
+  // Family-scope currency policy: totals sum the DOMINANT currency only.
+  // Invoices in other currencies are listed but excluded from sums (warning shown).
+  const { primaryCurrency, mixedCount, scopedInvoices } = useMemo(() => {
+    const byCur: Record<string, number> = {}
+    invoices.forEach((i) => {
+      const c = i.currency || 'EGP'
+      byCur[c] = (byCur[c] || 0) + (Number(i.amount) || 0)
+    })
+    const entries = Object.entries(byCur).sort((a, b) => b[1] - a[1])
+    const primary = entries[0]?.[0] || CURRENCY_SYMBOL
+    const scoped = invoices.filter((i) => (i.currency || 'EGP') === primary)
+    return {
+      primaryCurrency: primary,
+      mixedCount: invoices.length - scoped.length,
+      scopedInvoices: scoped,
+    }
+  }, [invoices])
+
   const stats = useMemo(
     () => ({
-      total: invoices.reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
-      paid: invoices
+      total: scopedInvoices.reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
+      paid: scopedInvoices
         .filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID)
         .reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
-      pending: invoices
+      pending: scopedInvoices
         .filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PENDING)
         .reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
-      overdue: invoices
+      overdue: scopedInvoices
         .filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.OVERDUE)
         .reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
-      paidCount: invoices.filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID)
-        .length,
-      pendingCount: invoices.filter(
+      paidCount: scopedInvoices.filter(
+        (i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID,
+      ).length,
+      pendingCount: scopedInvoices.filter(
         (i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PENDING,
       ).length,
-      overdueCount: invoices.filter(
+      overdueCount: scopedInvoices.filter(
         (i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.OVERDUE,
       ).length,
     }),
-    [invoices],
+    [scopedInvoices],
   )
 
   const isEmpty = invoices.length === 0
   const noResults = filteredInvoices.length === 0 && !isEmpty
-  const reportCurrency = invoices[0]?.currency || CURRENCY_SYMBOL
 
   if (authLoading || loading) {
     return (
@@ -249,7 +267,7 @@ export const ParentPaymentHistory = () => {
               <div className="rounded-xl border border-primary-soft bg-primary-soft px-3 py-2.5 text-center">
                 <p className="text-base font-black tabular-nums leading-none text-primary">
                   {stats.total.toLocaleString()}
-                  <span className="ms-1 text-[10px] font-bold text-muted">{reportCurrency}</span>
+                  <span className="ms-1 text-[10px] font-bold text-muted">{primaryCurrency}</span>
                 </p>
                 <p className="mt-1 text-[10px] font-bold text-muted">إجمالي الفواتير</p>
               </div>
@@ -276,6 +294,13 @@ export const ParentPaymentHistory = () => {
                 )
               })}
             </div>
+
+            {mixedCount > 0 && (
+              <p className="mt-3 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning">
+                <AlertCircle size={13} className="shrink-0" />
+                {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
+              </p>
+            )}
           </div>
         </motion.div>
 
