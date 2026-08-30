@@ -91,7 +91,7 @@ export const StatChipsRow = ({ stats }: { stats: DashboardStats }) => {
               </span>
               <ChevronLeft
                 size={12}
-                className="text-dim opacity-0 transition-opacity group-hover:opacity-100 rtl:rotate-180"
+                className="text-dim opacity-0 transition-opacity group-hover:opacity-100"
               />
             </div>
             <p className="font-dash text-lg font-black tabular-nums leading-none tracking-tight text-main">

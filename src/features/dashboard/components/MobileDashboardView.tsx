@@ -11,6 +11,8 @@ import {
   Receipt,
   UserCheck,
   ListTodo,
+  Megaphone,
+  FileText,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import type { Session } from '../../../types'
@@ -47,15 +49,27 @@ const asTimelineSessions = (list: unknown[]) =>
   list as { id: string; studentName: string; date?: string; status?: string }[]
 
 const ACTIONS = [
-  { label: 'طالب جديد', icon: UserPlus, path: '/students', tone: 'bg-primary-soft text-primary' },
+  { label: 'طالب جديد', icon: UserPlus, path: '/students', tone: 'bg-primary text-on-primary' },
   {
-    label: 'فاتورة',
+    label: 'تسجيل حضور',
+    icon: UserCheck,
+    path: '/attendance',
+    tone: 'bg-success text-on-success',
+  },
+  {
+    label: 'الفواتير',
     icon: Receipt,
     path: '/student-invoices',
-    tone: 'bg-success-soft text-success',
+    tone: 'bg-warning text-on-warning',
   },
-  { label: 'الحضور', icon: UserCheck, path: '/attendance', tone: 'bg-info-soft text-info' },
-  { label: 'المهام', icon: ListTodo, path: '/tasks', tone: 'bg-warning-soft text-warning' },
+  { label: 'المهام', icon: ListTodo, path: '/tasks', tone: 'bg-info text-on-info' },
+  {
+    label: 'إعلان جديد',
+    icon: Megaphone,
+    path: '/announcements',
+    tone: 'bg-accent text-on-accent',
+  },
+  { label: 'التقارير', icon: FileText, path: '/reports', tone: 'bg-main text-inverse' },
 ]
 
 /**
@@ -106,9 +120,9 @@ export const MobileDashboardView = ({
 
         <StatChipsRow stats={stats} />
 
-        <section className="rounded-2xl border border-border bg-card p-3 shadow-elevation-1">
+        <section>
           <MobileSectionHeader title="إجراءات سريعة" icon={Zap} className="mb-2.5 px-0.5" />
-          <div className="grid grid-cols-4 gap-1.5">
+          <div className="grid grid-cols-3 gap-2">
             {ACTIONS.map((action) => {
               const Icon = action.icon
               return (
@@ -116,19 +130,13 @@ export const MobileDashboardView = ({
                   key={action.label}
                   onClick={() => navigate(action.path)}
                   aria-label={action.label}
-                  className="flex flex-col items-center gap-1.5 rounded-xl py-2.5 outline-none transition-all duration-200 hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.94]"
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-1.5 rounded-2xl px-1 py-3.5 outline-none transition-all duration-200 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.94]',
+                    action.tone,
+                  )}
                 >
-                  <span
-                    className={cn(
-                      'flex h-11 w-11 items-center justify-center rounded-2xl',
-                      action.tone,
-                    )}
-                  >
-                    <Icon size={19} strokeWidth={1.9} />
-                  </span>
-                  <span className="text-[10px] font-bold leading-none text-main">
-                    {action.label}
-                  </span>
+                  <Icon size={19} strokeWidth={1.9} />
+                  <span className="text-[10px] font-bold leading-none">{action.label}</span>
                 </button>
               )
             })}
@@ -178,7 +186,11 @@ export const MobileDashboardView = ({
 
         <section>
           <MobileSectionHeader title="سجل النشاطات" icon={Activity} className="mb-2" />
-          <ActivityTimeline sessions={asTimelineSessions(rawSessions)} tasks={asTasks(tasks)} />
+          <ActivityTimeline
+            sessions={asTimelineSessions(rawSessions)}
+            tasks={asTasks(tasks)}
+            showHeader={false}
+          />
         </section>
       </div>
     </div>

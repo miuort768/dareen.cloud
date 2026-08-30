@@ -29,7 +29,7 @@ export const MoneyStrip = ({ stats }: { stats: DashboardStats }) => {
           </p>
         </div>
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface text-muted transition-colors group-hover:bg-hover group-hover:text-main">
-          <ChevronLeft size={16} className="rtl:rotate-180" />
+          <ChevronLeft size={16} />
         </span>
       </div>
 

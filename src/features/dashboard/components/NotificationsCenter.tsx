@@ -133,13 +133,9 @@ export const NotificationsCenter = ({
   const criticalCount = smartAlerts.filter((a) => a.priority === 'high').length
 
   return (
-    <div
-      className="rounded-2xl border border-border bg-card p-5 font-dash shadow-sm dark:border-border dark:bg-card"
-      dir="rtl"
-    >
+    <div className="rounded-2xl border border-border bg-card p-4 font-dash" dir="rtl">
       {/* Tabs */}
       <div className="mb-4 flex items-center justify-between gap-3">
-        <p className="text-[10px] font-bold text-muted">مراقبة الأنظمة</p>
         <div className="flex gap-0.5 rounded-lg bg-surface p-0.5 dark:bg-hover" role="tablist">
           <button
             role="tab"
@@ -170,19 +166,19 @@ export const NotificationsCenter = ({
             عمليات
           </button>
         </div>
+        {criticalCount > 0 && (
+          <Badge
+            variant="default"
+            className="h-5 rounded-lg border-border bg-error-soft px-2.5 text-[10px] text-error"
+          >
+            {criticalCount} حرج
+          </Badge>
+        )}
       </div>
 
       {/* Smart Alerts — Timeline */}
       {activeTab === 'smart' && (
         <div className="space-y-1">
-          {criticalCount > 0 && (
-            <Badge
-              variant="default"
-              className="mb-3 h-5 rounded-lg border-border bg-error-soft px-2.5 text-[10px] text-error"
-            >
-              {criticalCount} تنبيه حرج
-            </Badge>
-          )}
           {smartAlerts.length > 0 ? (
             <div className="relative">
               <div className="absolute bottom-2 start-[15px] top-2 w-px bg-divider" />

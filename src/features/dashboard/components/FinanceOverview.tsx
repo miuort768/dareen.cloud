@@ -57,10 +57,7 @@ export const FinanceOverview = React.memo(
     }
 
     return (
-      <div
-        className="rounded-2xl border border-border bg-card p-5 shadow-sm dark:border-border dark:bg-card"
-        dir="rtl"
-      >
+      <div className="rounded-2xl border border-border bg-card p-4" dir="rtl">
         {/* Header */}
         {showHeader && (
           <div className="mb-4 flex items-center justify-between">

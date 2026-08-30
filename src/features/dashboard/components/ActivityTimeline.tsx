@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 interface ActivityTimelineProps {
   sessions: { id: string; studentName: string; date?: string; status?: string }[]
   tasks: { id: string; title: string; dueDate?: string; status?: string; priority?: string }[]
+  showHeader?: boolean
 }
 
 interface TimelineItem {
@@ -17,7 +18,7 @@ interface TimelineItem {
   badge: string
 }
 
-export const ActivityTimeline = ({ sessions, tasks }: ActivityTimelineProps) => {
+export const ActivityTimeline = ({ sessions, tasks, showHeader = true }: ActivityTimelineProps) => {
   const sessionItems: TimelineItem[] = sessions.slice(0, 5).map((s) => ({
     id: `s-${s.id}`,
     title: `جلسة: ${s.studentName}`,
@@ -71,29 +72,28 @@ export const ActivityTimeline = ({ sessions, tasks }: ActivityTimelineProps) => 
   }
 
   return (
-    <div
-      className="rounded-2xl border border-border bg-card p-5 font-dash shadow-sm dark:border-border dark:bg-card"
-      dir="rtl"
-    >
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-info-soft dark:bg-info-soft">
-            <Clock size={16} className="text-info" />
+    <div className="rounded-2xl border border-border bg-card p-4 font-dash" dir="rtl">
+      {showHeader && (
+        <div className="mb-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-info-soft">
+              <Clock size={16} className="text-info" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-main">سجل النشاطات</h3>
+              <p className="text-[10px] text-muted">آخر العمليات المسجلة</p>
+            </div>
           </div>
-          <div>
-            <h3 className="text-sm font-bold text-main dark:text-main">سجل النشاطات</h3>
-            <p className="text-[10px] text-muted dark:text-muted">آخر العمليات المسجلة</p>
-          </div>
+          {allItems.length > 0 && (
+            <Badge
+              variant="default"
+              className="h-5 rounded-lg border-border bg-info-soft px-2.5 text-[10px] text-info"
+            >
+              {allItems.length} نشاط
+            </Badge>
+          )}
         </div>
-        {allItems.length > 0 && (
-          <Badge
-            variant="default"
-            className="h-5 rounded-lg border-border bg-info-soft px-2.5 text-[10px] text-info"
-          >
-            {allItems.length} نشاط
-          </Badge>
-        )}
-      </div>
+      )}
 
       {allItems.length === 0 ? (
         <div className="py-8 text-center">
