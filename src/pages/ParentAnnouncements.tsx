@@ -70,7 +70,7 @@ export const ParentAnnouncements = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-full space-y-4 pb-2 pt-3 md:space-y-5 md:pt-8" dir="rtl">
+      <div className="min-h-full space-y-4 bg-background pb-2 pt-3 md:space-y-5 md:pt-8" dir="rtl">
         <Skeleton className="h-28 w-full rounded-2xl" />
         <Skeleton className="h-12 w-full rounded-xl" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
@@ -83,7 +83,7 @@ export const ParentAnnouncements = () => {
   }
 
   return (
-    <div className="min-h-full space-y-4 pb-2 pt-3 md:space-y-5 md:pt-8" dir="rtl">
+    <div className="min-h-full space-y-4 bg-background pb-2 pt-3 md:space-y-5 md:pt-8" dir="rtl">
       {/* الترويسة */}
       <div className="rounded-2xl border border-border bg-card px-4 py-6 md:px-6 md:py-8">
         <div className="mb-3 flex items-center gap-3">
