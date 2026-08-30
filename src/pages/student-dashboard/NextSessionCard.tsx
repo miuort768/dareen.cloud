@@ -61,7 +61,7 @@ export const NextSessionCard = ({ nextSession }: NextSessionCardProps) => {
             className="flex shrink-0 items-center gap-1.5 rounded-lg bg-primary px-5 py-2.5 text-xs font-semibold text-on-primary transition-all duration-200 hover:bg-primary-hover active:scale-95 dark:bg-primary dark:text-on-primary dark:hover:bg-primary-hover"
             aria-label={`دخول حصة ${nextSession.subject}`}
           >
-            دخول <ArrowLeft size={12} className="rtl:rotate-180" />
+            دخول <ArrowLeft size={12} />
           </button>
         </div>
       </div>

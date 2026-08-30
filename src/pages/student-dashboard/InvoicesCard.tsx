@@ -63,7 +63,7 @@ export const InvoicesCard = () => {
           onClick={() => navigate('/student-invoices')}
           className="flex items-center gap-1 text-xs font-semibold text-primary transition-all hover:underline dark:text-primary"
         >
-          عرض الكل <ArrowLeft size={10} className="rtl:rotate-180" />
+          عرض الكل <ArrowLeft size={10} />
         </button>
       </div>
 

@@ -13,7 +13,7 @@ export const RecentActivity = ({ pointLogs }: RecentActivityProps) => {
       <h3 className="mb-4 text-sm font-bold text-main dark:text-main">آخر النشاطات</h3>
 
       <div className="relative">
-        <div className="absolute bottom-0 end-[11px] top-0 w-px bg-border dark:bg-border" />
+        <div className="absolute bottom-0 start-[11px] top-0 w-px bg-border dark:bg-border" />
 
         <div className="space-y-3">
           {recent.map((log, i) => (

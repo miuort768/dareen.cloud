@@ -20,13 +20,13 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
+        <h3 className="text-[13px] font-bold text-main dark:text-main">المواد</h3>
         <button
           onClick={() => navigate('/schedule')}
           className="text-[11px] font-semibold text-primary transition-all hover:underline dark:text-primary"
         >
           عرض الكل
         </button>
-        <h3 className="text-[13px] font-bold text-main dark:text-main">المواد</h3>
       </div>
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

@@ -14,13 +14,13 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
+        <h3 className="text-sm font-bold text-main dark:text-main">تابع تعلمك</h3>
         <button
           onClick={() => navigate('/schedule')}
           className="text-xs font-semibold text-primary transition-all hover:underline dark:text-primary"
         >
           عرض الكل
         </button>
-        <h3 className="text-sm font-bold text-main dark:text-main">تابع تعلمك</h3>
       </div>
 
       <div
@@ -70,7 +70,7 @@ export const ContinueLearning = ({ enrollments }: ContinueLearningProps) => {
                   onClick={() => navigate('/schedule')}
                   className="flex items-center gap-1 text-[11px] font-semibold text-primary transition-all hover:underline"
                 >
-                  متابعة <ArrowLeft size={10} className="rtl:rotate-180" />
+                  متابعة <ArrowLeft size={10} />
                 </button>
               </div>
             </div>

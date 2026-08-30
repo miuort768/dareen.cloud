@@ -16,7 +16,6 @@ import { NextSessionCard } from './NextSessionCard'
 import { TodayTasks } from './TodayTasks'
 import { ProgressOverview } from './ProgressOverview'
 import { SubjectCards } from './SubjectCards'
-import { ContinueLearning } from './ContinueLearning'
 import { InvoicesCard } from './InvoicesCard'
 import { AchievementsSection } from './AchievementsSection'
 import { RecentActivity } from './RecentActivity'
@@ -134,8 +133,8 @@ export const StudentDashboardDesktop = ({
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <div className="space-y-6 lg:col-span-2">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+          <div className="space-y-6 lg:col-span-7">
             <motion.div {...fadeUp(0.04)}>
               <NextSessionCard nextSession={nextSession} />
             </motion.div>
@@ -144,21 +143,13 @@ export const StudentDashboardDesktop = ({
                 <TodayTasks tasks={todayTasks} />
               </motion.div>
             )}
-            {enrollments.length > 0 && (
-              <motion.div {...fadeUp(0.14)}>
-                <SubjectCards enrollments={enrollments} />
-              </motion.div>
-            )}
-            <motion.div {...fadeUp(0.18)}>
-              <ContinueLearning enrollments={enrollments} />
-            </motion.div>
             {pointLogs.length > 0 && (
               <motion.div {...fadeUp(0.22)}>
                 <RecentActivity pointLogs={pointLogs} />
               </motion.div>
             )}
           </div>
-          <div className="space-y-6">
+          <div className="space-y-6 lg:col-span-5">
             <motion.div {...fadeUp(0.06)}>
               <ProgressOverview stats={stats} points={points} rank={rank} nextRank={nextRank} />
             </motion.div>
@@ -170,6 +161,12 @@ export const StudentDashboardDesktop = ({
             </motion.div>
           </div>
         </div>
+
+        {enrollments.length > 0 && (
+          <motion.div {...fadeUp(0.14)}>
+            <SubjectCards enrollments={enrollments} />
+          </motion.div>
+        )}
       </main>
     </div>
   )
