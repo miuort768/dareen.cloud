@@ -5,6 +5,7 @@ import { CURRENCY_SYMBOL } from '../../../config/constants'
 import { SectionCard, SectionTitle } from './ClosingUI'
 import { cn } from '../../../lib/utils'
 import { api } from '../../../lib/api'
+import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
 
 interface StudentInvoice {
   id: string
@@ -36,7 +37,8 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
     setSavingId(item.id)
     setSaveError('')
     try {
-      const newStatus = item.status === 'paid' ? 'pending' : 'paid'
+      const wasPaid = normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
+      const newStatus = wasPaid ? 'pending' : 'paid'
       await api.patch(`/studentInvoices/${item.id}`, { status: newStatus })
       await queryClient.invalidateQueries({ queryKey: ['student-invoices-closing'] })
     } catch {
@@ -96,12 +98,14 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
                       disabled={savingId === item.id}
                       className={cn(
                         'rounded-xl px-3 py-1 text-micro font-bold uppercase transition-all active:scale-95 disabled:opacity-60',
-                        item.status === 'paid'
+                        normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
                           ? 'bg-success text-on-success'
                           : 'border border-error bg-error-light text-error',
                       )}
                     >
-                      {item.status === 'paid' ? 'تم التحصيل' : 'انتظار'}
+                      {normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
+                        ? 'تم التحصيل'
+                        : 'انتظار'}
                     </button>
                   </td>
                 </tr>
@@ -135,12 +139,14 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
                   disabled={savingId === item.id}
                   className={cn(
                     'rounded-xl px-3 py-1 text-micro font-bold uppercase transition-all active:scale-95 disabled:opacity-60',
-                    item.status === 'paid'
+                    normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
                       ? 'bg-success text-on-success'
                       : 'border border-error bg-error-light text-error',
                   )}
                 >
-                  {item.status === 'paid' ? 'تم التحصيل' : 'انتظار'}
+                  {normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
+                    ? 'تم التحصيل'
+                    : 'انتظار'}
                 </button>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { api } from '../../lib/api'
 import { useCurrentUser } from '../../context/AppContext'
 import { CURRENCY_SYMBOL } from '@/config/constants'
+import { normalizeInvoiceStatus } from '../../types/invoice'
 
 interface StudentInvoice {
   id: string
@@ -44,8 +45,10 @@ export const InvoicesCard = () => {
 
   if (isLoading || invoices.length === 0) return null
 
-  const pending = invoices.filter((i) => i.status === 'pending' || i.status === 'overdue')
-  const totalPending = pending.reduce((sum, i) => sum + i.amount, 0)
+  const pending = invoices.filter((i) =>
+    ['pending', 'overdue', 'unpaid', 'partially_paid'].includes(normalizeInvoiceStatus(i.status)),
+  )
+  const totalPending = pending.reduce((sum, i) => sum + (Number(i.amount) || 0), 0)
 
   return (
     <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card">
