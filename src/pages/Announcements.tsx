@@ -198,7 +198,7 @@ export const Announcements = () => {
   }
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-2" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-2" dir="rtl">
       <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
         {/* Hero — internally divided: identity | stats */}
         <motion.div

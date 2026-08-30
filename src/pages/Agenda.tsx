@@ -192,7 +192,7 @@ export const Agenda = () => {
   }
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-24 font-sans" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-24 font-sans" dir="rtl">
       <div className="relative z-10 mx-auto max-w-page px-2">
         <PageHeader
           title="جدول المواعيد"

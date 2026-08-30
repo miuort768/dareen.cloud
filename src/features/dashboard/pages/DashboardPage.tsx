@@ -65,7 +65,7 @@ export const Dashboard = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="min-h-full pb-24"
+          className="min-h-full bg-background pb-24"
           dir="rtl"
         >
           <div className="relative z-10 mx-auto hidden max-w-page space-y-6 px-6 md:block">

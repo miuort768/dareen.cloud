@@ -95,7 +95,7 @@ export const Finance = () => {
   }
 
   return (
-    <div className="relative min-h-full overflow-x-hidden pb-28" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background pb-28" dir="rtl">
       <div className="mx-auto max-w-page space-y-6 px-2.5 sm:px-4 md:px-6">
         {/* Hero Banner */}
         <motion.div

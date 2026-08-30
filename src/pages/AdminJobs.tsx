@@ -281,7 +281,7 @@ export const AdminJobs = () => {
   const emptySearch = !loading && filtered.length === 0 && apps.length > 0
 
   return (
-    <div className="min-h-full pb-8" dir="rtl">
+    <div className="min-h-full bg-background pb-8" dir="rtl">
       <div className="mx-auto max-w-5xl px-2.5 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
