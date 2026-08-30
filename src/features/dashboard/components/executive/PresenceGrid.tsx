@@ -1,30 +1,44 @@
 import { memo } from 'react'
 import type { PresenceUser } from '../../services/executiveService'
-import { Users } from 'lucide-react'
+import { Users, GraduationCap, BookOpen, User, Shield } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-const STATUS_BG: Record<string, string> = {
-  online: 'bg-success-soft',
-  away: 'bg-warning-soft',
-  offline: 'bg-surface',
-}
-
-const STATUS_TEXT: Record<string, string> = {
-  online: 'text-success',
-  away: 'text-warning',
-  offline: 'text-muted',
-}
-
-const ROLE_LABELS: Record<string, string> = {
-  admin: 'مدير',
-  teacher: 'معلم',
-  parent: 'ولي أمر',
-  student: 'طالب',
-}
-
-function getInitials(name: string): string {
-  return (name || '?').charAt(0).toUpperCase()
-}
+const ROLE_TILES: {
+  role: string
+  label: string
+  icon: typeof Users
+  iconBg: string
+  iconText: string
+}[] = [
+  {
+    role: 'student',
+    label: 'طالب',
+    icon: GraduationCap,
+    iconBg: 'bg-primary-soft',
+    iconText: 'text-primary',
+  },
+  {
+    role: 'teacher',
+    label: 'معلم',
+    icon: BookOpen,
+    iconBg: 'bg-info-soft',
+    iconText: 'text-info',
+  },
+  {
+    role: 'parent',
+    label: 'ولي أمر',
+    icon: User,
+    iconBg: 'bg-success-soft',
+    iconText: 'text-success',
+  },
+  {
+    role: 'admin',
+    label: 'مدير',
+    icon: Shield,
+    iconBg: 'bg-accent-soft',
+    iconText: 'text-accent',
+  },
+]
 
 export const PresenceGrid = memo(function PresenceGrid({
   users,
@@ -34,10 +48,17 @@ export const PresenceGrid = memo(function PresenceGrid({
   total: number
 }) {
   if (!users) return null
-  const onlineCount = users.filter((u) => u.status === 'online').length
+
+  const onlineUsers = users.filter((u) => u.status === 'online')
+  const onlineCount = onlineUsers.length
+
+  const onlineByRole: Record<string, number> = {}
+  onlineUsers.forEach((u) => {
+    onlineByRole[u.role] = (onlineByRole[u.role] || 0) + 1
+  })
 
   return (
-    <div className="border-success-soft/60 rounded-2xl border bg-card p-5 font-dash" dir="rtl">
+    <div className="rounded-none border border-border bg-card p-5 font-dash" dir="rtl">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-success-soft">
@@ -56,56 +77,33 @@ export const PresenceGrid = memo(function PresenceGrid({
         </div>
       </div>
 
-      <div className="custom-scrollbar grid max-h-[320px] grid-cols-1 gap-1 overflow-y-auto sm:grid-cols-2">
-        {users.length === 0 && (
-          <div className="py-8 text-center">
-            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-surface">
-              <Users size={16} className="text-dim" />
-            </div>
-            <p className="text-xs font-bold text-muted">لا يوجد متصلين</p>
-          </div>
-        )}
-        {users.map((user) => {
-          const initials = getInitials(user.name)
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+        {ROLE_TILES.map((tile) => {
+          const Icon = tile.icon
+          const count = onlineByRole[tile.role] || 0
           return (
             <div
-              key={user.userId}
-              className="flex items-center gap-3 rounded-xl p-2.5 transition-colors hover:bg-surface"
+              key={tile.role}
+              className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-surface p-3"
             >
-              <div className="relative shrink-0">
-                <div
-                  className={cn(
-                    'flex h-9 w-9 items-center justify-center rounded-xl text-sm font-bold',
-                    STATUS_BG[user.status] || 'bg-surface',
-                    STATUS_TEXT[user.status] || 'text-muted',
-                  )}
-                >
-                  {initials}
-                </div>
-                {user.status === 'online' && (
-                  <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-card bg-success">
-                    <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-40" />
-                  </span>
+              <span
+                className={cn(
+                  'flex h-8 w-8 items-center justify-center rounded-lg',
+                  tile.iconBg,
+                  tile.iconText,
                 )}
-                {user.status === 'away' && (
-                  <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-card bg-warning" />
+              >
+                <Icon size={15} />
+              </span>
+              <span
+                className={cn(
+                  'text-xl font-black tabular-nums leading-none',
+                  count > 0 ? 'text-main' : 'text-dim',
                 )}
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-[11px] font-bold text-main">{user.name || 'مستخدم'}</p>
-                <p className="text-[10px] text-muted">
-                  {ROLE_LABELS[user.role] || user.role}
-                  {user.teachingSubject && ` · ${user.teachingSubject}`}
-                </p>
-              </div>
-              {user.status === 'offline' && user.secondsAgo < 3600 && (
-                <span className="whitespace-nowrap text-[9px] tabular-nums text-muted">
-                  منذ{' '}
-                  {user.secondsAgo < 60
-                    ? `${user.secondsAgo}ث`
-                    : `${Math.round(user.secondsAgo / 60)}د`}
-                </span>
-              )}
+              >
+                {count}
+              </span>
+              <span className="text-[10px] font-bold text-muted">{tile.label}</span>
             </div>
           )
         })}

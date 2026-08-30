@@ -35,7 +35,7 @@ const PULSE_ICONS: Record<string, typeof TrendingUp> = {
   unavailable: Activity,
 }
 
-const PULSE_COLORS: Record<string, string> = {
+const PULSE_ARC: Record<string, string> = {
   excellent: 'var(--bg-success)',
   good: 'var(--bg-info)',
   fair: 'var(--bg-warning)',
@@ -44,71 +44,81 @@ const PULSE_COLORS: Record<string, string> = {
 }
 
 export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: ExecutivePulse }) {
-  const color = PULSE_COLORS[pulse.status] || 'var(--text-muted)'
+  const arcColor = PULSE_ARC[pulse.status] || 'var(--text-muted)'
+  const scoreColor = PULSE_TEXT[pulse.status] || 'text-muted'
   const LabelIcon = PULSE_ICONS[pulse.status] || Activity
 
-  const radius = 36
-  const circumference = 2 * Math.PI * radius
-  const offset = circumference - (pulse.score / 100) * circumference
+  const score = Math.max(0, Math.min(100, Number(pulse.score) || 0))
+
+  const radius = 46
+  const arcLength = Math.PI * radius
+  const offset = arcLength * (1 - score / 100)
 
   return (
     <div
-      className="flex flex-col items-center rounded-2xl border border-border bg-card p-3.5 font-dash"
+      className="flex h-full flex-col rounded-2xl border border-border bg-card p-4 font-dash"
       dir="rtl"
     >
-      <div className="mb-2.5 flex items-center gap-2 self-start">
-        <Activity size={14} className="text-primary" />
-        <h3 className="text-xs font-bold text-main">مؤشر الأداء</h3>
+      {/* Header + status badge */}
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft">
+            <Activity size={13} className="text-primary" />
+          </span>
+          <h3 className="text-xs font-bold text-main">مؤشر الأداء</h3>
+        </div>
+        <span
+          className={cn(
+            'inline-flex shrink-0 items-center gap-1 rounded-lg border px-2 py-1 text-[10px] font-bold',
+            PULSE_BADGE[pulse.status] || 'border-border bg-surface text-muted',
+          )}
+        >
+          <LabelIcon size={10} />
+          {PULSE_LABELS[pulse.status] || 'غير متاح'}
+        </span>
       </div>
 
-      <div className="relative h-24 w-24">
-        <svg className="h-full w-full -rotate-90" viewBox="0 0 128 128">
-          <circle
-            cx="64"
-            cy="64"
-            r={radius}
+      {/* Semicircle gauge — fills right → left (RTL) */}
+      <div className="relative mx-auto mt-2 w-full max-w-[210px]">
+        <svg viewBox="0 0 128 76" className="block w-full" aria-hidden="true">
+          <path
+            d="M 110 68 A 46 46 0 0 0 18 68"
             fill="none"
             stroke="var(--border)"
-            strokeWidth="6"
+            strokeWidth="8"
             strokeLinecap="round"
           />
-          <circle
-            cx="64"
-            cy="64"
-            r={radius}
+          <path
+            d="M 110 68 A 46 46 0 0 0 18 68"
             fill="none"
-            stroke={color}
-            strokeWidth="6"
+            stroke={arcColor}
+            strokeWidth="8"
             strokeLinecap="round"
-            strokeDasharray={circumference}
+            strokeDasharray={arcLength}
             strokeDashoffset={offset}
             style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1)' }}
           />
         </svg>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span
-            className={cn(
-              'text-xl font-bold tabular-nums',
-              PULSE_TEXT[pulse.status] || 'text-muted',
-            )}
-          >
-            {pulse.score}
+        <div className="absolute inset-x-0 bottom-0.5 flex flex-col items-center">
+          <span className={cn('text-[32px] font-black tabular-nums leading-none', scoreColor)}>
+            {score}
           </span>
-          <span className="mt-0.5 text-[9px] text-muted">/ 100</span>
+          <span className="mt-1 text-[9px] font-bold text-muted">من 100</span>
         </div>
       </div>
 
-      <span
-        className={cn(
-          'mt-2 inline-flex items-center gap-1.5 rounded-xl border px-3 py-1 text-[10px] font-bold',
-          PULSE_BADGE[pulse.status] || 'border-border bg-surface text-muted',
-        )}
-      >
-        <LabelIcon size={11} />
-        {PULSE_LABELS[pulse.status] || 'غير متاح'}
-      </span>
+      {/* Scale */}
+      <div className="mx-auto flex w-full max-w-[210px] justify-between px-2 text-[8px] font-bold text-dim">
+        <span>0</span>
+        <span>100</span>
+      </div>
 
-      <p className="mt-2 text-center text-[10px] leading-relaxed text-muted">{pulse.message}</p>
+      {/* Message */}
+      <div className="mt-auto pt-3">
+        <p className="rounded-lg bg-surface p-2.5 text-center text-[10px] leading-relaxed text-muted">
+          {pulse.message}
+        </p>
+      </div>
     </div>
   )
 })
