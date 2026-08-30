@@ -79,7 +79,10 @@ export const RolesPage = () => {
   }, {})
 
   return (
-    <div className="relative min-h-full bg-background pb-24" dir="rtl">
+    <div
+      className="from-primary-soft/40 relative min-h-full bg-gradient-to-b via-background to-background pb-24"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-page space-y-4 px-2 py-4">
         <div className="mb-2 flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-card bg-primary-soft">

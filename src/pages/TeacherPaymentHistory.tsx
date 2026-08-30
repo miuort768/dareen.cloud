@@ -222,7 +222,10 @@ export const TeacherPaymentHistory = () => {
 
   if (loading) {
     return (
-      <div className="min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
+      <div
+        className="from-primary-soft/40 min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-24"
+        dir="rtl"
+      >
         <div className="mx-auto max-w-page space-y-4 px-2 pt-4">
           <Skeleton className="h-36 rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
@@ -237,7 +240,10 @@ export const TeacherPaymentHistory = () => {
   }
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-background pb-24" dir="rtl">
+    <div
+      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-24"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-page px-2">
         {/* Hero — internally divided: identity | stats */}
         <motion.div

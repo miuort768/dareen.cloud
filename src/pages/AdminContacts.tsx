@@ -237,7 +237,10 @@ export const AdminContacts = () => {
   ]
 
   return (
-    <div className="min-h-full bg-background pb-8" dir="rtl">
+    <div
+      className="from-info-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-5xl px-2.5 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -518,7 +521,7 @@ export const AdminContacts = () => {
                           </div>
                         </div>
 
-                        <div className="mb-3 rounded-xl border border-divider bg-background p-3.5">
+                        <div className="from-info-soft/40 mb-3 rounded-xl border border-divider bg-gradient-to-b via-background to-background p-3.5">
                           <p className="whitespace-pre-wrap text-xs font-bold leading-relaxed text-main">
                             {msg.message || 'لا توجد رسالة'}
                           </p>

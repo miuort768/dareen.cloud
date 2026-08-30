@@ -126,7 +126,10 @@ export const Appointments = () => {
   if (loading && allAppointments.length === 0) return <PageLoader />
 
   return (
-    <div className="relative min-h-full bg-background pb-24" dir="rtl">
+    <div
+      className="from-info-soft/40 relative min-h-full bg-gradient-to-b via-background to-background pb-24"
+      dir="rtl"
+    >
       <div className="mx-auto hidden max-w-page px-2 md:block">
         {/* Hero */}
         <motion.div

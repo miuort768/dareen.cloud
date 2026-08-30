@@ -192,7 +192,10 @@ export const Agenda = () => {
   }
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-background pb-24 font-sans" dir="rtl">
+    <div
+      className="from-info-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-24 font-sans"
+      dir="rtl"
+    >
       <div className="relative z-10 mx-auto max-w-page px-2">
         <PageHeader
           title="جدول المواعيد"
@@ -225,7 +228,7 @@ export const Agenda = () => {
                   'shrink-0 whitespace-nowrap rounded-xl px-3 py-2 text-[10px] font-bold transition-all',
                   activeDay === day
                     ? 'bg-primary text-on-primary shadow-sm'
-                    : 'border border-border bg-background text-dim hover:text-main',
+                    : 'from-info-soft/40 border border-border bg-gradient-to-b via-background to-background text-dim hover:text-main',
                 )}
               >
                 {day}
@@ -286,7 +289,7 @@ export const Agenda = () => {
                         <p className="text-[10px] font-bold text-dim">{app.studentGrade}</p>
                       </div>
                     </div>
-                    <div className="rounded-lg bg-background px-2 py-1 font-mono text-[10px] font-bold text-dim">
+                    <div className="from-info-soft/40 rounded-lg bg-gradient-to-b via-background to-background px-2 py-1 font-mono text-[10px] font-bold text-dim">
                       {app.time}
                     </div>
                   </div>

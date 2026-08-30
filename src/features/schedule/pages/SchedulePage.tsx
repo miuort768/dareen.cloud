@@ -314,14 +314,17 @@ export const Schedule = () => {
 
   if (loading)
     return (
-      <div className="flex min-h-full flex-col items-center justify-center gap-3 bg-background">
+      <div className="from-info-soft/40 flex min-h-full flex-col items-center justify-center gap-3 bg-gradient-to-b via-background to-background">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-border border-t-primary" />
         <p className="text-xs font-bold text-muted">جاري تحميل الجدول...</p>
       </div>
     )
 
   return (
-    <div className="relative min-h-full bg-background pb-24" dir="rtl">
+    <div
+      className="from-info-soft/40 relative min-h-full bg-gradient-to-b via-background to-background pb-24"
+      dir="rtl"
+    >
       <div className="mx-auto hidden max-w-page px-2 md:block">
         <ScheduleHeader
           searchTerm={searchTerm}

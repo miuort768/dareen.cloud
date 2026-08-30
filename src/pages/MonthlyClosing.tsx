@@ -322,7 +322,10 @@ export const MonthlyClosing = () => {
   if (isLoading) return <PageLoader />
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-background pb-28" dir="rtl">
+    <div
+      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-28"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-page px-2">
         {/* Hero — internally divided: identity | stats | toolbar */}
         <motion.div

@@ -213,7 +213,10 @@ export const Attendance = () => {
   )
 
   return (
-    <div className="relative min-h-full bg-background pb-24 font-sans" dir="rtl">
+    <div
+      className="from-success-soft/40 relative min-h-full bg-gradient-to-b via-background to-background pb-24 font-sans"
+      dir="rtl"
+    >
       {/* Mobile view */}
       <div className="md:hidden">
         <MobileAttendance />

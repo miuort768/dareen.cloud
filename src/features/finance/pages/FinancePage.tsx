@@ -97,95 +97,83 @@ export const Finance = () => {
   return (
     <div className="relative min-h-full overflow-x-hidden bg-background pb-28" dir="rtl">
       <div className="mx-auto max-w-page space-y-6 px-2.5 sm:px-4 md:px-6">
-        {/* Hero Banner */}
+        {/* Hero — clean divided card with finance identity */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 dark:border-primary/20 dark:from-slate-950 dark:via-indigo-950/90 dark:to-slate-950 md:p-8"
+          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
         >
-          <div className="absolute inset-0 opacity-[0.04]">
-            <svg width="100%" height="100%">
-              <defs>
-                <pattern
-                  id="finance-hero-grid"
-                  x="0"
-                  y="0"
-                  width="28"
-                  height="28"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <circle cx="2" cy="2" r="1" fill="white" />
-                  <circle cx="16" cy="16" r="0.8" fill="white" opacity="0.4" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#finance-hero-grid)" />
-            </svg>
-          </div>
-          <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <div className="mb-2 flex items-center gap-2">
-                <div className="rounded-xl bg-white/15 p-2 backdrop-blur-sm">
-                  <TrendingUp className="text-white" size={20} />
-                </div>
-                <span className="text-xs font-medium text-white/70">المالية</span>
+          <div className="bg-success/10 pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
+
+          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
+            <div className="flex items-center gap-4">
+              <div className="shadow-success/30 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-success shadow-lg">
+                <TrendingUp size={22} className="text-on-success" />
               </div>
-              <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">
-                الإدارة المالية
-              </h1>
-              <p className="text-sm text-white/70">نظرة شاملة على التدفقات المالية للمعهد</p>
+              <div>
+                <h1 className="text-xl font-black leading-tight text-main">الإدارة المالية</h1>
+                <p className="mt-0.5 text-xs text-muted">نظرة شاملة على التدفقات المالية للمعهد</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
+
+            <div className="hidden h-12 w-px bg-border lg:block" />
+
+            <div className="grid flex-1 grid-cols-3 gap-2">
+              {[
+                {
+                  label: 'إيرادات الشهر',
+                  value: (state.monthIncome || 0).toLocaleString(),
+                  icon: ArrowUpRight,
+                  tone: 'text-success',
+                },
+                {
+                  label: 'مصاريف الشهر',
+                  value: (state.monthExpenses || 0).toLocaleString(),
+                  icon: ArrowDownRight,
+                  tone: 'text-error',
+                },
+                {
+                  label: 'صافي الربح',
+                  value: (state.netProfit || 0).toLocaleString(),
+                  icon: Wallet,
+                  tone: 'text-info',
+                },
+              ].map((s) => {
+                const Icon = s.icon
+                return (
+                  <div
+                    key={s.label}
+                    className="rounded-xl border border-border bg-surface px-2 py-2.5 text-center"
+                  >
+                    <p className={cn('text-base font-black tabular-nums leading-none', s.tone)}>
+                      {s.value}
+                      <span className="ms-1 text-[9px] font-bold text-muted">
+                        {getCurrencySymbol(state.reportCurrency)}
+                      </span>
+                    </p>
+                    <p className="mt-1 flex items-center justify-center gap-1 text-[10px] font-bold text-muted">
+                      <Icon size={10} className={s.tone} />
+                      {s.label}
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2">
               <button
                 onClick={() => actions.refresh?.()}
-                className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/10 px-3.5 py-2 text-xs font-bold text-white/80 backdrop-blur-sm transition-all hover:bg-white/20 hover:text-white"
+                className="flex h-10 items-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95"
               >
                 <RefreshCcw size={13} /> تحديث
               </button>
               <button
                 onClick={() => navigate('/monthly-closing')}
-                className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/10 px-3.5 py-2 text-xs font-bold text-white/80 backdrop-blur-sm transition-all hover:bg-white/20 hover:text-white"
+                className="flex h-10 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
               >
                 <CalendarCheck size={13} /> تسوية
               </button>
-            </div>
-          </div>
-          {/* Summary bar */}
-          <div className="relative z-10 mt-5 grid grid-cols-3 gap-3 border-t border-white/10 pt-5">
-            <div className="flex items-center gap-2">
-              <div className="rounded-lg bg-success-soft p-1.5">
-                <ArrowUpRight className="text-success" size={14} />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-white/50">إيرادات الشهر</p>
-                <p className="text-sm font-bold tabular-nums text-on-primary">
-                  {(state.monthIncome || 0).toLocaleString()}{' '}
-                  {getCurrencySymbol(state.reportCurrency)}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="rounded-lg bg-error-soft p-1.5">
-                <ArrowDownRight className="text-error" size={14} />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-white/50">مصاريف الشهر</p>
-                <p className="text-sm font-bold tabular-nums text-on-primary">
-                  {(state.monthExpenses || 0).toLocaleString()}{' '}
-                  {getCurrencySymbol(state.reportCurrency)}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="rounded-lg bg-info-soft p-1.5">
-                <Wallet className="text-info" size={14} />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-white/50">صافي الربح</p>
-                <p className="text-sm font-bold tabular-nums text-on-primary">
-                  {(state.netProfit || 0).toLocaleString()}{' '}
-                  {getCurrencySymbol(state.reportCurrency)}
-                </p>
-              </div>
             </div>
           </div>
         </motion.div>

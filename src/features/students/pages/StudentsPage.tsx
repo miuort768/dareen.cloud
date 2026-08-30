@@ -322,7 +322,10 @@ export const Students = () => {
 
   if (loading) {
     return (
-      <div className="relative min-h-full bg-background" dir="rtl">
+      <div
+        className="from-primary-soft/40 relative min-h-full bg-gradient-to-b via-background to-background"
+        dir="rtl"
+      >
         <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
           <Skeleton className="h-14 w-full rounded-2xl" />
           <Skeleton className="h-12 w-full rounded-xl" />
@@ -339,7 +342,10 @@ export const Students = () => {
   }
 
   return (
-    <div className="relative min-h-full bg-background pb-2" dir="rtl">
+    <div
+      className="from-primary-soft/40 relative min-h-full bg-gradient-to-b via-background to-background pb-2"
+      dir="rtl"
+    >
       <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
         {/* Mobile compact header */}
         <div className="md:hidden">

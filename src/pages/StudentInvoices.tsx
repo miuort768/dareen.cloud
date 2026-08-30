@@ -192,7 +192,10 @@ export const StudentInvoices = () => {
 
   if (loading) {
     return (
-      <div className="min-h-full bg-background pb-8" dir="rtl">
+      <div
+        className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
+        dir="rtl"
+      >
         <div className="mx-auto max-w-5xl space-y-4 px-2.5 pt-6 sm:px-6">
           <Skeleton className="h-28 rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
@@ -208,7 +211,10 @@ export const StudentInvoices = () => {
   }
 
   return (
-    <div className="min-h-full bg-background pb-8" dir="rtl">
+    <div
+      className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-5xl px-2.5 sm:px-6">
         {/* Hero — internally divided: identity | stats | print */}
         <motion.div
