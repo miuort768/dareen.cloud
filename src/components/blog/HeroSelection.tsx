@@ -5,6 +5,14 @@ import { useAcademyName } from '../../context/AppContext'
 import { useSettingsStore } from '../../store/settingsStore'
 import { Image } from '../../shared/components/ui'
 
+const GRID_TONES = [
+  'bg-primary text-on-primary',
+  'bg-success text-on-success',
+  'bg-info text-on-info',
+  'bg-warning text-on-warning',
+  'bg-error text-on-error',
+]
+
 interface HeroSelectionProps {
   view: ViewType
   gridItems: GridItem[]
@@ -145,7 +153,7 @@ export const MobileHero = ({
 
         {/* Category buttons */}
         <div id="mobile-categories" className="mb-3 grid grid-cols-2 gap-2.5">
-          {gridItems.map((item: GridItem) => (
+          {gridItems.map((item: GridItem, i: number) => (
             <button
               type="button"
               key={item.id}
@@ -174,13 +182,17 @@ export const MobileHero = ({
                   return next
                 })
               }}
-              className="relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-border bg-card p-5 text-main shadow-sm transition-all duration-200 hover:border-primary/30 hover:shadow-md active:scale-[0.97]"
+              className={`relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:opacity-90 active:scale-[0.97] ${
+                GRID_TONES[i % GRID_TONES.length]
+              }`}
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft">
-                <item.icon size={20} className="text-primary" />
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/20">
+                <item.icon size={20} />
               </div>
               <span className="text-center text-sm font-extrabold leading-tight">{item.name}</span>
-              {item.sub && <span className="text-[10px] font-bold text-muted">{item.sub}</span>}
+              {item.sub && (
+                <span className="text-center text-[10px] font-bold opacity-75">{item.sub}</span>
+              )}
             </button>
           ))}
         </div>
@@ -235,7 +247,7 @@ export const MobileHero = ({
 
       <div className="mb-5 grid grid-cols-2 gap-2.5">
         {(view === 'languages' ? languages.map((l) => ({ ...l, icon: l.icon })) : gridItems).map(
-          (item: GridItem) => (
+          (item: GridItem, i: number) => (
             <button
               type="button"
               key={item.id}
@@ -260,13 +272,17 @@ export const MobileHero = ({
                   return next
                 })
               }}
-              className="relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-border bg-card p-5 text-main shadow-sm transition-all duration-200 hover:border-primary/30 hover:shadow-md active:scale-[0.97]"
+              className={`relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:opacity-90 active:scale-[0.97] ${
+                GRID_TONES[i % GRID_TONES.length]
+              }`}
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-soft">
-                <item.icon size={20} className="text-primary" />
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/20">
+                <item.icon size={20} />
               </div>
               <span className="text-center text-sm font-extrabold leading-tight">{item.name}</span>
-              {item.sub && <span className="text-[10px] font-bold text-muted">{item.sub}</span>}
+              {item.sub && (
+                <span className="text-center text-[10px] font-bold opacity-75">{item.sub}</span>
+              )}
             </button>
           ),
         )}
@@ -441,7 +457,7 @@ export const DesktopHero = ({
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {gridItems.map((item: GridItem) => (
+            {gridItems.map((item: GridItem, i: number) => (
               <button
                 key={item.id}
                 type="button"
@@ -468,19 +484,19 @@ export const DesktopHero = ({
                     return next
                   })
                 }}
-                className="group relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-2xl border border-border bg-card p-5 text-start transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none"
+                className={`group relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-2xl p-5 text-start shadow-sm transition-all duration-300 hover:-translate-y-1 hover:opacity-95 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none ${
+                  GRID_TONES[i % GRID_TONES.length]
+                }`}
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
-                  <item.icon size={22} className="text-primary" />
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20 transition-all duration-300 group-hover:scale-110">
+                  <item.icon size={22} />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="mb-0.5 text-base font-extrabold text-main transition-colors duration-300 group-hover:text-primary">
-                    {item.name}
-                  </h3>
+                  <h3 className="mb-0.5 text-base font-extrabold">{item.name}</h3>
                   {item.sub && (
-                    <p className="text-[11px] font-medium leading-relaxed text-muted">{item.sub}</p>
+                    <p className="text-[11px] font-medium leading-relaxed opacity-75">{item.sub}</p>
                   )}
-                  <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-extrabold text-primary transition-all duration-300 group-hover:gap-2.5">
+                  <span className="mt-1 inline-flex items-center gap-1.5 text-xs font-extrabold transition-all duration-300 group-hover:gap-2.5">
                     تصفح المحتوى
                     <ArrowLeft
                       size={12}
@@ -566,7 +582,7 @@ export const DesktopHero = ({
       {/* Selection grid */}
       <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-3">
         {(view === 'languages' ? languages.map((l) => ({ ...l, icon: l.icon })) : gridItems).map(
-          (item: GridItem) => (
+          (item: GridItem, i: number) => (
             <button
               type="button"
               key={item.id}
@@ -591,20 +607,22 @@ export const DesktopHero = ({
                   return next
                 })
               }}
-              className="group relative flex w-full cursor-pointer items-center gap-3 overflow-hidden rounded-2xl border border-border bg-card px-4 py-4 text-start text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97]"
+              className={`group relative flex w-full cursor-pointer items-center gap-3 overflow-hidden rounded-2xl px-4 py-4 text-start shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:opacity-95 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97] ${
+                GRID_TONES[i % GRID_TONES.length]
+              }`}
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft transition-transform duration-300 group-hover:scale-110">
-                <item.icon size={18} className="text-primary" />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 transition-transform duration-300 group-hover:scale-110">
+                <item.icon size={18} />
               </div>
               <div className="min-w-0 flex-1">
                 <span className="block text-sm font-extrabold leading-tight">{item.name}</span>
                 {item.sub && (
-                  <span className="block text-[11px] font-medium text-muted">{item.sub}</span>
+                  <span className="block text-[11px] font-medium opacity-75">{item.sub}</span>
                 )}
               </div>
               <ArrowLeft
                 size={14}
-                className="shrink-0 text-primary opacity-0 transition-all duration-300 group-hover:opacity-100"
+                className="shrink-0 opacity-60 transition-all duration-300 group-hover:opacity-100"
               />
             </button>
           ),
