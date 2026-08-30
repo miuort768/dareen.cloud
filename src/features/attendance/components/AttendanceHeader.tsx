@@ -13,6 +13,7 @@ export const AttendanceHeader = ({
   date,
   onDateChange,
   isTeacher,
+  stats,
   teacherCount = 0,
 }: AttendanceHeaderProps) => {
   const [lastSync, setLastSync] = useState(
