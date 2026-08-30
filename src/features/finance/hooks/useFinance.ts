@@ -223,7 +223,7 @@ export const useFinance = () => {
       .reduce((sum, t) => sum + (Number(t.amount) || 0), 0)
 
     const invoiceExpenses = filteredInvoices
-      .filter((i) => ['paid', 'مدفوعة', 'تم الدفع'].includes(i.status?.toLowerCase()))
+      .filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID)
       .reduce(
         (sum, i) => sum + Math.max((Number(i.amount) || 0) - (Number(i.personalExpenses) || 0), 0),
         0,
@@ -281,6 +281,7 @@ export const useFinance = () => {
           type: 'income' as const,
           category: 'حصة دراسية',
           amount: Number(s.price) || 0,
+          currency: s.studentCurrency || 'EGP',
           date: s.date || '',
           description: `(دفق مالي) ${s.studentName} - ${s.subject}`,
           status: s.status === 'completed' ? 'completed' : ('pending' as const),
@@ -290,13 +291,16 @@ export const useFinance = () => {
         type: 'expense' as const,
         category: 'راتب معلمة',
         amount: Math.max((Number(inv.amount) || 0) - (Number(inv.personalExpenses) || 0), 0),
+        currency: inv.currency || 'EGP',
         date: inv.date || '',
         description: `فاتورة مدفوعة: ${inv.teacher}${inv.personalExpenses ? ` (بعد خصم ${inv.personalExpenses} نثريات)` : ''}`,
-        status: ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase())
-          ? 'completed'
-          : ['pending', 'معلقة', 'قيد المعالجة'].includes(inv.status?.toLowerCase())
-            ? 'pending'
-            : ('cancelled' as const),
+        status:
+          normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.PAID
+            ? 'completed'
+            : normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.PROCESSING ||
+                normalizeInvoiceStatus(inv.status) === 'pending'
+              ? 'pending'
+              : ('cancelled' as const),
       })),
     ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
@@ -344,11 +348,23 @@ export const useFinance = () => {
       }
 
       const inc = allTransactions
-        .filter((t) => t.type === 'income' && t.status === 'completed' && isMonth(t.date))
-        .reduce((sum: number, t: { amount: number }) => sum + t.amount, 0)
+        .filter(
+          (t) =>
+            t.type === 'income' &&
+            t.status === 'completed' &&
+            isMonth(t.date) &&
+            (t.currency || 'EGP') === reportCurrency,
+        )
+        .reduce((sum: number, t: { amount: number }) => sum + (Number(t.amount) || 0), 0)
       const exp = allTransactions
-        .filter((t) => t.type === 'expense' && t.status === 'completed' && isMonth(t.date))
-        .reduce((sum: number, t: { amount: number }) => sum + t.amount, 0)
+        .filter(
+          (t) =>
+            t.type === 'expense' &&
+            t.status === 'completed' &&
+            isMonth(t.date) &&
+            (t.currency || 'EGP') === reportCurrency,
+        )
+        .reduce((sum: number, t: { amount: number }) => sum + (Number(t.amount) || 0), 0)
       return {
         month: new Date(y!, m! - 1).toLocaleDateString('ar-EG', { month: 'short' }),
         income: inc,
@@ -357,11 +373,16 @@ export const useFinance = () => {
     })
 
     const expenseByCategory = allTransactions
-      .filter((t) => t.type === 'expense' && t.status === 'completed')
+      .filter(
+        (t) =>
+          t.type === 'expense' &&
+          t.status === 'completed' &&
+          (t.currency || 'EGP') === reportCurrency,
+      )
       .reduce(
         (acc: Record<string, number>, t) => {
           const cat = t.category || 'أخرى'
-          acc[cat] = (acc[cat] || 0) + t.amount
+          acc[cat] = (acc[cat] || 0) + (Number(t.amount) || 0)
           return acc
         },
         {} as Record<string, number>,
@@ -374,7 +395,7 @@ export const useFinance = () => {
     }))
 
     return { monthlyData, pieData }
-  }, [allTransactions, uniqueMonths, serverStats, filterMonth])
+  }, [allTransactions, uniqueMonths, serverStats, filterMonth, reportCurrency])
 
   return {
     state: {

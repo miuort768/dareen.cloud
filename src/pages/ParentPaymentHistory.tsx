@@ -15,6 +15,7 @@ import { api } from '../lib/api'
 import { useShowNotification, useIsLoading } from '../context/AppContext'
 import { Skeleton } from '../shared/components/ui'
 import { CURRENCY_SYMBOL } from '../config/constants'
+import { INVOICE_STATUS, normalizeInvoiceStatus } from '../types/invoice'
 import type { Student } from '../types'
 
 interface StudentInvoiceData {
@@ -197,13 +198,24 @@ export const ParentPaymentHistory = () => {
 
   const stats = useMemo(
     () => ({
-      total: invoices.reduce((sum, i) => sum + i.amount, 0),
-      paid: invoices.filter((i) => i.status === 'paid').reduce((sum, i) => sum + i.amount, 0),
-      pending: invoices.filter((i) => i.status === 'pending').reduce((sum, i) => sum + i.amount, 0),
-      overdue: invoices.filter((i) => i.status === 'overdue').reduce((sum, i) => sum + i.amount, 0),
-      paidCount: invoices.filter((i) => i.status === 'paid').length,
-      pendingCount: invoices.filter((i) => i.status === 'pending').length,
-      overdueCount: invoices.filter((i) => i.status === 'overdue').length,
+      total: invoices.reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
+      paid: invoices
+        .filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID)
+        .reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
+      pending: invoices
+        .filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PENDING)
+        .reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
+      overdue: invoices
+        .filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.OVERDUE)
+        .reduce((sum, i) => sum + (Number(i.amount) || 0), 0),
+      paidCount: invoices.filter((i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PAID)
+        .length,
+      pendingCount: invoices.filter(
+        (i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.PENDING,
+      ).length,
+      overdueCount: invoices.filter(
+        (i) => normalizeInvoiceStatus(i.status) === INVOICE_STATUS.OVERDUE,
+      ).length,
     }),
     [invoices],
   )

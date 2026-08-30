@@ -24,6 +24,7 @@ import {
   getManualExp,
 } from '../utils/dashboardHelpers'
 import { normalizeDayName } from '../../attendance/utils/slotUtils'
+import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../types/invoice'
 
 export const useDashboardData = (currentUser: User | null) => {
   const queryClient = useQueryClient()
@@ -397,12 +398,12 @@ export const useDashboardData = (currentUser: User | null) => {
       ).length,
 
       pendingInvoices: studentInvoices.filter((inv: StudentInvoice) =>
-        ['pending', 'overdue', 'unpaid', 'معلقة', 'غير مدفوعة', 'متأخرة', 'غير مدفوع'].includes(
-          inv.status?.toLowerCase(),
+        ['pending', 'overdue', 'unpaid', 'partially_paid'].includes(
+          normalizeInvoiceStatus(inv.status),
         ),
       ).length,
-      paidInvoices: studentInvoices.filter((inv: StudentInvoice) =>
-        ['paid', 'مدفوعة', 'تم الدفع'].includes(inv.status?.toLowerCase()),
+      paidInvoices: studentInvoices.filter(
+        (inv: StudentInvoice) => normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.PAID,
       ).length,
 
       teacherPoints: isTeacher
