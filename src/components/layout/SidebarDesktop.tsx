@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { PanelLeftClose, PanelLeftOpen, LogOut, CalendarDays } from 'lucide-react'
 import { Image } from '../../shared/components/ui'
@@ -92,195 +91,175 @@ export const SidebarDesktop = ({
   academicYear,
   onToggleCollapse,
   onLogout,
-}: SidebarDesktopProps) => {
-  // Hover-expands the collapsed rail temporarily; the persisted preference only
-  // changes through the toggle button.
-  const [hoverExpanded, setHoverExpanded] = useState(false)
-  const isExpanded = !collapsed || hoverExpanded
-
-  const handleToggle = () => {
-    if (collapsed) {
-      onToggleCollapse() // expand permanently
-      setHoverExpanded(false)
-    } else {
-      setHoverExpanded(true) // mouse is over the rail — keep it open until leave
-      onToggleCollapse() // collapse after the mouse leaves
-    }
-  }
-
-  return (
+}: SidebarDesktopProps) => (
+  <div
+    className={cn(
+      'fixed start-0 top-0 z-50 hidden h-screen shrink-0 flex-col border-e border-border bg-card transition-all duration-300 lg:flex',
+      collapsed ? 'w-16' : 'w-56',
+    )}
+  >
+    {/* Logo */}
     <div
-      onMouseEnter={() => collapsed && setHoverExpanded(true)}
-      onMouseLeave={() => setHoverExpanded(false)}
       className={cn(
-        'fixed start-0 top-0 z-50 hidden h-screen shrink-0 flex-col border-e border-border bg-card transition-all duration-300 lg:flex',
-        isExpanded ? 'w-56' : 'w-16',
-        collapsed && hoverExpanded && 'shadow-2xl',
+        'flex shrink-0 items-center border-b border-border transition-all duration-300',
+        collapsed ? 'h-11 justify-center px-0' : 'h-14 justify-between px-5',
       )}
     >
-      {/* Logo */}
       <div
         className={cn(
-          'flex shrink-0 items-center border-b border-border transition-all duration-300',
-          isExpanded ? 'h-14 justify-between px-5' : 'h-11 justify-center px-0',
+          'flex items-center gap-2.5 overflow-hidden whitespace-nowrap',
+          collapsed && 'gap-0',
         )}
       >
         <div
           className={cn(
-            'flex items-center gap-2.5 overflow-hidden whitespace-nowrap',
-            !isExpanded && 'gap-0',
+            'shrink-0 overflow-hidden rounded-xl transition-all duration-300',
+            collapsed ? 'h-7 w-7' : 'h-8 w-8',
           )}
         >
+          <Image
+            src="/dareen_logo_new.webp"
+            alt="الشعار"
+            className="h-full w-full"
+            imgClassName="object-contain"
+          />
+        </div>
+        <span
+          className={cn(
+            'whitespace-nowrap text-sm font-bold text-main transition-all duration-300',
+            collapsed ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
+          )}
+        >
+          دارين السابعة
+        </span>
+      </div>
+      {academicYear && (
+        <span
+          className={cn(
+            'shrink-0 overflow-hidden transition-all duration-300',
+            collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100',
+          )}
+        >
+          <span className="flex items-center gap-1 whitespace-nowrap rounded-lg bg-primary-soft px-2 py-1 text-[10px] font-bold text-primary">
+            <CalendarDays size={11} />
+            {academicYear}
+          </span>
+        </span>
+      )}
+    </div>
+
+    {/* Navigation */}
+    <nav
+      className={cn(
+        'custom-scrollbar min-h-0 flex-1 overflow-y-auto transition-all duration-300',
+        collapsed ? 'py-1.5' : 'py-3',
+      )}
+      data-sidebar-nav
+    >
+      {sections.map((section, sIdx) => (
+        <div key={section.label} className={cn(sIdx > 0 && (collapsed ? 'mt-0' : 'mt-1'))}>
           <div
             className={cn(
-              'shrink-0 overflow-hidden rounded-xl transition-all duration-300',
-              isExpanded ? 'h-8 w-8' : 'h-7 w-7',
+              'overflow-hidden transition-all duration-300',
+              collapsed ? 'h-0 opacity-0' : 'h-auto opacity-100',
             )}
           >
-            <Image
-              src="/dareen_logo_new.webp"
-              alt="الشعار"
-              className="h-full w-full"
-              imgClassName="object-contain"
-            />
-          </div>
-          <span
-            className={cn(
-              'whitespace-nowrap text-sm font-bold text-main transition-all duration-300',
-              isExpanded ? 'w-auto opacity-100' : 'w-0 overflow-hidden opacity-0',
-            )}
-          >
-            دارين السابعة
-          </span>
-        </div>
-        {academicYear && (
-          <span
-            className={cn(
-              'shrink-0 overflow-hidden transition-all duration-300',
-              isExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
-            )}
-          >
-            <span className="flex items-center gap-1 whitespace-nowrap rounded-lg bg-primary-soft px-2 py-1 text-[10px] font-bold text-primary">
-              <CalendarDays size={11} />
-              {academicYear}
+            <span className="block px-5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-muted">
+              {section.label}
             </span>
-          </span>
-        )}
-      </div>
-
-      {/* Navigation */}
-      <nav
-        className={cn(
-          'custom-scrollbar min-h-0 flex-1 overflow-y-auto transition-all duration-300',
-          isExpanded ? 'py-3' : 'py-1.5',
-        )}
-        data-sidebar-nav
-      >
-        {sections.map((section, sIdx) => (
-          <div key={section.label} className={cn(sIdx > 0 && (!isExpanded ? 'mt-0' : 'mt-1'))}>
-            <div
-              className={cn(
-                'overflow-hidden transition-all duration-300',
-                isExpanded ? 'h-auto opacity-100' : 'h-0 opacity-0',
-              )}
-            >
-              <span className="block px-5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-muted">
-                {section.label}
-              </span>
-            </div>
-            {section.items.map((item) => (
-              <SidebarLink
-                key={`${item.href}-${item.id}`}
-                item={item}
-                collapsed={!isExpanded}
-                totalUnreadCount={totalUnreadCount}
-              />
-            ))}
           </div>
-        ))}
-      </nav>
+          {section.items.map((item) => (
+            <SidebarLink
+              key={`${item.href}-${item.id}`}
+              item={item}
+              collapsed={collapsed}
+              totalUnreadCount={totalUnreadCount}
+            />
+          ))}
+        </div>
+      ))}
+    </nav>
 
-      {/* User profile + actions */}
-      <div className="shrink-0 border-t border-border">
-        {user && (
-          <NavLink
-            to={getProfileLink(user.role)}
-            className={({ isActive }) =>
-              cn(
-                'group flex items-center rounded-xl transition-all duration-300',
-                isExpanded ? 'mx-2 mt-2 gap-2.5 px-3 py-2' : 'mx-1 mt-1.5 justify-center py-1.5',
-                isActive ? 'bg-primary/10 text-primary' : 'text-main hover:bg-hover',
-              )
-            }
+    {/* User profile + actions */}
+    <div className="shrink-0 border-t border-border">
+      {user && (
+        <NavLink
+          to={getProfileLink(user.role)}
+          className={({ isActive }) =>
+            cn(
+              'group flex items-center rounded-xl transition-all duration-300',
+              collapsed ? 'mx-1 mt-1.5 justify-center py-1.5' : 'mx-2 mt-2 gap-2.5 px-3 py-2',
+              isActive ? 'bg-primary/10 text-primary' : 'text-main hover:bg-hover',
+            )
+          }
+        >
+          <Avatar
+            className={cn(
+              'shrink-0 transition-all duration-300 group-hover:scale-105',
+              collapsed ? 'h-7 w-7' : 'h-8 w-8',
+            )}
           >
-            <Avatar
-              className={cn(
-                'shrink-0 transition-all duration-300 group-hover:scale-105',
-                isExpanded ? 'h-8 w-8' : 'h-7 w-7',
-              )}
-            >
-              {user.avatar ? (
-                <AvatarImage src={user.avatar} alt={user.name} />
-              ) : (
-                <AvatarFallback className="bg-primary/10 text-xs font-bold text-primary">
-                  {user.name?.charAt(0)}
-                </AvatarFallback>
-              )}
-            </Avatar>
-            <div
-              className={cn(
-                'overflow-hidden transition-all duration-300',
-                isExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
-              )}
-            >
-              <p className="truncate text-xs font-semibold leading-tight text-main">{user.name}</p>
-              <p className="truncate text-[10px] leading-tight text-muted">
-                {roleLabels[user.role] || user.role}
-              </p>
-            </div>
-          </NavLink>
+            {user.avatar ? (
+              <AvatarImage src={user.avatar} alt={user.name} />
+            ) : (
+              <AvatarFallback className="bg-primary/10 text-xs font-bold text-primary">
+                {user.name?.charAt(0)}
+              </AvatarFallback>
+            )}
+          </Avatar>
+          <div
+            className={cn(
+              'overflow-hidden transition-all duration-300',
+              collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100',
+            )}
+          >
+            <p className="truncate text-xs font-semibold leading-tight text-main">{user.name}</p>
+            <p className="truncate text-[10px] leading-tight text-muted">
+              {roleLabels[user.role] || user.role}
+            </p>
+          </div>
+        </NavLink>
+      )}
+      <div
+        className={cn(
+          'transition-all duration-300',
+          collapsed ? 'space-y-0 px-1.5 pb-1.5' : 'space-y-0.5 px-2 pb-2',
         )}
-        <div
+      >
+        <button
+          onClick={onToggleCollapse}
           className={cn(
-            'transition-all duration-300',
-            isExpanded ? 'space-y-0.5 px-2 pb-2' : 'space-y-0 px-1.5 pb-1.5',
+            'flex w-full items-center gap-2.5 rounded-xl text-muted transition-all duration-200 hover:bg-hover hover:text-main',
+            collapsed ? 'justify-center px-0 py-1.5' : 'px-3 py-2',
           )}
         >
-          <button
-            onClick={handleToggle}
+          {collapsed ? (
+            <PanelLeftOpen size={18} strokeWidth={1.8} />
+          ) : (
+            <>
+              <PanelLeftClose size={18} strokeWidth={1.8} />
+              <span className="text-[13px]">تصغير</span>
+            </>
+          )}
+        </button>
+        <button
+          onClick={onLogout}
+          className={cn(
+            'flex w-full items-center gap-2.5 rounded-xl text-error transition-all duration-200 hover:bg-error-soft hover:text-error',
+            collapsed ? 'justify-center px-0 py-1.5' : 'px-3 py-2',
+          )}
+        >
+          <LogOut size={18} strokeWidth={1.8} />
+          <span
             className={cn(
-              'flex w-full items-center gap-2.5 rounded-xl text-muted transition-all duration-200 hover:bg-hover hover:text-main',
-              isExpanded ? 'px-3 py-2' : 'justify-center px-0 py-1.5',
+              'whitespace-nowrap text-[13px] transition-all duration-300',
+              collapsed ? 'hidden' : '',
             )}
           >
-            {isExpanded ? (
-              <>
-                <PanelLeftClose size={18} strokeWidth={1.8} />
-                <span className="text-[13px]">تصغير</span>
-              </>
-            ) : (
-              <PanelLeftOpen size={18} strokeWidth={1.8} />
-            )}
-          </button>
-          <button
-            onClick={onLogout}
-            className={cn(
-              'flex w-full items-center gap-2.5 rounded-xl text-error transition-all duration-200 hover:bg-error-soft hover:text-error',
-              isExpanded ? 'px-3 py-2' : 'justify-center px-0 py-1.5',
-            )}
-          >
-            <LogOut size={18} strokeWidth={1.8} />
-            <span
-              className={cn(
-                'whitespace-nowrap text-[13px] transition-all duration-300',
-                isExpanded ? '' : 'hidden',
-              )}
-            >
-              خروج
-            </span>
-          </button>
-        </div>
+            خروج
+          </span>
+        </button>
       </div>
     </div>
-  )
-}
+  </div>
+)
