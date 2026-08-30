@@ -62,6 +62,8 @@ export const UsersSettings = ({
     return g
   }, [])
 
+  const permLabel = (id: string) => AVAILABLE_PERMISSIONS.find((p) => p.id === id)?.label || id
+
   const togglePerm = (id: string) => {
     if (id === '*') {
       setNewUser({ ...newUser, permissions: newUser.permissions.includes('*') ? [] : ['*'] })
@@ -101,7 +103,7 @@ export const UsersSettings = ({
               type="password"
               value={newUser.password}
               onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-              placeholder="••••••••"
+              placeholder={editingUserId ? 'اتركه فارغاً للإبقاء على الحالي' : '••••••••'}
             />
           </div>
         </div>
@@ -230,7 +232,7 @@ export const UsersSettings = ({
                     key={p}
                     className="rounded-md border border-divider bg-background px-2 py-0.5 text-[11px] text-muted"
                   >
-                    {p}
+                    {permLabel(p)}
                   </span>
                 ))}
                 {(u.permissions?.length || 0) > 3 && (

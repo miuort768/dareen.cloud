@@ -311,6 +311,13 @@ export const useSettingsHandlers = () => {
   const handleUserAction = async () => {
     const username = newUser.username.trim()
     if (!username) return
+    if (
+      !editingUserId &&
+      users.some((u) => (u.username || '').toLowerCase() === username.toLowerCase())
+    ) {
+      showNotify('اسم الدخول مستخدم بالفعل')
+      return
+    }
     if (!editingUserId && !newUser.password) {
       showNotify('أدخل كلمة مرور للحساب الجديد')
       return
