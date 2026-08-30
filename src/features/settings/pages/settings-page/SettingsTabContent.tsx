@@ -255,7 +255,8 @@ export const SettingsTabContent = (props: SettingsTabContentProps) => {
       return (
         <PoliciesSettings
           backdateLockEnabled={props.backdateLockEnabled}
-          setBackdateLockEnabled={props.setBackdateLockEnabled}
+          setShowBackdateModal={props.setShowBackdateModal}
+          setBackdateTarget={props.setBackdateTarget}
           teacherCommissionType={props.teacherCommissionType}
           setTeacherCommissionType={props.setTeacherCommissionType}
           autoFreezeThreshold={props.autoFreezeThreshold}

@@ -122,7 +122,6 @@ export const useSettingsHandlers = () => {
   const [localSemesters, setLocalSemesters] = useState(semesters)
   const [localWhatsappTemplate, setLocalWhatsappTemplate] = useState(whatsappTemplate)
   const [localTelegramHandle, setLocalTelegramHandle] = useState(telegramHandle)
-  const [academyEmail, setAcademyEmail] = useState('')
   const [localHeroBanners, setLocalHeroBanners] = useState<string[]>(() => {
     try {
       return JSON.parse(heroBanners)
@@ -165,7 +164,6 @@ export const useSettingsHandlers = () => {
   const [maintenanceTarget, setMaintenanceTarget] = useState(false)
   const [showBackdateModal, setShowBackdateModal] = useState(false)
   const [backdateTarget, setBackdateTarget] = useState(false)
-  const [backdateVerifying, setBackdateVerifying] = useState(false)
   const [notificationMessage, setNotificationMessage] = useState('')
   const notifyTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
 
@@ -311,19 +309,24 @@ export const useSettingsHandlers = () => {
   }
 
   const handleUserAction = async () => {
-    if (!newUser.username) return
+    const username = newUser.username.trim()
+    if (!username) return
+    if (!editingUserId && !newUser.password) {
+      showNotify('أدخل كلمة مرور للحساب الجديد')
+      return
+    }
     setIsSaving(true)
     try {
       if (editingUserId) {
         await editUser(editingUserId, {
-          username: newUser.username,
-          name: newUser.username,
+          username,
+          name: username,
           permissions: newUser.permissions,
           password: newUser.password || undefined,
         })
         showNotify('تم تعديل الحساب بنجاح')
       } else {
-        await addUser({ ...newUser, name: newUser.username, role: 'admin' })
+        await addUser({ ...newUser, username, name: username, role: 'admin' })
         showNotify('تم إنشاء الحساب بنجاح')
       }
       setEditingUserId(null)
@@ -336,18 +339,16 @@ export const useSettingsHandlers = () => {
   }
 
   const confirmBackdateToggle = async (password: string) => {
-    setBackdateVerifying(true)
     try {
       await settingsService.verifyPassword(password)
-      setLocalBackdateLock(backdateTarget)
+      // Persist globally — the sync effect will update the local mirror.
+      await setSetting('backdateLockEnabled', backdateTarget)
       showNotify(
         backdateTarget ? 'تم تفعيل قفل تعديل الحصص القديمة' : 'تم إلغاء قفل تعديل الحصص القديمة',
       )
       setShowBackdateModal(false)
     } catch (e) {
-      showNotify(e instanceof Error ? e.message : 'كلمة المرور غير صحيحة')
-    } finally {
-      setBackdateVerifying(false)
+      throw e instanceof Error ? e : new Error('كلمة المرور غير صحيحة')
     }
   }
 
@@ -359,27 +360,36 @@ export const useSettingsHandlers = () => {
     return () => clearTimeout(timer)
   }, [activeTab, fetchLogs])
 
+  // Sync local mirrors from global settings — but only keys whose global value
+  // actually changed, so unrelated global updates never wipe unsaved local edits.
+  const lastSyncedRef = useRef<Record<string, unknown>>({})
   useEffect(() => {
-    setLocalAcademyName(academyName)
-    setLocalAcademyLogo(academyLogo)
-    setLocalAcademyTagline(academyTagline)
-    setLocalAdminPhone(adminPhone)
-    setLocalSemesterName(semesterName)
-    setLocalSemesters(semesters)
-    setLocalPrice(defaultSessionPrice)
-    setLocalTeacherPrice(defaultTeacherPrice)
-    setLocalCurrency(currencySymbol)
-    setLocalThreshold(balanceWarningThreshold)
-    setLocalTelegramHandle(telegramHandle)
-    setLocalBackdateLock(backdateLockEnabled)
-    setLocalAutoFreeze(autoFreezeThreshold)
-    setLocalLibraryTelegram(libraryTelegram)
-    setLocalAcademicYear(academicYear)
-    setLocalSemesterStart(semesterStartDate)
-    setLocalSemesterEnd(semesterEndDate)
-    setLocalFooterDescription(footerDescription)
-    setLocalFooterAddress(footerAddress)
-    setLocalFooterInstagram(footerInstagram)
+    const syncIfChanged = <T>(key: string, incoming: T, setter: (v: T) => void) => {
+      if (lastSyncedRef.current[key] !== incoming) {
+        lastSyncedRef.current[key] = incoming
+        setter(incoming)
+      }
+    }
+    syncIfChanged('academyName', academyName, setLocalAcademyName)
+    syncIfChanged('academyLogo', academyLogo, setLocalAcademyLogo)
+    syncIfChanged('academyTagline', academyTagline, setLocalAcademyTagline)
+    syncIfChanged('adminPhone', adminPhone, setLocalAdminPhone)
+    syncIfChanged('semesterName', semesterName, setLocalSemesterName)
+    syncIfChanged('semesters', semesters, setLocalSemesters)
+    syncIfChanged('price', defaultSessionPrice, setLocalPrice)
+    syncIfChanged('teacherPrice', defaultTeacherPrice, setLocalTeacherPrice)
+    syncIfChanged('currency', currencySymbol, setLocalCurrency)
+    syncIfChanged('threshold', balanceWarningThreshold, setLocalThreshold)
+    syncIfChanged('telegramHandle', telegramHandle, setLocalTelegramHandle)
+    syncIfChanged('backdateLock', backdateLockEnabled, setLocalBackdateLock)
+    syncIfChanged('autoFreeze', autoFreezeThreshold, setLocalAutoFreeze)
+    syncIfChanged('libraryTelegram', libraryTelegram, setLocalLibraryTelegram)
+    syncIfChanged('academicYear', academicYear, setLocalAcademicYear)
+    syncIfChanged('semesterStart', semesterStartDate, setLocalSemesterStart)
+    syncIfChanged('semesterEnd', semesterEndDate, setLocalSemesterEnd)
+    syncIfChanged('footerDescription', footerDescription, setLocalFooterDescription)
+    syncIfChanged('footerAddress', footerAddress, setLocalFooterAddress)
+    syncIfChanged('footerInstagram', footerInstagram, setLocalFooterInstagram)
   }, [
     academyName,
     academyLogo,
@@ -483,8 +493,6 @@ export const useSettingsHandlers = () => {
     setLocalWhatsappTemplate,
     localTelegramHandle,
     setLocalTelegramHandle,
-    academyEmail,
-    setAcademyEmail,
     localHeroBanners,
     setLocalHeroBanners,
     localPrice,
@@ -517,7 +525,6 @@ export const useSettingsHandlers = () => {
     setShowBackdateModal,
     backdateTarget,
     setBackdateTarget,
-    backdateVerifying,
     confirmBackdateToggle,
     notificationMessage,
     showNotify,

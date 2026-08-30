@@ -5,7 +5,8 @@ import { settingsService } from '../services/settingsService'
 
 interface PoliciesSettingsProps {
   backdateLockEnabled: boolean
-  setBackdateLockEnabled: (v: boolean) => Promise<void> | void
+  setShowBackdateModal: (v: boolean) => void
+  setBackdateTarget: (v: boolean) => void
   showNotify: (msg: string) => void
   teacherCommissionType: string
   setTeacherCommissionType: (v: string) => Promise<void> | void
@@ -24,7 +25,8 @@ interface PoliciesSettingsProps {
 
 export const PoliciesSettings = ({
   backdateLockEnabled,
-  setBackdateLockEnabled,
+  setShowBackdateModal,
+  setBackdateTarget,
   showNotify,
   teacherCommissionType,
   setTeacherCommissionType,
@@ -48,11 +50,11 @@ export const PoliciesSettings = ({
             </div>
             <Toggle
               checked={backdateLockEnabled}
-              onChange={() =>
-                Promise.resolve(setBackdateLockEnabled(!backdateLockEnabled)).then(() =>
-                  showNotify('تم تحديث خيار الحماية'),
-                )
-              }
+              onChange={() => {
+                // Protected action — requires the admin password modal before applying.
+                setBackdateTarget(!backdateLockEnabled)
+                setShowBackdateModal(true)
+              }}
             />
           </div>
         </div>
