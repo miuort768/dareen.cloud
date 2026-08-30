@@ -28,6 +28,7 @@ export const useAttendance = (
   const [students, setStudents] = useState<Student[]>([])
   const [allSessions, setAllSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
+  const [teacherProfile, setTeacherProfile] = useState<{ id: string; name: string } | null>(null)
   const mountedRef = useRef(true)
 
   useEffect(() => {
@@ -36,6 +37,28 @@ export const useAttendance = (
       mountedRef.current = false
     }
   }, [])
+
+  // Resolve the REAL Teacher row for the logged-in teacher account. Enrollments
+  // reference the Teacher row id — matching by the account id alone misses them.
+  useEffect(() => {
+    if (currentUser?.role !== 'teacher') return
+    let cancelled = false
+    api
+      .get<{ id?: string | number; name?: string }>('/teachers/me')
+      .then((t) => {
+        if (cancelled || !t) return
+        setTeacherProfile({
+          id: String(t.id ?? ''),
+          name: String(t.name ?? '').trim(),
+        })
+      })
+      .catch(() => {
+        // account-only logins fall back to name matching below
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [currentUser?.role, currentUser?.id])
 
   const fetchAll = useCallback(async () => {
     setLoading(true)
@@ -197,17 +220,24 @@ export const useAttendance = (
   }, [allSessions, dateRange])
 
   const teacherData = useMemo(() => {
-    const nameToMatch = (currentUser?.teacherName || currentUser?.name || '').trim().toLowerCase()
-    const tidToMatch = currentUser?.id
+    // Match the teacher's enrollments by ANY known identity: the resolved Teacher
+    // row id/name, the account id, and the account teacherName/name. Enrollments
+    // may reference the row id while logins carry the account id (or vice versa).
+    const idCandidates = [teacherProfile?.id, currentUser?.id]
+      .filter(Boolean)
+      .map((id) => String(id))
+    const nameCandidates = [teacherProfile?.name, currentUser?.teacherName, currentUser?.name]
+      .map((n) => (n || '').trim().toLowerCase())
+      .filter(Boolean)
 
     // Flatten enrollments to handle multiple subjects per student for the same teacher
     const matchedEnrollments = students.flatMap((s) =>
       (s.enrollments || [])
         .filter((en) => {
           const enTeacherName = teacherNameOf(en).toLowerCase()
-          // Match by ID if available, otherwise fallback to robust name matching
-          const isIdMatch = tidToMatch && en.teacherId === tidToMatch
-          const isNameMatch = enTeacherName === nameToMatch
+          const enId = en.teacherId != null ? String(en.teacherId) : ''
+          const isIdMatch = !!enId && idCandidates.includes(enId)
+          const isNameMatch = !!enTeacherName && nameCandidates.includes(enTeacherName)
           return isIdMatch || isNameMatch
         })
         .map((en) => ({
@@ -229,7 +259,7 @@ export const useAttendance = (
       expectedTotal > 0 ? Math.round((teacherStats.used / expectedTotal) * 100) : 0
 
     return { matchedEnrollments, teacherStats }
-  }, [students, currentUser])
+  }, [students, currentUser, teacherProfile])
 
   const uniqueTeachers = useMemo(() => {
     return Array.from(
