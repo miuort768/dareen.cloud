@@ -156,7 +156,7 @@ export const AttendanceHistoryModal = ({
       onKeyDown={handleKeyDown}
     >
       <div className="absolute inset-0 bg-black/30" onClick={onClose} />
-      <div className="relative flex max-h-[75vh] w-full max-w-xs flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2">
+      <div className="relative flex max-h-[75vh] w-full max-w-xs flex-col overflow-hidden rounded-none border border-border bg-card shadow-elevation-2">
         {/* Compact Header */}
         <div className="flex items-center justify-between bg-primary px-4 py-3">
           <div className="flex items-center gap-2.5">
@@ -168,7 +168,7 @@ export const AttendanceHistoryModal = ({
           </div>
           <button
             onClick={onClose}
-            className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/15 text-on-primary transition-colors hover:bg-white/25"
+            className="flex h-7 w-7 items-center justify-center rounded-none bg-white/15 text-on-primary transition-colors hover:bg-white/25"
             aria-label="إغلاق"
           >
             <X size={14} />
@@ -202,7 +202,7 @@ export const AttendanceHistoryModal = ({
           {loading ? (
             <div className="space-y-2">
               {[...Array(4)].map((_, i) => (
-                <Skeleton key={`skel-${i}`} className="h-14 rounded-lg" />
+                <Skeleton key={`skel-${i}`} className="h-14 rounded-none" />
               ))}
             </div>
           ) : history.length > 0 ? (
@@ -211,7 +211,7 @@ export const AttendanceHistoryModal = ({
                 <div
                   key={session.id}
                   className={cn(
-                    'rounded-lg border bg-surface p-2.5',
+                    'rounded-none border bg-surface p-2.5',
                     session.status === 'completed' ? 'border-success-soft' : 'border-error-soft',
                   )}
                 >
@@ -227,7 +227,7 @@ export const AttendanceHistoryModal = ({
                             date: e.target.value,
                           })
                         }
-                        className="rounded-lg border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                        className="rounded-none border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                       />
                       <select
                         value={editingSession.status}
@@ -238,7 +238,7 @@ export const AttendanceHistoryModal = ({
                           })
                         }
                         aria-label="حالة الحضور"
-                        className="rounded-lg border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                        className="rounded-none border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                       >
                         <option value="completed">حضور</option>
                         <option value="cancelled">غياب</option>
@@ -246,14 +246,14 @@ export const AttendanceHistoryModal = ({
                       <div className="me-auto flex gap-1">
                         <button
                           onClick={handleUpdate}
-                          className="rounded-lg bg-success-soft p-1.5 text-success transition-all active:scale-95"
+                          className="rounded-none bg-success-soft p-1.5 text-success transition-all active:scale-95"
                           aria-label="حفظ"
                         >
                           <Save size={12} />
                         </button>
                         <button
                           onClick={() => setEditingSession(null)}
-                          className="rounded-lg bg-surface p-1.5 text-muted transition-all"
+                          className="rounded-none bg-surface p-1.5 text-muted transition-all"
                           aria-label="إلغاء"
                         >
                           <XSquare size={12} />
@@ -265,7 +265,7 @@ export const AttendanceHistoryModal = ({
                       <div className="flex items-center gap-2">
                         <div
                           className={cn(
-                            'flex h-7 w-7 items-center justify-center rounded-lg',
+                            'flex h-7 w-7 items-center justify-center rounded-none',
                             session.status === 'completed' ? 'bg-success-soft' : 'bg-error-soft',
                           )}
                         >
@@ -343,7 +343,7 @@ export const AttendanceHistoryModal = ({
         <div className="border-t border-border px-3 py-2">
           <button
             onClick={onClose}
-            className="w-full rounded-lg bg-surface py-2 text-[10px] font-bold text-main transition-colors hover:bg-hover"
+            className="w-full rounded-none bg-surface py-2 text-[10px] font-bold text-main transition-colors hover:bg-hover"
           >
             إغلاق
           </button>

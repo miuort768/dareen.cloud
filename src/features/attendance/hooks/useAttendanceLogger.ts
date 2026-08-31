@@ -6,6 +6,7 @@ import {
   useWhatsappTemplate,
 } from '../../../context/AppContext'
 import { generateWhatsAppLink } from '../../../lib/whatsapp'
+import { confirm } from '../../../lib/confirmDialog'
 import { teacherNameOf } from './useAttendance'
 import type { Session, Student, Enrollment } from '../types'
 
@@ -47,14 +48,23 @@ export const useAttendanceLogger = ({ allSessions, logAttendance }: UseAttendanc
     if (!secureModalData || !logDate || isLogging) return false
     setIsLogging(true)
     const { student, enrollment } = secureModalData
+    // السماح بتسجيل أكثر من حصة لنفس الطالب في نفس اليوم — مع تأكيد واعٍ
     const alreadyLogged = allSessions.some(
       (s) => s.studentId === student.id && s.subject === enrollment.subject && s.date === logDate,
     )
     if (alreadyLogged) {
-      showNotification('الحصة مسجلة بالفعل لهذا الطالب والمادة في هذا التاريخ', 'warning')
-      setSecureModalData(null)
-      setIsLogging(false)
-      return true
+      const proceed = await confirm({
+        title: 'تسجيل حصة إضافية',
+        description:
+          'يوجد تسجيل سابق لنفس الطالب ونفس المادة في هذا التاريخ. هل تريد تسجيل حصة إضافية؟',
+        confirmText: 'تسجيل حصة إضافية',
+        cancelText: 'إلغاء',
+      })
+      if (!proceed) {
+        setSecureModalData(null)
+        setIsLogging(false)
+        return true
+      }
     }
     const now = new Date()
     const currentTime = now.toLocaleTimeString('ar-EG', {

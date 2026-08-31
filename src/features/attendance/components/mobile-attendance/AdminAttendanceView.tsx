@@ -51,7 +51,7 @@ export const AdminAttendanceView = ({
         compact
         title="لا توجد بيانات متاحة"
         subtitle="ستظهر إحصائيات المعلمات بعد تسجيل الحصص"
-        className="rounded-2xl border border-dashed border-border bg-card"
+        className="rounded-none border border-dashed border-border bg-card"
       />
     )
   }
@@ -71,7 +71,7 @@ export const AdminAttendanceView = ({
         return (
           <div
             key={teacher.teacherName}
-            className="overflow-hidden rounded-2xl border border-border bg-card"
+            className="overflow-hidden rounded-none border border-border bg-card"
           >
             {/* رأس المجموعة */}
             <button
@@ -83,7 +83,7 @@ export const AdminAttendanceView = ({
               className="flex w-full items-center justify-between gap-2 px-3.5 py-3 text-start transition-colors hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus"
             >
               <div className="flex min-w-0 items-center gap-2.5">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-xs font-bold text-primary">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-none bg-primary-soft text-xs font-bold text-primary">
                   {teacher.teacherName.charAt(0)}
                 </div>
                 <div className="min-w-0">
@@ -96,7 +96,7 @@ export const AdminAttendanceView = ({
               <div className="flex shrink-0 items-center gap-2">
                 <span
                   className={cn(
-                    'flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold tabular-nums',
+                    'flex items-center gap-1 rounded-none px-2 py-1 text-micro font-bold tabular-nums',
                     getRateBg(teacher.rate),
                     getRateColor(teacher.rate),
                   )}
@@ -126,11 +126,11 @@ export const AdminAttendanceView = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: idx * 0.03 }}
-                        className="bg-surface/50 rounded-xl border border-border p-2.5"
+                        className="bg-surface/50 rounded-none border border-border p-2.5"
                       >
                         <div className="flex items-center justify-between gap-2">
                           <div className="flex min-w-0 items-center gap-2">
-                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-micro font-bold text-primary">
+                            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-none bg-primary-soft text-micro font-bold text-primary">
                               {student.studentName.charAt(0)}
                             </div>
                             <div className="min-w-0">
@@ -176,7 +176,7 @@ export const AdminAttendanceView = ({
                               )
                             }}
                             aria-label={`سجل ${student.studentName} في ${student.subject}`}
-                            className="flex items-center gap-1 rounded-lg bg-primary-soft px-2 py-1 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                            className="flex items-center gap-1 rounded-none bg-primary-soft px-2 py-1 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                           >
                             <History size={10} /> السجل
                           </button>

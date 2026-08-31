@@ -39,7 +39,7 @@ const TrendBadge = ({ value, label }: { value: number; label: string }) => {
   return (
     <div
       className={cn(
-        'mt-0.5 flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] font-bold',
+        'mt-0.5 flex items-center gap-0.5 rounded-none px-1.5 py-0.5 text-[9px] font-bold',
         isUp ? 'bg-success-soft text-success' : 'bg-error-soft text-error',
       )}
     >
@@ -65,7 +65,7 @@ const TooltipWrap = ({ text, children }: { text: string; children: React.ReactNo
         <motion.div
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute -top-1 left-1/2 z-20 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-bold text-inverse shadow-lg"
+          className="absolute -top-1 left-1/2 z-20 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-none bg-main px-2 py-1 text-[9px] font-bold text-inverse shadow-lg"
         >
           {text}
           <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-l-4 border-r-4 border-t-4 border-transparent border-t-main" />
@@ -91,7 +91,7 @@ export const AttendanceStats = ({
         className="mb-4 space-y-3"
         dir="rtl"
       >
-        <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 md:p-5">
+        <div className="relative overflow-hidden rounded-none border border-border bg-card p-4 md:p-5">
           <div className="pointer-events-none absolute -end-14 -top-16 h-44 w-44 rounded-full bg-primary/10 blur-3xl" />
           <div className="relative z-10">
             <div className="mb-2 flex items-center justify-between">
@@ -116,7 +116,7 @@ export const AttendanceStats = ({
           </div>
         </div>
         <div className="grid grid-cols-3 gap-3">
-          <div className="rounded-2xl border border-border bg-card p-4">
+          <div className="rounded-none border border-border bg-card p-4">
             <div className="mb-2 flex items-center justify-between">
               <Calendar size={14} className="text-primary" />
               <TooltipWrap text="إجمالي الحصص المقررة لهذا اليوم">
@@ -128,7 +128,7 @@ export const AttendanceStats = ({
             </p>
             <p className="mt-0.5 text-micro font-bold text-muted">الحصص المتوقعة</p>
           </div>
-          <div className="rounded-2xl border border-border bg-card p-4">
+          <div className="rounded-none border border-border bg-card p-4">
             <div className="mb-2 flex items-center justify-between">
               <CheckCircle2 size={14} className="text-success" />
               <TooltipWrap text="الحصص التي تم عقدها فعلياً">
@@ -140,14 +140,14 @@ export const AttendanceStats = ({
             </p>
             <p className="mt-0.5 text-micro font-bold text-muted">المنعقدة</p>
           </div>
-          <div className="rounded-2xl border border-border bg-card p-4">
+          <div className="rounded-none border border-border bg-card p-4">
             <div className="mb-2 flex items-center justify-between">
-              <XCircle size={14} className="text-warning" />
+              <XCircle size={14} className="text-warning dark:text-primary" />
               <TooltipWrap text="الحصص المتبقية من الجدول">
                 <Info size={9} className="text-muted" />
               </TooltipWrap>
             </div>
-            <p className="text-lg font-bold text-warning">
+            <p className="text-lg font-bold text-warning dark:text-primary">
               <Counter value={teacherStats.remaining} />
             </p>
             <p className="mt-0.5 text-micro font-bold text-muted">المتبقية</p>
@@ -185,7 +185,7 @@ export const AttendanceStats = ({
       dir="rtl"
     >
       {/* Main summary card */}
-      <div className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 md:p-5">
+      <div className="relative overflow-hidden rounded-none border border-border bg-card p-4 md:p-5">
         <div className="pointer-events-none absolute -end-14 -top-16 h-44 w-44 rounded-full bg-primary/10 blur-3xl" />
         <div className="relative z-10">
           <div className="mb-2 flex items-center justify-between">
@@ -204,15 +204,15 @@ export const AttendanceStats = ({
             <span className="text-xs font-bold text-muted">حصة</span>
           </div>
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span className="flex items-center gap-1 rounded-lg bg-success-soft px-2 py-1 text-[10px] font-bold text-success">
+            <span className="flex items-center gap-1 rounded-none bg-success-soft px-2 py-1 text-[10px] font-bold text-success">
               <CheckCircle2 size={10} />
               {stats.todayCompleted} حضور
             </span>
-            <span className="flex items-center gap-1 rounded-lg bg-error-soft px-2 py-1 text-[10px] font-bold text-error">
+            <span className="flex items-center gap-1 rounded-none bg-error-soft px-2 py-1 text-[10px] font-bold text-error">
               <XCircle size={10} />
               {stats.todayCancelled} غياب
             </span>
-            <span className="flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-1 text-[10px] font-bold text-warning">
+            <span className="flex items-center gap-1 rounded-none bg-warning-soft px-2 py-1 text-[10px] font-bold text-warning dark:bg-primary-soft dark:text-primary">
               <Calendar size={10} />
               {stats.todayScheduled} مجدولة
             </span>
@@ -234,7 +234,7 @@ export const AttendanceStats = ({
               initial={{ width: 0 }}
               animate={{ width: `${scheduledPct}%` }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="h-full rounded-e-full bg-warning"
+              className="h-full rounded-none bg-warning dark:bg-primary"
             />
           </div>
           <div className="mt-1.5 flex items-center justify-between">
@@ -248,7 +248,7 @@ export const AttendanceStats = ({
 
       {/* Rate cards — attendance % + absence % */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-2xl border border-success-soft bg-success-soft p-4">
+        <div className="rounded-none border border-success-soft bg-success-soft p-4">
           <div className="mb-2 flex items-center justify-between">
             <CheckCircle2 size={14} className="text-success" />
             <TrendBadge value={trendCompleted} label="مقارنة" />
@@ -267,7 +267,7 @@ export const AttendanceStats = ({
             />
           </div>
         </div>
-        <div className="rounded-2xl border border-error-soft bg-error-soft p-4">
+        <div className="rounded-none border border-error-soft bg-error-soft p-4">
           <div className="mb-2 flex items-center justify-between">
             <XCircle size={14} className="text-error" />
             <TrendBadge value={trendCancelled} label="مقارنة" />
@@ -290,7 +290,7 @@ export const AttendanceStats = ({
 
       {/* Count cards */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="rounded-2xl border border-border bg-card p-4">
+        <div className="rounded-none border border-border bg-card p-4">
           <div className="mb-2 flex items-center justify-between">
             <CheckCircle2 size={14} className="text-success" />
           </div>
@@ -299,7 +299,7 @@ export const AttendanceStats = ({
           </p>
           <p className="mt-0.5 text-[10px] font-bold text-muted">حضور</p>
         </div>
-        <div className="rounded-2xl border border-border bg-card p-4">
+        <div className="rounded-none border border-border bg-card p-4">
           <div className="mb-2 flex items-center justify-between">
             <XCircle size={14} className="text-error" />
           </div>
@@ -308,14 +308,14 @@ export const AttendanceStats = ({
           </p>
           <p className="mt-0.5 text-[10px] font-bold text-muted">غياب</p>
         </div>
-        <div className="rounded-2xl border border-border bg-card p-4">
+        <div className="rounded-none border border-border bg-card p-4">
           <div className="mb-2 flex items-center justify-between">
-            <Calendar size={14} className="text-warning" />
+            <Calendar size={14} className="text-warning dark:text-primary" />
             <TooltipWrap text="الحصص التي لم يتم البدء بها بعد">
               <Info size={9} className="text-muted" />
             </TooltipWrap>
           </div>
-          <p className="text-lg font-bold text-warning">
+          <p className="text-lg font-bold text-warning dark:text-primary">
             <Counter value={stats.todayScheduled} />
           </p>
           <p className="mt-0.5 text-[10px] font-bold text-muted">مجدولة</p>

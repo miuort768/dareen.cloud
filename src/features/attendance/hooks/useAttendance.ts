@@ -113,6 +113,21 @@ export const useAttendance = (
     }
   }
 
+  // حالة الحفظ للمزامنة مع نافذة إدارة الجدول (تعطيل الأزرار أثناء الحفظ)
+  const [schedulePending, setSchedulePending] = useState(false)
+  const updateScheduleTracked = async (
+    student: Student,
+    enrollmentIndex: number,
+    newSchedule: ScheduleSlot[],
+  ) => {
+    setSchedulePending(true)
+    try {
+      return await updateSchedule(student, enrollmentIndex, newSchedule)
+    } finally {
+      setSchedulePending(false)
+    }
+  }
+
   const updateEnrollmentNotes = async (studentId: string, subject: string, notes: string) => {
     try {
       const student = students.find((s) => s.id === studentId)
@@ -371,7 +386,9 @@ export const useAttendance = (
     allSessions,
     loading,
     logAttendance,
-    updateSchedule,
+    updateSchedule: updateScheduleTracked,
+    updateScheduleTracked,
+    schedulePending,
     updateEnrollmentNotes,
     requestReschedule,
     stats,

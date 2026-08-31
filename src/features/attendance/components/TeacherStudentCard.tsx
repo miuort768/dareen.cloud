@@ -27,6 +27,7 @@ interface TeacherStudentCardProps {
   onReschedule?: (student: Student, enrollment: Enrollment) => void
   logDate: string
   onDateChange: (date: string) => void
+  scheduleBusy?: boolean
 }
 
 export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
@@ -41,6 +42,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
   onReschedule,
   logDate,
   onDateChange,
+  scheduleBusy = false,
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [notes, setNotes] = useState(en.nextSessionNotes || '')
@@ -137,7 +139,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
   const [showLiveDialog, setShowLiveDialog] = useState(false)
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-all hover:shadow-elevation-2">
+    <div className="group flex flex-col overflow-hidden rounded-none border border-border bg-card shadow-elevation-1 transition-all hover:shadow-elevation-2">
       {/* Header Accent */}
       <div
         className={cn(
@@ -149,7 +151,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
       <div className="flex flex-1 flex-col space-y-4 p-5">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-micro font-semibold text-primary">
+            <div className="flex h-10 w-10 items-center justify-center rounded-none bg-primary-soft text-micro font-semibold text-primary">
               {student.grade?.charAt(0) || student.name.charAt(0)}
             </div>
             <div>
@@ -212,16 +214,17 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             else newSch.push(slot)
             onUpdateSchedule(student, student.enrollments.indexOf(en), newSch)
           }}
+          busy={scheduleBusy}
         />
 
         {/* Notes */}
-        <div className="rounded-xl border border-warning-soft bg-warning-soft p-3">
+        <div className="rounded-none border border-e-[3px] border-border border-e-primary bg-primary-soft p-3">
           <div className="mb-2 flex items-center justify-between">
-            <h5 className="flex items-center gap-1.5 text-micro font-bold uppercase text-warning">
-              <MessageSquare size={12} /> ملاحظات
+            <h5 className="flex items-center gap-1.5 text-micro font-bold uppercase text-primary">
+              <MessageSquare size={12} /> ملاحظات الحصة القادمة
             </h5>
             {isSavingNotes && (
-              <span className="animate-pulse text-micro font-bold text-warning">جاري الحفظ...</span>
+              <span className="animate-pulse text-micro font-bold text-primary">جاري الحفظ...</span>
             )}
           </div>
           <textarea
@@ -231,14 +234,14 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
               triggerSave(e.target.value)
             }}
             placeholder="وثقي ملاحظات الحصة القادمة..."
-            className="min-h-[60px] w-full resize-none border-none bg-transparent p-0 text-micro font-bold text-main placeholder:text-warning focus-visible:ring-0"
+            className="min-h-[60px] w-full resize-none border-none bg-transparent p-0 text-micro font-bold text-main placeholder:text-primary/60 focus-visible:ring-0"
           />
         </div>
 
         {/* Live Session Quick Start */}
         <button
           onClick={() => setShowLiveDialog(true)}
-          className="group flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-micro font-bold uppercase tracking-widest text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className="group flex w-full items-center justify-center gap-2 rounded-none bg-primary py-3 text-micro font-bold uppercase tracking-widest text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
         >
           <Radio size={14} className="animate-pulse" />
           <span>بدء الحصة مع {student.name.split(' ')[0]}</span>
@@ -262,7 +265,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
               aria-label="التاريخ"
               value={logDate}
               onChange={(e) => onDateChange(e.target.value)}
-              className="w-full rounded-xl border border-border bg-card px-2 py-2 text-micro font-bold outline-none transition-all focus-visible:border-primary"
+              className="w-full rounded-none border border-border bg-card px-2 py-2 text-micro font-bold outline-none transition-all focus-visible:border-primary"
             />
             <button
               onClick={() =>
@@ -274,13 +277,13 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                   student.curriculum,
                 )
               }
-              className="w-full rounded-xl bg-error px-1 py-2 text-micro font-bold text-on-error shadow-sm transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="w-full rounded-none bg-error px-1 py-2 text-micro font-bold text-on-error shadow-sm transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               السجل
             </button>
             <button
               onClick={() => onLogAttendance(student, en)}
-              className="w-full rounded-xl bg-success px-2 py-2 text-micro font-bold text-on-success shadow-sm transition-all hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="w-full rounded-none bg-success px-2 py-2 text-micro font-bold text-on-success shadow-sm transition-all hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               تسجيل
             </button>
