@@ -229,7 +229,14 @@ export const Sidebar = memo(
         },
         {
           label: 'الأشخاص',
-          items: pick('leads', 'trial_sessions', 'teachers', 'students', 'parents'),
+          items: pick(
+            'leads',
+            'trial_sessions',
+            'teachers',
+            'students',
+            'parents',
+            'parent_students',
+          ),
         },
         {
           label: 'التعلّم',
@@ -250,6 +257,7 @@ export const Sidebar = memo(
           label: 'المحتوى',
           items: pick(
             'announcements',
+            'parent_announcements',
             'admin-blog',
             'admin-blog-customers',
             'forum',
