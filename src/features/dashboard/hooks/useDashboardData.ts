@@ -353,7 +353,23 @@ export const useDashboardData = (currentUser: User | null) => {
       }
     })
 
-    // 7. Stats Object
+    // 7b. Week load — scheduled slots per day for the next 7 days (teacher view)
+    const weekCounts = [0, 0, 0, 0, 0, 0, 0]
+    if (isTeacher) {
+      filteredStudents.forEach((s: Student) => {
+        s.enrollments?.forEach((en: Enrollment) => {
+          if (en.teacher !== teacherName && en.teacherId !== currentUser.id) return
+          en.schedule?.forEach((slot: ScheduleSlot) => {
+            const idx = dayNames.indexOf(normalizeDayName(slot.day))
+            if (idx === -1) return
+            const dayOffset = (idx - now.getDay() + 7) % 7
+            weekCounts[dayOffset]++
+          })
+        })
+      })
+    }
+
+    // 8. Stats Object
     const stats: DashboardStats = {
       studentsCount: filteredStudents.length,
       teachersCount: teachers.length,
@@ -509,6 +525,7 @@ export const useDashboardData = (currentUser: User | null) => {
       todaySessions: filteredSessions.filter((s: Session) => s.date === today),
       monthlyData: chartData,
       lowBalanceStudents: lowBalance,
+      weekCounts,
       tasks: (getSafeArray(tasksQuery.data) as unknown as DashboardTask[]).filter((t) =>
         [
           'pending',
@@ -573,6 +590,7 @@ export const useDashboardData = (currentUser: User | null) => {
     todaySessions: processedData?.todaySessions || [],
     monthlyData: processedData?.monthlyData || [],
     lowBalanceStudents: processedData?.lowBalanceStudents || [],
+    weekCounts: processedData?.weekCounts || [0, 0, 0, 0, 0, 0, 0],
     tasks: processedData?.tasks || [],
     topStudents: processedData?.topStudents || [],
     focusStudents: processedData?.focusStudents || [],
