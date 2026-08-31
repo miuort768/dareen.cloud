@@ -1,10 +1,10 @@
-import { safeJsonLd } from '../../shared/utils/jsonLd'
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll'
 import { useSettingsStore } from '../../store/settingsStore'
 import { useAcademyName } from '../../context/AppContext'
+import { safeJsonLd } from '../../shared/utils/jsonLd'
 
 import { SEO } from '../../components/SEO'
 import { MobileHeader } from '../../components/public/MobileHeader'
@@ -51,11 +51,11 @@ export const Home = () => {
     }
   }
 
-  const requestFreeNumber = getNumber('��� ��� ������')
-  const bookFreeNumber = getNumber('���� ���� �������� ����')
-  const memorizingNumber = getNumber('���� ����� ����')
-  const excellenceNumber = getNumber('���� ���� ������')
-  const signupNowNumber = getNumber('��� ����')
+  const requestFreeNumber = getNumber('طلب حصة مجانية')
+  const bookFreeNumber = getNumber('احجز حصتك المجانية الآن')
+  const memorizingNumber = getNumber('ابدأ الحفظ الآن')
+  const excellenceNumber = getNumber('ابدأ رحلة التميز')
+  const signupNowNumber = getNumber('سجل الآن')
   const [currentIndex, setCurrentIndex] = useState(0)
   const [activeCategory, setActiveCategory] = useState('all')
   const [typewriterText, setTypewriterText] = useState('')
@@ -69,7 +69,7 @@ export const Home = () => {
   }
 
   useEffect(() => {
-    const fullText = `���� ${academyName}`
+    const fullText = `منصة ${academyName}`
     let i = 0,
       isDeleting = false,
       typingSpeed = 150,
@@ -101,11 +101,11 @@ export const Home = () => {
   return (
     <div className="relative min-h-full overflow-x-hidden bg-surface text-main transition-colors duration-500 dark:bg-background dark:text-main">
       <SEO
-        title="���� ����� �� ��� �� ������ �������"
-        description="����� �� ��� �� �����ʡ �������ɡ ��ѡ �������ʡ �����. ���� �����ɡ ����� ���� ������ ������� �������� �� ���� ��������. ���� ��� ������� ������ ����."
+        title="منصة تعليم عن بعد في الكويت والخليج"
+        description="تعليم عن بعد في الكويت، السعودية، قطر، الإمارات، وعمان. دروس خصوصية، تحفيظ قرآن، وتأسيس للمناهج الخليجية مع أفضل المعلمين. احجز حصة تجريبية مجانية الآن."
         url="https://dareen.cloud/"
         image="/hero-child.png"
-        breadcrumbs={[{ name: '��������', item: '/' }]}
+        breadcrumbs={[{ name: 'الرئيسية', item: '/' }]}
       />
       <script
         type="application/ld+json"
@@ -115,18 +115,18 @@ export const Home = () => {
       <main className="relative mx-auto max-w-lg px-2 pb-4 md:hidden">
         <div className="mb-3 mt-2 flex gap-1.5">
           <a
-            href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`������ ����� ���� �� ��� ��� ������ �� ${academyName}`)}`}
+            href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-extrabold text-on-primary shadow-lg shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
           >
-            <Headphones className="h-2.5 w-2.5 shrink-0" /> ��� ��� ������
+            <Headphones className="h-2.5 w-2.5 shrink-0" /> طلب حصة مجانية
           </a>
           <Link
             to="/books"
             className="flex flex-1 items-center justify-center gap-1 rounded-full border bg-primary px-1.5 py-2 text-xs font-bold text-on-primary shadow-lg shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:border-primary/30 dark:bg-white/10 dark:text-main"
           >
-            <Play className="h-2.5 w-2.5 shrink-0 dark:text-primary" /> ����� ������ ������
+            <Play className="h-2.5 w-2.5 shrink-0 dark:text-primary" /> تحميل مذكرات مجانية
           </Link>
         </div>
         <section className="relative mb-4 overflow-hidden rounded-card border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card shadow-sm dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
@@ -139,7 +139,7 @@ export const Home = () => {
                     {heroIndex === 0 && (
                       <span className="text-success-dark dark:text-primary">
                         {' '}
-                        �������{' '}
+                        السابعة{' '}
                         <BadgeCheck className="-mt-0.5 inline-block h-4 w-4 text-success-dark dark:text-primary" />
                       </span>
                     )}
@@ -156,13 +156,13 @@ export const Home = () => {
                       className="flex w-full items-center justify-center gap-1 rounded-full border bg-surface px-4 py-2 text-xs font-bold text-main shadow-card transition-all hover:bg-hover dark:border-primary/30 dark:bg-white/10 dark:text-main"
                     >
                       <Play className="h-3 w-3 fill-main dark:fill-primary dark:text-primary" />{' '}
-                      ���� �������
+                      تصفح الدورات
                     </Link>
                     <Link
                       to={isAuthenticated ? '/dashboard' : '/login'}
                       className="w-full rounded-full bg-primary px-4 py-2 text-center text-xs font-extrabold text-on-primary shadow-card transition-all dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
                     >
-                      {isAuthenticated ? '���� ������' : '����� ������'}
+                      {isAuthenticated ? 'لوحة التحكم' : 'تسجيل الدخول'}
                     </Link>
                   </div>
                 </div>
@@ -195,7 +195,7 @@ export const Home = () => {
                       <button
                         key={d}
                         onClick={() => setHeroIndex(d)}
-                        aria-label={`�������� ��� ������� ${d + 1}`}
+                        aria-label={`الانتقال إلى الشريحة ${d + 1}`}
                         className={`h-1.5 w-1.5 rounded-full transition-all ${heroIndex === d ? 'w-3 bg-primary dark:bg-primary' : 'bg-muted dark:bg-surface'}`}
                       />
                     ))}
@@ -245,12 +245,12 @@ export const Home = () => {
         </AnimateOnScroll>
         <section className="px-1">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-black text-main dark:text-main">���� �������</h2>
+            <h2 className="text-lg font-black text-main dark:text-main">أحدث الدورات</h2>
             <Link
               to="/courses"
               className="flex items-center gap-1 text-sm font-bold text-primary dark:text-primary"
             >
-              ��� ���� <ChevronLeft className="h-3.5 w-3.5" />
+              عرض الكل <ChevronLeft className="h-3.5 w-3.5" />
             </Link>
           </div>
           <div className="no-scrollbar flex gap-2 overflow-x-auto pb-2">
@@ -278,7 +278,7 @@ export const Home = () => {
               .map((c, i) => (
                 <motion.a
                   key={c.id}
-                  href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`������ ����� ���� �� ��������� �� ${c.title}`)}`}
+                  href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${c.title}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   initial={{ opacity: 0, y: 16 }}
@@ -406,37 +406,37 @@ export const Home = () => {
         className="pointer-events-none absolute h-0 overflow-hidden opacity-0"
         aria-hidden="true"
       >
-        <h2>������� ��������� - ������ �������� ����� �������</h2>
+        <h2>الكلمات المفتاحية - الصفحة الرئيسية دارين السابعة</h2>
         <p>
-          ���� ����� �� ���, ���� ���� �������, ���� ����� �������, ���� ������ ������, �����
-          ������, ����� ��������, ����� �� ��� �� ������, ����� �� ��� �� ��������, ����� �������,
-          ��� ������, ����� ������, ���� �������, ���� ����, ���� ��� �����, ���� ��� ��������,
-          ����� �����, ����� ����, ����� �������, ������� ������, ����� ������, ���� �����, ������
-          �������, ������ �����, ����� ������, ������ ����, ���� �������, ����� �����, ���� ������,
-          ���� �����, ����� �������, ����� �� ��� �������, ����� ������� ������, ������� ����������,
-          ���� ���� ������� �� ������, ���� ���� ������� �� ��������, ���� ���� ������� �� ��������,
-          ���� ���� ������� �� ���, ���� ���� ������� �� ����, ���� ���� ������� �� �������, �����
-          ������, ����� ����� �������, ����� �������, ��� ������� ����, ����� ����� �������, �����
-          ������� ��������, ����� ����� �������, ���� ������ �� ���������, ���� ������ �� ������,
-          ���� ������ �� ����� �������, ���� ������ �� ����� ����������, ����� ���� �� ���, �����
-          ����� ������, ��� ������ �������, ��� ������ �������, �� ��� ������, ������ �������,
-          �������� �������, ��� ������� ������, ������ ����� �������, ����� ������ �������, ����
-          ������, �������� �������, ���� ���� ����� �� ������
+          منصة تعليم عن بعد, أفضل منصة تعليمية, مدرس خصوصي أونلاين, دروس خصوصية الخليج, مناهج
+          الكويت, مناهج السعودية, تعليم عن بعد في الكويت, تعليم عن بعد في السعودية, تعليم أونلاين,
+          حصة مجانية, تجربة مجانية, مدرس رياضيات, مدرس علوم, مدرس لغة عربية, مدرس لغة إنجليزية,
+          تأسيس أطفال, تحفيظ قرآن, قدرات وتحصيلي, مراجعات نهائية, نتائج مضمونة, تفوق دراسي, متابعة
+          أسبوعية, تقارير دورية, مناهج خليجية, معلمين نخبة, فصول تفاعلية, تعليم مباشر, أفضل مدرسين,
+          دروس تقوية, تحسين المستوى, تعليم عن بعد للأطفال, تعليم أونلاين للطلاب, المدرسة الافتراضية,
+          أفضل منصة تعليمية في الكويت, أفضل منصة تعليمية في السعودية, أفضل منصة تعليمية في الإمارات,
+          أفضل منصة تعليمية في قطر, أفضل منصة تعليمية في عمان, أفضل منصة تعليمية في البحرين, تطبيق
+          تعليمي, تطبيق دارين السابعة, تحميل التطبيق, حمل التطبيق الآن, دورات دارين السابعة, دورات
+          المناهج الخليجية, دورات تقوية أونلاين, دروس خصوصية في الرياضيات, دروس خصوصية في العلوم,
+          دروس خصوصية في اللغة العربية, دروس خصوصية في اللغة الإنجليزية, تحفيظ قرآن عن بعد, تأسيس
+          قراءة وكتابة, شرح المنهج الكويتي, شرح المنهج السعودي, حل كتب المنهج, مذكرات تعليمية,
+          اختبارات تجريبية, حصة تجريبية مجانية, واتساب دارين السابعة, أرقام مدرسين خصوصيين, معهد
+          تعليمي, أكاديمية تعليمية, أفضل مدرس خصوصي في الخليج
         </p>
-        <h3>����� ������� ����� - ������ ��������</h3>
+        <h3>كلمات مفتاحية طويلة - الصفحة الرئيسية</h3>
         <p>
-          ���� ���� ����� �� ��� �� ������ ��������� �������, ���� ����� ������� ������� ��������,
-          ���� ����� �� ��������� ������� �������, ��� ������� ������ ��� ������, ����� �������
-          ������� ������, ������ ������� �� ������ �����, ��� ������ ������� �������� ����������,
-          ����� ������ ������ �� ��� �������, ����� ������� �� ������� �������� �������, ����
-          �������� ��������� �� ������, ���� ������ ������� ������ ������, ����� ������ ���� ������
-          �����, ����� ������ ������� ��������, ����� ������� ������� �� �� ����, ���� ������
-          �������� �������, ���� ������ ������� ��������, ����� ������ ������ �������, ���� ������
-          ����� �������, ����� �� ��� ����� �����, ���� ������� ����� ������� �������, ����� �����
-          �� ���� ������, ������� ������ ��� ����������, �������� ����� �������, ���� �� ����� �����
-          ��������, ����� ������� �� ������ ��������� ��������� ���� ����� ��������, ������ �����
-          ������� ��������� ��������, ���� ���� �������� ����, ����� ����� ������� ���������, ���
-          ���� ���� ����� �������
+          أفضل منصة تعليم عن بعد في الكويت والسعودية والخليج, مدرس خصوصي أونلاين للمناهج الخليجية,
+          دروس تقوية في الرياضيات والعلوم واللغات, حصة تجريبية مجانية لكل المواد, تحسين المستوى
+          الدراسي للطلاب, متابعة أسبوعية مع تقارير دورية, شرح المنهج الكويتي والسعودي والإماراتي,
+          تحفيظ القرآن الكريم عن بعد للأطفال, تأسيس الأطفال في القراءة والكتابة والحساب, أفضل
+          المدرسين الخصوصيين في الخليج, دروس خصوصية أونلاين بأسعار مناسبة, باقات اشتراك دروس خصوصية
+          مخفضة, تطبيق تعليمي للمناهج الخليجية, تجربة تعليمية متكاملة من أي مكان, فصول دراسية
+          افتراضية تفاعلية, نخبة معلمين للمناهج الخليجية, نتائج مضمونة وتحسين الدرجات, دروس خصوصية
+          فردية أونلاين, تعليم عن بعد بجودة عالية, منصة تعليمية عربية للمناهج العربية, دورات تقوية
+          في جميع المواد, مراجعات نهائية قبل الاختبارات, اختبارات قدرات وتحصيلي, ذاكر من البيت بأفضل
+          المدرسين, تعليم أونلاين في الكويت والسعودية والإمارات وقطر وعمان والبحرين, واتساب دارين
+          السابعة للاستفسار والتسجيل, احجز حصتك المجانية الآن, دورات دارين السابعة التعليمية, قصص
+          نجاح طلاب دارين السابعة
         </p>
       </div>
       <footer>
