@@ -109,8 +109,8 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
               )}
 
               {sub.notes && (
-                <p className="border-warning/20 mt-3 flex items-start gap-1.5 rounded-lg border bg-warning-soft p-2 text-[10px] font-bold leading-relaxed text-main">
-                  <FileText size={10} className="mt-0.5 shrink-0 text-warning" />
+                <p className="mt-3 flex items-start gap-1.5 rounded-lg border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
+                  <FileText size={10} className="mt-0.5 shrink-0 text-primary" />
                   {sub.notes}
                 </p>
               )}

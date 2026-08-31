@@ -12,8 +12,8 @@ const STATUS_META: Record<
   { dot: string; text: string; label: string; icon: typeof CircleDashed }
 > = {
   live: {
-    dot: 'bg-warning',
-    text: 'text-warning',
+    dot: 'bg-error',
+    text: 'text-error',
     label: 'جارية الآن',
     icon: Radio,
   },
@@ -67,7 +67,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                   <div
                     className={cn(
                       'flex items-center justify-between gap-3 rounded-2xl border bg-surface p-3 transition-colors duration-300',
-                      item.status === 'live' && 'border-warning/40 bg-warning-soft',
+                      item.status === 'live' && 'border-error/40 bg-error-soft',
                       item.status === 'done' && 'border-border',
                       item.status === 'cancelled' && 'opacity-60',
                       item.status === 'upcoming' && 'border-border',

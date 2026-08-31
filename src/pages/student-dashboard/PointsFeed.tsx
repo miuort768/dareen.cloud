@@ -13,6 +13,7 @@ type FeedItem = {
   id: string
   title: string
   meta: string
+  detail?: string
   amount?: number
   tone: 'positive' | 'negative' | 'neutral'
 }
@@ -38,6 +39,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
     id: s.id || `ss-${i}`,
     title: `حصة ${s.subject || ''}`,
     meta: s.date || '',
+    detail: s.topics || undefined,
     tone: s.status === 'completed' ? 'neutral' : 'negative',
   }))
 
@@ -65,6 +67,11 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
                   <p className="flex items-center gap-1 text-[10px] font-bold text-muted">
                     <Clock size={8} />
                     {item.meta}
+                  </p>
+                )}
+                {item.detail && (
+                  <p className="mt-1 rounded-none border border-primary/20 bg-primary-soft p-1.5 text-[10px] font-bold leading-relaxed text-main">
+                    {item.detail}
                   </p>
                 )}
               </div>

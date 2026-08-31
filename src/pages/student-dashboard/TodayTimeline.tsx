@@ -1,4 +1,4 @@
-import { CalendarCheck, CircleDashed, XCircle, FileText } from 'lucide-react'
+import { CalendarCheck, CircleDashed, XCircle, FileText, Radio } from 'lucide-react'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import type { TodayTimelineItem } from './types'
 import { cn } from '../../lib/utils'
@@ -11,6 +11,7 @@ const STATUS_META: Record<
   TodayTimelineItem['status'],
   { dot: string; text: string; label: string; icon: typeof CircleDashed }
 > = {
+  live: { dot: 'bg-error', text: 'text-error', label: 'جارية الآن', icon: Radio },
   done: { dot: 'bg-success', text: 'text-success', label: 'منجزة', icon: CalendarCheck },
   cancelled: { dot: 'bg-error', text: 'text-error', label: 'ملغاة', icon: XCircle },
   upcoming: { dot: 'bg-primary', text: 'text-primary', label: 'قادمة', icon: CircleDashed },
@@ -49,6 +50,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                       item.status === 'done' && 'border-border',
                       item.status === 'cancelled' && 'border-border opacity-60',
                       item.status === 'upcoming' && 'border-primary/20',
+                      item.status === 'live' && 'border-error/40 bg-error-soft',
                     )}
                   >
                     <div className="flex items-center justify-between gap-3">
@@ -59,7 +61,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                       <span
                         className={cn(
                           'inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-black',
-                          'bg-divider/50',
+                          item.status === 'live' ? 'bg-surface' : 'bg-divider/50',
                           meta.text,
                         )}
                       >
@@ -68,8 +70,8 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                       </span>
                     </div>
                     {item.notes && (
-                      <p className="border-warning/20 mt-2 flex items-start gap-1.5 rounded-lg border bg-warning-soft p-2 text-[10px] font-bold leading-relaxed text-main">
-                        <FileText size={10} className="mt-0.5 shrink-0 text-warning" />
+                      <p className="mt-2 flex items-start gap-1.5 rounded-lg border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
+                        <FileText size={10} className="mt-0.5 shrink-0 text-primary" />
                         {item.notes}
                       </p>
                     )}

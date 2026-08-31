@@ -106,7 +106,7 @@ export const TeacherDashboardMobile = ({
 
   return (
     <div
-      className="min-h-full overflow-x-hidden bg-surface pb-6 transition-colors duration-500"
+      className="min-h-full overflow-x-hidden bg-background pb-6 transition-colors duration-500"
       dir="rtl"
       {...handlers}
     >
@@ -139,7 +139,7 @@ export const TeacherDashboardMobile = ({
             className="flex items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="الملف الشخصي"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/70 shadow-md shadow-primary/25">
               <UserIcon size={17} className="text-on-primary" />
             </div>
             <div className="text-start">
@@ -158,11 +158,11 @@ export const TeacherDashboardMobile = ({
                   ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
               }, 250)
             }}
-            className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:bg-primary/10"
             aria-label="الإعلانات"
           >
             <Bell size={15} className="text-primary" />
-            <span className="absolute -end-0.5 -top-0.5 h-2 w-2 rounded-full border-2 border-surface bg-error" />
+            <span className="absolute -end-0.5 -top-0.5 h-2 w-2 rounded-full border-2 border-background bg-error" />
           </button>
         </div>
 
@@ -178,7 +178,7 @@ export const TeacherDashboardMobile = ({
         <div
           role="tablist"
           aria-label="أقسام لوحة التحكم"
-          className="grid grid-cols-3 gap-1 rounded-2xl border border-border bg-surface p-1 shadow-sm"
+          className="grid grid-cols-3 gap-1 rounded-2xl border border-border bg-card p-1 shadow-elevation-1"
         >
           {TABS.map((tab) => {
             const Icon = tab.icon
@@ -219,11 +219,9 @@ export const TeacherDashboardMobile = ({
             {activeTab === 'home' && (
               <>
                 {nextSession ? (
-                  <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm">
-                    <NextSessionHero timeline={timeline} />
-                  </div>
+                  <NextSessionHero timeline={timeline} />
                 ) : (
-                  <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm">
+                  <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
                     <EmptyState
                       icon={Calendar}
                       title="لا حصص قادمة اليوم"
@@ -237,15 +235,15 @@ export const TeacherDashboardMobile = ({
                   <QuickActions showQuickLinks={true} />
                 </div>
                 <SectionLabel label="التنبيهات الذكية" tone="bg-error" />
-                <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm">
+                <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
                   <SmartNotifications
                     lowBalanceStudents={lowBalanceStudents}
                     focusStudents={focusStudents || []}
                   />
                 </div>
                 <section id="announcements-section" className="scroll-mt-24 space-y-3">
-                  <SectionLabel label="الإعلانات" tone="bg-warning" />
-                  <div className="rounded-3xl border border-border bg-surface p-3.5 shadow-sm">
+                  <SectionLabel label="الإعلانات" tone="bg-info" />
+                  <div className="rounded-3xl border border-border bg-card p-3.5 shadow-elevation-1">
                     <ModernAnnouncements />
                   </div>
                 </section>
@@ -256,14 +254,14 @@ export const TeacherDashboardMobile = ({
               <>
                 <WeekStrip counts={weekCounts} />
                 {timeline.length > 0 ? (
-                  <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm">
+                  <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
                     <TeacherSessionTimeline
                       sessions={timeline}
                       onStudentClick={setBriefingStudent}
                     />
                   </div>
                 ) : (
-                  <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm">
+                  <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
                     <EmptyState
                       icon={Calendar}
                       title="لا توجد حصص اليوم"
@@ -277,7 +275,7 @@ export const TeacherDashboardMobile = ({
 
             {activeTab === 'reports' && (
               <>
-                <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm">
+                <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
                   <FinancialSnapshot
                     monthNetProfit={stats.monthNetProfit}
                     monthRevenue={stats.monthRevenue}
@@ -285,18 +283,18 @@ export const TeacherDashboardMobile = ({
                     currency={stats.currency}
                   />
                 </div>
-                <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm">
+                <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
                   <AttendanceChart rate={stats.attendanceRate} />
                 </div>
                 <SectionLabel label="الأكثر حضوراً" tone="bg-success" />
-                <div className="rounded-3xl border border-border bg-surface p-3.5 shadow-sm">
+                <div className="rounded-3xl border border-border bg-card p-3.5 shadow-elevation-1">
                   <TopAttendanceStudents
                     sessions={rawSessions}
                     onStudentClick={setBriefingStudent}
                   />
                 </div>
-                <SectionLabel label="الإنجازات التعليمية" tone="bg-warning" />
-                <div className="rounded-3xl border border-border bg-surface p-3.5 shadow-sm">
+                <SectionLabel label="الإنجازات التعليمية" tone="bg-primary" />
+                <div className="rounded-3xl border border-border bg-card p-3.5 shadow-elevation-1">
                   <TeacherAchievements
                     stats={stats}
                     lowBalanceStudents={lowBalanceStudents}
@@ -304,7 +302,7 @@ export const TeacherDashboardMobile = ({
                   />
                 </div>
                 <SectionLabel label="المهام والطلبات" tone="bg-error" />
-                <div className="rounded-3xl border border-border bg-surface p-3.5 shadow-sm">
+                <div className="rounded-3xl border border-border bg-card p-3.5 shadow-elevation-1">
                   <TasksAndRequests tasks={tasks} />
                 </div>
               </>

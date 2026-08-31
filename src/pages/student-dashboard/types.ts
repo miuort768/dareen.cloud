@@ -33,6 +33,8 @@ export interface Session {
   date?: string
   day?: string
   time?: string
+  topics?: string
+  homework?: string
 }
 
 export interface PointLog {
@@ -72,7 +74,7 @@ export interface TodayTimelineItem {
   period: 'am' | 'pm'
   minutes: number
   notes?: string
-  status: 'done' | 'cancelled' | 'upcoming'
+  status: 'done' | 'cancelled' | 'upcoming' | 'live'
 }
 
 export interface SubjectProgress {

@@ -53,8 +53,8 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
           <p className="truncate text-base font-black text-main">{session.subject}</p>
           <p className="truncate text-[11px] font-bold text-muted">مع {session.teacher}</p>
           {session.notes && (
-            <p className="border-warning/20 mt-2 flex items-start gap-1.5 rounded-xl border bg-warning-soft p-2.5 text-[11px] font-bold leading-relaxed text-main">
-              <FileText size={12} className="mt-0.5 shrink-0 text-warning" />
+            <p className="mt-2 flex items-start gap-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2.5 text-[11px] font-bold leading-relaxed text-main">
+              <FileText size={12} className="mt-0.5 shrink-0 text-primary" />
               {session.notes}
             </p>
           )}

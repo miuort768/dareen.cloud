@@ -177,20 +177,20 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
         {notes.length > 0 && (
           <div className="mt-4">
             <h3 className="mb-2 flex items-center gap-1.5 text-xs font-black text-muted">
-              <FileText size={12} className="text-warning" />
+              <FileText size={12} className="text-primary" />
               ملاحظات المعلمات
             </h3>
             <div className="space-y-2">
               {notes.map((note, i) => (
                 <div
                   key={`note-${i}`}
-                  className="border-warning/20 rounded-2xl border bg-warning-soft p-3"
+                  className="rounded-2xl border border-s-[3px] border-border border-s-primary bg-card p-3 shadow-sm"
                 >
                   <div className="mb-1 flex items-center justify-between">
                     <span className="text-[11px] font-black text-main">{note.subject}</span>
-                    <span className="text-[10px] font-bold text-muted">{note.teacher}</span>
+                    <span className="text-[10px] font-bold text-primary">{note.teacher}</span>
                   </div>
-                  <p className="text-[11px] leading-relaxed text-main">{note.text}</p>
+                  <p className="text-[11px] leading-relaxed text-muted">{note.text}</p>
                 </div>
               ))}
             </div>

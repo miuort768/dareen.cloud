@@ -20,6 +20,7 @@ import type {
 } from './student-dashboard/types'
 import { StudentDashboardDesktop } from './student-dashboard/StudentDashboardDesktop'
 import { StudentDashboardMobile } from './student-dashboard/StudentDashboardMobile'
+import type { StudentActiveSession } from './student-dashboard/LiveSessionBanner'
 import { format } from 'date-fns'
 
 const teacherLabel = (en: { teacher?: string; teacherName?: string }): string =>
@@ -61,6 +62,15 @@ export const StudentDashboard = () => {
   const sessions = useMemo(() => data?.sessions ?? [], [data])
   const pointLogs = useMemo(() => data?.pointLogs ?? [], [data])
   const enrollments = useMemo(() => studentData?.enrollments || [], [studentData])
+
+  // ── Live session timer: يرصد /active-sessions/my كل 5 ثوانٍ (المعلمة بدأت الحصة) ──
+  const { data: activeSessions } = useQuery<StudentActiveSession[]>({
+    queryKey: ['active-sessions'],
+    queryFn: () => api.get<StudentActiveSession[]>('/active-sessions/my'),
+    refetchInterval: 5000,
+    enabled: currentUser?.role === 'student',
+  })
+  const activeSession = useMemo(() => activeSessions?.[0] ?? null, [activeSessions])
 
   // ── Stats ──────────────────────────────────────────────────────────────────
   const stats = useMemo<StudentStats>(() => {
@@ -152,12 +162,16 @@ export const StudentDashboard = () => {
           period: normalizePeriod(slot.period),
           minutes: to24Minutes(slot.hour, slot.period),
           notes: en.nextSessionNotes || undefined,
-          status: matched ? (matched.status as 'done' | 'cancelled') : 'upcoming',
+          status: matched
+            ? (matched.status as 'done' | 'cancelled')
+            : activeSession?.subject === subject
+              ? 'live'
+              : 'upcoming',
         })
       })
     })
     return items.sort((a, b) => a.minutes - b.minutes)
-  }, [enrollments, sessions])
+  }, [enrollments, sessions, activeSession])
 
   // ── Subjects board data ───────────────────────────────────────────────────
   const subjects = useMemo<SubjectProgress[]>(
@@ -229,6 +243,7 @@ export const StudentDashboard = () => {
     todayItems,
     nextSession,
     subjects,
+    activeSession,
     onRefresh: () =>
       queryClient.invalidateQueries({ queryKey: ['student-dashboard', currentUser?.id] }),
   }

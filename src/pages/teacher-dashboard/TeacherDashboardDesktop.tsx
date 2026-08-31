@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Calendar } from 'lucide-react'
+import { cn } from '../../lib/utils'
+import { motion } from 'framer-motion'
 import { fadeUp } from '../../shared/animations/fadeUp'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
@@ -45,6 +46,30 @@ interface TeacherDashboardDesktopProps {
   weekCounts: number[]
 }
 
+/** بطاقة قسم موحدة — بيضاء مرتفعة بحدود وظل ناعم */
+const SectionCard = ({
+  children,
+  delay = 0,
+  className,
+  id,
+}: {
+  children: React.ReactNode
+  delay?: number
+  className?: string
+  id?: string
+}) => (
+  <motion.div
+    {...fadeUp(delay)}
+    id={id}
+    className={cn(
+      'rounded-3xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300',
+      className,
+    )}
+  >
+    {children}
+  </motion.div>
+)
+
 export const TeacherDashboardDesktop = ({
   currentUser,
   stats,
@@ -88,118 +113,91 @@ export const TeacherDashboardDesktop = ({
         />
       </motion.div>
 
-      <motion.div {...fadeUp(0.04)}>
-        {nextSession ? (
-          <NextSessionHero timeline={timeline} />
-        ) : (
-          <div className="flex h-full min-h-[140px] items-center justify-center rounded-3xl border border-border bg-surface p-5">
-            <EmptyState
-              icon={Calendar}
-              title="لا توجد حصة قادمة اليوم"
-              subtitle="يمكنك بدء حصة مباشرة متى شئت"
-              compact
-            />
-          </div>
-        )}
-      </motion.div>
-
-      <motion.div {...fadeUp(0.06)}>
-        <WeekStrip counts={weekCounts} />
-      </motion.div>
+      {/* الحصة القادمة + الأسبوع — شبكة Bento */}
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-12">
+        <motion.div {...fadeUp(0.04)} className="xl:col-span-8">
+          {nextSession ? (
+            <NextSessionHero timeline={timeline} />
+          ) : (
+            <div className="flex h-full min-h-[150px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-elevation-1">
+              <EmptyState
+                icon={Calendar}
+                title="لا توجد حصة قادمة اليوم"
+                subtitle="يمكنك بدء حصة مباشرة متى شئت"
+                compact
+              />
+            </div>
+          )}
+        </motion.div>
+        <motion.div {...fadeUp(0.06)} className="xl:col-span-4">
+          <WeekStrip counts={weekCounts} />
+        </motion.div>
+      </div>
 
       <motion.div {...fadeUp(0.08)}>
         <DashboardStats stats={stats} isTeacher={true} />
       </motion.div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+        {/* العمود الرئيسي */}
         <div className="space-y-5 lg:col-span-8">
-          <motion.div
-            {...fadeUp(0.1)}
-            className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
-          >
+          <SectionCard delay={0.1}>
             <LiveSessions />
-          </motion.div>
+          </SectionCard>
 
           {timeline.length > 0 && (
-            <motion.div
-              {...fadeUp(0.12)}
-              className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
-            >
+            <SectionCard delay={0.12}>
               <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
-            </motion.div>
+            </SectionCard>
           )}
 
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            <motion.div
-              {...fadeUp(0.14)}
-              className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
-            >
+            <SectionCard delay={0.14}>
               <AttendanceChart rate={stats.attendanceRate} />
-            </motion.div>
-            <motion.div
-              {...fadeUp(0.16)}
-              className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
-            >
+            </SectionCard>
+            <SectionCard delay={0.16}>
               <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
-            </motion.div>
+            </SectionCard>
           </div>
 
-          <motion.div
-            {...fadeUp(0.18)}
-            id="announcements-section"
-            className="scroll-mt-32 rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
-          >
+          <SectionCard delay={0.18} id="announcements-section" className="scroll-mt-32">
             <ModernAnnouncements />
-          </motion.div>
+          </SectionCard>
         </div>
 
+        {/* العمود الجانبي */}
         <div className="space-y-5 lg:col-span-4">
-          <motion.div
-            {...fadeUp(0.1)}
-            className="rounded-3xl border border-border bg-surface p-4 shadow-sm transition-colors duration-300"
-          >
-            <QuickActions showQuickLinks={false} />
-          </motion.div>
+          <SectionCard delay={0.1} className="p-4">
+            <QuickActions showQuickLinks={true} />
+          </SectionCard>
 
-          <motion.div
-            {...fadeUp(0.14)}
-            className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
-          >
+          <SectionCard delay={0.14} className="p-4">
             <SmartNotifications
               lowBalanceStudents={lowBalanceStudents}
               focusStudents={focusStudents || []}
             />
-          </motion.div>
+          </SectionCard>
 
-          <motion.div
-            {...fadeUp(0.18)}
-            className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
-          >
+          <SectionCard delay={0.18} className="p-4">
             <TasksAndRequests tasks={tasks} />
-          </motion.div>
+          </SectionCard>
 
-          <motion.div
-            {...fadeUp(0.22)}
-            className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
-          >
+          <SectionCard delay={0.22} className="p-4">
             <FinancialSnapshot
               monthNetProfit={stats.monthNetProfit}
               monthRevenue={stats.monthRevenue}
               expectedCollection={stats.expectedCollection}
               currency={stats.currency}
             />
-          </motion.div>
+          </SectionCard>
 
-          <motion.div
-            {...fadeUp(0.26)}
-            className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
-          >
+          <SectionCard delay={0.26} className="p-4">
             <TeacherAchievements
               stats={stats}
               lowBalanceStudents={lowBalanceStudents}
               isTeacher={true}
             />
-          </motion.div>
+          </SectionCard>
         </div>
       </div>
 

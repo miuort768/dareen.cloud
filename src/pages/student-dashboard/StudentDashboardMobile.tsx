@@ -19,6 +19,7 @@ import { SubjectsBoard } from './SubjectsBoard'
 import { RankJourney } from './RankJourney'
 import { PointsFeed } from './PointsFeed'
 import { InvoicesStrip } from './InvoicesStrip'
+import { LiveSessionBanner, type StudentActiveSession } from './LiveSessionBanner'
 
 interface StudentDashboardMobileProps {
   studentData: StudentDashboardData | null
@@ -28,6 +29,7 @@ interface StudentDashboardMobileProps {
   todayItems: TodayTimelineItem[]
   nextSession: NextSessionInfo | null
   subjects: SubjectProgress[]
+  activeSession: StudentActiveSession | null
   onRefresh: () => void
 }
 
@@ -38,6 +40,7 @@ export const StudentDashboardMobile = ({
   todayItems,
   nextSession,
   subjects,
+  activeSession,
   onRefresh,
 }: StudentDashboardMobileProps) => {
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh })
@@ -82,6 +85,8 @@ export const StudentDashboardMobile = ({
             rank={rank}
           />
         </motion.div>
+
+        <LiveSessionBanner session={activeSession} />
 
         <motion.div {...fadeUp(0.05)}>
           <NextSessionRadar session={nextSession} />

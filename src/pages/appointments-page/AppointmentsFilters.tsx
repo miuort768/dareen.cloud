@@ -24,15 +24,15 @@ export const AppointmentsFilters = ({
   hasActiveFilters,
   onReset,
 }: AppointmentsFiltersProps) => (
-  <div className="mb-4 rounded-2xl border border-border bg-card">
+  <div className="mb-4 rounded-none border border-border bg-card">
     <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
       <div className="flex items-center gap-2">
-        <div className="flex h-6 w-6 items-center justify-center rounded-xl bg-primary-soft">
+        <div className="flex h-6 w-6 items-center justify-center rounded-none bg-primary-soft">
           <SlidersHorizontal size={12} className="text-primary" />
         </div>
         <span className="text-xs font-bold text-muted">تصفية النتائج</span>
         {hasActiveFilters && (
-          <span className="rounded-lg bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
+          <span className="rounded-none bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
             نشط
           </span>
         )}
@@ -40,7 +40,7 @@ export const AppointmentsFilters = ({
       {hasActiveFilters && (
         <button
           onClick={onReset}
-          className="flex items-center gap-1 rounded-xl bg-error-soft px-2 py-1 text-micro font-bold text-error transition-all active:scale-95"
+          className="flex items-center gap-1 rounded-none bg-error-soft px-2 py-1 text-micro font-bold text-error transition-all active:scale-95"
         >
           <X size={12} /> إعادة تعيين
         </button>
@@ -55,7 +55,7 @@ export const AppointmentsFilters = ({
           placeholder="ابحث باسم الطالب أو المادة..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface py-2 pe-8 ps-8 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus"
+          className="w-full rounded-none border border-border bg-surface py-2 pe-8 ps-8 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus"
         />
         {searchTerm && (
           <button
@@ -73,7 +73,7 @@ export const AppointmentsFilters = ({
           value={filterDay}
           onChange={(e) => onDayChange(e.target.value)}
           aria-label="تصفية حسب اليوم"
-          className="w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all focus:outline-none focus:ring-2 focus:ring-focus dark:[color-scheme:dark]"
+          className="w-full cursor-pointer appearance-none rounded-none border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all focus:outline-none focus:ring-2 focus:ring-focus dark:[color-scheme:dark]"
         >
           <option value="all">كل الأيام</option>
           {DAYS_OF_WEEK.map((day) => (
@@ -89,7 +89,7 @@ export const AppointmentsFilters = ({
           value={filterTeacher}
           onChange={(e) => onTeacherChange(e.target.value)}
           aria-label="تصفية حسب المعلمة"
-          className="w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all focus:outline-none focus:ring-2 focus:ring-focus dark:[color-scheme:dark]"
+          className="w-full cursor-pointer appearance-none rounded-none border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all focus:outline-none focus:ring-2 focus:ring-focus dark:[color-scheme:dark]"
         >
           <option value="all">كل المعلمات</option>
           {uniqueTeachers.map((teacher) => (

@@ -16,6 +16,7 @@ import { SubjectsBoard } from './SubjectsBoard'
 import { RankJourney } from './RankJourney'
 import { PointsFeed } from './PointsFeed'
 import { InvoicesStrip } from './InvoicesStrip'
+import { LiveSessionBanner, type StudentActiveSession } from './LiveSessionBanner'
 
 interface ShellProps {
   studentData: StudentDashboardData | null
@@ -24,6 +25,7 @@ interface ShellProps {
   todayItems: TodayTimelineItem[]
   nextSession: NextSessionInfo | null
   subjects: SubjectProgress[]
+  activeSession: StudentActiveSession | null
 }
 
 export const StudentDashboardDesktop = ({
@@ -33,6 +35,7 @@ export const StudentDashboardDesktop = ({
   todayItems,
   nextSession,
   subjects,
+  activeSession,
 }: ShellProps) => {
   const points = studentData?.totalPoints || 0
   const rank = getRankByPoints(points, STUDENT_RANKS)
@@ -50,6 +53,8 @@ export const StudentDashboardDesktop = ({
             rank={rank}
           />
         </motion.div>
+
+        <LiveSessionBanner session={activeSession} />
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
           <div className="space-y-5 lg:col-span-8">

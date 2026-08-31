@@ -13,7 +13,16 @@ export interface PointLogEntry {
   points?: number
 }
 
-export type ActiveTimerSession = Student
+/** جلسة نشطة من /active-sessions/my — تشمل اسم المعلمة والمادة ووقت البدء */
+export interface ActiveTimerSession {
+  id: string
+  studentId: string
+  teacherId?: string
+  teacherName?: string
+  subject: string
+  timerSeconds?: number
+  startedAt: string
+}
 
 export interface ChildNextSession {
   day: string

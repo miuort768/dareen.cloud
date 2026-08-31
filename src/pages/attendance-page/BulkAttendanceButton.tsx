@@ -1,4 +1,5 @@
-import { Users } from 'lucide-react'
+import { useState } from 'react'
+import { Loader2, Users } from 'lucide-react'
 import { useShowNotification } from '../../context/AppContext'
 import { confirm } from '../../lib/confirmDialog'
 import type { Student, Enrollment, Session } from '../../features/attendance/types'
@@ -18,8 +19,10 @@ export const BulkAttendanceButton = ({
   logAttendance,
 }: BulkAttendanceButtonProps) => {
   const showNotification = useShowNotification()
+  const [isBulkLoading, setIsBulkLoading] = useState(false)
 
   const handleBulk = async () => {
+    if (isBulkLoading) return
     const selectedDayName = new Date(logDate).toLocaleDateString('ar-EG', { weekday: 'long' })
     const todayStudents = (matchedEnrollments || []).filter(({ student, enrollment }) => {
       const isScheduledToday = enrollment.schedule?.some(
@@ -38,6 +41,7 @@ export const BulkAttendanceButton = ({
 
     if (!(await confirm(`سيتم تسجيل (${todayStudents.length}) طالب كحضور تلقائي`))) return
 
+    setIsBulkLoading(true)
     const now = new Date()
     const currentTime = now.toLocaleTimeString('ar-EG', {
       hour: 'numeric',
@@ -47,6 +51,7 @@ export const BulkAttendanceButton = ({
     })
 
     let successCount = 0
+    let failedCount = 0
     for (const { student, enrollment } of todayStudents) {
       const teacherRaw = enrollment.teacher
       const result = await logAttendance({
@@ -62,17 +67,35 @@ export const BulkAttendanceButton = ({
         price: enrollment.price ? enrollment.price - (enrollment.discount || 0) : undefined,
       })
       if (result?.success) successCount++
+      else failedCount++
     }
-    showNotification(`تم تسجيل ${successCount} طالب بنجاح`, 'success')
+    setIsBulkLoading(false)
+    if (failedCount > 0) {
+      showNotification(
+        `تم تسجيل ${successCount} طالب — فشل ${failedCount}، أعد المحاولة لهم`,
+        'warning',
+      )
+    } else {
+      showNotification(`تم تسجيل ${successCount} طالب بنجاح`, 'success')
+    }
   }
 
   return (
     <div className="mb-2 px-0">
       <button
         onClick={handleBulk}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-success px-4 py-3.5 text-xs font-semibold text-on-success shadow-sm transition-all duration-200 hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+        disabled={isBulkLoading}
+        className="flex w-full items-center justify-center gap-2 rounded-none bg-success px-4 py-3.5 text-xs font-semibold text-on-success shadow-sm transition-all duration-200 hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-60"
       >
-        تسجيل حضور اليوم بالكامل <Users size={16} />
+        {isBulkLoading ? (
+          <>
+            <Loader2 size={16} className="animate-spin" /> جاري التسجيل...
+          </>
+        ) : (
+          <>
+            تسجيل حضور اليوم بالكامل <Users size={16} />
+          </>
+        )}
       </button>
     </div>
   )

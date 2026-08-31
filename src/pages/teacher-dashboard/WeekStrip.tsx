@@ -24,11 +24,11 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
   return (
     <section
       aria-label="حمل الأسبوع القادم"
-      className="rounded-3xl border border-border bg-surface p-4 shadow-sm transition-colors duration-300"
+      className="h-full rounded-3xl border border-border bg-card p-4 shadow-elevation-1 transition-colors duration-300"
     >
       <div className="mb-3 flex items-center justify-between px-1">
         <h3 className="text-sm font-black text-main">أسبوعك القادم</h3>
-        <span className="rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary">
+        <span className="rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary dark:bg-primary/10">
           {weekTotal} {weekTotal === 1 ? 'حصة' : 'حصص'}
         </span>
       </div>
@@ -41,7 +41,9 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
               key={day.label + day.count}
               className={cn(
                 'flex flex-col items-center gap-1.5 rounded-xl border px-1 py-2.5 transition-colors duration-300',
-                day.isToday ? 'border-primary/40 bg-primary-soft' : 'border-border bg-surface',
+                day.isToday
+                  ? 'border-primary/40 bg-primary-soft dark:bg-primary/10'
+                  : 'border-border bg-surface',
               )}
             >
               <span
@@ -49,20 +51,24 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
               >
                 {day.label}
               </span>
-              <div className="flex h-8 w-full items-end justify-center px-1">
+              <div className="flex h-10 w-full items-end justify-center px-1.5">
                 <div
                   className={cn(
-                    'w-full rounded-sm transition-all duration-700',
-                    day.count > 0 ? 'bg-primary' : 'bg-divider',
+                    'w-full rounded-full transition-all duration-700',
+                    day.isToday && day.count > 0
+                      ? 'bg-primary'
+                      : day.count > 0
+                        ? 'bg-primary/60'
+                        : 'bg-border',
                   )}
-                  style={{ height: `${day.count > 0 ? 20 + intensity * 80 : 12}%` }}
+                  style={{ height: `${day.count > 0 ? 18 + intensity * 82 : 10}%` }}
                   aria-hidden="true"
                 />
               </div>
               <span
                 className={cn(
                   'text-[11px] font-black tabular-nums',
-                  day.count > 0 ? 'text-main' : 'text-muted/60',
+                  day.count > 0 ? 'text-main' : 'text-dim',
                 )}
               >
                 {day.count}
