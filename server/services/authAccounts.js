@@ -72,6 +72,20 @@ async function touchLastLogin(accountId) {
   } catch { /* best-effort */ }
 }
 
+// Timing side-channel equalizer: without this, "account not found" returns
+// ~instantly while "account exists" waits for bcrypt (~250ms) — letting an
+// attacker enumerate valid usernames by measuring latency. A one-off dummy
+// compare runs on every not-found path so both responses cost the same.
+let dummyHash = null;
+async function equalizeTiming(password) {
+  try {
+    if (!dummyHash) {
+      dummyHash = await bcrypt.hash(`timing-equalizer-${Date.now()}`, 12);
+    }
+    await bcrypt.compare(password, dummyHash);
+  } catch { /* best-effort */ }
+}
+
 // Best-effort "last seen" update by entity identity (used for throttled
 // activity tracking so lastLoginAt reflects actual platform usage, not just
 // logins). No-op when no account row exists (e.g. legacy-only deployments).
@@ -89,8 +103,14 @@ async function touchLastSeen(entityType, entityId) {
 async function authenticate(normalizedLogin, password) {
   if (isAccountsMode()) {
     const account = await findAccountForLogin(normalizedLogin);
-    if (!account) return null;
-    if (!account.isActive || account.isLocked) return null;
+    if (!account) {
+      await equalizeTiming(password);
+      return null;
+    }
+    if (!account.isActive || account.isLocked) {
+      await equalizeTiming(password);
+      return null;
+    }
 
     const valid = await bcrypt.compare(password, account.passwordHash);
     if (!valid) return null;
@@ -110,7 +130,10 @@ async function authenticate(normalizedLogin, password) {
   if (isDualMode()) {
     const account = await findAccountForLogin(normalizedLogin);
     if (account) {
-      if (!account.isActive || account.isLocked) return null;
+      if (!account.isActive || account.isLocked) {
+        await equalizeTiming(password);
+        return null;
+      }
       const valid = await bcrypt.compare(password, account.passwordHash);
       if (valid) {
         touchLastLogin(account.id);
@@ -126,12 +149,21 @@ async function authenticate(normalizedLogin, password) {
     }
   }
 
-  return await legacyAuthenticate(normalizedLogin, password);
+  const legacyResult = await legacyAuthenticate(normalizedLogin, password);
+  // Dual/accounts mode with no match anywhere: equalize before giving up so
+  // the legacy-path miss is indistinguishable from an accounts-path miss.
+  if (!legacyResult && (isAccountsMode() || isDualMode())) {
+    await equalizeTiming(password);
+  }
+  return legacyResult;
 }
 
 async function legacyAuthenticate(normalizedLogin, password) {
   const userData = await resolveLegacyIdentity(normalizedLogin);
-  if (!userData) return null;
+  if (!userData) {
+    await equalizeTiming(password);
+    return null;
+  }
 
   const valid = userData.password && userData.password.startsWith('$2b$') && await bcrypt.compare(password, userData.password);
   if (!valid) return null;

@@ -60,6 +60,25 @@ function createRateLimiter(options) {
     const sweepInterval = setInterval(sweepInMemoryStore, 5 * 60 * 1000);
     if (sweepInterval.unref) sweepInterval.unref();
 
+    // Sampled 429 logging: unbounded logging of blocked requests is itself a
+    // disk-exhaustion vector, but zero logs blind fail2ban/monitoring. Log
+    // the first block per key per window + every 25th attempt after.
+    const logCounters = new Map();
+    function logBlocked(key) {
+        const entry = logCounters.get(key);
+        const count = (entry?.count || 0) + 1;
+        logCounters.set(key, { count });
+        if (count === 1 || count % 25 === 0) {
+            logger.warn(`Rate limit exceeded [${key}] (${count} blocked in window)`);
+        }
+    }
+    // Bound the counter map itself (same exhaustion logic as the store)
+    const LOG_COUNTER_MAX = 50_000;
+    const logSweep = setInterval(() => {
+        if (logCounters.size > LOG_COUNTER_MAX / 2) logCounters.clear();
+    }, 10 * 60 * 1000);
+    if (logSweep.unref) logSweep.unref();
+
     return function rateLimiter(req, res, next) {
         const extraKey = keyFn ? String(keyFn(req) || '') : '';
         const key = `${keyPrefix}${normalizeIp(req.ip || req.connection?.remoteAddress)}${extraKey ? `:${extraKey}` : ''}`;
@@ -88,6 +107,7 @@ function createRateLimiter(options) {
 
                     if (count > max) {
                         res.setHeader('Retry-After', Math.max(1, Math.ceil(ttl / 1000)));
+                        logBlocked(key);
                         return res.status(429).json({ error: message });
                     }
                     next();
@@ -120,6 +140,7 @@ function createRateLimiter(options) {
 
             if (entry.count > max) {
                 res.setHeader('Retry-After', Math.max(1, Math.ceil((entry.resetTime - now) / 1000)));
+                logBlocked(key);
                 return res.status(429).json({ error: message });
             }
             next();

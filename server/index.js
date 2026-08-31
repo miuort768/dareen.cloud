@@ -113,7 +113,13 @@ app.use((err, _req, res, next) => {
 
 require('./routes/seo')(app);
 
-app.set('trust proxy', 1);
+// Trust proxy — number of reverse proxies in front of Node.
+//   Nginx only:            TRUST_PROXY=1 (default)
+//   Cloudflare + Nginx:    TRUST_PROXY=2
+// Wrong value breaks rate limiting: with CF and trust=1 every user shares
+// Cloudflare edge IPs in buckets → mass false 429s (or the reverse).
+const TRUST_PROXY = Number(process.env.TRUST_PROXY || 1);
+app.set('trust proxy', Number.isFinite(TRUST_PROXY) ? TRUST_PROXY : 1);
 
 const { createRateLimiter } = require('./middleware/rateLimiter');
 const limiter = createRateLimiter({
