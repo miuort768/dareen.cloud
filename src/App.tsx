@@ -176,6 +176,8 @@ const ProtectedRoute = ({
 
     const isCommonAccess = [
       'schedule',
+      // Agenda mirrors schedule access — same audience, read-only companion view
+      'agenda',
       'announcements',
       'parent_announcements',
       'appointments',
@@ -201,6 +203,7 @@ const ProtectedRoute = ({
         'dashboard',
         'evaluations',
         'schedule',
+        'agenda',
         'attendance',
         'announcements',
         'appointments',

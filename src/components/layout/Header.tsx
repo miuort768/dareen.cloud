@@ -70,6 +70,9 @@ const SEARCH_ROUTES: [string, string][] = [
   ['التقييمات', '/evaluations'],
   ['الإغلاق', '/monthly-closing'],
   ['أولياء', '/parents'],
+  ['الأدوار', '/roles'],
+  ['الصلاحيات', '/roles'],
+  ['المراقبة', '/monitoring'],
 ]
 
 export const Header = memo(() => {

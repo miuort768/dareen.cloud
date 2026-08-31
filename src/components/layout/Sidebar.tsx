@@ -24,6 +24,9 @@ import {
   Briefcase,
   Mail,
   BookUser,
+  CalendarClock,
+  ShieldCheck,
+  Activity,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Image } from '../../shared/components/ui'
@@ -110,6 +113,7 @@ export const Sidebar = memo(
       { name: 'تقفيل الشهر', href: '/monthly-closing', id: 'monthly_closing', icon: CalendarCheck },
       { name: 'الحضور والغياب', href: '/attendance', id: 'attendance', icon: UserCheck },
       { name: 'الجداول الدراسية', href: '/schedule', id: 'schedule', icon: CalendarDays },
+      { name: 'الأجندة', href: '/agenda', id: 'agenda', icon: CalendarClock },
       { name: 'المواعيد', href: '/appointments', id: 'appointments', icon: CalendarCheck },
       { name: 'التقارير', href: '/reports', id: 'reports', icon: FileText },
       {
@@ -149,14 +153,21 @@ export const Sidebar = memo(
         icon: Megaphone,
       },
       { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
+      { name: 'الأدوار والصلاحيات', href: '/roles', id: 'roles', icon: ShieldCheck },
+      { name: 'المراقبة', href: '/monitoring', id: 'monitoring', icon: Activity },
       { name: 'رسائل الاتصال', href: '/admin-contacts', id: 'admin_contacts', icon: Mail },
       { name: 'طلبات التوظيف', href: '/admin-jobs', id: 'admin_jobs', icon: Briefcase },
     ]
 
     const filteredNavigation = navigation.filter((item) => {
       if (!currentUser) return false
+      // Admin-only pages — must match ProtectedRoute permission="admin"
+      if (item.id === 'roles' || item.id === 'monitoring') {
+        return currentUser.role === 'admin' || currentUser.permissions?.includes('admin')
+      }
       const isCommonAccess = [
         'schedule',
+        'agenda',
         'announcements',
         'parent_announcements',
         'appointments',
@@ -208,6 +219,7 @@ export const Sidebar = memo(
           [
             'evaluations',
             'schedule',
+            'agenda',
             'announcements',
             'appointments',
             'forum',
@@ -240,7 +252,7 @@ export const Sidebar = memo(
         },
         {
           label: 'التعلّم',
-          items: pick('evaluations', 'attendance', 'schedule', 'appointments', 'tasks'),
+          items: pick('evaluations', 'attendance', 'schedule', 'agenda', 'appointments', 'tasks'),
         },
         {
           label: 'المالية',
@@ -266,7 +278,7 @@ export const Sidebar = memo(
             'admin_jobs',
           ),
         },
-        { label: 'النظام', items: pick('settings') },
+        { label: 'النظام', items: pick('roles', 'monitoring', 'settings') },
       ].filter((section) => section.items.length > 0)
     }, [filteredNavigation])
 
