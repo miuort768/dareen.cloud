@@ -15,34 +15,66 @@ export interface PointLogEntry {
 
 export type ActiveTimerSession = Student
 
-export interface DashboardStats {
-  childCount: number
-  upcomingSessions: number
-  attendanceRate: number
-  academicProgress: number
-  totalSessionsUsed: number
-  totalSessionsTotal: number
+export interface ChildNextSession {
+  day: string
+  hour: string
+  period: string
+  subject: string
+  teacher: string
+  minutes: number
+  isToday: boolean
 }
 
-export interface TodayTask {
+export interface ChildNote {
+  subject: string
+  teacher: string
+  text: string
+}
+
+export interface ChildStats {
+  attendanceRate: number
+  completed: number
+  cancelled: number
+  sessionsUsed: number
+  sessionsTotal: number
+  progress: number
+  nextSession: ChildNextSession | null
+  notes: ChildNote[]
+}
+
+export interface TodayTimelineItem {
+  id: string
+  studentId: string
   studentName: string
   subject: string
   teacher: string
-  time: string
+  hour: string
   period: string
+  minutes: number
+  status: 'live' | 'done' | 'cancelled' | 'upcoming'
 }
 
-export interface ParentViewProps {
+export interface WeeklyPulseStats {
+  completed: number
+  weeklyCompleted: number
+  cancelled: number
+  todayCount: number
+  attendanceRate: number
+  academicProgress: number
+}
+
+export interface ParentDashboardProps {
   currentUser: ParentUser
   adminPhone: string | undefined
   children: Student[]
-  sessions: Student[]
   allPointLogs: PointLogEntry[]
   activeTimers: ActiveTimerSession[]
-  stats: DashboardStats
-  todayTasks: TodayTask[]
+  childStats: Record<string, ChildStats>
+  timeline: TodayTimelineItem[]
+  weekly: WeeklyPulseStats
   points: number
-  rank: { name: string }
-  logout: () => void
+  selectedChildId: string | null
+  onSelectChild: (id: string) => void
   formatTime: (startedAt: string | null | undefined) => string
+  onRefresh: () => void
 }

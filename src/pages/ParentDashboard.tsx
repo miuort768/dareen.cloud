@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../lib/api'
 import { useCurrentUser, useAdminPhone, useAcademyName } from '../context/AppContext'
@@ -7,8 +7,95 @@ import { ar } from 'date-fns/locale'
 import { Skeleton } from '../shared/components/ui'
 import { ParentDashboardDesktop } from './parent-dashboard/ParentDashboardDesktop'
 import { ParentDashboardMobile } from './parent-dashboard/ParentDashboardMobile'
-import type { Student } from '../types'
-import { normalizeDayName } from '../features/attendance/utils/slotUtils'
+import type { Student, Enrollment } from '../types'
+import {
+  normalizeDayName,
+  normalizePeriod,
+  to24Minutes,
+} from '../features/attendance/utils/slotUtils'
+import { ARABIC_DAYS } from '../shared/constants/days'
+import type {
+  ChildStats,
+  ChildNextSession,
+  ChildNote,
+  TodayTimelineItem,
+  WeeklyPulseStats,
+} from './parent-dashboard/types'
+
+const teacherLabel = (en: Enrollment): string =>
+  typeof en.teacher === 'string' ? en.teacher : en.teacher?.name || en.teacherName || ''
+
+/** Next upcoming slot for a child: today's remaining slots first, then the week ahead. */
+const findNextSession = (child: Student): ChildNextSession | null => {
+  const todayIdx = new Date().getDay()
+  const nowMinutes = new Date().getHours() * 60 + new Date().getMinutes()
+
+  const candidates: (ChildNextSession & { dayIndex: number })[] = []
+  ;(child.enrollments || []).forEach((en) => {
+    ;(en.schedule || []).forEach((slot) => {
+      const day = normalizeDayName(slot.day)
+      const dayIndex = ARABIC_DAYS.indexOf(day as (typeof ARABIC_DAYS)[number])
+      if (dayIndex === -1) return
+      const dayOffset = (dayIndex - todayIdx + 7) % 7
+      const minutes = to24Minutes(slot.hour, slot.period)
+      // skip today's already-passed slots
+      if (dayOffset === 0 && minutes <= nowMinutes) return
+      candidates.push({
+        day,
+        hour: String(parseInt(String(slot.hour), 10) || ''),
+        period: normalizePeriod(slot.period),
+        subject: en.subject || teacherLabel(en),
+        teacher: teacherLabel(en),
+        minutes,
+        isToday: dayOffset === 0,
+        dayIndex: dayOffset,
+      })
+    })
+  })
+
+  if (candidates.length === 0) return null
+  candidates.sort((a, b) => a.dayIndex - b.dayIndex || a.minutes - b.minutes)
+  const best = candidates[0]
+  return {
+    day: best.day,
+    hour: best.hour,
+    period: best.period,
+    subject: best.subject,
+    teacher: best.teacher,
+    minutes: best.minutes,
+    isToday: best.isToday,
+  }
+}
+
+const computeChildStats = (child: Student, childSessions: Student[]): ChildStats => {
+  const completed = childSessions.filter((s) => s.status === 'completed').length
+  const cancelled = childSessions.filter((s) => s.status === 'cancelled').length
+  const totalRecorded = completed + cancelled
+  const attendanceRate = totalRecorded > 0 ? Math.round((completed / totalRecorded) * 100) : 0
+
+  const enrollments = child.enrollments || []
+  const sessionsUsed = enrollments.reduce((s, en) => s + Number(en.sessionsUsed || 0), 0)
+  const sessionsTotal = enrollments.reduce((s, en) => s + Number(en.sessionsTotal || 0), 0)
+
+  const notes: ChildNote[] = enrollments
+    .filter((en) => en.nextSessionNotes)
+    .map((en) => ({
+      subject: en.subject || teacherLabel(en),
+      teacher: teacherLabel(en),
+      text: en.nextSessionNotes || '',
+    }))
+
+  return {
+    attendanceRate,
+    completed,
+    cancelled,
+    sessionsUsed,
+    sessionsTotal,
+    progress: sessionsTotal > 0 ? Math.round((sessionsUsed / sessionsTotal) * 100) : 0,
+    nextSession: findNextSession(child),
+    notes,
+  }
+}
 
 export const ParentDashboard = () => {
   const academyName = useAcademyName()
@@ -19,6 +106,7 @@ export const ParentDashboard = () => {
   const adminPhone = useAdminPhone()
 
   const [partialError, setPartialError] = useState<string | null>(null)
+  const [selectedChildId, setSelectedChildId] = useState<string | null>(null)
 
   const todayArabic = format(new Date(), 'eeee', { locale: ar })
 
@@ -87,8 +175,13 @@ export const ParentDashboard = () => {
   })
 
   const children = useMemo(() => parentData?.children ?? [], [parentData])
-  const sessions = parentData?.sessions ?? []
-  const allPointLogs = parentData?.allPointLogs ?? []
+  const sessions = useMemo(() => parentData?.sessions ?? [], [parentData])
+  const allPointLogs = useMemo(() => parentData?.allPointLogs ?? [], [parentData])
+
+  // default selection: first child once data arrives
+  useEffect(() => {
+    if (!selectedChildId && children.length > 0) setSelectedChildId(children[0]!.id)
+  }, [children, selectedChildId])
 
   const { data: activeTimers = [] } = useQuery({
     queryKey: ['active-sessions'],
@@ -124,67 +217,129 @@ export const ParentDashboard = () => {
     return `${m}:${s}`
   }
 
-  const todayTasks = useMemo(() => {
-    const tasks: {
-      studentName: string
-      subject: string
-      teacher: string
-      time: string
-      period: string
-    }[] = []
+  // ── Derived: per-child stats ───────────────────────────────────────────────
+  const childStats = useMemo(() => {
+    const map: Record<string, ChildStats> = {}
+    children.forEach((child) => {
+      const childSessions = sessions.filter((s) => s.studentId === child.id)
+      map[child.id] = computeChildStats(child, childSessions)
+    })
+    return map
+  }, [children, sessions])
+
+  // ── Derived: today's timeline (all children) ──────────────────────────────
+  const timeline = useMemo<TodayTimelineItem[]>(() => {
+    const todayStr = format(new Date(), 'yyyy-MM-dd')
+    const items: TodayTimelineItem[] = []
     children.forEach((child) => {
       ;(child.enrollments || []).forEach((en) => {
         ;(en.schedule || []).forEach((slot) => {
-          if (normalizeDayName(slot.day) === todayArabic) {
-            tasks.push({
-              studentName: child.name,
-              subject: en.subject || en.teacherName || '',
-              teacher: typeof en.teacher === 'string' ? en.teacher : en.teacher?.name || '',
-              time: slot.hour,
-              period: slot.period,
-            })
-          }
+          if (normalizeDayName(slot.day) !== todayArabic) return
+          const subject = en.subject || teacherLabel(en)
+          const teacher = teacherLabel(en)
+          const minutes = to24Minutes(slot.hour, slot.period)
+          const matched = sessions.find(
+            (s) =>
+              s.studentId === child.id &&
+              s.subject === subject &&
+              (s.teacherId
+                ? en.teacherId && s.teacherId === en.teacherId
+                : s.teacherName === teacher) &&
+              (s.date === todayStr || s.date === format(new Date(), 'en-CA')) &&
+              s.status !== 'scheduled',
+          )
+          const isLive = activeTimers.some((t) => t.studentId === child.id && t.subject === subject)
+          items.push({
+            id: `${child.id}-${en.id || en.subject}-${slot.hour}-${slot.period}`,
+            studentId: child.id,
+            studentName: child.name,
+            subject,
+            teacher,
+            hour: String(parseInt(String(slot.hour), 10) || ''),
+            period: normalizePeriod(slot.period),
+            minutes,
+            status: isLive
+              ? 'live'
+              : matched
+                ? (matched.status as 'done' | 'cancelled')
+                : 'upcoming',
+          })
         })
       })
     })
-    return tasks.sort((a, b) => (a.time || '').localeCompare(b.time || ''))
-  }, [children, todayArabic])
+    return items.sort((a, b) => a.minutes - b.minutes)
+  }, [children, todayArabic, sessions, activeTimers])
+
+  // ── Derived: weekly pulse ──────────────────────────────────────────────────
+  const weekly = useMemo<WeeklyPulseStats>(() => {
+    const completed = sessions.filter((s) => s.status === 'completed').length
+    const cancelled = sessions.filter((s) => s.status === 'cancelled').length
+    const weekStart = new Date()
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay())
+    weekStart.setHours(0, 0, 0, 0)
+    const weeklyCompleted = sessions.filter((s) => {
+      if (s.status !== 'completed') return false
+      const d = s.date
+      if (!d || typeof d !== 'string') return false
+      try {
+        return new Date(d) >= weekStart
+      } catch {
+        return false
+      }
+    }).length
+
+    let used = 0
+    let total = 0
+    children.forEach((c) => {
+      ;(c.enrollments || []).forEach((en) => {
+        used += Number(en.sessionsUsed || 0)
+        total += Number(en.sessionsTotal || 0)
+      })
+    })
+    const totalRecorded = completed + cancelled
+    return {
+      completed,
+      weeklyCompleted,
+      cancelled,
+      todayCount: timeline.length,
+      attendanceRate: totalRecorded > 0 ? Math.round((completed / totalRecorded) * 100) : 0,
+      academicProgress: total > 0 ? Math.round((used / total) * 100) : 0,
+    }
+  }, [sessions, children, timeline])
+
+  const points = useMemo(
+    () => allPointLogs.reduce((sum, log) => sum + (log.points || 0), 0),
+    [allPointLogs],
+  )
+
+  const childNames = useMemo(() => {
+    const map: Record<string, string> = {}
+    children.forEach((c) => {
+      map[c.id] = c.name
+    })
+    return map
+  }, [children])
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background dark:bg-background" dir="rtl">
-        <div className="sticky top-0 z-[100] border-b border-border bg-surface dark:border-border dark:bg-card">
-          <div className="mx-auto flex max-w-page items-center justify-between px-2.5 pb-3 pt-4 sm:px-4 md:px-6">
-            <div className="flex items-center gap-3">
-              <Skeleton className="h-9 w-9 rounded-xl" />
-              <div className="space-y-1.5">
-                <Skeleton className="h-4 w-24" />
-                <Skeleton className="h-3 w-16" />
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Skeleton className="h-11 w-11 rounded-xl" />
-              <Skeleton className="h-11 w-11 rounded-xl" />
-              <Skeleton className="h-11 w-11 rounded-xl" />
-            </div>
+      <div className="min-h-screen bg-background" dir="rtl">
+        <div className="mx-auto max-w-page space-y-5 px-2.5 pt-6 sm:px-4 md:px-6">
+          <Skeleton className="h-32 rounded-3xl" />
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <Skeleton className="h-28 rounded-3xl" />
+            <Skeleton className="h-28 rounded-3xl" />
+            <Skeleton className="h-28 rounded-3xl" />
+            <Skeleton className="h-28 rounded-3xl" />
           </div>
-        </div>
-        <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4 md:px-6">
-          <Skeleton className="h-44 rounded-[2rem] md:h-48" />
-          <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
-            <Skeleton className="h-32 rounded-3xl" />
-            <Skeleton className="h-32 rounded-3xl" />
-            <Skeleton className="h-32 rounded-3xl" />
-            <Skeleton className="h-32 rounded-3xl" />
-          </div>
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <div className="space-y-6 lg:col-span-2">
-              <Skeleton className="h-28 rounded-3xl" />
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+            <div className="space-y-5 lg:col-span-8">
+              <Skeleton className="h-12 rounded-2xl" />
+              <Skeleton className="h-96 rounded-3xl" />
               <Skeleton className="h-64 rounded-3xl" />
             </div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-1">
-              <Skeleton className="h-56 rounded-3xl" />
+            <div className="space-y-5 lg:col-span-4">
               <Skeleton className="h-40 rounded-3xl" />
+              <Skeleton className="h-56 rounded-3xl" />
             </div>
           </div>
         </div>
@@ -194,14 +349,9 @@ export const ParentDashboard = () => {
 
   if (error) {
     return (
-      <div
-        className="flex min-h-screen items-center justify-center bg-background dark:bg-background"
-        dir="rtl"
-      >
-        <div className="max-w-sm space-y-4 rounded-2xl border border-border bg-surface p-8 text-center dark:border-border dark:bg-card">
-          <p className="text-sm text-muted dark:text-muted">
-            فشل تحميل الأبناء. تحقق من اتصالك بالإنترنت.
-          </p>
+      <div className="flex min-h-screen items-center justify-center bg-background" dir="rtl">
+        <div className="max-w-sm space-y-4 rounded-2xl border border-border bg-surface p-8 text-center">
+          <p className="text-sm text-muted">فشل تحميل الأبناء. تحقق من اتصالك بالإنترنت.</p>
           <button
             onClick={() => refetch()}
             className="text-sm font-semibold text-primary hover:underline"
@@ -217,12 +367,17 @@ export const ParentDashboard = () => {
     currentUser,
     adminPhone,
     children,
-    sessions,
     allPointLogs,
     activeTimers,
-    todayTasks,
+    childStats,
+    timeline,
+    weekly,
+    points,
+    selectedChildId,
+    onSelectChild: setSelectedChildId,
     formatTime,
     onRefresh: () => refetch(),
+    childNames,
   }
 
   return (
