@@ -4,6 +4,16 @@ const { updatePresence, removePresence } = require('../services/executive/presen
 
 const socketRateLimiter = (maxPerWindow = 60, windowMs = 10000) => {
     const counts = new Map();
+    // Sweep stale entries periodically — sockets churn constantly and stale
+    // keys would otherwise grow the Map without bound (memory-exhaustion DoS).
+    const sweep = () => {
+        const now = Date.now();
+        for (const [key, entry] of counts) {
+            if (now - entry.windowStart > windowMs * 2) counts.delete(key);
+        }
+    };
+    const sweepInterval = setInterval(sweep, windowMs * 3);
+    if (sweepInterval.unref) sweepInterval.unref();
     return (socket, eventName, ...args) => {
         const key = `${socket.id}:${eventName}`;
         const now = Date.now();
@@ -22,8 +32,13 @@ const socketRateLimiter = (maxPerWindow = 60, windowMs = 10000) => {
     };
 };
 
+// Cap concurrent sockets per account — one compromised/bot account must not
+// be able to open thousands of live connections and amplify broadcasts.
+const MAX_SOCKETS_PER_USER = 5;
+
 module.exports = (io) => {
     const rateLimit = socketRateLimiter(30, 10000);
+    const socketsByUser = new Map(); // userId -> Set<socketId>
 
     io.use(async (socket, next) => {
         const token = socket.handshake.auth.token || socket.handshake.query.token;
@@ -48,6 +63,22 @@ module.exports = (io) => {
         const user = socket.data.user;
         const userId = user?.id;
         console.log(`🔌 Socket Connected: ${socket.id} (User: ${user?.name || 'Anonymous'}, ID: ${userId})`);
+
+        // Per-user concurrent-connection cap
+        if (userId) {
+            let ids = socketsByUser.get(userId);
+            if (!ids) {
+                ids = new Set();
+                socketsByUser.set(userId, ids);
+            }
+            if (ids.size >= MAX_SOCKETS_PER_USER) {
+                console.warn(`[SOCKET-CAP] User ${userId} exceeded ${MAX_SOCKETS_PER_USER} concurrent sockets — rejecting`);
+                socket.emit('error_message', { message: 'عدد كبير من الاتصالات النشطة. سيتم إغلاق هذا الاتصال.' });
+                socket.disconnect(true);
+                return;
+            }
+            ids.add(socket.id);
+        }
 
         if (userId) {
             const userRoom = `user_${userId}`;
@@ -97,6 +128,11 @@ module.exports = (io) => {
         socket.on('disconnect', () => {
             console.log(`🔌 Socket Disconnected: ${socket.id}`);
             if (userId) {
+                const ids = socketsByUser.get(userId);
+                if (ids) {
+                    ids.delete(socket.id);
+                    if (ids.size === 0) socketsByUser.delete(userId);
+                }
                 removePresence(userId);
                 io.to('admin_room').emit('presence_update', { userId, name: user.name, role: user.role, status: 'offline' });
             }

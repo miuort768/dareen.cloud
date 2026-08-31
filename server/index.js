@@ -344,6 +344,13 @@ async function startServer() {
         completedSessionsReset.start();
 
         const server = http.createServer(app);
+        // ── DoS hardening (Slowloris / slow-body attacks) ───────────────────
+        // headersTimeout (35s) kills the header-phase Slowloris; requestTimeout
+        // defaults to 300s which is generous for slow-body — 120s still allows
+        // multi-MB backup restores on slow links while cutting hold time 2.5x.
+        server.requestTimeout = 120_000;
+        server.keepAliveTimeout = 5_000;
+        server.headersTimeout = 35_000; // must stay > keepAliveTimeout
         const io = new Server(server, {
             path: '/api/socket.io',
             cors: {
@@ -353,8 +360,11 @@ async function startServer() {
                 },
                 methods: ["GET", "POST"]
             },
-            pingTimeout: 60000,
-            pingInterval: 25000
+            pingTimeout: 25000,
+            pingInterval: 20000,
+            maxHttpBufferSize: 256 * 1024, // 256 KB — chat payloads never need more
+            connectionStateRecovery: false,
+            transports: ['websocket', 'polling'],
         });
         app.set('socketio', io);
 
@@ -362,7 +372,6 @@ async function startServer() {
         require('./socket/reminderScheduler')(app);
 
         server.timeout = 120_000; // 2 min — close idle connections
-        server.headersTimeout = 65_000; // slightly above timeout for HTTP headers
 
         const serverInstance = server.listen(PORT, () => {
             console.log(`Server running on http://localhost:${PORT}`);

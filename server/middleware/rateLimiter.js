@@ -8,6 +8,24 @@ try {
 
 const KEY_PREFIX = redisMod?.NAMESPACE?.RATE || 'darin:rate:';
 
+// ── IPv6 normalization ──────────────────────────────────────────────────────
+// A single attacker can rotate millions of addresses inside one /64 block to
+// bypass per-IP limits. Normalizing IPv6 to its /64 prefix collapses those
+// rotations into a single bucket (IPv4 addresses pass through untouched).
+function normalizeIp(rawIp) {
+    const ip = String(rawIp || '').trim().toLowerCase();
+    if (!ip) return 'unknown';
+    if (ip.includes(':')) {
+        // Handle IPv4-mapped IPv6 (::ffff:1.2.3.4) — use the IPv4 part
+        const mapped = ip.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/);
+        if (mapped) return mapped[1];
+        // Collapse to /64: the high-order bits before '::' identify the block
+        const prefix = ip.split('::')[0].replace(/:$/, '');
+        return (prefix || '0') + '::/64';
+    }
+    return ip;
+}
+
 function createRateLimiter(options) {
     const {
         windowMs = 15 * 60 * 1000,
@@ -18,10 +36,30 @@ function createRateLimiter(options) {
 
     const inMemoryStore = new Map();
 
-    return function rateLimiter(req, res, next) {
-        const key = `${keyPrefix}${req.ip || req.connection.remoteAddress}`;
+    // ── Memory-exhaustion guard ─────────────────────────────────────────────
+    // Each unique IP adds an entry; without cleanup an attacker with rotating
+    // IPs (or a botnet) grows the Map until the process OOMs. Sweep expired
+    // entries every 5 minutes and hard-cap the store size.
+    const MAX_STORE_ENTRIES = 50_000;
+    function sweepInMemoryStore() {
+        const now = Date.now();
+        for (const [key, entry] of inMemoryStore) {
+            if (now > entry.resetTime) inMemoryStore.delete(key);
+        }
+        // Still oversized (attack in progress)? Drop oldest half.
+        if (inMemoryStore.size > MAX_STORE_ENTRIES) {
+            const keys = inMemoryStore.keys();
+            const toDelete = inMemoryStore.size - MAX_STORE_ENTRIES;
+            for (let i = 0; i < toDelete; i++) inMemoryStore.delete(keys.next().value);
+        }
+    }
+    const sweepInterval = setInterval(sweepInMemoryStore, 5 * 60 * 1000);
+    if (sweepInterval.unref) sweepInterval.unref();
 
-        if (redisClient) {
+    return function rateLimiter(req, res, next) {
+        const key = `${keyPrefix}${normalizeIp(req.ip || req.connection?.remoteAddress)}`;
+
+        if (redisClient && redisClient.status === 'ready') {
             redisClient
                 .multi()
                 .incr(key)
@@ -44,6 +82,7 @@ function createRateLimiter(options) {
                     res.setHeader('X-RateLimit-Reset', Math.ceil((Date.now() + ttl) / 1000));
 
                     if (count > max) {
+                        res.setHeader('Retry-After', Math.max(1, Math.ceil(ttl / 1000)));
                         return res.status(429).json({ error: message });
                     }
                     next();
@@ -75,6 +114,7 @@ function createRateLimiter(options) {
             res.setHeader('X-RateLimit-Reset', Math.ceil(entry.resetTime / 1000));
 
             if (entry.count > max) {
+                res.setHeader('Retry-After', Math.max(1, Math.ceil((entry.resetTime - now) / 1000)));
                 return res.status(429).json({ error: message });
             }
             next();
@@ -82,4 +122,4 @@ function createRateLimiter(options) {
     };
 }
 
-module.exports = { createRateLimiter };
+module.exports = { createRateLimiter, normalizeIp };
