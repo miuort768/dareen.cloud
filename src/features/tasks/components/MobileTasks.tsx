@@ -178,7 +178,7 @@ export const MobileTasks = () => {
 
         {/* بطاقة الإنجاز */}
         <motion.div {...fadeUpStatic} className="px-4 pt-3">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-deep to-primary p-4">
+          <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-deep to-primary p-4">
             <div className="pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true">
               <svg width="100%" height="100%">
                 <defs>
@@ -248,7 +248,7 @@ export const MobileTasks = () => {
                         setFilter(filter === t.key ? 'all' : t.key)
                       }}
                       className={cn(
-                        'rounded-xl px-2 py-1.5 text-center backdrop-blur-sm transition-colors',
+                        'rounded-none px-2 py-1.5 text-center backdrop-blur-sm transition-colors',
                         filter === t.key ? 'bg-white/25 ring-1 ring-white/40' : 'bg-white/10',
                       )}
                     >
@@ -267,7 +267,7 @@ export const MobileTasks = () => {
 
       {/* التبويبات اللاصقة */}
       <div className="bg-background/95 sticky top-14 z-30 mt-3 px-4 pb-2 pt-2 backdrop-blur-sm">
-        <div className="flex gap-1 rounded-2xl border border-border bg-card p-1">
+        <div className="flex gap-1 rounded-none border border-border bg-card p-1">
           {tabs.map((tab) => (
             <motion.button
               key={tab.key}
@@ -278,7 +278,7 @@ export const MobileTasks = () => {
               }}
               aria-pressed={filter === tab.key}
               className={cn(
-                'relative min-w-0 flex-1 rounded-xl px-1 py-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                'relative min-w-0 flex-1 rounded-none px-1 py-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                 filter === tab.key
                   ? 'bg-primary font-bold text-on-primary shadow-elevation-1'
                   : 'font-bold text-muted hover:text-main',
@@ -317,7 +317,7 @@ export const MobileTasks = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="ابحث في المهام..."
-            className="w-full rounded-2xl border border-border bg-card py-2.5 pe-10 ps-9 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary"
+            className="w-full rounded-none border border-border bg-card py-2.5 pe-10 ps-9 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary"
           />
         </div>
       </div>
@@ -331,12 +331,12 @@ export const MobileTasks = () => {
             <SkeletonCard />
           </div>
         ) : isError ? (
-          <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-10 text-center">
+          <div className="bg-error-soft/50 rounded-none border border-dashed border-error-soft py-10 text-center">
             <AlertTriangle size={26} className="mx-auto mb-2 text-error" strokeWidth={1.5} />
             <p className="text-xs font-bold text-main">تعذر تحميل المهام</p>
             <button
               onClick={() => refetch()}
-              className="mx-auto mt-3 rounded-xl bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="mx-auto mt-3 rounded-none bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               إعادة المحاولة
             </button>
@@ -349,7 +349,7 @@ export const MobileTasks = () => {
             subtitle={
               search ? `جرّب كلمة أخرى بدل "${search}"` : 'أضف مهمتك الأولى من زر (+) بالأسفل'
             }
-            className="rounded-2xl border border-dashed border-border bg-card"
+            className="rounded-none border border-dashed border-border bg-card"
           />
         ) : (
           filtered.map((task, i) => {
@@ -368,7 +368,7 @@ export const MobileTasks = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.03, 0.24), duration: 0.3 }}
                 className={cn(
-                  'relative overflow-hidden rounded-2xl border bg-card p-3.5 ps-4',
+                  'relative overflow-hidden rounded-none border bg-card p-3.5 ps-4',
                   done ? 'border-border opacity-70' : 'border-border',
                 )}
               >
@@ -427,7 +427,7 @@ export const MobileTasks = () => {
                     <div className="mt-2 flex flex-wrap items-center gap-1.5">
                       <span
                         className={cn(
-                          'rounded-lg px-2 py-0.5 text-micro font-bold',
+                          'rounded-none px-2 py-0.5 text-micro font-bold',
                           priority.badge,
                         )}
                       >
@@ -436,7 +436,7 @@ export const MobileTasks = () => {
                       {!done && (
                         <span
                           className={cn(
-                            'rounded-lg bg-surface px-2 py-0.5 text-micro font-bold',
+                            'rounded-none bg-surface px-2 py-0.5 text-micro font-bold',
                             statusMeta.color,
                           )}
                         >
@@ -446,11 +446,11 @@ export const MobileTasks = () => {
                       {task.dueDate && (
                         <span
                           className={cn(
-                            'flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold tabular-nums',
+                            'flex items-center gap-1 rounded-none px-2 py-0.5 text-micro font-bold tabular-nums',
                             overdue
                               ? 'bg-error-soft text-error'
                               : isToday
-                                ? 'bg-warning-soft text-warning'
+                                ? 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary'
                                 : 'text-muted',
                           )}
                         >
@@ -470,7 +470,7 @@ export const MobileTasks = () => {
                     onClick={() => handleDelete(task)}
                     disabled={deleteTask.isPending}
                     aria-label={`حذف المهمة: ${task.title}`}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-muted transition-colors hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-none text-muted transition-colors hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
                   >
                     <Trash2 size={14} strokeWidth={1.7} />
                   </button>
@@ -489,7 +489,7 @@ export const MobileTasks = () => {
           setSheetOpen(true)
         }}
         aria-label="إضافة مهمة جديدة"
-        className="fixed bottom-24 end-4 z-40 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:hidden"
+        className="fixed bottom-24 end-4 z-40 flex h-14 w-14 items-center justify-center rounded-none bg-primary text-on-primary shadow-elevation-3 transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:hidden"
       >
         <Plus size={24} strokeWidth={2} />
       </motion.button>
@@ -508,7 +508,7 @@ export const MobileTasks = () => {
             type="submit"
             form="mobile-task-form"
             disabled={createTask.isPending || !form.title.trim()}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3.5 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-none bg-primary py-3.5 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
           >
             {createTask.isPending ? (
               <>
@@ -538,7 +538,7 @@ export const MobileTasks = () => {
               value={form.title}
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               placeholder="مثال: تجهيز تقرير الأسبوع..."
-              className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+              className="w-full rounded-none border border-border bg-background px-4 py-3 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
 
@@ -556,7 +556,7 @@ export const MobileTasks = () => {
               value={form.description}
               onChange={(e) => setForm({ ...form, description: e.target.value })}
               placeholder="تفاصيل المهمة..."
-              className="w-full resize-none rounded-2xl border border-border bg-background px-4 py-3 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+              className="w-full resize-none rounded-none border border-border bg-background px-4 py-3 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
 
@@ -574,7 +574,7 @@ export const MobileTasks = () => {
                   }}
                   aria-pressed={form.priority === p}
                   className={cn(
-                    'flex items-center justify-center gap-1.5 rounded-xl border py-2.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    'flex items-center justify-center gap-1.5 rounded-none border py-2.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                     form.priority === p
                       ? cn(TASK_PRIORITY_CONFIG[p].badge, 'border-current')
                       : 'border-border text-muted hover:text-main',
@@ -613,7 +613,7 @@ export const MobileTasks = () => {
                     setForm({ ...form, dueDate: d.value })
                   }}
                   className={cn(
-                    'rounded-xl border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    'rounded-none border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                     form.dueDate === d.value
                       ? 'border-primary bg-primary-soft text-primary'
                       : 'border-border text-muted hover:text-main',
@@ -628,7 +628,7 @@ export const MobileTasks = () => {
                 aria-label="اختيار تاريخ التسليم"
                 value={form.dueDate}
                 onChange={(e) => setForm({ ...form, dueDate: e.target.value })}
-                className="min-w-0 flex-1 rounded-xl border border-border bg-background px-2 py-2 text-micro font-bold text-main outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+                className="min-w-0 flex-1 rounded-none border border-border bg-background px-2 py-2 text-micro font-bold text-main outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus"
               />
             </div>
           </div>

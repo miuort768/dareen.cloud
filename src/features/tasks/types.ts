@@ -23,7 +23,7 @@ interface StatusMeta {
 }
 
 export const TASK_STATUS_CONFIG: Record<TaskStatus, StatusMeta> = {
-  pending: { label: 'قيد الانتظار', icon: Clock, color: 'text-warning' },
+  pending: { label: 'قيد الانتظار', icon: Clock, color: 'text-warning dark:text-primary' },
   'in-progress': { label: 'قيد التنفيذ', icon: CircleDashed, color: 'text-primary' },
   completed: { label: 'مكتملة', icon: CheckCircle2, color: 'text-success' },
 }
@@ -46,9 +46,9 @@ export const TASK_PRIORITY_CONFIG: Record<TaskPriority, PriorityMeta> = {
   },
   medium: {
     label: 'متوسطة',
-    badge: 'bg-warning-soft text-warning',
-    dot: 'bg-warning',
-    bar: 'bg-warning',
+    badge: 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary',
+    dot: 'bg-warning dark:bg-primary',
+    bar: 'bg-warning dark:bg-primary',
     icon: ArrowRight,
   },
   low: {

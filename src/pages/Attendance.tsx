@@ -86,6 +86,7 @@ export const Attendance = () => {
     teacherAttendanceRates,
     refresh,
     teacherStats,
+    schedulePending,
   } = useAttendance(currentUser, date, dateRange)
 
   const { logDate, setLogDate, secureModalData, openSecureLog, closeSecureLog, handleConfirmLog } =
@@ -172,8 +173,8 @@ export const Attendance = () => {
         label: 'الجدول الكلي',
         value: periodStats?.scheduled || stats.todayTotal,
         icon: Clock,
-        color: 'text-warning bg-warning-soft',
-        accent: 'bg-warning',
+        color: 'text-warning bg-warning-soft dark:text-primary dark:bg-primary-soft',
+        accent: 'bg-warning dark:bg-primary',
       },
       {
         label: 'المعلمات',
@@ -229,38 +230,40 @@ export const Attendance = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
+            className="relative overflow-hidden rounded-card bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-5 shadow-elevation-2 md:p-6"
           >
-            <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-            <div className="bg-info/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+            <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-black/10 blur-3xl" />
 
             <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-white/15 shadow-lg backdrop-blur-sm">
                   <UserCheck size={22} className="text-on-primary" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-black leading-tight text-main">الحضور والغياب</h1>
-                  <p className="text-xs text-muted">متابعة حضور وغياب الطلاب بشكل يومي</p>
+                  <h1 className="text-xl font-black leading-tight text-on-primary">
+                    الحضور والغياب
+                  </h1>
+                  <p className="text-xs text-white/70">متابعة حضور وغياب الطلاب بشكل يومي</p>
                 </div>
               </div>
 
-              <div className="hidden h-12 w-px bg-border lg:block" />
+              <div className="hidden h-12 w-px bg-white/20 lg:block" />
 
               <div className="grid flex-1 grid-cols-3 gap-2">
                 {[
-                  { label: 'إجمالي الحضور', value: stats.totalCompleted, tone: 'text-success' },
-                  { label: 'الغياب', value: stats.totalCancelled, tone: 'text-error' },
-                  { label: 'المقررة', value: stats.todayTotal, tone: 'text-warning' },
+                  { label: 'إجمالي الحضور', value: stats.totalCompleted },
+                  { label: 'الغياب', value: stats.totalCancelled },
+                  { label: 'المقررة', value: stats.todayTotal },
                 ].map((s) => (
                   <div
                     key={s.label}
-                    className="rounded-xl border border-border bg-surface px-2 py-2.5 text-center"
+                    className="rounded-none border border-white/20 bg-white/10 px-2 py-2.5 text-center backdrop-blur-sm"
                   >
-                    <p className={cn('text-lg font-black tabular-nums leading-none', s.tone)}>
+                    <p className="text-lg font-black tabular-nums leading-none text-on-primary">
                       {s.value.toLocaleString('ar-EG')}
                     </p>
-                    <p className="mt-1 text-[10px] font-bold text-muted">{s.label}</p>
+                    <p className="mt-1 text-[10px] font-bold text-white/70">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -286,10 +289,10 @@ export const Attendance = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.12 + i * 0.06 }}
                     whileHover={{ scale: 1.02, y: -2 }}
-                    className="relative overflow-hidden rounded-xl border border-border bg-card p-4"
+                    className="relative overflow-hidden rounded-none border border-border bg-card p-4"
                   >
                     <div className="mb-3 flex items-center justify-between">
-                      <div className={cn('flex rounded-lg p-2', kpi.color)}>
+                      <div className={cn('flex rounded-none p-2', kpi.color)}>
                         <Icon size={16} />
                       </div>
                       <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
@@ -404,7 +407,7 @@ export const Attendance = () => {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       placeholder="ابحث باسم الطالب أو المادة..."
-                      className="w-full rounded-xl border border-border bg-surface py-2 pe-4 ps-10 text-xs font-bold transition-all focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                      className="w-full rounded-none border border-border bg-surface py-2 pe-4 ps-10 text-xs font-bold transition-all focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                     />
                   </div>
                 </div>
@@ -450,6 +453,7 @@ export const Attendance = () => {
                           }
                           logDate={logDate}
                           onDateChange={setLogDate}
+                          scheduleBusy={schedulePending}
                         />
                       </motion.div>
                     ))
@@ -547,7 +551,7 @@ export const Attendance = () => {
                     }}
                     className="flex items-center gap-2"
                   >
-                    <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                    <span className="whitespace-nowrap rounded-none border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
                       {action.label}
                     </span>
                     <button

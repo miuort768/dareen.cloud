@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Clock, GraduationCap } from 'lucide-react'
-import { cn } from '@/lib/utils'
 
 interface TimelineSession {
   id: string
@@ -71,48 +70,65 @@ export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
   if (!nextSession) return null
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-primary p-5 dark:bg-primary">
-      <div className="pointer-events-none absolute start-0 top-0 h-48 w-48 rounded-full bg-white/5 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 end-0 h-32 w-32 rounded-full bg-white/5 blur-3xl" />
+    <div className="relative h-full overflow-hidden rounded-3xl bg-primary p-5 shadow-lg shadow-primary/25 sm:p-6">
+      {/* زخارف زجاجية ناعمة على خلفية الهوية */}
+      <div
+        className="pointer-events-none absolute -start-10 -top-10 h-48 w-48 rounded-full bg-white/10 blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -bottom-12 -end-8 h-36 w-36 rounded-full bg-white/10 blur-3xl"
+        aria-hidden="true"
+      />
 
       <div className="relative z-10">
-        <div className="mb-3 flex items-center gap-2">
+        <div className="mb-4 flex items-center gap-2">
           <div className="h-2 w-2 animate-pulse rounded-full bg-success" />
-          <span className="text-micro font-bold text-white/70">الحصة القادمة</span>
+          <span className="text-micro font-bold text-on-primary opacity-80">الحصة القادمة</span>
         </div>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15">
-            <GraduationCap size={24} className="text-white dark:text-on-primary" />
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15 backdrop-blur-sm">
+            <GraduationCap size={26} className="text-on-primary" />
           </div>
 
           <div className="min-w-0 flex-1">
-            <h2 className="mb-0.5 text-lg font-bold leading-tight text-on-primary">
+            <h2 className="mb-0.5 truncate text-lg font-black leading-tight text-on-primary md:text-xl">
               {nextSession?.subject || ''}
             </h2>
-            <p className="text-sm font-medium text-white/70">{nextSession?.studentName || ''}</p>
+            <p className="truncate text-sm font-bold text-on-primary opacity-80">
+              {nextSession?.studentName || ''}
+            </p>
             {nextSession?.studentGrade && (
-              <p className="text-[10px] font-medium text-white/60">
+              <p className="text-[10px] font-bold text-on-primary opacity-65">
                 الصف: {nextSession.studentGrade}
               </p>
             )}
             {nextSession?.curriculum && (
-              <p className="text-[10px] font-medium text-white/60">{nextSession.curriculum}</p>
+              <p className="truncate text-[10px] font-bold text-on-primary opacity-65">
+                {nextSession.curriculum}
+              </p>
             )}
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 rounded-xl bg-white/15 px-3 py-2">
-              <Clock size={15} className="text-white/70 text-white/80" />
-              <span className={cn('text-xl font-bold tabular-nums tracking-wider text-white')}>
-                {isNow ? 'الآن' : timeLeft}
-              </span>
-            </div>
+          <div className="flex shrink-0 items-center gap-2 rounded-2xl bg-white/15 px-3.5 py-2.5 backdrop-blur-sm">
+            <Clock size={15} className="text-on-primary opacity-80" />
+            <span className="text-xl font-black tabular-nums tracking-wider text-on-primary">
+              {isNow ? 'الآن' : timeLeft}
+            </span>
           </div>
         </div>
 
-        <div className="mt-4 flex items-center justify-between">
-          <span className="text-sm font-medium text-white/60">{nextSession?.time || ''}</span>
+        <div className="mt-4 flex items-center justify-between border-t border-white/15 pt-3">
+          <span className="flex items-center gap-1.5 text-sm font-bold text-on-primary opacity-75">
+            <Clock size={13} />
+            {nextSession?.time || ''}
+          </span>
+          {isNow && (
+            <span className="rounded-lg bg-white/20 px-2.5 py-1 text-[10px] font-black text-on-primary">
+              جارية الآن
+            </span>
+          )}
         </div>
       </div>
     </div>

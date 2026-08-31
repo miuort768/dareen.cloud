@@ -8,7 +8,6 @@ import {
   BookOpen,
   Filter,
 } from 'lucide-react'
-import { cn } from '../../../../lib/utils'
 
 interface ScheduleHeaderProps {
   searchTerm: string
@@ -61,38 +60,38 @@ export const ScheduleHeader = ({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
+        className="relative overflow-hidden rounded-card bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-5 shadow-elevation-2 md:p-6"
       >
-        <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-        <div className="bg-info/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
+        <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-black/10 blur-3xl" />
 
         <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-lg backdrop-blur-sm">
               <CalendarDays size={22} className="text-on-primary" />
             </div>
             <div>
-              <h1 className="text-xl font-black leading-tight text-main">الجداول الدراسية</h1>
-              <p className="text-xs text-muted">جدول الحصص الأسبوعي للمعلمات والطلاب</p>
+              <h1 className="text-xl font-black leading-tight text-on-primary">الجداول الدراسية</h1>
+              <p className="text-xs text-white/70">جدول الحصص الأسبوعي للمعلمات والطلاب</p>
             </div>
           </div>
 
-          <div className="hidden h-12 w-px bg-border lg:block" />
+          <div className="hidden h-12 w-px bg-white/20 lg:block" />
 
           <div className="grid flex-1 grid-cols-3 gap-2">
             {[
-              { label: 'الحصص', value: stats.sessions, tone: 'text-primary' },
-              { label: 'المعلمات', value: stats.teachers, tone: 'text-success' },
-              { label: 'الطلاب', value: stats.students, tone: 'text-warning' },
+              { label: 'الحصص', value: stats.sessions },
+              { label: 'المعلمات', value: stats.teachers },
+              { label: 'الطلاب', value: stats.students },
             ].map((s) => (
               <div
                 key={s.label}
-                className="rounded-xl border border-border bg-surface px-2 py-2.5 text-center"
+                className="rounded-xl border border-white/20 bg-white/10 px-2 py-2.5 text-center backdrop-blur-sm"
               >
-                <p className={cn('text-lg font-black tabular-nums leading-none', s.tone)}>
+                <p className="text-lg font-black tabular-nums leading-none text-on-primary">
                   {s.value}
                 </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">{s.label}</p>
+                <p className="mt-1 text-[10px] font-bold text-white/70">{s.label}</p>
               </div>
             ))}
           </div>

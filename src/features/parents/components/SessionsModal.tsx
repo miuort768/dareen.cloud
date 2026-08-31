@@ -29,6 +29,8 @@ interface ChildSession {
   subject: string
   status: string
   notes?: string
+  topics?: string
+  homework?: string
   [key: string]: unknown
 }
 
@@ -282,6 +284,22 @@ export const SessionsModal = ({
                                     {session.notes}
                                   </p>
                                 </div>
+                              </div>
+                            )}
+                            {session.topics && (
+                              <div className="mt-2 border-t border-border pt-2">
+                                <p className="text-micro font-bold text-main">
+                                  <span className="text-success">✓</span> تم إنجازه:{' '}
+                                  <span className="font-normal text-muted">{session.topics}</span>
+                                </p>
+                              </div>
+                            )}
+                            {session.homework && (
+                              <div className="mt-1.5">
+                                <p className="text-micro font-bold text-main">
+                                  <span className="text-warning dark:text-primary">★</span> الواجب:{' '}
+                                  <span className="font-normal text-muted">{session.homework}</span>
+                                </p>
                               </div>
                             )}
                           </div>

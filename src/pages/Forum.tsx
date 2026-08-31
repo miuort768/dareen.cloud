@@ -264,7 +264,7 @@ export const Forum = () => {
         label: 'التعليقات',
         value: totalComments,
         icon: MessageCircle,
-        iconBg: 'bg-warning-soft text-warning',
+        iconBg: 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary',
       },
       {
         label: 'المشاركون',
@@ -307,7 +307,7 @@ export const Forum = () => {
 
   return (
     <div
-      className="from-info-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-8 font-sans md:pb-12"
+      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-8 font-sans md:pb-12"
       dir="rtl"
     >
       <div className="relative z-10 pt-2">
@@ -327,7 +327,7 @@ export const Forum = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ y: -2 }}
-                  className="relative overflow-hidden rounded-card border border-border bg-card p-4"
+                  className="relative overflow-hidden rounded-card border border-border bg-card p-4 shadow-sm dark:bg-surface"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-lg p-2', kpi.iconBg)}>

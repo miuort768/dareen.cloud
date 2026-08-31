@@ -1,6 +1,5 @@
 ﻿import { useState, useEffect, useMemo, useCallback } from 'react'
 import {
-  Loader2,
   Sparkles,
   Clock,
   BookOpen,
@@ -83,7 +82,6 @@ export const Schedule = () => {
   const [filterSubject, setFilterSubject] = useState('all')
   const [currentWeekOffset, setCurrentWeekOffset] = useState(0)
   const [selectedEvent, setSelectedEvent] = useState<ScheduleEvent | null>(null)
-  const [, setShowDetails] = useState(false)
   const [loading, setLoading] = useState(true)
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches,
@@ -300,7 +298,7 @@ export const Schedule = () => {
         label: 'الطلاب',
         value: weekStats.students,
         icon: Users,
-        iconBg: 'bg-warning-soft text-warning',
+        iconBg: 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary',
       },
       {
         label: 'الأيام',
@@ -524,23 +522,11 @@ export const Schedule = () => {
             onSelectEvent={handleSelectEvent}
           />
         </div>
-
-        {loading && (
-          <div className="flex justify-center py-12">
-            <Loader2 className="animate-spin text-info" size={24} />
-          </div>
-        )}
       </div>
 
       {isMobile && <MobileSchedule />}
 
-      <SchedulePopover
-        event={selectedEvent}
-        onClose={() => {
-          setShowDetails(false)
-          setSelectedEvent(null)
-        }}
-      />
+      <SchedulePopover event={selectedEvent} onClose={() => setSelectedEvent(null)} />
     </div>
   )
 }

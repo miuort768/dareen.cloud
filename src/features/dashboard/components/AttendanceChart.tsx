@@ -16,7 +16,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
 
   const getStrokeColor = (r: number) => {
     if (r >= 80) return 'var(--bg-success)'
-    if (r >= 50) return 'var(--bg-warning)'
+    if (r >= 50) return 'var(--bg-info)'
     return 'var(--bg-error)'
   }
 
@@ -85,7 +85,10 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
         </div>
         <div className="w-full space-y-2 text-center">
           <p className="text-sm font-bold text-main dark:text-main">{status.label}</p>
-          <ProgressBar value={rate} variant="attendance" />
+          <ProgressBar
+            value={rate}
+            variant={rate >= 80 ? 'success' : rate >= 50 ? 'info' : 'error'}
+          />
           <p className="text-micro font-medium text-dim dark:text-dim">{status.hint}</p>
         </div>
       </div>

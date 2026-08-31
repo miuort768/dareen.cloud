@@ -21,7 +21,7 @@ export const AnnouncementCard = ({
   return (
     <div
       className={cn(
-        'relative flex flex-col rounded-2xl border border-border bg-card p-4 transition-all duration-300 md:p-5',
+        'relative flex flex-col rounded-card border border-border bg-card p-4 shadow-sm transition-all duration-300 dark:bg-surface md:p-5',
         !ann.isActive && 'border-dashed opacity-60 grayscale',
       )}
     >
@@ -82,7 +82,7 @@ export const AnnouncementCard = ({
       </div>
       {!ann.isActive && (
         <div className="mt-5 border-t border-dashed border-border pt-3">
-          <span className="flex items-center gap-1.5 text-micro font-bold text-warning-dark">
+          <span className="flex items-center gap-1.5 text-micro font-bold text-warning-dark dark:text-primary">
             <Info size={10} /> غير نشط
           </span>
         </div>
