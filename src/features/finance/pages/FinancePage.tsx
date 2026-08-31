@@ -273,7 +273,7 @@ export const Finance = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'h-13 w-13 flex items-center justify-center rounded-none text-on-primary shadow-xl transition-all',
+            'flex h-12 w-12 items-center justify-center rounded-none text-on-primary shadow-xl transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >
