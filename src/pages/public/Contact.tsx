@@ -1,3 +1,4 @@
+import { safeJsonLd } from '../../shared/utils/jsonLd'
 import { useState } from 'react'
 import { MobileHeader } from '../../components/public/MobileHeader'
 import { PublicFooter } from '../../components/public/PublicFooter'
@@ -95,7 +96,7 @@ export const Contact = () => {
         ]}
       />
       <script type="application/ld+json">
-        {JSON.stringify({
+        {safeJsonLd({
           '@context': 'https://schema.org',
           '@type': 'ContactPage',
           name: 'اتصل بنا - دارين السابعة',

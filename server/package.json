@@ -19,7 +19,7 @@
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "arabic-reshaper": "^1.1.0",
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^6.0.0",
     "bidi-js": "^1.0.3",
     "bullmq": "^5.79.2",
     "compression": "^1.8.1",
@@ -37,8 +37,6 @@
     "prisma": "^7.8.0",
     "sharp": "^0.35.2",
     "socket.io": "^4.8.3",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7",
     "uuid": "^9.0.1",
     "web-push": "^3.6.7",
     "zod": "^4.3.5"

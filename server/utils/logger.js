@@ -16,6 +16,33 @@ const errorStream = fs.createWriteStream(errorFile, { flags: 'a' });
 logStream.on('error', () => {});
 errorStream.on('error', () => {});
 
+// ── Disk-exhaustion guard ───────────────────────────────────────────────────
+// Unbounded append-only logs inside the container fill the disk and take the
+// whole stack down (app + postgres + redis share the host disk). Rotate at
+// MAX_LOG_BYTES keeping one .1 generation, so per-file ceiling is ~20MB.
+const MAX_LOG_BYTES = 10 * 1024 * 1024;
+
+function maybeRotate(file, stream) {
+    try {
+        const st = fs.statSync(file);
+        if (st.size < MAX_LOG_BYTES) return;
+        stream.end();
+        try { fs.unlinkSync(file + '.1'); } catch { /* first rotation */ }
+        fs.renameSync(file, file + '.1');
+        const fresh = fs.createWriteStream(file, { flags: 'a' });
+        fresh.on('error', () => {});
+        stream.write = fresh.write.bind(fresh);
+    } catch { /* file missing — fine */ }
+}
+
+// Rotation check is cheap; run it on a timer instead of per-write to avoid
+// stat() on every log line under flood conditions.
+const rotateTimer = setInterval(() => {
+    maybeRotate(logFile, logStream);
+    maybeRotate(errorFile, errorStream);
+}, 60 * 1000);
+if (rotateTimer.unref) rotateTimer.unref();
+
 const sanitizeForFile = (obj) => {
     if (!obj) return '';
     if (obj instanceof Error) return obj.message;

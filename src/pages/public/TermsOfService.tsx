@@ -1,3 +1,4 @@
+import { safeJsonLd } from '../../shared/utils/jsonLd'
 import { PublicNavbar } from '../../components/public/PublicNavbar'
 import { PublicFooter } from '../../components/public/PublicFooter'
 import {
@@ -29,7 +30,7 @@ export const TermsOfService = () => {
         ]}
       />
       <script type="application/ld+json">
-        {JSON.stringify({
+        {safeJsonLd({
           '@context': 'https://schema.org',
           '@type': 'WebPage',
           name: `شروط الاستخدام والأحكام - ${academyName}`,

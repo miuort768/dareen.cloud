@@ -1,3 +1,4 @@
+import { safeJsonLd } from '../shared/utils/jsonLd'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { FileText, ChevronRight, ChevronLeft, Send, CheckCircle2, Briefcase } from 'lucide-react'
@@ -127,7 +128,7 @@ export const Jobs = () => {
         ]}
       />
       <script type="application/ld+json">
-        {JSON.stringify({
+        {safeJsonLd({
           '@context': 'https://schema.org',
           '@type': 'WebPage',
           name: 'التوظيف في دارين السابعة',

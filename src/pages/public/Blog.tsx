@@ -1,3 +1,4 @@
+import { safeJsonLd } from '../../shared/utils/jsonLd'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useSearchParams, useNavigate } from 'react-router-dom'
@@ -341,7 +342,7 @@ export const Blog = () => {
           ]}
         />
         <script type="application/ld+json">
-          {JSON.stringify({
+          {safeJsonLd({
             '@context': 'https://schema.org',
             '@type': 'CollectionPage',
             name: 'المكتبة التعليمية - دارين السابعة',

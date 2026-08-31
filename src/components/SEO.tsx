@@ -1,243 +1,283 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
-import { useSettingsStore } from '../store/settingsStore';
+import React from 'react'
+import { Helmet } from 'react-helmet-async'
+import { useSettingsStore } from '../store/settingsStore'
+import { safeJsonLd } from '../shared/utils/jsonLd'
 
-const BASE = 'https://dareen.cloud';
+const BASE = 'https://dareen.cloud'
 
-const toAbs = (src: string) => src.startsWith('http') ? src : `${BASE}${src}`;
+const toAbs = (src: string) => (src.startsWith('http') ? src : `${BASE}${src}`)
 
 interface SEOProps {
-    title?: string;
-    description?: string;
-    keywords?: string;
-    image?: string;
-    url?: string;
-    preloadImages?: string[];
-    breadcrumbs?: { name: string; item: string }[];
-    noindex?: boolean;
+  title?: string
+  description?: string
+  keywords?: string
+  image?: string
+  url?: string
+  preloadImages?: string[]
+  breadcrumbs?: { name: string; item: string }[]
+  noindex?: boolean
 }
 
 export const SEO: React.FC<SEOProps> = ({
-    title,
-    description,
-    keywords,
-    image = '/dareen_logo_new.jpg',
-    url = 'https://dareen.cloud/',
-    preloadImages = [],
-    breadcrumbs,
-    noindex = false
+  title,
+  description,
+  keywords,
+  image = '/dareen_logo_new.jpg',
+  url = 'https://dareen.cloud/',
+  preloadImages = [],
+  breadcrumbs,
+  noindex = false,
 }) => {
-    const adminPhone = useSettingsStore(s => s.adminPhone);
-    const phone = adminPhone || '965XXXXXXXX';
-    const absUrl = url.startsWith('http') ? url : `${BASE}${url}`;
-    const absImage = toAbs(image);
-    const siteTitle = 'دارين السابعة للتعليم والتدريب';
-    const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-    const siteDescription = description || "دارين السابعة للتعليم والتدريب - أفضل منصة تعليم عن بعد في السعودية والكويت والإمارات والخليج. نوفر مدرسين خصوصيين في الرياضيات، العلوم، اللغة العربية، اللغة الإنجليزية، قدرات وتحصيلي وفق المنهج السعودي والكويتي والخليجي لجميع المراحل. تحفيظ قرآن عن بعد، تأسيس أطفال. احجز حصة تجريبية مجانية.";
-    const siteKeywords = keywords || "تعليم عن بعد, دارين السابعة, مدرس خصوصي الكويت, دروس خصوصية قطر, افضل منصة تعليمية السعودية, معلمين الامارات, دروس اونلاين سلطنة عمان, تحفيظ قرآن عن بعد, منهج كويتي, منهج سعودي, قدرات وتحصيلي, تأسيس لغة عربية, مراجعات نهائية, اكاديمية تعليمية, مدرس خصوصي اونلاين, معهد تعليمي الكويت, دروس تقوية اونلاين, تجويد قرآن, تأسيس أطفال الكويت, مذكرات تعليمية, اختبارات تجريبية, حصة تجريبية مجانية, تعليم ابتدائي متوسط ثانوي, مناهج عمان الامارات قطر البحرين, معلم رياضيات علوم انجليزي عربي, تحسين المستوى الدراسي, متابعة دراسية اسبوعية, دروس تقوية الكويت, مدرس رياضيات خصوصي الكويت, مدرس علوم خصوصي الكويت, مدرس لغة عربية خصوصي الكويت, مدرس انجليزي خصوصي الكويت, معلم خصوصي اونلاين الكويت, أفضل مدرس خصوصي في الكويت, شرح المنهج الكويتي, حل كتب المنهج الكويتي, مذكرات منهج كويتي, ملخصات المنهج الكويتي, اختبارات المنهج الكويتي, كتب المنهج الكويتي, معلم قرآن خصوصي الكويت, حلقات تحفيظ قرآن الكويت, تأسيس قراءة وكتابة الكويت, تأسيس رياضيات الكويت, شرح رياضيات المنهج الكويتي, شرح علوم المنهج الكويتي, شرح لغة عربية المنهج الكويتي, سعر الحصة الخصوصية في الكويت, أفضل منصة تعليم عن بعد في الكويت, تطبيق تعليمي كويتي, عروض دروس خصوصية الكويت, منصة تعليم عن بعد في الامارات, معهد تعليمي في الامارات, اكاديمية تعليمية الامارات, مدرس خصوصي في الامارات, مدرس خصوصي اونلاين الامارات, دروس تقوية الامارات, مدرس رياضيات خصوصي الامارات, مدرس علوم خصوصي الامارات, مدرس لغة عربية خصوصي الامارات, مدرس انجليزي خصوصي الامارات, أفضل مدرس خصوصي في الامارات, معلم خصوصي اونلاين الامارات, منهج اماراتي, شرح المنهج الاماراتي, حل كتب المنهج الاماراتي, مذكرات منهج اماراتي, ملخصات المنهج الاماراتي, اختبارات المنهج الاماراتي, كتب المنهج الاماراتي, تحفيظ قرآن الامارات, معلم قرآن خصوصي الامارات, حلقات تحفيظ قرآن الامارات, تأسيس أطفال الامارات, تأسيس قراءة وكتابة الامارات, تأسيس رياضيات الامارات, شرح رياضيات المنهج الاماراتي, شرح علوم المنهج الاماراتي, شرح لغة عربية المنهج الاماراتي, دروس خصوصية في دبي, دروس خصوصية في أبوظبي, دروس خصوصية في الشارقة, معلم خصوصي دبي, معلم خصوصي أبوظبي, أفضل منصة تعليم عن بعد في الامارات, سعر الحصة الخصوصية في الامارات, تطبيق تعليمي اماراتي, عروض دروس خصوصية الامارات, منصة تعليم عن بعد في السعودية, معهد تعليمي في السعودية, مدرس خصوصي في السعودية, مدرس خصوصي اونلاين السعودية, دروس تقوية السعودية, مدرس رياضيات خصوصي السعودية, مدرس علوم خصوصي السعودية, مدرس لغة عربية خصوصي السعودية, مدرس انجليزي خصوصي السعودية, أفضل مدرس خصوصي في السعودية, معلم خصوصي اونلاين السعودية, شرح المنهج السعودي, حل كتب المنهج السعودي, مذكرات منهج سعودي, ملخصات المنهج السعودي, اختبارات المنهج السعودي, كتب المنهج السعودي, تحفيظ قرآن السعودية, معلم قرآن خصوصي السعودية, حلقات تحفيظ قرآن السعودية, تأسيس أطفال السعودية, تأسيس قراءة وكتابة السعودية, تأسيس رياضيات السعودية, شرح رياضيات المنهج السعودي, شرح علوم المنهج السعودي, دروس خصوصية في الرياض, دروس خصوصية في جدة, دروس خصوصية في مكة, معلم خصوصي الرياض, معلم خصوصي جدة, أفضل منصة تعليم عن بعد في السعودية, دورات قدرات وتحصيلي في السعودية, عروض دروس خصوصية السعودية, دروس خصوصية قطر, مدرس خصوصي في قطر, منهج قطري, شرح المنهج القطري, مدرس خصوصي اونلاين قطر, دروس تقوية قطر, معلم خصوصي قطر, تحفيظ قرآن قطر, تأسيس أطفال قطر, دروس خصوصية في الدوحة, معلم خصوصي الدوحة, أفضل منصة تعليم في قطر, مدرس خصوصي الدوحة, مدرس خصوصي الريان, معلم خصوصي الريان, معلم خصوصي الوكرة, معلم خصوصي الخور, معلم خصوصي أم صلال, معلم رياضيات قطر, معلم علوم قطر, معلم لغة عربية قطر, معلم انجليزي قطر, مدرس رياضيات خصوصي قطر, مدرس علوم خصوصي قطر, مدرس لغة عربية خصوصي قطر, مدرس انجليزي خصوصي قطر, شرح المنهج القطري, حل كتب المنهج القطري, مذكرات منهج قطري, ملخصات منهج قطري, اختبارات المنهج القطري, كتب المنهج القطري, تحفيظ قرآن الدوحة, معلم قرآن خصوصي قطر, حلقات تحفيظ قرآن قطر, تأسيس قراءة وكتابة قطر, تأسيس رياضيات قطر, قدرات وتحصيلي قطر, دروس خصوصية في الريان, دروس خصوصية في الوكرة, دروس خصوصية في الخور, أفضل مدرس خصوصي في قطر, معلم خصوصي اونلاين قطر, حصة تجريبية مجانية قطر, سعر الحصة الخصوصية قطر, تطبيق تعليمي قطري, عروض دروس خصوصية قطر, منصة تعليم عن بعد قطر, دروس اونلاين سلطنة عمان, مدرس خصوصي في عمان, منهج عماني, شرح المنهج العماني, معلم خصوصي عمان, تحفيظ قرآن عمان, تأسيس أطفال عمان, دروس خصوصية في مسقط, أفضل منصة تعليم في عمان, مدرس خصوصي مسقط, مدرس خصوصي صحار, مدرس خصوصي صلالة, مدرس خصوصي السيب, معلم خصوصي صحار, معلم خصوصي صلالة, معلم خصوصي السيب, معلم خصوصي نزوى, معلم خصوصي عبري, معلم خصوصي البريمي, معلم رياضيات عمان, معلم علوم عمان, معلم لغة عربية عمان, معلم انجليزي عمان, مدرس رياضيات خصوصي عمان, مدرس علوم خصوصي عمان, مدرس لغة عربية خصوصي عمان, مدرس انجليزي خصوصي عمان, حل كتب المنهج العماني, مذكرات منهج عماني, ملخصات المنهج العماني, اختبارات المنهج العماني, كتب المنهج العماني, تحفيظ قرآن مسقط, معلم قرآن خصوصي عمان, حلقات تحفيظ قرآن عمان, تأسيس قراءة وكتابة عمان, تأسيس رياضيات عمان, قدرات وتحصيلي عمان, دروس خصوصية في صحار, دروس خصوصية في صلالة, دروس خصوصية في السيب, دروس خصوصية في نزوى, دروس خصوصية في عبري, أفضل مدرس خصوصي في عمان, معلم خصوصي اونلاين عمان, حصة تجريبية مجانية عمان, سعر الحصة الخصوصية عمان, تطبيق تعليمي عماني, عروض دروس خصوصية عمان, منصة تعليم عن بعد عمان, منهج بحريني, مدرس خصوصي في البحرين, مدرس خصوصي المنامة, مدرس خصوصي المحرق, مدرس خصوصي الرفاع, مدرس خصوصي مدينة عيسى, مدرس خصوصي سترة, معلم خصوصي المنامة, معلم خصوصي المحرق, معلم خصوصي الرفاع, معلم خصوصي مدينة عيسى, معلم خصوصي سترة, معلم خصوصي مدينة حمد, معلم رياضيات البحرين, معلم علوم البحرين, معلم لغة عربية البحرين, معلم انجليزي البحرين, مدرس رياضيات خصوصي البحرين, مدرس علوم خصوصي البحرين, مدرس لغة عربية خصوصي البحرين, مدرس انجليزي خصوصي البحرين, شرح المنهج البحريني, حل كتب المنهج البحريني, مذكرات منهج بحريني, ملخصات المنهج البحريني, اختبارات المنهج البحريني, كتب المنهج البحريني, تحفيظ قرآن البحرين, تحفيظ قرآن المنامة, معلم قرآن خصوصي البحرين, حلقات تحفيظ قرآن البحرين, تأسيس أطفال البحرين, تأسيس قراءة وكتابة البحرين, تأسيس رياضيات البحرين, دروس خصوصية في المنامة, دروس خصوصية في المحرق, دروس خصوصية في الرفاع, دروس خصوصية في مدينة عيسى, أفضل مدرس خصوصي في البحرين, معلم خصوصي اونلاين البحرين, حصة تجريبية مجانية البحرين, سعر الحصة الخصوصية البحرين, تطبيق تعليمي بحريني, عروض دروس خصوصية البحرين, منصة تعليم عن بعد في البحرين";
+  const adminPhone = useSettingsStore((s) => s.adminPhone)
+  const phone = adminPhone || '965XXXXXXXX'
+  const absUrl = url.startsWith('http') ? url : `${BASE}${url}`
+  const absImage = toAbs(image)
+  const siteTitle = 'دارين السابعة للتعليم والتدريب'
+  const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle
+  const siteDescription =
+    description ||
+    'دارين السابعة للتعليم والتدريب - أفضل منصة تعليم عن بعد في السعودية والكويت والإمارات والخليج. نوفر مدرسين خصوصيين في الرياضيات، العلوم، اللغة العربية، اللغة الإنجليزية، قدرات وتحصيلي وفق المنهج السعودي والكويتي والخليجي لجميع المراحل. تحفيظ قرآن عن بعد، تأسيس أطفال. احجز حصة تجريبية مجانية.'
+  const siteKeywords =
+    keywords ||
+    'تعليم عن بعد, دارين السابعة, مدرس خصوصي الكويت, دروس خصوصية قطر, افضل منصة تعليمية السعودية, معلمين الامارات, دروس اونلاين سلطنة عمان, تحفيظ قرآن عن بعد, منهج كويتي, منهج سعودي, قدرات وتحصيلي, تأسيس لغة عربية, مراجعات نهائية, اكاديمية تعليمية, مدرس خصوصي اونلاين, معهد تعليمي الكويت, دروس تقوية اونلاين, تجويد قرآن, تأسيس أطفال الكويت, مذكرات تعليمية, اختبارات تجريبية, حصة تجريبية مجانية, تعليم ابتدائي متوسط ثانوي, مناهج عمان الامارات قطر البحرين, معلم رياضيات علوم انجليزي عربي, تحسين المستوى الدراسي, متابعة دراسية اسبوعية, دروس تقوية الكويت, مدرس رياضيات خصوصي الكويت, مدرس علوم خصوصي الكويت, مدرس لغة عربية خصوصي الكويت, مدرس انجليزي خصوصي الكويت, معلم خصوصي اونلاين الكويت, أفضل مدرس خصوصي في الكويت, شرح المنهج الكويتي, حل كتب المنهج الكويتي, مذكرات منهج كويتي, ملخصات المنهج الكويتي, اختبارات المنهج الكويتي, كتب المنهج الكويتي, معلم قرآن خصوصي الكويت, حلقات تحفيظ قرآن الكويت, تأسيس قراءة وكتابة الكويت, تأسيس رياضيات الكويت, شرح رياضيات المنهج الكويتي, شرح علوم المنهج الكويتي, شرح لغة عربية المنهج الكويتي, سعر الحصة الخصوصية في الكويت, أفضل منصة تعليم عن بعد في الكويت, تطبيق تعليمي كويتي, عروض دروس خصوصية الكويت, منصة تعليم عن بعد في الامارات, معهد تعليمي في الامارات, اكاديمية تعليمية الامارات, مدرس خصوصي في الامارات, مدرس خصوصي اونلاين الامارات, دروس تقوية الامارات, مدرس رياضيات خصوصي الامارات, مدرس علوم خصوصي الامارات, مدرس لغة عربية خصوصي الامارات, مدرس انجليزي خصوصي الامارات, أفضل مدرس خصوصي في الامارات, معلم خصوصي اونلاين الامارات, منهج اماراتي, شرح المنهج الاماراتي, حل كتب المنهج الاماراتي, مذكرات منهج اماراتي, ملخصات المنهج الاماراتي, اختبارات المنهج الاماراتي, كتب المنهج الاماراتي, تحفيظ قرآن الامارات, معلم قرآن خصوصي الامارات, حلقات تحفيظ قرآن الامارات, تأسيس أطفال الامارات, تأسيس قراءة وكتابة الامارات, تأسيس رياضيات الامارات, شرح رياضيات المنهج الاماراتي, شرح علوم المنهج الاماراتي, شرح لغة عربية المنهج الاماراتي, دروس خصوصية في دبي, دروس خصوصية في أبوظبي, دروس خصوصية في الشارقة, معلم خصوصي دبي, معلم خصوصي أبوظبي, أفضل منصة تعليم عن بعد في الامارات, سعر الحصة الخصوصية في الامارات, تطبيق تعليمي اماراتي, عروض دروس خصوصية الامارات, منصة تعليم عن بعد في السعودية, معهد تعليمي في السعودية, مدرس خصوصي في السعودية, مدرس خصوصي اونلاين السعودية, دروس تقوية السعودية, مدرس رياضيات خصوصي السعودية, مدرس علوم خصوصي السعودية, مدرس لغة عربية خصوصي السعودية, مدرس انجليزي خصوصي السعودية, أفضل مدرس خصوصي في السعودية, معلم خصوصي اونلاين السعودية, شرح المنهج السعودي, حل كتب المنهج السعودي, مذكرات منهج سعودي, ملخصات المنهج السعودي, اختبارات المنهج السعودي, كتب المنهج السعودي, تحفيظ قرآن السعودية, معلم قرآن خصوصي السعودية, حلقات تحفيظ قرآن السعودية, تأسيس أطفال السعودية, تأسيس قراءة وكتابة السعودية, تأسيس رياضيات السعودية, شرح رياضيات المنهج السعودي, شرح علوم المنهج السعودي, دروس خصوصية في الرياض, دروس خصوصية في جدة, دروس خصوصية في مكة, معلم خصوصي الرياض, معلم خصوصي جدة, أفضل منصة تعليم عن بعد في السعودية, دورات قدرات وتحصيلي في السعودية, عروض دروس خصوصية السعودية, دروس خصوصية قطر, مدرس خصوصي في قطر, منهج قطري, شرح المنهج القطري, مدرس خصوصي اونلاين قطر, دروس تقوية قطر, معلم خصوصي قطر, تحفيظ قرآن قطر, تأسيس أطفال قطر, دروس خصوصية في الدوحة, معلم خصوصي الدوحة, أفضل منصة تعليم في قطر, مدرس خصوصي الدوحة, مدرس خصوصي الريان, معلم خصوصي الريان, معلم خصوصي الوكرة, معلم خصوصي الخور, معلم خصوصي أم صلال, معلم رياضيات قطر, معلم علوم قطر, معلم لغة عربية قطر, معلم انجليزي قطر, مدرس رياضيات خصوصي قطر, مدرس علوم خصوصي قطر, مدرس لغة عربية خصوصي قطر, مدرس انجليزي خصوصي قطر, شرح المنهج القطري, حل كتب المنهج القطري, مذكرات منهج قطري, ملخصات منهج قطري, اختبارات المنهج القطري, كتب المنهج القطري, تحفيظ قرآن الدوحة, معلم قرآن خصوصي قطر, حلقات تحفيظ قرآن قطر, تأسيس قراءة وكتابة قطر, تأسيس رياضيات قطر, قدرات وتحصيلي قطر, دروس خصوصية في الريان, دروس خصوصية في الوكرة, دروس خصوصية في الخور, أفضل مدرس خصوصي في قطر, معلم خصوصي اونلاين قطر, حصة تجريبية مجانية قطر, سعر الحصة الخصوصية قطر, تطبيق تعليمي قطري, عروض دروس خصوصية قطر, منصة تعليم عن بعد قطر, دروس اونلاين سلطنة عمان, مدرس خصوصي في عمان, منهج عماني, شرح المنهج العماني, معلم خصوصي عمان, تحفيظ قرآن عمان, تأسيس أطفال عمان, دروس خصوصية في مسقط, أفضل منصة تعليم في عمان, مدرس خصوصي مسقط, مدرس خصوصي صحار, مدرس خصوصي صلالة, مدرس خصوصي السيب, معلم خصوصي صحار, معلم خصوصي صلالة, معلم خصوصي السيب, معلم خصوصي نزوى, معلم خصوصي عبري, معلم خصوصي البريمي, معلم رياضيات عمان, معلم علوم عمان, معلم لغة عربية عمان, معلم انجليزي عمان, مدرس رياضيات خصوصي عمان, مدرس علوم خصوصي عمان, مدرس لغة عربية خصوصي عمان, مدرس انجليزي خصوصي عمان, حل كتب المنهج العماني, مذكرات منهج عماني, ملخصات المنهج العماني, اختبارات المنهج العماني, كتب المنهج العماني, تحفيظ قرآن مسقط, معلم قرآن خصوصي عمان, حلقات تحفيظ قرآن عمان, تأسيس قراءة وكتابة عمان, تأسيس رياضيات عمان, قدرات وتحصيلي عمان, دروس خصوصية في صحار, دروس خصوصية في صلالة, دروس خصوصية في السيب, دروس خصوصية في نزوى, دروس خصوصية في عبري, أفضل مدرس خصوصي في عمان, معلم خصوصي اونلاين عمان, حصة تجريبية مجانية عمان, سعر الحصة الخصوصية عمان, تطبيق تعليمي عماني, عروض دروس خصوصية عمان, منصة تعليم عن بعد عمان, منهج بحريني, مدرس خصوصي في البحرين, مدرس خصوصي المنامة, مدرس خصوصي المحرق, مدرس خصوصي الرفاع, مدرس خصوصي مدينة عيسى, مدرس خصوصي سترة, معلم خصوصي المنامة, معلم خصوصي المحرق, معلم خصوصي الرفاع, معلم خصوصي مدينة عيسى, معلم خصوصي سترة, معلم خصوصي مدينة حمد, معلم رياضيات البحرين, معلم علوم البحرين, معلم لغة عربية البحرين, معلم انجليزي البحرين, مدرس رياضيات خصوصي البحرين, مدرس علوم خصوصي البحرين, مدرس لغة عربية خصوصي البحرين, مدرس انجليزي خصوصي البحرين, شرح المنهج البحريني, حل كتب المنهج البحريني, مذكرات منهج بحريني, ملخصات المنهج البحريني, اختبارات المنهج البحريني, كتب المنهج البحريني, تحفيظ قرآن البحرين, تحفيظ قرآن المنامة, معلم قرآن خصوصي البحرين, حلقات تحفيظ قرآن البحرين, تأسيس أطفال البحرين, تأسيس قراءة وكتابة البحرين, تأسيس رياضيات البحرين, دروس خصوصية في المنامة, دروس خصوصية في المحرق, دروس خصوصية في الرفاع, دروس خصوصية في مدينة عيسى, أفضل مدرس خصوصي في البحرين, معلم خصوصي اونلاين البحرين, حصة تجريبية مجانية البحرين, سعر الحصة الخصوصية البحرين, تطبيق تعليمي بحريني, عروض دروس خصوصية البحرين, منصة تعليم عن بعد في البحرين'
 
-    return (
-        <>
-            <Helmet>
-                {/* Primary Meta Tags */}
-                <title>{fullTitle}</title>
-                <meta name="title" content={fullTitle} />
-                <meta name="description" content={siteDescription} />
-                <meta name="keywords" content={siteKeywords} />
-                <meta name="author" content="دارين السابعة للتعليم والتدريب" />
-                <link rel="icon" type="image/png" href="/icons/icon-48x48.png" />
+  return (
+    <>
+      <Helmet>
+        {/* Primary Meta Tags */}
+        <title>{fullTitle}</title>
+        <meta name="title" content={fullTitle} />
+        <meta name="description" content={siteDescription} />
+        <meta name="keywords" content={siteKeywords} />
+        <meta name="author" content="دارين السابعة للتعليم والتدريب" />
+        <link rel="icon" type="image/png" href="/icons/icon-48x48.png" />
 
-                {/* Open Graph / Facebook */}
-                <meta property="og:type" content="website" />
-                <meta property="og:url" content={absUrl} />
-                <meta property="og:title" content={fullTitle} />
-                <meta property="og:description" content={siteDescription} />
-                <meta property="og:image" content={absImage} />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
-                <meta property="og:locale" content="ar_AR" />
-                <meta property="og:locale:alternate" content="en_US" />
-                <meta property="og:site_name" content="دارين السابعة" />
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={absUrl} />
+        <meta property="og:title" content={fullTitle} />
+        <meta property="og:description" content={siteDescription} />
+        <meta property="og:image" content={absImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="ar_AR" />
+        <meta property="og:locale:alternate" content="en_US" />
+        <meta property="og:site_name" content="دارين السابعة" />
 
-                {/* Twitter */}
-                <meta property="twitter:card" content="summary_large_image" />
-                <meta property="twitter:site" content="@dareen_academy" />
-                <meta property="twitter:url" content={absUrl} />
-                <meta property="twitter:title" content={fullTitle} />
-                <meta property="twitter:description" content={siteDescription} />
-                <meta property="twitter:image" content={absImage} />
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:site" content="@dareen_academy" />
+        <meta property="twitter:url" content={absUrl} />
+        <meta property="twitter:title" content={fullTitle} />
+        <meta property="twitter:description" content={siteDescription} />
+        <meta property="twitter:image" content={absImage} />
 
-                {/* Preload Critical Assets */}
-                {preloadImages.map((src, idx) => (
-                    <link key={idx} rel="preload" href={toAbs(src)} as="image" />
-                ))}
+        {/* Preload Critical Assets */}
+        {preloadImages.map((src, idx) => (
+          <link key={idx} rel="preload" href={toAbs(src)} as="image" />
+        ))}
 
-                {/* Geographic & Regional Domination Meta Tags */}
-                <meta name="geo.region" content="SA, KW, AE, QA, BH, OM" />
-                <meta name="geo.placename" content="Middle East, GCC, الرياض، جدة، الكويت، دبي، الدوحة، الريان، الوكرة، مسقط، صحار، صلالة، السيب، المنامة، المحرق، الرفاع" />
-                <meta name="geo.position" content="24.7136;46.6753" />
-                <meta name="ICBM" content="24.7136, 46.6753" />
+        {/* Geographic & Regional Domination Meta Tags */}
+        <meta name="geo.region" content="SA, KW, AE, QA, BH, OM" />
+        <meta
+          name="geo.placename"
+          content="Middle East, GCC, الرياض، جدة، الكويت، دبي، الدوحة، الريان، الوكرة، مسقط، صحار، صلالة، السيب، المنامة، المحرق، الرفاع"
+        />
+        <meta name="geo.position" content="24.7136;46.6753" />
+        <meta name="ICBM" content="24.7136, 46.6753" />
 
-                <link rel="alternate" href={absUrl} hrefLang="ar" />
-                <link rel="alternate" href={absUrl} hrefLang="ar-sa" />
-                <link rel="alternate" href={absUrl} hrefLang="ar-kw" />
-                <link rel="alternate" href={absUrl} hrefLang="ar-ae" />
-                <link rel="alternate" href={absUrl} hrefLang="ar-qa" />
-                <link rel="alternate" href={absUrl} hrefLang="ar-om" />
-                <link rel="alternate" href={absUrl} hrefLang="ar-bh" />
-                <link rel="alternate" href={absUrl} hrefLang="x-default" />
+        <link rel="alternate" href={absUrl} hrefLang="ar" />
+        <link rel="alternate" href={absUrl} hrefLang="ar-sa" />
+        <link rel="alternate" href={absUrl} hrefLang="ar-kw" />
+        <link rel="alternate" href={absUrl} hrefLang="ar-ae" />
+        <link rel="alternate" href={absUrl} hrefLang="ar-qa" />
+        <link rel="alternate" href={absUrl} hrefLang="ar-om" />
+        <link rel="alternate" href={absUrl} hrefLang="ar-bh" />
+        <link rel="alternate" href={absUrl} hrefLang="x-default" />
 
-                {/* Advanced Multi-Schema for Rich Snippets (Sitelinks, Star Ratings, FAQs, Courses) */}
-                <script type="application/ld+json">
-                    {JSON.stringify([
-                        {
-                            "@context": "https://schema.org",
-                            "@type": "WebSite",
-                            "name": "دارين السابعة للتعليم والتدريب",
-                            "url": "https://dareen.cloud/",
-                            "potentialAction": {
-                                "@type": "SearchAction",
-                                "target": {
-                                    "@type": "EntryPoint",
-                                    "urlTemplate": "https://dareen.cloud/search?q={search_term_string}"
-                                },
-                                "query-input": "required name=search_term_string"
-                            }
-                        },
-                        {
-                            "@context": "https://schema.org",
-                            "@type": "SiteNavigationElement",
-                            "name": ["الرئيسية", "الدورات", "من نحن", "اتصل بنا", "تسجيل الدخول", "المكتبة"],
-                            "url": [
-                                "https://dareen.cloud/",
-                                "https://dareen.cloud/courses",
-                                "https://dareen.cloud/about",
-                                "https://dareen.cloud/contact",
-                                "https://dareen.cloud/login",
-                                "https://dareen.cloud/books"
-                            ]
-                        },
-                        {
-                            "@context": "https://schema.org",
-                            "@type": "EducationalOrganization",
-                            "name": "دارين السابعة للتعليم والتدريب",
-                            "url": "https://dareen.cloud/",
-                            "logo": "https://dareen.cloud/logo.png",
-                            "description": siteDescription,
-                            "telephone": "+${phone}",
-                            "email": "info@dareen.cloud",
-                            "areaServed": ["Saudi Arabia", "Kuwait", "United Arab Emirates", "Qatar", "Oman", "Bahrain"],
-                            "address": {
-                                "@type": "PostalAddress",
-                                "addressRegion": "Kuwait",
-                                "addressCountry": "KW"
-                            },
-                            "openingHoursSpecification": [
-                                { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"], "opens": "08:00", "closes": "20:00" },
-                                { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "08:00", "closes": "16:00" }
-                            ],
-                            "sameAs": [
-                                `https://wa.me/${phone}`,
-                                "https://instagram.com/dareen.academy"
-                            ],
-                            "aggregateRating": {
-                                "@type": "AggregateRating",
-                                "ratingValue": "4.9",
-                                "bestRating": "5",
-                                "ratingCount": "3450"
-                            }
-                        },
-                        {
-                            "@context": "https://schema.org",
-                            "@type": "HowTo",
-                            "name": "كيفية الاشتراك في دارين السابعة",
-                            "description": "ثلاث خطوات بسيطة للبدء في رحلتك التعليمية مع دارين السابعة",
-                            "step": [
-                                { "@type": "HowToStep", "position": 1, "name": "اختر الخدمة", "text": "حدد النظام التعليمي المناسب لابنك أو ابنتك من بين دوراتنا المتنوعة." },
-                                { "@type": "HowToStep", "position": 2, "name": "حصة مجانية", "text": "استمتع بحصة تجريبية مجانية للتعرف على أسلوب المعلمين والمنصة." },
-                                { "@type": "HowToStep", "position": 3, "name": "اشترك الآن", "text": "تواصل معنا عبر الواتساب لحجز المقعد والبدء في رحلة التعلم." }
-                            ]
-                        },
-                        {
-                            "@context": "https://schema.org",
-                            "@type": "Course",
-                            "name": "دروس خصوصية أونلاين للمناهج الخليجية",
-                            "description": "دروس خصوصية عن بعد في جميع المواد للمناهج الكويتية والسعودية والقطرية والإماراتية والعمانية مع نخبة من أفضل المعلمين.",
-                            "provider": {
-                                "@type": "EducationalOrganization",
-                                "name": "دارين السابعة للتعليم والتدريب",
-                                "url": "https://dareen.cloud/"
-                            }
-                        },
-                        {
-                            "@context": "https://schema.org",
-                            "@type": "FAQPage",
-                            "mainEntity": [
-                                {
-                                    "@type": "Question",
-                                    "name": "ما هي أفضل منصة تعليم أون لاين في دول الخليج (الكويت، قطر، السعودية، الامارات، عمان)؟",
-                                    "acceptedAnswer": {
-                                        "@type": "Answer",
-                                        "text": "دارين السابعة هي المنصة الرائدة والأولى المتخصصة في تقديم الدروس الخصوصية الأون لاين والمتابعات الدراسية للمناهج الخليجية وتأسيس الطلاب وتحفيظ القرآن بأعلى معايير الجودة."
-                                    }
-                                },
-                                {
-                                    "@type": "Question",
-                                    "name": "هل يتوفر مدرس خصوصي للمناهج في الكويت والسعودية وقطر؟",
-                                    "acceptedAnswer": {
-                                        "@type": "Answer",
-                                        "text": "نعم، نوفر نخبة من أفضل المعلمين والمدرسين الخصوصيين لتدريس المنهج الكويتي، السعودي، القطري، الإماراتي والعماني، وتجهيز الطلاب للاختبارات النهائية والقدرات."
-                                    }
-                                },
-                                {
-                                    "@type": "Question",
-                                    "name": "كم تكلفة الدروس الخصوصية الأونلاين في دارين السابعة؟",
-                                    "acceptedAnswer": {
-                                        "@type": "Answer",
-                                        "text": "نقدم حصة تجريبية مجانية للتعرف على المنصة والمعلمين. بعد ذلك، لدينا باقات مرنة تناسب جميع الاحتياجات بأسعار تنافسية. يمكنكم التواصل معنا عبر الواتساب للحصول على عرض سعر مخصص."
-                                    }
-                                },
-                                {
-                                    "@type": "Question",
-                                    "name": "هل تقدمون تحفيظ قرآن عن بعد للأطفال؟",
-                                    "acceptedAnswer": {
-                                        "@type": "Answer",
-                                        "text": "نعم، لدينا برنامج متكامل لتحفيظ القرآن الكريم عن بعد للأطفال والكبار مع معلمين متخصصين في التجويد والتلاوة، مع متابعة مستمرة وتقارير دورية للأهل."
-                                    }
-                                },
-                                {
-                                    "@type": "Question",
-                                    "name": "ما هي المناهج الدراسية التي تغطيها منصة دارين السابعة؟",
-                                    "acceptedAnswer": {
-                                        "@type": "Answer",
-                                        "text": "نغطي المناهج الكويتية والسعودية والقطرية والإماراتية والعمانية لجميع المراحل الدراسية. نقدم تأسيساً في اللغة العربية والرياضيات والعلوم واللغة الإنجليزية والمواد الشرعية، بالإضافة إلى دورات قدرات وتحصيلي."
-                                    }
-                                }
-                            ]
-                        }
-                    ])}
-                </script>
+        {/* Advanced Multi-Schema for Rich Snippets (Sitelinks, Star Ratings, FAQs, Courses) */}
+        <script type="application/ld+json">
+          {safeJsonLd([
+            {
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'دارين السابعة للتعليم والتدريب',
+              url: 'https://dareen.cloud/',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: 'https://dareen.cloud/search?q={search_term_string}',
+                },
+                'query-input': 'required name=search_term_string',
+              },
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'SiteNavigationElement',
+              name: ['الرئيسية', 'الدورات', 'من نحن', 'اتصل بنا', 'تسجيل الدخول', 'المكتبة'],
+              url: [
+                'https://dareen.cloud/',
+                'https://dareen.cloud/courses',
+                'https://dareen.cloud/about',
+                'https://dareen.cloud/contact',
+                'https://dareen.cloud/login',
+                'https://dareen.cloud/books',
+              ],
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'EducationalOrganization',
+              name: 'دارين السابعة للتعليم والتدريب',
+              url: 'https://dareen.cloud/',
+              logo: 'https://dareen.cloud/logo.png',
+              description: siteDescription,
+              telephone: '+${phone}',
+              email: 'info@dareen.cloud',
+              areaServed: [
+                'Saudi Arabia',
+                'Kuwait',
+                'United Arab Emirates',
+                'Qatar',
+                'Oman',
+                'Bahrain',
+              ],
+              address: {
+                '@type': 'PostalAddress',
+                addressRegion: 'Kuwait',
+                addressCountry: 'KW',
+              },
+              openingHoursSpecification: [
+                {
+                  '@type': 'OpeningHoursSpecification',
+                  dayOfWeek: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday'],
+                  opens: '08:00',
+                  closes: '20:00',
+                },
+                {
+                  '@type': 'OpeningHoursSpecification',
+                  dayOfWeek: 'Thursday',
+                  opens: '08:00',
+                  closes: '16:00',
+                },
+              ],
+              sameAs: [`https://wa.me/${phone}`, 'https://instagram.com/dareen.academy'],
+              aggregateRating: {
+                '@type': 'AggregateRating',
+                ratingValue: '4.9',
+                bestRating: '5',
+                ratingCount: '3450',
+              },
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'HowTo',
+              name: 'كيفية الاشتراك في دارين السابعة',
+              description: 'ثلاث خطوات بسيطة للبدء في رحلتك التعليمية مع دارين السابعة',
+              step: [
+                {
+                  '@type': 'HowToStep',
+                  position: 1,
+                  name: 'اختر الخدمة',
+                  text: 'حدد النظام التعليمي المناسب لابنك أو ابنتك من بين دوراتنا المتنوعة.',
+                },
+                {
+                  '@type': 'HowToStep',
+                  position: 2,
+                  name: 'حصة مجانية',
+                  text: 'استمتع بحصة تجريبية مجانية للتعرف على أسلوب المعلمين والمنصة.',
+                },
+                {
+                  '@type': 'HowToStep',
+                  position: 3,
+                  name: 'اشترك الآن',
+                  text: 'تواصل معنا عبر الواتساب لحجز المقعد والبدء في رحلة التعلم.',
+                },
+              ],
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'Course',
+              name: 'دروس خصوصية أونلاين للمناهج الخليجية',
+              description:
+                'دروس خصوصية عن بعد في جميع المواد للمناهج الكويتية والسعودية والقطرية والإماراتية والعمانية مع نخبة من أفضل المعلمين.',
+              provider: {
+                '@type': 'EducationalOrganization',
+                name: 'دارين السابعة للتعليم والتدريب',
+                url: 'https://dareen.cloud/',
+              },
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'FAQPage',
+              mainEntity: [
+                {
+                  '@type': 'Question',
+                  name: 'ما هي أفضل منصة تعليم أون لاين في دول الخليج (الكويت، قطر، السعودية، الامارات، عمان)؟',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'دارين السابعة هي المنصة الرائدة والأولى المتخصصة في تقديم الدروس الخصوصية الأون لاين والمتابعات الدراسية للمناهج الخليجية وتأسيس الطلاب وتحفيظ القرآن بأعلى معايير الجودة.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'هل يتوفر مدرس خصوصي للمناهج في الكويت والسعودية وقطر؟',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'نعم، نوفر نخبة من أفضل المعلمين والمدرسين الخصوصيين لتدريس المنهج الكويتي، السعودي، القطري، الإماراتي والعماني، وتجهيز الطلاب للاختبارات النهائية والقدرات.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'كم تكلفة الدروس الخصوصية الأونلاين في دارين السابعة؟',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'نقدم حصة تجريبية مجانية للتعرف على المنصة والمعلمين. بعد ذلك، لدينا باقات مرنة تناسب جميع الاحتياجات بأسعار تنافسية. يمكنكم التواصل معنا عبر الواتساب للحصول على عرض سعر مخصص.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'هل تقدمون تحفيظ قرآن عن بعد للأطفال؟',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'نعم، لدينا برنامج متكامل لتحفيظ القرآن الكريم عن بعد للأطفال والكبار مع معلمين متخصصين في التجويد والتلاوة، مع متابعة مستمرة وتقارير دورية للأهل.',
+                  },
+                },
+                {
+                  '@type': 'Question',
+                  name: 'ما هي المناهج الدراسية التي تغطيها منصة دارين السابعة؟',
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: 'نغطي المناهج الكويتية والسعودية والقطرية والإماراتية والعمانية لجميع المراحل الدراسية. نقدم تأسيساً في اللغة العربية والرياضيات والعلوم واللغة الإنجليزية والمواد الشرعية، بالإضافة إلى دورات قدرات وتحصيلي.',
+                  },
+                },
+              ],
+            },
+          ])}
+        </script>
 
-                {/* Dynamic Breadcrumbs Schema */}
-                {breadcrumbs && breadcrumbs.length > 0 && (
-                    <script type="application/ld+json">
-                        {JSON.stringify({
-                            "@context": "https://schema.org",
-                            "@type": "BreadcrumbList",
-                            "itemListElement": breadcrumbs.map((crumb, index) => ({
-                                "@type": "ListItem",
-                                "position": index + 1,
-                                "name": crumb.name,
-                                "item": crumb.item.startsWith('http') ? crumb.item : `https://dareen.cloud${crumb.item}`
-                            }))
-                        })}
-                    </script>
-                )}
+        {/* Dynamic Breadcrumbs Schema */}
+        {breadcrumbs && breadcrumbs.length > 0 && (
+          <script type="application/ld+json">
+            {safeJsonLd({
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: breadcrumbs.map((crumb, index) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                name: crumb.name,
+                item: crumb.item.startsWith('http')
+                  ? crumb.item
+                  : `https://dareen.cloud${crumb.item}`,
+              })),
+            })}
+          </script>
+        )}
 
-                {/* Canonical URL */}
-                <link rel="canonical" href={absUrl} />
-                {noindex && <meta name="robots" content="noindex, follow" />}
-            </Helmet>
-        </>
-    );
-};
+        {/* Canonical URL */}
+        <link rel="canonical" href={absUrl} />
+        {noindex && <meta name="robots" content="noindex, follow" />}
+      </Helmet>
+    </>
+  )
+}

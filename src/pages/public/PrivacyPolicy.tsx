@@ -1,3 +1,4 @@
+import { safeJsonLd } from '../../shared/utils/jsonLd'
 import { MobileHeader } from '../../components/public/MobileHeader'
 import { PublicFooter } from '../../components/public/PublicFooter'
 import { Lock, Eye, Database, UserCheck, FileText, Headphones, Sparkles } from 'lucide-react'
@@ -31,7 +32,7 @@ export const PrivacyPolicy = () => {
         ]}
       />
       <script type="application/ld+json">
-        {JSON.stringify({
+        {safeJsonLd({
           '@context': 'https://schema.org',
           '@type': 'WebPage',
           name: 'سياسة الخصوصية والأمان - دارين السابعة',

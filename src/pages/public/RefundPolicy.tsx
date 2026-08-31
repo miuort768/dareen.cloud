@@ -1,3 +1,4 @@
+import { safeJsonLd } from '../../shared/utils/jsonLd'
 import { MobileHeader } from '../../components/public/MobileHeader'
 import { PublicFooter } from '../../components/public/PublicFooter'
 import {
@@ -42,7 +43,7 @@ export const RefundPolicy = () => {
         ]}
       />
       <script type="application/ld+json">
-        {JSON.stringify({
+        {safeJsonLd({
           '@context': 'https://schema.org',
           '@type': 'WebPage',
           name: 'سياسة الاسترداد والاسترجاع - دارين السابعة',

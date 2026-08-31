@@ -1,3 +1,4 @@
+import { safeJsonLd } from '../../shared/utils/jsonLd'
 import { useState, useMemo } from 'react'
 import type { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
@@ -128,7 +129,7 @@ export const Courses = () => {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(courseSchema) }}
       />
       <MobileHeader />
 
