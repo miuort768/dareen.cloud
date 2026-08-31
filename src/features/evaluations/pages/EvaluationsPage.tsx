@@ -205,10 +205,13 @@ export const Evaluations = () => {
   if (isLoading)
     return (
       <div className="min-h-full space-y-3 bg-background p-4">
-        <div className="h-52 animate-pulse rounded-2xl bg-card" />
+        <div className="h-52 animate-pulse rounded-2xl border border-border bg-card shadow-elevation-1" />
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {[...Array(8)].map((_, i) => (
-            <div key={`eval-${i}`} className="h-52 animate-pulse rounded-2xl bg-card" />
+            <div
+              key={`eval-${i}`}
+              className="h-52 animate-pulse rounded-2xl border border-border bg-card shadow-elevation-1"
+            />
           ))}
         </div>
       </div>
@@ -216,7 +219,15 @@ export const Evaluations = () => {
 
   return (
     <div className="relative min-h-full overflow-x-hidden bg-background pb-24 font-sans" dir="rtl">
-      <div className="relative z-10 mx-auto max-w-page space-y-3 px-2">
+      {/* زخارف خلفية ناعمة أعلى الصفحة */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 overflow-hidden"
+        aria-hidden="true"
+      >
+        <div className="absolute -top-28 start-[15%] h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -top-16 end-[5%] h-56 w-56 rounded-full bg-primary/5 blur-3xl" />
+      </div>
+      <div className="relative z-10 mx-auto max-w-page space-y-4 px-2.5 pt-3 sm:px-4 md:space-y-5 md:px-6 md:pt-5">
         <EvaluationsHeader
           stats={stats}
           showAddButton={currentUser?.role !== 'parent'}
@@ -234,19 +245,19 @@ export const Evaluations = () => {
           data-cards
         >
           {isError ? (
-            <div className="bg-error-soft/50 col-span-full rounded-2xl border border-dashed border-error-soft py-16 text-center">
+            <div className="col-span-full rounded-2xl border border-dashed border-error-soft bg-error-soft py-16 text-center">
               <p className="text-sm font-bold text-main">تعذر تحميل التقييمات</p>
               <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
               <button
                 onClick={() => refetch()}
-                className="mx-auto mt-4 block rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="mx-auto mt-4 block rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 إعادة المحاولة
               </button>
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 xl:grid-cols-4">
                 {sortedStudents.map((student, idx) => (
                   <motion.div
                     key={student.id}
@@ -269,7 +280,7 @@ export const Evaluations = () => {
                 ))}
                 {sortedStudents.length === 0 && (
                   <div className="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface py-16 text-center">
-                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft">
+                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
                       <User size={20} className="text-primary" />
                     </div>
                     <h3 className="mb-1 text-xs font-bold text-main">
@@ -323,7 +334,7 @@ export const Evaluations = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold text-main shadow-sm">
                   {action.label}
                 </span>
                 <button
@@ -332,7 +343,7 @@ export const Evaluations = () => {
                     setFabOpen(false)
                   }}
                   aria-label={action.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <action.icon size={18} />
                 </button>
@@ -346,8 +357,10 @@ export const Evaluations = () => {
           aria-label={fabOpen ? 'إغلاق الإجراءات السريعة' : 'إجراءات سريعة'}
           aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-xl text-on-primary shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-            fabOpen ? 'rotate-45 bg-error text-on-error' : 'bg-primary',
+            'flex h-12 w-12 items-center justify-center rounded-xl shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+            fabOpen
+              ? 'rotate-45 border border-border bg-card text-main'
+              : 'bg-primary text-on-primary',
           )}
         >
           <Plus size={24} />

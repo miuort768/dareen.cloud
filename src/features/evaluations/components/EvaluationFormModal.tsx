@@ -64,7 +64,7 @@ export const EvaluationFormModal = ({
             {/* Header */}
             <div className="flex items-center justify-between border-b border-border p-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
                   <Award size={20} className="text-primary" />
                 </div>
                 <div>
@@ -130,8 +130,8 @@ export const EvaluationFormModal = ({
                           className={cn(
                             'relative flex flex-col items-center justify-center gap-2 rounded-xl border-2 px-2 py-3.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                             isSelected
-                              ? cn(opt.bg, opt.border, opt.color)
-                              : 'border-border bg-card text-main hover:border-primary/40',
+                              ? cn(opt.bg, opt.border, opt.color, 'shadow-sm')
+                              : 'border-border bg-surface text-muted hover:border-primary/40 hover:bg-hover hover:text-main',
                           )}
                         >
                           {/* علامة التحديد الواضحة — لا اعتماد على اللون فقط */}
@@ -172,8 +172,8 @@ export const EvaluationFormModal = ({
                           className={cn(
                             'rounded-lg border px-3 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                             isSelected
-                              ? 'border-warning bg-warning-light font-black text-warning-strong shadow-sm dark:bg-warning-soft'
-                              : 'border-border bg-surface text-muted hover:border-warning hover:text-warning-strong',
+                              ? 'border-primary bg-primary-soft font-black text-primary shadow-sm dark:bg-primary/10'
+                              : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-primary',
                           )}
                         >
                           +{p}
@@ -182,8 +182,8 @@ export const EvaluationFormModal = ({
                     })}
                   </div>
                   <div className="flex items-center gap-2.5">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-warning bg-warning-light dark:bg-warning-soft">
-                      <Zap size={16} className="text-warning-strong" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-primary/20 bg-primary-soft dark:bg-primary/10">
+                      <Zap size={16} className="text-primary" />
                     </div>
                     <input
                       type="number"
@@ -235,7 +235,7 @@ export const EvaluationFormModal = ({
                 type="submit"
                 form="evaluation-form"
                 disabled={isSubmitting}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95] disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <CheckCircle2 size={14} /> {isSubmitting ? 'جاري الإرسال...' : 'إرسال التقييم'}
               </button>

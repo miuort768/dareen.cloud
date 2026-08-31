@@ -1,5 +1,11 @@
 import { Star, ThumbsUp, CheckCircle2, Minus, XCircle, ThumbsDown } from 'lucide-react'
 
+/**
+ * سلّم التقييم — لوحة هادئة ومتدرجة:
+ * أخضر (ممتاز) → بنفسجي (جيد جدًا) → سماوي (جيد) → رمادي (مقبول)
+ * → كهرماني نهاريًا / رمادي ليليًا (يحتاج تحسين) → وردي (ضعيف).
+ * ملاحظة: لا يوجد أي لون كهرماني (أصفر) في الوضع الليلي إطلاقًا.
+ */
 export const RATING_OPTIONS = [
   {
     value: 'ممتاز',
@@ -12,26 +18,34 @@ export const RATING_OPTIONS = [
   {
     value: 'جيد جدًا',
     icon: ThumbsUp,
-    color: 'text-success-strong',
-    bg: 'bg-success-soft',
-    border: 'border-success',
-    pill: 'bg-success-soft text-success-strong',
+    color: 'text-primary dark:text-primary',
+    bg: 'bg-primary-soft dark:bg-primary/10',
+    border: 'border-primary',
+    pill: 'bg-primary-soft text-primary dark:bg-primary/10',
   },
   {
     value: 'جيد',
     icon: CheckCircle2,
-    color: 'text-primary dark:text-primary',
-    bg: 'bg-primary-soft',
-    border: 'border-primary',
-    pill: 'bg-primary-soft text-primary dark:text-primary',
+    color: 'text-info-strong',
+    bg: 'bg-info-soft',
+    border: 'border-info',
+    pill: 'bg-info-soft text-info-strong',
   },
   {
     value: 'مقبول',
     icon: Minus,
-    color: 'text-warning-strong',
-    bg: 'bg-warning-soft',
-    border: 'border-warning',
-    pill: 'bg-warning-soft text-warning-strong',
+    color: 'text-main',
+    bg: 'bg-hover',
+    border: 'border-strong',
+    pill: 'bg-hover text-muted',
+  },
+  {
+    value: 'يحتاج تحسين',
+    icon: ThumbsDown,
+    color: 'text-warning-strong dark:text-main',
+    bg: 'bg-warning-soft dark:bg-hover',
+    border: 'border-warning dark:border-strong',
+    pill: 'bg-warning-soft text-warning-strong dark:bg-hover dark:text-muted',
   },
   {
     value: 'ضعيف',
@@ -40,14 +54,6 @@ export const RATING_OPTIONS = [
     bg: 'bg-error-soft',
     border: 'border-error',
     pill: 'bg-error-soft text-error-strong',
-  },
-  {
-    value: 'يحتاج تحسين',
-    icon: ThumbsDown,
-    color: 'text-warning-strong',
-    bg: 'bg-warning-soft',
-    border: 'border-warning',
-    pill: 'bg-warning-soft text-warning-strong',
   },
 ] as const
 
@@ -71,14 +77,15 @@ export const averageRatingOf = (evals: { rating: string }[]): number => {
   return Math.round((sum / evals.length) * 10) / 10
 }
 
-/** تدرجات أفاتار الطلاب — مصدر واحد (كانت مكررة في Card وDrawer مع to-warning-hover غير المعرف سابقًا) */
+/**
+ * تدرجات أفاتار الطلاب — مصدر واحد (4 ألوان هادئة، بلا كهرماني/ذهبي).
+ * نهايات التدرجات من توكنات معرفة في الوضعين معًا (لا to-*-hover غير المعرف).
+ */
 export const AVATAR_GRADIENTS = [
-  { g: 'from-primary to-primary-hover', on: 'text-on-primary' },
-  { g: 'from-success to-success-hover', on: 'text-on-success' },
+  { g: 'from-primary to-primary/70', on: 'text-on-primary' },
+  { g: 'from-success to-success-dark', on: 'text-on-success' },
   { g: 'from-info to-info-hover', on: 'text-on-info' },
-  { g: 'from-warning to-warning-hover', on: 'text-on-warning' },
   { g: 'from-error to-error-hover', on: 'text-on-error' },
-  { g: 'from-accent to-accent-hover', on: 'text-on-accent' },
 ] as const
 
 export const getAvatarGradient = (name: string) => {

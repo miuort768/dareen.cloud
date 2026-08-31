@@ -90,37 +90,37 @@ export const EvaluationDrawer = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.92 }}
             transition={{ duration: 0.15 }}
-            className="relative flex max-h-[75vh] w-full max-w-xs flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2"
+            className="relative flex max-h-[75vh] w-full max-w-xs flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-3"
             dir="rtl"
           >
-            {/* Header */}
-            <div className={cn('relative overflow-hidden px-4 py-3', gradient.g)}>
-              <div className="absolute inset-0 bg-white/10" />
+            {/* Header — محايد وهادئ مع أفاتار ملون */}
+            <div className="relative border-b border-border bg-surface px-4 py-3">
               <button
                 onClick={onClose}
                 aria-label="إغلاق الملف"
-                className="absolute end-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-lg bg-black/25 text-white backdrop-blur-sm transition-all hover:bg-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="absolute end-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-lg border border-border bg-card text-muted transition-all hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <X size={13} />
               </button>
-              <div className="relative z-10 flex items-center gap-3">
+              <div className="flex items-center gap-3 pe-8">
                 <div
                   className={cn(
-                    'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 text-sm font-bold ring-1 ring-white/30',
+                    'flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-sm font-bold shadow-md ring-2 ring-primary/10',
+                    gradient.g,
                     gradient.on,
                   )}
                 >
                   {(student?.name || '?').charAt(0)}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h2 className={cn('truncate text-xs font-bold', gradient.on)}>{student?.name}</h2>
-                  <p className="text-micro font-medium text-white/85">{student?.grade || '—'}</p>
+                  <h2 className="truncate text-sm font-black text-main">{student?.name}</h2>
+                  <p className="text-micro font-medium text-muted">{student?.grade || '—'}</p>
                   <div className="mt-1 flex items-center gap-1.5">
-                    <span className="flex items-center gap-1 rounded bg-black/25 px-1.5 py-0.5 text-micro font-bold text-white backdrop-blur-sm">
-                      <Star size={8} /> {avgRating || '—'}
+                    <span className="flex items-center gap-1 rounded-md border border-border bg-card px-1.5 py-0.5 text-micro font-bold text-main">
+                      <Star size={8} className="text-info-strong" /> {avgRating || '—'}
                     </span>
                     {totalXP > 0 && (
-                      <span className="flex items-center gap-1 rounded bg-warning-light px-1.5 py-0.5 text-micro font-bold text-warning-strong">
+                      <span className="flex items-center gap-1 rounded-md bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary dark:bg-primary/10">
                         <Award size={8} /> {totalXP} XP
                       </span>
                     )}
@@ -138,7 +138,7 @@ export const EvaluationDrawer = ({
                     icon: BookOpen,
                     value: (student?.enrollments || []).length,
                     label: 'المواد',
-                    color: 'text-primary bg-primary-soft',
+                    color: 'text-primary bg-primary-soft dark:bg-primary/10',
                   },
                   {
                     icon: Calendar,
@@ -180,7 +180,7 @@ export const EvaluationDrawer = ({
                   </div>
                   <ProgressBar
                     value={progress}
-                    variant={progress >= 75 ? 'success' : progress >= 50 ? 'warning' : 'error'}
+                    variant={progress >= 75 ? 'success' : progress >= 50 ? 'info' : 'error'}
                     className="h-1.5"
                   />
                 </div>
@@ -238,7 +238,7 @@ export const EvaluationDrawer = ({
                                 {ev.rating}
                               </span>
                               {ev.points > 0 && (
-                                <span className="rounded bg-warning-light px-1 py-0.5 text-micro font-bold text-warning-strong dark:bg-warning-soft">
+                                <span className="rounded bg-primary-soft px-1 py-0.5 text-micro font-bold text-primary dark:bg-primary/10">
                                   +{ev.points}
                                 </span>
                               )}
@@ -284,10 +284,10 @@ export const EvaluationDrawer = ({
             </div>
 
             {/* Footer */}
-            <div className="border-t border-border px-3 py-2">
+            <div className="border-t border-border bg-surface px-3 py-2">
               <button
                 onClick={onClose}
-                className="w-full rounded-xl border border-border bg-surface py-2.5 text-xs font-bold text-main transition-colors hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                className="w-full rounded-xl border border-border bg-card py-2.5 text-xs font-bold text-main transition-colors hover:border-primary/30 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 إغلاق
               </button>
