@@ -93,7 +93,7 @@ export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
             <p className="text-sm font-medium text-white/70">{nextSession?.studentName || ''}</p>
             {nextSession?.studentGrade && (
               <p className="text-[10px] font-medium text-white/60">
-                Grade: {nextSession.studentGrade}
+                الصف: {nextSession.studentGrade}
               </p>
             )}
             {nextSession?.curriculum && (

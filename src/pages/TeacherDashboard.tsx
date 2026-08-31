@@ -38,7 +38,7 @@ export const TeacherDashboard = () => {
   return (
     <>
       <div
-        className="relative hidden min-h-full overflow-x-hidden bg-background pb-24 font-sans transition-colors duration-500 dark:bg-background md:block"
+        className="relative hidden min-h-full overflow-x-hidden bg-background font-sans transition-colors duration-500 dark:bg-background md:block"
         dir="rtl"
       >
         <TeacherDashboardDesktop

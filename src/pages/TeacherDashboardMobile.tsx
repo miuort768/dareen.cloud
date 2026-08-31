@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Calendar,
+  CalendarDays,
+  ClipboardList,
   Clock,
+  Home,
   Users,
   Award,
   Bell,
@@ -15,6 +18,7 @@ import {
   User as UserIcon,
   LogOut,
 } from 'lucide-react'
+import { triggerHaptic } from '../lib/haptics'
 import { EmptyState } from '../shared/components/ui/EmptyState'
 import { cn } from '../lib/utils'
 import { usePullToRefresh } from '../shared/components/mobile/usePullToRefresh'
@@ -57,6 +61,32 @@ interface TeacherDashboardMobileProps {
   logout?: () => void
 }
 
+const TABS = [
+  { id: 'home' as const, label: 'الرئيسية', icon: Home },
+  { id: 'schedule' as const, label: 'الجدول', icon: CalendarDays },
+  { id: 'reports' as const, label: 'التقارير', icon: ClipboardList },
+]
+
+const HeaderStat = ({
+  icon: Icon,
+  value,
+  label,
+  iconColor,
+}: {
+  icon: typeof Clock
+  value: number
+  label: string
+  iconColor: string
+}) => (
+  <div className="flex items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-2.5 shadow-sm">
+    <Icon size={14} className={cn('shrink-0', iconColor)} />
+    <div className="flex min-w-0 items-baseline gap-1">
+      <span className="text-base font-bold tabular-nums text-main">{value}</span>
+      <span className="truncate text-[11px] font-medium text-muted">{label}</span>
+    </div>
+  </div>
+)
+
 export const TeacherDashboardMobile = ({
   currentUser,
   stats,
@@ -96,7 +126,7 @@ export const TeacherDashboardMobile = ({
   return (
     <div
       ref={containerRef}
-      className="relative min-h-full overflow-x-hidden bg-surface pb-28 font-sans transition-colors duration-500 dark:bg-background"
+      className="relative min-h-full overflow-x-hidden bg-surface pb-6 font-sans transition-colors duration-500 dark:bg-background"
       dir="rtl"
       {...handlers}
     >
@@ -128,12 +158,12 @@ export const TeacherDashboardMobile = ({
           'sticky top-0 z-50 border-b border-border bg-gradient-to-br from-primary-light via-primary-soft to-surface backdrop-blur-xl transition-all duration-500 dark:border-border dark:from-card dark:via-surface dark:to-background',
         )}
       >
-        <div className="px-5 pb-4 pt-5">
+        <div className="px-4 pb-3 pt-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button
                 onClick={() => navigate('/teacher-profile')}
-                className="flex items-center gap-3 text-start"
+                className="flex items-center gap-3 rounded-xl text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 aria-label="الملف الشخصي"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary dark:bg-primary">
@@ -156,7 +186,7 @@ export const TeacherDashboardMobile = ({
                     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
                   }, 250)
                 }}
-                className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10"
+                className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:bg-primary/10"
                 aria-label="الإعلانات"
               >
                 <Bell size={15} className="text-primary dark:text-primary" />
@@ -165,7 +195,7 @@ export const TeacherDashboardMobile = ({
               {logout && (
                 <button
                   onClick={logout}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-error-soft dark:bg-error-soft"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:bg-error-soft"
                   aria-label="تسجيل الخروج"
                 >
                   <LogOut size={15} className="text-error dark:text-error" />
@@ -173,36 +203,62 @@ export const TeacherDashboardMobile = ({
               )}
             </div>
           </div>
-          {/* Stats row */}
-          <div className="mt-3 flex items-center gap-2">
-            <div className="flex flex-1 items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-2.5 shadow-sm dark:border-border dark:bg-primary/10">
-              <Clock size={13} className="shrink-0 text-primary dark:text-primary" />
-              <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold text-main dark:text-main">
-                  {stats.todaySessions || 0}
-                </span>
-                <span className="text-[11px] font-medium text-muted dark:text-muted">حصة</span>
-              </div>
-            </div>
-            <div className="flex flex-1 items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-2.5 shadow-sm dark:border-border dark:bg-primary/10">
-              <Users size={13} className="shrink-0 text-info dark:text-primary" />
-              <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold text-main dark:text-main">
-                  {stats.studentsCount || 0}
-                </span>
-                <span className="text-[11px] font-medium text-muted dark:text-muted">طالب</span>
-              </div>
-            </div>
-            <div className="flex flex-1 items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-2.5 shadow-sm dark:border-border dark:bg-primary/10">
-              <Award size={13} className="shrink-0 text-success dark:text-primary" />
-              <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold text-main dark:text-main">
-                  {stats.completedSessions || 0}
-                </span>
-                <span className="text-[11px] font-medium text-muted dark:text-muted">منجز</span>
-              </div>
-            </div>
+          {/* شريط التبويبات */}
+          <div
+            role="tablist"
+            aria-label="أقسام لوحة التحكم"
+            className="mt-3 grid grid-cols-3 gap-1 rounded-2xl border border-border bg-surface p-1 shadow-sm"
+          >
+            {TABS.map((tab) => {
+              const Icon = tab.icon
+              const isActive = activeTab === tab.id
+              return (
+                <button
+                  key={tab.id}
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => {
+                    if (activeTab === tab.id) return
+                    triggerHaptic('light')
+                    setActiveTab(tab.id)
+                  }}
+                  className={cn(
+                    'flex min-h-10 items-center justify-center gap-1.5 rounded-xl px-1 text-[11px] font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    isActive
+                      ? 'bg-primary text-on-primary shadow-sm'
+                      : 'text-muted hover:bg-hover hover:text-main',
+                  )}
+                >
+                  <Icon size={14} />
+                  {tab.label}
+                </button>
+              )
+            })}
           </div>
+        </div>
+      </div>
+
+      {/* شريط الإحصائيات */}
+      <div className="px-2.5 pt-4 sm:px-4">
+        <div className="grid grid-cols-3 gap-2">
+          <HeaderStat
+            icon={Clock}
+            value={stats.todaySessions || 0}
+            label="حصة اليوم"
+            iconColor="text-primary"
+          />
+          <HeaderStat
+            icon={Users}
+            value={stats.studentsCount || 0}
+            label="طالب"
+            iconColor="text-info"
+          />
+          <HeaderStat
+            icon={Award}
+            value={stats.completedSessions || 0}
+            label="منجز"
+            iconColor="text-success"
+          />
         </div>
       </div>
 
@@ -229,7 +285,7 @@ export const TeacherDashboardMobile = ({
                 <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
                   <button
                     onClick={() => navigate('/teacher-payment-history')}
-                    className="flex w-full items-center gap-3 py-1 text-start transition-all duration-200 hover:opacity-80 active:scale-[0.99]"
+                    className="flex w-full items-center gap-3 rounded-xl py-1 text-start transition-all duration-200 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
                     aria-label="سجل الدفعات"
                   >
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-success-soft dark:bg-success-soft">
@@ -288,7 +344,7 @@ export const TeacherDashboardMobile = ({
             )}
             {activeTab === 'reports' && (
               <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3">
                   <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm dark:border-primary/20 dark:bg-card">
                     <FinancialSnapshot
                       monthNetProfit={stats.monthNetProfit}

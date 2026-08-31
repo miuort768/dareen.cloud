@@ -73,7 +73,7 @@ export const TeacherDashboardDesktop = ({
 
   return (
     <>
-      <div className="mx-auto max-w-page space-y-3 px-2.5 pb-28 pt-4 sm:px-4 md:space-y-4">
+      <div className="mx-auto max-w-page space-y-3 px-2.5 pb-6 pt-4 sm:px-4 md:space-y-4">
         <motion.div {...fadeUp(0.04)}>
           {nextSession ? (
             <NextSessionHero timeline={timeline} />
@@ -127,7 +127,7 @@ export const TeacherDashboardDesktop = ({
           </div>
 
           {/* Right Column (Sidebar/Widgets - span 1) */}
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-1">
             <div className="rounded-2xl border border-border bg-surface p-4 shadow-sm transition-all duration-300 hover:shadow-md dark:border-border dark:bg-card">
               <QuickActions showQuickLinks={false} />
             </div>
@@ -152,7 +152,7 @@ export const TeacherDashboardDesktop = ({
               />
             </div>
 
-            <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card">
+            <div className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-border dark:bg-card md:col-span-2 lg:col-span-1">
               <TeacherAchievements
                 stats={stats}
                 lowBalanceStudents={lowBalanceStudents}
