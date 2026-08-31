@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+﻿import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
   Area,
@@ -13,6 +13,7 @@ import {
   Cell,
 } from 'recharts'
 import { TrendingUp, TrendingDown } from 'lucide-react'
+import { getCurrencySymbol } from '../../../config/constants'
 
 interface MonthlyData {
   month: string
@@ -39,12 +40,12 @@ const TOP_EXPENSE_COLORS = [
   'var(--chart-5)',
   'var(--chart-6)',
 ]
-const PERIODS = ['شهري', 'ربعي', 'سنوي'] as const
+const PERIODS = ['ط´ظ‡ط±ظٹ', 'ط±ط¨ط¹ظٹ', 'ط³ظ†ظˆظٹ'] as const
 type Period = (typeof PERIODS)[number]
 
 const aggregateByPeriod = (data: MonthlyData[], period: Period): MonthlyData[] => {
-  if (period === 'شهري' || data.length <= 3) return data
-  const chunkSize = period === 'ربعي' ? 3 : data.length
+  if (period === 'ط´ظ‡ط±ظٹ' || data.length <= 3) return data
+  const chunkSize = period === 'ط±ط¨ط¹ظٹ' ? 3 : data.length
   const result: MonthlyData[] = []
   for (let i = 0; i < data.length; i += chunkSize) {
     const chunk = data.slice(i, i + chunkSize)
@@ -64,7 +65,7 @@ export const FinanceCharts = ({
   totalExpenses,
   reportCurrency = 'EGP',
 }: FinanceChartsProps) => {
-  const [period, setPeriod] = useState<Period>('شهري')
+  const [period, setPeriod] = useState<Period>('ط´ظ‡ط±ظٹ')
   const chartData = useMemo(() => aggregateByPeriod(monthlyData, period), [monthlyData, period])
   const sortedPie = useMemo(() => [...pieData].sort((a, b) => b.value - a.value), [pieData])
 
@@ -75,12 +76,14 @@ export const FinanceCharts = ({
       className="grid grid-cols-1 gap-4 lg:grid-cols-5"
       dir="rtl"
     >
-      {/* Area chart — spans 3 cols */}
-      <div className="rounded-2xl border border-border bg-card p-3.5 shadow-sm lg:col-span-3">
+      {/* Area chart â€” spans 3 cols */}
+      <div className="rounded-none border border-border bg-card p-3.5 shadow-sm lg:col-span-3">
         <div className="mb-3 flex items-center justify-between">
           <div>
-            <h3 className="text-xs font-bold text-main">تحليل التدفق النقدي</h3>
-            <p className="mt-0.5 text-[9px] text-muted">مقارنة الإيرادات والمصاريف</p>
+            <h3 className="text-xs font-bold text-main">طھط­ظ„ظٹظ„ ط§ظ„طھط¯ظپظ‚ ط§ظ„ظ†ظ‚ط¯ظٹ</h3>
+            <p className="mt-0.5 text-[9px] text-muted">
+              ظ…ظ‚ط§ط±ظ†ط© ط§ظ„ط¥ظٹط±ط§ط¯ط§طھ ظˆط§ظ„ظ…طµط§ط±ظٹظپ
+            </p>
           </div>
           <div className="flex gap-0.5 rounded-lg bg-surface p-0.5">
             {PERIODS.map((p) => (
@@ -104,11 +107,11 @@ export const FinanceCharts = ({
         <div className="mb-3 flex items-center gap-3">
           <div className="flex items-center gap-1.5">
             <div className="h-0.5 w-3 rounded bg-success" />
-            <span className="text-[8px] font-bold text-muted">إيرادات</span>
+            <span className="text-[8px] font-bold text-muted">ط¥ظٹط±ط§ط¯ط§طھ</span>
           </div>
           <div className="flex items-center gap-1.5">
             <div className="h-0.5 w-3 rounded bg-error" />
-            <span className="text-[8px] font-bold text-muted">مصروفات</span>
+            <span className="text-[8px] font-bold text-muted">ظ…طµط±ظˆظپط§طھ</span>
           </div>
         </div>
         <div className="h-56">
@@ -159,7 +162,7 @@ export const FinanceCharts = ({
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex items-center gap-1">
                             <TrendingUp size={9} className="text-success" />
-                            <span className="text-[8px] font-bold text-muted">إيرادات</span>
+                            <span className="text-[8px] font-bold text-muted">ط¥ظٹط±ط§ط¯ط§طھ</span>
                           </div>
                           <span className="text-xs font-bold tabular-nums text-main">
                             +{(payload[0]?.value ?? 0).toLocaleString()}
@@ -168,7 +171,7 @@ export const FinanceCharts = ({
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex items-center gap-1">
                             <TrendingDown size={9} className="text-error" />
-                            <span className="text-[8px] font-bold text-muted">مصروفات</span>
+                            <span className="text-[8px] font-bold text-muted">ظ…طµط±ظˆظپط§طھ</span>
                           </div>
                           <span className="text-xs font-bold tabular-nums text-main">
                             -{(payload[1]?.value ?? 0).toLocaleString()}
@@ -203,9 +206,9 @@ export const FinanceCharts = ({
         </div>
       </div>
 
-      {/* Donut chart — spans 2 cols */}
-      <div className="rounded-2xl border border-border bg-card p-3.5 shadow-sm lg:col-span-2">
-        <h3 className="mb-3 text-xs font-bold text-main">تصنيف المصروفات</h3>
+      {/* Donut chart â€” spans 2 cols */}
+      <div className="rounded-none border border-border bg-card p-3.5 shadow-sm lg:col-span-2">
+        <h3 className="mb-3 text-xs font-bold text-main">طھطµظ†ظٹظپ ط§ظ„ظ…طµط±ظˆظپط§طھ</h3>
         <div className="flex h-[calc(100%-2rem)] flex-col items-center justify-center">
           <div className="relative h-36 w-full" dir="ltr">
             {pieData.length > 0 ? (
@@ -241,7 +244,9 @@ export const FinanceCharts = ({
                               <p className="text-[8px] font-bold text-muted">{d.name}</p>
                               <p className="text-xs font-bold tabular-nums text-main">
                                 {(d?.value ?? 0).toLocaleString()}{' '}
-                                <span className="text-[8px] text-muted">{reportCurrency}</span>
+                                <span className="text-[8px] text-muted">
+                                  {getCurrencySymbol(reportCurrency)}
+                                </span>
                               </p>
                             </div>
                           )
@@ -252,7 +257,7 @@ export const FinanceCharts = ({
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                  <p className="text-[8px] font-bold text-muted">الإجمالي</p>
+                  <p className="text-[8px] font-bold text-muted">ط§ظ„ط¥ط¬ظ…ط§ظ„ظٹ</p>
                   <p className="text-sm font-bold tabular-nums text-main">
                     {(totalExpenses ?? 0).toLocaleString()}
                   </p>
@@ -260,7 +265,7 @@ export const FinanceCharts = ({
               </>
             ) : (
               <div className="flex h-full flex-col items-center justify-center opacity-40">
-                <p className="text-[9px] font-bold text-muted">لا توجد بيانات</p>
+                <p className="text-[9px] font-bold text-muted">ظ„ط§ طھظˆط¬ط¯ ط¨ظٹط§ظ†ط§طھ</p>
               </div>
             )}
           </div>

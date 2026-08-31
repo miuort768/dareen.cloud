@@ -83,13 +83,13 @@ export const Finance = () => {
   if (loading) {
     return (
       <div className="min-h-full space-y-6 bg-surface p-4">
-        <div className="h-28 animate-pulse rounded-2xl bg-card" />
+        <div className="h-28 animate-pulse rounded-none bg-card" />
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {[...Array(4)].map((_, i) => (
-            <div key={`finance-${i}`} className="h-28 animate-pulse rounded-2xl bg-card" />
+            <div key={`finance-${i}`} className="h-28 animate-pulse rounded-none bg-card" />
           ))}
         </div>
-        <div className="h-96 animate-pulse rounded-2xl bg-card" />
+        <div className="h-96 animate-pulse rounded-none bg-card" />
       </div>
     )
   }
@@ -101,7 +101,7 @@ export const Finance = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
+          className="relative overflow-hidden rounded-none border border-border bg-card p-5 shadow-sm md:p-6"
         >
           <div className="bg-success/10 pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
@@ -234,6 +234,7 @@ export const Finance = () => {
             transactions={state.filteredTransactions || []}
             onPreviewInvoice={handlePreviewInvoice}
             onAddTransaction={() => actions.setShowAddModal(true)}
+            reportCurrency={state.reportCurrency as string}
           />
         </motion.div>
       </div>
@@ -260,7 +261,7 @@ export const Finance = () => {
                 </span>
                 <button
                   onClick={() => handleFabAction(item.action)}
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl active:scale-95"
+                  className="flex h-11 w-11 items-center justify-center rounded-none bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl active:scale-95"
                 >
                   <item.icon size={18} />
                 </button>
@@ -272,7 +273,7 @@ export const Finance = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'h-13 w-13 flex items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all',
+            'h-13 w-13 flex items-center justify-center rounded-none text-on-primary shadow-xl transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >

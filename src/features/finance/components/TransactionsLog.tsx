@@ -14,7 +14,7 @@ import {
   Calendar,
   CreditCard,
 } from 'lucide-react'
-import { CURRENCY_SYMBOL } from '../../../config/constants'
+import { getCurrencySymbol } from '../../../config/constants'
 
 interface Transaction {
   id: string | number
@@ -23,6 +23,7 @@ interface Transaction {
   description: string
   amount: number
   date: string
+  currency?: string
   studentName?: string
   status?: string
   invoiceNumber?: string
@@ -47,15 +48,16 @@ const STATUS_BADGE: Record<string, { label: string; cls: string }> = {
 const TransactionRow = ({
   t,
   onPreviewInvoice,
-  currency = CURRENCY_SYMBOL,
 }: {
   t: Transaction
   onPreviewInvoice?: (inv: string) => void
-  currency?: string
 }) => {
   const [expanded, setExpanded] = useState(false)
   const isIncome = t.type === 'income'
   const badge = t.status ? STATUS_BADGE[t.status] : null
+  // Each row is displayed in its OWN currency — a 1 KWD session must never
+  // render as "1 EGP" (1 KWD ≈ 164 EGP). Currency values are ISO codes.
+  const rowCurrency = getCurrencySymbol(t.currency || 'EGP')
 
   return (
     <motion.div
@@ -113,7 +115,7 @@ const TransactionRow = ({
               className={`text-sm font-extrabold tabular-nums ${isIncome ? 'text-success' : 'text-error'}`}
             >
               {isIncome ? '+' : '-'}
-              {(t.amount ?? 0).toLocaleString()} {currency}
+              {(t.amount ?? 0).toLocaleString()} {rowCurrency}
             </p>
             {badge && (
               <span
@@ -209,15 +211,20 @@ export const TransactionsLog = ({
   const paged = filtered.slice(0, page * PER_PAGE)
 
   const stats = useMemo(() => {
-    const inc = filtered.filter((t) => t.type === 'income').reduce((s, t) => s + (t.amount || 0), 0)
+    // Sums only rows in the report currency — mixing KWD amounts into an EGP
+    // total silently overstates/understates by the exchange factor.
+    const inReport = (t: Transaction) => (t.currency || 'EGP') === reportCurrency
+    const inc = filtered
+      .filter((t) => t.type === 'income' && inReport(t))
+      .reduce((s, t) => s + (t.amount || 0), 0)
     const exp = filtered
-      .filter((t) => t.type === 'expense')
+      .filter((t) => t.type === 'expense' && inReport(t))
       .reduce((s, t) => s + (t.amount || 0), 0)
     return { inc, exp }
-  }, [filtered])
+  }, [filtered, reportCurrency])
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-none border border-border bg-card shadow-sm">
       {/* Header */}
       <div className="flex flex-col justify-between gap-3 border-b border-divider p-4 md:flex-row md:items-center">
         <div className="flex items-center gap-3">
@@ -285,7 +292,7 @@ export const TransactionsLog = ({
                 : 'text-muted hover:text-main'
             }`}
           >
-            إيرادات (+{stats.inc.toLocaleString()})
+            إيرادات (+{stats.inc.toLocaleString()} {getCurrencySymbol(reportCurrency)})
           </button>
           <button
             onClick={() => {
@@ -298,7 +305,7 @@ export const TransactionsLog = ({
                 : 'text-muted hover:text-main'
             }`}
           >
-            مصروفات (-{stats.exp.toLocaleString()})
+            مصروفات (-{stats.exp.toLocaleString()} {getCurrencySymbol(reportCurrency)})
           </button>
         </div>
       </div>
@@ -314,14 +321,7 @@ export const TransactionsLog = ({
             <p className="mt-1 text-[10px] text-muted">جرب البحث بكلمات مختلفة أو تغيير الفلتر</p>
           </div>
         ) : (
-          paged.map((t) => (
-            <TransactionRow
-              key={t.id}
-              t={t}
-              onPreviewInvoice={onPreviewInvoice}
-              currency={reportCurrency}
-            />
-          ))
+          paged.map((t) => <TransactionRow key={t.id} t={t} onPreviewInvoice={onPreviewInvoice} />)
         )}
       </div>
 

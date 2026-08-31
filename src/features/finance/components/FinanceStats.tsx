@@ -76,7 +76,7 @@ const KPICard = ({
 }) => (
   <motion.div
     whileHover={{ scale: 1.01, y: -1 }}
-    className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:shadow-md"
+    className="relative overflow-hidden rounded-none border border-border bg-card shadow-sm transition-all hover:shadow-md"
   >
     <div className={`absolute inset-0 opacity-[0.03] ${gradient}`} />
     <div className={`absolute left-0 right-0 top-0 h-0.5 ${gradient}`} />

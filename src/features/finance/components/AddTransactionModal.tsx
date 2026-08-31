@@ -13,6 +13,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
     type: 'expense',
     category: '',
     amount: '',
+    currency: 'EGP',
     date: new Date().toISOString().split('T')[0],
     description: '',
   })
@@ -25,6 +26,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
       type: newTransaction.type as 'income' | 'expense',
       category: newTransaction.category,
       amount: Number(newTransaction.amount),
+      currency: newTransaction.currency,
       date: newTransaction.date ?? '',
       description: newTransaction.description,
     })
@@ -34,6 +36,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
       type: 'expense',
       category: '',
       amount: '',
+      currency: 'EGP',
       date: new Date().toISOString().split('T')[0],
       description: '',
     })
@@ -96,6 +99,22 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
                 placeholder="0.00"
               />
+            </div>
+            <div className="space-y-2">
+              <label className="flex items-center gap-1.5 text-micro font-bold uppercase tracking-widest text-muted">
+                عملة المعاملة
+              </label>
+              <select
+                value={newTransaction.currency}
+                onChange={(e) => setNewTransaction({ ...newTransaction, currency: e.target.value })}
+                aria-label="عملة المعاملة"
+                className="w-full appearance-none rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+              >
+                <option value="EGP">جنيه مصري (ج.م)</option>
+                <option value="KWD">دينار كويتي (د.ك)</option>
+                <option value="SAR">ريال سعودي (ر.س)</option>
+                <option value="AED">درهم إماراتي (د.إ)</option>
+              </select>
             </div>
           </div>
 
