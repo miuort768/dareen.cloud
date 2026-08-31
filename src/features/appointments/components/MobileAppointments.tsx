@@ -122,7 +122,7 @@ export const MobileAppointments = () => {
 
       {/* التبويبات اللاصقة */}
       <div className="bg-background/95 sticky top-0 z-30 mt-3 px-4 pb-2 pt-2 backdrop-blur-sm">
-        <div className="flex gap-1 rounded-2xl border border-border bg-card p-1">
+        <div className="flex gap-1 rounded-none border border-border bg-card p-1">
           {tabs.map((tab) => (
             <motion.button
               key={tab.key}
@@ -132,10 +132,11 @@ export const MobileAppointments = () => {
                 setActiveTab(tab.key)
                 setSearchTerm('')
                 setFilterDay('all')
+                setFilterTeacher('all')
               }}
               aria-pressed={activeTab === tab.key}
               className={cn(
-                'relative flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-xl px-2 py-2.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                'relative flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-none px-2 py-2.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                 activeTab === tab.key
                   ? 'bg-primary font-bold text-on-primary shadow-elevation-1'
                   : 'font-bold text-muted hover:text-main',
@@ -172,12 +173,12 @@ export const MobileAppointments = () => {
         {loading && allAppointments.length === 0 ? (
           <MobileSkeleton rows={6} />
         ) : isError ? (
-          <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-10 text-center">
+          <div className="bg-error-soft/50 rounded-none border border-dashed border-error-soft py-10 text-center">
             <AlertTriangle size={26} className="mx-auto mb-2 text-error" strokeWidth={1.5} />
             <p className="text-xs font-bold text-main">تعذر تحميل المواعيد</p>
             <button
               onClick={() => refetch()}
-              className="mx-auto mt-3 block rounded-xl bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="mx-auto mt-3 block rounded-none bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               إعادة المحاولة
             </button>
@@ -194,6 +195,7 @@ export const MobileAppointments = () => {
               setShowDetails(true)
             }}
             canComplete={canComplete}
+            isPending={completeMutation.isPending}
           />
         )}
       </div>

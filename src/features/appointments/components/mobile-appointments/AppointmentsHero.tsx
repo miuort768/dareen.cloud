@@ -45,7 +45,7 @@ export const AppointmentsHero = ({
 
   return (
     <motion.div {...fadeUpStatic} className="px-4 pt-3">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary-deep to-primary p-4">
+      <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-deep to-primary p-4">
         <div className="pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true">
           <svg width="100%" height="100%">
             <defs>
@@ -114,7 +114,7 @@ export const AppointmentsHero = ({
               {chips.map((chip) => (
                 <div
                   key={chip.label}
-                  className="rounded-xl bg-white/10 px-1 py-1.5 text-center backdrop-blur-sm"
+                  className="rounded-none bg-white/10 px-1 py-1.5 text-center backdrop-blur-sm"
                 >
                   <p className="flex items-center justify-center gap-0.5 text-sm font-bold tabular-nums leading-none text-on-primary">
                     <chip.icon

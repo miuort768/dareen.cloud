@@ -102,7 +102,7 @@ export const buildAppointmentEvents = (
             slot.period === 'ص'
           )
           const normalizedPeriod = isPM ? 'م' : 'ص'
-          const normHour = String(parseInt(String(slot.hour).trim(), 10) || '')
+          const normHour = String(parseInt(String(slot.hour).trim(), 10) || 0)
           const tName = appointmentTeacherNameOf(enrollment)
           return {
             id: `${student.id}-${tName}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
