@@ -33,6 +33,34 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
+// Self-service profile update — teacher can change own name and phone1 only.
+// (This route previously did not exist, so PUT /teachers/me returned 404 and
+// the profile page showed "تعذر تحديث الاسم".)
+router.put('/me', authMiddleware, async (req, res) => {
+  try {
+    if (req.user.role !== 'teacher') {
+      return res.status(403).json({ error: 'هذه الميزة متاحة للمعلمين فقط' });
+    }
+    const { name, phone1 } = req.body;
+    if (name !== undefined && (!String(name).trim() || String(name).trim().length < 2)) {
+      return res.status(400).json({ error: 'الاسم يجب أن يكون حرفين على الأقل' });
+    }
+    if (phone1 !== undefined && phone1 !== '' && !/^[0-9]{11}$/.test(String(phone1))) {
+      return res.status(400).json({ error: 'رقم الهاتف يجب أن يكون 11 خانة' });
+    }
+    const teacher = await teacherService.updateOwnProfile(
+      req.user.id,
+      { name, phone1: phone1 ?? undefined },
+      req.user,
+    );
+    res.json(teacher);
+  } catch (err) {
+    if (err.statusCode === 404) return res.status(404).json({ error: 'Teacher not found' });
+    logger.error('Error updating own teacher profile', err, { id: req.user.id });
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.get('/me/payment-settings', authMiddleware, async (req, res) => {
   try {
     if (req.user.role !== 'teacher' && req.user.role !== 'admin') {

@@ -109,11 +109,11 @@ export const ParentAccountPage = () => {
   const activity = useMemo(() => data?.activity ?? [], [data])
 
   /* حفظ الاسم — نفس endpoint النظام الحالي مع تحديث محلي للعرض */
-  const handleSaveName = async (newName: string) => {
+  const handleSaveName = async (values: { name: string; phone?: string }) => {
     setSavingName(true)
     try {
-      await api.put('/parents/me', { name: newName })
-      setNameOverride(newName)
+      await api.put('/parents/me', { name: values.name })
+      setNameOverride(values.name)
       showNotification('تم تحديث الاسم بنجاح', 'success')
       setEditOpen(false)
     } catch (err) {

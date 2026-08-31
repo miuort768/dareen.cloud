@@ -132,6 +132,29 @@ async function updateTeacher(id, data, user) {
   return mapTeacher(teacher);
 }
 
+// Self-service update: only name + phone1, never subject/price/points/username.
+// Keeps the account sync + audit trail of the admin path.
+async function updateOwnProfile(id, data, user) {
+  const { name, phone1 } = data;
+  const existing = await prisma.teacher.findUnique({ where: { id } });
+  if (!existing) {
+    throw Object.assign(new Error('Teacher not found'), { statusCode: 404 });
+  }
+
+  const updateData = {};
+  if (name !== undefined) updateData.name = String(name).trim();
+  if (phone1 !== undefined) updateData.phone1 = String(phone1).trim();
+
+  const teacher = await prisma.teacher.update({ where: { id }, data: updateData });
+
+  cache.del(CK.byId(id));
+  cache.del(CK.list());
+  await audit(user.id, user.username, AUDIT_ACTIONS.TEACHER_UPDATED,
+    { id, selfService: true }, 'teacher', id);
+
+  return mapTeacher(teacher);
+}
+
 async function deleteTeacher(id, user) {
   const existing = await prisma.teacher.findUnique({ where: { id } });
   if (!existing) {
@@ -196,6 +219,7 @@ module.exports = {
   getTeacherById,
   createTeacher,
   updateTeacher,
+  updateOwnProfile,
   deleteTeacher,
   deleteAllTeachers,
   restoreTeacher,

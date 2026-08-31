@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion } from 'framer-motion'
 import {
   Wallet,
@@ -264,73 +265,125 @@ export const PaymentMethodsSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="overflow-hidden rounded-xl border border-border bg-surface"
+          className="space-y-3"
         >
-          <div className="flex items-center justify-between gap-2 border-b border-border bg-card px-4 py-3">
-            <div className="flex min-w-0 items-center gap-2.5">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-                {methodMeta && <methodMeta.icon size={15} className="text-primary" />}
-              </div>
+          {/* بطاقة الاستلام — لمسة بصرية شبيهة ببطاقة الدفع */}
+          <div
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-elevation-2"
+            dir="rtl"
+          >
+            <div className="pointer-events-none absolute inset-0 opacity-[0.08]" aria-hidden="true">
+              <svg width="100%" height="100%">
+                <defs>
+                  <pattern
+                    id="pm-card-dots"
+                    x="0"
+                    y="0"
+                    width="22"
+                    height="22"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <circle cx="2" cy="2" r="1" fill="white" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#pm-card-dots)" />
+              </svg>
+            </div>
+            <div className="relative flex items-center justify-between gap-3">
               <div className="min-w-0">
-                <p className="truncate text-xs font-bold text-main">{methodMeta?.label}</p>
-                <span className="mt-0.5 flex w-fit items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-micro font-bold text-success-strong">
-                  <BadgeCheck size={10} />
-                  طريقة الاستلام الرئيسية
-                </span>
+                <p className="text-on-primary/70 text-micro font-bold uppercase tracking-widest">
+                  طريقة استلام المستحقات
+                </p>
+                <p className="mt-1 truncate text-sm font-black text-on-primary">
+                  {methodMeta?.label}
+                  {setting.method === 'wallet' && setting.walletProvider && (
+                    <span className="text-on-primary/80 font-bold">
+                      {' '}
+                      — {WALLET_LABELS[setting.walletProvider] || setting.walletProvider}
+                    </span>
+                  )}
+                </p>
+                <p className="text-on-primary/90 mt-1 font-mono text-xs font-bold tabular-nums">
+                  {setting.method === 'wallet'
+                    ? setting.walletPhone
+                    : setting.method === 'instapay'
+                      ? setting.instapayId
+                      : setting.iban}
+                </p>
+              </div>
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/30">
+                {methodMeta && <methodMeta.icon size={20} className="text-on-primary" />}
               </div>
             </div>
-            <div className="flex shrink-0 items-center gap-1.5">
+          </div>
+
+          <div className="overflow-hidden rounded-xl border border-border bg-surface">
+            <div className="flex items-center justify-between gap-2 border-b border-border bg-card px-4 py-3">
+              <div className="flex min-w-0 items-center gap-2.5">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
+                  {methodMeta && <methodMeta.icon size={15} className="text-primary" />}
+                </div>
+                <div className="min-w-0">
+                  <p className="truncate text-xs font-bold text-main">{methodMeta?.label}</p>
+                  <span className="mt-0.5 flex w-fit items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-micro font-bold text-success-strong">
+                    <BadgeCheck size={10} />
+                    طريقة الاستلام الرئيسية
+                  </span>
+                </div>
+              </div>
+              <div className="flex shrink-0 items-center gap-1.5">
+                <button
+                  onClick={openEdit}
+                  aria-label="تعديل طريقة الدفع"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                >
+                  <PencilLine size={14} />
+                </button>
+                <button
+                  onClick={handleDelete}
+                  disabled={deleting}
+                  aria-label="حذف طريقة الدفع"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-error hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                >
+                  {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                </button>
+              </div>
+            </div>
+
+            <div className="px-4 py-1">
+              {setting.method === 'wallet' && (
+                <>
+                  <InfoRow
+                    label="شركة المحفظة"
+                    value={WALLET_LABELS[setting.walletProvider || ''] || setting.walletProvider}
+                  />
+                  <InfoRow label="رقم المحفظة" value={setting.walletPhone} mono />
+                </>
+              )}
+              {setting.method === 'instapay' && (
+                <>
+                  <InfoRow label="معرّف InstaPay" value={setting.instapayId} mono />
+                  <InfoRow label="اسم صاحب الحساب" value={setting.accountHolder} />
+                  <InfoRow label="الرقم المرتبط" value={setting.instapayPhone} mono />
+                </>
+              )}
+              {setting.method === 'bank_transfer' && (
+                <>
+                  <InfoRow label="اسم البنك" value={setting.bankName} />
+                  <InfoRow label="اسم صاحب الحساب" value={setting.accountHolder} />
+                  <InfoRow label="رقم الآيبان IBAN" value={setting.iban} mono />
+                </>
+              )}
+            </div>
+
+            <div className="border-t border-border px-4 py-2.5">
               <button
                 onClick={openEdit}
-                aria-label="تعديل طريقة الدفع"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary-soft py-2 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
-                <PencilLine size={14} />
-              </button>
-              <button
-                onClick={handleDelete}
-                disabled={deleting}
-                aria-label="حذف طريقة الدفع"
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-error hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
-              >
-                {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                <PencilLine size={12} /> تعديل البيانات
               </button>
             </div>
-          </div>
-
-          <div className="px-4 py-1">
-            {setting.method === 'wallet' && (
-              <>
-                <InfoRow
-                  label="شركة المحفظة"
-                  value={WALLET_LABELS[setting.walletProvider || ''] || setting.walletProvider}
-                />
-                <InfoRow label="رقم المحفظة" value={setting.walletPhone} mono />
-              </>
-            )}
-            {setting.method === 'instapay' && (
-              <>
-                <InfoRow label="معرّف InstaPay" value={setting.instapayId} mono />
-                <InfoRow label="اسم صاحب الحساب" value={setting.accountHolder} />
-                <InfoRow label="الرقم المرتبط" value={setting.instapayPhone} mono />
-              </>
-            )}
-            {setting.method === 'bank_transfer' && (
-              <>
-                <InfoRow label="اسم البنك" value={setting.bankName} />
-                <InfoRow label="اسم صاحب الحساب" value={setting.accountHolder} />
-                <InfoRow label="رقم الآيبان IBAN" value={setting.iban} mono />
-              </>
-            )}
-          </div>
-
-          <div className="border-t border-border px-4 py-2.5">
-            <button
-              onClick={openEdit}
-              className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary-soft py-2 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-            >
-              <PencilLine size={12} /> تعديل البيانات
-            </button>
           </div>
         </motion.div>
       )}
@@ -368,194 +421,203 @@ const PaymentMethodForm = ({
   submitting,
   onClose,
   onSubmit,
-}: PaymentMethodFormProps) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.15 }}
-    className="fixed inset-0 z-[200] flex items-end justify-center sm:items-center sm:p-4"
-    onClick={(e) => {
-      if (e.target === e.currentTarget) onClose()
-    }}
-    role="dialog"
-    aria-modal="true"
-    aria-label={isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
-  >
-    <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+}: PaymentMethodFormProps) =>
+  /* Portal: يُرسم فوق body مباشرة خارج سياق التكديس الرئيسي —
+     بدونه تظهر النافذة خلف شريط التنقل السفلي على الهاتف */
+  createPortal(
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 50 }}
-      transition={{ type: 'spring', damping: 30, stiffness: 320 }}
-      className="relative flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-border bg-card shadow-elevation-3 sm:rounded-2xl"
-      dir="rtl"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.15 }}
+      className="fixed inset-0 z-[200] flex items-end justify-center sm:items-center sm:p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
     >
-      <div className="flex justify-center pt-3 sm:hidden">
-        <div className="h-1.5 w-10 rounded-full bg-border" />
-      </div>
-
-      <div className="flex items-start justify-between gap-3 px-5 pb-3 pt-4">
-        <div>
-          <h3 className="text-sm font-bold text-main">
-            {isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
-          </h3>
-          <p className="mt-0.5 text-micro text-muted">اختر النوع ثم أكمل البيانات</p>
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 50 }}
+        transition={{ type: 'spring', damping: 30, stiffness: 320 }}
+        className="relative flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-border bg-card shadow-elevation-3 sm:rounded-2xl"
+        dir="rtl"
+      >
+        <div className="flex justify-center pt-3 sm:hidden">
+          <div className="h-1.5 w-10 rounded-full bg-border" />
         </div>
-        <button
-          onClick={onClose}
-          aria-label="إغلاق"
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface text-muted transition-colors hover:bg-hover hover:text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-        >
-          ✕<span className="sr-only">إغلاق</span>
-        </button>
-      </div>
 
-      <form onSubmit={onSubmit} className="no-scrollbar flex-1 space-y-5 overflow-y-auto px-5 pb-4">
-        {/* اختيار النوع */}
-        <div>
-          <label className="mb-2 block text-xs font-bold text-muted">نوع طريقة الدفع</label>
-          <div className="grid grid-cols-3 gap-2">
-            {METHODS.map((m) => {
-              const active = form.method === m.id
-              return (
-                <button
-                  key={m.id}
-                  type="button"
-                  onClick={() => setForm({ method: m.id })}
-                  aria-pressed={active}
-                  className={cn(
-                    'flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                    active
-                      ? 'border-primary bg-primary-soft text-primary shadow-sm'
-                      : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-main',
-                  )}
-                >
-                  <m.icon size={17} strokeWidth={active ? 2.3 : 1.8} />
-                  <span className="text-center text-micro font-bold leading-tight">{m.label}</span>
-                </button>
-              )
-            })}
+        <div className="flex items-start justify-between gap-3 px-5 pb-3 pt-4">
+          <div>
+            <h3 className="text-sm font-bold text-main">
+              {isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
+            </h3>
+            <p className="mt-0.5 text-micro text-muted">اختر النوع ثم أكمل البيانات</p>
           </div>
+          <button
+            onClick={onClose}
+            aria-label="إغلاق"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface text-muted transition-colors hover:bg-hover hover:text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          >
+            ✕<span className="sr-only">إغلاق</span>
+          </button>
         </div>
 
-        {/* حقول المحفظة */}
-        {form.method === 'wallet' && (
-          <>
-            <div>
-              <label htmlFor="pm-provider" className="mb-2 block text-xs font-bold text-muted">
-                شركة المحفظة
-              </label>
-              <div className="grid grid-cols-3 gap-1.5">
-                {WALLETS.map((w) => (
+        <form
+          onSubmit={onSubmit}
+          className="no-scrollbar flex-1 space-y-5 overflow-y-auto px-5 pb-4"
+        >
+          {/* اختيار النوع */}
+          <div>
+            <label className="mb-2 block text-xs font-bold text-muted">نوع طريقة الدفع</label>
+            <div className="grid grid-cols-3 gap-2">
+              {METHODS.map((m) => {
+                const active = form.method === m.id
+                return (
                   <button
-                    key={w}
+                    key={m.id}
                     type="button"
-                    onClick={() => setForm({ walletProvider: w })}
-                    aria-pressed={form.walletProvider === w}
+                    onClick={() => setForm({ method: m.id })}
+                    aria-pressed={active}
                     className={cn(
-                      'rounded-lg border py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                      form.walletProvider === w
-                        ? 'border-primary bg-primary-soft text-primary'
-                        : 'border-border bg-surface text-muted hover:text-main',
+                      'flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                      active
+                        ? 'border-primary bg-primary-soft text-primary shadow-sm'
+                        : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-main',
                     )}
                   >
-                    {WALLET_LABELS[w]}
+                    <m.icon size={17} strokeWidth={active ? 2.3 : 1.8} />
+                    <span className="text-center text-micro font-bold leading-tight">
+                      {m.label}
+                    </span>
                   </button>
-                ))}
-              </div>
+                )
+              })}
             </div>
-            <Field
-              id="pm-wallet-phone"
-              label="رقم المحفظة"
-              value={form.walletPhone}
-              onChange={(v) => setForm({ walletPhone: v.replace(/\D/g, '').slice(0, 11) })}
-              placeholder="01XXXXXXXXX"
-              inputMode="numeric"
-            />
-          </>
-        )}
+          </div>
 
-        {/* حقول InstaPay */}
-        {form.method === 'instapay' && (
-          <>
-            <Field
-              id="pm-instapay-id"
-              label="معرّف InstaPay"
-              value={form.instapayId}
-              onChange={(v) => setForm({ instapayId: v })}
-              placeholder="example@instapay"
-            />
-            <Field
-              id="pm-holder"
-              label="اسم صاحب الحساب"
-              value={form.accountHolder}
-              onChange={(v) => setForm({ accountHolder: v })}
-              placeholder="الاسم كما في البنك"
-            />
-            <Field
-              id="pm-instapay-phone"
-              label="الرقم المرتبط"
-              value={form.instapayPhone}
-              onChange={(v) => setForm({ instapayPhone: v.replace(/\D/g, '').slice(0, 11) })}
-              placeholder="01XXXXXXXXX"
-              inputMode="numeric"
-            />
-          </>
-        )}
+          {/* حقول المحفظة */}
+          {form.method === 'wallet' && (
+            <>
+              <div>
+                <label htmlFor="pm-provider" className="mb-2 block text-xs font-bold text-muted">
+                  شركة المحفظة
+                </label>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {WALLETS.map((w) => (
+                    <button
+                      key={w}
+                      type="button"
+                      onClick={() => setForm({ walletProvider: w })}
+                      aria-pressed={form.walletProvider === w}
+                      className={cn(
+                        'rounded-lg border py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                        form.walletProvider === w
+                          ? 'border-primary bg-primary-soft text-primary'
+                          : 'border-border bg-surface text-muted hover:text-main',
+                      )}
+                    >
+                      {WALLET_LABELS[w]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <Field
+                id="pm-wallet-phone"
+                label="رقم المحفظة"
+                value={form.walletPhone}
+                onChange={(v) => setForm({ walletPhone: v.replace(/\D/g, '').slice(0, 11) })}
+                placeholder="01XXXXXXXXX"
+                inputMode="numeric"
+              />
+            </>
+          )}
 
-        {/* حقول البنك */}
-        {form.method === 'bank_transfer' && (
-          <>
-            <Field
-              id="pm-bank"
-              label="اسم البنك"
-              value={form.bankName}
-              onChange={(v) => setForm({ bankName: v })}
-              placeholder="مثال: البنك الأهلي"
-            />
-            <Field
-              id="pm-bank-holder"
-              label="اسم صاحب الحساب"
-              value={form.accountHolder}
-              onChange={(v) => setForm({ accountHolder: v })}
-              placeholder="الاسم كما في البنك"
-            />
-            <Field
-              id="pm-iban"
-              label="رقم الآيبان IBAN"
-              value={form.iban}
-              onChange={(v) => setForm({ iban: v })}
-              placeholder="EG00 0000 0000 0000 0000 0000"
-              mono
-            />
-          </>
-        )}
-      </form>
+          {/* حقول InstaPay */}
+          {form.method === 'instapay' && (
+            <>
+              <Field
+                id="pm-instapay-id"
+                label="معرّف InstaPay"
+                value={form.instapayId}
+                onChange={(v) => setForm({ instapayId: v })}
+                placeholder="example@instapay"
+              />
+              <Field
+                id="pm-holder"
+                label="اسم صاحب الحساب"
+                value={form.accountHolder}
+                onChange={(v) => setForm({ accountHolder: v })}
+                placeholder="الاسم كما في البنك"
+              />
+              <Field
+                id="pm-instapay-phone"
+                label="الرقم المرتبط"
+                value={form.instapayPhone}
+                onChange={(v) => setForm({ instapayPhone: v.replace(/\D/g, '').slice(0, 11) })}
+                placeholder="01XXXXXXXXX"
+                inputMode="numeric"
+              />
+            </>
+          )}
 
-      {/* أزرار ثابتة */}
-      <div className="grid grid-cols-2 gap-2.5 border-t border-border bg-card p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-        <button
-          type="button"
-          onClick={onClose}
-          disabled={submitting}
-          className="rounded-xl border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
-        >
-          إلغاء
-        </button>
-        <button
-          type="submit"
-          onClick={(e) => onSubmit(e)}
-          disabled={submitting}
-          className="flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {submitting && <Loader2 size={13} className="animate-spin" />}
-          {submitting ? 'جاري الحفظ...' : isEdit ? 'حفظ التغييرات' : 'إضافة طريقة الدفع'}
-        </button>
-      </div>
-    </motion.div>
-  </motion.div>
-)
+          {/* حقول البنك */}
+          {form.method === 'bank_transfer' && (
+            <>
+              <Field
+                id="pm-bank"
+                label="اسم البنك"
+                value={form.bankName}
+                onChange={(v) => setForm({ bankName: v })}
+                placeholder="مثال: البنك الأهلي"
+              />
+              <Field
+                id="pm-bank-holder"
+                label="اسم صاحب الحساب"
+                value={form.accountHolder}
+                onChange={(v) => setForm({ accountHolder: v })}
+                placeholder="الاسم كما في البنك"
+              />
+              <Field
+                id="pm-iban"
+                label="رقم الآيبان IBAN"
+                value={form.iban}
+                onChange={(v) => setForm({ iban: v })}
+                placeholder="EG00 0000 0000 0000 0000 0000"
+                mono
+              />
+            </>
+          )}
+        </form>
+
+        {/* أزرار ثابتة */}
+        <div className="grid grid-cols-2 gap-2.5 border-t border-border bg-card p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+          <button
+            type="button"
+            onClick={onClose}
+            disabled={submitting}
+            className="rounded-xl border border-border bg-surface py-3 text-xs font-bold text-main transition-all hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+          >
+            إلغاء
+          </button>
+          <button
+            type="submit"
+            onClick={(e) => onSubmit(e)}
+            disabled={submitting}
+            className="flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {submitting && <Loader2 size={13} className="animate-spin" />}
+            {submitting ? 'جاري الحفظ...' : isEdit ? 'حفظ التغييرات' : 'إضافة طريقة الدفع'}
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body,
+  )
 
 interface FieldProps {
   id: string

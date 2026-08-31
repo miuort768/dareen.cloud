@@ -1,33 +1,48 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Phone, User } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { triggerHaptic } from '../../lib/haptics'
+
+export interface ProfileEditValues {
+  name: string
+  phone?: string
+}
 
 interface EditNameModalProps {
   isOpen: boolean
   initialName: string
+  initialPhone?: string
   saving?: boolean
   onClose: () => void
-  onSubmit: (name: string) => void | Promise<void>
+  /** يُستدعى بالقيم الجديدة — الاسم مطلوب، الهاتف اختياري (11 رقمًا أو فارغ) */
+  onSubmit: (values: ProfileEditValues) => void | Promise<void>
 }
 
 /**
- * تعديل البيانات الموحد لكل الأدوار — الحقل الوحيد المسموح تعديله هو الاسم.
+ * تعديل بيانات الحساب (الاسم + رقم الجوال) لكل الأدوار.
  * Bottom Sheet على الهاتف ونافذة مركزية على الشاشات الكبيرة.
+ * يُرسم عبر React Portal خارج سياق التكديس الرئيسي حتى لا يظهر
+ * أسفل شريط التنقل السفلي (AppTabBar) على الهاتف.
  */
 export const EditNameModal = ({
   isOpen,
   initialName,
+  initialPhone = '',
   saving = false,
   onClose,
   onSubmit,
 }: EditNameModalProps) => {
   const [name, setName] = useState(initialName)
+  const [phone, setPhone] = useState(initialPhone)
 
   useEffect(() => {
-    if (isOpen) setName(initialName)
-  }, [isOpen, initialName])
+    if (isOpen) {
+      setName(initialName)
+      setPhone(initialPhone)
+    }
+  }, [isOpen, initialName, initialPhone])
 
   useEffect(() => {
     if (!isOpen) return
@@ -42,10 +57,12 @@ export const EditNameModal = ({
     e.preventDefault()
     if (!name.trim() || saving) return
     triggerHaptic('light')
-    await onSubmit(name.trim())
+    await onSubmit({ name: name.trim(), phone: phone.trim() })
   }
 
-  return (
+  if (typeof document === 'undefined') return null
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <motion.div
@@ -60,7 +77,7 @@ export const EditNameModal = ({
           }}
           role="dialog"
           aria-modal="true"
-          aria-label="تعديل الاسم"
+          aria-label="تعديل بيانات الحساب"
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           <motion.div
@@ -78,10 +95,8 @@ export const EditNameModal = ({
 
             <div className="flex items-start justify-between gap-3 px-5 pb-3 pt-4">
               <div>
-                <h3 className="text-sm font-bold text-main">تعديل الاسم</h3>
-                <p className="mt-0.5 text-micro text-muted">
-                  الاسم هو البيانات الوحيدة القابلة للتعديل
-                </p>
+                <h3 className="text-sm font-bold text-main">تعديل بيانات الحساب</h3>
+                <p className="mt-0.5 text-micro text-muted">يمكنك تحديث الاسم ورقم الجوال فقط</p>
               </div>
               <button
                 onClick={onClose}
@@ -94,7 +109,11 @@ export const EditNameModal = ({
 
             <form onSubmit={handleSubmit} className="space-y-4 px-5 pb-5">
               <div className="space-y-1.5">
-                <label htmlFor="account-name" className="text-xs font-bold text-muted">
+                <label
+                  htmlFor="account-name"
+                  className="flex items-center gap-1.5 text-xs font-bold text-muted"
+                >
+                  <User size={12} className="text-primary" />
                   الاسم
                 </label>
                 <input
@@ -111,6 +130,32 @@ export const EditNameModal = ({
                 />
               </div>
 
+              <div className="space-y-1.5">
+                <label
+                  htmlFor="account-phone"
+                  className="flex items-center gap-1.5 text-xs font-bold text-muted"
+                >
+                  <Phone size={12} className="text-primary" />
+                  رقم الجوال
+                </label>
+                <input
+                  id="account-phone"
+                  type="tel"
+                  inputMode="numeric"
+                  autoComplete="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 11))}
+                  disabled={saving}
+                  className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold tabular-nums text-main outline-none transition-all placeholder:font-sans placeholder:font-medium placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60"
+                  placeholder="01XXXXXXXXX"
+                />
+                {phone && !/^01[0-9]{9}$/.test(phone) && (
+                  <p className="text-micro font-bold text-warning">
+                    الرقم يجب أن يكون 11 خانة ويبدأ بـ 01
+                  </p>
+                )}
+              </div>
+
               <div className="grid grid-cols-2 gap-2.5 pt-1">
                 <button
                   type="button"
@@ -122,7 +167,11 @@ export const EditNameModal = ({
                 </button>
                 <button
                   type="submit"
-                  disabled={saving || !name.trim() || name.trim() === initialName}
+                  disabled={
+                    saving ||
+                    !name.trim() ||
+                    (name.trim() === initialName && phone.trim() === initialPhone.trim())
+                  }
                   className={cn(
                     'flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50',
                   )}
@@ -135,6 +184,7 @@ export const EditNameModal = ({
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }

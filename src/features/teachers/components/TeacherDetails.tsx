@@ -7,6 +7,7 @@ import type { Student, Enrollment } from '../../../types'
 import { TeacherPerformanceGauge } from './TeacherPerformanceGauge'
 import { TeacherEnrollmentList } from './TeacherEnrollmentList'
 import { TeacherActivitySection } from './TeacherActivitySection'
+import { TeacherPaymentInfo } from './TeacherPaymentInfo'
 import { useTeacherActivity } from '../hooks/useTeacherActivity'
 
 interface TeacherDetailsProps {
@@ -140,6 +141,8 @@ export const TeacherDetails = ({
           prevMonthSessions={prevMonthSessions}
           performanceChange={performanceChange}
         />
+
+        {!isTeacherView && <TeacherPaymentInfo teacherId={teacher.id} />}
 
         <TeacherEnrollmentList
           enrolledStudents={enrolledStudents}

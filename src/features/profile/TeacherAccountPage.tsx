@@ -33,6 +33,7 @@ import {
   RANK_ICON_MAP,
 } from '../../shared/utils/ranks'
 import { ProgressBar } from '../../shared/components/ui'
+import { getCurrencySymbol } from '../../config/constants'
 
 interface TeacherData {
   id?: string
@@ -46,7 +47,6 @@ interface TeacherData {
   username?: string
   createdAt?: string
 }
-
 export const TeacherAccountPage = () => {
   const currentUser = useCurrentUser()
   const showNotification = useShowNotification()
@@ -88,17 +88,20 @@ export const TeacherAccountPage = () => {
     )
   }, [points, rank, nextRank])
 
-  /* حفظ الاسم — نفس endpoint النظام الحالي */
-  const handleSaveName = async (newName: string) => {
+  /* حفظ الاسم ورقم الجوال — PUT /teachers/me (مسار الخدمة الذاتية) */
+  const handleSaveProfile = async (values: { name: string; phone?: string }) => {
     setSavingName(true)
     try {
-      await api.put('/teachers/me', { name: newName })
-      showNotification('تم تحديث الاسم بنجاح', 'success')
+      await api.put('/teachers/me', {
+        name: values.name,
+        ...(values.phone !== undefined ? { phone1: values.phone } : {}),
+      })
+      showNotification('تم تحديث بياناتك بنجاح', 'success')
       setEditOpen(false)
       await refetch()
     } catch (err) {
-      console.error('Failed updating name', err)
-      showNotification('تعذر تحديث الاسم، حاول مجددًا', 'error')
+      console.error('Failed updating profile', err)
+      showNotification('تعذر تحديث البيانات، حاول مجددًا', 'error')
     } finally {
       setSavingName(false)
     }
@@ -121,9 +124,11 @@ export const TeacherAccountPage = () => {
             name={displayName}
             roleLabel="معلمة"
             subtitle={teacher?.subject || undefined}
-            metaChips={[teacher?.price != null ? `سعر الحصة ${teacher.price} ج.م` : ''].filter(
-              Boolean,
-            )}
+            metaChips={[
+              teacher?.price != null
+                ? `سعر الحصة ${teacher.price} ${getCurrencySymbol(teacher.currency || 'EGP')}`
+                : '',
+            ].filter(Boolean)}
             onEdit={() => setEditOpen(true)}
           />
 
@@ -166,7 +171,11 @@ export const TeacherAccountPage = () => {
                   <MiniTile label="المادة" value={teacher?.subject || '—'} icon={BookOpen} />
                   <MiniTile
                     label="سعر الحصة"
-                    value={teacher?.price != null ? `${teacher.price} ج.م` : '—'}
+                    value={
+                      teacher?.price != null
+                        ? `${teacher.price} ${getCurrencySymbol(teacher.currency || 'EGP')}`
+                        : '—'
+                    }
                     icon={Wallet}
                   />
                   <MiniTile label="إجمالي النقاط" value={String(points)} icon={Award} />
@@ -207,9 +216,10 @@ export const TeacherAccountPage = () => {
       <EditNameModal
         isOpen={editOpen}
         initialName={displayName}
+        initialPhone={teacher?.phone1 || ''}
         saving={savingName}
         onClose={() => setEditOpen(false)}
-        onSubmit={handleSaveName}
+        onSubmit={handleSaveProfile}
       />
     </PageShell>
   )
@@ -219,7 +229,7 @@ export const TeacherAccountPage = () => {
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
-    <div dir="rtl" className="min-h-full overflow-x-hidden bg-background pb-28 md:pb-10">
+    <div dir="rtl" className="min-h-full overflow-x-hidden bg-background pb-6 md:pb-10">
       <div className="mx-auto max-w-page space-y-4 p-3 pt-4 md:p-5 md:pt-6">{children}</div>
     </div>
   )
