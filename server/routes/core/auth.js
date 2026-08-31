@@ -20,6 +20,18 @@ const loginLimiter = createRateLimiter({
     message: 'محاولات دخول كثيرة جداً، يرجى المحاولة بعد 15 دقيقة'
 });
 
+// Per-username bucket — an attacker rotating IPs to brute-force ONE account
+// still hits this limit because the bucket follows the username, not the IP.
+const usernameLimiter = createRateLimiter({
+    windowMs: 15 * 60 * 1000, max: 20,
+    message: 'محاولات دخول كثيرة جداً لهذا الحساب، يرجى المحاولة بعد 15 دقيقة',
+    keyPrefix: 'darin:rate:user:',
+    keyFn: (req) => {
+        const u = req.body?.username;
+        return typeof u === 'string' && u.trim() ? u.trim().toLowerCase().slice(0, 64) : '';
+    },
+});
+
 const verifyLimiter = createRateLimiter({
     windowMs: 15 * 60 * 1000, max: 300,
     message: 'محاولات تحقق كثيرة جداً، يرجى المحاولة بعد 15 دقيقة'
@@ -30,7 +42,7 @@ const logoutAllLimiter = createRateLimiter({
     message: 'محاولات تسجيل خروج كثيرة جداً، يرجى المحاولة بعد ساعة'
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', usernameLimiter, async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
         return res.status(400).json({ error: 'Username and password are required' });

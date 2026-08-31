@@ -32,6 +32,10 @@ function createRateLimiter(options) {
         max = 100,
         message = 'Too many requests, please try again later.',
         keyPrefix = KEY_PREFIX,
+        // Optional custom key resolver (e.g. per-username): returned string is
+        // appended to the IP bucket. Used to stop distributed brute-force on a
+        // single account from rotating IPs.
+        keyFn = null,
     } = options;
 
     const inMemoryStore = new Map();
@@ -57,7 +61,8 @@ function createRateLimiter(options) {
     if (sweepInterval.unref) sweepInterval.unref();
 
     return function rateLimiter(req, res, next) {
-        const key = `${keyPrefix}${normalizeIp(req.ip || req.connection?.remoteAddress)}`;
+        const extraKey = keyFn ? String(keyFn(req) || '') : '';
+        const key = `${keyPrefix}${normalizeIp(req.ip || req.connection?.remoteAddress)}${extraKey ? `:${extraKey}` : ''}`;
 
         if (redisClient && redisClient.status === 'ready') {
             redisClient

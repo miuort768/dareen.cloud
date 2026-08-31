@@ -9,7 +9,13 @@ const logger = require('../utils/logger');
  * Automatically trims strings and cleans common injection patterns
  */
 const sanitizeInput = (req, res, next) => {
-    const sanitizeValue = (val) => {
+    const MAX_SANITIZE_DEPTH = 20;
+    const sanitizeValue = (val, depth = 0) => {
+        if (depth > MAX_SANITIZE_DEPTH) {
+            // Deeply-nested payloads would recurse until the stack overflows —
+            // truncate instead of crashing the request handler.
+            return null;
+        }
         if (typeof val === 'string') {
             return val.trim()
                 .replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gmi, '')
@@ -26,12 +32,12 @@ const sanitizeInput = (req, res, next) => {
         if (val !== null && typeof val === 'object' && !Array.isArray(val)) {
             const cleanObj = {};
             for (let k in val) {
-                cleanObj[k] = sanitizeValue(val[k]);
+                cleanObj[k] = sanitizeValue(val[k], depth + 1);
             }
             return cleanObj;
         }
         if (Array.isArray(val)) {
-            return val.map(sanitizeValue);
+            return val.map((v) => sanitizeValue(v, depth + 1));
         }
         return val;
     };

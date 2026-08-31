@@ -167,6 +167,10 @@ app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads
         if (filePath.match(/\.(png|jpg|jpeg|gif|webp|avif|svg)$/)) {
             res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
         }
+        // Uploaded content must never run scripts on the app origin —
+        // this sandbox neutralizes embedded JS in any uploaded SVG/HTML.
+        res.setHeader('Content-Security-Policy', "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' data:; sandbox");
+        res.setHeader('X-Content-Type-Options', 'nosniff');
     }
 }));
 

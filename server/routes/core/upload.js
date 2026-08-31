@@ -20,13 +20,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage,
-    limits: { fileSize: 10 * 1024 * 1024 },
+    limits: { fileSize: 10 * 1024 * 1024, files: 1 },
     fileFilter: (req, file, cb) => {
-        const allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
+        // SVG excluded — stored XSS vector (embedded <script>)
+        const allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         if (allowed.includes(file.mimetype)) {
             cb(null, true);
         } else {
-            cb(new Error('نوع الملف غير مدعوم. الأنواع المدعومة: JPG, PNG, GIF, WebP, SVG'));
+            cb(new Error('نوع الملف غير مدعوم. الأنواع المدعومة: JPG, PNG, GIF, WebP'));
         }
     }
 });
