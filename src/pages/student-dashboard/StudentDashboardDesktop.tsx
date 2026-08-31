@@ -133,7 +133,7 @@ export const StudentDashboardDesktop = ({
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12">
           <div className="space-y-6 lg:col-span-7">
             <motion.div {...fadeUp(0.04)}>
               <NextSessionCard nextSession={nextSession} />

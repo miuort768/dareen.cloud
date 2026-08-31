@@ -51,7 +51,7 @@ export const InvoicesCard = () => {
   const totalPending = pending.reduce((sum, i) => sum + (Number(i.amount) || 0), 0)
 
   return (
-    <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card">
+    <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card sm:p-5">
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">
@@ -64,7 +64,7 @@ export const InvoicesCard = () => {
         </div>
         <button
           onClick={() => navigate('/student-invoices')}
-          className="flex items-center gap-1 text-xs font-semibold text-primary transition-all hover:underline dark:text-primary"
+          className="flex items-center gap-1 rounded-lg text-xs font-semibold text-primary transition-all hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:text-primary"
         >
           عرض الكل <ArrowLeft size={10} />
         </button>

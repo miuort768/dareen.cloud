@@ -25,7 +25,7 @@ export const SessionCallAlert = () => {
   useEffect(() => {
     if (!notificationAudioRef.current) {
       notificationAudioRef.current = new Audio('/notification.wav')
-      notificationAudioRef.current.volume = 0.55
+      notificationAudioRef.current.volume = 0.9
     }
     const audio = notificationAudioRef.current
 

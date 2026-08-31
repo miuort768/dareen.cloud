@@ -38,7 +38,7 @@ export const useChatSocketInit = () => {
     if (!audioRef.current) {
       try {
         audioRef.current = new Audio('/notification.wav')
-        audioRef.current.volume = 0.45
+        audioRef.current.volume = 0.85
       } catch (e) {
         console.error('Audio initialization failed', e)
       }

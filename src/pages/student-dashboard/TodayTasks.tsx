@@ -51,12 +51,12 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
   const completedCount = tasks.filter((t) => completedIds.has(t.id)).length
 
   return (
-    <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card">
+    <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card sm:p-5">
       <div className="mb-4 flex items-center justify-between">
-        <span className="rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary dark:bg-primary/10 dark:text-primary">
+        <h3 className="text-sm font-bold text-main dark:text-main">مهام اليوم</h3>
+        <span className="rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-primary dark:bg-primary/10 dark:text-primary">
           {completedCount}/{tasks.length}
         </span>
-        <h3 className="text-sm font-bold text-main dark:text-main">مهام اليوم</h3>
       </div>
 
       <div className="space-y-2">
@@ -68,7 +68,7 @@ export const TodayTasks = ({ tasks }: TodayTasksProps) => {
             <button
               key={task.id}
               onClick={() => toggle(task.id)}
-              className={`flex min-h-12 w-full items-center gap-3 rounded-xl border p-3 text-start transition-all duration-200 active:scale-[0.98] ${
+              className={`flex min-h-12 w-full items-center gap-3 rounded-xl border p-3 text-start transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] ${
                 isDone
                   ? 'border-border bg-surface opacity-60 dark:border-border dark:bg-surface'
                   : 'border-border bg-surface hover:border-primary/30 hover:shadow-sm dark:border-border dark:bg-surface dark:hover:border-primary/30'

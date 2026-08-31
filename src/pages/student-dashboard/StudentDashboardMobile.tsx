@@ -66,22 +66,29 @@ const HeroStatCell = ({
   value,
   iconBg,
   iconText,
+  valueTitle,
 }: {
   icon: typeof Sparkles
   label: string
   value: string
   iconBg: string
   iconText: string
+  valueTitle?: string
 }) => (
   <div className="flex items-center gap-2 rounded-xl border border-border bg-card p-2.5">
     <span
-      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${iconBg} ${iconText}`}
+      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${iconBg} ${iconText}`}
     >
-      <Icon size={14} />
+      <Icon size={15} />
     </span>
     <div className="min-w-0">
-      <p className="truncate text-[9px] font-bold text-muted">{label}</p>
-      <p className="truncate text-sm font-black tabular-nums leading-tight text-main">{value}</p>
+      <p className="truncate text-[10px] font-bold text-muted">{label}</p>
+      <p
+        title={valueTitle}
+        className="truncate text-sm font-black tabular-nums leading-tight text-main"
+      >
+        {value}
+      </p>
     </div>
   </div>
 )
@@ -172,8 +179,9 @@ const MobileStudentHero = ({
           />
           <HeroStatCell
             icon={RankIcon}
-            label={rank.name}
-            value="رتبتي"
+            label="رتبتي"
+            value={rank.name}
+            valueTitle={rank.name}
             iconBg="bg-warning-soft"
             iconText="text-warning"
           />
@@ -201,10 +209,10 @@ const SUBJECT_TONES = [
 const MobileSubjects = ({ enrollments }: { enrollments: Enrollment[] }) => (
   <div>
     <div className="mb-2.5 flex items-center justify-between px-0.5">
-      <h3 className="text-xs font-bold text-main">موادي</h3>
+      <h3 className="text-sm font-bold text-main">موادي</h3>
       <Link
         to="/schedule"
-        className="text-[11px] font-semibold text-primary transition-all hover:underline"
+        className="rounded-lg text-[11px] font-semibold text-primary transition-all hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
       >
         عرض الكل
       </Link>

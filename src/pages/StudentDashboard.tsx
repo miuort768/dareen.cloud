@@ -51,14 +51,19 @@ export const StudentDashboard = () => {
             <Skeleton className="h-8 w-8 rounded-xl" />
           </div>
         </div>
-        <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4">
-          <Skeleton className="h-44 rounded-2xl" />
-          <Skeleton className="h-32 rounded-2xl" />
-          <div className="grid grid-cols-2 gap-4">
-            <Skeleton className="h-32 rounded-2xl" />
-            <Skeleton className="h-32 rounded-2xl" />
+        <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4 md:px-6">
+          <Skeleton className="h-44 rounded-[2rem] md:h-48" />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12">
+            <div className="space-y-6 lg:col-span-7">
+              <Skeleton className="h-36 rounded-3xl" />
+              <Skeleton className="h-52 rounded-3xl" />
+            </div>
+            <div className="space-y-6 lg:col-span-5">
+              <Skeleton className="h-72 rounded-3xl" />
+              <Skeleton className="h-40 rounded-3xl" />
+            </div>
           </div>
-          <Skeleton className="h-48 rounded-2xl" />
+          <Skeleton className="h-40 rounded-3xl" />
         </div>
       </div>
     )

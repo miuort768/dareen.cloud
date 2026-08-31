@@ -20,10 +20,10 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-[13px] font-bold text-main dark:text-main">المواد</h3>
+        <h3 className="text-sm font-bold text-main dark:text-main">المواد</h3>
         <button
           onClick={() => navigate('/schedule')}
-          className="text-[11px] font-semibold text-primary transition-all hover:underline dark:text-primary"
+          className="rounded-lg text-[11px] font-semibold text-primary transition-all hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:text-primary"
         >
           عرض الكل
         </button>
@@ -39,7 +39,7 @@ export const SubjectCards = ({ enrollments }: SubjectCardsProps) => {
           return (
             <div
               key={en.id || idx}
-              className="rounded-3xl border border-border bg-surface p-4 shadow-sm transition-all duration-200 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card"
+              className="rounded-3xl border border-border bg-surface p-4 shadow-sm transition-all duration-200 hover:border-primary/30 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card"
             >
               <div className="mb-3 flex items-center gap-3">
                 <div
