@@ -147,7 +147,7 @@ export const useFinance = () => {
 
   const stats = useMemo(() => {
     const now = new Date()
-    const currentMonthStr = now.toISOString().slice(0, 7)
+    const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
 
     const isSameMonth = (dateStr: string) => {
       if (!dateStr) return false

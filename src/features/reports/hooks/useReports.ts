@@ -20,11 +20,11 @@ export const useReports = () => {
 
   const stats = useMemo(() => {
     const now = new Date()
-    const currentMonthStr = now.toISOString().slice(0, 7)
+    // Local month keys — UTC shifting via toISOString mislabels month boundaries
+    const currentMonthStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
 
-    const prevMonthDate = new Date()
-    prevMonthDate.setMonth(prevMonthDate.getMonth() - 1)
-    const prevMonthStr = prevMonthDate.toISOString().slice(0, 7)
+    const prevMonthDate = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+    const prevMonthStr = `${prevMonthDate.getFullYear()}-${String(prevMonthDate.getMonth() + 1).padStart(2, '0')}`
 
     // General Arrays
     const students = safeArray<Student>(data.students)

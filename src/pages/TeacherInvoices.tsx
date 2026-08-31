@@ -44,9 +44,14 @@ export const TeacherInvoices = () => {
   const [filterStatus, setFilterStatus] = useState<string>('all')
   const [startDate, setStartDate] = useState(() => {
     const d = new Date()
-    return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().split('T')[0] ?? ''
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-01`
   })
-  const [endDate, setEndDate] = useState(new Date().toISOString().split('T')[0] ?? '')
+  const [endDate, setEndDate] = useState(() => {
+    const d = new Date()
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
+      d.getDate(),
+    ).padStart(2, '0')}`
+  })
   const [fabOpen, setFabOpen] = useState(false)
   const currentUser = useCurrentUser()
   const showNotification = useShowNotification()

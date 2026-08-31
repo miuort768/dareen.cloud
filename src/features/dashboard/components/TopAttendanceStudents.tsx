@@ -22,7 +22,10 @@ export const TopAttendanceStudents = ({
   const topPresentStudents = useMemo(() => {
     const studentStats: Record<string, { id: string; name: string; count: number }> = {}
     const now = new Date()
-    const currentMonth = now.toISOString().slice(0, 7)
+    // Local month key — toISOString() would shift the bucket at month
+    // boundaries for UTC+2/+3 users (sessions logged on the 1st at midnight
+    // would land in the previous month).
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
 
     sessions.forEach((s) => {
       const isCompleted = ['completed', 'مكتملة', 'تمت'].includes(
@@ -52,7 +55,8 @@ export const TopAttendanceStudents = ({
   }, [sessions, currentUser])
 
   const totalMonthSessions = useMemo(() => {
-    const currentMonth = new Date().toISOString().slice(0, 7)
+    const now = new Date()
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
     return sessions.filter(
       (s) =>
         ['completed', 'مكتملة', 'تمت'].includes(String(s.status ?? '').toLowerCase()) &&

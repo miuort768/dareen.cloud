@@ -59,11 +59,15 @@ export const MonthlyClosing = () => {
   const [fabOpen, setFabOpen] = useState(false)
   const [startDate, setStartDate] = useState<string>(() => {
     const d = new Date()
-    return new Date(d.getFullYear(), d.getMonth(), 1).toISOString().slice(0, 10)
+    // Local formatting — toISOString() shifted month start/end by a day on
+    // UTC+2/+3 (payroll windows started on the 2nd or missed the last day).
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-01`
   })
   const [endDate, setEndDate] = useState<string>(() => {
     const d = new Date()
-    return new Date(d.getFullYear(), d.getMonth() + 1, 0).toISOString().slice(0, 10)
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
+      new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(),
+    ).padStart(2, '0')}`
   })
   const [selectedTeacherForSlip, setSelectedTeacherForSlip] = useState<{
     name: string

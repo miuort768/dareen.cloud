@@ -278,11 +278,10 @@ export const useDashboardData = (currentUser: User | null) => {
     const totalNetProfitValue = totalRevenueValue - totalExpensesValue
     const monthNetProfitValue = monthRevenueValue - monthExpensesValue
 
-    // 5. Chart Data
+    // 5. Chart Data — local month keys (UTC shift mislabels first-day sessions)
     const last6Months = Array.from({ length: 6 }, (_, i) => {
-      const d = new Date()
-      d.setMonth(d.getMonth() - (5 - i))
-      return d.toISOString().slice(0, 7)
+      const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1)
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
     })
 
     const chartData = computeChartData(
