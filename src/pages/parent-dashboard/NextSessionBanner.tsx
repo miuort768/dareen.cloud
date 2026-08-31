@@ -15,7 +15,7 @@ interface NextSessionBannerProps {
 export const NextSessionBanner = ({ todayTasks }: NextSessionBannerProps) => {
   if (todayTasks.length === 0) {
     return (
-      <div className="rounded-3xl border border-border bg-surface p-6 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card md:p-7">
+      <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card sm:p-6">
         <div className="flex flex-col items-center gap-5 md:flex-row">
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
             <Calendar size={24} className="text-primary dark:text-primary" />
@@ -36,7 +36,7 @@ export const NextSessionBanner = ({ todayTasks }: NextSessionBannerProps) => {
 
   return (
     <div className="overflow-hidden rounded-3xl border border-border bg-surface shadow-sm transition-all duration-300 hover:shadow-elevation-1 dark:border-primary/20 dark:bg-card">
-      <div className="p-5 md:p-6">
+      <div className="p-4 sm:p-5 md:p-6">
         <div className="mb-4 flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">
             <Clock size={16} className="text-primary dark:text-primary" />

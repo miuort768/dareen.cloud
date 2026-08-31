@@ -115,7 +115,7 @@ export const ParentDashboardDesktop = ({
             )}
           </div>
 
-          <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-1">
             <motion.div {...fadeUp(0.14)}>
               <AcademicPerformance
                 sessions={sessions}
@@ -133,7 +133,7 @@ export const ParentDashboardDesktop = ({
             <motion.div {...fadeUp(0.3)}>
               <button
                 onClick={() => navigate('/parent-payment-history')}
-                className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface p-4 text-start transition-all duration-200 hover:bg-hover hover:shadow-sm active:scale-[0.99] dark:border-border dark:bg-card dark:hover:bg-hover"
+                className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface p-4 text-start transition-all duration-200 hover:bg-hover hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99] dark:border-border dark:bg-card dark:hover:bg-hover"
                 aria-label="سجل الدفعات"
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success-soft dark:bg-success-soft">

@@ -99,7 +99,7 @@ export const ParentDashboardMobile = ({
         </div>
       </motion.div>
 
-      <main className="mx-auto max-w-page space-y-4 px-2.5 pb-28 pt-4 sm:px-4">
+      <main className="mx-auto max-w-page space-y-4 px-2.5 pb-6 pt-4 sm:px-4">
         <motion.div {...fadeUp(0)}>
           <HeroSection
             name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
@@ -159,7 +159,7 @@ export const ParentDashboardMobile = ({
           <motion.div {...fadeUp(0.3)}>
             <button
               onClick={() => navigate('/parent-payment-history')}
-              className="flex w-full items-center gap-3 rounded-3xl border border-border bg-surface p-4 text-start shadow-sm transition-all duration-200 hover:bg-hover hover:shadow-elevation-1 active:scale-[0.99] dark:border-primary/20 dark:bg-card dark:hover:bg-hover"
+              className="flex w-full items-center gap-3 rounded-3xl border border-border bg-surface p-4 text-start shadow-sm transition-all duration-200 hover:bg-hover hover:shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99] dark:border-primary/20 dark:bg-card dark:hover:bg-hover"
               aria-label="سجل الدفعات"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-success-soft dark:bg-success-soft">

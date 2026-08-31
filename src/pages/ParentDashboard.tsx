@@ -169,14 +169,24 @@ export const ParentDashboard = () => {
             </div>
           </div>
         </div>
-        <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4">
-          <Skeleton className="h-44 rounded-2xl" />
-          <div className="grid grid-cols-2 gap-4">
-            <Skeleton className="h-32 rounded-2xl" />
-            <Skeleton className="h-32 rounded-2xl" />
+        <div className="mx-auto max-w-page space-y-6 px-2.5 pt-6 sm:px-4 md:px-6">
+          <Skeleton className="h-44 rounded-[2rem] md:h-48" />
+          <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+            <Skeleton className="h-32 rounded-3xl" />
+            <Skeleton className="h-32 rounded-3xl" />
+            <Skeleton className="h-32 rounded-3xl" />
+            <Skeleton className="h-32 rounded-3xl" />
           </div>
-          <Skeleton className="h-32 rounded-2xl" />
-          <Skeleton className="h-48 rounded-2xl" />
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div className="space-y-6 lg:col-span-2">
+              <Skeleton className="h-28 rounded-3xl" />
+              <Skeleton className="h-64 rounded-3xl" />
+            </div>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-1">
+              <Skeleton className="h-56 rounded-3xl" />
+              <Skeleton className="h-40 rounded-3xl" />
+            </div>
+          </div>
         </div>
       </div>
     )

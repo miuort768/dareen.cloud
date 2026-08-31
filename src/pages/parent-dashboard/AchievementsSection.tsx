@@ -38,15 +38,15 @@ export const AchievementsSection = ({ points }: AchievementsSectionProps) => {
     },
   ]
   return (
-    <div className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card md:p-6">
+    <div className="rounded-3xl border border-border bg-surface p-4 shadow-sm transition-colors duration-300 dark:border-primary/20 dark:bg-card sm:p-5 md:p-6">
       <div className="mb-5 flex items-center gap-2">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-warning-soft dark:bg-warning-soft">
           <Trophy size={16} className="text-warning dark:text-warning" />
         </div>
-        <h3 className="text-base font-bold text-main dark:text-main md:text-lg">الإنجازات</h3>
+        <h3 className="text-sm font-bold text-main dark:text-main sm:text-base">الإنجازات</h3>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3">
         {badges.map((badge, i) => {
           const Icon = badge.icon
           return (

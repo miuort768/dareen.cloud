@@ -27,7 +27,7 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
         </div>
         <button
           onClick={() => navigate('/parent-students')}
-          className="flex items-center gap-1 text-[11px] font-semibold text-primary transition-all hover:underline dark:text-primary"
+          className="flex items-center gap-1 rounded-lg text-[11px] font-semibold text-primary transition-all hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:text-primary"
         >
           عرض الكل <ChevronLeft size={12} />
         </button>
@@ -43,7 +43,7 @@ export const ChildrenCards = ({ children: kids }: ChildrenCardsProps) => {
             <button
               key={child.id}
               onClick={() => navigate('/parent-students')}
-              className="group flex w-full items-center gap-3 rounded-xl border border-border bg-surface p-3.5 text-end transition-all duration-200 hover:bg-hover hover:shadow-sm active:scale-[0.98] dark:border-border dark:bg-surface dark:hover:bg-hover"
+              className="group flex w-full items-center gap-3 rounded-xl border border-border bg-surface p-3.5 text-end transition-all duration-200 hover:bg-hover hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] dark:border-border dark:bg-surface dark:hover:bg-hover"
             >
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary dark:bg-primary">
                 <span className="text-sm font-bold text-on-primary dark:text-on-primary">
