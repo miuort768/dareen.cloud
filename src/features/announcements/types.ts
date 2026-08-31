@@ -48,9 +48,9 @@ export const ANNOUNCEMENT_TYPE_CONFIG: Record<AnnouncementType, AnnouncementType
   holiday: {
     icon: Calendar,
     label: 'إجازة',
-    badge: 'bg-warning-soft text-warning',
-    iconBg: 'bg-warning-soft',
-    iconText: 'text-warning',
+    badge: 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary',
+    iconBg: 'bg-warning-soft dark:bg-primary-soft',
+    iconText: 'text-warning dark:text-primary',
     cssVar: {
       color: 'var(--text-warning)',
       bg: 'var(--bg-warning-soft)',

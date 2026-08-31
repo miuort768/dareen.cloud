@@ -73,7 +73,6 @@ const Leads = lazy(() => import('./pages/Leads').then((m) => ({ default: m.Leads
 const TrialSessions = lazy(() =>
   import('./pages/TrialSessions').then((m) => ({ default: m.TrialSessions })),
 )
-const Agenda = lazy(() => import('./pages/Agenda').then((m) => ({ default: m.Agenda })))
 const Appointments = lazy(() =>
   import('./pages/Appointments').then((m) => ({ default: m.Appointments })),
 )
@@ -176,8 +175,6 @@ const ProtectedRoute = ({
 
     const isCommonAccess = [
       'schedule',
-      // Agenda mirrors schedule access — same audience, read-only companion view
-      'agenda',
       'announcements',
       'parent_announcements',
       'appointments',
@@ -203,7 +200,6 @@ const ProtectedRoute = ({
         'dashboard',
         'evaluations',
         'schedule',
-        'agenda',
         'attendance',
         'announcements',
         'appointments',
@@ -492,14 +488,6 @@ function App() {
                   element={
                     <ProtectedRoute permission="schedule">
                       <Schedule />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="agenda"
-                  element={
-                    <ProtectedRoute permission="schedule">
-                      <Agenda />
                     </ProtectedRoute>
                   }
                 />

@@ -140,7 +140,6 @@ Disallow: /finance
 Disallow: /reports
 Disallow: /forum
 Disallow: /tasks
-Disallow: /agenda
 Disallow: /announcements
 Disallow: /parent-students
 Disallow: /parent-announcements

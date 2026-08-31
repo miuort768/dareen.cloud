@@ -31,7 +31,6 @@ Disallow: /finance
 Disallow: /reports
 Disallow: /forum
 Disallow: /tasks
-Disallow: /agenda
 Disallow: /announcements
 
 Sitemap: https://dareen.cloud/sitemap.xml
