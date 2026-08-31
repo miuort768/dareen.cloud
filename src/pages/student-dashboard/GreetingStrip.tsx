@@ -39,7 +39,7 @@ export const GreetingStrip = ({ name, grade, points, rank }: GreetingStripProps)
             {format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}
           </p>
           <h1 className="text-xl font-black leading-tight text-main md:text-2xl">
-            {getGreeting()}، {firstName} <span aria-hidden="true">🚀</span>
+            {getGreeting()}، {firstName}
           </h1>
           {grade && <p className="mt-1 text-[11px] font-bold text-muted">{grade}</p>}
         </div>

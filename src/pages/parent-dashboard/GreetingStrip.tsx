@@ -58,7 +58,7 @@ export const GreetingStrip = ({
             {format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}
           </p>
           <h1 className="text-xl font-black leading-tight text-main md:text-2xl">
-            {getGreeting()}، {firstName} <span aria-hidden="true">👋</span>
+            {getGreeting()}، {firstName}
           </h1>
         </div>
 

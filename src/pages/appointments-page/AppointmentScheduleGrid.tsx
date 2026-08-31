@@ -45,7 +45,7 @@ export const AppointmentScheduleGrid = ({
         >
           <PartyPopper size={40} className="text-success" />
         </motion.div>
-        <h3 className="mb-2 text-xl font-bold text-main">أحسنت! 🎉</h3>
+        <h3 className="mb-2 text-xl font-bold text-main">أحسنت!</h3>
         <p className="max-w-xs text-sm font-bold text-muted">لقد أتممت جميع المواعيد. عمل رائع!</p>
       </motion.div>
     )

@@ -65,7 +65,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
         </>
       ) : (
         <p className="rounded-xl bg-success-soft p-2.5 text-center text-[11px] font-black text-success">
-          أعلى رتبة — أنت الأسطورة! 🏆
+          أعلى رتبة — أنت الأسطورة!
         </p>
       )}
 
