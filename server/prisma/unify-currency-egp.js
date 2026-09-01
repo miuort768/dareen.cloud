@@ -1,33 +1,28 @@
 /**
  * توحيد عملة النظام بالكامل إلى الجنيه المصري (EGP)
  * ---------------------------------------------------
- * يُشغَّل مرة واحدة على قاعدة البيانات الحالية:
- *   node server/prisma/unify-currency-egp.js
+ * يُشغَّل مرة واحدة — داخل حاوية Docker:
+ *   docker compose exec app node server/prisma/unify-currency-egp.js
  *
  * يقوم بـ:
  *  1) تحويل كل أعمدة العملات في كل الجداول إلى 'EGP'
  *  2) إلغاء تنشيط أي عملات أخرى في جدول currencies
  *  3) حذف أسعار الصرف القديمة (لا حاجة لها بعملة موحدة)
  *  4) تصفير حقول سعر الصرف في الجلسات
+ *
+ * ملاحظة: الهجرة prisma migrate deploy هي التي تنشئ الجداول الجديدة وتغيّر
+ * الافتراضيات — هذا السكربت يقوم بجزء البيانات عبر Prisma Client نفسه
+ * (نفس آلية utils/prisma.js مع adapter-pg تلقائياً حسب DATABASE_URL).
  */
 const path = require('path');
 const fs = require('fs');
 
-let prisma;
-(async () => {
-  // نفس آلية الاتصال المستخدمة في seed.js (LibSQL أو SQLite)
-  try {
-    const { PrismaLibSql } = require('@prisma/adapter-libsql');
-    const { PrismaClient } = require('@prisma/client');
-    const defaultUrl =
-      'file:' + path.resolve(__dirname, '..', 'dev.db').replace(/\\/g, '/');
-    const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL || defaultUrl });
-    prisma = new PrismaClient({ adapter });
-  } catch {
-    const { PrismaClient } = require('@prisma/client');
-    prisma = new PrismaClient();
-  }
+// يضمن تحميل @prisma/client المولَّد من مسار الخادم الصحيح
+require('module').Module._initPaths();
 
+const { prisma } = require(path.join(__dirname, '..', 'utils', 'prisma.js'));
+
+(async () => {
   console.log('🔄 توحيد العملة إلى الجنيه المصري (EGP)...');
 
   // 1) الجداول الأساسية
@@ -83,6 +78,20 @@ let prisma;
     console.log('  ✅ EGP نشطة كعملة موحدة');
   } catch (e) {
     console.warn(`  ⚠️ EGP upsert: ${e.message}`);
+  }
+
+  // 4.ب) تصفير العملة الافتراضية المخزنة في إعدادات النظام إن كانت بعملة أخرى
+  try {
+    const legacy = await prisma.systemSetting.findUnique({ where: { key: 'currency_symbol' } });
+    if (legacy && legacy.value && legacy.value !== 'ج.م' && legacy.value !== 'EGP') {
+      await prisma.systemSetting.update({
+        where: { key: 'currency_symbol' },
+        data: { value: 'ج.م' },
+      });
+      console.log('  ✅ currency_symbol (إعدادات النظام) = ج.م');
+    }
+  } catch (e) {
+    // المفتاح غير موجود — تجاهل
   }
 
   // 5) حذف أسعار الصرف القديمة
