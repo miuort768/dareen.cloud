@@ -49,7 +49,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
   return (
     <section
       aria-label="آخر النشاطات"
-      className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+      className="rounded-none border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
     >
       <h3 className="mb-4 text-sm font-black text-main">آخر النشاطات</h3>
 
@@ -77,7 +77,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
               </div>
               {item.amount !== undefined && (
                 <span
-                  className={`shrink-0 rounded-lg px-2 py-0.5 text-[11px] font-black tabular-nums ${
+                  className={`shrink-0 rounded-none px-2 py-0.5 text-[11px] font-black tabular-nums ${
                     isPositive ? 'bg-success-soft text-success' : 'bg-error-soft text-error'
                   }`}
                 >

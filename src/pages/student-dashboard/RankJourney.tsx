@@ -28,11 +28,11 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
   return (
     <section
       aria-label="رحلة الرتب"
-      className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+      className="rounded-none border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
     >
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2.5">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-on-primary">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none bg-primary text-on-primary">
             <RankIcon size={19} />
           </div>
           <div className="min-w-0">
@@ -40,7 +40,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
             <p className="text-[10px] font-bold text-muted">رتبتك الحالية</p>
           </div>
         </div>
-        <div className="shrink-0 rounded-xl bg-primary-soft px-3 py-1.5 text-center">
+        <div className="shrink-0 rounded-none bg-primary-soft px-3 py-1.5 text-center">
           <p className="text-lg font-black tabular-nums leading-none text-primary">{points}</p>
           <p className="mt-0.5 text-[9px] font-bold text-muted">نقطة</p>
         </div>
@@ -64,7 +64,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           </p>
         </>
       ) : (
-        <p className="rounded-xl bg-success-soft p-2.5 text-center text-[11px] font-black text-success">
+        <p className="rounded-none bg-success-soft p-2.5 text-center text-[11px] font-black text-success">
           أعلى رتبة — أنت الأسطورة!
         </p>
       )}
@@ -76,17 +76,20 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           return (
             <div
               key={badge.label}
-              className={`rounded-xl p-2 text-center transition-all duration-300 ${
+              className={`rounded-none p-2 text-center transition-all duration-300 ${
                 unlocked
-                  ? 'bg-warning-soft hover:-translate-y-0.5 hover:shadow-elevation-1'
+                  ? 'bg-warning-soft hover:-translate-y-0.5 hover:shadow-elevation-1 dark:bg-primary-soft'
                   : 'bg-divider/40'
               }`}
               title={badge.label}
             >
-              <Icon size={15} className={`mx-auto ${unlocked ? 'text-warning' : 'text-muted'}`} />
+              <Icon
+                size={15}
+                className={`mx-auto ${unlocked ? 'text-warning dark:text-primary' : 'text-muted'}`}
+              />
               <p
                 className={`mt-1 text-[8px] font-black leading-tight ${
-                  unlocked ? 'text-warning' : 'text-muted'
+                  unlocked ? 'text-warning dark:text-primary' : 'text-muted'
                 }`}
               >
                 {badge.label}

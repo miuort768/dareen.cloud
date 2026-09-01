@@ -21,17 +21,17 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
   return (
     <section
       aria-label="حصص اليوم"
-      className="rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+      className="rounded-none border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
     >
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-sm font-black text-main">حصص اليوم</h3>
-        <span className="rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary">
+        <span className="rounded-none bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary">
           {items.length} {items.length === 1 ? 'حصة' : 'حصص'}
         </span>
       </div>
 
       {items.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-border py-10 text-center">
+        <div className="rounded-none border border-dashed border-border py-10 text-center">
           <CalendarCheck size={28} className="mx-auto mb-2 text-muted" />
           <p className="text-xs font-bold text-muted">يوم مريح — لا توجد حصص مجدولة</p>
         </div>
@@ -46,7 +46,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                 <div className="min-w-0 flex-1">
                   <div
                     className={cn(
-                      'rounded-2xl border bg-surface p-3 transition-colors duration-300',
+                      'rounded-none border bg-surface p-3 transition-colors duration-300',
                       item.status === 'done' && 'border-border',
                       item.status === 'cancelled' && 'border-border opacity-60',
                       item.status === 'upcoming' && 'border-primary/20',
@@ -60,7 +60,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                       </div>
                       <span
                         className={cn(
-                          'inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-black',
+                          'inline-flex shrink-0 items-center gap-1 rounded-none px-2 py-1 text-[10px] font-black',
                           item.status === 'live' ? 'bg-surface' : 'bg-divider/50',
                           meta.text,
                         )}
@@ -70,7 +70,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                       </span>
                     </div>
                     {item.notes && (
-                      <p className="mt-2 flex items-start gap-1.5 rounded-lg border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
+                      <p className="mt-2 flex items-start gap-1.5 rounded-none border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
                         <FileText size={10} className="mt-0.5 shrink-0 text-primary" />
                         {item.notes}
                       </p>

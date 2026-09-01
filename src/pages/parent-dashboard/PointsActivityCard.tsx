@@ -23,11 +23,11 @@ export const PointsActivityCard = ({
   return (
     <section
       aria-label="النقاط والنشاطات"
-      className="overflow-hidden rounded-3xl border border-border bg-surface shadow-sm transition-colors duration-300"
+      className="overflow-hidden rounded-none border border-border bg-surface shadow-sm transition-colors duration-300"
     >
       <div className="flex items-center justify-between gap-3 border-b border-border bg-primary-soft p-4">
         <div className="flex min-w-0 items-center gap-2.5">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-surface">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-none bg-surface">
             <RankIcon size={17} className="text-primary" />
           </div>
           <div className="min-w-0">
@@ -37,7 +37,7 @@ export const PointsActivityCard = ({
             </p>
           </div>
         </div>
-        <div className="shrink-0 rounded-xl bg-surface px-3 py-1.5 text-center">
+        <div className="shrink-0 rounded-none bg-surface px-3 py-1.5 text-center">
           <p className="text-lg font-black tabular-nums leading-none text-primary">{points}</p>
           <p className="mt-0.5 text-[9px] font-bold text-muted">نقطة</p>
         </div>
@@ -75,7 +75,7 @@ export const PointsActivityCard = ({
                     </p>
                   </div>
                   <span
-                    className={`shrink-0 rounded-lg px-2 py-0.5 text-[11px] font-black tabular-nums ${
+                    className={`shrink-0 rounded-none px-2 py-0.5 text-[11px] font-black tabular-nums ${
                       isPositive ? 'bg-success-soft text-success' : 'bg-error-soft text-error'
                     }`}
                   >

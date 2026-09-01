@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
 import { useCurrentUser, useAcademyName } from '../context/AppContext'
@@ -26,7 +26,7 @@ import { format } from 'date-fns'
 const teacherLabel = (en: { teacher?: string; teacherName?: string }): string =>
   en.teacherName || en.teacher || ''
 
-const DAY_CHIPS = ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت']
+const DAY_CHIPS = ['���', '�����', '������', '������', '����', '����', '���']
 
 const dayChip = (day: string): string => {
   const idx = ARABIC_DAYS.indexOf(normalizeDayName(day) as (typeof ARABIC_DAYS)[number])
@@ -36,7 +36,7 @@ const dayChip = (day: string): string => {
 export const StudentDashboard = () => {
   const academyName = useAcademyName()
   useEffect(() => {
-    document.title = `لوحة تحكم الطالب | ${academyName}`
+    document.title = `���� ���� ������ | ${academyName}`
   }, [academyName])
   const currentUser = useCurrentUser()
   const queryClient = useQueryClient()
@@ -63,7 +63,7 @@ export const StudentDashboard = () => {
   const pointLogs = useMemo(() => data?.pointLogs ?? [], [data])
   const enrollments = useMemo(() => studentData?.enrollments || [], [studentData])
 
-  // ── Live session timer: يرصد /active-sessions/my كل 5 ثوانٍ (المعلمة بدأت الحصة) ──
+  // ?? Live session timer: ���� /active-sessions/my �� 5 ����� (������� ���� �����) ??
   const { data: activeSessions } = useQuery<StudentActiveSession[]>({
     queryKey: ['active-sessions'],
     queryFn: () => api.get<StudentActiveSession[]>('/active-sessions/my'),
@@ -72,7 +72,7 @@ export const StudentDashboard = () => {
   })
   const activeSession = useMemo(() => activeSessions?.[0] ?? null, [activeSessions])
 
-  // ── Stats ──────────────────────────────────────────────────────────────────
+  // ?? Stats ??????????????????????????????????????????????????????????????????
   const stats = useMemo<StudentStats>(() => {
     const attendance = sessions.filter((s) => s.status === 'completed').length
     const absence = sessions.filter((s) => s.status === 'cancelled').length
@@ -93,7 +93,7 @@ export const StudentDashboard = () => {
     }
   }, [sessions, enrollments])
 
-  // ── Next session: today's remaining slots first, then the week ahead ──────
+  // ?? Next session: today's remaining slots first, then the week ahead ??????
   const nextSession = useMemo<NextSessionInfo | null>(() => {
     const todayIdx = new Date().getDay()
     const nowMinutes = new Date().getHours() * 60 + new Date().getMinutes()
@@ -110,7 +110,7 @@ export const StudentDashboard = () => {
         const minutes = to24Minutes(slot.hour, slot.period)
         if (dayOffset === 0 && minutes <= nowMinutes) return
         candidates.push({
-          subject: en.subject || 'دورة',
+          subject: en.subject || '����',
           teacher: teacherLabel(en),
           hour: String(parseInt(String(slot.hour), 10) || ''),
           period: normalizePeriod(slot.period),
@@ -138,7 +138,7 @@ export const StudentDashboard = () => {
     }
   }, [enrollments])
 
-  // ── Today's timeline with status from session records ─────────────────────
+  // ?? Today's timeline with status from session records ?????????????????????
   const todayItems = useMemo<TodayTimelineItem[]>(() => {
     const todayName = ARABIC_DAYS[new Date().getDay()] || ''
     const todayStr = format(new Date(), 'yyyy-MM-dd')
@@ -146,7 +146,7 @@ export const StudentDashboard = () => {
     enrollments.forEach((en) => {
       ;(en.schedule || []).forEach((slot) => {
         if (normalizeDayName(slot.day) !== todayName) return
-        const subject = en.subject || 'دورة'
+        const subject = en.subject || '����'
         const matched = sessions.find(
           (s) =>
             s.subject === subject &&
@@ -173,7 +173,7 @@ export const StudentDashboard = () => {
     return items.sort((a, b) => a.minutes - b.minutes)
   }, [enrollments, sessions, activeSession])
 
-  // ── Subjects board data ───────────────────────────────────────────────────
+  // ?? Subjects board data ???????????????????????????????????????????????????
   const subjects = useMemo<SubjectProgress[]>(
     () =>
       enrollments.map((en, idx) => {
@@ -182,8 +182,8 @@ export const StudentDashboard = () => {
         const days = [...new Set((en.schedule || []).map((s) => dayChip(s.day)))]
         return {
           id: en.id || `en-${idx}`,
-          subject: en.subject || 'دورة',
-          teacher: teacherLabel(en) || '—',
+          subject: en.subject || '����',
+          teacher: teacherLabel(en) || '�',
           used,
           total,
           percent: total > 0 ? Math.min(Math.round((used / total) * 100), 100) : 0,
@@ -199,15 +199,15 @@ export const StudentDashboard = () => {
     return (
       <div className="min-h-screen bg-background" dir="rtl">
         <div className="mx-auto max-w-page space-y-5 px-2.5 pt-6 sm:px-4 md:px-6">
-          <Skeleton className="h-32 rounded-3xl" />
+          <Skeleton className="h-32 rounded-none" />
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
             <div className="space-y-5 lg:col-span-8">
-              <Skeleton className="h-36 rounded-3xl" />
-              <Skeleton className="h-52 rounded-3xl" />
+              <Skeleton className="h-36 rounded-none" />
+              <Skeleton className="h-52 rounded-none" />
             </div>
             <div className="space-y-5 lg:col-span-4">
-              <Skeleton className="h-64 rounded-3xl" />
-              <Skeleton className="h-40 rounded-3xl" />
+              <Skeleton className="h-64 rounded-none" />
+              <Skeleton className="h-40 rounded-none" />
             </div>
           </div>
         </div>
@@ -218,9 +218,9 @@ export const StudentDashboard = () => {
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background" dir="rtl">
-        <div className="max-w-sm space-y-4 rounded-2xl border border-border bg-surface p-8 text-center">
+        <div className="max-w-sm space-y-4 rounded-none border border-border bg-surface p-8 text-center">
           <p className="text-sm text-muted">
-            {error.message || 'فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.'}
+            {error.message || '��� ����� ��������. ���� �� ������ ���������.'}
           </p>
           <button
             onClick={() =>
@@ -228,7 +228,7 @@ export const StudentDashboard = () => {
             }
             className="text-sm font-semibold text-primary hover:underline"
           >
-            إعادة المحاولة
+            ����� ��������
           </button>
         </div>
       </div>

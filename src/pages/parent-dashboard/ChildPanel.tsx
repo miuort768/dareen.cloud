@@ -20,7 +20,8 @@ interface ChildPanelProps {
 const Ring = ({ value, size = 64 }: { value: number; size?: number }) => {
   const r = (size - 8) / 2
   const c = 2 * Math.PI * r
-  const tone = value >= 90 ? 'text-success' : value >= 75 ? 'text-warning' : 'text-error'
+  const tone =
+    value >= 90 ? 'text-success' : value >= 75 ? 'text-warning dark:text-primary' : 'text-error'
   return (
     <div className="relative shrink-0" style={{ width: size, height: size }}>
       <svg className="-rotate-90" width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
@@ -61,12 +62,12 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
   return (
     <section
       aria-label={`لوحة متابعة ${child.name}`}
-      className="overflow-hidden rounded-3xl border border-border bg-surface shadow-sm transition-colors duration-300"
+      className="overflow-hidden rounded-none border border-border bg-surface shadow-sm transition-colors duration-300"
     >
       {/* Header — identity + attendance ring + key numbers */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border p-5">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-on-primary">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-primary text-on-primary">
             <span className="text-base font-black" aria-hidden="true">
               {(child.name || 'ط').charAt(0)}
             </span>
@@ -101,7 +102,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
               <span className="text-primary">{nextSession.subject}</span>
               <span className="text-muted">مع {nextSession.teacher}</span>
             </p>
-            <span className="rounded-lg bg-surface px-2.5 py-1 text-[11px] font-black tabular-nums text-main">
+            <span className="rounded-none bg-surface px-2.5 py-1 text-[11px] font-black tabular-nums text-main">
               {nextSession.isToday
                 ? `اليوم ${nextSession.hour} ${periodLabel(nextSession.period, true)}`
                 : `${nextSession.day} ${nextSession.hour} ${periodLabel(nextSession.period, true)}`}
@@ -119,7 +120,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
       <div className="p-5">
         <h3 className="mb-3 text-xs font-black text-muted">تقدم المواد</h3>
         {enrollments.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-border py-6 text-center text-xs font-bold text-muted">
+          <p className="rounded-none border border-dashed border-border py-6 text-center text-xs font-bold text-muted">
             لا توجد مواد مسجلة
           </p>
         ) : (
@@ -132,7 +133,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
               return (
                 <div
                   key={en.id || `en-${idx}`}
-                  className={`rounded-2xl border p-3 transition-colors duration-300 ${
+                  className={`rounded-none border p-3 transition-colors duration-300 ${
                     frozen ? 'bg-divider/30 border-border' : 'border-border bg-surface'
                   }`}
                 >
@@ -145,7 +146,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
                       <span className="truncate">{en.subject}</span>
                     </p>
                     {frozen ? (
-                      <span className="inline-flex shrink-0 items-center gap-1 rounded-md bg-divider px-1.5 py-0.5 text-[9px] font-bold text-muted">
+                      <span className="inline-flex shrink-0 items-center gap-1 rounded-none bg-divider px-1.5 py-0.5 text-[9px] font-bold text-muted">
                         <Snowflake size={9} /> مجمّدة
                       </span>
                     ) : (
@@ -184,7 +185,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
               {notes.map((note, i) => (
                 <div
                   key={`note-${i}`}
-                  className="rounded-2xl border border-s-[3px] border-border border-s-primary bg-card p-3 shadow-sm"
+                  className="rounded-none border border-s-[3px] border-border border-s-primary bg-card p-3 shadow-sm"
                 >
                   <div className="mb-1 flex items-center justify-between">
                     <span className="text-[11px] font-black text-main">{note.subject}</span>
@@ -199,7 +200,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
 
         <button
           onClick={() => navigate('/parent-students')}
-          className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-xl border border-border py-2.5 text-xs font-bold text-primary transition-all hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+          className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-none border border-border py-2.5 text-xs font-bold text-primary transition-all hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
         >
           عرض السجل الكامل في صفحة الأبناء
           <ChevronLeft size={14} />

@@ -53,17 +53,17 @@ export const InvoicesStrip = () => {
   return (
     <button
       onClick={() => navigate('/student-invoices')}
-      className="flex w-full items-center gap-3 rounded-3xl border border-border bg-surface p-4 text-start shadow-sm transition-all duration-200 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+      className="flex w-full items-center gap-3 rounded-none border border-border bg-surface p-4 text-start shadow-sm transition-all duration-200 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
       aria-label={`الفواتير: ${pending.length} فاتورة معلقة، الإجمالي ${totalPending.toFixed(3)} ${CURRENCY_SYMBOL}`}
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none bg-primary-soft">
         <Receipt size={17} className="text-primary" />
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-xs font-black text-main">الفواتير</p>
         <p className="text-[11px] font-bold text-muted">{pending.length} فاتورة معلقة</p>
       </div>
-      <div className="shrink-0 rounded-xl bg-primary-soft px-3 py-1.5 text-[11px] font-black tabular-nums text-primary">
+      <div className="shrink-0 rounded-none bg-primary-soft px-3 py-1.5 text-[11px] font-black tabular-nums text-primary">
         {totalPending.toFixed(3)} {CURRENCY_SYMBOL}
       </div>
       <ArrowLeft size={14} className="shrink-0 text-muted" />
