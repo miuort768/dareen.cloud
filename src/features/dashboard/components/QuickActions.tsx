@@ -133,7 +133,7 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
                 <button
                   key={`action-${i}`}
                   onClick={() => handleAction(action)}
-                  className="text-start"
+                  className="rounded-2xl text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <motion.div
                     initial={{ opacity: 0, y: 12 }}
@@ -141,24 +141,24 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
                     transition={{ delay: i * 0.05, duration: 0.3 }}
                     className={cn(
                       'flex w-full items-center gap-3 rounded-2xl p-3.5',
-                      'border border-border bg-surface dark:border-border dark:bg-card',
-                      'group transition-all duration-200 active:scale-[0.97]',
+                      'border border-border bg-card shadow-elevation-1',
+                      'group transition-colors duration-200 hover:border-primary/30 active:scale-[0.97]',
                     )}
                   >
                     <div
                       className={cn(
-                        'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl',
+                        'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl',
                         action.iconBg,
                         'transition-transform duration-200 group-hover:scale-105',
                       )}
                     >
-                      <Icon size={18} className={action.color} />
+                      <Icon size={19} className={action.color} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-[12px] font-bold leading-tight text-main">
+                      <h3 className="text-[13px] font-bold leading-tight text-main">
                         {action.title}
                       </h3>
-                      <p className="mt-0.5 text-[9px] text-muted">{action.subtitle}</p>
+                      <p className="mt-0.5 text-[10px] font-medium text-muted">{action.subtitle}</p>
                     </div>
                     <ChevronLeft size={14} className="shrink-0 text-muted opacity-50" />
                   </motion.div>

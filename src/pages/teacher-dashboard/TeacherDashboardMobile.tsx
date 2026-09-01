@@ -1,16 +1,7 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Calendar,
-  CalendarDays,
-  ClipboardList,
-  Home,
-  Bell,
-  Loader2,
-  RefreshCw,
-  User as UserIcon,
-} from 'lucide-react'
+import { Calendar, CalendarDays, ClipboardList, Home, Bell, Loader2, RefreshCw } from 'lucide-react'
 import { triggerHaptic } from '../../lib/haptics'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { cn } from '../../lib/utils'
@@ -62,11 +53,34 @@ const TABS = [
   { id: 'reports' as const, label: 'التقارير', icon: ClipboardList },
 ]
 
-const SectionLabel = ({ label, tone }: { label: string; tone: string }) => (
-  <div className="flex items-center gap-2 px-1">
-    <span className={cn('h-1.5 w-1.5 rounded-full', tone)} aria-hidden="true" />
-    <h2 className="text-sm font-black text-main">{label}</h2>
-  </div>
+const SectionCard = ({
+  id,
+  title,
+  tone,
+  className,
+  children,
+}: {
+  id?: string
+  title?: string
+  tone?: string
+  className?: string
+  children: ReactNode
+}) => (
+  <section
+    id={id}
+    className={cn(
+      'rounded-3xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300',
+      className,
+    )}
+  >
+    {title && (
+      <div className="mb-3 flex items-center gap-2">
+        <span className={cn('h-1.5 w-1.5 rounded-full', tone ?? 'bg-primary')} aria-hidden="true" />
+        <h2 className="text-sm font-black text-main">{title}</h2>
+      </div>
+    )}
+    {children}
+  </section>
 )
 
 export const TeacherDashboardMobile = ({
@@ -103,6 +117,7 @@ export const TeacherDashboardMobile = ({
   } | null>(null)
 
   const nextSession = timeline.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
+  const firstName = (currentUser?.name || 'المعلمة').split(' ')[0]
 
   return (
     <div
@@ -131,22 +146,19 @@ export const TeacherDashboardMobile = ({
         </div>
       </motion.div>
 
-      <div className="space-y-4 px-2.5 pt-4 sm:px-4">
-        {/* Profile + notifications row */}
-        <div className="flex items-center justify-between px-1">
+      <div className="space-y-5 px-4 pt-4">
+        <div className="flex items-center justify-between">
           <button
             onClick={() => navigate('/teacher-profile')}
             className="flex items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="الملف الشخصي"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/70 shadow-md shadow-primary/25">
-              <UserIcon size={17} className="text-on-primary" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-base font-black text-on-primary">
+              {firstName.charAt(0)}
             </div>
             <div className="text-start">
-              <p className="text-sm font-black text-main">
-                أ. {(currentUser?.name || 'المعلمة').split(' ')[0]}
-              </p>
-              <p className="text-[10px] font-bold text-muted">لوحة المعلمة</p>
+              <p className="text-sm font-black text-main">أ. {firstName}</p>
+              <p className="text-[11px] font-bold text-muted">لوحة المعلمة</p>
             </div>
           </button>
           <button
@@ -158,10 +170,10 @@ export const TeacherDashboardMobile = ({
                   ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
               }, 250)
             }}
-            className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:bg-primary/10"
+            className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="الإعلانات"
           >
-            <Bell size={15} className="text-primary" />
+            <Bell size={16} className="text-main" />
             <span className="absolute -end-0.5 -top-0.5 h-2 w-2 rounded-full border-2 border-background bg-error" />
           </button>
         </div>
@@ -174,7 +186,6 @@ export const TeacherDashboardMobile = ({
           points={stats.teacherPoints}
         />
 
-        {/* Tab bar */}
         <div
           role="tablist"
           aria-label="أقسام لوحة التحكم"
@@ -194,13 +205,13 @@ export const TeacherDashboardMobile = ({
                   setActiveTab(tab.id)
                 }}
                 className={cn(
-                  'flex min-h-10 items-center justify-center gap-1.5 rounded-xl px-1 text-[11px] font-black transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                  'flex min-h-11 items-center justify-center gap-1.5 rounded-xl px-1 text-xs font-black transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                   isActive
-                    ? 'bg-primary text-on-primary shadow-sm'
+                    ? 'bg-primary text-on-primary'
                     : 'text-muted hover:bg-hover hover:text-main',
                 )}
               >
-                <Icon size={14} />
+                <Icon size={15} />
                 {tab.label}
               </button>
             )
@@ -214,39 +225,38 @@ export const TeacherDashboardMobile = ({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.2 }}
-            className="space-y-4"
+            className="space-y-5"
           >
             {activeTab === 'home' && (
               <>
                 {nextSession ? (
                   <NextSessionHero timeline={timeline} />
                 ) : (
-                  <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
+                  <SectionCard>
                     <EmptyState
                       icon={Calendar}
                       title="لا حصص قادمة اليوم"
                       subtitle="يوم هادئ"
                       compact
                     />
-                  </div>
+                  </SectionCard>
                 )}
                 <WeekStrip counts={weekCounts} />
-                <div className="px-1">
-                  <QuickActions showQuickLinks={true} />
-                </div>
-                <SectionLabel label="التنبيهات الذكية" tone="bg-error" />
-                <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
+                <QuickActions showQuickLinks={true} />
+                <SectionCard>
                   <SmartNotifications
                     lowBalanceStudents={lowBalanceStudents}
                     focusStudents={focusStudents || []}
                   />
-                </div>
-                <section id="announcements-section" className="scroll-mt-24 space-y-3">
-                  <SectionLabel label="الإعلانات" tone="bg-info" />
-                  <div className="rounded-3xl border border-border bg-card p-3.5 shadow-elevation-1">
-                    <ModernAnnouncements />
-                  </div>
-                </section>
+                </SectionCard>
+                <SectionCard
+                  id="announcements-section"
+                  title="الإعلانات"
+                  tone="bg-info"
+                  className="scroll-mt-24"
+                >
+                  <ModernAnnouncements />
+                </SectionCard>
               </>
             )}
 
@@ -254,57 +264,54 @@ export const TeacherDashboardMobile = ({
               <>
                 <WeekStrip counts={weekCounts} />
                 {timeline.length > 0 ? (
-                  <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
+                  <SectionCard>
                     <TeacherSessionTimeline
                       sessions={timeline}
                       onStudentClick={setBriefingStudent}
                     />
-                  </div>
+                  </SectionCard>
                 ) : (
-                  <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
+                  <SectionCard>
                     <EmptyState
                       icon={Calendar}
                       title="لا توجد حصص اليوم"
                       subtitle="استمتع بيومك!"
                       compact
                     />
-                  </div>
+                  </SectionCard>
                 )}
               </>
             )}
 
             {activeTab === 'reports' && (
               <>
-                <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
+                <SectionCard>
                   <FinancialSnapshot
                     monthNetProfit={stats.monthNetProfit}
                     monthRevenue={stats.monthRevenue}
                     expectedCollection={stats.expectedCollection}
                     currency={stats.currency}
                   />
-                </div>
-                <div className="rounded-3xl border border-border bg-card p-4 shadow-elevation-1">
+                </SectionCard>
+                <SectionCard>
                   <AttendanceChart rate={stats.attendanceRate} />
-                </div>
-                <SectionLabel label="الأكثر حضوراً" tone="bg-success" />
-                <div className="rounded-3xl border border-border bg-card p-3.5 shadow-elevation-1">
+                </SectionCard>
+                <SectionCard>
                   <TopAttendanceStudents
                     sessions={rawSessions}
                     onStudentClick={setBriefingStudent}
                   />
-                </div>
-                <SectionLabel label="الإنجازات التعليمية" tone="bg-primary" />
-                <div className="rounded-3xl border border-border bg-card p-3.5 shadow-elevation-1">
+                </SectionCard>
+                <SectionCard>
                   <TeacherAchievements
                     stats={stats}
                     lowBalanceStudents={lowBalanceStudents}
                     isTeacher={true}
                   />
-                </div>
-                <SectionLabel label="المهام والطلبات" tone="bg-error" />
-                <div className="rounded-3xl border border-border bg-card p-3.5 shadow-elevation-1">
+                </SectionCard>
+                <SectionCard>
                   <TasksAndRequests tasks={tasks} />
-                </div>
+                </SectionCard>
               </>
             )}
           </motion.div>

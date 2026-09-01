@@ -28,7 +28,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
     >
       <div className="mb-3 flex items-center justify-between px-1">
         <h3 className="text-sm font-black text-main">أسبوعك القادم</h3>
-        <span className="rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary dark:bg-primary/10">
+        <span className="rounded-xl bg-primary-soft px-2.5 py-1 text-[11px] font-black tabular-nums text-primary dark:bg-primary/10">
           {weekTotal} {weekTotal === 1 ? 'حصة' : 'حصص'}
         </span>
       </div>
@@ -40,9 +40,9 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
             <div
               key={day.label + day.count}
               className={cn(
-                'flex flex-col items-center gap-1.5 rounded-xl border px-1 py-2.5 transition-colors duration-300',
+                'flex flex-col items-center gap-2 rounded-xl border px-1 py-2.5 transition-colors duration-300',
                 day.isToday
-                  ? 'border-primary/40 bg-primary-soft dark:bg-primary/10'
+                  ? 'border-primary/30 bg-primary-soft dark:bg-primary/10'
                   : 'border-border bg-surface',
               )}
             >
@@ -61,7 +61,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
                         ? 'bg-primary/60'
                         : 'bg-border',
                   )}
-                  style={{ height: `${day.count > 0 ? 18 + intensity * 82 : 10}%` }}
+                  style={{ height: `${day.count > 0 ? 20 + intensity * 80 : 12}%` }}
                   aria-hidden="true"
                 />
               </div>

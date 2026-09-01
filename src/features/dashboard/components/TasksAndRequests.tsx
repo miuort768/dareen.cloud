@@ -35,22 +35,22 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
             <div
               key={task.id}
               className={cn(
-                'flex items-center gap-2.5 rounded-xl border p-2.5 transition-all',
+                'flex items-center gap-2.5 rounded-2xl border p-3 transition-colors duration-200',
                 task.priority === 'high'
-                  ? 'border-error bg-error-soft'
+                  ? 'border-error-soft bg-error-soft'
                   : task.priority === 'medium'
-                    ? 'border-warning bg-warning-soft'
-                    : 'border-border bg-background dark:border-border dark:bg-surface',
+                    ? 'border-warning-soft bg-warning-soft'
+                    : 'border-border bg-surface dark:border-border dark:bg-hover',
               )}
             >
               <div
                 className={cn(
                   'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
                   task.priority === 'high'
-                    ? 'bg-error-soft text-error'
+                    ? 'bg-card text-error dark:bg-hover dark:text-error'
                     : task.priority === 'medium'
-                      ? 'bg-warning-soft text-warning'
-                      : 'bg-primary-soft text-primary',
+                      ? 'bg-card text-warning dark:bg-hover dark:text-warning'
+                      : 'bg-primary-soft text-primary dark:bg-primary/10 dark:text-primary',
                 )}
               >
                 {task.priority === 'high' ? <AlertTriangle size={13} /> : <Clock size={13} />}

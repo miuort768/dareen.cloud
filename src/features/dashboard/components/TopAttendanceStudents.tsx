@@ -64,62 +64,60 @@ export const TopAttendanceStudents = ({
     ).length
   }, [sessions])
 
+  const leaderCount = topPresentStudents[0]?.count || 1
+
   return (
     <div>
-      <div className="mb-2.5 flex items-center justify-between">
-        <h3 className="flex items-center gap-1.5 text-xs font-bold text-muted dark:text-muted">
-          <Medal size={11} className="text-warning dark:text-primary" />
-          الأكثر حضوراً
-        </h3>
-        <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-warning-soft dark:bg-primary/10">
-          <TrendingUp size={11} className="text-warning dark:text-primary" />
+      <div className="mb-3 flex items-center gap-2">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-warning-soft dark:bg-primary/10">
+          <Medal size={14} className="text-warning dark:text-primary" />
         </div>
+        <h3 className="text-sm font-black text-main dark:text-main">الأكثر حضوراً</h3>
       </div>
 
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         {topPresentStudents.length > 0 ? (
           topPresentStudents.map((stu, i) => (
-            <div
+            <button
               key={`att-${i}`}
-              role="button"
-              tabIndex={0}
+              type="button"
               onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault()
-                  onStudentClick?.({ id: stu.id, name: stu.name })
-                }
-              }}
-              className="flex cursor-pointer items-center justify-between rounded-xl border border-border bg-background p-2 transition-all hover:border-warning focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-card dark:hover:border-border"
+              className="hover:border-warning/40 w-full cursor-pointer rounded-2xl border border-border bg-surface p-2.5 text-start transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-hover dark:hover:border-border"
             >
-              <div className="flex items-center gap-2">
-                <div
-                  className={cn(
-                    'flex h-7 w-7 items-center justify-center rounded-lg text-micro font-semibold',
-                    i === 0
-                      ? 'bg-warning-soft text-warning dark:bg-primary/10 dark:text-primary'
-                      : i === 1
-                        ? 'bg-surface text-main dark:bg-surface dark:text-main'
-                        : i === 2
-                          ? 'bg-warning-soft text-warning dark:bg-primary/10 dark:text-primary'
-                          : 'bg-surface text-muted dark:bg-surface dark:text-muted',
-                  )}
-                >
-                  {i + 1}
-                </div>
-                <div className="min-w-0">
-                  <p className="truncate text-micro font-bold text-main dark:text-main">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex min-w-0 items-center gap-2.5">
+                  <div
+                    className={cn(
+                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-black tabular-nums',
+                      i === 0
+                        ? 'bg-warning-soft text-warning dark:bg-primary/10 dark:text-primary'
+                        : 'bg-hover text-muted dark:bg-surface dark:text-muted',
+                    )}
+                  >
+                    {i + 1}
+                  </div>
+                  <p className="truncate text-[13px] font-bold text-main dark:text-main">
                     {stu.name}
                   </p>
                 </div>
+                <div className="flex shrink-0 items-baseline gap-1">
+                  <span className="text-base font-black tabular-nums text-main dark:text-main">
+                    {stu.count}
+                  </span>
+                  <span className="text-[10px] font-bold text-muted dark:text-muted">حصة</span>
+                </div>
               </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-base font-bold tabular-nums text-main dark:text-main">
-                  {stu.count}
-                </span>
-                <span className="text-micro font-bold text-warning dark:text-primary">حصة</span>
+              <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-hover dark:bg-surface">
+                <div
+                  className={cn(
+                    'h-full rounded-full transition-all duration-700',
+                    i === 0 ? 'bg-warning dark:bg-primary' : 'bg-warning/60 dark:bg-primary/60',
+                  )}
+                  style={{ width: `${Math.max((stu.count / leaderCount) * 100, 8)}%` }}
+                  aria-hidden="true"
+                />
               </div>
-            </div>
+            </button>
           ))
         ) : (
           <div className="flex flex-col items-center justify-center py-6 opacity-50">
@@ -131,14 +129,17 @@ export const TopAttendanceStudents = ({
         )}
       </div>
 
-      <div className="mt-2.5 flex items-center justify-between rounded-xl bg-warning p-2.5 text-on-warning dark:bg-primary">
+      <div className="mt-3 flex items-center justify-between rounded-2xl bg-warning p-3 dark:bg-primary">
         <div>
-          <p className="text-micro font-bold text-on-warning">إجمالي حصص الشهر</p>
-          <p className="text-base font-bold tabular-nums">{totalMonthSessions}</p>
+          <p className="text-[11px] font-bold text-on-warning dark:text-main">إجمالي حصص الشهر</p>
+          <p className="text-base font-black tabular-nums text-on-warning dark:text-on-primary">
+            {totalMonthSessions}
+          </p>
         </div>
-        <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/15 backdrop-blur-sm dark:bg-black/20">
-          <TrendingUp size={12} className="text-on-warning dark:text-on-primary" />
-        </div>
+        <TrendingUp
+          size={18}
+          className="text-on-warning opacity-70 dark:text-on-primary dark:opacity-70"
+        />
       </div>
     </div>
   )

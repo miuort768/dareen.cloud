@@ -82,12 +82,12 @@ export const TeacherSessionTimeline = ({
                   }
                 }}
                 className={cn(
-                  'group/card relative w-[280px] min-w-[280px] shrink-0 cursor-pointer snap-center rounded-xl border p-4 transition-all md:w-[calc(33.333%-14px)]',
+                  'group/card relative w-[280px] min-w-[280px] shrink-0 cursor-pointer snap-center rounded-2xl border p-4 transition-all md:w-[calc(33.333%-14px)]',
                   isCompleted
-                    ? 'border-success bg-success-soft dark:border-success-soft dark:bg-success-soft'
+                    ? 'border-success-soft bg-success-soft dark:border-success-soft dark:bg-success-soft'
                     : isCancelled
-                      ? 'border-error bg-error-soft dark:border-error-soft dark:bg-error-soft'
-                      : 'border-border bg-surface hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-sm dark:border-border dark:bg-card dark:hover:border-border',
+                      ? 'border-error-soft bg-error-soft dark:border-error-soft dark:bg-error-soft'
+                      : 'border-border bg-surface hover:-translate-y-0.5 hover:border-primary/30 dark:border-border dark:bg-card dark:hover:border-border',
                 )}
               >
                 <div className="mb-3 flex items-center justify-between">
@@ -145,9 +145,6 @@ export const TeacherSessionTimeline = ({
                   >
                     {isCompleted ? 'مكتملة' : isCancelled ? 'ملغاة' : 'قادمة'}
                   </span>
-                  {isOngoing && (
-                    <div className="h-2 w-2 animate-pulse rounded-full bg-primary dark:bg-primary" />
-                  )}
                 </div>
               </div>
             )

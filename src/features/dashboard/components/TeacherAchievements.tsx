@@ -29,49 +29,52 @@ export const TeacherAchievements = ({
         {isTeacher && <RankBadge rank={rank} size="sm" />}
       </div>
 
-      <div className="relative mb-4 overflow-hidden rounded-2xl bg-primary p-5 dark:bg-primary">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.1)_0%,transparent_60%)]" />
-        <div className="relative z-10">
-          <div className="mb-2 flex items-center gap-1.5">
-            <TrendingUp size={12} className="text-white/70 dark:text-main" />
-            <span className="text-[11px] font-bold text-white/70 dark:text-main">
-              {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
-            </span>
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-bold tabular-nums text-on-primary">
-              {isTeacher
-                ? (stats.monthNetProfit || 0).toLocaleString('ar-EG')
-                : stats.expectedCollection.toLocaleString('ar-EG')}
-            </span>
-            <span className="text-[11px] font-bold text-white/70">{CURRENCY_SYMBOL}</span>
-          </div>
-          {isTeacher && (
-            <div className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-3 py-1.5 text-[11px] font-bold text-white backdrop-blur-sm">
-              <Award size={10} />
-              {stats.teacherPoints || 0} XP
-            </div>
-          )}
+      <div className="mb-4 overflow-hidden rounded-2xl bg-primary p-5 dark:bg-primary">
+        <div className="mb-2 flex items-center gap-1.5">
+          <TrendingUp size={12} className="text-on-primary opacity-70" />
+          <span className="text-[11px] font-bold text-on-primary opacity-70">
+            {isTeacher ? 'صافي أرباح الشهر (تقديري)' : 'إجمالي التحصيل المستهدف'}
+          </span>
         </div>
+        <div className="flex items-baseline gap-1.5">
+          <span className="text-2xl font-black tabular-nums text-on-primary">
+            {isTeacher
+              ? (stats.monthNetProfit || 0).toLocaleString('ar-EG')
+              : stats.expectedCollection.toLocaleString('ar-EG')}
+          </span>
+          <span className="text-[11px] font-bold text-on-primary opacity-70">
+            {CURRENCY_SYMBOL}
+          </span>
+        </div>
+        {isTeacher && (
+          <div className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-3 py-1.5 text-[11px] font-bold text-on-primary">
+            <Award size={10} />
+            {stats.teacherPoints || 0} XP
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <div className="flex items-center gap-3 rounded-xl border border-error-soft bg-error-soft p-3 dark:border-error-soft dark:bg-error-soft">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-error-soft">
-            <AlertCircle size={14} className="text-error" />
+        <div className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 dark:border-border dark:bg-hover">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-error-soft dark:bg-error-soft">
+            <AlertCircle size={14} className="text-error dark:text-error" />
           </div>
           <div>
-            <span className="text-lg font-bold tabular-nums text-error">{expiredCount}</span>
-            <p className="text-[11px] font-bold text-error">منتهي</p>
+            <span className="text-lg font-black tabular-nums text-main dark:text-main">
+              {expiredCount}
+            </span>
+            <p className="text-[11px] font-bold text-muted dark:text-muted">منتهي</p>
           </div>
         </div>
-        <div className="flex items-center gap-3 rounded-xl border border-warning-soft bg-warning-soft p-3 dark:border-primary/30 dark:bg-primary/5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-warning-soft">
-            <Clock size={14} className="text-warning dark:text-primary" />
+        <div className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 dark:border-border dark:bg-hover">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-warning-soft dark:bg-warning-soft">
+            <Clock size={14} className="text-warning dark:text-warning" />
           </div>
           <div>
-            <span className="text-lg font-bold tabular-nums text-warning">{lowCount}</span>
-            <p className="text-[11px] font-bold text-warning">مستحق</p>
+            <span className="text-lg font-black tabular-nums text-main dark:text-main">
+              {lowCount}
+            </span>
+            <p className="text-[11px] font-bold text-muted dark:text-muted">مستحق</p>
           </div>
         </div>
       </div>

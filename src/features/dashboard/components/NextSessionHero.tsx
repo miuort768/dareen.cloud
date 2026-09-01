@@ -71,16 +71,6 @@ export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
 
   return (
     <div className="relative h-full overflow-hidden rounded-3xl bg-primary p-5 shadow-lg shadow-primary/25 sm:p-6">
-      {/* زخارف زجاجية ناعمة على خلفية الهوية */}
-      <div
-        className="pointer-events-none absolute -start-10 -top-10 h-48 w-48 rounded-full bg-white/10 blur-3xl"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -bottom-12 -end-8 h-36 w-36 rounded-full bg-white/10 blur-3xl"
-        aria-hidden="true"
-      />
-
       <div className="relative z-10">
         <div className="mb-4 flex items-center gap-2">
           <div className="h-2 w-2 animate-pulse rounded-full bg-success" />

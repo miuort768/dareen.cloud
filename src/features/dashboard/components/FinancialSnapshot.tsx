@@ -1,5 +1,4 @@
 ﻿import { TrendingUp, Wallet } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import { getCurrencySymbol } from '@/config/constants'
 
 interface FinancialSnapshotProps {
@@ -22,57 +21,45 @@ export const FinancialSnapshot = ({
       label: 'أرباح هذا الشهر',
       value: monthNetProfit,
       icon: TrendingUp,
-      color: 'text-success',
-      bg: 'bg-success-soft',
-      border: 'border-success-soft',
-      valueColor: 'text-success',
+      tone: 'bg-success-soft text-success dark:bg-success-soft dark:text-success',
     },
     {
       label: 'المستحق لك',
       value: expectedCollection,
-      icon: TrendingUp,
-      color: 'text-primary',
-      bg: 'bg-primary-soft',
-      border: 'border-primary/30',
-      valueColor: 'text-primary',
+      icon: Wallet,
+      tone: 'bg-primary-soft text-primary dark:bg-primary/10 dark:text-primary',
     },
     {
       label: 'الإيرادات',
       value: monthRevenue,
       icon: Wallet,
-      color: 'text-primary',
-      bg: 'bg-primary-soft',
-      border: 'border-primary/30',
-      valueColor: 'text-primary',
+      tone: 'bg-info-soft text-info-strong dark:bg-info-soft dark:text-info-strong',
     },
   ]
 
   return (
     <div>
-      <h3 className="mb-3 flex items-center gap-2 text-[13px] font-bold text-main dark:text-main">
-        <Wallet size={13} className="text-success dark:text-primary" />
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-black text-main dark:text-main">
+        <Wallet size={14} className="text-primary dark:text-primary" />
         الملخص المالي
       </h3>
       <div className="space-y-2.5">
         {items.map((item) => (
           <div
             key={item.label}
-            className={cn('flex items-center gap-3 rounded-xl border p-3', item.bg, item.border)}
+            className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 transition-colors duration-300 dark:border-border dark:bg-hover"
           >
             <div
-              className={cn(
-                'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl',
-                item.bg,
-              )}
+              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${item.tone}`}
             >
-              <item.icon size={16} className={item.color} />
+              <item.icon size={16} />
             </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-[11px] font-bold text-muted dark:text-muted">{item.label}</p>
-            </div>
-            <span className={cn('text-sm font-semibold tabular-nums', item.valueColor)}>
+            <p className="min-w-0 flex-1 truncate text-xs font-bold text-muted dark:text-muted">
+              {item.label}
+            </p>
+            <span className="shrink-0 text-base font-black tabular-nums text-main dark:text-main">
               {item.value.toLocaleString('ar-EG')}{' '}
-              <span className="text-[11px] font-bold">{sym}</span>
+              <span className="text-[11px] font-bold text-muted dark:text-muted">{sym}</span>
             </span>
           </div>
         ))}

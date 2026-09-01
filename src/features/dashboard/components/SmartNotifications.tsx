@@ -1,12 +1,4 @@
-﻿import {
-  AlertCircle,
-  Clock,
-  AlertTriangle,
-  Info,
-  ChevronLeft,
-  BellRing,
-  type LucideIcon,
-} from 'lucide-react'
+﻿import { AlertCircle, Clock, AlertTriangle, Info, BellRing, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { LowBalanceStudent } from '../types'
 
@@ -105,15 +97,15 @@ export const SmartNotifications = ({
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-[13px] font-bold text-main dark:text-main">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
-            <BellRing size={15} className="text-primary dark:text-primary" />
+        <h3 className="flex items-center gap-2 text-sm font-black text-main dark:text-main">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">
+            <BellRing size={14} className="text-primary dark:text-primary" />
           </div>
           مركز التنبيهات
           {urgencyLabel && (
             <span
               className={cn(
-                'rounded px-1.5 py-0.5 text-[10px] font-bold',
+                'rounded-md px-1.5 py-0.5 text-[10px] font-bold',
                 expired.length > 0
                   ? 'bg-error-soft text-error dark:bg-error-soft dark:text-error'
                   : 'bg-warning-soft text-warning dark:bg-warning-soft dark:text-warning',
@@ -133,7 +125,7 @@ export const SmartNotifications = ({
           <div
             key={`alert-${i}`}
             className={cn(
-              'group relative flex items-start gap-3 overflow-hidden rounded-2xl border p-4 transition-all duration-200 hover:shadow-sm',
+              'relative flex items-start gap-3 overflow-hidden rounded-2xl border p-4 transition-colors duration-200',
               alert.bg,
               alert.border,
             )}
@@ -147,17 +139,11 @@ export const SmartNotifications = ({
               <alert.icon size={17} className={alert.iconColor} />
             </div>
             <div className="min-w-0 flex-1">
-              <p className={cn('mb-1 flex items-center gap-1.5 text-[13px] font-bold', alert.text)}>
-                {alert.title}
-              </p>
+              <p className={cn('mb-1 text-[13px] font-bold', alert.text)}>{alert.title}</p>
               <p className="line-clamp-2 text-[11px] font-medium leading-relaxed text-muted dark:text-muted">
                 {alert.desc}
               </p>
             </div>
-            <ChevronLeft
-              size={14}
-              className="mt-0.5 shrink-0 text-muted opacity-0 transition-opacity group-hover:opacity-100 dark:text-muted"
-            />
           </div>
         ))}
       </div>
