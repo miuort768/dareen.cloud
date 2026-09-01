@@ -100,9 +100,12 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
       setTimerSeconds(0)
       localStorage.removeItem(`active_timer_${student.id}`)
       try {
-        await api.delete('/active-sessions', {
+        const res = await api.delete<{ success: boolean; deleted?: number }>('/active-sessions', {
           body: JSON.stringify({ studentId: student.id, subject: en.subject }),
         })
+        if (res && res.deleted === 0) {
+          console.warn('لم تُحذف أي جلسة نشطة في الخادم — قد تكون انتهت مسبقاً')
+        }
       } catch {
         console.warn('فشل إنهاء الجلسة النشطة في الخادم')
       }

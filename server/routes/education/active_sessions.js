@@ -40,6 +40,18 @@ router.get('/my', async (req, res) => {
         } else {
             return res.status(403).json({ error: 'Forbidden: Insufficient permissions' });
         }
+        // تنظيف الجلسات العالقة (أقدم من 6 ساعات) — حماية من مؤقتات لم تُنهَ أبداً
+        const STALE_MS = 6 * 60 * 60 * 1000;
+        const stale = activeSessions.filter(
+            (s) => !s.startedAt || Date.now() - new Date(s.startedAt).getTime() > STALE_MS
+        );
+        if (stale.length > 0) {
+            await prisma.activeSession.deleteMany({
+                where: { id: { in: stale.map((s) => s.id) } }
+            });
+            const staleIds = new Set(stale.map((s) => s.id));
+            activeSessions = activeSessions.filter((s) => !staleIds.has(s.id));
+        }
         res.json(activeSessions);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Fetch active sessions');
@@ -73,14 +85,17 @@ router.post('/', async (req, res) => {
 
 router.delete('/', async (req, res) => {
     if (req.user.role !== 'teacher' && req.user.role !== 'admin') return res.status(403).json({ error: 'Forbidden' });
-    const { studentId, subject } = req.body;
+    // يقبل المعرفات من الجسم أو من query — يمنع الحذف الصامت عند فقدان الجسم
+    const studentId = (req.body && req.body.studentId) || req.query.studentId;
+    const subject = (req.body && req.body.subject) || req.query.subject;
     try {
-        if (studentId && subject) {
-            await prisma.activeSession.deleteMany({
-                where: { studentId, subject }
-            });
+        if (!studentId || !subject) {
+            return res.status(400).json({ error: 'studentId and subject are required' });
         }
-        res.json({ success: true });
+        const result = await prisma.activeSession.deleteMany({
+            where: { studentId, subject }
+        });
+        res.json({ success: true, deleted: result.count });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Delete active session');
     }

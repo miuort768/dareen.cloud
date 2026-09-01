@@ -26,7 +26,7 @@ import { format } from 'date-fns'
 const teacherLabel = (en: { teacher?: string; teacherName?: string }): string =>
   en.teacherName || en.teacher || ''
 
-const DAY_CHIPS = ['���', '�����', '������', '������', '����', '����', '���']
+const DAY_CHIPS = ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت']
 
 const dayChip = (day: string): string => {
   const idx = ARABIC_DAYS.indexOf(normalizeDayName(day) as (typeof ARABIC_DAYS)[number])
@@ -36,7 +36,7 @@ const dayChip = (day: string): string => {
 export const StudentDashboard = () => {
   const academyName = useAcademyName()
   useEffect(() => {
-    document.title = `���� ���� ������ | ${academyName}`
+    document.title = `لوحة تحكم الطالب | ${academyName}`
   }, [academyName])
   const currentUser = useCurrentUser()
   const queryClient = useQueryClient()
@@ -63,7 +63,7 @@ export const StudentDashboard = () => {
   const pointLogs = useMemo(() => data?.pointLogs ?? [], [data])
   const enrollments = useMemo(() => studentData?.enrollments || [], [studentData])
 
-  // ?? Live session timer: ���� /active-sessions/my �� 5 ����� (������� ���� �����) ??
+  // ── Live session timer: يرصد /active-sessions/my كل 5 ثوانٍ (المعلمة بدأت الحصة) ──
   const { data: activeSessions } = useQuery<StudentActiveSession[]>({
     queryKey: ['active-sessions'],
     queryFn: () => api.get<StudentActiveSession[]>('/active-sessions/my'),
@@ -72,7 +72,7 @@ export const StudentDashboard = () => {
   })
   const activeSession = useMemo(() => activeSessions?.[0] ?? null, [activeSessions])
 
-  // ?? Stats ??????????????????????????????????????????????????????????????????
+  // ── Stats ──────────────────────────────────────────────────────────────────
   const stats = useMemo<StudentStats>(() => {
     const attendance = sessions.filter((s) => s.status === 'completed').length
     const absence = sessions.filter((s) => s.status === 'cancelled').length
@@ -93,7 +93,7 @@ export const StudentDashboard = () => {
     }
   }, [sessions, enrollments])
 
-  // ?? Next session: today's remaining slots first, then the week ahead ??????
+  // ── Next session: today's remaining slots first, then the week ahead ──────
   const nextSession = useMemo<NextSessionInfo | null>(() => {
     const todayIdx = new Date().getDay()
     const nowMinutes = new Date().getHours() * 60 + new Date().getMinutes()
@@ -110,7 +110,7 @@ export const StudentDashboard = () => {
         const minutes = to24Minutes(slot.hour, slot.period)
         if (dayOffset === 0 && minutes <= nowMinutes) return
         candidates.push({
-          subject: en.subject || '����',
+          subject: en.subject || 'دورة',
           teacher: teacherLabel(en),
           hour: String(parseInt(String(slot.hour), 10) || ''),
           period: normalizePeriod(slot.period),
@@ -138,7 +138,7 @@ export const StudentDashboard = () => {
     }
   }, [enrollments])
 
-  // ?? Today's timeline with status from session records ?????????????????????
+  // ── Today's timeline with status from session records ─────────────────────
   const todayItems = useMemo<TodayTimelineItem[]>(() => {
     const todayName = ARABIC_DAYS[new Date().getDay()] || ''
     const todayStr = format(new Date(), 'yyyy-MM-dd')
@@ -146,7 +146,7 @@ export const StudentDashboard = () => {
     enrollments.forEach((en) => {
       ;(en.schedule || []).forEach((slot) => {
         if (normalizeDayName(slot.day) !== todayName) return
-        const subject = en.subject || '����'
+        const subject = en.subject || 'دورة'
         const matched = sessions.find(
           (s) =>
             s.subject === subject &&
@@ -173,7 +173,7 @@ export const StudentDashboard = () => {
     return items.sort((a, b) => a.minutes - b.minutes)
   }, [enrollments, sessions, activeSession])
 
-  // ?? Subjects board data ???????????????????????????????????????????????????
+  // ── Subjects board data ───────────────────────────────────────────────────
   const subjects = useMemo<SubjectProgress[]>(
     () =>
       enrollments.map((en, idx) => {
@@ -182,8 +182,8 @@ export const StudentDashboard = () => {
         const days = [...new Set((en.schedule || []).map((s) => dayChip(s.day)))]
         return {
           id: en.id || `en-${idx}`,
-          subject: en.subject || '����',
-          teacher: teacherLabel(en) || '�',
+          subject: en.subject || 'دورة',
+          teacher: teacherLabel(en) || '—',
           used,
           total,
           percent: total > 0 ? Math.min(Math.round((used / total) * 100), 100) : 0,
@@ -220,7 +220,7 @@ export const StudentDashboard = () => {
       <div className="flex min-h-screen items-center justify-center bg-background" dir="rtl">
         <div className="max-w-sm space-y-4 rounded-none border border-border bg-surface p-8 text-center">
           <p className="text-sm text-muted">
-            {error.message || '��� ����� ��������. ���� �� ������ ���������.'}
+            {error.message || 'فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.'}
           </p>
           <button
             onClick={() =>
@@ -228,7 +228,7 @@ export const StudentDashboard = () => {
             }
             className="text-sm font-semibold text-primary hover:underline"
           >
-            ����� ��������
+            إعادة المحاولة
           </button>
         </div>
       </div>

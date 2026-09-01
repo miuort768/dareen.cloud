@@ -239,6 +239,8 @@ class ApiClient {
       ...options,
       method: 'DELETE',
       headers: {
+        // DELETE مع جسم JSON يحتاج Content-Type وإلا يتجاهله express.json()
+        ...(options.body ? { 'Content-Type': 'application/json' } : {}),
         ...this.getAuthHeader(),
         ...(options.headers as Record<string, string>),
       },
