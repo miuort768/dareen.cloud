@@ -137,8 +137,7 @@ export const CurrenciesSection = ({
       {activeTab === 'currencies' && (
         <>
           <div className="mb-5 rounded-xl border border-primary/20 bg-primary-soft p-4 text-[11px] font-bold text-primary">
-            العملات المدعومة في المنصة ثابتة (جنيه مصري، دولار، دينار كويتي، بحريني، أردني، ريال
-            سعودي، قطري، عماني، درهم إماراتي).
+            عملة النظام الموحدة هي الجنيه المصري (ج.م) — لا توجد عملات أخرى في المنصة.
           </div>
 
           <div className="overflow-x-auto rounded-xl border border-divider">
@@ -216,12 +215,12 @@ export const CurrenciesSection = ({
             <InputField
               value={newRate.fromCurrency}
               onChange={(e) => setNewRate((p) => ({ ...p, fromCurrency: e.target.value }))}
-              placeholder="من (USD)"
+              placeholder="من (EGP)"
             />
             <InputField
               value={newRate.toCurrency}
               onChange={(e) => setNewRate((p) => ({ ...p, toCurrency: e.target.value }))}
-              placeholder="إلى (KWD)"
+              placeholder="إلى (EGP)"
             />
             <InputField
               value={newRate.buyRate}

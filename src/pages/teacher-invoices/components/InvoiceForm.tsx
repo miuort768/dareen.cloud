@@ -132,14 +132,7 @@ export const InvoiceForm = ({
             onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
             className={inputClasses}
           >
-            <option value="KWD">د.ك (KWD)</option>
-            <option value="SAR">﷼ (SAR)</option>
-            <option value="AED">د.إ (AED)</option>
-            <option value="QAR">﷼ (QAR)</option>
-            <option value="OMR">﷼ (OMR)</option>
-            <option value="BHD">د.ب (BHD)</option>
             <option value="EGP">ج.م (EGP)</option>
-            <option value="USD">$ (USD)</option>
           </select>
         </div>
         <div>

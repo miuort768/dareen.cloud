@@ -425,9 +425,7 @@ export const ParentPaymentHistory = () => {
                         </td>
                         <td className="px-4 py-3 text-center font-mono text-xs font-bold tabular-nums text-main">
                           {(Number(inv.amount) || 0).toLocaleString()}{' '}
-                          <span className="text-[10px] text-muted">
-                            {inv.currency || CURRENCY_SYMBOL}
-                          </span>
+                          <span className="text-[10px] text-muted">{CURRENCY_SYMBOL}</span>
                         </td>
                         <td className="px-4 py-3 text-center text-[11px] text-muted">{inv.date}</td>
                         <td className="px-4 py-3 text-center">
@@ -518,9 +516,7 @@ export const ParentPaymentHistory = () => {
                           <p className="mb-0.5 text-[9px] font-bold text-muted">المبلغ</p>
                           <span className="font-mono text-xs font-bold tabular-nums text-main">
                             {(Number(inv.amount) || 0).toLocaleString()}{' '}
-                            <span className="text-[9px] text-muted">
-                              {inv.currency || CURRENCY_SYMBOL}
-                            </span>
+                            <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span>
                           </span>
                         </div>
                         <div className="h-6 w-px bg-divider" />

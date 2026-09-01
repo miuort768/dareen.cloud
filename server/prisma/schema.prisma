@@ -23,20 +23,20 @@ model User {
 }
 
 model Teacher {
-  id          String       @id @default(cuid())
-  name        String
-  phone1      String?
-  phone2      String?
-  subject     String?
-  price       Int          @default(0)
-  email       String?
-  username    String?      @unique
-  password    String?
-  points      Int          @default(0)
-  currency    String       @default("EGP")
-  deletedAt   DateTime?    @map("deleted_at")
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
+  id        String    @id @default(cuid())
+  name      String
+  phone1    String?
+  phone2    String?
+  subject   String?
+  price     Int       @default(0)
+  email     String?
+  username  String?   @unique
+  password  String?
+  points    Int       @default(0)
+  currency  String    @default("EGP")
+  deletedAt DateTime? @map("deleted_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
 
   enrollments    Enrollment[]
   sessions       Session[]
@@ -54,30 +54,30 @@ model Teacher {
 }
 
 model Student {
-  id           String       @id @default(cuid())
+  id           String    @id @default(cuid())
   name         String
   grade        String?
-  parentPhone  String?      @map("parent_phone")
-  studentPhone  String?     @map("student_phone")
+  parentPhone  String?   @map("parent_phone")
+  studentPhone String?   @map("student_phone")
   curriculum   String?
   notes        String?
-  sessionPrice Int          @default(0) @map("session_price")
-  currency     String       @default("KWD")
+  sessionPrice Int       @default(0) @map("session_price")
+  currency     String    @default("EGP")
   parentId     String?
-  parent       Parent?      @relation(fields: [parentId], references: [id], onDelete: SetNull)
-  totalPoints  Int          @default(0) @map("total_points")
+  parent       Parent?   @relation(fields: [parentId], references: [id], onDelete: SetNull)
+  totalPoints  Int       @default(0) @map("total_points")
   badges       String?
-  username     String?      @unique
+  username     String?   @unique
   password     String?
-  deletedAt    DateTime?    @map("deleted_at")
-  createdAt    DateTime     @default(now()) @map("created_at")
-  updatedAt    DateTime     @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
 
-  enrollments   Enrollment[]
-  pointsLogs    PointsLog[]
-  sessions      Session[]
-  invoices      StudentInvoice[]
-  evaluations   Evaluation[]
+  enrollments    Enrollment[]
+  pointsLogs     PointsLog[]
+  sessions       Session[]
+  invoices       StudentInvoice[]
+  evaluations    Evaluation[]
   activeSessions ActiveSession[]
 
   @@index([parentId])
@@ -104,25 +104,25 @@ model Parent {
 }
 
 model Enrollment {
-  id               Int      @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   studentId        String
-  student          Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student          Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
   teacherId        String?
-  teacher          Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
-  teacherFallback  String?  @map("teacher")
+  teacher          Teacher?  @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherFallback  String?   @map("teacher")
   subject          String?
   curr             String?
   curriculum       String?
-  sessionsTotal    Int      @default(0) @map("sessions_total")
-  sessionsUsed     Int      @default(0) @map("sessions_used")
-  teacherPrice     Int?     @map("teacher_price")
+  sessionsTotal    Int       @default(0) @map("sessions_total")
+  sessionsUsed     Int       @default(0) @map("sessions_used")
+  teacherPrice     Int?      @map("teacher_price")
   schedule         String?
-  nextSessionNotes String?  @map("next_session_notes")
-  isFrozen         Int?     @default(0) @map("isFrozen")
-  frozenReason     String?  @map("frozenReason")
-  deletedAt       DateTime? @map("deleted_at")
-  createdAt        DateTime @default(now()) @map("created_at")
-  updatedAt        DateTime @updatedAt @map("updated_at")
+  nextSessionNotes String?   @map("next_session_notes")
+  isFrozen         Int?      @default(0) @map("isFrozen")
+  frozenReason     String?   @map("frozenReason")
+  deletedAt        DateTime? @map("deleted_at")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
 
   @@index([studentId])
   @@index([teacherId])
@@ -144,30 +144,30 @@ model PointsLog {
 // ========== Phase 2: Education Domain ==========
 
 model Session {
-  id               String   @id @default(cuid())
-  studentId        String
-  student          Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  teacherId        String?
-  teacher          Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
-  studentName      String?
-  teacherName      String?
-  subject          String?
-  date             String   @map("date")
-  day              String?
-  time             String?
-  price            Int      @default(0)
-  teacherPrice     Int?     @default(0) @map("teacherPrice")
-  studentCurrency  String?
-  teacherCurrency  String?
-  exchangeRateFrom String?
-  exchangeRateTo   String?
+  id                String   @id @default(cuid())
+  studentId         String
+  student           Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacherId         String?
+  teacher           Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  studentName       String?
+  teacherName       String?
+  subject           String?
+  date              String   @map("date")
+  day               String?
+  time              String?
+  price             Int      @default(0)
+  teacherPrice      Int?     @default(0) @map("teacherPrice")
+  studentCurrency   String?
+  teacherCurrency   String?
+  exchangeRateFrom  String?
+  exchangeRateTo    String?
   exchangeRateValue Decimal? @db.Decimal(18, 8)
-  status           String   @default("scheduled")
-  topics           String?
-  homework         String?
-  needsCompensation Int?    @default(0) @map("needsCompensation")
-  isArchived       Int?     @default(0) @map("is_archived")
-  createdAt        DateTime @default(now()) @map("created_at")
+  status            String   @default("scheduled")
+  topics            String?
+  homework          String?
+  needsCompensation Int?     @default(0) @map("needsCompensation")
+  isArchived        Int?     @default(0) @map("is_archived")
+  createdAt         DateTime @default(now()) @map("created_at")
 
   @@index([studentId])
   @@index([teacherId])
@@ -213,18 +213,18 @@ model ActiveSession {
 }
 
 model Evaluation {
-  id         String   @id @default(cuid())
-  studentId  String
-  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  teacherId  String
-  teacher    Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  id          String   @id @default(cuid())
+  studentId   String
+  student     Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacherId   String
+  teacher     Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   teacherName String?
-  sessionId  String?  @map("sessionId")
-  date       String
-  rating     String
-  notes      String?
-  points     Int?     @default(0)
-  createdAt  DateTime @default(now()) @map("created_at")
+  sessionId   String?  @map("sessionId")
+  date        String
+  rating      String
+  notes       String?
+  points      Int?     @default(0)
+  createdAt   DateTime @default(now()) @map("created_at")
 
   @@index([studentId])
   @@index([teacherId])
@@ -232,18 +232,18 @@ model Evaluation {
 }
 
 model TrialSession {
-  id           String   @id @default(cuid())
-  studentName  String
-  parentPhone  String
-  subject      String?
-  teacherId    String?
-  teacher      Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
-  teacherName  String?
-  date         String
-  time         String?
-  status       String   @default("pending")
-  notes        String?
-  createdAt    DateTime @default(now()) @map("created_at")
+  id          String   @id @default(cuid())
+  studentName String
+  parentPhone String
+  subject     String?
+  teacherId   String?
+  teacher     Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherName String?
+  date        String
+  time        String?
+  status      String   @default("pending")
+  notes       String?
+  createdAt   DateTime @default(now()) @map("created_at")
 
   @@index([teacherId])
   @@index([status])
@@ -252,14 +252,14 @@ model TrialSession {
 }
 
 model TeacherAvailability {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   teacherId   String
-  teacher     Teacher  @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacher     Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   teacherName String
   dayOfWeek   Int
   startTime   String
   endTime     String
-  isAvailable Int?     @default(1) @map("isAvailable")
+  isAvailable Int?    @default(1) @map("isAvailable")
 
   @@index([teacherId])
   @@map("teacher_availability")
@@ -281,8 +281,8 @@ model ExchangeRate {
   id            Int      @id @default(autoincrement())
   fromCurrency  String
   toCurrency    String
-  buyRate       Decimal @db.Decimal(18, 8)
-  sellRate      Decimal @db.Decimal(18, 8)
+  buyRate       Decimal  @db.Decimal(18, 8)
+  sellRate      Decimal  @db.Decimal(18, 8)
   effectiveDate DateTime
   notes         String?
   createdAt     DateTime @default(now())
@@ -300,16 +300,16 @@ model FinancialSetting {
 }
 
 model StudentInvoice {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   studentId     String
-  student       Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student       Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
   studentName   String?
   amount        Int
   currency      String?
   description   String?
   date          String
   dueDate       String?
-  status        String   @default("unpaid")
+  status        String    @default("unpaid")
   paymentMethod String?
   notes         String?
   items         String?
@@ -324,16 +324,16 @@ model StudentInvoice {
 }
 
 model TeacherInvoice {
-  id               String   @id @default(cuid())
+  id               String    @id @default(cuid())
   teacherId        String?
-  teacher          Teacher? @relation(fields: [teacherId], references: [id], onDelete: SetNull)
-  teacherName      String?  @map("teacher")
+  teacher          Teacher?  @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  teacherName      String?   @map("teacher")
   specialization   String?
   amount           Int
   currency         String?
   paymentMethod    String?
-  status           String   @default("unpaid")
-  personalExpenses Int?     @default(0) @map("personalExpenses")
+  status           String    @default("unpaid")
+  personalExpenses Int?      @default(0) @map("personalExpenses")
   date             String
   isArchived       Int?      @default(0) @map("is_archived")
   paidAt           String?
@@ -448,19 +448,19 @@ model Lead {
 }
 
 model JobApplication {
-  id              String   @id @default(cuid())
-  name            String
-  phone           String
-  whatsapp        String?
-  position        String
-  qualification   String
-  grade           String?
-  subject         String?
-  graduationYear  String?
-  onlineYears     String?
-  curriculums     String?
-  contacted       Int?     @default(0)
-  createdAt       DateTime @default(now()) @map("created_at")
+  id             String   @id @default(cuid())
+  name           String
+  phone          String
+  whatsapp       String?
+  position       String
+  qualification  String
+  grade          String?
+  subject        String?
+  graduationYear String?
+  onlineYears    String?
+  curriculums    String?
+  contacted      Int?     @default(0)
+  createdAt      DateTime @default(now()) @map("created_at")
 
   @@index([position])
   @@index([phone])
@@ -468,7 +468,7 @@ model JobApplication {
 }
 
 model ContactMessage {
-  id        String   @id @default(cuid())
+  id         String   @id @default(cuid())
   name       String?
   phone      String
   subject    String?
@@ -481,15 +481,15 @@ model ContactMessage {
 }
 
 model Conversation {
-  id        String   @id @default(cuid())
-  name      String?
-  isGroup   Int?     @default(0) @map("isGroup")
-  createdBy String?
-  isLive    Int?     @default(0) @map("isLive")
+  id         String   @id @default(cuid())
+  name       String?
+  isGroup    Int?     @default(0) @map("isGroup")
+  createdBy  String?
+  isLive     Int?     @default(0) @map("isLive")
   meetingUrl String?  @map("meetingUrl")
-  createdAt DateTime @default(now()) @map("createdAt")
+  createdAt  DateTime @default(now()) @map("createdAt")
 
-  members ConversationMember[]
+  members  ConversationMember[]
   messages Message[]
 
   @@index([createdBy])
@@ -521,14 +521,14 @@ model Message {
 }
 
 model ChatProfile {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
-  username  String   @unique
+  username  String    @unique
   password  String
   avatar    String?
-  status    String?  @default("offline")
+  status    String?   @default("offline")
   lastSeen  DateTime?
-  createdAt DateTime @default(now()) @map("createdAt")
+  createdAt DateTime  @default(now()) @map("createdAt")
 
   @@map("chat_profiles")
 }
@@ -581,18 +581,18 @@ model Announcement {
 }
 
 model Notification {
-  id             String   @id @default(cuid())
+  id             String  @id @default(cuid())
   senderId       String?
   receiverId     String?
   senderName     String?
   title          String
   message        String?
-  type           String?  @default("info")
+  type           String? @default("info")
   time           String
-  read           Int?     @default(0)
+  read           Int?    @default(0)
   conversationId String?
   link           String?
-  isDismissed    Int?     @default(0) @map("is_dismissed")
+  isDismissed    Int?    @default(0) @map("is_dismissed")
 
   @@index([receiverId])
   @@index([senderId])
@@ -610,19 +610,19 @@ enum AccountType {
 }
 
 model Account {
-  id                  String      @id @default(cuid())
-  username            String      @unique
-  normalizedLogin     String      @unique
-  passwordHash        String
-  accountType         AccountType
-  entityId            String
-  tokenVersion        Int         @default(0)
-  isActive            Boolean     @default(true)
-  isLocked            Boolean     @default(false)
-  lastLoginAt         DateTime?
+  id                   String      @id @default(cuid())
+  username             String      @unique
+  normalizedLogin      String      @unique
+  passwordHash         String
+  accountType          AccountType
+  entityId             String
+  tokenVersion         Int         @default(0)
+  isActive             Boolean     @default(true)
+  isLocked             Boolean     @default(false)
+  lastLoginAt          DateTime?
   lastPasswordChangeAt DateTime?
-  createdAt           DateTime    @default(now())
-  updatedAt           DateTime    @updatedAt
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
 
   @@index([accountType, entityId])
   @@map("accounts")
@@ -631,7 +631,7 @@ model Account {
 // ========== Phase 5: System Domain ==========
 
 model SystemSetting {
-  key   String @id
+  key   String  @id
   value String?
 
   @@map("system_settings")
@@ -670,12 +670,12 @@ model AuditLog {
   timestamp  DateTime @default(now())
 
   // Sprint 2.1 — Enhanced Audit fields
-  accountId  String?
-  ipAddress  String?
-  userAgent  String?
-  status     String   @default("SUCCESS")
-  requestId  String?
-  metadata   Json?
+  accountId String?
+  ipAddress String?
+  userAgent String?
+  status    String  @default("SUCCESS")
+  requestId String?
+  metadata  Json?
 
   @@index([userId])
   @@index([action])
@@ -746,12 +746,12 @@ model PasswordResetToken {
 // ========== RBAC ==========
 
 model Role {
-  id          Int              @id @default(autoincrement())
-  name        String           @unique
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
   label       String
   description String?
-  isSystem    Int?             @default(0)
-  createdAt   DateTime         @default(now())
+  isSystem    Int?     @default(0)
+  createdAt   DateTime @default(now())
 
   permissions RolePermission[]
   userRoles   UserRole[]
@@ -760,8 +760,8 @@ model Role {
 }
 
 model Permission {
-  id          Int              @id @default(autoincrement())
-  key         String           @unique
+  id          Int     @id @default(autoincrement())
+  key         String  @unique
   label       String
   group       String
   description String?
@@ -774,7 +774,7 @@ model Permission {
 model RolePermission {
   roleId       Int
   permissionId Int
-  granted      Int        @default(1)
+  granted      Int @default(1)
 
   role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
   permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
@@ -784,18 +784,18 @@ model RolePermission {
 }
 
 model TeacherPaymentSetting {
-  id              String   @id @default(cuid())
-  teacherId       String   @map("teacher_id")
-  method          String   // "wallet" | "instapay" | "bank_transfer"
-  walletProvider  String?  @map("wallet_provider") // "vodafone" | "etisalat" | "orange"
-  walletPhone     String?  @map("wallet_phone") // 11-digit phone for wallet
-  instapayId      String?  @map("instapay_id")
-  accountHolder   String?  @map("account_holder") // instapay or bank
-  instapayPhone   String?  @map("instapay_phone") // phone linked to instapay
-  iban            String?
-  bankName        String?  @map("bank_name")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  id             String   @id @default(cuid())
+  teacherId      String   @map("teacher_id")
+  method         String // "wallet" | "instapay" | "bank_transfer"
+  walletProvider String?  @map("wallet_provider") // "vodafone" | "etisalat" | "orange"
+  walletPhone    String?  @map("wallet_phone") // 11-digit phone for wallet
+  instapayId     String?  @map("instapay_id")
+  accountHolder  String?  @map("account_holder") // instapay or bank
+  instapayPhone  String?  @map("instapay_phone") // phone linked to instapay
+  iban           String?
+  bankName       String?  @map("bank_name")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
   teacher Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
 

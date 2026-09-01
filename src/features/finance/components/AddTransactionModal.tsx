@@ -111,9 +111,6 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 className="w-full appearance-none rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
               >
                 <option value="EGP">جنيه مصري (ج.م)</option>
-                <option value="KWD">دينار كويتي (د.ك)</option>
-                <option value="SAR">ريال سعودي (ر.س)</option>
-                <option value="AED">درهم إماراتي (د.إ)</option>
               </select>
             </div>
           </div>

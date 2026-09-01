@@ -80,7 +80,7 @@ async function getAlerts() {
         if (overdueResult.length > 0) {
             warning.push({
                 type: 'overdue_invoices',
-                message: `${overdueResult.length} فواتير متأخرة (إجمالي ${overdueTotal.toLocaleString()} د.ك)`,
+                message: `${overdueResult.length} فواتير متأخرة (إجمالي ${overdueTotal.toLocaleString()} ج.م)`,
                 count: overdueResult.length,
                 severity: 'warning',
             });

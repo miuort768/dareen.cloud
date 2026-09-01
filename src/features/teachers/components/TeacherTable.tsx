@@ -56,19 +56,12 @@ const getSubjectStyle = (subject?: string) => {
 }
 
 const currencySymbolMap: Record<string, string> = {
-  KWD: 'د.ك',
-  SAR: 'ر.س',
   EGP: 'ج.م',
-  AED: 'د.إ',
-  QAR: 'ر.ق',
-  OMR: 'ر.ع',
-  BHD: 'د.ب',
-  USD: '$',
 }
 
 const getCurrencySymbol = (currency?: string) => {
   if (!currency) return CURRENCY_SYMBOL
-  return currencySymbolMap[currency.toUpperCase()] || `${currency} `
+  return currencySymbolMap[currency.toUpperCase()] || CURRENCY_SYMBOL
 }
 
 const Tooltip = ({ label, children }: { label: string; children: React.ReactNode }) => (

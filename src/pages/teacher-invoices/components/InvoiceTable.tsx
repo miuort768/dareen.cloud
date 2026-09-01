@@ -96,12 +96,12 @@ export const InvoiceTable = memo(
                     <span className="text-micro font-medium text-muted">{inv.specialization}</span>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs font-bold text-muted">
-                    {inv.amount.toLocaleString()} {inv.currency || CURRENCY_SYMBOL}
+                    {inv.amount.toLocaleString()} {CURRENCY_SYMBOL}
                   </td>
                   <td className="px-4 py-3 text-center">
                     <Badge variant="success" size="sm">
                       {(inv.amount - (inv.personalExpenses || 0)).toLocaleString()}{' '}
-                      {inv.currency || CURRENCY_SYMBOL}
+                      {CURRENCY_SYMBOL}
                     </Badge>
                   </td>
                   <td className="px-4 py-3">
@@ -167,7 +167,7 @@ export const InvoiceTable = memo(
                     <div>
                       <p className="mb-0.5 text-micro font-bold uppercase text-muted">المبلغ</p>
                       <span className="font-mono text-sm font-bold text-main">
-                        {inv.amount.toLocaleString()} {inv.currency || CURRENCY_SYMBOL}
+                        {inv.amount.toLocaleString()} {CURRENCY_SYMBOL}
                       </span>
                     </div>
                     <div className="h-6 w-px bg-border" />
@@ -175,7 +175,7 @@ export const InvoiceTable = memo(
                       <p className="mb-0.5 text-micro font-bold uppercase text-muted">الصافي</p>
                       <span className="text-xs font-bold text-success-dark">
                         {(inv.amount - (inv.personalExpenses || 0)).toLocaleString()}{' '}
-                        {inv.currency || CURRENCY_SYMBOL}
+                        {CURRENCY_SYMBOL}
                       </span>
                     </div>
                   </div>

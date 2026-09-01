@@ -409,9 +409,7 @@ export const StudentInvoices = () => {
                       <td className="px-4 py-3 text-center">
                         <span className="text-sm font-bold tabular-nums text-main">
                           {money(inv.amount).toLocaleString()}{' '}
-                          <span className="text-xs text-muted">
-                            {inv.currency || CURRENCY_SYMBOL}
-                          </span>
+                          <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span>
                         </span>
                       </td>
                       <td className="px-4 py-3 text-center text-xs text-muted">
@@ -499,9 +497,7 @@ export const StudentInvoices = () => {
                       <p className="mb-0.5 text-[10px] text-muted">المبلغ</p>
                       <span className="text-sm font-bold tabular-nums text-main">
                         {money(inv.amount).toLocaleString()}{' '}
-                        <span className="text-xs text-muted">
-                          {inv.currency || CURRENCY_SYMBOL}
-                        </span>
+                        <span className="text-xs text-muted">{CURRENCY_SYMBOL}</span>
                       </span>
                     </div>
                     <div className="h-8 w-px bg-border" />

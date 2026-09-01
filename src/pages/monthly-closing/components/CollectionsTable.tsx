@@ -87,7 +87,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
                     </span>
                   </td>
                   <td className="px-4 py-4 text-center text-xs font-bold text-success">
-                    {item.amount.toLocaleString()} {item.currency || CURRENCY_SYMBOL}
+                    {item.amount.toLocaleString()} {CURRENCY_SYMBOL}
                   </td>
                   <td className="px-4 py-4 text-center font-mono text-micro text-muted">
                     {item.date}
@@ -129,7 +129,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
                   </span>
                 </div>
                 <span className="me-2 text-xs font-bold text-success">
-                  {item.amount.toLocaleString()} {item.currency || CURRENCY_SYMBOL}
+                  {item.amount.toLocaleString()} {CURRENCY_SYMBOL}
                 </span>
               </div>
               <div className="flex items-center justify-between">

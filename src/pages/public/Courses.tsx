@@ -106,7 +106,7 @@ export const Courses = () => {
         },
         offers: {
           '@type': 'Offer',
-          priceCurrency: 'SAR',
+          priceCurrency: 'EGP',
           price: '0',
           availability: 'https://schema.org/InStock',
         },

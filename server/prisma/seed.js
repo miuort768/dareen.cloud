@@ -18,39 +18,17 @@ if (process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith('postgresql'
 
 const currencies = [
   { code: 'EGP', name: 'جنيه مصري', symbol: 'ج.م', isActive: 1, sortOrder: 1 },
-  { code: 'USD', name: 'دولار أمريكي', symbol: '$', isActive: 1, sortOrder: 2 },
-  { code: 'KWD', name: 'دينار كويتي', symbol: 'د.ك', isActive: 1, sortOrder: 3 },
-  { code: 'SAR', name: 'ريال سعودي', symbol: '﷼', isActive: 1, sortOrder: 4 },
-  { code: 'AED', name: 'درهم إماراتي', symbol: 'د.إ', isActive: 1, sortOrder: 5 },
-  { code: 'QAR', name: 'ريال قطري', symbol: '﷼', isActive: 1, sortOrder: 6 },
-  { code: 'OMR', name: 'ريال عماني', symbol: '﷼', isActive: 1, sortOrder: 7 },
-  { code: 'BHD', name: 'دينار بحريني', symbol: 'د.ب', isActive: 1, sortOrder: 8 },
-  { code: 'JOD', name: 'دينار أردني', symbol: 'د.أ', isActive: 1, sortOrder: 9 },
 ];
 
 const financialSettings = [
   { key: 'reportCurrency', value: 'EGP' },
-  { key: 'decimalPlaces', value: '3' },
+  { key: 'decimalPlaces', value: '2' },
   { key: 'roundingMode', value: 'HALF_UP' },
   { key: 'autoUpdateRates', value: 'false' },
 ];
 
-const defaultRates = [
-  { fromCurrency: 'KWD', toCurrency: 'EGP', buyRate: 160.00, sellRate: 160.00 },
-  { fromCurrency: 'KWD', toCurrency: 'SAR', buyRate: 12.40, sellRate: 12.50 },
-  { fromCurrency: 'KWD', toCurrency: 'AED', buyRate: 12.10, sellRate: 12.20 },
-  { fromCurrency: 'KWD', toCurrency: 'QAR', buyRate: 11.90, sellRate: 12.00 },
-  { fromCurrency: 'KWD', toCurrency: 'OMR', buyRate: 1.28, sellRate: 1.30 },
-  { fromCurrency: 'KWD', toCurrency: 'BHD', buyRate: 1.24, sellRate: 1.26 },
-  { fromCurrency: 'KWD', toCurrency: 'USD', buyRate: 3.30, sellRate: 3.32 },
-  { fromCurrency: 'EGP', toCurrency: 'KWD', buyRate: 0.00625, sellRate: 0.00625 },
-  { fromCurrency: 'SAR', toCurrency: 'KWD', buyRate: 0.080, sellRate: 0.081 },
-  { fromCurrency: 'AED', toCurrency: 'KWD', buyRate: 0.082, sellRate: 0.083 },
-  { fromCurrency: 'QAR', toCurrency: 'KWD', buyRate: 0.084, sellRate: 0.085 },
-  { fromCurrency: 'OMR', toCurrency: 'KWD', buyRate: 0.77, sellRate: 0.78 },
-  { fromCurrency: 'BHD', toCurrency: 'KWD', buyRate: 0.80, sellRate: 0.81 },
-  { fromCurrency: 'USD', toCurrency: 'KWD', buyRate: 0.30, sellRate: 0.31 },
-];
+// عملة النظام الموحدة هي الجنيه المصري — لا حاجة لأسعار صرف
+const defaultRates = [];
 
 async function main() {
   for (const c of currencies) {
@@ -60,6 +38,12 @@ async function main() {
       create: c,
     });
   }
+
+  // العملة الموحدة للنظام هي الجنيه المصري — إلغاء تنشيط أي عملات قديمة
+  await prisma.currency.updateMany({
+    where: { code: { not: 'EGP' } },
+    data: { isActive: 0 },
+  });
 
   for (const s of financialSettings) {
     await prisma.financialSetting.upsert({

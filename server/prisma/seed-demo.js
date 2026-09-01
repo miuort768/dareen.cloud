@@ -251,7 +251,7 @@ async function main() {
           subject: t.subject,
           phone1: `9655${String(10000000 + i).padStart(7, '0')}`,
           price: randomInt(10, 25),
-          currency: 'KWD',
+          currency: 'EGP',
           username: id,
           password: hash,
           points: randomInt(100, 1500),

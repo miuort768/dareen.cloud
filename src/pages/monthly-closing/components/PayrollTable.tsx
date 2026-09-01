@@ -99,7 +99,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
                 <td className="px-4 py-4">
                   <div className="flex flex-col items-center gap-1.5">
                     <span className="text-xs font-bold text-success">
-                      {item.totalAmount.toLocaleString()} {item.currency || CURRENCY_SYMBOL}
+                      {item.totalAmount.toLocaleString()} {CURRENCY_SYMBOL}
                     </span>
                     <button
                       onClick={() => setSelectedTeacherForSlip(item)}
@@ -143,7 +143,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
               <div className="rounded-lg bg-card p-2 text-center">
                 <span className="mb-0.5 block text-micro text-muted">الصافي</span>
                 <span className="text-xs font-bold text-success">
-                  {item.totalAmount.toLocaleString()} {item.currency || CURRENCY_SYMBOL}
+                  {item.totalAmount.toLocaleString()} {CURRENCY_SYMBOL}
                 </span>
               </div>
             </div>
