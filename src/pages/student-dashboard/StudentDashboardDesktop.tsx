@@ -40,6 +40,12 @@ export const StudentDashboardDesktop = ({
   const points = studentData?.totalPoints || 0
   const rank = getRankByPoints(points, STUDENT_RANKS)
   const nextRank = getNextRank(points, STUDENT_RANKS)
+  const nextRankProgress = nextRank.next
+    ? Math.min(
+        Math.round(((points - rank.minPoints) / (nextRank.next.minPoints - rank.minPoints)) * 100),
+        100,
+      )
+    : 100
   const recentSessions = sessions.slice(0, 3)
 
   return (
@@ -51,6 +57,7 @@ export const StudentDashboardDesktop = ({
             grade={studentData?.grade || ''}
             points={points}
             rank={rank}
+            rankProgress={nextRankProgress}
           />
         </motion.div>
 
