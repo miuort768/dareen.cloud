@@ -1,6 +1,6 @@
 :root {
   /* ── shadcn/ui CSS Variables ── */
-  --background: #f8fafc;
+  --background: #f1f5f9;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -26,7 +26,7 @@
   --input: #e2e8f0;
   --ring: #6366f1;
   --radius: 0.75rem;
-  --sidebar-background: #ffffff;
+  --sidebar-background: #f8fafc;
   --sidebar-foreground: #0f172a;
   --sidebar-primary: #6366f1;
   --sidebar-primary-foreground: #ffffff;
@@ -35,8 +35,8 @@
   --sidebar-border: #e2e8f0;
   --sidebar-ring: #6366f1;
 
-  --bg-surface: #f8fafc;
-  --bg-background: #f1f5f9;
+  --bg-surface: #f1f5f9;
+  --bg-background: #e7ecf3;
   --bg-card: #ffffff;
   --bg-hover: #f1f5f9;
 
@@ -148,7 +148,7 @@
   --sidebar-ring: #D4AF37;
 
   --bg-surface: #0a0a0c;
-  --bg-background: #0d0d0f;
+  --bg-background: #08080a;
   --bg-card: #0d0d0f;
   --bg-hover: #1a1a1e;
 
