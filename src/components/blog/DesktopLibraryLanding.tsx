@@ -23,6 +23,7 @@ import { cn } from '../../lib/utils'
 import { api } from '../../lib/api'
 import { useAcademyName } from '../../context/AppContext'
 import { types, directTypes, curriculums, languages } from './LibraryConfig'
+import { AdBanner } from './AdBanner'
 import { BLOG_COUNTRIES, normalizePhoneInput } from './blogCustomers'
 import type { BlogPost } from '../../data/blogPosts'
 
@@ -239,6 +240,8 @@ export const DesktopLibraryLanding = ({
         </p>
       </section>
 
+      <AdBanner slot="belowTypesHero" className="mb-8" />
+
       {/* ===== MOST READ FILES ===== */}
       <section className="mb-8">
         <div className="mb-6 flex items-end justify-between gap-4">
@@ -349,6 +352,8 @@ export const DesktopLibraryLanding = ({
           </div>
         </div>
       </section>
+
+      <AdBanner slot="belowSearch" className="mb-6" />
 
       {/* ===== ARTICLES + SIDEBAR ===== */}
       <section className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[320px_1fr]">

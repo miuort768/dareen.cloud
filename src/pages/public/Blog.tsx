@@ -24,6 +24,7 @@ import { BlogBreadcrumb } from '../../components/blog/BlogBreadcrumb'
 import { LoadMore } from '../../components/blog/LoadMore'
 import { LoadingState, EmptyState } from '../../components/blog/BlogStates'
 import { MobileHero, DesktopHero } from '../../components/blog/HeroSelection'
+import { AdBanner } from '../../components/blog/AdBanner'
 import { DesktopLibraryLanding } from '../../components/blog/DesktopLibraryLanding'
 import { SelectionGrid } from '../../components/blog/SelectionGrid'
 import { PageLoader } from '../../components/ui/PageLoader'
@@ -370,6 +371,11 @@ export const Blog = () => {
                 currentCurriculumName={currentCurriculumName}
                 setSearchParams={setSearchParams}
               />
+              {view === 'types' ? (
+                <AdBanner slot="belowTypesHero" className="mb-4" />
+              ) : (
+                <AdBanner slot="belowSelectionHero" className="mb-4" />
+              )}
             </div>
           ) : view === 'results' || view === 'language-sections' ? (
             <div className="pb-6">
@@ -440,6 +446,11 @@ export const Blog = () => {
                 currentCurriculumName={currentCurriculumName}
                 setSearchParams={setSearchParams}
               />
+              {view === 'types' ? (
+                <AdBanner slot="belowTypesHero" className="mt-10" />
+              ) : (
+                <AdBanner slot="belowSelectionHero" className="mt-8" />
+              )}
             </div>
           ) : view === 'results' || view === 'language-sections' ? (
             <div className="mx-auto max-w-[1400px] px-6 lg:px-10">

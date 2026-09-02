@@ -40,6 +40,7 @@ const routeMeta: Record<string, { title: string; subtitle: string }> = {
   '/trial-sessions': { title: 'جلسات المراجعة', subtitle: 'متابعة جلسات الطلاب' },
   '/admin-contacts': { title: 'رسائل الاتصال', subtitle: 'إدارة رسائل التواصل' },
   '/admin-jobs': { title: 'طلبات التوظيف', subtitle: 'إدارة طلبات التوظيف' },
+  '/advertisers': { title: 'المعلنون', subtitle: 'المساحات الإعلانية في صفحة المكتبة' },
   '/student-profile': { title: 'الملف الشخصي', subtitle: 'معلومات حسابك الشخصي' },
   '/teacher-profile': { title: 'الملف الشخصي', subtitle: 'معلومات حسابك الشخصي' },
   '/parent-profile': { title: 'الملف الشخصي', subtitle: 'معلومات حسابك الشخصي' },

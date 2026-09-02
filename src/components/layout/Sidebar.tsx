@@ -134,6 +134,7 @@ export const Sidebar = memo(
         icon: DollarSign,
       },
       { name: 'الإعلانات', href: '/announcements', id: 'announcements', icon: Megaphone },
+      { name: 'المعلنون', href: '/advertisers', id: 'advertisers', icon: Megaphone },
       { name: 'إدارة المدونة', href: '/admin/blog', id: 'admin-blog', icon: FileText },
       {
         name: 'عملاء المدونة',
@@ -160,7 +161,13 @@ export const Sidebar = memo(
     const filteredNavigation = navigation.filter((item) => {
       if (!currentUser) return false
       // Admin-only pages — must match ProtectedRoute permission="admin"
-      if (item.id === 'roles' || item.id === 'monitoring') {
+      if (
+        item.id === 'roles' ||
+        item.id === 'monitoring' ||
+        item.id === 'advertisers' ||
+        item.id === 'admin-blog' ||
+        item.id === 'admin-blog-customers'
+      ) {
         return currentUser.role === 'admin' || currentUser.permissions?.includes('admin')
       }
       const isCommonAccess = [
@@ -265,6 +272,7 @@ export const Sidebar = memo(
           label: 'المحتوى',
           items: pick(
             'announcements',
+            'advertisers',
             'parent_announcements',
             'admin-blog',
             'admin-blog-customers',

@@ -27,6 +27,7 @@ interface SettingsState {
   reminderMinutesBefore: number
   libraryWhatsapp: string
   libraryTelegram: string
+  libraryAds: string
   whatsappNumbers: string
   googlePlayUrl: string
   appStoreUrl: string
@@ -69,6 +70,7 @@ const SETTING_META: Record<string, { apiKey: string; coerce?: 'boolean' | 'numbe
   reminderMinutesBefore: { apiKey: 'reminder_minutes_before', coerce: 'number' },
   libraryWhatsapp: { apiKey: 'library_whatsapp' },
   libraryTelegram: { apiKey: 'library_telegram' },
+  libraryAds: { apiKey: 'library_ads', coerce: 'json' },
   whatsappNumbers: { apiKey: 'whatsapp_numbers', coerce: 'json' },
   googlePlayUrl: { apiKey: 'google_play_url' },
   appStoreUrl: { apiKey: 'app_store_url' },
@@ -172,6 +174,7 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   reminderMinutesBefore: 30,
   libraryWhatsapp: '',
   libraryTelegram: '',
+  libraryAds: '',
   whatsappNumbers: JSON.stringify([
     { label: 'طلب حصة مجانية', phone: '201015098836' },
     { label: 'احجز حصتك المجانية الآن', phone: '201015098836' },

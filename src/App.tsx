@@ -118,6 +118,9 @@ const AdminContacts = lazy(() =>
 const AdminBlogCustomers = lazy(() =>
   import('./pages/AdminBlogCustomers').then((m) => ({ default: m.AdminBlogCustomers })),
 )
+const Advertisers = lazy(() =>
+  import('./pages/Advertisers').then((m) => ({ default: m.Advertisers })),
+)
 const DesignSystemPage = lazy(() =>
   import('./features/design-system/DesignSystemPage').then((m) => ({
     default: m.DesignSystemPage,
@@ -678,6 +681,14 @@ function App() {
                   element={
                     <ProtectedRoute permission="admin">
                       <AdminBlogCustomers />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="advertisers"
+                  element={
+                    <ProtectedRoute permission="admin">
+                      <Advertisers />
                     </ProtectedRoute>
                   }
                 />
