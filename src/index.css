@@ -109,7 +109,7 @@ html, body {
 
   body {
     position: relative;
-    background: linear-gradient(135deg, #e9edf5 0%, #eef1f6 50%, #e7ecf3 100%);
+    background: linear-gradient(135deg, #dbe2ee 0%, #e0e6ef 50%, #d7dfeb 100%);
     color: rgb(var(--text-main));
     width: 100vw;
     max-width: 100%;
@@ -122,7 +122,7 @@ html, body {
   }
 
   .dark body {
-    background: radial-gradient(ellipse at 20% 50%, #1a1040 0%, #0f172a 50%, #020617 100%) !important;
+    background: radial-gradient(ellipse at 20% 50%, #150c30 0%, #0b1220 50%, #010409 100%) !important;
     background-attachment: fixed !important;
   }
 

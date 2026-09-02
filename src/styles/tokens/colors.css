@@ -1,6 +1,6 @@
 :root {
   /* ── shadcn/ui CSS Variables ── */
-  --background: #f1f5f9;
+  --background: #e2e8f0;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -8,9 +8,9 @@
   --popover-foreground: #0f172a;
   --primary: #6366f1;
   --primary-foreground: #ffffff;
-  --secondary: #f1f5f9;
+  --secondary: #e6ebf3;
   --secondary-foreground: #475569;
-  --muted: #f1f5f9;
+  --muted: #e6ebf3;
   --muted-foreground: #94a3b8;
   --accent: #D4AF37;
   --accent-foreground: #0f172a;
@@ -22,11 +22,11 @@
   --warning-foreground: #ffffff;
   --info: #0ea5e9;
   --info-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
+  --border: #d8dfeb;
+  --input: #d8dfeb;
   --ring: #6366f1;
   --radius: 0.75rem;
-  --sidebar-background: #f8fafc;
+  --sidebar-background: #eef1f7;
   --sidebar-foreground: #0f172a;
   --sidebar-primary: #6366f1;
   --sidebar-primary-foreground: #ffffff;
@@ -35,10 +35,10 @@
   --sidebar-border: #e2e8f0;
   --sidebar-ring: #6366f1;
 
-  --bg-surface: #f1f5f9;
-  --bg-background: #e7ecf3;
+  --bg-surface: #eef1f7;
+  --bg-background: #dfe4ee;
   --bg-card: #ffffff;
-  --bg-hover: #f1f5f9;
+  --bg-hover: #e6ebf3;
 
   --bg-primary: #6366f1;
   --bg-primary-deep: #1e1b4b;
@@ -76,9 +76,9 @@
 
   --ring-focus: #6366f1;
 
-  --border: #e2e8f0;
-  --border-strong: #cbd5e1;
-  --divider: #e2e8f0;
+  --border: #d8dfeb;
+  --border-strong: #c5cfdd;
+  --divider: #d8dfeb;
 
   --bg-success: #10b981;
   --bg-success-dark: #059669;
@@ -147,8 +147,8 @@
   --sidebar-border: #27272a;
   --sidebar-ring: #D4AF37;
 
-  --bg-surface: #0a0a0c;
-  --bg-background: #08080a;
+  --bg-surface: #08080a;
+  --bg-background: #050507;
   --bg-card: #0d0d0f;
   --bg-hover: #1a1a1e;
 
