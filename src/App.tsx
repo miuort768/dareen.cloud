@@ -353,7 +353,7 @@ function App() {
         <SocketInitLayer />
       </Suspense>
       <Suspense fallback={<PageLoader />}>
-        <main id="main-content">
+        <div id="main-content">
           <Routes>
             <Route errorElement={<RouteErrorBoundary />}>
               {/* Public Routes */}
@@ -686,7 +686,7 @@ function App() {
 
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </main>
+        </div>
       </Suspense>
     </>
   )

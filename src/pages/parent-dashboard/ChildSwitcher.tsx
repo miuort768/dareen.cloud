@@ -42,20 +42,32 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
           >
             <span
               className={cn(
-                'flex h-7 w-7 items-center justify-center rounded-none text-xs font-black',
+                'flex h-7 w-7 shrink-0 items-center justify-center rounded-none text-xs font-black',
                 active ? 'bg-on-primary/20 text-on-primary' : tone,
               )}
               aria-hidden="true"
             >
               {(child.name || 'ط').charAt(0)}
             </span>
-            <span
-              className={cn(
-                'max-w-28 truncate text-xs font-bold',
-                active ? 'text-on-primary' : 'text-main',
+            <span className="min-w-0">
+              <span
+                className={cn(
+                  'block max-w-28 truncate text-xs font-bold',
+                  active ? 'text-on-primary' : 'text-main',
+                )}
+              >
+                {child.name}
+              </span>
+              {child.grade && (
+                <span
+                  className={cn(
+                    'block max-w-28 truncate text-[9px] font-bold',
+                    active ? 'text-on-primary/70' : 'text-muted',
+                  )}
+                >
+                  {child.grade}
+                </span>
               )}
-            >
-              {child.name}
             </span>
           </button>
         )

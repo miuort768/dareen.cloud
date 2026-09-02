@@ -193,7 +193,10 @@ export const ParentPaymentHistory = () => {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-full overflow-x-hidden bg-surface pb-24" dir="rtl">
+      <div
+        className="from-primary-soft/40 min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
+        dir="rtl"
+      >
         <HeroSkeleton />
         <div className="mx-auto max-w-page space-y-4 px-2.5 pt-4 sm:px-4">
           <ListSkeleton />
@@ -230,7 +233,10 @@ export const ParentPaymentHistory = () => {
   ]
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-surface pb-24 font-sans" dir="rtl">
+    <div
+      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background font-sans"
+      dir="rtl"
+    >
       <div className="mx-auto max-w-page space-y-4 px-2.5 pt-4 sm:px-4">
         {/* Hero — internally divided: identity | total | status breakdown */}
         <motion.div

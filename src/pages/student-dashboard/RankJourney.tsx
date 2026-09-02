@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
-import { Sparkles, Star, Flame, BookOpen } from 'lucide-react'
+import { Sparkles, Star, Flame, BookOpen, Trophy } from 'lucide-react'
 import { RANK_ICON_MAP } from '../../shared/utils/ranks'
+import { CountUp } from '../../shared/components/CountUp'
 
 interface RankJourneyProps {
   points: number
@@ -31,19 +32,28 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
       className="rounded-none border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
     >
       <div className="mb-4 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft">
+            <Trophy size={14} className="text-primary" />
+          </div>
+          <h3 className="text-sm font-black text-main">رحلة الرتب</h3>
+        </div>
         <div className="flex min-w-0 items-center gap-2.5">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none bg-primary text-on-primary">
             <RankIcon size={19} />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 text-end">
             <p className="truncate text-sm font-black text-main">{rank.name}</p>
             <p className="text-[10px] font-bold text-muted">رتبتك الحالية</p>
           </div>
         </div>
-        <div className="shrink-0 rounded-none bg-primary-soft px-3 py-1.5 text-center">
-          <p className="text-lg font-black tabular-nums leading-none text-primary">{points}</p>
-          <p className="mt-0.5 text-[9px] font-bold text-muted">نقطة</p>
-        </div>
+      </div>
+      <div className="mb-4 rounded-none bg-primary-soft px-4 py-2.5 text-center">
+        <CountUp
+          value={points}
+          className="block text-xl font-black tabular-nums leading-none text-primary"
+        />
+        <p className="mt-1 text-[9px] font-bold text-muted">نقطة</p>
       </div>
 
       {nextRankName ? (

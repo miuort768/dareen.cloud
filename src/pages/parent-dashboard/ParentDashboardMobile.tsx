@@ -22,6 +22,7 @@ export const ParentDashboardMobile = ({
   currentUser,
   adminPhone,
   children: kids,
+  eldestChild,
   allPointLogs,
   activeTimers,
   childStats,
@@ -41,7 +42,7 @@ export const ParentDashboardMobile = ({
 
   return (
     <div
-      className="min-h-screen overflow-x-hidden bg-surface transition-colors duration-300"
+      className="min-h-screen overflow-x-hidden bg-background transition-colors duration-300"
       dir="rtl"
       {...handlers}
     >
@@ -74,6 +75,8 @@ export const ParentDashboardMobile = ({
             subjectCount={subjectCount}
             todayCount={weekly.todayCount}
             attendanceRate={weekly.attendanceRate}
+            eldestChildName={eldestChild?.name}
+            eldestChildGrade={eldestChild?.grade}
           />
         </motion.div>
 

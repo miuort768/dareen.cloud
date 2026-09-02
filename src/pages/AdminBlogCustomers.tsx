@@ -216,7 +216,7 @@ export const AdminBlogCustomers = () => {
 
   return (
     <div
-      className="from-success-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-24"
+      className="from-success-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
       dir="rtl"
     >
       <div className="mx-auto max-w-page px-2">

@@ -327,7 +327,7 @@ export const MonthlyClosing = () => {
 
   return (
     <div
-      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-28"
+      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
       dir="rtl"
     >
       <div className="mx-auto max-w-page px-2">

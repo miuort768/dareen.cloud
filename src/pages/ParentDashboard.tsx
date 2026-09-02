@@ -320,6 +320,22 @@ export const ParentDashboard = () => {
     return map
   }, [children])
 
+  /** الابن الأكبر: أعلى صف دراسي (نظام 12 صف) — وإن تعذّر المقارنة فالأول في القائمة */
+  const eldestChild = useMemo<Student | null>(() => {
+    if (children.length === 0) return null
+    const gradeValue = (grade?: string | null): number => {
+      if (!grade) return -1
+      const normalized = grade.replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
+      const m = normalized.match(/(\d{1,2})/)
+      return m ? parseInt(m[1], 10) : -1
+    }
+    const sorted = [...children].sort((a, b) => {
+      const diff = gradeValue(b.grade) - gradeValue(a.grade)
+      return diff !== 0 ? diff : 0
+    })
+    return sorted[0] ?? null
+  }, [children])
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background" dir="rtl">
@@ -367,6 +383,7 @@ export const ParentDashboard = () => {
     currentUser,
     adminPhone,
     children,
+    eldestChild,
     allPointLogs,
     activeTimers,
     childStats,

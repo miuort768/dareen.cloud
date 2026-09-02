@@ -159,7 +159,7 @@ export const MonitoringPage = () => {
 
   if (loading && !data) {
     return (
-      <div className="mx-auto max-w-5xl space-y-4 p-4" dir="rtl">
+      <div className="mx-auto max-w-5xl space-y-4 bg-background p-4" dir="rtl">
         <SkeletonBlock className="h-28 rounded-3xl" />
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
           {Array.from({ length: 6 }).map((_, i) => (

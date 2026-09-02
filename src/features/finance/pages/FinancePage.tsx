@@ -82,7 +82,7 @@ export const Finance = () => {
 
   if (loading) {
     return (
-      <div className="min-h-full space-y-6 bg-surface p-4">
+      <div className="min-h-full space-y-6 bg-background p-4">
         <div className="h-28 animate-pulse rounded-none bg-card" />
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {[...Array(4)].map((_, i) => (
@@ -95,7 +95,7 @@ export const Finance = () => {
   }
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-background pb-28" dir="rtl">
+    <div className="relative min-h-full overflow-x-hidden bg-background" dir="rtl">
       <div className="mx-auto max-w-page space-y-6 px-2.5 sm:px-4 md:px-6">
         {/* Hero — clean divided card with finance identity */}
         <motion.div

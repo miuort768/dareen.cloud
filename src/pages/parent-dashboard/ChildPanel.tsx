@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import type { Student } from '../../types'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
+import { CountUp } from '../../shared/components/CountUp'
 import type { ChildStats } from './types'
 
 interface ChildPanelProps {
@@ -81,7 +82,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
         <div className="flex items-center gap-4">
           <div className="text-center">
             <p className="text-sm font-black tabular-nums text-main">
-              {stats.completed}
+              <CountUp value={stats.completed} />
               <span className="text-[10px] font-bold text-muted"> منجزة</span>
             </p>
             {stats.cancelled > 0 && (

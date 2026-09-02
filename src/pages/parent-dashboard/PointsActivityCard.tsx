@@ -2,6 +2,7 @@ import { Star, Clock, Sparkles } from 'lucide-react'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { RANK_ICON_MAP } from '../../shared/utils/ranks'
+import { CountUp } from '../../shared/components/CountUp'
 import type { PointLogEntry } from './types'
 
 interface PointsActivityCardProps {
@@ -38,7 +39,10 @@ export const PointsActivityCard = ({
           </div>
         </div>
         <div className="shrink-0 rounded-none bg-surface px-3 py-1.5 text-center">
-          <p className="text-lg font-black tabular-nums leading-none text-primary">{points}</p>
+          <CountUp
+            value={points}
+            className="block text-lg font-black tabular-nums leading-none text-primary"
+          />
           <p className="mt-0.5 text-[9px] font-bold text-muted">نقطة</p>
         </div>
       </div>

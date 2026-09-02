@@ -11,7 +11,7 @@ const STATUS_META: Record<
   TodayTimelineItem['status'],
   { dot: string; text: string; label: string; icon: typeof CircleDashed }
 > = {
-  live: { dot: 'bg-error', text: 'text-error', label: 'جارية الآن', icon: Radio },
+  live: { dot: 'bg-error animate-pulse', text: 'text-error', label: 'جارية الآن', icon: Radio },
   done: { dot: 'bg-success', text: 'text-success', label: 'منجزة', icon: CalendarCheck },
   cancelled: { dot: 'bg-error', text: 'text-error', label: 'ملغاة', icon: XCircle },
   upcoming: { dot: 'bg-primary', text: 'text-primary', label: 'قادمة', icon: CircleDashed },

@@ -76,6 +76,7 @@ export interface ParentDashboardProps {
   currentUser: ParentUser
   adminPhone: string | undefined
   children: Student[]
+  eldestChild?: Student | null
   allPointLogs: PointLogEntry[]
   activeTimers: ActiveTimerSession[]
   childStats: Record<string, ChildStats>

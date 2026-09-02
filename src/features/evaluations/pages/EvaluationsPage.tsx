@@ -218,7 +218,10 @@ export const Evaluations = () => {
     )
 
   return (
-    <div className="relative min-h-full overflow-x-hidden bg-background pb-24 font-sans" dir="rtl">
+    <div
+      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background font-sans"
+      dir="rtl"
+    >
       {/* زخارف خلفية ناعمة أعلى الصفحة */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-72 overflow-hidden"

@@ -12,7 +12,7 @@ const STATUS_META: Record<
   { dot: string; text: string; label: string; icon: typeof CircleDashed }
 > = {
   live: {
-    dot: 'bg-error',
+    dot: 'bg-error animate-pulse',
     text: 'text-error',
     label: 'جارية الآن',
     icon: Radio,

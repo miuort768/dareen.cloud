@@ -19,7 +19,7 @@ export const PageLoader = () => {
           <div className="absolute inset-[-15px] animate-[spin_8s_linear_infinite] rounded-full border-2 border-primary/5 dark:border-primary/10" />
           <div className="absolute inset-[-30px] animate-[spin_12s_linear_reverse_infinite] rounded-full border border-primary/5 dark:border-primary/10" />
 
-          <div className="relative flex h-44 w-44 items-center justify-center overflow-hidden rounded-full border border-border bg-white p-3 shadow-[var(--shadow-glow)] md:h-52 md:w-52">
+          <div className="relative flex h-44 w-44 items-center justify-center overflow-hidden rounded-full border border-border bg-card p-3 shadow-[var(--shadow-glow)] md:h-52 md:w-52">
             <Image
               src="/bbook.webp"
               alt="بوابة دارين السابعة التعليمية"

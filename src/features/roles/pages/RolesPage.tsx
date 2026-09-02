@@ -80,7 +80,7 @@ export const RolesPage = () => {
 
   return (
     <div
-      className="from-primary-soft/40 relative min-h-full bg-gradient-to-b via-background to-background pb-24"
+      className="from-primary-soft/40 relative min-h-full bg-gradient-to-b via-background to-background"
       dir="rtl"
     >
       <div className="mx-auto max-w-page space-y-4 px-2 py-4">

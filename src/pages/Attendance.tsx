@@ -215,7 +215,7 @@ export const Attendance = () => {
 
   return (
     <div
-      className="from-success-soft/40 relative min-h-full bg-gradient-to-b via-background to-background pb-24 font-sans"
+      className="from-success-soft/40 relative min-h-full bg-gradient-to-b via-background to-background font-sans"
       dir="rtl"
     >
       {/* Mobile view */}

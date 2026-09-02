@@ -1,4 +1,4 @@
-import { Star, Clock, CheckCircle2, XCircle } from 'lucide-react'
+import { Star, Clock, CheckCircle2, XCircle, Activity } from 'lucide-react'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import type { PointLog } from './types'
@@ -51,7 +51,12 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
       aria-label="آخر النشاطات"
       className="rounded-none border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
     >
-      <h3 className="mb-4 text-sm font-black text-main">آخر النشاطات</h3>
+      <div className="mb-4 flex items-center gap-2">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft">
+          <Activity size={14} className="text-primary" />
+        </div>
+        <h3 className="text-sm font-black text-main">آخر النشاطات</h3>
+      </div>
 
       <ol className="relative space-y-3" role="list">
         <div className="absolute bottom-1 end-[9px] top-1 w-px bg-divider" aria-hidden="true" />

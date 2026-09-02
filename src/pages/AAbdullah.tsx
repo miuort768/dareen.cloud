@@ -42,8 +42,7 @@ export const AAbdullah = () => {
     { icon: VTargetArrow, title: 'التميز', desc: 'نسعى للأفضل دايماً', bgClass: 'bg-primary' },
   ]
 
-  const cardClass =
-    'bg-white dark:bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-border space-y-4'
+  const cardClass = 'bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-border space-y-4'
   const sectionDelay = (i: number) => ({
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -100,7 +99,7 @@ export const AAbdullah = () => {
         {/* ═══════════════ نبدة تعريفية ═══════════════ */}
         <motion.div
           {...sectionDelay(1)}
-          className="relative overflow-hidden rounded-3xl border border-border bg-white p-6 shadow-sm dark:bg-card md:p-8"
+          className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8"
         >
           <div className="pointer-events-none absolute -end-12 -top-12 h-32 w-32 rounded-full bg-primary-soft blur-2xl" />
           <div className="relative">
@@ -159,7 +158,7 @@ export const AAbdullah = () => {
               return (
                 <div
                   key={`item-${i}`}
-                  className="space-y-2 rounded-2xl border border-divider bg-white p-4 text-center shadow-sm dark:bg-card"
+                  className="space-y-2 rounded-2xl border border-divider bg-card p-4 text-center shadow-sm"
                 >
                   <div
                     className={`mx-auto flex h-10 w-10 items-center justify-center rounded-xl ${v.bgClass}`}
@@ -177,7 +176,7 @@ export const AAbdullah = () => {
         {/* ═══════════════ رسالة إلى أولياء الأمور والمعلمين ═══════════════ */}
         <motion.div
           {...sectionDelay(4)}
-          className="space-y-4 rounded-none border-s-4 border-accent bg-white p-6 shadow-sm dark:bg-card md:p-8"
+          className="space-y-4 rounded-none border-s-4 border-accent bg-card p-6 shadow-sm md:p-8"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">

@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { motion } from 'framer-motion'
-import { CalendarDays, GraduationCap, BookOpen, ClipboardList } from 'lucide-react'
+import { CalendarDays, GraduationCap, BookOpen, ClipboardList, UserRound } from 'lucide-react'
 import { TimeOfDayBadge } from '../../shared/components/TimeOfDayBadge'
 import { CountUp } from '../../shared/components/CountUp'
 
@@ -11,6 +11,8 @@ interface GreetingStripProps {
   subjectCount: number
   todayCount: number
   attendanceRate: number
+  eldestChildName?: string | null
+  eldestChildGrade?: string | null
 }
 
 const getGreeting = (): string => {
@@ -28,6 +30,8 @@ export const GreetingStrip = ({
   subjectCount,
   todayCount,
   attendanceRate,
+  eldestChildName,
+  eldestChildGrade,
 }: GreetingStripProps) => {
   const firstName = name.split(' ')[0] || name
 
@@ -71,6 +75,13 @@ export const GreetingStrip = ({
           <h1 className="text-xl font-black leading-tight text-on-primary md:text-2xl">
             {getGreeting()}، {firstName}
           </h1>
+          {eldestChildName && (
+            <p className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px] font-bold text-white/75">
+              <UserRound size={11} />
+              متابعة رحلة {eldestChildName.split(' ')[0]}
+              {eldestChildGrade ? ` — ${eldestChildGrade}` : ''}
+            </p>
+          )}
         </div>
 
         <div className="flex shrink-0 items-center gap-2.5">

@@ -32,7 +32,7 @@ export const RefundPolicy = () => {
   const whatsappNumber = getNumber('تواصل مع قسم الحسابات')
 
   return (
-    <div className="min-h-full bg-card font-sans text-main dark:bg-background">
+    <div className="min-h-full bg-background font-sans text-main">
       <SEO
         title="سياسة الاسترداد والاسترجاع"
         description="سياسة استرداد الرسوم وإلغاء الاشتراكات في دارين السابعة. تعرف على شروط الاسترجاع، إلغاء الحصص، وآلية استرداد المبالغ المدفوعة."

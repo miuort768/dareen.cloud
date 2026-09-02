@@ -169,7 +169,7 @@ export const PublicNavbar = () => {
                 </button>
                 <div
                   id="user-dropdown"
-                  className={`absolute end-0 z-50 mt-4 w-56 overflow-hidden rounded-2xl border border-border bg-white shadow-xl transition-all duration-300 dark:bg-card ${isDropdownOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'}`}
+                  className={`absolute end-0 z-50 mt-4 w-56 overflow-hidden rounded-2xl border border-border bg-card shadow-xl transition-all duration-300 ${isDropdownOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'}`}
                 >
                   <div className="border-b border-border bg-background p-4">
                     <p className="text-sm font-bold text-main">{currentUser?.name}</p>

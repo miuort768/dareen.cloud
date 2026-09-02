@@ -165,7 +165,7 @@ export const Tasks = () => {
       <div className="block md:hidden">
         <MobileTasks />
       </div>
-      <div className="relative hidden min-h-full bg-background pb-24 md:block" dir="rtl">
+      <div className="relative hidden min-h-full bg-background md:block" dir="rtl">
         <div className="mx-auto max-w-page space-y-4 px-3">
           {/* Hero */}
           <motion.div

@@ -538,7 +538,7 @@ export const Leads = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen bg-background pb-24"
+      className="min-h-full bg-background"
       dir="rtl"
     >
       <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4 md:px-6">

@@ -1,5 +1,5 @@
 import { safeJsonLd } from '../../shared/utils/jsonLd'
-import { PublicNavbar } from '../../components/public/PublicNavbar'
+import { MobileHeader } from '../../components/public/MobileHeader'
 import { PublicFooter } from '../../components/public/PublicFooter'
 import {
   Scale,
@@ -18,7 +18,7 @@ export const TermsOfService = () => {
   const academyName = useAcademyName()
   const adminPhone = useSettingsStore((s) => s.adminPhone)
   return (
-    <div className="min-h-full bg-card font-sans text-main dark:bg-background">
+    <div className="min-h-full bg-background font-sans text-main">
       <SEO
         title="شروط الاستخدام والأحكام"
         description={`شروط وأحكام استخدام منصة ${academyName} للتعليم عن بعد. تعرف على حقوقك والتزاماتك كطالب، ولي أمر، أو معلم عند استخدام خدماتنا.`}
@@ -42,7 +42,7 @@ export const TermsOfService = () => {
           },
         })}
       </script>
-      <PublicNavbar />
+      <MobileHeader />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-card pb-6 pt-24 md:pb-24 md:pt-36">

@@ -20,6 +20,7 @@ export const ParentDashboardDesktop = ({
   currentUser,
   adminPhone,
   children: kids,
+  eldestChild,
   allPointLogs,
   activeTimers,
   childStats,
@@ -45,6 +46,8 @@ export const ParentDashboardDesktop = ({
             subjectCount={subjectCount}
             todayCount={weekly.todayCount}
             attendanceRate={weekly.attendanceRate}
+            eldestChildName={eldestChild?.name}
+            eldestChildGrade={eldestChild?.grade}
           />
         </motion.div>
 

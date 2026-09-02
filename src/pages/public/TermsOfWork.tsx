@@ -31,7 +31,7 @@ export const TermsOfWork = () => {
     }
   }
   return (
-    <div className="min-h-full bg-card font-sans text-main dark:bg-background">
+    <div className="min-h-full bg-background font-sans text-main">
       <SEO
         title="قوانين العمل"
         description={`قوانين وسياسات العمل في ${academyName} - تعرف على حقوقك وواجباتك كمعلم أو موظف في منصتنا التعليمية.`}
