@@ -1,6 +1,8 @@
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { CalendarDays, Sparkles } from 'lucide-react'
+import { TimeOfDayBadge } from '../../shared/components/TimeOfDayBadge'
+import { CountUp } from '../../shared/components/CountUp'
 
 interface GreetingStripProps {
   name: string
@@ -54,23 +56,30 @@ export const GreetingStrip = ({
           </div>
         </div>
 
-        {typeof points === 'number' && points > 0 && (
-          <div
-            className="flex shrink-0 items-center gap-1.5 rounded-xl bg-primary-soft px-3 py-2 dark:bg-primary/10"
-            aria-label={`نقاطك ${points} نقطة`}
-          >
-            <Sparkles size={14} className="text-primary" />
-            <span className="text-sm font-black tabular-nums leading-none text-primary">
-              {points.toLocaleString()}
-            </span>
-          </div>
-        )}
+        <div className="flex shrink-0 items-center gap-2.5">
+          <TimeOfDayBadge variant="soft" />
+          {typeof points === 'number' && points > 0 && (
+            <div
+              className="flex items-center gap-1.5 rounded-xl bg-primary-soft px-3 py-2 dark:bg-primary/10"
+              aria-label={`نقاطك ${points} نقطة`}
+            >
+              <Sparkles size={14} className="text-primary" />
+              <CountUp
+                value={points}
+                className="text-sm font-black tabular-nums leading-none text-primary"
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="mt-5 grid grid-cols-3 divide-x divide-x-reverse divide-border border-t border-border pt-4">
         {stats.map(({ value, label }) => (
           <div key={label} className="px-2 text-center first:ps-0 last:pe-0">
-            <p className="text-xl font-black tabular-nums leading-none text-main">{value}</p>
+            <CountUp
+              value={value}
+              className="text-xl font-black tabular-nums leading-none text-main"
+            />
             <p className="mt-1.5 text-[11px] font-bold text-muted">{label}</p>
           </div>
         ))}

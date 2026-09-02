@@ -2,6 +2,8 @@ import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { CalendarDays, GraduationCap } from 'lucide-react'
 import { RANK_ICON_MAP } from '../../shared/utils/ranks'
+import { TimeOfDayBadge } from '../../shared/components/TimeOfDayBadge'
+import { CountUp } from '../../shared/components/CountUp'
 
 interface GreetingStripProps {
   name: string
@@ -49,16 +51,22 @@ export const GreetingStrip = ({ name, grade, points, rank }: GreetingStripProps)
           {grade && <p className="mt-1 text-[11px] font-bold text-white/70">{grade}</p>}
         </div>
 
-        <div
-          className="flex shrink-0 items-center gap-2 rounded-none border border-white/20 bg-white/10 px-3.5 py-2 backdrop-blur-sm"
-          aria-label={`النقاط الحالية ${points} نقطة، رتبة ${rank.name}`}
-        >
-          <div className="flex h-9 w-9 items-center justify-center rounded-none bg-white/15">
-            <RankIcon size={17} className="text-on-primary" />
-          </div>
-          <div>
-            <p className="text-sm font-black tabular-nums leading-none text-on-primary">{points}</p>
-            <p className="mt-1 text-[10px] font-bold text-white/70">{rank.name}</p>
+        <div className="flex shrink-0 items-center gap-2.5">
+          <TimeOfDayBadge variant="glass" />
+          <div
+            className="flex items-center gap-2 rounded-none border border-white/20 bg-white/10 px-3.5 py-2 backdrop-blur-sm"
+            aria-label={`النقاط الحالية ${points} نقطة، رتبة ${rank.name}`}
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-none bg-white/15">
+              <RankIcon size={17} className="text-on-primary" />
+            </div>
+            <div>
+              <CountUp
+                value={points}
+                className="block text-sm font-black tabular-nums leading-none text-on-primary"
+              />
+              <p className="mt-1 text-[10px] font-bold text-white/70">{rank.name}</p>
+            </div>
           </div>
         </div>
       </div>

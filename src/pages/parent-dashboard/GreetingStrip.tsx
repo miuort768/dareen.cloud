@@ -1,6 +1,9 @@
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
+import { motion } from 'framer-motion'
 import { CalendarDays, GraduationCap, BookOpen, ClipboardList } from 'lucide-react'
+import { TimeOfDayBadge } from '../../shared/components/TimeOfDayBadge'
+import { CountUp } from '../../shared/components/CountUp'
 
 interface GreetingStripProps {
   name: string
@@ -27,6 +30,11 @@ export const GreetingStrip = ({
   attendanceRate,
 }: GreetingStripProps) => {
   const firstName = name.split(' ')[0] || name
+
+  const RING_SIZE = 56
+  const RING_RADIUS = 24
+  const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS
+  const clampedRate = Math.min(Math.max(attendanceRate, 0), 100)
 
   const chips = [
     {
@@ -65,18 +73,43 @@ export const GreetingStrip = ({
           </h1>
         </div>
 
-        <div
-          className="flex shrink-0 items-center gap-2 rounded-none border border-white/20 bg-white/10 px-3.5 py-2 backdrop-blur-sm"
-          aria-label={`نسبة الحضور الإجمالية ${attendanceRate} بالمئة`}
-        >
-          <span className="text-lg font-black tabular-nums leading-none text-on-primary">
-            {attendanceRate}%
-          </span>
-          <span className="text-[11px] font-bold text-white/70">
-            الحضور
-            <br />
-            الإجمالي
-          </span>
+        <div className="flex shrink-0 items-center gap-2.5">
+          <TimeOfDayBadge variant="glass" />
+          <div
+            className="relative flex shrink-0 items-center justify-center"
+            aria-label={`نسبة الحضور الإجمالية ${attendanceRate} بالمئة`}
+          >
+            <svg width={RING_SIZE} height={RING_SIZE} viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}>
+              <circle
+                cx={RING_SIZE / 2}
+                cy={RING_SIZE / 2}
+                r={RING_RADIUS}
+                fill="none"
+                stroke="rgba(255,255,255,0.15)"
+                strokeWidth={5}
+              />
+              <motion.circle
+                cx={RING_SIZE / 2}
+                cy={RING_SIZE / 2}
+                r={RING_RADIUS}
+                fill="none"
+                stroke="currentColor"
+                className="text-on-primary"
+                strokeWidth={5}
+                strokeLinecap="round"
+                strokeDasharray={RING_CIRCUMFERENCE}
+                initial={{ strokeDashoffset: RING_CIRCUMFERENCE }}
+                animate={{ strokeDashoffset: RING_CIRCUMFERENCE * (1 - clampedRate / 100) }}
+                transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
+                transform={`rotate(-90 ${RING_SIZE / 2} ${RING_SIZE / 2})`}
+              />
+            </svg>
+            <CountUp
+              value={attendanceRate}
+              format={(n) => `${n}%`}
+              className="absolute text-[13px] font-black tabular-nums text-on-primary"
+            />
+          </div>
         </div>
       </div>
 
