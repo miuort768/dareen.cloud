@@ -203,49 +203,59 @@ export const MobileHero = ({
   // For other views (curriculums, grades, languages), show selection grid
   return (
     <div className="pb-6">
-      <div className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-4">
-        <div className="pointer-events-none absolute -end-12 -top-14 h-36 w-36 rounded-full bg-primary/10 blur-3xl" />
-        <div className="bg-accent/10 pointer-events-none absolute -bottom-14 -start-12 h-36 w-36 rounded-full blur-3xl" />
+      <div className="relative mb-5 overflow-hidden rounded-[1.75rem] border border-divider bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-2">
+        <div
+          className="pointer-events-none absolute -end-20 -top-24 h-64 w-64 rounded-full border border-white/10"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -end-6 -top-10 h-36 w-36 rounded-full border border-white/5"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-16 -start-12 h-44 w-44 rounded-full bg-white/5"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-transparent to-white/5"
+          aria-hidden="true"
+        />
 
-        <div className="relative flex items-start gap-3.5">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
-            <BookOpen size={20} className="text-primary" />
+        <div className="relative p-5">
+          <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-extrabold text-on-primary backdrop-blur-sm">
+            <BookOpen size={11} />
+            {view === 'curriculums'
+              ? currentTypeName
+              : view === 'languages'
+                ? 'تعلم اللغة'
+                : currentCurriculumName}
           </span>
-          <div className="min-w-0">
-            <span className="mb-1.5 inline-flex items-center rounded-full bg-primary-soft px-2.5 py-0.5 text-[10px] font-extrabold text-primary">
-              {view === 'curriculums'
-                ? currentTypeName
-                : view === 'languages'
-                  ? 'تعلم اللغة'
-                  : currentCurriculumName}
-            </span>
-            <h2 className="mb-1 text-lg font-black leading-tight text-main">
-              {view === 'curriculums' ? (
-                <>
-                  اختر <span className="text-primary">المنهج</span>
-                </>
-              ) : view === 'languages' ? (
-                <>
-                  اختر <span className="text-primary">اللغة</span>
-                </>
-              ) : (
-                <>
-                  اختر <span className="text-primary">المرحلة</span>
-                </>
-              )}
-            </h2>
-            <p className="text-[11px] font-medium leading-relaxed text-muted">
-              {view === 'curriculums'
-                ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج`
-                : view === 'languages'
-                  ? 'اختر اللغة التي تريد تعلمها'
-                  : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`}
-            </p>
-          </div>
+          <h2 className="mb-1.5 text-xl font-black leading-tight text-on-primary">
+            {view === 'curriculums' ? (
+              <>
+                اختر <span className="text-accent">المنهج</span>
+              </>
+            ) : view === 'languages' ? (
+              <>
+                اختر <span className="text-accent">اللغة</span>
+              </>
+            ) : (
+              <>
+                اختر <span className="text-accent">المرحلة</span>
+              </>
+            )}
+          </h2>
+          <p className="max-w-sm text-[11px] font-bold leading-relaxed text-white/70">
+            {view === 'curriculums'
+              ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+              : view === 'languages'
+                ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
+                : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`}
+          </p>
         </div>
       </div>
 
-      <div className="mb-5 grid grid-cols-2 gap-2.5">
+      <div className="mb-4 grid grid-cols-2 gap-2.5">
         {(view === 'languages' ? languages.map((l) => ({ ...l, icon: l.icon })) : gridItems).map(
           (item: GridItem, i: number) => (
             <button
@@ -272,11 +282,11 @@ export const MobileHero = ({
                   return next
                 })
               }}
-              className={`relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:opacity-90 active:scale-[0.97] ${
+              className={`group relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:opacity-90 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] ${
                 GRID_TONES[i % GRID_TONES.length]
               }`}
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/20">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 transition-transform duration-200 group-hover:scale-110">
                 <item.icon size={20} />
               </div>
               <span className="text-center text-sm font-extrabold leading-tight">{item.name}</span>
@@ -516,55 +526,65 @@ export const DesktopHero = ({
   return (
     <div className="mx-auto w-full">
       {/* Banner */}
-      <section className="relative overflow-hidden rounded-2xl border border-border bg-card px-6 py-7 md:px-8 md:py-8 lg:px-10">
-        <div className="pointer-events-none absolute -end-20 -top-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
-        <div className="bg-accent/10 pointer-events-none absolute -bottom-24 -start-16 h-56 w-56 rounded-full blur-3xl" />
+      <section className="relative overflow-hidden rounded-2xl border border-divider bg-gradient-to-br from-primary-deep via-primary to-primary-deep px-8 py-9 shadow-elevation-2 lg:rounded-none lg:px-10 lg:py-10">
+        <div
+          className="pointer-events-none absolute -end-24 -top-28 h-72 w-72 rounded-full border border-white/10"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -end-8 -top-12 h-40 w-40 rounded-full border border-white/5"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-20 -start-16 h-52 w-52 rounded-full bg-white/5"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-transparent to-white/5"
+          aria-hidden="true"
+        />
         <BookOpen
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-8 -end-6 hidden h-44 w-44 rotate-12 text-primary/5 md:block"
+          className="pointer-events-none absolute -bottom-10 -end-8 h-48 w-48 rotate-12 text-white/5"
         />
 
-        <div className="relative flex items-start gap-4 md:gap-5">
-          <span className="hidden h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary-soft sm:flex">
-            <BookOpen size={24} className="text-primary" />
+        <div className="relative">
+          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-extrabold text-on-primary backdrop-blur-sm">
+            <BookOpen size={12} />
+            {view === 'curriculums'
+              ? `تحميل ${currentTypeName}`
+              : view === 'languages'
+                ? 'تعلم اللغة'
+                : currentCurriculumName}
           </span>
-          <div className="min-w-0">
-            <span className="mb-2 inline-flex items-center rounded-full bg-primary-soft px-3 py-1 text-[11px] font-extrabold text-primary">
-              {view === 'curriculums'
-                ? `تحميل ${currentTypeName}`
-                : view === 'languages'
-                  ? 'تعلم اللغة'
-                  : currentCurriculumName}
-            </span>
 
-            <h1 className="mb-2 font-heading text-2xl font-black leading-tight text-main md:text-3xl">
-              {view === 'curriculums' ? (
-                <>
-                  اختر <span className="text-primary">المنهج</span>
-                </>
-              ) : view === 'languages' ? (
-                <>
-                  اختر <span className="text-primary">اللغة</span>
-                </>
-              ) : (
-                <>
-                  اختر <span className="text-primary">المرحلة</span>
-                </>
-              )}
-            </h1>
-            <p className="max-w-xl text-sm font-medium leading-relaxed text-muted lg:text-base">
-              {view === 'curriculums'
-                ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-                : view === 'languages'
-                  ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
-                  : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-            </p>
-          </div>
+          <h1 className="mb-2.5 font-heading text-3xl font-black leading-tight text-on-primary md:text-4xl">
+            {view === 'curriculums' ? (
+              <>
+                اختر <span className="text-accent">المنهج</span>
+              </>
+            ) : view === 'languages' ? (
+              <>
+                اختر <span className="text-accent">اللغة</span>
+              </>
+            ) : (
+              <>
+                اختر <span className="text-accent">المرحلة</span>
+              </>
+            )}
+          </h1>
+          <p className="max-w-xl text-sm font-bold leading-relaxed text-white/70 lg:text-base">
+            {view === 'curriculums'
+              ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+              : view === 'languages'
+                ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
+                : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
+          </p>
         </div>
       </section>
 
       {/* Selection grid */}
-      <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-3">
+      <div className="mt-7 grid grid-cols-2 gap-3.5 lg:grid-cols-3">
         {(view === 'languages' ? languages.map((l) => ({ ...l, icon: l.icon })) : gridItems).map(
           (item: GridItem, i: number) => (
             <button
@@ -591,22 +611,22 @@ export const DesktopHero = ({
                   return next
                 })
               }}
-              className={`group relative flex w-full cursor-pointer items-center gap-3 overflow-hidden rounded-2xl px-4 py-4 text-start shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:opacity-95 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97] ${
+              className={`group relative flex w-full cursor-pointer items-center gap-3.5 overflow-hidden rounded-2xl px-5 py-5 text-start shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97] ${
                 GRID_TONES[i % GRID_TONES.length]
               }`}
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 transition-transform duration-300 group-hover:scale-110">
-                <item.icon size={18} />
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20 transition-transform duration-300 group-hover:scale-110">
+                <item.icon size={21} />
               </div>
               <div className="min-w-0 flex-1">
-                <span className="block text-sm font-extrabold leading-tight">{item.name}</span>
+                <span className="block text-base font-extrabold leading-tight">{item.name}</span>
                 {item.sub && (
-                  <span className="block text-[11px] font-medium opacity-75">{item.sub}</span>
+                  <span className="block text-[11px] font-bold opacity-75">{item.sub}</span>
                 )}
               </div>
               <ArrowLeft
-                size={14}
-                className="shrink-0 opacity-60 transition-all duration-300 group-hover:opacity-100"
+                size={15}
+                className="shrink-0 opacity-60 transition-all duration-300 group-hover:-translate-x-1 group-hover:opacity-100"
               />
             </button>
           ),
