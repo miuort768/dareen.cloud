@@ -1,7 +1,7 @@
-﻿import { Award, AlertCircle, Clock, Star, TrendingUp } from 'lucide-react'
+﻿import { AlertCircle, Clock, Star, TrendingUp, Zap } from 'lucide-react'
 import { CURRENCY_SYMBOL } from '../../../config/constants'
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types'
-import { getRankByPoints, TEACHER_RANKS } from '../../../shared/utils/ranks'
+import { getRankByPoints, getNextRank, TEACHER_RANKS } from '../../../shared/utils/ranks'
 import { RankBadge } from '../../../shared/components/RankBadge'
 
 interface TeacherAchievementsProps {
@@ -15,19 +15,62 @@ export const TeacherAchievements = ({
   lowBalanceStudents,
   isTeacher,
 }: TeacherAchievementsProps) => {
-  const rank = getRankByPoints(stats.teacherPoints || 0, TEACHER_RANKS)
+  const points = stats.teacherPoints || 0
+  const rank = getRankByPoints(points, TEACHER_RANKS)
+  const { next, pointsNeeded } = getNextRank(points, TEACHER_RANKS)
   const expiredCount = lowBalanceStudents.filter((s) => s.remainingSessions === 0).length
   const lowCount = lowBalanceStudents.filter((s) => s.remainingSessions > 0).length
 
+  const currentRankIdx = [...TEACHER_RANKS].reverse().findIndex((r) => points >= r.minPoints)
+  const actualIdx = TEACHER_RANKS.length - 1 - currentRankIdx
+  const currentRank = TEACHER_RANKS[actualIdx]!
+  const xpProgress = next
+    ? Math.min(
+        Math.round(
+          ((points - currentRank.minPoints) / (next.minPoints - currentRank.minPoints)) * 100,
+        ),
+        100,
+      )
+    : 100
+
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-[13px] font-bold text-main dark:text-main">
-          <Star size={13} className="text-warning dark:text-primary" />
+      <div className="mb-3 flex items-center gap-2">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-warning-soft dark:bg-primary/10">
+          <Star size={14} className="text-warning dark:text-primary" />
+        </div>
+        <h3 className="text-sm font-black text-main dark:text-main">
           {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
         </h3>
         {isTeacher && <RankBadge rank={rank} size="sm" />}
       </div>
+
+      {isTeacher && next && (
+        <div className="mb-4 rounded-2xl border border-border bg-surface p-3.5 dark:border-border dark:bg-hover">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="flex items-center gap-1.5 text-[11px] font-bold text-main dark:text-main">
+              <Zap size={11} className="text-warning dark:text-primary" />
+              {pointsNeeded} XP للترقية إلى «{next.name}»
+            </span>
+            <span className="text-[11px] font-black tabular-nums text-primary dark:text-primary">
+              {xpProgress}%
+            </span>
+          </div>
+          <div
+            className="h-2 w-full overflow-hidden rounded-full bg-hover dark:bg-surface"
+            role="progressbar"
+            aria-valuenow={xpProgress}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="تقدم الرتبة"
+          >
+            <div
+              className="h-full rounded-full bg-warning transition-all duration-700 dark:bg-primary"
+              style={{ width: `${Math.max(xpProgress, 4)}%` }}
+            />
+          </div>
+        </div>
+      )}
 
       <div className="mb-4 overflow-hidden rounded-2xl bg-primary p-5 dark:bg-primary">
         <div className="mb-2 flex items-center gap-1.5">
@@ -46,12 +89,6 @@ export const TeacherAchievements = ({
             {CURRENCY_SYMBOL}
           </span>
         </div>
-        {isTeacher && (
-          <div className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-3 py-1.5 text-[11px] font-bold text-on-primary">
-            <Award size={10} />
-            {stats.teacherPoints || 0} XP
-          </div>
-        )}
       </div>
 
       <div className="grid grid-cols-2 gap-3">

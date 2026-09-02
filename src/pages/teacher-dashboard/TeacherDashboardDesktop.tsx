@@ -113,9 +113,9 @@ export const TeacherDashboardDesktop = ({
         />
       </motion.div>
 
-      {/* الحصة القادمة + الأسبوع — شبكة Bento */}
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-12">
-        <motion.div {...fadeUp(0.04)} className="xl:col-span-8">
+      {/* الحصة القادمة + الأسبوع — نصفا الشاشة */}
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+        <motion.div {...fadeUp(0.04)}>
           {nextSession ? (
             <NextSessionHero timeline={timeline} />
           ) : (
@@ -129,7 +129,7 @@ export const TeacherDashboardDesktop = ({
             </div>
           )}
         </motion.div>
-        <motion.div {...fadeUp(0.06)} className="xl:col-span-4">
+        <motion.div {...fadeUp(0.06)}>
           <WeekStrip counts={weekCounts} />
         </motion.div>
       </div>
@@ -139,67 +139,63 @@ export const TeacherDashboardDesktop = ({
       </motion.div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-        {/* العمود الرئيسي */}
-        <div className="space-y-5 lg:col-span-8">
-          <SectionCard delay={0.1}>
-            <LiveSessions />
-          </SectionCard>
+        <SectionCard delay={0.1} className="lg:col-span-8">
+          <LiveSessions />
+        </SectionCard>
 
-          {timeline.length > 0 && (
-            <SectionCard delay={0.12}>
-              <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
-            </SectionCard>
-          )}
-
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            <SectionCard delay={0.14}>
-              <AttendanceChart rate={stats.attendanceRate} />
-            </SectionCard>
-            <SectionCard delay={0.16}>
-              <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
-            </SectionCard>
-          </div>
-
-          <SectionCard delay={0.18} id="announcements-section" className="scroll-mt-32">
-            <ModernAnnouncements />
-          </SectionCard>
-        </div>
-
-        {/* العمود الجانبي */}
-        <div className="space-y-5 lg:col-span-4">
-          <SectionCard delay={0.1} className="p-4">
-            <QuickActions showQuickLinks={true} />
-          </SectionCard>
-
-          <SectionCard delay={0.14} className="p-4">
-            <SmartNotifications
-              lowBalanceStudents={lowBalanceStudents}
-              focusStudents={focusStudents || []}
-            />
-          </SectionCard>
-
-          <SectionCard delay={0.18} className="p-4">
-            <TasksAndRequests tasks={tasks} />
-          </SectionCard>
-
-          <SectionCard delay={0.22} className="p-4">
-            <FinancialSnapshot
-              monthNetProfit={stats.monthNetProfit}
-              monthRevenue={stats.monthRevenue}
-              expectedCollection={stats.expectedCollection}
-              currency={stats.currency}
-            />
-          </SectionCard>
-
-          <SectionCard delay={0.26} className="p-4">
-            <TeacherAchievements
-              stats={stats}
-              lowBalanceStudents={lowBalanceStudents}
-              isTeacher={true}
-            />
-          </SectionCard>
-        </div>
+        <SectionCard delay={0.12} className="p-4 lg:col-span-4">
+          <QuickActions showQuickLinks={true} />
+        </SectionCard>
       </div>
+
+      {timeline.length > 0 && (
+        <SectionCard delay={0.14}>
+          <TeacherSessionTimeline sessions={timeline} onStudentClick={setBriefingStudent} />
+        </SectionCard>
+      )}
+
+      <SectionCard delay={0.16}>
+        <SmartNotifications
+          lowBalanceStudents={lowBalanceStudents}
+          focusStudents={focusStudents || []}
+        />
+      </SectionCard>
+
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <SectionCard delay={0.18}>
+          <AttendanceChart rate={stats.attendanceRate} />
+        </SectionCard>
+        <SectionCard delay={0.2}>
+          <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
+        </SectionCard>
+      </div>
+
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <SectionCard delay={0.22} className="p-4">
+          <TasksAndRequests tasks={tasks} />
+        </SectionCard>
+
+        <SectionCard delay={0.24} className="p-4">
+          <FinancialSnapshot
+            monthNetProfit={stats.monthNetProfit}
+            monthRevenue={stats.monthRevenue}
+            expectedCollection={stats.expectedCollection}
+            currency={stats.currency}
+          />
+        </SectionCard>
+
+        <SectionCard delay={0.26} className="p-4">
+          <TeacherAchievements
+            stats={stats}
+            lowBalanceStudents={lowBalanceStudents}
+            isTeacher={true}
+          />
+        </SectionCard>
+      </div>
+
+      <SectionCard delay={0.28} id="announcements-section" className="scroll-mt-32">
+        <ModernAnnouncements />
+      </SectionCard>
 
       {briefingStudent && briefingStudent.id && briefingStudent.name && briefingStudent.grade && (
         <StudentQuickBrief

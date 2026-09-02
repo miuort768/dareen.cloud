@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
-import { CalendarDays, CheckCircle2, Sparkles, Users, CalendarCheck } from 'lucide-react'
+import { CalendarDays, Sparkles } from 'lucide-react'
 
 interface GreetingStripProps {
   name: string
@@ -27,43 +27,28 @@ export const GreetingStrip = ({
 }: GreetingStripProps) => {
   const firstName = (name || 'المعلمة').split(' ')[0]
 
-  const tiles = [
-    {
-      icon: Users,
-      value: studentsCount,
-      label: studentsCount === 1 ? 'طالب' : 'طلاب',
-      tone: 'bg-primary-soft text-primary dark:bg-primary/10',
-    },
-    {
-      icon: CalendarCheck,
-      value: todayCount,
-      label: 'حصص اليوم',
-      tone: 'bg-info-soft text-info-strong',
-    },
-    {
-      icon: CheckCircle2,
-      value: monthCompleted,
-      label: 'منجزة هذا الشهر',
-      tone: 'bg-success-soft text-success-strong',
-    },
+  const stats = [
+    { value: studentsCount, label: studentsCount === 1 ? 'طالب' : 'طلاب' },
+    { value: todayCount, label: 'حصص اليوم' },
+    { value: monthCompleted, label: 'منجزة هذا الشهر' },
   ]
 
   return (
     <section
       aria-label="ترحيب"
-      className="rounded-3xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300"
+      className="rounded-3xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300 sm:p-6"
     >
       <div className="flex items-center justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-lg font-black text-on-primary">
+        <div className="flex min-w-0 items-center gap-3.5">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary text-xl font-black text-on-primary">
             {firstName.charAt(0)}
           </div>
           <div className="min-w-0">
             <p className="mb-0.5 flex items-center gap-1.5 text-[11px] font-bold text-muted">
               <CalendarDays size={12} />
-              {format(new Date(), 'eeee، d MMMM', { locale: ar })}
+              {format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}
             </p>
-            <h1 className="truncate text-lg font-black leading-tight text-main">
+            <h1 className="truncate text-xl font-black leading-tight text-main md:text-2xl">
               {getGreeting()}، أ. {firstName}
             </h1>
           </div>
@@ -82,19 +67,11 @@ export const GreetingStrip = ({
         )}
       </div>
 
-      <div className="mt-4 grid grid-cols-3 gap-2">
-        {tiles.map(({ icon: Icon, value, label, tone }) => (
-          <div
-            key={label}
-            className="rounded-2xl border border-border bg-surface p-2.5 text-center"
-          >
-            <span
-              className={`mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-lg ${tone}`}
-            >
-              <Icon size={13} />
-            </span>
-            <p className="text-sm font-black tabular-nums leading-none text-main">{value}</p>
-            <p className="mt-1 text-[10px] font-bold text-muted">{label}</p>
+      <div className="mt-5 grid grid-cols-3 divide-x divide-x-reverse divide-border border-t border-border pt-4">
+        {stats.map(({ value, label }) => (
+          <div key={label} className="px-2 text-center first:ps-0 last:pe-0">
+            <p className="text-xl font-black tabular-nums leading-none text-main">{value}</p>
+            <p className="mt-1.5 text-[11px] font-bold text-muted">{label}</p>
           </div>
         ))}
       </div>

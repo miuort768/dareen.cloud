@@ -1,8 +1,7 @@
-import { UserPlus, FileText, CalendarDays, Megaphone, ChevronLeft } from 'lucide-react'
+import { MessageCircle, CalendarDays, Megaphone, MessagesSquare, ChevronLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { useCurrentUser } from '@/context/AppContext'
 
 interface QuickActionsProps {
   showQuickLinks?: boolean
@@ -10,18 +9,18 @@ interface QuickActionsProps {
 
 const actions = [
   {
-    title: 'إضافة طالب',
-    subtitle: 'تسجيل طالب جديد',
-    icon: UserPlus,
-    href: '/students?action=new',
+    title: 'الدردشة',
+    subtitle: 'تواصل مع الطلاب وأولياء الأمور',
+    icon: MessageCircle,
+    href: '/chat',
     color: 'text-primary',
     iconBg: 'bg-primary-soft',
   },
   {
-    title: 'إصدار فاتورة',
-    subtitle: 'إنشاء فاتورة مالية',
-    icon: FileText,
-    href: '/student-invoices?action=new',
+    title: 'المنتدى',
+    subtitle: 'ناقش وانشر في المجتمع',
+    icon: MessagesSquare,
+    href: '/forum',
     color: 'text-success',
     iconBg: 'bg-success-soft',
   },
@@ -34,8 +33,8 @@ const actions = [
     iconBg: 'bg-info-soft',
   },
   {
-    title: 'إعلان عام',
-    subtitle: 'إرسال إعلان للجميع',
+    title: 'الإعلانات',
+    subtitle: 'اطلع على آخر الأخبار',
     icon: Megaphone,
     href: '/announcements',
     color: 'text-warning',
@@ -43,32 +42,10 @@ const actions = [
   },
 ]
 
-const scrollToAnnouncements = () => {
-  const tryScroll = (attempt = 0) => {
-    if (attempt > 10) return
-    const el = document.getElementById('announcements-section')
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      return
-    }
-    setTimeout(() => tryScroll(attempt + 1), 200)
-  }
-  setTimeout(() => tryScroll(), 200)
-}
-
 export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
   const navigate = useNavigate()
-  const currentUser = useCurrentUser()
-
-  const canViewAnnouncements =
-    currentUser?.permissions?.includes('*') || currentUser?.permissions?.includes('announcements')
 
   const handleAction = (action: (typeof actions)[number]) => {
-    if (action.title === 'إعلان عام' && !canViewAnnouncements) {
-      navigate('/teacher-dashboard')
-      scrollToAnnouncements()
-      return
-    }
     navigate(action.href)
   }
 

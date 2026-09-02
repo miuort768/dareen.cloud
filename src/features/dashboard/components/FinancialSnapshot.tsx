@@ -37,12 +37,44 @@ export const FinancialSnapshot = ({
     },
   ]
 
+  const collectRate =
+    expectedCollection > 0
+      ? Math.min(Math.round((monthRevenue / expectedCollection) * 100), 100)
+      : 100
+
   return (
     <div>
       <h3 className="mb-3 flex items-center gap-2 text-sm font-black text-main dark:text-main">
         <Wallet size={14} className="text-primary dark:text-primary" />
         الملخص المالي
       </h3>
+
+      {expectedCollection > 0 && (
+        <div className="mb-4 rounded-2xl border border-border bg-surface p-3.5 dark:border-border dark:bg-hover">
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-[11px] font-bold text-main dark:text-main">
+              نسبة التحصيل الشهري
+            </span>
+            <span className="text-[11px] font-black tabular-nums text-primary dark:text-primary">
+              {collectRate}%
+            </span>
+          </div>
+          <div
+            className="h-2 w-full overflow-hidden rounded-full bg-hover dark:bg-surface"
+            role="progressbar"
+            aria-valuenow={collectRate}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="نسبة التحصيل"
+          >
+            <div
+              className="h-full rounded-full bg-success transition-all duration-700"
+              style={{ width: `${Math.max(collectRate, 4)}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       <div className="space-y-2.5">
         {items.map((item) => (
           <div

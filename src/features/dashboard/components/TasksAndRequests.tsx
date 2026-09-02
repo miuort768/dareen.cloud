@@ -10,13 +10,22 @@ interface TasksAndRequestsProps {
 }
 
 export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
+  const urgentCount = tasks.filter((t) => t.priority === 'high').length
+
   return (
     <div className="flex h-full flex-col">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-[13px] font-bold text-main dark:text-main">
-          <ListTodo size={13} className="text-primary dark:text-primary" />
-          المهام والطلبات
-        </h3>
+        <div className="flex items-center gap-2">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">
+            <ListTodo size={14} className="text-primary dark:text-primary" />
+          </div>
+          <h3 className="text-sm font-black text-main dark:text-main">المهام والطلبات</h3>
+          {urgentCount > 0 && (
+            <span className="rounded-md bg-error-soft px-1.5 py-0.5 text-[10px] font-bold text-error dark:bg-error-soft dark:text-error">
+              {urgentCount} عاجلة
+            </span>
+          )}
+        </div>
         <Link to="/tasks">
           <Button
             variant="ghost"
