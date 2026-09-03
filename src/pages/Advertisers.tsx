@@ -17,7 +17,7 @@ import {
   type LibraryAdSlot,
   type LibraryAds,
   type LibraryAdSlotId,
-} from '../components/blog/AdBanner'
+} from '../components/blog/adConfig'
 import { cn } from '../lib/utils'
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error'

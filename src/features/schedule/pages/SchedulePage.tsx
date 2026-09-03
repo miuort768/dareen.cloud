@@ -277,7 +277,6 @@ export const Schedule = () => {
 
   const handleSelectEvent = (event: ScheduleEvent) => {
     setSelectedEvent(event)
-    setShowDetails(true)
   }
 
   const kpiCards = useMemo(

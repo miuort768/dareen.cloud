@@ -150,12 +150,13 @@ export const MonitoringPage = () => {
   }, [load])
 
   const dbConnected = data?.database === 'connected'
-  const heapPct =
-    data?.memory?.heapTotal > 0
-      ? Math.round((data.memory.heapUsed / data.memory.heapTotal) * 100)
-      : 0
+  const heapTotal = data?.memory?.heapTotal ?? 0
+  const heapUsed = data?.memory?.heapUsed ?? 0
+  const heapPct = heapTotal > 0 ? Math.round((heapUsed / heapTotal) * 100) : 0
   const maxPath = Math.max(...Object.values(data?.byPath || {}), 1)
-  const errorRate = data?.total > 0 ? ((data.errors / data.total) * 100).toFixed(1) : '0.0'
+  const totalRequests = data?.total ?? 0
+  const totalErrors = data?.errors ?? 0
+  const errorRate = totalRequests > 0 ? ((totalErrors / totalRequests) * 100).toFixed(1) : '0.0'
 
   if (loading && !data) {
     return (

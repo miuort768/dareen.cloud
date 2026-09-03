@@ -7,7 +7,7 @@ import { ar } from 'date-fns/locale'
 import { Skeleton } from '../shared/components/ui'
 import { ParentDashboardDesktop } from './parent-dashboard/ParentDashboardDesktop'
 import { ParentDashboardMobile } from './parent-dashboard/ParentDashboardMobile'
-import type { Student, Enrollment } from '../types'
+import type { Student, Enrollment, Session } from '../types'
 import {
   normalizeDayName,
   normalizePeriod,
@@ -20,6 +20,7 @@ import type {
   ChildNote,
   TodayTimelineItem,
   WeeklyPulseStats,
+  ActiveTimerSession,
 } from './parent-dashboard/types'
 
 const teacherLabel = (en: Enrollment): string =>
@@ -55,7 +56,7 @@ const findNextSession = (child: Student): ChildNextSession | null => {
 
   if (candidates.length === 0) return null
   candidates.sort((a, b) => a.dayIndex - b.dayIndex || a.minutes - b.minutes)
-  const best = candidates[0]
+  const best = candidates[0]!
   return {
     day: best.day,
     hour: best.hour,
@@ -67,7 +68,7 @@ const findNextSession = (child: Student): ChildNextSession | null => {
   }
 }
 
-const computeChildStats = (child: Student, childSessions: Student[]): ChildStats => {
+const computeChildStats = (child: Student, childSessions: Session[]): ChildStats => {
   const completed = childSessions.filter((s) => s.status === 'completed').length
   const cancelled = childSessions.filter((s) => s.status === 'cancelled').length
   const totalRecorded = completed + cancelled
@@ -124,7 +125,7 @@ export const ParentDashboard = () => {
       let failedChildren = 0
       const sessionsPromises = students.map(async (s) => {
         try {
-          return (await api.get<Student[]>(`/parents/child-sessions/${s.id}`)) || []
+          return (await api.get<Session[]>(`/parents/child-sessions/${s.id}`)) || []
         } catch {
           failedChildren++
           return []
@@ -185,7 +186,7 @@ export const ParentDashboard = () => {
 
   const { data: activeTimers = [] } = useQuery({
     queryKey: ['active-sessions'],
-    queryFn: () => api.get<Student[]>('/active-sessions/my'),
+    queryFn: () => api.get<ActiveTimerSession[]>('/active-sessions/my'),
     refetchInterval: 5000,
   })
 
@@ -327,7 +328,7 @@ export const ParentDashboard = () => {
       if (!grade) return -1
       const normalized = grade.replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
       const m = normalized.match(/(\d{1,2})/)
-      return m ? parseInt(m[1], 10) : -1
+      return m && m[1] ? parseInt(m[1], 10) : -1
     }
     const sorted = [...children].sort((a, b) => {
       const diff = gradeValue(b.grade) - gradeValue(a.grade)

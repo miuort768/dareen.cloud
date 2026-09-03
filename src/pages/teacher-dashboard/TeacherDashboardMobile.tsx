@@ -117,7 +117,7 @@ export const TeacherDashboardMobile = ({
   } | null>(null)
 
   const nextSession = timeline.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
-  const firstName = (currentUser?.name || 'المعلمة').split(' ')[0]
+  const firstName = (currentUser?.name || 'المعلمة').split(' ')[0] || 'المعلمة'
 
   return (
     <div

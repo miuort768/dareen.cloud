@@ -125,7 +125,7 @@ export const StudentDashboard = () => {
 
     if (candidates.length === 0) return null
     candidates.sort((a, b) => a.dayIndex - b.dayIndex || a.minutes - b.minutes)
-    const best = candidates[0]
+    const best = candidates[0]!
     return {
       subject: best.subject,
       teacher: best.teacher,
@@ -150,7 +150,7 @@ export const StudentDashboard = () => {
         const matched = sessions.find(
           (s) =>
             s.subject === subject &&
-            (s.teacherName || s.teacher) === teacherLabel(en) &&
+            s.teacherName === teacherLabel(en) &&
             (s.date === todayStr || s.date === format(new Date(), 'en-CA')) &&
             s.status !== 'scheduled',
         )

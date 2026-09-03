@@ -27,7 +27,7 @@ export const GreetingStrip = ({
   monthCompleted,
   points,
 }: GreetingStripProps) => {
-  const firstName = (name || 'المعلمة').split(' ')[0]
+  const firstName = (name || 'المعلمة').split(' ')[0] || 'المعلمة'
 
   const stats = [
     { value: studentsCount, label: studentsCount === 1 ? 'طالب' : 'طلاب' },

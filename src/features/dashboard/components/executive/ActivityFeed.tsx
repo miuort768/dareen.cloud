@@ -228,7 +228,7 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
         )}
         {items.map((item, i) => {
           const Icon = ICON_MAP[item.icon] || History
-          const v = VARIANT_CONFIG[item.group] || VARIANT_CONFIG.other
+          const v = VARIANT_CONFIG[item.group] || VARIANT_CONFIG.other || VARIANT_CONFIG.finance!
           const isLast = i === items.length - 1
 
           return (

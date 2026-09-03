@@ -446,11 +446,7 @@ export const Blog = () => {
                 currentCurriculumName={currentCurriculumName}
                 setSearchParams={setSearchParams}
               />
-              {view === 'types' ? (
-                <AdBanner slot="belowTypesHero" className="mt-10" />
-              ) : (
-                <AdBanner slot="belowSelectionHero" className="mt-8" />
-              )}
+              <AdBanner slot="belowSelectionHero" className="mt-8" />
             </div>
           ) : view === 'results' || view === 'language-sections' ? (
             <div className="mx-auto max-w-[1400px] px-6 lg:px-10">

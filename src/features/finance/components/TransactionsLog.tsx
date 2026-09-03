@@ -14,7 +14,7 @@ import {
   Calendar,
   CreditCard,
 } from 'lucide-react'
-import { getCurrencySymbol } from '../../../config/constants'
+import { getCurrencySymbol, CURRENCY_SYMBOL } from '../../../config/constants'
 
 interface Transaction {
   id: string | number
