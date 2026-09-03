@@ -54,7 +54,7 @@ router.get('/system/public-settings', async (req, res) => {
             'admin_phone', 'theme_color',
             'notifications_enabled', 'auto_backup', 'chatbot_enabled',
             'chatbot_welcome_msg', 'chatbot_name', 'hero_banners',
-            'reminder_minutes_before', 'library_whatsapp', 'library_telegram',
+            'reminder_minutes_before', 'library_whatsapp', 'library_telegram', 'library_ads',
             'whatsapp_numbers', 'whatsapp_auto_notify', 'default_session_price', 'default_teacher_price',
             'currency_symbol', 'semester_name', 'semesters', 'whatsapp_template',
             'balance_warning_threshold', 'backdate_lock_enabled', 'teacher_commission_type',

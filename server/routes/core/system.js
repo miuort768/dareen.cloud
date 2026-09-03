@@ -626,6 +626,10 @@ router.post('/settings', async (req, res) => {
         const before = await prisma.systemSetting.findUnique({ where: { key } });
         await prisma.systemSetting.upsert({ where: { key }, update: { value: String(value) }, create: { key, value: String(value) } });
         cache.del('system:settings');
+        try {
+            const cacheService = require('../../services/cacheService');
+            await cacheService.del('system:public-settings');
+        } catch { /* cache service unavailable */ }
         await audit(req.user.id, req.user.username, 'SETTING_UPDATE', { key, before: before?.value, after: value }, 'system_setting', key);
         res.json({ success: true });
     } catch (err) {

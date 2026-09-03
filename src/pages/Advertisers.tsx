@@ -13,6 +13,7 @@ import { useAcademyName } from '../context/AppContext'
 import { useSettingsStore } from '../store/settingsStore'
 import {
   parseLibraryAds,
+  normalizeAdUrl,
   type LibraryAdSlot,
   type LibraryAds,
   type LibraryAdSlotId,
@@ -88,14 +89,8 @@ const SlotField = ({
 )
 
 const SlotPreview = ({ url, tall }: { url: string; tall?: boolean }) => {
-  if (!url.trim()) return null
-  const valid = /^https?:\/\//i.test(url.trim())
-  if (!valid)
-    return (
-      <p className="flex items-center gap-1.5 text-[10px] font-bold text-warning">
-        <AlertTriangle size={11} /> أدخل رابطاً يبدأ بـ https://
-      </p>
-    )
+  const normalized = normalizeAdUrl(url)
+  if (!normalized) return null
   return (
     <div
       className={cn(
@@ -104,7 +99,7 @@ const SlotPreview = ({ url, tall }: { url: string; tall?: boolean }) => {
       )}
     >
       <Image
-        src={url.trim()}
+        src={normalized}
         alt="معاينة الإعلان"
         className="h-full w-full"
         imgClassName="object-cover"
@@ -126,10 +121,10 @@ export const Advertisers = () => {
   const [ads, setAds] = useState<LibraryAds>(() => parseLibraryAds(libraryAds))
   const [saveState, setSaveState] = useState<SaveState>('idle')
 
+  // مزامنة مع الـ store — إذا وصلت الإعدادات بعد فتح الصفحة أو أُعيد جلبها
   useEffect(() => {
     setAds(parseLibraryAds(libraryAds))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [libraryAds])
 
   const updateSlot = (id: LibraryAdSlotId, patch: Partial<LibraryAdSlot>) => {
     setAds((prev) => ({ ...prev, [id]: { ...emptySlot(), ...prev[id], ...patch } }))
@@ -144,9 +139,9 @@ export const Advertisers = () => {
         const slot = ads[key]
         if (!slot) return
         const trimmed: LibraryAdSlot = {
-          desktop: slot.desktop?.trim() || undefined,
-          mobile: slot.mobile?.trim() || undefined,
-          link: slot.link?.trim() || undefined,
+          desktop: normalizeAdUrl(slot.desktop) || undefined,
+          mobile: normalizeAdUrl(slot.mobile) || undefined,
+          link: normalizeAdUrl(slot.link) || undefined,
         }
         if (trimmed.desktop || trimmed.mobile) clean[key] = trimmed
       })

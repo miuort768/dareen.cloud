@@ -25,6 +25,14 @@ export const parseLibraryAds = (raw: string | undefined): LibraryAds => {
   }
 }
 
+/** يضمن وجود scheme — روابط بدون https:// تُعامل كمسارات داخلية وتفشل */
+export const normalizeAdUrl = (url?: string): string => {
+  const t = (url || '').trim()
+  if (!t) return ''
+  if (/^(https?:\/\/|data:image\/)/i.test(t)) return t
+  return `https://${t}`
+}
+
 interface AdBannerProps {
   slot: LibraryAdSlotId
   variant?: 'both' | 'desktop'
@@ -36,12 +44,16 @@ export const AdBanner = ({ slot, variant = 'both', className }: AdBannerProps) =
   const ad = ads[slot]
   if (!ad) return null
 
-  const linkProps = ad.link
-    ? ({ href: ad.link, target: '_blank', rel: 'sponsored noopener noreferrer' } as const)
+  const desktopUrl = normalizeAdUrl(ad.desktop)
+  const mobileUrl = normalizeAdUrl(ad.mobile) || desktopUrl
+  const linkUrl = normalizeAdUrl(ad.link)
+
+  const linkProps = linkUrl
+    ? ({ href: linkUrl, target: '_blank', rel: 'sponsored noopener noreferrer' } as const)
     : {}
 
-  const showMobile = variant === 'both' && !!ad.mobile
-  const showDesktop = !!ad.desktop
+  const showMobile = variant === 'both' && !!mobileUrl
+  const showDesktop = !!desktopUrl
 
   if (!showMobile && !showDesktop) return null
 
@@ -55,7 +67,7 @@ export const AdBanner = ({ slot, variant = 'both', className }: AdBannerProps) =
         >
           <div className="aspect-[16/10] w-full">
             <Image
-              src={ad.mobile!}
+              src={mobileUrl}
               alt="إعلان"
               className="h-full w-full"
               imgClassName="object-cover"
@@ -73,7 +85,7 @@ export const AdBanner = ({ slot, variant = 'both', className }: AdBannerProps) =
         >
           <div className="h-36 w-full lg:h-44">
             <Image
-              src={ad.desktop!}
+              src={desktopUrl}
               alt="إعلان"
               className="h-full w-full"
               imgClassName="object-cover"
