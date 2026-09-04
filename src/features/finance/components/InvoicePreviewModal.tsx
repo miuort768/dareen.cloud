@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { X, Printer, CheckCircle2, Clock, AlertCircle } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { useSettingsStore } from '../../../store/settingsStore'
@@ -44,9 +44,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
             </div>
             <div>
               <h3 className="text-xl font-medium text-main">معاينة الفاتورة</h3>
-              <p className="mt-1 text-xs font-normal uppercase leading-none tracking-widest text-muted">
-                معاينة الفاتورة
-              </p>
+              <p className="mt-1 text-xs font-normal leading-none text-muted">معاينة الفاتورة</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -80,9 +78,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                   <h2 className="text-xl font-medium tracking-tighter text-main">
                     {academyName || 'دارين السابعة'}
                   </h2>
-                  <p className="text-micro font-normal uppercase tracking-widest text-muted">
-                    فاتورة الأكاديمية
-                  </p>
+                  <p className="text-micro font-normal text-muted">فاتورة الأكاديمية</p>
                 </div>
               </div>
               <div className="space-y-1 text-xs font-normal text-muted">
@@ -90,13 +86,13 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
               </div>
             </div>
             <div className="text-end">
-              <h1 className="mb-2 text-3xl font-medium uppercase text-main">فاتورة</h1>
+              <h1 className="mb-2 text-3xl font-medium text-main">فاتورة</h1>
               <p className="font-mono text-xs font-medium text-primary">
                 #{invoice.id.slice(0, 8).toUpperCase()}
               </p>
               <div
                 className={cn(
-                  'mt-2 inline-flex items-center gap-2 rounded-lg px-3 py-1 text-micro font-medium uppercase tracking-widest',
+                  'mt-2 inline-flex items-center gap-2 rounded-lg px-3 py-1 text-micro font-medium',
                   invoice.status === 'paid'
                     ? 'border border-success bg-success-soft text-success'
                     : invoice.status === 'pending'
@@ -122,26 +118,20 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
 
           <div className="mb-8 grid grid-cols-2 gap-4 border-y border-border py-6">
             <div>
-              <p className="mb-2 text-micro font-medium uppercase tracking-widest text-muted">
-                إلى الطالب:
-              </p>
+              <p className="mb-2 text-micro font-medium text-muted">إلى الطالب:</p>
               <p className="mb-1 text-base font-medium text-main">{invoice.studentName}</p>
               <p className="text-xs font-normal italic text-muted">{invoice.description}</p>
             </div>
             <div className="text-end">
               <div className="space-y-2">
                 <div>
-                  <p className="text-micro font-medium uppercase tracking-widest text-muted">
-                    تاريخ الإصدار
-                  </p>
+                  <p className="text-micro font-medium text-muted">تاريخ الإصدار</p>
                   <p className="font-mono text-xs font-normal text-main">
                     {new Date(invoice.date).toLocaleDateString('ar-EG')}
                   </p>
                 </div>
                 <div>
-                  <p className="text-micro font-medium uppercase tracking-widest text-muted">
-                    تاريخ الاستحقاق
-                  </p>
+                  <p className="text-micro font-medium text-muted">تاريخ الاستحقاق</p>
                   <p className="font-mono text-xs font-normal text-main">
                     {new Date(invoice.dueDate).toLocaleDateString('ar-EG')}
                   </p>
@@ -154,15 +144,11 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
             <table className="w-full table-fixed border-collapse">
               <thead>
                 <tr className="border-b-2 border-border">
-                  <th className="w-1/4 py-2 text-start text-micro font-medium uppercase">
-                    التاريخ
-                  </th>
-                  <th className="w-1/4 py-2 text-start text-micro font-medium uppercase">
-                    المعلمة
-                  </th>
-                  <th className="w-1/4 py-2 text-start text-micro font-medium uppercase">المادة</th>
+                  <th className="w-1/4 py-2 text-start text-micro font-medium">التاريخ</th>
+                  <th className="w-1/4 py-2 text-start text-micro font-medium">المعلمة</th>
+                  <th className="w-1/4 py-2 text-start text-micro font-medium">المادة</th>
                   {!hidePricing && (
-                    <th className="w-1/4 py-2 text-end text-micro font-medium uppercase">الحساب</th>
+                    <th className="w-1/4 py-2 text-end text-micro font-medium">الحساب</th>
                   )}
                 </tr>
               </thead>
@@ -226,7 +212,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
             </div>
             {!hidePricing && (
               <div className="flex w-full max-w-[200px] items-center justify-between bg-surface px-2 py-3">
-                <span className="text-xs font-medium uppercase tracking-widest">الإجمالي</span>
+                <span className="text-xs font-medium">الإجمالي</span>
                 <span className="font-mono text-lg font-medium text-main">
                   {invoice.amount.toLocaleString()} {CURRENCY_SYMBOL}
                 </span>
@@ -236,9 +222,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
 
           {invoice.notes && (
             <div className="mt-8">
-              <p className="mb-2 text-micro font-medium uppercase tracking-widest text-muted">
-                ملاحظات:
-              </p>
+              <p className="mb-2 text-micro font-medium text-muted">ملاحظات:</p>
               <p className="text-xs font-normal italic leading-relaxed text-muted">
                 {invoice.notes}
               </p>
@@ -246,7 +230,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
           )}
 
           <div className="no-print mt-12 text-center">
-            <p className="mb-4 text-micro font-medium uppercase tracking-label text-muted opacity-50">
+            <p className="mb-4 text-micro font-medium text-muted opacity-50">
               شكراً لثقتكم بأكاديميتنا
             </p>
             <div className="mx-auto h-1 w-24 bg-primary opacity-20"></div>
@@ -262,7 +246,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
           </button>
           <button
             onClick={handlePrint}
-            className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-xs font-medium uppercase tracking-widest text-on-primary transition-all hover:bg-primary-hover md:h-auto md:flex-none"
+            className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-xs font-medium text-on-primary transition-all hover:bg-primary-hover md:h-auto md:flex-none"
           >
             <Printer size={16} />
             طباعة

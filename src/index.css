@@ -177,7 +177,10 @@ html, body {
      يُصفَّر داخل سياق RTL فقط، فتبقى النصوص اللاتينية بلا تأثير. */
   [dir='rtl'] :is(h1, h2, h3, h4, h5, h6),
   [dir='rtl'] .tracking-tight,
-  [dir='rtl'] .tracking-tighter {
+  [dir='rtl'] .tracking-tighter,
+  [dir='rtl'] .tracking-wider,
+  [dir='rtl'] .tracking-widest,
+  [dir='rtl'] .tracking-label {
     letter-spacing: 0 !important;
   }
   
