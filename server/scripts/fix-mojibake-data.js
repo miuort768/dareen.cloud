@@ -16,12 +16,40 @@
  *   node scripts/fix-mojibake-data.js --apply    # write fixes
  */
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
+// Production servers keep the PG URL in .env.production — load it as fallback (no override)
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.production'), override: false });
 const fs = require('fs');
 const path = require('path');
 const { Pool } = require('pg');
 
 const APPLY = process.argv.includes('--apply');
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+
+const DB_URL = process.env.DATABASE_URL;
+if (!DB_URL || !DB_URL.startsWith('postgres')) {
+  console.error(
+    [
+      '',
+      'ERROR: DATABASE_URL is not set or is not a PostgreSQL URL.',
+      '',
+      'Options:',
+      '  1) Run inside the app container (env already configured):',
+      '       docker exec -it darin-app node server/scripts/fix-mojibake-data.js',
+      '       docker exec -it darin-app node server/scripts/fix-mojibake-data.js --apply',
+      '',
+      '  2) Or export it here first (same URL as server/.env.production):',
+      '       export $(grep -E "^DATABASE_URL=" .env.production | xargs)',
+      '       node scripts/fix-mojibake-data.js',
+      '',
+    ].join('\n'),
+  );
+  process.exit(1);
+}
+
+// Masked target so the user can confirm which DB they are touching
+const masked = DB_URL.replace(/:\/\/([^:]+):[^@]+@/, '://$1:****@');
+console.log(`Target DB: ${masked}`);
+
+const pool = new Pool({ connectionString: DB_URL });
 
 /* ── mojibake decode ─────────────────────────────────────────────── */
 
