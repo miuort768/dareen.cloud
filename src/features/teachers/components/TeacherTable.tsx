@@ -153,7 +153,7 @@ export const TeacherTable = memo(
     return (
       <div className="w-full" dir="rtl">
         {/* Desktop View */}
-        <div className="hidden overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 lg:block">
+        <div className="hidden overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 md:block">
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-start">
               <thead className="sticky top-0 z-20">
@@ -325,7 +325,7 @@ export const TeacherTable = memo(
         </div>
 
         {/* Mobile View */}
-        <div className="space-y-2 lg:hidden">
+        <div className="space-y-2.5 md:hidden">
           {sorted.map((teacher) => {
             const isSelected = selectedId === teacher.id
             const status = computeStatus(teacher)
@@ -398,40 +398,40 @@ export const TeacherTable = memo(
                       e.stopPropagation()
                       onChat(teacher.id)
                     }}
-                    className="flex h-9 items-center justify-center gap-1 rounded-xl bg-info-soft text-[10px] font-bold text-info transition-transform active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-info-soft text-[11px] font-bold text-info transition-transform active:scale-95"
                     aria-label="مراسلة"
                   >
-                    <MessageCircle size={12} /> مراسلة
+                    <MessageCircle size={13} /> مراسلة
                   </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       onNotify(teacher)
                     }}
-                    className="flex h-9 items-center justify-center gap-1 rounded-xl bg-warning-soft text-[10px] font-bold text-warning transition-transform active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-warning-soft text-[11px] font-bold text-warning transition-transform active:scale-95"
                     aria-label="إرسال إشعار"
                   >
-                    <Bell size={12} /> إشعار
+                    <Bell size={13} /> إشعار
                   </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       onEdit(teacher)
                     }}
-                    className="flex h-9 items-center justify-center gap-1 rounded-xl bg-primary-soft text-[10px] font-bold text-primary transition-transform active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-primary-soft text-[11px] font-bold text-primary transition-transform active:scale-95"
                     aria-label="تعديل"
                   >
-                    <Edit size={12} /> تعديل
+                    <Edit size={13} /> تعديل
                   </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
                       onDelete(teacher.id)
                     }}
-                    className="flex h-9 items-center justify-center gap-1 rounded-xl bg-error-soft text-[10px] font-bold text-error transition-transform active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-error-soft text-[11px] font-bold text-error transition-transform active:scale-95"
                     aria-label="حذف"
                   >
-                    <Trash2 size={12} /> حذف
+                    <Trash2 size={13} /> حذف
                   </button>
                 </div>
               </motion.div>

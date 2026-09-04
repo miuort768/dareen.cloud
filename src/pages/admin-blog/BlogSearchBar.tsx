@@ -41,7 +41,7 @@ export const BlogSearchBar = ({
           onClick={() => setFilterType(btn.key)}
           aria-pressed={filterType === btn.key}
           className={cn(
-            'flex h-9 items-center justify-center whitespace-nowrap rounded-lg px-3.5 text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+            'flex h-10 items-center justify-center whitespace-nowrap rounded-lg px-3.5 text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:h-9',
             filterType === btn.key
               ? 'bg-primary text-on-primary shadow-sm'
               : 'border border-border bg-card text-muted hover:bg-hover',

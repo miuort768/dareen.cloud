@@ -16,7 +16,7 @@ export const LeadTable = memo(
   ({ filteredLeads, updateMutation, handleMarkLost, onLeadClick }: LeadTableProps) => {
     if (filteredLeads.length === 0) {
       return (
-        <div className="hidden lg:block">
+        <div className="hidden md:block">
           <div className="py-20 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft">
               <Search size={28} className="text-primary opacity-40" />
@@ -29,7 +29,7 @@ export const LeadTable = memo(
     }
 
     return (
-      <div className="hidden lg:block">
+      <div className="hidden md:block">
         <Virtuoso
           style={{ height: Math.min(filteredLeads.length * 56 + 60, 600) }}
           data={filteredLeads}

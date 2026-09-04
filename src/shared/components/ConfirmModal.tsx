@@ -96,7 +96,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-4"
       dir="rtl"
       onKeyDown={handleKeyDown}
       role="dialog"
@@ -108,15 +108,15 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
         onClick={onClose}
       ></div>
 
-      <div className="relative w-full max-w-md overflow-hidden rounded-none border-2 border-error bg-card shadow-elevation-3 duration-200 animate-in zoom-in-95 dark:bg-card">
+      <div className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t-2 border-error bg-card shadow-elevation-3 duration-200 animate-in slide-in-from-bottom dark:bg-card md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border-x-2 md:border-b-2 md:animate-in md:zoom-in-95">
         {/* Accent bar */}
         <div className={cn('h-1 w-full', isDestructive ? 'bg-error' : 'bg-primary')}></div>
 
-        <div className="relative p-6">
+        <div className="relative p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:p-6">
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute start-4 top-4 flex h-8 w-8 items-center justify-center rounded-none bg-error text-on-error transition-all hover:scale-110 hover:bg-error-hover active:scale-95"
+            className="absolute start-4 top-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-error text-on-error transition-all hover:scale-110 hover:bg-error-hover active:scale-95 md:h-8 md:w-8"
             aria-label="إغلاق"
           >
             <X size={16} />
@@ -126,7 +126,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
             {/* Icon */}
             <div
               className={cn(
-                'mb-5 flex h-16 w-16 items-center justify-center rounded-none',
+                'mb-5 flex h-16 w-16 items-center justify-center rounded-2xl',
                 isDestructive
                   ? 'bg-error-soft text-error dark:bg-error-soft'
                   : 'bg-primary/10 text-primary dark:bg-primary/15',
@@ -167,7 +167,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                     placeholder={passwordPlaceholder}
                     aria-label="كلمة المرور التحذيرية"
                     className={cn(
-                      'w-full rounded-none border bg-surface py-2.5 pe-3 ps-9 text-xs font-bold text-main outline-none transition-all focus:ring-2',
+                      'w-full rounded-2xl border bg-surface py-2.5 pe-3 ps-9 text-xs font-bold text-main outline-none transition-all focus:ring-2',
                       passwordError
                         ? 'border-error focus:border-error focus:ring-error-soft'
                         : 'border-border focus:border-primary focus:ring-focus',

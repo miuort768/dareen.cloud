@@ -223,7 +223,7 @@ function TableInner<T>({
   const renderPagination = () => {
     if (!totalPages || totalPages <= 1 || !onPageChange) return null
     return (
-      <div className="flex items-center justify-between border-t border-border bg-surface px-5 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border bg-surface px-4 py-3 md:px-5">
         <p className="text-xs font-bold text-dim">
           {totalCount ? `1-${Math.min(pageSize || data.length, totalCount)} من ${totalCount}` : ''}
         </p>
@@ -231,7 +231,7 @@ function TableInner<T>({
           <button
             onClick={() => onPageChange(Math.max(1, (page || 1) - 1))}
             disabled={page === 1 || page === undefined}
-            className="rounded-card p-1.5 text-muted transition-colors hover:bg-hover disabled:pointer-events-none disabled:opacity-30"
+            className="rounded-card p-2.5 text-muted transition-colors hover:bg-hover disabled:pointer-events-none disabled:opacity-30 md:p-1.5"
             aria-label="الصفحة السابقة"
           >
             <ChevronRight size={16} />
@@ -244,7 +244,7 @@ function TableInner<T>({
                 key={p}
                 onClick={() => onPageChange(p)}
                 className={cn(
-                  'h-8 min-w-[32px] rounded-card text-xs font-bold transition-colors',
+                  'h-9 min-w-[36px] rounded-card text-xs font-bold transition-colors md:h-8 md:min-w-[32px]',
                   isActive ? 'bg-primary text-on-primary' : 'text-muted hover:bg-hover',
                 )}
               >
@@ -256,7 +256,7 @@ function TableInner<T>({
           <button
             onClick={() => onPageChange(Math.min(totalPages, (page || 1) + 1))}
             disabled={page === totalPages}
-            className="rounded-card p-1.5 text-muted transition-colors hover:bg-hover disabled:pointer-events-none disabled:opacity-30"
+            className="rounded-card p-2.5 text-muted transition-colors hover:bg-hover disabled:pointer-events-none disabled:opacity-30 md:p-1.5"
             aria-label="الصفحة التالية"
           >
             <ChevronLeft size={16} />
@@ -270,7 +270,7 @@ function TableInner<T>({
     if (!mobileCard || isLoading) return null
     if (sortedData.length === 0) return null
     return (
-      <div className="space-y-4 md:hidden">
+      <div className="space-y-3 md:hidden">
         {sortedData.map((item) => {
           const id = getId(item)
           return (
@@ -290,12 +290,69 @@ function TableInner<T>({
                   : undefined
               }
               className={cn(
-                'border border-border bg-card p-5',
-                onRowClick && 'cursor-pointer',
+                'rounded-2xl border border-border bg-card p-4 transition-shadow',
+                onRowClick && 'cursor-pointer active:scale-[0.99]',
                 selectedId !== undefined && selectedId === id && 'border-primary',
               )}
             >
               {mobileCard(item)}
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+
+  // Default mobile cards: when no custom mobileCard is provided, build cards
+  // from columns that declare a mobileLabel (label: value rows per card).
+  const defaultMobileColumns = mobileCard
+    ? null
+    : columns.filter((col) => col.mobileLabel && !col.hideOnMobile)
+
+  const renderDefaultMobileCards = () => {
+    if (mobileCard || isLoading || sortedData.length === 0) return null
+    if (!defaultMobileColumns || defaultMobileColumns.length === 0) return null
+    return (
+      <div className="space-y-3 md:hidden">
+        {sortedData.map((item) => {
+          const id = getId(item)
+          const isSelected = selectedId !== undefined && id === selectedId
+          return (
+            <div
+              key={id}
+              onClick={() => onRowClick?.(item)}
+              role={onRowClick ? 'button' : undefined}
+              tabIndex={onRowClick ? 0 : undefined}
+              onKeyDown={
+                onRowClick
+                  ? (e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        onRowClick(item)
+                      }
+                    }
+                  : undefined
+              }
+              className={cn(
+                'rounded-2xl border border-border bg-card p-4 transition-shadow',
+                onRowClick && 'cursor-pointer active:scale-[0.99]',
+                isSelected && 'border-primary',
+              )}
+            >
+              <div className="space-y-2.5">
+                {defaultMobileColumns.map((col) => (
+                  <div key={col.key} className="flex items-start justify-between gap-3">
+                    <span className="shrink-0 pt-0.5 text-xs font-semibold text-muted">
+                      {col.mobileLabel}
+                    </span>
+                    <span className="min-w-0 text-end text-sm font-medium text-main">
+                      {col.render
+                        ? col.render(item)
+                        : ((item as Record<string, unknown>)[col.key] as React.ReactNode)}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           )
         })}
@@ -313,6 +370,7 @@ function TableInner<T>({
         {renderPagination()}
       </div>
       {renderMobileCards()}
+      {renderDefaultMobileCards()}
     </div>
   )
 }

@@ -43,7 +43,7 @@ export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProp
         aria-label={tooltip || label}
         className={cn(
           'inline-flex items-center justify-center',
-          'h-8 w-8 rounded-xl border',
+          'h-10 w-10 rounded-xl border md:h-8 md:w-8',
           'text-[10px] font-bold',
           'transition-all duration-200',
           'active:scale-95',
@@ -55,7 +55,7 @@ export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProp
         {...props}
       >
         {isComponent
-          ? React.createElement(icon as React.ComponentType<{ size?: number }>, { size: 14 })
+          ? React.createElement(icon as React.ComponentType<{ size?: number }>, { size: 16 })
           : icon}
       </button>
     )

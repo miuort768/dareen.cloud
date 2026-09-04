@@ -49,7 +49,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
   return (
     <section
       aria-label="آخر النشاطات"
-      className="rounded-none border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+      className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
     >
       <div className="mb-4 flex items-center gap-2">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft">
@@ -75,14 +75,14 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
                   </p>
                 )}
                 {item.detail && (
-                  <p className="mt-1 rounded-none border border-primary/20 bg-primary-soft p-1.5 text-[10px] font-bold leading-relaxed text-main">
+                  <p className="mt-1 rounded-2xl border border-primary/20 bg-primary-soft p-1.5 text-[10px] font-bold leading-relaxed text-main">
                     {item.detail}
                   </p>
                 )}
               </div>
               {item.amount !== undefined && (
                 <span
-                  className={`shrink-0 rounded-none px-2 py-0.5 text-[11px] font-black tabular-nums ${
+                  className={`shrink-0 rounded-2xl px-2 py-0.5 text-[11px] font-black tabular-nums ${
                     isPositive ? 'bg-success-soft text-success' : 'bg-error-soft text-error'
                   }`}
                 >

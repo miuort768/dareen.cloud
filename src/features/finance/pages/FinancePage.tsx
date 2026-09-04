@@ -83,13 +83,13 @@ export const Finance = () => {
   if (loading) {
     return (
       <div className="min-h-full space-y-6 bg-background p-4">
-        <div className="h-28 animate-pulse rounded-none bg-card" />
+        <div className="h-28 animate-pulse rounded-2xl bg-card" />
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {[...Array(4)].map((_, i) => (
-            <div key={`finance-${i}`} className="h-28 animate-pulse rounded-none bg-card" />
+            <div key={`finance-${i}`} className="h-28 animate-pulse rounded-2xl bg-card" />
           ))}
         </div>
-        <div className="h-96 animate-pulse rounded-none bg-card" />
+        <div className="h-96 animate-pulse rounded-2xl bg-card" />
       </div>
     )
   }
@@ -101,7 +101,7 @@ export const Finance = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-none border border-border bg-card p-5 shadow-sm md:p-6"
+          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
         >
           <div className="bg-success/10 pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
@@ -164,13 +164,13 @@ export const Finance = () => {
             <div className="flex shrink-0 items-center gap-2">
               <button
                 onClick={() => actions.refresh?.()}
-                className="flex h-10 items-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95"
+                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95 md:h-10 md:flex-none"
               >
                 <RefreshCcw size={13} /> تحديث
               </button>
               <button
                 onClick={() => navigate('/monthly-closing')}
-                className="flex h-10 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
+                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95 md:h-10 md:flex-none"
               >
                 <CalendarCheck size={13} /> تسوية
               </button>
@@ -261,7 +261,7 @@ export const Finance = () => {
                 </span>
                 <button
                   onClick={() => handleFabAction(item.action)}
-                  className="flex h-11 w-11 items-center justify-center rounded-none bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl active:scale-95"
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl active:scale-95"
                 >
                   <item.icon size={18} />
                 </button>
@@ -273,7 +273,7 @@ export const Finance = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-none text-on-primary shadow-xl transition-all',
+            'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >

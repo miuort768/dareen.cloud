@@ -20,11 +20,11 @@ export const DeleteUserModal = ({
 
   return (
     <div
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4 animate-in fade-in"
+      className="fixed inset-0 z-[1000] flex items-end justify-center bg-black/40 animate-in fade-in md:items-center md:p-4"
       onClick={() => setShowDeleteModal(false)}
     >
       <div
-        className="w-full max-w-sm rounded-2xl border border-border bg-card p-6 shadow-xl"
+        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-xl md:max-h-none md:max-w-sm md:overflow-hidden md:rounded-2xl md:border md:p-6"
         onClick={(e) => e.stopPropagation()}
         dir="rtl"
       >

@@ -188,7 +188,7 @@ export const StudentDrawer = ({
             <div className="flex items-center justify-between p-4">
               <button
                 onClick={onClose}
-                className="flex h-8 items-center gap-1 rounded-lg bg-white/15 px-3 text-xs font-bold text-on-primary transition-colors hover:bg-white/25"
+                className="flex h-10 items-center gap-1 rounded-lg bg-white/15 px-3 text-xs font-bold text-on-primary transition-colors hover:bg-white/25 md:h-8"
                 aria-label="رجوع"
               >
                 <ChevronLeft size={14} />

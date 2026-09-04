@@ -82,7 +82,7 @@ export const TrialSessionCard = ({
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -2 }}
       className={cn(
-        'shadow-elevation-0 group overflow-hidden rounded-none border border-border bg-card text-right font-dash transition-all duration-300 hover:shadow-elevation-1 md:rounded-2xl',
+        'shadow-elevation-0 group overflow-hidden rounded-2xl border border-border bg-card text-right font-dash transition-all duration-300 hover:shadow-elevation-1 md:rounded-2xl',
         onCardClick && 'cursor-pointer',
       )}
       dir="rtl"

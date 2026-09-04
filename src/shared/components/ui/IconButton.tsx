@@ -4,7 +4,7 @@ import { triggerHaptic } from '../../../lib/haptics'
 
 export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'default' | 'error'
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
   icon: React.ReactNode
   label: string
   active?: boolean
@@ -22,8 +22,9 @@ const variants = {
 }
 
 const sizes = {
-  sm: 'w-9 h-9',
-  md: 'w-10 h-10',
+  sm: 'w-10 h-10 md:w-9 md:h-9',
+  md: 'w-11 h-11 md:w-10 md:h-10',
+  lg: 'w-12 h-12',
 }
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(

@@ -171,7 +171,7 @@ export const Tasks = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
           >
             {particles.map((p) => (
               <motion.div
@@ -191,7 +191,7 @@ export const Tasks = () => {
             <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <div className="mb-2 flex items-center gap-2">
-                  <div className="rounded-none bg-white/15 p-2 backdrop-blur-sm">
+                  <div className="rounded-2xl bg-white/15 p-2 backdrop-blur-sm">
                     <ListTodo className="text-on-primary" size={20} />
                   </div>
                   <span className="text-xs font-medium text-white/70">الإدارة</span>
@@ -201,7 +201,7 @@ export const Tasks = () => {
                 </h1>
                 <p className="text-sm text-white/70">إدارة وتكليف المهام للمعلمات</p>
               </div>
-              <div className="flex items-center gap-4 rounded-none border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
+              <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
                 <div className="text-center">
                   <p className="mb-1 text-xs text-white/60">نسبة الإنجاز</p>
                   <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.score}%</p>
@@ -233,15 +233,15 @@ export const Tasks = () => {
                     transition={{ delay: 0.12 + i * 0.06 }}
                     whileHover={{ scale: 1.02, y: -2 }}
                     className={cn(
-                      'relative overflow-hidden rounded-none border border-border bg-gradient-to-br p-4',
+                      'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4',
                       kpi.gradient,
                     )}
                   >
                     <div className="mb-3 flex items-center justify-between">
-                      <div className={cn('rounded-none p-2', kpi.iconBg)}>
+                      <div className={cn('rounded-2xl p-2', kpi.iconBg)}>
                         <Icon size={16} />
                       </div>
-                      <div className={cn('h-1 w-12 rounded-none', kpi.accent)} />
+                      <div className={cn('h-1 w-12 rounded-2xl', kpi.accent)} />
                     </div>
                     <p className="mb-1 text-xs text-muted">{kpi.label}</p>
                     <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
@@ -269,7 +269,7 @@ export const Tasks = () => {
                   placeholder="ابحث عن مهمة..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full rounded-none border border-border bg-card px-4 py-3 ps-10 text-xs font-bold text-main shadow-sm transition-all placeholder:text-muted focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full rounded-2xl border border-border bg-card px-4 py-3 ps-10 text-xs font-bold text-main shadow-sm transition-all placeholder:text-muted focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 />
               </div>
 
@@ -281,7 +281,7 @@ export const Tasks = () => {
                     onClick={() => setFilterPriority(key)}
                     aria-pressed={filterPriority === key}
                     className={cn(
-                      'whitespace-nowrap rounded-none border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                      'whitespace-nowrap rounded-2xl border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                       filterPriority === key
                         ? key !== 'all'
                           ? cn(TASK_PRIORITY_CONFIG[key].badge, 'border-current')
@@ -296,7 +296,7 @@ export const Tasks = () => {
                   <button
                     onClick={handleDeleteCompleted}
                     disabled={deleteTask.isPending}
-                    className="ms-auto flex shrink-0 items-center gap-1 whitespace-nowrap rounded-none px-3 py-2 text-micro font-bold text-error transition-colors hover:bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                    className="ms-auto flex shrink-0 items-center gap-1 whitespace-nowrap rounded-2xl px-3 py-2 text-micro font-bold text-error transition-colors hover:bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
                   >
                     <Trash2 size={12} /> حذف المكتملة ({stats.completed})
                   </button>
@@ -307,13 +307,13 @@ export const Tasks = () => {
 
           {/* حالة الخطأ */}
           {isError ? (
-            <div className="bg-error-soft/50 rounded-none border border-dashed border-error-soft py-16 text-center">
+            <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-16 text-center">
               <AlertTriangle size={32} className="mx-auto mb-3 text-error" strokeWidth={1.5} />
               <p className="text-sm font-bold text-main">تعذر تحميل المهام</p>
               <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
               <button
                 onClick={() => refetch()}
-                className="mx-auto mt-4 block rounded-none bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="mx-auto mt-4 block rounded-2xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 إعادة المحاولة
               </button>
@@ -364,7 +364,7 @@ export const Tasks = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="إنشاء مهمة جديدة"
-          className="fixed bottom-6 end-6 z-50 flex h-14 w-14 items-center justify-center rounded-none bg-primary text-on-primary shadow-xl transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="fixed bottom-6 end-6 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-xl transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
         >
           <Plus size={24} />
         </motion.button>

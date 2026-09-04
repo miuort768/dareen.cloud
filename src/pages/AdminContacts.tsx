@@ -342,7 +342,7 @@ export const AdminContacts = () => {
                 onClick={() => setFilterRead(pill.key)}
                 aria-pressed={filterRead === pill.key}
                 className={cn(
-                  'inline-flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold transition-colors duration-fast active:scale-[0.97]',
+                  'inline-flex min-h-[44px] items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold transition-colors duration-fast active:scale-[0.97] sm:min-h-0',
                   filterRead === pill.key
                     ? 'bg-primary text-on-primary'
                     : 'border border-border bg-card text-muted hover:border-primary/30 hover:text-main',
@@ -481,7 +481,7 @@ export const AdminContacts = () => {
                               <>
                                 <a
                                   href={`tel:${safePhone.replace(/\s/g, '')}`}
-                                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-success-soft text-success transition-colors duration-fast hover:bg-success hover:text-on-success active:scale-95"
+                                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-success-soft text-success transition-colors duration-fast hover:bg-success hover:text-on-success active:scale-95 sm:h-8 sm:w-8"
                                   aria-label={`اتصال بـ ${safePhone}`}
                                 >
                                   <Phone size={14} />
@@ -490,7 +490,7 @@ export const AdminContacts = () => {
                                   href={`https://wa.me/${safePhone.replace(/\D/g, '')}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-success-soft text-success transition-colors duration-fast hover:bg-success hover:text-on-success active:scale-95"
+                                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-success-soft text-success transition-colors duration-fast hover:bg-success hover:text-on-success active:scale-95 sm:h-8 sm:w-8"
                                   aria-label="مراسلة عبر واتساب"
                                 >
                                   <MessageCircle size={14} />
@@ -501,7 +501,7 @@ export const AdminContacts = () => {
                               type="button"
                               onClick={() => markAsRead(msg.id)}
                               className={cn(
-                                'flex h-8 w-8 items-center justify-center rounded-lg transition-colors duration-fast active:scale-95',
+                                'flex h-10 w-10 items-center justify-center rounded-lg transition-colors duration-fast active:scale-95 sm:h-8 sm:w-8',
                                 isMsgRead
                                   ? 'bg-success-soft text-success hover:bg-success hover:text-on-success'
                                   : 'bg-surface text-muted hover:bg-hover',
@@ -513,7 +513,7 @@ export const AdminContacts = () => {
                             <button
                               type="button"
                               onClick={() => handleDelete(msg.id)}
-                              className="flex h-8 w-8 items-center justify-center rounded-lg bg-error-soft text-error transition-colors duration-fast hover:bg-error hover:text-on-error active:scale-95"
+                              className="flex h-10 w-10 items-center justify-center rounded-lg bg-error-soft text-error transition-colors duration-fast hover:bg-error hover:text-on-error active:scale-95 sm:h-8 sm:w-8"
                               aria-label="حذف الرسالة"
                             >
                               <Trash2 size={14} />

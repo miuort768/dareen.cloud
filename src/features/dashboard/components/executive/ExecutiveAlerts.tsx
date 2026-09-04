@@ -71,7 +71,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
 
   return (
     <div
-      className="border-warning-soft/60 flex h-full flex-col rounded-none border bg-card p-5 font-dash"
+      className="border-warning-soft/60 flex h-full flex-col rounded-2xl border bg-card p-5 font-dash"
       dir="rtl"
     >
       <div className="mb-4 flex items-center justify-between">

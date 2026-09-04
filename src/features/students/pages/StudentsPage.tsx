@@ -438,7 +438,7 @@ export const Students = () => {
                   transition={{ delay: 0.1 + i * 0.05 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'relative overflow-hidden rounded-none border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
+                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
                     stat.gradient,
                   )}
                 >
@@ -522,7 +522,7 @@ export const Students = () => {
                 <button
                   onClick={handleDeleteAll}
                   disabled={isDeletingAllBusy}
-                  className="inline-flex h-9 items-center justify-center gap-2 rounded-xl bg-error px-4 text-micro font-bold text-on-error transition-all hover:bg-error-hover disabled:opacity-50"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-micro font-bold text-on-error transition-all hover:bg-error-hover disabled:opacity-50 md:h-9"
                 >
                   {isDeletingAllBusy && <Loader2 className="animate-spin" size={14} />}
                   تأكيد الحذف
@@ -533,7 +533,7 @@ export const Students = () => {
                     setDeleteAllPassword('')
                     setDeleteAllError('')
                   }}
-                  className="h-9 rounded-xl border border-border bg-surface px-4 text-micro font-bold text-main transition-all"
+                  className="h-10 rounded-xl border border-border bg-surface px-4 text-micro font-bold text-main transition-all md:h-9"
                 >
                   إلغاء
                 </button>

@@ -55,7 +55,7 @@ export const GreetingStrip = ({
   return (
     <section
       aria-label="ترحيب"
-      className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-elevation-2 transition-colors duration-300"
+      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-elevation-2 transition-colors duration-300"
     >
       <div
         className="pointer-events-none absolute -end-20 -top-24 h-64 w-64 rounded-full border border-white/10"
@@ -139,7 +139,7 @@ export const GreetingStrip = ({
             return (
               <span
                 key={chip.label}
-                className="inline-flex items-center gap-1.5 rounded-none border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-on-primary backdrop-blur-sm"
+                className="inline-flex items-center gap-1.5 rounded-2xl border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-on-primary backdrop-blur-sm"
               >
                 <Icon size={12} />
                 {chip.label}

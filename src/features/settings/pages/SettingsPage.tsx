@@ -73,8 +73,35 @@ export const Settings = () => {
           </div>
         </div>
 
-        {/* Tabs — single scrollable row */}
-        <div className="scrollbar-none mb-4 overflow-x-auto rounded-2xl border border-border bg-card p-2 shadow-sm">
+        {/* Mobile — grouped native select (OS picker, zero layout cost) */}
+        <div className="mb-4 md:hidden">
+          <label className="sr-only" htmlFor="settings-tab-select">
+            اختيار قسم الإعدادات
+          </label>
+          <select
+            id="settings-tab-select"
+            value={h.activeTab}
+            onChange={(e) => h.setActiveTab(e.target.value)}
+            className="h-11 w-full appearance-none rounded-xl border border-border bg-card px-4 text-sm font-bold text-main shadow-sm outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/10 dark:[color-scheme:dark]"
+          >
+            {tabGroups.map((group) => (
+              <optgroup key={group.label} label={group.label}>
+                {group.items.map((tabId) => {
+                  const tab = TABS.find((t) => t.id === tabId)
+                  if (!tab) return null
+                  return (
+                    <option key={tab.id} value={tab.id}>
+                      {tab.label}
+                    </option>
+                  )
+                })}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+
+        {/* Tabs — single scrollable row (desktop) */}
+        <div className="scrollbar-none mb-4 hidden overflow-x-auto rounded-2xl border border-border bg-card p-2 shadow-sm md:block">
           <div className="flex min-w-max items-center gap-1">
             {tabGroups.map((group, gi) => (
               <div

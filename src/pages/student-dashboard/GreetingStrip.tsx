@@ -30,7 +30,7 @@ export const GreetingStrip = ({ name, grade, points, rank, rankProgress }: Greet
   return (
     <section
       aria-label="ترحيب"
-      className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-elevation-2 transition-colors duration-300"
+      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-elevation-2 transition-colors duration-300"
     >
       <div
         className="pointer-events-none absolute -end-20 -top-24 h-64 w-64 rounded-full border border-white/10"
@@ -64,11 +64,11 @@ export const GreetingStrip = ({ name, grade, points, rank, rankProgress }: Greet
           <div className="flex shrink-0 items-center gap-2.5">
             <TimeOfDayBadge variant="glass" />
             <div
-              className="w-40 rounded-none border border-white/20 bg-white/10 px-3.5 py-2.5 backdrop-blur-sm"
+              className="w-40 rounded-2xl border border-white/20 bg-white/10 px-3.5 py-2.5 backdrop-blur-sm"
               aria-label={`النقاط الحالية ${points} نقطة، رتبة ${rank.name}`}
             >
               <div className="flex items-center gap-2">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-none bg-white/15">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white/15">
                   <RankIcon size={17} className="text-on-primary" />
                 </div>
                 <div className="min-w-0">
@@ -102,12 +102,12 @@ export const GreetingStrip = ({ name, grade, points, rank, rankProgress }: Greet
 
         <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-white/10 pt-4">
           {grade && (
-            <span className="inline-flex items-center gap-1.5 rounded-none border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-on-primary backdrop-blur-sm">
+            <span className="inline-flex items-center gap-1.5 rounded-2xl border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-on-primary backdrop-blur-sm">
               <GraduationCap size={12} />
               {grade}
             </span>
           )}
-          <span className="text-on-primary/90 inline-flex items-center gap-1.5 rounded-none border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold backdrop-blur-sm">
+          <span className="text-on-primary/90 inline-flex items-center gap-1.5 rounded-2xl border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] font-bold backdrop-blur-sm">
             <Sparkles size={12} />
             اجمع النقاط وارتقِ برتبتك
           </span>

@@ -133,7 +133,7 @@ const MultiEventModal = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.15 }}
-      className="fixed inset-0 z-[120] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[120] flex items-end justify-center bg-black/40 backdrop-blur-sm md:items-center md:p-4"
       onClick={onClose}
     >
       <motion.div
@@ -362,7 +362,7 @@ export const ScheduleGrid = ({
                     className={`mt-1 flex items-center justify-center gap-1 ${isToday(day) ? 'text-primary' : ''}`}
                   >
                     {isToday(day) && (
-                      <span className="h-1.5 w-1.5 animate-pulse rounded-none bg-primary" />
+                      <span className="h-1.5 w-1.5 animate-pulse rounded-2xl bg-primary" />
                     )}
                   </div>
                 </div>
@@ -450,7 +450,7 @@ export const ScheduleGrid = ({
             .map(([subject, colors]) => (
               <div
                 key={subject}
-                className="flex items-center gap-1 rounded-none border border-border bg-card px-1.5 py-0.5"
+                className="flex items-center gap-1 rounded-2xl border border-border bg-card px-1.5 py-0.5"
               >
                 <div className={`h-1.5 w-1.5 rounded-full ${colors.bar}`} />
                 <span className="text-micro font-bold text-muted">{subject}</span>

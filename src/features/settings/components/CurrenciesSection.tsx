@@ -140,7 +140,7 @@ export const CurrenciesSection = ({
             عملة النظام الموحدة هي الجنيه المصري (ج.م) — لا توجد عملات أخرى في المنصة.
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-divider">
+          <div className="hidden overflow-x-auto rounded-xl border border-divider md:block">
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-divider bg-background">
@@ -198,6 +198,50 @@ export const CurrenciesSection = ({
             </table>
           </div>
 
+          {/* Mobile cards */}
+          <div className="space-y-2.5 md:hidden">
+            {visibleCurrencies.map((c) => (
+              <div key={c.code} className="rounded-xl border border-divider bg-background p-3.5">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="rounded-lg bg-hover px-2 py-1 font-mono text-[11px] font-bold text-main">
+                      {c.code}
+                    </span>
+                    <span className="truncate text-xs font-bold text-main">{c.name}</span>
+                  </div>
+                  <span
+                    className={cn(
+                      'inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold',
+                      c.isActive ? 'bg-success-soft text-success' : 'bg-hover text-muted',
+                    )}
+                  >
+                    {c.isActive ? 'نشط' : 'غير نشط'}
+                  </span>
+                </div>
+                <div className="mt-2.5 flex items-center justify-between border-t border-divider pt-2.5">
+                  <span className="text-[11px] text-muted">العلامة: {c.symbol}</span>
+                  {localCurrency === c.code ? (
+                    <span className="inline-flex items-center gap-1 rounded-lg bg-primary-soft px-2.5 py-1 text-[11px] font-bold text-primary">
+                      <CheckCircle2 size={12} /> الافتراضية
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => setAsDefault(c.code)}
+                      className="rounded-lg bg-info-soft px-3 py-2 text-[11px] font-bold text-info transition-all hover:brightness-95"
+                    >
+                      تعيين افتراضي
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+            {visibleCurrencies.length === 0 && (
+              <div className="rounded-xl border border-divider py-10 text-center text-muted">
+                لا توجد عملات
+              </div>
+            )}
+          </div>
+
           <div className="mt-4 rounded-xl border border-primary/10 bg-primary-soft p-4">
             <p className="text-xs font-bold text-primary">
               العملة الافتراضية:{' '}
@@ -246,7 +290,7 @@ export const CurrenciesSection = ({
             </PrimaryBtn>
           </div>
 
-          <div className="max-h-80 overflow-x-auto overflow-y-auto rounded-xl border border-divider">
+          <div className="hidden max-h-80 overflow-x-auto overflow-y-auto rounded-xl border border-divider md:block">
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-divider bg-background">
@@ -291,6 +335,42 @@ export const CurrenciesSection = ({
                 )}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile cards */}
+          <div className="max-h-96 space-y-2.5 overflow-y-auto md:hidden">
+            {rates.map((r) => (
+              <div key={r.id} className="rounded-xl border border-divider bg-background p-3.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-bold text-main">
+                    {r.fromCurrency} → {r.toCurrency}
+                  </span>
+                  <button
+                    aria-label="حذف سعر الصرف"
+                    onClick={() => removeRate(r.id)}
+                    className="flex h-9 w-9 items-center justify-center rounded-lg text-error transition-all hover:bg-error-soft"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
+                <div className="mt-2 flex items-center gap-4 border-t border-divider pt-2 text-[11px] text-muted">
+                  <span>
+                    شراء: <b className="text-main">{r.buyRate}</b>
+                  </span>
+                  <span>
+                    بيع: <b className="text-main">{r.sellRate}</b>
+                  </span>
+                  <span className="ms-auto">
+                    {new Date(r.effectiveDate).toLocaleDateString('ar')}
+                  </span>
+                </div>
+              </div>
+            ))}
+            {rates.length === 0 && (
+              <div className="rounded-xl border border-divider py-10 text-center text-muted">
+                لا توجد أسعار صرف
+              </div>
+            )}
           </div>
         </>
       )}

@@ -92,7 +92,7 @@ export const Reports = () => {
           <button
             onClick={() => window.print()}
             aria-label="طباعة التقرير"
-            className="no-print flex h-9 items-center gap-1.5 rounded-lg border border-border bg-surface px-3 text-[11px] font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="no-print flex h-11 items-center gap-1.5 rounded-lg border border-border bg-surface px-3 text-[11px] font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-9"
           >
             <Download size={13} />
             طباعة / تصدير PDF
@@ -110,7 +110,7 @@ export const Reports = () => {
               <button
                 key={tab.id}
                 onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                className={`flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs font-bold transition-all ${isActive ? 'shadow-xs bg-primary text-on-primary' : 'text-muted hover:text-main'}`}
+                className={`flex min-h-[44px] items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs font-bold transition-all sm:min-h-0 ${isActive ? 'shadow-xs bg-primary text-on-primary' : 'text-muted hover:text-main'}`}
               >
                 <Icon size={15} /> {tab.label}
               </button>

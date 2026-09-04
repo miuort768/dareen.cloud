@@ -134,7 +134,7 @@ export const Appointments = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
+          className="relative mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
         >
           {particles.map((p) => (
             <motion.div
@@ -154,7 +154,7 @@ export const Appointments = () => {
           <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <div className="mb-2 flex items-center gap-2">
-                <div className="rounded-none bg-white/15 p-2 backdrop-blur-sm">
+                <div className="rounded-2xl bg-white/15 p-2 backdrop-blur-sm">
                   <Calendar className="text-on-primary" size={20} />
                 </div>
                 <span className="text-xs font-medium text-white/70">المواعيد الدراسية</span>
@@ -162,7 +162,7 @@ export const Appointments = () => {
               <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">المواعيد</h1>
               <p className="text-sm text-white/70">جدولة ومتابعة الحصص الأكاديمية للطلاب</p>
             </div>
-            <div className="flex items-center gap-4 rounded-none border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
+            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
               <div className="text-center">
                 <p className="mb-1 text-xs text-white/60">اليوم</p>
                 <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.today}</p>
@@ -185,12 +185,12 @@ export const Appointments = () => {
 
         {isError ? (
           /* حالة الخطأ مع إعادة المحاولة */
-          <div className="bg-error-soft/50 rounded-none border border-dashed border-error-soft py-16 text-center">
+          <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-16 text-center">
             <p className="text-sm font-bold text-main">حدث خطأ في تحميل البيانات</p>
             <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
             <button
               onClick={() => refetch()}
-              className="mx-auto mt-4 block rounded-none bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+              className="mx-auto mt-4 block rounded-2xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               إعادة المحاولة
             </button>
@@ -264,7 +264,7 @@ export const Appointments = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-none border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-2xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
                   {action.label}
                 </span>
                 <button
@@ -273,7 +273,7 @@ export const Appointments = () => {
                     setFabOpen(false)
                   }}
                   aria-label={action.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-none bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <action.icon size={18} />
                 </button>
@@ -287,7 +287,7 @@ export const Appointments = () => {
           aria-label={fabOpen ? 'إغلاق الإجراءات السريعة' : 'إجراءات سريعة'}
           aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-none text-on-primary shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+            'flex h-12 w-12 items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
             fabOpen ? 'rotate-45 bg-error text-on-error' : 'bg-primary',
           )}
         >

@@ -96,7 +96,7 @@ export const SessionsModal = ({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12"
+      className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-12"
       role="dialog"
       aria-modal="true"
       aria-label={viewingSubject ? `مواعيد حصص: ${viewingSubject.subject}` : 'سجل المواعيد'}

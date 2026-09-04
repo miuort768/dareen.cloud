@@ -29,13 +29,13 @@ export const AppointmentScheduleGrid = ({
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center rounded-none border border-dashed border-border bg-card py-20 text-center"
+        className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card py-20 text-center"
       >
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-          className="mb-4 flex h-20 w-20 items-center justify-center rounded-none bg-primary-soft"
+          className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-primary-soft"
         >
           <CalendarX size={40} className="text-primary" strokeWidth={1.5} />
         </motion.div>
@@ -56,7 +56,7 @@ export const AppointmentScheduleGrid = ({
       {/* Summary bar */}
       <div className="flex items-center justify-between px-1">
         <span className="text-xs font-bold text-muted">جدول الأسبوع الكامل</span>
-        <span className="rounded-none bg-primary-soft px-2.5 py-0.5 text-xs font-bold tabular-nums text-primary">
+        <span className="rounded-2xl bg-primary-soft px-2.5 py-0.5 text-xs font-bold tabular-nums text-primary">
           {total} موعد
         </span>
       </div>
@@ -70,7 +70,7 @@ export const AppointmentScheduleGrid = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
             className={cn(
-              'overflow-hidden rounded-none border bg-card',
+              'overflow-hidden rounded-2xl border bg-card',
               isToday ? 'border-primary shadow-md shadow-primary/10' : 'border-border',
             )}
           >
@@ -89,14 +89,14 @@ export const AppointmentScheduleGrid = ({
                   {day}
                 </h3>
                 {isToday && (
-                  <span className="rounded-none bg-white/20 px-1.5 py-0.5 text-micro font-bold text-on-primary">
+                  <span className="rounded-2xl bg-white/20 px-1.5 py-0.5 text-micro font-bold text-on-primary">
                     اليوم
                   </span>
                 )}
               </div>
               <span
                 className={cn(
-                  'rounded-none px-2 py-0.5 text-micro font-bold tabular-nums',
+                  'rounded-2xl px-2 py-0.5 text-micro font-bold tabular-nums',
                   isToday
                     ? 'bg-white/15 text-on-primary'
                     : appointments.length > 0
@@ -127,7 +127,7 @@ export const AppointmentScheduleGrid = ({
                     className="flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-hover focus-visible:bg-hover focus-visible:outline-none"
                   >
                     {/* Time chip */}
-                    <div className="flex h-11 w-14 shrink-0 flex-col items-center justify-center rounded-none bg-primary-soft">
+                    <div className="flex h-11 w-14 shrink-0 flex-col items-center justify-center rounded-2xl bg-primary-soft">
                       <Clock size={10} className="mb-0.5 text-primary" />
                       <span className="text-micro font-black tabular-nums text-primary">
                         {app.time}
@@ -151,7 +151,7 @@ export const AppointmentScheduleGrid = ({
                     {/* Grade + complete */}
                     <div className="flex shrink-0 items-center gap-2">
                       {app.studentGrade && (
-                        <span className="hidden rounded-none bg-surface px-2 py-0.5 text-micro font-bold text-muted md:inline-block">
+                        <span className="hidden rounded-2xl bg-surface px-2 py-0.5 text-micro font-bold text-muted md:inline-block">
                           {app.studentGrade}
                         </span>
                       )}
@@ -160,7 +160,7 @@ export const AppointmentScheduleGrid = ({
                           onClick={(e) => onCompleteSession(app.id, e)}
                           disabled={isPending}
                           aria-label={`إتمام موعد ${app.studentName}`}
-                          className="flex items-center gap-1 rounded-none bg-success px-2.5 py-1.5 text-micro font-bold text-on-success transition-all hover:brightness-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                          className="flex items-center gap-1 rounded-2xl bg-success px-2.5 py-1.5 text-micro font-bold text-on-success transition-all hover:brightness-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
                         >
                           <CheckCircle2 size={12} />
                           إتمام

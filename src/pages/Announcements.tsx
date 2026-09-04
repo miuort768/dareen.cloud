@@ -276,7 +276,7 @@ export const Announcements = () => {
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className={cn(
-                    'relative overflow-hidden rounded-none border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
+                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
                     kpi.gradient,
                   )}
                 >

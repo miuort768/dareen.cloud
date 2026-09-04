@@ -56,7 +56,7 @@ export const AttendanceHistoryView = ({
     className="space-y-3"
   >
     {/* فلتر الفترة */}
-    <div className="flex gap-1 rounded-none border border-border bg-card p-1">
+    <div className="flex gap-1 rounded-2xl border border-border bg-card p-1">
       {(['today', 'week', 'month'] as PeriodFilter[]).map((p) => (
         <motion.button
           key={p}
@@ -66,7 +66,7 @@ export const AttendanceHistoryView = ({
             setPeriodFilter(p)
           }}
           className={cn(
-            'relative flex-1 rounded-none py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+            'relative flex-1 rounded-2xl py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
             periodFilter === p
               ? 'bg-primary text-on-primary shadow-elevation-1'
               : 'text-muted hover:text-main',
@@ -91,7 +91,7 @@ export const AttendanceHistoryView = ({
         return Array.from(groups.entries()).map(([dateStr, sessions]) => (
           <div key={dateStr} className="space-y-1.5">
             <div className="sticky top-[64px] z-10 flex items-center gap-2 px-1">
-              <span className="rounded-none bg-surface px-2 py-1 text-micro font-bold text-main">
+              <span className="rounded-2xl bg-surface px-2 py-1 text-micro font-bold text-main">
                 {dayHeaderLabel(dateStr)}
               </span>
               <span className="h-px flex-1 bg-border" />
@@ -110,12 +110,12 @@ export const AttendanceHistoryView = ({
                     onViewHistory(session.studentId, session.studentName, session.subject)
                   }}
                   aria-label={`سجل ${session.studentName} — ${meta.label}`}
-                  className="flex w-full items-center justify-between gap-2 rounded-none border border-border bg-card p-3 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex w-full items-center justify-between gap-2 rounded-2xl border border-border bg-card p-3 text-start focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <div className="flex min-w-0 items-center gap-2.5">
                     <div
                       className={cn(
-                        'flex h-9 w-9 shrink-0 items-center justify-center rounded-none',
+                        'flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl',
                         meta.avatar,
                       )}
                     >
@@ -128,7 +128,7 @@ export const AttendanceHistoryView = ({
                         </p>
                         <span
                           className={cn(
-                            'shrink-0 rounded-none bg-surface px-1.5 py-0.5 text-micro font-bold',
+                            'shrink-0 rounded-2xl bg-surface px-1.5 py-0.5 text-micro font-bold',
                             meta.iconClass,
                           )}
                         >
@@ -159,7 +159,7 @@ export const AttendanceHistoryView = ({
         compact
         title="لا توجد جلسات مسجلة"
         subtitle={`خلال فترة: ${periodLabel}`}
-        className="rounded-none border border-dashed border-border bg-card"
+        className="rounded-2xl border border-dashed border-border bg-card"
       />
     )}
   </motion.div>

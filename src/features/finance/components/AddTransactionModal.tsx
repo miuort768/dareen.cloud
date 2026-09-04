@@ -44,10 +44,10 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 backdrop-blur-sm md:items-center md:p-4"
       dir="rtl"
     >
-      <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-xl">
+      <div className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-xl md:max-h-none md:max-w-lg md:overflow-hidden md:rounded-2xl md:border-x md:border-b">
         {/* Header */}
         <div className="flex items-center justify-between bg-primary p-5 text-on-primary">
           <div className="flex items-center gap-3">
@@ -64,7 +64,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
           <button
             aria-label="إغلاق"
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-xl text-on-primary opacity-60 transition-colors hover:bg-white/15 hover:opacity-100"
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-on-primary opacity-60 transition-colors hover:bg-white/15 hover:opacity-100 md:h-8 md:w-8"
           >
             <X size={18} />
           </button>

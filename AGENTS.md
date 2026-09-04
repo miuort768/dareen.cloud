@@ -31,6 +31,18 @@
 | v1.2.4 | Elevation System (5 levels: elevation-0 through elevation-4) | ✅ Done |
 | v1.2.5 | Color tokens expansion (primary-200/400, text-secondary, border-hover, surface-active) | ✅ Done |
 | v1.2.6 | Dialog (Confirm/Cancel), Avatar (first-letter + status), Dropdown | ✅ Done |
+| **v1.3** | **Mobile Dashboard UX — Premium Mobile Experience** | **✅ Done (~122 files)** |
+| v1.3.1 | Modal → Bottom Sheet on mobile (`< md`), centered on Desktop — all system modals inherit | ✅ Done |
+| v1.3.2 | Touch targets ≥44px on mobile: Button, IconButton, ActionRow, Dropdown, FilterDropdown, Dialog, ErrorState retry | ✅ Done |
+| v1.3.3 | Table: default mobile cards via `mobileLabel` columns + improved mobileCard styling + pagination targets | ✅ Done |
+| v1.3.4 | Tabs `scrollable` variant; Settings 17-tabs → grouped native select on mobile | ✅ Done |
+| v1.3.5 | Table split point unified at `md` (Teachers, Leads were `lg` — broken 768–1024 band) | ✅ Done |
+| v1.3.6 | FAB unified above AppTabBar: `bottom: calc(96px + env(safe-area-inset-bottom))` (MonthlyClosing, TeacherInvoices, TeacherPaymentHistory fixed) | ✅ Done |
+| v1.3.7 | Settings tables (Currencies, AuditLog) → mobile cards; MonthlyClosing date range full-width on mobile | ✅ Done |
+| v1.3.8 | Custom centered dialogs → Bottom Sheet on mobile (ConfirmModal, SendNotification, SecureAttendance, Settings×4, AddTransaction, Reschedule, StartLiveSession, Parents×2, Dashboard×4, Schedule×2) | ✅ Done |
+| v1.3.9 | Radius unification: `rounded-none` → `rounded-2xl` (73+ files); SalarySlip/InvoicePreview → Bottom Sheet | ✅ Done |
+| v1.3.10 | Toolbar restructure (AdminJobs 3-col action grid, AdminContacts/AdminBlog touch chips, TeacherToolbar search text-base) | ✅ Done |
+| v1.3.11 | Encoding integrity: byte-level Arabic verification across all 122 modified files (3 BOM files repaired via Node) | ✅ Done |
 
 ## 2. Design System Rules (Non-Negotiable)
 
@@ -176,3 +188,4 @@ Every component MUST pass all checks before being marked complete:
 | Jul 15 | Third cleanup: 3 dead files deleted, VAcademicCap removed, json-server purged, 2 unused hook exports removed | Cleanup round 3, all verified |
 | Jul 19 | Typography cleanup: `text-[color]` corrected in 4 files (Home, ExecutiveDashboard, BlogHero, About), `tracking-[0.2em]`→`tracking-label` in 14 files (18 occurrences), `leading-[*]`→Tailwind leading tokens in 7 files, `design-tokens.ts` font family mismatch fixed | `tsc --noEmit` passes |
 | Jul 19 | Gradient cleanup: `from-[var(--bg-*)]`→`from-*`, `to-[var(--bg-*)]`→`to-*`, `via-[var(--bg-*)]`→`via-*` across 24 files (HeroSelection, SelectionGrid, CollectionsTable, SalarySlipModal, InvoiceTables, HowToSubscribe, AboutCTA, Contact, AboutValues, Blog, MonthlyClosing, MasarSection, MobileHeader, PublicNavbar, PageLoader, AdminHomeTab, Home, Courses, TermsOfService, TermsOfWork, RefundPolicy, WhyChooseUs, BlogPostShareSection, HowItWorks) | `tsc --noEmit` passes |
+| Sep 4 | Mobile Dashboard UX (v1.3): ~122 files — Modal/Dialog → mobile Bottom Sheet, ≥44px touch targets, unified `md` table split, FAB above AppTabBar, Settings grouped select, mobile cards for Currencies/AuditLog, radius unification | `tsc` + `vite build` + 173 tests pass; Arabic byte-integrity verified on all modified files |

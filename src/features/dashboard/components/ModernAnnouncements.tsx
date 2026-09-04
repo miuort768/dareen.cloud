@@ -210,7 +210,7 @@ export const ModernAnnouncements = () => {
       {ackTarget &&
         createPortal(
           <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-[100] flex items-end justify-center bg-black/40 backdrop-blur-sm md:items-center md:p-4"
             role="dialog"
             aria-modal="true"
             aria-label="تأكيد قراءة الإعلان"
@@ -241,7 +241,7 @@ export const ModernAnnouncements = () => {
                 <button
                   onClick={() => setAckTarget(null)}
                   aria-label="إغلاق"
-                  className="ms-auto flex h-9 w-9 items-center justify-center rounded-xl bg-surface text-muted transition-colors hover:bg-hover hover:text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="ms-auto flex h-10 w-10 items-center justify-center rounded-xl bg-surface text-muted transition-colors hover:bg-hover hover:text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:h-9 md:w-9"
                 >
                   <X size={15} />
                 </button>

@@ -57,7 +57,7 @@ export const TeacherToolbar = ({
             placeholder="بحث بالاسم أو التخصص..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 sm:h-9"
+            className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-base font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 sm:h-9 sm:text-xs"
           />
         </div>
         <div className="mt-2 flex items-center gap-2 sm:mt-0 sm:shrink-0 sm:gap-1.5">

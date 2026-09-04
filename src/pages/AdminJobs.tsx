@@ -301,24 +301,24 @@ export const AdminJobs = () => {
                 <p className="mt-0.5 text-xs text-muted">إدارة طلبات المتقدمين للوظائف</p>
               </div>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-2">
               <button
                 onClick={() => exportToCsv(filtered)}
-                className="flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.98]"
+                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.98] sm:h-auto sm:py-2.5"
               >
                 <Download size={14} />
                 <span>تصدير CSV</span>
               </button>
               <button
                 onClick={handleExportPdf}
-                className="flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-xs font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover active:scale-[0.98]"
+                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-xs font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover active:scale-[0.98] sm:h-auto sm:py-2.5"
               >
                 <FileText size={14} />
                 <span>تصدير PDF</span>
               </button>
               <button
                 onClick={handleDeleteAll}
-                className="flex items-center gap-2 rounded-xl bg-error px-4 py-2.5 text-xs font-bold text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-[0.98]"
+                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-bold text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-[0.98] sm:h-auto sm:py-2.5"
               >
                 <Trash2 size={14} />
                 <span>حذف الكل</span>
@@ -372,7 +372,7 @@ export const AdminJobs = () => {
                 onClick={() => setSubjectFilter(pill.key)}
                 aria-pressed={subjectFilter === pill.key}
                 className={cn(
-                  'shrink-0 rounded-full border px-3.5 py-2 text-micro font-bold transition-colors duration-fast active:scale-[0.97]',
+                  'shrink-0 rounded-full border px-3.5 py-2.5 text-micro font-bold transition-colors duration-fast active:scale-[0.97] sm:py-2',
                   subjectFilter === pill.key
                     ? 'border-primary bg-primary text-on-primary'
                     : pill.color + ' hover:border-primary/30',
@@ -491,7 +491,7 @@ export const AdminJobs = () => {
                     exit={{ opacity: 0, y: -10, transition: { duration: 0.15 } }}
                     transition={{ duration: 0.2, delay: index * 0.02 }}
                     className={cn(
-                      'overflow-hidden rounded-none border border-border bg-card transition-shadow duration-normal hover:shadow-elevation-1',
+                      'overflow-hidden rounded-2xl border border-border bg-card transition-shadow duration-normal hover:shadow-elevation-1',
                       app.contacted
                         ? 'border-r-4 border-r-success'
                         : 'border-r-4 border-r-primary/40',
@@ -538,7 +538,7 @@ export const AdminJobs = () => {
                           {!app.contacted && (
                             <button
                               onClick={() => handleContacted(app.id)}
-                              className="flex items-center gap-1.5 rounded-lg bg-success px-3 py-1.5 text-micro font-bold text-on-success transition-colors duration-fast hover:bg-success-hover active:scale-95"
+                              className="flex h-9 items-center gap-1.5 rounded-lg bg-success px-3 text-micro font-bold text-on-success transition-colors duration-fast hover:bg-success-hover active:scale-95 sm:h-auto sm:py-1.5"
                               title="تم التواصل"
                               aria-label="تم التواصل"
                             >
@@ -548,11 +548,11 @@ export const AdminJobs = () => {
                           )}
                           <button
                             onClick={() => handleDelete(app.id)}
-                            className="flex items-center gap-1.5 rounded-lg bg-error px-3 py-1.5 text-micro font-bold text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-95"
+                            className="flex h-9 w-9 items-center justify-center rounded-lg bg-error text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-95 sm:h-auto sm:w-auto sm:px-3 sm:py-1.5"
                             aria-label="حذف الطلب"
                           >
                             <Trash2 size={13} />
-                            <span>حذف</span>
+                            <span className="hidden sm:inline">حذف</span>
                           </button>
                         </div>
                       </div>

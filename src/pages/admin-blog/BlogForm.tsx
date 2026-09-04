@@ -62,7 +62,7 @@ export const BlogForm = ({
         </div>
         <button
           onClick={() => setIsModalOpen(false)}
-          className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-on-error transition-colors hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-white/60 active:scale-95"
+          className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-on-error transition-colors hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-white/60 active:scale-95 md:h-9 md:w-9"
           aria-label="إغلاق النموذج"
         >
           <X size={16} />

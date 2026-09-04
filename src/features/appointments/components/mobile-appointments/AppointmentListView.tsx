@@ -47,7 +47,7 @@ export const AppointmentListView = ({
             compact
             title={activeTab === 'upcoming' ? 'لا توجد مواعيد متبقية' : 'لا توجد مواعيد مكتملة'}
             subtitle="جرّب تغيير اليوم أو كلمة البحث"
-            className="rounded-none border border-dashed border-border bg-card"
+            className="rounded-2xl border border-dashed border-border bg-card"
           />
         ) : (
           appointmentsByDay.map(({ day, appointments }) => {
@@ -58,7 +58,7 @@ export const AppointmentListView = ({
                 <div className="sticky top-[64px] z-10 flex items-center gap-2 px-1">
                   <span
                     className={cn(
-                      'rounded-none px-2 py-1 text-micro font-bold',
+                      'rounded-2xl px-2 py-1 text-micro font-bold',
                       isToday
                         ? 'bg-primary text-on-primary shadow-elevation-1'
                         : 'bg-surface text-main',
@@ -74,7 +74,7 @@ export const AppointmentListView = ({
                 </div>
 
                 {appointments.length === 0 ? (
-                  <div className="bg-card/60 flex items-center justify-center gap-2 rounded-none border border-dashed border-border py-3 text-micro font-bold text-muted">
+                  <div className="bg-card/60 flex items-center justify-center gap-2 rounded-2xl border border-dashed border-border py-3 text-micro font-bold text-muted">
                     لا توجد مواعيد في هذا اليوم
                   </div>
                 ) : (
@@ -98,7 +98,7 @@ export const AppointmentListView = ({
                         }}
                         aria-label={`تفاصيل موعد ${app.studentName} — ${app.subject} ${app.time}`}
                         className={cn(
-                          'flex w-full cursor-pointer items-stretch gap-3 rounded-none border p-2.5 text-start transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                          'flex w-full cursor-pointer items-stretch gap-3 rounded-2xl border p-2.5 text-start transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                           done
                             ? 'border-border bg-card opacity-75'
                             : 'border-border bg-card hover:bg-surface',
@@ -107,7 +107,7 @@ export const AppointmentListView = ({
                         {/* خانة الوقت */}
                         <div
                           className={cn(
-                            'flex w-14 shrink-0 flex-col items-center justify-center rounded-none py-2',
+                            'flex w-14 shrink-0 flex-col items-center justify-center rounded-2xl py-2',
                             done ? 'bg-surface' : 'bg-primary-soft',
                           )}
                         >
@@ -141,7 +141,7 @@ export const AppointmentListView = ({
                               {app.studentName}
                             </p>
                             {app.studentGrade && (
-                              <span className="shrink-0 rounded-none bg-surface px-1.5 py-0.5 text-micro font-bold text-muted">
+                              <span className="shrink-0 rounded-2xl bg-surface px-1.5 py-0.5 text-micro font-bold text-muted">
                                 {app.studentGrade}
                               </span>
                             )}
@@ -163,7 +163,7 @@ export const AppointmentListView = ({
                         {/* الإجراء */}
                         <div className="flex shrink-0 flex-col justify-center">
                           {done ? (
-                            <span className="flex items-center gap-1 rounded-none bg-success-soft px-2 py-1.5 text-micro font-bold text-success">
+                            <span className="flex items-center gap-1 rounded-2xl bg-success-soft px-2 py-1.5 text-micro font-bold text-success">
                               <CheckCircle2 size={11} strokeWidth={1.7} /> تم
                             </span>
                           ) : canComplete ? (
@@ -172,7 +172,7 @@ export const AppointmentListView = ({
                                 onClick={(e) => onComplete(app.id, e)}
                                 disabled={isPending}
                                 aria-label={`إتمام حصة ${app.studentName}`}
-                                className="flex items-center gap-1 rounded-none bg-success px-2.5 py-2 text-micro font-bold text-on-success transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                                className="flex items-center gap-1 rounded-2xl bg-success px-2.5 py-2 text-micro font-bold text-on-success transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
                               >
                                 <CheckCircle2 size={11} strokeWidth={1.7} /> إتمام
                               </button>

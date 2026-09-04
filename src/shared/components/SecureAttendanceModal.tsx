@@ -69,7 +69,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto overflow-x-hidden p-4 sm:p-6"
+      className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-4 lg:p-6"
       role="dialog"
       aria-modal="true"
       onKeyDown={(e) => {
@@ -81,15 +81,15 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
         onClick={onClose}
       ></div>
 
-      <div className="relative w-full max-w-md overflow-hidden rounded-none border border-border bg-card shadow-elevation-3 duration-200 animate-in zoom-in-95 dark:bg-card">
+      <div className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-elevation-3 duration-200 animate-in slide-in-from-bottom dark:bg-card md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border md:animate-in md:zoom-in-95">
         {/* Accent bar */}
         <div className="h-1 w-full bg-primary"></div>
 
-        <div className="p-6">
+        <div className="p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:p-6">
           {/* Header */}
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-none bg-primary/10 dark:bg-primary/15">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 dark:bg-primary/15">
                 <ShieldCheck size={20} className="text-primary" />
               </div>
               <div>
@@ -99,7 +99,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="flex h-8 w-8 items-center justify-center rounded-none bg-surface text-muted transition-all hover:bg-hover hover:text-main"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-surface text-muted transition-all hover:bg-hover hover:text-main md:h-8 md:w-8"
               aria-label="إغلاق"
             >
               <X size={16} />
@@ -107,10 +107,10 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
           </div>
 
           {/* Student info */}
-          <div className="mb-5 rounded-none bg-surface p-4 text-center dark:bg-hover">
+          <div className="mb-5 rounded-2xl bg-surface p-4 text-center dark:bg-hover">
             <p className="mb-1 text-[11px] font-medium text-muted">تسجيل للطالب</p>
             <h4 className="text-base font-bold text-main">{studentName}</h4>
-            <span className="mt-1 inline-block rounded-none bg-primary/10 px-2.5 py-1 text-[11px] font-bold text-primary">
+            <span className="mt-1 inline-block rounded-2xl bg-primary/10 px-2.5 py-1 text-[11px] font-bold text-primary">
               بتاريخ: {date}
             </span>
           </div>
@@ -120,7 +120,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             <button
               onClick={() => setStatus('completed')}
               className={cn(
-                'flex flex-col items-center gap-2 rounded-none border-2 p-3.5 transition-all',
+                'flex flex-col items-center gap-2 rounded-2xl border-2 p-3.5 transition-all',
                 status === 'completed'
                   ? 'border-success bg-success-soft text-success'
                   : 'border-border bg-surface text-muted hover:border-success',
@@ -135,7 +135,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             <button
               onClick={() => setStatus('cancelled')}
               className={cn(
-                'flex flex-col items-center gap-2 rounded-none border-2 p-3.5 transition-all',
+                'flex flex-col items-center gap-2 rounded-2xl border-2 p-3.5 transition-all',
                 status === 'cancelled'
                   ? 'border-error bg-error-soft text-error'
                   : 'border-border bg-surface text-muted hover:border-error',
@@ -159,7 +159,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                 <textarea
                   id="attendance-topics"
                   placeholder="مثلاً: مراجعة سورة البقرة، أول 10 آيات..."
-                  className="w-full resize-none rounded-none border border-border bg-surface p-3 text-xs font-medium leading-relaxed transition-all focus:border-success focus:ring-1 focus:ring-success-soft dark:bg-hover dark:text-main"
+                  className="w-full resize-none rounded-2xl border border-border bg-surface p-3 text-xs font-medium leading-relaxed transition-all focus:border-success focus:ring-1 focus:ring-success-soft dark:bg-hover dark:text-main"
                   rows={2}
                   value={topics}
                   onChange={(e) => setTopics(e.target.value)}
@@ -176,7 +176,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
                   id="attendance-homework"
                   type="text"
                   placeholder="مثلاً: حفظ الجزء الثاني من الصفحة..."
-                  className="w-full rounded-none border border-border bg-surface p-3 text-xs font-medium transition-all focus:border-warning focus:ring-1 focus:ring-warning-soft dark:bg-hover dark:text-main dark:focus:border-primary dark:focus:ring-primary-soft"
+                  className="w-full rounded-2xl border border-border bg-surface p-3 text-xs font-medium transition-all focus:border-warning focus:ring-1 focus:ring-warning-soft dark:bg-hover dark:text-main dark:focus:border-primary dark:focus:ring-primary-soft"
                   value={homework}
                   onChange={(e) => setHomework(e.target.value)}
                 />
@@ -187,7 +187,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
           {/* Cancelled checkbox */}
           {status === 'cancelled' && (
             <div className="mb-5 duration-200 animate-in fade-in slide-in-from-top-2">
-              <label className="flex cursor-pointer items-center gap-3 rounded-none border border-error-soft bg-error-soft p-3.5 transition-colors hover:bg-error-soft">
+              <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-error-soft bg-error-soft p-3.5 transition-colors hover:bg-error-soft">
                 <input
                   type="checkbox"
                   checked={needsCompensation}
@@ -222,7 +222,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
               }}
               placeholder="أدخل كلمة المرور..."
               className={cn(
-                'w-full rounded-none border bg-surface p-3 text-center font-mono text-xs font-medium tracking-widest outline-none transition-all focus:ring-1 dark:bg-hover dark:text-main',
+                'w-full rounded-2xl border bg-surface p-3 text-center font-mono text-xs font-medium tracking-widest outline-none transition-all focus:ring-1 dark:bg-hover dark:text-main',
                 error
                   ? 'border-error focus:ring-error-soft'
                   : 'border-border focus:border-primary focus:ring-primary/20',

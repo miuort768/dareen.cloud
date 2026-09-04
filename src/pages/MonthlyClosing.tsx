@@ -376,11 +376,11 @@ export const MonthlyClosing = () => {
           </div>
 
           <div className="relative z-10 mt-4 flex flex-wrap items-center gap-2 border-t border-border pt-3.5">
-            <div className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-1.5">
+            <div className="flex w-full items-center gap-2 rounded-xl border border-border bg-surface px-3 py-1.5 md:w-auto">
               <input
                 aria-label="تاريخ البداية"
                 type="date"
-                className="w-[120px] border-none bg-transparent text-xs font-bold text-main outline-none dark:[color-scheme:dark]"
+                className="min-w-0 flex-1 border-none bg-transparent text-xs font-bold text-main outline-none dark:[color-scheme:dark] md:w-[120px] md:flex-none"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
               />
@@ -388,14 +388,14 @@ export const MonthlyClosing = () => {
               <input
                 aria-label="تاريخ النهاية"
                 type="date"
-                className="w-[120px] border-none bg-transparent text-xs font-bold text-main outline-none dark:[color-scheme:dark]"
+                className="min-w-0 flex-1 border-none bg-transparent text-xs font-bold text-main outline-none dark:[color-scheme:dark] md:w-[120px] md:flex-none"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
               />
             </div>
             <button
               onClick={handleRefresh}
-              className="flex items-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95"
+              className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95 md:min-h-0 md:flex-none"
             >
               <RefreshCw size={13} /> تحديث
             </button>
@@ -459,7 +459,7 @@ export const MonthlyClosing = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as TabType)}
                 className={cn(
-                  'relative flex items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all',
+                  'relative flex min-h-[44px] items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all md:min-h-[38px]',
                   activeTab === tab.id ? 'text-on-primary' : 'text-muted hover:text-main',
                 )}
               >
@@ -534,7 +534,7 @@ export const MonthlyClosing = () => {
         )}
       </div>
 
-      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+      <div className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-4 z-50 flex flex-col items-end gap-3 md:bottom-6 md:end-6">
         <AnimatePresence>
           {fabOpen &&
             [

@@ -224,7 +224,7 @@ export const TransactionsLog = ({
   }, [filtered, reportCurrency])
 
   return (
-    <div className="overflow-hidden rounded-none border border-border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
       {/* Header */}
       <div className="flex flex-col justify-between gap-3 border-b border-divider p-4 md:flex-row md:items-center">
         <div className="flex items-center gap-3">

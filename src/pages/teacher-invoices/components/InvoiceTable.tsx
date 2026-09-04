@@ -207,7 +207,7 @@ export const InvoiceTable = memo(
           ))
         ) : (
           <SectionCard className="border-dashed border-border py-16 text-center">
-            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-none bg-primary-soft text-primary">
+            <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-2xl bg-primary-soft text-primary">
               <GraduationCap size={18} />
             </div>
             <p className="text-xs font-bold text-muted">لا توجد فواتير</p>

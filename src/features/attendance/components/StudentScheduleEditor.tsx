@@ -32,7 +32,7 @@ export const StudentScheduleEditor = ({
         </h5>
         <button
           onClick={onToggleEdit}
-          className={`rounded-none px-2 py-0.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
+          className={`rounded-2xl px-2 py-0.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
             isEditing
               ? 'bg-error-soft text-error'
               : 'bg-primary-soft text-primary hover:bg-primary hover:text-on-primary'
@@ -47,7 +47,7 @@ export const StudentScheduleEditor = ({
           schedule.map((slot, i) => (
             <span
               key={`slot-${i}`}
-              className="flex items-center gap-1 rounded-none border border-border bg-surface px-2 py-1 text-micro font-bold text-muted"
+              className="flex items-center gap-1 rounded-2xl border border-border bg-surface px-2 py-1 text-micro font-bold text-muted"
             >
               {slot.day} {slot.hour} {periodLabel(slot.period)}
             </span>

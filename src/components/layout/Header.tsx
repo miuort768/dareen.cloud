@@ -198,7 +198,7 @@ export const Header = memo(() => {
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-              className="flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-hover hover:text-main active:scale-95"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:bg-hover hover:text-main active:scale-95 md:h-8 md:w-8"
             >
               {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
             </button>
@@ -208,7 +208,7 @@ export const Header = memo(() => {
             <Link
               to="/chat"
               aria-label="الدردشة"
-              className="relative flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-hover hover:text-main active:scale-95"
+              className="relative flex h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:bg-hover hover:text-main active:scale-95 md:h-8 md:w-8"
             >
               <MessageSquare size={15} />
               {totalUnreadCount > 0 && (
@@ -227,7 +227,7 @@ export const Header = memo(() => {
                 if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout()
               }}
               aria-label="تسجيل الخروج"
-              className="flex h-8 w-8 items-center justify-center rounded-full text-error transition-colors hover:bg-error-light active:scale-95"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-error transition-colors hover:bg-error-light active:scale-95 md:h-8 md:w-8"
             >
               <LogOut size={15} />
             </button>

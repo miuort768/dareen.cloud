@@ -35,7 +35,7 @@ export const AdminTeacherGroupList = ({
 
   if (visibleTeachers.length === 0) {
     return (
-      <div className="rounded-none border border-dashed border-border bg-card py-12 text-center">
+      <div className="rounded-2xl border border-dashed border-border bg-card py-12 text-center">
         <Users className="mx-auto mb-2 text-muted" size={28} strokeWidth={1.5} />
         <p className="text-sm font-bold text-muted">لا توجد بيانات حضور متاحة</p>
         <p className="mt-1 text-xs text-muted">سيظهر هذا القسم بعد تسجيل حصص للمعلمات</p>
@@ -58,7 +58,7 @@ export const AdminTeacherGroupList = ({
             {/* Teacher Header */}
             <div className="flex items-center justify-between bg-primary px-5 py-3">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-none bg-white/15 text-xs font-bold text-on-primary shadow-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15 text-xs font-bold text-on-primary shadow-sm">
                   {teacher.teacherName.charAt(0)}
                 </div>
                 <div>
@@ -72,7 +72,7 @@ export const AdminTeacherGroupList = ({
                 {/* Teacher rate badge */}
                 <div
                   className={cn(
-                    'flex items-center gap-1.5 rounded-none px-3 py-1.5 text-xs font-bold',
+                    'flex items-center gap-1.5 rounded-2xl px-3 py-1.5 text-xs font-bold',
                     getRateBg(teacher.rate),
                     getRateColor(teacher.rate),
                   )}
@@ -140,7 +140,7 @@ export const AdminTeacherGroupList = ({
                     >
                       <td className="px-4 py-2.5">
                         <div className="flex items-center gap-2.5">
-                          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-none bg-primary-soft text-[10px] font-bold text-primary">
+                          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl bg-primary-soft text-[10px] font-bold text-primary">
                             {getGradeDisplay(student.studentName)}
                           </div>
                           <span className="max-w-[120px] truncate text-[11px] font-bold text-main">
@@ -149,7 +149,7 @@ export const AdminTeacherGroupList = ({
                         </div>
                       </td>
                       <td className="px-4 py-2.5">
-                        <span className="rounded-none bg-surface px-2 py-0.5 text-[10px] font-bold text-muted">
+                        <span className="rounded-2xl bg-surface px-2 py-0.5 text-[10px] font-bold text-muted">
                           {student.subject}
                         </span>
                       </td>
@@ -198,7 +198,7 @@ export const AdminTeacherGroupList = ({
                               student.subject,
                             )
                           }
-                          className="inline-flex items-center gap-1 rounded-none bg-primary-soft px-2 py-1 text-[9px] font-bold text-primary transition-all hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                          className="inline-flex items-center gap-1 rounded-2xl bg-primary-soft px-2 py-1 text-[9px] font-bold text-primary transition-all hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                         >
                           <History size={10} /> سجل
                         </button>

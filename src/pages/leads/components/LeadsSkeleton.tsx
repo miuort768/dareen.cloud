@@ -45,7 +45,7 @@ export const LeadsSkeleton = () => (
         </div>
 
         {/* Cards skeleton (mobile) */}
-        <div className="space-y-2.5 p-3 lg:hidden">
+        <div className="space-y-2.5 p-3 md:hidden">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="space-y-3 rounded-2xl border border-border bg-card p-4">
               <div className="flex items-center justify-between">
@@ -74,7 +74,7 @@ export const LeadsSkeleton = () => (
         </div>
 
         {/* Table skeleton (desktop) */}
-        <div className="hidden lg:block">
+        <div className="hidden md:block">
           <div className="flex gap-4 border-b border-border bg-gradient-to-l from-primary to-primary-deep px-5 py-3">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} style={{ flex: i === 0 ? '22%' : i === 5 ? '25%' : '15%' }}>

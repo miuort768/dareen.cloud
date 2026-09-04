@@ -69,7 +69,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
             <article
               key={sub.id}
               className={cn(
-                'rounded-none border p-4 shadow-sm transition-all duration-200 hover:shadow-elevation-1',
+                'rounded-2xl border p-4 shadow-sm transition-all duration-200 hover:shadow-elevation-1',
                 sub.isFrozen ? 'bg-divider/20 border-border' : 'border-border bg-surface',
               )}
             >
@@ -82,7 +82,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
                   </p>
                 </div>
                 {sub.isFrozen ? (
-                  <span className="inline-flex shrink-0 items-center gap-1 rounded-none bg-divider px-2 py-1 text-[9px] font-black text-muted">
+                  <span className="inline-flex shrink-0 items-center gap-1 rounded-2xl bg-divider px-2 py-1 text-[9px] font-black text-muted">
                     <Snowflake size={10} /> مجمّدة
                   </span>
                 ) : (
@@ -91,7 +91,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
               </div>
 
               {!sub.isFrozen && (
-                <div className="bg-divider/40 mt-3 flex items-center justify-between rounded-none px-3 py-2">
+                <div className="bg-divider/40 mt-3 flex items-center justify-between rounded-2xl px-3 py-2">
                   <span className="text-[10px] font-black text-muted">المنهج</span>
                   <span className={cn('text-xs font-black tabular-nums', tone)}>
                     {sub.used}
@@ -105,7 +105,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
                   {sub.weekDays.map((d, i) => (
                     <span
                       key={`${sub.id}-day-${i}`}
-                      className="inline-flex items-center gap-1 rounded-none bg-primary-soft px-1.5 py-0.5 text-[9px] font-black text-primary"
+                      className="inline-flex items-center gap-1 rounded-2xl bg-primary-soft px-1.5 py-0.5 text-[9px] font-black text-primary"
                     >
                       <CalendarDays size={8} />
                       {d}
@@ -115,7 +115,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
               )}
 
               {sub.notes && (
-                <p className="mt-3 flex items-start gap-1.5 rounded-none border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
+                <p className="mt-3 flex items-start gap-1.5 rounded-2xl border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
                   <FileText size={10} className="mt-0.5 shrink-0 text-primary" />
                   {sub.notes}
                 </p>

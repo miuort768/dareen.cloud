@@ -29,7 +29,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
   return (
     <section
       aria-label="رحلة الرتب"
-      className="rounded-none border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+      className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
     >
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
@@ -39,7 +39,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           <h3 className="text-sm font-black text-main">رحلة الرتب</h3>
         </div>
         <div className="flex min-w-0 items-center gap-2.5">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-none bg-primary text-on-primary">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-on-primary">
             <RankIcon size={19} />
           </div>
           <div className="min-w-0 text-end">
@@ -48,7 +48,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           </div>
         </div>
       </div>
-      <div className="mb-4 rounded-none bg-primary-soft px-4 py-2.5 text-center">
+      <div className="mb-4 rounded-2xl bg-primary-soft px-4 py-2.5 text-center">
         <CountUp
           value={points}
           className="block text-xl font-black tabular-nums leading-none text-primary"
@@ -74,7 +74,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           </p>
         </>
       ) : (
-        <p className="rounded-none bg-success-soft p-2.5 text-center text-[11px] font-black text-success">
+        <p className="rounded-2xl bg-success-soft p-2.5 text-center text-[11px] font-black text-success">
           أعلى رتبة — أنت الأسطورة!
         </p>
       )}
@@ -86,7 +86,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           return (
             <div
               key={badge.label}
-              className={`rounded-none p-2 text-center transition-all duration-300 ${
+              className={`rounded-2xl p-2 text-center transition-all duration-300 ${
                 unlocked
                   ? 'bg-warning-soft hover:-translate-y-0.5 hover:shadow-elevation-1 dark:bg-primary-soft'
                   : 'bg-divider/40'

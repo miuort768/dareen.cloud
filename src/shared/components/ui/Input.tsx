@@ -13,7 +13,7 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
 
 const sizeStyles = {
   sm: 'h-9 px-3 text-xs',
-  md: 'h-11 px-4 text-sm',
+  md: 'h-11 px-4 text-base md:text-sm',
   lg: 'h-12 px-5 text-base',
 }
 

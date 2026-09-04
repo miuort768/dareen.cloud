@@ -18,7 +18,7 @@ export const LeadCards = ({
   onLeadClick,
 }: LeadCardsProps) => {
   return (
-    <div className="lg:hidden">
+    <div className="md:hidden">
       {filteredLeads.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -20,7 +20,7 @@ export const StudentCardTimer = ({
     <button
       onClick={onToggle}
       className={cn(
-        'flex items-center justify-between rounded-none border px-3 py-2.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+        'flex items-center justify-between rounded-2xl border px-3 py-2.5 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
         timerRunning
           ? 'border-error bg-error text-on-error'
           : 'border-primary bg-primary text-on-primary hover:bg-primary-hover',
@@ -34,7 +34,7 @@ export const StudentCardTimer = ({
     </button>
     <button
       onClick={onReschedule}
-      className="flex items-center justify-center gap-2 rounded-none border border-border bg-card px-3 py-2.5 text-micro font-bold uppercase text-muted transition-all hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+      className="flex items-center justify-center gap-2 rounded-2xl border border-border bg-card px-3 py-2.5 text-micro font-bold uppercase text-muted transition-all hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
     >
       <Calendar size={14} /> إعادة جدولة
     </button>

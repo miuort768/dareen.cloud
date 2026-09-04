@@ -7,7 +7,7 @@ export const SectionCard = ({
   children: React.ReactNode
   className?: string
 }) => (
-  <div className={cn('rounded-none border border-border bg-card p-4 shadow-sm md:p-5', className)}>
+  <div className={cn('rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5', className)}>
     {children}
   </div>
 )
@@ -22,7 +22,7 @@ export const SectionTitle = ({
   sub?: string
 }) => (
   <div className="flex items-center gap-3">
-    <div className="flex h-8 w-8 items-center justify-center rounded-none bg-primary-soft text-primary">
+    <div className="flex h-8 w-8 items-center justify-center rounded-2xl bg-primary-soft text-primary">
       <Icon size={16} />
     </div>
     <div>

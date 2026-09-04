@@ -13,6 +13,8 @@ export interface TabsProps {
   activeTab: string
   onChange: (value: string) => void
   variant?: 'underline' | 'pills' | 'buttons'
+  /** Scrollable horizontal strip on mobile (recommended when tabs overflow) */
+  scrollable?: boolean
   className?: string
 }
 
@@ -57,41 +59,62 @@ export const Tabs: React.FC<TabsProps> = ({
   activeTab,
   onChange,
   variant = 'underline',
+  scrollable = false,
   className,
 }) => {
   const styles = variantStyles[variant]
 
+  const tabList = tabs.map((tab) => {
+    const isActive = tab.value === activeTab
+    return (
+      <button
+        key={tab.value}
+        role="tab"
+        aria-selected={isActive}
+        onClick={() => onChange(tab.value)}
+        className={cn(
+          styles.tab(isActive),
+          'inline-flex items-center gap-2 whitespace-nowrap',
+          scrollable && 'min-h-[44px] shrink-0',
+        )}
+      >
+        {tab.icon && <span className="shrink-0">{tab.icon}</span>}
+        {tab.label}
+        {tab.badge !== undefined && (
+          <span
+            className={cn(
+              'min-w-[18px] rounded-full px-1.5 py-0.5 text-center text-micro font-bold',
+              isActive
+                ? variant === 'pills'
+                  ? 'bg-white/20 text-on-primary'
+                  : 'bg-primary text-on-primary'
+                : 'bg-surface text-muted',
+            )}
+          >
+            {tab.badge}
+          </span>
+        )}
+      </button>
+    )
+  })
+
+  if (scrollable) {
+    return (
+      <div
+        className={cn(
+          'no-scrollbar -mx-1 flex overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
+          className,
+        )}
+        role="tablist"
+      >
+        {tabList}
+      </div>
+    )
+  }
+
   return (
     <div className={cn(styles.container, className)} role="tablist">
-      {tabs.map((tab) => {
-        const isActive = tab.value === activeTab
-        return (
-          <button
-            key={tab.value}
-            role="tab"
-            aria-selected={isActive}
-            onClick={() => onChange(tab.value)}
-            className={cn(styles.tab(isActive), 'inline-flex items-center gap-2 whitespace-nowrap')}
-          >
-            {tab.icon && <span className="shrink-0">{tab.icon}</span>}
-            {tab.label}
-            {tab.badge !== undefined && (
-              <span
-                className={cn(
-                  'min-w-[18px] rounded-full px-1.5 py-0.5 text-center text-micro font-bold',
-                  isActive
-                    ? variant === 'pills'
-                      ? 'bg-white/20 text-on-primary'
-                      : 'bg-primary text-on-primary'
-                    : 'bg-surface text-muted',
-                )}
-              >
-                {tab.badge}
-              </span>
-            )}
-          </button>
-        )
-      })}
+      {tabList}
     </div>
   )
 }

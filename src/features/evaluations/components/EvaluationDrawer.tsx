@@ -71,7 +71,7 @@ export const EvaluationDrawer = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.12 }}
-          className="fixed inset-0 z-[90] flex items-center justify-center p-3"
+          className="fixed inset-0 z-[90] flex items-end justify-center md:items-center md:p-3"
           onClick={(e) => {
             if (e.target === e.currentTarget) onClose()
           }}

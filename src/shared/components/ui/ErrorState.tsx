@@ -40,7 +40,7 @@ export const ErrorState = ({
     <p className="text-sm font-semibold text-main md:text-base">{title}</p>
     <p className="mt-1 max-w-xs text-sm text-muted">{message}</p>
     {onRetry && (
-      <Button variant="outline" size="sm" onClick={onRetry} className="mt-4">
+      <Button variant="outline" onClick={onRetry} className="mt-4 h-11 px-6 md:h-8 md:px-3.5">
         {retryLabel}
       </Button>
     )}

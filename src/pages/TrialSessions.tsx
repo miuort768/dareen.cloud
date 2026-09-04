@@ -1009,7 +1009,7 @@ export const TrialSessions = () => {
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
-                className="hidden w-full max-w-sm overflow-hidden rounded-none border-2 border-error bg-card shadow-2xl md:block"
+                className="hidden w-full max-w-sm overflow-hidden rounded-2xl border-2 border-error bg-card shadow-2xl md:block"
               >
                 <div className="flex items-center justify-between bg-error px-5 py-4">
                   <div className="flex items-center gap-3">
@@ -1064,7 +1064,7 @@ export const TrialSessions = () => {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: '100%', opacity: 0 }}
                 transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="w-full overflow-hidden rounded-none border-2 border-error bg-card shadow-2xl md:max-w-sm"
+                className="w-full overflow-hidden rounded-2xl border-2 border-error bg-card shadow-2xl md:max-w-sm"
               >
                 <div className="mx-auto mt-3 h-1 w-10 rounded-full bg-border md:hidden" />
                 <div className="flex items-center justify-between bg-error px-5 py-5">

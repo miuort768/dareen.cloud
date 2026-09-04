@@ -341,22 +341,22 @@ export const ParentDashboard = () => {
     return (
       <div className="min-h-screen bg-background" dir="rtl">
         <div className="mx-auto max-w-page space-y-5 px-2.5 pt-6 sm:px-4 md:px-6">
-          <Skeleton className="h-32 rounded-none" />
+          <Skeleton className="h-32 rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-            <Skeleton className="h-28 rounded-none" />
-            <Skeleton className="h-28 rounded-none" />
-            <Skeleton className="h-28 rounded-none" />
-            <Skeleton className="h-28 rounded-none" />
+            <Skeleton className="h-28 rounded-2xl" />
+            <Skeleton className="h-28 rounded-2xl" />
+            <Skeleton className="h-28 rounded-2xl" />
+            <Skeleton className="h-28 rounded-2xl" />
           </div>
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
             <div className="space-y-5 lg:col-span-8">
-              <Skeleton className="h-12 rounded-none" />
-              <Skeleton className="h-96 rounded-none" />
-              <Skeleton className="h-64 rounded-none" />
+              <Skeleton className="h-12 rounded-2xl" />
+              <Skeleton className="h-96 rounded-2xl" />
+              <Skeleton className="h-64 rounded-2xl" />
             </div>
             <div className="space-y-5 lg:col-span-4">
-              <Skeleton className="h-40 rounded-none" />
-              <Skeleton className="h-56 rounded-none" />
+              <Skeleton className="h-40 rounded-2xl" />
+              <Skeleton className="h-56 rounded-2xl" />
             </div>
           </div>
         </div>
@@ -367,7 +367,7 @@ export const ParentDashboard = () => {
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background" dir="rtl">
-        <div className="max-w-sm space-y-4 rounded-none border border-border bg-surface p-8 text-center">
+        <div className="max-w-sm space-y-4 rounded-2xl border border-border bg-surface p-8 text-center">
           <p className="text-sm text-muted">فشل تحميل الأبناء. تحقق من اتصالك بالإنترنت.</p>
           <button
             onClick={() => refetch()}

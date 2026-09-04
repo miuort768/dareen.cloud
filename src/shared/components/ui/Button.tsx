@@ -9,6 +9,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   isLoading?: boolean
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
+  fullWidth?: boolean
 }
 
 const variants = {
@@ -55,10 +56,10 @@ const variants = {
 }
 
 const sizes = {
-  sm: 'h-8 px-3.5 text-xs rounded-lg gap-1.5 font-semibold',
-  md: 'h-10 px-5 text-sm rounded-lg gap-2 font-semibold',
-  lg: 'h-12 px-7 text-base rounded-xl gap-2.5 font-semibold',
-  icon: 'h-10 w-10 rounded-lg',
+  sm: 'h-10 px-3.5 text-xs rounded-lg gap-1.5 font-semibold md:h-8 md:px-3.5 md:text-xs',
+  md: 'h-11 px-5 text-sm rounded-lg gap-2 font-semibold md:h-10 md:px-5',
+  lg: 'h-12 px-6 text-base rounded-xl gap-2.5 font-semibold md:px-7',
+  icon: 'h-11 w-11 rounded-lg md:h-10 md:w-10',
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -70,6 +71,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       isLoading,
       leftIcon,
       rightIcon,
+      fullWidth,
       children,
       onClick,
       ...props
@@ -91,6 +93,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'transition-all duration-200 ease-out',
           'disabled:pointer-events-none disabled:scale-100 disabled:opacity-40',
           '[&_svg]:pointer-events-none [&_svg]:shrink-0',
+          fullWidth && 'w-full',
           variants[variant],
           sizes[size],
           className,

@@ -359,7 +359,7 @@ export const LiveSessions = () => {
 
       {showEditDialog && editingSession && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-end justify-center bg-black/40 backdrop-blur-sm md:items-center md:p-4"
           onClick={() => setShowEditDialog(false)}
           role="dialog"
           aria-modal="true"

@@ -45,14 +45,15 @@ export const SalarySlipModal = ({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-background p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-background backdrop-blur-sm md:items-center md:p-4"
       dir="rtl"
       role="dialog"
       aria-modal="true"
       aria-label="قسيمة راتب"
       onKeyDown={handleKeyDown}
     >
-      <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-border bg-card shadow-lg md:duration-200 md:animate-in md:zoom-in-95">
+      <div className="max-h-[94dvh] w-full overflow-hidden rounded-t-3xl border-x-0 border-t border-border bg-card shadow-lg md:max-w-xl md:rounded-2xl md:border md:duration-200 md:animate-in md:zoom-in-95">
+        <div className="bg-strong mx-auto mt-2.5 h-1.5 w-10 shrink-0 rounded-full md:hidden" />
         <div className="flex items-center justify-between bg-gradient-to-l from-primary to-primary-hover p-5 text-on-primary">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15">
@@ -67,14 +68,14 @@ export const SalarySlipModal = ({
           </div>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-xl text-error transition-colors hover:bg-error"
+            className="flex h-11 w-11 items-center justify-center rounded-xl text-error transition-colors hover:bg-error md:h-8 md:w-8"
             aria-label="إغلاق"
           >
             <X size={18} />
           </button>
         </div>
 
-        <div className="max-h-[80vh] space-y-6 overflow-y-auto p-6">
+        <div className="max-h-[80vh] space-y-6 overflow-y-auto p-4 md:p-6">
           <div className="flex items-start justify-between border-b border-border pb-6">
             <div>
               <p className="mb-1 text-micro font-bold uppercase text-muted">المعلمة</p>
@@ -147,7 +148,7 @@ export const SalarySlipModal = ({
             )}
           </div>
 
-          <div className="no-print flex gap-3 pt-2">
+          <div className="no-print flex gap-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2">
             <SecondaryBtn onClick={onClose} className="flex-1">
               إغلاق
             </SecondaryBtn>

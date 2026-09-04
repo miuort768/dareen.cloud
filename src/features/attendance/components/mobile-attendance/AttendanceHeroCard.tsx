@@ -40,7 +40,7 @@ export const AttendanceHeroCard = ({
 
   return (
     <motion.div {...fadeUpStatic} className="px-4 pb-1 pt-3">
-      <div className="relative overflow-hidden rounded-none bg-gradient-to-br from-primary via-primary-deep to-primary p-4">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary p-4">
         {/* نقشة زخرفية */}
         <div className="pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true">
           <svg width="100%" height="100%">
@@ -102,7 +102,7 @@ export const AttendanceHeroCard = ({
               {stats.map((s) => (
                 <div
                   key={s.label}
-                  className="rounded-none bg-white/10 px-2 py-1.5 text-center backdrop-blur-sm"
+                  className="rounded-2xl bg-white/10 px-2 py-1.5 text-center backdrop-blur-sm"
                 >
                   <p
                     className={cn(
@@ -121,7 +121,7 @@ export const AttendanceHeroCard = ({
         </div>
 
         {/* التاريخ */}
-        <div className="relative z-10 mt-3 flex items-center justify-between rounded-none bg-white/10 px-3 py-2 backdrop-blur-sm">
+        <div className="relative z-10 mt-3 flex items-center justify-between rounded-2xl bg-white/10 px-3 py-2 backdrop-blur-sm">
           <div className="flex items-center gap-1.5 text-white/85">
             <CalendarDays size={12} />
             <span className="text-micro font-bold">{todayArabic()}</span>
@@ -132,7 +132,7 @@ export const AttendanceHeroCard = ({
               aria-label="اختيار التاريخ"
               value={date}
               onChange={(e) => onDateChange(e.target.value)}
-              className="w-[105px] cursor-pointer rounded-none border-none bg-transparent p-0 text-end text-micro font-bold text-white outline-none"
+              className="w-[105px] cursor-pointer rounded-2xl border-none bg-transparent p-0 text-end text-micro font-bold text-white outline-none"
             />
           )}
         </div>

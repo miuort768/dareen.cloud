@@ -30,7 +30,7 @@ export const BlogGrid = ({
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 6 }).map((_, i) => (
           <div key={i} className="overflow-hidden rounded-2xl border border-border bg-card">
-            <Skeleton className="h-36 w-full rounded-none" />
+            <Skeleton className="h-36 w-full rounded-2xl" />
             <div className="space-y-2 p-3">
               <Skeleton className="h-4 w-3/4 rounded-lg" />
               <Skeleton className="h-3 w-1/2 rounded-lg" />
@@ -98,14 +98,14 @@ export const BlogGrid = ({
               <div className="flex gap-1.5">
                 <button
                   onClick={() => handleOpenModal(post)}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-info transition-colors hover:bg-info-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg text-info transition-colors hover:bg-info-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-9 md:w-9"
                   aria-label="تعديل"
                 >
                   <Edit2 size={15} />
                 </button>
                 <button
                   onClick={() => handleDelete(post.id)}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-error transition-colors hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg text-error transition-colors hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-9 md:w-9"
                   aria-label="حذف"
                 >
                   <Trash2 size={15} />
@@ -116,7 +116,7 @@ export const BlogGrid = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="عرض المقال"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted transition-colors hover:bg-surface hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-muted transition-colors hover:bg-surface hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-9 md:w-9"
               >
                 <ExternalLink size={15} />
               </a>

@@ -40,7 +40,7 @@ export const Dialog = ({
     <div className="flex flex-col items-center py-4 text-center">
       {icon && <div className={cn('mb-4', variantIcons[variant])}>{icon}</div>}
       <p className="mb-6 text-sm leading-relaxed text-main">{message}</p>
-      <div className="flex w-full items-center gap-3">
+      <div className="flex w-full flex-col-reverse items-stretch gap-2 sm:flex-row sm:items-center sm:gap-3">
         {onCancel && (
           <Button variant="secondary" onClick={onCancel || onClose} className="flex-1" size="md">
             {cancelLabel}

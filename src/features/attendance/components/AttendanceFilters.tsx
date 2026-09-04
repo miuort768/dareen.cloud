@@ -69,11 +69,11 @@ export const AttendanceFilters = ({
       transition={{ duration: 0.3 }}
       className="mb-4"
     >
-      <div className="rounded-none border border-border bg-card p-3 md:p-4">
+      <div className="rounded-2xl border border-border bg-card p-3 md:p-4">
         {/* Top bar */}
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-none bg-primary-soft text-primary">
+            <div className="flex h-7 w-7 items-center justify-center rounded-2xl bg-primary-soft text-primary">
               <SlidersHorizontal size={12} />
             </div>
             <span className="text-xs font-bold text-main">فلترة السجلات</span>
@@ -81,19 +81,19 @@ export const AttendanceFilters = ({
           <div className="flex items-center gap-2">
             {/* Segmented Control */}
             {periodFilter && onPeriodChange && (
-              <div className="flex gap-0.5 rounded-none bg-surface p-0.5" dir="ltr">
+              <div className="flex gap-0.5 rounded-2xl bg-surface p-0.5" dir="ltr">
                 {(Object.keys(periodLabels) as PeriodFilter[]).map((key) => {
                   const isActive = periodFilter === key
                   return (
                     <button
                       key={key}
                       onClick={() => onPeriodChange(key)}
-                      className={`relative whitespace-nowrap rounded-none px-2.5 py-1 text-[9px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${isActive ? 'text-on-primary' : 'text-muted hover:text-main'}`}
+                      className={`relative whitespace-nowrap rounded-2xl px-2.5 py-1 text-[9px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${isActive ? 'text-on-primary' : 'text-muted hover:text-main'}`}
                     >
                       {isActive && (
                         <motion.div
                           layoutId="period-pill-att"
-                          className="absolute inset-0 rounded-none bg-primary"
+                          className="absolute inset-0 rounded-2xl bg-primary"
                           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                         />
                       )}
@@ -111,7 +111,7 @@ export const AttendanceFilters = ({
                   onTeacherChange('all')
                   onSubjectChange?.('all')
                 }}
-                className="flex items-center gap-1 rounded-none bg-error-soft px-2 py-1 text-[9px] font-bold text-error transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex items-center gap-1 rounded-2xl bg-error-soft px-2 py-1 text-[9px] font-bold text-error transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <X size={10} /> مسح
               </button>
@@ -132,7 +132,7 @@ export const AttendanceFilters = ({
               type="date"
               value={customStartDate || ''}
               onChange={(e) => onCustomStartChange?.(e.target.value)}
-              className="rounded-none border border-border bg-surface px-2 py-1.5 text-[9px] font-bold outline-none transition-all focus-visible:border-primary"
+              className="rounded-2xl border border-border bg-surface px-2 py-1.5 text-[9px] font-bold outline-none transition-all focus-visible:border-primary"
             />
             <span className="text-[9px] font-bold text-muted">إلى</span>
             <input
@@ -140,7 +140,7 @@ export const AttendanceFilters = ({
               type="date"
               value={customEndDate || ''}
               onChange={(e) => onCustomEndChange?.(e.target.value)}
-              className="rounded-none border border-border bg-surface px-2 py-1.5 text-[9px] font-bold outline-none transition-all focus-visible:border-primary"
+              className="rounded-2xl border border-border bg-surface px-2 py-1.5 text-[9px] font-bold outline-none transition-all focus-visible:border-primary"
             />
           </motion.div>
         )}
@@ -156,7 +156,7 @@ export const AttendanceFilters = ({
               placeholder="اسم الطالب، المادة..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full rounded-none border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
+              className="w-full rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
             />
           </div>
 
@@ -171,7 +171,7 @@ export const AttendanceFilters = ({
                 value={filterStatus}
                 onChange={(e) => onStatusChange(e.target.value)}
                 aria-label="تصفية حسب الحالة"
-                className="cursor-pointer appearance-none rounded-none border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
+                className="cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
               >
                 <option value="all">جميع الحالات</option>
                 <option value="scheduled">مجدولة</option>
@@ -188,7 +188,7 @@ export const AttendanceFilters = ({
                 value={filterTeacher}
                 onChange={(e) => onTeacherChange(e.target.value)}
                 aria-label="تصفية حسب المعلمة"
-                className="cursor-pointer appearance-none rounded-none border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
+                className="cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
               >
                 <option value="all">كافة المعلمات</option>
                 {uniqueTeachers.map((t) => (
@@ -208,7 +208,7 @@ export const AttendanceFilters = ({
                   value={filterSubject || 'all'}
                   onChange={(e) => onSubjectChange(e.target.value)}
                   aria-label="تصفية حسب المادة"
-                  className="cursor-pointer appearance-none rounded-none border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
+                  className="cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
                 >
                   <option value="all">جميع المواد</option>
                   {uniqueSubjects.map((s) => (

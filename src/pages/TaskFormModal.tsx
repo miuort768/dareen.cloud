@@ -30,10 +30,10 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
       onKeyDown={(e) => e.key === 'Escape' && onClose()}
     >
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
-      <div className="relative w-full max-w-lg overflow-hidden rounded-none border border-border bg-card shadow-soft">
+      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
         <div className="flex items-center justify-between border-b border-primary-hover bg-primary p-5">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-none bg-white/15">
+            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15">
               <Plus size={16} className="text-on-primary" />
             </div>
             <div>
@@ -46,7 +46,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
           <button
             onClick={onClose}
             aria-label="إغلاق النافذة"
-            className="rounded-none bg-white/15 p-3 text-on-primary transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="rounded-2xl bg-white/15 p-3 text-on-primary transition-colors hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <X size={22} />
           </button>
@@ -66,7 +66,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                 id="task-title"
                 required
                 type="text"
-                className="w-full rounded-none border border-border bg-background px-4 py-2.5 text-xs font-bold text-main transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 value={data.title}
                 onChange={(e) => onChange({ ...data, title: e.target.value })}
               />
@@ -87,7 +87,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                   />
                   <select
                     id="task-priority"
-                    className="w-full cursor-pointer appearance-none rounded-none border border-border bg-background py-2.5 pe-4 ps-8 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                    className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-background py-2.5 pe-4 ps-8 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     aria-label="درجة الأولوية"
                     value={data.priority}
                     onChange={(e) =>
@@ -110,7 +110,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                 <input
                   id="task-due"
                   type="date"
-                  className="w-full rounded-none border border-border bg-background px-4 py-2.5 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   value={data.dueDate}
                   onChange={(e) => onChange({ ...data, dueDate: e.target.value })}
                 />
@@ -126,7 +126,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
               </label>
               <textarea
                 id="task-desc"
-                className="h-24 w-full resize-none rounded-none border border-border bg-background px-4 py-2.5 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="h-24 w-full resize-none rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 value={data.description}
                 onChange={(e) => onChange({ ...data, description: e.target.value })}
               ></textarea>
@@ -136,7 +136,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
           <button
             type="submit"
             disabled={!data.title.trim()}
-            className="w-full rounded-none bg-primary py-3 text-xs font-bold uppercase tracking-wider text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+            className="w-full rounded-2xl bg-primary py-3 text-xs font-bold uppercase tracking-wider text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
           >
             إنشاء مهمة جديدة
           </button>

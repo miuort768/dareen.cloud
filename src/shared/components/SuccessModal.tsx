@@ -73,7 +73,7 @@ export const SuccessModal = ({
     >
       <div
         className={cn(
-          'p-4.5 relative overflow-hidden rounded-none border border-success-soft bg-card shadow-2xl dark:border-success-soft',
+          'p-4.5 relative overflow-hidden rounded-2xl border border-success-soft bg-card shadow-2xl dark:border-success-soft',
           'pointer-events-auto transition-all duration-300 ease-out',
           isExiting
             ? 'translate-y-6 scale-90 opacity-0 blur-sm'
@@ -81,16 +81,16 @@ export const SuccessModal = ({
         )}
       >
         {/* â”€â”€ Glowing Ambient Background â”€â”€ */}
-        <div className="pointer-events-none absolute -end-12 -top-12 h-24 w-24 rounded-none bg-success-soft blur-2xl" />
-        <div className="pointer-events-none absolute -bottom-12 -start-12 h-24 w-24 rounded-none bg-info-soft blur-2xl" />
+        <div className="pointer-events-none absolute -end-12 -top-12 h-24 w-24 rounded-2xl bg-success-soft blur-2xl" />
+        <div className="pointer-events-none absolute -bottom-12 -start-12 h-24 w-24 rounded-2xl bg-info-soft blur-2xl" />
 
         <div className="relative z-10 flex items-start gap-3.5">
           {/* â”€â”€ Glowing Success Icon â”€â”€ */}
           <div className="relative flex-shrink-0">
-            <div className="flex h-10 w-10 items-center justify-center rounded-none bg-success text-on-success">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-success text-on-success">
               <CheckCircle2 size={20} className="stroke-[2.5]" />
             </div>
-            <div className="absolute -start-1.5 -top-1.5 flex h-4 w-4 animate-bounce items-center justify-center rounded-none bg-warning-soft text-warning">
+            <div className="absolute -start-1.5 -top-1.5 flex h-4 w-4 animate-bounce items-center justify-center rounded-2xl bg-warning-soft text-warning">
               <Sparkles size={8} />
             </div>
           </div>
@@ -108,7 +108,7 @@ export const SuccessModal = ({
             onClick={handleClose}
             className={cn(
               'flex-shrink-0 text-muted hover:text-main dark:hover:text-dim',
-              'rounded-none bg-background p-1.5 hover:bg-surface dark:bg-surface dark:hover:bg-hover',
+              'rounded-2xl bg-background p-1.5 hover:bg-surface dark:bg-surface dark:hover:bg-hover',
               'border border-border transition-all active:scale-95',
             )}
           >

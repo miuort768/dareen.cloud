@@ -45,18 +45,18 @@ export const PasswordConfirmModal = ({
 
   return (
     <div
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 p-4 animate-in fade-in"
+      className="fixed inset-0 z-[1000] flex items-end justify-center bg-black/50 animate-in fade-in md:items-center md:p-4"
       dir="rtl"
     >
-      <div className="w-full max-w-md overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
-        <div className="space-y-3 border-b border-divider p-6 text-center">
+      <div className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-lg md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border-x md:border-b">
+        <div className="space-y-3 border-b border-divider p-5 text-center md:p-6">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-warning-soft text-warning">
             <Lock size={20} />
           </div>
           <h3 className="text-base font-bold text-main">{title}</h3>
           <p className="text-xs leading-relaxed text-muted">{description}</p>
         </div>
-        <div className="space-y-4 p-6">
+        <div className="space-y-4 p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:p-6">
           <div>
             <label className="mb-1.5 block text-[11px] font-bold text-muted">كلمة المرور</label>
             <div className="relative">

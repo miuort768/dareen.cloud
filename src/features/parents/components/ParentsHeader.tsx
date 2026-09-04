@@ -176,7 +176,7 @@ export const ParentsHeader = ({
               onClick={() => onFilterStatusChange(f.value)}
               aria-pressed={filterStatus === f.value}
               className={cn(
-                'flex h-9 min-w-[44px] items-center justify-center whitespace-nowrap rounded-lg px-3 text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-white/60 active:scale-[0.97]',
+                'flex h-10 min-w-[44px] items-center justify-center whitespace-nowrap rounded-lg px-3 text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-white/60 active:scale-[0.97] md:h-9',
                 filterStatus === f.value
                   ? 'bg-white text-primary shadow-sm'
                   : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white',

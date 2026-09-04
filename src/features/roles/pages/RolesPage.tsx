@@ -100,31 +100,31 @@ export const RolesPage = () => {
           <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-main">
             <Plus size={16} className="text-primary" /> إضافة دور جديد
           </h3>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">
             <input
               aria-label="الاسم التقني"
               placeholder="الاسم (مثل: manager)"
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
-              className="min-w-[140px] flex-1 rounded-card border border-border bg-card px-3 py-2 text-sm text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus"
+              className="w-full rounded-card border border-border bg-card px-3 py-2.5 text-sm text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus md:min-w-[140px] md:flex-1 md:py-2"
             />
             <input
               aria-label="التسمية"
               placeholder="التسمية (مثل: مدير)"
               value={newLabel}
               onChange={(e) => setNewLabel(e.target.value)}
-              className="min-w-[140px] flex-1 rounded-card border border-border bg-card px-3 py-2 text-sm text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus"
+              className="w-full rounded-card border border-border bg-card px-3 py-2.5 text-sm text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus md:min-w-[140px] md:flex-1 md:py-2"
             />
             <input
               aria-label="الوصف"
               placeholder="وصف"
               value={newDesc}
               onChange={(e) => setNewDesc(e.target.value)}
-              className="min-w-[140px] flex-1 rounded-card border border-border bg-card px-3 py-2 text-sm text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus"
+              className="w-full rounded-card border border-border bg-card px-3 py-2.5 text-sm text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus md:min-w-[140px] md:flex-1 md:py-2"
             />
             <button
               onClick={createRole}
-              className="flex items-center gap-2 rounded-card bg-primary px-5 py-2 text-sm font-bold text-on-primary transition-all hover:bg-primary-hover"
+              className="flex h-11 items-center justify-center gap-2 rounded-card bg-primary px-5 text-sm font-bold text-on-primary transition-all hover:bg-primary-hover md:h-auto md:py-2"
             >
               <Plus size={16} /> إضافة
             </button>
@@ -174,13 +174,17 @@ export const RolesPage = () => {
 
         {editingRole && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 backdrop-blur-sm md:items-center md:p-4"
             onClick={() => setEditingRole(null)}
           >
             <div
-              className="max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-card border border-border bg-card p-6 shadow-soft"
+              className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-t border-border bg-card p-5 shadow-soft md:max-h-[85vh] md:max-w-lg md:rounded-card md:border md:p-6"
               onClick={(e) => e.stopPropagation()}
             >
+              <div
+                aria-hidden="true"
+                className="bg-strong mx-auto mb-4 h-1.5 w-10 shrink-0 rounded-full md:hidden"
+              />
               <div className="mb-5 flex items-center justify-between">
                 <h3 className="flex items-center gap-2 font-heading text-lg font-bold text-main">
                   <Settings size={18} className="text-primary" /> تعديل: {editingRole.label}
@@ -188,7 +192,7 @@ export const RolesPage = () => {
                 <button
                   onClick={() => setEditingRole(null)}
                   aria-label="إغلاق"
-                  className="flex h-8 w-8 items-center justify-center rounded-card text-muted transition-all hover:bg-surface hover:text-main"
+                  className="flex h-11 w-11 items-center justify-center rounded-card text-muted transition-all hover:bg-surface hover:text-main md:h-8 md:w-8"
                 >
                   <X size={18} />
                 </button>
@@ -232,16 +236,16 @@ export const RolesPage = () => {
                 </div>
               ))}
 
-              <div className="mt-6 flex items-center gap-3 border-t border-border pt-4">
+              <div className="mt-6 flex items-center gap-3 border-t border-border pb-[max(0.25rem,env(safe-area-inset-bottom))] pt-4">
                 <button
                   onClick={saveRole}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-card bg-primary px-4 py-2.5 text-sm font-bold text-on-primary transition-all hover:bg-primary-hover"
+                  className="flex h-11 flex-1 items-center justify-center gap-2 rounded-card bg-primary px-4 text-sm font-bold text-on-primary transition-all hover:bg-primary-hover"
                 >
                   <Save size={16} /> حفظ
                 </button>
                 <button
                   onClick={() => setEditingRole(null)}
-                  className="rounded-card bg-surface px-4 py-2.5 text-sm font-bold text-main transition-all hover:bg-hover"
+                  className="h-11 flex-1 rounded-card bg-surface text-sm font-bold text-main transition-all hover:bg-hover md:h-auto md:flex-none md:px-4 md:py-2.5"
                 >
                   إلغاء
                 </button>

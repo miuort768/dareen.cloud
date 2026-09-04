@@ -22,7 +22,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          'relative overflow-hidden rounded-2xl border p-6 transition-all duration-slow',
+          'relative overflow-hidden rounded-2xl border p-4 transition-all duration-slow md:p-6',
           hoverLift && variant !== 'sharp' && 'hover:-translate-y-1',
           variants[variant],
           className,

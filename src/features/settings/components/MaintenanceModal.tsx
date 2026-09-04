@@ -38,11 +38,11 @@ export const MaintenanceModal = ({
 
   return (
     <div
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50 p-4 animate-in fade-in"
+      className="fixed inset-0 z-[1000] flex items-end justify-center bg-black/50 animate-in fade-in md:items-center md:p-4"
       dir="rtl"
     >
-      <div className="w-full max-w-md overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
-        <div className="space-y-4 border-b border-divider p-6 text-center">
+      <div className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-lg md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border-x md:border-b">
+        <div className="space-y-4 border-b border-divider p-5 text-center md:p-6">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft">
             <Image
               src="/dareen_logo_new.webp"
@@ -63,7 +63,7 @@ export const MaintenanceModal = ({
           </div>
         </div>
 
-        <div className="space-y-4 p-6">
+        <div className="space-y-4 p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:p-6">
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col items-center gap-2 rounded-xl border border-divider bg-background p-4">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-error-soft text-error">

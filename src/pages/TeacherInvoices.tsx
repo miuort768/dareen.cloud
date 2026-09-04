@@ -518,7 +518,7 @@ export const TeacherInvoices = () => {
         />
       </div>
 
-      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3">
+      <div className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-4 z-50 flex flex-col items-end gap-3 md:bottom-6 md:end-6">
         <AnimatePresence>
           {fabOpen &&
             fabActions

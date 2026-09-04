@@ -42,11 +42,11 @@ const Card = ({
   iconText: string
   children: React.ReactNode
 }) => (
-  <div className="flex flex-col rounded-none border border-border bg-surface p-2.5">
+  <div className="flex flex-col rounded-2xl border border-border bg-surface p-2.5">
     <div className="mb-2 flex items-center gap-1.5">
       <span
         className={cn(
-          'flex h-6 w-6 shrink-0 items-center justify-center rounded-none',
+          'flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl',
           iconBg,
           iconText,
         )}
@@ -72,11 +72,11 @@ const RankRow = ({
   badgeBg: string
   badgeText: string
 }) => (
-  <div className="flex items-center justify-between gap-2 rounded-none border border-border bg-background px-2 py-1.5">
+  <div className="flex items-center justify-between gap-2 rounded-2xl border border-border bg-background px-2 py-1.5">
     <div className="flex min-w-0 items-center gap-1.5">
       <span
         className={cn(
-          'flex h-5 w-5 shrink-0 items-center justify-center rounded-none text-[9px] font-black tabular-nums',
+          'flex h-5 w-5 shrink-0 items-center justify-center rounded-2xl text-[9px] font-black tabular-nums',
           badgeBg,
           badgeText,
         )}
@@ -147,20 +147,20 @@ export const AttendanceInsights = memo(function AttendanceInsights() {
     <div className="mt-4 border-t border-border pt-4" dir="rtl">
       <div className="mb-2.5 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-none bg-primary-soft">
+          <div className="flex h-7 w-7 items-center justify-center rounded-2xl bg-primary-soft">
             <CalendarCheck size={13} className="text-primary" />
           </div>
           <h4 className="text-xs font-black text-main">تحليلات الحضور</h4>
         </div>
         {analytics.totalCompleted > 0 && (
-          <span className="rounded-none bg-surface px-1.5 py-0.5 text-[9px] font-black tabular-nums text-muted">
+          <span className="rounded-2xl bg-surface px-1.5 py-0.5 text-[9px] font-black tabular-nums text-muted">
             {analytics.totalCompleted} حصة مسجلة
           </span>
         )}
       </div>
 
       {!analytics.hasData ? (
-        <p className="rounded-none border border-dashed border-border bg-surface py-4 text-center text-[10px] font-bold text-dim">
+        <p className="rounded-2xl border border-dashed border-border bg-surface py-4 text-center text-[10px] font-bold text-dim">
           لا توجد بيانات حضور بعد
         </p>
       ) : (
@@ -204,9 +204,9 @@ export const AttendanceInsights = memo(function AttendanceInsights() {
           </div>
 
           {analytics.leastTeacher && (
-            <div className="flex items-center justify-between gap-2 rounded-none border border-error-soft bg-error-soft px-2.5 py-2">
+            <div className="flex items-center justify-between gap-2 rounded-2xl border border-error-soft bg-error-soft px-2.5 py-2">
               <div className="flex min-w-0 items-center gap-1.5">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-none bg-card text-error">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-2xl bg-card text-error">
                   <UserMinus size={12} />
                 </span>
                 <p className="truncate text-[11px] font-bold text-main">
@@ -250,14 +250,14 @@ export const AttendanceInsights = memo(function AttendanceInsights() {
                 <div
                   key={`hour-${h.hour}`}
                   className={cn(
-                    'flex items-center justify-between gap-2 rounded-none border px-2 py-1.5',
+                    'flex items-center justify-between gap-2 rounded-2xl border px-2 py-1.5',
                     i === 0 ? 'border-warning-soft bg-warning-soft' : 'border-border bg-background',
                   )}
                 >
                   <div className="flex min-w-0 items-center gap-1.5">
                     <span
                       className={cn(
-                        'flex h-5 w-5 shrink-0 items-center justify-center rounded-none text-[9px] font-black tabular-nums',
+                        'flex h-5 w-5 shrink-0 items-center justify-center rounded-2xl text-[9px] font-black tabular-nums',
                         i === 0 ? 'bg-warning text-on-warning' : 'bg-warning-soft text-warning',
                       )}
                     >

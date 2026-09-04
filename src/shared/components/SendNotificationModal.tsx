@@ -30,7 +30,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-4"
       dir="rtl"
       role="dialog"
       aria-modal="true"
@@ -43,15 +43,15 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
         onClick={onClose}
       ></div>
 
-      <div className="relative w-full max-w-md overflow-hidden rounded-none border-2 border-primary/50 bg-card shadow-elevation-3 duration-200 animate-in zoom-in-95 dark:bg-card">
+      <div className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t-2 border-primary/50 bg-card shadow-elevation-3 duration-200 animate-in slide-in-from-bottom dark:bg-card md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border-x-2 md:border-b-2 md:animate-in md:zoom-in-95">
         {/* Accent bar */}
         <div className="h-1 w-full bg-primary"></div>
 
-        <div className="p-6">
+        <div className="p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] md:p-6">
           {/* Header */}
           <div className="mb-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-none bg-primary/10 dark:bg-primary/15">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 dark:bg-primary/15">
                 <Bell size={20} className="text-primary" />
               </div>
               <div>
@@ -63,7 +63,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="flex h-8 w-8 items-center justify-center rounded-none text-muted transition-all hover:bg-hover hover:text-main"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl text-muted transition-all hover:bg-hover hover:text-main md:h-8 md:w-8"
               aria-label="إغلاق"
             >
               <X size={16} />
@@ -83,7 +83,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="اكتب رسالتك هنا..."
-                className="h-28 w-full resize-none rounded-none border border-border bg-surface p-3 text-xs font-medium leading-relaxed outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary/20 dark:bg-hover dark:text-main"
+                className="h-28 w-full resize-none rounded-2xl border border-border bg-surface p-3 text-xs font-medium leading-relaxed outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary/20 dark:bg-hover dark:text-main"
               />
             </div>
 

@@ -33,11 +33,11 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
   }
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm transition-all duration-300">
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-card shadow-elevation-2 duration-300 animate-in fade-in zoom-in">
+    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 backdrop-blur-sm transition-all duration-300 md:items-center md:p-4">
+      <div className="relative max-h-[94dvh] w-full overflow-y-auto rounded-t-3xl bg-card shadow-elevation-2 duration-300 animate-in fade-in slide-in-from-bottom md:max-h-none md:max-w-lg md:overflow-hidden md:rounded-2xl md:animate-in md:fade-in md:zoom-in">
         <div className="pointer-events-none absolute start-0 top-0 h-32 w-32 -translate-y-16 translate-x-16 -rotate-45 bg-primary opacity-10"></div>
 
-        <div className="no-print flex items-center justify-between border-b border-border p-6">
+        <div className="no-print sticky top-0 z-10 flex items-center justify-between border-b border-border bg-card p-4 md:static md:p-6">
           <div className="flex items-center gap-3">
             <div className="rounded-xl bg-primary-soft p-2">
               <Printer size={24} className="text-primary" />
@@ -61,7 +61,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
             </label>
             <button
               onClick={onClose}
-              className="rounded-xl p-2 text-error transition-colors hover:bg-error-soft"
+              className="flex h-11 w-11 items-center justify-center rounded-xl text-error transition-colors hover:bg-error-soft md:h-auto md:w-auto md:p-2"
               aria-label="إغلاق"
             >
               <X size={24} className="text-muted" />
@@ -69,7 +69,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
           </div>
         </div>
 
-        <div id="printable-invoice" className="min-h-[500px] bg-card p-8">
+        <div id="printable-invoice" className="min-h-[500px] bg-card p-4 md:p-8">
           <div className="mb-8 flex items-start justify-between">
             <div className="space-y-4">
               <div className="flex items-center gap-3">
@@ -253,16 +253,16 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
           </div>
         </div>
 
-        <div className="no-print flex justify-end gap-3 border-t border-border bg-surface p-6">
+        <div className="no-print flex items-stretch justify-stretch gap-3 border-t border-border bg-surface p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:items-center md:justify-end md:p-6">
           <button
             onClick={onClose}
-            className="rounded-xl px-6 py-2 text-sm font-medium text-muted transition-colors hover:text-main"
+            className="h-11 flex-1 rounded-xl border border-border text-sm font-medium text-muted transition-colors hover:text-main md:h-auto md:flex-none md:border-0 md:px-6 md:py-2"
           >
             إغلاق
           </button>
           <button
             onClick={handlePrint}
-            className="flex items-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-xs font-medium uppercase tracking-widest text-on-primary transition-all hover:bg-primary-hover"
+            className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-xs font-medium uppercase tracking-widest text-on-primary transition-all hover:bg-primary-hover md:h-auto md:flex-none"
           >
             <Printer size={16} />
             طباعة

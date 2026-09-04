@@ -237,7 +237,7 @@ export const Attendance = () => {
 
             <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
               <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-white/15 shadow-lg backdrop-blur-sm">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-lg backdrop-blur-sm">
                   <UserCheck size={22} className="text-on-primary" />
                 </div>
                 <div>
@@ -258,7 +258,7 @@ export const Attendance = () => {
                 ].map((s) => (
                   <div
                     key={s.label}
-                    className="rounded-none border border-white/20 bg-white/10 px-2 py-2.5 text-center backdrop-blur-sm"
+                    className="rounded-2xl border border-white/20 bg-white/10 px-2 py-2.5 text-center backdrop-blur-sm"
                   >
                     <p className="text-lg font-black tabular-nums leading-none text-on-primary">
                       {s.value.toLocaleString('ar-EG')}
@@ -289,10 +289,10 @@ export const Attendance = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.12 + i * 0.06 }}
                     whileHover={{ scale: 1.02, y: -2 }}
-                    className="relative overflow-hidden rounded-none border border-border bg-card p-4"
+                    className="relative overflow-hidden rounded-2xl border border-border bg-card p-4"
                   >
                     <div className="mb-3 flex items-center justify-between">
-                      <div className={cn('flex rounded-none p-2', kpi.color)}>
+                      <div className={cn('flex rounded-2xl p-2', kpi.color)}>
                         <Icon size={16} />
                       </div>
                       <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
@@ -407,7 +407,7 @@ export const Attendance = () => {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       placeholder="ابحث باسم الطالب أو المادة..."
-                      className="w-full rounded-none border border-border bg-surface py-2 pe-4 ps-10 text-xs font-bold transition-all focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                      className="w-full rounded-2xl border border-border bg-surface py-2 pe-4 ps-10 text-xs font-bold transition-all focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                     />
                   </div>
                 </div>
@@ -551,7 +551,7 @@ export const Attendance = () => {
                     }}
                     className="flex items-center gap-2"
                   >
-                    <span className="whitespace-nowrap rounded-none border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                    <span className="whitespace-nowrap rounded-2xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
                       {action.label}
                     </span>
                     <button

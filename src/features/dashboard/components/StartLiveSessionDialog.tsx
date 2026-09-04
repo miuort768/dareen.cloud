@@ -117,7 +117,7 @@ export const StartLiveSessionDialog = ({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4"
+      className="fixed inset-0 z-[100] flex items-end justify-center bg-black/40 md:items-center md:p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -127,7 +127,7 @@ export const StartLiveSessionDialog = ({
       }}
     >
       <div
-        className="no-scrollbar max-h-[90vh] w-full max-w-md space-y-5 overflow-y-auto rounded-2xl border border-border bg-card p-6 shadow-2xl dark:border-border dark:bg-card"
+        className="no-scrollbar max-h-[92dvh] w-full space-y-5 overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card p-5 shadow-2xl dark:border-border dark:bg-card md:max-w-md md:rounded-2xl md:border md:p-6"
         onClick={(e) => e.stopPropagation()}
       >
         {started ? (
@@ -136,7 +136,7 @@ export const StartLiveSessionDialog = ({
               <h3 className="text-lg font-bold text-main dark:text-main">بدأت الحصة!</h3>
               <button
                 onClick={onClose}
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-surface transition-colors hover:bg-hover dark:bg-hover dark:hover:bg-primary/5"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface transition-colors hover:bg-hover dark:bg-hover dark:hover:bg-primary/5 md:h-9 md:w-9"
                 aria-label="إغلاق"
               >
                 <X size={16} className="text-muted dark:text-muted" />
@@ -209,7 +209,7 @@ export const StartLiveSessionDialog = ({
               </div>
               <button
                 onClick={onClose}
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-surface transition-colors hover:bg-hover dark:bg-hover dark:hover:bg-primary/5"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface transition-colors hover:bg-hover dark:bg-hover dark:hover:bg-primary/5 md:h-9 md:w-9"
                 aria-label="إغلاق"
               >
                 <X size={16} className="text-muted dark:text-muted" />

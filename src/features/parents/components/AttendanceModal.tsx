@@ -68,7 +68,7 @@ export const AttendanceModal = ({
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+      className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-8"
       role="dialog"
       aria-modal="true"
       aria-label="تقرير الحضور"

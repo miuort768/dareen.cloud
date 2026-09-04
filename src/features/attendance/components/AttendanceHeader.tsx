@@ -29,11 +29,11 @@ export const AttendanceHeader = ({
 
   return (
     <div
-      className="flex flex-wrap items-center justify-between gap-3 rounded-none border border-border bg-card p-3.5"
+      className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-border bg-card p-3.5"
       dir="rtl"
     >
       <div className="flex flex-wrap items-center gap-2">
-        <span className="flex items-center gap-1.5 rounded-none bg-success-soft px-2.5 py-1.5">
+        <span className="flex items-center gap-1.5 rounded-2xl bg-success-soft px-2.5 py-1.5">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
@@ -42,7 +42,7 @@ export const AttendanceHeader = ({
         </span>
 
         {!isTeacher && (
-          <label className="flex items-center gap-2 rounded-none border border-border bg-surface px-3 py-1.5">
+          <label className="flex items-center gap-2 rounded-2xl border border-border bg-surface px-3 py-1.5">
             <Calendar size={12} className="text-muted" />
             <input
               type="date"
@@ -54,7 +54,7 @@ export const AttendanceHeader = ({
           </label>
         )}
 
-        <span className="hidden items-center gap-1.5 rounded-none bg-surface px-2.5 py-1.5 md:flex">
+        <span className="hidden items-center gap-1.5 rounded-2xl bg-surface px-2.5 py-1.5 md:flex">
           <Clock size={11} className="text-dim" />
           <span className="text-[10px] font-bold text-muted">آخر مزامنة {lastSync}</span>
         </span>
@@ -62,14 +62,14 @@ export const AttendanceHeader = ({
 
       <div className="flex items-center gap-2">
         {!isTeacher && teacherCount > 0 && (
-          <span className="hidden items-center gap-1.5 rounded-none bg-surface px-2.5 py-1.5 md:flex">
+          <span className="hidden items-center gap-1.5 rounded-2xl bg-surface px-2.5 py-1.5 md:flex">
             <Users size={11} className="text-dim" />
             <span className="text-[10px] font-bold tabular-nums text-muted">
               {teacherCount} معلمة
             </span>
           </span>
         )}
-        <span className="flex items-center gap-1.5 rounded-none bg-primary-soft px-2.5 py-1.5">
+        <span className="flex items-center gap-1.5 rounded-2xl bg-primary-soft px-2.5 py-1.5">
           <Activity size={11} className="text-primary" />
           <span className="text-[10px] font-black tabular-nums text-primary">
             {stats.todayTotal} حصة اليوم

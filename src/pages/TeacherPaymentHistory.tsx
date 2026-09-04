@@ -528,7 +528,7 @@ export const TeacherPaymentHistory = () => {
       </div>
 
       {/* FAB — mobile only */}
-      <div className="fixed bottom-6 end-6 z-50 flex flex-col items-end gap-3 md:hidden">
+      <div className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-4 z-50 flex flex-col items-end gap-3 md:hidden">
         <AnimatePresence>
           {fabOpen &&
             fabActions.map((action, i) => (

@@ -34,7 +34,7 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
             aria-selected={active}
             onClick={() => onSelect(child.id)}
             className={cn(
-              'inline-flex shrink-0 items-center gap-2 rounded-none border px-3 py-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+              'inline-flex shrink-0 items-center gap-2 rounded-2xl border px-3 py-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
               active
                 ? 'border-primary bg-primary shadow-sm'
                 : 'border-border bg-surface hover:bg-hover',
@@ -42,7 +42,7 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
           >
             <span
               className={cn(
-                'flex h-7 w-7 shrink-0 items-center justify-center rounded-none text-xs font-black',
+                'flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl text-xs font-black',
                 active ? 'bg-on-primary/20 text-on-primary' : tone,
               )}
               aria-hidden="true"

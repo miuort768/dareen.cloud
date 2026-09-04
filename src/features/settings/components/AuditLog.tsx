@@ -23,7 +23,8 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
       </SecondaryBtn>
     </div>
 
-    <div className="overflow-x-auto rounded-xl border border-divider">
+    {/* Desktop table */}
+    <div className="hidden overflow-x-auto rounded-xl border border-divider md:block">
       <table className="w-full text-start text-sm">
         <thead>
           <tr className="bg-background">
@@ -69,6 +70,40 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
           )}
         </tbody>
       </table>
+    </div>
+
+    {/* Mobile cards */}
+    <div className="space-y-2.5 md:hidden">
+      {auditLogs.length > 0 ? (
+        auditLogs.map((log, idx) => (
+          <div key={idx} className="rounded-xl border border-divider bg-background p-3.5">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex min-w-0 items-center gap-2">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 text-[11px] font-bold text-primary">
+                  {log.username?.[0]?.toUpperCase() || 'A'}
+                </div>
+                <span className="truncate text-xs font-bold text-main">{log.username}</span>
+              </div>
+              <span className="shrink-0 font-mono text-[10px] text-muted" dir="ltr">
+                {new Date(log.timestamp).toLocaleString('ar-EG', {
+                  dateStyle: 'short',
+                  timeStyle: 'short',
+                })}
+              </span>
+            </div>
+            <div className="mt-2 flex items-center gap-2 border-t border-divider pt-2">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary/50" />
+              <span className="text-xs text-main">{log.action}</span>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="rounded-xl border border-divider py-14 text-center">
+          <CheckCircle2 className="mx-auto mb-2 text-success" size={24} />
+          <p className="text-sm font-bold text-muted">لا توجد سجلات</p>
+          <p className="mt-1 text-[11px] text-muted">لا يوجد نشاط مسجل حتى الآن</p>
+        </div>
+      )}
     </div>
 
     <div className="mt-3 flex items-center justify-between px-1">
