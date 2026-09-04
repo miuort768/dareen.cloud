@@ -137,8 +137,8 @@ export const Finance = () => {
                   tone: 'text-error',
                 },
                 {
-                  label: 'صافي الربح',
-                  value: (state.netProfit || 0).toLocaleString(),
+                  label: 'صافي ربح الشهر',
+                  value: ((state.monthIncome || 0) - (state.monthExpenses || 0)).toLocaleString(),
                   icon: Wallet,
                   tone: 'text-info',
                 },

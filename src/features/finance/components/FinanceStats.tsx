@@ -1,12 +1,5 @@
 import { motion } from 'framer-motion'
-import {
-  TrendingUp,
-  TrendingDown,
-  Wallet,
-  DollarSign,
-  ArrowUpRight,
-  ArrowDownRight,
-} from 'lucide-react'
+import { TrendingUp, TrendingDown, Wallet, DollarSign } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 
@@ -43,35 +36,22 @@ const Counter = ({
   </motion.span>
 )
 
-const TrendBadge = ({ value, positive }: { value: number; positive: boolean }) => {
-  if (value === 0) return null
-  const isUp = positive ? value > 0 : value < 0
-  return (
-    <div
-      className={`inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] font-bold ${isUp ? 'bg-success-soft text-success-strong' : 'bg-error-soft text-error'}`}
-    >
-      {isUp ? <ArrowUpRight size={8} /> : <ArrowDownRight size={8} />}
-      {Math.abs(value).toFixed(1)}%
-    </div>
-  )
-}
-
 const KPICard = ({
   title,
   value,
   icon: Icon,
   monthValue,
+  monthLabel = 'الشهر',
   tone,
-  trend,
-  profitMargin: pm,
+  note,
 }: {
   title: string
   value: number
   icon: LucideIcon
   monthValue: number
+  monthLabel?: string
   tone: string
-  trend?: number
-  profitMargin?: string
+  note?: string
 }) => (
   <motion.div
     whileHover={{ scale: 1.01, y: -1 }}
@@ -82,18 +62,17 @@ const KPICard = ({
         <div className={cn('flex h-8 w-8 items-center justify-center rounded-xl', tone)}>
           <Icon size={14} />
         </div>
-        {trend !== undefined && <TrendBadge value={trend} positive={title === 'صافي الربح'} />}
+        {note && <span className="text-[9px] font-bold text-muted">{note}</span>}
       </div>
       <p className="text-[10px] font-bold text-muted">{title}</p>
       <p className="mt-0.5 text-lg font-bold leading-none text-main">
         <Counter value={value} />
       </p>
       <div className="mt-2 flex items-center gap-1.5 border-t border-divider pt-2">
-        <span className="text-[8px] font-bold text-muted">الشهر</span>
+        <span className="text-[8px] font-bold text-muted">{monthLabel}</span>
         <span className="text-[10px] font-bold tabular-nums text-main">
           <Counter value={monthValue} />
         </span>
-        {pm && <span className="me-auto text-[8px] font-bold text-muted">هامش: {pm}%</span>}
       </div>
     </div>
   </motion.div>
@@ -109,10 +88,6 @@ export const FinanceStats = ({
   monthProfit,
   profitMargin = '0',
 }: FinanceStatsProps) => {
-  const incomeTrend = monthIncome && totalIncome ? (monthIncome / (totalIncome / 12) - 1) * 100 : 0
-  const expenseTrend =
-    monthExpenses && totalExpenses ? (monthExpenses / (totalExpenses / 12) - 1) * 100 : 0
-
   return (
     <div className="grid grid-cols-2 gap-4 lg:grid-cols-4" dir="rtl">
       <KPICard
@@ -121,21 +96,21 @@ export const FinanceStats = ({
         icon={TrendingUp}
         monthValue={monthIncome}
         tone="bg-success-soft text-success-strong"
-        trend={Math.round(incomeTrend)}
       />
       <KPICard
-        title="مستحقات المعلمات"
+        title="إجمالي المصروفات"
         value={totalExpenses}
         icon={TrendingDown}
         monthValue={monthExpenses}
         tone="bg-error-soft text-error"
-        trend={Math.round(expenseTrend)}
+        note="رواتب + يدوية + ثابتة"
       />
       <KPICard
         title="المصروفات التشغيلية"
         value={totalFixedExpenses}
         icon={Wallet}
         monthValue={totalFixedExpenses}
+        monthLabel="شهريًا"
         tone="bg-warning-soft text-warning-strong"
       />
       <KPICard
@@ -144,8 +119,7 @@ export const FinanceStats = ({
         icon={DollarSign}
         monthValue={monthProfit}
         tone="bg-primary-soft text-primary"
-        trend={totalIncome ? Math.round((netProfit / totalIncome) * 100) : 0}
-        profitMargin={profitMargin}
+        note={totalIncome > 0 ? `هامش: ${profitMargin}%` : undefined}
       />
     </div>
   )
