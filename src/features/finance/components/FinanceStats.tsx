@@ -8,6 +8,7 @@ import {
   ArrowDownRight,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { cn } from '../../../lib/utils'
 
 interface FinanceStatsProps {
   totalIncome: number
@@ -47,7 +48,7 @@ const TrendBadge = ({ value, positive }: { value: number; positive: boolean }) =
   const isUp = positive ? value > 0 : value < 0
   return (
     <div
-      className={`inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] font-bold ${isUp ? 'bg-success/[10%] text-success' : 'bg-error/[10%] text-error'}`}
+      className={`inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] font-bold ${isUp ? 'bg-success-soft text-success-strong' : 'bg-error-soft text-error'}`}
     >
       {isUp ? <ArrowUpRight size={8} /> : <ArrowDownRight size={8} />}
       {Math.abs(value).toFixed(1)}%
@@ -60,8 +61,7 @@ const KPICard = ({
   value,
   icon: Icon,
   monthValue,
-  gradient,
-  on,
+  tone,
   trend,
   profitMargin: pm,
 }: {
@@ -69,8 +69,7 @@ const KPICard = ({
   value: number
   icon: LucideIcon
   monthValue: number
-  gradient: string
-  on: string
+  tone: string
   trend?: number
   profitMargin?: string
 }) => (
@@ -78,11 +77,9 @@ const KPICard = ({
     whileHover={{ scale: 1.01, y: -1 }}
     className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:shadow-md"
   >
-    <div className={`absolute inset-0 opacity-[0.03] ${gradient}`} />
-    <div className={`absolute left-0 right-0 top-0 h-0.5 ${gradient}`} />
     <div className="relative p-3.5">
       <div className="mb-2 flex items-start justify-between">
-        <div className={`flex h-8 w-8 items-center justify-center rounded-xl ${gradient} ${on}`}>
+        <div className={cn('flex h-8 w-8 items-center justify-center rounded-xl', tone)}>
           <Icon size={14} />
         </div>
         {trend !== undefined && <TrendBadge value={trend} positive={title === 'صافي الربح'} />}
@@ -123,8 +120,7 @@ export const FinanceStats = ({
         value={totalIncome}
         icon={TrendingUp}
         monthValue={monthIncome}
-        gradient="bg-gradient-to-r from-success to-success"
-        on="text-on-success"
+        tone="bg-success-soft text-success-strong"
         trend={Math.round(incomeTrend)}
       />
       <KPICard
@@ -132,8 +128,7 @@ export const FinanceStats = ({
         value={totalExpenses}
         icon={TrendingDown}
         monthValue={monthExpenses}
-        gradient="bg-gradient-to-r from-error to-error"
-        on="text-on-error"
+        tone="bg-error-soft text-error"
         trend={Math.round(expenseTrend)}
       />
       <KPICard
@@ -141,16 +136,14 @@ export const FinanceStats = ({
         value={totalFixedExpenses}
         icon={Wallet}
         monthValue={totalFixedExpenses}
-        gradient="bg-gradient-to-r from-warning to-warning"
-        on="text-on-warning"
+        tone="bg-warning-soft text-warning-strong"
       />
       <KPICard
         title="صافي الربح"
         value={netProfit}
         icon={DollarSign}
         monthValue={monthProfit}
-        gradient="bg-gradient-to-r from-primary/80 to-primary"
-        on="text-on-primary"
+        tone="bg-primary-soft text-primary"
         trend={totalIncome ? Math.round((netProfit / totalIncome) * 100) : 0}
         profitMargin={profitMargin}
       />

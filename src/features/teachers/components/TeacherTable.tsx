@@ -1,19 +1,10 @@
-import { memo, useState, useMemo } from 'react'
-import { motion } from 'framer-motion'
-import {
-  Edit,
-  Trash2,
-  GraduationCap,
-  MessageCircle,
-  Bell,
-  Award,
-  ChevronUp,
-  ChevronDown,
-  ArrowUpDown,
-} from 'lucide-react'
+import { memo } from 'react'
+import { Edit, Trash2, GraduationCap, MessageCircle, Bell, Award } from 'lucide-react'
 import type { Teacher } from '../types'
 import { cn } from '../../../lib/utils'
 import { CURRENCY_SYMBOL } from '../../../config/constants'
+import { Table, EmptyState } from '../../../shared/components/ui'
+import type { Column } from '../../../shared/components/ui'
 
 interface TeacherTableProps {
   teachers: Teacher[]
@@ -26,33 +17,30 @@ interface TeacherTableProps {
   studentCounts: Record<string, number>
 }
 
-type SortField = 'name' | 'subject' | 'students' | 'price'
-type SortDir = 'asc' | 'desc'
-
 const subjectColorMap: Record<string, string> = {
-  رياضيات: 'text-primary bg-primary-soft ring-primary-soft',
-  عربي: 'text-success bg-success-soft ring-success-soft',
-  'اللغة العربية': 'text-success bg-success-soft ring-success-soft',
-  علوم: 'text-info bg-info-soft ring-info-soft',
-  إنجليزي: 'text-warning bg-warning-soft ring-warning-soft',
-  'اللغة الانجليزية': 'text-warning bg-warning-soft ring-warning-soft',
-  فيزياء: 'text-accent bg-accent-soft ring-accent-soft',
-  كيمياء: 'text-error bg-error-soft ring-error-soft',
-  لغات: 'text-accent bg-accent-soft ring-accent-soft',
-  'اللغة الفرنسية': 'text-accent bg-accent-soft ring-accent-soft',
-  'اللغة الاسبانية': 'text-info bg-info-soft ring-info-soft',
-  أدبي: 'text-warning bg-warning-soft ring-warning-soft',
-  دراسات: 'text-success bg-success-soft ring-success-soft',
-  قرآن: 'text-primary bg-primary-soft ring-primary-soft',
-  قران: 'text-primary bg-primary-soft ring-primary-soft',
-  شرعية: 'text-success bg-success-soft ring-success-soft',
-  اجتماعيات: 'text-warning bg-warning-soft ring-warning-soft',
+  رياضيات: 'text-primary bg-primary-soft',
+  عربي: 'text-success bg-success-soft',
+  'اللغة العربية': 'text-success bg-success-soft',
+  علوم: 'text-info bg-info-soft',
+  إنجليزي: 'text-warning bg-warning-soft',
+  'اللغة الانجليزية': 'text-warning bg-warning-soft',
+  فيزياء: 'text-accent bg-accent-soft',
+  كيمياء: 'text-error bg-error-soft',
+  لغات: 'text-accent bg-accent-soft',
+  'اللغة الفرنسية': 'text-accent bg-accent-soft',
+  'اللغة الاسبانية': 'text-info bg-info-soft',
+  أدبي: 'text-warning bg-warning-soft',
+  دراسات: 'text-success bg-success-soft',
+  قرآن: 'text-primary bg-primary-soft',
+  قران: 'text-primary bg-primary-soft',
+  شرعية: 'text-success bg-success-soft',
+  اجتماعيات: 'text-warning bg-warning-soft',
 }
 
 const getSubjectStyle = (subject?: string) => {
-  if (!subject) return 'text-muted bg-surface ring-border'
+  if (!subject) return 'text-muted bg-surface'
   const key = Object.keys(subjectColorMap).find((k) => subject.includes(k) || k.includes(subject))
-  return key ? subjectColorMap[key] : 'text-info bg-info-soft ring-info-soft'
+  return key ? subjectColorMap[key] : 'text-info bg-info-soft'
 }
 
 const currencySymbolMap: Record<string, string> = {
@@ -62,6 +50,17 @@ const currencySymbolMap: Record<string, string> = {
 const getCurrencySymbol = (currency?: string) => {
   if (!currency) return CURRENCY_SYMBOL
   return currencySymbolMap[currency.toUpperCase()] || CURRENCY_SYMBOL
+}
+
+const computeStatus = (teacher: Teacher, studentCounts: Record<string, number>) => {
+  const count = studentCounts[teacher.name] || 0
+  if (count > 0)
+    return {
+      label: 'نشطة',
+      dot: 'bg-success',
+      text: 'text-success-strong bg-success-soft',
+    }
+  return { label: 'متوقفة', dot: 'bg-error', text: 'text-error bg-error-soft' }
 }
 
 const Tooltip = ({ label, children }: { label: string; children: React.ReactNode }) => (
@@ -84,275 +83,200 @@ export const TeacherTable = memo(
     selectedId,
     studentCounts,
   }: TeacherTableProps) => {
-    const [sortField, setSortField] = useState<SortField>('name')
-    const [sortDir, setSortDir] = useState<SortDir>('asc')
-
-    const toggleSort = (field: SortField) => {
-      if (sortField === field) {
-        setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))
-      } else {
-        setSortField(field)
-        setSortDir('asc')
-      }
-    }
-
-    const sorted = useMemo(() => {
-      const list = [...teachers]
-      list.sort((a, b) => {
-        let cmp = 0
-        switch (sortField) {
-          case 'name':
-            cmp = a.name.localeCompare(b.name)
-            break
-          case 'subject':
-            cmp = a.subject.localeCompare(b.subject)
-            break
-          case 'students':
-            cmp = (studentCounts[a.name] || 0) - (studentCounts[b.name] || 0)
-            break
-          case 'price':
-            cmp = a.price - b.price
-            break
-        }
-        return sortDir === 'asc' ? cmp : -cmp
-      })
-      return list
-    }, [teachers, sortField, sortDir, studentCounts])
-
-    const SortIcon = ({ field }: { field: SortField }) => {
-      if (sortField !== field) return <ArrowUpDown size={10} className="opacity-30" />
-      return sortDir === 'asc' ? <ChevronUp size={10} /> : <ChevronDown size={10} />
-    }
-
-    const computeStatus = (teacher: Teacher): { label: string; dot: string; text: string } => {
-      const count = studentCounts[teacher.name] || 0
-      if (count > 0)
-        return {
-          label: 'نشطة',
-          dot: 'bg-success',
-          text: 'text-success bg-success-soft ring-success-soft',
-        }
-      return { label: 'متوقفة', dot: 'bg-error', text: 'text-error bg-error-soft ring-error-soft' }
-    }
-
-    const teacherPoints = (teacher: Teacher): number => teacher.points ?? 0
-
-    const thClass =
-      'px-5 py-3 font-bold text-[10px] tracking-wider text-on-primary select-none cursor-pointer transition-colors'
-    const thInnerClass = 'flex items-center gap-1'
+    const columns: Column<Teacher>[] = [
+      {
+        key: 'name',
+        header: 'المعلمة',
+        sortable: true,
+        mobileLabel: 'المعلمة',
+        render: (teacher) => (
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-bold text-on-primary shadow-sm dark:bg-accent dark:text-on-accent">
+              {(teacher.name || '?').charAt(0)}
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-bold leading-tight text-main">
+                {teacher.name || '—'}
+              </p>
+              <p className="mt-0.5 font-mono text-[10px] text-muted">
+                ID: {(teacher.id || '').substring(0, 8)}
+              </p>
+            </div>
+          </div>
+        ),
+      },
+      {
+        key: 'subject',
+        header: 'التخصص',
+        sortable: true,
+        align: 'center',
+        mobileLabel: 'التخصص',
+        render: (teacher) => (
+          <span
+            className={cn(
+              'inline-flex items-center rounded-lg px-2.5 py-1 text-[10px] font-bold',
+              getSubjectStyle(teacher.subject),
+            )}
+          >
+            {teacher.subject}
+          </span>
+        ),
+      },
+      {
+        key: 'points',
+        header: 'النقاط',
+        align: 'center',
+        hideOnMobile: true,
+        render: (teacher) => {
+          const points = teacher.points ?? 0
+          return (
+            <span
+              className={cn(
+                'inline-flex items-center gap-1 text-[11px] font-bold',
+                points > 0 ? 'text-warning-strong' : 'text-muted',
+              )}
+            >
+              <Award size={11} />
+              {points}
+            </span>
+          )
+        },
+      },
+      {
+        key: 'status',
+        header: 'الحالة',
+        align: 'center',
+        mobileLabel: 'الحالة',
+        render: (teacher) => {
+          const status = computeStatus(teacher, studentCounts)
+          return (
+            <span
+              className={cn(
+                'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-bold',
+                status.text,
+              )}
+            >
+              <span className={cn('h-1.5 w-1.5 rounded-full', status.dot)} />
+              {status.label}
+            </span>
+          )
+        },
+      },
+      {
+        key: 'students',
+        header: 'الطلاب',
+        sortable: true,
+        align: 'center',
+        hideOnMobile: true,
+        render: (teacher) => (
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-info-soft text-xs font-bold text-info-strong">
+            {studentCounts[teacher.name] || 0}
+          </span>
+        ),
+      },
+      {
+        key: 'price',
+        header: 'التعريفة',
+        sortable: true,
+        align: 'center',
+        mobileLabel: 'التعريفة',
+        render: (teacher) => (
+          <div className="inline-flex items-center gap-1">
+            <span className="text-sm font-bold text-success-strong">{teacher.price}</span>
+            <span className="text-[9px] text-muted">{getCurrencySymbol(teacher.currency)}</span>
+          </div>
+        ),
+      },
+      {
+        key: 'actions',
+        header: 'إجراءات',
+        align: 'center',
+        hideOnMobile: true,
+        render: (teacher) => (
+          <div className="flex items-center justify-center gap-1">
+            <Tooltip label="تعديل">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onEdit(teacher)
+                }}
+                className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-primary-soft text-primary transition-all hover:bg-primary-light active:scale-95"
+                aria-label="تعديل"
+              >
+                <Edit size={13} />
+              </button>
+            </Tooltip>
+            <Tooltip label="إشعار">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onNotify(teacher)
+                }}
+                className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-warning-soft text-warning-strong transition-all hover:bg-warning-light active:scale-95"
+                aria-label="إرسال إشعار"
+              >
+                <Bell size={13} />
+              </button>
+            </Tooltip>
+            <Tooltip label="محادثة">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onChat(teacher.id)
+                }}
+                className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-info-soft text-info-strong transition-all hover:bg-info-light active:scale-95"
+                aria-label="مراسلة"
+              >
+                <MessageCircle size={13} />
+              </button>
+            </Tooltip>
+            <Tooltip label="حذف">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onDelete(teacher.id)
+                }}
+                className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-error-soft text-error transition-all hover:bg-error-light active:scale-95"
+                aria-label="حذف"
+              >
+                <Trash2 size={13} />
+              </button>
+            </Tooltip>
+          </div>
+        ),
+      },
+    ]
 
     if (teachers.length === 0) {
       return (
-        <div className="py-24 text-center">
-          <GraduationCap size={48} className="mx-auto mb-4 text-muted opacity-40" />
-          <p className="text-xs text-muted">لا توجد بيانات معلمات حالياً</p>
+        <div className="rounded-2xl border border-border bg-card">
+          <EmptyState
+            icon={GraduationCap}
+            title="لا توجد بيانات معلمات حالياً"
+            subtitle="ستظهر المعلمات هنا بعد إضافتها"
+          />
         </div>
       )
     }
 
     return (
       <div className="w-full" dir="rtl">
-        {/* Desktop View */}
-        <div className="hidden overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 md:block">
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse text-start">
-              <thead className="sticky top-0 z-20">
-                <tr className="bg-gradient-to-l from-primary to-primary-deep">
-                  <th className={thClass} onClick={() => toggleSort('name')}>
-                    <div className={thInnerClass}>
-                      <SortIcon field="name" /> المعلمة
-                    </div>
-                  </th>
-                  <th className={cn(thClass, 'text-center')} onClick={() => toggleSort('subject')}>
-                    <div className={cn(thInnerClass, 'justify-center')}>
-                      <SortIcon field="subject" /> التخصص
-                    </div>
-                  </th>
-                  <th className={cn(thClass, 'text-center')}>
-                    <div className={cn(thInnerClass, 'justify-center')}>النقاط</div>
-                  </th>
-                  <th className={cn(thClass, 'text-center')}>
-                    <div className={cn(thInnerClass, 'justify-center')}>الحالة</div>
-                  </th>
-                  <th className={cn(thClass, 'text-center')} onClick={() => toggleSort('students')}>
-                    <div className={cn(thInnerClass, 'justify-center')}>
-                      <SortIcon field="students" /> الطلاب
-                    </div>
-                  </th>
-                  <th className={cn(thClass, 'text-center')} onClick={() => toggleSort('price')}>
-                    <div className={cn(thInnerClass, 'justify-center')}>
-                      <SortIcon field="price" /> التعريفة
-                    </div>
-                  </th>
-                  <th className={cn(thClass, 'text-center')}>
-                    <div className={cn(thInnerClass, 'justify-center')}>إجراءات</div>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {sorted.map((teacher) => {
-                  const isSelected = selectedId === teacher.id
-                  const status = computeStatus(teacher)
-                  const points = teacherPoints(teacher)
-                  const subjectStyle = getSubjectStyle(teacher.subject)
-                  return (
-                    <tr
-                      key={teacher.id}
-                      onClick={() => onSelect(teacher)}
-                      className={cn(
-                        'cursor-pointer transition-colors',
-                        isSelected ? 'bg-primary-soft' : 'hover:bg-hover',
-                      )}
-                    >
-                      <td className="px-5 py-4">
-                        <div className="flex items-center gap-3.5">
-                          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep text-base font-bold text-on-primary shadow-sm ring-2 ring-primary/20 dark:from-accent dark:to-primary-deep dark:text-on-accent">
-                            {(teacher.name || '?').charAt(0)}
-                          </div>
-                          <div className="min-w-0">
-                            <p className="truncate text-[15px] font-bold leading-tight text-main">
-                              {teacher.name || '—'}
-                            </p>
-                            <p className="mt-1.5 font-mono text-[10px] text-muted">
-                              ID: {(teacher.id || '').substring(0, 8)}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-5 py-4 text-center">
-                        <span
-                          className={cn(
-                            'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-bold ring-1',
-                            subjectStyle,
-                          )}
-                        >
-                          {teacher.subject}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4 text-center">
-                        <span
-                          className={cn(
-                            'inline-flex items-center gap-1 text-[11px] font-bold',
-                            points > 0 ? 'text-warning' : 'text-muted',
-                          )}
-                        >
-                          <Award size={11} />
-                          {points}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4 text-center">
-                        <span
-                          className={cn(
-                            'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[9px] font-bold ring-1',
-                            status.text,
-                          )}
-                        >
-                          <span className={cn('h-1.5 w-1.5 rounded-full', status.dot)} />
-                          {status.label}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4 text-center">
-                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-info-soft text-xs font-bold text-info ring-1 ring-info-soft">
-                          {studentCounts[teacher.name] || 0}
-                        </span>
-                      </td>
-                      <td className="px-5 py-4 text-center">
-                        <div className="inline-flex items-center gap-1">
-                          <span className="text-sm font-bold text-success">{teacher.price}</span>
-                          <span className="text-[9px] text-muted">
-                            {getCurrencySymbol(teacher.currency)}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="px-5 py-4">
-                        <div className="flex items-center justify-center gap-1">
-                          <Tooltip label="تعديل">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                onEdit(teacher)
-                              }}
-                              className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-primary text-[10px] font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
-                              aria-label="تعديل"
-                            >
-                              <Edit size={13} />
-                            </button>
-                          </Tooltip>
-                          <Tooltip label="إشعار">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                onNotify(teacher)
-                              }}
-                              className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-warning-soft text-warning transition-all hover:bg-warning-light active:scale-95"
-                              aria-label="إرسال إشعار"
-                            >
-                              <Bell size={13} />
-                            </button>
-                          </Tooltip>
-                          <Tooltip label="محادثة">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                onChat(teacher.id)
-                              }}
-                              className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-info-soft text-info transition-all hover:bg-info-light active:scale-95"
-                              aria-label="مراسلة"
-                            >
-                              <MessageCircle size={13} />
-                            </button>
-                          </Tooltip>
-                          <Tooltip label="حذف">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                onDelete(teacher.id)
-                              }}
-                              className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-error-soft text-error transition-all hover:bg-error-light active:scale-95"
-                              aria-label="حذف"
-                            >
-                              <Trash2 size={13} />
-                            </button>
-                          </Tooltip>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Mobile View */}
-        <div className="space-y-2.5 md:hidden">
-          {sorted.map((teacher) => {
-            const isSelected = selectedId === teacher.id
-            const status = computeStatus(teacher)
-            const points = teacherPoints(teacher)
+        {/* Desktop + mobile — shared DataTable with custom mobile cards (keep action row) */}
+        <Table<Teacher>
+          data={teachers}
+          columns={columns}
+          headerVariant="surface"
+          onRowClick={onSelect}
+          selectedId={selectedId}
+          getId={(t) => t.id}
+          mobileCard={(teacher) => {
+            const status = computeStatus(teacher, studentCounts)
             const subjectStyle = getSubjectStyle(teacher.subject)
             return (
-              <motion.div
-                key={teacher.id}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                onClick={() => onSelect(teacher)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    onSelect(teacher)
-                  }
-                }}
-                className={cn(
-                  'rounded-2xl border border-border bg-card p-3 shadow-elevation-1 transition-all active:scale-[0.98]',
-                  isSelected && 'ring-1 ring-primary/30',
-                )}
-              >
+              <>
                 <div className="mb-2 flex items-center justify-between">
                   <div className="flex min-w-0 flex-1 items-center gap-3">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep text-base font-bold text-on-primary ring-2 ring-primary/20 dark:from-accent dark:to-primary-deep dark:text-on-accent">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-base font-bold text-on-primary dark:bg-accent dark:text-on-accent">
                       {(teacher.name || '?').charAt(0)}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -362,7 +286,7 @@ export const TeacherTable = memo(
                         </h4>
                         <span
                           className={cn(
-                            'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-bold ring-1',
+                            'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-bold',
                             status.text,
                           )}
                         >
@@ -372,21 +296,21 @@ export const TeacherTable = memo(
                       <div className="mt-1 flex items-center gap-2">
                         <span
                           className={cn(
-                            'inline-flex items-center gap-1 rounded px-2 py-0.5 text-[9px] font-bold ring-1',
+                            'inline-flex items-center rounded px-2 py-0.5 text-[9px] font-bold',
                             subjectStyle,
                           )}
                         >
                           {teacher.subject}
                         </span>
-                        <span className="inline-flex items-center gap-0.5 text-[10px] text-warning">
+                        <span className="inline-flex items-center gap-0.5 text-[10px] text-warning-strong">
                           <Award size={9} />
-                          {points}
+                          {teacher.points ?? 0}
                         </span>
                       </div>
                     </div>
                   </div>
                   <div className="ms-2 shrink-0 text-end">
-                    <span className="text-base font-bold text-success">{teacher.price}</span>
+                    <span className="text-base font-bold text-success-strong">{teacher.price}</span>
                     <span className="mt-0.5 block text-[9px] text-muted">
                       {getCurrencySymbol(teacher.currency)} / حصة
                     </span>
@@ -398,7 +322,7 @@ export const TeacherTable = memo(
                       e.stopPropagation()
                       onChat(teacher.id)
                     }}
-                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-info-soft text-[11px] font-bold text-info transition-transform active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-info-soft text-[11px] font-bold text-info-strong transition-transform active:scale-95"
                     aria-label="مراسلة"
                   >
                     <MessageCircle size={13} /> مراسلة
@@ -408,7 +332,7 @@ export const TeacherTable = memo(
                       e.stopPropagation()
                       onNotify(teacher)
                     }}
-                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-warning-soft text-[11px] font-bold text-warning transition-transform active:scale-95"
+                    className="flex h-10 items-center justify-center gap-1 rounded-xl bg-warning-soft text-[11px] font-bold text-warning-strong transition-transform active:scale-95"
                     aria-label="إرسال إشعار"
                   >
                     <Bell size={13} /> إشعار
@@ -434,10 +358,10 @@ export const TeacherTable = memo(
                     <Trash2 size={13} /> حذف
                   </button>
                 </div>
-              </motion.div>
+              </>
             )
-          })}
-        </div>
+          }}
+        />
       </div>
     )
   },

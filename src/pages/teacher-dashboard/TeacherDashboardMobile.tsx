@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+﻿import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Calendar, CalendarDays, ClipboardList, Home, Bell, Loader2, RefreshCw } from 'lucide-react'
@@ -69,7 +69,7 @@ const SectionCard = ({
   <section
     id={id}
     className={cn(
-      'rounded-3xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300',
+      'rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300',
       className,
     )}
   >

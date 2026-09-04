@@ -9,7 +9,7 @@ import {
   BatteryLow,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { Button } from '../../../shared/components/ui'
 
 interface FocusSession {
   id: string

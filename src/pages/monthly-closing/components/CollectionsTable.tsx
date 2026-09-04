@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Wallet } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { CURRENCY_SYMBOL } from '../../../config/constants'
 import { SectionCard, SectionTitle } from './ClosingUI'
 import { cn } from '../../../lib/utils'
 import { api } from '../../../lib/api'
+import { Table } from '../../../shared/components/ui'
+import type { Column } from '../../../shared/components/ui'
 import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
 
 interface StudentInvoice {
@@ -48,6 +50,75 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
     }
   }
 
+  const scoped = useMemo(
+    () => (studentInvoices || []).filter((inv) => inv.date >= startDate && inv.date <= endDate),
+    [studentInvoices, startDate, endDate],
+  )
+
+  const statusToggle = (item: StudentInvoice) => {
+    const isPaid = normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
+    return (
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          handleToggle(item)
+        }}
+        disabled={savingId === item.id}
+        className={cn(
+          'rounded-xl px-3 py-1 text-micro font-bold uppercase transition-all active:scale-95 disabled:opacity-60',
+          isPaid ? 'bg-success text-on-success' : 'border border-error bg-error-light text-error',
+        )}
+      >
+        {isPaid ? 'تم التحصيل' : 'انتظار'}
+      </button>
+    )
+  }
+
+  const columns = useMemo<Column<StudentInvoice>[]>(
+    () => [
+      {
+        key: 'studentName',
+        header: 'الطالب',
+        mobileLabel: 'الطالب',
+        render: (item) => (
+          <div className="min-w-0">
+            <span className="block text-xs font-bold text-main">{item.studentName}</span>
+            <span className="line-clamp-1 text-micro font-medium text-muted">
+              {item.description}
+            </span>
+          </div>
+        ),
+      },
+      {
+        key: 'amount',
+        header: 'المبلغ',
+        align: 'center',
+        mobileLabel: 'المبلغ',
+        render: (item) => (
+          <span className="text-xs font-bold text-success-strong">
+            {item.amount.toLocaleString()} {CURRENCY_SYMBOL}
+          </span>
+        ),
+      },
+      {
+        key: 'date',
+        header: 'التاريخ',
+        align: 'center',
+        mobileLabel: 'التاريخ',
+        render: (item) => <span className="font-mono text-micro text-muted">{item.date}</span>,
+      },
+      {
+        key: 'status',
+        header: 'الحالة',
+        align: 'center',
+        mobileLabel: 'الحالة',
+        render: (item) => statusToggle(item),
+      },
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- statusToggle closes over savingId intentionally
+    [savingId],
+  )
+
   return (
     <SectionCard>
       <div className="border-b border-border p-4">
@@ -58,99 +129,14 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
           {saveError}
         </div>
       )}
-      {/* Desktop table */}
-      <div className="hidden overflow-x-auto md:block">
-        <table className="w-full text-start">
-          <thead className="bg-gradient-to-l from-primary to-primary">
-            <tr>
-              <th className="px-4 py-3 text-micro font-bold uppercase tracking-wider text-on-primary">
-                الطالب
-              </th>
-              <th className="px-4 py-3 text-center text-micro font-bold text-on-primary">المبلغ</th>
-              <th className="px-4 py-3 text-center text-micro font-bold text-on-primary">
-                التاريخ
-              </th>
-              <th className="px-4 py-3 text-center text-micro font-bold text-on-primary">الحالة</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-border">
-            {(studentInvoices || [])
-              .filter((inv) => inv.date >= startDate && inv.date <= endDate)
-              .map((item) => (
-                <tr key={item.id} className="transition-colors hover:bg-surface">
-                  <td className="px-4 py-4">
-                    <span className="mb-0.5 block text-xs font-bold text-main">
-                      {item.studentName}
-                    </span>
-                    <span className="line-clamp-1 text-micro font-medium text-muted">
-                      {item.description}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4 text-center text-xs font-bold text-success">
-                    {item.amount.toLocaleString()} {CURRENCY_SYMBOL}
-                  </td>
-                  <td className="px-4 py-4 text-center font-mono text-micro text-muted">
-                    {item.date}
-                  </td>
-                  <td className="px-4 py-4 text-center">
-                    <button
-                      onClick={() => handleToggle(item)}
-                      disabled={savingId === item.id}
-                      className={cn(
-                        'rounded-xl px-3 py-1 text-micro font-bold uppercase transition-all active:scale-95 disabled:opacity-60',
-                        normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
-                          ? 'bg-success text-on-success'
-                          : 'border border-error bg-error-light text-error',
-                      )}
-                    >
-                      {normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
-                        ? 'تم التحصيل'
-                        : 'انتظار'}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
-      {/* Mobile cards */}
-      <div className="space-y-3 p-4 md:hidden">
-        {(studentInvoices || [])
-          .filter((inv) => inv.date >= startDate && inv.date <= endDate)
-          .map((item) => (
-            <div key={item.id} className="space-y-2 rounded-xl bg-surface p-4">
-              <div className="flex items-start justify-between">
-                <div className="min-w-0 flex-1">
-                  <span className="block truncate text-xs font-bold leading-tight text-main">
-                    {item.studentName}
-                  </span>
-                  <span className="line-clamp-1 text-micro font-medium text-muted">
-                    {item.description}
-                  </span>
-                </div>
-                <span className="me-2 text-xs font-bold text-success">
-                  {item.amount.toLocaleString()} {CURRENCY_SYMBOL}
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-micro text-muted">{item.date}</span>
-                <button
-                  onClick={() => handleToggle(item)}
-                  disabled={savingId === item.id}
-                  className={cn(
-                    'rounded-xl px-3 py-1 text-micro font-bold uppercase transition-all active:scale-95 disabled:opacity-60',
-                    normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
-                      ? 'bg-success text-on-success'
-                      : 'border border-error bg-error-light text-error',
-                  )}
-                >
-                  {normalizeInvoiceStatus(item.status) === INVOICE_STATUS.PAID
-                    ? 'تم التحصيل'
-                    : 'انتظار'}
-                </button>
-              </div>
-            </div>
-          ))}
+      <div className="p-4">
+        <Table<StudentInvoice>
+          data={scoped}
+          columns={columns}
+          headerVariant="surface"
+          getId={(item) => item.id}
+          emptyMessage="لا توجد تحصيلات في هذه الفترة"
+        />
       </div>
     </SectionCard>
   )

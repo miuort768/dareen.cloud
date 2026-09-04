@@ -13,9 +13,7 @@ import { SystemStatusBar } from './SystemStatusBar'
 import { ActivityFeed } from './ActivityFeed'
 import { InsightsPanel } from './InsightsPanel'
 import { QuickActionsGrid } from './QuickActionsGrid'
-import { SectionErrorBoundary } from '../../../../shared/components/ui'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Button } from '@/components/ui/button'
+import { SectionErrorBoundary, Skeleton, ErrorState } from '../../../../shared/components/ui'
 import { cn } from '@/lib/utils'
 
 const containerVariants = {
@@ -82,18 +80,14 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
 
   if (error || !data || !data.pulse || !data.stats) {
     return (
-      <div className="flex min-h-[40vh] items-center justify-center">
-        <div className="max-w-md text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-error-soft">
-            <AlertCircle size={28} className="text-error" />
-          </div>
-          <h2 className="mb-2 text-lg font-bold text-main">تعذر تحميل البيانات</h2>
-          <p className="mb-4 text-sm text-muted">حدث خطأ أثناء تحميل بيانات لوحة القيادة</p>
-          <Button variant="outline" size="sm" onClick={() => refetch()} className="gap-1.5">
-            <RefreshCw size={14} />
-            إعادة المحاولة
-          </Button>
-        </div>
+      <div className="flex min-h-[40vh] items-center justify-center rounded-card" dir="rtl">
+        <ErrorState
+          icon={AlertCircle}
+          title="تعذر تحميل البيانات"
+          message="حدث خطأ أثناء تحميل بيانات لوحة القيادة"
+          onRetry={() => refetch()}
+          retryLabel="إعادة المحاولة"
+        />
       </div>
     )
   }

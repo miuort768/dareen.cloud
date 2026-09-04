@@ -30,6 +30,7 @@ import { cn } from '../lib/utils'
 import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
 import { Skeleton, SkeletonText } from '../shared/components/ui/Skeleton'
+import { PageHeader } from '../shared/components/ui'
 
 interface JobApp {
   id: string
@@ -242,29 +243,25 @@ export const AdminJobs = () => {
         label: 'إجمالي الطلبات',
         value: apps.length,
         icon: Briefcase,
-        color: 'text-primary',
-        bg: 'bg-primary/10',
+        bg: 'bg-primary-soft text-primary',
       },
       {
-        label: 'بانتظار التواصل',
+        label: 'قيد المراجعة',
         value: pendingCount,
         icon: Inbox,
-        color: 'text-warning',
-        bg: 'bg-warning-soft',
+        bg: 'bg-warning-soft text-warning-strong',
       },
       {
         label: 'تم التواصل',
         value: contactedCount,
         icon: CheckCircle2,
-        color: 'text-success',
-        bg: 'bg-success-soft',
+        bg: 'bg-success-soft text-success-strong',
       },
       {
-        label: 'المواد',
+        label: 'المناصب',
         value: uniqueSubjects,
         icon: BookOpen,
-        color: 'text-info',
-        bg: 'bg-info-soft',
+        bg: 'bg-info-soft text-info-strong',
       },
     ],
     [apps, pendingCount, contactedCount, uniqueSubjects],
@@ -291,40 +288,43 @@ export const AdminJobs = () => {
           animate={{ opacity: 1, y: 0 }}
           className="border-b border-border pb-5 pt-6"
         >
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-                <Briefcase size={20} className="text-primary" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-main">طلبات التوظيف</h1>
-                <p className="mt-0.5 text-xs text-muted">إدارة طلبات المتقدمين للوظائف</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center sm:gap-2">
-              <button
-                onClick={() => exportToCsv(filtered)}
-                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.98] sm:h-auto sm:py-2.5"
-              >
-                <Download size={14} />
-                <span>تصدير CSV</span>
-              </button>
-              <button
-                onClick={handleExportPdf}
-                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-accent px-4 text-xs font-bold text-on-accent transition-colors duration-fast hover:bg-accent-hover active:scale-[0.98] sm:h-auto sm:py-2.5"
-              >
-                <FileText size={14} />
-                <span>تصدير PDF</span>
-              </button>
+          <PageHeader
+            title="طلبات التوظيف"
+            subtitle="إدارة طلبات المتقدمين للوظائف"
+            icon={<Briefcase size={22} />}
+            meta={
+              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                {apps.length} طلب
+              </span>
+            }
+            actions={
+              <>
+                <button
+                  onClick={() => exportToCsv(filtered)}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-200 hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                >
+                  <Download size={14} />
+                  <span>تصدير CSV</span>
+                </button>
+                <button
+                  onClick={handleExportPdf}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-200 hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                >
+                  <FileText size={14} />
+                  <span>تصدير PDF</span>
+                </button>
+              </>
+            }
+            action={
               <button
                 onClick={handleDeleteAll}
-                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-bold text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-[0.98] sm:h-auto sm:py-2.5"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-error px-4 text-sm font-semibold text-on-error shadow-sm transition-all duration-200 hover:bg-error-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98]"
               >
                 <Trash2 size={14} />
                 <span>حذف الكل</span>
               </button>
-            </div>
-          </div>
+            }
+          />
         </motion.div>
 
         <motion.div
@@ -342,13 +342,13 @@ export const AdminJobs = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 + i * 0.04 }}
                   whileHover={{ y: -2 }}
-                  className="rounded-xl border border-border bg-card p-4 transition-shadow duration-normal hover:shadow-elevation-1"
+                  className="rounded-2xl border border-border bg-card p-4 shadow-sm transition-shadow duration-normal hover:shadow-elevation-1"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div
                       className={cn('flex h-9 w-9 items-center justify-center rounded-lg', kpi.bg)}
                     >
-                      <Icon size={16} className={kpi.color} />
+                      <Icon size={16} />
                     </div>
                   </div>
                   <p className="text-2xl font-bold text-main">{kpi.value}</p>

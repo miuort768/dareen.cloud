@@ -6,7 +6,18 @@ export interface StatCardProps {
   title: string
   value: string | number
   icon?: React.ComponentType<{ size?: number; className?: string }>
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'error' | 'info'
+  variant?:
+    | 'default'
+    | 'primary'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'info'
+    | 'soft-primary'
+    | 'soft-success'
+    | 'soft-warning'
+    | 'soft-error'
+    | 'soft-info'
   trend?: { value: number; isUp: boolean; label?: string }
   unit?: string
   badge?: string
@@ -69,7 +80,49 @@ const styles: Record<
     trend: 'text-on-info opacity-80',
     skeleton: 'bg-white/20',
   },
+  'soft-primary': {
+    card: 'bg-primary-soft text-main',
+    icon: 'bg-card text-primary shadow-sm',
+    value: 'text-main',
+    title: 'text-muted',
+    trend: '',
+    skeleton: 'bg-card',
+  },
+  'soft-success': {
+    card: 'bg-success-soft text-main',
+    icon: 'bg-card text-success-strong shadow-sm',
+    value: 'text-main',
+    title: 'text-muted',
+    trend: '',
+    skeleton: 'bg-card',
+  },
+  'soft-warning': {
+    card: 'bg-warning-soft text-main',
+    icon: 'bg-card text-warning-strong shadow-sm',
+    value: 'text-main',
+    title: 'text-muted',
+    trend: '',
+    skeleton: 'bg-card',
+  },
+  'soft-error': {
+    card: 'bg-error-soft text-main',
+    icon: 'bg-card text-error-strong shadow-sm',
+    value: 'text-main',
+    title: 'text-muted',
+    trend: '',
+    skeleton: 'bg-card',
+  },
+  'soft-info': {
+    card: 'bg-info-soft text-main',
+    icon: 'bg-card text-info-strong shadow-sm',
+    value: 'text-main',
+    title: 'text-muted',
+    trend: '',
+    skeleton: 'bg-card',
+  },
 }
+
+const isSoftVariant = (v: StatVariant) => v.startsWith('soft-') || v === 'default'
 
 export const StatCard = ({
   title,
@@ -84,6 +137,7 @@ export const StatCard = ({
   className,
 }: StatCardProps) => {
   const s = styles[variant]
+  const soft = isSoftVariant(variant)
 
   return (
     <div
@@ -140,7 +194,12 @@ export const StatCard = ({
           </div>
 
           {trend && (
-            <div className={cn('mt-2 flex items-center gap-1 text-xs font-semibold', s.trend)}>
+            <div
+              className={cn(
+                'mt-2 flex items-center gap-1 text-xs font-semibold',
+                soft ? (trend.isUp ? 'text-success-strong' : 'text-error-strong') : s.trend,
+              )}
+            >
               <span>{trend.isUp ? <TrendingUp size={12} /> : <TrendingDown size={12} />}</span>
               <span>{trend.value}%</span>
               {trend.label && <span className="opacity-60">{trend.label}</span>}

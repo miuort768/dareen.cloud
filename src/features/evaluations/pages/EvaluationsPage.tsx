@@ -12,6 +12,7 @@ import { EvaluationFormModal } from '../components/EvaluationFormModal'
 import type { Student, Evaluation } from '../../../types'
 import { cn } from '../../../lib/utils'
 import { ratingValueOf } from '../types/constants'
+import { ErrorState, EmptyState } from '../../../shared/components/ui'
 
 export const Evaluations = () => {
   useEffect(() => {
@@ -248,15 +249,13 @@ export const Evaluations = () => {
           data-cards
         >
           {isError ? (
-            <div className="col-span-full rounded-2xl border border-dashed border-error-soft bg-error-soft py-16 text-center">
-              <p className="text-sm font-bold text-main">تعذر تحميل التقييمات</p>
-              <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
-              <button
-                onClick={() => refetch()}
-                className="mx-auto mt-4 block rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-              >
-                إعادة المحاولة
-              </button>
+            <div className="rounded-card border border-border bg-card">
+              <ErrorState
+                title="تعذر تحميل التقييمات"
+                message="تحقق من الاتصال ثم أعد المحاولة"
+                onRetry={() => refetch()}
+                retryLabel="إعادة المحاولة"
+              />
             </div>
           ) : (
             <>
@@ -282,16 +281,12 @@ export const Evaluations = () => {
                   </motion.div>
                 ))}
                 {sortedStudents.length === 0 && (
-                  <div className="col-span-full flex flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-surface py-16 text-center">
-                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft dark:bg-primary/10">
-                      <User size={20} className="text-primary" />
-                    </div>
-                    <h3 className="mb-1 text-xs font-bold text-main">
-                      {searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون'}
-                    </h3>
-                    <p className="text-micro text-muted">
-                      {searchTerm ? 'جرب كلمات مختلفة' : 'سيظهر الطلاب هنا بعد التسجيل'}
-                    </p>
+                  <div className="col-span-full rounded-card border border-border bg-card">
+                    <EmptyState
+                      icon={User}
+                      title={searchTerm ? 'لا توجد نتائج للبحث' : 'لا يوجد طلاب مسجلون'}
+                      subtitle={searchTerm ? 'جرب كلمات مختلفة' : 'سيظهر الطلاب هنا بعد التسجيل'}
+                    />
                   </div>
                 )}
               </div>

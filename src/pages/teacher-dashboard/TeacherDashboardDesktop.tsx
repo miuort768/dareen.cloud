@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Calendar } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { motion } from 'framer-motion'
@@ -62,7 +62,7 @@ const SectionCard = ({
     {...fadeUp(delay)}
     id={id}
     className={cn(
-      'rounded-3xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300',
+      'rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300',
       className,
     )}
   >
@@ -119,7 +119,7 @@ export const TeacherDashboardDesktop = ({
           {nextSession ? (
             <NextSessionHero timeline={timeline} />
           ) : (
-            <div className="flex h-full min-h-[150px] items-center justify-center rounded-3xl border border-border bg-card p-5 shadow-elevation-1">
+            <div className="flex h-full min-h-[150px] items-center justify-center rounded-card border border-border bg-card p-5 shadow-elevation-1">
               <EmptyState
                 icon={Calendar}
                 title="لا توجد حصة قادمة اليوم"

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+﻿import { useState, useEffect, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import {
   Search,
@@ -22,7 +22,8 @@ import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
 import type { Lead, LeadStatus, LeadPriority } from '../features/crm/types'
 import { ErrorBanner } from '../shared/components/ui/ErrorState'
-import { PrimaryBtn, statusColors } from './leads/components/LeadsUI'
+import { PageHeader } from '../shared/components/ui'
+import { statusColors } from './leads/components/LeadsUI'
 import { LeadTable } from './leads/components/LeadTable'
 import { LeadCards } from './leads/components/LeadCards'
 import { LeadsSkeleton } from './leads/components/LeadsSkeleton'
@@ -318,9 +319,13 @@ const AddLeadModalInline = ({
           />
         </div>
         <div className="flex gap-3 pt-1">
-          <PrimaryBtn type="submit" disabled={addMutation.isPending} className="flex-1 py-3">
+          <button
+            type="submit"
+            disabled={addMutation.isPending}
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-bold text-on-primary shadow-sm transition-all duration-200 hover:bg-primary-hover active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          >
             {addMutation.isPending ? 'جاري الحفظ...' : 'إضافة العميل'}
-          </PrimaryBtn>
+          </button>
           <button
             type="button"
             onClick={onClose}
@@ -562,28 +567,26 @@ export const Leads = () => {
           <div className="mt-3">{lostBanner}</div>
         </div>
 
-        {/* Desktop header */}
+        {/* Desktop header — unified PageHeader pattern */}
         <div className="hidden pb-2 pt-4 md:block">
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4 }}
-            className="flex items-center justify-between"
           >
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary shadow-sm shadow-primary/20">
-                <Users size={20} />
-              </div>
-              <div>
-                <h1 className="font-outfit text-lg font-black text-main md:text-xl">
-                  العملاء المحتملون
-                </h1>
-                <p className="text-[11px] text-muted">إدارة طلبات التسجيل والعملاء المتوقعين</p>
-              </div>
-            </div>
-            <PrimaryBtn onClick={() => setIsAddModalOpen(true)} className="h-11 px-5 text-xs">
-              <Plus size={16} /> عميل جديد
-            </PrimaryBtn>
+            <PageHeader
+              title="العملاء المحتملون"
+              subtitle="إدارة طلبات التسجيل والعملاء المتوقعين"
+              icon={<Users size={22} />}
+              action={
+                <button
+                  onClick={() => setIsAddModalOpen(true)}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-sm transition-all duration-200 hover:bg-primary-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                >
+                  <Plus size={16} /> عميل جديد
+                </button>
+              }
+            />
           </motion.div>
 
           <motion.div
@@ -604,9 +607,8 @@ export const Leads = () => {
               sub: `${activeCount} نشط`,
               icon: Users,
               card: 'border-border bg-card',
-              chip: 'bg-primary-soft',
-              iconColor: 'text-primary',
-              valueColor: 'text-primary',
+              chip: 'bg-primary-soft text-primary',
+              valueColor: 'text-main',
               delay: 0.15,
             },
             {
@@ -615,9 +617,8 @@ export const Leads = () => {
               sub: 'هذا الشهر',
               icon: Activity,
               card: 'border-border bg-card',
-              chip: 'bg-info-soft',
-              iconColor: 'text-info',
-              valueColor: 'text-info',
+              chip: 'bg-info-soft text-info-strong',
+              valueColor: 'text-main',
               accent: true,
               delay: 0.2,
             },
@@ -626,10 +627,9 @@ export const Leads = () => {
               value: stats?.converted || 0,
               sub: 'إلى مشتركين',
               icon: Phone,
-              card: 'border-success-soft bg-success-soft',
-              chip: 'bg-white/50 dark:bg-white/10',
-              iconColor: 'text-success',
-              valueColor: 'text-success',
+              card: 'border-border bg-card',
+              chip: 'bg-success-soft text-success-strong',
+              valueColor: 'text-main',
               delay: 0.25,
             },
             {
@@ -637,10 +637,9 @@ export const Leads = () => {
               value: `${(stats?.conversionRate ?? 0).toFixed(1)}%`,
               sub: 'من إجمالي العملاء',
               icon: BarChart3,
-              card: 'border-warning-soft bg-warning-soft',
-              chip: 'bg-white/50 dark:bg-white/10',
-              iconColor: 'text-warning',
-              valueColor: 'text-warning',
+              card: 'border-border bg-card',
+              chip: 'bg-warning-soft text-warning-strong',
+              valueColor: 'text-main',
               delay: 0.3,
             },
           ].map((stat, i) => (
@@ -655,20 +654,20 @@ export const Leads = () => {
               )}
             >
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-bold text-main">{stat.label}</span>
+                <span className="text-xs font-bold text-muted">{stat.label}</span>
                 <div
                   className={cn('flex h-8 w-8 items-center justify-center rounded-xl', stat.chip)}
                 >
-                  <stat.icon size={14} className={stat.iconColor} />
+                  <stat.icon size={14} />
                 </div>
               </div>
-              <div className={cn('font-outfit text-2xl font-black tabular-nums', stat.valueColor)}>
+              <div className={cn('text-2xl font-black tabular-nums', stat.valueColor)}>
                 {stat.value}
               </div>
               <div
                 className={cn(
                   'mt-1 flex items-center gap-1 text-[10px] font-medium',
-                  stat.accent ? 'text-success' : 'text-muted',
+                  stat.accent ? 'text-success-strong' : 'text-muted',
                 )}
               >
                 {stat.accent && <span>↗</span>}

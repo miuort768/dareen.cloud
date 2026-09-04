@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   Radio,
@@ -24,7 +24,7 @@ import { useCurrentUser } from '../../../context/AppContext'
 import { updateLiveSession } from '../../../services/liveSessionService'
 import { cn } from '@/lib/utils'
 import { confirm } from '../../../lib/confirmDialog'
-import { Button } from '@/components/ui/button'
+import { Button } from '../../../shared/components/ui'
 import { StartLiveSessionDialog } from './StartLiveSessionDialog'
 import type { LiveSession } from '../../../types'
 

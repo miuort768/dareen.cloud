@@ -12,6 +12,7 @@ import type { BlogPost } from './admin-blog/types'
 import { BookMarked, Plus, FileText, Eye, Star, Trash2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '../lib/utils'
+import { PageHeader } from '../shared/components/ui'
 
 const formatViews = (n: number) => {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, '')}M`
@@ -242,33 +243,25 @@ export const AdminBlog = () => {
         label: 'إجمالي المقالات',
         value: posts.length,
         icon: BookMarked,
-        gradient: 'from-primary/20 to-primary/5',
-        iconBg: 'bg-primary/10 text-primary',
-        accent: 'bg-primary',
+        iconBg: 'bg-primary-soft text-primary',
       },
       {
         label: 'المميزة',
         value: posts.filter((p) => p.isFeatured).length,
         icon: Star,
-        gradient: 'from-warning-soft to-transparent',
-        iconBg: 'bg-warning-soft text-warning',
-        accent: 'bg-warning',
+        iconBg: 'bg-warning-soft text-warning-strong',
       },
       {
         label: 'إجمالي المشاهدات',
         value: formatViews(posts.reduce((s, p) => s + (p.views || 0), 0)),
         icon: Eye,
-        gradient: 'from-success-soft to-transparent',
-        iconBg: 'bg-success-soft text-success',
-        accent: 'bg-success',
+        iconBg: 'bg-success-soft text-success-strong',
       },
       {
         label: 'فوق مليون مشاهدة',
         value: posts.filter((p) => (p.views || 0) >= 1_000_000).length,
         icon: FileText,
-        gradient: 'from-info-soft to-transparent',
-        iconBg: 'bg-info-soft text-info',
-        accent: 'bg-info',
+        iconBg: 'bg-info-soft text-info-strong',
       },
     ],
     [posts],
@@ -292,48 +285,23 @@ export const AdminBlog = () => {
       dir="rtl"
     >
       <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
-        {/* Hero — internally divided: identity | stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
-        >
-          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-          <div className="bg-accent/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
-
-          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
-                <BookMarked size={22} className="text-on-primary" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-xl font-black leading-tight text-main">المقالات</h1>
-                  <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
-                    المدونة
-                  </span>
-                </div>
-                <p className="mt-0.5 text-xs text-muted">إدارة المقالات والدروس التعليمية</p>
-              </div>
-            </div>
-
-            <div className="hidden h-12 w-px bg-border lg:block" />
-
-            <div className="grid flex-1 grid-cols-2 gap-2">
-              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
-                <p className="text-lg font-black tabular-nums leading-none text-primary">
-                  {posts.length}
-                </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">المقالات</p>
-              </div>
-              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
-                <p className="text-lg font-black tabular-nums leading-none text-success">
-                  {formatViews(posts.reduce((s, p) => s + (p.views || 0), 0))}
-                </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">المشاهدات</p>
-              </div>
-            </div>
-          </div>
+        {/* Header — unified PageHeader pattern */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <PageHeader
+            title="المقالات"
+            subtitle="إدارة المقالات والدروس التعليمية"
+            icon={<BookMarked size={22} />}
+            meta={
+              <>
+                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                  {posts.length} مقال
+                </span>
+                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                  {formatViews(posts.reduce((s, p) => s + (p.views || 0), 0))} مشاهدة
+                </span>
+              </>
+            }
+          />
         </motion.div>
 
         <motion.div
@@ -351,14 +319,8 @@ export const AdminBlog = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className={cn(
-                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
-                    kpi.gradient,
-                  )}
+                  className="rounded-2xl border border-border bg-card p-4 shadow-sm transition-shadow hover:shadow-elevation-2"
                 >
-                  <div className="absolute inset-x-0 top-0 h-0.5">
-                    <div className={cn('h-full rounded-full', kpi.accent)} />
-                  </div>
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-lg p-2', kpi.iconBg)}>
                       <Icon size={16} />

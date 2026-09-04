@@ -1,6 +1,6 @@
-import { Share2, FileDown, CheckCircle2, Star, Calendar, X, Award, ShieldCheck } from 'lucide-react'
+﻿import { Share2, FileDown, CheckCircle2, Star, Calendar, X, Award, ShieldCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { Button } from '../../../shared/components/ui'
 import { useAcademyName } from '../../../context/AppContext'
 
 interface MonthlyReportPreviewProps {

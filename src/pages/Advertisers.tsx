@@ -8,7 +8,7 @@ import {
   CheckCircle2,
   AlertTriangle,
 } from 'lucide-react'
-import { Image } from '../shared/components/ui'
+import { Image, PageHeader } from '../shared/components/ui'
 import { useAcademyName } from '../context/AppContext'
 import { useSettingsStore } from '../store/settingsStore'
 import {
@@ -161,34 +161,22 @@ export const Advertisers = () => {
     >
       <div className="mx-auto max-w-page space-y-4 px-2.5 pt-3 sm:px-4 md:px-6 md:pt-8">
         {/* Header */}
-        <div className="relative overflow-hidden rounded-2xl border border-divider bg-card p-5 shadow-elevation-1 md:p-6">
-          <div
-            className="pointer-events-none absolute -end-16 -top-16 h-40 w-40 rounded-full bg-primary-soft blur-3xl"
-            aria-hidden="true"
-          />
-          <div className="relative flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-on-primary">
-                <Megaphone size={22} />
-              </div>
-              <div>
-                <h1 className="text-lg font-black text-main md:text-xl">المعلنون</h1>
-                <p className="text-[11px] font-bold text-muted">
-                  إدارة المساحات الإعلانية في صفحة المكتبة — الصق رابط الصورة فقط وستظهر مباشرة
-                </p>
-              </div>
-            </div>
+        <PageHeader
+          title="المعلنون"
+          subtitle="إدارة المساحات الإعلانية في صفحة المكتبة — الصق رابط الصورة فقط وستظهر مباشرة"
+          icon={<Megaphone size={22} />}
+          action={
             <button
               type="button"
               onClick={handleSave}
               disabled={saveState === 'saving'}
               className={cn(
-                'inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs font-black transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+                'inline-flex h-10 items-center gap-2 rounded-lg px-5 text-sm font-semibold shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97]',
                 saveState === 'saved'
                   ? 'bg-success text-on-success'
                   : saveState === 'error'
                     ? 'bg-error text-on-error'
-                    : 'bg-primary text-on-primary hover:bg-primary-hover',
+                    : 'bg-primary text-on-primary hover:bg-primary-hover hover:shadow-md',
               )}
             >
               {saveState === 'saved' ? (
@@ -205,8 +193,8 @@ export const Advertisers = () => {
                 </>
               )}
             </button>
-          </div>
-        </div>
+          }
+        />
 
         {/* Slots */}
         <div className="space-y-4">

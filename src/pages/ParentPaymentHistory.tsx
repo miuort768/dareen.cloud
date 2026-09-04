@@ -1,11 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
   Search,
   CheckCircle,
   Clock,
   AlertCircle,
-  FileText,
   ArrowLeft,
   Wallet,
   Users,
@@ -14,7 +13,8 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
 import { useShowNotification, useIsLoading } from '../context/AppContext'
-import { Skeleton } from '../shared/components/ui'
+import { Skeleton, PageHeader, Table } from '../shared/components/ui'
+import type { Column } from '../shared/components/ui'
 import { cn } from '../lib/utils'
 import { CURRENCY_SYMBOL } from '../config/constants'
 import { INVOICE_STATUS, normalizeInvoiceStatus, type InvoiceStatus } from '../types/invoice'
@@ -191,6 +191,88 @@ export const ParentPaymentHistory = () => {
   const isEmpty = invoices.length === 0
   const noResults = filteredInvoices.length === 0 && !isEmpty
 
+  const columns = useMemo<Column<StudentInvoiceData>[]>(
+    () => [
+      {
+        key: 'studentName',
+        header: 'الطالب',
+        mobileLabel: 'الطالب',
+        render: (inv) => (
+          <span className="flex items-center gap-1.5 text-xs font-bold text-main">
+            <Users size={11} className="shrink-0 text-muted" />
+            {inv.studentName}
+          </span>
+        ),
+      },
+      {
+        key: 'description',
+        header: 'الوصف',
+        mobileLabel: 'الوصف',
+        render: (inv) => <span className="text-xs font-bold text-main">{inv.description}</span>,
+      },
+      {
+        key: 'amount',
+        header: 'المبلغ',
+        align: 'center',
+        mobileLabel: 'المبلغ',
+        render: (inv) => (
+          <span className="font-mono text-xs font-bold tabular-nums text-main">
+            {(Number(inv.amount) || 0).toLocaleString()}{' '}
+            <span className="text-[10px] text-muted">{CURRENCY_SYMBOL}</span>
+          </span>
+        ),
+      },
+      {
+        key: 'date',
+        header: 'التاريخ',
+        align: 'center',
+        hideOnMobile: true,
+        render: (inv) => <span className="text-[11px] text-muted">{inv.date}</span>,
+      },
+      {
+        key: 'status',
+        header: 'الحالة',
+        align: 'center',
+        mobileLabel: 'الحالة',
+        render: (inv) => {
+          const status = statusConfig[normalizeInvoiceStatus(inv.status)]
+          const StatusIcon = status.icon
+          return (
+            <span
+              className={cn(
+                'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-bold',
+                status.bgCls,
+                status.textCls,
+              )}
+            >
+              <StatusIcon size={10} />
+              {status.label}
+            </span>
+          )
+        },
+      },
+      {
+        key: 'dueDate',
+        header: 'الاستحقاق',
+        align: 'center',
+        mobileLabel: 'الاستحقاق',
+        render: (inv) => (
+          <span
+            className={cn(
+              'text-[11px]',
+              normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.OVERDUE
+                ? 'font-bold text-error'
+                : 'text-muted',
+            )}
+          >
+            {inv.dueDate}
+          </span>
+        ),
+      },
+    ],
+    [],
+  )
+
   if (authLoading || loading) {
     return (
       <div
@@ -238,77 +320,66 @@ export const ParentPaymentHistory = () => {
       dir="rtl"
     >
       <div className="mx-auto max-w-page space-y-4 px-2.5 pt-4 sm:px-4">
-        {/* Hero — internally divided: identity | total | status breakdown */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm"
-        >
-          <div className="bg-success/10 pointer-events-none absolute -end-16 -top-20 h-48 w-48 rounded-full blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-16 -start-16 h-40 w-40 rounded-full bg-primary/10 blur-3xl" />
-
-          <div className="relative z-10">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
-                  <Wallet size={20} className="text-on-primary" />
-                </div>
-                <div>
-                  <h1 className="text-lg font-black leading-tight text-main">سجل الدفعات</h1>
-                  <p className="mt-0.5 text-[11px] font-bold text-muted">
-                    متابعة فواتير ومستحقات أبنائك
-                  </p>
-                </div>
-              </div>
+        {/* Header — unified PageHeader pattern */}
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+          <PageHeader
+            title="سجل الدفعات"
+            subtitle="متابعة فواتير ومستحقات أبنائك"
+            icon={<Wallet size={22} />}
+            action={
               <button
                 onClick={() => navigate(-1)}
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface text-muted transition-all hover:bg-hover hover:text-main"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-card text-muted transition-all hover:bg-hover hover:text-main"
                 aria-label="رجوع"
               >
                 <ArrowLeft size={15} />
               </button>
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-2 lg:grid-cols-4">
-              <div className="rounded-xl border border-primary-soft bg-primary-soft px-3 py-2.5 text-center">
-                <p className="text-base font-black tabular-nums leading-none text-primary">
-                  {stats.total.toLocaleString()}
-                  <span className="ms-1 text-[10px] font-bold text-muted">{primaryCurrency}</span>
-                </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">إجمالي الفواتير</p>
-              </div>
-              {statusCells.map((cell) => {
-                const Icon = cell.icon
-                return (
-                  <div
-                    key={cell.title}
-                    className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center"
-                  >
-                    <p
-                      className={cn(
-                        'flex items-center justify-center gap-1 text-base font-black tabular-nums leading-none',
-                        cell.text,
-                      )}
-                    >
-                      <Icon size={12} />
-                      {cell.value.toLocaleString()}
-                    </p>
-                    <p className="mt-1 text-[10px] font-bold text-muted">
-                      {cell.title} · {cell.count}
-                    </p>
-                  </div>
-                )
-              })}
-            </div>
-
-            {mixedCount > 0 && (
-              <p className="mt-3 flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning">
-                <AlertCircle size={13} className="shrink-0" />
-                {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
-              </p>
-            )}
-          </div>
+            }
+            meta={
+              <span className="inline-flex items-center rounded-lg border border-primary-soft bg-primary-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-primary">
+                الإجمالي: {stats.total.toLocaleString()} {primaryCurrency}
+              </span>
+            }
+          />
         </motion.div>
+
+        {/* Status breakdown — inline chips */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="grid grid-cols-3 gap-2"
+        >
+          {statusCells.map((cell) => {
+            const Icon = cell.icon
+            return (
+              <div
+                key={cell.title}
+                className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center"
+              >
+                <p
+                  className={cn(
+                    'flex items-center justify-center gap-1 text-base font-black tabular-nums leading-none',
+                    cell.text,
+                  )}
+                >
+                  <Icon size={12} />
+                  {cell.value.toLocaleString()}
+                </p>
+                <p className="mt-1 text-[10px] font-bold text-muted">
+                  {cell.title} · {cell.count}
+                </p>
+              </div>
+            )
+          })}
+        </motion.div>
+
+        {mixedCount > 0 && (
+          <p className="flex items-center gap-1.5 rounded-xl bg-warning-soft px-3 py-2 text-[11px] font-bold text-warning-strong">
+            <AlertCircle size={13} className="shrink-0" />
+            {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
+          </p>
+        )}
 
         {/* Filters */}
         <motion.div
@@ -380,182 +451,20 @@ export const ParentPaymentHistory = () => {
           </div>
         </motion.div>
 
-        {/* Desktop Table */}
+        {/* Data table — shared DataTable (desktop table + mobile cards) */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="hidden overflow-hidden rounded-2xl border border-border bg-card shadow-sm md:block"
         >
-          <table className="w-full border-collapse text-start">
-            <thead>
-              <tr className="border-b border-divider bg-surface">
-                {['الطالب', 'الوصف', 'المبلغ', 'التاريخ', 'الحالة', 'تاريخ الاستحقاق'].map(
-                  (h, idx) => (
-                    <th
-                      key={h}
-                      className={cn(
-                        'px-4 py-3 text-[11px] font-bold text-muted',
-                        idx < 2 ? 'text-start' : 'text-center',
-                      )}
-                    >
-                      {h}
-                    </th>
-                  ),
-                )}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-divider">
-              <AnimatePresence>
-                {filteredInvoices.length > 0 ? (
-                  filteredInvoices.map((inv, i) => {
-                    const status = statusConfig[normalizeInvoiceStatus(inv.status)]
-                    const StatusIcon = status.icon
-                    return (
-                      <motion.tr
-                        key={inv.id}
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -6 }}
-                        transition={{ delay: i * 0.03 }}
-                        className="transition-colors hover:bg-surface"
-                      >
-                        <td className="px-4 py-3">
-                          <span className="flex items-center gap-1.5 text-xs font-bold text-main">
-                            <Users size={11} className="shrink-0 text-muted" />
-                            {inv.studentName}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3">
-                          <span className="text-xs font-bold text-main">{inv.description}</span>
-                        </td>
-                        <td className="px-4 py-3 text-center font-mono text-xs font-bold tabular-nums text-main">
-                          {(Number(inv.amount) || 0).toLocaleString()}{' '}
-                          <span className="text-[10px] text-muted">{CURRENCY_SYMBOL}</span>
-                        </td>
-                        <td className="px-4 py-3 text-center text-[11px] text-muted">{inv.date}</td>
-                        <td className="px-4 py-3 text-center">
-                          <span
-                            className={cn(
-                              'inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[10px] font-bold',
-                              status.bgCls,
-                              status.textCls,
-                            )}
-                          >
-                            <StatusIcon size={10} />
-                            {status.label}
-                          </span>
-                        </td>
-                        <td
-                          className={cn(
-                            'px-4 py-3 text-center text-[11px]',
-                            normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.OVERDUE
-                              ? 'font-bold text-error'
-                              : 'text-muted',
-                          )}
-                        >
-                          {inv.dueDate}
-                        </td>
-                      </motion.tr>
-                    )
-                  })
-                ) : (
-                  <tr>
-                    <td colSpan={6} className="py-16 text-center">
-                      <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary">
-                        <FileText size={18} />
-                      </div>
-                      <p className="text-xs font-bold text-muted">
-                        {noResults ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
-                      </p>
-                    </td>
-                  </tr>
-                )}
-              </AnimatePresence>
-            </tbody>
-          </table>
+          <Table<StudentInvoiceData>
+            data={filteredInvoices}
+            columns={columns}
+            headerVariant="surface"
+            getId={(inv) => inv.id}
+            emptyMessage={noResults ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
+          />
         </motion.div>
-
-        {/* Mobile Cards */}
-        <div className="space-y-2.5 md:hidden">
-          <AnimatePresence>
-            {filteredInvoices.length > 0 ? (
-              filteredInvoices.map((inv, i) => {
-                const status = statusConfig[normalizeInvoiceStatus(inv.status)]
-                const StatusIcon = status.icon
-                return (
-                  <motion.div
-                    key={inv.id}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ delay: i * 0.04 }}
-                    className="rounded-2xl border border-border bg-card p-3.5 shadow-sm"
-                  >
-                    <div className="mb-2.5 flex items-center justify-between gap-2">
-                      <div className="flex min-w-0 flex-1 items-center gap-2">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-                          <Wallet size={12} className="text-primary" />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate text-xs font-bold text-main">{inv.description}</p>
-                          <p className="flex items-center gap-1 text-[10px] text-muted">
-                            <Users size={9} />
-                            {inv.studentName}
-                          </p>
-                        </div>
-                      </div>
-                      <span
-                        className={cn(
-                          'inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold',
-                          status.bgCls,
-                          status.textCls,
-                        )}
-                      >
-                        <StatusIcon size={9} />
-                        {status.label}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between border-t border-divider pt-2.5">
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <p className="mb-0.5 text-[9px] font-bold text-muted">المبلغ</p>
-                          <span className="font-mono text-xs font-bold tabular-nums text-main">
-                            {(Number(inv.amount) || 0).toLocaleString()}{' '}
-                            <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span>
-                          </span>
-                        </div>
-                        <div className="h-6 w-px bg-divider" />
-                        <div>
-                          <p className="mb-0.5 text-[9px] font-bold text-muted">الاستحقاق</p>
-                          <span
-                            className={cn(
-                              'text-[10px]',
-                              normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.OVERDUE
-                                ? 'font-bold text-error'
-                                : 'text-muted',
-                            )}
-                          >
-                            {inv.dueDate}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )
-              })
-            ) : (
-              <div className="rounded-2xl border border-dashed border-border bg-card py-16 text-center">
-                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-primary">
-                  <FileText size={18} />
-                </div>
-                <p className="text-xs font-bold text-muted">
-                  {noResults ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
-                </p>
-              </div>
-            )}
-          </AnimatePresence>
-        </div>
       </div>
     </div>
   )

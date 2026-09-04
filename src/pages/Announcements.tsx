@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Megaphone, Plus, Bell, Calendar, EyeOff, Trash2, AlertTriangle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { EmptyState, SkeletonCard } from '../shared/components/ui'
+import { EmptyState, SkeletonCard, PageHeader, ErrorState } from '../shared/components/ui'
 import { api, safeArray } from '../lib/api'
 import { useShowNotification, useAcademyName, useCurrentUser } from '../context/AppContext'
 import { confirm } from '../lib/confirmDialog'
@@ -144,33 +144,25 @@ export const Announcements = () => {
         label: 'إجمالي الإعلانات',
         value: announcements.length,
         icon: Megaphone,
-        gradient: 'from-primary/20 to-primary/5',
-        iconBg: 'bg-primary/10 text-primary',
-        accent: 'bg-primary',
+        iconBg: 'bg-primary-soft text-primary',
       },
       {
         label: 'النشطة',
         value: announcements.filter((a) => a.isActive).length,
         icon: Bell,
-        gradient: 'from-success-soft to-background dark:from-success-soft dark:to-card',
-        iconBg: 'bg-white/50 text-success dark:bg-white/10',
-        accent: 'bg-success',
+        iconBg: 'bg-success-soft text-success-strong',
       },
       {
         label: 'غير النشطة',
         value: announcements.filter((a) => !a.isActive).length,
         icon: EyeOff,
-        gradient: 'from-warning-soft to-background dark:from-primary-soft dark:to-card',
-        iconBg: 'bg-white/50 text-warning dark:bg-white/10 dark:text-primary',
-        accent: 'bg-warning dark:bg-primary',
+        iconBg: 'bg-warning-soft text-warning-strong',
       },
       {
         label: 'الأحداث',
         value: announcements.filter((a) => a.type === 'event' || a.type === 'holiday').length,
         icon: Calendar,
-        gradient: 'from-info-soft to-background dark:from-info-soft dark:to-card',
-        iconBg: 'bg-white/50 text-info dark:bg-white/10',
-        accent: 'bg-info',
+        iconBg: 'bg-info-soft text-info-strong',
       },
     ],
     [announcements],
@@ -203,59 +195,23 @@ export const Announcements = () => {
       dir="rtl"
     >
       <div className="mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
-        {/* Hero — internally divided: identity | stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-card bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-5 shadow-elevation-2 md:p-6"
-        >
-          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-black/10 blur-3xl" />
-
-          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-lg backdrop-blur-sm">
-                <Megaphone size={22} className="text-on-primary" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h1 className="text-xl font-black leading-tight text-on-primary">الإعلانات</h1>
-                  <span className="rounded-lg bg-white/20 px-2 py-0.5 text-[10px] font-bold text-on-primary">
-                    الإدارة
-                  </span>
-                </div>
-                <p className="mt-0.5 text-xs text-white/70">نشر وإدارة الإعلانات والتنبيهات</p>
-              </div>
-            </div>
-
-            <div className="hidden h-12 w-px bg-white/20 lg:block" />
-
-            <div className="grid flex-1 grid-cols-2 gap-2">
-              {[
-                {
-                  label: 'الإجمالي',
-                  value: announcements.length,
-                  box: 'border-white/20 bg-white/10 text-on-primary',
-                },
-                {
-                  label: 'النشطة',
-                  value: announcements.filter((a) => a.isActive).length,
-                  box: 'border-white/20 bg-white/15 text-on-primary',
-                },
-              ].map((s) => (
-                <div
-                  key={s.label}
-                  className={cn(
-                    'rounded-xl border px-3 py-2.5 text-center backdrop-blur-sm',
-                    s.box,
-                  )}
-                >
-                  <p className={cn('text-xl font-black tabular-nums leading-none')}>{s.value}</p>
-                  <p className="mt-1 text-[10px] font-bold text-white/70">{s.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Header — unified PageHeader pattern */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <PageHeader
+            title="الإعلانات"
+            subtitle="نشر وإدارة الإعلانات والتنبيهات"
+            icon={<Megaphone size={22} />}
+            meta={
+              <>
+                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                  الإجمالي: {announcements.length}
+                </span>
+                <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
+                  النشطة: {announcements.filter((a) => a.isActive).length}
+                </span>
+              </>
+            }
+          />
         </motion.div>
 
         {/* KPIs */}
@@ -275,14 +231,8 @@ export const Announcements = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className={cn(
-                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
-                    kpi.gradient,
-                  )}
+                  className="rounded-2xl border border-border bg-card p-4 shadow-sm transition-shadow hover:shadow-elevation-2"
                 >
-                  <div className="absolute inset-x-0 top-0 h-0.5">
-                    <div className={cn('h-full rounded-full', kpi.accent)} />
-                  </div>
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-lg p-2 shadow-sm', kpi.iconBg)}>
                       <Icon size={16} />
@@ -303,15 +253,14 @@ export const Announcements = () => {
           transition={{ delay: 0.2 }}
         >
           {isError ? (
-            <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-16 text-center">
-              <AlertTriangle size={32} className="mx-auto mb-3 text-error" strokeWidth={1.5} />
-              <p className="text-sm font-bold text-main">تعذر تحميل الإعلانات</p>
-              <button
-                onClick={() => refetch()}
-                className="mx-auto mt-4 block rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-              >
-                إعادة المحاولة
-              </button>
+            <div className="rounded-card border border-border bg-card">
+              <ErrorState
+                icon={AlertTriangle}
+                title="تعذر تحميل الإعلانات"
+                message="تحقق من الاتصال ثم أعد المحاولة"
+                onRetry={() => refetch()}
+                retryLabel="إعادة المحاولة"
+              />
             </div>
           ) : isLoading ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">

@@ -1,4 +1,4 @@
-import { cn } from '../../lib/utils'
+﻿import { cn } from '../../lib/utils'
 
 interface WeekStripProps {
   counts: number[]
@@ -23,7 +23,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
   return (
     <section
       aria-label="حمل الأسبوع القادم"
-      className="flex h-full flex-col rounded-3xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300"
+      className="flex h-full flex-col rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300"
     >
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-sm font-black text-main">أسبوعك القادم</h3>

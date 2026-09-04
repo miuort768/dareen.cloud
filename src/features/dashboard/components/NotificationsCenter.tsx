@@ -1,12 +1,12 @@
-import { useState, useMemo } from 'react'
+﻿import { useState, useMemo } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import { Bell, Zap, AlertTriangle, CheckCircle2, Phone, Info } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { cn } from '../../../lib/utils'
 import { sendWhatsAppReminder } from '../../../shared/utils/reminders'
 import { useAdminPhone } from '../../../context/AppContext'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Button } from '../../../shared/components/ui'
+import { Badge } from '../../../shared/components/ui'
 import type { DashboardTask as Task, LowBalanceStudent } from '../types'
 
 interface NotificationsCenterProps {

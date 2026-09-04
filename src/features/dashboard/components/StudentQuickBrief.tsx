@@ -1,5 +1,5 @@
-import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+﻿import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react'
+import { Button } from '../../../shared/components/ui'
 
 interface BriefSession {
   date: string

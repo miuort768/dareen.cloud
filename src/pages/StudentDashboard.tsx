@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
 import { useCurrentUser, useAcademyName } from '../context/AppContext'
-import { Skeleton } from '../shared/components/ui'
+import { Skeleton, ErrorState } from '../shared/components/ui'
 import { ARABIC_DAYS } from '../shared/constants/days'
 import {
   normalizeDayName,
@@ -218,19 +218,14 @@ export const StudentDashboard = () => {
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background" dir="rtl">
-        <div className="max-w-sm space-y-4 rounded-2xl border border-border bg-surface p-8 text-center">
-          <p className="text-sm text-muted">
-            {error.message || 'فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.'}
-          </p>
-          <button
-            onClick={() =>
-              queryClient.invalidateQueries({ queryKey: ['student-dashboard', currentUser?.id] })
-            }
-            className="text-sm font-semibold text-primary hover:underline"
-          >
-            إعادة المحاولة
-          </button>
-        </div>
+        <ErrorState
+          title="تعذر تحميل لوحة الطالب"
+          message={error.message || 'فشل تحميل البيانات. تحقق من اتصالك بالإنترنت.'}
+          onRetry={() =>
+            queryClient.invalidateQueries({ queryKey: ['student-dashboard', currentUser?.id] })
+          }
+          retryLabel="إعادة المحاولة"
+        />
       </div>
     )
   }

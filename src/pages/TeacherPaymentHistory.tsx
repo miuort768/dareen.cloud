@@ -16,7 +16,8 @@ import {
 import { api } from '../lib/api'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
 import { type TeacherInvoice, INVOICE_STATUS, normalizeInvoiceStatus } from '../types/invoice'
-import { Skeleton } from '../shared/components/ui'
+import { Skeleton, PageHeader, Table, EmptyState } from '../shared/components/ui'
+import type { Column } from '../shared/components/ui'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { CURRENCY_SYMBOL } from '../config/constants'
@@ -161,31 +162,24 @@ export const TeacherPaymentHistory = () => {
         label: 'إجمالي الفواتير',
         value: invoices.length,
         icon: DollarSign,
-        gradient: 'from-primary/20 to-primary/5',
-        iconBg: 'bg-primary/10 text-primary',
-        accent: 'bg-primary',
+        iconBg: 'bg-primary-soft text-primary',
       },
       {
         label: 'مدفوعة',
         value: paidCount,
         icon: CheckCircle,
-        gradient: 'from-success-soft to-transparent',
-        iconBg: 'bg-success-soft text-success',
-        accent: 'bg-success',
+        iconBg: 'bg-success-soft text-success-strong',
       },
       {
         label: 'قيد المعالجة',
         value: pendingCount,
         icon: Clock,
-        gradient: 'from-warning-soft to-transparent',
-        iconBg: 'bg-warning-soft text-warning',
-        accent: 'bg-warning',
+        iconBg: 'bg-warning-soft text-warning-strong',
       },
       {
         label: 'غير مدفوعة',
         value: overdueCount,
         icon: AlertTriangle,
-        gradient: 'from-error-soft to-transparent',
         iconBg: 'bg-error-soft text-error',
         accent: 'bg-error',
       },
@@ -202,6 +196,72 @@ export const TeacherPaymentHistory = () => {
     ],
     [],
   )
+
+  const columns = useMemo<Column<TeacherInvoice>[]>(
+    () => [
+      {
+        key: 'specialization',
+        header: 'التخصص',
+        mobileLabel: 'التخصص',
+        render: (inv) => (
+          <span className="text-xs font-bold text-main">{inv.specialization || '—'}</span>
+        ),
+      },
+      {
+        key: 'amount',
+        header: 'المبلغ',
+        align: 'center',
+        mobileLabel: 'المبلغ',
+        render: (inv) => (
+          <span className="font-mono text-xs font-bold tabular-nums text-main">
+            {inv.amount.toFixed(3)} <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span>
+          </span>
+        ),
+      },
+      {
+        key: 'paymentMethod',
+        header: 'طريقة الدفع',
+        align: 'center',
+        hideOnMobile: true,
+        render: (inv) => <span className="text-[10px] text-muted">{inv.paymentMethod || '—'}</span>,
+      },
+      {
+        key: 'date',
+        header: 'التاريخ',
+        align: 'center',
+        mobileLabel: 'التاريخ',
+        render: (inv) => (
+          <span className="text-[10px] text-muted">
+            {inv.date ? format(new Date(inv.date), 'dd MMM yyyy', { locale: ar }) : '—'}
+          </span>
+        ),
+      },
+      {
+        key: 'status',
+        header: 'الحالة',
+        align: 'center',
+        mobileLabel: 'الحالة',
+        render: (inv) => {
+          const status = statusConfig(inv.status)
+          const StatusIcon = status.icon
+          return (
+            <span
+              className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[10px] font-bold ${status.cls}`}
+            >
+              <StatusIcon size={10} />
+              {status.label}
+            </span>
+          )
+        },
+      },
+    ],
+    [],
+  )
+
+  const emptyMessage =
+    searchTerm || filterStatus !== 'all' || period !== 'all'
+      ? 'لا توجد نتائج مطابقة'
+      : 'لا توجد دفعات بعد'
 
   const fabActions = useMemo(
     () => [
@@ -245,43 +305,23 @@ export const TeacherPaymentHistory = () => {
       dir="rtl"
     >
       <div className="mx-auto max-w-page px-2">
-        {/* Hero — internally divided: identity | stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
-        >
-          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-          <div className="bg-success/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
-
-          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
-                <Wallet size={22} className="text-on-primary" />
-              </div>
-              <div>
-                <h1 className="text-xl font-black leading-tight text-main">سجل الدفعات</h1>
-                <p className="mt-0.5 text-xs text-muted">سجل المدفوعات والمستحقات المالية</p>
-              </div>
-            </div>
-
-            <div className="hidden h-12 w-px bg-border lg:block" />
-
-            <div className="grid flex-1 grid-cols-2 gap-2">
-              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
-                <p className="text-lg font-black tabular-nums leading-none text-primary">
-                  {stats.total.toFixed(3)}
-                </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي {CURRENCY_SYMBOL}</p>
-              </div>
-              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
-                <p className="text-lg font-black tabular-nums leading-none text-success">
-                  {paidCount}
-                </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">فواتير مدفوعة</p>
-              </div>
-            </div>
-          </div>
+        {/* Header — unified PageHeader pattern */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
+          <PageHeader
+            title="سجل الدفعات"
+            subtitle="سجل المدفوعات والمستحقات المالية"
+            icon={<Wallet size={22} />}
+            meta={
+              <>
+                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                  الإجمالي: {stats.total.toFixed(3)} {CURRENCY_SYMBOL}
+                </span>
+                <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
+                  مدفوعة: {paidCount}
+                </span>
+              </>
+            }
+          />
         </motion.div>
 
         {/* KPI cards */}
@@ -301,16 +341,17 @@ export const TeacherPaymentHistory = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className={cn(
-                    'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
-                    kpi.gradient,
-                  )}
+                  className="rounded-2xl border border-border bg-card p-4 shadow-sm"
                 >
                   <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('rounded-lg p-2', kpi.iconBg)}>
+                    <div
+                      className={cn(
+                        'flex h-10 w-10 items-center justify-center rounded-lg',
+                        kpi.iconBg,
+                      )}
+                    >
                       <Icon size={16} />
                     </div>
-                    <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
                   </div>
                   <p className="mb-1 text-xs text-muted">{kpi.label}</p>
                   <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
@@ -381,149 +422,58 @@ export const TeacherPaymentHistory = () => {
           </div>
         </motion.div>
 
-        {/* Table (desktop) */}
+        {/* Table — shared DataTable (desktop table + mobile cards) */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
         >
-          <div className="hidden overflow-hidden rounded-2xl border border-divider bg-card shadow-sm md:block">
-            <table className="w-full border-collapse text-start">
-              <thead>
-                <tr className="border-b border-divider bg-surface">
-                  <th className="px-5 py-3.5 text-start text-[10px] font-bold text-muted">
-                    التخصص
-                  </th>
-                  <th className="px-5 py-3.5 text-center text-[10px] font-bold text-muted">
-                    المبلغ
-                  </th>
-                  <th className="px-5 py-3.5 text-center text-[10px] font-bold text-muted">
-                    طريقة الدفع
-                  </th>
-                  <th className="px-5 py-3.5 text-center text-[10px] font-bold text-muted">
-                    التاريخ
-                  </th>
-                  <th className="px-5 py-3.5 text-center text-[10px] font-bold text-muted">
-                    الحالة
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-divider">
-                {filteredInvoices.length > 0 ? (
-                  filteredInvoices.map((inv) => {
-                    const status = statusConfig(inv.status)
-                    const StatusIcon = status.icon
-                    return (
-                      <tr key={inv.id} className="transition-colors hover:bg-surface">
-                        <td className="px-5 py-3.5">
-                          <span className="text-xs font-bold text-main">
-                            {inv.specialization || '—'}
-                          </span>
-                        </td>
-                        <td className="px-5 py-3.5 text-center font-mono text-xs font-bold tabular-nums text-main">
-                          {inv.amount.toFixed(3)}{' '}
-                          <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span>
-                        </td>
-                        <td className="px-5 py-3.5 text-center text-[10px] text-muted">
-                          {inv.paymentMethod || '—'}
-                        </td>
-                        <td className="px-5 py-3.5 text-center text-[10px] text-muted">
-                          {inv.date
-                            ? format(new Date(inv.date), 'dd MMM yyyy', { locale: ar })
-                            : '—'}
-                        </td>
-                        <td className="px-5 py-3.5 text-center">
-                          <span
-                            className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[10px] font-bold ${status.cls}`}
-                          >
-                            <StatusIcon size={10} />
-                            {status.label}
-                          </span>
-                        </td>
-                      </tr>
-                    )
-                  })
-                ) : (
-                  <tr>
-                    <td colSpan={5} className="py-16 text-center">
-                      <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft text-primary">
-                        <FileText size={20} />
-                      </div>
-                      <p className="text-xs font-bold text-muted">
-                        {searchTerm || filterStatus !== 'all' || period !== 'all'
-                          ? 'لا توجد نتائج مطابقة'
-                          : 'لا توجد دفعات بعد'}
-                      </p>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Cards (mobile) */}
-          <div className="space-y-3 md:hidden">
-            {filteredInvoices.length > 0 ? (
-              filteredInvoices.map((inv, i) => {
+          {filteredInvoices.length > 0 ||
+          !(searchTerm || filterStatus !== 'all' || period !== 'all') ? (
+            <Table<TeacherInvoice>
+              data={filteredInvoices}
+              columns={columns}
+              headerVariant="surface"
+              getId={(inv) => inv.id}
+              emptyMessage={emptyMessage}
+              mobileCard={(inv) => {
                 const status = statusConfig(inv.status)
                 const StatusIcon = status.icon
                 return (
-                  <motion.div
-                    key={inv.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.04 }}
-                    className="rounded-2xl border border-divider bg-card p-4 shadow-sm transition-all hover:shadow-md"
-                  >
-                    <div className="mb-3 flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft">
-                          <Wallet size={13} className="text-primary" />
-                        </div>
-                        <div>
-                          <p className="text-xs font-bold text-main">
-                            {inv.specialization || 'بدون تخصص'}
-                          </p>
-                          <p className="text-[10px] text-muted">
-                            {inv.date
-                              ? format(new Date(inv.date), 'dd MMM yyyy', { locale: ar })
-                              : '—'}
-                          </p>
-                        </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft">
+                        <Wallet size={13} className="text-primary" />
                       </div>
-                      <span
-                        className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[10px] font-bold ${status.cls}`}
-                      >
-                        <StatusIcon size={10} />
-                        {status.label}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between border-t border-divider pt-3">
-                      <div className="flex items-center gap-2">
-                        <DollarSign size={12} className="text-muted" />
-                        <span className="font-mono text-sm font-bold tabular-nums text-main">
-                          {inv.amount.toFixed(3)}{' '}
-                          <span className="text-[9px] text-muted">{CURRENCY_SYMBOL}</span>
-                        </span>
+                      <div>
+                        <p className="text-xs font-bold text-main">
+                          {inv.specialization || 'بدون تخصص'}
+                        </p>
+                        <p className="text-[10px] text-muted">
+                          {inv.date
+                            ? format(new Date(inv.date), 'dd MMM yyyy', { locale: ar })
+                            : '—'}
+                        </p>
                       </div>
-                      <span className="text-[10px] text-muted">{inv.paymentMethod || '—'}</span>
                     </div>
-                  </motion.div>
+                    <span
+                      className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[10px] font-bold ${status.cls}`}
+                    >
+                      <StatusIcon size={10} />
+                      {status.label}
+                    </span>
+                    <span className="font-mono text-sm font-bold tabular-nums text-main">
+                      {inv.amount.toFixed(3)}
+                    </span>
+                  </div>
                 )
-              })
-            ) : (
-              <div className="rounded-2xl border border-dashed border-divider bg-card py-16 text-center">
-                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft text-primary">
-                  <FileText size={20} />
-                </div>
-                <p className="text-xs font-bold text-muted">
-                  {searchTerm || filterStatus !== 'all' || period !== 'all'
-                    ? 'لا توجد نتائج مطابقة'
-                    : 'لا توجد دفعات بعد'}
-                </p>
-              </div>
-            )}
-          </div>
+              }}
+            />
+          ) : (
+            <div className="rounded-2xl border border-border bg-card">
+              <EmptyState icon={FileText} title={emptyMessage} />
+            </div>
+          )}
         </motion.div>
       </div>
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+﻿import { useState, useEffect, useMemo } from 'react'
 import { useStudents } from '../hooks/useStudents'
 import { useTeachers } from '../../teachers/hooks/useTeachers'
 import { useShowNotification } from '../../../context/AppContext'
@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import { Skeleton } from '../../../shared/components/ui'
+import { Skeleton, PageHeader } from '../../../shared/components/ui'
 import { MobilePageHeader } from '../../../shared/components/mobile'
 import { SendNotificationModal } from '../../../shared/components/SendNotificationModal'
 import { ConfirmModal } from '../../../shared/components/ConfirmModal'
@@ -270,33 +270,25 @@ export const Students = () => {
         label: 'إجمالي الطلاب',
         value: allStudents.length,
         icon: Users,
-        gradient: 'from-primary-soft to-background dark:from-primary-soft dark:to-card',
-        iconBg: 'bg-white/50 text-primary ring-primary-soft dark:bg-white/10',
-        accent: 'bg-primary',
+        iconBg: 'bg-primary-soft text-primary',
       },
       {
         label: 'الاشتراكات النشطة',
         value: activeEnrollments,
         icon: BookOpen,
-        gradient: 'from-success-soft to-background dark:from-success-soft dark:to-card',
-        iconBg: 'bg-white/50 text-success ring-success-soft dark:bg-white/10',
-        accent: 'bg-success',
+        iconBg: 'bg-success-soft text-success-strong',
       },
       {
         label: 'حصص مكتملة',
         value: completedSessions,
         icon: Star,
-        gradient: 'from-warning-soft to-background dark:from-warning-soft dark:to-card',
-        iconBg: 'bg-white/50 text-warning ring-warning-soft dark:bg-white/10',
-        accent: 'bg-warning',
+        iconBg: 'bg-warning-soft text-warning-strong',
       },
       {
         label: 'متوسط الحصص للطالب',
         value: averageSessions,
         icon: GraduationCap,
-        gradient: 'from-info-soft to-background dark:from-info-soft dark:to-card',
-        iconBg: 'bg-white/50 text-info ring-info-soft dark:bg-white/10',
-        accent: 'bg-info',
+        iconBg: 'bg-info-soft text-info-strong',
       },
     ],
     [allStudents.length, activeEnrollments, completedSessions, averageSessions],
@@ -379,47 +371,34 @@ export const Students = () => {
             className="w-full rounded-xl border border-border bg-card py-3 pe-3 ps-10 text-xs font-bold text-main shadow-elevation-1 outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
           />
         </div>
-        {/* Desktop hero — internally divided: identity | search | count */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="relative hidden overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:block md:p-6"
-        >
-          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-          <div className="bg-accent/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
-
-          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
-                <GraduationCap size={22} className="text-on-primary" />
+        {/* Desktop header — unified PageHeader pattern */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="hidden md:block">
+          <PageHeader
+            title="إدارة الطلاب"
+            subtitle="إدارة بيانات الطلاب والاشتراكات والجلسات"
+            icon={<GraduationCap size={22} />}
+            meta={
+              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                {allStudents.length} طالب
+              </span>
+            }
+            toolbar={
+              <div className="relative w-full lg:max-w-sm">
+                <Search
+                  className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
+                  size={15}
+                />
+                <input
+                  type="text"
+                  aria-label="بحث عن طالب"
+                  placeholder="ابحث بالاسم أو الهاتف أو المرحلة..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                />
               </div>
-              <div>
-                <h1 className="text-xl font-black leading-tight text-main">إدارة الطلاب</h1>
-                <p className="text-xs text-muted">إدارة بيانات الطلاب والاشتراكات والجلسات</p>
-              </div>
-            </div>
-
-            <div className="hidden h-12 w-px bg-border lg:block" />
-
-            <div className="relative w-full lg:max-w-sm lg:flex-1">
-              <Search
-                className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
-                size={15}
-              />
-              <input
-                type="text"
-                aria-label="بحث عن طالب"
-                placeholder="ابحث بالاسم أو الهاتف أو المرحلة..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
-              />
-            </div>
-
-            <span className="hidden shrink-0 items-center rounded-xl border border-border bg-surface px-3.5 py-2.5 text-[11px] font-bold tabular-nums text-muted lg:inline-flex">
-              {allStudents.length} طالب
-            </span>
-          </div>
+            }
+          />
         </motion.div>
 
         <motion.div
@@ -437,18 +416,12 @@ export const Students = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.05 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className={cn(
-                    'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4 transition-shadow hover:shadow-elevation-2',
-                    stat.gradient,
-                  )}
+                  className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm transition-shadow hover:shadow-elevation-2"
                 >
-                  <div className="absolute inset-x-0 top-0 h-0.5">
-                    <div className={cn('h-full rounded-full', stat.accent)} />
-                  </div>
                   <div className="mb-3 flex items-center justify-between">
                     <div
                       className={cn(
-                        'flex h-10 w-10 items-center justify-center rounded-xl ring-1',
+                        'flex h-10 w-10 items-center justify-center rounded-xl',
                         stat.iconBg,
                       )}
                     >

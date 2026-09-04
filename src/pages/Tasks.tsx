@@ -20,17 +20,9 @@ import type { Task, TaskPriority } from '../features/tasks/types'
 import { TASK_PRIORITY_CONFIG } from '../features/tasks/types'
 import { useTaskMutations } from '../features/tasks/hooks/useTaskMutations'
 import { MobileTasks } from '../features/tasks/components/MobileTasks'
+import { PageHeader, ErrorState } from '../shared/components/ui'
 import { TaskCard, EmptyTaskState } from './TaskCard'
 import { TaskFormModal } from './TaskFormModal'
-
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
 
 export interface NewTaskDraft {
   title: string
@@ -126,33 +118,25 @@ export const Tasks = () => {
         label: 'إجمالي المهام',
         value: stats.total,
         icon: ListTodo,
-        gradient: 'from-primary/20 to-primary/5',
-        iconBg: 'bg-primary/10 text-primary',
-        accent: 'bg-primary',
+        iconBg: 'bg-primary-soft text-primary',
       },
       {
         label: 'معلقة',
         value: stats.pending,
         icon: Clock,
-        gradient: 'from-warning-soft to-transparent dark:from-primary-soft',
-        iconBg: 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary',
-        accent: 'bg-warning dark:bg-primary',
+        iconBg: 'bg-warning-soft text-warning-strong',
       },
       {
         label: 'قيد التنفيذ',
         value: stats.inProgress,
         icon: RefreshCcw,
-        gradient: 'from-info-soft to-transparent',
-        iconBg: 'bg-info-soft text-info',
-        accent: 'bg-info',
+        iconBg: 'bg-info-soft text-info-strong',
       },
       {
         label: 'تم الإنجاز',
         value: stats.completed,
         icon: CheckCircle2,
-        gradient: 'from-success-soft to-transparent',
-        iconBg: 'bg-success-soft text-success',
-        accent: 'bg-success',
+        iconBg: 'bg-success-soft text-success-strong',
       },
     ],
     [stats.total, stats.pending, stats.inProgress, stats.completed],
@@ -167,52 +151,31 @@ export const Tasks = () => {
       </div>
       <div className="relative hidden min-h-full bg-background md:block" dir="rtl">
         <div className="mx-auto max-w-page space-y-4 px-3">
-          {/* Hero */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
-          >
-            {particles.map((p) => (
-              <motion.div
-                key={p.id}
-                aria-hidden="true"
-                className="pointer-events-none absolute rounded-full bg-white/10"
-                style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-                animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-                transition={{
-                  duration: p.duration,
-                  repeat: Infinity,
-                  delay: p.delay,
-                  ease: 'easeInOut',
-                }}
-              />
-            ))}
-            <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <div className="mb-2 flex items-center gap-2">
-                  <div className="rounded-2xl bg-white/15 p-2 backdrop-blur-sm">
-                    <ListTodo className="text-on-primary" size={20} />
-                  </div>
-                  <span className="text-xs font-medium text-white/70">الإدارة</span>
-                </div>
-                <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">
-                  المهام والطلبات
-                </h1>
-                <p className="text-sm text-white/70">إدارة وتكليف المهام للمعلمات</p>
-              </div>
-              <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
-                <div className="text-center">
-                  <p className="mb-1 text-xs text-white/60">نسبة الإنجاز</p>
-                  <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.score}%</p>
-                </div>
-                <div className="h-10 w-px bg-white/10" />
-                <div className="text-center">
-                  <p className="mb-1 text-xs text-white/60">المهام</p>
-                  <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.total}</p>
-                </div>
-              </div>
-            </div>
+          {/* Header — unified PageHeader pattern */}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <PageHeader
+              title="المهام والطلبات"
+              subtitle="إدارة وتكليف المهام للمعلمات"
+              icon={<ListTodo size={22} />}
+              action={
+                <button
+                  onClick={() => setShowAddForm(true)}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-sm transition-all duration-200 hover:bg-primary-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                >
+                  <Plus size={16} /> مهمة جديدة
+                </button>
+              }
+              meta={
+                <>
+                  <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                    المهام: {stats.total}
+                  </span>
+                  <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
+                    الإنجاز: {stats.score}%
+                  </span>
+                </>
+              }
+            />
           </motion.div>
 
           {/* KPI Cards */}
@@ -232,16 +195,17 @@ export const Tasks = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.12 + i * 0.06 }}
                     whileHover={{ scale: 1.02, y: -2 }}
-                    className={cn(
-                      'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br p-4',
-                      kpi.gradient,
-                    )}
+                    className="rounded-2xl border border-border bg-card p-4 shadow-sm"
                   >
                     <div className="mb-3 flex items-center justify-between">
-                      <div className={cn('rounded-2xl p-2', kpi.iconBg)}>
+                      <div
+                        className={cn(
+                          'flex h-10 w-10 items-center justify-center rounded-xl',
+                          kpi.iconBg,
+                        )}
+                      >
                         <Icon size={16} />
                       </div>
-                      <div className={cn('h-1 w-12 rounded-2xl', kpi.accent)} />
                     </div>
                     <p className="mb-1 text-xs text-muted">{kpi.label}</p>
                     <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
@@ -307,16 +271,14 @@ export const Tasks = () => {
 
           {/* حالة الخطأ */}
           {isError ? (
-            <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-16 text-center">
-              <AlertTriangle size={32} className="mx-auto mb-3 text-error" strokeWidth={1.5} />
-              <p className="text-sm font-bold text-main">تعذر تحميل المهام</p>
-              <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
-              <button
-                onClick={() => refetch()}
-                className="mx-auto mt-4 block rounded-2xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-              >
-                إعادة المحاولة
-              </button>
+            <div className="rounded-card border border-border bg-card">
+              <ErrorState
+                icon={AlertTriangle}
+                title="تعذر تحميل المهام"
+                message="تحقق من الاتصال ثم أعد المحاولة"
+                onRetry={() => refetch()}
+                retryLabel="إعادة المحاولة"
+              />
             </div>
           ) : (
             <motion.div

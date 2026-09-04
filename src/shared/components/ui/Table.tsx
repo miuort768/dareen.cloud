@@ -19,6 +19,7 @@ export type SortDirection = 'asc' | 'desc'
 export interface TableProps<T> {
   data: T[]
   columns: Column<T>[]
+  /** @default 'surface' — quiet SaaS header; 'primary' = solid brand header */
   headerVariant?: 'primary' | 'surface' | 'gradient'
   isLoading?: boolean
   emptyMessage?: string
@@ -35,6 +36,8 @@ export interface TableProps<T> {
   sortKey?: string
   sortDir?: SortDirection
   onSort?: (key: string, dir: SortDirection) => void
+  /** Compact row density for data-heavy tables */
+  dense?: boolean
 }
 
 const SkeletonRow = ({ cols }: { cols: number }) => (
@@ -53,7 +56,7 @@ const SkeletonRow = ({ cols }: { cols: number }) => (
 function TableInner<T>({
   data,
   columns,
-  headerVariant = 'primary',
+  headerVariant = 'surface',
   isLoading,
   emptyMessage,
   onRowClick,
@@ -69,6 +72,7 @@ function TableInner<T>({
   sortKey: externalSortKey,
   sortDir: externalSortDir,
   onSort,
+  dense = false,
 }: TableProps<T>) {
   const [internalSortKey, setInternalSortKey] = useState<string | undefined>()
   const [internalSortDir, setInternalSortDir] = useState<SortDirection>('asc')
@@ -114,25 +118,25 @@ function TableInner<T>({
   const headerClass =
     headerVariant === 'gradient'
       ? 'bg-gradient-to-l from-primary to-primary-deep text-on-primary'
-      : headerVariant === 'surface'
-        ? 'bg-surface text-muted'
-        : 'bg-primary text-on-primary'
+      : headerVariant === 'primary'
+        ? 'bg-primary text-on-primary'
+        : 'bg-surface text-muted'
 
-  const thClass = headerVariant === 'surface' ? 'text-muted' : 'text-on-primary'
+  const thClass = headerVariant === 'surface' ? 'text-dim' : 'text-on-primary'
 
   const renderHeader = () => (
     <thead>
-      <tr className={headerClass}>
+      <tr className={cn('border-b border-border', headerClass)}>
         {columns.map((col) => (
           <th
             key={col.key}
             className={cn(
-              'select-none px-5 py-3.5 text-start text-xs font-bold',
+              'select-none px-5 py-3 text-start text-xs font-bold',
               col.align === 'center' && 'text-center',
               col.align === 'right' && 'text-end',
               thClass,
               col.hideOnMobile && 'hidden lg:table-cell',
-              col.sortable && 'cursor-pointer transition-opacity hover:opacity-80',
+              col.sortable && 'cursor-pointer transition-colors hover:text-main',
               col.headerClassName,
             )}
             onClick={() => col.sortable && handleSort(col.key)}
@@ -156,6 +160,8 @@ function TableInner<T>({
     </thead>
   )
 
+  const cellPad = dense ? 'px-4 py-2.5' : 'px-5 py-3.5'
+
   const renderBody = () => {
     if (isLoading) {
       return (
@@ -171,7 +177,7 @@ function TableInner<T>({
       return (
         <tbody>
           <tr>
-            <td colSpan={columns.length} className="px-5 py-16 text-center">
+            <td colSpan={columns.length} className="px-5 py-14 text-center">
               <div className="flex flex-col items-center gap-2 text-muted">
                 <Inbox size={32} className="text-dim" />
                 <span className="text-sm font-medium">{emptyMessage || 'لا توجد بيانات'}</span>
@@ -201,7 +207,8 @@ function TableInner<T>({
                 <td
                   key={col.key}
                   className={cn(
-                    'px-5 py-3.5 text-sm text-main',
+                    cellPad,
+                    'text-sm text-main',
                     col.align === 'center' && 'text-center',
                     col.align === 'right' && 'text-end',
                     col.hideOnMobile && 'hidden lg:table-cell',
@@ -362,7 +369,7 @@ function TableInner<T>({
 
   return (
     <div className={cn('w-full', className)}>
-      <div className="hidden overflow-x-auto border border-border bg-card md:block">
+      <div className="hidden overflow-hidden rounded-2xl border border-border bg-card shadow-sm md:block">
         <table className="w-full border-collapse text-start">
           {renderHeader()}
           {renderBody()}

@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { ListTodo, ChevronLeft, Clock, AlertTriangle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { DashboardTask as Task } from '../types'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { Button } from '../../../shared/components/ui'
+import { Badge } from '../../../shared/components/ui'
 
 interface TasksAndRequestsProps {
   tasks: Task[]

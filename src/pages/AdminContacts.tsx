@@ -24,6 +24,7 @@ import { cn } from '../lib/utils'
 import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
 import { Skeleton, SkeletonText } from '../shared/components/ui/Skeleton'
+import { PageHeader } from '../shared/components/ui'
 
 interface ContactMsg {
   id: string
@@ -202,29 +203,25 @@ export const AdminContacts = () => {
         label: 'إجمالي الرسائل',
         value: messages.length,
         icon: Mail,
-        color: 'text-primary',
-        bg: 'bg-primary/10',
+        bg: 'bg-primary-soft text-primary',
       },
       {
         label: 'رسائل اليوم',
         value: todayCount,
         icon: Calendar,
-        color: 'text-info',
-        bg: 'bg-info-soft',
+        bg: 'bg-info-soft text-info-strong',
       },
       {
         label: 'بها هواتف',
         value: withPhoneCount,
         icon: Phone,
-        color: 'text-success',
-        bg: 'bg-success-soft',
+        bg: 'bg-success-soft text-success-strong',
       },
       {
         label: 'المواضيع',
         value: uniqueSubjects,
         icon: BookOpen,
-        color: 'text-warning',
-        bg: 'bg-warning-soft',
+        bg: 'bg-warning-soft text-warning-strong',
       },
     ],
     [messages, todayCount, withPhoneCount, uniqueSubjects],
@@ -247,33 +244,59 @@ export const AdminContacts = () => {
           animate={{ opacity: 1, y: 0 }}
           className="pb-5 pt-6"
         >
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
-                <Mail size={20} className="text-primary" />
+          <PageHeader
+            title="رسائل التواصل"
+            subtitle="إدارة ومتابعة رسائل الزوار والعملاء"
+            icon={<Mail size={22} />}
+            actions={
+              <>
+                <button
+                  onClick={() => exportToCsv(filtered)}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-200 hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                >
+                  <Download size={14} />
+                  <span className="hidden sm:inline">تصدير</span>
+                </button>
+                <button
+                  onClick={handleDeleteAll}
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-error px-4 text-sm font-semibold text-on-error shadow-sm transition-all duration-200 hover:bg-error-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98]"
+                >
+                  <Trash2 size={14} />
+                  <span className="hidden sm:inline">حذف الكل</span>
+                </button>
+              </>
+            }
+            meta={
+              <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                {messages.length} رسالة
+              </span>
+            }
+            toolbar={
+              <div className="relative w-full lg:max-w-md">
+                <Search
+                  className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
+                  size={15}
+                />
+                <input
+                  type="text"
+                  aria-label="بحث في الرسائل"
+                  placeholder="بحث بالاسم أو الهاتف أو الموضوع..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-4 ps-10 text-xs font-bold text-main transition-colors duration-fast focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                />
+                {search && (
+                  <button
+                    onClick={() => setSearch('')}
+                    className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors duration-fast hover:text-main"
+                    aria-label="مسح البحث"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-main">رسائل التواصل</h1>
-                <p className="mt-0.5 text-xs text-muted">إدارة ومتابعة رسائل الزوار والعملاء</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => exportToCsv(filtered)}
-                className="flex items-center gap-2 rounded-xl bg-success px-4 py-2.5 text-xs font-bold text-on-success transition-colors duration-fast hover:bg-success-hover active:scale-[0.98]"
-              >
-                <Download size={14} />
-                <span className="hidden sm:inline">تصدير</span>
-              </button>
-              <button
-                onClick={handleDeleteAll}
-                className="flex items-center gap-2 rounded-xl bg-error px-4 py-2.5 text-xs font-bold text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-[0.98]"
-              >
-                <Trash2 size={14} />
-                <span className="hidden sm:inline">حذف الكل</span>
-              </button>
-            </div>
-          </div>
+            }
+          />
         </motion.div>
 
         <motion.div
@@ -291,13 +314,13 @@ export const AdminContacts = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 + i * 0.04 }}
                   whileHover={{ y: -2 }}
-                  className="rounded-xl border border-border bg-card p-4"
+                  className="rounded-2xl border border-border bg-card p-4 shadow-sm"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div
                       className={cn('flex h-9 w-9 items-center justify-center rounded-lg', kpi.bg)}
                     >
-                      <Icon size={16} className={kpi.color} />
+                      <Icon size={16} />
                     </div>
                   </div>
                   <p className="text-2xl font-bold text-main">{kpi.value}</p>

@@ -10,7 +10,7 @@ import {
   BarChart3,
   Download,
 } from 'lucide-react'
-import { Skeleton } from '../shared/components/ui'
+import { Skeleton, PageHeader } from '../shared/components/ui'
 import { useReports } from '../features/reports/hooks/useReports'
 import { FinancialReport } from '../features/reports/components/FinancialReport'
 import type { ReportType } from '../features/reports/types'
@@ -76,28 +76,22 @@ export const Reports = () => {
       dir="rtl"
     >
       <div className="mx-auto max-w-page space-y-4 px-2">
-        {/* Header strip */}
-        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5">
-          <div className="flex items-center gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-              <BarChart3 size={20} strokeWidth={1.9} className="text-primary" />
-            </span>
-            <div>
-              <h1 className="text-lg font-black leading-tight tracking-tight text-main md:text-xl">
-                التقارير والإحصائيات
-              </h1>
-              <p className="mt-0.5 text-[11px] font-bold text-muted">{dateStr}</p>
-            </div>
-          </div>
-          <button
-            onClick={() => window.print()}
-            aria-label="طباعة التقرير"
-            className="no-print flex h-11 items-center gap-1.5 rounded-lg border border-border bg-surface px-3 text-[11px] font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-9"
-          >
-            <Download size={13} />
-            طباعة / تصدير PDF
-          </button>
-        </div>
+        {/* Header — unified PageHeader pattern */}
+        <PageHeader
+          title="التقارير والإحصائيات"
+          subtitle={dateStr}
+          icon={<BarChart3 size={22} />}
+          action={
+            <button
+              onClick={() => window.print()}
+              aria-label="طباعة التقرير"
+              className="no-print inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-200 hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+            >
+              <Download size={14} />
+              طباعة / تصدير PDF
+            </button>
+          }
+        />
 
         {/* Tabs Row */}
         <div className="no-scrollbar no-print flex gap-1 overflow-x-auto rounded-2xl border border-border bg-surface p-1">

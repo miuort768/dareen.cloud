@@ -4,7 +4,7 @@ import { api } from '../lib/api'
 import { useCurrentUser, useAdminPhone, useAcademyName } from '../context/AppContext'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
-import { Skeleton } from '../shared/components/ui'
+import { Skeleton, ErrorState } from '../shared/components/ui'
 import { ParentDashboardDesktop } from './parent-dashboard/ParentDashboardDesktop'
 import { ParentDashboardMobile } from './parent-dashboard/ParentDashboardMobile'
 import type { Student, Enrollment, Session } from '../types'
@@ -367,15 +367,12 @@ export const ParentDashboard = () => {
   if (error) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background" dir="rtl">
-        <div className="max-w-sm space-y-4 rounded-2xl border border-border bg-surface p-8 text-center">
-          <p className="text-sm text-muted">فشل تحميل الأبناء. تحقق من اتصالك بالإنترنت.</p>
-          <button
-            onClick={() => refetch()}
-            className="text-sm font-semibold text-primary hover:underline"
-          >
-            إعادة المحاولة
-          </button>
-        </div>
+        <ErrorState
+          title="تعذر تحميل لوحة ولي الأمر"
+          message="فشل تحميل الأبناء. تحقق من اتصالك بالإنترنت."
+          onRetry={() => refetch()}
+          retryLabel="إعادة المحاولة"
+        />
       </div>
     )
   }

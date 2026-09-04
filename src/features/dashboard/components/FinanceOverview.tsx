@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+﻿import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import type { TooltipProps } from 'recharts'
@@ -6,7 +6,7 @@ import { DollarSign, TrendingUp, TrendingDown, BarChart3, Plus } from 'lucide-re
 import { CURRENCY_SYMBOL } from '../../../config/constants'
 import type { DashboardMonthData as MonthData } from '../types'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { Button } from '../../../shared/components/ui'
 
 interface FinanceOverviewProps {
   monthlyData: MonthData[]

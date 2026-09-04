@@ -11,6 +11,7 @@ import {
   Receipt,
 } from 'lucide-react'
 import { cn } from '../../../lib/utils'
+import { Skeleton } from '../../../shared/components/ui'
 import { TransactionsLog } from '../components/TransactionsLog'
 import { FinanceCharts } from '../components/FinanceCharts'
 import { FinanceStats } from '../components/FinanceStats'
@@ -82,14 +83,16 @@ export const Finance = () => {
 
   if (loading) {
     return (
-      <div className="min-h-full space-y-6 bg-background p-4">
-        <div className="h-28 animate-pulse rounded-2xl bg-card" />
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {[...Array(4)].map((_, i) => (
-            <div key={`finance-${i}`} className="h-28 animate-pulse rounded-2xl bg-card" />
-          ))}
+      <div className="min-h-full space-y-6 bg-background p-4" dir="rtl">
+        <div className="mx-auto max-w-page space-y-6 px-2.5 sm:px-4 md:px-6">
+          <Skeleton className="h-28 rounded-2xl" />
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={`finance-${i}`} className="h-28 rounded-2xl" />
+            ))}
+          </div>
+          <Skeleton className="h-96 rounded-2xl" />
         </div>
-        <div className="h-96 animate-pulse rounded-2xl bg-card" />
       </div>
     )
   }

@@ -4,9 +4,7 @@ import { useAuthStore } from '../../../store/authStore'
 import { useDashboardData } from '../hooks/useDashboardData'
 import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout'
 import { MobileDashboardView } from '../components/MobileDashboardView'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { Skeleton } from '../../../shared/components/ui'
 import { AlertCircle } from 'lucide-react'
 import { useAcademicYear } from '../../../context/useApp'
 
@@ -49,9 +47,13 @@ export const Dashboard = () => {
           <p className="mb-4 text-sm text-muted">
             ليس لديك صلاحية لعرض لوحة التحكم. يرجى التواصل مع مدير النظام.
           </p>
-          <Button variant="outline" size="sm" onClick={() => window.history.back()}>
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            className="inline-flex h-8 items-center justify-center rounded-lg border-2 border-primary/30 px-3.5 text-xs font-semibold text-primary transition-all duration-200 hover:border-primary/60 hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+          >
             العودة
-          </Button>
+          </button>
         </div>
       </div>
     )
@@ -72,13 +74,14 @@ export const Dashboard = () => {
             <Skeleton className="h-[180px] rounded-2xl" />
             <div className="grid grid-cols-4 gap-3">
               {Array.from({ length: 4 }).map((_, i) => (
-                <Card key={`skel-kpi-${i}`} className="overflow-hidden">
-                  <CardContent className="p-5">
-                    <Skeleton className="mb-3 h-10 w-10 rounded-xl" />
-                    <Skeleton className="mb-1 h-8 w-24" />
-                    <Skeleton className="h-3 w-20" />
-                  </CardContent>
-                </Card>
+                <div
+                  key={`skel-kpi-${i}`}
+                  className="rounded-2xl border border-border bg-card p-5 shadow-sm"
+                >
+                  <Skeleton className="mb-3 h-10 w-10 rounded-xl" />
+                  <Skeleton className="mb-1 h-8 w-24" />
+                  <Skeleton className="h-3 w-20" />
+                </div>
               ))}
             </div>
             <div className="grid grid-cols-2 gap-6">

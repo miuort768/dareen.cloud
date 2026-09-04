@@ -1,7 +1,7 @@
 ﻿import { ListTodo, Calendar, Clock } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Badge } from '@/components/ui/badge'
+import { Badge } from '../../../shared/components/ui'
 
 interface ActivityTimelineProps {
   sessions: { id: string; studentName: string; date?: string; status?: string }[]

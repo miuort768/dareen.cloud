@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { X, Loader2, LinkIcon, Copy, CheckCircle2, Radio, ExternalLink, Users } from 'lucide-react'
 import { api } from '../../../lib/api'
 import { startLiveSession } from '../../../services/liveSessionService'
 import { useCurrentUser } from '../../../context/AppContext'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { Button } from '../../../shared/components/ui'
 import type { Student } from '../../../types'
 
 const PROVIDERS = [

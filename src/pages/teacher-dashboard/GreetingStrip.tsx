@@ -1,4 +1,4 @@
-import { format } from 'date-fns'
+﻿import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { CalendarDays, Sparkles } from 'lucide-react'
 import { TimeOfDayBadge } from '../../shared/components/TimeOfDayBadge'
@@ -38,7 +38,7 @@ export const GreetingStrip = ({
   return (
     <section
       aria-label="ترحيب"
-      className="rounded-3xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300 sm:p-6"
+      className="rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300 sm:p-6"
     >
       <div className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3.5">

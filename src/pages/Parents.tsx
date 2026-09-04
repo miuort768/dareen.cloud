@@ -26,15 +26,6 @@ const parentHasStudents = (parent: Parent, students: Student[]) =>
     (s) => samePhone(parent.phone, s.parentPhone) || (parent.id && s.parent?.id === parent.id),
   )
 
-const particles = Array.from({ length: 8 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 5 + 2,
-  duration: Math.random() * 6 + 4,
-  delay: Math.random() * 3,
-}))
-
 export const Parents = () => {
   const academyName = useAcademyName()
   useEffect(() => {
@@ -135,51 +126,35 @@ export const Parents = () => {
       dir="rtl"
     >
       <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
-        <div className="relative overflow-hidden rounded-2xl">
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              className="pointer-events-none absolute z-10 rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <ParentsHeader
-            totalParents={state.totalParents}
-            totalLinkedStudents={state.totalLinkedStudents}
-            avgChildren={Math.round(avgChildren * 10) / 10}
-            showAddForm={state.showAddForm}
-            searchTerm={state.searchTerm}
-            onSearchChange={actions.setSearchTerm}
-            filterStatus={filterStatus}
-            onFilterStatusChange={setFilterStatus}
-            onToggleAddForm={() => {
-              if (state.showAddForm) {
-                actions.setShowAddForm(false)
-                actions.setEditId(null)
-              } else {
-                openAddParent()
-              }
-            }}
-            onImport={actions.handleImportParents}
-            onExportExcel={() =>
-              downloadExport('parents', 'xlsx')
-                .then(() => showNotification('تم تصدير Excel', 'success'))
-                .catch((e) => showNotification(e.message, 'error'))
+        <ParentsHeader
+          totalParents={state.totalParents}
+          totalLinkedStudents={state.totalLinkedStudents}
+          avgChildren={Math.round(avgChildren * 10) / 10}
+          showAddForm={state.showAddForm}
+          searchTerm={state.searchTerm}
+          onSearchChange={actions.setSearchTerm}
+          filterStatus={filterStatus}
+          onFilterStatusChange={setFilterStatus}
+          onToggleAddForm={() => {
+            if (state.showAddForm) {
+              actions.setShowAddForm(false)
+              actions.setEditId(null)
+            } else {
+              openAddParent()
             }
-            onExportPDF={() =>
-              downloadExport('parents', 'pdf')
-                .then(() => showNotification('تم تصدير PDF', 'success'))
-                .catch((e) => showNotification(e.message, 'error'))
-            }
-          />
-        </div>
+          }}
+          onImport={actions.handleImportParents}
+          onExportExcel={() =>
+            downloadExport('parents', 'xlsx')
+              .then(() => showNotification('تم تصدير Excel', 'success'))
+              .catch((e) => showNotification(e.message, 'error'))
+          }
+          onExportPDF={() =>
+            downloadExport('parents', 'pdf')
+              .then(() => showNotification('تم تصدير PDF', 'success'))
+              .catch((e) => showNotification(e.message, 'error'))
+          }
+        />
 
         <div className="space-y-4 md:space-y-5">
           <AnimatePresence>

@@ -22,7 +22,7 @@ import { confirm } from '../lib/confirmDialog'
 import { motion } from 'framer-motion'
 import { useIsLoading, useAcademyName } from '../context/AppContext'
 import { cn } from '../lib/utils'
-import { Skeleton } from '../shared/components/ui'
+import { Skeleton, PageHeader } from '../shared/components/ui'
 
 interface CountryStyle {
   badge: string
@@ -182,33 +182,25 @@ export const AdminBlogCustomers = () => {
         label: 'إجمالي العملاء',
         value: customers.length,
         icon: Users,
-        gradient: 'bg-gradient-to-br from-primary-soft to-transparent',
         iconBg: 'bg-primary-soft text-primary',
-        accent: 'bg-primary',
       },
       {
         label: 'عملاء اليوم',
         value: todayCount,
         icon: Calendar,
-        gradient: 'bg-gradient-to-br from-info-soft to-transparent',
-        iconBg: 'bg-info-soft text-info-dark',
-        accent: 'bg-info',
+        iconBg: 'bg-info-soft text-info-strong',
       },
       {
         label: 'عدد الدول',
         value: uniqueCountries,
         icon: Globe,
-        gradient: 'bg-gradient-to-br from-success-soft to-transparent',
-        iconBg: 'bg-success-soft text-success',
-        accent: 'bg-success',
+        iconBg: 'bg-success-soft text-success-strong',
       },
       {
         label: 'عملاء الأسبوع',
         value: weekCount,
         icon: TrendingUp,
-        gradient: 'bg-gradient-to-br from-warning-soft to-transparent',
-        iconBg: 'bg-warning-soft text-warning',
-        accent: 'bg-warning',
+        iconBg: 'bg-warning-soft text-warning-strong',
       },
     ],
     [customers.length, todayCount, uniqueCountries, weekCount],
@@ -220,45 +212,23 @@ export const AdminBlogCustomers = () => {
       dir="rtl"
     >
       <div className="mx-auto max-w-page px-2">
-        {/* Hero — internally divided: identity | stats */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
-        >
-          <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
-          <div className="bg-success/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
-
-          <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
-            <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
-                <Mail size={22} className="text-on-primary" />
-              </div>
-              <div>
-                <h1 className="text-xl font-black leading-tight text-main">عملاء المدونة</h1>
-                <p className="mt-0.5 text-xs text-muted">
-                  عملاء النشرة البريدية — الدولة ورقم الهاتف
-                </p>
-              </div>
-            </div>
-
-            <div className="hidden h-12 w-px bg-border lg:block" />
-
-            <div className="grid flex-1 grid-cols-2 gap-2">
-              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
-                <p className="text-xl font-black tabular-nums leading-none text-primary">
-                  {customers.length}
-                </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">الإجمالي</p>
-              </div>
-              <div className="rounded-xl border border-border bg-surface px-3 py-2.5 text-center">
-                <p className="text-xl font-black tabular-nums leading-none text-success">
-                  {todayCount}
-                </p>
-                <p className="mt-1 text-[10px] font-bold text-muted">اليوم</p>
-              </div>
-            </div>
-          </div>
+        {/* Header — unified PageHeader pattern */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
+          <PageHeader
+            title="عملاء المدونة"
+            subtitle="عملاء النشرة البريدية — الدولة ورقم الهاتف"
+            icon={<Mail size={22} />}
+            meta={
+              <>
+                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                  الإجمالي: {customers.length}
+                </span>
+                <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
+                  اليوم: {todayCount}
+                </span>
+              </>
+            }
+          />
         </motion.div>
 
         <motion.div
@@ -276,16 +246,12 @@ export const AdminBlogCustomers = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className={cn(
-                    'relative overflow-hidden rounded-xl border border-border bg-gradient-to-br p-4',
-                    kpi.gradient,
-                  )}
+                  className="rounded-2xl border border-border bg-card p-4 shadow-sm"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-lg p-2', kpi.iconBg)}>
                       <Icon size={16} />
                     </div>
-                    <div className={cn('h-1 w-12 rounded-full', kpi.accent)} />
                   </div>
                   <p className="mb-1 text-xs text-muted">{kpi.label}</p>
                   <p className="text-2xl font-bold text-main">{kpi.value}</p>
