@@ -16,6 +16,13 @@ export const useReports = () => {
     queryFn: () => reportsService.getReportData(),
   })
 
+  // Money numbers come from the server (same source as the Finance page):
+  // currency conversion, invoice states and fixed expenses are computed there.
+  const { data: financeStats } = useQuery({
+    queryKey: ['finance-stats'],
+    queryFn: () => reportsService.getFinanceStats(),
+  })
+
   const data = reportData
 
   const stats = useMemo(() => {
@@ -41,7 +48,7 @@ export const useReports = () => {
     const attendanceRate =
       totalSessions > 0 ? Math.round((completedSessions / totalSessions) * 100) : 0
 
-    // Financial calculations
+    // Financial calculations (client-side fallback — overridden by server stats below)
     // Currency policy: reports display EGP — non-EGP sessions excluded (same as dashboard totals).
     const isEgp = (c?: string) => !c || c === 'EGP'
 
@@ -97,11 +104,18 @@ export const useReports = () => {
       }, 0)
 
     const revenueGrowth =
-      prevMonthRevenue > 0
-        ? Math.round(((monthRevenue - prevMonthRevenue) / prevMonthRevenue) * 100)
-        : monthRevenue > 0
-          ? 100
-          : 0
+      financeStats && financeStats.monthlyData && financeStats.monthlyData.length >= 2
+        ? (() => {
+            const md = financeStats.monthlyData
+            const last = md[md.length - 1]!.income
+            const prev = md[md.length - 2]!.income
+            return prev > 0 ? Math.round(((last - prev) / prev) * 100) : last > 0 ? 100 : 0
+          })()
+        : prevMonthRevenue > 0
+          ? Math.round(((monthRevenue - prevMonthRevenue) / prevMonthRevenue) * 100)
+          : monthRevenue > 0
+            ? 100
+            : 0
 
     const monthTeacherCost = sessions
       .filter((s) => s.status === 'completed' && s.date?.startsWith(currentMonthStr))
@@ -230,10 +244,17 @@ export const useReports = () => {
       completedSessions,
       cancelledSessions,
       attendanceRate,
-      totalRevenue,
-      totalExpenses,
-      monthRevenue,
-      monthExpenses,
+      // Server-computed money numbers when available (authoritative — currency
+      // conversion + invoices + fixed expenses live server-side); client-side
+      // session-price estimates only as a fallback while loading.
+      totalRevenue: financeStats?.totalIncome ?? totalRevenue,
+      totalExpenses: financeStats?.totalExpenses ?? totalExpenses,
+      monthRevenue: financeStats?.monthIncome ?? monthRevenue,
+      monthExpenses: financeStats?.monthExpenses ?? monthExpenses,
+      netProfit: financeStats?.netProfit ?? totalRevenue - totalExpenses,
+      monthNetProfit: financeStats?.monthProfit ?? monthRevenue - monthExpenses,
+      profitMargin: financeStats?.profitMargin ?? '0',
+      reportCurrency: financeStats?.reportCurrency ?? 'EGP',
       revenueGrowth,
       monthlySessionsData,
       subjectPieData,
@@ -241,7 +262,7 @@ export const useReports = () => {
       teacherPerformanceData,
       studentProgressData,
     }
-  }, [data])
+  }, [data, financeStats])
 
   const filteredStudentProgress = useMemo(() => {
     return stats.studentProgressData.filter(

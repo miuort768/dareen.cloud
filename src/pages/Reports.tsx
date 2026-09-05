@@ -348,8 +348,11 @@ export const Reports = () => {
               monthRevenue={state.monthRevenue}
               totalExpenses={state.totalExpenses}
               monthExpenses={state.monthExpenses}
+              netProfit={state.netProfit}
+              monthNetProfit={state.monthNetProfit}
+              profitMargin={state.profitMargin}
               completedSessions={state.completedSessions}
-              reportCurrency={CURRENCY_SYMBOL}
+              reportCurrency={state.reportCurrency}
             />
           )}
         </div>

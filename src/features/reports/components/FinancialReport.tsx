@@ -7,6 +7,9 @@ interface FinancialReportProps {
   monthRevenue: number
   totalExpenses: number
   monthExpenses: number
+  netProfit: number
+  monthNetProfit: number
+  profitMargin?: string
   completedSessions: number
   reportCurrency?: string
 }
@@ -54,18 +57,20 @@ export const FinancialReport = ({
   monthRevenue,
   totalExpenses,
   monthExpenses,
+  netProfit,
+  monthNetProfit,
+  profitMargin,
   completedSessions,
   reportCurrency = 'EGP',
 }: FinancialReportProps) => {
-  const netProfit = totalRevenue - totalExpenses
-  const monthNetProfit = monthRevenue - monthExpenses
-
-  // Accurate Profit Margin Calculations: (Net Profit / Total Revenue) * 100
-  const overallMarginNum = totalRevenue > 0 ? (netProfit / totalRevenue) * 100 : 0
-  const monthMarginNum = monthRevenue > 0 ? (monthNetProfit / monthRevenue) * 100 : 0
-
-  const overallMargin = overallMarginNum.toFixed(1)
-  const monthMargin = monthMarginNum.toFixed(1)
+  // Margin from the server stats when available; computed locally as fallback.
+  const overallMargin =
+    profitMargin && profitMargin !== '0'
+      ? profitMargin
+      : totalRevenue > 0
+        ? ((netProfit / totalRevenue) * 100).toFixed(1)
+        : '0'
+  const monthMargin = monthRevenue > 0 ? ((monthNetProfit / monthRevenue) * 100).toFixed(1) : '0'
 
   return (
     <div className="space-y-4">
@@ -101,7 +106,7 @@ export const FinancialReport = ({
           currency={reportCurrency}
         />
         <FinancialCard
-          title="هامش الربح النسبة"
+          title="هامش الربح"
           value={overallMargin}
           subValue={monthMargin}
           icon={Percent}
@@ -111,6 +116,13 @@ export const FinancialReport = ({
           isPercentage
         />
       </div>
+
+      {/* Negative-profit warning — margin is meaningless when revenue ≈ 0 */}
+      {totalRevenue <= 0 && totalExpenses > 0 && (
+        <div className="rounded-2xl border border-warning-soft bg-warning-soft px-4 py-3 text-xs font-bold text-warning-strong">
+          لا توجد إيرادات مسجلة بعد، لذا لا يمكن حساب هامش الربح — المسجل هو مصروفات فقط.
+        </div>
+      )}
 
       <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
         <div className="flex items-start gap-3.5">
@@ -129,11 +141,18 @@ export const FinancialReport = ({
               <span className="font-bold text-error">
                 {totalExpenses.toLocaleString()} {reportCurrency}
               </span>
-              . نتج عن ذلك صافي ربح قدره{' '}
+              . نتج عن ذلك {netProfit >= 0 ? 'صافي ربح' : 'صافي خسارة'} قدره{' '}
               <span className="font-bold text-primary">
-                {netProfit.toLocaleString()} {reportCurrency}
-              </span>{' '}
-              وهامش ربح إجمالي بنسبة <span className="font-bold text-info">{overallMargin}%</span>.
+                {Math.abs(netProfit).toLocaleString()} {reportCurrency}
+              </span>
+              {totalRevenue > 0 && (
+                <>
+                  {' '}
+                  وهامش ربح إجمالي بنسبة{' '}
+                  <span className="font-bold text-info">{overallMargin}%</span>
+                </>
+              )}
+              .
             </p>
           </div>
         </div>
