@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { GraduationCap, Plus, RefreshCw, FileText, AlertCircle } from 'lucide-react'
 import { ConfirmModal } from '../shared/components/ConfirmModal'
 import { api } from '../lib/api'
+import { parseNumberSafe } from '../lib/utils'
 import { CURRENCY_SYMBOL } from '../config/constants'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
 import {
@@ -304,8 +305,8 @@ export const TeacherInvoices = () => {
     async (e: React.FormEvent) => {
       e.preventDefault()
       setIsSaving(true)
-      const amountValue = parseFloat(formData.amount) || 0
-      const personalExpValue = parseFloat(formData.personalExpenses) || 0
+      const amountValue = parseNumberSafe(formData.amount)
+      const personalExpValue = parseNumberSafe(formData.personalExpenses)
       const invoiceData = {
         teacherId: formData.teacherId || null,
         teacher: formData.teacher,

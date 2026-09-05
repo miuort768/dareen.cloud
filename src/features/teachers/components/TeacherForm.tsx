@@ -13,7 +13,7 @@ import {
   Award,
   type LucideIcon,
 } from 'lucide-react'
-import { cn } from '../../../lib/utils'
+import { cn, parseNumberSafe } from '../../../lib/utils'
 import { CURRENCY_OPTIONS } from '../../../config/constants'
 import type { Teacher } from '../types'
 
@@ -72,11 +72,11 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
     e.preventDefault()
     onSubmit({
       ...formData,
-      price: Number(formData.price),
+      price: parseNumberSafe(formData.price),
       currency: formData.currency || 'EGP',
       username: enableLogin ? formData.username : '',
       password: enableLogin ? formData.password : '',
-      points: Number(formData.points),
+      points: parseNumberSafe(formData.points),
     })
   }
 

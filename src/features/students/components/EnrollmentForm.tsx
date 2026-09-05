@@ -3,6 +3,7 @@ import { Plus, X, Loader2 } from 'lucide-react'
 import type { Teacher } from '../../teachers/types'
 import type { ScheduleSlot } from '../types'
 import { CURRENCY_OPTIONS } from '../../../config/constants'
+import { parseNumberSafe } from '../../../lib/utils'
 
 interface EnrollmentFormProps {
   teachers: Teacher[]
@@ -57,8 +58,8 @@ export const EnrollmentForm = ({
       subject: form.subject,
       curr: form.curr,
       curriculum: form.curriculum,
-      totalSessions: Number(form.totalSessions) || 0,
-      teacherPrice: Number(form.teacherPrice) || undefined,
+      totalSessions: parseNumberSafe(form.totalSessions),
+      teacherPrice: parseNumberSafe(form.teacherPrice) || undefined,
       schedule,
     })
     setForm({

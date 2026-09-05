@@ -1,6 +1,7 @@
 ﻿import React, { useState } from 'react'
 import { DollarSign, Save, X, Info, Calendar, Tag } from 'lucide-react'
 import type { Transaction } from '../../../types'
+import { parseNumberSafe } from '../../../lib/utils'
 
 interface AddTransactionModalProps {
   isOpen: boolean
@@ -25,7 +26,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
     onAdd({
       type: newTransaction.type as 'income' | 'expense',
       category: newTransaction.category,
-      amount: Number(newTransaction.amount),
+      amount: parseNumberSafe(newTransaction.amount),
       currency: newTransaction.currency,
       date: newTransaction.date ?? '',
       description: newTransaction.description,
