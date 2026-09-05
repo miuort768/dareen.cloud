@@ -481,84 +481,86 @@ export const TrialSessions = () => {
     >
       <div className="relative z-10 mx-auto max-w-page px-2.5 sm:px-4 md:px-6">
         {/* ===== HEADER ===== */}
-        <motion.div variants={itemVariants} className="pb-2 pt-4">
-          {/* Mobile layout */}
-          <div className="md:hidden">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-md shadow-primary/20">
-                <CalendarDays size={20} className="text-on-primary" />
+        <motion.div variants={itemVariants} className="mb-5">
+          <div className="rounded-card border border-border bg-card p-4 shadow-card md:p-5">
+            {/* Mobile layout */}
+            <div className="md:hidden">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-md shadow-primary/20">
+                  <CalendarDays size={20} className="text-on-primary" />
+                </div>
+                <div>
+                  <h1 className="font-outfit text-lg font-black text-main">جلسات المراجعة</h1>
+                  <p className="text-[11px] text-muted">{stats?.total || 0} حصة مسجلة في النظام</p>
+                </div>
               </div>
-              <div>
-                <h1 className="font-outfit text-lg font-black text-main">جلسات المراجعة</h1>
-                <p className="text-[11px] text-muted">{stats?.total || 0} حصة مسجلة في النظام</p>
-              </div>
-            </div>
-            <button
-              onClick={() => {
-                setEditingId(null)
-                resetForm()
-                setShowModal(true)
-              }}
-              className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-4 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all hover:shadow-lg hover:shadow-primary/30 active:scale-95"
-            >
-              <Plus size={16} /> جدولة جديدة
-            </button>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              <button
-                onClick={handleExportReport}
-                className="flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95"
-              >
-                <Download size={16} /> تحميل التقرير
-              </button>
-              <button
-                onClick={() => {
-                  setConfirmDeleteAll(true)
-                  setDeleteAllTyped('')
-                }}
-                className="flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
-              >
-                <Trash2 size={16} /> حذف الكل
-              </button>
-            </div>
-          </div>
-
-          {/* Desktop layout */}
-          <div className="hidden items-center justify-between gap-4 md:flex">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-md shadow-primary/25">
-                <CalendarDays size={22} className="text-on-primary" />
-              </div>
-              <div>
-                <h1 className="font-outfit text-xl font-black text-main">جلسات المراجعة</h1>
-                <p className="text-[11px] text-muted">{stats?.total || 0} حصة مسجلة في النظام</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleExportReport}
-                className="flex h-10 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95"
-              >
-                <Download size={15} /> تحميل التقرير
-              </button>
-              <button
-                onClick={() => {
-                  setConfirmDeleteAll(true)
-                  setDeleteAllTyped('')
-                }}
-                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
-              >
-                <Trash2 size={15} /> حذف الكل
-              </button>
               <button
                 onClick={() => {
                   setEditingId(null)
                   resetForm()
                   setShowModal(true)
                 }}
-                className="flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-5 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all hover:shadow-lg hover:shadow-primary/30 active:scale-95"
+                className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-4 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all hover:shadow-lg hover:shadow-primary/30 active:scale-95"
               >
-                <Plus size={15} /> جدولة جديدة
+                <Plus size={16} /> جدولة جديدة
               </button>
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <button
+                  onClick={handleExportReport}
+                  className="flex h-11 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95"
+                >
+                  <Download size={16} /> تحميل التقرير
+                </button>
+                <button
+                  onClick={() => {
+                    setConfirmDeleteAll(true)
+                    setDeleteAllTyped('')
+                  }}
+                  className="flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
+                >
+                  <Trash2 size={16} /> حذف الكل
+                </button>
+              </div>
+            </div>
+
+            {/* Desktop layout */}
+            <div className="hidden items-center justify-between gap-4 md:flex">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-md shadow-primary/25">
+                  <CalendarDays size={22} className="text-on-primary" />
+                </div>
+                <div>
+                  <h1 className="font-outfit text-xl font-black text-main">جلسات المراجعة</h1>
+                  <p className="text-[11px] text-muted">{stats?.total || 0} حصة مسجلة في النظام</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleExportReport}
+                  className="flex h-10 items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-main transition-all hover:border-primary/20 hover:text-primary active:scale-95"
+                >
+                  <Download size={15} /> تحميل التقرير
+                </button>
+                <button
+                  onClick={() => {
+                    setConfirmDeleteAll(true)
+                    setDeleteAllTyped('')
+                  }}
+                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
+                >
+                  <Trash2 size={15} /> حذف الكل
+                </button>
+                <button
+                  onClick={() => {
+                    setEditingId(null)
+                    resetForm()
+                    setShowModal(true)
+                  }}
+                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-5 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all hover:shadow-lg hover:shadow-primary/30 active:scale-95"
+                >
+                  <Plus size={15} /> جدولة جديدة
+                </button>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -906,7 +908,7 @@ export const TrialSessions = () => {
                 <button
                   onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                   disabled={currentPage === totalPages}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-surface text-muted transition-all hover:bg-hover disabled:cursor-not-allowed disabled:opacity-30"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-surface text-muted transition-all hover:bg-hover disabled:cursor-not-allowed disabled:opacity-30 md:h-9 md:w-9"
                   aria-label="الصفحة التالية"
                 >
                   <ChevronLeft size={16} />
@@ -916,7 +918,7 @@ export const TrialSessions = () => {
                     key={page}
                     onClick={() => setCurrentPage(page)}
                     className={cn(
-                      'flex h-9 w-9 items-center justify-center rounded-xl text-[12px] font-bold transition-all',
+                      'flex h-11 w-11 items-center justify-center rounded-xl text-[12px] font-bold transition-all md:h-9 md:w-9',
                       page === currentPage
                         ? 'bg-primary text-on-primary shadow-sm shadow-primary/10'
                         : 'border border-border bg-surface text-muted hover:bg-hover',
@@ -928,7 +930,7 @@ export const TrialSessions = () => {
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                   disabled={currentPage === 1}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-surface text-muted transition-all hover:bg-hover disabled:cursor-not-allowed disabled:opacity-30"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-surface text-muted transition-all hover:bg-hover disabled:cursor-not-allowed disabled:opacity-30 md:h-9 md:w-9"
                   aria-label="الصفحة السابقة"
                 >
                   <ChevronRight size={16} />
@@ -975,7 +977,7 @@ export const TrialSessions = () => {
                   <div className="h-1 w-10 rounded-full bg-border" />
                 </div>
                 <div className="flex items-center gap-3 bg-error px-5 py-4">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 md:h-9 md:w-9">
                     <AlertTriangle size={20} className="text-on-error" />
                   </div>
                   <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
@@ -1013,7 +1015,7 @@ export const TrialSessions = () => {
               >
                 <div className="flex items-center justify-between bg-error px-5 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 md:h-9 md:w-9">
                       <AlertTriangle size={20} className="text-on-error" />
                     </div>
                     <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>

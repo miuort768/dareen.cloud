@@ -37,11 +37,6 @@ export const Parents = () => {
 
   const [filterStatus, setFilterStatus] = useState('')
 
-  const avgChildren = useMemo(
-    () => (state.totalParents > 0 ? state.totalLinkedStudents / state.totalParents : 0),
-    [state.totalParents, state.totalLinkedStudents],
-  )
-
   const filteredParents = useMemo(() => {
     let list = state.filteredParents
     if (filterStatus === 'active')
@@ -129,7 +124,6 @@ export const Parents = () => {
         <ParentsHeader
           totalParents={state.totalParents}
           totalLinkedStudents={state.totalLinkedStudents}
-          avgChildren={Math.round(avgChildren * 10) / 10}
           showAddForm={state.showAddForm}
           searchTerm={state.searchTerm}
           onSearchChange={actions.setSearchTerm}
