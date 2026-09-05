@@ -1,4 +1,4 @@
-﻿const { localYmd } = require('../../utils/validators');
+﻿const { localYmd, timeToMinutes } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
 
 async function getStats() {
@@ -133,18 +133,9 @@ async function getStats() {
 
     const lateStarts = sessionsToday.filter(s => {
         if (s.status?.toLowerCase() !== 'scheduled') return false;
-        const m = String(s.time || '').match(/^(\d{1,2}):(\d{2})\s*(ص|م|صباحاً|مساءً)?/);
-        if (!m) return false;
-        let h = parseInt(m[1], 10);
-        const mm = parseInt(m[2], 10);
-        const period = m[3] || '';
-        const isPM = /م$|مساء/.test(period);
-        if (isPM && h < 12) h += 12;
-        if (!isPM && h === 12) h = 0;
-        const sched = new Date(now);
-        sched.setHours(h, mm, 0, 0);
-        if (isNaN(sched.getTime())) return false;
-        return (now.getTime() - sched.getTime()) > 15 * 60 * 1000;
+        const sMin = timeToMinutes(s.time);
+        if (Number.isNaN(sMin)) return false;
+        return (now.getHours() * 60 + now.getMinutes() - sMin) > 15;
     }).length;
 
     // Attendance analytics across all completed sessions

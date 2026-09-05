@@ -1,4 +1,4 @@
-﻿const { localYmd } = require('../../utils/validators');
+﻿const { localYmd, timeToMinutes } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
 const logger = require('../../utils/logger');
 
@@ -7,9 +7,8 @@ const logger = require('../../utils/logger');
 async function getAlerts() {
     const now = new Date();
     const today = localYmd(now);
-    const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-    const in10Min = new Date(now.getTime() + 10 * 60000);
-    const in10MinTime = `${String(in10Min.getHours()).padStart(2, '0')}:${String(in10Min.getMinutes()).padStart(2, '0')}`;
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+    const in10MinMin = nowMin + 10;
 
     const critical = [];
     const warning = [];
@@ -88,21 +87,15 @@ async function getAlerts() {
         }
     }
 
-    // 🟠 Warning: subscriptions ending soon
+    // 🟠 Warning: subscriptions ending soon (using the authoritative per-enrollment counter)
     await safe('subscriptions_ending', async () => {
         const enrollments = await prisma.enrollment.findMany({
-            select: { studentId: true, teacher: true, subject: true, sessionsTotal: true },
-        });
-        const allSessions = await prisma.session.findMany({
-            where: { status: 'completed' },
-            select: { studentId: true, teacherName: true, subject: true },
+            where: { deletedAt: null },
+            select: { studentId: true, sessionsTotal: true, sessionsUsed: true },
         });
         const endingSoon = [];
         for (const e of enrollments) {
-            const used = allSessions.filter(
-                s => s.studentId === e.studentId && s.teacherName === e.teacher && s.subject === e.subject,
-            ).length;
-            const remaining = (Number(e.sessionsTotal) || 0) - used;
+            const remaining = (Number(e.sessionsTotal) || 0) - (Number(e.sessionsUsed) || 0);
             if (remaining <= 2 && remaining > 0) endingSoon.push({ studentId: e.studentId, remaining });
         }
         if (endingSoon.length > 0) {
@@ -117,30 +110,34 @@ async function getAlerts() {
 
     // 🟡 Reminder: upcoming sessions in 10 min
     await safe('sessions_soon', async () => {
-        const upcomingSessions = await prisma.session.findMany({
+        const upToMin = Math.min(nowMin + 10, 1439);
+        const candidates = await prisma.session.findMany({
             where: {
                 date: today,
                 status: 'scheduled',
-                time: { gte: currentTime, lte: in10MinTime },
             },
             select: { id: true, studentName: true, subject: true, time: true, teacherName: true },
             orderBy: { time: 'asc' },
         });
-        for (const s of upcomingSessions) {
-            reminder.push({
-                type: 'session_soon',
-                message: `حصّة ${s.subject} مع ${s.studentName} بعد ${timeDiff(s.time, currentTime)} دقائق`,
-                sessionId: s.id,
-                time: s.time,
-                severity: 'reminder',
-            });
+        for (const s of candidates) {
+            const sMin = timeToMinutes(s.time);
+            if (!Number.isNaN(sMin) && sMin >= nowMin && sMin <= upToMin) {
+                reminder.push({
+                    type: 'session_soon',
+                    message: `حصّة ${s.subject} مع ${s.studentName} بعد ${sMin - nowMin} دقائق`,
+                    sessionId: s.id,
+                    time: s.time,
+                    severity: 'reminder',
+                });
+            }
         }
     });
 
     // 🔵 Info: new students today
     await safe('new_students', async () => {
+        const localStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
         const newStudentsToday = await prisma.student.count({
-            where: { createdAt: { gte: new Date(today) } },
+            where: { createdAt: { gte: localStart } },
         });
         if (newStudentsToday > 0) {
             info.push({
@@ -153,12 +150,6 @@ async function getAlerts() {
     });
 
     return { critical, warning, reminder, info };
-}
-
-function timeDiff(t1, t2) {
-    const [h1, m1] = t1.split(':').map(Number);
-    const [h2, m2] = t2.split(':').map(Number);
-    return (h1 * 60 + m1) - (h2 * 60 + m2);
 }
 
 module.exports = { getAlerts };

@@ -28,6 +28,23 @@ function localYmd(d = new Date(), month = false) {
 }
 
 /**
+ * "10:30 م" | "4:30 ص" | "22:30" → minutes of day. The `time` column mixes 12h
+ * Arabic-period strings and 24h strings, so raw string comparison is bogus
+ * (executive reminders/timeline used it and missed/fired arbitrarily).
+ */
+function timeToMinutes(timeStr) {
+  const m = String(timeStr || '').match(/^(\d{1,2}):(\d{2})\s*(ص|م|صباحاً|مساءً)?/);
+  if (!m) return NaN;
+  let h = parseInt(m[1], 10);
+  const min = parseInt(m[2], 10);
+  const period = m[3] || '';
+  const isPM = /م$|مساء/.test(period);
+  if (isPM && h < 12) h += 12;
+  if (!isPM && h === 12) h = 0;
+  return h * 60 + min;
+}
+
+/**
  * Tolerant numeric coercion: accepts real numbers, ASCII numeric strings AND
  * Eastern-Arabic digit strings ("١٦٠" / "۱۶۰"). Number() alone fails on those
  * (NaN), which either 500s the request or silently stores 0.
@@ -266,6 +283,7 @@ const updateLeadSchema = createLeadSchema.partial();
 module.exports = {
     parseTolerantNumber,
     localYmd,
+    timeToMinutes,
     createStudentSchema,
     updateStudentSchema,
     createTeacherSchema,

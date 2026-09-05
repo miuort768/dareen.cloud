@@ -1,16 +1,15 @@
-﻿const { localYmd } = require('../../utils/validators');
+﻿const { localYmd, timeToMinutes } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
 
 async function getUpcoming() {
     const now = new Date();
     const today = localYmd(now);
-    const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const nowMin = now.getHours() * 60 + now.getMinutes();
 
     const sessions = await prisma.session.findMany({
         where: {
             date: today,
             status: 'scheduled',
-            time: { gte: currentTime },
         },
         select: {
             id: true,
@@ -21,15 +20,15 @@ async function getUpcoming() {
             studentId: true,
         },
         orderBy: { time: 'asc' },
-        take: 10,
+        take: 20,
     });
 
-    return sessions.map(s => {
-        const [h, m] = s.time.split(':').map(Number);
-        const schedMs = h * 3600000 + m * 60000;
-        const nowMs = now.getHours() * 3600000 + now.getMinutes() * 60000 + now.getSeconds() * 1000;
-        const diffMs = schedMs - nowMs;
-        const minutesUntil = Math.round(diffMs / 60000);
+    const upcoming = [];
+    for (const s of sessions) {
+        const sMin = timeToMinutes(s.time);
+        if (Number.isNaN(sMin)) continue;
+        const minutesUntil = sMin - nowMin;
+        if (minutesUntil < -15) continue;
 
         let urgency;
         if (minutesUntil <= 0) urgency = 'now';
@@ -38,7 +37,7 @@ async function getUpcoming() {
         else if (minutesUntil <= 60) urgency = 'within_hour';
         else urgency = 'later';
 
-        return {
+        upcoming.push({
             id: s.id,
             studentName: s.studentName,
             subject: s.subject,
@@ -46,8 +45,10 @@ async function getUpcoming() {
             teacherName: s.teacherName,
             minutesUntil,
             urgency,
-        };
-    });
+        });
+    }
+
+    return upcoming.slice(0, 10);
 }
 
 module.exports = { getUpcoming };
