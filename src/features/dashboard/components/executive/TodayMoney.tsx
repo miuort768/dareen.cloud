@@ -52,8 +52,8 @@ export const TodayMoney = memo(function TodayMoney({ stats }: { stats: Executive
       <div className="border-t border-divider lg:border-e lg:border-t-0">
         <MoneyStat
           icon={Banknote}
-          label="المقبوضات نقدًا"
-          value={stats.cashToday}
+          label="المقبوضات نقدًا هذا الشهر"
+          value={stats.cashMonth}
           accent="text-success"
           iconBg="bg-success-soft"
         />

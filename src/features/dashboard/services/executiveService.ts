@@ -3,6 +3,7 @@ import { api } from '../../../lib/api'
 export interface ExecutiveStats {
   todayRevenue: number
   cashToday: number
+  cashMonth: number
   todayProfit: number
   activeSessions: number
   occupancyRate: number

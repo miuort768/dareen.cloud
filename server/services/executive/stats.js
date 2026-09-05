@@ -4,12 +4,14 @@ const { prisma } = require('../../utils/prisma');
 async function getStats() {
     const now = new Date();
     const today = localYmd(now);
+    const currentMonth = today.slice(0, 7);
     const weekAgo = new Date(now.getTime() - 7 * 86400000).toISOString();
 
     const [
         sessionsToday,
         activeSessions,
         transactionsToday,
+        monthTransactions,
         fixedExpenses,
         students,
         teachers,
@@ -22,6 +24,7 @@ async function getStats() {
         prisma.session.findMany({ where: { date: today } }),
         prisma.activeSession.count(),
         prisma.manualTransaction.findMany({ where: { date: { gte: today } } }),
+        prisma.manualTransaction.findMany({ where: { date: { startsWith: currentMonth } } }),
         prisma.fixedExpense.findMany({ where: { isActive: 1 } }),
         prisma.student.findMany({ where: { deletedAt: null }, select: { id: true, createdAt: true, sessionPrice: true } }),
         prisma.teacher.findMany({ select: { id: true, name: true, price: true } }),
@@ -57,6 +60,10 @@ async function getStats() {
     const todayRevenue = todayRevenueRaw.reduce((a, b) => a + b, 0) + todayTransIncome.reduce((a, b) => a + b, 0);
 
     const cashToday = todayTransIncome.reduce((a, b) => a + b, 0);
+
+    const monthCash = (await Promise.all(monthTransactions.filter(t => t.type === 'income').map(t =>
+        currencyService.convert(Number(t.amount) || 0, t.currency || 'EGP', reportCurrency)
+    ))).reduce((a, b) => a + b, 0);
 
     const todayFixedExp = await Promise.all(fixedExpenses.map(f => 
         currencyService.convert(Number(f.amount) || 0, f.currency || 'EGP', reportCurrency)
@@ -161,6 +168,7 @@ async function getStats() {
     return {
         todayRevenue: Math.round(todayRevenue * 100) / 100,
         cashToday: Math.round(cashToday * 100) / 100,
+        cashMonth: Math.round(monthCash * 100) / 100,
         todayProfit: Math.round(todayProfit * 100) / 100,
         activeSessions,
         occupancyRate,
