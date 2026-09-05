@@ -86,7 +86,7 @@ async function main() {
            st.session_price AS student_price
       FROM sessions s
       JOIN students st ON st.id = s."studentId"
-     WHERE s.price <> st.session_price
+     WHERE (s.price IS NULL OR s.price <> st.session_price)
      ORDER BY st.name, s.date DESC
   `);
 
