@@ -47,13 +47,24 @@ const formatToday = () => {
   }
 }
 
+const getGreeting = (): string => {
+  const h = new Date().getHours()
+  if (h < 5) return 'تصبح على خير'
+  if (h < 12) return 'صباح الخير'
+  if (h < 17) return 'يوم سعيد'
+  return 'مساء الخير'
+}
+
 interface ExecutiveDashboardProps {
   academicYear?: string
+  userName?: string
 }
 
 export const ExecutiveDashboard = memo(function ExecutiveDashboard({
   academicYear,
+  userName,
 }: ExecutiveDashboardProps) {
+  const firstName = (userName || '').split(' ')[0] || 'المدير'
   const { data, isLoading, error, refetch, isFetching } = useExecutiveDashboard()
 
   if (isLoading) {
@@ -138,9 +149,12 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 font-dash">
           <div className="flex items-center gap-2">
             <CalendarDays size={16} strokeWidth={1.9} className="text-primary" />
-            <h1 className="text-sm font-black tracking-tight text-main md:text-base">
-              {formatToday()}
-            </h1>
+            <div className="min-w-0">
+              <p className="mb-0.5 text-[11px] font-black text-muted">{formatToday()}</p>
+              <h1 className="truncate text-sm font-black tracking-tight text-main md:text-base">
+                {getGreeting()}، {firstName}
+              </h1>
+            </div>
             {academicYear && (
               <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
                 {academicYear}

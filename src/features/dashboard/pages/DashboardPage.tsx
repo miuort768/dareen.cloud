@@ -125,7 +125,10 @@ export const Dashboard = () => {
         >
           {/* Desktop */}
           <div className="relative z-10 mx-auto hidden max-w-page px-6 md:block">
-            <ExecutiveDashboard academicYear={academicYear} />
+            <ExecutiveDashboard
+              academicYear={academicYear}
+              userName={currentUser?.name || currentUser?.username}
+            />
           </div>
 
           {/* Mobile */}
