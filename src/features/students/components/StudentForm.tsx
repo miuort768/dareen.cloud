@@ -55,6 +55,9 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     password: '',
   })
 
+  // Arabic-Indic digits (١٦٠) → ASCII (160) so Number() never fails on Arabic keyboards
+  const toAsciiDigits = (s: string) => s.replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
+
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -76,7 +79,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
     e.preventDefault()
     onSubmit({
       ...formData,
-      sessionPrice: Number(formData.sessionPrice) || 0,
+      sessionPrice: Number(toAsciiDigits(formData.sessionPrice)) || 0,
     })
   }
 
