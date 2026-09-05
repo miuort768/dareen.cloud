@@ -7,6 +7,19 @@ const logger = require('../utils/logger');
 
 const FINANCE_CACHE_TTL = 60;
 
+/**
+ * Tolerant numeric coercion — Eastern-Arabic digits ("١٦٠"/"۱۶۰") parse to NaN
+ * with Number()/parseFloat(); normalize to ASCII digits first.
+ */
+function parseTolerantNumber(val) {
+  const s = String(val ?? '')
+    .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[\u06F0-\u06F9]/g, (d) => String(d.charCodeAt(0) - 0x06F0))
+    .trim();
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
 function ctx(user) {
   return { userId: user.id, username: user.username };
 }
@@ -26,7 +39,7 @@ async function createTransaction(data, user) {
   if (!['income', 'expense'].includes(type)) {
     throw Object.assign(new Error('type يجب أن يكون income أو expense فقط'), { statusCode: 400 });
   }
-  const parsedAmount = parseFloat(amount);
+  const parsedAmount = parseTolerantNumber(amount);
   if (isNaN(parsedAmount) || parsedAmount <= 0) {
     throw Object.assign(new Error('amount يجب أن يكون رقماً موجباً'), { statusCode: 400 });
   }
@@ -81,6 +94,11 @@ async function updateFixedExpense(id, amount, user) {
     throw Object.assign(new Error('Amount is required'), { statusCode: 400 });
   }
 
+  const parsed = parseTolerantNumber(amount);
+  if (isNaN(parsed) || parsed < 0) {
+    throw Object.assign(new Error('amount يجب أن يكون رقماً صحيحاً'), { statusCode: 400 });
+  }
+
   const before = await prisma.fixedExpense.findUnique({ where: { id: parseInt(id) } });
   if (!before) {
     throw Object.assign(new Error('Fixed expense not found'), { statusCode: 404 });
@@ -88,7 +106,7 @@ async function updateFixedExpense(id, amount, user) {
 
   const updated = await prisma.fixedExpense.update({
     where: { id: parseInt(id) },
-    data: { amount: parseFloat(amount) },
+    data: { amount: parsed },
   });
 
   cache.invalidate('finance:*');
