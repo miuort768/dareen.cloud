@@ -20,25 +20,25 @@ const pool = new Pool({ connectionString: DB_URL });
 const q = (sql) => pool.query(sql);
 
 async function main() {
-  /* 1. Students pricing */
+  /* 1. Students pricing — students columns are snake_case (@map) */
   const students = await q(`
     SELECT COUNT(*)::int                          AS total,
            COUNT(*) FILTER (WHERE session_price > 0)::int AS with_price,
            COALESCE(AVG(NULLIF(session_price, 0)), 0)::float AS avg_price
-      FROM students WHERE "deletedAt" IS NULL
+      FROM students WHERE deleted_at IS NULL
   `);
   const s = students.rows[0];
   console.log('── الطلاب ──');
   console.log(`  إجمالي: ${s.total} | بسعر حصة: ${s.with_price} | بدون سعر: ${s.total - s.with_price} | متوسط السعر: ${Number(s.avg_price).toFixed(0)}`);
 
   const zeroStudents = await q(`
-    SELECT id, name, session_price, "createdAt"
-      FROM students WHERE "deletedAt" IS NULL AND session_price = 0
-     ORDER BY "createdAt" DESC LIMIT 8
+    SELECT id, name, session_price, created_at
+      FROM students WHERE deleted_at IS NULL AND session_price = 0
+     ORDER BY created_at DESC LIMIT 8
   `);
   if (zeroStudents.rows.length) {
     console.log('  أمثلة طلاب بدون سعر:');
-    zeroStudents.rows.forEach((r) => console.log(`    ${r.id}  ${r.name}  (أُنشئ ${new Date(r.createdAt).toISOString().slice(0, 10)})`));
+    zeroStudents.rows.forEach((r) => console.log(`    ${r.id}  ${r.name}  (أُنشئ ${new Date(r.created_at).toISOString().slice(0, 10)})`));
   }
 
   /* 2. Sessions pricing */
