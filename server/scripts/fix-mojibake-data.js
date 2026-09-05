@@ -16,11 +16,30 @@
  *   node scripts/fix-mojibake-data.js --apply    # write fixes
  */
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
-// Production servers keep the PG URL in .env.production — load it as fallback (no override)
+// Production keeps the PG URL in .env.production — load as fallback (no override)
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.production'), override: false });
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { Pool } = require('pg');
+
+/** Backups dir must be writable inside the container (runs as `node` user).
+ *  Tries ./backups first, falls back to the OS temp dir. */
+function makeBackupFile(prefix) {
+  const candidates = [
+    path.join(__dirname, '..', 'backups'),
+    path.join(os.tmpdir(), 'darin-backups'),
+  ];
+  for (const dir of candidates) {
+    try {
+      fs.mkdirSync(dir, { recursive: true });
+      return path.join(dir, `${prefix}-${Date.now()}.jsonl`);
+    } catch {
+      // permission denied — try next candidate
+    }
+  }
+  return null;
+}
 
 const APPLY = process.argv.includes('--apply');
 
@@ -146,8 +165,10 @@ async function main() {
   const tables = await discover();
   console.log(`Text-bearing tables with PK: ${tables.length}`);
 
-  const backupPath = path.join(__dirname, '..', 'backups', `mojibake-${Date.now()}.jsonl`);
-  if (APPLY) fs.mkdirSync(path.dirname(backupPath), { recursive: true });
+  const backupPath = APPLY ? makeBackupFile('mojibake') : null;
+  if (APPLY && !backupPath) {
+    console.warn('WARNING: could not create backup file — continuing without backup.');
+  }
 
   let totalFields = 0;
   let totalRows = 0;
@@ -189,7 +210,7 @@ async function main() {
       totalFields += Object.keys(updates).length;
 
       if (APPLY) {
-        fs.appendFileSync(backupPath, JSON.stringify(backupRow) + '\n');
+        if (backupPath) fs.appendFileSync(backupPath, JSON.stringify(backupRow) + '\n');
         const setClause = Object.keys(updates)
           .map((c, i) => `"${c}" = $${i + 2}`)
           .join(', ');
@@ -211,7 +232,7 @@ async function main() {
 
   console.log('─'.repeat(50));
   console.log(`Total ${APPLY ? 'fixed' : 'to fix'}: ${totalFields} fields in ${totalRows} rows`);
-  if (APPLY) console.log('Backup:', backupPath);
+  if (APPLY && backupPath) console.log('Backup:', backupPath);
   else console.log('DRY RUN — re-run with --apply to write fixes.');
 
   await pool.end();

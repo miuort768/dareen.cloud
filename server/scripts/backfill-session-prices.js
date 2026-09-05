@@ -24,8 +24,27 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 // Production keeps the PG URL in .env.production — load as fallback (no override)
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.production'), override: false });
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { Pool } = require('pg');
+
+/** Backups dir must be writable inside the container (runs as `node` user).
+ *  Tries ./backups first, falls back to the OS temp dir. */
+function makeBackupFile(prefix) {
+  const candidates = [
+    path.join(__dirname, '..', 'backups'),
+    path.join(os.tmpdir(), 'darin-backups'),
+  ];
+  for (const dir of candidates) {
+    try {
+      fs.mkdirSync(dir, { recursive: true });
+      return path.join(dir, `${prefix}-${Date.now()}.jsonl`);
+    } catch {
+      // permission denied — try next candidate
+    }
+  }
+  return null;
+}
 
 const APPLY = process.argv.includes('--apply');
 const DB_URL = process.env.DATABASE_URL;
@@ -102,10 +121,13 @@ async function main() {
     return;
   }
 
-  const backupPath = path.join(__dirname, '..', 'backups', `session-price-backfill-${Date.now()}.jsonl`);
-  fs.mkdirSync(path.dirname(backupPath), { recursive: true });
-  fs.writeFileSync(backupPath, rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
-  console.log(`Backup: ${backupPath}`);
+  const backupPath = makeBackupFile('session-price-backfill');
+  if (backupPath) {
+    fs.writeFileSync(backupPath, rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
+    console.log(`Backup: ${backupPath}`);
+  } else {
+    console.warn('WARNING: could not write backup file — continuing without backup.');
+  }
 
   let updated = 0;
   for (const r of rows) {
