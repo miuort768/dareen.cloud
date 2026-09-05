@@ -12,7 +12,7 @@ import {
 import { settingsService } from '../services/settingsService'
 import { useSettingsStore } from '../../../store/settingsStore'
 import type { Currency, ExchangeRate } from '../services/settingsService'
-import { cn } from '../../../lib/utils'
+import { cn, parseNumberSafe } from '../../../lib/utils'
 
 export const CurrenciesSection = ({
   localCurrency,
@@ -64,8 +64,8 @@ export const CurrenciesSection = ({
       await settingsService.createExchangeRate({
         fromCurrency: newRate.fromCurrency.toUpperCase(),
         toCurrency: newRate.toCurrency.toUpperCase(),
-        buyRate: parseFloat(newRate.buyRate),
-        sellRate: parseFloat(newRate.sellRate || newRate.buyRate),
+        buyRate: parseNumberSafe(newRate.buyRate),
+        sellRate: parseNumberSafe(newRate.sellRate || newRate.buyRate),
         notes: newRate.notes,
       })
       setNewRate({ fromCurrency: '', toCurrency: '', buyRate: '', sellRate: '', notes: '' })

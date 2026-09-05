@@ -1,8 +1,9 @@
+﻿const { localYmd } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
 
 async function getUpcoming() {
     const now = new Date();
-    const today = now.toISOString().split('T')[0];
+    const today = localYmd(now);
     const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
     const sessions = await prisma.session.findMany({

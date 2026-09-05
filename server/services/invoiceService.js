@@ -1,3 +1,4 @@
+﻿const { localYmd } = require('../utils/validators');
 const crypto = require('crypto');
 const { prisma } = require('../utils/prisma');
 const cacheService = require('./cacheService');
@@ -167,7 +168,7 @@ async function payTeacherInvoice(id, data, user) {
       data: {
         status: 'paid',
         paymentMethod: data.paymentMethod || existing.paymentMethod || '',
-        paidAt: data.paidAt || new Date().toISOString().split('T')[0],
+        paidAt: data.paidAt || localYmd(),
       },
     });
     return tx.teacherInvoice.findUnique({ where: { id } });
@@ -361,7 +362,7 @@ async function payStudentInvoice(id, data, user) {
       data: {
         status: 'paid',
         paymentMethod: data.paymentMethod || existing.paymentMethod || '',
-        paidAt: data.paidAt || new Date().toISOString().split('T')[0],
+        paidAt: data.paidAt || localYmd(),
       },
     });
     return tx.studentInvoice.findUnique({ where: { id } });

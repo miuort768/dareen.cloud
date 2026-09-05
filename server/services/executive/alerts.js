@@ -1,3 +1,4 @@
+﻿const { localYmd } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
 const logger = require('../../utils/logger');
 
@@ -5,7 +6,7 @@ const logger = require('../../utils/logger');
 // alerts service (which previously caused the frontend "degraded" banner).
 async function getAlerts() {
     const now = new Date();
-    const today = now.toISOString().split('T')[0];
+    const today = localYmd(now);
     const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     const in10Min = new Date(now.getTime() + 10 * 60000);
     const in10MinTime = `${String(in10Min.getHours()).padStart(2, '0')}:${String(in10Min.getMinutes()).padStart(2, '0')}`;

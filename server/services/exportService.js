@@ -1,4 +1,4 @@
-const { prisma } = require('../utils/prisma');
+﻿const { prisma } = require('../utils/prisma');
 const ExcelJS = require('exceljs');
 const PDFDocument = require('pdfkit');
 const arabicReshaper = require('arabic-reshaper');
@@ -7,6 +7,7 @@ const path = require('path');
 const fs = require('fs');
 const fsp = fs.promises;
 const logger = require('../utils/logger');
+const { localYmd } = require('../utils/validators');
 
 const bidi = bidiFactory();
 
@@ -499,7 +500,7 @@ async function exportData(entity, format, filters = {}) {
         return {
             buffer,
             contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            filename: `${entity}_${new Date().toISOString().split('T')[0]}.xlsx`,
+            filename: `${entity}_${localYmd()}.xlsx`,
         };
     }
 
@@ -508,7 +509,7 @@ async function exportData(entity, format, filters = {}) {
         return {
             buffer,
             contentType: 'application/pdf',
-            filename: `${entity}_${new Date().toISOString().split('T')[0]}.pdf`,
+            filename: `${entity}_${localYmd()}.pdf`,
         };
     }
 

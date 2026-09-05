@@ -2,6 +2,7 @@ const { prisma } = require('../utils/prisma');
 const cache = require('./cacheService');
 const { CACHE_KEYS } = require('../cache/cacheKeys');
 const logger = require('../utils/logger');
+const { localYmd } = require('../utils/validators');
 
 const RATE_CACHE_TTL = 300;
 const SETTINGS_CACHE_TTL = 600;
@@ -62,7 +63,7 @@ async function getLatestRate(fromCurrency, toCurrency, date) {
   if (fromCurrency === toCurrency) return 1;
 
   const cacheKey = `${CACHE_KEYS.EXCHANGE_RATES}:rate:${fromCurrency}:${toCurrency}:${date || 'latest'}`;
-  const targetDate = date || new Date().toISOString().slice(0, 10);
+  const targetDate = date || localYmd();
 
   return cache.remember(cacheKey, RATE_CACHE_TTL, async () => {
     let rate = await prisma.exchangeRate.findFirst({

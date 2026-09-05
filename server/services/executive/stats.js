@@ -1,8 +1,9 @@
+﻿const { localYmd } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
 
 async function getStats() {
     const now = new Date();
-    const today = now.toISOString().split('T')[0];
+    const today = localYmd(now);
     const weekAgo = new Date(now.getTime() - 7 * 86400000).toISOString();
 
     const [

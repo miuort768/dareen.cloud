@@ -5,6 +5,7 @@ const ResponseHandler = require('../../utils/responseHandler');
 const { prisma } = require('../../utils/prisma');
 const { audit } = require('../../services/auditService');
 const cache = require('../../services/cacheService');
+const { parseTolerantNumber } = require('../../utils/validators');
 
 router.use(authMiddleware);
 router.use(checkRole(['admin']));
@@ -78,12 +79,17 @@ router.get('/exchange-rates', async (req, res) => {
 
 router.post('/exchange-rates', async (req, res) => {
     const { fromCurrency, toCurrency, buyRate, sellRate, effectiveDate, notes } = req.body;
+    const parsedBuy = parseTolerantNumber(buyRate);
+    const parsedSell = parseTolerantNumber(sellRate || buyRate);
+    if (!Number.isFinite(parsedBuy) || !Number.isFinite(parsedSell) || parsedBuy <= 0 || parsedSell <= 0) {
+        return ResponseHandler.error(res, 'قيم الرقم غير صالحة — أدخل أرقامًا صحيحة', 400);
+    }
     try {
         const rate = await prisma.exchangeRate.create({
             data: {
                 fromCurrency, toCurrency,
-                buyRate: parseFloat(buyRate),
-                sellRate: parseFloat(sellRate),
+                buyRate: parsedBuy,
+                sellRate: parsedSell,
                 effectiveDate: effectiveDate ? new Date(effectiveDate) : new Date(),
                 notes, createdBy: req.user.username,
             }

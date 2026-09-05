@@ -1,5 +1,6 @@
-const { v4: uuidv4 } = require('uuid');
+﻿const { v4: uuidv4 } = require('uuid');
 const { prisma } = require('../utils/prisma');
+const { localYmd } = require('../utils/validators');
 
 let timer = null;
 
@@ -13,7 +14,7 @@ module.exports = (app) => {
             });
             const minutesBefore = parseInt(settings?.value) || 30;
             const targetDate = new Date(Date.now() + minutesBefore * 60 * 1000);
-            const targetToday = targetDate.toISOString().split('T')[0];
+            const targetToday = localYmd(targetDate);
             const targetTime = `${String(targetDate.getHours()).padStart(2, '0')}:${String(targetDate.getMinutes()).padStart(2, '0')}`;
             const upcoming = await prisma.session.findMany({
                 where: { date: targetToday, time: targetTime, status: 'scheduled' },
@@ -34,7 +35,7 @@ module.exports = (app) => {
                                 receiverId: parent.id,
                                 title,
                                 message,
-                                time: { gte: new Date(new Date().toISOString().split('T')[0]) }
+                                time: { gte: new Date(localYmd()) }
                             }
                         });
                         if (!existing) {

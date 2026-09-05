@@ -3,6 +3,7 @@
  */
 
 const logger = require('../utils/logger');
+const { parseTolerantNumber } = require('../utils/validators');
 
 /**
  * 1. Global Input Sanitizer
@@ -84,7 +85,7 @@ const validateBody = (schema) => {
                 continue;
             }
             if (rules.type === 'number') {
-                const num = Number(value);
+                const num = parseTolerantNumber(value);
                 if (isNaN(num)) {
                     errors.push(`الحقل "${field}" يجب أن يكون رقماً`);
                     continue;

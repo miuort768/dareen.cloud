@@ -4,21 +4,9 @@ const cache = require('./cacheService');
 const { audit } = require('./auditService');
 const currencyService = require('./currencyService');
 const logger = require('../utils/logger');
+const { parseTolerantNumber } = require('../utils/validators');
 
 const FINANCE_CACHE_TTL = 60;
-
-/**
- * Tolerant numeric coercion — Eastern-Arabic digits ("١٦٠"/"۱۶۰") parse to NaN
- * with Number()/parseFloat(); normalize to ASCII digits first.
- */
-function parseTolerantNumber(val) {
-  const s = String(val ?? '')
-    .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660))
-    .replace(/[\u06F0-\u06F9]/g, (d) => String(d.charCodeAt(0) - 0x06F0))
-    .trim();
-  const n = Number(s);
-  return Number.isFinite(n) ? n : NaN;
-}
 
 function ctx(user) {
   return { userId: user.id, username: user.username };
@@ -156,9 +144,9 @@ async function getStats() {
   return cache.wrap('finance:overview:all', FINANCE_CACHE_TTL, async () => {
     const reportCurrency = await currencyService.getReportCurrency();
     const now = new Date();
-    const currentMonth = now.toISOString().slice(0, 7);
+    const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1);
-    const sixMonthsAgoStr = sixMonthsAgo.toISOString().slice(0, 10);
+    const sixMonthsAgoStr = `${sixMonthsAgo.getFullYear()}-${String(sixMonthsAgo.getMonth() + 1).padStart(2, '0')}-${String(sixMonthsAgo.getDate()).padStart(2, '0')}`;
 
     const [
       sessionByCurrency,
@@ -255,7 +243,7 @@ async function getStats() {
     const monthlyData = [];
     for (let i = 5; i >= 0; i--) {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      const mStr = d.toISOString().slice(0, 7);
+      const mStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
       const mLabel = d.toLocaleDateString('ar-EG', { month: 'short' });
 
       const mSessions = recentSessions.filter(s => s.date && s.date.startsWith(mStr));

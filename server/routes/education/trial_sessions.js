@@ -1,3 +1,4 @@
+﻿const { localYmd } = require('../../utils/validators');
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
@@ -139,7 +140,7 @@ router.post('/:id/convert', checkRole(['admin']), async (req, res) => {
                         teacherId: trial.teacherId,
                         teacherName: trial.teacherName || '',
                         subject: trial.subject || '',
-                        date: trial.date || new Date().toISOString().split('T')[0],
+                        date: trial.date || localYmd(),
                         time: trial.time || '',
                         status: 'completed',
                     }

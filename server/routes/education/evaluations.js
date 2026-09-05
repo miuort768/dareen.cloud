@@ -1,3 +1,4 @@
+﻿const { localYmd } = require('../../utils/validators');
 const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
@@ -83,7 +84,7 @@ router.post('/', authMiddleware, checkRole(['admin', 'teacher']), validate(creat
     const teacherId = req.user.role === 'teacher' ? req.user.id : (req.body.teacherId || 'admin');
     const teacherName = req.user.role === 'teacher' ? (req.user.teacherName || req.user.name) : 'المدير';
     const newId = uuidv4();
-    const date = new Date().toISOString().split('T')[0];
+    const date = localYmd();
 
     try {
         await prisma.$transaction(async (tx) => {

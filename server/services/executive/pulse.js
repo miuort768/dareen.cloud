@@ -1,10 +1,11 @@
+﻿const { localYmd } = require('../../utils/validators');
 const { prisma } = require('../../utils/prisma');
 const logger = require('../../utils/logger');
 const { getStats } = require('./stats');
 
 async function getPulse() {
     const now = new Date();
-    const today = now.toISOString().split('T')[0];
+    const today = localYmd(now);
 
     let stats;
     try {
@@ -17,7 +18,7 @@ async function getPulse() {
     let profitScore = 50;
     try {
         const weekSessions = await prisma.session.findMany({
-            where: { date: { gte: new Date(now.getTime() - 7 * 86400000).toISOString().split('T')[0] }, status: 'completed' },
+            where: { date: { gte: localYmd(new Date(now.getTime() - 7 * 86400000)) }, status: 'completed' },
             select: { price: true },
         });
         const dailyAvg = weekSessions.reduce((s, x) => s + (Number(x.price) || 0), 0) / 7;

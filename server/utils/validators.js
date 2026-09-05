@@ -5,6 +5,29 @@ const idSchema = z.string().or(z.number());
 const phoneSchema = z.string().min(10, "Phone number too short").optional().or(z.literal(''));
 
 /**
+ * Pure numeric coercion tolerant of Eastern-Arabic digit strings, returning
+ * NaN for garbage instead of false 0. Use in non-zod routes before Prisma.
+ */
+function parseTolerantNumber(val) {
+  const s = String(val ?? '')
+    .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[\u06F0-\u06F9]/g, (d) => String(d.charCodeAt(0) - 0x06F0))
+    .trim();
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+/**
+ * Local YYYY-MM-DD (or YYYY-MM with month=true). Display/driven strings in the
+ * DB are local calendar dates, but toISOString() shifts them a day back on
+ * UTC+2/+3 between 00:00–02:00 local (monthly stats, rate lookups, reminders).
+ */
+function localYmd(d = new Date(), month = false) {
+  const base = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  return month ? base : `${base}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+/**
  * Tolerant numeric coercion: accepts real numbers, ASCII numeric strings AND
  * Eastern-Arabic digit strings ("١٦٠" / "۱۶۰"). Number() alone fails on those
  * (NaN), which either 500s the request or silently stores 0.
@@ -241,6 +264,8 @@ const createLeadSchema = z.object({
 const updateLeadSchema = createLeadSchema.partial();
 
 module.exports = {
+    parseTolerantNumber,
+    localYmd,
     createStudentSchema,
     updateStudentSchema,
     createTeacherSchema,
