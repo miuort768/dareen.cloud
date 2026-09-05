@@ -22,10 +22,10 @@ async function getStats() {
         prisma.session.findMany({ where: { date: today } }),
         prisma.activeSession.count(),
         prisma.manualTransaction.findMany({ where: { date: { gte: today } } }),
-        prisma.fixedExpense.findMany(),
+        prisma.fixedExpense.findMany({ where: { isActive: 1 } }),
         prisma.student.findMany({ where: { deletedAt: null }, select: { id: true, createdAt: true, sessionPrice: true } }),
         prisma.teacher.findMany({ select: { id: true, name: true, price: true } }),
-        prisma.enrollment.findMany({ select: { id: true, teacher: true, subject: true, sessionsTotal: true, studentId: true } }),
+        prisma.enrollment.findMany({ where: { deletedAt: null }, select: { id: true, teacherFallback: true, subject: true, sessionsTotal: true, sessionsUsed: true, studentId: true } }),
         prisma.evaluation.findMany({ select: { rating: true, studentId: true } }),
         prisma.studentInvoice.findMany({ where: { status: { in: ['overdue', 'pending'] } } }),
         prisma.teacherInvoice.findMany(),
@@ -70,16 +70,14 @@ async function getStats() {
     const todayProfit = todayRevenue - todayExpenses;
 
     const teacherHours = teachers.length * 8;
-    const activeHours = activeSessions;
-    const occupancyRate = teacherHours > 0 ? Math.round((activeHours / teacherHours) * 100) : 0;
+    const workloadToday = scheduledToday.length + completedToday.length;
+    const occupancyRate = teacherHours > 0 ? Math.min(100, Math.round((workloadToday / teacherHours) * 100)) : 0;
 
     const totalEnrollments = enrollments.length;
-    const expiredEnrollments = enrollments.filter(e => {
-        const used = allSessions.filter(s => s.teacherName === e.teacher && s.subject === e.subject).length;
-        return (Number(e.sessionsTotal) || 0) - used <= 0;
-    }).length;
-    const renewedCount = totalEnrollments - expiredEnrollments;
-    const renewalRate = totalEnrollments > 0 ? Math.round((renewedCount / totalEnrollments) * 100) : 100;
+    const activeEnrollments = enrollments.filter(e =>
+        (Number(e.sessionsTotal) || 0) - (Number(e.sessionsUsed) || 0) > 0
+    ).length;
+    const renewalRate = totalEnrollments > 0 ? Math.round((activeEnrollments / totalEnrollments) * 100) : 100;
 
     const subjectRevenue = {};
     for (const s of allSessions) {
@@ -116,19 +114,10 @@ async function getStats() {
     const overdueInvoicesCount = studentInvoices.length;
 
     const lowSessionStudents = [];
-    const enrollmentsByStudent = {};
     for (const e of enrollments) {
-        if (!enrollmentsByStudent[e.studentId]) enrollmentsByStudent[e.studentId] = [];
-        enrollmentsByStudent[e.studentId].push(e);
-    }
-    for (const [sid, enrollmentList] of Object.entries(enrollmentsByStudent)) {
-        let totalRemaining = 0;
-        for (const e of enrollmentList) {
-            const used = allSessions.filter(s => s.teacherName === e.teacher && s.subject === e.subject).length;
-            totalRemaining += (Number(e.sessionsTotal) || 0) - used;
-        }
-        if (totalRemaining <= 3 && totalRemaining >= 0) {
-            lowSessionStudents.push({ studentId: sid, remaining: totalRemaining });
+        const remaining = (Number(e.sessionsTotal) || 0) - (Number(e.sessionsUsed) || 0);
+        if (remaining >= 0 && remaining <= 3) {
+            lowSessionStudents.push({ studentId: e.studentId, remaining });
         }
     }
 
@@ -143,10 +132,19 @@ async function getStats() {
     const attendanceRate = totalScheduled > 0 ? Math.round((completedToday.length / totalScheduled) * 100) : 100;
 
     const lateStarts = sessionsToday.filter(s => {
-        if (!s.time || !s.status) return false;
-        const [h, m] = s.time.split(':').map(Number);
-        const sched = new Date(); sched.setHours(h, m, 0, 0);
-        return s.status === 'completed' && (now.getTime() - sched.getTime()) > 5 * 60 * 1000;
+        if (s.status?.toLowerCase() !== 'scheduled') return false;
+        const m = String(s.time || '').match(/^(\d{1,2}):(\d{2})\s*(ص|م|صباحاً|مساءً)?/);
+        if (!m) return false;
+        let h = parseInt(m[1], 10);
+        const mm = parseInt(m[2], 10);
+        const period = m[3] || '';
+        const isPM = /م$|مساء/.test(period);
+        if (isPM && h < 12) h += 12;
+        if (!isPM && h === 12) h = 0;
+        const sched = new Date(now);
+        sched.setHours(h, mm, 0, 0);
+        if (isNaN(sched.getTime())) return false;
+        return (now.getTime() - sched.getTime()) > 15 * 60 * 1000;
     }).length;
 
     // Attendance analytics across all completed sessions
