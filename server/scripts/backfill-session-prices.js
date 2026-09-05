@@ -51,13 +51,16 @@ console.log(`Mode: ${APPLY ? 'APPLY' : 'DRY RUN'}`);
 const pool = new Pool({ connectionString: DB_URL });
 
 async function main() {
+  // Column names follow the Prisma schema exactly: sessions."studentId" is
+  // camelCase (no @map), students."session_price" is snake_case (@map).
   const { rows } = await pool.query(`
-    SELECT s.id, s.date, s.subject, s.student_id,
+    SELECT s.id, s.date, s.subject,
+           s."studentId"  AS student_id,
            s.price        AS session_price,
            st.session_price AS student_price,
            s.status
       FROM sessions s
-      JOIN students st ON st.id = s.student_id
+      JOIN students st ON st.id = s."studentId"
      WHERE s.price = 0
        AND st.session_price > 0
      ORDER BY s.date DESC
