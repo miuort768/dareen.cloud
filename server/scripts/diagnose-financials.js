@@ -86,6 +86,28 @@ async function main() {
   console.log('\n── عملات الحصص المكتملة ──');
   cur.rows.forEach((r) => console.log(`  ${r.cur.padEnd(10)} ${String(r.n).padStart(5)} حصة  إيراد ${r.rev}`));
 
+  /* 6. Unpriced sessions — why they still rent 0 revenue */
+  const unpriced = await q(`
+    SELECT s.id, s.date, s.subject, s.status,
+           s."studentId" AS student_id,
+           COALESCE(st.name, '(طالب محذوف/غير موجود)') AS student_name,
+           COALESCE(st.session_price, 0) AS student_price,
+           s.price AS session_price,
+           s."teacherPrice" AS teacher_price
+      FROM sessions s
+      LEFT JOIN students st ON st.id = s."studentId"
+     WHERE s.status = 'completed' AND (s.price IS NULL OR s.price <= 0)
+     ORDER BY s.date, s.id
+  `);
+  if (unpriced.rows.length) {
+    console.log('\n── الحصص المكتملة بلا سعر (لا تدخل الإيراد) ──');
+    unpriced.rows.forEach((r) =>
+      console.log(`  ${r.id}  ${r.date}  ${String(r.subject || '—').slice(0, 20)}  الطالب: ${String(r.student_name).slice(0, 24)}  (سعر الطالب: ${r.student_price})  تكلفة المعلمة: ${r.teacher_price ?? 0}`),
+    );
+    console.log('  => سببها: الطالب بلا سعر حصة (session_price=0) أو محذوف. أدخل السعر ثم أعد backfill،');
+    console.log('     أو صححها يدويًا/حذفها إن كانت حصص اختبار.');
+  }
+
   await pool.end();
 }
 
