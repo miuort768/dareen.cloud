@@ -75,7 +75,7 @@ async function main() {
   console.log('\n── المعاملات اليدوية ──');
   tx.rows.forEach((r) => console.log(`  ${r.type.padEnd(8)} ${String(r.status).padEnd(10)} ${String(r.n).padStart(4)}  مجموع ${r.total}`));
 
-  const fixed = await q(`SELECT COUNT(*)::int AS n, COALESCE(SUM(amount),0)::int AS total FROM "fixed_expenses" WHERE "isActive" = 1`);
+  const fixed = await q(`SELECT COUNT(*)::int AS n, COALESCE(SUM(amount),0)::int AS total FROM "fixed_expenses" WHERE is_active = 1`);
   console.log(`\n── المصاريف الثابتة ──\n  ${fixed.rows[0].n} بند  مجموع ${fixed.rows[0].total}`);
 
   /* 5. Currencies actually in use */
