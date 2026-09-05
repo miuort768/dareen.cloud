@@ -80,7 +80,7 @@ export const EvaluationsHeader = ({
             {showAddButton && (
               <button
                 onClick={onAddClick}
-                className="flex h-8 items-center gap-1.5 rounded-lg bg-primary px-3 text-micro font-bold text-on-primary transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-10"
               >
                 <Plus size={11} /> تقييم
               </button>
