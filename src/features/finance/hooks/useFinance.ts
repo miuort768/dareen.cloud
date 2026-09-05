@@ -1,9 +1,10 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+﻿import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { financeService } from '../services/financeService'
 import type { Session, TeacherInvoice, Transaction, FixedExpense } from '../../../types'
 import { CHART_COLORS } from '../types'
 import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
 import { confirm } from '../../../lib/confirmDialog'
+import { formatLocalDate } from '../../../lib/utils'
 
 interface FinanceStats {
   reportCurrency?: string
@@ -92,7 +93,7 @@ export const useFinance = () => {
             category: exp.name,
             amount: exp.amount,
             currency: exp.currency || 'EGP',
-            date: new Date().toISOString().split('T')[0]!,
+            date: formatLocalDate(new Date())!,
             description: `تحويل تلقائي من المصاريف الثابتة: ${exp.name}`,
           }),
         ),

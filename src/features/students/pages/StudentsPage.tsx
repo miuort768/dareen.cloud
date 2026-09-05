@@ -30,7 +30,7 @@ import { StudentsToolbar } from '../components/StudentsToolbar'
 import { generateSessionDates } from '../utils/sessionUtils'
 import { periodLabel } from '../../attendance/utils/slotUtils'
 import type { Student, Enrollment, ScheduleSlot } from '../types'
-import { cn } from '../../../lib/utils'
+import { cn, formatLocalDate } from '../../../lib/utils'
 
 const DELETE_ALL_PASSWORD = 'dareen'
 
@@ -182,7 +182,7 @@ export const Students = () => {
         schedule: enrollData.schedule,
         sessions: generateSessionDates(enrollData.schedule, enrollData.totalSessions).map(
           (info) => ({
-            date: info.date.toISOString().split('T')[0],
+            date: formatLocalDate(info.date),
             day: info.slot.day,
             time: `${info.slot.hour} ${periodLabel(info.slot.period, true)}`,
           }),

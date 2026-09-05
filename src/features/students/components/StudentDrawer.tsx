@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+﻿import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   X,
@@ -19,7 +19,7 @@ import {
   Zap,
   Flame,
 } from 'lucide-react'
-import { cn } from '../../../lib/utils'
+import { cn, formatLocalDate } from '../../../lib/utils'
 import { getCurrencySymbol } from '../../../config/constants'
 import type { LucideIcon } from 'lucide-react'
 import type { Student, ScheduleSlot } from '../types'
@@ -132,7 +132,7 @@ export const StudentDrawer = ({
     let streak = 0
     const d = new Date()
     for (let i = 0; i < 30; i++) {
-      const dateStr = d.toISOString().split('T')[0]
+      const dateStr = formatLocalDate(d)
       if (sessions.some((s) => s.date === dateStr && s.status === 'completed')) {
         streak++
       } else if (i > 0) break
@@ -154,7 +154,7 @@ export const StudentDrawer = ({
   const totalSess = sessions.length
   const overallAttendance = totalSess > 0 ? Math.round((completedSessions / totalSess) * 100) : 0
 
-  const today = new Date().toISOString().split('T')[0]
+  const today = formatLocalDate(new Date())
   const todaySessions = sessions.filter((s) => s.date === today)
 
   return (

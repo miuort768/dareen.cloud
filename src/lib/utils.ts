@@ -23,6 +23,15 @@ export function parseNumberSafe(input: string | number | null | undefined): numb
   return Number.isFinite(n) ? n : 0
 }
 
+/**
+ * Local YYYY-MM-DD — toISOString() shifts the calendar date back a day on
+ * UTC+2/+3 timezones between 00:00–02:00 local (documented MonthlyClosing bug:
+ * payroll windows started on the 2nd or missed the last day).
+ */
+export function formatLocalDate(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
 export function formatTimeAgo(dateInput?: string | Date | null): string {
   if (!dateInput) return ''
   const date = new Date(dateInput)

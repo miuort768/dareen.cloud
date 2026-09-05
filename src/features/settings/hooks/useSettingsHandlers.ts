@@ -1,3 +1,4 @@
+﻿import { formatLocalDate } from '../../../lib/utils'
 import { useState, useEffect, useCallback, useRef } from 'react'
 import {
   useAcademyName,
@@ -226,7 +227,7 @@ export const useSettingsHandlers = () => {
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `darin_backup_${new Date().toISOString().split('T')[0]}.json`
+      a.download = `darin_backup_${formatLocalDate(new Date())}.json`
       document.body.appendChild(a)
       a.click()
       a.remove()

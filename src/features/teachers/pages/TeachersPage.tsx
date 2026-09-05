@@ -1,3 +1,4 @@
+﻿import { formatLocalDate } from '../../../lib/utils'
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -71,7 +72,7 @@ export const Teachers = () => {
   const [showDetails, setShowDetails] = useState(false)
 
   const [editId, setEditId] = useState<string | null>(null)
-  const [logDate] = useState(new Date().toISOString().split('T')[0] ?? '')
+  const [logDate] = useState(formatLocalDate(new Date()) ?? '')
   const [secureModalData, setSecureModalData] = useState<{
     student: Student
     enrollment: Enrollment

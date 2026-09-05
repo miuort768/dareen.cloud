@@ -1,10 +1,10 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+﻿import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { GraduationCap, Plus, RefreshCw, FileText, AlertCircle } from 'lucide-react'
 import { ConfirmModal } from '../shared/components/ConfirmModal'
 import { api } from '../lib/api'
-import { parseNumberSafe } from '../lib/utils'
+import { parseNumberSafe, formatLocalDate } from '../lib/utils'
 import { CURRENCY_SYMBOL } from '../config/constants'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
 import {
@@ -177,7 +177,7 @@ export const TeacherInvoices = () => {
                   status: INVOICE_STATUS.PROCESSING,
                   personalExpenses: 0,
                   currency: 'EGP',
-                  date: new Date().toISOString().split('T')[0],
+                  date: formatLocalDate(new Date()),
                 })
               }),
             )
@@ -316,7 +316,7 @@ export const TeacherInvoices = () => {
         status: formData.status,
         personalExpenses: personalExpValue,
         currency: formData.currency || 'EGP',
-        date: new Date().toISOString().split('T')[0],
+        date: formatLocalDate(new Date()),
       }
       try {
         if (editingId)

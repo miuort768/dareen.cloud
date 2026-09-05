@@ -1,3 +1,4 @@
+﻿import { formatLocalDate } from '../../../lib/utils'
 import { useState, useMemo } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { parentsService } from '../services/parentsService'
@@ -264,7 +265,7 @@ export const useParents = () => {
       const url = URL.createObjectURL(dataBlob)
       const link = document.createElement('a')
       link.href = url
-      link.download = `parents_export_${new Date().toISOString().split('T')[0]}.json`
+      link.download = `parents_export_${formatLocalDate(new Date())}.json`
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)

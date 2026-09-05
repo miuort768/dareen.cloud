@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+﻿import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useShowNotification, useAcademyName } from '../context/AppContext'
 import { api, safeArray } from '../lib/api'
@@ -11,7 +11,7 @@ import { BlogGrid } from './admin-blog/BlogGrid'
 import type { BlogPost } from './admin-blog/types'
 import { BookMarked, Plus, FileText, Eye, Star, Trash2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { cn } from '../lib/utils'
+import { cn, formatLocalDate } from '../lib/utils'
 import { PageHeader } from '../shared/components/ui'
 
 const formatViews = (n: number) => {
@@ -79,7 +79,7 @@ export const AdminBlog = () => {
         category: 'عام',
         keywords: '',
         author: 'فريق دارين السابعة',
-        date: new Date().toISOString().split('T')[0],
+        date: formatLocalDate(new Date()),
         contentType: 'notes',
         curriculum: 'kuwait',
         level: 'middle',

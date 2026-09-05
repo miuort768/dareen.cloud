@@ -1,4 +1,5 @@
-﻿import { useState, useEffect } from 'react'
+﻿import { formatLocalDate } from '../../../lib/utils'
+import { useState, useEffect } from 'react'
 import { Users } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { api } from '../../../lib/api'
@@ -64,11 +65,9 @@ export const ParentStudents = () => {
   const [sessionsStartDate, setSessionsStartDate] = useState(() => {
     const d = new Date()
     d.setDate(d.getDate() - 30)
-    return d.toISOString().split('T')[0] ?? ''
+    return formatLocalDate(d) ?? ''
   })
-  const [sessionsEndDate, setSessionsEndDate] = useState(
-    new Date().toISOString().split('T')[0] ?? '',
-  )
+  const [sessionsEndDate, setSessionsEndDate] = useState(formatLocalDate(new Date()) ?? '')
 
   useEffect(() => {
     const fetchStudents = async () => {
