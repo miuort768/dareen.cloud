@@ -1,11 +1,9 @@
-import { format } from 'date-fns'
-import { ar } from 'date-fns/locale'
 import { motion } from 'framer-motion'
-import { CalendarDays, GraduationCap, BookOpen, ClipboardList, UserRound } from 'lucide-react'
-import { TimeOfDayBadge } from '../../shared/components/TimeOfDayBadge'
+import { GraduationCap, BookOpen, ClipboardList, UserRound } from 'lucide-react'
+import { DashboardGreeting } from '../../shared/components/DashboardGreeting'
 import { CountUp } from '../../shared/components/CountUp'
 
-interface GreetingStripProps {
+export interface GreetingStripProps {
   name: string
   childCount: number
   subjectCount: number
@@ -15,15 +13,7 @@ interface GreetingStripProps {
   eldestChildGrade?: string | null
 }
 
-const getGreeting = (): string => {
-  const h = new Date().getHours()
-  if (h < 5) return 'ليلة هادئة'
-  if (h < 12) return 'صباح الخير'
-  if (h < 17) return 'يوم سعيد'
-  return 'مساء الخير'
-}
-
-/** هيرو ترحيب ولي الأمر — تدرج primary مع شرائح زجاجية وعدّاد الحضور */
+/** هيرو ترحيب ولي الأمر — تدرج primary مع عداد الحضور الدائري */
 export const GreetingStrip = ({
   name,
   childCount,
@@ -33,121 +23,72 @@ export const GreetingStrip = ({
   eldestChildName,
   eldestChildGrade,
 }: GreetingStripProps) => {
-  const firstName = name.split(' ')[0] || name
-
   const RING_SIZE = 56
   const RING_RADIUS = 24
   const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS
   const clampedRate = Math.min(Math.max(attendanceRate, 0), 100)
 
-  const chips = [
-    {
-      icon: GraduationCap,
-      label: childCount === 1 ? 'ابن واحد' : `${childCount} أبناء`,
-    },
-    { icon: BookOpen, label: `${subjectCount} ${subjectCount === 1 ? 'مادة' : 'مواد'}` },
-    {
-      icon: ClipboardList,
-      label: todayCount > 0 ? `${todayCount} حصص اليوم` : 'لا حصص اليوم',
-    },
-  ]
-
   return (
-    <section
-      aria-label="ترحيب"
-      className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-elevation-2 transition-colors duration-300"
-    >
-      <div
-        className="pointer-events-none absolute -end-20 -top-24 h-64 w-64 rounded-full border border-white/10"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -end-6 -top-10 h-36 w-36 rounded-full border border-white/5"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -bottom-16 -start-12 h-44 w-44 rounded-full bg-white/5"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-transparent to-white/5"
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 p-5 sm:p-6">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div className="min-w-0">
-            <p className="mb-1 flex items-center gap-1.5 text-xs font-bold text-white/70">
-              <CalendarDays size={12} />
-              {format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}
-            </p>
-            <h1 className="text-xl font-black leading-tight text-on-primary md:text-2xl">
-              {getGreeting()}، {firstName}
-            </h1>
-            {eldestChildName && (
-              <p className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px] font-bold text-white/75">
-                <UserRound size={11} />
-                متابعة رحلة {eldestChildName.split(' ')[0]}
-                {eldestChildGrade ? ` — ${eldestChildGrade}` : ''}
-              </p>
-            )}
-          </div>
-
-          <div className="flex shrink-0 items-center gap-2.5">
-            <TimeOfDayBadge variant="glass" />
-            <div
-              className="relative flex shrink-0 items-center justify-center"
-              aria-label={`نسبة الحضور الإجمالية ${attendanceRate} بالمئة`}
-            >
-              <svg width={RING_SIZE} height={RING_SIZE} viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}>
-                <circle
-                  cx={RING_SIZE / 2}
-                  cy={RING_SIZE / 2}
-                  r={RING_RADIUS}
-                  fill="none"
-                  stroke="rgba(255,255,255,0.15)"
-                  strokeWidth={5}
-                />
-                <motion.circle
-                  cx={RING_SIZE / 2}
-                  cy={RING_SIZE / 2}
-                  r={RING_RADIUS}
-                  fill="none"
-                  stroke="currentColor"
-                  className="text-on-primary"
-                  strokeWidth={5}
-                  strokeLinecap="round"
-                  strokeDasharray={RING_CIRCUMFERENCE}
-                  initial={{ strokeDashoffset: RING_CIRCUMFERENCE }}
-                  animate={{ strokeDashoffset: RING_CIRCUMFERENCE * (1 - clampedRate / 100) }}
-                  transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
-                  transform={`rotate(-90 ${RING_SIZE / 2} ${RING_SIZE / 2})`}
-                />
-              </svg>
-              <CountUp
-                value={attendanceRate}
-                format={(n) => `${n}%`}
-                className="absolute text-[13px] font-black tabular-nums text-on-primary"
-              />
-            </div>
-          </div>
+    <DashboardGreeting
+      name={name}
+      nightMessage="ليلة هادئة"
+      subtitle={
+        eldestChildName ? (
+          <p className="flex flex-wrap items-center gap-1.5 text-[11px] font-bold text-white/75">
+            <UserRound size={11} />
+            متابعة رحلة {eldestChildName.split(' ')[0]}
+            {eldestChildGrade ? ` — ${eldestChildGrade}` : ''}
+          </p>
+        ) : null
+      }
+      end={
+        <div
+          className="relative flex shrink-0 items-center justify-center"
+          aria-label={`نسبة الحضور الإجمالية ${attendanceRate} بالمئة`}
+        >
+          <svg width={RING_SIZE} height={RING_SIZE} viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}>
+            <circle
+              cx={RING_SIZE / 2}
+              cy={RING_SIZE / 2}
+              r={RING_RADIUS}
+              fill="none"
+              stroke="rgba(255,255,255,0.15)"
+              strokeWidth={5}
+            />
+            <motion.circle
+              cx={RING_SIZE / 2}
+              cy={RING_SIZE / 2}
+              r={RING_RADIUS}
+              fill="none"
+              stroke="currentColor"
+              className="text-on-primary"
+              strokeWidth={5}
+              strokeLinecap="round"
+              strokeDasharray={RING_CIRCUMFERENCE}
+              initial={{ strokeDashoffset: RING_CIRCUMFERENCE }}
+              animate={{ strokeDashoffset: RING_CIRCUMFERENCE * (1 - clampedRate / 100) }}
+              transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
+              transform={`rotate(-90 ${RING_SIZE / 2} ${RING_SIZE / 2})`}
+            />
+          </svg>
+          <CountUp
+            value={attendanceRate}
+            format={(n) => `${n}%`}
+            className="absolute text-[13px] font-black tabular-nums text-on-primary"
+          />
         </div>
-
-        <div className="mt-5 flex flex-wrap gap-2 border-t border-white/10 pt-4">
-          {chips.map((chip) => {
-            const Icon = chip.icon
-            return (
-              <span
-                key={chip.label}
-                className="inline-flex items-center gap-1.5 rounded-2xl border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold text-on-primary backdrop-blur-sm"
-              >
-                <Icon size={12} />
-                {chip.label}
-              </span>
-            )
-          })}
-        </div>
-      </div>
-    </section>
+      }
+      chips={[
+        {
+          icon: GraduationCap,
+          label: childCount === 1 ? 'ابن واحد' : `${childCount} أبناء`,
+        },
+        { icon: BookOpen, label: `${subjectCount} ${subjectCount === 1 ? 'مادة' : 'مواد'}` },
+        {
+          icon: ClipboardList,
+          label: todayCount > 0 ? `${todayCount} حصص اليوم` : 'لا حصص اليوم',
+        },
+      ]}
+    />
   )
 }
