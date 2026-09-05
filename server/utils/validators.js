@@ -4,6 +4,39 @@ const { z } = require('zod');
 const idSchema = z.string().or(z.number());
 const phoneSchema = z.string().min(10, "Phone number too short").optional().or(z.literal(''));
 
+/**
+ * Tolerant numeric coercion: accepts real numbers, ASCII numeric strings AND
+ * Eastern-Arabic digit strings ("١٦٠" / "۱۶۰"). Number() alone fails on those
+ * (NaN), which either 500s the request or silently stores 0.
+ */
+function numericField({ int = false, min = null, max = null, nullable = false, optional = false, def = undefined } = {}) {
+  const parse = (val) => {
+    const s = String(val)
+      .replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+      .replace(/[\u06F0-\u06F9]/g, (d) => String(d.charCodeAt(0) - 0x06F0))
+      .trim();
+    let n = Number(s);
+    if (!Number.isFinite(n)) return NaN; // garbage input → validation error
+    if (int) n = Math.round(n);
+    if (min !== null && n < min) return NaN; // out of range → validation error
+    if (max !== null && n > max) return NaN;
+    return n;
+  };
+  let schema = z.union([z.number(), z.string()], { errorMap: () => ({ message: 'must be a number' }) })
+    .transform((v, ctx) => {
+      const n = parse(v);
+      if (Number.isNaN(n)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'قيمة رقمية غير صالحة' });
+        return z.NEVER;
+      }
+      return n;
+    });
+  if (nullable) schema = schema.nullable();
+  if (optional || def !== undefined) schema = schema.optional();
+  if (def !== undefined) schema = schema.default(def);
+  return schema;
+}
+
 // --- Student Schemas ---
 const createStudentSchema = z.object({
     id: z.string().optional(),
@@ -14,8 +47,8 @@ const createStudentSchema = z.object({
     studentPhone: z.string().nullable().optional().or(z.literal('')),
     curriculum: z.string().nullable().optional().or(z.literal('')),
     notes: z.string().nullable().optional().or(z.literal('')),
-    sessionPrice: z.number().or(z.string().transform(val => Number(val))).nullable().optional(),
-    balance: z.number().or(z.string().transform(val => Number(val))).nullable().optional().default(0),
+    sessionPrice: numericField({ nullable: true, optional: true }),
+    balance: numericField({ nullable: true, optional: true, def: 0 }),
     username: z.string().nullable().optional().or(z.literal('')),
     password: z.string().nullable().optional().or(z.literal('')),
     currency: z.string().optional(),
@@ -31,12 +64,12 @@ const createTeacherSchema = z.object({
     phone1: z.string().optional().or(z.literal('')),
     phone2: z.string().optional().or(z.literal('')),
     subject: z.string().optional().or(z.literal('')),
-    price: z.number().or(z.string().transform(val => Number(val))).optional().default(0),
+    price: numericField({ def: 0 }),
     email: z.string().optional().or(z.literal('')),
     currency: z.string().optional(),
     username: z.string().optional().or(z.literal('')),
     password: z.string().optional().or(z.literal('')),
-    points: z.number().or(z.string().transform(val => Number(val))).optional()
+    points: numericField({ optional: true })
 });
 
 const updateTeacherSchema = createTeacherSchema.partial();
@@ -65,7 +98,7 @@ const createSessionSchema = z.object({
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
     day: z.string().optional(),
     time: z.string().optional(),
-    price: z.number().or(z.string().transform(val => Number(val))).default(0),
+    price: numericField({ def: 0 }),
     currency: z.string().optional(),
     teacherCurrency: z.string().optional(),
     status: z.enum(['scheduled', 'completed', 'cancelled', 'pending']).default('scheduled')
@@ -83,7 +116,7 @@ const createEvaluationSchema = z.object({
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD").optional().or(z.literal('')),
     rating: z.enum(['ممتاز', 'جيد جدًا', 'جيد', 'مقبول', 'ضعيف', 'يحتاج تحسين']).default('ممتاز'),
     notes: z.string().optional().or(z.literal('')),
-    points: z.number().int().min(0).max(50).default(0)
+    points: numericField({ int: true, min: 0, max: 50, def: 0 })
 });
 
 const updateEvaluationSchema = createEvaluationSchema.partial();
@@ -133,7 +166,7 @@ const createStudentInvoiceSchema = z.object({
     id: z.string().optional(),
     studentId: idSchema,
     studentName: z.string().min(1, "Student Name is required"),
-    amount: z.number().or(z.string().transform(val => Number(val))),
+    amount: numericField(),
     currency: z.string().optional(),
     description: z.string().optional(),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
@@ -149,12 +182,12 @@ const createTeacherInvoiceSchema = z.object({
     teacherId: idSchema.optional(),
     teacher: z.string().min(1, "Teacher Name is required"),
     specialization: z.string().optional().or(z.literal('')),
-    amount: z.number().or(z.string().transform(val => Number(val))),
+    amount: numericField(),
     currency: z.string().optional(),
     status: z.enum(['pending', 'paid', 'reviewed', 'unpaid']).default('pending'),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be YYYY-MM-DD"),
     paymentMethod: z.string().optional().or(z.literal('')),
-    personalExpenses: z.number().or(z.string().transform(val => Number(val))).optional()
+    personalExpenses: numericField({ optional: true })
 });
 
 // --- Enrollment Schemas ---
@@ -165,8 +198,8 @@ const createEnrollmentSchema = z.object({
     subject: z.string().min(1, "Subject is required"),
     curr: z.string().optional().or(z.literal('')),
     curriculum: z.string().optional().or(z.literal('')),
-    sessionsTotal: z.number().int().min(0).default(0),
-    teacherPrice: z.number().int().min(0).nullable().optional(),
+    sessionsTotal: numericField({ int: true, min: 0, def: 0 }),
+    teacherPrice: numericField({ int: true, min: 0, nullable: true, optional: true }),
     schedule: z.array(z.object({
         day: z.string(),
         hour: z.string(),
