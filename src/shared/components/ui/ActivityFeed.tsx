@@ -69,7 +69,9 @@ export const ActivityFeed = ({
   const lineSide = dir === 'rtl' ? 'start-4' : 'end-4'
 
   return (
-    <div className={cn('rounded-2xl border border-border bg-card p-5 shadow-sm', className)}>
+    <div
+      className={cn('rounded-2xl border border-border bg-card p-5 shadow-elevation-1', className)}
+    >
       {title && (
         <div className="mb-5 flex items-center justify-between">
           <div>

@@ -64,7 +64,7 @@ export const PublicNavbar = () => {
           <Link to="/" className="group flex shrink-0 items-center gap-3 ps-2">
             <div className="group relative">
               <div className="absolute inset-0 rounded-xl bg-primary-light opacity-20 blur-md transition-opacity group-hover:opacity-40"></div>
-              <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-white/20 bg-gradient-to-tr from-primary via-primary to-primary text-on-primary shadow-lg transition-all duration-500 group-hover:rotate-[10deg]">
+              <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-white/20 bg-gradient-to-tr from-primary via-primary to-primary text-on-primary shadow-elevation-3 transition-all duration-500 group-hover:rotate-[10deg]">
                 <div className="animate-shine pointer-events-none absolute inset-0 z-0 h-full w-[150%] bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
                 <GraduationCap size={24} className="relative z-10" />
               </div>
@@ -112,14 +112,14 @@ export const PublicNavbar = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="relative z-10 hidden min-w-0 shrink items-center gap-1 rounded-full border border-primary bg-primary-soft px-1.5 py-1.5 shadow-sm md:flex lg:gap-2 lg:px-2">
+          <div className="relative z-10 hidden min-w-0 shrink items-center gap-1 rounded-full border border-primary bg-primary-soft px-1.5 py-1.5 shadow-elevation-1 md:flex lg:gap-2 lg:px-2">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
                 className={`whitespace-nowrap rounded-full px-3 py-2 text-xs font-bold transition-colors duration-150 lg:px-5 lg:text-sm xl:px-6 ${
                   isActive(item.path)
-                    ? 'bg-primary text-on-primary shadow-lg shadow-primary/30'
+                    ? 'bg-primary text-on-primary shadow-elevation-3 shadow-primary/30'
                     : 'text-main hover:bg-primary hover:text-on-primary'
                 }`}
               >
@@ -147,7 +147,7 @@ export const PublicNavbar = () => {
                   aria-expanded={isDropdownOpen}
                   aria-controls="user-dropdown"
                 >
-                  <div className="h-8 w-8 overflow-hidden rounded-full border-2 border-primary shadow-sm transition-all group-hover:border-primary">
+                  <div className="h-8 w-8 overflow-hidden rounded-full border-2 border-primary shadow-elevation-1 transition-all group-hover:border-primary">
                     {currentUser?.avatar ? (
                       <Image
                         src={currentUser.avatar}
@@ -169,7 +169,7 @@ export const PublicNavbar = () => {
                 </button>
                 <div
                   id="user-dropdown"
-                  className={`absolute end-0 z-50 mt-4 w-56 overflow-hidden rounded-2xl border border-border bg-card shadow-xl transition-all duration-300 ${isDropdownOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'}`}
+                  className={`absolute end-0 z-50 mt-4 w-56 overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-4 transition-all duration-300 ${isDropdownOpen ? 'visible translate-y-0 opacity-100' : 'invisible -translate-y-2 opacity-0'}`}
                 >
                   <div className="border-b border-border bg-background p-4">
                     <p className="text-sm font-bold text-main">{currentUser?.name}</p>
@@ -200,7 +200,7 @@ export const PublicNavbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="hidden whitespace-nowrap rounded-full bg-gradient-to-r from-primary to-primary px-4 py-2 text-xs font-bold text-on-primary transition-all hover:scale-105 hover:shadow-lg md:flex md:py-2.5 lg:px-6 lg:text-sm xl:px-8"
+                className="hidden whitespace-nowrap rounded-full bg-gradient-to-r from-primary to-primary px-4 py-2 text-xs font-bold text-on-primary transition-all hover:scale-105 hover:shadow-elevation-3 md:flex md:py-2.5 lg:px-6 lg:text-sm xl:px-8"
               >
                 تسجيل الدخول
               </Link>
@@ -232,7 +232,7 @@ export const PublicNavbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`flex items-center gap-3 rounded-full px-6 py-4 font-bold transition-all ${
                     isActive(item.path)
-                      ? 'bg-primary text-on-primary shadow-lg'
+                      ? 'bg-primary text-on-primary shadow-elevation-3'
                       : 'text-main hover:bg-surface dark:text-main dark:hover:bg-hover'
                   }`}
                 >
@@ -270,7 +270,7 @@ export const PublicNavbar = () => {
                 <Link
                   to="/login"
                   onClick={() => setIsMenuOpen(false)}
-                  className="mt-2 flex items-center justify-center rounded-full bg-gradient-to-r from-primary to-primary py-4 font-bold text-on-primary shadow-lg transition-transform active:scale-[0.98]"
+                  className="mt-2 flex items-center justify-center rounded-full bg-gradient-to-r from-primary to-primary py-4 font-bold text-on-primary shadow-elevation-3 transition-transform active:scale-[0.98]"
                 >
                   تسجيل الدخول
                 </Link>

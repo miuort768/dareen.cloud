@@ -43,7 +43,7 @@ export const MobilePageHeader = ({
         </button>
       )}
       {icon && (
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep text-on-primary shadow-md shadow-primary/20">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep text-on-primary shadow-elevation-2 shadow-primary/20">
           {icon}
         </div>
       )}

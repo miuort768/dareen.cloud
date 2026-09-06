@@ -41,7 +41,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
       <header className="flex items-center justify-between bg-surface px-2 pb-2 pt-3 dark:bg-black md:hidden">
         <div className="flex items-center gap-1">
           <Link to="/" className="flex items-center gap-2">
-            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-[16px] bg-gradient-to-br from-primary to-primary shadow-lg shadow-primary/20 dark:from-primary dark:to-warning dark:shadow-primary/20">
+            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-[16px] bg-gradient-to-br from-primary to-primary shadow-elevation-3 shadow-primary/20 dark:from-primary dark:to-warning dark:shadow-primary/20">
               <div className="animate-shine pointer-events-none absolute inset-0 z-0 h-full w-[150%] bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
               <GraduationCap className="relative z-10 h-6 w-6 text-on-primary dark:text-on-primary" />
             </div>
@@ -62,7 +62,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-surface shadow-sm dark:border-primary/30 dark:bg-card ${hideThemeToggle ? 'hidden' : ''}`}
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-surface shadow-elevation-1 dark:border-primary/30 dark:bg-card ${hideThemeToggle ? 'hidden' : ''}`}
           >
             {theme === 'dark' ? (
               <Sun className="h-4 w-4 text-primary" />
@@ -74,7 +74,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface shadow-sm dark:border-primary/30 dark:bg-card"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface shadow-elevation-1 dark:border-primary/30 dark:bg-card"
             >
               {menuOpen ? (
                 <X className="h-5 w-5 text-muted dark:text-primary" />

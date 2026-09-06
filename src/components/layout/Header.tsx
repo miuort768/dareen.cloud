@@ -148,7 +148,7 @@ export const Header = memo(() => {
             <Image
               src="/dareen_logo_new.webp"
               alt="دارين السابعة"
-              className="h-9 w-9 overflow-hidden rounded-xl border border-border bg-card shadow-sm dark:border-white/5 lg:h-10 lg:w-10"
+              className="h-9 w-9 overflow-hidden rounded-xl border border-border bg-card shadow-elevation-1 dark:border-white/5 lg:h-10 lg:w-10"
               imgClassName="object-contain scale-[1.28]"
             />
           </Link>
@@ -194,7 +194,7 @@ export const Header = memo(() => {
           )}
 
           {/* Icon actions */}
-          <div className="flex items-center gap-0.5 rounded-full border border-border bg-card p-1 shadow-sm dark:border-white/5">
+          <div className="flex items-center gap-0.5 rounded-full border border-border bg-card p-1 shadow-elevation-1 dark:border-white/5">
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
@@ -237,7 +237,7 @@ export const Header = memo(() => {
           <Link
             to={userLink}
             aria-label="الملف الشخصي"
-            className="flex h-10 items-center gap-2 rounded-full border border-border bg-card py-1 pe-1 ps-1 shadow-sm transition-all hover:bg-hover hover:shadow-md active:scale-[0.97] dark:border-white/5 lg:pe-2.5"
+            className="flex h-10 items-center gap-2 rounded-full border border-border bg-card py-1 pe-1 ps-1 shadow-elevation-1 transition-all hover:bg-hover hover:shadow-elevation-2 active:scale-[0.97] dark:border-white/5 lg:pe-2.5"
           >
             <span className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-on-primary">
               {currentUser?.avatar ? (

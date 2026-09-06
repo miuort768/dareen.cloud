@@ -69,7 +69,7 @@ export const FoundationCard = ({
   return (
     <div className="duration-500 animate-in zoom-in-95" style={{ animationDelay: `${i * 60}ms` }}>
       <div
-        className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm ${borderAccent}`}
+        className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-elevation-1 ${borderAccent}`}
       >
         <div className="flex flex-1 flex-col p-5">
           <div className="mb-3 flex items-center gap-2">
@@ -192,7 +192,7 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
       <Link
         to={`/books/${post.slug}`}
         onClick={() => window.scrollTo(0, 0)}
-        className="group block flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm"
+        className="group block flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-elevation-1"
       >
         <div
           className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-surface`}

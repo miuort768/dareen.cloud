@@ -291,7 +291,7 @@ export const DesktopLibraryLanding = ({
                   <div className="mb-3 flex items-center justify-between">
                     <span
                       className={cn(
-                        'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg',
+                        'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl transition-all duration-300 group-hover:scale-110 group-hover:shadow-elevation-3',
                         s.iconWrap,
                       )}
                     >
@@ -594,7 +594,7 @@ export const DesktopLibraryLanding = ({
                           <Clock size={11} />
                           {formatDate(post.date)}
                         </span>
-                        <span className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-[11px] font-extrabold text-on-primary transition-all duration-300 hover:bg-primary-hover group-hover:gap-1.5 group-hover:shadow-md">
+                        <span className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-[11px] font-extrabold text-on-primary transition-all duration-300 hover:bg-primary-hover group-hover:gap-1.5 group-hover:shadow-elevation-2">
                           اقرأ المقال
                           <ArrowLeft
                             size={11}
@@ -649,7 +649,7 @@ export const DesktopLibraryLanding = ({
               <div className="absolute inset-0 bg-gradient-to-br from-warning-soft to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="relative z-10">
                 <div className="mb-3 flex items-center justify-between">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-warning-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-warning-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-elevation-3">
                     <Globe size={22} className="text-warning" />
                   </span>
                 </div>
@@ -709,7 +709,7 @@ export const DesktopLibraryLanding = ({
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="relative z-10">
                 <div className="mb-3 flex items-center justify-between">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary-soft transition-all duration-300 group-hover:scale-110 group-hover:shadow-elevation-3">
                     <curr.icon size={22} className="text-primary" />
                   </span>
                 </div>

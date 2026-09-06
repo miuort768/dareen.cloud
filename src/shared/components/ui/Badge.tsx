@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { cn } from '../../../lib/utils'
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -12,8 +12,9 @@ const variants = {
   warning: 'bg-warning-soft text-warning-dark border-warning',
   error: 'bg-error-soft text-error-dark border-error',
   info: 'bg-info-soft text-info-dark border-info',
-  premium: 'bg-gradient-to-l from-accent to-accent-light text-on-accent border-accent shadow-sm',
-  glow: 'bg-primary/10 text-primary border-primary/20 shadow-sm shadow-primary/10',
+  premium:
+    'bg-gradient-to-l from-accent to-accent-light text-on-accent border-accent shadow-elevation-1',
+  glow: 'bg-primary/10 text-primary border-primary/20 shadow-elevation-1 shadow-primary/10',
 }
 
 const sizes = {

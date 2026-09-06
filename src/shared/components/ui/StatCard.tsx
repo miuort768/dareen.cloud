@@ -82,7 +82,7 @@ const styles: Record<
   },
   'soft-primary': {
     card: 'bg-primary-soft text-main',
-    icon: 'bg-card text-primary shadow-sm',
+    icon: 'bg-card text-primary shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
     trend: '',
@@ -90,7 +90,7 @@ const styles: Record<
   },
   'soft-success': {
     card: 'bg-success-soft text-main',
-    icon: 'bg-card text-success-strong shadow-sm',
+    icon: 'bg-card text-success-strong shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
     trend: '',
@@ -98,7 +98,7 @@ const styles: Record<
   },
   'soft-warning': {
     card: 'bg-warning-soft text-main',
-    icon: 'bg-card text-warning-strong shadow-sm',
+    icon: 'bg-card text-warning-strong shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
     trend: '',
@@ -106,7 +106,7 @@ const styles: Record<
   },
   'soft-error': {
     card: 'bg-error-soft text-main',
-    icon: 'bg-card text-error-strong shadow-sm',
+    icon: 'bg-card text-error-strong shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
     trend: '',
@@ -114,7 +114,7 @@ const styles: Record<
   },
   'soft-info': {
     card: 'bg-info-soft text-main',
-    icon: 'bg-card text-info-strong shadow-sm',
+    icon: 'bg-card text-info-strong shadow-elevation-1',
     value: 'text-main',
     title: 'text-muted',
     trend: '',
@@ -142,7 +142,7 @@ export const StatCard = ({
   return (
     <div
       className={cn(
-        'relative rounded-2xl p-4 shadow-sm transition-colors duration-slow hover:-translate-y-0.5 hover:shadow-md',
+        'relative rounded-2xl p-4 shadow-elevation-1 transition-colors duration-slow hover:-translate-y-0.5 hover:shadow-elevation-2',
         s.card,
         className,
       )}

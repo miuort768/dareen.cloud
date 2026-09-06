@@ -28,7 +28,7 @@ export const PublicFooter = () => {
           {/* Brand + description */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-none bg-gradient-to-br from-primary to-primary-hover shadow-lg dark:from-primary dark:to-primary">
+              <div className="flex h-12 w-12 items-center justify-center rounded-none bg-gradient-to-br from-primary to-primary-hover shadow-elevation-3 dark:from-primary dark:to-primary">
                 <span className="text-2xl font-black text-on-primary dark:text-card">د</span>
               </div>
               <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text font-heading text-lg font-black text-transparent dark:from-primary dark:to-primary">
@@ -117,7 +117,7 @@ export const PublicFooter = () => {
               </Link>
               <Link
                 to="/terms-of-work"
-                className="block w-full transform bg-gradient-to-r from-accent to-accent-hover py-3 text-center text-sm font-black text-on-accent transition-all hover:-translate-y-0.5 hover:shadow-lg dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
+                className="block w-full transform bg-gradient-to-r from-accent to-accent-hover py-3 text-center text-sm font-black text-on-accent transition-all hover:-translate-y-0.5 hover:shadow-elevation-3 dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
               >
                 قوانين العمل
               </Link>

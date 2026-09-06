@@ -78,7 +78,7 @@ export const FloatingActions = () => {
             >
               {/* Hover Label */}
               <div className="pointer-events-none absolute end-full top-1/2 me-4 -translate-y-1/2 overflow-hidden md:start-full md:ms-4">
-                <motion.div className="-translate-x-4 rounded-full border border-white/20 bg-white/80 px-3 py-1.5 opacity-0 shadow-xl backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 dark:border-border dark:bg-card md:translate-x-4">
+                <motion.div className="-translate-x-4 rounded-full border border-white/20 bg-white/80 px-3 py-1.5 opacity-0 shadow-elevation-4 backdrop-blur-md transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 dark:border-border dark:bg-card md:translate-x-4">
                   <span className="whitespace-nowrap text-micro font-black uppercase tracking-wider text-main">
                     {action.label}
                   </span>
@@ -92,7 +92,7 @@ export const FloatingActions = () => {
                   rel={action.isExternal ? 'noopener noreferrer' : ''}
                   aria-label={action.label}
                   className={cn(
-                    'relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[0.9rem] text-on-primary shadow-xl transition-all duration-500 hover:scale-[1.15] active:scale-90 md:h-12 md:w-12',
+                    'relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[0.9rem] text-on-primary shadow-elevation-4 transition-all duration-500 hover:scale-[1.15] active:scale-90 md:h-12 md:w-12',
                     action.color,
                   )}
                 >
@@ -104,7 +104,7 @@ export const FloatingActions = () => {
                   onClick={action.onClick}
                   aria-label={action.label}
                   className={cn(
-                    'relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[0.9rem] text-on-primary shadow-xl transition-all duration-500 hover:scale-[1.15] active:scale-90 md:h-12 md:w-12',
+                    'relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[0.9rem] text-on-primary shadow-elevation-4 transition-all duration-500 hover:scale-[1.15] active:scale-90 md:h-12 md:w-12',
                     action.color,
                   )}
                 >

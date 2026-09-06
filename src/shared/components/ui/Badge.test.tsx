@@ -40,7 +40,7 @@ describe('Badge', () => {
 
   it('applies glow variant', () => {
     const { container } = render(<Badge variant="glow">توهج</Badge>)
-    expect(container.firstChild).toHaveClass('shadow-sm')
+    expect(container.firstChild).toHaveClass('shadow-elevation-1')
   })
 
   it('applies sm size', () => {

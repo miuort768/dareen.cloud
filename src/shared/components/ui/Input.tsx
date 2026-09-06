@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { cn } from '../../../lib/utils'
 import { FormField, useFormField } from './FormField'
 
@@ -35,7 +35,7 @@ const InputInner = React.forwardRef<HTMLInputElement, InputProps>(
           type={type}
           className={cn(
             'w-full rounded-xl border border-border bg-card font-medium outline-none transition-all duration-normal',
-            'focus:border-primary/60 focus:shadow-sm focus:ring-2 focus:ring-primary/10',
+            'focus:border-primary/60 focus:shadow-elevation-1 focus:ring-2 focus:ring-primary/10',
             'hover:border-border-strong',
             'placeholder:text-dim',
             'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-45',

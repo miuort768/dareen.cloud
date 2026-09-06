@@ -14,18 +14,18 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const variants = {
   primary:
-    'bg-primary text-on-primary shadow-sm border border-primary/80' +
-    ' hover:bg-primary-hover hover:shadow-md hover:border-primary-hover' +
-    ' active:bg-primary-active active:shadow-sm active:scale-[0.98]' +
+    'bg-primary text-on-primary shadow-elevation-1 border border-primary/80' +
+    ' hover:bg-primary-hover hover:shadow-elevation-2 hover:border-primary-hover' +
+    ' active:bg-primary-active active:shadow-elevation-1 active:scale-[0.98]' +
     ' focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
   secondary:
-    'bg-card text-main border border-border shadow-sm' +
-    ' hover:bg-hover hover:shadow-md hover:border-border-strong' +
-    ' active:bg-hover active:shadow-sm active:scale-[0.98]' +
+    'bg-card text-main border border-border shadow-elevation-1' +
+    ' hover:bg-hover hover:shadow-elevation-2 hover:border-border-strong' +
+    ' active:bg-hover active:shadow-elevation-1 active:scale-[0.98]' +
     ' focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
   outline:
     'bg-transparent text-primary border-2 border-primary/30' +
-    ' hover:bg-primary-soft hover:border-primary/60 hover:shadow-sm' +
+    ' hover:bg-primary-soft hover:border-primary/60 hover:shadow-elevation-1' +
     ' active:bg-primary-soft active:border-primary active:text-primary active:scale-[0.98]' +
     ' focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
   ghost:
@@ -34,24 +34,24 @@ const variants = {
     ' active:bg-hover active:scale-[0.98]' +
     ' focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
   destructive:
-    'bg-error text-on-error shadow-sm border border-error' +
-    ' hover:bg-error-hover hover:shadow-md hover:border-error-hover' +
-    ' active:bg-error-active active:shadow-sm active:scale-[0.98]' +
+    'bg-error text-on-error shadow-elevation-1 border border-error' +
+    ' hover:bg-error-hover hover:shadow-elevation-2 hover:border-error-hover' +
+    ' active:bg-error-active active:shadow-elevation-1 active:scale-[0.98]' +
     ' focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2',
   success:
-    'bg-success text-on-success shadow-sm border border-success' +
-    ' hover:brightness-110 hover:shadow-md' +
-    ' active:brightness-95 active:shadow-sm active:scale-[0.98]' +
+    'bg-success text-on-success shadow-elevation-1 border border-success' +
+    ' hover:brightness-110 hover:shadow-elevation-2' +
+    ' active:brightness-95 active:shadow-elevation-1 active:scale-[0.98]' +
     ' focus-visible:ring-2 focus-visible:ring-success focus-visible:ring-offset-2',
   glass:
-    'bg-white/70 dark:bg-card backdrop-blur-xl text-main border border-white/20 dark:border-white/10 shadow-sm' +
-    ' hover:bg-white/90 dark:hover:bg-card hover:shadow-md hover:border-white/30 dark:hover:border-white/20' +
-    ' active:scale-[0.98] active:shadow-sm' +
+    'bg-white/70 dark:bg-card backdrop-blur-xl text-main border border-white/20 dark:border-white/10 shadow-elevation-1' +
+    ' hover:bg-white/90 dark:hover:bg-card hover:shadow-elevation-2 hover:border-white/30 dark:hover:border-white/20' +
+    ' active:scale-[0.98] active:shadow-elevation-1' +
     ' focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
   premium:
-    'bg-gradient-to-l from-primary via-primary-hover to-primary-active text-on-primary shadow-lg shadow-primary/20 border border-primary/50' +
-    ' hover:shadow-xl hover:shadow-primary/25 hover:brightness-110' +
-    ' active:scale-[0.98] active:shadow-md' +
+    'bg-gradient-to-l from-primary via-primary-hover to-primary-active text-on-primary shadow-elevation-3 shadow-primary/20 border border-primary/50' +
+    ' hover:shadow-elevation-4 hover:shadow-primary/25 hover:brightness-110' +
+    ' active:scale-[0.98] active:shadow-elevation-2' +
     ' focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
 }
 

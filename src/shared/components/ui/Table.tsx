@@ -369,7 +369,7 @@ function TableInner<T>({
 
   return (
     <div className={cn('w-full', className)}>
-      <div className="hidden overflow-hidden rounded-2xl border border-border bg-card shadow-sm md:block">
+      <div className="hidden overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 md:block">
         <table className="w-full border-collapse text-start">
           {renderHeader()}
           {renderBody()}

@@ -1,4 +1,4 @@
-﻿import { cn } from '../../../lib/utils'
+import { cn } from '../../../lib/utils'
 
 interface MobileSkeletonProps {
   rows?: number
@@ -13,7 +13,7 @@ export const MobileSkeleton = ({ rows = 4, className }: MobileSkeletonProps) => 
     {Array.from({ length: rows }).map((_, i) => (
       <div
         key={`skel-mobile-${i}`}
-        className="space-y-3 rounded-2xl border border-border bg-card p-4 shadow-sm"
+        className="space-y-3 rounded-2xl border border-border bg-card p-4 shadow-elevation-1"
       >
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 shrink-0 animate-pulse rounded-xl bg-hover" />

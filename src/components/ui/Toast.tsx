@@ -77,12 +77,12 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
         'group relative flex w-full items-center gap-3 overflow-hidden rounded-none border border-s-4 border-border bg-card p-3 pe-2 shadow-elevation-3 transition-all duration-500 sm:min-w-[300px] sm:max-w-[380px]',
         startBorder,
         isExiting ? '-translate-x-4 scale-95 opacity-0' : 'animate-in fade-in slide-in-from-left-8',
-        'hover:shadow-elevation-4 hover:-translate-y-0.5',
+        'hover:-translate-y-0.5 hover:shadow-elevation-4',
       )}
     >
       <div
         className={cn(
-          'flex h-9 w-9 shrink-0 items-center justify-center rounded-none shadow-sm ring-1',
+          'flex h-9 w-9 shrink-0 items-center justify-center rounded-none shadow-elevation-1 ring-1',
           iconBg,
           iconText,
           ring,

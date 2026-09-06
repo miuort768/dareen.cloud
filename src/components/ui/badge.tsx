@@ -8,12 +8,13 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-transparent bg-primary text-primary-foreground shadow-sm',
+        default: 'border-transparent bg-primary text-primary-foreground shadow-elevation-1',
         secondary: 'border-transparent bg-secondary text-secondary-foreground',
-        destructive: 'border-transparent bg-destructive text-destructive-foreground shadow-sm',
+        destructive:
+          'border-transparent bg-destructive text-destructive-foreground shadow-elevation-1',
         outline: 'text-foreground',
-        success: 'border-transparent bg-success text-success-foreground shadow-sm',
-        warning: 'border-transparent bg-warning text-warning-foreground shadow-sm',
+        success: 'border-transparent bg-success text-success-foreground shadow-elevation-1',
+        warning: 'border-transparent bg-warning text-warning-foreground shadow-elevation-1',
       },
     },
     defaultVariants: {

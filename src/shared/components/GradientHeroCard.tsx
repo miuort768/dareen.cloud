@@ -43,7 +43,7 @@ export const GradientHeroCard = ({
     <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
       <div className="flex items-center gap-4">
         {Icon && (
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-lg backdrop-blur-sm">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-elevation-3 backdrop-blur-sm">
             <Icon size={22} className={cn('text-on-primary', iconClassName)} />
           </div>
         )}

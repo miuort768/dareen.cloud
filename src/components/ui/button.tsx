@@ -10,20 +10,20 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-primary text-on-primary shadow-sm border border-primary/80 hover:bg-primary-hover hover:shadow-md hover:border-primary-hover active:bg-primary-active active:shadow-sm active:scale-[0.98]',
+          'bg-primary text-on-primary shadow-elevation-1 border border-primary/80 hover:bg-primary-hover hover:shadow-elevation-2 hover:border-primary-hover active:bg-primary-active active:shadow-elevation-1 active:scale-[0.98]',
         destructive:
-          'bg-error text-on-error shadow-sm border border-error hover:bg-error-hover hover:shadow-md hover:border-error-hover active:bg-error-active active:shadow-sm active:scale-[0.98] focus-visible:ring-error',
+          'bg-error text-on-error shadow-elevation-1 border border-error hover:bg-error-hover hover:shadow-elevation-2 hover:border-error-hover active:bg-error-active active:shadow-elevation-1 active:scale-[0.98] focus-visible:ring-error',
         outline:
-          'bg-transparent text-primary border-2 border-primary/30 hover:bg-primary-soft hover:border-primary/60 hover:shadow-sm active:bg-primary-soft active:border-primary active:scale-[0.98]',
+          'bg-transparent text-primary border-2 border-primary/30 hover:bg-primary-soft hover:border-primary/60 hover:shadow-elevation-1 active:bg-primary-soft active:border-primary active:scale-[0.98]',
         secondary:
-          'bg-card text-main border border-border shadow-sm hover:bg-hover hover:shadow-md hover:border-border-strong active:bg-hover active:shadow-sm active:scale-[0.98]',
+          'bg-card text-main border border-border shadow-elevation-1 hover:bg-hover hover:shadow-elevation-2 hover:border-border-strong active:bg-hover active:shadow-elevation-1 active:scale-[0.98]',
         ghost:
           'bg-transparent text-muted border border-transparent hover:bg-hover hover:text-main hover:border-border active:bg-hover active:scale-[0.98]',
         link: 'text-primary underline-offset-4 hover:underline active:underline',
         success:
-          'bg-success text-on-success shadow-sm border border-success hover:brightness-110 hover:shadow-md active:brightness-95 active:shadow-sm active:scale-[0.98] focus-visible:ring-success',
+          'bg-success text-on-success shadow-elevation-1 border border-success hover:brightness-110 hover:shadow-elevation-2 active:brightness-95 active:shadow-elevation-1 active:scale-[0.98] focus-visible:ring-success',
         warning:
-          'bg-warning text-on-warning shadow-sm border border-warning hover:brightness-110 hover:shadow-md active:brightness-95 active:shadow-sm active:scale-[0.98] focus-visible:ring-warning',
+          'bg-warning text-on-warning shadow-elevation-1 border border-warning hover:brightness-110 hover:shadow-elevation-2 active:brightness-95 active:shadow-elevation-1 active:scale-[0.98] focus-visible:ring-warning',
       },
       size: {
         default: 'h-10 px-5 text-sm rounded-lg font-semibold',

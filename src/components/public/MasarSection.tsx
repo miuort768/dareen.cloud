@@ -67,7 +67,7 @@ export const MasarSection = () => {
                 </div>
                 <h2 className="mb-3 font-heading text-lg font-black leading-tight sm:text-xl md:text-2xl lg:text-3xl">
                   <span className="text-on-primary dark:text-main">مركز</span>
-                  <span className="text-shadow-none inline-block -rotate-1 transform whitespace-nowrap bg-primary px-3 py-1 text-on-primary shadow-lg dark:bg-primary dark:text-on-primary md:px-5 md:py-1">
+                  <span className="text-shadow-none inline-block -rotate-1 transform whitespace-nowrap bg-primary px-3 py-1 text-on-primary shadow-elevation-3 dark:bg-primary dark:text-on-primary md:px-5 md:py-1">
                     دارين السابعة
                   </span>
                   <span className="text-on-primary dark:text-main">للمذكرات التعليمية</span>
@@ -121,7 +121,7 @@ export const MasarSection = () => {
         <div className="pointer-events-none absolute -end-20 bottom-40 h-72 w-72 rounded-full bg-primary/10 blur-[120px] dark:bg-primary/[0.05]"></div>
 
         <div className="relative z-10 px-4">
-          <div className="relative mb-4 overflow-hidden rounded-2xl shadow-lg">
+          <div className="relative mb-4 overflow-hidden rounded-2xl shadow-elevation-3">
             <div className="absolute inset-0 z-10 bg-gradient-to-t from-primary/60 via-transparent to-transparent dark:from-black/80"></div>
             <picture>
               <source srcSet="/dareen_books_portal_v3.webp" type="image/webp" />
@@ -137,7 +137,7 @@ export const MasarSection = () => {
             </picture>
           </div>
 
-          <div className="mb-5 flex items-center justify-between rounded-2xl border border-border bg-surface p-5 shadow-sm dark:border-primary/30 dark:bg-card">
+          <div className="mb-5 flex items-center justify-between rounded-2xl border border-border bg-surface p-5 shadow-elevation-1 dark:border-primary/30 dark:bg-card">
             <div>
               <h2 className="text-lg font-black text-main dark:text-main">بوابة الكتب والملخصات</h2>
               <p className="mt-0.5 text-xs font-medium text-muted dark:text-muted">
@@ -149,13 +149,13 @@ export const MasarSection = () => {
             </div>
           </div>
 
-          <div className="mb-5 rounded-3xl bg-gradient-to-br from-primary via-primary-hover to-primary p-6 shadow-lg shadow-primary/20 dark:from-primary dark:via-warning dark:to-primary dark:shadow-primary/20">
+          <div className="mb-5 rounded-3xl bg-gradient-to-br from-primary via-primary-hover to-primary p-6 shadow-elevation-3 shadow-primary/20 dark:from-primary dark:via-warning dark:to-primary dark:shadow-primary/20">
             <div className="mb-4 flex items-center gap-4">
               <div className="relative">
                 <span className="text-sm font-black text-on-primary dark:text-on-primary">
                   مركز دارين السابعة
                 </span>
-                <div className="absolute -bottom-1 start-0 h-0.5 w-full rounded-full bg-white/80 shadow-sm dark:bg-black/30"></div>
+                <div className="absolute -bottom-1 start-0 h-0.5 w-full rounded-full bg-white/80 shadow-elevation-1 dark:bg-black/30"></div>
               </div>
               <span className="rounded-[4px] border border-white/30 bg-white/20 px-3 py-1 text-micro font-bold text-on-primary backdrop-blur-sm dark:border-black/30 dark:bg-black/20 dark:text-on-primary">
                 للمذكرات التعليمية
@@ -170,7 +170,7 @@ export const MasarSection = () => {
             <div className="flex flex-col gap-3">
               <Link
                 to="/books"
-                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-white/20 to-white/30 py-4 text-base font-black text-on-primary shadow-lg shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-primary/50 dark:from-black/20 dark:to-black/30 dark:text-on-primary dark:shadow-black/20"
+                className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-white/20 to-white/30 py-4 text-base font-black text-on-primary shadow-elevation-3 shadow-primary/30 transition-all hover:-translate-y-0.5 hover:shadow-primary/50 dark:from-black/20 dark:to-black/30 dark:text-on-primary dark:shadow-black/20"
               >
                 <FileText size={20} />
                 <span>تحميل مذكرة</span>
@@ -189,7 +189,7 @@ export const MasarSection = () => {
           </div>
 
           <div className="grid grid-cols-3 gap-4">
-            <div className="rounded-2xl border border-border bg-surface p-4 text-center shadow-sm dark:border-primary/20 dark:bg-card">
+            <div className="rounded-2xl border border-border bg-surface p-4 text-center shadow-elevation-1 dark:border-primary/20 dark:bg-card">
               <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/15">
                 <Shield size={20} className="text-primary dark:text-primary" />
               </div>
@@ -197,7 +197,7 @@ export const MasarSection = () => {
                 جودة مضمونة
               </span>
             </div>
-            <div className="rounded-2xl border border-border bg-surface p-4 text-center shadow-sm dark:border-primary/20 dark:bg-card">
+            <div className="rounded-2xl border border-border bg-surface p-4 text-center shadow-elevation-1 dark:border-primary/20 dark:bg-card">
               <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-success-light dark:bg-primary/15">
                 <BadgeCheck size={20} className="text-success dark:text-primary" />
               </div>
@@ -205,7 +205,7 @@ export const MasarSection = () => {
                 محتوى موثوق
               </span>
             </div>
-            <div className="rounded-2xl border border-border bg-surface p-4 text-center shadow-sm dark:border-primary/20 dark:bg-card">
+            <div className="rounded-2xl border border-border bg-surface p-4 text-center shadow-elevation-1 dark:border-primary/20 dark:bg-card">
               <div className="mx-auto mb-2.5 flex h-12 w-12 items-center justify-center rounded-2xl bg-warning-light dark:bg-primary/15">
                 <Headphones size={20} className="text-warning dark:text-primary" />
               </div>

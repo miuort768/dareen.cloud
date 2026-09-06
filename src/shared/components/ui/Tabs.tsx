@@ -37,7 +37,7 @@ const variantStyles = {
         'px-4 py-2 text-sm font-semibold rounded-lg transition-colors duration-normal',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
         isActive
-          ? 'bg-primary text-on-primary shadow-sm'
+          ? 'bg-primary text-on-primary shadow-elevation-1'
           : 'text-muted hover:text-main hover:bg-hover',
       ),
   },
@@ -48,7 +48,7 @@ const variantStyles = {
         'px-4 py-2 text-sm font-semibold rounded-card border transition-colors duration-normal',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
         isActive
-          ? 'bg-card text-main border-primary shadow-sm'
+          ? 'bg-card text-main border-primary shadow-elevation-1'
           : 'bg-surface text-muted border-border hover:text-main hover:border-strong',
       ),
   },

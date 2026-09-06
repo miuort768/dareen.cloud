@@ -182,7 +182,7 @@ export const MobileHero = ({
                   return next
                 })
               }}
-              className={`relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:opacity-90 active:scale-[0.97] ${
+              className={`relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-elevation-1 transition-all duration-200 hover:opacity-90 active:scale-[0.97] ${
                 GRID_TONES[i % GRID_TONES.length]
               }`}
             >
@@ -282,7 +282,7 @@ export const MobileHero = ({
                   return next
                 })
               }}
-              className={`group relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-sm transition-all duration-200 hover:opacity-90 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] ${
+              className={`group relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-elevation-1 transition-all duration-200 hover:opacity-90 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] ${
                 GRID_TONES[i % GRID_TONES.length]
               }`}
             >
@@ -494,7 +494,7 @@ export const DesktopHero = ({
                     return next
                   })
                 }}
-                className={`group relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-2xl p-5 text-start shadow-sm transition-all duration-300 hover:-translate-y-1 hover:opacity-95 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none ${
+                className={`group relative flex cursor-pointer items-center gap-4 overflow-hidden rounded-2xl p-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:opacity-95 hover:shadow-elevation-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 lg:rounded-none ${
                   GRID_TONES[i % GRID_TONES.length]
                 }`}
               >
@@ -611,7 +611,7 @@ export const DesktopHero = ({
                   return next
                 })
               }}
-              className={`group relative flex w-full cursor-pointer items-center gap-3.5 overflow-hidden rounded-2xl px-5 py-5 text-start shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97] ${
+              className={`group relative flex w-full cursor-pointer items-center gap-3.5 overflow-hidden rounded-2xl px-5 py-5 text-start shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97] ${
                 GRID_TONES[i % GRID_TONES.length]
               }`}
             >

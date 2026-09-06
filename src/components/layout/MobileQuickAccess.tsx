@@ -126,7 +126,7 @@ export const MobileQuickAccess = ({
           <button
             onClick={onCloseMenu}
             aria-label="إغلاق القائمة"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-error-soft bg-error-soft text-error shadow-sm outline-none transition-all duration-normal hover:bg-error hover:text-on-error hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-error-soft bg-error-soft text-error shadow-elevation-1 outline-none transition-all duration-normal hover:bg-error hover:text-on-error hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <X size={18} strokeWidth={2.2} />
           </button>

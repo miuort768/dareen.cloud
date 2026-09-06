@@ -75,7 +75,7 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
       {item.name}
     </span>
     {collapsed && (
-      <div className="bg-popover text-popover-foreground pointer-events-none absolute end-full top-1/2 z-50 me-3 -translate-y-1/2 translate-x-1 whitespace-nowrap rounded-lg border border-border px-2.5 py-1.5 text-xs opacity-0 shadow-lg transition-all duration-fast group-hover:translate-x-0 group-hover:opacity-100">
+      <div className="bg-popover text-popover-foreground pointer-events-none absolute end-full top-1/2 z-50 me-3 -translate-y-1/2 translate-x-1 whitespace-nowrap rounded-lg border border-border px-2.5 py-1.5 text-xs opacity-0 shadow-elevation-3 transition-all duration-fast group-hover:translate-x-0 group-hover:opacity-100">
         {item.name}
         <div className="bg-popover absolute -start-1.5 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border-s border-t border-border" />
       </div>
