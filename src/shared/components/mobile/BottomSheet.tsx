@@ -45,7 +45,7 @@ export const BottomSheet = ({
           'shadow-2xl',
           'data-[state=open]:animate-in data-[state=closed]:animate-out',
           'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
-          'data-[state=closed]:duration-300 data-[state=open]:duration-500',
+          'data-[state=closed]:duration-slow data-[state=open]:duration-500',
           className,
         )}
       >

@@ -26,7 +26,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
       role="dialog"
       aria-modal="true"
       aria-label="إنشاء مهمة جديدة"
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4 duration-300 animate-in fade-in"
+      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4 duration-slow animate-in fade-in"
       onKeyDown={(e) => e.key === 'Escape' && onClose()}
     >
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />

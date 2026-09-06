@@ -290,13 +290,13 @@ export const Sidebar = memo(
       return (
         <div
           className={cn(
-            'sticky top-0 z-50 hidden h-screen shrink-0 flex-col border-e border-border bg-card transition-all duration-300 lg:flex',
+            'sticky top-0 z-50 hidden h-screen shrink-0 flex-col border-e border-border bg-card transition-all duration-slow lg:flex',
             collapsed ? 'w-16' : 'w-56',
           )}
         >
           <div
             className={cn(
-              'flex h-14 items-center border-b border-border transition-all duration-300',
+              'flex h-14 items-center border-b border-border transition-all duration-slow',
               collapsed ? 'justify-center px-0' : 'justify-between px-5',
             )}
           >
@@ -316,7 +316,7 @@ export const Sidebar = memo(
               </div>
               <span
                 className={cn(
-                  'text-sm font-semibold text-main transition-all duration-300',
+                  'text-sm font-semibold text-main transition-all duration-slow',
                   collapsed ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
                 )}
               >

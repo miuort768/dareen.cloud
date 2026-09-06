@@ -133,7 +133,7 @@ export const InstallPWA = () => {
           if (e.key === 'Escape') handleDismiss()
         }}
       >
-        <div className="w-full max-w-sm border-2 border-border bg-card shadow-elevation-3 duration-300 animate-in fade-in slide-in-from-bottom-5">
+        <div className="w-full max-w-sm border-2 border-border bg-card shadow-elevation-3 duration-slow animate-in fade-in slide-in-from-bottom-5">
           <div className="flex items-center justify-between border-b-2 border-border bg-warning px-4 py-3">
             <div className="flex items-center gap-2">
               <Smartphone size={18} className="text-main" />

@@ -105,7 +105,7 @@ export const StatCard = ({
     return () => clearInterval(timer)
   }, [numericValue])
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-border bg-card p-4 transition-all duration-300 hover:shadow-elevation-1 dark:hover:border-primary/10">
+    <div className="group relative overflow-hidden rounded-2xl border border-border bg-card p-4 transition-all duration-slow hover:shadow-elevation-1 dark:hover:border-primary/10">
       <div className="mb-3 flex items-start justify-between">
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft">
           {Icon ? (
@@ -324,7 +324,7 @@ export const PrimaryBtn = ({
     disabled={disabled}
     onClick={onClick}
     className={cn(
-      'inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-sm shadow-primary/10 outline-none transition-all duration-200 hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50',
+      'inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-sm shadow-primary/10 outline-none transition-all duration-normal hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}
   >

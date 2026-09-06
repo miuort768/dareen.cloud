@@ -131,7 +131,7 @@ export const MobileDashboardView = ({
                   onClick={() => navigate(action.path)}
                   aria-label={action.label}
                   className={cn(
-                    'flex flex-col items-center justify-center gap-1.5 rounded-2xl px-1 py-3.5 outline-none transition-all duration-200 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.94]',
+                    'flex flex-col items-center justify-center gap-1.5 rounded-2xl px-1 py-3.5 outline-none transition-all duration-normal hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.94]',
                     action.tone,
                   )}
                 >

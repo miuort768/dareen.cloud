@@ -176,7 +176,7 @@ export const Chat = () => {
       style={{ paddingTop: 'var(--safe-area-top, 0px)' }}
       className={cn(
         'flex flex-col overflow-hidden bg-card',
-        'fixed inset-x-0 top-0 z-10 transition-all duration-300 lg:relative lg:inset-auto lg:bottom-auto lg:h-screen lg:w-full',
+        'fixed inset-x-0 top-0 z-10 transition-all duration-slow lg:relative lg:inset-auto lg:bottom-auto lg:h-screen lg:w-full',
         selectedConv ? 'bottom-0' : 'bottom-[max(76px,calc(64px+env(safe-area-inset-bottom)))]',
       )}
     >

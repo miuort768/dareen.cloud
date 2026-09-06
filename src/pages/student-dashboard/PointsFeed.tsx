@@ -49,7 +49,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
   return (
     <section
       aria-label="آخر النشاطات"
-      className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+      className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-slow"
     >
       <div className="mb-4 flex items-center gap-2">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft">

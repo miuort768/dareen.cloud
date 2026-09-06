@@ -173,7 +173,7 @@ export const Jobs = () => {
                   {steps.map((s) => (
                     <div
                       key={s.id}
-                      className={`h-2 w-2 rounded-full transition-all duration-300 ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'border border-border bg-card'}`}
+                      className={`h-2 w-2 rounded-full transition-all duration-slow ${step === s.id ? 'w-5 bg-primary' : step > s.id ? 'bg-success' : 'border border-border bg-card'}`}
                     />
                   ))}
                 </div>

@@ -75,7 +75,7 @@ export const AttendanceModal = ({
       onKeyDown={handleKeyDown}
     >
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 md:duration-300 md:animate-in md:slide-in-from-bottom-8">
+      <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 md:duration-slow md:animate-in md:slide-in-from-bottom-8">
         <div className="relative flex shrink-0 items-center justify-between overflow-hidden bg-success p-5 text-on-success">
           <div className="absolute end-0 top-0 -me-12 -mt-12 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
           <div className="absolute bottom-0 start-0 h-16 w-16 translate-x-8 translate-y-8 rounded-full bg-white/5 blur-lg"></div>

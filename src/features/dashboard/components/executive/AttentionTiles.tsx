@@ -53,7 +53,7 @@ export const AttentionTiles = memo(function AttentionTiles({ stats }: { stats: E
             key={tile.id}
             to={tile.to}
             className={cn(
-              'group flex items-center gap-3 rounded-2xl border p-3.5 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]',
+              'group flex items-center gap-3 rounded-2xl border p-3.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]',
               tile.tile,
             )}
           >
@@ -79,7 +79,7 @@ export const AttentionTiles = memo(function AttentionTiles({ stats }: { stats: E
             </span>
             <ChevronLeft
               size={14}
-              className="shrink-0 text-dim opacity-0 transition-all duration-200 group-hover:opacity-100"
+              className="shrink-0 text-dim opacity-0 transition-all duration-normal group-hover:opacity-100"
             />
           </Link>
         )

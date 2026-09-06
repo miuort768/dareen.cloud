@@ -125,7 +125,7 @@ export const SmartNotifications = ({
           <div
             key={`alert-${i}`}
             className={cn(
-              'relative flex items-start gap-3 overflow-hidden rounded-2xl border p-4 transition-colors duration-200',
+              'relative flex items-start gap-3 overflow-hidden rounded-2xl border p-4 transition-colors duration-normal',
               alert.bg,
               alert.border,
             )}

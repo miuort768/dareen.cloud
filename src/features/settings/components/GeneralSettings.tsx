@@ -164,7 +164,7 @@ export const GeneralSettings = ({
                 <select
                   value={localCurrency}
                   onChange={(e) => setLocalCurrency(e.target.value)}
-                  className="w-full rounded-xl border border-divider bg-background px-3 py-3 text-sm font-bold text-main outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
+                  className="w-full rounded-xl border border-divider bg-background px-3 py-3 text-sm font-bold text-main outline-none transition-all duration-normal focus:border-primary focus:ring-2 focus:ring-primary/10"
                 >
                   {ALLOWED_CURRENCIES.map((c) => (
                     <option key={c.code} value={c.code}>

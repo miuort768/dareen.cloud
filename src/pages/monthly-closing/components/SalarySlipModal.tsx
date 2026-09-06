@@ -52,7 +52,7 @@ export const SalarySlipModal = ({
       aria-label="قسيمة راتب"
       onKeyDown={handleKeyDown}
     >
-      <div className="max-h-[94dvh] w-full overflow-hidden rounded-t-3xl border-x-0 border-t border-border bg-card shadow-lg md:max-w-xl md:rounded-2xl md:border md:duration-200 md:animate-in md:zoom-in-95">
+      <div className="max-h-[94dvh] w-full overflow-hidden rounded-t-3xl border-x-0 border-t border-border bg-card shadow-lg md:max-w-xl md:rounded-2xl md:border md:duration-normal md:animate-in md:zoom-in-95">
         <div className="bg-strong mx-auto mt-2.5 h-1.5 w-10 shrink-0 rounded-full md:hidden" />
         <div className="flex items-center justify-between bg-gradient-to-l from-primary to-primary-hover p-5 text-on-primary">
           <div className="flex items-center gap-3">

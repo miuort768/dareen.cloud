@@ -128,7 +128,7 @@ export const EvaluationFormModal = ({
                           onClick={() => onChange({ ...formData, rating: opt.value })}
                           aria-pressed={isSelected}
                           className={cn(
-                            'relative flex flex-col items-center justify-center gap-2 rounded-xl border-2 px-2 py-3.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                            'relative flex flex-col items-center justify-center gap-2 rounded-xl border-2 px-2 py-3.5 transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                             isSelected
                               ? cn(opt.bg, opt.border, opt.color, 'shadow-sm')
                               : 'border-border bg-surface text-muted hover:border-primary/40 hover:bg-hover hover:text-main',

@@ -85,7 +85,7 @@ export const Reports = () => {
             <button
               onClick={() => window.print()}
               aria-label="طباعة التقرير"
-              className="no-print inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-200 hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+              className="no-print inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-normal hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
             >
               <Download size={14} />
               طباعة / تصدير PDF
@@ -113,7 +113,7 @@ export const Reports = () => {
         </div>
 
         {/* Main Content Area */}
-        <div className="px-0 transition-all duration-300 animate-in fade-in slide-in-from-bottom-2">
+        <div className="px-0 transition-all duration-slow animate-in fade-in slide-in-from-bottom-2">
           {state.activeReport === 'overview' && (
             <div className="space-y-4">
               <div className="rounded-2xl border border-border bg-card p-5">

@@ -1,11 +1,11 @@
-﻿/* eslint-disable react-refresh/only-export-components -- constants/variants exported beside the component (intentional UI pattern) */
+/* eslint-disable react-refresh/only-export-components -- constants/variants exported beside the component (intentional UI pattern) */
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap select-none transition-all duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 disabled:scale-100 [&_svg]:pointer-events-none [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap select-none transition-all duration-normal ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40 disabled:scale-100 [&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       variant: {

@@ -63,7 +63,7 @@ export const SectionCard = ({
   <div
     className={cn(
       'rounded-2xl border border-divider bg-card p-5 md:p-6',
-      'shadow-sm transition-all duration-300 hover:shadow-md',
+      'shadow-sm transition-all duration-slow hover:shadow-md',
       className,
     )}
   >
@@ -103,7 +103,7 @@ export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) =
       'w-full border border-divider bg-background',
       'px-4 py-3 text-sm font-bold text-main',
       'outline-none focus:border-primary focus:ring-2 focus:ring-primary/10',
-      'rounded-xl transition-all duration-200',
+      'rounded-xl transition-all duration-normal',
       'text-dim',
       props.className,
     )}
@@ -117,7 +117,7 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
       'w-full border border-divider bg-background',
       'resize-none px-4 py-3 text-sm font-bold text-main',
       'outline-none focus:border-primary focus:ring-2 focus:ring-primary/10',
-      'rounded-xl transition-all duration-200',
+      'rounded-xl transition-all duration-normal',
       'text-dim',
       props.className,
     )}
@@ -130,7 +130,7 @@ export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () =
     aria-checked={checked}
     onClick={onChange}
     className={cn(
-      'relative h-6 w-11 shrink-0 rounded-full transition-all duration-300',
+      'relative h-6 w-11 shrink-0 rounded-full transition-all duration-slow',
       checked
         ? 'bg-gradient-to-r from-primary to-primary-active shadow-sm shadow-primary/30'
         : 'bg-divider hover:bg-border',
@@ -138,7 +138,7 @@ export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () =
   >
     <span
       className={cn(
-        'absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-300',
+        'absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-slow',
         checked ? 'start-[1.375rem]' : 'start-0.5',
       )}
     />
@@ -162,7 +162,7 @@ export const PrimaryBtn = ({
       'flex items-center justify-center gap-2 bg-gradient-to-br from-primary to-primary-active',
       'hover:from-primary-hover hover:to-primary',
       'rounded-xl px-6 py-3 text-xs font-bold text-on-primary',
-      'outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+      'outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       'shadow-sm shadow-primary/20 hover:shadow-md',
       'disabled:cursor-not-allowed disabled:opacity-50',
       className,
@@ -187,7 +187,7 @@ export const SecondaryBtn = ({
       'flex items-center justify-center gap-2 border border-divider bg-card',
       'text-muted hover:border-border hover:bg-surface hover:text-main',
       'rounded-xl px-5 py-2.5 text-xs font-bold',
-      'outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+      'outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       className,
     )}
   >
@@ -210,7 +210,7 @@ export const DangerBtn = ({
       'flex items-center justify-center gap-2 bg-gradient-to-br from-error-soft to-transparent',
       'border-2 border-error-soft hover:border-error hover:from-error hover:to-error-dark',
       'rounded-xl px-5 py-2.5 text-xs font-bold text-error hover:text-on-error',
-      'shadow-sm outline-none transition-all duration-200 hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+      'shadow-sm outline-none transition-all duration-normal hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       className,
     )}
   >
@@ -231,7 +231,7 @@ export const ToggleRow = ({
   checked: boolean
   onChange: () => void
 }) => (
-  <div className="flex items-center justify-between rounded-xl border border-divider bg-background px-4 py-3 transition-colors duration-200 hover:border-divider">
+  <div className="flex items-center justify-between rounded-xl border border-divider bg-background px-4 py-3 transition-colors duration-normal hover:border-divider">
     <div className="flex items-center gap-3">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10">
         <Icon size={15} className="text-primary" />

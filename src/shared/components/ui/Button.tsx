@@ -90,7 +90,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isLoading || props.disabled}
         className={cn(
           'inline-flex select-none items-center justify-center whitespace-nowrap',
-          'transition-all duration-200 ease-out',
+          'transition-all duration-normal ease-out',
           'disabled:pointer-events-none disabled:scale-100 disabled:opacity-40',
           '[&_svg]:pointer-events-none [&_svg]:shrink-0',
           fullWidth && 'w-full',

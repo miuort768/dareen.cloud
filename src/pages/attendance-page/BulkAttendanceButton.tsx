@@ -85,7 +85,7 @@ export const BulkAttendanceButton = ({
       <button
         onClick={handleBulk}
         disabled={isBulkLoading}
-        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-success px-4 py-3.5 text-xs font-semibold text-on-success shadow-sm transition-all duration-200 hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-60"
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-success px-4 py-3.5 text-xs font-semibold text-on-success shadow-sm transition-all duration-normal hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-60"
       >
         {isBulkLoading ? (
           <>

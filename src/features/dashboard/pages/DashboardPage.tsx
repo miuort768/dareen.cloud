@@ -50,7 +50,7 @@ export const Dashboard = () => {
           <button
             type="button"
             onClick={() => window.history.back()}
-            className="inline-flex h-8 items-center justify-center rounded-lg border-2 border-primary/30 px-3.5 text-xs font-semibold text-primary transition-all duration-200 hover:border-primary/60 hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+            className="inline-flex h-8 items-center justify-center rounded-lg border-2 border-primary/30 px-3.5 text-xs font-semibold text-primary transition-all duration-normal hover:border-primary/60 hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             العودة
           </button>

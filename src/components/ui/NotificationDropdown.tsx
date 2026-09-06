@@ -142,7 +142,7 @@ export const NotificationDropdown = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'relative flex h-11 w-11 items-center justify-center gap-1.5 rounded-lg px-2.5 transition-all duration-200 md:h-8 md:w-auto',
+          'relative flex h-11 w-11 items-center justify-center gap-1.5 rounded-lg px-2.5 transition-all duration-normal md:h-8 md:w-auto',
           'text-muted hover:bg-accent-soft hover:text-main',
         )}
         aria-label="إظهار الإشعارات"
@@ -166,7 +166,7 @@ export const NotificationDropdown = ({
         <div
           id="notification-panel"
           className={cn(
-            'z-[200] duration-300 animate-in fade-in slide-in-from-top-2',
+            'z-[200] duration-slow animate-in fade-in slide-in-from-top-2',
             tray
               ? // Fixed tray — viewport anchored, immune to ancestor clipping (chat sidebar)
                 'fixed inset-x-2 bottom-4 top-[calc(66px+var(--safe-area-top))] flex w-auto flex-col rounded-2xl border border-border bg-card shadow-elevation-3 md:inset-x-auto md:bottom-auto md:end-4 md:h-fit md:w-[400px]'

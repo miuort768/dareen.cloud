@@ -107,7 +107,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
                   onClick={() => handleTab(tab)}
                   aria-current={isActive ? 'page' : undefined}
                   className={cn(
-                    'relative flex min-w-0 flex-1 items-center justify-center rounded-full outline-none transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-focus',
+                    'relative flex min-w-0 flex-1 items-center justify-center rounded-full outline-none transition-colors duration-slow focus-visible:ring-2 focus-visible:ring-focus',
                     isActive ? 'text-on-primary' : 'text-muted hover:text-main',
                   )}
                 >
@@ -135,7 +135,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
             <button
               onClick={handleMore}
               aria-label="القائمة — الوصول السريع لكل الصفحات"
-              className="relative flex min-w-0 flex-1 items-center justify-center rounded-full text-muted outline-none transition-colors duration-300 hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
+              className="relative flex min-w-0 flex-1 items-center justify-center rounded-full text-muted outline-none transition-colors duration-slow hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
             >
               <span className="relative z-10 flex items-center gap-1 px-1">
                 <span className="relative shrink-0">

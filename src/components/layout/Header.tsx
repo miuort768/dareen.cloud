@@ -138,7 +138,7 @@ export const Header = memo(() => {
     <header
       className={cn(
         'sticky top-0 z-40 w-full border-b border-border bg-background backdrop-blur-xl dark:border-white/5',
-        'transition-all duration-300',
+        'transition-all duration-slow',
       )}
     >
       <div className="mx-auto flex h-14 max-w-page items-center gap-2 px-2.5 sm:px-4 md:h-16 lg:h-[68px] lg:gap-4 lg:px-8">
@@ -185,7 +185,7 @@ export const Header = memo(() => {
                   if (e.key === 'Enter') runSearch()
                   if (e.key === 'Escape') searchRef.current?.blur()
                 }}
-                className="h-10 w-52 rounded-full border border-border bg-surface pe-16 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:w-64 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 dark:border-white/5 xl:w-64"
+                className="h-10 w-52 rounded-full border border-border bg-surface pe-16 ps-10 text-xs font-bold text-main outline-none transition-all duration-normal placeholder:text-muted focus-visible:w-64 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 dark:border-white/5 xl:w-64"
               />
               <kbd className="pointer-events-none absolute end-3 top-1/2 flex -translate-y-1/2 items-center gap-0.5 rounded-md border border-border bg-background px-1.5 py-0.5 text-[9px] font-bold text-muted dark:border-white/5">
                 <Command size={9} />K

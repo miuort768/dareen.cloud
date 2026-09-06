@@ -74,10 +74,10 @@ export const SuccessModal = ({
       <div
         className={cn(
           'p-4.5 relative overflow-hidden rounded-2xl border border-success-soft bg-card shadow-2xl dark:border-success-soft',
-          'pointer-events-auto transition-all duration-300 ease-out',
+          'pointer-events-auto transition-all duration-slow ease-out',
           isExiting
             ? 'translate-y-6 scale-90 opacity-0 blur-sm'
-            : 'duration-300 animate-in fade-in slide-in-from-bottom-6',
+            : 'duration-slow animate-in fade-in slide-in-from-bottom-6',
         )}
       >
         {/* â”€â”€ Glowing Ambient Background â”€â”€ */}

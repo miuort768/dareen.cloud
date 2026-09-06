@@ -270,7 +270,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
           </label>
 
           {enableLogin && (
-            <div className="grid grid-cols-1 gap-4 duration-300 animate-in fade-in slide-in-from-top-2 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 duration-slow animate-in fade-in slide-in-from-top-2 md:grid-cols-2">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between px-1">
                   <label htmlFor="teacher-username" className="text-xs text-muted">

@@ -40,7 +40,7 @@ export const Layout = () => {
     <div
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative flex min-h-screen bg-background font-sans text-main transition-colors duration-300"
+      className="relative flex min-h-screen bg-background font-sans text-main transition-colors duration-slow"
       dir="rtl"
     >
       <Helmet>
@@ -49,13 +49,13 @@ export const Layout = () => {
       {!isChatOnly && (
         <div
           className={cn(
-            'hidden shrink-0 transition-all duration-300 lg:block',
+            'hidden shrink-0 transition-all duration-slow lg:block',
             isChatOnly ? 'w-0' : sidebarCollapsed ? 'w-16' : 'w-56',
           )}
         >
           <div
             className={cn(
-              'transition-all duration-300',
+              'transition-all duration-slow',
               isChatOnly ? 'w-0' : sidebarCollapsed ? 'w-16' : 'w-56',
             )}
           />
@@ -65,7 +65,7 @@ export const Layout = () => {
         <Sidebar mobileMenuOpen={mobileMenuOpen} onSetMobileMenuOpen={setMobileMenuOpen} />
       )}
 
-      <div className="flex min-w-0 max-w-full flex-1 flex-col transition-all duration-300">
+      <div className="flex min-w-0 max-w-full flex-1 flex-col transition-all duration-slow">
         {!isChatOnly && !location.pathname.includes('/chat') && <Header />}
 
         <main

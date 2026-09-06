@@ -187,7 +187,7 @@ export const UsersSettings = ({
           {users.map((u) => (
             <div
               key={u.id}
-              className="group rounded-xl border border-divider bg-card p-4 transition-all duration-200 hover:border-primary/30 hover:shadow-sm"
+              className="group rounded-xl border border-divider bg-card p-4 transition-all duration-normal hover:border-primary/30 hover:shadow-sm"
             >
               <div className="mb-3 flex items-start justify-between">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-sm font-bold text-primary">

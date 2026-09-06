@@ -29,7 +29,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
   return (
     <section
       aria-label="رحلة الرتب"
-      className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+      className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-slow"
     >
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
@@ -86,7 +86,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           return (
             <div
               key={badge.label}
-              className={`rounded-2xl p-2 text-center transition-all duration-300 ${
+              className={`rounded-2xl p-2 text-center transition-all duration-slow ${
                 unlocked
                   ? 'bg-warning-soft hover:-translate-y-0.5 hover:shadow-elevation-1 dark:bg-primary-soft'
                   : 'bg-divider/40'

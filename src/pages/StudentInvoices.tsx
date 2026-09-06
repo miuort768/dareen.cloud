@@ -295,7 +295,7 @@ export const StudentInvoices = () => {
             action={
               <button
                 onClick={() => window.print()}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-on-primary shadow-sm transition-all duration-200 hover:bg-primary-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-on-primary shadow-sm transition-all duration-normal hover:bg-primary-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
               >
                 <Printer size={14} />
                 <span className="hidden sm:inline">طباعة</span>
@@ -313,7 +313,7 @@ export const StudentInvoices = () => {
                     placeholder={isAdmin ? 'بحث بالبيان أو اسم الطالب...' : 'بحث بالبيان...'}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                    className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                   />
                   {searchTerm && (
                     <button
@@ -329,7 +329,7 @@ export const StudentInvoices = () => {
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
                   aria-label="تصفية حسب الحالة"
-                  className="h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-200 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 >
                   <option value="all">الكل</option>
                   <option value="paid">مدفوعة</option>
@@ -371,7 +371,7 @@ export const StudentInvoices = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 + i * 0.04 }}
                   whileHover={{ y: -2 }}
-                  className="rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:shadow-elevation-1"
+                  className="rounded-xl border border-border bg-card p-4 transition-all duration-normal hover:shadow-elevation-1"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div
@@ -410,7 +410,7 @@ export const StudentInvoices = () => {
                 placeholder={isAdmin ? 'بحث بالبيان أو اسم الطالب...' : 'بحث بالبيان...'}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-xl border border-border bg-surface py-3 pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-200 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                className="w-full rounded-xl border border-border bg-surface py-3 pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               />
               {searchTerm && (
                 <button
@@ -426,7 +426,7 @@ export const StudentInvoices = () => {
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
               aria-label="تصفية حسب الحالة"
-              className="h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-200 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              className="h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
             >
               <option value="all">الكل</option>
               <option value="paid">مدفوعة</option>

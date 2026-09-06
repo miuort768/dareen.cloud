@@ -64,7 +64,7 @@ const StatTile = ({
   value: number
   tone: string
 }) => (
-  <div className="rounded-2xl border border-border bg-surface p-3.5 shadow-sm transition-colors duration-300">
+  <div className="rounded-2xl border border-border bg-surface p-3.5 shadow-sm transition-colors duration-slow">
     <div className={cn('mb-2 flex h-8 w-8 items-center justify-center rounded-xl', tone)}>
       <Icon size={14} />
     </div>
@@ -90,7 +90,7 @@ const SectionCard = ({
 }) => (
   <section
     className={cn(
-      'overflow-hidden rounded-3xl border bg-surface shadow-sm transition-colors duration-300',
+      'overflow-hidden rounded-3xl border bg-surface shadow-sm transition-colors duration-slow',
       accent || 'border-border',
     )}
   >
@@ -180,7 +180,7 @@ export const MonitoringPage = () => {
       {/* Header — family greeting strip */}
       <section
         aria-label="مراقبة النظام"
-        className="relative overflow-hidden rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+        className="relative overflow-hidden rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-slow"
       >
         <div
           className="pointer-events-none absolute inset-y-0 start-0 w-1.5 bg-primary"

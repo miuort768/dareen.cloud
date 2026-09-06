@@ -82,7 +82,7 @@ export const TopAttendanceStudents = ({
               key={`att-${i}`}
               type="button"
               onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
-              className="hover:border-warning/40 w-full cursor-pointer rounded-2xl border border-border bg-surface p-2.5 text-start transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-hover dark:hover:border-border"
+              className="hover:border-warning/40 w-full cursor-pointer rounded-2xl border border-border bg-surface p-2.5 text-start transition-colors duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-hover dark:hover:border-border"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2.5">

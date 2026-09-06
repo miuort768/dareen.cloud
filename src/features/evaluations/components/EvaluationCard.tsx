@@ -56,12 +56,12 @@ export const EvaluationCard = ({
   ]
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-elevation-2">
+    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-all duration-slow hover:-translate-y-1 hover:border-primary/30 hover:shadow-elevation-2">
       {/* Header: avatar + name + grade + XP */}
       <div className="flex items-center gap-3 border-b border-border p-4 pb-3">
         <div
           className={cn(
-            'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-base font-bold shadow-md ring-2 ring-primary/10 transition-transform duration-300 group-hover:scale-105',
+            'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-base font-bold shadow-md ring-2 ring-primary/10 transition-transform duration-slow group-hover:scale-105',
             gradient.g,
             gradient.on,
           )}

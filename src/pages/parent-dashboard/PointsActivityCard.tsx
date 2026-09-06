@@ -24,7 +24,7 @@ export const PointsActivityCard = ({
   return (
     <section
       aria-label="النقاط والنشاطات"
-      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition-colors duration-300"
+      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition-colors duration-slow"
     >
       <div className="flex items-center justify-between gap-3 border-b border-border bg-primary-soft p-4">
         <div className="flex min-w-0 items-center gap-2.5">

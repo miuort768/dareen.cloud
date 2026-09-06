@@ -301,14 +301,14 @@ export const AdminJobs = () => {
               <>
                 <button
                   onClick={() => exportToCsv(filtered)}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-200 hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-normal hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <Download size={14} />
                   <span>تصدير CSV</span>
                 </button>
                 <button
                   onClick={handleExportPdf}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-200 hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-normal hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <FileText size={14} />
                   <span>تصدير PDF</span>
@@ -318,7 +318,7 @@ export const AdminJobs = () => {
             action={
               <button
                 onClick={handleDeleteAll}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-error px-4 text-sm font-semibold text-on-error shadow-sm transition-all duration-200 hover:bg-error-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98]"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-error px-4 text-sm font-semibold text-on-error shadow-sm transition-all duration-normal hover:bg-error-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98]"
               >
                 <Trash2 size={14} />
                 <span>حذف الكل</span>

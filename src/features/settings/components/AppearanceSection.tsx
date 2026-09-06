@@ -46,7 +46,7 @@ export const AppearanceSection = ({
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             className={cn(
-              'relative h-7 w-12 shrink-0 rounded-full transition-all duration-300',
+              'relative h-7 w-12 shrink-0 rounded-full transition-all duration-slow',
               theme === 'dark'
                 ? 'bg-gradient-to-r from-primary to-primary-active shadow-sm shadow-primary/30'
                 : 'bg-divider hover:bg-border',
@@ -54,7 +54,7 @@ export const AppearanceSection = ({
           >
             <span
               className={cn(
-                'absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-300',
+                'absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-slow',
                 theme === 'dark' ? 'start-[1.375rem]' : 'start-0.5',
               )}
             />
@@ -77,7 +77,7 @@ export const AppearanceSection = ({
                 >
                   <div
                     className={cn(
-                      'flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300',
+                      'flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-slow',
                       isActive
                         ? 'scale-110 shadow-md ring-2 ring-primary ring-offset-2 ring-offset-card'
                         : 'ring-1 ring-divider hover:shadow-sm hover:ring-border',

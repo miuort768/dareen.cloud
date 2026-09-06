@@ -44,7 +44,7 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
             key={action.label}
             onClick={() => navigate(action.path)}
             className={cn(
-              'group flex flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-4 outline-none transition-all duration-200 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97]',
+              'group flex flex-col items-center justify-center gap-1.5 rounded-2xl px-2 py-4 outline-none transition-all duration-normal hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97]',
               action.btn,
             )}
             title={action.label}
@@ -52,7 +52,7 @@ export const QuickActionsGrid = memo(function QuickActionsGrid() {
             <Icon
               size={20}
               strokeWidth={1.9}
-              className="transition-transform duration-200 group-hover:scale-110"
+              className="transition-transform duration-normal group-hover:scale-110"
             />
             <span className="text-[10px] font-bold leading-tight">{action.label}</span>
           </button>

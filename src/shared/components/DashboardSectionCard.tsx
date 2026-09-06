@@ -30,7 +30,7 @@ export const DashboardSectionCard: React.FC<DashboardSectionCardProps> = ({
     {...fadeUp(delay)}
     id={id}
     className={cn(
-      'rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300',
+      'rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow',
       className,
     )}
   >

@@ -356,7 +356,7 @@ export const ParentsTable = memo<ParentsTableProps>(
             <ChevronDown
               size={13}
               className={cn(
-                'text-muted transition-transform duration-200',
+                'text-muted transition-transform duration-normal',
                 expandedId === parent.id && 'rotate-180',
               )}
             />

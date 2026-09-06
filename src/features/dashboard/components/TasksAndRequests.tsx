@@ -44,7 +44,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
             <div
               key={task.id}
               className={cn(
-                'flex items-center gap-2.5 rounded-2xl border p-3 transition-colors duration-200',
+                'flex items-center gap-2.5 rounded-2xl border p-3 transition-colors duration-normal',
                 task.priority === 'high'
                   ? 'border-error-soft bg-error-soft'
                   : task.priority === 'medium'

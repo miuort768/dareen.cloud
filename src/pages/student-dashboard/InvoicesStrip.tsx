@@ -53,7 +53,7 @@ export const InvoicesStrip = () => {
   return (
     <button
       onClick={() => navigate('/student-invoices')}
-      className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface p-4 text-start shadow-sm transition-all duration-200 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+      className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface p-4 text-start shadow-sm transition-all duration-normal hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
       aria-label={`الفواتير: ${pending.length} فاتورة معلقة، الإجمالي ${totalPending.toFixed(3)} ${CURRENCY_SYMBOL}`}
     >
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">

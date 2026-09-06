@@ -67,14 +67,14 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
       {/* New Chat / Group Flow Modal */}
       {showNewChatModal && (
         <div
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 p-0 backdrop-blur-sm duration-300 animate-in fade-in md:p-4"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 p-0 backdrop-blur-sm duration-slow animate-in fade-in md:p-4"
           role="dialog"
           aria-modal="true"
           onKeyDown={(e) => {
             if (e.key === 'Escape') handleClose()
           }}
         >
-          <div className="flex h-full w-full max-w-lg flex-col overflow-hidden bg-card shadow-sm duration-300 animate-in zoom-in-95 md:h-[650px] md:max-h-[90vh] md:rounded-lg">
+          <div className="flex h-full w-full max-w-lg flex-col overflow-hidden bg-card shadow-sm duration-slow animate-in zoom-in-95 md:h-[650px] md:max-h-[90vh] md:rounded-lg">
             {/* Header - WhatsApp Style */}
             <div className="flex shrink-0 items-center gap-4 bg-success p-4 text-on-success transition-all">
               <button
@@ -229,7 +229,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
                 {/* Floating Next Button */}
                 {isCreatingGroup && selectedUsers.length > 0 && (
-                  <div className="absolute bottom-6 end-6 duration-300 animate-in fade-in slide-in-from-bottom-5">
+                  <div className="absolute bottom-6 end-6 duration-slow animate-in fade-in slide-in-from-bottom-5">
                     <button
                       onClick={handleNextStep}
                       className="rounded-full bg-success p-4 text-on-success shadow-md outline-none transition-all hover:brightness-95 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
@@ -242,7 +242,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
               </>
             ) : (
               /* Step 2: Group Info */
-              <div className="slide-in-from-start-5 flex flex-1 flex-col p-6 duration-300 animate-in fade-in">
+              <div className="slide-in-from-start-5 flex flex-1 flex-col p-6 duration-slow animate-in fade-in">
                 <div className="space-y-6">
                   <div className="group relative">
                     <input

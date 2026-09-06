@@ -33,8 +33,8 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
   }
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 backdrop-blur-sm transition-all duration-300 md:items-center md:p-4">
-      <div className="relative max-h-[94dvh] w-full overflow-y-auto rounded-t-3xl bg-card shadow-elevation-2 duration-300 animate-in fade-in slide-in-from-bottom md:max-h-none md:max-w-lg md:overflow-hidden md:rounded-2xl md:animate-in md:fade-in md:zoom-in">
+    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 backdrop-blur-sm transition-all duration-slow md:items-center md:p-4">
+      <div className="relative max-h-[94dvh] w-full overflow-y-auto rounded-t-3xl bg-card shadow-elevation-2 duration-slow animate-in fade-in slide-in-from-bottom md:max-h-none md:max-w-lg md:overflow-hidden md:rounded-2xl md:animate-in md:fade-in md:zoom-in">
         <div className="pointer-events-none absolute start-0 top-0 h-32 w-32 -translate-y-16 translate-x-16 -rotate-45 bg-primary opacity-10"></div>
 
         <div className="no-print sticky top-0 z-10 flex items-center justify-between border-b border-border bg-card p-4 md:static md:p-6">

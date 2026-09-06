@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Calendar, CalendarDays, ClipboardList, Home, Bell, Loader2, RefreshCw } from 'lucide-react'
@@ -176,7 +176,7 @@ export const TeacherDashboardMobile = ({
                   setActiveTab(tab.id)
                 }}
                 className={cn(
-                  'flex min-h-11 items-center justify-center gap-1.5 rounded-xl px-1 text-xs font-black transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                  'flex min-h-11 items-center justify-center gap-1.5 rounded-xl px-1 text-xs font-black transition-colors duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                   isActive
                     ? 'bg-primary text-on-primary'
                     : 'text-muted hover:bg-hover hover:text-main',

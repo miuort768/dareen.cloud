@@ -23,7 +23,7 @@ interface TrialSessionFormModalProps {
 }
 
 const inputClass =
-  'w-full bg-surface border border-border px-3.5 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted font-bold'
+  'w-full bg-surface border border-border px-3.5 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main rounded-xl transition-all duration-normal placeholder:text-muted font-bold'
 const labelClass = 'text-[11px] font-bold text-muted mb-1.5 block'
 const selectWrapperClass = 'relative'
 

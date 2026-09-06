@@ -77,7 +77,7 @@ export const FinancialSnapshot = ({
         {items.map((item) => (
           <div
             key={item.label}
-            className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 transition-colors duration-300 dark:border-border dark:bg-hover"
+            className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 transition-colors duration-slow dark:border-border dark:bg-hover"
           >
             <div
               className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${item.tone}`}

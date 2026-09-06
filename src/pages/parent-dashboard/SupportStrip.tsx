@@ -14,7 +14,7 @@ export const SupportStrip = ({ adminPhone }: SupportStripProps) => {
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
       <button
         onClick={() => navigate('/parent-payment-history')}
-        className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3.5 text-start transition-all duration-200 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+        className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3.5 text-start transition-all duration-normal hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
         aria-label="فتح سجل الدفعات"
       >
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-success-soft">
@@ -28,7 +28,7 @@ export const SupportStrip = ({ adminPhone }: SupportStripProps) => {
           href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3.5 text-start transition-all duration-200 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+          className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3.5 text-start transition-all duration-normal hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
           aria-label="تواصل مع الدعم عبر واتساب"
         >
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-info-soft">

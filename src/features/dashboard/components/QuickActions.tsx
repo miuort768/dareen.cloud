@@ -68,14 +68,14 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
                 'border border-border bg-card dark:border-border dark:bg-card',
                 'hover:border-primary/30 hover:shadow-sm dark:hover:border-border',
                 'active:scale-[0.97]',
-                'group transition-all duration-200',
+                'group transition-all duration-normal',
               )}
             >
               <div
                 className={cn(
                   'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl',
                   action.iconBg,
-                  'transition-transform duration-200 group-hover:scale-105',
+                  'transition-transform duration-normal group-hover:scale-105',
                 )}
               >
                 <Icon size={20} className={action.color} />
@@ -117,14 +117,14 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
                     className={cn(
                       'flex w-full items-center gap-3 rounded-2xl p-3.5',
                       'border border-border bg-card shadow-elevation-1',
-                      'group transition-colors duration-200 hover:border-primary/30 active:scale-[0.97]',
+                      'group transition-colors duration-normal hover:border-primary/30 active:scale-[0.97]',
                     )}
                   >
                     <div
                       className={cn(
                         'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl',
                         action.iconBg,
-                        'transition-transform duration-200 group-hover:scale-105',
+                        'transition-transform duration-normal group-hover:scale-105',
                       )}
                     >
                       <Icon size={19} className={action.color} />

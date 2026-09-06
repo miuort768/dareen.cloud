@@ -34,7 +34,7 @@ export const LiveSessionBanner = ({ session }: LiveSessionBannerProps) => {
 
   return (
     <div
-      className="border-error/40 relative overflow-hidden rounded-2xl border bg-error-soft shadow-sm transition-colors duration-300"
+      className="border-error/40 relative overflow-hidden rounded-2xl border bg-error-soft shadow-sm transition-colors duration-slow"
       role="status"
       aria-label="حصة جارية الآن"
     >

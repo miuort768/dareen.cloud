@@ -63,7 +63,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
   return (
     <section
       aria-label={`لوحة متابعة ${child.name}`}
-      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition-colors duration-300"
+      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition-colors duration-slow"
     >
       {/* Header — identity + attendance ring + key numbers */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border p-5">
@@ -134,7 +134,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
               return (
                 <div
                   key={en.id || `en-${idx}`}
-                  className={`rounded-2xl border p-3 transition-colors duration-300 ${
+                  className={`rounded-2xl border p-3 transition-colors duration-slow ${
                     frozen ? 'bg-divider/30 border-border' : 'border-border bg-surface'
                   }`}
                 >

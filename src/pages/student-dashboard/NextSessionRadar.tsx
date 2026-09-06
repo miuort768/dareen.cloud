@@ -14,7 +14,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
     return (
       <section
         aria-label="الحصة القادمة"
-        className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+        className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-slow"
       >
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
@@ -36,7 +36,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
   return (
     <section
       aria-label="الحصة القادمة"
-      className="overflow-hidden rounded-2xl border border-primary/30 bg-surface shadow-sm transition-colors duration-300"
+      className="overflow-hidden rounded-2xl border border-primary/30 bg-surface shadow-sm transition-colors duration-slow"
     >
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-primary/10 bg-primary-soft px-5 py-3">
         <p className="flex items-center gap-2 text-xs font-black text-main">
@@ -61,7 +61,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
         </div>
         <button
           onClick={() => navigate('/schedule')}
-          className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-2xl bg-primary px-4 py-2.5 text-xs font-black text-on-primary shadow-sm transition-all duration-200 hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-2xl bg-primary px-4 py-2.5 text-xs font-black text-on-primary shadow-sm transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           aria-label="فتح الجدول الأسبوعي"
         >
           الجدول

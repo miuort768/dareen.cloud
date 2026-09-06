@@ -116,14 +116,14 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
         >
           <div
             className={cn(
-              'fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200',
+              'fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-normal',
               isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
             )}
             onClick={handleClose}
           />
           <div
             className={cn(
-              'relative w-full max-w-sm rounded-card bg-card shadow-2xl transition-all duration-200',
+              'relative w-full max-w-sm rounded-card bg-card shadow-2xl transition-all duration-normal',
               isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
             )}
           >
@@ -251,14 +251,14 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
         >
           <div
             className={cn(
-              'fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-200',
+              'fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-normal',
               isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
             )}
             onClick={handleClose}
           />
           <div
             className={cn(
-              'relative w-full max-w-sm rounded-card bg-card shadow-2xl transition-all duration-200',
+              'relative w-full max-w-sm rounded-card bg-card shadow-2xl transition-all duration-normal',
               isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
             )}
           >

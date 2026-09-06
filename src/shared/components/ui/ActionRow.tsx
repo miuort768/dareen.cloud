@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { cn } from '../../../lib/utils'
 import { triggerHaptic } from '../../../lib/haptics'
 
@@ -45,7 +45,7 @@ export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProp
           'inline-flex items-center justify-center',
           'h-10 w-10 rounded-xl border md:h-8 md:w-8',
           'text-[10px] font-bold',
-          'transition-all duration-200',
+          'transition-all duration-normal',
           'active:scale-95',
           'focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
           'disabled:pointer-events-none disabled:opacity-40',

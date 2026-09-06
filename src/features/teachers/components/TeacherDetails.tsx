@@ -192,7 +192,7 @@ export const TeacherDetails = ({
           </button>
 
           {showActivity && (
-            <div className="duration-300 animate-in fade-in slide-in-from-top-2">
+            <div className="duration-slow animate-in fade-in slide-in-from-top-2">
               <TeacherActivitySection activity={activity} activityLoading={activityLoading} />
             </div>
           )}

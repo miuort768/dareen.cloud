@@ -21,7 +21,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
   return (
     <section
       aria-label="حصص اليوم"
-      className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-300"
+      className="rounded-2xl border border-border bg-surface p-5 shadow-sm transition-colors duration-slow"
     >
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-sm font-black text-main">حصص اليوم</h3>
@@ -46,7 +46,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                 <div className="min-w-0 flex-1">
                   <div
                     className={cn(
-                      'rounded-2xl border bg-surface p-3 transition-colors duration-300',
+                      'rounded-2xl border bg-surface p-3 transition-colors duration-slow',
                       item.status === 'done' && 'border-border',
                       item.status === 'cancelled' && 'border-border opacity-60',
                       item.status === 'upcoming' && 'border-primary/20',

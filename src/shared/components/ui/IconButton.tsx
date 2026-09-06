@@ -44,7 +44,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         aria-label={label}
         className={cn(
           'inline-flex items-center justify-center rounded-lg',
-          'transition-all duration-200',
+          'transition-all duration-normal',
           'active:scale-95',
           'focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2',
           'disabled:pointer-events-none disabled:scale-100 disabled:opacity-40',

@@ -73,7 +73,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({
                 {!isLast && <div className="w-px flex-1 bg-divider" />}
               </div>
 
-              <div className="hover:border-info/40 mb-2.5 flex min-w-0 flex-1 items-center gap-3 rounded-xl border border-border bg-card p-2.5 shadow-sm transition-all duration-200 hover:shadow-elevation-1">
+              <div className="hover:border-info/40 mb-2.5 flex min-w-0 flex-1 items-center gap-3 rounded-xl border border-border bg-card p-2.5 shadow-sm transition-all duration-normal hover:shadow-elevation-1">
                 <span
                   className={cn(
                     'flex h-10 w-12 shrink-0 flex-col items-center justify-center rounded-lg text-[11px] font-black tabular-nums leading-none',

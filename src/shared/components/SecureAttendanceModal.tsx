@@ -77,11 +77,11 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
       }}
     >
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm duration-200 animate-in fade-in"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm duration-normal animate-in fade-in"
         onClick={onClose}
       ></div>
 
-      <div className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-elevation-3 duration-200 animate-in slide-in-from-bottom dark:bg-card md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border md:animate-in md:zoom-in-95">
+      <div className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-elevation-3 duration-normal animate-in slide-in-from-bottom dark:bg-card md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border md:animate-in md:zoom-in-95">
         {/* Accent bar */}
         <div className="h-1 w-full bg-primary"></div>
 
@@ -148,7 +148,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
           {/* Completed fields */}
           {status === 'completed' && (
-            <div className="mb-5 space-y-3.5 duration-200 animate-in fade-in slide-in-from-top-2">
+            <div className="mb-5 space-y-3.5 duration-normal animate-in fade-in slide-in-from-top-2">
               <div className="space-y-1.5">
                 <label
                   htmlFor="attendance-topics"
@@ -186,7 +186,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
           {/* Cancelled checkbox */}
           {status === 'cancelled' && (
-            <div className="mb-5 duration-200 animate-in fade-in slide-in-from-top-2">
+            <div className="mb-5 duration-normal animate-in fade-in slide-in-from-top-2">
               <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-error-soft bg-error-soft p-3.5 transition-colors hover:bg-error-soft">
                 <input
                   type="checkbox"

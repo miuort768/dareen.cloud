@@ -38,7 +38,7 @@ export const LeadTable = memo(
             return (
               <div
                 onClick={() => onLeadClick(lead)}
-                className="group flex cursor-pointer items-center border-b border-border px-5 py-3.5 transition-all duration-200 hover:bg-hover"
+                className="group flex cursor-pointer items-center border-b border-border px-5 py-3.5 transition-all duration-normal hover:bg-hover"
               >
                 <div className="flex w-[22%] min-w-0 items-center gap-3 px-2">
                   <GradientAvatar name={lead.studentName || 'ع'} size="sm" />
@@ -111,7 +111,7 @@ export const LeadTable = memo(
                     {priority.label}
                   </span>
                 </div>
-                <div className="flex w-[28%] items-center justify-end gap-1.5 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                <div className="flex w-[28%] items-center justify-end gap-1.5 opacity-0 transition-opacity duration-normal group-hover:opacity-100">
                   <ActionBtn
                     onClick={(e) => {
                       e.stopPropagation()

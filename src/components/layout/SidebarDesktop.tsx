@@ -46,7 +46,7 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
     to={item.href}
     className={({ isActive }) =>
       cn(
-        'group relative flex items-center gap-2.5 overflow-visible rounded-xl text-sm transition-all duration-200',
+        'group relative flex items-center gap-2.5 overflow-visible rounded-xl text-sm transition-all duration-normal',
         collapsed ? 'mx-1 my-0 justify-center px-0 py-1.5' : 'mx-2 my-0.5 px-3 py-2',
         isActive
           ? 'bg-primary/10 font-semibold text-primary'
@@ -55,7 +55,7 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
     }
     title={collapsed ? item.name : ''}
   >
-    <div className="relative shrink-0 transition-transform duration-200 group-hover:scale-110">
+    <div className="relative shrink-0 transition-transform duration-normal group-hover:scale-110">
       <item.icon size={18} className="shrink-0" strokeWidth={1.8} />
       {item.id === 'chat' && totalUnreadCount > 0 && (
         <Badge
@@ -68,14 +68,14 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
     </div>
     <span
       className={cn(
-        'whitespace-nowrap text-sm transition-all duration-300',
+        'whitespace-nowrap text-sm transition-all duration-slow',
         collapsed ? 'hidden w-0 opacity-0' : 'w-auto opacity-100',
       )}
     >
       {item.name}
     </span>
     {collapsed && (
-      <div className="bg-popover text-popover-foreground pointer-events-none absolute end-full top-1/2 z-50 me-3 -translate-y-1/2 translate-x-1 whitespace-nowrap rounded-lg border border-border px-2.5 py-1.5 text-xs opacity-0 shadow-lg transition-all duration-150 group-hover:translate-x-0 group-hover:opacity-100">
+      <div className="bg-popover text-popover-foreground pointer-events-none absolute end-full top-1/2 z-50 me-3 -translate-y-1/2 translate-x-1 whitespace-nowrap rounded-lg border border-border px-2.5 py-1.5 text-xs opacity-0 shadow-lg transition-all duration-fast group-hover:translate-x-0 group-hover:opacity-100">
         {item.name}
         <div className="bg-popover absolute -start-1.5 top-1/2 h-2.5 w-2.5 -translate-y-1/2 rotate-45 border-s border-t border-border" />
       </div>
@@ -94,14 +94,14 @@ export const SidebarDesktop = ({
 }: SidebarDesktopProps) => (
   <div
     className={cn(
-      'fixed start-0 top-0 z-50 hidden h-screen shrink-0 flex-col border-e border-border bg-card transition-all duration-300 lg:flex',
+      'fixed start-0 top-0 z-50 hidden h-screen shrink-0 flex-col border-e border-border bg-card transition-all duration-slow lg:flex',
       collapsed ? 'w-16' : 'w-56',
     )}
   >
     {/* Logo */}
     <div
       className={cn(
-        'flex shrink-0 items-center border-b border-border transition-all duration-300',
+        'flex shrink-0 items-center border-b border-border transition-all duration-slow',
         collapsed ? 'h-11 justify-center px-0' : 'h-14 justify-between px-5',
       )}
     >
@@ -113,7 +113,7 @@ export const SidebarDesktop = ({
       >
         <div
           className={cn(
-            'shrink-0 overflow-hidden rounded-xl transition-all duration-300',
+            'shrink-0 overflow-hidden rounded-xl transition-all duration-slow',
             collapsed ? 'h-7 w-7' : 'h-8 w-8',
           )}
         >
@@ -126,7 +126,7 @@ export const SidebarDesktop = ({
         </div>
         <span
           className={cn(
-            'whitespace-nowrap text-sm font-bold text-main transition-all duration-300',
+            'whitespace-nowrap text-sm font-bold text-main transition-all duration-slow',
             collapsed ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100',
           )}
         >
@@ -136,7 +136,7 @@ export const SidebarDesktop = ({
       {academicYear && (
         <span
           className={cn(
-            'shrink-0 overflow-hidden transition-all duration-300',
+            'shrink-0 overflow-hidden transition-all duration-slow',
             collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100',
           )}
         >
@@ -151,7 +151,7 @@ export const SidebarDesktop = ({
     {/* Navigation */}
     <nav
       className={cn(
-        'custom-scrollbar min-h-0 flex-1 overflow-y-auto transition-all duration-300',
+        'custom-scrollbar min-h-0 flex-1 overflow-y-auto transition-all duration-slow',
         collapsed ? 'py-1.5' : 'py-3',
       )}
       data-sidebar-nav
@@ -160,7 +160,7 @@ export const SidebarDesktop = ({
         <div key={section.label} className={cn(sIdx > 0 && (collapsed ? 'mt-0' : 'mt-1'))}>
           <div
             className={cn(
-              'overflow-hidden transition-all duration-300',
+              'overflow-hidden transition-all duration-slow',
               collapsed ? 'h-0 opacity-0' : 'h-auto opacity-100',
             )}
           >
@@ -187,7 +187,7 @@ export const SidebarDesktop = ({
           to={getProfileLink(user.role)}
           className={({ isActive }) =>
             cn(
-              'group flex items-center rounded-xl transition-all duration-300',
+              'group flex items-center rounded-xl transition-all duration-slow',
               collapsed ? 'mx-1 mt-1.5 justify-center py-1.5' : 'mx-2 mt-2 gap-2.5 px-3 py-2',
               isActive ? 'bg-primary/10 text-primary' : 'text-main hover:bg-hover',
             )
@@ -195,7 +195,7 @@ export const SidebarDesktop = ({
         >
           <Avatar
             className={cn(
-              'shrink-0 transition-all duration-300 group-hover:scale-105',
+              'shrink-0 transition-all duration-slow group-hover:scale-105',
               collapsed ? 'h-7 w-7' : 'h-8 w-8',
             )}
           >
@@ -209,7 +209,7 @@ export const SidebarDesktop = ({
           </Avatar>
           <div
             className={cn(
-              'overflow-hidden transition-all duration-300',
+              'overflow-hidden transition-all duration-slow',
               collapsed ? 'w-0 opacity-0' : 'w-auto opacity-100',
             )}
           >
@@ -222,14 +222,14 @@ export const SidebarDesktop = ({
       )}
       <div
         className={cn(
-          'transition-all duration-300',
+          'transition-all duration-slow',
           collapsed ? 'space-y-0 px-1.5 pb-1.5' : 'space-y-0.5 px-2 pb-2',
         )}
       >
         <button
           onClick={onToggleCollapse}
           className={cn(
-            'flex w-full items-center gap-2.5 rounded-xl text-muted transition-all duration-200 hover:bg-hover hover:text-main',
+            'flex w-full items-center gap-2.5 rounded-xl text-muted transition-all duration-normal hover:bg-hover hover:text-main',
             collapsed ? 'justify-center px-0 py-1.5' : 'px-3 py-2',
           )}
         >
@@ -245,14 +245,14 @@ export const SidebarDesktop = ({
         <button
           onClick={onLogout}
           className={cn(
-            'flex w-full items-center gap-2.5 rounded-xl text-error transition-all duration-200 hover:bg-error-soft hover:text-error',
+            'flex w-full items-center gap-2.5 rounded-xl text-error transition-all duration-normal hover:bg-error-soft hover:text-error',
             collapsed ? 'justify-center px-0 py-1.5' : 'px-3 py-2',
           )}
         >
           <LogOut size={18} strokeWidth={1.8} />
           <span
             className={cn(
-              'whitespace-nowrap text-sm transition-all duration-300',
+              'whitespace-nowrap text-sm transition-all duration-slow',
               collapsed ? 'hidden' : '',
             )}
           >

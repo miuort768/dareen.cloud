@@ -1,4 +1,4 @@
-﻿import { cn } from '../../lib/utils'
+import { cn } from '../../lib/utils'
 
 interface WeekStripProps {
   counts: number[]
@@ -23,7 +23,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
   return (
     <section
       aria-label="حمل الأسبوع القادم"
-      className="flex h-full flex-col rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300"
+      className="flex h-full flex-col rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow"
     >
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-sm font-black text-main">أسبوعك القادم</h3>
@@ -42,7 +42,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
                 : `${day.label}: لا حصص`
             }
             className={cn(
-              'flex cursor-default flex-col items-center justify-center gap-1.5 rounded-2xl px-0.5 py-3 transition-all duration-300 hover:-translate-y-0.5 sm:py-4',
+              'flex cursor-default flex-col items-center justify-center gap-1.5 rounded-2xl px-0.5 py-3 transition-all duration-slow hover:-translate-y-0.5 sm:py-4',
               day.isToday
                 ? 'bg-primary text-on-primary shadow-md shadow-primary/25'
                 : day.count > 0

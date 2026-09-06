@@ -104,11 +104,11 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       aria-label={title}
     >
       <div
-        className="fixed inset-0 bg-black/40 backdrop-blur-sm duration-200 animate-in fade-in"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm duration-normal animate-in fade-in"
         onClick={onClose}
       ></div>
 
-      <div className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t-2 border-error bg-card shadow-elevation-3 duration-200 animate-in slide-in-from-bottom dark:bg-card md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border-x-2 md:border-b-2 md:animate-in md:zoom-in-95">
+      <div className="relative max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t-2 border-error bg-card shadow-elevation-3 duration-normal animate-in slide-in-from-bottom dark:bg-card md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border-x-2 md:border-b-2 md:animate-in md:zoom-in-95">
         {/* Accent bar */}
         <div className={cn('h-1 w-full', isDestructive ? 'bg-error' : 'bg-primary')}></div>
 

@@ -80,7 +80,7 @@ export const StatChipsRow = ({ stats }: { stats: DashboardStats }) => {
             key={chip.label}
             to={chip.to}
             className={cn(
-              'group w-[108px] shrink-0 snap-start rounded-2xl border border-border bg-card p-3 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]',
+              'group w-[108px] shrink-0 snap-start rounded-2xl border border-border bg-card p-3 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.96]',
             )}
           >
             <div className="mb-2 flex items-center justify-between">

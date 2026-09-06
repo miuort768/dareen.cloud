@@ -68,7 +68,7 @@ export const ParentStudentCard = ({
   }))
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/30 hover:shadow-elevation-1">
+    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-slow hover:border-primary/30 hover:shadow-elevation-1">
       <div className="relative overflow-hidden bg-primary p-4 md:p-6">
         <div className="absolute start-0 top-0 h-24 w-24 -translate-y-12 translate-x-12 rotate-45 rounded-full bg-white/10 blur-xl transition-transform group-hover:scale-110"></div>
         <div className="absolute bottom-0 end-0 h-16 w-16 -translate-x-8 translate-y-8 rounded-full bg-white/5 blur-lg"></div>

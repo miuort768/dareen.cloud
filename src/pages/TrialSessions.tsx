@@ -612,7 +612,7 @@ export const TrialSessions = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
               className={cn(
-                'shadow-elevation-0 rounded-2xl border p-4 transition-all duration-300 hover:shadow-elevation-1',
+                'shadow-elevation-0 rounded-2xl border p-4 transition-all duration-slow hover:shadow-elevation-1',
                 stat.card,
               )}
             >
@@ -650,7 +650,7 @@ export const TrialSessions = () => {
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="بحث باسم الطالب أو رقم الهاتف..."
                   aria-label="بحث عن حصة"
-                  className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-sm text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-sm text-main outline-none transition-all duration-normal placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 />
                 {search && (
                   <button
@@ -665,7 +665,7 @@ export const TrialSessions = () => {
               <button
                 onClick={() => setShowPaid(!showPaid)}
                 className={cn(
-                  'flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all duration-200',
+                  'flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all duration-normal',
                   showPaid
                     ? 'border-success-soft bg-success-soft text-success'
                     : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
@@ -948,7 +948,7 @@ export const TrialSessions = () => {
             resetForm()
             setShowModal(true)
           }}
-          className="fixed bottom-8 end-8 z-40 hidden h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-hover active:scale-95 md:flex"
+          className="fixed bottom-8 end-8 z-40 hidden h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20 transition-all duration-normal hover:bg-primary-hover active:scale-95 md:flex"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة حصة جديدة"
@@ -1112,7 +1112,7 @@ export const TrialSessions = () => {
                       value={deleteAllTyped}
                       onChange={(e) => setDeleteAllTyped(e.target.value)}
                       placeholder="dareen"
-                      className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-sm font-black tracking-widest text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
+                      className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-sm font-black tracking-widest text-main outline-none transition-all duration-normal placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && deleteAllTyped.trim().toLowerCase() === 'dareen')
                           deleteAllMutation.mutate()

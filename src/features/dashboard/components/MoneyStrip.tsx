@@ -11,7 +11,7 @@ export const MoneyStrip = ({ stats }: { stats: DashboardStats }) => {
   return (
     <Link
       to="/finance"
-      className="group block rounded-2xl border border-border bg-card p-4 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+      className="group block rounded-2xl border border-border bg-card p-4 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
       dir="rtl"
     >
       <div className="flex items-center justify-between">
