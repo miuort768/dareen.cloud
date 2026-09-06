@@ -82,7 +82,7 @@ export const TrialSessionCard = ({
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -2 }}
       className={cn(
-        'shadow-elevation-0 group overflow-hidden rounded-2xl border border-border bg-card text-right font-dash transition-all duration-slow hover:shadow-elevation-1 md:rounded-2xl',
+        'shadow-elevation-0 group overflow-hidden rounded-2xl border border-border bg-card text-start font-dash transition-all duration-slow hover:shadow-elevation-1 md:rounded-2xl',
         onCardClick && 'cursor-pointer',
       )}
       dir="rtl"
@@ -99,7 +99,7 @@ export const TrialSessionCard = ({
             >
               <User size={18} className={gradient.on} />
             </div>
-            <div className="text-right">
+            <div className="text-start">
               <h3 className="text-sm font-bold leading-tight text-main">{t.studentName}</h3>
               <span
                 className={cn(
@@ -133,7 +133,7 @@ export const TrialSessionCard = ({
 
         {/* Session info: stacked on mobile, 3 columns on sm+ */}
         <div className="mb-3 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-          <div className="rounded-xl border border-primary-soft bg-primary-soft p-2.5 text-right">
+          <div className="rounded-xl border border-primary-soft bg-primary-soft p-2.5 text-start">
             <p className="mb-1 text-[10px] font-bold text-primary">المادة</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
@@ -144,7 +144,7 @@ export const TrialSessionCard = ({
               </span>
             </div>
           </div>
-          <div className="rounded-xl border border-success-soft bg-success-soft p-2.5 text-right">
+          <div className="rounded-xl border border-success-soft bg-success-soft p-2.5 text-start">
             <p className="mb-1 text-[10px] font-bold text-success">المعلمة</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
@@ -155,7 +155,7 @@ export const TrialSessionCard = ({
               </span>
             </div>
           </div>
-          <div className="rounded-xl border border-warning-soft bg-warning-soft p-2.5 text-right">
+          <div className="rounded-xl border border-warning-soft bg-warning-soft p-2.5 text-start">
             <p className="mb-1 text-[10px] font-bold text-warning">رقم التواصل</p>
             <div className="flex items-center justify-start gap-1.5">
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
@@ -185,7 +185,7 @@ export const TrialSessionCard = ({
             {showNotes ? (
               <div className="flex items-start gap-2">
                 <MessageCircle size={14} className="mt-0.5 shrink-0 font-bold text-warning" />
-                <div className="min-w-0 flex-1 text-right">
+                <div className="min-w-0 flex-1 text-start">
                   <p className="font-semibold leading-relaxed text-main">{t.notes}</p>
                   <button
                     onClick={(e) => {
@@ -202,7 +202,7 @@ export const TrialSessionCard = ({
             ) : (
               <div className="flex items-center gap-1.5 px-1 py-1.5 font-semibold text-main">
                 <MessageCircle size={13} className="shrink-0 text-warning" />
-                <span className="line-clamp-1 flex-1 text-right">{t.notes}</span>
+                <span className="line-clamp-1 flex-1 text-start">{t.notes}</span>
                 <ChevronDown size={11} className="shrink-0 text-warning" />
               </div>
             )}
