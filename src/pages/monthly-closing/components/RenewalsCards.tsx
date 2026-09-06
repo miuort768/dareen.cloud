@@ -38,13 +38,13 @@ export const RenewalsCards: React.FC<RenewalsCardsProps> = ({ renewalsData }) =>
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => window.open(item.waLink, '_blank')}
-              className="flex items-center justify-center gap-1.5 rounded-xl bg-success py-2.5 text-micro font-bold text-on-success transition-all hover:brightness-90 active:scale-95"
+              className="flex items-center justify-center gap-1.5 rounded-xl bg-success py-2.5 text-micro font-bold text-on-success outline-none transition-all hover:brightness-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <MessageCircle size={14} /> واتساب
             </button>
             <a
               href={`tel:${item.phone}`}
-              className="flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-micro font-bold text-on-primary transition-all hover:brightness-90 active:scale-95"
+              className="flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-micro font-bold text-on-primary outline-none transition-all hover:brightness-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <Phone size={14} /> اتصال
             </a>

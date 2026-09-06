@@ -193,7 +193,7 @@ export const AttendanceModal = ({
         <div className="flex shrink-0 justify-end border-t border-border bg-surface p-5">
           <button
             onClick={onClose}
-            className="rounded-xl bg-success px-6 py-2 text-micro font-medium text-on-success transition-all hover:bg-success-hover active:scale-[0.98]"
+            className="rounded-xl bg-success px-6 py-2 text-micro font-medium text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             إغلاق
           </button>

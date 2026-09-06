@@ -59,7 +59,7 @@ const formatPhone = (phone: string) => {
 }
 
 const actionBtnBase =
-  'flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-[11px] font-extrabold transition-all active:scale-95'
+  'flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-[11px] font-extrabold transition-all active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-focus'
 
 export const TrialSessionCard = ({
   session: t,

@@ -185,7 +185,7 @@ export const EnrollmentForm = ({
             <button
               type="button"
               onClick={handleAddSlot}
-              className="rounded-xl bg-primary px-2 text-on-primary transition-transform active:scale-95"
+              className="rounded-xl bg-primary px-2 text-on-primary outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               aria-label="إضافة"
             >
               <Plus size={14} />
@@ -214,7 +214,7 @@ export const EnrollmentForm = ({
         <button
           type="submit"
           disabled={isLoading}
-          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-medium text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-medium text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? <Loader2 size={14} className="animate-spin" /> : null}
           {isLoading ? 'جاري الحفظ...' : 'تأكيد وحفظ الاشتراك'}

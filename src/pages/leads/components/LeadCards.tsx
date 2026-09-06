@@ -43,7 +43,7 @@ export const LeadCards = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.04, duration: 0.3 }}
                 onClick={() => onLeadClick(lead)}
-                className="cursor-pointer overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-transform duration-200 active:scale-[0.99] dark:shadow-none"
+                className="cursor-pointer overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 outline-none transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99] dark:shadow-none"
               >
                 {/* Identity */}
                 <div className="flex items-start justify-between gap-2 px-3.5 pt-3.5">
@@ -122,7 +122,7 @@ export const LeadCards = ({
                       window.open(`tel:${lead.phone}`)
                     }}
                     aria-label="اتصال مباشر"
-                    className="flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-main text-xs font-black text-background shadow-sm transition-all hover:opacity-90 active:scale-[0.97]"
+                    className="flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-main text-xs font-black text-background shadow-sm outline-none transition-all hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                   >
                     <Phone size={14} />
                     اتصال مباشر
@@ -133,7 +133,7 @@ export const LeadCards = ({
                       window.open(`https://wa.me/${lead.phone}`, '_blank')
                     }}
                     aria-label="رسالة واتساب"
-                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft text-success transition-all hover:bg-success-light active:scale-95"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft text-success outline-none transition-all hover:bg-success-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   >
                     <MessageSquare size={15} />
                   </button>
@@ -143,7 +143,7 @@ export const LeadCards = ({
                       updateMutation.mutate({ id: lead.id, updates: { status: 'converted' } })
                     }}
                     aria-label="تحويل إلى مشترك"
-                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-info-soft text-info transition-all hover:bg-info-light active:scale-95"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-info-soft text-info outline-none transition-all hover:bg-info-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   >
                     <CalendarCheck size={15} />
                   </button>
@@ -153,7 +153,7 @@ export const LeadCards = ({
                       handleMarkLost(lead.id)
                     }}
                     aria-label="نقل إلى المفقودين"
-                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-error-soft text-error transition-all hover:bg-error-light active:scale-95"
+                    className="flex h-10 w-10 items-center justify-center rounded-xl bg-error-soft text-error outline-none transition-all hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   >
                     <Trash2 size={15} />
                   </button>

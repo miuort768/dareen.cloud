@@ -65,7 +65,7 @@ export const CollectionsTable: React.FC<CollectionsTableProps> = ({
         }}
         disabled={savingId === item.id}
         className={cn(
-          'rounded-xl px-3 py-1 text-micro font-bold uppercase transition-all active:scale-95 disabled:opacity-60',
+          'rounded-xl px-3 py-1 text-micro font-bold uppercase outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-60',
           isPaid ? 'bg-success text-on-success' : 'border border-error bg-error-light text-error',
         )}
       >

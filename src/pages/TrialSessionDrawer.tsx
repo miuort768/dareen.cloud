@@ -267,13 +267,13 @@ export const TrialSessionDrawer = ({
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => onCall(session.parentPhone)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-info-soft py-3 text-xs font-bold text-info transition-all hover:bg-info-light active:scale-[0.98]"
+                className="flex items-center justify-center gap-2 rounded-xl bg-info-soft py-3 text-xs font-bold text-info outline-none transition-all hover:bg-info-light focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 <Phone size={14} /> اتصال
               </button>
               <button
                 onClick={() => onWhatsApp(session.parentPhone)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-success-soft py-3 text-xs font-bold text-success transition-all hover:bg-success-light active:scale-[0.98]"
+                className="flex items-center justify-center gap-2 rounded-xl bg-success-soft py-3 text-xs font-bold text-success outline-none transition-all hover:bg-success-light focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 <MessageSquare size={14} /> واتساب
               </button>
@@ -281,7 +281,7 @@ export const TrialSessionDrawer = ({
                 <button
                   onClick={() => onConvert(session.id)}
                   disabled={isConverting}
-                  className="col-span-2 flex items-center justify-center gap-2 rounded-xl bg-primary-soft py-3 text-xs font-bold text-primary transition-all hover:bg-primary-light active:scale-[0.98] disabled:opacity-50"
+                  className="col-span-2 flex items-center justify-center gap-2 rounded-xl bg-primary-soft py-3 text-xs font-bold text-primary outline-none transition-all hover:bg-primary-light focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
                 >
                   <UserPlus size={14} /> {isConverting ? 'جاري التحويل...' : 'تحويل إلى طالب'}
                 </button>
@@ -291,13 +291,13 @@ export const TrialSessionDrawer = ({
                   onEdit(session)
                   onClose()
                 }}
-                className="flex items-center justify-center gap-2 rounded-xl bg-primary-soft py-3 text-xs font-bold text-primary transition-all hover:bg-primary-light active:scale-[0.98]"
+                className="flex items-center justify-center gap-2 rounded-xl bg-primary-soft py-3 text-xs font-bold text-primary outline-none transition-all hover:bg-primary-light focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 <Pencil size={14} /> تعديل
               </button>
               <button
                 onClick={() => onPaid(session.id)}
-                className="flex items-center justify-center gap-2 rounded-xl bg-warning-soft py-3 text-xs font-bold text-warning transition-all hover:bg-warning-light active:scale-[0.98]"
+                className="flex items-center justify-center gap-2 rounded-xl bg-warning-soft py-3 text-xs font-bold text-warning outline-none transition-all hover:bg-warning-light focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 <CircleDollarSign size={14} /> مدفوعة
               </button>

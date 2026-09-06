@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, TrendingDown } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -51,7 +51,7 @@ export const PrimaryBtn = ({
     disabled={disabled}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50',
+      'flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}
   >
@@ -71,7 +71,7 @@ export const SecondaryBtn = ({
   <button
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl border border-divider bg-card px-3 py-2 text-xs font-bold text-muted transition-all hover:bg-surface active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border border-divider bg-card px-3 py-2 text-xs font-bold text-muted outline-none transition-all hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       className,
     )}
   >

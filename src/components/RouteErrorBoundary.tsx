@@ -31,13 +31,13 @@ export const RouteErrorBoundary = () => {
         <div className="flex justify-center gap-3">
           <button
             onClick={() => navigate(-1)}
-            className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-5 py-2.5 text-sm font-bold text-main transition-all hover:bg-hover active:scale-[0.98]"
+            className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-5 py-2.5 text-sm font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             <RotateCcw size={14} /> العودة
           </button>
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.98]"
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             <Home size={14} /> الصفحة الرئيسية
           </button>

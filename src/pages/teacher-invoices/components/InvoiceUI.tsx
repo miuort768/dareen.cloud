@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
 import { RefreshCw, type LucideIcon } from 'lucide-react'
 
@@ -63,7 +63,7 @@ export const PrimaryBtn = ({
     disabled={disabled || loading}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover hover:shadow-md active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100',
+      'flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100',
       className,
     )}
   >
@@ -86,7 +86,7 @@ export const SecondaryBtn = ({
     title={title}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl border border-divider bg-card px-4 py-2.5 text-xs font-bold text-muted transition-all hover:bg-surface hover:text-main active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border border-divider bg-card px-4 py-2.5 text-xs font-bold text-muted outline-none transition-all hover:bg-surface hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       className,
     )}
   >
@@ -109,7 +109,7 @@ export const DangerBtn = ({
     title={title}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl border-2 border-error-soft bg-error-soft px-4 py-2.5 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-primary active:scale-[0.97]',
+      'flex items-center justify-center gap-2 rounded-xl border-2 border-error-soft bg-error-soft px-4 py-2.5 text-xs font-bold text-error outline-none transition-all hover:bg-error hover:text-on-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       className,
     )}
   >

@@ -395,7 +395,7 @@ export const MonthlyClosing = () => {
             </div>
             <button
               onClick={handleRefresh}
-              className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95 md:min-h-0 md:flex-none"
+              className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:min-h-0 md:flex-none"
             >
               <RefreshCw size={13} /> تحديث
             </button>

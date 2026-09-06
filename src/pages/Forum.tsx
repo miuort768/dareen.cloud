@@ -484,7 +484,7 @@ export const Forum = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-12 w-12 items-center justify-center rounded-card border border-divider bg-primary text-on-primary shadow-elevation-2 transition-[background-color,box-shadow,transform] duration-fast hover:bg-primary-hover hover:shadow-elevation-3 active:scale-95"
+                  className="flex h-12 w-12 items-center justify-center rounded-card border border-divider bg-primary text-on-primary shadow-elevation-2 outline-none transition-[background-color,box-shadow,transform] duration-fast hover:bg-primary-hover hover:shadow-elevation-3 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <action.icon size={20} />
                 </button>

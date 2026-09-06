@@ -100,7 +100,7 @@ export const ForumHelpBanner = () => {
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="w-full shrink-0 rounded-card bg-primary px-4 py-2.5 text-center text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-95 sm:w-auto sm:px-5"
+          className="w-full shrink-0 rounded-card bg-primary px-4 py-2.5 text-center text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:w-auto sm:px-5"
         >
           عرض القواعد والتعليمات
         </button>
@@ -163,7 +163,7 @@ export const ForumHelpBanner = () => {
                 </ul>
                 <button
                   onClick={() => setShowModal(false)}
-                  className="mt-4 w-full rounded-card bg-primary py-3 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-95"
+                  className="mt-4 w-full rounded-card bg-primary py-3 text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   فهمت وأوافق على الإرشادات
                 </button>

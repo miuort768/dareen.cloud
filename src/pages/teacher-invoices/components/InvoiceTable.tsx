@@ -46,7 +46,7 @@ const ActionButton = ({
       onClick()
     }}
     className={cn(
-      'flex h-8 w-8 items-center justify-center rounded-lg text-muted transition-all active:scale-90',
+      'flex h-8 w-8 items-center justify-center rounded-lg text-muted outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-90',
       hoverClass,
     )}
     title={title}

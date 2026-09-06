@@ -216,7 +216,7 @@ export const ReportStudentTable = React.memo(
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
-                className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-muted transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
+                className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-muted outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
               >
                 <ChevronRight size={14} />
               </button>
@@ -225,7 +225,7 @@ export const ReportStudentTable = React.memo(
                   key={`page-${i}`}
                   onClick={() => setPage(i + 1)}
                   className={cn(
-                    'h-8 w-8 rounded-xl border text-xs font-bold transition-all active:scale-95',
+                    'h-8 w-8 rounded-xl border text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                     page === i + 1
                       ? 'border-chart-4 bg-chart-4 text-on-primary'
                       : 'border-border bg-card text-muted',
@@ -238,7 +238,7 @@ export const ReportStudentTable = React.memo(
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}
-                className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-muted transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
+                className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-muted outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-30"
               >
                 <ChevronLeft size={14} />
               </button>

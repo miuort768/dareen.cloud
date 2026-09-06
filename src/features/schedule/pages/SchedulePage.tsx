@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import {
   Sparkles,
   Clock,
@@ -468,7 +468,7 @@ export const Schedule = () => {
                       <button
                         onClick={() => completeMutation.mutate(currentSession.id)}
                         disabled={completeMutation.isPending}
-                        className="flex items-center gap-1.5 rounded-xl bg-success px-3 py-1.5 text-xs font-bold text-on-success transition-all hover:bg-success-hover active:scale-95 disabled:opacity-50"
+                        className="flex items-center gap-1.5 rounded-xl bg-success px-3 py-1.5 text-xs font-bold text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
                       >
                         <CheckCircle2 size={13} />
                         <span className="hidden sm:inline">إتمام</span>

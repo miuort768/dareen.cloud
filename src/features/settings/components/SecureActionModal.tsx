@@ -76,7 +76,7 @@ export const SecureActionModal = ({
                 setSecureAction(null)
                 setSecureInput('')
               }}
-              className="flex-1 rounded-xl bg-error py-2.5 text-xs font-bold text-on-error transition-all hover:bg-error-hover active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex-1 rounded-xl bg-error py-2.5 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40"
             >
               تنفيذ نهائي
             </button>

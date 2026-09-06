@@ -167,13 +167,13 @@ export const Finance = () => {
             <div className="flex shrink-0 items-center gap-2">
               <button
                 onClick={() => actions.refresh?.()}
-                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 text-xs font-bold text-main transition-all hover:bg-hover active:scale-95 md:h-10 md:flex-none"
+                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-10 md:flex-none"
               >
                 <RefreshCcw size={13} /> تحديث
               </button>
               <button
                 onClick={() => navigate('/monthly-closing')}
-                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95 md:h-10 md:flex-none"
+                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-10 md:flex-none"
               >
                 <CalendarCheck size={13} /> تسوية
               </button>
@@ -264,7 +264,7 @@ export const Finance = () => {
                 </span>
                 <button
                   onClick={() => handleFabAction(item.action)}
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl active:scale-95"
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg outline-none transition-all hover:bg-primary-hover hover:shadow-xl focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <item.icon size={18} />
                 </button>

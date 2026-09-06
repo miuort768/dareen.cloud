@@ -176,14 +176,14 @@ export const ParentStudentCard = ({
         <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => onViewDates(student)}
-            className="flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-micro font-medium text-on-primary transition-all hover:bg-primary-hover active:scale-[0.98] md:gap-2 md:text-micro"
+            className="flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-micro font-medium text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:gap-2 md:text-micro"
           >
             <Calendar size={13} className="md:size-[14px]" />
             حصص الطالب
           </button>
           <button
             onClick={() => onViewAttendance(student)}
-            className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-surface py-2.5 text-micro font-medium text-main transition-all hover:border-primary/30 hover:bg-surface active:scale-[0.98] md:gap-2 md:text-micro"
+            className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-surface py-2.5 text-micro font-medium text-main outline-none transition-all hover:border-primary/30 hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:gap-2 md:text-micro"
           >
             <TrendingUp size={13} className="md:size-[14px]" />
             نسبة الحضور
@@ -192,7 +192,7 @@ export const ParentStudentCard = ({
         <button
           onClick={() => onViewAchievements(student)}
           className={cn(
-            'flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-micro font-medium transition-all active:scale-[0.98] md:text-micro',
+            'flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-micro font-medium outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:text-micro',
             hasAchievements
               ? 'border border-primary/30 bg-surface text-primary'
               : 'bg-primary text-on-primary hover:bg-primary-hover',
@@ -225,7 +225,7 @@ export const ParentStudentCard = ({
               />
               <button
                 onClick={onCloseAchievements}
-                className="mt-2 w-full rounded-xl bg-error py-2 text-micro font-medium text-on-error transition-all hover:bg-error-hover active:scale-95"
+                className="mt-2 w-full rounded-xl bg-error py-2 text-micro font-medium text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
                 إغلاق السجل
               </button>

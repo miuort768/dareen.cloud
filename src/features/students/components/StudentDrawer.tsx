@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   X,
@@ -468,7 +468,7 @@ export const StudentDrawer = ({
                 <div className="grid grid-cols-2 gap-2">
                   <a
                     href={`tel:${student.parentPhone}`}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                   >
                     <Phone size={13} /> اتصال
                   </a>
@@ -476,7 +476,7 @@ export const StudentDrawer = ({
                     href={`https://wa.me/${student.parentPhone?.replace(/[^0-9]/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[11px] font-bold text-on-success transition-all hover:bg-success-hover active:scale-[0.98]"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[11px] font-bold text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                   >
                     <MessageSquare size={13} /> واتساب
                   </a>

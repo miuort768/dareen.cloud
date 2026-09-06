@@ -50,7 +50,7 @@ export const DeleteUserModal = ({
               setShowDeleteModal(false)
               showNotify('تم حذف المستخدم')
             }}
-            className="flex-1 rounded-xl bg-error py-2.5 text-xs font-bold text-on-error transition-all hover:bg-error-hover active:scale-[0.97]"
+            className="flex-1 rounded-xl bg-error py-2.5 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             تأكيد الحذف
           </button>

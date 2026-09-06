@@ -37,7 +37,7 @@ export const AppointmentDetailsSheet = ({
             onComplete(appointment.id, e)
             onClose()
           }}
-          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-success py-3 text-micro font-bold text-on-success transition-transform active:scale-[0.98]"
+          className="flex w-full items-center justify-center gap-2 rounded-2xl bg-success py-3 text-micro font-bold text-on-success outline-none transition-transform focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
         >
           <CheckCircle2 size={14} strokeWidth={1.5} /> إتمام الحصة
         </button>

@@ -79,7 +79,7 @@ export const AAbdullah = () => {
               href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-success px-5 py-2.5 text-sm font-bold text-on-success shadow-lg transition-all active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
+              className="flex items-center gap-2 rounded-full bg-success px-5 py-2.5 text-sm font-bold text-on-success shadow-lg outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
             >
               <VChatBubble size={16} />
               واتساب
@@ -88,7 +88,7 @@ export const AAbdullah = () => {
               href={tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-on-primary shadow-lg transition-all active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
+              className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-on-primary shadow-lg outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
             >
               <VTelegram size={16} />
               تيليجرام

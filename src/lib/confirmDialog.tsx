@@ -148,7 +148,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
 
               <button
                 onClick={handleClose}
-                className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-on-primary shadow-lg shadow-primary/20 transition-all hover:bg-primary active:scale-[0.98]"
+                className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-on-primary shadow-lg shadow-primary/20 outline-none transition-all hover:bg-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 {options.confirmText || 'حسناً'}
               </button>
@@ -292,7 +292,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                 <button
                   onClick={handleConfirm}
                   className={cn(
-                    'h-12 w-full rounded-xl text-sm font-bold transition-all active:scale-[0.98]',
+                    'h-12 w-full rounded-xl text-sm font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]',
                     isDestructive
                       ? 'bg-error text-on-error shadow-lg hover:bg-error'
                       : 'bg-primary text-on-primary shadow-lg shadow-primary/20 hover:bg-primary',

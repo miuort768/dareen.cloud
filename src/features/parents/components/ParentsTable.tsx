@@ -302,7 +302,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                     e.stopPropagation()
                     onEdit(parent)
                   }}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-on-primary transition-all hover:bg-primary-hover active:scale-90"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
                   aria-label="تعديل"
                 >
                   <Edit size={11} />
@@ -314,7 +314,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-success text-on-success transition-all hover:bg-success-hover active:scale-90"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-success text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
                   title="واتساب"
                 >
                   <MessageCircle size={11} />
@@ -326,7 +326,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                     e.stopPropagation()
                     onDelete(parent.id)
                   }}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-error text-on-error transition-all hover:bg-error-hover active:scale-90"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-error text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
                   aria-label="حذف"
                 >
                   <Trash2 size={11} />
@@ -338,7 +338,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                     e.stopPropagation()
                     onViewParent?.(parent)
                   }}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface text-primary transition-all hover:bg-primary-soft active:scale-90"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg border border-border bg-surface text-primary outline-none transition-all hover:bg-primary-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
                   aria-label="فتح الملف"
                 >
                   <ArrowUpRight size={11} />
@@ -415,7 +415,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                     e.stopPropagation()
                     onEdit(parent)
                   }}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-on-primary active:scale-90"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-on-primary outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
                 >
                   <Edit size={11} />
                 </button>
@@ -426,7 +426,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-success text-on-success active:scale-90"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-success text-on-success outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
                 >
                   <MessageCircle size={11} />
                 </a>
@@ -437,7 +437,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                     e.stopPropagation()
                     onDelete(parent.id)
                   }}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-error text-on-error active:scale-90"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-error text-on-error outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
                 >
                   <Trash2 size={11} />
                 </button>

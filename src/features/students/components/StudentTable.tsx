@@ -217,7 +217,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onEdit(student)
                   }}
-                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-primary text-[10px] font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
+                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-primary text-[10px] font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   aria-label="تعديل"
                 >
                   <Edit size={13} />
@@ -316,7 +316,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onEdit(student)
                   }}
-                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-primary text-on-primary active:scale-95"
+                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-primary text-on-primary outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   aria-label="تعديل"
                 >
                   <Edit size={13} />

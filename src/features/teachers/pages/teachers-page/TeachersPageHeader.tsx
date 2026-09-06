@@ -62,7 +62,7 @@ export const TeachersPageHeader = ({
             <button
               onClick={onToggleForm}
               className={cn(
-                'flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[11px] font-black transition-all active:scale-[0.97]',
+                'flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[11px] font-black outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                 showAddForm
                   ? 'border border-border bg-surface text-main hover:bg-hover'
                   : 'bg-primary text-on-primary shadow-md shadow-primary/25 hover:bg-primary-hover',
@@ -112,7 +112,7 @@ export const TeachersPageHeader = ({
             <button
               onClick={onToggleForm}
               className={cn(
-                'flex h-11 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-bold transition-all active:scale-[0.97]',
+                'flex h-11 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                 showAddForm
                   ? 'border border-border bg-surface text-main'
                   : 'bg-primary text-on-primary shadow-md shadow-primary/25',
