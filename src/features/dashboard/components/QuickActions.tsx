@@ -84,7 +84,7 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
                 <h3 className="text-[12px] font-bold leading-tight text-main dark:text-main">
                   {action.title}
                 </h3>
-                <p className="mt-1 text-[9px] text-muted dark:text-muted">{action.subtitle}</p>
+                <p className="mt-1 text-[10px] text-muted">{action.subtitle}</p>
               </div>
             </motion.div>
           </button>

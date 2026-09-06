@@ -73,13 +73,13 @@ export const FinanceOverview = React.memo(
             <div className="flex items-center gap-1.5">
               <div className="flex items-center gap-1 rounded-lg bg-success-soft px-2 py-0.5">
                 <TrendingUp size={9} className="text-success" />
-                <span className="text-[9px] font-bold tabular-nums text-success">
+                <span className="text-[10px] font-bold tabular-nums text-success">
                   {totalRevenue.toLocaleString()}
                 </span>
               </div>
               <div className="flex items-center gap-1 rounded-lg bg-warning-soft px-2 py-0.5">
                 <TrendingDown size={9} className="text-warning" />
-                <span className="text-[9px] font-bold tabular-nums text-warning">
+                <span className="text-[10px] font-bold tabular-nums text-warning">
                   {totalExpenses.toLocaleString()}
                 </span>
               </div>
@@ -191,7 +191,7 @@ export const FinanceOverview = React.memo(
               <DollarSign size={9} className={totalProfit >= 0 ? 'text-success' : 'text-error'} />
               <span
                 className={cn(
-                  'text-[9px] font-bold tabular-nums',
+                  'text-[10px] font-bold tabular-nums',
                   totalProfit >= 0 ? 'text-success' : 'text-error',
                 )}
               >

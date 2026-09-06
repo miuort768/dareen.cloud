@@ -86,7 +86,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
             </div>
             <span
               className={cn(
-                'shrink-0 rounded-lg px-2 py-1 text-[9px] font-black leading-none',
+                'shrink-0 rounded-lg px-2 py-1 text-[10px] font-black leading-none',
                 st.badge,
               )}
             >
