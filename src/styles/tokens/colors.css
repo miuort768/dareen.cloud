@@ -59,7 +59,7 @@
 
   --text-main: #0f172a;
   --text-muted: #64748b;
-  --text-dim: #94a3b8;
+  --text-dim: #66778e;
   --text-inverse: #ffffff;
 
   --chart-1: #6366f1;
@@ -170,8 +170,8 @@
   --border-accent: #D4AF37;
 
   --text-main: #f1f5f9;
-  --text-muted: #71717a;
-  --text-dim: #52525b;
+  --text-muted: #8b8b93;
+  --text-dim: #7b7b85;
   --text-inverse: #000000;
 
   --ring-focus: #D4AF37;
@@ -229,7 +229,7 @@
     --border-primary: #4f46e5;
     --text-main: #0f172a;
     --text-muted: #64748b;
-    --text-dim: #94a3b8;
+    --text-dim: #66778e;
     --text-primary: #6366f1;
     --bg-primary: #6366f1;
     --bg-primary-hover: #4f46e5;

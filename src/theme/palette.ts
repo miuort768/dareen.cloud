@@ -36,7 +36,7 @@ export const palette = {
   // Text
   text: slate[900],
   textMuted: slate[500],
-  textDim: slate[400],
+  textDim: '#66778e',
   textInverse: '#ffffff',
   textOnPrimary: '#ffffff',
 
