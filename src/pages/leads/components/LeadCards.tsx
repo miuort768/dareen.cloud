@@ -28,7 +28,7 @@ export const LeadCards = ({
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft">
             <Search size={28} className="text-primary opacity-40" />
           </div>
-          <p className="mb-1 text-sm font-bold text-main">لا توجد نتائج</p>
+          <p className="mb-1 text-xs font-bold text-muted">لا توجد نتائج</p>
           <p className="text-xs text-muted">لا يوجد عملاء متطابقون مع معايير البحث</p>
         </motion.div>
       ) : (

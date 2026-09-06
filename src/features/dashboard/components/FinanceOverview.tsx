@@ -1,4 +1,4 @@
-﻿import React, { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import type { TooltipProps } from 'recharts'
@@ -93,7 +93,7 @@ export const FinanceOverview = React.memo(
             <div className="mb-3 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft">
               <BarChart3 size={28} className="text-primary-200" />
             </div>
-            <p className="text-sm font-bold text-muted dark:text-muted">لا توجد بيانات مالية بعد</p>
+            <p className="text-xs font-bold text-muted">لا توجد بيانات مالية بعد</p>
             <p className="mt-1 text-[11px] text-dim dark:text-dim">ابدأ بإضافة أول عملية مالية</p>
             <Button
               onClick={() => navigate('/finance')}

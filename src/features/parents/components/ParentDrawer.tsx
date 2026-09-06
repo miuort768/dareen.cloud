@@ -226,7 +226,7 @@ const OverviewTab = ({
         ) : (
           <div className="rounded-xl border border-dashed border-border py-8 text-center">
             <Users size={28} className="mx-auto mb-2 text-muted" />
-            <p className="text-[10px] text-muted">لا يوجد أبناء مرتبطين</p>
+            <p className="text-xs font-bold text-muted">لا يوجد أبناء مرتبطين</p>
           </div>
         )}
       </div>
@@ -321,7 +321,7 @@ const ScheduleTab = ({ familySchedule }: { familySchedule: FamilyScheduleItem[] 
     ) : (
       <div className="rounded-xl border border-dashed border-border py-12 text-center">
         <Calendar size={32} className="mx-auto mb-2 text-muted opacity-40" />
-        <p className="text-[10px] text-muted">لا توجد مواعيد حالياً</p>
+        <p className="text-xs font-bold text-muted">لا توجد مواعيد حالياً</p>
       </div>
     )}
   </div>

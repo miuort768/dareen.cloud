@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import {
   Area,
@@ -263,7 +263,7 @@ export const FinanceCharts = ({
               </>
             ) : (
               <div className="flex h-full flex-col items-center justify-center opacity-40">
-                <p className="text-[9px] font-bold text-muted">لا توجد بيانات</p>
+                <p className="text-xs font-bold text-muted">لا توجد بيانات</p>
               </div>
             )}
           </div>

@@ -112,8 +112,8 @@ export const BackupSection = ({
           <p className="text-xs text-muted">جاري التحميل...</p>
         ) : backupHistory.length === 0 ? (
           <div className="py-8 text-center text-muted">
-            <p className="text-sm font-bold">لا توجد نسخ احتياطية سابقة</p>
-            <p className="mt-1 text-xs">قم بإنشاء أول نسخة احتياطية الآن</p>
+            <p className="text-xs font-bold text-muted">لا توجد نسخ احتياطية سابقة</p>
+            <p className="mt-1 text-xs text-muted">قم بإنشاء أول نسخة احتياطية الآن</p>
           </div>
         ) : (
           <div className="max-h-48 space-y-1 overflow-y-auto">

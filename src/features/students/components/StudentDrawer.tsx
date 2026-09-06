@@ -489,8 +489,8 @@ export const StudentDrawer = ({
                 {enrollments.length === 0 ? (
                   <div className="py-12 text-center text-muted">
                     <BookOpen size={36} className="mx-auto mb-2 opacity-30" />
-                    <p className="text-xs font-bold">لا توجد برامج</p>
-                    <p className="text-[10px]">لم يتم إضافة أي برامج لهذا الطالب</p>
+                    <p className="text-xs font-bold text-muted">لا توجد برامج</p>
+                    <p className="text-xs text-muted">لم يتم إضافة أي برامج لهذا الطالب</p>
                   </div>
                 ) : (
                   enrollments.map((en, i) => {
@@ -644,8 +644,8 @@ export const StudentDrawer = ({
                 {sessions.length === 0 ? (
                   <div className="py-12 text-center text-muted">
                     <Clock size={36} className="mx-auto mb-2 opacity-30" />
-                    <p className="text-xs font-bold">لا توجد نشاطات</p>
-                    <p className="text-[10px]">سيظهر هنا سجل الحصص والمدفوعات</p>
+                    <p className="text-xs font-bold text-muted">لا توجد نشاطات</p>
+                    <p className="text-xs text-muted">سيظهر هنا سجل الحصص والمدفوعات</p>
                   </div>
                 ) : (
                   <div className="relative">

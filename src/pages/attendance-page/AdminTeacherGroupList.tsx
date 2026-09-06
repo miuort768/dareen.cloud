@@ -37,7 +37,7 @@ export const AdminTeacherGroupList = ({
     return (
       <div className="rounded-2xl border border-dashed border-border bg-card py-12 text-center">
         <Users className="mx-auto mb-2 text-muted" size={28} strokeWidth={1.5} />
-        <p className="text-sm font-bold text-muted">لا توجد بيانات حضور متاحة</p>
+        <p className="text-xs font-bold text-muted">لا توجد بيانات حضور متاحة</p>
         <p className="mt-1 text-xs text-muted">سيظهر هذا القسم بعد تسجيل حصص للمعلمات</p>
       </div>
     )

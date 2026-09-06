@@ -195,7 +195,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
           })
         ) : (
           <div className="flex flex-col items-center justify-center p-6 text-muted lg:p-12">
-            <p className="text-sm">لا توجد محادثات نشطة</p>
+            <p className="text-xs font-bold text-muted">لا توجد محادثات نشطة</p>
           </div>
         )}
       </div>

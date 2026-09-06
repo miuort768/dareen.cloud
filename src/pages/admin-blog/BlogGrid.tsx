@@ -51,7 +51,7 @@ export const BlogGrid = ({
         <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-soft text-primary">
           <BookMarked size={22} />
         </div>
-        <p className="text-sm font-bold text-muted">لا توجد مقالات بعد — أضف أول مقال الآن</p>
+        <p className="text-xs font-bold text-muted">لا توجد مقالات بعد — أضف أول مقال الآن</p>
       </div>
     )
   }

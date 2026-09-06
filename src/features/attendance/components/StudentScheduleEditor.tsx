@@ -53,7 +53,7 @@ export const StudentScheduleEditor = ({
             </span>
           ))
         ) : (
-          <p className="text-micro italic text-muted">لا يوجد جدول محدد</p>
+          <p className="text-xs font-bold text-muted">لا يوجد جدول محدد</p>
         )}
       </div>
 

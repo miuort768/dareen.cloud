@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   Briefcase,
@@ -465,7 +465,7 @@ export const AdminJobs = () => {
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
                   <Briefcase size={24} className="text-primary" />
                 </div>
-                <p className="mb-1 text-sm font-bold text-main">لا توجد طلبات</p>
+                <p className="mb-1 text-xs font-bold text-muted">لا توجد طلبات</p>
                 <p className="text-xs text-muted">سيتم عرض طلبات المتقدمين هنا</p>
               </motion.div>
             ) : emptySearch ? (
@@ -477,7 +477,7 @@ export const AdminJobs = () => {
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
                   <Search size={24} className="text-primary" />
                 </div>
-                <p className="mb-1 text-sm font-bold text-main">لا توجد نتائج</p>
+                <p className="mb-1 text-xs font-bold text-muted">لا توجد نتائج</p>
                 <p className="text-xs text-muted">جرّب تغيير كلمات البحث أو الفلتر</p>
               </motion.div>
             ) : (

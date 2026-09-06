@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   Radio,
@@ -232,7 +232,7 @@ export const LiveSessions = () => {
           <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/10">
             <Video size={24} className="text-primary/40 dark:text-primary/30" />
           </div>
-          <p className="text-[13px] font-bold text-muted">لا توجد حصص مباشرة حالياً</p>
+          <p className="text-xs font-bold text-muted">لا توجد حصص مباشرة حالياً</p>
           <p className="mt-1 text-[11px] text-muted dark:text-dim">ابدأ حصتك بضغطة واحدة</p>
           {isTeacher && (
             <Button

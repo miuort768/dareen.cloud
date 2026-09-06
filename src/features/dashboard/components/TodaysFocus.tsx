@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   CalendarCheck,
   ListTodo,
@@ -54,7 +54,7 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
         <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft">
           <Sun size={24} strokeWidth={1.6} className="text-primary" />
         </div>
-        <p className="text-sm font-bold text-muted">لا توجد مهام اليوم</p>
+        <p className="text-xs font-bold text-muted">لا توجد مهام اليوم</p>
         <p className="mt-1 text-[11px] font-medium text-dim">استمتع بيوم هادئ</p>
         <Link to="/tasks">
           <Button size="sm" className="mt-3 h-8 gap-1.5 rounded-xl px-4 text-[10px] font-bold">

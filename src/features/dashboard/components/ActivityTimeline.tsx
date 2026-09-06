@@ -1,4 +1,4 @@
-﻿import { ListTodo, Calendar, Clock } from 'lucide-react'
+import { ListTodo, Calendar, Clock } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '../../../shared/components/ui'
@@ -100,7 +100,7 @@ export const ActivityTimeline = ({ sessions, tasks, showHeader = true }: Activit
           <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft">
             <Clock size={24} className="text-primary-200" />
           </div>
-          <p className="text-sm font-bold text-muted dark:text-muted">لا توجد نشاطات مؤخراً</p>
+          <p className="text-xs font-bold text-muted">لا توجد نشاطات مؤخراً</p>
           <p className="mt-1 text-[11px] text-dim dark:text-dim">ستظهر الأنشطة عند تسجيلها</p>
         </div>
       ) : (

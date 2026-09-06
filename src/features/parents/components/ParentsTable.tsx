@@ -156,7 +156,7 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
               })
             ) : (
               <div className="col-span-full rounded-xl border border-dashed border-border py-6 text-center">
-                <p className="text-[10px] text-muted">لا يوجد أبناء مرتبطين</p>
+                <p className="text-xs font-bold text-muted">لا يوجد أبناء مرتبطين</p>
               </div>
             )}
           </div>

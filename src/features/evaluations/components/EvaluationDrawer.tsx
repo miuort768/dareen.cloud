@@ -277,7 +277,7 @@ export const EvaluationDrawer = ({
                 ) : (
                   <div className="rounded-lg border border-dashed border-border py-6 text-center">
                     <History size={16} className="mx-auto mb-1 text-muted" />
-                    <p className="text-micro text-muted">لا يوجد سجل</p>
+                    <p className="text-xs font-bold text-muted">لا يوجد سجل</p>
                   </div>
                 )}
               </div>

@@ -334,7 +334,7 @@ export const AttendanceHistoryModal = ({
           ) : (
             <div className="flex flex-col items-center py-8 text-center">
               <AlertCircle size={20} className="mb-1.5 text-muted" />
-              <p className="text-[10px] text-muted">لا يوجد سجلات حضور سابقة</p>
+              <p className="text-xs font-bold text-muted">لا يوجد سجلات حضور سابقة</p>
             </div>
           )}
         </div>

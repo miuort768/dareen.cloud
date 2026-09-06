@@ -1,4 +1,4 @@
-﻿import { TrendingUp, User, Medal } from 'lucide-react'
+import { TrendingUp, User, Medal } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useMemo } from 'react'
 
@@ -124,7 +124,7 @@ export const TopAttendanceStudents = ({
             <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-xl bg-surface dark:bg-surface">
               <User size={14} className="text-dim dark:text-dim" />
             </div>
-            <p className="text-micro font-bold text-muted dark:text-muted">لا توجد سجلات حالياً</p>
+            <p className="text-xs font-bold text-muted">لا توجد سجلات حالياً</p>
           </div>
         )}
       </div>

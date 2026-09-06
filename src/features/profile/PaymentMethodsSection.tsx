@@ -247,7 +247,7 @@ export const PaymentMethodsSection = () => {
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft">
             <CreditCard size={20} className="text-primary" />
           </div>
-          <p className="text-sm font-bold text-main">لا توجد طرق دفع</p>
+          <p className="text-xs font-bold text-muted">لا توجد طرق دفع</p>
           <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted">
             أضف طريقة دفع حتى تتمكن من استلام مستحقاتك.
           </p>

@@ -317,7 +317,7 @@ export const TransactionsLog = ({
             <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-2xl bg-surface text-muted">
               <Filter size={20} />
             </div>
-            <p className="text-xs font-bold text-main">لا توجد معاملات مطابقة</p>
+            <p className="text-xs font-bold text-muted">لا توجد معاملات مطابقة</p>
             <p className="mt-1 text-[10px] text-muted">جرب البحث بكلمات مختلفة أو تغيير الفلتر</p>
           </div>
         ) : (

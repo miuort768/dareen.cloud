@@ -226,7 +226,7 @@ export const ParentAccountPage = () => {
                 <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft">
                   <Users size={20} className="text-primary" />
                 </div>
-                <p className="text-sm font-bold text-main">لا يوجد أبناء مرتبطون بالحساب</p>
+                <p className="text-xs font-bold text-muted">لا يوجد أبناء مرتبطون بالحساب</p>
                 <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted">
                   سيظهر الأبناء هنا بعد ربط حسابهم برقم جوالك في المنصة.
                 </p>
