@@ -128,7 +128,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
               <div className="relative mt-0.5 shrink-0">
                 <Icon size={14} className={cfg.text} />
                 <span
-                  className={cn('absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full', cfg.dot)}
+                  className={cn('absolute -end-0.5 -top-0.5 h-1.5 w-1.5 rounded-full', cfg.dot)}
                 />
               </div>
               <div className="min-w-0 flex-1">

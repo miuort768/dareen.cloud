@@ -171,7 +171,7 @@ export const LiveSessions = () => {
               <Radio size={16} className="text-success" />
             </div>
             {sessions.length > 0 && (
-              <span className="absolute -left-1 -top-1 flex h-3.5 w-3.5 items-center justify-center">
+              <span className="absolute -start-1 -top-1 flex h-3.5 w-3.5 items-center justify-center">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
               </span>
