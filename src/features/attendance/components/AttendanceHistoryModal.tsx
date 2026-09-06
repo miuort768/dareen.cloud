@@ -279,7 +279,7 @@ export const AttendanceHistoryModal = ({
                           <div className="flex items-center gap-1.5">
                             <Calendar size={10} className="text-muted" />
                             <span className="text-[10px] font-bold text-main">{session.date}</span>
-                            <span className="rounded bg-surface px-1 py-0.5 text-[8px] font-bold text-muted">
+                            <span className="rounded bg-surface px-1 py-0.5 text-[9px] font-bold text-muted">
                               {session.day}
                             </span>
                           </div>

@@ -159,7 +159,7 @@ const OverviewTab = ({
       <h5 className="flex items-center gap-1.5 text-[9px] font-bold text-muted">
         <GraduationCap size={10} />
         الأبناء المسجلين
-        <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[8px] font-bold text-primary">
+        <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary">
           {children.length}
         </span>
       </h5>
@@ -181,7 +181,7 @@ const OverviewTab = ({
                     </div>
                     <div className="min-w-0">
                       <p className="truncate text-[11px] font-bold text-main">{child.name}</p>
-                      <p className="text-[8px] text-muted">{child.grade || '—'}</p>
+                      <p className="text-[9px] text-muted">{child.grade || '—'}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -203,7 +203,7 @@ const OverviewTab = ({
                 {(child.enrollments || []).length > 0 && (
                   <div className="mt-2 space-y-1">
                     {(child.enrollments || []).slice(0, 2).map((en, i) => (
-                      <div key={i} className="flex items-center justify-between px-1 text-[8px]">
+                      <div key={i} className="flex items-center justify-between px-1 text-[9px]">
                         <span className="flex items-center gap-1 text-muted">
                           <BookOpen size={8} />
                           {en.subject}
@@ -214,7 +214,7 @@ const OverviewTab = ({
                       </div>
                     ))}
                     {(child.enrollments || []).length > 2 && (
-                      <p className="px-1 text-[7px] text-muted">
+                      <p className="px-1 text-[8px] text-muted">
                         +{(child.enrollments || []).length - 2} مواد
                       </p>
                     )}
@@ -364,13 +364,13 @@ const ParentHeader = ({
         </p>
         <div className="mt-1.5 flex items-center gap-1.5">
           {hasOverdue && (
-            <span className="flex items-center gap-1 rounded-lg bg-error-soft px-1.5 py-0.5 text-[8px] font-bold text-error">
+            <span className="flex items-center gap-1 rounded-lg bg-error-soft px-1.5 py-0.5 text-[9px] font-bold text-error">
               <AlertTriangle size={8} /> متأخرات
             </span>
           )}
           <span
             className={cn(
-              'flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[8px] font-bold',
+              'flex items-center gap-1 rounded-lg px-1.5 py-0.5 text-[9px] font-bold',
               childrenCount > 0 ? 'bg-success-soft text-success' : 'bg-surface text-muted',
             )}
           >

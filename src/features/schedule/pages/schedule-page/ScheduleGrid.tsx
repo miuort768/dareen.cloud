@@ -238,7 +238,7 @@ const EventCard = ({ event, onSelect }: { event: ScheduleEvent; onSelect: () => 
         <p className="truncate text-[10px] font-bold leading-tight text-main">
           {event.studentName}
         </p>
-        <p className="mt-0.5 flex items-center gap-1 truncate text-[8px] text-muted">
+        <p className="mt-0.5 flex items-center gap-1 truncate text-[9px] text-muted">
           <UserRound size={8} className="opacity-60" />
           {event.teacherName || event.studentGrade}
         </p>
@@ -265,10 +265,10 @@ const MultiCard = ({
     <div className="p-1.5 pt-2">
       <div className="mb-1 flex items-center gap-1.5">
         <Layers size={9} className="shrink-0 text-primary" />
-        <span className="text-[8px] font-bold text-primary">مواعيد متعددة</span>
+        <span className="text-[9px] font-bold text-primary">مواعيد متعددة</span>
       </div>
       <p className="text-[9px] font-bold text-main">{events.length} مواعيد</p>
-      <p className="mt-0.5 flex items-center gap-1 text-[8px] text-muted">
+      <p className="mt-0.5 flex items-center gap-1 text-[9px] text-muted">
         <BookOpen size={7} />
         {Array.from(new Set(events.map((e) => e.subject)))
           .slice(0, 2)
@@ -402,7 +402,7 @@ export const ScheduleGrid = ({
                             <div className="flex h-6 w-6 items-center justify-center rounded-lg border border-dashed border-primary/30 bg-primary-soft">
                               <Plus size={11} className="text-primary" />
                             </div>
-                            <span className="mt-1 text-[8px] text-muted">إضافة حصة</span>
+                            <span className="mt-1 text-[9px] text-muted">إضافة حصة</span>
                           </div>
                         ) : count === 1 ? (
                           <div className="h-full p-0.5">

@@ -68,7 +68,7 @@ export const HeroSection = ({ currentUser, stats }: HeroSectionProps) => {
           <span className={`text-sm font-black tabular-nums leading-none ${tone}`}>
             {attendanceRate}%
           </span>
-          <span className="mt-0.5 text-[8px] font-bold text-muted">الحضور</span>
+          <span className="mt-0.5 text-[9px] font-bold text-muted">الحضور</span>
         </div>
       </div>
     </div>

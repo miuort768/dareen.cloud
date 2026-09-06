@@ -518,7 +518,7 @@ export const StudentDrawer = ({
                                 {enrollmentTeacherName(en) || '—'}
                               </p>
                               {en.curriculum ? (
-                                <span className="mt-1 inline-flex items-center gap-0.5 rounded bg-primary-soft px-1.5 py-0.5 text-[8px] font-bold text-primary ring-1 ring-primary/20">
+                                <span className="mt-1 inline-flex items-center gap-0.5 rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary ring-1 ring-primary/20">
                                   <BookOpen size={8} /> {normalizeCurriculum(en.curriculum)}
                                 </span>
                               ) : null}
@@ -547,7 +547,7 @@ export const StudentDrawer = ({
                             />
                           ))}
                           {total > 24 && (
-                            <span className="self-center text-[8px] text-muted">+{total - 24}</span>
+                            <span className="self-center text-[9px] text-muted">+{total - 24}</span>
                           )}
                         </div>
 
@@ -583,7 +583,7 @@ export const StudentDrawer = ({
                             <p className="text-[10px] font-black tabular-nums text-success">
                               {used}
                             </p>
-                            <p className="text-[8px] font-bold text-muted">حصة منفذة</p>
+                            <p className="text-[9px] font-bold text-muted">حصة منفذة</p>
                           </div>
                           <div className="text-center">
                             <p
@@ -594,13 +594,13 @@ export const StudentDrawer = ({
                             >
                               {remaining}
                             </p>
-                            <p className="text-[8px] font-bold text-muted">حصة متبقية</p>
+                            <p className="text-[9px] font-bold text-muted">حصة متبقية</p>
                           </div>
                           <div className="text-center">
                             <p className="text-[10px] font-black text-info">
                               {getCurrencySymbol(en.curr)}
                             </p>
-                            <p className="text-[8px] font-bold text-muted">العملة</p>
+                            <p className="text-[9px] font-bold text-muted">العملة</p>
                           </div>
                         </div>
                       </motion.div>

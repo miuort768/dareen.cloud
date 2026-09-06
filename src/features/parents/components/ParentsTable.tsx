@@ -97,7 +97,7 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
           <h5 className="mb-3 flex items-center gap-2 text-[10px] font-bold text-muted">
             <GraduationCap size={11} />
             الأبناء المسجلين
-            <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[8px] font-bold text-primary">
+            <span className="rounded bg-primary-soft px-1.5 py-0.5 text-[9px] font-bold text-primary">
               {children.length}
             </span>
           </h5>
@@ -121,14 +121,14 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
                       </div>
                       <div className="min-w-0">
                         <p className="truncate text-[10px] font-bold text-main">{child.name}</p>
-                        <p className="text-[8px] text-muted">{child.grade || '—'}</p>
+                        <p className="text-[9px] text-muted">{child.grade || '—'}</p>
                       </div>
                       {hasLowBalance && <AlertCircle size={10} className="shrink-0 text-error" />}
                     </div>
                     {(child.enrollments || []).length > 0 && (
                       <div className="space-y-1">
                         {(child.enrollments || []).slice(0, 2).map((en, i) => (
-                          <div key={i} className="flex items-center justify-between text-[8px]">
+                          <div key={i} className="flex items-center justify-between text-[9px]">
                             <span className="text-muted">{en.subject}</span>
                             <span className="font-bold text-main">
                               {en.sessionsUsed}/{en.sessionsTotal}
@@ -136,7 +136,7 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
                           </div>
                         ))}
                         {(child.enrollments || []).length > 2 && (
-                          <p className="text-[7px] text-muted">
+                          <p className="text-[8px] text-muted">
                             +{(child.enrollments || []).length - 2} مواد أخرى
                           </p>
                         )}
@@ -207,7 +207,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                     </p>
                     <span
                       className={cn(
-                        'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[8px] font-bold',
+                        'inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-bold',
                         status.bg,
                         status.text,
                       )}
@@ -262,7 +262,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                     <div key={child.id} className="group/child relative">
                       <div
                         className={cn(
-                          'flex h-7 w-7 items-center justify-center rounded-lg border-2 text-[8px] font-bold transition-all',
+                          'flex h-7 w-7 items-center justify-center rounded-lg border-2 text-[9px] font-bold transition-all',
                           i === 0
                             ? 'border-primary/20 bg-primary/10 text-primary'
                             : i === 1
@@ -278,7 +278,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                     </div>
                   ))}
                   {children.length > 3 && (
-                    <div className="flex h-7 w-7 items-center justify-center rounded-lg border-2 border-primary/30 bg-primary text-[8px] font-bold text-on-primary">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-lg border-2 border-primary/30 bg-primary text-[9px] font-bold text-on-primary">
                       +{children.length - 3}
                     </div>
                   )}
@@ -450,7 +450,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                 <div
                   key={child.id}
                   className={cn(
-                    'flex h-6 w-6 items-center justify-center rounded-lg border-2 text-[7px] font-bold',
+                    'flex h-6 w-6 items-center justify-center rounded-lg border-2 text-[8px] font-bold',
                     i === 0
                       ? 'border-primary/20 bg-primary/10 text-primary'
                       : i === 1
@@ -462,7 +462,7 @@ export const ParentsTable = memo<ParentsTableProps>(
                 </div>
               ))}
               {children.length > 3 && (
-                <div className="flex h-6 w-6 items-center justify-center rounded-lg border-2 border-primary/30 bg-primary text-[7px] font-bold text-on-primary">
+                <div className="flex h-6 w-6 items-center justify-center rounded-lg border-2 border-primary/30 bg-primary text-[8px] font-bold text-on-primary">
                   +{children.length - 3}
                 </div>
               )}

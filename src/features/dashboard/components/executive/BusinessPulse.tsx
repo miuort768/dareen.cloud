@@ -108,7 +108,7 @@ export const BusinessPulse = memo(function BusinessPulse({ pulse }: { pulse: Exe
       </div>
 
       {/* Scale */}
-      <div className="mx-auto flex w-full max-w-[210px] justify-between px-2 text-[8px] font-bold text-dim">
+      <div className="mx-auto flex w-full max-w-[210px] justify-between px-2 text-[9px] font-bold text-dim">
         <span>0</span>
         <span>100</span>
       </div>

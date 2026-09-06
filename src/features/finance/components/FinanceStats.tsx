@@ -69,7 +69,7 @@ const KPICard = ({
         <Counter value={value} />
       </p>
       <div className="mt-2 flex items-center gap-1.5 border-t border-divider pt-2">
-        <span className="text-[8px] font-bold text-muted">{monthLabel}</span>
+        <span className="text-[9px] font-bold text-muted">{monthLabel}</span>
         <span className="text-[10px] font-bold tabular-nums text-main">
           <Counter value={monthValue} />
         </span>

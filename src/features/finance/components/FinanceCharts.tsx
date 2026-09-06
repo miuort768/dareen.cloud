@@ -88,7 +88,7 @@ export const FinanceCharts = ({
               <button
                 key={p}
                 onClick={() => setPeriod(p)}
-                className={`relative rounded-md px-2 py-1 text-[8px] font-bold transition-all ${period === p ? 'text-on-primary' : 'text-muted hover:text-main'}`}
+                className={`relative rounded-md px-2 py-1 text-[9px] font-bold transition-all ${period === p ? 'text-on-primary' : 'text-muted hover:text-main'}`}
               >
                 {period === p && (
                   <motion.div
@@ -105,11 +105,11 @@ export const FinanceCharts = ({
         <div className="mb-3 flex items-center gap-3">
           <div className="flex items-center gap-1.5">
             <div className="h-0.5 w-3 rounded bg-success" />
-            <span className="text-[8px] font-bold text-muted">إيرادات</span>
+            <span className="text-[9px] font-bold text-muted">إيرادات</span>
           </div>
           <div className="flex items-center gap-1.5">
             <div className="h-0.5 w-3 rounded bg-error" />
-            <span className="text-[8px] font-bold text-muted">مصروفات</span>
+            <span className="text-[9px] font-bold text-muted">مصروفات</span>
           </div>
         </div>
         <div className="h-56">
@@ -160,7 +160,7 @@ export const FinanceCharts = ({
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex items-center gap-1">
                             <TrendingUp size={9} className="text-success" />
-                            <span className="text-[8px] font-bold text-muted">إيرادات</span>
+                            <span className="text-[9px] font-bold text-muted">إيرادات</span>
                           </div>
                           <span className="text-xs font-bold tabular-nums text-main">
                             +{(payload[0]?.value ?? 0).toLocaleString()}
@@ -169,7 +169,7 @@ export const FinanceCharts = ({
                         <div className="flex items-center justify-between gap-3">
                           <div className="flex items-center gap-1">
                             <TrendingDown size={9} className="text-error" />
-                            <span className="text-[8px] font-bold text-muted">مصروفات</span>
+                            <span className="text-[9px] font-bold text-muted">مصروفات</span>
                           </div>
                           <span className="text-xs font-bold tabular-nums text-main">
                             -{(payload[1]?.value ?? 0).toLocaleString()}
@@ -239,10 +239,10 @@ export const FinanceCharts = ({
                               className="rounded-xl border border-border bg-card px-2.5 py-1.5 shadow-elevation-2"
                               dir="rtl"
                             >
-                              <p className="text-[8px] font-bold text-muted">{d.name}</p>
+                              <p className="text-[9px] font-bold text-muted">{d.name}</p>
                               <p className="text-xs font-bold tabular-nums text-main">
                                 {(d?.value ?? 0).toLocaleString()}{' '}
-                                <span className="text-[8px] text-muted">
+                                <span className="text-[9px] text-muted">
                                   {getCurrencySymbol(reportCurrency)}
                                 </span>
                               </p>
@@ -255,7 +255,7 @@ export const FinanceCharts = ({
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                  <p className="text-[8px] font-bold text-muted">الإجمالي</p>
+                  <p className="text-[9px] font-bold text-muted">الإجمالي</p>
                   <p className="text-sm font-bold tabular-nums text-main">
                     {(totalExpenses ?? 0).toLocaleString()}
                   </p>
@@ -277,7 +277,7 @@ export const FinanceCharts = ({
                       className="h-2 w-2 shrink-0 rounded-full"
                       style={{ backgroundColor: `var(--chart-${(i % 6) + 1})` }}
                     />
-                    <span className="max-w-[90px] truncate text-[8px] font-bold text-muted">
+                    <span className="max-w-[90px] truncate text-[9px] font-bold text-muted">
                       {entry.name}
                     </span>
                   </div>
@@ -285,7 +285,7 @@ export const FinanceCharts = ({
                     <span className="text-[9px] font-bold tabular-nums text-main">
                       {(entry.value ?? 0).toLocaleString()}
                     </span>
-                    <span className="rounded bg-surface px-1 py-0.5 text-[7px] font-bold text-muted">
+                    <span className="rounded bg-surface px-1 py-0.5 text-[8px] font-bold text-muted">
                       {pct}%
                     </span>
                   </div>
