@@ -65,10 +65,10 @@ const TooltipWrap = ({ text, children }: { text: string; children: React.ReactNo
         <motion.div
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute -top-1 left-1/2 z-20 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-2xl bg-main px-2 py-1 text-[9px] font-bold text-inverse shadow-elevation-3"
+          className="absolute -top-1 start-1/2 z-20 -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-2xl bg-main px-2 py-1 text-[9px] font-bold text-inverse shadow-elevation-3"
         >
           {text}
-          <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-l-4 border-r-4 border-t-4 border-transparent border-t-main" />
+          <div className="absolute start-1/2 top-full h-0 w-0 -translate-x-1/2 border-l-4 border-r-4 border-t-4 border-transparent border-t-main" />
         </motion.div>
       )}
     </div>
