@@ -154,7 +154,7 @@ export const StudentTable = memo(
               <span className="text-xs font-bold tabular-nums text-main">
                 {totalUsed} <span className="text-muted">/</span> {totalExpected}
                 {remaining <= 2 && remaining > 0 && (
-                  <span className="block text-[8px] text-error">{remaining} رصيد</span>
+                  <span className="block text-[9px] text-error">{remaining} رصيد</span>
                 )}
               </span>
             )

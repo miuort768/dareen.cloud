@@ -96,9 +96,7 @@ export const TopAttendanceStudents = ({
                   >
                     {i + 1}
                   </div>
-                  <p className="truncate text-[13px] font-bold text-main dark:text-main">
-                    {stu.name}
-                  </p>
+                  <p className="truncate text-sm font-bold text-main dark:text-main">{stu.name}</p>
                 </div>
                 <div className="flex shrink-0 items-baseline gap-1">
                   <span className="text-base font-black tabular-nums text-main dark:text-main">

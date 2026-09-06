@@ -23,7 +23,7 @@ interface TrialSessionFormModalProps {
 }
 
 const inputClass =
-  'w-full bg-surface border border-border px-3.5 py-3 text-[13px] outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted font-bold'
+  'w-full bg-surface border border-border px-3.5 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted font-bold'
 const labelClass = 'text-[11px] font-bold text-muted mb-1.5 block'
 const selectWrapperClass = 'relative'
 
@@ -52,7 +52,7 @@ export const TrialSessionFormModal = ({
             <CalendarDays size={16} className="text-on-primary" />
           </div>
           <div>
-            <h2 className="text-[13px] font-bold text-on-primary">
+            <h2 className="text-sm font-bold text-on-primary">
               {editingId ? 'تعديل الحصة' : 'إضافة حصة جديدة'}
             </h2>
             <p className="mt-0.5 text-[10px] text-white/80">أدخل بيانات الحصة التجريبية</p>
@@ -164,7 +164,7 @@ export const TrialSessionFormModal = ({
           <button
             type="submit"
             disabled={isSaving}
-            className="flex-1 rounded-xl bg-primary py-3 text-[13px] font-bold text-on-primary shadow-sm shadow-primary/10 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 rounded-xl bg-primary py-3 text-sm font-bold text-on-primary shadow-sm shadow-primary/10 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSaving ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}
           </button>

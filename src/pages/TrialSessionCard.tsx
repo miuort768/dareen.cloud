@@ -100,7 +100,7 @@ export const TrialSessionCard = ({
               <User size={18} className={gradient.on} />
             </div>
             <div className="text-right">
-              <h3 className="text-[14px] font-bold leading-tight text-main">{t.studentName}</h3>
+              <h3 className="text-sm font-bold leading-tight text-main">{t.studentName}</h3>
               <span
                 className={cn(
                   'mt-1 inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[9px] font-bold',

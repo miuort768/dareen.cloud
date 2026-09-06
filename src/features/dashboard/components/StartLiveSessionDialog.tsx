@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { X, Loader2, LinkIcon, Copy, CheckCircle2, Radio, ExternalLink, Users } from 'lucide-react'
 import { api } from '../../../lib/api'
@@ -147,7 +147,7 @@ export const StartLiveSessionDialog = ({
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-success-soft">
                 <CheckCircle2 size={26} className="text-success" />
               </div>
-              <p className="text-[13px] font-bold leading-relaxed text-main dark:text-main">
+              <p className="text-sm font-bold leading-relaxed text-main dark:text-main">
                 تم إشعار الطالب وولي الأمر بأن الحصة جارية الآن
               </p>
               <p className="text-[11px] font-medium text-muted dark:text-muted">

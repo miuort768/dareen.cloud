@@ -136,7 +136,7 @@ const ExpandedRowContent = ({ parent, students }: { parent: Parent; students: St
                           </div>
                         ))}
                         {(child.enrollments || []).length > 2 && (
-                          <p className="text-[8px] text-muted">
+                          <p className="text-[9px] text-muted">
                             +{(child.enrollments || []).length - 2} مواد أخرى
                           </p>
                         )}

@@ -68,7 +68,7 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
     </div>
     <span
       className={cn(
-        'whitespace-nowrap text-[13px] transition-all duration-300',
+        'whitespace-nowrap text-sm transition-all duration-300',
         collapsed ? 'hidden w-0 opacity-0' : 'w-auto opacity-100',
       )}
     >
@@ -238,7 +238,7 @@ export const SidebarDesktop = ({
           ) : (
             <>
               <PanelLeftClose size={18} strokeWidth={1.8} />
-              <span className="text-[13px]">تصغير</span>
+              <span className="text-sm">تصغير</span>
             </>
           )}
         </button>
@@ -252,7 +252,7 @@ export const SidebarDesktop = ({
           <LogOut size={18} strokeWidth={1.8} />
           <span
             className={cn(
-              'whitespace-nowrap text-[13px] transition-all duration-300',
+              'whitespace-nowrap text-sm transition-all duration-300',
               collapsed ? 'hidden' : '',
             )}
           >

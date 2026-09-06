@@ -81,7 +81,7 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
                 <Icon size={20} className={action.color} />
               </div>
               <div>
-                <h3 className="text-[12px] font-bold leading-tight text-main dark:text-main">
+                <h3 className="text-xs font-bold leading-tight text-main dark:text-main">
                   {action.title}
                 </h3>
                 <p className="mt-1 text-[10px] text-muted">{action.subtitle}</p>
@@ -132,9 +132,7 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
                       <Icon size={19} className={action.color} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-[13px] font-bold leading-tight text-main">
-                        {action.title}
-                      </h3>
+                      <h3 className="text-sm font-bold leading-tight text-main">{action.title}</h3>
                       <p className="mt-0.5 text-[10px] font-medium text-muted">{action.subtitle}</p>
                     </div>
                     <ChevronLeft size={14} className="shrink-0 text-muted opacity-50" />

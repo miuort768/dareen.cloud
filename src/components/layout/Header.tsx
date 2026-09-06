@@ -156,7 +156,7 @@ export const Header = memo(() => {
           <div className="hidden h-6 w-px shrink-0 bg-divider lg:block" />
 
           <div className="min-w-0">
-            <h1 className="truncate text-sm font-black leading-tight text-main md:text-[15px] lg:text-base">
+            <h1 className="truncate text-sm font-black leading-tight text-main md:text-base lg:text-base">
               {meta.title}
             </h1>
             {isDesktop && (

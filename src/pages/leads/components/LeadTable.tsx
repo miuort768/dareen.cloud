@@ -43,7 +43,7 @@ export const LeadTable = memo(
                 <div className="flex w-[22%] min-w-0 items-center gap-3 px-2">
                   <GradientAvatar name={lead.studentName || 'ع'} size="sm" />
                   <div className="min-w-0">
-                    <h4 className="truncate text-[13px] font-bold text-main">
+                    <h4 className="truncate text-sm font-bold text-main">
                       {lead.studentName || 'عميل بدون اسم'}
                     </h4>
                     {lead.source && (
@@ -59,7 +59,7 @@ export const LeadTable = memo(
                       e.stopPropagation()
                       window.open(`https://wa.me/${lead.phone}`, '_blank')
                     }}
-                    className="cursor-pointer font-mono text-[12px] text-muted transition-colors hover:text-success"
+                    className="cursor-pointer font-mono text-xs text-muted transition-colors hover:text-success"
                   >
                     {lead.phone}
                   </span>

@@ -650,7 +650,7 @@ export const TrialSessions = () => {
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="بحث باسم الطالب أو رقم الهاتف..."
                   aria-label="بحث عن حصة"
-                  className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-[13px] text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-sm text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 />
                 {search && (
                   <button
@@ -919,7 +919,7 @@ export const TrialSessions = () => {
                     key={page}
                     onClick={() => setCurrentPage(page)}
                     className={cn(
-                      'flex h-11 w-11 items-center justify-center rounded-xl text-[12px] font-bold transition-all md:h-9 md:w-9',
+                      'flex h-11 w-11 items-center justify-center rounded-xl text-xs font-bold transition-all md:h-9 md:w-9',
                       page === currentPage
                         ? 'bg-primary text-on-primary shadow-sm shadow-primary/10'
                         : 'border border-border bg-surface text-muted hover:bg-hover',
@@ -1112,7 +1112,7 @@ export const TrialSessions = () => {
                       value={deleteAllTyped}
                       onChange={(e) => setDeleteAllTyped(e.target.value)}
                       placeholder="dareen"
-                      className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-[13px] font-black tracking-widest text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
+                      className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-sm font-black tracking-widest text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && deleteAllTyped.trim().toLowerCase() === 'dareen')
                           deleteAllMutation.mutate()

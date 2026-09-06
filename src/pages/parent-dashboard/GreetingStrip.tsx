@@ -74,7 +74,7 @@ export const GreetingStrip = ({
           <CountUp
             value={attendanceRate}
             format={(n) => `${n}%`}
-            className="absolute text-[13px] font-black tabular-nums text-on-primary"
+            className="absolute text-sm font-black tabular-nums text-on-primary"
           />
         </div>
       }

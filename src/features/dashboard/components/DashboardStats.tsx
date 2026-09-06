@@ -91,7 +91,7 @@ const TintedStatCard = ({ item, index }: { item: StatCardData; index: number }) 
         {item.formatter && typeof item.value === 'number' ? item.formatter(item.value) : item.value}
         {item.prefix && <span className="me-1 text-xs font-bold text-muted">{item.prefix}</span>}
       </p>
-      <p className="text-[13px] font-bold text-muted">{item.title}</p>
+      <p className="text-sm font-bold text-muted">{item.title}</p>
     </motion.div>
   )
 }
@@ -129,7 +129,7 @@ const SolidStatCard = ({ item, index }: { item: StatCardData; index: number }) =
             <span className="me-1 text-xs font-bold text-on-primary opacity-75">{item.prefix}</span>
           )}
         </p>
-        <p className="text-[13px] font-bold text-on-primary opacity-85">{item.title}</p>
+        <p className="text-sm font-bold text-on-primary opacity-85">{item.title}</p>
       </div>
     </motion.div>
   )

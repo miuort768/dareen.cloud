@@ -137,7 +137,7 @@ export const TrialSessionDrawer = ({
     >
       <div className="overflow-hidden rounded-2xl border border-border bg-card" dir="rtl">
         <div className="flex shrink-0 items-center justify-between bg-gradient-to-l from-primary to-primary-deep px-5 py-4">
-          <span className="text-[13px] font-bold text-on-primary">تفاصيل الحصة</span>
+          <span className="text-sm font-bold text-on-primary">تفاصيل الحصة</span>
           <button
             onClick={onClose}
             className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 transition-all hover:bg-white/25"

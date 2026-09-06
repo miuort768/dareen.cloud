@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ListTodo, ChevronLeft, Clock, AlertTriangle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { DashboardTask as Task } from '../types'
@@ -65,9 +65,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                 {task.priority === 'high' ? <AlertTriangle size={13} /> : <Clock size={13} />}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[13px] font-bold text-main dark:text-main">
-                  {task.title}
-                </p>
+                <p className="truncate text-sm font-bold text-main dark:text-main">{task.title}</p>
                 <div className="mt-0.5 flex items-center gap-2">
                   <span className="text-[11px] font-medium text-muted dark:text-muted">
                     {task.dueDate}

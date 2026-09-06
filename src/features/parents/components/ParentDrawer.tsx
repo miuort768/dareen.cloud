@@ -214,7 +214,7 @@ const OverviewTab = ({
                       </div>
                     ))}
                     {(child.enrollments || []).length > 2 && (
-                      <p className="px-1 text-[8px] text-muted">
+                      <p className="px-1 text-[9px] text-muted">
                         +{(child.enrollments || []).length - 2} مواد
                       </p>
                     )}

@@ -179,7 +179,7 @@ export const LiveSessions = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-[13px] font-bold text-main">الحصص المباشرة</h3>
+              <h3 className="text-sm font-bold text-main">الحصص المباشرة</h3>
               {sessions.length > 0 && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-success-soft px-2 py-0.5 text-[10px] font-bold text-success dark:bg-success-soft">
                   <span className="h-1.5 w-1.5 rounded-full bg-success" />
@@ -268,7 +268,7 @@ export const LiveSessions = () => {
 
                 {/* Info */}
                 <div className="min-w-0 flex-1">
-                  <h4 className="text-[13px] font-bold text-main">{session.title}</h4>
+                  <h4 className="text-sm font-bold text-main">{session.title}</h4>
                   <div className="mt-1 flex items-center gap-2 text-[11px] text-muted">
                     <span className="flex items-center gap-1">
                       <Users size={10} />

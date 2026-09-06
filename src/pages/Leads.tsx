@@ -180,7 +180,7 @@ const ConfirmDeleteAllModal = ({
               value={typed}
               onChange={(e) => setTyped(e.target.value)}
               placeholder="dareen"
-              className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-[13px] font-black tracking-widest text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
+              className="w-full rounded-xl border border-border bg-surface px-3.5 py-3 text-center text-sm font-black tracking-widest text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-error focus-visible:ring-2 focus-visible:ring-error-soft"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && verified) onConfirm()
               }}
@@ -216,7 +216,7 @@ const ConfirmDeleteAllModal = ({
 const StatusKeys: LeadStatus[] = ['new', 'contacted', 'interested', 'trial', 'converted']
 
 const inputClass =
-  'w-full bg-surface border border-border px-3.5 py-3 text-[13px] outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted font-bold'
+  'w-full bg-surface border border-border px-3.5 py-3 text-sm outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 text-main rounded-xl transition-all duration-200 placeholder:text-muted font-bold'
 const labelClass = 'text-[11px] font-bold text-muted mb-1.5 block'
 
 const AddLeadModalInline = ({
@@ -244,7 +244,7 @@ const AddLeadModalInline = ({
             <UserPlus size={16} className="text-on-primary" />
           </div>
           <div>
-            <h2 className="text-[13px] font-bold text-on-primary">إضافة عميل جديد</h2>
+            <h2 className="text-sm font-bold text-on-primary">إضافة عميل جديد</h2>
             <p className="text-[10px] text-white/80">أدخل بيانات العميل</p>
           </div>
         </div>
@@ -685,7 +685,7 @@ export const Leads = () => {
               type="text"
               placeholder="ابحث بالاسم أو رقم الهاتف..."
               aria-label="بحث عن عميل"
-              className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-[13px] text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-sm text-main outline-none transition-all duration-200 placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />

@@ -176,7 +176,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
               </div>
             </div>
             <div>
-              <h3 className="text-[13px] font-bold text-on-primary">
+              <h3 className="text-sm font-bold text-on-primary">
                 {lead.studentName || 'عميل بدون اسم'}
               </h3>
               <div className="mt-0.5 flex items-center gap-1.5">
@@ -224,12 +224,12 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                   <input
                     value={editData.phone}
                     onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
-                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-[13px] font-bold text-main outline-none focus:border-primary"
+                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
                     dir="ltr"
                     style={{ textAlign: 'right' }}
                   />
                 ) : (
-                  <p className="font-mono text-[13px] font-bold text-main" dir="ltr">
+                  <p className="font-mono text-sm font-bold text-main" dir="ltr">
                     {lead.phone}
                   </p>
                 )}
@@ -240,10 +240,10 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                   <input
                     value={editData.subject}
                     onChange={(e) => setEditData({ ...editData, subject: e.target.value })}
-                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-[13px] font-bold text-main outline-none focus:border-primary"
+                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
                   />
                 ) : (
-                  <p className="text-[13px] font-bold text-main">{lead.subject || '—'}</p>
+                  <p className="text-sm font-bold text-main">{lead.subject || '—'}</p>
                 )}
               </div>
               <div className="rounded-xl border border-info-soft bg-info-soft p-3">
@@ -252,10 +252,10 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                   <input
                     value={editData.curriculum}
                     onChange={(e) => setEditData({ ...editData, curriculum: e.target.value })}
-                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-[13px] font-bold text-main outline-none focus:border-primary"
+                    className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
                   />
                 ) : (
-                  <p className="text-[13px] font-bold text-main">{lead.curriculum || '—'}</p>
+                  <p className="text-sm font-bold text-main">{lead.curriculum || '—'}</p>
                 )}
               </div>
               <div className="rounded-xl bg-surface p-3">
@@ -282,10 +282,10 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                   value={editData.notes}
                   onChange={(e) => setEditData({ ...editData, notes: e.target.value })}
                   rows={2}
-                  className="w-full resize-none rounded-lg border border-border bg-card px-2 py-1 text-[13px] font-bold text-main outline-none focus:border-primary"
+                  className="w-full resize-none rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
                 />
               ) : (
-                <p className="text-[13px] leading-relaxed text-main">
+                <p className="text-sm leading-relaxed text-main">
                   {lead.notes || 'لا توجد ملاحظات'}
                 </p>
               )}

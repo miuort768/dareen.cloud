@@ -1,4 +1,4 @@
-﻿import { AlertCircle, Clock, AlertTriangle, Info, BellRing, type LucideIcon } from 'lucide-react'
+import { AlertCircle, Clock, AlertTriangle, Info, BellRing, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { LowBalanceStudent } from '../types'
 
@@ -139,7 +139,7 @@ export const SmartNotifications = ({
               <alert.icon size={17} className={alert.iconColor} />
             </div>
             <div className="min-w-0 flex-1">
-              <p className={cn('mb-1 text-[13px] font-bold', alert.text)}>{alert.title}</p>
+              <p className={cn('mb-1 text-sm font-bold', alert.text)}>{alert.title}</p>
               <p className="line-clamp-2 text-[11px] font-medium leading-relaxed text-muted dark:text-muted">
                 {alert.desc}
               </p>
