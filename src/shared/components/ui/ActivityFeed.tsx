@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { cn } from '../../../lib/utils'
 import { Badge } from './Badge'
 import type { BadgeProps } from './Badge'
@@ -104,7 +104,7 @@ export const ActivityFeed = ({
               <div key={item.id} className="group relative flex items-start gap-4 py-2">
                 {!isLast && (
                   <div
-                    className={cn('absolute top-10 h-[calc(100%-20px)] w-[2px]', lineCls, lineSide)}
+                    className={cn('absolute top-10 h-[calc(100%-20px)] w-0.5', lineCls, lineSide)}
                   />
                 )}
 

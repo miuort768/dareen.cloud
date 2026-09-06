@@ -1,22 +1,22 @@
-import { cn } from '../../../lib/utils';
-import type { ProgressVariant } from '../../../lib/progress';
-import { getProgressColor } from '../../../lib/progress';
+import { cn } from '../../../lib/utils'
+import type { ProgressVariant } from '../../../lib/progress'
+import { getProgressColor } from '../../../lib/progress'
 
 export interface ProgressBarProps {
-  value: number;
-  variant?: ProgressVariant;
-  size?: 'sm' | 'md' | 'lg';
-  animate?: boolean;
-  showLabel?: boolean;
-  className?: string;
-  trackClassName?: string;
+  value: number
+  variant?: ProgressVariant
+  size?: 'sm' | 'md' | 'lg'
+  animate?: boolean
+  showLabel?: boolean
+  className?: string
+  trackClassName?: string
 }
 
 const sizeClasses: Record<string, string> = {
   sm: 'h-1',
   md: 'h-1.5',
   lg: 'h-2',
-};
+}
 
 export const ProgressBar = ({
   value,
@@ -27,8 +27,8 @@ export const ProgressBar = ({
   className,
   trackClassName,
 }: ProgressBarProps) => {
-  const clamped = Math.max(0, Math.min(100, value));
-  const color = getProgressColor(clamped, variant);
+  const clamped = Math.max(0, Math.min(100, value))
+  const color = getProgressColor(clamped, variant)
 
   return (
     <div className={cn('flex items-center gap-2', className)}>
@@ -38,7 +38,7 @@ export const ProgressBar = ({
         aria-valuemin={0}
         aria-valuemax={100}
         className={cn(
-          'flex-1 bg-surface rounded-full overflow-hidden',
+          'flex-1 overflow-hidden rounded-full bg-surface',
           sizeClasses[size],
           trackClassName,
         )}
@@ -53,12 +53,12 @@ export const ProgressBar = ({
         />
       </div>
       {showLabel && (
-        <span className="text-micro font-mono font-medium text-dim shrink-0 min-w-[2.5rem] text-end">
+        <span className="min-w-10 shrink-0 text-end font-mono text-micro font-medium text-dim">
           {clamped}%
         </span>
       )}
     </div>
-  );
-};
+  )
+}
 
-ProgressBar.displayName = 'ProgressBar';
+ProgressBar.displayName = 'ProgressBar'

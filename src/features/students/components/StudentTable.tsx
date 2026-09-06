@@ -217,7 +217,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onEdit(student)
                   }}
-                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-primary text-[10px] font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-primary text-[10px] font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   aria-label="تعديل"
                 >
                   <Edit size={13} />
@@ -229,7 +229,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onNotify(student)
                   }}
-                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl text-muted transition-all hover:bg-warning-soft hover:text-warning"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted transition-all hover:bg-warning-soft hover:text-warning"
                   aria-label="إشعار"
                 >
                   <Bell size={13} />
@@ -241,7 +241,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onDelete(student.id)
                   }}
-                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl text-muted transition-all hover:bg-error-soft hover:text-error"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted transition-all hover:bg-error-soft hover:text-error"
                   aria-label="حذف"
                 >
                   <Trash size={13} />
@@ -316,7 +316,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onEdit(student)
                   }}
-                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-primary text-on-primary outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-primary text-on-primary outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   aria-label="تعديل"
                 >
                   <Edit size={13} />
@@ -328,7 +328,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onNotify(student)
                   }}
-                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl text-muted hover:bg-warning-soft hover:text-warning"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted hover:bg-warning-soft hover:text-warning"
                   aria-label="إشعار"
                 >
                   <Bell size={13} />
@@ -340,7 +340,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onDelete(student.id)
                   }}
-                  className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl text-muted hover:bg-error-soft hover:text-error"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted hover:bg-error-soft hover:text-error"
                   aria-label="حذف"
                 >
                   <Trash size={13} />

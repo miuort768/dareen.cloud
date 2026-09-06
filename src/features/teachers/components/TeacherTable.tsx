@@ -200,7 +200,7 @@ export const TeacherTable = memo(
                   e.stopPropagation()
                   onEdit(teacher)
                 }}
-                className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-primary-soft text-primary outline-none transition-all hover:bg-primary-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-primary-soft text-primary outline-none transition-all hover:bg-primary-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 aria-label="تعديل"
               >
                 <Edit size={13} />
@@ -212,7 +212,7 @@ export const TeacherTable = memo(
                   e.stopPropagation()
                   onNotify(teacher)
                 }}
-                className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-warning-soft text-warning-strong outline-none transition-all hover:bg-warning-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-warning-soft text-warning-strong outline-none transition-all hover:bg-warning-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 aria-label="إرسال إشعار"
               >
                 <Bell size={13} />
@@ -224,7 +224,7 @@ export const TeacherTable = memo(
                   e.stopPropagation()
                   onChat(teacher.id)
                 }}
-                className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-info-soft text-info-strong outline-none transition-all hover:bg-info-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-info-soft text-info-strong outline-none transition-all hover:bg-info-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 aria-label="مراسلة"
               >
                 <MessageCircle size={13} />
@@ -236,7 +236,7 @@ export const TeacherTable = memo(
                   e.stopPropagation()
                   onDelete(teacher.id)
                 }}
-                className="flex min-h-[34px] min-w-[34px] items-center justify-center rounded-xl bg-error-soft text-error outline-none transition-all hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-error-soft text-error outline-none transition-all hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 aria-label="حذف"
               >
                 <Trash2 size={13} />

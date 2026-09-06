@@ -251,7 +251,7 @@ function TableInner<T>({
                 key={p}
                 onClick={() => onPageChange(p)}
                 className={cn(
-                  'h-9 min-w-[36px] rounded-card text-xs font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:min-w-[32px]',
+                  'h-9 min-w-9 rounded-card text-xs font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:min-w-[32px]',
                   isActive ? 'bg-primary text-on-primary' : 'text-muted hover:bg-hover',
                 )}
               >

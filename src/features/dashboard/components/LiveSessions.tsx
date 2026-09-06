@@ -315,7 +315,7 @@ export const LiveSessions = () => {
 
                   <button
                     onClick={() => copyLink(session.meetingUrl || '', session.id)}
-                    className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border text-muted transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary dark:border-primary/15 dark:hover:bg-primary/10"
+                    className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary dark:border-primary/15 dark:hover:bg-primary/10"
                     title="نسخ الرابط"
                     aria-label="نسخ رابط الحصة"
                   >
@@ -329,7 +329,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => openEditDialog(session)}
-                      className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border text-muted transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary dark:border-primary/15 dark:hover:bg-primary/10"
+                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary dark:border-primary/15 dark:hover:bg-primary/10"
                       title="تعديل الرابط"
                       aria-label="تعديل رابط الحصة"
                     >
@@ -340,7 +340,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => endSession(session.id)}
-                      className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border text-error transition-all hover:border-error-soft hover:bg-error-soft hover:text-error dark:border-error-soft"
+                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-error transition-all hover:border-error-soft hover:bg-error-soft hover:text-error dark:border-error-soft"
                       title="إنهاء الحصة"
                       aria-label="إنهاء الحصة"
                     >
