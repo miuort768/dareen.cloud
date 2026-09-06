@@ -88,6 +88,7 @@
   --border-success: #10b981;
 
   --bg-warning: #b45309;
+  --bg-warning-hover: #92400e;
   --bg-warning-soft: #fffbeb;
   --bg-warning-light: #fef3c7;
   --text-warning: #d97706;
@@ -188,6 +189,7 @@
   --border-success: #059669;
 
   --bg-warning: #b45309;
+  --bg-warning-hover: #d97706;
   --bg-warning-soft: #78350f;
   --bg-warning-light: #92400e;
   --text-warning: #fbbf24;
