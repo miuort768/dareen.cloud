@@ -212,7 +212,7 @@ export const Header = memo(() => {
             >
               <MessageSquare size={15} />
               {totalUnreadCount > 0 && (
-                <span className="absolute -top-0.5 start-0 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[9px] font-black leading-none text-on-error">
+                <span className="absolute -top-0.5 start-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-error px-1 text-[9px] font-black leading-none text-on-error">
                   {totalUnreadCount > 99 ? '+99' : totalUnreadCount}
                 </span>
               )}

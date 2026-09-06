@@ -252,11 +252,11 @@ export const Chat = () => {
                 واتساب {academyName} للكمبيوتر
               </h2>
               <div className="mb-6 flex items-center justify-center gap-3">
-                <span className="h-[1px] w-8 bg-primary/30"></span>
+                <span className="h-px w-8 bg-primary/30"></span>
                 <p className="text-micro font-medium uppercase tracking-label text-primary">
                   تواصل آمن • مشفر
                 </p>
-                <span className="h-[1px] w-8 bg-primary/30"></span>
+                <span className="h-px w-8 bg-primary/30"></span>
               </div>
               <p className="mx-auto max-w-sm text-sm font-medium leading-relaxed text-muted">
                 أرسل واستقبل الرسائل على التابلت والكمبيوتر بتجربة متكاملة.

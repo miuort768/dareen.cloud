@@ -60,7 +60,7 @@ const SidebarLink = ({ item, collapsed, totalUnreadCount }: SidebarLinkProps) =>
       {item.id === 'chat' && totalUnreadCount > 0 && (
         <Badge
           variant="destructive"
-          className="absolute -start-1.5 -top-1.5 flex h-3.5 min-w-[14px] items-center justify-center px-0.5 text-[8px] leading-none"
+          className="absolute -start-1.5 -top-1.5 flex h-3.5 min-w-3.5 items-center justify-center px-0.5 text-[8px] leading-none"
         >
           {totalUnreadCount > 99 ? '99+' : totalUnreadCount}
         </Badge>

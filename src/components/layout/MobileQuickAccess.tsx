@@ -225,7 +225,7 @@ export const MobileQuickAccess = ({
                         {navItem.id === 'chat' && totalUnreadCount > 0 && (
                           <Badge
                             variant="destructive"
-                            className="flex h-4 min-w-[16px] items-center justify-center px-1 text-[8px] leading-none"
+                            className="flex h-4 min-w-4 items-center justify-center px-1 text-[8px] leading-none"
                           >
                             {totalUnreadCount > 99 ? '+99' : totalUnreadCount}
                           </Badge>

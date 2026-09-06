@@ -76,7 +76,7 @@ export const ChatInputFooter = ({
       <div className="flex shrink-0 items-center justify-center">
         <button
           onClick={onSend}
-          className="flex h-[48px] w-[48px] items-center justify-center rounded-xl bg-success p-3.5 text-on-success shadow-elevation-1 outline-none transition-all hover:brightness-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className="flex h-12 w-12 items-center justify-center rounded-xl bg-success p-3.5 text-on-success shadow-elevation-1 outline-none transition-all hover:brightness-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           title="إرسال"
         >
           <Send size={20} className={cn('transition-transform', isSending && 'animate-pulse')} />

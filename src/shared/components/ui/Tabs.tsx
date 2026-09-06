@@ -75,7 +75,7 @@ export const Tabs: React.FC<TabsProps> = ({
         className={cn(
           styles.tab(isActive),
           'inline-flex items-center gap-2 whitespace-nowrap',
-          scrollable && 'min-h-[44px] shrink-0',
+          scrollable && 'min-h-11 shrink-0',
         )}
       >
         {tab.icon && <span className="shrink-0">{tab.icon}</span>}

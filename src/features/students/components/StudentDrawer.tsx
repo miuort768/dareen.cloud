@@ -677,7 +677,7 @@ export const StudentDrawer = ({
                             {!isLast && (
                               <div
                                 className={cn(
-                                  'min-h-[8px] w-px flex-1',
+                                  'min-h-2 w-px flex-1',
                                   isCompleted ? 'bg-success-soft' : 'bg-border',
                                 )}
                               />

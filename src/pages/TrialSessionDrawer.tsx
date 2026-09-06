@@ -238,7 +238,7 @@ export const TrialSessionDrawer = ({
                       >
                         <Icon size={13} className={v.iconText} />
                       </div>
-                      {!isLast && <div className={cn('min-h-[8px] w-px flex-1', v.line)} />}
+                      {!isLast && <div className={cn('min-h-2 w-px flex-1', v.line)} />}
                     </div>
                     <div className="min-w-0 flex-1 pt-0.5">
                       <p className="text-xs font-bold text-main">{item.label}</p>

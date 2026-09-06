@@ -307,7 +307,7 @@ export const LiveSessions = () => {
                     href={session.meetingUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex min-h-[36px] items-center gap-1.5 rounded-xl bg-primary px-3.5 text-[11px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                    className="flex min-h-9 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-[11px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                   >
                     <ExternalLink size={12} />
                     انضم

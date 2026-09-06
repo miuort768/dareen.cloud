@@ -34,7 +34,7 @@ export const Settings = () => {
     return (
       <div className="from-primary-soft/30 mx-auto max-w-page space-y-3 bg-gradient-to-b via-background to-background px-2 pt-4">
         <Skeleton className="h-[76px] rounded-2xl" />
-        <Skeleton className="h-[56px] rounded-2xl" />
+        <Skeleton className="h-14 rounded-2xl" />
         <Skeleton className="h-64 rounded-2xl" />
       </div>
     )

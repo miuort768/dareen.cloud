@@ -365,7 +365,7 @@ export const AdminContacts = () => {
                 onClick={() => setFilterRead(pill.key)}
                 aria-pressed={filterRead === pill.key}
                 className={cn(
-                  'inline-flex min-h-[44px] items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold transition-colors duration-fast active:scale-[0.97] sm:min-h-0',
+                  'inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold transition-colors duration-fast active:scale-[0.97] sm:min-h-0',
                   filterRead === pill.key
                     ? 'bg-primary text-on-primary'
                     : 'border border-border bg-card text-muted hover:border-primary/30 hover:text-main',

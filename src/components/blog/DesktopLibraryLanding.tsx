@@ -234,7 +234,7 @@ export const DesktopLibraryLanding = ({
         <h1 className="mb-3 font-heading text-3xl font-black text-main lg:text-4xl">
           مركز ملفات <span className="text-primary">{academyName}</span>
         </h1>
-        <p className="mx-auto max-w-lg text-[13px] font-medium leading-relaxed text-muted lg:text-sm">
+        <p className="mx-auto max-w-lg text-sm font-medium leading-relaxed text-muted">
           دليلك الشامل للتفوق الدراسي — أحدث المناهج، مذكرات، ملخصات، وحلول الكتب لجميع المراحل في
           الكويت وقطر والإمارات والسعودية.
         </p>

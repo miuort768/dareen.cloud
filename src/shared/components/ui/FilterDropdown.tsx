@@ -95,7 +95,7 @@ export const FilterDropdown = ({
                     setOpen(false)
                   }}
                   className={cn(
-                    'flex min-h-[44px] w-full items-center gap-2 px-3.5 py-2.5 text-start text-xs font-bold transition-colors duration-fast hover:bg-hover md:min-h-0 md:text-[11px]',
+                    'flex min-h-11 w-full items-center gap-2 px-3.5 py-2.5 text-start text-xs font-bold transition-colors duration-fast hover:bg-hover md:min-h-0 md:text-[11px]',
                     isActive ? 'bg-primary-soft text-primary' : 'text-main',
                   )}
                 >

@@ -395,7 +395,7 @@ export const MonthlyClosing = () => {
             </div>
             <button
               onClick={handleRefresh}
-              className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:min-h-0 md:flex-none"
+              className="flex min-h-11 flex-1 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3.5 py-2 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:min-h-0 md:flex-none"
             >
               <RefreshCw size={13} /> تحديث
             </button>
@@ -459,7 +459,7 @@ export const MonthlyClosing = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as TabType)}
                 className={cn(
-                  'relative flex min-h-[44px] items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all md:min-h-[38px]',
+                  'relative flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all md:min-h-[38px]',
                   activeTab === tab.id ? 'text-on-primary' : 'text-muted hover:text-main',
                 )}
               >

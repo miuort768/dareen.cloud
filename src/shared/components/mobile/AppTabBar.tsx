@@ -82,7 +82,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
 
   const renderBadge = (count: number) =>
     count > 0 ? (
-      <span className="absolute -end-1.5 -top-1.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-error px-1 text-[8px] font-black leading-none text-on-error shadow-elevation-1">
+      <span className="absolute -end-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-error px-1 text-[8px] font-black leading-none text-on-error shadow-elevation-1">
         {count > 99 ? '+99' : count}
       </span>
     ) : null

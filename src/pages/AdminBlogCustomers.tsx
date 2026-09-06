@@ -80,7 +80,7 @@ const FALLBACK_STYLE: CountryStyle = {
 const getCountryStyle = (country: string) => COUNTRY_STYLES[country] || FALLBACK_STYLE
 
 const CONTACT_LINK_CLASS =
-  'inline-flex min-h-[44px] items-center justify-center gap-1 rounded-lg bg-success-soft px-2.5 py-2 text-[10px] font-bold text-success transition-colors hover:bg-success-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95'
+  'inline-flex min-h-11 items-center justify-center gap-1 rounded-lg bg-success-soft px-2.5 py-2 text-[10px] font-bold text-success transition-colors hover:bg-success-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95'
 
 const FILTER_CHIP_CLASS =
   'flex h-10 items-center justify-center whitespace-nowrap rounded-lg px-3.5 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:h-9'
@@ -355,7 +355,7 @@ export const AdminBlogCustomers = () => {
                 <button
                   type="button"
                   onClick={() => void refetch()}
-                  className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-[10px] font-semibold text-on-primary transition-colors hover:bg-primary-hover active:scale-[0.97]"
+                  className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-[10px] font-semibold text-on-primary transition-colors hover:bg-primary-hover active:scale-[0.97]"
                 >
                   إعادة المحاولة
                 </button>
@@ -423,7 +423,7 @@ export const AdminBlogCustomers = () => {
                             <button
                               type="button"
                               onClick={() => handleDelete(cust.id)}
-                              className="inline-flex min-h-[44px] items-center justify-center gap-1 rounded-lg bg-error-soft px-2.5 py-2 text-[10px] font-semibold text-error transition-colors hover:bg-error-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                              className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg bg-error-soft px-2.5 py-2 text-[10px] font-semibold text-error transition-colors hover:bg-error-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                               aria-label="حذف العميل"
                             >
                               <Trash2 size={13} />

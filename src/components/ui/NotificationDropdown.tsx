@@ -156,7 +156,7 @@ export const NotificationDropdown = ({
         />
         {showLabel && <span className="hidden text-xs font-medium sm:inline">الإشعارات</span>}
         {notificationsEnabled && unreadCount > 0 && (
-          <span className="absolute -start-0.5 -top-0.5 flex h-5 min-w-[20px] items-center justify-center rounded-full border-2 border-surface bg-error px-1 text-micro font-bold text-on-error shadow-elevation-3">
+          <span className="absolute -start-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full border-2 border-surface bg-error px-1 text-micro font-bold text-on-error shadow-elevation-3">
             {unreadCount}
           </span>
         )}

@@ -142,7 +142,7 @@ export const NotificationsCenter = ({
             aria-selected={activeTab === 'smart'}
             onClick={() => setActiveTab('smart')}
             className={cn(
-              'flex min-h-[36px] items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
+              'flex min-h-9 items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
               activeTab === 'smart'
                 ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary'
                 : 'text-muted hover:text-main dark:text-muted',
@@ -156,7 +156,7 @@ export const NotificationsCenter = ({
             aria-selected={activeTab === 'room'}
             onClick={() => setActiveTab('room')}
             className={cn(
-              'flex min-h-[36px] items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
+              'flex min-h-9 items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
               activeTab === 'room'
                 ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary'
                 : 'text-muted hover:text-main dark:text-muted',

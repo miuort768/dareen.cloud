@@ -395,7 +395,7 @@ export const ScheduleGrid = ({
                     return (
                       <div
                         key={`${day}-${slot.hour}`}
-                        className={`relative min-h-[80px] border-b border-e border-border p-1 transition-colors last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''} group`}
+                        className={`relative min-h-20 border-b border-e border-border p-1 transition-colors last:border-e-0 ${isToday(day) ? 'bg-primary-soft' : ''} group`}
                       >
                         {count === 0 ? (
                           <div className="flex h-full cursor-pointer flex-col items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">

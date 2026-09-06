@@ -116,7 +116,7 @@ export const StrategicSummary: React.FC<StrategicSummaryProps> = ({
 
             <div>
               <h3 className="mb-10 flex items-center gap-3 text-xs font-semibold uppercase tracking-label text-primary">
-                <span className="h-[1px] w-6 bg-primary"></span>
+                <span className="h-px w-6 bg-primary"></span>
                 ملاحظات التدقيق المالي
               </h3>
               <div className="space-y-10">
