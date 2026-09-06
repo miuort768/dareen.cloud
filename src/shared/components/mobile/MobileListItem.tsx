@@ -49,7 +49,7 @@ export const MobileListItem = ({
       }}
       className={cn(
         'flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3.5 shadow-sm',
-        'transition-all duration-fast active:scale-[0.985]',
+        'transition-all duration-fast hover:bg-hover active:scale-[0.985]',
         'outline-none focus-visible:ring-2 focus-visible:ring-focus',
         onClick && 'cursor-pointer',
         selected && 'border-primary',
