@@ -205,7 +205,7 @@ export const UsersSettings = ({
                         permissions: u.permissions || [],
                       })
                     }}
-                    className="rounded-lg border border-divider bg-background p-2 text-muted transition-all hover:border-primary hover:text-primary"
+                    className="rounded-lg border border-divider bg-background p-2 text-muted transition-colors hover:border-primary hover:text-primary"
                     title="تعديل"
                   >
                     <Edit size={13} />
@@ -213,7 +213,7 @@ export const UsersSettings = ({
                   {u.id !== user?.id && (
                     <button
                       onClick={() => setShowDeleteModal(u)}
-                      className="rounded-lg border border-error-soft bg-error-soft p-2 text-error transition-all hover:bg-error"
+                      className="rounded-lg border border-error-soft bg-error-soft p-2 text-error transition-colors hover:bg-error"
                       title="حذف"
                     >
                       <Trash2 size={13} />

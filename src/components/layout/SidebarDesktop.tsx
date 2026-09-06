@@ -252,7 +252,7 @@ export const SidebarDesktop = ({
           <LogOut size={18} strokeWidth={1.8} />
           <span
             className={cn(
-              'whitespace-nowrap text-sm transition-all duration-slow',
+              'whitespace-nowrap text-sm transition-colors duration-slow',
               collapsed ? 'hidden' : '',
             )}
           >

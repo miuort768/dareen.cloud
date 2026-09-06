@@ -253,7 +253,7 @@ export const AttendanceHistoryModal = ({
                         </button>
                         <button
                           onClick={() => setEditingSession(null)}
-                          className="rounded-2xl bg-surface p-1.5 text-muted transition-all"
+                          className="rounded-2xl bg-surface p-1.5 text-muted transition-colors"
                           aria-label="إلغاء"
                         >
                           <XSquare size={12} />
@@ -306,7 +306,7 @@ export const AttendanceHistoryModal = ({
                         </span>
                         <button
                           onClick={() => setEditingSession(session)}
-                          className="rounded p-1 text-muted transition-all hover:text-primary"
+                          className="rounded p-1 text-muted transition-colors hover:text-primary"
                           aria-label="تعديل"
                         >
                           <Edit2 size={10} />

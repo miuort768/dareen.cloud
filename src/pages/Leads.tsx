@@ -329,7 +329,7 @@ const AddLeadModalInline = ({
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 rounded-xl bg-surface py-3 text-[11px] font-bold text-muted transition-all hover:bg-hover"
+            className="flex-1 rounded-xl bg-surface py-3 text-[11px] font-bold text-muted transition-colors hover:bg-hover"
           >
             إلغاء
           </button>

@@ -326,7 +326,7 @@ export const CurrenciesSection = ({
                       <button
                         aria-label="حذف سعر الصرف"
                         onClick={() => removeRate(r.id)}
-                        className="rounded-lg p-2 text-error transition-all hover:bg-error-soft"
+                        className="rounded-lg p-2 text-error transition-colors hover:bg-error-soft"
                       >
                         <Trash2 size={13} />
                       </button>

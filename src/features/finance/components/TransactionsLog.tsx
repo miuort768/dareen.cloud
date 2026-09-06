@@ -134,13 +134,13 @@ const TransactionRow = ({
                   e.stopPropagation()
                   onPreviewInvoice(t.invoiceNumber!)
                 }}
-                className="rounded-xl p-1.5 text-muted transition-all hover:bg-primary-soft hover:text-primary"
+                className="rounded-xl p-1.5 text-muted transition-colors hover:bg-primary-soft hover:text-primary"
                 title="عرض الفاتورة"
               >
                 <Eye size={15} />
               </button>
             )}
-            <div className="rounded-xl p-1.5 text-muted transition-all group-hover:text-main">
+            <div className="rounded-xl p-1.5 text-muted transition-colors group-hover:text-main">
               {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
             </div>
           </div>

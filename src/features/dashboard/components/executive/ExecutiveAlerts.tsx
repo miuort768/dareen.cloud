@@ -99,7 +99,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
               key={key}
               onClick={() => setFilter(key)}
               className={cn(
-                'whitespace-nowrap rounded-lg px-2.5 py-1 text-[10px] font-bold transition-all',
+                'whitespace-nowrap rounded-lg px-2.5 py-1 text-[10px] font-bold transition-colors',
                 isActive ? 'bg-primary text-on-primary' : 'bg-surface text-muted hover:text-main',
               )}
             >

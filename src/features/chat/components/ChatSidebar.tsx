@@ -93,7 +93,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   e.stopPropagation()
                   onDeleteAll()
                 }}
-                className="relative flex cursor-pointer items-center justify-center rounded-full p-2 text-error transition-all hover:bg-error-light dark:hover:bg-error-soft"
+                className="relative flex cursor-pointer items-center justify-center rounded-full p-2 text-error transition-colors hover:bg-error-light dark:hover:bg-error-soft"
                 title="حذف جميع المحادثات"
               >
                 <Trash2 size={22} strokeWidth={2.5} />

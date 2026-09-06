@@ -139,7 +139,7 @@ export const ParentStudentCard = ({
             return (
               <div
                 key={idx}
-                className="group/item relative overflow-hidden rounded-xl border border-transparent bg-surface p-3 transition-all hover:border-primary/20"
+                className="group/item relative overflow-hidden rounded-xl border border-transparent bg-surface p-3 transition-colors hover:border-primary/20"
               >
                 <div className="mb-2 flex items-start justify-between">
                   <div>
