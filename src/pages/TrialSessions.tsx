@@ -25,6 +25,7 @@ import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { ErrorBanner } from '../shared/components/ui/ErrorState'
+import { EmptyState } from '../shared/components/ui/EmptyState'
 import { TrialSessionCard } from './TrialSessionCard'
 import { TrialSessionFormModal } from './TrialSessionFormModal'
 import { TrialSessionDrawer } from './TrialSessionDrawer'
@@ -828,45 +829,45 @@ export const TrialSessions = () => {
                 isConverting={convertMutation.isPending}
               />
             ) : filtered.length === 0 ? (
-              <div className="py-14 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft">
-                  <Users size={28} className="text-primary/40" />
-                </div>
-                <p className="mb-1 text-sm font-bold text-main">
-                  {hasActiveFilters
+              <EmptyState
+                compact
+                icon={Users}
+                iconClassName="text-primary/40"
+                title={
+                  hasActiveFilters
                     ? 'لا توجد نتائج مطابقة'
                     : showPaid
                       ? 'لا توجد حصص مدفوعة'
-                      : 'لا توجد حصص تجريبية'}
-                </p>
-                <p className="mb-4 text-[11px] text-muted">
-                  {hasActiveFilters
+                      : 'لا توجد حصص تجريبية'
+                }
+                subtitle={
+                  hasActiveFilters
                     ? 'حاول تغيير معايير البحث أو مسح الفلاتر'
                     : showPaid
                       ? 'لم تتم دفع أي حصة بعد'
-                      : 'ابدأ بإضافة أول حصة تجريبية'}
-                </p>
-                {hasActiveFilters ? (
-                  <button
-                    onClick={clearAllFilters}
-                    className="inline-flex items-center gap-2 rounded-xl border border-error-soft bg-error-soft px-5 py-2.5 text-xs font-bold text-error transition-all hover:bg-error-light active:scale-[0.98]"
-                  >
-                    <X size={14} /> مسح الفلاتر
-                  </button>
-                ) : (
-                  !showPaid && (
+                      : 'ابدأ بإضافة أول حصة تجريبية'
+                }
+                action={
+                  hasActiveFilters ? (
+                    <button
+                      onClick={clearAllFilters}
+                      className="inline-flex h-11 items-center gap-2 rounded-xl border border-error-soft bg-error-soft px-5 text-xs font-bold text-error transition-all hover:bg-error-light active:scale-[0.98] md:h-9"
+                    >
+                      <X size={14} /> مسح الفلاتر
+                    </button>
+                  ) : !showPaid ? (
                     <button
                       onClick={() => {
                         resetForm()
                         setShowModal(true)
                       }}
-                      className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.98]"
+                      className="inline-flex h-11 items-center gap-2 rounded-xl bg-primary px-5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.98] md:h-9"
                     >
                       <Plus size={14} /> إضافة حصة
                     </button>
-                  )
-                )}
-              </div>
+                  ) : undefined
+                }
+              />
             ) : (
               <motion.div variants={containerVariants} className="space-y-3">
                 {Array.from(paginatedGroups.entries()).map(([phone, sessions]) => (
