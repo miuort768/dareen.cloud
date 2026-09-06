@@ -46,7 +46,7 @@ export const palette = {
   successLight: emerald[100],
   successDark: emerald[700],
 
-  warning: amber[500],
+  warning: amber[700],
   warningSoft: amber[50],
   warningLight: amber[100],
   warningDark: amber[700],
@@ -58,7 +58,7 @@ export const palette = {
   errorHover: rose[700],
   errorActive: rose[800],
 
-  info: sky[500],
+  info: sky[700],
   infoSoft: sky[50],
   infoLight: sky[100],
   infoDark: sky[700],
