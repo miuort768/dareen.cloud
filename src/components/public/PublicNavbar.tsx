@@ -142,7 +142,7 @@ export const PublicNavbar = () => {
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="group flex items-center gap-3 px-2 py-2 text-main transition-all hover:text-primary md:px-4"
+                  className="group flex items-center gap-3 px-2 py-2 text-main outline-none transition-all hover:text-primary focus-visible:ring-2 focus-visible:ring-focus md:px-4"
                   aria-label={isDropdownOpen ? 'إغلاق القائمة' : 'فتح قائمة المستخدم'}
                   aria-expanded={isDropdownOpen}
                   aria-controls="user-dropdown"
@@ -189,7 +189,7 @@ export const PublicNavbar = () => {
                       logout()
                       setIsDropdownOpen(false)
                     }}
-                    className="flex w-full items-center gap-2 px-4 py-3 text-start text-sm text-error transition-colors hover:bg-error-light dark:hover:bg-error"
+                    className="flex w-full items-center gap-2 px-4 py-3 text-start text-sm text-error outline-none transition-colors hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-error"
                     aria-label="تسجيل الخروج"
                   >
                     <LogOut className="h-5 w-5" />
@@ -209,7 +209,7 @@ export const PublicNavbar = () => {
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="rounded-full p-2 text-primary transition-all hover:bg-primary-soft active:scale-90 dark:text-main dark:hover:bg-white/10 md:hidden"
+              className="rounded-full p-2 text-primary outline-none transition-all hover:bg-primary-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-90 dark:text-main dark:hover:bg-white/10 md:hidden"
               aria-label={isMenuOpen ? 'إغلاق القائمة الجانبية' : 'فتح القائمة الجانبية'}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -260,7 +260,7 @@ export const PublicNavbar = () => {
                       logout()
                       setIsMenuOpen(false)
                     }}
-                    className="flex w-full items-center gap-3 rounded-full px-6 py-4 font-bold text-error hover:bg-error-light dark:hover:bg-error"
+                    className="flex w-full items-center gap-3 rounded-full px-6 py-4 font-bold text-error outline-none hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-error"
                   >
                     <LogOut size={20} className="rotate-180" />
                     تسجيل الخروج

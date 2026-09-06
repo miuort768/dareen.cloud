@@ -88,7 +88,7 @@ export const FinanceCharts = ({
               <button
                 key={p}
                 onClick={() => setPeriod(p)}
-                className={`relative rounded-md px-2 py-1 text-[9px] font-bold transition-all ${period === p ? 'text-on-primary' : 'text-muted hover:text-main'}`}
+                className={`relative rounded-md px-2 py-1 text-[9px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${period === p ? 'text-on-primary' : 'text-muted hover:text-main'}`}
               >
                 {period === p && (
                   <motion.div

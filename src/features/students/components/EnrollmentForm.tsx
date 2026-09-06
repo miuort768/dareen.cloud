@@ -201,7 +201,7 @@ export const EnrollmentForm = ({
                 <button
                   type="button"
                   onClick={() => handleRemoveSlot(idx)}
-                  className="text-error"
+                  className="text-error outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label="إزالة"
                 >
                   <X size={10} />

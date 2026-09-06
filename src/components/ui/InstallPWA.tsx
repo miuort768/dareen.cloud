@@ -143,7 +143,7 @@ export const InstallPWA = () => {
             </div>
             <button
               onClick={handleDismiss}
-              className="p-1 transition-colors hover:bg-hover"
+              className="p-1 outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="إغلاق"
             >
               <X size={16} className="text-main" />
@@ -202,13 +202,13 @@ export const InstallPWA = () => {
           <div className="flex border-t-2 border-border">
             <button
               onClick={handleDismissPermanent}
-              className="flex-1 border-s border-border py-3 text-micro font-medium text-muted transition-colors hover:bg-surface"
+              className="flex-1 border-s border-border py-3 text-micro font-medium text-muted outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
             >
               عدم التذكير مجدداً
             </button>
             <button
               onClick={handleDismiss}
-              className="flex-1 bg-warning py-3 text-micro font-medium text-main transition-colors hover:bg-warning"
+              className="flex-1 bg-warning py-3 text-micro font-medium text-main outline-none transition-colors hover:bg-warning focus-visible:ring-2 focus-visible:ring-focus"
             >
               فهمت، شكراً
             </button>
@@ -252,7 +252,7 @@ export const InstallPWA = () => {
           </button>
           <button
             onClick={handleDismiss}
-            className="rounded-full bg-white/10 p-1.5 text-on-success transition-colors hover:bg-error hover:text-on-error"
+            className="rounded-full bg-white/10 p-1.5 text-on-success outline-none transition-colors hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="إغلاق"
           >
             <X size={12} />

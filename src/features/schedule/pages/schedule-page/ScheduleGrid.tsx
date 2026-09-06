@@ -157,7 +157,7 @@ const MultiEventModal = ({
           </div>
           <button
             onClick={onClose}
-            className="flex h-7 w-7 items-center justify-center rounded-lg text-muted transition-colors hover:bg-hover hover:text-main"
+            className="flex h-7 w-7 items-center justify-center rounded-lg text-muted outline-none transition-colors hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="إغلاق"
           >
             <X size={14} />
@@ -181,7 +181,7 @@ const MultiEventModal = ({
                   onSelect(event)
                   onClose()
                 }}
-                className="group flex w-full items-center gap-3 px-4 py-3 text-start transition-colors hover:bg-hover"
+                className="group flex w-full items-center gap-3 px-4 py-3 text-start outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <div className={`w-1 self-stretch rounded-full ${c.bar} shrink-0`} />
                 <div className="min-w-0 flex-1">

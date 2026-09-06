@@ -46,7 +46,7 @@ export const AppearanceSection = ({
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             className={cn(
-              'relative h-7 w-12 shrink-0 rounded-full transition-all duration-slow',
+              'relative h-7 w-12 shrink-0 rounded-full outline-none transition-all duration-slow focus-visible:ring-2 focus-visible:ring-focus',
               theme === 'dark'
                 ? 'bg-gradient-to-r from-primary to-primary-active shadow-elevation-1 shadow-primary/30'
                 : 'bg-divider hover:bg-border',
@@ -73,7 +73,7 @@ export const AppearanceSection = ({
                 <button
                   key={preset.id}
                   onClick={() => setThemeColor(preset.id)}
-                  className="group flex flex-col items-center gap-2"
+                  className="group flex flex-col items-center gap-2 outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <div
                     className={cn(

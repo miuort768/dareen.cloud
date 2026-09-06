@@ -115,7 +115,7 @@ export const CurrenciesSection = ({
         <button
           onClick={() => setActiveTab('currencies')}
           className={cn(
-            'rounded-lg px-4 py-2 text-xs font-bold transition-all',
+            'rounded-lg px-4 py-2 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
             activeTab === 'currencies'
               ? 'bg-card text-main shadow-elevation-1'
               : 'text-muted hover:text-main',
@@ -126,7 +126,7 @@ export const CurrenciesSection = ({
         <button
           onClick={() => setActiveTab('rates')}
           className={cn(
-            'rounded-lg px-4 py-2 text-xs font-bold transition-all',
+            'rounded-lg px-4 py-2 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
             activeTab === 'rates'
               ? 'bg-card text-main shadow-elevation-1'
               : 'text-muted hover:text-main',
@@ -180,7 +180,7 @@ export const CurrenciesSection = ({
                       ) : (
                         <button
                           onClick={() => setAsDefault(c.code)}
-                          className="rounded-lg bg-info-soft px-3 py-1.5 text-[11px] font-bold text-info transition-all hover:brightness-95"
+                          className="rounded-lg bg-info-soft px-3 py-1.5 text-[11px] font-bold text-info outline-none transition-all hover:brightness-95 focus-visible:ring-2 focus-visible:ring-focus"
                           title="تعيين كافتراضي"
                         >
                           تعيين افتراضي
@@ -229,7 +229,7 @@ export const CurrenciesSection = ({
                   ) : (
                     <button
                       onClick={() => setAsDefault(c.code)}
-                      className="rounded-lg bg-info-soft px-3 py-2 text-[11px] font-bold text-info transition-all hover:brightness-95"
+                      className="rounded-lg bg-info-soft px-3 py-2 text-[11px] font-bold text-info outline-none transition-all hover:brightness-95 focus-visible:ring-2 focus-visible:ring-focus"
                     >
                       تعيين افتراضي
                     </button>
@@ -326,7 +326,7 @@ export const CurrenciesSection = ({
                       <button
                         aria-label="حذف سعر الصرف"
                         onClick={() => removeRate(r.id)}
-                        className="rounded-lg p-2 text-error transition-colors hover:bg-error-soft"
+                        className="rounded-lg p-2 text-error outline-none transition-colors hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus"
                       >
                         <Trash2 size={13} />
                       </button>
@@ -355,7 +355,7 @@ export const CurrenciesSection = ({
                   <button
                     aria-label="حذف سعر الصرف"
                     onClick={() => removeRate(r.id)}
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-error transition-all hover:bg-error-soft"
+                    className="flex h-9 w-9 items-center justify-center rounded-lg text-error outline-none transition-all hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     <Trash2 size={14} />
                   </button>

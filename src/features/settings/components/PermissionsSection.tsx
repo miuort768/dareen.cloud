@@ -158,7 +158,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
                         key={p.id}
                         onClick={() => togglePerm(p.key)}
                         className={cn(
-                          'flex items-center gap-2 rounded-xl border px-3 py-2.5 text-start text-[11px] font-bold transition-all',
+                          'flex items-center gap-2 rounded-xl border px-3 py-2.5 text-start text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                           isSelected
                             ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                             : 'border-divider bg-background text-muted hover:border-primary/50 hover:text-main',

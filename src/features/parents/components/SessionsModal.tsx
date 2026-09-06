@@ -141,7 +141,7 @@ export const SessionsModal = ({
           </div>
           <button
             onClick={onClose}
-            className="relative z-10 flex h-7 w-7 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm transition-all hover:bg-white/20"
+            className="relative z-10 flex h-7 w-7 items-center justify-center rounded-xl bg-white/10 outline-none backdrop-blur-sm transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="إغلاق"
           >
             <X size={14} />
@@ -155,7 +155,7 @@ export const SessionsModal = ({
                 <button
                   key={idx}
                   onClick={() => onSelectSubject(en)}
-                  className="group flex items-center justify-between rounded-xl border border-border bg-surface p-4 text-start transition-all hover:border-primary/30 hover:bg-card"
+                  className="group flex items-center justify-between rounded-xl border border-border bg-surface p-4 text-start outline-none transition-all hover:border-primary/30 hover:bg-card focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft text-primary transition-all group-hover:bg-primary group-hover:text-on-primary">
@@ -183,7 +183,7 @@ export const SessionsModal = ({
                     onSelectSubject(null)
                     onPageChange(1)
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-1 text-micro font-medium text-primary transition-all hover:bg-primary-soft"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-1 text-micro font-medium text-primary outline-none transition-all hover:bg-primary-soft focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <ChevronRight size={12} /> العودة للمواد
                 </button>
@@ -205,7 +205,7 @@ export const SessionsModal = ({
                         aria-label="الصفحة السابقة"
                         disabled={sessionsPage === 1}
                         onClick={() => onPageChange(Math.max(1, sessionsPage - 1))}
-                        className="flex h-6 w-6 items-center justify-center rounded-lg border border-border text-muted transition-all hover:bg-surface disabled:opacity-30"
+                        className="flex h-6 w-6 items-center justify-center rounded-lg border border-border text-muted outline-none transition-all hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-30"
                       >
                         <ChevronRight size={14} />
                       </button>
@@ -216,7 +216,7 @@ export const SessionsModal = ({
                         aria-label="الصفحة التالية"
                         disabled={sessionsPage === totalPages}
                         onClick={() => onPageChange(Math.min(totalPages, sessionsPage + 1))}
-                        className="flex h-6 w-6 items-center justify-center rounded-lg border border-border text-muted transition-all hover:bg-surface disabled:opacity-30"
+                        className="flex h-6 w-6 items-center justify-center rounded-lg border border-border text-muted outline-none transition-all hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-30"
                       >
                         <ChevronLeft size={14} />
                       </button>

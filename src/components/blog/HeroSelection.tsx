@@ -182,7 +182,7 @@ export const MobileHero = ({
                   return next
                 })
               }}
-              className={`relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-elevation-1 transition-all duration-200 hover:opacity-90 active:scale-[0.97] ${
+              className={`relative flex cursor-pointer flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl p-5 shadow-elevation-1 outline-none transition-all duration-200 hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] ${
                 GRID_TONES[i % GRID_TONES.length]
               }`}
             >

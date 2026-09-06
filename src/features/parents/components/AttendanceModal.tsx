@@ -92,7 +92,7 @@ export const AttendanceModal = ({
           </div>
           <button
             onClick={onClose}
-            className="relative z-10 flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm transition-all hover:bg-white/20"
+            className="relative z-10 flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 outline-none backdrop-blur-sm transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="إغلاق"
           >
             <X size={18} />

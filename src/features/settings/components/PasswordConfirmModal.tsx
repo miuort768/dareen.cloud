@@ -77,7 +77,7 @@ export const PasswordConfirmModal = ({
               />
               <button
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-main"
+                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                 aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
               >
                 {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}

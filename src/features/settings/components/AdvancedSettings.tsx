@@ -85,7 +85,7 @@ export const AdvancedSettings = ({
             <button
               key={tag}
               onClick={() => setLocalWhatsappTemplate((prev) => prev + ' ' + tag)}
-              className="rounded-lg border border-divider bg-background px-3 py-1.5 font-mono text-[11px] font-bold text-muted transition-all hover:bg-info-soft hover:text-info"
+              className="rounded-lg border border-divider bg-background px-3 py-1.5 font-mono text-[11px] font-bold text-muted outline-none transition-all hover:bg-info-soft hover:text-info focus-visible:ring-2 focus-visible:ring-focus"
             >
               {tag}
             </button>

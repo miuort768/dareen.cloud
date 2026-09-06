@@ -79,7 +79,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
             <div className="flex shrink-0 items-center gap-4 bg-success p-4 text-on-success transition-all">
               <button
                 onClick={step === 'info' ? handleBackStep : handleClose}
-                className="rounded-full p-1 hover:bg-white/10"
+                className="rounded-full p-1 outline-none hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-focus"
                 aria-label={step === 'info' ? 'رجوع' : 'إغلاق'}
               >
                 {step === 'info' ? <ChevronLeft size={24} /> : <X size={24} />}
@@ -136,7 +136,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                             onClick={() =>
                               setSelectedUsers(selectedUsers.filter((id) => id !== user.id))
                             }
-                            className="absolute -start-0 -top-0 rounded-full border-2 border-white bg-background p-0.5 text-main transition-colors hover:bg-error dark:border-card"
+                            className="absolute -start-0 -top-0 rounded-full border-2 border-white bg-background p-0.5 text-main outline-none transition-colors hover:bg-error focus-visible:ring-2 focus-visible:ring-focus dark:border-card"
                             aria-label="إزالة"
                           >
                             <X size={12} />
@@ -155,7 +155,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                   {!isCreatingGroup && (
                     <button
                       onClick={() => setIsCreatingGroup(true)}
-                      className="flex w-full items-center gap-4 border-b border-border p-4 transition-colors hover:bg-surface dark:hover:bg-hover"
+                      className="flex w-full items-center gap-4 border-b border-border p-4 outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-hover"
                     >
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-success text-on-success shadow-elevation-1">
                         <UsersIcon size={24} />
@@ -336,7 +336,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                   setShowDeleteConfirm(false)
                   setItemToDelete(null)
                 }}
-                className="flex-1 rounded-lg bg-surface py-3 font-bold text-main transition-colors hover:bg-hover dark:bg-hover dark:text-muted dark:hover:text-main"
+                className="flex-1 rounded-lg bg-surface py-3 font-bold text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-hover dark:text-muted dark:hover:text-main"
               >
                 إلغاء
               </button>

@@ -65,7 +65,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
           <button
             aria-label="إغلاق"
             onClick={onClose}
-            className="flex h-10 w-10 items-center justify-center rounded-xl text-on-primary opacity-60 transition-colors hover:bg-white/15 hover:opacity-100 md:h-8 md:w-8"
+            className="flex h-10 w-10 items-center justify-center rounded-xl text-on-primary opacity-60 outline-none transition-colors hover:bg-white/15 hover:opacity-100 focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-8"
           >
             <X size={18} />
           </button>
@@ -166,7 +166,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 rounded-xl bg-hover px-6 py-3 text-xs font-bold text-muted transition-all hover:bg-primary-light"
+              className="flex-1 rounded-xl bg-hover px-6 py-3 text-xs font-bold text-muted outline-none transition-all hover:bg-primary-light focus-visible:ring-2 focus-visible:ring-focus"
             >
               إلغاء
             </button>

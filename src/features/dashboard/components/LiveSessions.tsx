@@ -215,7 +215,7 @@ export const LiveSessions = () => {
           </div>
           <button
             onClick={() => refetch()}
-            className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-error transition-colors hover:bg-error-soft"
+            className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-error outline-none transition-colors hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus"
           >
             <RefreshCcw size={11} /> إعادة
           </button>
@@ -315,7 +315,7 @@ export const LiveSessions = () => {
 
                   <button
                     onClick={() => copyLink(session.meetingUrl || '', session.id)}
-                    className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary dark:border-primary/15 dark:hover:bg-primary/10"
+                    className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted outline-none transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/15 dark:hover:bg-primary/10"
                     title="نسخ الرابط"
                     aria-label="نسخ رابط الحصة"
                   >
@@ -329,7 +329,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => openEditDialog(session)}
-                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary dark:border-primary/15 dark:hover:bg-primary/10"
+                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-muted outline-none transition-all hover:border-primary/30 hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/15 dark:hover:bg-primary/10"
                       title="تعديل الرابط"
                       aria-label="تعديل رابط الحصة"
                     >
@@ -340,7 +340,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => endSession(session.id)}
-                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-error transition-all hover:border-error-soft hover:bg-error-soft hover:text-error dark:border-error-soft"
+                      className="flex min-h-9 min-w-9 items-center justify-center rounded-xl border border-border text-error outline-none transition-all hover:border-error-soft hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus dark:border-error-soft"
                       title="إنهاء الحصة"
                       aria-label="إنهاء الحصة"
                     >
@@ -388,7 +388,7 @@ export const LiveSessions = () => {
                     key={p.value}
                     onClick={() => setEditProvider(p.value)}
                     className={cn(
-                      'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold transition-all',
+                      'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                       editProvider === p.value
                         ? 'border-primary bg-primary-soft text-primary dark:border-primary dark:bg-primary/10'
                         : 'border-border text-muted hover:border-primary/30 dark:border-primary/15',

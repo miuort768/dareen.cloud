@@ -229,7 +229,7 @@ export const SidebarDesktop = ({
         <button
           onClick={onToggleCollapse}
           className={cn(
-            'flex w-full items-center gap-2.5 rounded-xl text-muted transition-all duration-normal hover:bg-hover hover:text-main',
+            'flex w-full items-center gap-2.5 rounded-xl text-muted outline-none transition-all duration-normal hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus',
             collapsed ? 'justify-center px-0 py-1.5' : 'px-3 py-2',
           )}
         >
@@ -245,7 +245,7 @@ export const SidebarDesktop = ({
         <button
           onClick={onLogout}
           className={cn(
-            'flex w-full items-center gap-2.5 rounded-xl text-error transition-all duration-normal hover:bg-error-soft hover:text-error',
+            'flex w-full items-center gap-2.5 rounded-xl text-error outline-none transition-all duration-normal hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus',
             collapsed ? 'justify-center px-0 py-1.5' : 'px-3 py-2',
           )}
         >

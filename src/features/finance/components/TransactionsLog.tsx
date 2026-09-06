@@ -134,7 +134,7 @@ const TransactionRow = ({
                   e.stopPropagation()
                   onPreviewInvoice(t.invoiceNumber!)
                 }}
-                className="rounded-xl p-1.5 text-muted transition-colors hover:bg-primary-soft hover:text-primary"
+                className="rounded-xl p-1.5 text-muted outline-none transition-colors hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                 title="عرض الفاتورة"
               >
                 <Eye size={15} />
@@ -274,7 +274,7 @@ export const TransactionsLog = ({
               setFilterType('all')
               setPage(1)
             }}
-            className={`rounded-lg px-3 py-1 text-xs font-bold transition-all ${
+            className={`rounded-lg px-3 py-1 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
               filterType === 'all'
                 ? 'shadow-xs bg-primary text-on-primary'
                 : 'text-muted hover:text-main'
@@ -287,7 +287,7 @@ export const TransactionsLog = ({
               setFilterType('income')
               setPage(1)
             }}
-            className={`rounded-lg px-3 py-1 text-xs font-bold transition-all ${
+            className={`rounded-lg px-3 py-1 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
               filterType === 'income'
                 ? 'shadow-xs bg-success text-on-success'
                 : 'text-muted hover:text-main'
@@ -300,7 +300,7 @@ export const TransactionsLog = ({
               setFilterType('expense')
               setPage(1)
             }}
-            className={`rounded-lg px-3 py-1 text-xs font-bold transition-all ${
+            className={`rounded-lg px-3 py-1 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
               filterType === 'expense'
                 ? 'shadow-xs bg-error text-on-error'
                 : 'text-muted hover:text-main'

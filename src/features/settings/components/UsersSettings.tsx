@@ -119,7 +119,7 @@ export const UsersSettings = ({
               <button
                 key={role.label}
                 onClick={() => setNewUser({ ...newUser, permissions: role.perms })}
-                className="rounded-lg border border-divider bg-background px-3 py-1.5 text-[11px] font-bold text-muted transition-all hover:bg-primary-soft hover:text-primary"
+                className="rounded-lg border border-divider bg-background px-3 py-1.5 text-[11px] font-bold text-muted outline-none transition-all hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
               >
                 {role.label}
               </button>
@@ -143,7 +143,7 @@ export const UsersSettings = ({
                         key={p.id}
                         onClick={() => togglePerm(p.id)}
                         className={cn(
-                          'flex items-center gap-1.5 rounded-lg border px-2.5 py-2 text-start text-[11px] font-bold transition-all',
+                          'flex items-center gap-1.5 rounded-lg border px-2.5 py-2 text-start text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                           isSelected
                             ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                             : 'border-divider bg-card text-muted hover:border-primary/50 hover:text-main',
@@ -205,7 +205,7 @@ export const UsersSettings = ({
                         permissions: u.permissions || [],
                       })
                     }}
-                    className="rounded-lg border border-divider bg-background p-2 text-muted transition-colors hover:border-primary hover:text-primary"
+                    className="rounded-lg border border-divider bg-background p-2 text-muted outline-none transition-colors hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                     title="تعديل"
                   >
                     <Edit size={13} />
@@ -213,7 +213,7 @@ export const UsersSettings = ({
                   {u.id !== user?.id && (
                     <button
                       onClick={() => setShowDeleteModal(u)}
-                      className="rounded-lg border border-error-soft bg-error-soft p-2 text-error transition-colors hover:bg-error"
+                      className="rounded-lg border border-error-soft bg-error-soft p-2 text-error outline-none transition-colors hover:bg-error focus-visible:ring-2 focus-visible:ring-focus"
                       title="حذف"
                     >
                       <Trash2 size={13} />

@@ -62,7 +62,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-surface shadow-elevation-1 dark:border-primary/30 dark:bg-card ${hideThemeToggle ? 'hidden' : ''}`}
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-surface shadow-elevation-1 outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/30 dark:bg-card ${hideThemeToggle ? 'hidden' : ''}`}
           >
             {theme === 'dark' ? (
               <Sun className="h-4 w-4 text-primary" />
@@ -74,7 +74,7 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface shadow-elevation-1 dark:border-primary/30 dark:bg-card"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface shadow-elevation-1 outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/30 dark:bg-card"
             >
               {menuOpen ? (
                 <X className="h-5 w-5 text-muted dark:text-primary" />

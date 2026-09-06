@@ -124,7 +124,7 @@ export const RolesPage = () => {
             />
             <button
               onClick={createRole}
-              className="flex h-11 items-center justify-center gap-2 rounded-card bg-primary px-5 text-sm font-bold text-on-primary transition-all hover:bg-primary-hover md:h-auto md:py-2"
+              className="flex h-11 items-center justify-center gap-2 rounded-card bg-primary px-5 text-sm font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus md:h-auto md:py-2"
             >
               <Plus size={16} /> إضافة
             </button>
@@ -155,14 +155,14 @@ export const RolesPage = () => {
               <div className="mt-4 flex items-center gap-2 border-t border-border pt-3">
                 <button
                   onClick={() => startEdit(role)}
-                  className="rounded-card bg-primary-soft px-4 py-1.5 text-xs font-bold text-primary transition-all hover:bg-primary hover:text-on-primary"
+                  className="rounded-card bg-primary-soft px-4 py-1.5 text-xs font-bold text-primary outline-none transition-all hover:bg-primary hover:text-on-primary focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   تعديل الصلاحيات
                 </button>
                 {!role.isSystem && (
                   <button
                     onClick={() => deleteRole(role.id)}
-                    className="flex items-center gap-1 rounded-card bg-error-soft px-4 py-1.5 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-error"
+                    className="flex items-center gap-1 rounded-card bg-error-soft px-4 py-1.5 text-xs font-bold text-error outline-none transition-all hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     <Trash2 size={14} /> حذف
                   </button>
@@ -192,7 +192,7 @@ export const RolesPage = () => {
                 <button
                   onClick={() => setEditingRole(null)}
                   aria-label="إغلاق"
-                  className="flex h-11 w-11 items-center justify-center rounded-card text-muted transition-all hover:bg-surface hover:text-main md:h-8 md:w-8"
+                  className="flex h-11 w-11 items-center justify-center rounded-card text-muted outline-none transition-all hover:bg-surface hover:text-main focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-8"
                 >
                   <X size={18} />
                 </button>
@@ -239,13 +239,13 @@ export const RolesPage = () => {
               <div className="mt-6 flex items-center gap-3 border-t border-border pb-[max(0.25rem,env(safe-area-inset-bottom))] pt-4">
                 <button
                   onClick={saveRole}
-                  className="flex h-11 flex-1 items-center justify-center gap-2 rounded-card bg-primary px-4 text-sm font-bold text-on-primary transition-all hover:bg-primary-hover"
+                  className="flex h-11 flex-1 items-center justify-center gap-2 rounded-card bg-primary px-4 text-sm font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <Save size={16} /> حفظ
                 </button>
                 <button
                   onClick={() => setEditingRole(null)}
-                  className="h-11 flex-1 rounded-card bg-surface text-sm font-bold text-main transition-all hover:bg-hover md:h-auto md:flex-none md:px-4 md:py-2.5"
+                  className="h-11 flex-1 rounded-card bg-surface text-sm font-bold text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus md:h-auto md:flex-none md:px-4 md:py-2.5"
                 >
                   إلغاء
                 </button>

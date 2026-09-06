@@ -104,7 +104,7 @@ export const FloatingActions = () => {
                   onClick={action.onClick}
                   aria-label={action.label}
                   className={cn(
-                    'relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[0.9rem] text-on-primary shadow-elevation-4 transition-all duration-500 hover:scale-[1.15] active:scale-90 md:h-12 md:w-12',
+                    'relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[0.9rem] text-on-primary shadow-elevation-4 outline-none transition-all duration-500 hover:scale-[1.15] focus-visible:ring-2 focus-visible:ring-focus active:scale-90 md:h-12 md:w-12',
                     action.color,
                   )}
                 >

@@ -114,7 +114,7 @@ export const ActiveSessionBanner = () => {
           </a>
           <button
             onClick={() => setDismissed(true)}
-            className="rounded-lg p-1.5 transition-colors hover:bg-white/20"
+            className="rounded-lg p-1.5 outline-none transition-colors hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="إخفاء الشريط"
           >
             <X size={14} />

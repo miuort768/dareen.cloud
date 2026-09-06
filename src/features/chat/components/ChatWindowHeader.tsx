@@ -41,7 +41,7 @@ export const ChatWindowHeader = ({
         <button
           onClick={onBack}
           aria-label="رجوع لقائمة المحادثات"
-          className="p-1 text-muted lg:hidden"
+          className="p-1 text-muted outline-none focus-visible:ring-2 focus-visible:ring-focus lg:hidden"
         >
           <ChevronRight size={24} />
         </button>
@@ -123,7 +123,7 @@ export const ChatWindowHeader = ({
             }}
             aria-label={showSearchBar ? 'إغلاق البحث' : 'بحث في الرسائل'}
             className={cn(
-              'rounded-full p-2 transition-colors',
+              'rounded-full p-2 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
               showSearchBar
                 ? 'bg-primary text-on-primary'
                 : 'hover:bg-black/5 dark:hover:bg-white/5',
@@ -135,7 +135,7 @@ export const ChatWindowHeader = ({
             <button
               onClick={onToggleMoreMenu}
               aria-label="خيارات المحادثة"
-              className="rounded-full p-2 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+              className="rounded-full p-2 outline-none transition-colors hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-white/5"
             >
               <MoreVertical size={20} />
             </button>
@@ -152,7 +152,7 @@ export const ChatWindowHeader = ({
                         openGroupSettings()
                         onToggleMoreMenu()
                       }}
-                      className="w-full px-4 py-3 text-start text-sm font-medium text-main transition-colors hover:bg-hover"
+                      className="w-full px-4 py-3 text-start text-sm font-medium text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
                     >
                       تعديل المجموعة
                     </button>
@@ -162,7 +162,7 @@ export const ChatWindowHeader = ({
                       onDeleteConversation()
                       onToggleMoreMenu()
                     }}
-                    className="w-full px-4 py-3 text-start text-sm text-error transition-colors hover:bg-hover"
+                    className="w-full px-4 py-3 text-start text-sm text-error outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     حذف الدردشة
                   </button>

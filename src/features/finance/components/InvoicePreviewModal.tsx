@@ -59,7 +59,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
             </label>
             <button
               onClick={onClose}
-              className="flex h-11 w-11 items-center justify-center rounded-xl text-error transition-colors hover:bg-error-soft md:h-auto md:w-auto md:p-2"
+              className="flex h-11 w-11 items-center justify-center rounded-xl text-error outline-none transition-colors hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus md:h-auto md:w-auto md:p-2"
               aria-label="إغلاق"
             >
               <X size={24} className="text-muted" />
@@ -240,13 +240,13 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
         <div className="no-print flex items-stretch justify-stretch gap-3 border-t border-border bg-surface p-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:items-center md:justify-end md:p-6">
           <button
             onClick={onClose}
-            className="h-11 flex-1 rounded-xl border border-border text-sm font-medium text-muted transition-colors hover:text-main md:h-auto md:flex-none md:border-0 md:px-6 md:py-2"
+            className="h-11 flex-1 rounded-xl border border-border text-sm font-medium text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus md:h-auto md:flex-none md:border-0 md:px-6 md:py-2"
           >
             إغلاق
           </button>
           <button
             onClick={handlePrint}
-            className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-xs font-medium text-on-primary transition-all hover:bg-primary-hover md:h-auto md:flex-none"
+            className="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-xs font-medium text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus md:h-auto md:flex-none"
           >
             <Printer size={16} />
             طباعة

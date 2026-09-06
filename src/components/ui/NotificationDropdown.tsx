@@ -142,7 +142,7 @@ export const NotificationDropdown = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'relative flex h-11 w-11 items-center justify-center gap-1.5 rounded-lg px-2.5 transition-all duration-normal md:h-8 md:w-auto',
+          'relative flex h-11 w-11 items-center justify-center gap-1.5 rounded-lg px-2.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-auto',
           'text-muted hover:bg-accent-soft hover:text-main',
         )}
         aria-label="إظهار الإشعارات"
@@ -196,7 +196,7 @@ export const NotificationDropdown = ({
               {unreadCount > 0 && (
                 <button
                   onClick={markAllAsRead}
-                  className="whitespace-nowrap text-micro font-medium text-primary hover:text-primary sm:text-xs"
+                  className="whitespace-nowrap text-micro font-medium text-primary outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-focus sm:text-xs"
                 >
                   تحديد الكل
                 </button>
@@ -204,7 +204,7 @@ export const NotificationDropdown = ({
               {Array.isArray(notifications) && notifications.length > 0 && (
                 <button
                   onClick={clearAll}
-                  className="whitespace-nowrap text-micro font-medium text-error hover:text-error sm:text-xs"
+                  className="whitespace-nowrap text-micro font-medium text-error outline-none hover:text-error focus-visible:ring-2 focus-visible:ring-focus sm:text-xs"
                 >
                   حذف الكل
                 </button>
@@ -232,7 +232,7 @@ export const NotificationDropdown = ({
                     showNotification('تم تفعيل التنبيهات الفورية بنجاح', 'success')
                   }
                 }}
-                className="rounded-lg bg-primary px-3 py-1.5 text-micro font-medium text-on-primary shadow-soft transition-colors hover:bg-primary-hover"
+                className="rounded-lg bg-primary px-3 py-1.5 text-micro font-medium text-on-primary shadow-soft outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
               >
                 تفعيل الآن
               </button>
@@ -296,7 +296,7 @@ export const NotificationDropdown = ({
                             e.stopPropagation()
                             deleteNotification(notification.id)
                           }}
-                          className="rounded-full p-1 text-muted transition-colors hover:bg-error-soft hover:text-error"
+                          className="rounded-full p-1 text-muted outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
                           aria-label="حذف"
                         >
                           <Trash2 size={14} />

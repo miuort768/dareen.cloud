@@ -88,7 +88,7 @@ export const SessionCallAlert = () => {
               </div>
               <button
                 onClick={() => setShow(false)}
-                className="text-on-primary transition-transform hover:rotate-90"
+                className="text-on-primary outline-none transition-transform hover:rotate-90 focus-visible:ring-2 focus-visible:ring-focus"
                 aria-label="إغلاق"
               >
                 <X size={20} />
@@ -128,7 +128,7 @@ export const SessionCallAlert = () => {
                 </a>
                 <button
                   onClick={() => setShow(false)}
-                  className="border-2 border-border px-4 py-2 text-xs font-normal transition-colors hover:bg-surface"
+                  className="border-2 border-border px-4 py-2 text-xs font-normal outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   لاحقاً
                 </button>

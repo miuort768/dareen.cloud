@@ -131,7 +131,7 @@ export const ScheduleHeader = ({
           {/* Today button */}
           <button
             onClick={() => onDayChange(filterDay === todayDayName ? 'all' : todayDayName)}
-            className={`flex h-8 items-center gap-1.5 rounded-lg border px-3 text-xs font-bold transition-all ${
+            className={`flex h-8 items-center gap-1.5 rounded-lg border px-3 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${
               filterDay === todayDayName
                 ? 'border-primary bg-primary text-on-primary'
                 : 'border-border bg-surface text-main hover:bg-hover'
@@ -229,7 +229,7 @@ export const ScheduleHeader = ({
                 onSubjectChange('all')
                 onSearchChange('')
               }}
-              className="flex h-8 items-center gap-1 rounded-lg border border-error-soft bg-error-soft px-3 text-xs font-bold text-error transition-all hover:bg-error hover:text-on-error"
+              className="flex h-8 items-center gap-1 rounded-lg border border-error-soft bg-error-soft px-3 text-xs font-bold text-error outline-none transition-all hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus"
             >
               <span>مسح ({activeFiltersCount})</span>
             </button>

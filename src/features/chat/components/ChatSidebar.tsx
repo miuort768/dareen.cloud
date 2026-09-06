@@ -66,7 +66,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
           <div className="ms-3 flex items-center gap-1.5 border-s border-border ps-2 dark:border-white/10">
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="rounded-full p-1.5 text-muted transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+              className="rounded-full p-1.5 text-muted outline-none transition-colors hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-white/5"
             >
               <Sun size={18} />
             </button>
@@ -82,7 +82,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   setIsEditingGroup(false)
                   setShowNewChatModal(true)
                 }}
-                className="relative rounded-full p-2 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+                className="relative rounded-full p-2 outline-none transition-colors hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-white/5"
                 title="دردشة جديدة"
               >
                 <MessageSquarePlus size={22} />
@@ -93,7 +93,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                   e.stopPropagation()
                   onDeleteAll()
                 }}
-                className="relative flex cursor-pointer items-center justify-center rounded-full p-2 text-error transition-colors hover:bg-error-light dark:hover:bg-error-soft"
+                className="relative flex cursor-pointer items-center justify-center rounded-full p-2 text-error outline-none transition-colors hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-error-soft"
                 title="حذف جميع المحادثات"
               >
                 <Trash2 size={22} strokeWidth={2.5} />
@@ -128,7 +128,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 key={conv.id}
                 onClick={() => setSelectedConv(conv)}
                 className={cn(
-                  'relative flex w-full items-center gap-3 px-3 py-3 transition-colors hover:bg-primary/5',
+                  'relative flex w-full items-center gap-3 px-3 py-3 outline-none transition-colors hover:bg-primary/5 focus-visible:ring-2 focus-visible:ring-focus',
                   isSelected && 'bg-primary/10 dark:bg-primary/5',
                 )}
               >

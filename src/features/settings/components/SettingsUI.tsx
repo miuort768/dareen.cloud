@@ -130,7 +130,7 @@ export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () =
     aria-checked={checked}
     onClick={onChange}
     className={cn(
-      'relative h-6 w-11 shrink-0 rounded-full transition-all duration-slow',
+      'relative h-6 w-11 shrink-0 rounded-full outline-none transition-all duration-slow focus-visible:ring-2 focus-visible:ring-focus',
       checked
         ? 'bg-gradient-to-r from-primary to-primary-active shadow-elevation-1 shadow-primary/30'
         : 'bg-divider hover:bg-border',

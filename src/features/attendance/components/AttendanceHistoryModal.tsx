@@ -168,7 +168,7 @@ export const AttendanceHistoryModal = ({
           </div>
           <button
             onClick={onClose}
-            className="flex h-7 w-7 items-center justify-center rounded-2xl bg-white/15 text-on-primary transition-colors hover:bg-white/25"
+            className="flex h-7 w-7 items-center justify-center rounded-2xl bg-white/15 text-on-primary outline-none transition-colors hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="إغلاق"
           >
             <X size={14} />
@@ -246,14 +246,14 @@ export const AttendanceHistoryModal = ({
                       <div className="me-auto flex gap-1">
                         <button
                           onClick={handleUpdate}
-                          className="rounded-2xl bg-success-soft p-1.5 text-success transition-all active:scale-95"
+                          className="rounded-2xl bg-success-soft p-1.5 text-success outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                           aria-label="حفظ"
                         >
                           <Save size={12} />
                         </button>
                         <button
                           onClick={() => setEditingSession(null)}
-                          className="rounded-2xl bg-surface p-1.5 text-muted transition-colors"
+                          className="rounded-2xl bg-surface p-1.5 text-muted outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus"
                           aria-label="إلغاء"
                         >
                           <XSquare size={12} />
@@ -306,7 +306,7 @@ export const AttendanceHistoryModal = ({
                         </span>
                         <button
                           onClick={() => setEditingSession(session)}
-                          className="rounded p-1 text-muted transition-colors hover:text-primary"
+                          className="rounded p-1 text-muted outline-none transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                           aria-label="تعديل"
                         >
                           <Edit2 size={10} />
@@ -314,7 +314,7 @@ export const AttendanceHistoryModal = ({
                         {canDelete && (
                           <button
                             onClick={() => handleDelete(session.id)}
-                            className="rounded p-1 text-muted transition-all hover:text-error"
+                            className="rounded p-1 text-muted outline-none transition-all hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
                             aria-label="حذف"
                             disabled={deletingId === session.id}
                           >
@@ -343,7 +343,7 @@ export const AttendanceHistoryModal = ({
         <div className="border-t border-border px-3 py-2">
           <button
             onClick={onClose}
-            className="w-full rounded-2xl bg-surface py-2 text-[10px] font-bold text-main transition-colors hover:bg-hover"
+            className="w-full rounded-2xl bg-surface py-2 text-[10px] font-bold text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
           >
             إغلاق
           </button>

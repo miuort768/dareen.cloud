@@ -265,7 +265,7 @@ function App() {
             <div className="flex justify-center gap-3 pt-2">
               <button
                 onClick={() => window.location.reload()}
-                className="rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-on-primary shadow-elevation-3 shadow-primary/20 transition-colors hover:bg-primary-hover"
+                className="rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-on-primary shadow-elevation-3 shadow-primary/20 outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
               >
                 إعادة التحميل
               </button>
@@ -295,7 +295,7 @@ function App() {
                     window.location.reload()
                   }
                 }}
-                className="rounded-xl bg-error px-6 py-2.5 text-sm font-bold text-on-error shadow-elevation-3 transition-colors hover:bg-error hover:text-on-error"
+                className="rounded-xl bg-error px-6 py-2.5 text-sm font-bold text-on-error shadow-elevation-3 outline-none transition-colors hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus"
               >
                 مسح التخزين وإعادة التحميل
               </button>
@@ -326,7 +326,10 @@ function App() {
           <span className="flex animate-pulse items-center gap-1">
             <AlertTriangle size={14} /> وضع الصيانة مفعل (يراه الجميع عداك)
           </span>
-          <button onClick={() => navigate('/settings')} className="underline hover:no-underline">
+          <button
+            onClick={() => navigate('/settings')}
+            className="underline outline-none hover:no-underline focus-visible:ring-2 focus-visible:ring-focus"
+          >
             انقر هنا للإلغاء
           </button>
         </div>

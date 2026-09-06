@@ -143,7 +143,7 @@ export const SchedulePopover = ({
                 <button
                   onClick={onClose}
                   autoFocus
-                  className="text-on-primary/60 flex h-7 w-7 items-center justify-center rounded-lg transition-colors duration-fast hover:bg-white/15 hover:text-white"
+                  className="text-on-primary/60 flex h-7 w-7 items-center justify-center rounded-lg outline-none transition-colors duration-fast hover:bg-white/15 hover:text-white focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label="إغلاق"
                 >
                   <X size={14} />

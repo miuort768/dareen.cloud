@@ -273,7 +273,7 @@ export const MobileSchedule = () => {
                 <button
                   onClick={() => setSearchTerm('')}
                   aria-label="مسح البحث"
-                  className="absolute end-2.5 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-md text-muted transition-colors duration-fast hover:text-main"
+                  className="absolute end-2.5 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-md text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <X size={13} />
                 </button>

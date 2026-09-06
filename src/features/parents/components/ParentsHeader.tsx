@@ -65,7 +65,7 @@ export const ParentsHeader = ({
           <button
             type="button"
             onClick={onImport}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted transition-all hover:bg-hover hover:text-main"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="استيراد"
             title="استيراد"
           >
@@ -75,7 +75,7 @@ export const ParentsHeader = ({
           <button
             type="button"
             onClick={onExportExcel}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted transition-all hover:bg-hover hover:text-main"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="تصدير Excel"
             title="تصدير Excel"
           >
@@ -84,7 +84,7 @@ export const ParentsHeader = ({
           <button
             type="button"
             onClick={onExportPDF}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted transition-all hover:bg-hover hover:text-main"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="تصدير PDF"
             title="تصدير PDF"
           >

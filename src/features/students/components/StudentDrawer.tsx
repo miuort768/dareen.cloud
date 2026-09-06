@@ -188,7 +188,7 @@ export const StudentDrawer = ({
             <div className="flex items-center justify-between p-4">
               <button
                 onClick={onClose}
-                className="flex h-10 items-center gap-1 rounded-lg bg-white/15 px-3 text-xs font-bold text-on-primary transition-colors hover:bg-white/25 md:h-8"
+                className="flex h-10 items-center gap-1 rounded-lg bg-white/15 px-3 text-xs font-bold text-on-primary outline-none transition-colors hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus md:h-8"
                 aria-label="رجوع"
               >
                 <ChevronLeft size={14} />
@@ -257,7 +257,7 @@ export const StudentDrawer = ({
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}
                     className={cn(
-                      'relative flex flex-1 items-center justify-center gap-1.5 py-3 text-[10px] font-bold transition-all',
+                      'relative flex flex-1 items-center justify-center gap-1.5 py-3 text-[10px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                       isActive ? 'text-primary' : 'text-muted hover:text-main',
                     )}
                   >
@@ -615,7 +615,7 @@ export const StudentDrawer = ({
                       <p className="text-[11px] font-bold text-main">إضافة برنامج جديد</p>
                       <button
                         onClick={() => setShowAddProgram(false)}
-                        className="text-[10px] font-bold text-muted transition-colors hover:text-main"
+                        className="text-[10px] font-bold text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                         aria-label="إغلاق نموذج إضافة برنامج"
                       >
                         إلغاء
@@ -631,7 +631,7 @@ export const StudentDrawer = ({
                 ) : (
                   <button
                     onClick={() => setShowAddProgram(true)}
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border py-3 text-[10px] font-bold text-muted transition-all hover:border-primary hover:text-primary"
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border py-3 text-[10px] font-bold text-muted outline-none transition-all hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     <Plus size={13} /> إضافة برنامج جديد
                   </button>

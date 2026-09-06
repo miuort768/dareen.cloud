@@ -136,7 +136,7 @@ export const StartLiveSessionDialog = ({
               <h3 className="text-lg font-bold text-main">بدأت الحصة!</h3>
               <button
                 onClick={onClose}
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface transition-colors hover:bg-hover dark:bg-hover dark:hover:bg-primary/5 md:h-9 md:w-9"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-hover dark:hover:bg-primary/5 md:h-9 md:w-9"
                 aria-label="إغلاق"
               >
                 <X size={16} className="text-muted" />
@@ -167,7 +167,7 @@ export const StartLiveSessionDialog = ({
               </div>
               <button
                 onClick={copyLink}
-                className="flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-primary px-3 text-[11px] font-bold text-on-primary transition-colors hover:bg-primary-hover dark:bg-primary dark:text-on-primary dark:hover:bg-primary-active"
+                className="flex h-9 shrink-0 items-center gap-1.5 rounded-xl bg-primary px-3 text-[11px] font-bold text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-primary dark:text-on-primary dark:hover:bg-primary-active"
                 aria-label="نسخ الرابط"
               >
                 {copied ? <CheckCircle2 size={13} /> : <Copy size={13} />}
@@ -207,7 +207,7 @@ export const StartLiveSessionDialog = ({
               </div>
               <button
                 onClick={onClose}
-                className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface transition-colors hover:bg-hover dark:bg-hover dark:hover:bg-primary/5 md:h-9 md:w-9"
+                className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-hover dark:hover:bg-primary/5 md:h-9 md:w-9"
                 aria-label="إغلاق"
               >
                 <X size={16} className="text-muted" />
@@ -274,7 +274,7 @@ export const StartLiveSessionDialog = ({
                     key={p.value}
                     onClick={() => setProvider(p.value)}
                     className={cn(
-                      'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold transition-all',
+                      'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                       provider === p.value
                         ? 'border-primary bg-primary-soft text-primary dark:border-primary dark:bg-primary/10 dark:text-primary'
                         : 'border-border text-muted hover:border-primary/30 dark:border-border dark:text-muted',

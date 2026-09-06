@@ -96,7 +96,7 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
       </div>
       <button
         onClick={handleClose}
-        className="shrink-0 rounded-none p-1.5 text-muted transition-colors hover:bg-error-soft hover:text-error"
+        className="shrink-0 rounded-none p-1.5 text-muted outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
         aria-label="إغلاق"
       >
         <X size={14} />

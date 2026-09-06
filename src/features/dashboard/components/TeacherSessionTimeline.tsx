@@ -150,7 +150,7 @@ export const TeacherSessionTimeline = ({
             <button
               onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
               disabled={currentPage === 0}
-              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 transition-all hover:bg-hover hover:shadow-elevation-4 disabled:cursor-not-allowed disabled:opacity-30 dark:border-border dark:bg-card md:h-9 md:w-9"
+              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30 dark:border-border dark:bg-card md:h-9 md:w-9"
               aria-label="السابق"
             >
               <ChevronRight size={16} className="text-main" />
@@ -158,7 +158,7 @@ export const TeacherSessionTimeline = ({
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
               disabled={currentPage === totalPages - 1}
-              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 transition-all hover:bg-hover hover:shadow-elevation-4 disabled:cursor-not-allowed disabled:opacity-30 dark:border-border dark:bg-card md:h-9 md:w-9"
+              className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-3 outline-none transition-all hover:bg-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-30 dark:border-border dark:bg-card md:h-9 md:w-9"
               aria-label="التالي"
             >
               <ChevronLeft size={16} className="text-main" />
@@ -173,7 +173,7 @@ export const TeacherSessionTimeline = ({
                 key={i}
                 onClick={() => setCurrentPage(i)}
                 className={cn(
-                  'h-2 w-2 rounded-full transition-all',
+                  'h-2 w-2 rounded-full outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                   i === currentPage
                     ? 'w-6 bg-primary dark:bg-primary'
                     : 'bg-hover hover:bg-hover dark:bg-hover',

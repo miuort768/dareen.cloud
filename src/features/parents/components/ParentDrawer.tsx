@@ -395,7 +395,7 @@ const TabsBar = ({ tab, onTabChange }: { tab: TabKey; onTabChange: (t: TabKey) =
         key={t.key}
         onClick={() => onTabChange(t.key)}
         className={cn(
-          'flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-[10px] font-bold transition-all',
+          'flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-[10px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
           tab === t.key
             ? 'border-primary text-primary'
             : 'border-transparent text-muted hover:text-main',

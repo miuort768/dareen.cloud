@@ -95,7 +95,7 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
               key={f}
               onClick={() => setDefaultFormat(f)}
               className={cn(
-                'flex items-center gap-2 rounded-xl border px-5 py-3 text-xs font-bold transition-all',
+                'flex items-center gap-2 rounded-xl border px-5 py-3 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                 defaultFormat === f
                   ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                   : 'border-divider bg-background text-muted hover:border-primary/50',
