@@ -85,7 +85,7 @@ export const EnrollmentForm = ({
             value={form.teacherId}
             onChange={(e) => setForm({ ...form, teacherId: e.target.value })}
             aria-label="اختر المعلمة"
-            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main"
+            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
           >
             <option value="">المعلمة</option>
             {teachers.map((t) => (
@@ -100,7 +100,7 @@ export const EnrollmentForm = ({
             aria-label="المادة"
             value={form.subject}
             onChange={(e) => setForm({ ...form, subject: e.target.value })}
-            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main"
+            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
           />
         </div>
         <div className="grid grid-cols-2 gap-2">
@@ -109,7 +109,7 @@ export const EnrollmentForm = ({
             value={form.curr}
             onChange={(e) => setForm({ ...form, curr: e.target.value })}
             aria-label="العملة"
-            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main"
+            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
           >
             {CURRENCY_OPTIONS.map((c) => (
               <option key={c.code} value={c.code}>
@@ -122,7 +122,7 @@ export const EnrollmentForm = ({
             aria-label="المنهج"
             value={form.curriculum}
             onChange={(e) => setForm({ ...form, curriculum: e.target.value })}
-            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main"
+            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
           />
         </div>
         <div className="grid grid-cols-2 gap-2">
@@ -133,7 +133,7 @@ export const EnrollmentForm = ({
             aria-label="عدد الحصص"
             value={form.totalSessions}
             onChange={(e) => setForm({ ...form, totalSessions: e.target.value })}
-            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main"
+            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
           />
           <input
             type="number"
@@ -142,7 +142,7 @@ export const EnrollmentForm = ({
             aria-label="سعر الحصة التي ستحصل عليها المعلمة"
             value={form.teacherPrice}
             onChange={(e) => setForm({ ...form, teacherPrice: e.target.value })}
-            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main"
+            className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-xs font-normal text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
           />
         </div>
 
@@ -153,7 +153,7 @@ export const EnrollmentForm = ({
               value={slotInput.day}
               onChange={(e) => setSlotInput({ ...slotInput, day: e.target.value })}
               aria-label="اختر اليوم"
-              className="flex-1 rounded-xl border border-border bg-surface px-2 py-1 text-micro font-normal text-main"
+              className="flex-1 rounded-xl border border-border bg-surface px-2 py-1 text-micro font-normal text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
             >
               <option value="">اليوم</option>
               {['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'].map(
@@ -171,13 +171,13 @@ export const EnrollmentForm = ({
               onChange={(e) =>
                 setSlotInput({ ...slotInput, hour: e.target.value.replace(/^0+/, '') })
               }
-              className="w-20 rounded-xl border border-border bg-surface px-2 py-1 text-micro font-normal text-main"
+              className="w-20 rounded-xl border border-border bg-surface px-2 py-1 text-micro font-normal text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
             />
             <select
               value={slotInput.period}
               onChange={(e) => setSlotInput({ ...slotInput, period: e.target.value })}
               aria-label="الفترة صباحاً أو مساءً"
-              className="w-16 rounded-xl border border-border bg-surface px-1 py-1 text-micro font-normal text-main"
+              className="w-16 rounded-xl border border-border bg-surface px-1 py-1 text-micro font-normal text-main outline-none focus:border-primary focus:ring-2 focus:ring-primary/50"
             >
               <option value="am">صباحاً</option>
               <option value="pm">مساءً</option>
