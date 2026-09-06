@@ -89,6 +89,7 @@
 
   --bg-warning: #b45309;
   --bg-warning-hover: #92400e;
+  --bg-warning-dark: #78350f;
   --bg-warning-soft: #fffbeb;
   --bg-warning-light: #fef3c7;
   --text-warning: #d97706;
@@ -109,6 +110,7 @@
   --bg-info-soft: #f0f9ff;
   --bg-info-light: #e0f2fe;
   --bg-info-hover: #075985;
+  --bg-info-dark: #0c4a6e;
   --text-info-dark: #0369a1;
 }
 
@@ -190,6 +192,7 @@
 
   --bg-warning: #b45309;
   --bg-warning-hover: #d97706;
+  --bg-warning-dark: #f59e0b;
   --bg-warning-soft: #78350f;
   --bg-warning-light: #92400e;
   --text-warning: #fbbf24;
@@ -220,6 +223,7 @@
   --bg-info-soft: #0c4a6e;
   --bg-info-light: #075985;
   --bg-info-hover: #0284c7;
+  --bg-info-dark: #38bdf8;
   --text-info-dark: #7dd3fc;
 }
 

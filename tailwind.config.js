@@ -104,7 +104,8 @@ module.exports = {
         'primary-200': 'var(--bg-primary-soft)',
         'primary-400': 'var(--bg-primary-light)',
         focus: 'var(--ring-focus)',
-        'ring-offset': 'var(--ring-offset)',
+        ring: 'var(--ring-focus)',
+        'primary-foreground': 'var(--text-on-primary)',
         page: 'var(--background)',
         chart: {
           1: 'var(--chart-1)',
