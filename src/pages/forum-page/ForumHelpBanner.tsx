@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useDialogFocus } from '../../shared/hooks/useDialogFocus'
+import { useState } from 'react'
 import { useCurrentUser } from '../../context/AppContext'
 import { Scale, ShieldCheck, Heart, Sparkles, GraduationCap, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -8,18 +9,7 @@ export const ForumHelpBanner = () => {
   const role = currentUser?.role || 'student'
   const [showModal, setShowModal] = useState(false)
 
-  useEffect(() => {
-    if (!showModal) return
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setShowModal(false)
-    }
-    document.addEventListener('keydown', onKeyDown)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', onKeyDown)
-      document.body.style.overflow = ''
-    }
-  }, [showModal])
+  const { containerRef, handleKeyDown } = useDialogFocus(showModal, () => setShowModal(false))
 
   const getRoleRules = () => {
     switch (role) {
@@ -122,6 +112,8 @@ export const ForumHelpBanner = () => {
               role="dialog"
               aria-modal="true"
               aria-labelledby="forum-rules-title"
+              ref={containerRef}
+              onKeyDown={handleKeyDown}
               className="relative flex max-h-[85vh] w-full max-w-lg flex-col overflow-hidden rounded-card border border-border bg-card shadow-elevation-3"
               dir="rtl"
             >

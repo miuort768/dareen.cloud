@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useDialogFocus } from '../../shared/hooks/useDialogFocus'
 import { Download, X, Smartphone, Monitor, Share } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 
@@ -118,6 +119,8 @@ export const InstallPWA = () => {
     localStorage.setItem('pwa_dismissed_permanent', 'true')
   }
 
+  const { containerRef, handleKeyDown } = useDialogFocus(!!showIOSGuide, handleDismiss)
+
   if (!isVisible || isDashboard) return null
 
   const isDesktop = platform === 'desktop-chrome' || platform === 'windows-edge'
@@ -126,12 +129,11 @@ export const InstallPWA = () => {
   if (showIOSGuide) {
     return (
       <div
+        ref={containerRef}
+        onKeyDown={handleKeyDown}
         className="fixed inset-0 z-[150] flex items-end justify-center bg-black/40 p-4"
         role="dialog"
         aria-modal="true"
-        onKeyDown={(e) => {
-          if (e.key === 'Escape') handleDismiss()
-        }}
       >
         <div className="w-full max-w-sm border-2 border-border bg-card shadow-elevation-3 duration-slow animate-in fade-in slide-in-from-bottom-5">
           <div className="flex items-center justify-between border-b-2 border-border bg-warning px-4 py-3">

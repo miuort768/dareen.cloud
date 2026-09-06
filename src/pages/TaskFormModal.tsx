@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useDialogFocus } from '../shared/hooks/useDialogFocus'
 import { Plus, X, Sparkles, ShieldCheck, ChevronDown } from 'lucide-react'
 import type { NewTaskDraft } from './Tasks'
 
@@ -10,24 +10,16 @@ interface TaskFormModalProps {
 }
 
 export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormModalProps) => {
-  const titleRef = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    titleRef.current?.focus()
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [onClose])
+  const { containerRef, handleKeyDown } = useDialogFocus(true, onClose)
 
   return (
     <div
+      ref={containerRef}
+      onKeyDown={handleKeyDown}
       role="dialog"
       aria-modal="true"
       aria-label="إنشاء مهمة جديدة"
       className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 p-4 duration-slow animate-in fade-in"
-      onKeyDown={(e) => e.key === 'Escape' && onClose()}
     >
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
       <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
@@ -62,7 +54,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                 <Sparkles size={10} className="text-primary" /> عنوان المهمة
               </label>
               <input
-                ref={titleRef}
+                data-autofocus
                 id="task-title"
                 required
                 type="text"

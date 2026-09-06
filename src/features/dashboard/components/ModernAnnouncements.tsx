@@ -1,9 +1,10 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, AlertTriangle, X, Check, RefreshCw } from 'lucide-react'
 import { api } from '@/lib/api'
 import { cn } from '@/lib/utils'
 import { Button } from '../../../shared/components/ui'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { Badge } from '../../../shared/components/ui'
 import { announcementTypeOf } from '../../announcements/types'
 import type { Announcement } from '../../announcements/types'
@@ -30,7 +31,6 @@ export const ModernAnnouncements = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   // الإعلان المثبّت للإقرار — يمنع تبديل المحتوى أثناء الدوران التلقائي
   const [ackTarget, setAckTarget] = useState<Announcement | null>(null)
-  const confirmBtnRef = useRef<HTMLButtonElement>(null)
 
   // جلب واحد فقط — بلا عاصفة refetch عند كل استبعاد
   useEffect(() => {
@@ -89,16 +89,7 @@ export const ModernAnnouncements = () => {
     setCurrentIndex(0)
   }, [])
 
-  // Escape + تركيز أولي لنافذة الإقرار (محمولة عبر portal)
-  useEffect(() => {
-    if (!ackTarget) return
-    confirmBtnRef.current?.focus()
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setAckTarget(null)
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [ackTarget])
+  const { containerRef, handleKeyDown } = useDialogFocus(!!ackTarget, () => setAckTarget(null))
 
   if (loading || (!error && announcements.length === 0)) return null
 
@@ -210,6 +201,8 @@ export const ModernAnnouncements = () => {
       {ackTarget &&
         createPortal(
           <div
+            ref={containerRef}
+            onKeyDown={handleKeyDown}
             className="fixed inset-0 z-[100] flex items-end justify-center bg-black/40 backdrop-blur-sm md:items-center md:p-4"
             role="dialog"
             aria-modal="true"
@@ -256,7 +249,7 @@ export const ModernAnnouncements = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <Button
-                  ref={confirmBtnRef}
+                  data-autofocus
                   onClick={() => handleDismiss(ackTarget)}
                   className="h-10 gap-1.5 rounded-xl text-xs font-bold"
                 >

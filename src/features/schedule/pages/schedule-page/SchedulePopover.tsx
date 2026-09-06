@@ -1,3 +1,4 @@
+import { useDialogFocus } from '../../../../shared/hooks/useDialogFocus'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -42,15 +43,7 @@ export const SchedulePopover = ({
   const [noteText, setNoteText] = useState('')
   const [showNoteInput, setShowNoteInput] = useState(false)
   const [sent, setSent] = useState(false)
-
-  useEffect(() => {
-    if (!event) return
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [event, onClose])
+  const { containerRef, handleKeyDown } = useDialogFocus(!!event, onClose)
 
   useEffect(() => {
     if (!event) {
@@ -95,6 +88,8 @@ export const SchedulePopover = ({
         exit={{ opacity: 0 }}
         transition={{ duration: 0.15 }}
         className="fixed inset-0 z-[100] flex items-end justify-center bg-black/40 backdrop-blur-sm md:items-center md:p-4"
+        ref={containerRef}
+        onKeyDown={handleKeyDown}
         onClick={onClose}
         role="dialog"
         aria-modal="true"

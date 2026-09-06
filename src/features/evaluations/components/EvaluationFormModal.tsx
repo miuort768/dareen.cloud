@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Award, X, CheckCircle2, Zap, Check } from 'lucide-react'
 import { cn } from '../../../lib/utils'
@@ -26,15 +26,7 @@ export const EvaluationFormModal = ({
   onChange,
   onSubmit,
 }: EvaluationFormModalProps) => {
-  useEffect(() => {
-    if (!isOpen) return
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', handleEsc)
-    return () => document.removeEventListener('keydown', handleEsc)
-  }, [isOpen, onClose])
-
+  const { containerRef, handleKeyDown } = useDialogFocus(isOpen, onClose)
   return (
     <AnimatePresence>
       {isOpen && (
@@ -51,6 +43,8 @@ export const EvaluationFormModal = ({
         >
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
           <motion.div
+            ref={containerRef}
+            onKeyDown={handleKeyDown}
             role="dialog"
             aria-modal="true"
             aria-label={formData.studentId ? 'تعديل تقييم طالب' : 'إضافة تقييم جديد'}

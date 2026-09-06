@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useDialogFocus } from '../shared/hooks/useDialogFocus'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Megaphone, X, CheckCircle2, Eye, EyeOff } from 'lucide-react'
@@ -39,14 +39,7 @@ export const AnnouncementFormModal = ({
   onClose,
   onSubmit,
 }: AnnouncementFormModalProps) => {
-  useEffect(() => {
-    if (!isOpen) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [isOpen, onClose])
+  const { containerRef, handleKeyDown } = useDialogFocus(isOpen, onClose)
 
   return createPortal(
     <AnimatePresence>
@@ -56,6 +49,8 @@ export const AnnouncementFormModal = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
+          ref={containerRef}
+          onKeyDown={handleKeyDown}
           className="fixed inset-0 z-[200] flex items-end justify-center bg-black/50 backdrop-blur-sm sm:items-center sm:p-4"
           dir="rtl"
           role="dialog"

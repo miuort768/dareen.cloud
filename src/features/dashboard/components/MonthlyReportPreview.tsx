@@ -1,6 +1,7 @@
 import { Share2, FileDown, CheckCircle2, Star, Calendar, X, Award, ShieldCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '../../../shared/components/ui'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { useAcademyName } from '../../../context/AppContext'
 
 interface MonthlyReportPreviewProps {
@@ -27,10 +28,14 @@ export const MonthlyReportPreview = ({
 }: MonthlyReportPreviewProps) => {
   const academyName = useAcademyName()
 
+  const { containerRef, handleKeyDown } = useDialogFocus(!!(isOpen && student), onClose)
+
   if (!isOpen || !student) return null
 
   return (
     <div
+      ref={containerRef}
+      onKeyDown={handleKeyDown}
       className="fixed inset-0 z-[110] flex items-end justify-center bg-background dark:bg-black/70 md:items-center md:p-4"
       dir="rtl"
       role="dialog"
@@ -38,9 +43,6 @@ export const MonthlyReportPreview = ({
       aria-label={`تقرير ${student.name}`}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
-      }}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') onClose()
       }}
     >
       <div className="relative flex max-h-[95vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border-2 border-border bg-card shadow-[16px_16px_0px_0px_black] dark:border-primary/20 dark:bg-card">

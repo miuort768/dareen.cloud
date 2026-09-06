@@ -1,5 +1,5 @@
 import { Calendar, Clock, AlertCircle, Save, X } from 'lucide-react'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState } from 'react'
 
 interface RescheduleModalProps {
   isOpen: boolean
@@ -19,24 +19,7 @@ export const RescheduleModal = ({
   const [date, setDate] = useState(new Date().toLocaleDateString('en-CA'))
   const [time, setTime] = useState('')
   const [reason, setReason] = useState('')
-  const containerRef = useRef<HTMLDivElement>(null)
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.stopPropagation()
-        onClose()
-      }
-    },
-    [onClose],
-  )
-
-  useEffect(() => {
-    if (!isOpen) return
-    const first = containerRef.current?.querySelector<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-    )
-    first?.focus()
-  }, [isOpen])
+  const { containerRef, handleKeyDown } = useDialogFocus(isOpen, onClose)
 
   if (!isOpen) return null
 

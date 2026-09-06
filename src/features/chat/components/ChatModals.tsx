@@ -1,3 +1,4 @@
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import React from 'react'
 import { X, Users as UsersIcon, ChevronLeft, Search, Check } from 'lucide-react'
 import { cn } from '../../../lib/utils'
@@ -44,6 +45,18 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
   const [step, setStep] = React.useState<'select' | 'info'>('select')
 
+  const { containerRef: newChatRef, handleKeyDown: newChatKeyDown } = useDialogFocus(
+    showNewChatModal,
+    handleClose,
+  )
+  const { containerRef: deleteRef, handleKeyDown: deleteKeyDown } = useDialogFocus(
+    showDeleteConfirm,
+    React.useCallback(() => {
+      setShowDeleteConfirm(false)
+      setItemToDelete(null)
+    }, [setShowDeleteConfirm, setItemToDelete]),
+  )
+
   const selectedUsersObjects = availableUsers.filter((u) => selectedUsers.includes(u.id))
 
   const handleNextStep = () => {
@@ -67,12 +80,11 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
       {/* New Chat / Group Flow Modal */}
       {showNewChatModal && (
         <div
+          ref={newChatRef}
+          onKeyDown={newChatKeyDown}
           className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 p-0 backdrop-blur-sm duration-slow animate-in fade-in md:p-4"
           role="dialog"
           aria-modal="true"
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') handleClose()
-          }}
         >
           <div className="flex h-full w-full max-w-lg flex-col overflow-hidden bg-card shadow-elevation-1 duration-slow animate-in zoom-in-95 md:h-[650px] md:max-h-[90vh] md:rounded-lg">
             {/* Header - WhatsApp Style */}
@@ -311,15 +323,11 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
       {/* Delete Confirmation UI */}
       {showDeleteConfirm && (
         <div
+          ref={deleteRef}
+          onKeyDown={deleteKeyDown}
           className="fixed inset-0 z-[300] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
-              setShowDeleteConfirm(false)
-              setItemToDelete(null)
-            }
-          }}
         >
           <div className="w-full max-w-sm rounded-lg bg-card p-6 shadow-elevation-1">
             <h3 className="mb-4 text-start text-xl font-normal text-error">

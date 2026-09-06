@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { X, Plus, Trash2, CalendarDays, Loader2 } from 'lucide-react'
 import type { ScheduleSlot } from '../types'
 import { normalizePeriod, periodLabel } from '../utils/slotUtils'
@@ -40,14 +41,7 @@ export const ScheduleEditorModal = ({
     }
   }, [isOpen])
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    if (isOpen) document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [isOpen, onClose])
-
+  const { containerRef, handleKeyDown } = useDialogFocus(isOpen, onClose)
   if (!isOpen) return null
 
   const isBusy = busy || localBusy
@@ -79,11 +73,12 @@ export const ScheduleEditorModal = ({
 
   return (
     <div
+      ref={containerRef}
+      onKeyDown={handleKeyDown}
       role="dialog"
       aria-modal="true"
       aria-label="إدارة الجدول الأسبوعي"
       className="fixed inset-0 z-[1000] flex items-end justify-center bg-black/40 p-0 sm:items-center sm:p-4"
-      onKeyDown={(e) => e.key === 'Escape' && onClose()}
     >
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
       <div className="relative flex max-h-[90vh] w-full max-w-md flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft sm:max-h-[85vh]">

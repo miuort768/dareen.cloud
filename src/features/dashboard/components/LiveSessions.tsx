@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   Radio,
@@ -69,6 +70,10 @@ export const LiveSessions = () => {
   const [editProvider, setEditProvider] = useState('google_meet')
   const [editUrl, setEditUrl] = useState('')
   const [editError, setEditError] = useState<string | null>(null)
+
+  const { containerRef, handleKeyDown } = useDialogFocus(!!(showEditDialog && editingSession), () =>
+    setShowEditDialog(false),
+  )
 
   const {
     data: sessions = [],
@@ -359,14 +364,13 @@ export const LiveSessions = () => {
 
       {showEditDialog && editingSession && (
         <div
+          ref={containerRef}
           className="fixed inset-0 z-[100] flex items-end justify-center bg-black/40 backdrop-blur-sm md:items-center md:p-4"
           onClick={() => setShowEditDialog(false)}
           role="dialog"
           aria-modal="true"
-          aria-label="تعديل رابط الحصة"
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') setShowEditDialog(false)
-          }}
+          aria-label="تعديل الجلسة المباشرة"
+          onKeyDown={handleKeyDown}
         >
           <div
             className="w-full max-w-md space-y-5 rounded-2xl border border-border bg-card p-6 shadow-2xl dark:border-primary/20"

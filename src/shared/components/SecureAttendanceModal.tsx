@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useDialogFocus } from '../hooks/useDialogFocus'
 import { ShieldCheck, X, CheckCircle2, XCircle, Lock, BookOpen, Star } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { Button } from '../components/ui/Button'
@@ -43,6 +44,8 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     }
   }, [isOpen])
 
+  const { containerRef, handleKeyDown } = useDialogFocus(isOpen, onClose)
+
   if (!isOpen) return null
 
   const handleConfirm = async () => {
@@ -69,12 +72,11 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
 
   return (
     <div
+      ref={containerRef}
+      onKeyDown={handleKeyDown}
       className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-4 lg:p-6"
       role="dialog"
       aria-modal="true"
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') onClose()
-      }}
     >
       <div
         className="fixed inset-0 bg-black/40 backdrop-blur-sm duration-normal animate-in fade-in"

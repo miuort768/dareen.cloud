@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { X, Loader2, LinkIcon, Copy, CheckCircle2, Radio, ExternalLink, Users } from 'lucide-react'
 import { api } from '../../../lib/api'
@@ -113,18 +114,19 @@ export const StartLiveSessionDialog = ({
     }
   }
 
+  const { containerRef, handleKeyDown } = useDialogFocus(open, onClose)
+
   if (!open) return null
 
   return (
     <div
+      ref={containerRef}
+      onKeyDown={handleKeyDown}
       className="fixed inset-0 z-[100] flex items-end justify-center bg-black/40 md:items-center md:p-4"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="بدء حصة مباشرة"
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') onClose()
-      }}
+      aria-label="بدء جلسة مباشرة"
     >
       <div
         className="no-scrollbar max-h-[92dvh] w-full space-y-5 overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card p-5 shadow-2xl dark:border-border dark:bg-card md:max-w-md md:rounded-2xl md:border md:p-6"

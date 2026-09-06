@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Loader2, Phone, User } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { triggerHaptic } from '../../lib/haptics'
+import { useDialogFocus } from '../../shared/hooks/useDialogFocus'
 
 export interface ProfileEditValues {
   name: string
@@ -44,14 +45,7 @@ export const EditNameModal = ({
     }
   }, [isOpen, initialName, initialPhone])
 
-  useEffect(() => {
-    if (!isOpen) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [isOpen, onClose])
+  const { containerRef, handleKeyDown } = useDialogFocus(isOpen, onClose)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -75,6 +69,8 @@ export const EditNameModal = ({
           onClick={(e) => {
             if (e.target === e.currentTarget) onClose()
           }}
+          ref={containerRef}
+          onKeyDown={handleKeyDown}
           role="dialog"
           aria-modal="true"
           aria-label="تعديل بيانات الحساب"

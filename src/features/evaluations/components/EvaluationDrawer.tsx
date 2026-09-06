@@ -1,4 +1,5 @@
-import { useMemo, useEffect, useState } from 'react'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
+import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   X,
@@ -45,16 +46,7 @@ export const EvaluationDrawer = ({
     [evaluations, student?.id],
   )
 
-  useEffect(() => {
-    if (!student) return
-    setVisibleCount(3)
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    document.addEventListener('keydown', handleEsc)
-    return () => document.removeEventListener('keydown', handleEsc)
-  }, [student, onClose])
-
+  const { containerRef, handleKeyDown } = useDialogFocus(!!student, onClose)
   const totalXP = studentEvals.reduce((s, ev) => s + (ev.points || 0), 0)
   const totalSessions = (student?.enrollments || []).reduce((s, en) => s + en.sessionsTotal, 0)
   const usedSessions = (student?.enrollments || []).reduce((s, en) => s + en.sessionsUsed, 0)
@@ -83,6 +75,8 @@ export const EvaluationDrawer = ({
             onClick={onClose}
           />
           <motion.div
+            ref={containerRef}
+            onKeyDown={handleKeyDown}
             role="dialog"
             aria-modal="true"
             aria-label={`ملف التقييمات: ${student?.name}`}

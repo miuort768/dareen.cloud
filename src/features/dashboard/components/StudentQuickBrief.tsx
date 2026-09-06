@@ -1,3 +1,4 @@
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react'
 import { Button } from '../../../shared/components/ui'
 
@@ -37,10 +38,14 @@ export const StudentQuickBrief = ({
   enrollment,
   recentSessions,
 }: StudentQuickBriefProps) => {
+  const { containerRef, handleKeyDown } = useDialogFocus(!!(isOpen && student), onClose)
+
   if (!isOpen || !student) return null
 
   return (
     <div
+      ref={containerRef}
+      onKeyDown={handleKeyDown}
       className="fixed inset-0 z-[100] flex items-end justify-center bg-background dark:bg-black/70 md:items-center md:p-4"
       dir="rtl"
       role="dialog"
@@ -48,9 +53,6 @@ export const StudentQuickBrief = ({
       aria-label={`ملخص ${student.name}`}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
-      }}
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') onClose()
       }}
     >
       <div className="flex max-h-[90vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl border-2 border-border bg-card shadow-[12px_12px_0px_0px_black] dark:border-primary/20 dark:bg-card">

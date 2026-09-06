@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { Receipt, X, Activity as ActivityIcon, Printer } from 'lucide-react'
 import { SectionTitle, PrimaryBtn, SecondaryBtn } from './ClosingUI'
 import { CURRENCY_SYMBOL } from '../../../config/constants'
@@ -21,24 +21,7 @@ export const SalarySlipModal = ({
   month: string
   onClose: () => void
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.stopPropagation()
-        onClose()
-      }
-    },
-    [onClose],
-  )
-
-  useEffect(() => {
-    if (!teacher) return
-    const first = containerRef.current?.querySelector<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-    )
-    first?.focus()
-  }, [teacher])
+  const { containerRef, handleKeyDown } = useDialogFocus(!!teacher, onClose)
 
   if (!teacher) return null
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDialogFocus } from '../hooks/useDialogFocus'
 import { X, Send, Bell } from 'lucide-react'
 import { Button } from '../components/ui/Button'
 
@@ -17,6 +18,8 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
 }) => {
   const [message, setMessage] = useState('')
 
+  const { containerRef, handleKeyDown } = useDialogFocus(isOpen, onClose)
+
   if (!isOpen) return null
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -30,13 +33,12 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
 
   return (
     <div
+      ref={containerRef}
+      onKeyDown={handleKeyDown}
       className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-4"
       dir="rtl"
       role="dialog"
       aria-modal="true"
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') onClose()
-      }}
     >
       <div
         className="fixed inset-0 bg-black/40 backdrop-blur-sm duration-normal animate-in fade-in"

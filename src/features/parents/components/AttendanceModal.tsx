@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { TrendingUp, X, CheckCircle2, XCircle, AlertCircle } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { ProgressBar } from '../../../shared/components/ui'
@@ -38,21 +38,7 @@ export const AttendanceModal = ({
   childSessions,
   isSessionsLoading,
 }: AttendanceModalProps) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    },
-    [onClose],
-  )
-
-  useEffect(() => {
-    if (!viewingAttendanceStudent) return
-    const first = containerRef.current?.querySelector<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-    )
-    first?.focus()
-  }, [viewingAttendanceStudent])
+  const { containerRef, handleKeyDown } = useDialogFocus(!!viewingAttendanceStudent, onClose)
 
   if (!viewingAttendanceStudent) return null
 

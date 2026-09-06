@@ -1,4 +1,5 @@
-import { useState, useRef, useCallback } from 'react'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
+import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   X,
@@ -47,7 +48,6 @@ export const AttendanceHistoryModal = ({
   const [editingSession, setEditingSession] = useState<Session | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const showNotification = useShowNotification()
-  const containerRef = useRef<HTMLDivElement>(null)
   const queryClient = useQueryClient()
 
   const { data: history = [], isLoading: loading } = useQuery({
@@ -133,16 +133,7 @@ export const AttendanceHistoryModal = ({
       showNotification('حدث خطأ أثناء التحديث', 'error')
     }
   }
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.stopPropagation()
-        onClose()
-      }
-    },
-    [onClose],
-  )
+  const { containerRef, handleKeyDown } = useDialogFocus(isOpen, onClose)
 
   if (!isOpen) return null
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { BookOpen, ChevronLeft, ChevronRight, X, Calendar } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { format } from 'date-fns'
@@ -63,24 +63,7 @@ export const SessionsModal = ({
   sessionsEndDate,
   onEndDateChange,
 }: SessionsModalProps) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.stopPropagation()
-        onClose()
-      }
-    },
-    [onClose],
-  )
-
-  useEffect(() => {
-    if (!viewingStudent) return
-    const first = containerRef.current?.querySelector<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-    )
-    first?.focus()
-  }, [viewingStudent])
+  const { containerRef, handleKeyDown } = useDialogFocus(!!viewingStudent, onClose)
 
   if (!viewingStudent) return null
 
