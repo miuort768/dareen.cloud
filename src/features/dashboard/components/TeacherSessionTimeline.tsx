@@ -80,7 +80,7 @@ export const TeacherSessionTimeline = ({
                   }
                 }}
                 className={cn(
-                  'group/card relative w-[240px] min-w-[240px] shrink-0 cursor-pointer snap-center rounded-2xl border p-4 transition-all sm:w-[calc(50%-6px)] md:w-[calc(25%-9px)] md:min-w-0',
+                  'group/card relative w-60 min-w-60 shrink-0 cursor-pointer snap-center rounded-2xl border p-4 transition-all sm:w-[calc(50%-6px)] md:w-[calc(25%-9px)] md:min-w-0',
                   isCompleted
                     ? 'border-success-soft bg-success-soft dark:border-success-soft dark:bg-success-soft'
                     : isCancelled

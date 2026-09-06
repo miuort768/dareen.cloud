@@ -234,7 +234,7 @@ export const NotificationsCenter = ({
 
       {/* Room Alerts — Timeline */}
       {activeTab === 'room' && (
-        <div className="custom-scrollbar max-h-[320px] space-y-1 overflow-y-auto">
+        <div className="custom-scrollbar max-h-80 space-y-1 overflow-y-auto">
           {roomAlerts.length > 0 ? (
             <div className="relative">
               <div className="absolute bottom-2 start-[15px] top-2 w-px bg-divider dark:bg-primary/20" />

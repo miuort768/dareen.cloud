@@ -1,4 +1,4 @@
-﻿import { formatLocalDate } from '../../../lib/utils'
+import { formatLocalDate } from '../../../lib/utils'
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -360,7 +360,7 @@ export const Teachers = () => {
         <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
           <Skeleton className="h-[104px] rounded-2xl" />
           <Skeleton className="h-[150px] rounded-2xl" />
-          <Skeleton className="h-[320px] rounded-2xl" />
+          <Skeleton className="h-80 rounded-2xl" />
         </div>
       </div>
     )

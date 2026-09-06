@@ -400,7 +400,7 @@ export const DesktopHero = ({
 
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                 <div className="h-[300px] w-[300px] animate-[spin_30s_linear_infinite] rounded-full border border-dashed border-white/[0.06] lg:h-[350px] lg:w-[350px]" />
-                <div className="border-accent/[0.08] absolute h-[240px] w-[240px] animate-[spin_22s_linear_infinite_reverse] rounded-full border border-dashed lg:h-[290px] lg:w-[290px]" />
+                <div className="border-accent/[0.08] absolute h-60 w-60 animate-[spin_22s_linear_infinite_reverse] rounded-full border border-dashed lg:h-[290px] lg:w-[290px]" />
               </div>
 
               <div className="absolute inset-0 flex items-center justify-center p-8 lg:p-12">

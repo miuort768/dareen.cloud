@@ -55,7 +55,7 @@ export const AppointmentListView = ({
             return (
               <div key={day} className="space-y-1.5">
                 {/* رأس اليوم */}
-                <div className="sticky top-[64px] z-10 flex items-center gap-2 px-1">
+                <div className="sticky top-16 z-10 flex items-center gap-2 px-1">
                   <span
                     className={cn(
                       'rounded-2xl px-2 py-1 text-micro font-bold',

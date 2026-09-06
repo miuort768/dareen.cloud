@@ -90,7 +90,7 @@ export const AttendanceHistoryView = ({
           })
         return Array.from(groups.entries()).map(([dateStr, sessions]) => (
           <div key={dateStr} className="space-y-1.5">
-            <div className="sticky top-[64px] z-10 flex items-center gap-2 px-1">
+            <div className="sticky top-16 z-10 flex items-center gap-2 px-1">
               <span className="rounded-2xl bg-surface px-2 py-1 text-micro font-bold text-main">
                 {dayHeaderLabel(dateStr)}
               </span>

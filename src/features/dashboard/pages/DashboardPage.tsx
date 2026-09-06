@@ -89,8 +89,8 @@ export const Dashboard = () => {
               <Skeleton className="h-[280px] rounded-2xl" />
             </div>
             <div className="grid grid-cols-2 gap-6">
-              <Skeleton className="h-[240px] rounded-2xl" />
-              <Skeleton className="h-[240px] rounded-2xl" />
+              <Skeleton className="h-60 rounded-2xl" />
+              <Skeleton className="h-60 rounded-2xl" />
             </div>
           </div>
 

@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
   if (!active || !payload?.length) return null
   return (
     <div
-      className="min-w-[160px] rounded-xl border border-border bg-card px-4 py-3 shadow-elevation-3 dark:border-border dark:bg-card"
+      className="min-w-40 rounded-xl border border-border bg-card px-4 py-3 shadow-elevation-3 dark:border-border dark:bg-card"
       dir="rtl"
     >
       <p className="mb-2 text-xs font-bold text-main">{label}</p>
@@ -104,7 +104,7 @@ export const FinanceOverview = React.memo(
             </Button>
           </div>
         ) : (
-          <div className={compact ? '-mx-2 h-[150px]' : '-mx-2 h-[240px]'}>
+          <div className={compact ? '-mx-2 h-[150px]' : '-mx-2 h-60'}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={monthlyData}

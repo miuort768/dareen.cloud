@@ -49,7 +49,7 @@ export const Dropdown = ({ trigger, items, onSelect, align = 'end', className }:
       {open && (
         <div
           className={cn(
-            'absolute z-50 mt-1 max-h-[320px] min-w-[160px] overflow-y-auto rounded-card border border-border bg-card py-1 shadow-elevation-2',
+            'absolute z-50 mt-1 max-h-80 min-w-40 overflow-y-auto rounded-card border border-border bg-card py-1 shadow-elevation-2',
             align === 'end' ? 'end-0' : 'start-0',
           )}
           role="menu"
