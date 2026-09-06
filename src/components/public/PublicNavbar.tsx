@@ -61,7 +61,10 @@ export const PublicNavbar = () => {
       <nav className="relative rounded-full border border-border bg-card px-3 py-2 shadow-[var(--shadow-navbar)] md:rounded-[2rem] md:px-4 md:py-3 lg:px-6">
         <div className="flex h-12 min-w-0 items-center justify-between md:h-14">
           {/* Logo */}
-          <Link to="/" className="group flex shrink-0 items-center gap-3 ps-2">
+          <Link
+            to="/"
+            className="group flex shrink-0 items-center gap-3 ps-2 outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          >
             <div className="group relative">
               <div className="absolute inset-0 rounded-xl bg-primary-light opacity-20 blur-md transition-opacity group-hover:opacity-40"></div>
               <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl border border-white/20 bg-gradient-to-tr from-primary via-primary to-primary text-on-primary shadow-elevation-3 transition-all duration-500 group-hover:rotate-[10deg]">

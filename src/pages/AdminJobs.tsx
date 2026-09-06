@@ -690,7 +690,10 @@ const DetailRow = ({
 
   if (phoneLink && value && value !== '-') {
     return (
-      <a href={'tel:' + cleanPhone} className="flex items-center gap-1">
+      <a
+        href={'tel:' + cleanPhone}
+        className="flex items-center gap-1 outline-none focus-visible:ring-2 focus-visible:ring-focus"
+      >
         {content}
       </a>
     )

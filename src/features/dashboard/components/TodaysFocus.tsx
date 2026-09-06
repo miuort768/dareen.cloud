@@ -133,7 +133,10 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
       )}
 
       <div className="flex gap-2 pt-1.5">
-        <Link to="/schedule" className="flex-1">
+        <Link
+          to="/schedule"
+          className="flex-1 outline-none focus-visible:ring-2 focus-visible:ring-focus"
+        >
           <Button
             variant="outline"
             size="sm"
@@ -144,7 +147,10 @@ export const TodaysFocus = ({ todaySessions, tasks, lowBalanceCount }: TodaysFoc
             <ArrowLeft size={10} />
           </Button>
         </Link>
-        <Link to="/tasks" className="flex-1">
+        <Link
+          to="/tasks"
+          className="flex-1 outline-none focus-visible:ring-2 focus-visible:ring-focus"
+        >
           <Button
             variant="outline"
             size="sm"

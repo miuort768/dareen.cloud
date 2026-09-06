@@ -40,7 +40,10 @@ export const MobileHeader = ({ hideThemeToggle }: { hideThemeToggle?: boolean })
       </div>
       <header className="flex items-center justify-between bg-surface px-2 pb-2 pt-3 dark:bg-black md:hidden">
         <div className="flex items-center gap-1">
-          <Link to="/" className="flex items-center gap-2">
+          <Link
+            to="/"
+            className="flex items-center gap-2 outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          >
             <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary shadow-elevation-3 shadow-primary/20 dark:from-primary dark:to-warning dark:shadow-primary/20">
               <div className="animate-shine pointer-events-none absolute inset-0 z-0 h-full w-[150%] bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
               <GraduationCap className="relative z-10 h-6 w-6 text-on-primary dark:text-on-primary" />

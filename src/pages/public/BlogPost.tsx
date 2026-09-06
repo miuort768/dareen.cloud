@@ -108,7 +108,10 @@ export const BlogPost = () => {
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
           <h1 className="mb-4 text-4xl font-black">المقال غير موجود</h1>
-          <Link to="/books" className="font-bold text-error underline">
+          <Link
+            to="/books"
+            className="font-bold text-error underline outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          >
             العودة للمدونة
           </Link>
         </div>

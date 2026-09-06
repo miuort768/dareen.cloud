@@ -88,7 +88,10 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
       </div>
 
       <div className="mt-3">
-        <Link to="/tasks" className="w-full">
+        <Link
+          to="/tasks"
+          className="w-full outline-none focus-visible:ring-2 focus-visible:ring-focus"
+        >
           <Button className="w-full" size="sm">
             عرض كافة المهام
           </Button>

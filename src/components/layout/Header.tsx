@@ -144,7 +144,11 @@ export const Header = memo(() => {
       <div className="mx-auto flex h-14 max-w-page items-center gap-2 px-2.5 sm:px-4 md:h-16 lg:h-[68px] lg:gap-4 lg:px-8">
         {/* ===== Start: identity ===== */}
         <div className="flex min-w-0 flex-1 items-center gap-2 lg:gap-3">
-          <Link to="/admin-dashboard" aria-label="الرئيسية" className="shrink-0">
+          <Link
+            to="/admin-dashboard"
+            aria-label="الرئيسية"
+            className="shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          >
             <Image
               src="/dareen_logo_new.webp"
               alt="دارين السابعة"
