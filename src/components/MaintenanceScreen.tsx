@@ -106,7 +106,7 @@ export const MaintenanceScreen = () => {
                 href={`https://wa.me/${adminPhone.replace(/\D/g, '').replace(/^0/, '20')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-xs font-bold text-on-primary shadow-lg shadow-primary/20 outline-none transition-all duration-normal hover:bg-primary-hover hover:shadow-xl hover:shadow-primary/25 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:px-8 md:py-3.5 md:text-sm"
+                className="group inline-flex items-center gap-2 rounded-2xl bg-primary px-6 py-3 text-xs font-bold text-on-primary shadow-elevation-3 shadow-primary/20 outline-none transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-4 hover:shadow-primary/25 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:px-8 md:py-3.5 md:text-sm"
               >
                 <MessageCircle
                   size={16}

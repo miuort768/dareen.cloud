@@ -265,7 +265,7 @@ function App() {
             <div className="flex justify-center gap-3 pt-2">
               <button
                 onClick={() => window.location.reload()}
-                className="rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-on-primary shadow-lg shadow-primary/20 transition-colors hover:bg-primary-hover"
+                className="rounded-xl bg-primary px-6 py-2.5 text-sm font-bold text-on-primary shadow-elevation-3 shadow-primary/20 transition-colors hover:bg-primary-hover"
               >
                 إعادة التحميل
               </button>
@@ -295,7 +295,7 @@ function App() {
                     window.location.reload()
                   }
                 }}
-                className="rounded-xl bg-error px-6 py-2.5 text-sm font-bold text-on-error shadow-lg transition-colors hover:bg-error hover:text-on-error"
+                className="rounded-xl bg-error px-6 py-2.5 text-sm font-bold text-on-error shadow-elevation-3 transition-colors hover:bg-error hover:text-on-error"
               >
                 مسح التخزين وإعادة التحميل
               </button>
@@ -322,7 +322,7 @@ function App() {
     <>
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
-        <div className="fixed inset-x-0 top-0 z-[9999] flex items-center justify-center gap-2 bg-warning py-0.5 text-center text-micro font-semibold text-on-warning shadow-lg">
+        <div className="fixed inset-x-0 top-0 z-[9999] flex items-center justify-center gap-2 bg-warning py-0.5 text-center text-micro font-semibold text-on-warning shadow-elevation-3">
           <span className="flex animate-pulse items-center gap-1">
             <AlertTriangle size={14} /> وضع الصيانة مفعل (يراه الجميع عداك)
           </span>

@@ -1,5 +1,29 @@
 import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { extendTailwindMerge, validators } from 'tailwind-merge'
+
+const twMerge = extendTailwindMerge({
+  override: {
+    classGroups: {
+      shadow: [
+        {
+          shadow: [
+            '',
+            'inner',
+            'none',
+            'elevation-0',
+            'elevation-1',
+            'elevation-2',
+            'elevation-3',
+            'elevation-4',
+            validators.isTshirtSize,
+            validators.isArbitraryShadow,
+          ],
+        },
+      ],
+      'shadow-color': [{ shadow: [validators.isAny] }],
+    },
+  },
+})
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

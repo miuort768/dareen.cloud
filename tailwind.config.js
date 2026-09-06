@@ -183,9 +183,11 @@ module.exports = {
         glass: 'var(--shadow-glass)',
         soft: 'var(--shadow-soft)',
         broad: 'var(--shadow-broad)',
+        'elevation-0': 'var(--elevation-0)',
         'elevation-1': 'var(--elevation-1)',
         'elevation-2': 'var(--elevation-2)',
         'elevation-3': 'var(--elevation-3)',
+        'elevation-4': 'var(--elevation-4)',
       },
       keyframes: {
         shine: {
