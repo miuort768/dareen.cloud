@@ -20,13 +20,13 @@ export const AboutStory = () => (
                       alt="تعلم تعاوني"
                     />
                   </div>
-                  <div className="flex h-48 flex-col justify-end rounded-[2rem] bg-warning p-6 text-on-warning shadow-xl">
+                  <div className="flex h-48 flex-col justify-end rounded-[2rem] bg-warning p-6 text-on-warning shadow-elevation-4">
                     <Sparkles size={24} className="mb-4 text-white/90" />
                     <p className="text-xl font-black">إبداع مستمر</p>
                   </div>
                 </div>
                 <div className="space-y-4">
-                  <div className="flex h-48 flex-col justify-end rounded-[2rem] bg-primary-hover p-6 text-on-primary shadow-xl">
+                  <div className="flex h-48 flex-col justify-end rounded-[2rem] bg-primary-hover p-6 text-on-primary shadow-elevation-4">
                     <Target size={24} className="mb-4 text-white/90" />
                     <h4 className="text-xl font-black text-on-primary">أهداف محققة</h4>
                   </div>
@@ -69,7 +69,7 @@ export const AboutStory = () => (
                 transition={{ duration: 0.4 }}
                 className="flex items-start gap-4 rounded-card border border-border bg-background p-6 transition-colors hover:bg-surface dark:bg-card dark:hover:bg-card"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-card text-primary shadow-sm">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-card text-primary shadow-elevation-1">
                   <Zap size={24} />
                 </div>
                 <div>
@@ -84,7 +84,7 @@ export const AboutStory = () => (
                 transition={{ duration: 0.4 }}
                 className="flex items-start gap-4 rounded-card border border-border bg-background p-6 transition-colors hover:bg-surface dark:bg-card dark:hover:bg-card"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-card text-warning shadow-sm">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-card text-warning shadow-elevation-1">
                   <BookOpen size={24} />
                 </div>
                 <div>

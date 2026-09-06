@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ArrowLeft, Sparkles, Users, Target } from 'lucide-react'
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll'
 import { useIsAuthenticated } from '../../context/useApp'
@@ -84,7 +84,7 @@ export const AboutCTA = () => {
                       <Link
                         to="/courses"
                         onClick={() => window.scrollTo(0, 0)}
-                        className="group relative flex items-center justify-center gap-3 overflow-hidden rounded-xl bg-gradient-to-br from-warning to-warning-dark px-10 py-4 text-base font-black text-on-primary shadow-xl transition-all duration-500 hover:-translate-y-1 dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
+                        className="group relative flex items-center justify-center gap-3 overflow-hidden rounded-xl bg-gradient-to-br from-warning to-warning-dark px-10 py-4 text-base font-black text-on-primary shadow-elevation-4 transition-all duration-500 hover:-translate-y-1 dark:from-primary dark:to-primary dark:text-card dark:shadow-primary/20"
                       >
                         <span className="relative z-10">ابدأ رحلتك الآن</span>
                         <ArrowLeft

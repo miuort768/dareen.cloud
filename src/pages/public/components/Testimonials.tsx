@@ -1,4 +1,4 @@
-﻿import { Star, Quote } from 'lucide-react'
+import { Star, Quote } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 
 interface Review {
@@ -29,7 +29,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
         <div className="mx-auto max-w-6xl">
           <div className="lg:hidden">
             <div className="group relative">
-              <div className="relative flex min-h-[140px] flex-col overflow-hidden rounded-2xl border border-border bg-surface p-4 shadow-sm dark:border-primary/30 dark:bg-card">
+              <div className="relative flex min-h-[140px] flex-col overflow-hidden rounded-2xl border border-border bg-surface p-4 shadow-elevation-1 dark:border-primary/30 dark:bg-card">
                 <Quote
                   size={30}
                   className="absolute -end-1 -top-1 text-primary opacity-10 dark:text-primary"
@@ -67,7 +67,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                 <div
                   key={index}
                   className={cn(
-                    'group relative flex flex-col rounded-2xl border shadow-sm transition-all duration-700 hover:-translate-y-1',
+                    'group relative flex flex-col rounded-2xl border shadow-elevation-1 transition-all duration-700 hover:-translate-y-1',
                     isLarge
                       ? 'border-success-dark bg-success-dark p-6 text-on-success dark:border-primary dark:bg-surface dark:text-main lg:col-span-2'
                       : 'border-border bg-surface p-5 text-muted dark:border-primary/20 dark:bg-card dark:text-muted',
@@ -86,7 +86,7 @@ export const Testimonials = ({ reviews, currentIndex }: TestimonialsProps) => {
                   <div className="mb-4 flex items-center justify-between">
                     <div
                       className={cn(
-                        'rounded-full px-4 py-1.5 text-xs font-black shadow-sm transition-transform group-hover:scale-105',
+                        'rounded-full px-4 py-1.5 text-xs font-black shadow-elevation-1 transition-transform group-hover:scale-105',
                         isLarge
                           ? 'bg-on-success text-success-dark dark:bg-background dark:text-primary'
                           : 'bg-success-dark text-on-success dark:bg-primary dark:text-on-primary',

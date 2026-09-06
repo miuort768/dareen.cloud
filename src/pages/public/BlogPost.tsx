@@ -173,11 +173,11 @@ export const BlogPost = () => {
         {/* Image + First Content Side by Side */}
         <div className="container mx-auto mb-12 max-w-5xl px-4">
           <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 md:gap-10">
-            <div className="w-full overflow-hidden rounded-card bg-surface shadow-xl">
+            <div className="w-full overflow-hidden rounded-card bg-surface shadow-elevation-4">
               <Image src={post.coverImage || ''} alt={post.title || ''} className="h-auto w-full" />
             </div>
             <div
-              className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl prose-p:text-justify max-w-none text-main"
+              className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify max-w-none text-main"
               dangerouslySetInnerHTML={{
                 __html: sanitizeHTML(processContent(contentParts.first, post.title)),
               }}
@@ -195,7 +195,7 @@ export const BlogPost = () => {
                   <button
                     onClick={(e) => handleButtonClick('download', downloadLink, e)}
                     disabled={buttonState !== null && buttonState.type !== 'download'}
-                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-black shadow-lg transition-all hover:bg-error hover:text-on-error disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card text-on-primary'}`}
+                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-black shadow-elevation-3 transition-all hover:bg-error hover:text-on-error disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card text-on-primary'}`}
                   >
                     <Download size={16} />
                     <span>
@@ -211,7 +211,7 @@ export const BlogPost = () => {
                   <button
                     onClick={(e) => handleButtonClick('watch', watchLink, e)}
                     disabled={buttonState !== null && buttonState.type !== 'watch'}
-                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-black shadow-lg transition-all hover:bg-error-active disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}
+                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-black shadow-elevation-3 transition-all hover:bg-error-active disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}
                   >
                     <Eye size={16} />
                     <span>
@@ -228,7 +228,7 @@ export const BlogPost = () => {
 
           {contentParts.rest && (
             <div
-              className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-xl prose-p:text-justify mb-4 max-w-none text-main"
+              className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify mb-4 max-w-none text-main"
               dangerouslySetInnerHTML={{
                 __html: sanitizeHTML(processContent(contentParts.rest, post.title)),
               }}

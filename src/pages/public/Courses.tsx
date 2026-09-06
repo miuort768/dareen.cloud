@@ -169,7 +169,7 @@ export const Courses = () => {
                 placeholder="ابحث عن دورتك المفضلة..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="shadow-sm/50 w-full rounded-card border border-border bg-card px-5 py-4 ps-12 text-base font-bold shadow-lg outline-none transition-all placeholder:text-dim focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:border-primary/30 dark:bg-card dark:shadow-black/20 dark:placeholder:text-dim dark:focus-visible:border-primary/50 dark:focus-visible:shadow-lg dark:focus-visible:ring-primary/10"
+                className="shadow-elevation-1/50 w-full rounded-card border border-border bg-card px-5 py-4 ps-12 text-base font-bold shadow-elevation-3 outline-none transition-all placeholder:text-dim focus-visible:border-primary/50 focus-visible:ring-4 focus-visible:ring-primary/10 dark:border-primary/30 dark:bg-card dark:shadow-black/20 dark:placeholder:text-dim dark:focus-visible:border-primary/50 dark:focus-visible:shadow-elevation-3 dark:focus-visible:ring-primary/10"
               />
               <Search className="absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-dim transition-colors group-focus-within:text-primary dark:text-dim dark:group-focus-within:text-primary" />
             </div>
@@ -182,8 +182,8 @@ export const Courses = () => {
                   onClick={() => setActiveCategory(cat.value)}
                   className={`flex cursor-pointer items-center gap-2 rounded-card px-4 py-2.5 text-xs font-black transition-all duration-300 ${
                     activeCategory === cat.value
-                      ? 'bg-primary-active text-on-primary shadow-lg dark:bg-primary dark:text-on-primary dark:shadow-primary/20'
-                      : 'border border-border bg-surface text-muted hover:border-primary/30 hover:text-main hover:shadow-md dark:border-primary/20 dark:bg-card dark:text-muted dark:hover:border-primary/40 dark:hover:text-main'
+                      ? 'bg-primary-active text-on-primary shadow-elevation-3 dark:bg-primary dark:text-on-primary dark:shadow-primary/20'
+                      : 'border border-border bg-surface text-muted hover:border-primary/30 hover:text-main hover:shadow-elevation-2 dark:border-primary/20 dark:bg-card dark:text-muted dark:hover:border-primary/40 dark:hover:text-main'
                   }`}
                 >
                   <span className="flex items-center gap-2">
@@ -215,7 +215,7 @@ export const Courses = () => {
                 <motion.div
                   key={course.id}
                   variants={cardVariants}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-card border border-border bg-card shadow-sm transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 dark:border-primary/20 dark:bg-card dark:hover:shadow-primary/10"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-card border border-border bg-card shadow-elevation-1 transition-all duration-500 hover:shadow-elevation-4 hover:shadow-primary/5 dark:border-primary/20 dark:bg-card dark:hover:shadow-primary/10"
                 >
                   <div className="relative h-44 overflow-hidden bg-background dark:bg-card">
                     <Image
@@ -229,7 +229,7 @@ export const Courses = () => {
 
                     <div className="absolute start-3 top-3 z-10">
                       <div
-                        className={`rounded-lg bg-gradient-to-br px-2.5 py-1 text-micro font-black text-on-primary shadow-lg ${course.color}`}
+                        className={`rounded-lg bg-gradient-to-br px-2.5 py-1 text-micro font-black text-on-primary shadow-elevation-3 ${course.color}`}
                       >
                         {CATEGORIES.find((c) => c.value === course.category)?.label ||
                           course.category}
@@ -237,7 +237,7 @@ export const Courses = () => {
                     </div>
 
                     <div className="absolute bottom-3 end-3 z-10">
-                      <div className="flex items-center gap-1 rounded-lg bg-surface px-2 py-1 shadow-sm backdrop-blur-sm dark:bg-card">
+                      <div className="flex items-center gap-1 rounded-lg bg-surface px-2 py-1 shadow-elevation-1 backdrop-blur-sm dark:bg-card">
                         <StarRating rating={course.rating} />
                       </div>
                     </div>
@@ -278,7 +278,7 @@ export const Courses = () => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في الاستفسار عن ${course.title}`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mx-3 mb-3 flex items-center justify-center gap-2 rounded-card bg-success py-2.5 text-xs font-black text-on-success shadow-lg transition-all duration-300 hover:bg-success-dark active:scale-[0.97] dark:bg-primary dark:text-on-primary dark:shadow-lg dark:shadow-primary/20 dark:hover:bg-warning"
+                    className="mx-3 mb-3 flex items-center justify-center gap-2 rounded-card bg-success py-2.5 text-xs font-black text-on-success shadow-elevation-3 transition-all duration-300 hover:bg-success-dark active:scale-[0.97] dark:bg-primary dark:text-on-primary dark:shadow-elevation-3 dark:shadow-primary/20 dark:hover:bg-warning"
                   >
                     <MessageCircle size={14} />
                     تواصل عبر واتساب

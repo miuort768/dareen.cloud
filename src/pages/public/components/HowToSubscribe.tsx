@@ -82,7 +82,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
           </div>
         </div>
 
-        <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover px-4 py-1.5 shadow-sm dark:from-primary dark:to-warning">
+        <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover px-4 py-1.5 shadow-elevation-1 dark:from-primary dark:to-warning">
           <Zap
             size={10}
             className="fill-warning text-warning dark:fill-on-primary dark:text-on-primary"
@@ -106,15 +106,15 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
           {steps.map((s, i) => (
             <div
               key={`step-${i}`}
-              className="relative flex flex-col items-center rounded-2xl border border-border bg-card p-3.5 text-center shadow-sm dark:border-primary/30 dark:bg-card"
+              className="relative flex flex-col items-center rounded-2xl border border-border bg-card p-3.5 text-center shadow-elevation-1 dark:border-primary/30 dark:bg-card"
             >
-              <div className="absolute -start-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary shadow-md dark:bg-primary">
+              <div className="absolute -start-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary shadow-elevation-2 dark:bg-primary">
                 <span className="text-micro font-black text-on-primary dark:text-on-primary">
                   {s.num}
                 </span>
               </div>
               <div
-                className={`h-10 w-10 rounded-xl ${s.boxBg} mb-2.5 flex items-center justify-center shadow-md`}
+                className={`h-10 w-10 rounded-xl ${s.boxBg} mb-2.5 flex items-center justify-center shadow-elevation-2`}
               >
                 <s.icon size={18} className="text-on-primary dark:text-on-primary" />
               </div>
@@ -133,7 +133,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
             { icon: 'Hash', title: 'عدد الحصص', desc: 'بالقدر المناسب لك' },
           ].map((item, i) => (
             <div key={`perk-${i}`} className="flex items-center gap-3">
-              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary-hover shadow-sm dark:from-primary dark:to-warning">
+              <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary-hover shadow-elevation-1 dark:from-primary dark:to-warning">
                 {item.icon === 'CreditCard' && (
                   <CreditCard size={12} className="text-on-primary dark:text-on-primary" />
                 )}
@@ -156,7 +156,7 @@ export const HowToSubscribe = ({ whatsappNumber }: HowToSubscribeProps) => {
           href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-primary to-primary-hover px-6 py-4 shadow-lg transition-all hover:-translate-y-0.5 hover:brightness-110 dark:from-primary dark:to-warning dark:shadow-primary/20"
+          className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-l from-primary to-primary-hover px-6 py-4 shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-110 dark:from-primary dark:to-warning dark:shadow-primary/20"
         >
           <Gift size={16} className="text-on-primary opacity-90 dark:text-on-primary" />
           <span className="text-sm font-black text-on-primary dark:text-on-primary">

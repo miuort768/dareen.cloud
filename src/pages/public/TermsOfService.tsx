@@ -50,7 +50,7 @@ export const TermsOfService = () => {
         <div className="absolute bottom-0 end-0 h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-warning-soft blur-[80px]"></div>
 
         <div className="container relative z-10 mx-auto px-4 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-card border border-border bg-card px-4 py-2 text-main shadow-sm">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-card border border-border bg-card px-4 py-2 text-main shadow-elevation-1">
             <Scale size={14} className="text-success" />
             <span className="text-xs font-semibold uppercase tracking-label">الشروط والأحكام</span>
           </div>

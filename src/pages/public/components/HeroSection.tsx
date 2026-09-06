@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ArrowLeft, Star, MessageCircle, Users } from 'lucide-react'
 
 interface HeroSectionProps {
@@ -21,7 +21,7 @@ export const HeroSection = ({
       <div className="pointer-events-none absolute end-0 top-0 h-64 w-64 rounded-full bg-accent-soft blur-[100px] dark:bg-primary/10" />
       <div className="pointer-events-none absolute bottom-0 start-0 h-48 w-48 rounded-full bg-primary/5 blur-[80px] dark:bg-primary/10" />
       <div className="container mx-auto px-4">
-        <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-primary-soft via-primary-soft to-card shadow-sm dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
+        <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-primary-soft via-primary-soft to-card shadow-elevation-1 dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
           <div className="flex flex-col-reverse items-center gap-2 p-6 md:p-10 lg:flex-row lg:gap-6">
             <div className="z-10 text-center lg:w-[60%]">
               <div className="mx-auto mb-4 mt-4 inline-flex items-center gap-2 rounded-full border border-primary/50 bg-white/80 px-3 py-1.5 dark:border-primary/40 dark:bg-primary/10 lg:mt-0">
@@ -53,7 +53,7 @@ export const HeroSection = ({
                 <Link
                   to="/courses"
                   onClick={() => window.scrollTo(0, 0)}
-                  className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primary px-6 py-3 text-base font-extrabold text-on-primary shadow-lg transition-all hover:-translate-y-0.5 hover:brightness-90 dark:from-primary dark:to-warning dark:text-on-primary dark:shadow-primary/20 sm:px-10 sm:py-4 sm:text-lg"
+                  className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-primary px-6 py-3 text-base font-extrabold text-on-primary shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:from-primary dark:to-warning dark:text-on-primary dark:shadow-primary/20 sm:px-10 sm:py-4 sm:text-lg"
                   aria-label="تصفح الدورات التعليمية"
                 >
                   <span>تصفح الدورات</span>
@@ -63,7 +63,7 @@ export const HeroSection = ({
                   href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في ' + academyName)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-center gap-3 rounded-xl bg-success px-6 py-3 text-base font-extrabold text-on-success shadow-lg transition-all hover:bg-success-dark hover:shadow-xl active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary sm:px-10 sm:py-4 sm:text-lg"
+                  className="group flex items-center justify-center gap-3 rounded-xl bg-success px-6 py-3 text-base font-extrabold text-on-success shadow-elevation-3 transition-all hover:bg-success-dark hover:shadow-elevation-4 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary sm:px-10 sm:py-4 sm:text-lg"
                   aria-label="حجز حصة مجانية عبر واتساب"
                 >
                   <MessageCircle className="h-5 w-5" />
@@ -124,7 +124,7 @@ export const HeroSection = ({
             text ? (
               <div
                 key={idx}
-                className="group flex items-center justify-between gap-1 rounded-2xl border border-border bg-surface p-2 shadow-sm transition-all hover:shadow-md dark:border-primary/20 dark:bg-card"
+                className="group flex items-center justify-between gap-1 rounded-2xl border border-border bg-surface p-2 shadow-elevation-1 transition-all hover:shadow-elevation-2 dark:border-primary/20 dark:bg-card"
               >
                 <p className="dark:text-soft flex-1 text-micro font-black leading-tight text-main lg:text-xs">
                   {text}
@@ -134,7 +134,7 @@ export const HeroSection = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`سجل الآن: ${text}`}
-                  className="shrink-0 whitespace-nowrap rounded-xl bg-primary px-2.5 py-1 text-micro font-extrabold text-on-primary shadow-sm transition-all hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary lg:text-micro"
+                  className="shrink-0 whitespace-nowrap rounded-xl bg-primary px-2.5 py-1 text-micro font-extrabold text-on-primary shadow-elevation-1 transition-all hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary lg:text-micro"
                 >
                   سجل الآن
                 </a>

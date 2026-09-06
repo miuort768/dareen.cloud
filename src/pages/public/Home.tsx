@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { AnimateOnScroll } from '../../components/ui/AnimateOnScroll'
@@ -118,18 +118,18 @@ export const Home = () => {
             href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent(`السلام عليكم، أرغب في حجز حصة مجانية في ${academyName}`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-extrabold text-on-primary shadow-lg shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+            className="flex flex-1 items-center justify-center gap-1 rounded-full bg-primary px-1.5 py-2 text-xs font-extrabold text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
           >
             <Headphones className="h-2.5 w-2.5 shrink-0" /> طلب حصة مجانية
           </a>
           <Link
             to="/books"
-            className="flex flex-1 items-center justify-center gap-1 rounded-full border bg-primary px-1.5 py-2 text-xs font-bold text-on-primary shadow-lg shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:border-primary/30 dark:bg-white/10 dark:text-main"
+            className="flex flex-1 items-center justify-center gap-1 rounded-full border bg-primary px-1.5 py-2 text-xs font-bold text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 active:scale-[0.97] dark:border-primary/30 dark:bg-white/10 dark:text-main"
           >
             <Play className="h-2.5 w-2.5 shrink-0 dark:text-primary" /> تحميل مذكرات مجانية
           </Link>
         </div>
-        <section className="relative mb-4 overflow-hidden rounded-card border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card shadow-sm dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
+        <section className="relative mb-4 overflow-hidden rounded-card border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card shadow-elevation-1 dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
           {heroSlides.map((slide, i) => (
             <div key={`hero-${i}`} className={`${heroIndex === i ? 'block' : 'hidden'} p-5`}>
               <div className="flex items-center gap-4">
@@ -217,7 +217,7 @@ export const Home = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: i * 0.08 }}
-                    className={`flex items-center gap-2 p-2 ${s.bg} rounded-card border border-border shadow-sm transition-all dark:border-primary/20 dark:bg-card`}
+                    className={`flex items-center gap-2 p-2 ${s.bg} rounded-card border border-border shadow-elevation-1 transition-all dark:border-primary/20 dark:bg-card`}
                   >
                     <div
                       className={`h-10 w-10 rounded-card ${s.bg} flex shrink-0 items-center justify-center dark:bg-primary/15`}
@@ -258,7 +258,7 @@ export const Home = () => {
               <button
                 key={cat.value}
                 onClick={() => setActiveCategory(cat.value)}
-                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-bold transition-all ${activeCategory === cat.value ? 'bg-primary text-on-primary shadow-md shadow-black/20 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary' : 'dark:text-soft border border-border bg-surface text-muted dark:border-primary/30 dark:bg-surface'}`}
+                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-bold transition-all ${activeCategory === cat.value ? 'bg-primary text-on-primary shadow-elevation-2 shadow-black/20 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary' : 'dark:text-soft border border-border bg-surface text-muted dark:border-primary/30 dark:bg-surface'}`}
               >
                 <cat.icon
                   size={12}
@@ -284,12 +284,12 @@ export const Home = () => {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: i * 0.08 }}
-                  className="block w-[180px] min-w-[180px] shrink-0 overflow-hidden rounded-card border border-border bg-surface shadow-sm dark:border-primary/25 dark:bg-card"
+                  className="block w-[180px] min-w-[180px] shrink-0 overflow-hidden rounded-card border border-border bg-surface shadow-elevation-1 dark:border-primary/25 dark:bg-card"
                 >
                   <div className="relative h-24 overflow-hidden bg-surface dark:bg-background">
                     <Image src={c.image} alt={c.title} className="h-24" />
                     <span
-                      className={`absolute start-2 top-2 rounded-full px-2 py-0.5 text-micro font-black shadow-sm ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning text-on-warning dark:bg-primary dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary' : 'bg-error text-on-error'}`}
+                      className={`absolute start-2 top-2 rounded-full px-2 py-0.5 text-micro font-black shadow-elevation-1 ${c.category === 'foundation' ? 'bg-success text-on-success' : c.category === 'quran' ? 'bg-warning text-on-warning dark:bg-primary dark:text-on-primary' : c.category === 'gulf' ? 'bg-info text-on-info' : c.category === 'english' ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary' : 'bg-error text-on-error'}`}
                     >
                       {stages.find((cat) => cat.value === c.category)?.label || c.category}
                     </span>

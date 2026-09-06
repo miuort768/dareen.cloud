@@ -108,12 +108,12 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
               >
                 <div
                   className={cn(
-                    'relative mb-4 flex h-[55px] w-[55px] items-center justify-center rounded-[30%] bg-gradient-to-br text-on-primary shadow-xl transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 dark:text-on-primary md:mb-6 md:h-[90px] md:w-[90px]',
+                    'relative mb-4 flex h-[55px] w-[55px] items-center justify-center rounded-[30%] bg-gradient-to-br text-on-primary shadow-elevation-4 transition-all duration-500 group-hover:rotate-6 group-hover:scale-110 dark:text-on-primary md:mb-6 md:h-[90px] md:w-[90px]',
                     step.color,
                   )}
                 >
                   <div className="scale-75 md:scale-100">{step.icon}</div>
-                  <span className="absolute -start-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full border border-border bg-surface text-micro font-black text-main shadow-lg dark:border-primary/50 dark:bg-background dark:text-primary md:-start-2 md:-top-2 md:h-6 md:w-6 md:text-micro">
+                  <span className="absolute -start-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full border border-border bg-surface text-micro font-black text-main shadow-elevation-3 dark:border-primary/50 dark:bg-background dark:text-primary md:-start-2 md:-top-2 md:h-6 md:w-6 md:text-micro">
                     {step.id}
                   </span>
                 </div>
@@ -137,7 +137,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء وحجز حصة تجريبية مجانية')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden rounded-xl bg-primary px-8 py-3.5 text-sm font-extrabold text-on-primary shadow-xl transition-all hover:scale-105 active:scale-95 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+              className="group relative overflow-hidden rounded-xl bg-primary px-8 py-3.5 text-sm font-extrabold text-on-primary shadow-elevation-4 transition-all hover:scale-105 active:scale-95 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:from-primary dark:to-warning"></div>
               <div className="relative flex items-center gap-2">

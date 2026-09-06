@@ -54,14 +54,14 @@ export const NotFound = () => {
           <div className="flex flex-row items-center justify-center gap-2 md:gap-4">
             <Link
               to="/"
-              className="flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-black text-on-primary shadow-md transition-all hover:bg-primary-hover hover:shadow-lg active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
+              className="flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-black text-on-primary shadow-elevation-2 transition-all hover:bg-primary-hover hover:shadow-elevation-3 active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
             >
               <Home size={16} />
               العودة للرئيسية
             </Link>
             <Link
               to="/courses"
-              className="flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-black text-on-accent shadow-md transition-all hover:bg-accent-hover hover:shadow-lg active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
+              className="flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-black text-on-accent shadow-elevation-2 transition-all hover:bg-accent-hover hover:shadow-elevation-3 active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
             >
               <ArrowLeft size={16} />
               تصفح الدورات

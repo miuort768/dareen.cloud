@@ -104,7 +104,7 @@ export const FAQSection = () => {
       </div>
       <div className="container relative z-10 mx-auto px-4">
         <div className="mb-4 text-center md:mb-8">
-          <div className="mx-auto mb-2 inline-flex items-center gap-1.5 rounded-full border border-border bg-white/50 px-2.5 py-1 shadow-sm backdrop-blur-sm dark:border-primary/40 dark:bg-primary/20">
+          <div className="mx-auto mb-2 inline-flex items-center gap-1.5 rounded-full border border-border bg-white/50 px-2.5 py-1 shadow-elevation-1 backdrop-blur-sm dark:border-primary/40 dark:bg-primary/20">
             <HelpCircle size={12} className="text-primary dark:text-primary" />
             <span className="dark:text-soft text-micro font-black text-muted">لديك استفسار؟</span>
           </div>
@@ -154,7 +154,7 @@ export const FAQSection = () => {
             return (
               <div
                 key={idx}
-                className="dark: group relative overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-500 hover:border-primary hover:shadow-md hover:shadow-primary/5 dark:border-primary/30 dark:bg-card dark:hover:border-accent"
+                className="dark: group relative overflow-hidden rounded-2xl border border-border bg-surface transition-all duration-500 hover:border-primary hover:shadow-elevation-2 hover:shadow-primary/5 dark:border-primary/30 dark:bg-card dark:hover:border-accent"
               >
                 <div className="pointer-events-none absolute -bottom-4 -end-4 text-muted opacity-[0.03] transition-all duration-700 group-hover:rotate-12 group-hover:opacity-[0.06] dark:text-primary dark:opacity-[0.05]">
                   {icons[idx % icons.length]}

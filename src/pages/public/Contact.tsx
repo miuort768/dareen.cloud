@@ -164,7 +164,7 @@ export const Contact = () => {
 
           {/* ── Contact Form Card ── */}
           <AnimateOnScroll animation="fadeUp">
-            <div className="shadow-sm/40 overflow-hidden rounded-none border border-border bg-card shadow-xl dark:shadow-black/40">
+            <div className="shadow-elevation-1/40 overflow-hidden rounded-none border border-border bg-card shadow-elevation-4 dark:shadow-black/40">
               {/* Top accent bar */}
               <div className="h-1.5 bg-gradient-to-r from-primary via-primary to-warning" />
 
@@ -338,7 +338,7 @@ export const Contact = () => {
                           'flex items-center justify-center gap-2 rounded-none py-3.5 text-sm font-black transition-all',
                           formState === 'submitting'
                             ? 'cursor-not-allowed bg-card text-muted'
-                            : 'bg-primary text-on-primary shadow-lg shadow-primary/20 hover:bg-primary-hover',
+                            : 'bg-primary text-on-primary shadow-elevation-3 shadow-primary/20 hover:bg-primary-hover',
                         )}
                       >
                         <span className={cn(formState === 'submitting' && 'animate-pulse')}>
@@ -352,7 +352,7 @@ export const Contact = () => {
                         href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في الاستفسار عن خدمات دارين السابعة')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 rounded-none bg-success py-3.5 text-sm font-black text-on-success shadow-lg transition-all hover:bg-success-dark"
+                        className="flex items-center justify-center gap-2 rounded-none bg-success py-3.5 text-sm font-black text-on-success shadow-elevation-3 transition-all hover:bg-success-dark"
                       >
                         <MessageCircle size={16} />
                         <span>تواصل واتساب</span>
@@ -372,12 +372,12 @@ export const Contact = () => {
                   href={card.href}
                   target={card.href !== '#' ? '_blank' : undefined}
                   rel="noopener noreferrer"
-                  className="group block rounded-none border border-border bg-card p-5 shadow-sm"
+                  className="group block rounded-none border border-border bg-card p-5 shadow-elevation-1"
                 >
                   <div className="flex items-center gap-4">
                     <div
                       className={cn(
-                        'flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-gradient-to-br text-on-primary shadow-lg',
+                        'flex h-12 w-12 shrink-0 items-center justify-center rounded-none bg-gradient-to-br text-on-primary shadow-elevation-3',
                         card.gradient,
                       )}
                     >

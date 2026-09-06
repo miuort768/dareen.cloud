@@ -93,10 +93,10 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 key={f.title}
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.4 }}
-                className={`relative flex items-center gap-4 p-4 ${vc.card} rounded-2xl shadow-sm backdrop-blur-sm`}
+                className={`relative flex items-center gap-4 p-4 ${vc.card} rounded-2xl shadow-elevation-1 backdrop-blur-sm`}
               >
                 {f.ribbon && (
-                  <div className="absolute -end-2 -top-2 flex items-center gap-1 rounded-full bg-gradient-to-br from-primary to-primary-hover px-2 py-0.5 text-micro font-black text-on-primary shadow-lg dark:from-primary dark:to-primary dark:text-card">
+                  <div className="absolute -end-2 -top-2 flex items-center gap-1 rounded-full bg-gradient-to-br from-primary to-primary-hover px-2 py-0.5 text-micro font-black text-on-primary shadow-elevation-3 dark:from-primary dark:to-primary dark:text-card">
                     <Star
                       size={8}
                       className="fill-warning text-warning dark:fill-card dark:text-card"
@@ -142,7 +142,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 href={`https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent('مرحباً، أرغب في الاستفسار عن خدماتكم التعليمية')}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-white/15 px-5 py-2.5 text-xs font-extrabold text-on-primary shadow-lg transition-all hover:bg-white/25 active:scale-[0.98] dark:bg-gradient-to-r dark:from-primary dark:to-primary dark:text-card"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-white/15 px-5 py-2.5 text-xs font-extrabold text-on-primary shadow-elevation-3 transition-all hover:bg-white/25 active:scale-[0.98] dark:bg-gradient-to-r dark:from-primary dark:to-primary dark:text-card"
               >
                 تواصل معنا الآن
                 <ArrowLeft size={14} />
@@ -184,10 +184,10 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
                 key={f.title}
                 variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
                 transition={{ duration: 0.5 }}
-                className={`relative p-6 ${vc.card} group flex items-start gap-4 rounded-2xl shadow-sm transition-all hover:shadow-md dark:hover:shadow-primary/5`}
+                className={`relative p-6 ${vc.card} group flex items-start gap-4 rounded-2xl shadow-elevation-1 transition-all hover:shadow-elevation-2 dark:hover:shadow-primary/5`}
               >
                 {f.ribbon && (
-                  <div className="absolute -end-2 -top-2 flex items-center gap-1 rounded-full bg-gradient-to-br from-primary to-primary-hover px-2 py-0.5 text-micro font-black text-on-primary shadow-lg dark:from-primary dark:to-primary dark:text-card">
+                  <div className="absolute -end-2 -top-2 flex items-center gap-1 rounded-full bg-gradient-to-br from-primary to-primary-hover px-2 py-0.5 text-micro font-black text-on-primary shadow-elevation-3 dark:from-primary dark:to-primary dark:text-card">
                     <Star
                       size={8}
                       className="fill-warning text-warning dark:fill-card dark:text-card"
@@ -215,7 +215,7 @@ export const WhyChooseUs = ({ whatsappNumber = '201015098836' }: WhyChooseUsProp
           })}
 
           {/* Showcase card (desktop) */}
-          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary-hover p-6 shadow-lg dark:border dark:border-primary/20 dark:from-card dark:via-surface dark:to-card md:col-span-3 md:p-8">
+          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary-hover p-6 shadow-elevation-3 dark:border dark:border-primary/20 dark:from-card dark:via-surface dark:to-card md:col-span-3 md:p-8">
             <div className="absolute start-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-on-primary opacity-5 blur-3xl dark:bg-primary"></div>
             <div className="absolute bottom-0 end-0 h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-on-primary opacity-5 blur-3xl dark:bg-primary"></div>
             <div className="relative z-10 flex flex-col items-center gap-6 lg:flex-row">

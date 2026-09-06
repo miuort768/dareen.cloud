@@ -46,7 +46,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
         <div className="pointer-events-none absolute end-0 top-0 h-64 w-64 rounded-full bg-accent-soft blur-[100px] dark:bg-primary/10" />
         <div className="pointer-events-none absolute bottom-0 start-0 h-48 w-48 rounded-full bg-primary/5 blur-[80px] dark:bg-primary/10" />
         <div className="container relative z-10 mx-auto px-4 md:px-8">
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-success bg-success-soft shadow-sm dark:border-primary/40 dark:bg-card">
+          <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-success bg-success-soft shadow-elevation-1 dark:border-primary/40 dark:bg-card">
             <div className="flex flex-col items-center justify-center gap-4 p-6 md:p-10 lg:flex-row lg:gap-16">
               <div className="w-full text-center lg:w-1/2">
                 <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-success bg-white/80 px-4 py-1.5 dark:border-primary/40 dark:bg-primary/15">
@@ -84,7 +84,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-center gap-2 rounded-xl bg-success px-8 py-3.5 text-sm font-extrabold text-on-success shadow-lg transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+                    className="group flex items-center justify-center gap-2 rounded-xl bg-success px-8 py-3.5 text-sm font-extrabold text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
                   >
                     <span>ابدأ الحفظ الآن</span>
                     <ArrowLeft
@@ -106,7 +106,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                     {[1, 2, 3].map((i) => (
                       <div
                         key={`avatar-${i}`}
-                        className="h-10 w-10 overflow-hidden rounded-full border-2 border-card bg-success-soft shadow-sm dark:border-primary/40 dark:bg-background"
+                        className="h-10 w-10 overflow-hidden rounded-full border-2 border-card bg-success-soft shadow-elevation-1 dark:border-primary/40 dark:bg-background"
                       >
                         <Image
                           src={`https://i.pravatar.cc/100?img=${i + 10}`}
@@ -115,7 +115,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                         />
                       </div>
                     ))}
-                    <div className="dark:text-soft flex h-10 w-10 items-center justify-center rounded-full border-2 border-card bg-surface text-xs font-bold text-muted shadow-sm dark:border-primary/40 dark:bg-background">
+                    <div className="dark:text-soft flex h-10 w-10 items-center justify-center rounded-full border-2 border-card bg-surface text-xs font-bold text-muted shadow-elevation-1 dark:border-primary/40 dark:bg-background">
                       +5k
                     </div>
                   </div>
@@ -142,7 +142,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   <motion.div
                     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                     transition={{ duration: 0.4 }}
-                    className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-sm dark:border-primary/25 dark:bg-surface"
+                    className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-elevation-1 dark:border-primary/25 dark:bg-surface"
                   >
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-surface text-primary dark:bg-primary/15 dark:text-primary">
                       <Clock className="h-5 w-5" />
@@ -155,7 +155,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   <motion.div
                     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                     transition={{ duration: 0.4 }}
-                    className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-sm dark:border-primary/25 dark:bg-surface"
+                    className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-elevation-1 dark:border-primary/25 dark:bg-surface"
                   >
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-warning-soft text-warning dark:bg-primary/15 dark:text-primary">
                       <ClipboardCheck className="h-5 w-5" />
@@ -170,7 +170,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   <motion.div
                     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
                     transition={{ duration: 0.4 }}
-                    className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-sm dark:border-primary/25 dark:bg-surface"
+                    className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-elevation-1 dark:border-primary/25 dark:bg-surface"
                   >
                     <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-success-soft text-success dark:bg-primary/15 dark:text-primary">
                       <Mic className="h-5 w-5" />
@@ -188,7 +188,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   >
                     <Link
                       to="/contact"
-                      className="flex cursor-pointer flex-col items-center rounded-2xl bg-primary p-4 text-center text-on-primary shadow-lg transition-all hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+                      className="flex cursor-pointer flex-col items-center rounded-2xl bg-primary p-4 text-center text-on-primary shadow-elevation-3 transition-all hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
                     >
                       <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 text-on-primary backdrop-blur-sm dark:bg-black/20 dark:text-on-primary">
                         <Sparkles className="h-5 w-5" />
@@ -217,7 +217,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
 
         <div className="relative z-10 px-5">
           <div className="mb-5 mt-2 flex items-center justify-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-success bg-white/80 px-5 py-2.5 shadow-sm dark:border-primary/40 dark:bg-primary/15">
+            <div className="inline-flex items-center gap-2 rounded-full border border-success bg-white/80 px-5 py-2.5 shadow-elevation-1 dark:border-primary/40 dark:bg-primary/15">
               <span className="h-2 w-2 animate-pulse rounded-full bg-success dark:bg-primary"></span>
               <span className="text-xs font-bold tracking-wide text-success-dark dark:text-primary">
                 برامج حفظ متميزة
@@ -260,7 +260,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في البدء بحفظ القرآن الكريم في دارين السابعة')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl bg-success py-4 text-base font-extrabold text-on-success shadow-lg transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
+              className="group flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl bg-success py-4 text-base font-extrabold text-on-success shadow-elevation-3 transition-all hover:-translate-y-0.5 hover:brightness-90 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
             >
               <span>ابدأ الحفظ الآن</span>
               <ArrowLeft size={20} className="transition-transform group-hover:-translate-x-1" />
@@ -268,7 +268,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             <Link
               to="/courses"
               onClick={() => window.scrollTo(0, 0)}
-              className="flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl border border-border bg-card py-3.5 text-sm font-bold text-main shadow-sm transition-all dark:border-primary/30 dark:bg-white/5 dark:text-main"
+              className="flex w-full max-w-[320px] items-center justify-center gap-2 rounded-2xl border border-border bg-card py-3.5 text-sm font-bold text-main shadow-elevation-1 transition-all dark:border-primary/30 dark:bg-white/5 dark:text-main"
             >
               <Sparkles size={16} className="dark:text-primary" />
               تصفح المزيد
@@ -294,7 +294,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
               {[1, 2, 3].map((i) => (
                 <div
                   key={`avatar-${i}`}
-                  className="h-9 w-9 overflow-hidden rounded-full border-2 border-card bg-surface shadow-sm dark:border-primary/40 dark:bg-background"
+                  className="h-9 w-9 overflow-hidden rounded-full border-2 border-card bg-surface shadow-elevation-1 dark:border-primary/40 dark:bg-background"
                 >
                   <Image
                     src={`https://i.pravatar.cc/100?img=${i + 10}`}
@@ -303,7 +303,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
                   />
                 </div>
               ))}
-              <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-card bg-success text-micro font-black text-on-success shadow-sm dark:border-primary/40 dark:bg-primary dark:text-on-primary">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-card bg-success text-micro font-black text-on-success shadow-elevation-1 dark:border-primary/40 dark:bg-primary dark:text-on-primary">
                 5K+
               </div>
             </div>
@@ -319,7 +319,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               transition={{ duration: 0.4 }}
-              className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-sm dark:border-primary/25 dark:bg-surface"
+              className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-elevation-1 dark:border-primary/25 dark:bg-surface"
             >
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-warning-soft dark:bg-primary/15">
                 <ClipboardCheck size={22} className="text-warning dark:text-primary" />
@@ -332,7 +332,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               transition={{ duration: 0.4 }}
-              className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-sm dark:border-primary/25 dark:bg-surface"
+              className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-elevation-1 dark:border-primary/25 dark:bg-surface"
             >
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-soft dark:bg-primary/15">
                 <Clock size={22} className="text-primary dark:text-primary" />
@@ -345,7 +345,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               transition={{ duration: 0.4 }}
-              className="flex flex-col items-center rounded-2xl border-0 bg-primary p-4 text-center shadow-lg dark:bg-gradient-to-r dark:from-primary dark:to-warning"
+              className="flex flex-col items-center rounded-2xl border-0 bg-primary p-4 text-center shadow-elevation-3 dark:bg-gradient-to-r dark:from-primary dark:to-warning"
             >
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-sm dark:bg-black/20">
                 <Sparkles size={22} className="text-on-primary dark:text-on-primary" />
@@ -360,7 +360,7 @@ export const QuranSection = ({ whatsappNumber }: QuranSectionProps) => {
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               transition={{ duration: 0.4 }}
-              className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-sm dark:border-primary/25 dark:bg-surface"
+              className="flex flex-col items-center rounded-2xl border border-border bg-card p-4 text-center shadow-elevation-1 dark:border-primary/25 dark:bg-surface"
             >
               <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-success-soft dark:bg-primary/15">
                 <Mic size={22} className="text-success dark:text-primary" />

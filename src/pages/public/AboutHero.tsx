@@ -50,7 +50,7 @@ export const AboutHero = () => (
           transition={{ duration: 0.4 }}
           className="flex flex-col items-center"
         >
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-card bg-primary-soft text-primary shadow-sm transition-transform group-hover:scale-110 dark:bg-card">
+          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-card bg-primary-soft text-primary shadow-elevation-1 transition-transform group-hover:scale-110 dark:bg-card">
             <Award size={24} />
           </div>
           <span className="text-xl font-black text-main md:text-2xl">10+</span>
@@ -61,7 +61,7 @@ export const AboutHero = () => (
           transition={{ duration: 0.4 }}
           className="flex flex-col items-center"
         >
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-card bg-primary-soft text-primary shadow-sm transition-transform group-hover:scale-110 dark:bg-card">
+          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-card bg-primary-soft text-primary shadow-elevation-1 transition-transform group-hover:scale-110 dark:bg-card">
             <Users size={24} />
           </div>
           <span className="text-xl font-black text-main md:text-2xl">5k+</span>
@@ -72,7 +72,7 @@ export const AboutHero = () => (
           transition={{ duration: 0.4 }}
           className="flex flex-col items-center"
         >
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-card bg-warning-light text-warning shadow-sm transition-transform group-hover:scale-110 dark:bg-warning-soft">
+          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-card bg-warning-light text-warning shadow-elevation-1 transition-transform group-hover:scale-110 dark:bg-warning-soft">
             <Heart size={24} />
           </div>
           <span className="text-xl font-black text-main md:text-2xl">100%</span>

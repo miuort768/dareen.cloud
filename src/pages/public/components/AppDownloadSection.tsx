@@ -12,7 +12,7 @@ export const AppDownloadSection = () => {
         <div className="pointer-events-none absolute end-0 top-0 h-64 w-64 rounded-full bg-accent-soft blur-[100px] dark:bg-primary/[0.08]" />
         <div className="pointer-events-none absolute bottom-0 start-0 h-48 w-48 rounded-full bg-primary/5 blur-[80px] dark:bg-primary/[0.05]" />
         <div className="container relative z-10 mx-auto px-4 md:px-8">
-          <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-primary/30 bg-primary-soft shadow-sm dark:border-primary/30 dark:bg-card">
+          <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-primary/30 bg-primary-soft shadow-elevation-1 dark:border-primary/30 dark:bg-card">
             <div className="flex flex-col items-center justify-center p-6 text-center md:p-10">
               <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-primary/50 bg-white/80 px-4 py-1.5 dark:border-primary/40 dark:bg-primary/20">
                 <Smartphone size={14} className="text-primary dark:text-primary" />
@@ -72,7 +72,7 @@ export const AppDownloadSection = () => {
         <div className="pointer-events-none absolute -start-20 bottom-40 h-80 w-80 rounded-full bg-primary/10 blur-[120px] dark:bg-primary/[0.05]"></div>
         <div className="relative z-10 px-5">
           <div className="mb-5 mt-2 flex items-center justify-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/50 bg-white/80 px-5 py-2.5 shadow-sm dark:border-primary/40 dark:bg-primary/20">
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/50 bg-white/80 px-5 py-2.5 shadow-elevation-1 dark:border-primary/40 dark:bg-primary/20">
               <Smartphone size={14} className="text-primary dark:text-primary" />
               <span className="text-xs font-bold tracking-wide text-primary dark:text-primary">
                 تطبيق دارين السابعة

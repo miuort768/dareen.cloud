@@ -158,14 +158,14 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
           href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، لدي سؤال عن' + post.title)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-card bg-success px-6 py-4 text-sm font-black text-on-success shadow-lg transition-all hover:opacity-90"
+          className="inline-flex items-center gap-2 rounded-card bg-success px-6 py-4 text-sm font-black text-on-success shadow-elevation-3 transition-all hover:opacity-90"
         >
           <MessageCircle size={18} />
           <span>لدي سؤال؟</span>
         </a>
         <Link
           to="/courses"
-          className="inline-flex items-center gap-2 rounded-card bg-primary px-6 py-4 text-sm font-black text-on-primary shadow-lg transition-all hover:bg-primary-hover"
+          className="inline-flex items-center gap-2 rounded-card bg-primary px-6 py-4 text-sm font-black text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover"
         >
           <Play size={18} /> ابدأ التعلم الآن
         </Link>

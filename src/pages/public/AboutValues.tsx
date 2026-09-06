@@ -9,7 +9,7 @@ export const AboutValues = () => (
     <div className="container relative z-10 mx-auto px-4">
       <AnimateOnScroll animation="fadeUp">
         <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover px-3 py-1 shadow-lg shadow-primary/20">
+          <div className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-l from-primary to-primary-hover px-3 py-1 shadow-elevation-3 shadow-primary/20">
             <span className="text-micro font-black text-on-primary">دستورنا التعليمي</span>
           </div>
           <h2 className="mb-4 font-heading text-2xl font-black text-main md:text-4xl">
@@ -31,10 +31,10 @@ export const AboutValues = () => (
           <motion.div
             variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.4 }}
-            className="relative overflow-hidden rounded-card border border-primary/50 bg-gradient-to-br from-card to-primary/10 p-6 shadow-sm dark:border-primary/30 dark:to-primary/5 md:p-8"
+            className="relative overflow-hidden rounded-card border border-primary/50 bg-gradient-to-br from-card to-primary/10 p-6 shadow-elevation-1 dark:border-primary/30 dark:to-primary/5 md:p-8"
           >
             <div className="mb-4 flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-primary to-primary text-on-primary shadow-lg shadow-primary/20">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-primary to-primary text-on-primary shadow-elevation-3 shadow-primary/20">
                 <Shield className="h-6 w-6" />
               </div>
               <h3 className="font-heading text-lg font-black text-main md:text-xl">الأمانة</h3>
@@ -48,7 +48,7 @@ export const AboutValues = () => (
           <motion.div
             variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.4 }}
-            className="relative overflow-hidden rounded-2xl border border-warning bg-gradient-to-br from-card to-transparent p-6 shadow-sm dark:border-warning-soft dark:to-transparent md:p-8"
+            className="relative overflow-hidden rounded-2xl border border-warning bg-gradient-to-br from-card to-transparent p-6 shadow-elevation-1 dark:border-warning-soft dark:to-transparent md:p-8"
           >
             <div className="mb-4 flex items-center gap-4">
               <div className="shadow-l flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-warning to-warning text-on-warning">
@@ -64,7 +64,7 @@ export const AboutValues = () => (
           <motion.div
             variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.4 }}
-            className="relative overflow-hidden rounded-2xl border border-success bg-gradient-to-br from-card to-transparent p-6 shadow-sm dark:border-success-soft dark:to-transparent md:p-8"
+            className="relative overflow-hidden rounded-2xl border border-success bg-gradient-to-br from-card to-transparent p-6 shadow-elevation-1 dark:border-success-soft dark:to-transparent md:p-8"
           >
             <div className="mb-4 flex items-center gap-4">
               <div className="shadow-l flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-success to-success text-on-success">
@@ -80,7 +80,7 @@ export const AboutValues = () => (
           <motion.div
             variants={{ hidden: { opacity: 0, y: 25 }, visible: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.4 }}
-            className="relative overflow-hidden rounded-2xl border border-error bg-gradient-to-br from-card to-transparent p-6 shadow-sm dark:border-error-soft dark:to-transparent md:p-8"
+            className="relative overflow-hidden rounded-2xl border border-error bg-gradient-to-br from-card to-transparent p-6 shadow-elevation-1 dark:border-error-soft dark:to-transparent md:p-8"
           >
             <div className="mb-4 flex items-center gap-4">
               <div className="shadow-l flex h-12 w-12 shrink-0 items-center justify-center rounded-card bg-gradient-to-br from-error to-error text-on-error">

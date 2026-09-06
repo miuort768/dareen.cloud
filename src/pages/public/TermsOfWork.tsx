@@ -57,12 +57,12 @@ export const TermsOfWork = () => {
       <MobileHeader />
 
       {/* Hero Section */}
-      <section className="relative mx-4 mb-4 overflow-hidden rounded-card border border-primary/50 bg-card pb-4 pt-4 shadow-sm dark:border-primary/50 dark:bg-background md:mx-0 md:mb-0 md:rounded-none md:border-0 md:pb-10 md:pt-36 md:shadow-none">
+      <section className="relative mx-4 mb-4 overflow-hidden rounded-card border border-primary/50 bg-card pb-4 pt-4 shadow-elevation-1 dark:border-primary/50 dark:bg-background md:mx-0 md:mb-0 md:rounded-none md:border-0 md:pb-10 md:pt-36 md:shadow-none">
         <div className="absolute start-0 top-0 hidden h-96 w-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-primary/5 blur-[100px] md:block"></div>
         <div className="absolute bottom-0 end-0 hidden h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-primary/5 blur-[80px] md:block"></div>
 
         <div className="container relative z-10 mx-auto px-4 text-center">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/50 bg-primary-soft px-3 py-1 text-primary shadow-sm dark:border-primary/50 dark:bg-primary/20 dark:text-main md:mb-4 md:rounded-none md:px-4 md:py-2">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-primary/50 bg-primary-soft px-3 py-1 text-primary shadow-elevation-1 dark:border-primary/50 dark:bg-primary/20 dark:text-main md:mb-4 md:rounded-none md:px-4 md:py-2">
             <Briefcase size={12} className="text-primary" />
             <span className="text-xs font-semibold tracking-label md:text-xs">قوانين العمل</span>
           </div>

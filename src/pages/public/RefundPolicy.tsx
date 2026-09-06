@@ -58,7 +58,7 @@ export const RefundPolicy = () => {
       <MobileHeader />
 
       {/* Hero Section */}
-      <section className="relative mx-4 mb-4 overflow-hidden rounded-card border border-primary/50 bg-primary pb-4 pt-4 shadow-sm dark:border-primary/50 md:mx-0 md:mb-0 md:rounded-none md:border-0 md:bg-card md:pb-24 md:pt-36 md:shadow-none dark:md:bg-background">
+      <section className="relative mx-4 mb-4 overflow-hidden rounded-card border border-primary/50 bg-primary pb-4 pt-4 shadow-elevation-1 dark:border-primary/50 md:mx-0 md:mb-0 md:rounded-none md:border-0 md:bg-card md:pb-24 md:pt-36 md:shadow-none dark:md:bg-background">
         <div className="absolute start-0 top-0 hidden h-96 w-96 -translate-y-1/2 translate-x-1/2 rounded-full bg-info-soft blur-[100px] dark:bg-info-soft md:block"></div>
         <div className="absolute bottom-0 end-0 hidden h-64 w-64 -translate-x-1/2 translate-y-1/2 rounded-full bg-warning-soft blur-[80px] dark:bg-warning-soft md:block"></div>
 
@@ -217,7 +217,7 @@ export const RefundPolicy = () => {
           </div>
 
           {/* Support Button Section */}
-          <div className="group relative mb-4 flex flex-col items-center justify-center overflow-hidden rounded-card border border-primary bg-primary px-6 py-6 shadow-xl shadow-primary/20 dark:border-border dark:bg-background">
+          <div className="group relative mb-4 flex flex-col items-center justify-center overflow-hidden rounded-card border border-primary bg-primary px-6 py-6 shadow-elevation-4 shadow-primary/20 dark:border-border dark:bg-background">
             <div className="absolute start-0 top-0 -ms-16 -mt-16 h-32 w-32 rounded-full bg-white/10 blur-3xl"></div>
             <div className="absolute bottom-0 end-0 -mb-16 -me-16 h-32 w-32 rounded-full bg-white/10 blur-3xl"></div>
 
@@ -233,7 +233,7 @@ export const RefundPolicy = () => {
                 href={`https://wa.me/${whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex w-full items-center justify-center gap-4 overflow-hidden rounded-card border border-white/20 bg-info px-10 py-4 font-bold text-on-info shadow-lg transition-all hover:bg-white/15 sm:w-auto"
+                className="group relative inline-flex w-full items-center justify-center gap-4 overflow-hidden rounded-card border border-white/20 bg-info px-10 py-4 font-bold text-on-info shadow-elevation-3 transition-all hover:bg-white/15 sm:w-auto"
               >
                 <Headphones className="relative z-10 h-5 w-5" />
                 <span className="relative z-10 text-base md:text-lg">تواصل مع قسم الحسابات</span>
