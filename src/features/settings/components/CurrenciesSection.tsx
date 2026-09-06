@@ -117,7 +117,7 @@ export const CurrenciesSection = ({
           className={cn(
             'rounded-lg px-4 py-2 text-xs font-bold transition-all',
             activeTab === 'currencies'
-              ? 'bg-card text-main shadow-sm'
+              ? 'bg-card text-main shadow-elevation-1'
               : 'text-muted hover:text-main',
           )}
         >
@@ -127,7 +127,9 @@ export const CurrenciesSection = ({
           onClick={() => setActiveTab('rates')}
           className={cn(
             'rounded-lg px-4 py-2 text-xs font-bold transition-all',
-            activeTab === 'rates' ? 'bg-card text-main shadow-sm' : 'text-muted hover:text-main',
+            activeTab === 'rates'
+              ? 'bg-card text-main shadow-elevation-1'
+              : 'text-muted hover:text-main',
           )}
         >
           أسعار الصرف

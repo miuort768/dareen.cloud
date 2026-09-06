@@ -43,7 +43,7 @@ interface ParentsTableProps {
 const Tooltip = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="group relative">
     {children}
-    <div className="pointer-events-none absolute -top-8 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-bold text-inverse opacity-0 shadow-sm transition-opacity group-hover:opacity-100">
+    <div className="pointer-events-none absolute -top-8 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-bold text-inverse opacity-0 shadow-elevation-1 transition-opacity group-hover:opacity-100">
       {label}
     </div>
   </div>

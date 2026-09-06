@@ -24,7 +24,7 @@ export const DeleteUserModal = ({
       onClick={() => setShowDeleteModal(false)}
     >
       <div
-        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-xl md:max-h-none md:max-w-sm md:overflow-hidden md:rounded-2xl md:border md:p-6"
+        className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card p-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-elevation-4 md:max-h-none md:max-w-sm md:overflow-hidden md:rounded-2xl md:border md:p-6"
         onClick={(e) => e.stopPropagation()}
         dir="rtl"
       >

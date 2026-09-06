@@ -195,7 +195,7 @@ export const EnrollmentForm = ({
             {schedule.map((s, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-1 rounded-xl border border-primary-soft bg-card px-2 py-1 text-micro font-medium shadow-sm"
+                className="flex items-center gap-1 rounded-xl border border-primary-soft bg-card px-2 py-1 text-micro font-medium shadow-elevation-1"
               >
                 {s.day} {s.hour}
                 <button
@@ -214,7 +214,7 @@ export const EnrollmentForm = ({
         <button
           type="submit"
           disabled={isLoading}
-          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-medium text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-medium text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? <Loader2 size={14} className="animate-spin" /> : null}
           {isLoading ? 'جاري الحفظ...' : 'تأكيد وحفظ الاشتراك'}

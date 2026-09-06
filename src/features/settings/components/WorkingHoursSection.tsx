@@ -118,7 +118,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
               onClick={() => toggleDay(d.day)}
               className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-all ${
                 d.enabled
-                  ? 'bg-gradient-to-br from-primary/20 to-primary/5 text-primary shadow-sm'
+                  ? 'bg-gradient-to-br from-primary/20 to-primary/5 text-primary shadow-elevation-1'
                   : 'bg-hover text-muted'
               }`}
             >

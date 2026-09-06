@@ -83,7 +83,7 @@ export const ScheduleHeader = ({
       />
 
       {/* Controls toolbar — redesigned for better visual consistency */}
-      <div className="rounded-xl border border-border bg-card shadow-sm">
+      <div className="rounded-xl border border-border bg-card shadow-elevation-1">
         {/* Row 1: Search + Week Navigation */}
         <div className="flex items-center gap-3 border-b border-border px-4 py-3">
           {/* Search */}

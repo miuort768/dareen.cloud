@@ -213,7 +213,7 @@ export const PaymentMethodsSection = () => {
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-micro font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-micro font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={13} /> إضافة طريقة دفع
           </button>
@@ -253,7 +253,7 @@ export const PaymentMethodsSection = () => {
           </p>
           <button
             onClick={openAdd}
-            className="mt-4 flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="mt-4 flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={14} /> إضافة طريقة دفع
           </button>
@@ -486,7 +486,7 @@ const PaymentMethodForm = ({
                     className={cn(
                       'flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                       active
-                        ? 'border-primary bg-primary-soft text-primary shadow-sm'
+                        ? 'border-primary bg-primary-soft text-primary shadow-elevation-1'
                         : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-main',
                     )}
                   >
@@ -608,7 +608,7 @@ const PaymentMethodForm = ({
             type="submit"
             onClick={(e) => onSubmit(e)}
             disabled={submitting}
-            className="flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {submitting && <Loader2 size={13} className="animate-spin" />}
             {submitting ? 'جاري الحفظ...' : isEdit ? 'حفظ التغييرات' : 'إضافة طريقة الدفع'}

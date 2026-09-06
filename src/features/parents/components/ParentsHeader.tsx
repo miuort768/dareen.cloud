@@ -121,7 +121,7 @@ export const ParentsHeader = ({
             'flex h-11 items-center gap-1.5 rounded-xl px-4 text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] md:h-10',
             showAddForm
               ? 'bg-error text-on-error hover:bg-error-hover'
-              : 'bg-primary text-on-primary shadow-sm hover:bg-primary-hover',
+              : 'bg-primary text-on-primary shadow-elevation-1 hover:bg-primary-hover',
           )}
         >
           {showAddForm ? <X size={14} /> : <UserPlus size={14} />}

@@ -10,7 +10,7 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
   <SectionCard>
     <div className="mb-4 flex items-center justify-between border-b border-divider pb-3">
       <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 shadow-sm">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 shadow-elevation-1">
           <Activity size={16} className="text-primary" />
         </div>
         <div>

@@ -79,7 +79,10 @@ const CustomTooltip = ({
 }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="rounded-xl border border-border bg-card px-4 py-3 shadow-xl" dir="rtl">
+      <div
+        className="rounded-xl border border-border bg-card px-4 py-3 shadow-elevation-4"
+        dir="rtl"
+      >
         <p className="mb-1 text-micro font-bold text-muted">{label}</p>
         <p className="text-lg font-bold tabular-nums text-main">
           {payload[0]!.value} <span className="text-micro text-muted">طالب</span>

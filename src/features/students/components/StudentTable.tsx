@@ -20,7 +20,7 @@ interface StudentTableProps {
 const Tooltip = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="group relative">
     {children}
-    <div className="pointer-events-none absolute -top-8 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-bold text-inverse opacity-0 shadow-sm transition-opacity group-hover:opacity-100">
+    <div className="pointer-events-none absolute -top-8 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-lg bg-main px-2 py-1 text-[9px] font-bold text-inverse opacity-0 shadow-elevation-1 transition-opacity group-hover:opacity-100">
       {label}
     </div>
   </div>
@@ -217,7 +217,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onEdit(student)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-primary text-[10px] font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl bg-primary text-[10px] font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   aria-label="تعديل"
                 >
                   <Edit size={13} />

@@ -127,7 +127,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
           <div className="flex justify-end border-t border-border pt-6">
             <button
               type="submit"
-              className="group flex items-center gap-3 rounded-xl bg-primary px-10 py-4 text-micro font-bold text-on-primary shadow-lg shadow-primary/20 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="group flex items-center gap-3 rounded-xl bg-primary px-10 py-4 text-micro font-bold text-on-primary shadow-elevation-3 shadow-primary/20 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <Save size={14} className="transition-transform group-hover:rotate-12" />
               {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}

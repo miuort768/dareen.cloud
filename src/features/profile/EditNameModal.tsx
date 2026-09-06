@@ -173,7 +173,7 @@ export const EditNameModal = ({
                     (name.trim() === initialName && phone.trim() === initialPhone.trim())
                   }
                   className={cn(
-                    'flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50',
+                    'flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50',
                   )}
                 >
                   {saving && <Loader2 size={13} className="animate-spin" />}

@@ -145,7 +145,7 @@ export const UsersSettings = ({
                         className={cn(
                           'flex items-center gap-1.5 rounded-lg border px-2.5 py-2 text-start text-[11px] font-bold transition-all',
                           isSelected
-                            ? 'border-primary bg-primary text-on-primary shadow-sm'
+                            ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                             : 'border-divider bg-card text-muted hover:border-primary/50 hover:text-main',
                         )}
                       >
@@ -189,7 +189,7 @@ export const UsersSettings = ({
           {users.map((u) => (
             <div
               key={u.id}
-              className="group rounded-xl border border-divider bg-card p-4 transition-all duration-normal hover:border-primary/30 hover:shadow-sm"
+              className="group rounded-xl border border-divider bg-card p-4 transition-all duration-normal hover:border-primary/30 hover:shadow-elevation-1"
             >
               <div className="mb-3 flex items-start justify-between">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft text-sm font-bold text-primary">

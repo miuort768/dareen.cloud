@@ -221,7 +221,7 @@ const EventCard = ({ event, onSelect }: { event: ScheduleEvent; onSelect: () => 
       whileHover={{ scale: 1.02, y: -1 }}
       whileTap={{ scale: 0.97 }}
       onClick={onSelect}
-      className="relative cursor-pointer overflow-hidden border border-border bg-card shadow-sm transition-all hover:z-10 hover:shadow-md"
+      className="relative cursor-pointer overflow-hidden border border-border bg-card shadow-elevation-1 transition-all hover:z-10 hover:shadow-elevation-2"
     >
       <div className={`absolute inset-x-0 top-0 h-0.5 ${c.bar}`} />
       <div className="p-1.5 pt-2">
@@ -259,7 +259,7 @@ const MultiCard = ({
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.97 }}
     onClick={onOpenModal}
-    className="relative cursor-pointer overflow-hidden border border-primary/30 bg-primary-soft shadow-sm transition-all hover:z-10 hover:shadow-md"
+    className="relative cursor-pointer overflow-hidden border border-primary/30 bg-primary-soft shadow-elevation-1 transition-all hover:z-10 hover:shadow-elevation-2"
   >
     <div className="absolute inset-x-0 top-0 h-0.5 bg-primary" />
     <div className="p-1.5 pt-2">
@@ -305,7 +305,7 @@ const CurrentTimeLine = () => {
       <div className="flex items-center gap-1.5">
         <div className="h-2 w-2 shrink-0 rounded-full bg-error" />
         <div className="h-px flex-1 bg-error" />
-        <span className="ms-auto rounded-sm bg-card px-1 py-0.5 text-micro font-bold text-error shadow-sm">
+        <span className="ms-auto rounded-sm bg-card px-1 py-0.5 text-micro font-bold text-error shadow-elevation-1">
           {nowLabel}
         </span>
       </div>
@@ -346,7 +346,7 @@ export const ScheduleGrid = ({
         />
       )}
 
-      <div className="relative mt-4 overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
+      <div className="relative mt-4 overflow-hidden rounded-xl border border-border bg-surface shadow-elevation-1">
         <div className="custom-scrollbar overflow-x-auto">
           <div className="relative min-w-[1000px]">
             {/* Sticky header row */}

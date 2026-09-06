@@ -77,7 +77,7 @@ export const PoliciesSettings = ({
                 className={cn(
                   'rounded-xl border p-3.5 text-start transition-all',
                   teacherCommissionType === opt.id
-                    ? 'border-primary bg-primary text-on-primary shadow-sm'
+                    ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                     : 'border-divider bg-background text-muted hover:border-primary/50',
                 )}
               >

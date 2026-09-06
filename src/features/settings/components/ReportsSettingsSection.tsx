@@ -97,7 +97,7 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
               className={cn(
                 'flex items-center gap-2 rounded-xl border px-5 py-3 text-xs font-bold transition-all',
                 defaultFormat === f
-                  ? 'border-primary bg-primary text-on-primary shadow-sm'
+                  ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                   : 'border-divider bg-background text-muted hover:border-primary/50',
               )}
             >

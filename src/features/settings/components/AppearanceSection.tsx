@@ -16,9 +16,9 @@ export const AppearanceSection = ({
   setThemeColor,
 }: AppearanceSectionProps) => {
   return (
-    <section className="rounded-2xl border border-divider bg-card p-5 shadow-sm md:p-6">
+    <section className="rounded-2xl border border-divider bg-card p-5 shadow-elevation-1 md:p-6">
       <div className="mb-6 flex items-center gap-3 border-b border-divider pb-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 shadow-sm">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 shadow-elevation-1">
           <Palette size={18} className="text-primary" />
         </div>
         <div className="flex-1">
@@ -48,13 +48,13 @@ export const AppearanceSection = ({
             className={cn(
               'relative h-7 w-12 shrink-0 rounded-full transition-all duration-slow',
               theme === 'dark'
-                ? 'bg-gradient-to-r from-primary to-primary-active shadow-sm shadow-primary/30'
+                ? 'bg-gradient-to-r from-primary to-primary-active shadow-elevation-1 shadow-primary/30'
                 : 'bg-divider hover:bg-border',
             )}
           >
             <span
               className={cn(
-                'absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-slow',
+                'absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-elevation-2 transition-all duration-slow',
                 theme === 'dark' ? 'start-[1.375rem]' : 'start-0.5',
               )}
             />
@@ -79,8 +79,8 @@ export const AppearanceSection = ({
                     className={cn(
                       'flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-slow',
                       isActive
-                        ? 'scale-110 shadow-md ring-2 ring-primary ring-offset-2 ring-offset-card'
-                        : 'ring-1 ring-divider hover:shadow-sm hover:ring-border',
+                        ? 'scale-110 shadow-elevation-2 ring-2 ring-primary ring-offset-2 ring-offset-card'
+                        : 'ring-1 ring-divider hover:shadow-elevation-1 hover:ring-border',
                     )}
                   >
                     <div

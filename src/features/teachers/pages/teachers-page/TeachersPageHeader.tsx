@@ -43,7 +43,7 @@ export const TeachersPageHeader = ({
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="relative hidden overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:block md:p-6"
+        className="relative hidden overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 md:block md:p-6"
       >
         <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
         <div className="bg-accent/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
@@ -51,7 +51,7 @@ export const TeachersPageHeader = ({
         <div className="relative z-10">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary shadow-elevation-3 shadow-primary/30">
                 <Users size={20} className="text-on-primary" />
               </div>
               <div>
@@ -65,7 +65,7 @@ export const TeachersPageHeader = ({
                 'flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-[11px] font-black outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                 showAddForm
                   ? 'border border-border bg-surface text-main hover:bg-hover'
-                  : 'bg-primary text-on-primary shadow-md shadow-primary/25 hover:bg-primary-hover',
+                  : 'bg-primary text-on-primary shadow-elevation-2 shadow-primary/25 hover:bg-primary-hover',
               )}
             >
               {showAddForm ? <X size={13} /> : <Plus size={13} />}
@@ -115,7 +115,7 @@ export const TeachersPageHeader = ({
                 'flex h-11 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
                 showAddForm
                   ? 'border border-border bg-surface text-main'
-                  : 'bg-primary text-on-primary shadow-md shadow-primary/25',
+                  : 'bg-primary text-on-primary shadow-elevation-2 shadow-primary/25',
               )}
             >
               {showAddForm ? <X size={15} /> : <Plus size={15} />}

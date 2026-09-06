@@ -91,7 +91,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
       {/* Header Section */}
       <div className="flex items-center justify-between gap-4 bg-primary px-4 py-6 md:gap-6 md:px-6 md:py-8">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center bg-white/15 text-on-primary shadow-sm">
+          <div className="flex h-12 w-12 items-center justify-center bg-white/15 text-on-primary shadow-elevation-1">
             {initialData ? <Edit size={24} /> : <UserPlus size={24} />}
           </div>
           <div>
@@ -266,7 +266,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
         <div className="flex items-center justify-end border-t border-border pt-6">
           <button
             type="submit"
-            className="flex items-center gap-2 rounded-xl bg-primary px-10 py-3 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center gap-2 rounded-xl bg-primary px-10 py-3 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Save size={16} />
             {initialData ? 'تحديث السجل' : 'إتمام الإضافة'}

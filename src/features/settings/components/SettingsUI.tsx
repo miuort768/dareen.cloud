@@ -63,7 +63,7 @@ export const SectionCard = ({
   <div
     className={cn(
       'rounded-2xl border border-divider bg-card p-5 md:p-6',
-      'shadow-sm transition-all duration-slow hover:shadow-md',
+      'shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-2',
       className,
     )}
   >
@@ -81,7 +81,7 @@ export const SectionTitle = ({
   sub?: string
 }) => (
   <div className="mb-5 flex items-center gap-3 border-b border-divider pb-4">
-    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 shadow-sm">
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 shadow-elevation-1">
       <Icon size={18} className="text-primary" />
     </div>
     <div className="flex-1">
@@ -132,13 +132,13 @@ export const Toggle = ({ checked, onChange }: { checked: boolean; onChange: () =
     className={cn(
       'relative h-6 w-11 shrink-0 rounded-full transition-all duration-slow',
       checked
-        ? 'bg-gradient-to-r from-primary to-primary-active shadow-sm shadow-primary/30'
+        ? 'bg-gradient-to-r from-primary to-primary-active shadow-elevation-1 shadow-primary/30'
         : 'bg-divider hover:bg-border',
     )}
   >
     <span
       className={cn(
-        'absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-all duration-slow',
+        'absolute top-0.5 h-5 w-5 rounded-full bg-white shadow-elevation-2 transition-all duration-slow',
         checked ? 'start-[1.375rem]' : 'start-0.5',
       )}
     />
@@ -163,7 +163,7 @@ export const PrimaryBtn = ({
       'hover:from-primary-hover hover:to-primary',
       'rounded-xl px-6 py-3 text-xs font-bold text-on-primary',
       'outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
-      'shadow-sm shadow-primary/20 hover:shadow-md',
+      'shadow-elevation-1 shadow-primary/20 hover:shadow-elevation-2',
       'disabled:cursor-not-allowed disabled:opacity-50',
       className,
     )}
@@ -210,7 +210,7 @@ export const DangerBtn = ({
       'flex items-center justify-center gap-2 bg-gradient-to-br from-error-soft to-transparent',
       'border-2 border-error-soft hover:border-error hover:from-error hover:to-error-dark',
       'rounded-xl px-5 py-2.5 text-xs font-bold text-error hover:text-on-error',
-      'shadow-sm outline-none transition-all duration-normal hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
+      'shadow-elevation-1 outline-none transition-all duration-normal hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       className,
     )}
   >

@@ -352,7 +352,7 @@ export const Students = () => {
                   setShowAddForm(true)
                 }}
                 aria-label="إضافة طالب"
-                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-colors active:scale-95"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 transition-colors active:scale-95"
               >
                 <Plus size={16} /> طالب
               </button>
@@ -416,7 +416,7 @@ export const Students = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + i * 0.05 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm transition-shadow hover:shadow-elevation-2"
+                  className="relative overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elevation-1 transition-shadow hover:shadow-elevation-2"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div
@@ -618,7 +618,7 @@ export const Students = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
                   {action.label}
                 </span>
                 <button

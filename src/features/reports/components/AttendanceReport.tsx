@@ -73,7 +73,7 @@ const CustomTooltip = ({
   if (active && payload && payload.length) {
     return (
       <div
-        className="min-w-[140px] rounded-xl border border-border bg-card px-4 py-3 text-start text-main shadow-xl"
+        className="min-w-[140px] rounded-xl border border-border bg-card px-4 py-3 text-start text-main shadow-elevation-4"
         dir="rtl"
       >
         <p className="mb-2 border-b border-border pb-1 text-micro font-medium uppercase text-muted">

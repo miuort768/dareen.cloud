@@ -35,7 +35,7 @@ const FinancialCard = ({
   currency?: string
   isPercentage?: boolean
 }) => (
-  <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+  <div className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1">
     <div className="mb-3 flex items-center gap-2">
       <div className={cn('rounded-xl p-2', iconBgClass)}>
         <Icon size={16} className={textClass} />
@@ -124,7 +124,7 @@ export const FinancialReport = ({
         </div>
       )}
 
-      <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1">
         <div className="flex items-start gap-3.5">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
             <FileText size={18} className="text-primary" />

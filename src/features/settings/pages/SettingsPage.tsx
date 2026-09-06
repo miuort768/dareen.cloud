@@ -46,7 +46,7 @@ export const Settings = () => {
     >
       <div className="mx-auto max-w-page px-2">
         {/* Header strip */}
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 rounded-2xl border border-border bg-card p-4 shadow-elevation-1 md:p-5">
           <div className="flex items-center gap-3">
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
               <SettingsIcon size={20} strokeWidth={1.9} className="text-primary" />
@@ -82,7 +82,7 @@ export const Settings = () => {
             id="settings-tab-select"
             value={h.activeTab}
             onChange={(e) => h.setActiveTab(e.target.value)}
-            className="h-11 w-full appearance-none rounded-xl border border-border bg-card px-4 text-sm font-bold text-main shadow-sm outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/10 dark:[color-scheme:dark]"
+            className="h-11 w-full appearance-none rounded-xl border border-border bg-card px-4 text-sm font-bold text-main shadow-elevation-1 outline-none transition-all focus:border-primary/60 focus:ring-2 focus:ring-primary/10 dark:[color-scheme:dark]"
           >
             {tabGroups.map((group) => (
               <optgroup key={group.label} label={group.label}>
@@ -101,7 +101,7 @@ export const Settings = () => {
         </div>
 
         {/* Tabs — single scrollable row (desktop) */}
-        <div className="scrollbar-none mb-4 hidden overflow-x-auto rounded-2xl border border-border bg-card p-2 shadow-sm md:block">
+        <div className="scrollbar-none mb-4 hidden overflow-x-auto rounded-2xl border border-border bg-card p-2 shadow-elevation-1 md:block">
           <div className="flex min-w-max items-center gap-1">
             {tabGroups.map((group, gi) => (
               <div
@@ -125,7 +125,7 @@ export const Settings = () => {
                       className={cn(
                         'flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl px-3 py-2 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                         isActive
-                          ? 'bg-primary text-on-primary shadow-sm'
+                          ? 'bg-primary text-on-primary shadow-elevation-1'
                           : 'text-muted hover:bg-hover hover:text-main',
                       )}
                     >

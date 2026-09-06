@@ -48,7 +48,7 @@ export const PasswordConfirmModal = ({
       className="fixed inset-0 z-[1000] flex items-end justify-center bg-black/50 animate-in fade-in md:items-center md:p-4"
       dir="rtl"
     >
-      <div className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-lg md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border-x md:border-b">
+      <div className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-elevation-3 md:max-h-none md:max-w-md md:overflow-hidden md:rounded-2xl md:border-x md:border-b">
         <div className="space-y-3 border-b border-divider p-5 text-center md:p-6">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-warning-soft text-warning">
             <Lock size={20} />

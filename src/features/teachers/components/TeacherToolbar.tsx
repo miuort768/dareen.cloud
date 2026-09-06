@@ -70,14 +70,14 @@ export const TeacherToolbar = ({
           </button>
           <button
             onClick={onExportExcel}
-            className="flex h-10 flex-1 items-center justify-center rounded-xl bg-success font-bold text-on-success shadow-sm transition-colors hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-9 sm:w-9 sm:flex-none"
+            className="flex h-10 flex-1 items-center justify-center rounded-xl bg-success font-bold text-on-success shadow-elevation-1 transition-colors hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-9 sm:w-9 sm:flex-none"
             aria-label="تصدير Excel"
           >
             <FileSpreadsheet size={15} />
           </button>
           <button
             onClick={onExportPDF}
-            className="flex h-10 flex-1 items-center justify-center rounded-xl bg-error font-bold text-on-error shadow-sm transition-colors hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-9 sm:w-9 sm:flex-none"
+            className="flex h-10 flex-1 items-center justify-center rounded-xl bg-error font-bold text-on-error shadow-elevation-1 transition-colors hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-9 sm:w-9 sm:flex-none"
             aria-label="تصدير PDF"
           >
             <FileText size={15} />
@@ -92,7 +92,7 @@ export const TeacherToolbar = ({
           <button
             onClick={onToggleAddForm}
             className={cn(
-              'flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-bold shadow-sm transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-9 sm:flex-none',
+              'flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl px-4 text-xs font-bold shadow-elevation-1 transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-9 sm:flex-none',
               showAddForm
                 ? 'border border-error bg-error text-on-error'
                 : 'border border-primary bg-primary text-on-primary',

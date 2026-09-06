@@ -187,7 +187,10 @@ export const StudentsToolbar = ({
                 .then(() => showNotification('تم تصدير Excel', 'success'))
                 .catch((e) => showNotification(e.message, 'error'))
             }
-            className={cn(btnClass, 'bg-success text-on-success shadow-sm hover:bg-success-hover')}
+            className={cn(
+              btnClass,
+              'bg-success text-on-success shadow-elevation-1 hover:bg-success-hover',
+            )}
           >
             <FileSpreadsheet size={12} /> Excel
           </button>
@@ -197,7 +200,10 @@ export const StudentsToolbar = ({
                 .then(() => showNotification('تم تصدير PDF', 'success'))
                 .catch((e) => showNotification(e.message, 'error'))
             }
-            className={cn(btnClass, 'bg-error text-on-error shadow-sm hover:bg-error-hover')}
+            className={cn(
+              btnClass,
+              'bg-error text-on-error shadow-elevation-1 hover:bg-error-hover',
+            )}
           >
             <FileText size={12} /> PDF
           </button>

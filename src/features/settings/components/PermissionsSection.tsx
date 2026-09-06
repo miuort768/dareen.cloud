@@ -102,7 +102,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
           {canOpenRoles ? (
             <button
               onClick={() => navigate('/roles')}
-              className="flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+              className="flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               <Users size={14} /> فتح
             </button>
@@ -160,7 +160,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
                         className={cn(
                           'flex items-center gap-2 rounded-xl border px-3 py-2.5 text-start text-[11px] font-bold transition-all',
                           isSelected
-                            ? 'border-primary bg-primary text-on-primary shadow-sm'
+                            ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                             : 'border-divider bg-background text-muted hover:border-primary/50 hover:text-main',
                         )}
                       >
