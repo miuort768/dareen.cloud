@@ -1,4 +1,5 @@
 import { useEffect, useState, lazy, Suspense } from 'react'
+import { MotionConfig } from 'framer-motion'
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { PageLoader } from './components/ui/PageLoader'
 
@@ -319,7 +320,7 @@ function App() {
   }
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       {/* Maintenance Indicator for Admins */}
       {maintenanceMode && isAdmin && (
         <div className="fixed inset-x-0 top-0 z-[9999] flex items-center justify-center gap-2 bg-warning py-0.5 text-center text-micro font-semibold text-on-warning shadow-elevation-3">
@@ -359,7 +360,7 @@ function App() {
         <SocketInitLayer />
       </Suspense>
       <Suspense fallback={<PageLoader />}>
-        <div id="main-content">
+        <div>
           <Routes>
             <Route errorElement={<RouteErrorBoundary />}>
               {/* Public Routes */}
@@ -702,7 +703,7 @@ function App() {
           </Routes>
         </div>
       </Suspense>
-    </>
+    </MotionConfig>
   )
 }
 

@@ -73,6 +73,8 @@ const Toast = ({ id, type, message, duration = 4000, onClose }: ToastProps) => {
 
   return (
     <div
+      role={type === 'error' ? 'alert' : 'status'}
+      aria-live={type === 'error' ? 'assertive' : 'polite'}
       className={cn(
         'group relative flex w-full items-center gap-3 overflow-hidden rounded-none border border-s-4 border-border bg-card p-3 pe-2 shadow-elevation-3 transition-all duration-500 sm:min-w-[300px] sm:max-w-[380px]',
         startBorder,

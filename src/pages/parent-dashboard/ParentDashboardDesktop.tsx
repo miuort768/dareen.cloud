@@ -38,7 +38,7 @@ export const ParentDashboardDesktop = ({
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-slow" dir="rtl">
-      <main className="mx-auto max-w-page space-y-5 px-2.5 pb-12 pt-5 sm:px-4 md:px-6">
+      <div className="mx-auto max-w-page space-y-5 px-2.5 pb-12 pt-5 sm:px-4 md:px-6">
         <motion.div {...fadeUp(0)}>
           <GreetingStrip
             name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
@@ -114,7 +114,7 @@ export const ParentDashboardDesktop = ({
             </motion.div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   )
 }

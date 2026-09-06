@@ -61,6 +61,12 @@ export const Layout = () => {
           />
         </div>
       )}
+      <a
+        href="#main-content"
+        className="fixed start-4 top-4 z-[9999] -translate-y-24 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-on-primary shadow-elevation-3 outline-none transition-transform duration-normal focus-visible:translate-y-0 focus-visible:ring-2 focus-visible:ring-focus"
+      >
+        تخطَّ إلى المحتوى
+      </a>
       {!isChatOnly && (
         <Sidebar mobileMenuOpen={mobileMenuOpen} onSetMobileMenuOpen={setMobileMenuOpen} />
       )}
@@ -69,6 +75,8 @@ export const Layout = () => {
         {!isChatOnly && !location.pathname.includes('/chat') && <Header />}
 
         <main
+          id="main-content"
+          tabIndex={-1}
           className={cn(
             'custom-scrollbar relative w-full min-w-0 max-w-full flex-1 overflow-y-auto overflow-x-hidden',
             isChatOnly || location.pathname.includes('/chat')
