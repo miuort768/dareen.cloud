@@ -46,7 +46,7 @@ export const MonthlyReportPreview = ({
       <div className="relative flex max-h-[95vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border-2 border-border bg-card shadow-[16px_16px_0px_0px_black] dark:border-primary/20 dark:bg-card">
         <div className="custom-scrollbar relative z-10 flex-1 overflow-y-auto p-10 pb-6">
           {/* Brand / Logo */}
-          <div className="mb-12 flex flex-col items-center justify-center space-y-6 text-center">
+          <div className="mb-12 flex flex-col items-center justify-center gap-y-6 text-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-border bg-primary text-on-primary shadow-[6px_6px_0px_0px_black] dark:border-primary/20 dark:bg-primary dark:text-on-primary">
               <Award size={32} />
             </div>

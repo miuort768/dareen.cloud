@@ -35,7 +35,7 @@ export const SecureActionModal = ({
         onClick={(e) => e.stopPropagation()}
         dir="rtl"
       >
-        <div className="flex flex-col items-center space-y-3 text-center">
+        <div className="flex flex-col items-center gap-y-3 text-center">
           <div className="mb-1 flex h-12 w-12 items-center justify-center rounded-2xl bg-error-soft text-error">
             <AlertCircle size={24} />
           </div>
