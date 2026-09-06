@@ -71,7 +71,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
               type="button"
               onClick={onClose}
               aria-label="إغلاق النموذج"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 text-on-primary backdrop-blur-sm transition-all hover:bg-error hover:text-on-error active:scale-90"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/15 text-on-primary outline-none backdrop-blur-sm transition-all hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
             >
               <X size={16} />
             </button>
@@ -126,7 +126,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
           <div className="flex justify-end border-t border-border pt-6">
             <button
               type="submit"
-              className="group flex items-center gap-3 rounded-xl bg-primary px-10 py-4 text-micro font-bold text-on-primary shadow-lg shadow-primary/20 transition-all hover:bg-primary-hover active:scale-95"
+              className="group flex items-center gap-3 rounded-xl bg-primary px-10 py-4 text-micro font-bold text-on-primary shadow-lg shadow-primary/20 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <Save size={14} className="transition-transform group-hover:rotate-12" />
               {isEdit ? 'تحديث البيانات' : 'حفظ وتسجيل الحساب'}

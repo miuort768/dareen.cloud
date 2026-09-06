@@ -162,7 +162,7 @@ export const PrimaryBtn = ({
       'flex items-center justify-center gap-2 bg-gradient-to-br from-primary to-primary-active',
       'hover:from-primary-hover hover:to-primary',
       'rounded-xl px-6 py-3 text-xs font-bold text-on-primary',
-      'transition-all duration-200 active:scale-[0.97]',
+      'outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       'shadow-sm shadow-primary/20 hover:shadow-md',
       'disabled:cursor-not-allowed disabled:opacity-50',
       className,
@@ -187,7 +187,7 @@ export const SecondaryBtn = ({
       'flex items-center justify-center gap-2 border border-divider bg-card',
       'text-muted hover:border-border hover:bg-surface hover:text-main',
       'rounded-xl px-5 py-2.5 text-xs font-bold',
-      'transition-all duration-200 active:scale-[0.97]',
+      'outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       className,
     )}
   >
@@ -210,7 +210,7 @@ export const DangerBtn = ({
       'flex items-center justify-center gap-2 bg-gradient-to-br from-error-soft to-transparent',
       'border-2 border-error-soft hover:border-error hover:from-error hover:to-error-dark',
       'rounded-xl px-5 py-2.5 text-xs font-bold text-error hover:text-on-error',
-      'shadow-sm transition-all duration-200 hover:shadow-md active:scale-[0.97]',
+      'shadow-sm outline-none transition-all duration-200 hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
       className,
     )}
   >

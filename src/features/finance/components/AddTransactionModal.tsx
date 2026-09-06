@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react'
+import React, { useState } from 'react'
 import { DollarSign, Save, X, Info, Calendar, Tag } from 'lucide-react'
 import type { Transaction } from '../../../types'
 import { parseNumberSafe, formatLocalDate } from '../../../lib/utils'
@@ -168,7 +168,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
             </button>
             <button
               type="submit"
-              className="flex flex-[2] items-center justify-center gap-3 rounded-xl bg-primary py-3 font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
+              className="flex flex-[2] items-center justify-center gap-3 rounded-xl bg-primary py-3 font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <Save size={18} />
               تأكيد وحفظ العملية

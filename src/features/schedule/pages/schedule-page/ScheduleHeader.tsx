@@ -103,7 +103,7 @@ export const ScheduleHeader = ({
           <div className="flex shrink-0 items-center gap-1 rounded-lg border border-border bg-surface p-0.5">
             <button
               onClick={() => onWeekChange(-1)}
-              className="flex h-7 w-7 items-center justify-center rounded-md text-main transition-all hover:bg-hover active:scale-90"
+              className="flex h-7 w-7 items-center justify-center rounded-md text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
               aria-label="الأسبوع السابق"
             >
               <ChevronRight size={14} />
@@ -113,7 +113,7 @@ export const ScheduleHeader = ({
             </span>
             <button
               onClick={() => onWeekChange(1)}
-              className="flex h-7 w-7 items-center justify-center rounded-md text-main transition-all hover:bg-hover active:scale-90"
+              className="flex h-7 w-7 items-center justify-center rounded-md text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-90"
               aria-label="الأسبوع التالي"
             >
               <ChevronLeft size={14} />

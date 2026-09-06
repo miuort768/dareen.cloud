@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
   Zap,
@@ -226,13 +226,13 @@ export const FixedExpensesManager = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onConvertAll}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <RotateCcw size={13} /> ترحيل للمعاملات
           </button>
           <button
             onClick={onClearAll}
-            className="flex items-center gap-1.5 rounded-xl border border-error-soft bg-error-soft px-3 py-2 text-xs font-bold text-error transition-all hover:bg-error-soft active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl border border-error-soft bg-error-soft px-3 py-2 text-xs font-bold text-error outline-none transition-all hover:bg-error-soft focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Trash2 size={13} /> تصفير المبالغ
           </button>

@@ -266,7 +266,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
         <div className="flex items-center justify-end border-t border-border pt-6">
           <button
             type="submit"
-            className="flex items-center gap-2 rounded-xl bg-primary px-10 py-3 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
+            className="flex items-center gap-2 rounded-xl bg-primary px-10 py-3 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Save size={16} />
             {initialData ? 'تحديث السجل' : 'إتمام الإضافة'}

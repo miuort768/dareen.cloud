@@ -107,7 +107,7 @@ export const MaintenanceModal = ({
                 setShowMaintenanceModal(false)
                 setInput('')
               }}
-              className="flex-1 rounded-xl border border-divider py-3 text-xs font-bold text-muted transition-all hover:bg-surface hover:text-main active:scale-[0.97]"
+              className="flex-1 rounded-xl border border-divider py-3 text-xs font-bold text-muted outline-none transition-all hover:bg-surface hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               تراجع
             </button>
@@ -115,7 +115,7 @@ export const MaintenanceModal = ({
               disabled={input.trim().toLowerCase() !== CONFIRM_WORD}
               onClick={handleConfirm}
               className={cn(
-                'flex flex-1 items-center justify-center gap-1.5 rounded-xl py-3 text-xs font-bold transition-all active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40',
+                'flex flex-1 items-center justify-center gap-1.5 rounded-xl py-3 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-40',
                 isEnabled
                   ? 'bg-error text-on-error hover:bg-error-hover'
                   : 'bg-primary text-on-primary hover:bg-primary-hover',

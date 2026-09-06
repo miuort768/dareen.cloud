@@ -164,7 +164,7 @@ export const TrialSessionFormModal = ({
           <button
             type="submit"
             disabled={isSaving}
-            className="flex-1 rounded-xl bg-primary py-3 text-[13px] font-bold text-on-primary shadow-sm shadow-primary/10 transition-all hover:bg-primary-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 rounded-xl bg-primary py-3 text-[13px] font-bold text-on-primary shadow-sm shadow-primary/10 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSaving ? 'جاري الحفظ...' : editingId ? 'تحديث' : 'إتمام الإضافة'}
           </button>

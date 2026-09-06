@@ -102,7 +102,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
           {canOpenRoles ? (
             <button
               onClick={() => navigate('/roles')}
-              className="flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-[0.97]"
+              className="flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               <Users size={14} /> فتح
             </button>

@@ -279,7 +279,7 @@ export const ForumPostCard = ({
         <button
           onClick={() => onVote(post.id, 'upvote')}
           className={cn(
-            'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold transition-colors duration-fast active:scale-95',
+            'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
             isLiked
               ? 'bg-primary-soft text-primary'
               : 'text-muted hover:bg-surface hover:text-muted',
@@ -290,14 +290,14 @@ export const ForumPostCard = ({
         </button>
         <button
           onClick={() => onToggleComments(post.id)}
-          className="mx-1 flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-muted transition-colors duration-fast hover:bg-surface hover:text-muted active:scale-95"
+          className="mx-1 flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-muted outline-none transition-colors duration-fast hover:bg-surface hover:text-muted focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
         >
           <MessageSquare size={15} />
           <span>{post.commentCount || 0} تعليق</span>
         </button>
         <button
           onClick={() => onReport(post.id)}
-          className="flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-error transition-colors duration-fast hover:bg-error-light hover:text-error active:scale-95"
+          className="flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold text-error outline-none transition-colors duration-fast hover:bg-error-light hover:text-error focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
         >
           <AlertTriangle size={15} />
           <span>بلاغ</span>
@@ -589,7 +589,7 @@ export const ForumPostCard = ({
                 onClick={() => onAddComment(post.id)}
                 disabled={!(commentTexts[post.id] || '').trim()}
                 aria-label="إرسال التعليق"
-                className="absolute end-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg bg-primary text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-90 disabled:opacity-25"
+                className="absolute end-1.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg bg-primary text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-90 disabled:opacity-25"
               >
                 <Send size={12} />
               </button>
@@ -607,13 +607,13 @@ export const ForumPostCard = ({
           <div className="flex gap-2">
             <button
               onClick={() => onUpdateStatus(post.id, 'approved')}
-              className="rounded-card bg-success px-3.5 py-1.5 text-micro font-bold text-on-success transition-colors duration-fast active:scale-95"
+              className="rounded-card bg-success px-3.5 py-1.5 text-micro font-bold text-on-success outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               موافقة
             </button>
             <button
               onClick={() => onDelete(post.id)}
-              className="rounded-card bg-error px-3.5 py-1.5 text-micro font-bold text-on-error transition-colors duration-fast active:scale-95"
+              className="rounded-card bg-error px-3.5 py-1.5 text-micro font-bold text-on-error outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               حذف
             </button>

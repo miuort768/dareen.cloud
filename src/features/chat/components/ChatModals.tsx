@@ -232,7 +232,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                   <div className="absolute bottom-6 end-6 duration-300 animate-in fade-in slide-in-from-bottom-5">
                     <button
                       onClick={handleNextStep}
-                      className="rounded-full bg-success p-4 text-on-success shadow-md transition-all hover:brightness-95 active:scale-95"
+                      className="rounded-full bg-success p-4 text-on-success shadow-md outline-none transition-all hover:brightness-95 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                       aria-label="التالي"
                     >
                       <ChevronLeft size={32} />
@@ -289,7 +289,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
                     onClick={handleCreateConversation}
                     disabled={!groupName.trim() || isSubmitting}
                     className={cn(
-                      'flex w-full items-center justify-center gap-3 rounded-xl bg-success py-4 font-normal uppercase tracking-widest text-on-success shadow-sm transition-all active:scale-95',
+                      'flex w-full items-center justify-center gap-3 rounded-xl bg-success py-4 font-normal uppercase tracking-widest text-on-success shadow-sm outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                       (!groupName.trim() || isSubmitting) &&
                         'cursor-not-allowed opacity-50 grayscale',
                     )}
@@ -342,7 +342,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
               </button>
               <button
                 onClick={handleDeleteAction}
-                className="flex-1 rounded-lg bg-error py-3 font-bold text-on-error transition-all hover:bg-error-hover active:scale-[0.98]"
+                className="flex-1 rounded-lg bg-error py-3 font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 حذف الآن
               </button>

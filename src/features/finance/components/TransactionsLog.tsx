@@ -242,7 +242,7 @@ export const TransactionsLog = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onAddTransaction}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={14} /> إضافة معاملة
           </button>
@@ -330,7 +330,7 @@ export const TransactionsLog = ({
         <div className="px-4 pb-4 pt-0">
           <button
             onClick={() => setPage((p) => p + 1)}
-            className="w-full rounded-xl border border-primary/20 bg-primary-soft py-2.5 text-xs font-bold text-primary transition-all hover:bg-primary/15 active:scale-[0.99]"
+            className="w-full rounded-xl border border-primary/20 bg-primary-soft py-2.5 text-xs font-bold text-primary outline-none transition-all hover:bg-primary/15 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
           >
             عرض المزيد ({filtered.length - page * PER_PAGE} متبقي)
           </button>

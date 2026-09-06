@@ -242,14 +242,14 @@ export const SchedulePopover = ({
                         setShowNoteInput(false)
                         setNoteText('')
                       }}
-                      className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-4 text-micro font-bold text-main transition-colors duration-fast hover:bg-hover active:scale-95"
+                      className="flex h-10 items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-4 text-micro font-bold text-main outline-none transition-colors duration-fast hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                     >
                       إلغاء
                     </button>
                     <button
                       onClick={handleSendNote}
                       disabled={!noteText.trim() || sendNoteMutation.isPending}
-                      className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-95 disabled:opacity-50"
+                      className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
                     >
                       <Send size={12} />
                       {sendNoteMutation.isPending ? 'جاري الإرسال...' : 'إرسال الملاحظة'}
@@ -258,7 +258,7 @@ export const SchedulePopover = ({
                 ) : (
                   <button
                     onClick={() => setShowNoteInput(true)}
-                    className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-95"
+                    className="flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                   >
                     <Send size={12} />
                     إرسال ملاحظة للطالب

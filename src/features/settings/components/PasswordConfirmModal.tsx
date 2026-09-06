@@ -95,7 +95,7 @@ export const PasswordConfirmModal = ({
                 setPassword('')
                 setError('')
               }}
-              className="flex-1 rounded-xl border border-divider py-3 text-xs font-bold text-muted transition-all hover:bg-surface hover:text-main active:scale-[0.97]"
+              className="flex-1 rounded-xl border border-divider py-3 text-xs font-bold text-muted outline-none transition-all hover:bg-surface hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               تراجع
             </button>
@@ -103,7 +103,7 @@ export const PasswordConfirmModal = ({
               onClick={handleConfirm}
               disabled={submitting}
               className={cn(
-                'flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50',
+                'flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50',
                 submitting && 'opacity-60',
               )}
             >
