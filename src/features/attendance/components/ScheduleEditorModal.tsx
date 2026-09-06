@@ -188,7 +188,7 @@ export const ScheduleEditorModal = ({
                   value={tempSlot.day}
                   onChange={(e) => setTempSlot({ ...tempSlot, day: e.target.value })}
                   aria-label="اختر اليوم"
-                  className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-card px-2 py-2 text-micro font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-card px-2 py-2 text-micro font-bold text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   {DAYS.map((d) => (
                     <option key={d} value={d}>
@@ -217,7 +217,7 @@ export const ScheduleEditorModal = ({
                   value={normalizePeriod(tempSlot.period)}
                   onChange={(e) => setTempSlot({ ...tempSlot, period: e.target.value })}
                   aria-label="اختر الفترة"
-                  className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-card px-2 py-2 text-micro font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-card px-2 py-2 text-micro font-bold text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <option value="am">صباحاً</option>
                   <option value="pm">مساءً</option>

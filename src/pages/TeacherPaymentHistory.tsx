@@ -389,7 +389,7 @@ export const TeacherPaymentHistory = () => {
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
                   aria-label="تصفية حسب الحالة"
-                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main transition-all focus-visible:border-primary focus-visible:outline-none"
+                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
                 >
                   <option value="all">جميع الحالات</option>
                   <option value={INVOICE_STATUS.PAID}>مدفوعة</option>
@@ -403,7 +403,7 @@ export const TeacherPaymentHistory = () => {
                   value={period}
                   onChange={(e) => setPeriod(e.target.value)}
                   aria-label="تصفية حسب الفترة"
-                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface px-3 text-xs font-bold text-main transition-all focus-visible:border-primary focus-visible:outline-none"
+                  className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-surface px-3 text-xs font-bold text-main transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
                 >
                   {periodOptions.map((p) => (
                     <option key={p.value} value={p.value}>

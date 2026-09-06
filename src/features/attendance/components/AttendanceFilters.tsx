@@ -156,7 +156,7 @@ export const AttendanceFilters = ({
               placeholder="اسم الطالب، المادة..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
+              className="w-full rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
             />
           </div>
 
@@ -171,7 +171,7 @@ export const AttendanceFilters = ({
                 value={filterStatus}
                 onChange={(e) => onStatusChange(e.target.value)}
                 aria-label="تصفية حسب الحالة"
-                className="cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
+                className="cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
               >
                 <option value="all">جميع الحالات</option>
                 <option value="scheduled">مجدولة</option>
@@ -188,7 +188,7 @@ export const AttendanceFilters = ({
                 value={filterTeacher}
                 onChange={(e) => onTeacherChange(e.target.value)}
                 aria-label="تصفية حسب المعلمة"
-                className="cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
+                className="cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
               >
                 <option value="all">كافة المعلمات</option>
                 {uniqueTeachers.map((t) => (
@@ -208,7 +208,7 @@ export const AttendanceFilters = ({
                   value={filterSubject || 'all'}
                   onChange={(e) => onSubjectChange(e.target.value)}
                   aria-label="تصفية حسب المادة"
-                  className="cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all focus-visible:border-primary focus-visible:outline-none"
+                  className="cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-[10px] font-medium transition-all hover:border-primary focus-visible:border-primary focus-visible:outline-none"
                 >
                   <option value="all">جميع المواد</option>
                   {uniqueSubjects.map((s) => (

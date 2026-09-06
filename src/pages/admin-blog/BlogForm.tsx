@@ -210,7 +210,7 @@ export const BlogForm = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-4">
-          <label className="flex cursor-pointer items-center gap-2">
+          <label className="flex cursor-pointer items-center gap-2 hover:opacity-80">
             <input
               type="checkbox"
               checked={currentPost.isNew || false}

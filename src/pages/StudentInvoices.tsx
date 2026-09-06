@@ -329,7 +329,7 @@ export const StudentInvoices = () => {
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
                   aria-label="تصفية حسب الحالة"
-                  className="h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                  className="h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                 >
                   <option value="all">الكل</option>
                   <option value="paid">مدفوعة</option>
@@ -426,7 +426,7 @@ export const StudentInvoices = () => {
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
               aria-label="تصفية حسب الحالة"
-              className="h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+              className="h-11 cursor-pointer appearance-none rounded-xl border border-border bg-surface px-4 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
             >
               <option value="all">الكل</option>
               <option value="paid">مدفوعة</option>

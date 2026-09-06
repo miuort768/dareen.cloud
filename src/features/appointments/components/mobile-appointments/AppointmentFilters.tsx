@@ -46,7 +46,7 @@ export const AppointmentFilters = ({
 
     {/* الفلاتر */}
     <div className="flex gap-2">
-      <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-1.5 rounded-2xl border border-border bg-card px-2.5 py-2 transition-colors focus-within:border-primary">
+      <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-1.5 rounded-2xl border border-border bg-card px-2.5 py-2 transition-colors focus-within:border-primary hover:border-primary">
         <CalendarDays size={13} className="shrink-0 text-primary" />
         <select
           value={filterDay}
@@ -63,7 +63,7 @@ export const AppointmentFilters = ({
         </select>
       </label>
       {uniqueTeachers.length > 0 && (
-        <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-1.5 rounded-2xl border border-border bg-card px-2.5 py-2 transition-colors focus-within:border-primary">
+        <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-1.5 rounded-2xl border border-border bg-card px-2.5 py-2 transition-colors focus-within:border-primary hover:border-primary">
           <GraduationCap size={13} className="shrink-0 text-primary" />
           <select
             value={filterTeacher}

@@ -67,7 +67,7 @@ const TransactionRow = ({
     >
       {/* Main row */}
       <div
-        className="flex cursor-pointer items-center justify-between gap-3 p-3.5"
+        className="flex cursor-pointer items-center justify-between gap-3 p-3.5 hover:bg-hover"
         onClick={() => setExpanded(!expanded)}
         role="button"
         tabIndex={0}

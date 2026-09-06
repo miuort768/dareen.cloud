@@ -352,7 +352,7 @@ export const MobileAttendance = () => {
                             value={filterTeacher}
                             onChange={(e) => setFilterTeacher(e.target.value)}
                             aria-label="تصفية حسب المعلمة"
-                            className="min-w-0 flex-1 cursor-pointer appearance-none truncate rounded-2xl bg-transparent px-1 py-0.5 text-micro font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                            className="min-w-0 flex-1 cursor-pointer appearance-none truncate rounded-2xl bg-transparent px-1 py-0.5 text-micro font-bold text-main outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                           >
                             <option value="all">كل المعلمات</option>
                             {uniqueTeachers.map((t) => (
@@ -369,7 +369,7 @@ export const MobileAttendance = () => {
                               value={filterSubject}
                               onChange={(e) => setFilterSubject(e.target.value)}
                               aria-label="تصفية حسب المادة"
-                              className="min-w-0 flex-1 cursor-pointer appearance-none truncate rounded-2xl bg-transparent px-1 py-0.5 text-micro font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                              className="min-w-0 flex-1 cursor-pointer appearance-none truncate rounded-2xl bg-transparent px-1 py-0.5 text-micro font-bold text-main outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                             >
                               <option value="all">كل المواد</option>
                               {uniqueSubjects.map((s) => (

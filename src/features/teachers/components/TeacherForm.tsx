@@ -182,7 +182,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                   required
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full cursor-pointer appearance-none border border-border bg-surface px-4 py-2.5 ps-10 text-xs text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
+                  className="w-full cursor-pointer appearance-none border border-border bg-surface px-4 py-2.5 ps-10 text-xs text-main outline-none transition-all hover:border-primary focus:border-primary focus:ring-2 focus:ring-primary/10"
                 >
                   <option value="" disabled>
                     اختر التخصص...
@@ -256,7 +256,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
         <div className="rounded-2xl border border-border bg-surface p-5">
           <label
             onClick={() => setEnableLogin(!enableLogin)}
-            className="mb-6 flex cursor-pointer items-center gap-3"
+            className="mb-6 flex cursor-pointer items-center gap-3 hover:opacity-80"
           >
             <div
               className={cn(

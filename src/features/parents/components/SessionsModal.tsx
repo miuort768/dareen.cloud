@@ -125,7 +125,7 @@ export const SessionsModal = ({
               <input
                 type="date"
                 aria-label="تاريخ البداية"
-                className="cursor-pointer border-none bg-transparent p-0 text-micro font-normal text-on-primary outline-none dark:[color-scheme:dark]"
+                className="cursor-pointer border-none bg-transparent p-0 text-micro font-normal text-on-primary outline-none hover:text-primary dark:[color-scheme:dark]"
                 value={sessionsStartDate}
                 onChange={(e) => onStartDateChange(e.target.value)}
               />
@@ -133,7 +133,7 @@ export const SessionsModal = ({
               <input
                 type="date"
                 aria-label="تاريخ النهاية"
-                className="cursor-pointer border-none bg-transparent p-0 text-micro font-normal text-on-primary outline-none dark:[color-scheme:dark]"
+                className="cursor-pointer border-none bg-transparent p-0 text-micro font-normal text-on-primary outline-none hover:text-primary dark:[color-scheme:dark]"
                 value={sessionsEndDate}
                 onChange={(e) => onEndDateChange(e.target.value)}
               />

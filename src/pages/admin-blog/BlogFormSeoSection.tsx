@@ -94,7 +94,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
       </div>
     </div>
     <div className="mt-4 flex items-center gap-6">
-      <label className="flex cursor-pointer items-center gap-2">
+      <label className="flex cursor-pointer items-center gap-2 hover:opacity-80">
         <input
           type="checkbox"
           checked={currentPost.robotsIndex !== false}
@@ -103,7 +103,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
         />
         <span className="text-micro font-bold text-muted">السماح بفهرسة المقال</span>
       </label>
-      <label className="flex cursor-pointer items-center gap-2">
+      <label className="flex cursor-pointer items-center gap-2 hover:opacity-80">
         <input
           type="checkbox"
           checked={currentPost.isFeatured || false}

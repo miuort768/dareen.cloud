@@ -43,7 +43,7 @@ export const LeadCards = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.04, duration: 0.3 }}
                 onClick={() => onLeadClick(lead)}
-                className="cursor-pointer overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 outline-none transition-transform duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99] dark:shadow-none"
+                className="cursor-pointer overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 outline-none transition-transform duration-normal hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99] dark:shadow-none"
               >
                 {/* Identity */}
                 <div className="flex items-start justify-between gap-2 px-3.5 pt-3.5">

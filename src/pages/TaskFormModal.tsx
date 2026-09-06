@@ -87,7 +87,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                   />
                   <select
                     id="task-priority"
-                    className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-background py-2.5 pe-4 ps-8 text-xs font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                    className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-background py-2.5 pe-4 ps-8 text-xs font-bold text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
                     aria-label="درجة الأولوية"
                     value={data.priority}
                     onChange={(e) =>

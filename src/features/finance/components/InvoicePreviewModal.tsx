@@ -48,7 +48,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <label className="no-print flex cursor-pointer items-center gap-2">
+            <label className="no-print flex cursor-pointer items-center gap-2 hover:opacity-80">
               <input
                 type="checkbox"
                 checked={hidePricing}

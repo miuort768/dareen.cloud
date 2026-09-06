@@ -49,7 +49,7 @@ export const AttendanceHeader = ({
               aria-label="التاريخ"
               value={date}
               onChange={(e) => onDateChange(e.target.value)}
-              className="w-28 cursor-pointer border-none bg-transparent p-0 text-[11px] font-bold text-main outline-none focus-visible:ring-0"
+              className="w-28 cursor-pointer border-none bg-transparent p-0 text-[11px] font-bold text-main outline-none hover:text-primary focus-visible:ring-0"
             />
           </label>
         )}

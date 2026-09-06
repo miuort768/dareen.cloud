@@ -71,7 +71,7 @@ export const LeadTable = memo(
                 </div>
                 <div className="w-[14%] px-2">
                   <select
-                    className="cursor-pointer rounded-lg border border-border bg-surface px-2.5 py-1.5 text-[10px] font-bold text-main outline-none transition-all"
+                    className="cursor-pointer rounded-lg border border-border bg-surface px-2.5 py-1.5 text-[10px] font-bold text-main outline-none transition-all hover:bg-hover hover:text-primary"
                     value={lead.status}
                     aria-label="حالة العميل"
                     onChange={(e) =>

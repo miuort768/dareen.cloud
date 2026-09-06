@@ -54,7 +54,7 @@ export const TeacherInvoicesHeader = ({
             <input
               type="date"
               aria-label="تاريخ البداية"
-              className="cursor-pointer border-none bg-transparent p-0 text-xs font-bold text-main outline-none"
+              className="cursor-pointer border-none bg-transparent p-0 text-xs font-bold text-main outline-none hover:text-primary"
               value={startDate}
               onChange={(e) => onStartDateChange(e.target.value)}
             />
@@ -62,7 +62,7 @@ export const TeacherInvoicesHeader = ({
             <input
               type="date"
               aria-label="تاريخ النهاية"
-              className="cursor-pointer border-none bg-transparent p-0 text-xs font-bold text-main outline-none"
+              className="cursor-pointer border-none bg-transparent p-0 text-xs font-bold text-main outline-none hover:text-primary"
               value={endDate}
               onChange={(e) => onEndDateChange(e.target.value)}
             />

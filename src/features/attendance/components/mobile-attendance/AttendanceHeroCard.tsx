@@ -132,7 +132,7 @@ export const AttendanceHeroCard = ({
               aria-label="اختيار التاريخ"
               value={date}
               onChange={(e) => onDateChange(e.target.value)}
-              className="w-[105px] cursor-pointer rounded-2xl border-none bg-transparent p-0 text-end text-micro font-bold text-white outline-none"
+              className="w-[105px] cursor-pointer rounded-2xl border-none bg-transparent p-0 text-end text-micro font-bold text-white outline-none hover:text-white/80"
             />
           )}
         </div>
