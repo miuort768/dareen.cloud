@@ -238,7 +238,7 @@ function TableInner<T>({
           <button
             onClick={() => onPageChange(Math.max(1, (page || 1) - 1))}
             disabled={page === 1 || page === undefined}
-            className="rounded-card p-2.5 text-muted transition-colors hover:bg-hover disabled:pointer-events-none disabled:opacity-30 md:p-1.5"
+            className="rounded-card p-2.5 text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus disabled:pointer-events-none disabled:opacity-30 md:p-1.5"
             aria-label="الصفحة السابقة"
           >
             <ChevronRight size={16} />
@@ -251,7 +251,7 @@ function TableInner<T>({
                 key={p}
                 onClick={() => onPageChange(p)}
                 className={cn(
-                  'h-9 min-w-[36px] rounded-card text-xs font-bold transition-colors md:h-8 md:min-w-[32px]',
+                  'h-9 min-w-[36px] rounded-card text-xs font-bold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:min-w-[32px]',
                   isActive ? 'bg-primary text-on-primary' : 'text-muted hover:bg-hover',
                 )}
               >
@@ -263,7 +263,7 @@ function TableInner<T>({
           <button
             onClick={() => onPageChange(Math.min(totalPages, (page || 1) + 1))}
             disabled={page === totalPages}
-            className="rounded-card p-2.5 text-muted transition-colors hover:bg-hover disabled:pointer-events-none disabled:opacity-30 md:p-1.5"
+            className="rounded-card p-2.5 text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus disabled:pointer-events-none disabled:opacity-30 md:p-1.5"
             aria-label="الصفحة التالية"
           >
             <ChevronLeft size={16} />
@@ -297,7 +297,7 @@ function TableInner<T>({
                   : undefined
               }
               className={cn(
-                'rounded-2xl border border-border bg-card p-4 transition-shadow',
+                'rounded-2xl border border-border bg-card p-4 outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-focus',
                 onRowClick && 'cursor-pointer active:scale-[0.99]',
                 selectedId !== undefined && selectedId === id && 'border-primary',
               )}
@@ -341,7 +341,7 @@ function TableInner<T>({
                   : undefined
               }
               className={cn(
-                'rounded-2xl border border-border bg-card p-4 transition-shadow',
+                'rounded-2xl border border-border bg-card p-4 outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-focus',
                 onRowClick && 'cursor-pointer active:scale-[0.99]',
                 isSelected && 'border-primary',
               )}

@@ -47,7 +47,7 @@ export const MobileTopBar = ({
             <button
               onClick={() => (backTo ? navigate(backTo) : navigate(-1))}
               aria-label="رجوع"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-main transition-colors hover:bg-hover active:scale-95"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-main outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <ChevronRight size={18} />
             </button>
@@ -74,7 +74,7 @@ export const MobileTopBar = ({
           <button
             onClick={() => navigate('/parent-announcements')}
             aria-label="الإعلانات"
-            className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:bg-hover active:scale-95"
+            className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Bell size={16} strokeWidth={1.5} />
             {totalUnreadCount > 0 && (

@@ -37,7 +37,7 @@ export const MobilePageHeader = ({
         <button
           onClick={() => (backTo ? navigate(backTo) : navigate(-1))}
           aria-label="رجوع"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-main transition-all active:scale-95"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
         >
           <ChevronRight size={20} />
         </button>
@@ -48,9 +48,7 @@ export const MobilePageHeader = ({
         </div>
       )}
       <div className="min-w-0 flex-1">
-        <h1 className="truncate font-outfit text-lg font-black leading-tight text-main">
-          {title}
-        </h1>
+        <h1 className="font-outfit truncate text-lg font-black leading-tight text-main">{title}</h1>
         {subtitle && <p className="truncate text-[11px] font-medium text-muted">{subtitle}</p>}
       </div>
       {action && <div className="shrink-0">{action}</div>}

@@ -109,7 +109,7 @@ export const SuccessModal = ({
             className={cn(
               'flex-shrink-0 text-muted hover:text-main dark:hover:text-dim',
               'rounded-2xl bg-background p-1.5 hover:bg-surface dark:bg-surface dark:hover:bg-hover',
-              'border border-border transition-all active:scale-95',
+              'border border-border outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
             )}
           >
             <X size={12} />

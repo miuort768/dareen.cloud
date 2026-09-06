@@ -57,7 +57,7 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
           <button
             key={`action-${i}`}
             onClick={() => handleAction(action)}
-            className="block text-start"
+            className="block rounded-2xl text-start outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <motion.div
               initial={{ opacity: 0, y: 12 }}

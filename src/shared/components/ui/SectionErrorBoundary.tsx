@@ -76,7 +76,7 @@ export class SectionErrorBoundary extends Component<Props, State> {
             <p className="mb-4 text-xs text-muted">تعذر تحميل هذا القسم. يرجى المحاولة مرة أخرى.</p>
             <button
               onClick={this.handleReset}
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover active:scale-95"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <RotateCcw size={14} /> إعادة المحاولة
             </button>
