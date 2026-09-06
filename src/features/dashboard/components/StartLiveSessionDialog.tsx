@@ -277,7 +277,7 @@ export const StartLiveSessionDialog = ({
                       'flex-1 rounded-xl border-2 px-2 py-3 text-[11px] font-bold transition-all',
                       provider === p.value
                         ? 'border-primary bg-primary-soft text-primary dark:border-primary dark:bg-primary/10 dark:text-primary'
-                        : 'border-border text-muted hover:border-primary/30 dark:border-border dark:text-muted dark:hover:border-primary/30',
+                        : 'border-border text-muted hover:border-primary/30 dark:border-border dark:text-muted',
                     )}
                   >
                     {p.label}

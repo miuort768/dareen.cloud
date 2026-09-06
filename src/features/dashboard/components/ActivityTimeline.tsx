@@ -112,7 +112,7 @@ export const ActivityTimeline = ({ sessions, tasks, showHeader = true }: Activit
             return (
               <div
                 key={item.id}
-                className="flex items-center gap-3 rounded-xl bg-surface p-3 transition-colors hover:bg-hover dark:bg-hover dark:hover:bg-hover"
+                className="flex items-center gap-3 rounded-xl bg-surface p-3 transition-colors hover:bg-hover dark:bg-hover"
               >
                 <div className="relative shrink-0">
                   <div

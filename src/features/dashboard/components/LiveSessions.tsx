@@ -215,7 +215,7 @@ export const LiveSessions = () => {
           </div>
           <button
             onClick={() => refetch()}
-            className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-error transition-colors hover:bg-error-soft dark:hover:bg-error-soft"
+            className="flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold text-error transition-colors hover:bg-error-soft"
           >
             <RefreshCcw size={11} /> إعادة
           </button>
@@ -340,7 +340,7 @@ export const LiveSessions = () => {
                   {isTeacher && (
                     <button
                       onClick={() => endSession(session.id)}
-                      className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border text-error transition-all hover:border-error-soft hover:bg-error-soft hover:text-error dark:border-error-soft dark:hover:bg-error-soft"
+                      className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-xl border border-border text-error transition-all hover:border-error-soft hover:bg-error-soft hover:text-error dark:border-error-soft"
                       title="إنهاء الحصة"
                       aria-label="إنهاء الحصة"
                     >
@@ -424,7 +424,7 @@ export const LiveSessions = () => {
                     href="https://meet.google.com/new"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors hover:bg-success-soft dark:bg-success-soft dark:hover:bg-success-soft"
+                    className="flex items-center gap-1 whitespace-nowrap rounded-xl border border-success-soft bg-success-soft px-3 py-3 text-[11px] font-bold text-success transition-colors hover:bg-success-soft dark:bg-success-soft"
                     title="إنشاء رابط Google Meet جديد"
                   >
                     <LinkIcon size={14} /> إنشاء

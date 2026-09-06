@@ -145,7 +145,7 @@ export const NotificationsCenter = ({
               'flex min-h-[36px] items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
               activeTab === 'smart'
                 ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary'
-                : 'text-muted hover:text-main dark:text-muted dark:hover:text-main',
+                : 'text-muted hover:text-main dark:text-muted',
             )}
           >
             <Zap size={10} />
@@ -159,7 +159,7 @@ export const NotificationsCenter = ({
               'flex min-h-[36px] items-center gap-1 rounded-md px-3 py-1.5 text-[10px] font-bold transition-colors',
               activeTab === 'room'
                 ? 'bg-primary text-on-primary dark:bg-primary dark:text-on-primary'
-                : 'text-muted hover:text-main dark:text-muted dark:hover:text-main',
+                : 'text-muted hover:text-main dark:text-muted',
             )}
           >
             <Bell size={10} />

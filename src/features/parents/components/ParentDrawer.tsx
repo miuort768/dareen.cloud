@@ -236,25 +236,25 @@ const OverviewTab = ({
     <div className="grid grid-cols-2 gap-2 pt-2">
       <button
         onClick={handleCall}
-        className="flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[10px] font-bold text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-success dark:text-on-success dark:hover:bg-success-hover"
+        className="flex items-center justify-center gap-2 rounded-xl bg-success py-2.5 text-[10px] font-bold text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-success dark:text-on-success"
       >
         <Phone size={12} /> اتصال
       </button>
       <button
         onClick={handleWhatsApp}
-        className="flex items-center justify-center gap-2 rounded-xl bg-warning py-2.5 text-[10px] font-bold text-on-warning outline-none transition-all hover:bg-warning-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-warning dark:text-on-warning dark:hover:bg-warning-hover"
+        className="flex items-center justify-center gap-2 rounded-xl bg-warning py-2.5 text-[10px] font-bold text-on-warning outline-none transition-all hover:bg-warning-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-warning dark:text-on-warning"
       >
         <MessageCircle size={12} /> واتساب
       </button>
       <button
         onClick={() => onEdit?.(parent)}
-        className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[10px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-primary dark:text-on-primary dark:hover:bg-primary-hover"
+        className="flex items-center justify-center gap-2 rounded-xl bg-primary py-2.5 text-[10px] font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-primary dark:text-on-primary"
       >
         <Edit size={12} /> تعديل
       </button>
       <button
         onClick={() => onDelete?.(parent.id)}
-        className="flex items-center justify-center gap-2 rounded-xl bg-error py-2.5 text-[10px] font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-error dark:text-on-error dark:hover:bg-error-hover"
+        className="flex items-center justify-center gap-2 rounded-xl bg-error py-2.5 text-[10px] font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 dark:bg-error dark:text-on-error"
       >
         <Trash2 size={12} /> حذف
       </button>

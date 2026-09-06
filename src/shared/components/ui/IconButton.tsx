@@ -18,7 +18,7 @@ const variants = {
   error:
     'bg-card dark:bg-card border border-border dark:border-primary/20' +
     ' text-muted' +
-    ' hover:bg-error-soft hover:text-error dark:hover:bg-error-soft dark:hover:text-error',
+    ' hover:bg-error-soft hover:text-error',
 }
 
 const sizes = {

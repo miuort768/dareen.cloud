@@ -176,7 +176,7 @@ export const TeacherSessionTimeline = ({
                   'h-2 w-2 rounded-full transition-all',
                   i === currentPage
                     ? 'w-6 bg-primary dark:bg-primary'
-                    : 'bg-hover hover:bg-hover dark:bg-hover dark:hover:bg-hover',
+                    : 'bg-hover hover:bg-hover dark:bg-hover',
                 )}
                 aria-label={`صفحة ${i + 1}`}
               />
