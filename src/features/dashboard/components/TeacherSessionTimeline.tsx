@@ -1,4 +1,4 @@
-﻿import { Clock, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Clock, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useState, useMemo } from 'react'
 
@@ -47,9 +47,7 @@ export const TeacherSessionTimeline = ({
           </div>
           <div>
             <h3 className="text-sm font-black text-main">الجدول الزمني</h3>
-            <p className="mt-0.5 text-[11px] font-medium text-muted dark:text-muted">
-              جدول الحصص اليومية
-            </p>
+            <p className="mt-0.5 text-[11px] font-medium text-muted">جدول الحصص اليومية</p>
           </div>
         </div>
         <div className="flex items-center gap-1.5 rounded-lg bg-success-soft px-2.5 py-1 text-[10px] font-bold text-success dark:bg-success-soft dark:text-success">
@@ -112,9 +110,7 @@ export const TeacherSessionTimeline = ({
                   )}
                 </div>
 
-                <h4 className="mb-1 truncate text-xs font-bold text-main dark:text-main">
-                  {session.studentName}
-                </h4>
+                <h4 className="mb-1 truncate text-xs font-bold text-main">{session.studentName}</h4>
 
                 <div className="flex items-center gap-1.5">
                   <div
@@ -127,9 +123,7 @@ export const TeacherSessionTimeline = ({
                           : 'bg-primary dark:bg-primary',
                     )}
                   />
-                  <p className="truncate text-[11px] text-muted dark:text-muted">
-                    {session.subject}
-                  </p>
+                  <p className="truncate text-[11px] text-muted">{session.subject}</p>
                 </div>
 
                 <div className="mt-3 flex items-center justify-between border-t border-border pt-2.5 dark:border-border">
@@ -159,7 +153,7 @@ export const TeacherSessionTimeline = ({
               className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-lg transition-all hover:bg-hover hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-30 dark:border-border dark:bg-card md:h-9 md:w-9"
               aria-label="السابق"
             >
-              <ChevronRight size={16} className="text-main dark:text-main" />
+              <ChevronRight size={16} className="text-main" />
             </button>
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
@@ -167,7 +161,7 @@ export const TeacherSessionTimeline = ({
               className="pointer-events-auto z-10 flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-surface shadow-lg transition-all hover:bg-hover hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-30 dark:border-border dark:bg-card md:h-9 md:w-9"
               aria-label="التالي"
             >
-              <ChevronLeft size={16} className="text-main dark:text-main" />
+              <ChevronLeft size={16} className="text-main" />
             </button>
           </div>
         )}

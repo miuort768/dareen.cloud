@@ -133,13 +133,13 @@ export const StartLiveSessionDialog = ({
         {started ? (
           <div className="space-y-5">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-main dark:text-main">بدأت الحصة!</h3>
+              <h3 className="text-lg font-bold text-main">بدأت الحصة!</h3>
               <button
                 onClick={onClose}
                 className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface transition-colors hover:bg-hover dark:bg-hover dark:hover:bg-primary/5 md:h-9 md:w-9"
                 aria-label="إغلاق"
               >
-                <X size={16} className="text-muted dark:text-muted" />
+                <X size={16} className="text-muted" />
               </button>
             </div>
 
@@ -147,19 +147,17 @@ export const StartLiveSessionDialog = ({
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-success-soft">
                 <CheckCircle2 size={26} className="text-success" />
               </div>
-              <p className="text-sm font-bold leading-relaxed text-main dark:text-main">
+              <p className="text-sm font-bold leading-relaxed text-main">
                 تم إشعار الطالب وولي الأمر بأن الحصة جارية الآن
               </p>
-              <p className="text-[11px] font-medium text-muted dark:text-muted">
+              <p className="text-[11px] font-medium text-muted">
                 رابط الحصة جاهز ويمكن نسخه أو مشاركته
               </p>
             </div>
 
             <div className="flex items-center gap-2 rounded-xl border border-border bg-background p-3 dark:border-border dark:bg-hover">
               <div className="min-w-0 flex-1">
-                <p className="mb-0.5 text-[10px] font-bold text-muted dark:text-muted">
-                  رابط الحصة
-                </p>
+                <p className="mb-0.5 text-[10px] font-bold text-muted">رابط الحصة</p>
                 <p
                   className="truncate text-[11px] font-medium text-primary dark:text-primary"
                   dir="ltr"
@@ -201,8 +199,8 @@ export const StartLiveSessionDialog = ({
                   <Radio size={16} className="text-primary dark:text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-main dark:text-main">بدء حصة مباشرة</h3>
-                  <p className="mt-0.5 text-[10px] text-muted dark:text-muted">
+                  <h3 className="text-base font-bold text-main">بدء حصة مباشرة</h3>
+                  <p className="mt-0.5 text-[10px] text-muted">
                     اختر الطالب ثم ضع الرابط ليصل له وولي أمره
                   </p>
                 </div>
@@ -212,14 +210,14 @@ export const StartLiveSessionDialog = ({
                 className="flex h-10 w-10 items-center justify-center rounded-xl bg-surface transition-colors hover:bg-hover dark:bg-hover dark:hover:bg-primary/5 md:h-9 md:w-9"
                 aria-label="إغلاق"
               >
-                <X size={16} className="text-muted dark:text-muted" />
+                <X size={16} className="text-muted" />
               </button>
             </div>
 
             <div>
               <label
                 htmlFor="start-live-student"
-                className="mb-2 block text-xs font-bold text-muted dark:text-muted"
+                className="mb-2 block text-xs font-bold text-muted"
               >
                 الطالب <span className="text-error">*</span>
               </label>
@@ -244,7 +242,7 @@ export const StartLiveSessionDialog = ({
                 </select>
               </div>
               {!loadingStudents && ownStudents.length === 0 && (
-                <p className="mt-1 flex items-center gap-1.5 text-[11px] font-bold text-muted dark:text-muted">
+                <p className="mt-1 flex items-center gap-1.5 text-[11px] font-bold text-muted">
                   <Users size={12} />
                   لا يوجد طلاب مضافون لك حالياً.
                 </p>
@@ -254,7 +252,7 @@ export const StartLiveSessionDialog = ({
             <div>
               <label
                 htmlFor="start-live-subject"
-                className="mb-2 block text-xs font-bold text-muted dark:text-muted"
+                className="mb-2 block text-xs font-bold text-muted"
               >
                 المادة
               </label>
@@ -269,9 +267,7 @@ export const StartLiveSessionDialog = ({
             </div>
 
             <div>
-              <label className="mb-2 block text-xs font-bold text-muted dark:text-muted">
-                نوع الاجتماع
-              </label>
+              <label className="mb-2 block text-xs font-bold text-muted">نوع الاجتماع</label>
               <div className="flex gap-2">
                 {PROVIDERS.map((p) => (
                   <button
@@ -293,7 +289,7 @@ export const StartLiveSessionDialog = ({
             <div>
               <label
                 htmlFor="start-live-meeting-url"
-                className="mb-2 block text-xs font-bold text-muted dark:text-muted"
+                className="mb-2 block text-xs font-bold text-muted"
               >
                 رابط الاجتماع <span className="text-error">*</span>
               </label>

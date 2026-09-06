@@ -19,7 +19,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">
             <ListTodo size={14} className="text-primary dark:text-primary" />
           </div>
-          <h3 className="text-sm font-black text-main dark:text-main">المهام والطلبات</h3>
+          <h3 className="text-sm font-black text-main">المهام والطلبات</h3>
           {urgentCount > 0 && (
             <span className="rounded-md bg-error-soft px-1.5 py-0.5 text-[10px] font-bold text-error dark:bg-error-soft dark:text-error">
               {urgentCount} عاجلة
@@ -65,11 +65,9 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
                 {task.priority === 'high' ? <AlertTriangle size={13} /> : <Clock size={13} />}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-bold text-main dark:text-main">{task.title}</p>
+                <p className="truncate text-sm font-bold text-main">{task.title}</p>
                 <div className="mt-0.5 flex items-center gap-2">
-                  <span className="text-[11px] font-medium text-muted dark:text-muted">
-                    {task.dueDate}
-                  </span>
+                  <span className="text-[11px] font-medium text-muted">{task.dueDate}</span>
                   {task.priority === 'high' && (
                     <Badge variant="destructive" className="text-[10px]">
                       عاجل
@@ -82,11 +80,9 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
         ) : (
           <div className="flex flex-col items-center justify-center py-10 opacity-50">
             <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-xl bg-surface dark:bg-hover">
-              <ListTodo size={18} className="text-dim dark:text-dim" />
+              <ListTodo size={18} className="text-dim" />
             </div>
-            <p className="text-[11px] font-bold text-muted dark:text-muted">
-              لا توجد مهام نشطة حالياً
-            </p>
+            <p className="text-[11px] font-bold text-muted">لا توجد مهام نشطة حالياً</p>
           </div>
         )}
       </div>

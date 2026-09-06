@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import { Bell, Zap, AlertTriangle, CheckCircle2, Phone, Info } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
@@ -208,13 +208,9 @@ export const NotificationsCenter = ({
                     }}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <h3 className="text-[11px] font-bold text-main dark:text-main">
-                        {alert.title}
-                      </h3>
+                      <h3 className="text-[11px] font-bold text-main">{alert.title}</h3>
                     </div>
-                    <p className="mt-0.5 line-clamp-1 text-[10px] text-muted dark:text-muted">
-                      {alert.desc}
-                    </p>
+                    <p className="mt-0.5 line-clamp-1 text-[10px] text-muted">{alert.desc}</p>
                   </div>
                 </div>
               ))}
@@ -229,9 +225,7 @@ export const NotificationsCenter = ({
                   <h3 className="text-[11px] font-bold text-success">كل الأنظمة تعمل</h3>
                   <span className="shrink-0 text-[9px] text-muted dark:text-dim">الآن</span>
                 </div>
-                <p className="mt-0.5 text-[10px] text-muted dark:text-muted">
-                  لا توجد مشاكل في النظام
-                </p>
+                <p className="mt-0.5 text-[10px] text-muted">لا توجد مشاكل في النظام</p>
               </div>
             </div>
           )}
@@ -251,13 +245,9 @@ export const NotificationsCenter = ({
                   </div>
                   <div className="min-w-0 flex-1 rounded-xl border border-border bg-card p-3 transition-colors hover:bg-surface dark:border-border dark:bg-card dark:hover:bg-hover">
                     <div className="mb-1 flex items-center justify-between gap-2">
-                      <h4 className="truncate text-[11px] font-bold text-main dark:text-main">
-                        {alert.title}
-                      </h4>
+                      <h4 className="truncate text-[11px] font-bold text-main">{alert.title}</h4>
                     </div>
-                    <p className="line-clamp-1 text-[10px] text-muted dark:text-muted">
-                      {alert.description}
-                    </p>
+                    <p className="line-clamp-1 text-[10px] text-muted">{alert.description}</p>
                     <div className="mt-2 flex gap-1.5">
                       {alert.actionLabel === 'واتساب' ? (
                         <Button
@@ -292,9 +282,7 @@ export const NotificationsCenter = ({
                   <h3 className="text-[11px] font-bold text-success">كل الأنظمة تعمل</h3>
                   <span className="shrink-0 text-[9px] text-muted dark:text-dim">الآن</span>
                 </div>
-                <p className="mt-0.5 text-[10px] text-muted dark:text-muted">
-                  كافة الأنظمة تعمل بشكل طبيعي
-                </p>
+                <p className="mt-0.5 text-[10px] text-muted">كافة الأنظمة تعمل بشكل طبيعي</p>
               </div>
             </div>
           )}

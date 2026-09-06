@@ -72,7 +72,7 @@ export const TopAttendanceStudents = ({
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-warning-soft dark:bg-primary/10">
           <Medal size={14} className="text-warning dark:text-primary" />
         </div>
-        <h3 className="text-sm font-black text-main dark:text-main">الأكثر حضوراً</h3>
+        <h3 className="text-sm font-black text-main">الأكثر حضوراً</h3>
       </div>
 
       <div className="space-y-2">
@@ -96,13 +96,11 @@ export const TopAttendanceStudents = ({
                   >
                     {i + 1}
                   </div>
-                  <p className="truncate text-sm font-bold text-main dark:text-main">{stu.name}</p>
+                  <p className="truncate text-sm font-bold text-main">{stu.name}</p>
                 </div>
                 <div className="flex shrink-0 items-baseline gap-1">
-                  <span className="text-base font-black tabular-nums text-main dark:text-main">
-                    {stu.count}
-                  </span>
-                  <span className="text-[10px] font-bold text-muted dark:text-muted">حصة</span>
+                  <span className="text-base font-black tabular-nums text-main">{stu.count}</span>
+                  <span className="text-[10px] font-bold text-muted">حصة</span>
                 </div>
               </div>
               <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-hover dark:bg-surface">
@@ -119,8 +117,8 @@ export const TopAttendanceStudents = ({
           ))
         ) : (
           <div className="flex flex-col items-center justify-center py-6 opacity-50">
-            <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-xl bg-surface dark:bg-surface">
-              <User size={14} className="text-dim dark:text-dim" />
+            <div className="mb-1.5 flex h-8 w-8 items-center justify-center rounded-xl bg-surface">
+              <User size={14} className="text-dim" />
             </div>
             <p className="text-xs font-bold text-muted">لا توجد سجلات حالياً</p>
           </div>

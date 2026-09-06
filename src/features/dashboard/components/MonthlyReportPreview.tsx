@@ -1,4 +1,4 @@
-﻿import { Share2, FileDown, CheckCircle2, Star, Calendar, X, Award, ShieldCheck } from 'lucide-react'
+import { Share2, FileDown, CheckCircle2, Star, Calendar, X, Award, ShieldCheck } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '../../../shared/components/ui'
 import { useAcademyName } from '../../../context/AppContext'
@@ -51,10 +51,10 @@ export const MonthlyReportPreview = ({
               <Award size={32} />
             </div>
             <div>
-              <h3 className="text-xl font-medium uppercase italic tracking-tight text-main dark:text-main">
+              <h3 className="text-xl font-medium uppercase italic tracking-tight text-main">
                 تقرير التميز الأكاديمي
               </h3>
-              <p className="mt-1 text-micro font-medium uppercase text-muted dark:text-muted">
+              <p className="mt-1 text-micro font-medium uppercase text-muted">
                 منصة {academyName} التعليمية —{' '}
                 {new Date().toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}
               </p>
@@ -68,12 +68,12 @@ export const MonthlyReportPreview = ({
                 <p className="text-micro font-medium uppercase text-primary dark:text-primary">
                   نجمة أكاديمية
                 </p>
-                <h4 className="text-2xl font-medium uppercase tracking-tight text-main dark:text-main">
+                <h4 className="text-2xl font-medium uppercase tracking-tight text-main">
                   {student.name}
                 </h4>
               </div>
               <div className="rounded-2xl border-2 border-border bg-card px-4 py-2 text-end dark:border-primary/20 dark:bg-card">
-                <p className="mb-0.5 text-micro font-medium uppercase text-muted dark:text-muted">
+                <p className="mb-0.5 text-micro font-medium uppercase text-muted">
                   المستوى / المادة
                 </p>
                 <p className="text-xs font-medium uppercase text-primary dark:text-primary">
@@ -120,19 +120,15 @@ export const MonthlyReportPreview = ({
                   >
                     <item.icon size={20} />
                   </div>
-                  <p className="text-xl font-medium tabular-nums text-main dark:text-main">
-                    {item.value}
-                  </p>
-                  <p className="mt-1 text-micro font-medium uppercase text-muted dark:text-muted">
-                    {item.label}
-                  </p>
+                  <p className="text-xl font-medium tabular-nums text-main">{item.value}</p>
+                  <p className="mt-1 text-micro font-medium uppercase text-muted">{item.label}</p>
                 </div>
               ))}
             </div>
 
             {/* Qualitative Feedback */}
             <div className="space-y-4 rounded-2xl border-2 border-border bg-background p-6 dark:border-primary/20 dark:bg-card">
-              <p className="flex items-center gap-2 text-micro font-medium uppercase text-muted dark:text-muted">
+              <p className="flex items-center gap-2 text-micro font-medium uppercase text-muted">
                 <CheckCircle2 size={14} className="text-primary dark:text-primary" />
                 التوصيات الأكاديمية ومسارات التطوير
               </p>
@@ -140,9 +136,7 @@ export const MonthlyReportPreview = ({
                 {student.lastNotes.map((note, idx) => (
                   <div key={idx} className="flex items-start gap-3">
                     <div className="mt-1 h-2 w-2 shrink-0 rounded-2xl border border-border bg-primary dark:bg-primary"></div>
-                    <p className="text-sm font-normal italic leading-tight text-main dark:text-main">
-                      "{note}"
-                    </p>
+                    <p className="text-sm font-normal italic leading-tight text-main">"{note}"</p>
                   </div>
                 ))}
               </div>

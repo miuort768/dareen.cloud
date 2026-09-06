@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { cn } from '../../../lib/utils'
 import { triggerHaptic } from '../../../lib/haptics'
 
@@ -13,11 +13,11 @@ export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
 const variants = {
   default:
     'bg-card dark:bg-card border border-border dark:border-primary/20' +
-    ' text-muted dark:text-muted' +
+    ' text-muted' +
     ' hover:bg-hover hover:text-main dark:hover:bg-primary/10 dark:hover:text-primary',
   error:
     'bg-card dark:bg-card border border-border dark:border-primary/20' +
-    ' text-muted dark:text-muted' +
+    ' text-muted' +
     ' hover:bg-error-soft hover:text-error dark:hover:bg-error-soft dark:hover:text-error',
 }
 

@@ -30,7 +30,7 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
 
   return (
     <div>
-      <h3 className="mb-4 text-sm font-black text-main dark:text-main">{label}</h3>
+      <h3 className="mb-4 text-sm font-black text-main">{label}</h3>
       <div className="flex items-center gap-5">
         <svg
           width={size}
@@ -84,12 +84,12 @@ export const AttendanceChart = ({ rate, label = 'نسبة الحضور' }: Atten
         </svg>
 
         <div className="min-w-0 flex-1 space-y-2">
-          <p className="text-sm font-bold text-main dark:text-main">{status.label}</p>
+          <p className="text-sm font-bold text-main">{status.label}</p>
           <ProgressBar
             value={rate}
             variant={rate >= 80 ? 'success' : rate >= 50 ? 'info' : 'error'}
           />
-          <p className="text-micro font-medium text-dim dark:text-dim">{status.hint}</p>
+          <p className="text-micro font-medium text-dim">{status.hint}</p>
         </div>
       </div>
     </div>

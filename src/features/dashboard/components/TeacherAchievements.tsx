@@ -1,4 +1,4 @@
-﻿import { AlertCircle, Clock, Star, TrendingUp, Zap } from 'lucide-react'
+import { AlertCircle, Clock, Star, TrendingUp, Zap } from 'lucide-react'
 import { CURRENCY_SYMBOL } from '../../../config/constants'
 import type { DashboardStats as Stats, LowBalanceStudent } from '../types'
 import { getRankByPoints, getNextRank, TEACHER_RANKS } from '../../../shared/utils/ranks'
@@ -39,7 +39,7 @@ export const TeacherAchievements = ({
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-warning-soft dark:bg-primary/10">
           <Star size={14} className="text-warning dark:text-primary" />
         </div>
-        <h3 className="text-sm font-black text-main dark:text-main">
+        <h3 className="text-sm font-black text-main">
           {isTeacher ? 'إنجازاتك التعليمية' : 'التحصيل المالي'}
         </h3>
         {isTeacher && <RankBadge rank={rank} size="sm" />}
@@ -48,7 +48,7 @@ export const TeacherAchievements = ({
       {isTeacher && next && (
         <div className="mb-4 rounded-2xl border border-border bg-surface p-3.5 dark:border-border dark:bg-hover">
           <div className="mb-2 flex items-center justify-between">
-            <span className="flex items-center gap-1.5 text-[11px] font-bold text-main dark:text-main">
+            <span className="flex items-center gap-1.5 text-[11px] font-bold text-main">
               <Zap size={11} className="text-warning dark:text-primary" />
               {pointsNeeded} XP للترقية إلى «{next.name}»
             </span>
@@ -97,10 +97,8 @@ export const TeacherAchievements = ({
             <AlertCircle size={14} className="text-error dark:text-error" />
           </div>
           <div>
-            <span className="text-lg font-black tabular-nums text-main dark:text-main">
-              {expiredCount}
-            </span>
-            <p className="text-[11px] font-bold text-muted dark:text-muted">منتهي</p>
+            <span className="text-lg font-black tabular-nums text-main">{expiredCount}</span>
+            <p className="text-[11px] font-bold text-muted">منتهي</p>
           </div>
         </div>
         <div className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3 dark:border-border dark:bg-hover">
@@ -108,10 +106,8 @@ export const TeacherAchievements = ({
             <Clock size={14} className="text-warning dark:text-warning" />
           </div>
           <div>
-            <span className="text-lg font-black tabular-nums text-main dark:text-main">
-              {lowCount}
-            </span>
-            <p className="text-[11px] font-bold text-muted dark:text-muted">مستحق</p>
+            <span className="text-lg font-black tabular-nums text-main">{lowCount}</span>
+            <p className="text-[11px] font-bold text-muted">مستحق</p>
           </div>
         </div>
       </div>

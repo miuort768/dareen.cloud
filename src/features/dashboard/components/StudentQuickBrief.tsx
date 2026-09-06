@@ -1,4 +1,4 @@
-﻿import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react'
+import { User, Star, MessageSquare, Award, X, Sparkles, TrendingUp } from 'lucide-react'
 import { Button } from '../../../shared/components/ui'
 
 interface BriefSession {
@@ -62,7 +62,7 @@ export const StudentQuickBrief = ({
                 <User size={32} />
               </div>
               <div>
-                <h3 className="text-xl font-medium uppercase tracking-tight text-main dark:text-main">
+                <h3 className="text-xl font-medium uppercase tracking-tight text-main">
                   {student.name}
                 </h3>
                 <div className="mt-2 flex items-center gap-2">
@@ -105,7 +105,7 @@ export const StudentQuickBrief = ({
 
           {/* Context Row */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-muted dark:text-muted">
+            <div className="flex items-center gap-2 text-muted">
               <MessageSquare size={14} className="text-primary dark:text-primary" />
               <h4 className="text-micro font-medium uppercase">سياق ولي الأمر</h4>
             </div>
@@ -116,7 +116,7 @@ export const StudentQuickBrief = ({
 
           {/* Timeline Row */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-muted dark:text-muted">
+            <div className="flex items-center gap-2 text-muted">
               <TrendingUp size={14} className="text-success" />
               <h4 className="text-micro font-medium uppercase">مسار التعلم الأخير</h4>
             </div>
@@ -129,10 +129,10 @@ export const StudentQuickBrief = ({
                     className="group flex items-center justify-between rounded-2xl border-2 border-divider bg-card p-4 transition-all hover:border-border dark:border-primary/10 dark:bg-card dark:hover:border-primary/30"
                   >
                     <div className="min-w-0">
-                      <p className="mb-1 text-micro font-medium uppercase text-muted dark:text-muted">
+                      <p className="mb-1 text-micro font-medium uppercase text-muted">
                         {sess.date}
                       </p>
-                      <p className="truncate text-sm font-medium uppercase tracking-tight text-main dark:text-main">
+                      <p className="truncate text-sm font-medium uppercase tracking-tight text-main">
                         {sess.topics}
                       </p>
                       <div className="mt-1.5 flex items-center gap-2">
@@ -149,9 +149,7 @@ export const StudentQuickBrief = ({
                 ))
               ) : (
                 <div className="rounded-2xl border-2 border-dashed border-border bg-background py-12 text-center dark:border-primary/20 dark:bg-card">
-                  <p className="text-micro font-medium uppercase text-muted dark:text-muted">
-                    مرحلة البدء
-                  </p>
+                  <p className="text-micro font-medium uppercase text-muted">مرحلة البدء</p>
                 </div>
               )}
             </div>

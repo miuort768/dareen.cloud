@@ -1,4 +1,4 @@
-﻿import { TrendingUp, Wallet } from 'lucide-react'
+import { TrendingUp, Wallet } from 'lucide-react'
 import { getCurrencySymbol } from '@/config/constants'
 
 interface FinancialSnapshotProps {
@@ -44,7 +44,7 @@ export const FinancialSnapshot = ({
 
   return (
     <div>
-      <h3 className="mb-3 flex items-center gap-2 text-sm font-black text-main dark:text-main">
+      <h3 className="mb-3 flex items-center gap-2 text-sm font-black text-main">
         <Wallet size={14} className="text-primary dark:text-primary" />
         الملخص المالي
       </h3>
@@ -52,9 +52,7 @@ export const FinancialSnapshot = ({
       {expectedCollection > 0 && (
         <div className="mb-4 rounded-2xl border border-border bg-surface p-3.5 dark:border-border dark:bg-hover">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-[11px] font-bold text-main dark:text-main">
-              نسبة التحصيل الشهري
-            </span>
+            <span className="text-[11px] font-bold text-main">نسبة التحصيل الشهري</span>
             <span className="text-[11px] font-black tabular-nums text-primary dark:text-primary">
               {collectRate}%
             </span>
@@ -86,12 +84,10 @@ export const FinancialSnapshot = ({
             >
               <item.icon size={16} />
             </div>
-            <p className="min-w-0 flex-1 truncate text-xs font-bold text-muted dark:text-muted">
-              {item.label}
-            </p>
-            <span className="shrink-0 text-base font-black tabular-nums text-main dark:text-main">
+            <p className="min-w-0 flex-1 truncate text-xs font-bold text-muted">{item.label}</p>
+            <span className="shrink-0 text-base font-black tabular-nums text-main">
               {item.value.toLocaleString('ar-EG')}{' '}
-              <span className="text-[11px] font-bold text-muted dark:text-muted">{sym}</span>
+              <span className="text-[11px] font-bold text-muted">{sym}</span>
             </span>
           </div>
         ))}

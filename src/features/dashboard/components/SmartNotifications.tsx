@@ -97,7 +97,7 @@ export const SmartNotifications = ({
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-sm font-black text-main dark:text-main">
+        <h3 className="flex items-center gap-2 text-sm font-black text-main">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft dark:bg-primary/10">
             <BellRing size={14} className="text-primary dark:text-primary" />
           </div>
@@ -140,7 +140,7 @@ export const SmartNotifications = ({
             </div>
             <div className="min-w-0 flex-1">
               <p className={cn('mb-1 text-sm font-bold', alert.text)}>{alert.title}</p>
-              <p className="line-clamp-2 text-[11px] font-medium leading-relaxed text-muted dark:text-muted">
+              <p className="line-clamp-2 text-[11px] font-medium leading-relaxed text-muted">
                 {alert.desc}
               </p>
             </div>

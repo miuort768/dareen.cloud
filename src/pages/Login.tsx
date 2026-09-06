@@ -102,7 +102,7 @@ export const Login = () => {
       <div className="relative z-10 flex min-h-[calc(100vh-60px)] flex-col items-center justify-center px-4 py-8 lg:min-h-screen lg:pt-24">
         <div className="mt-32 w-full max-w-sm dark:rounded-2xl dark:bg-white dark:p-8 dark:shadow-2xl lg:mt-0 lg:max-w-md xl:max-w-lg">
           <div className="mb-8 text-center lg:mb-10">
-            <h1 className="mb-2 hidden font-heading text-2xl font-black text-main dark:text-main lg:block lg:text-3xl">
+            <h1 className="mb-2 hidden font-heading text-2xl font-black text-main lg:block lg:text-3xl">
               تسجيل الدخول
             </h1>
             <p className="text-sm font-medium text-white/80 dark:text-muted lg:text-base lg:text-main">
@@ -127,7 +127,7 @@ export const Login = () => {
               <div className="relative">
                 <User
                   size={18}
-                  className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-muted dark:text-muted"
+                  className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-muted"
                 />
                 <input
                   id="login-username"
@@ -151,7 +151,7 @@ export const Login = () => {
               <div className="relative">
                 <Lock
                   size={18}
-                  className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-muted dark:text-muted"
+                  className="pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-muted"
                 />
                 <input
                   id="login-password"
