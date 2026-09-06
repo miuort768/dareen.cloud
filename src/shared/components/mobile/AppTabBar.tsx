@@ -93,7 +93,7 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
         className="px-3 pt-1"
         style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
       >
-        <div className="relative overflow-hidden rounded-[26px] border border-border bg-card shadow-elevation-3 backdrop-blur-2xl dark:border-white/10 dark:bg-background">
+        <div className="relative overflow-hidden rounded-full border border-border bg-card shadow-elevation-3 backdrop-blur-2xl dark:border-white/10 dark:bg-background">
           <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/25 to-transparent" />
 
           <div className="flex h-[60px] items-stretch gap-1 px-1.5 py-2">

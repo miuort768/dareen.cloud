@@ -84,7 +84,7 @@ export const AppearanceSection = ({
                     )}
                   >
                     <div
-                      className="relative h-full w-full overflow-hidden rounded-[10px] shadow-inner"
+                      className="relative h-full w-full overflow-hidden rounded-md shadow-inner"
                       style={{ backgroundColor: preset.color }}
                     >
                       {isActive && (

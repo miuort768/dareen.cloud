@@ -537,7 +537,7 @@ export const StudentDrawer = ({
                             <div
                               key={idx}
                               className={cn(
-                                'h-3 w-3 rounded-[3px] transition-all',
+                                'h-3 w-3 rounded transition-all',
                                 idx < used
                                   ? 'bg-success'
                                   : idx === used

@@ -60,7 +60,7 @@ export const Sparkline = ({
   }, [value])
   const max = Math.max(...bars.current, 1)
   return (
-    <div className="flex items-end gap-[2px]" style={{ height }}>
+    <div className="flex items-end gap-0.5" style={{ height }}>
       {bars.current.map((v, i) => (
         <div
           key={i}

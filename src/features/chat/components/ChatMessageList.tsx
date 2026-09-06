@@ -101,8 +101,8 @@ export const ChatMessageList = ({
                 className={cn(
                   'relative max-w-[90%] px-3 py-2 shadow-sm md:max-w-[75%]',
                   isMe
-                    ? 'ms-2 rounded-[12px] rounded-tr-none bg-primary text-on-primary'
-                    : 'me-2 rounded-[12px] rounded-tl-none border border-border bg-surface text-main',
+                    ? 'ms-2 rounded-lg rounded-tr-none bg-primary text-on-primary'
+                    : 'me-2 rounded-lg rounded-tl-none border border-border bg-surface text-main',
                 )}
               >
                 {isGroup && !isMe && (

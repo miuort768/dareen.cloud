@@ -225,11 +225,11 @@ export const InstallPWA = () => {
       }`}
     >
       <div
-        className={`flex items-center gap-3 rounded-[20px] border border-white/10 bg-success p-2.5 ${
+        className={`flex items-center gap-3 rounded-2xl border border-white/10 bg-success p-2.5 ${
           isDesktop ? 'me-auto max-w-[280px]' : ''
         }`}
       >
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/10 text-on-success">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-on-success">
           {isDesktop ? <Monitor size={18} /> : <Smartphone size={18} />}
         </div>
 
