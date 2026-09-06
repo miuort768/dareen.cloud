@@ -73,6 +73,7 @@ export const AttendanceSettingsSection = ({
           <FieldLabel>حد التأخير (دقائق)</FieldLabel>
           <InputField
             type="number"
+            aria-label="حد التأخير (دقائق)"
             value={lateThreshold}
             onChange={(e) => setLateThreshold(e.target.value)}
           />
@@ -81,6 +82,7 @@ export const AttendanceSettingsSection = ({
           <FieldLabel>حد الغياب للتنبيه</FieldLabel>
           <InputField
             type="number"
+            aria-label="حد الغياب للتنبيه"
             value={absenceAlertThreshold}
             onChange={(e) => setAbsenceAlertThreshold(e.target.value)}
           />
@@ -89,6 +91,7 @@ export const AttendanceSettingsSection = ({
           <FieldLabel>التجميد التلقائي (غيابات)</FieldLabel>
           <InputField
             type="number"
+            aria-label="التجميد التلقائي (غيابات)"
             value={localAutoFreeze}
             onChange={(e) => setLocalAutoFreeze(Number(e.target.value))}
           />

@@ -92,6 +92,7 @@ export const UsersSettings = ({
           <div>
             <FieldLabel>اسم الدخول</FieldLabel>
             <InputField
+              aria-label="اسم الدخول"
               value={newUser.username}
               onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
               placeholder="اسم المستخدم"
@@ -101,6 +102,7 @@ export const UsersSettings = ({
             <FieldLabel>الرقم السري</FieldLabel>
             <InputField
               type="password"
+              aria-label="الرقم السري"
               value={newUser.password}
               onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
               placeholder={editingUserId ? 'اتركه فارغاً للإبقاء على الحالي' : '••••••••'}

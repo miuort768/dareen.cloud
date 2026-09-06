@@ -282,6 +282,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
               <div className="mb-1 text-[10px] font-bold text-warning">ملاحظات</div>
               {isEditing ? (
                 <textarea
+                  aria-label="ملاحظات"
                   value={editData.notes}
                   onChange={(e) => setEditData({ ...editData, notes: e.target.value })}
                   rows={2}

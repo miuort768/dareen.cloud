@@ -206,6 +206,7 @@ export const SchedulePopover = ({
                     className="overflow-hidden"
                   >
                     <textarea
+                      aria-label="ملاحظة الحصة"
                       value={noteText}
                       onChange={(e) => setNoteText(e.target.value)}
                       placeholder="اكتب ملاحظتك هنا..."

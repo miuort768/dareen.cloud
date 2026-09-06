@@ -231,6 +231,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             )}
           </div>
           <textarea
+            aria-label="ملاحظات الحصة القادمة"
             value={notes}
             onChange={(e) => {
               setNotes(e.target.value)

@@ -257,16 +257,19 @@ export const CurrenciesSection = ({
         <>
           <div className="mb-5 grid grid-cols-1 gap-3 rounded-xl border border-divider bg-background p-4 md:grid-cols-6">
             <InputField
+              aria-label="من العملة"
               value={newRate.fromCurrency}
               onChange={(e) => setNewRate((p) => ({ ...p, fromCurrency: e.target.value }))}
               placeholder="من (EGP)"
             />
             <InputField
+              aria-label="إلى العملة"
               value={newRate.toCurrency}
               onChange={(e) => setNewRate((p) => ({ ...p, toCurrency: e.target.value }))}
               placeholder="إلى (EGP)"
             />
             <InputField
+              aria-label="سعر الشراء"
               value={newRate.buyRate}
               onChange={(e) => setNewRate((p) => ({ ...p, buyRate: e.target.value }))}
               placeholder="سعر الشراء"
@@ -274,6 +277,7 @@ export const CurrenciesSection = ({
               step="0.001"
             />
             <InputField
+              aria-label="سعر البيع"
               value={newRate.sellRate}
               onChange={(e) => setNewRate((p) => ({ ...p, sellRate: e.target.value }))}
               placeholder="سعر البيع"
@@ -281,6 +285,7 @@ export const CurrenciesSection = ({
               step="0.001"
             />
             <InputField
+              aria-label="ملاحظات سعر الصرف"
               value={newRate.notes}
               onChange={(e) => setNewRate((p) => ({ ...p, notes: e.target.value }))}
               placeholder="ملاحظة"

@@ -61,6 +61,7 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
         <div className="rounded-xl border border-divider bg-background p-4">
           <FieldLabel>تذييل التقرير</FieldLabel>
           <InputField
+            aria-label="تذييل التقرير"
             value={reportFooter}
             onChange={(e) => setReportFooter(e.target.value)}
             placeholder="شكراً لثقتكم"
@@ -69,6 +70,7 @@ export const ReportsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
         <div className="rounded-xl border border-divider bg-background p-4">
           <FieldLabel>حجم الورق</FieldLabel>
           <InputField
+            aria-label="حجم الورق"
             value={pageSize}
             onChange={(e) => setPageSize(e.target.value)}
             placeholder="A4"

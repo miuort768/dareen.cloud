@@ -148,6 +148,7 @@ export const ScheduleHeader = ({
               className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
             />
             <select
+              aria-label="تصفية حسب اليوم"
               value={filterDay}
               onChange={(e) => onDayChange(e.target.value)}
               className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
@@ -173,6 +174,7 @@ export const ScheduleHeader = ({
                 className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
               />
               <select
+                aria-label="تصفية حسب المعلمة"
                 value={filterTeacher}
                 onChange={(e) => onTeacherChange(e.target.value)}
                 className={`h-8 max-w-[160px] appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${
@@ -199,6 +201,7 @@ export const ScheduleHeader = ({
                 className="pointer-events-none absolute start-2.5 top-1/2 -translate-y-1/2 text-muted"
               />
               <select
+                aria-label="تصفية حسب المادة"
                 value={filterSubject}
                 onChange={(e) => onSubjectChange(e.target.value)}
                 className={`h-8 appearance-none rounded-lg border bg-surface pe-2 ps-7 text-xs font-bold text-main outline-none transition-all hover:bg-hover focus:border-primary dark:[color-scheme:dark] ${

@@ -158,6 +158,7 @@ export const TrialSessionFormModal = ({
         <div className="space-y-1">
           <label className={labelClass}>ملاحظات</label>
           <textarea
+            aria-label="ملاحظات"
             value={form.notes}
             onChange={(e) => onChange({ ...form, notes: e.target.value })}
             rows={2}

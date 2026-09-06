@@ -33,6 +33,7 @@ const InputField = ({
       </div>
       <input
         {...props}
+        aria-label={label}
         className={cn(
           'w-full rounded-xl border border-border bg-surface py-3 pe-4 ps-12 text-xs font-normal outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10',
           className,

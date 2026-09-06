@@ -81,6 +81,7 @@ export const GeneralSettings = ({
             <div>
               <FieldLabel>اسم الأكاديمية</FieldLabel>
               <InputField
+                aria-label="اسم الأكاديمية"
                 value={localAcademyName}
                 onChange={(e) => setLocalAcademyName(e.target.value)}
               />
@@ -88,6 +89,7 @@ export const GeneralSettings = ({
             <div>
               <FieldLabel>رقم هاتف المسؤول</FieldLabel>
               <InputField
+                aria-label="رقم هاتف المسؤول"
                 value={localAdminPhone}
                 onChange={(e) => setLocalAdminPhone(e.target.value)}
                 dir="ltr"
@@ -97,6 +99,7 @@ export const GeneralSettings = ({
             <div>
               <FieldLabel>قناة تليجرام</FieldLabel>
               <InputField
+                aria-label="قناة تليجرام"
                 value={localTelegramHandle}
                 onChange={(e) => setLocalTelegramHandle(e.target.value)}
                 placeholder="تطبيق دارين السابعة"
@@ -107,6 +110,7 @@ export const GeneralSettings = ({
             <div>
               <FieldLabel>قناة تليجرام المكتبة</FieldLabel>
               <InputField
+                aria-label="قناة تليجرام المكتبة"
                 value={localLibraryTelegram}
                 onChange={(e) => setLocalLibraryTelegram(e.target.value)}
                 placeholder="https://t.me/..."
@@ -137,6 +141,7 @@ export const GeneralSettings = ({
             <div>
               <FieldLabel>تسمية الفصل الدراسي</FieldLabel>
               <InputField
+                aria-label="تسمية الفصل الدراسي"
                 value={localSemesterName}
                 onChange={(e) => setLocalSemesterName(e.target.value)}
                 placeholder="الفصل الأول 2024"
@@ -147,6 +152,7 @@ export const GeneralSettings = ({
                 <FieldLabel>سعر الطالب</FieldLabel>
                 <InputField
                   type="number"
+                  aria-label="سعر الطالب"
                   value={localPrice}
                   onChange={(e) => setLocalPrice(Number(e.target.value))}
                 />
@@ -155,6 +161,7 @@ export const GeneralSettings = ({
                 <FieldLabel>سعر المعلم</FieldLabel>
                 <InputField
                   type="number"
+                  aria-label="سعر المعلم"
                   value={localTeacherPrice}
                   onChange={(e) => setLocalTeacherPrice(Number(e.target.value))}
                 />
@@ -162,6 +169,7 @@ export const GeneralSettings = ({
               <div>
                 <FieldLabel>العملة</FieldLabel>
                 <select
+                  aria-label="العملة"
                   value={localCurrency}
                   onChange={(e) => setLocalCurrency(e.target.value)}
                   className="w-full rounded-xl border border-divider bg-background px-3 py-3 text-sm font-bold text-main outline-none transition-all duration-normal focus:border-primary focus:ring-2 focus:ring-primary/10"
@@ -177,6 +185,7 @@ export const GeneralSettings = ({
                 <FieldLabel>تنبيه الرصيد</FieldLabel>
                 <InputField
                   type="number"
+                  aria-label="تنبيه الرصيد"
                   value={localThreshold}
                   onChange={(e) => setLocalThreshold(Number(e.target.value))}
                   className="text-center text-warning"
@@ -219,6 +228,7 @@ export const GeneralSettings = ({
             <FieldLabel>عدد أيام التجميد</FieldLabel>
             <InputField
               type="number"
+              aria-label="عدد أيام التجميد"
               value={localAutoFreeze}
               onChange={(e) => setLocalAutoFreeze(Number(e.target.value))}
               className="text-center"

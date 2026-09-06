@@ -111,6 +111,7 @@ export const PoliciesSettings = ({
           <div className="flex items-center gap-3">
             <InputField
               type="number"
+              aria-label="حد الغياب المسموح"
               value={autoFreezeThreshold}
               onChange={(e) => setAutoFreezeThreshold(Number(e.target.value))}
               min={1}

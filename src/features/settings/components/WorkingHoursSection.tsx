@@ -83,6 +83,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
           <FieldLabel>مدة الجلسة (دقيقة)</FieldLabel>
           <InputField
             type="number"
+            aria-label="مدة الجلسة (دقيقة)"
             value={sessionDuration}
             onChange={(e) => setSessionDuration(e.target.value)}
           />
@@ -91,13 +92,19 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
           <FieldLabel>بداية الاستراحة</FieldLabel>
           <InputField
             type="time"
+            aria-label="بداية الاستراحة"
             value={breakStart}
             onChange={(e) => setBreakStart(e.target.value)}
           />
         </div>
         <div className="rounded-xl border border-divider bg-background p-4">
           <FieldLabel>نهاية الاستراحة</FieldLabel>
-          <InputField type="time" value={breakEnd} onChange={(e) => setBreakEnd(e.target.value)} />
+          <InputField
+            type="time"
+            aria-label="نهاية الاستراحة"
+            value={breakEnd}
+            onChange={(e) => setBreakEnd(e.target.value)}
+          />
         </div>
       </div>
 
@@ -126,6 +133,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
               <>
                 <InputField
                   type="time"
+                  aria-label="وقت البداية"
                   value={d.start}
                   onChange={(e) => updateTime(d.day, 'start', e.target.value)}
                   className="w-24 md:w-28"
@@ -133,6 +141,7 @@ export const WorkingHoursSection = ({ showNotify }: { showNotify: (msg: string) 
                 <span className="shrink-0 text-muted">—</span>
                 <InputField
                   type="time"
+                  aria-label="وقت النهاية"
                   value={d.end}
                   onChange={(e) => updateTime(d.day, 'end', e.target.value)}
                   className="w-24 md:w-28"

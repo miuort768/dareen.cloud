@@ -85,11 +85,13 @@ export const MobileSettings = ({
             >
               <div className="flex-1 space-y-2">
                 <InputField
+                  aria-label="مسمى زر الواتساب"
                   placeholder="مسمى الزر (مثال: تواصل عام)"
                   value={entry.label}
                   onChange={(e) => updateEntry(i, 'label', e.target.value)}
                 />
                 <InputField
+                  aria-label="رقم هاتف زر الواتساب"
                   placeholder="رقم الهاتف (مثال: 201015098836)"
                   value={entry.phone}
                   onChange={(e) => updateEntry(i, 'phone', e.target.value)}

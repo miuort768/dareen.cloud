@@ -55,6 +55,7 @@ export const CommunicationsSection = ({
           <div>
             <FieldLabel>قالب رسالة واتساب</FieldLabel>
             <TextAreaField
+              aria-label="قالب رسالة واتساب"
               value={localWhatsappTemplate}
               onChange={(e) => setLocalWhatsappTemplate(e.target.value)}
               rows={4}

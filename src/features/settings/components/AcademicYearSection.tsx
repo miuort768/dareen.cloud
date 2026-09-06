@@ -97,6 +97,7 @@ export const AcademicYearSection = ({
         <div>
           <FieldLabel>السنة الدراسية الحالية</FieldLabel>
           <InputField
+            aria-label="السنة الدراسية الحالية"
             value={localAcademicYear}
             onChange={(e) => setLocalAcademicYear(e.target.value)}
             placeholder="مثال: 2024-2025"
@@ -105,6 +106,7 @@ export const AcademicYearSection = ({
         <div>
           <FieldLabel>مسمى الفصل</FieldLabel>
           <InputField
+            aria-label="مسمى الفصل"
             value={localSemesterName}
             onChange={(e) => setLocalSemesterName(e.target.value)}
             placeholder="مثال: الفصل الدراسي"
@@ -114,6 +116,7 @@ export const AcademicYearSection = ({
           <FieldLabel>تاريخ بداية الفصل</FieldLabel>
           <InputField
             type="date"
+            aria-label="تاريخ بداية الفصل"
             value={localSemesterStart}
             onChange={(e) => setLocalSemesterStart(e.target.value)}
           />
@@ -122,6 +125,7 @@ export const AcademicYearSection = ({
           <FieldLabel>تاريخ نهاية الفصل</FieldLabel>
           <InputField
             type="date"
+            aria-label="تاريخ نهاية الفصل"
             value={localSemesterEnd}
             onChange={(e) => setLocalSemesterEnd(e.target.value)}
           />
@@ -147,6 +151,7 @@ export const AcademicYearSection = ({
               className="flex items-center gap-2 rounded-xl border border-divider bg-background p-3"
             >
               <InputField
+                aria-label="اسم الفصل"
                 value={s.name}
                 onChange={(e) => renameSemester(s.id, e.target.value)}
                 className="flex-1"

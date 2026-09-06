@@ -51,6 +51,7 @@ export const SecureActionModal = ({
               {secureAction.confirmWord}
             </div>
             <InputField
+              aria-label="كلمة التأكيد"
               value={secureInput}
               onChange={(e) => setSecureInput(e.target.value)}
               placeholder="اكتب العبارة للتحقق..."

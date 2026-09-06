@@ -72,6 +72,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
           <FieldLabel>نقاط لكل جلسة</FieldLabel>
           <InputField
             type="number"
+            aria-label="نقاط لكل جلسة"
             value={pointsPerSession}
             onChange={(e) => setPointsPerSession(e.target.value)}
           />
@@ -80,6 +81,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
           <FieldLabel>مكافأة التقييم</FieldLabel>
           <InputField
             type="number"
+            aria-label="مكافأة التقييم"
             value={bonusPerRating}
             onChange={(e) => setBonusPerRating(e.target.value)}
           />
@@ -96,6 +98,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
             </div>
             <InputField
               type="number"
+              aria-label="الشارة البرونزية"
               value={badgeThreshold1}
               onChange={(e) => setBadgeThreshold1(e.target.value)}
             />
@@ -107,6 +110,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
             </div>
             <InputField
               type="number"
+              aria-label="الشارة الفضية"
               value={badgeThreshold2}
               onChange={(e) => setBadgeThreshold2(e.target.value)}
             />
@@ -118,6 +122,7 @@ export const RewardsSettingsSection = ({ showNotify }: { showNotify: (msg: strin
             </div>
             <InputField
               type="number"
+              aria-label="الشارة الذهبية"
               value={badgeThreshold3}
               onChange={(e) => setBadgeThreshold3(e.target.value)}
             />

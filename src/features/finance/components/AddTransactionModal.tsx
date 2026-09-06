@@ -152,6 +152,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
               بيان المعاملة / التفاصيل
             </label>
             <textarea
+              aria-label="بيان المعاملة"
               value={newTransaction.description}
               onChange={(e) =>
                 setNewTransaction({ ...newTransaction, description: e.target.value })

@@ -55,6 +55,7 @@ export const AcademyInfoSection = ({
           <div>
             <FieldLabel>اسم المعهد</FieldLabel>
             <InputField
+              aria-label="اسم المعهد"
               value={localAcademyName}
               onChange={(e) => setLocalAcademyName(e.target.value)}
               placeholder="مثال: دارين السابعة للتعليم والتدريب"
@@ -65,6 +66,7 @@ export const AcademyInfoSection = ({
             <div className="relative">
               <Phone size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
               <InputField
+                aria-label="رقم الهاتف (واتساب)"
                 value={localAdminPhone}
                 onChange={(e) => setLocalAdminPhone(e.target.value)}
                 className="ps-9"
@@ -81,6 +83,7 @@ export const AcademyInfoSection = ({
             <div className="relative">
               <Hash size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
               <InputField
+                aria-label="قناة تليجرام"
                 value={localTelegramHandle}
                 onChange={(e) => setLocalTelegramHandle(e.target.value)}
                 className="ps-9"
@@ -93,6 +96,7 @@ export const AcademyInfoSection = ({
             <div className="relative">
               <Hash size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
               <InputField
+                aria-label="قناة تليجرام المكتبة"
                 value={localLibraryTelegram}
                 onChange={(e) => setLocalLibraryTelegram(e.target.value)}
                 className="ps-9"
@@ -111,6 +115,7 @@ export const AcademyInfoSection = ({
             <div className="relative">
               <Globe size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
               <InputField
+                aria-label="رابط Google Play"
                 value={googlePlayUrl}
                 onChange={(e) => setSetting('googlePlayUrl', e.target.value)}
                 className="ps-9"
@@ -123,6 +128,7 @@ export const AcademyInfoSection = ({
             <div className="relative">
               <Apple size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
               <InputField
+                aria-label="رابط App Store"
                 value={appStoreUrl}
                 onChange={(e) => setSetting('appStoreUrl', e.target.value)}
                 className="ps-9"

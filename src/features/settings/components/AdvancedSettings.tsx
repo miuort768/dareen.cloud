@@ -73,6 +73,7 @@ export const AdvancedSettings = ({
         <div>
           <FieldLabel>قالب رسالة الحضور</FieldLabel>
           <TextAreaField
+            aria-label="قالب رسالة الحضور"
             value={localWhatsappTemplate}
             onChange={(e) => setLocalWhatsappTemplate(e.target.value)}
             rows={5}
@@ -114,6 +115,7 @@ export const AdvancedSettings = ({
           <FieldLabel>إرسال تذكير قبل الحصة بـ (دقائق)</FieldLabel>
           <InputField
             type="number"
+            aria-label="إرسال تذكير قبل الحصة بـ (دقائق)"
             value={reminderMinutesBefore}
             onChange={(e) => setReminderMinutesBefore(Math.max(1, Number(e.target.value)))}
             placeholder="30"
@@ -131,6 +133,7 @@ export const AdvancedSettings = ({
         <div>
           <FieldLabel>الفصل الحالي</FieldLabel>
           <InputField
+            aria-label="الفصل الحالي"
             value={localSemesterName}
             onChange={(e) => setLocalSemesterName(e.target.value)}
             placeholder="الفصل الأول 2024"
@@ -139,6 +142,7 @@ export const AdvancedSettings = ({
         <div>
           <FieldLabel>الأرشيف التاريخي</FieldLabel>
           <TextAreaField
+            aria-label="الأرشيف التاريخي"
             value={localSemesters}
             onChange={(e) => setLocalSemesters(e.target.value)}
             rows={4}

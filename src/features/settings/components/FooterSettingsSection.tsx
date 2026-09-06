@@ -26,6 +26,7 @@ export const FooterSettingsSection = ({
       <div className="md:col-span-2">
         <FieldLabel>وصف الفوتر</FieldLabel>
         <TextAreaField
+          aria-label="وصف الفوتر"
           value={localFooterDescription}
           onChange={(e) => setLocalFooterDescription(e.target.value)}
           rows={2}
@@ -35,6 +36,7 @@ export const FooterSettingsSection = ({
       <div>
         <FieldLabel>عنوان الفوتر</FieldLabel>
         <InputField
+          aria-label="عنوان الفوتر"
           value={localFooterAddress}
           onChange={(e) => setLocalFooterAddress(e.target.value)}
           placeholder="مثال: بني سويف - مصر"
@@ -43,6 +45,7 @@ export const FooterSettingsSection = ({
       <div>
         <FieldLabel>حساب انستجرام</FieldLabel>
         <InputField
+          aria-label="حساب انستجرام"
           value={localFooterInstagram}
           onChange={(e) => setLocalFooterInstagram(e.target.value)}
           placeholder="daren_school"

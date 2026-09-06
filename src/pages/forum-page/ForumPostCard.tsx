@@ -248,6 +248,7 @@ export const ForumPostCard = ({
             </label>
             <textarea
               rows={3}
+              aria-label="تعديل نص المنشور"
               value={editPostContent}
               onChange={(e) => setEditPostContent(e.target.value)}
               className="w-full resize-none rounded-xl border border-border bg-card p-3 text-sm font-medium text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
@@ -488,6 +489,7 @@ export const ForumPostCard = ({
                                   <div className="my-1.5 space-y-2 rounded-lg border border-border bg-card p-2">
                                     <input
                                       type="text"
+                                      aria-label="تعديل التعليق"
                                       value={editCommentText}
                                       onChange={(e) => setEditCommentText(e.target.value)}
                                       className="w-full rounded-md border border-border bg-surface p-2 text-xs text-main outline-none focus:border-primary"

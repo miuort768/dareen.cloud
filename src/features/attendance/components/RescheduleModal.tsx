@@ -102,6 +102,7 @@ export const RescheduleModal = ({
             <div>
               <label className="mb-1.5 block text-micro font-bold text-muted">سبب التغيير</label>
               <textarea
+                aria-label="سبب التغيير"
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="مثلاً: الطالب لديه امتحان في المدرسة..."
