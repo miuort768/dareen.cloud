@@ -22,7 +22,7 @@ export const AppearanceSection = ({
           <Palette size={18} className="text-primary" />
         </div>
         <div className="flex-1">
-          <h2 className="text-sm font-bold text-main">المظهر</h2>
+          <h2 className="text-sm font-black text-main">المظهر</h2>
           <p className="mt-0.5 text-[11px] font-bold text-muted">الوضع الداكن وسمة الألوان</p>
         </div>
         <div className="hidden h-0.5 w-16 rounded-full bg-gradient-to-l from-primary/40 to-transparent sm:block" />

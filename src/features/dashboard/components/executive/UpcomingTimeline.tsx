@@ -38,7 +38,7 @@ export const UpcomingTimeline = memo(function UpcomingTimeline({
             <Calendar size={16} className="text-info" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-main">الجلسات القادمة</h3>
+            <h3 className="text-sm font-black text-main">الجلسات القادمة</h3>
             <p className="text-[10px] text-muted">الجدول الزمني</p>
           </div>
         </div>

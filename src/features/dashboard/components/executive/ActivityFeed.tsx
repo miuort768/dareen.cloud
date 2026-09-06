@@ -205,7 +205,7 @@ export const ActivityFeed = memo(function ActivityFeed({ items }: { items: Servi
             <History size={16} className="text-primary" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-main">النشاطات</h3>
+            <h3 className="text-sm font-black text-main">النشاطات</h3>
             <p className="text-[10px] text-muted">سجل العمليات المباشر</p>
           </div>
         </div>

@@ -46,7 +46,7 @@ export const TeacherSessionTimeline = ({
             <Clock size={18} />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-main dark:text-main">الجدول الزمني</h3>
+            <h3 className="text-sm font-black text-main">الجدول الزمني</h3>
             <p className="mt-0.5 text-[11px] font-medium text-muted dark:text-muted">
               جدول الحصص اليومية
             </p>

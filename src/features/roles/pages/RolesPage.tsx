@@ -97,7 +97,7 @@ export const RolesPage = () => {
         </div>
 
         <div className="mb-6 rounded-card border border-border bg-surface p-5">
-          <h3 className="mb-4 flex items-center gap-2 text-sm font-bold text-main">
+          <h3 className="mb-4 flex items-center gap-2 text-sm font-black text-main">
             <Plus size={16} className="text-primary" /> إضافة دور جديد
           </h3>
           <div className="flex flex-col gap-3 md:flex-row md:flex-wrap">

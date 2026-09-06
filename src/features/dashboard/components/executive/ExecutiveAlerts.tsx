@@ -80,7 +80,7 @@ export const ExecutiveAlerts = memo(function ExecutiveAlerts({ alerts }: { alert
             <Bell size={16} className="text-warning" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-main">التنبيهات</h3>
+            <h3 className="text-sm font-black text-main">التنبيهات</h3>
             <p className="text-[10px] text-muted">مراقبة الأنظمة</p>
           </div>
         </div>

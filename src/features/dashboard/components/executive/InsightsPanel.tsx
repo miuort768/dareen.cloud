@@ -158,7 +158,7 @@ export const InsightsPanel = memo(function InsightsPanel({ stats }: { stats: Exe
             <Lightbulb size={16} className="text-warning" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-main">تحليلات ذكية</h3>
+            <h3 className="text-sm font-black text-main">تحليلات ذكية</h3>
             <p className="text-[10px] text-muted">رؤى مبنية على بيانات اليوم</p>
           </div>
         </div>

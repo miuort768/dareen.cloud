@@ -66,7 +66,7 @@ export const FinanceOverview = React.memo(
                 <BarChart3 size={16} className="text-primary dark:text-primary" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-main dark:text-main">نظرة مالية</h3>
+                <h3 className="text-sm font-black text-main">نظرة مالية</h3>
                 <p className="text-[10px] text-muted dark:text-muted">الإيرادات والمصروفات</p>
               </div>
             </div>

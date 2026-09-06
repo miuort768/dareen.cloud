@@ -80,7 +80,7 @@ export const ActivityTimeline = ({ sessions, tasks, showHeader = true }: Activit
               <Clock size={16} className="text-info" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-main">سجل النشاطات</h3>
+              <h3 className="text-sm font-black text-main">سجل النشاطات</h3>
               <p className="text-[10px] text-muted">آخر العمليات المسجلة</p>
             </div>
           </div>

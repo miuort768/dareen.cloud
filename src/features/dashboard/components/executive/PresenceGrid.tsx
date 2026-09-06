@@ -65,7 +65,7 @@ export const PresenceGrid = memo(function PresenceGrid({
             <Users size={16} className="text-success" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-main">الحضور المباشر</h3>
+            <h3 className="text-sm font-black text-main">الحضور المباشر</h3>
             <p className="text-[10px] text-muted">المتصلون الآن</p>
           </div>
         </div>

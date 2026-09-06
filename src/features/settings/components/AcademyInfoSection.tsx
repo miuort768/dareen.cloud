@@ -104,7 +104,7 @@ export const AcademyInfoSection = ({
       </div>
 
       <div className="mt-6 border-t border-divider pt-5">
-        <h4 className="mb-4 text-sm font-bold text-main">روابط التطبيقات</h4>
+        <h4 className="mb-4 text-sm font-black text-main">روابط التطبيقات</h4>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <div>
             <FieldLabel>رابط Google Play</FieldLabel>

@@ -215,7 +215,7 @@ export const FixedExpensesManager = ({
             <Building2 size={18} />
           </div>
           <div>
-            <h2 className="text-sm font-bold text-main">المصروفات التشغيلية والتطوير</h2>
+            <h2 className="text-sm font-black text-main">المصروفات التشغيلية والتطوير</h2>
             <p className="mt-0.5 text-xs text-muted">
               إجمالي المصروفات:{' '}
               <span className="font-bold tabular-nums text-primary">{total.toLocaleString()}</span>{' '}

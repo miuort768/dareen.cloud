@@ -124,7 +124,7 @@ export const SectionCard = ({
           </div>
         )}
         <div>
-          <h2 className="text-sm font-bold leading-tight text-main">{title}</h2>
+          <h2 className="text-sm font-black leading-tight text-main">{title}</h2>
           {description && <p className="mt-0.5 text-micro text-muted">{description}</p>}
         </div>
       </div>

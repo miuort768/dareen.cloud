@@ -165,7 +165,7 @@ export const Jobs = () => {
           >
             <div className="border-b border-border p-4 md:p-10">
               <div className="mb-6 flex items-center justify-between">
-                <h2 className="flex items-center gap-2 font-heading text-sm font-bold text-main md:text-lg">
+                <h2 className="flex items-center gap-2 font-heading text-sm font-black text-main md:text-lg">
                   <FileText className="h-4 w-4 text-primary md:h-5 md:w-5" />
                   تقديم طلب التوظيف
                 </h2>

@@ -73,7 +73,7 @@ export const ActivityFeed = ({
       {title && (
         <div className="mb-5 flex items-center justify-between">
           <div>
-            <h3 className="text-sm font-bold text-main">{title}</h3>
+            <h3 className="text-sm font-black text-main">{title}</h3>
             {subtitle && <p className="mt-0.5 text-micro font-medium text-muted">{subtitle}</p>}
           </div>
         </div>

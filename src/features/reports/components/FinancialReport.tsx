@@ -130,7 +130,7 @@ export const FinancialReport = ({
             <FileText size={18} className="text-primary" />
           </div>
           <div>
-            <h3 className="mb-1 text-sm font-bold text-main">التقرير المالي والتحليل الدقيق</h3>
+            <h3 className="mb-1 text-sm font-black text-main">التقرير المالي والتحليل الدقيق</h3>
             <p className="text-xs font-bold leading-relaxed text-muted">
               تم تحليل <span className="font-bold text-main">{completedSessions}</span> حصة دراسية
               مكتملة، بحيث بلغ إجمالي الإيرادات{' '}
