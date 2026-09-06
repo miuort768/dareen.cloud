@@ -109,7 +109,7 @@ export const MonthlyReportPreview = ({
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="rounded-2xl border-2 border-border bg-card p-5 text-center shadow-elevation-2 transition-transform hover:translate-y-[-2px] dark:border-primary/20 dark:bg-card"
+                  className="rounded-2xl border-2 border-border bg-card p-5 text-center shadow-elevation-2 transition-transform hover:-translate-y-0.5 dark:border-primary/20 dark:bg-card"
                 >
                   <div
                     className={cn(
@@ -155,7 +155,7 @@ export const MonthlyReportPreview = ({
         <div className="flex gap-4 border-t-2 border-border bg-background p-10 pt-6 dark:border-primary/20 dark:bg-card">
           <Button
             onClick={() => onShare('whatsapp')}
-            className="h-14 flex-1 rounded-2xl border-2 border-border bg-success text-on-success shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
+            className="h-14 flex-1 rounded-2xl border-2 border-border bg-success text-on-success shadow-[4px_4px_0px_0px_black] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
           >
             <Share2 size={18} />
             إرسال لولي الأمر
@@ -163,7 +163,7 @@ export const MonthlyReportPreview = ({
           <Button
             onClick={() => window.print()}
             variant="outline"
-            className="h-14 flex-1 rounded-2xl border-2 border-border shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
+            className="h-14 flex-1 rounded-2xl border-2 border-border shadow-[4px_4px_0px_0px_black] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
           >
             <FileDown size={18} />
             تحميل PDF

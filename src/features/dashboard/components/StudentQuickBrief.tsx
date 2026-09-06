@@ -160,7 +160,7 @@ export const StudentQuickBrief = ({
         <div className="flex gap-4 border-t-2 border-border bg-background p-6 dark:border-primary/20 dark:bg-card">
           <Button
             onClick={() => onGenerateReport?.(student)}
-            className="h-12 flex-1 rounded-2xl border-2 border-border bg-success text-on-success shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
+            className="h-12 flex-1 rounded-2xl border-2 border-border bg-success text-on-success shadow-[4px_4px_0px_0px_black] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
           >
             <Sparkles size={16} />
             إصدار تقرير شهري
@@ -168,7 +168,7 @@ export const StudentQuickBrief = ({
           <Button
             onClick={onClose}
             variant="outline"
-            className="h-12 rounded-2xl border-2 border-border px-8 shadow-[4px_4px_0px_0px_black] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
+            className="h-12 rounded-2xl border-2 border-border px-8 shadow-[4px_4px_0px_0px_black] hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_0px_black] active:translate-y-0 active:shadow-none"
           >
             إغلاق
           </Button>

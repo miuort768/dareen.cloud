@@ -251,7 +251,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
           <span>بدء الحصة مع {student.name.split(' ')[0]}</span>
           <Play
             size={10}
-            className="fill-current opacity-50 transition-transform group-hover:translate-x-[-2px]"
+            className="fill-current opacity-50 transition-transform group-hover:-translate-x-0.5"
           />
         </button>
 

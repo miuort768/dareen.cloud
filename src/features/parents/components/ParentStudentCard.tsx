@@ -75,7 +75,7 @@ export const ParentStudentCard = ({
         <div className="relative z-10 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 md:gap-4">
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/20 text-on-primary backdrop-blur-sm md:h-14 md:w-14">
-              <User size={20} className="md:size-[28px]" />
+              <User size={20} className="md:size-7" />
             </div>
             <div className="min-w-0">
               <h3 className="truncate text-base font-medium leading-tight text-on-primary md:text-lg">
@@ -88,7 +88,7 @@ export const ParentStudentCard = ({
           </div>
           {totalPoints > 0 && (
             <div className="flex shrink-0 flex-col items-center gap-0.5 rounded-xl bg-warning px-1.5 py-1 text-on-warning">
-              <Star size={12} className="fill-current md:size-[16px]" />
+              <Star size={12} className="fill-current md:size-4" />
               <span className="text-micro font-medium">{totalPoints}</span>
             </div>
           )}
@@ -98,14 +98,14 @@ export const ParentStudentCard = ({
       <div className="grid grid-cols-2 border-b border-border">
         <div className="flex flex-col items-center justify-center border-e border-border p-3 md:p-4">
           <div className="mb-1 flex h-8 w-8 items-center justify-center rounded-xl bg-primary-soft">
-            <BookOpen size={14} className="text-primary md:size-[16px]" />
+            <BookOpen size={14} className="text-primary md:size-4" />
           </div>
           <span className="text-micro font-medium uppercase text-muted md:text-micro">المواد</span>
           <span className="text-base font-medium text-main md:text-lg">{enrollments.length}</span>
         </div>
         <div className="flex flex-col items-center justify-center p-3 md:p-4">
           <div className="mb-1 flex h-8 w-8 items-center justify-center rounded-xl bg-success-soft">
-            <TrendingUp size={14} className="text-success md:size-[16px]" />
+            <TrendingUp size={14} className="text-success md:size-4" />
           </div>
           <span className="text-micro font-medium uppercase text-muted md:text-micro">
             الالتزام
@@ -178,14 +178,14 @@ export const ParentStudentCard = ({
             onClick={() => onViewDates(student)}
             className="flex items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-micro font-medium text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:gap-2 md:text-micro"
           >
-            <Calendar size={13} className="md:size-[14px]" />
+            <Calendar size={13} className="md:size-3.5" />
             حصص الطالب
           </button>
           <button
             onClick={() => onViewAttendance(student)}
             className="flex items-center justify-center gap-1.5 rounded-xl border border-border bg-surface py-2.5 text-micro font-medium text-main outline-none transition-all hover:border-primary/30 hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] md:gap-2 md:text-micro"
           >
-            <TrendingUp size={13} className="md:size-[14px]" />
+            <TrendingUp size={13} className="md:size-3.5" />
             نسبة الحضور
           </button>
         </div>

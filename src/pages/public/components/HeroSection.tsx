@@ -57,7 +57,7 @@ export const HeroSection = ({
                   aria-label="تصفح الدورات التعليمية"
                 >
                   <span>تصفح الدورات</span>
-                  <ArrowLeft className="h-5 w-5 transition-transform group-hover:translate-x-[-4px]" />
+                  <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
                 </Link>
                 <a
                   href={`https://wa.me/${requestFreeNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة مجانية في ' + academyName)}`}
@@ -68,7 +68,7 @@ export const HeroSection = ({
                 >
                   <MessageCircle className="h-5 w-5" />
                   <span>حجز حصة مجانية</span>
-                  <ArrowLeft className="h-5 w-5 transition-transform group-hover:translate-x-[-4px]" />
+                  <ArrowLeft className="h-5 w-5 transition-transform group-hover:-translate-x-1" />
                 </a>
               </div>
               <div className="mt-4 flex items-center justify-center gap-6 border-t border-border pt-4 dark:border-white/10">
@@ -93,8 +93,8 @@ export const HeroSection = ({
             </div>
             <div className="relative z-10 flex justify-center lg:mb-0 lg:w-[40%]">
               <div className="relative flex aspect-auto w-full max-w-[220px] items-center justify-center lg:aspect-[4/5] lg:max-w-[375px]">
-                <div className="animate-spin-slow pointer-events-none absolute inset-[2%] rounded-full border-[1px] border-dashed border-primary/40 dark:border-primary/40"></div>
-                <div className="animate-reverse-spin-slow pointer-events-none absolute inset-[4%] rounded-full border-[1px] border-dashed border-accent-soft dark:border-warning-soft"></div>
+                <div className="animate-spin-slow pointer-events-none absolute inset-[2%] rounded-full border border-dashed border-primary/40 dark:border-primary/40"></div>
+                <div className="animate-reverse-spin-slow pointer-events-none absolute inset-[4%] rounded-full border border-dashed border-accent-soft dark:border-warning-soft"></div>
 
                 <div className="absolute inset-0 animate-pulse rounded-[3rem] bg-gradient-to-br from-primary/20 to-accent-soft blur-2xl dark:from-primary/20 dark:to-transparent"></div>
                 <picture>

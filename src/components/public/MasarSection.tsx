@@ -157,7 +157,7 @@ export const MasarSection = () => {
                 </span>
                 <div className="absolute -bottom-1 start-0 h-0.5 w-full rounded-full bg-white/80 shadow-elevation-1 dark:bg-black/30"></div>
               </div>
-              <span className="rounded-[4px] border border-white/30 bg-white/20 px-3 py-1 text-micro font-bold text-on-primary backdrop-blur-sm dark:border-black/30 dark:bg-black/20 dark:text-on-primary">
+              <span className="rounded border border-white/30 bg-white/20 px-3 py-1 text-micro font-bold text-on-primary backdrop-blur-sm dark:border-black/30 dark:bg-black/20 dark:text-on-primary">
                 للمذكرات التعليمية
               </span>
             </div>

@@ -137,7 +137,7 @@ export const Courses = () => {
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
           <div className="absolute right-[-10%] top-[-15%] h-[60%] w-[60%] rounded-full bg-gradient-to-br from-primary/5 to-primary/5 blur-[140px] dark:from-primary/[0.05] dark:to-primary/[0.05]" />
           <div className="to-primary/3 absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr from-info-soft blur-[120px] dark:from-primary/[0.03] dark:to-primary/[0.03]" />
-          <div className="absolute left-[50%] top-[40%] h-px w-[80%] translate-x-[-50%] bg-gradient-to-r from-transparent via-primary/10 to-transparent dark:via-primary/20" />
+          <div className="absolute left-[50%] top-[40%] h-px w-[80%] -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/10 to-transparent dark:via-primary/20" />
         </div>
 
         <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
