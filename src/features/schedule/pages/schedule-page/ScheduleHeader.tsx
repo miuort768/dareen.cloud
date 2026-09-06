@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import {
   Search,
   CalendarDays,
@@ -8,6 +7,7 @@ import {
   BookOpen,
   Filter,
 } from 'lucide-react'
+import { GradientHeroCard } from '../../../../shared/components/GradientHeroCard'
 
 interface ScheduleHeaderProps {
   searchTerm: string
@@ -57,27 +57,11 @@ export const ScheduleHeader = ({
   return (
     <div className="mb-4 space-y-3">
       {/* Hero — internally divided: identity | stats */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="relative overflow-hidden rounded-card bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-5 shadow-elevation-2 md:p-6"
-      >
-        <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-black/10 blur-3xl" />
-
-        <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-lg backdrop-blur-sm">
-              <CalendarDays size={22} className="text-on-primary" />
-            </div>
-            <div>
-              <h1 className="text-xl font-black leading-tight text-on-primary">الجداول الدراسية</h1>
-              <p className="text-xs text-white/70">جدول الحصص الأسبوعي للمعلمات والطلاب</p>
-            </div>
-          </div>
-
-          <div className="hidden h-12 w-px bg-white/20 lg:block" />
-
+      <GradientHeroCard
+        icon={CalendarDays}
+        title="الجداول الدراسية"
+        subtitle="جدول الحصص الأسبوعي للمعلمات والطلاب"
+        end={
           <div className="grid flex-1 grid-cols-3 gap-2">
             {[
               { label: 'الحصص', value: stats.sessions },
@@ -95,8 +79,8 @@ export const ScheduleHeader = ({
               </div>
             ))}
           </div>
-        </div>
-      </motion.div>
+        }
+      />
 
       {/* Controls toolbar — redesigned for better visual consistency */}
       <div className="rounded-xl border border-border bg-card shadow-sm">

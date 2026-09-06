@@ -13,6 +13,7 @@ import {
 import { Plus, Calendar, CheckCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '../lib/utils'
+import { GradientHeroCard } from '../shared/components/GradientHeroCard'
 
 const particles = Array.from({ length: 8 }, (_, i) => ({
   id: i,
@@ -131,38 +132,31 @@ export const Appointments = () => {
     >
       <div className="mx-auto hidden max-w-page px-2 md:block">
         {/* Hero */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-6 md:p-8"
-        >
-          {particles.map((p) => (
-            <motion.div
-              key={p.id}
-              aria-hidden="true"
-              className="pointer-events-none absolute rounded-full bg-white/10"
-              style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
-              animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
-              transition={{
-                duration: p.duration,
-                repeat: Infinity,
-                delay: p.delay,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-          <div className="relative z-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <div className="mb-2 flex items-center gap-2">
-                <div className="rounded-2xl bg-white/15 p-2 backdrop-blur-sm">
-                  <Calendar className="text-on-primary" size={20} />
-                </div>
-                <span className="text-xs font-medium text-white/70">المواعيد الدراسية</span>
-              </div>
-              <h1 className="mb-1 text-2xl font-bold text-on-primary md:text-3xl">المواعيد</h1>
-              <p className="text-sm text-white/70">جدولة ومتابعة الحصص الأكاديمية للطلاب</p>
-            </div>
-            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm">
+        <GradientHeroCard
+          icon={Calendar}
+          title="المواعيد"
+          subtitle="جدولة ومتابعة الحصص الأكاديمية للطلاب"
+          decor={
+            <>
+              {particles.map((p) => (
+                <motion.div
+                  key={p.id}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute rounded-full bg-white/10"
+                  style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
+                  animate={{ y: [0, -20, 0], opacity: [0.2, 0.5, 0.2] }}
+                  transition={{
+                    duration: p.duration,
+                    repeat: Infinity,
+                    delay: p.delay,
+                    ease: 'easeInOut',
+                  }}
+                />
+              ))}
+            </>
+          }
+          end={
+            <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm lg:ms-auto">
               <div className="text-center">
                 <p className="mb-1 text-xs text-white/60">اليوم</p>
                 <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.today}</p>
@@ -180,8 +174,8 @@ export const Appointments = () => {
                 <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.total}</p>
               </div>
             </div>
-          </div>
-        </motion.div>
+          }
+        />
 
         {isError ? (
           /* حالة الخطأ مع إعادة المحاولة */
