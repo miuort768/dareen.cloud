@@ -1,10 +1,11 @@
-﻿import { useState, type ReactNode } from 'react'
+﻿import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Calendar, CalendarDays, ClipboardList, Home, Bell, Loader2, RefreshCw } from 'lucide-react'
 import { triggerHaptic } from '../../lib/haptics'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { cn } from '../../lib/utils'
+import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
 import { usePullToRefresh } from '../../shared/components/mobile/usePullToRefresh'
 import { TeacherAchievements } from '../../features/dashboard/components/TeacherAchievements'
 import { TasksAndRequests } from '../../features/dashboard/components/TasksAndRequests'
@@ -52,36 +53,6 @@ const TABS = [
   { id: 'schedule' as const, label: 'الجدول', icon: CalendarDays },
   { id: 'reports' as const, label: 'التقارير', icon: ClipboardList },
 ]
-
-const SectionCard = ({
-  id,
-  title,
-  tone,
-  className,
-  children,
-}: {
-  id?: string
-  title?: string
-  tone?: string
-  className?: string
-  children: ReactNode
-}) => (
-  <section
-    id={id}
-    className={cn(
-      'rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300',
-      className,
-    )}
-  >
-    {title && (
-      <div className="mb-3 flex items-center gap-2">
-        <span className={cn('h-1.5 w-1.5 rounded-full', tone ?? 'bg-primary')} aria-hidden="true" />
-        <h2 className="text-sm font-black text-main">{title}</h2>
-      </div>
-    )}
-    {children}
-  </section>
-)
 
 export const TeacherDashboardMobile = ({
   currentUser,

@@ -1,8 +1,8 @@
 ﻿import { useState } from 'react'
 import { Calendar } from 'lucide-react'
-import { cn } from '../../lib/utils'
 import { motion } from 'framer-motion'
 import { fadeUp } from '../../shared/animations/fadeUp'
+import { DashboardSectionCard as SectionCard } from '../../shared/components/DashboardSectionCard'
 import { EmptyState } from '../../shared/components/ui/EmptyState'
 import { DashboardStats } from '../../features/dashboard/components/DashboardStats'
 import { TeacherAchievements } from '../../features/dashboard/components/TeacherAchievements'
@@ -45,30 +45,6 @@ interface TeacherDashboardDesktopProps {
   }[]
   weekCounts: number[]
 }
-
-/** بطاقة قسم موحدة — بيضاء مرتفعة بحدود وظل ناعم */
-const SectionCard = ({
-  children,
-  delay = 0,
-  className,
-  id,
-}: {
-  children: React.ReactNode
-  delay?: number
-  className?: string
-  id?: string
-}) => (
-  <motion.div
-    {...fadeUp(delay)}
-    id={id}
-    className={cn(
-      'rounded-card border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-300',
-      className,
-    )}
-  >
-    {children}
-  </motion.div>
-)
 
 export const TeacherDashboardDesktop = ({
   currentUser,
