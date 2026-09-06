@@ -70,7 +70,7 @@ export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
   if (!nextSession) return null
 
   return (
-    <div className="relative h-full overflow-hidden rounded-3xl bg-primary p-5 shadow-lg shadow-primary/25 sm:p-6">
+    <div className="relative h-full overflow-hidden rounded-3xl bg-primary p-5 shadow-elevation-3 shadow-primary/25 sm:p-6">
       <div className="relative z-10">
         <div className="mb-4 flex items-center gap-2">
           <div className="h-2 w-2 animate-pulse rounded-full bg-success" />

@@ -46,7 +46,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
     >
       <div className="flex h-[60px] shrink-0 items-center justify-between border-b border-border bg-surface px-4 dark:border-white/5 dark:bg-card">
         <div className="flex items-center gap-2">
-          <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-success-soft shadow-sm">
+          <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-success-soft shadow-elevation-1">
             <Image
               src="/chat-avatar.webp"
               alt="avatar"
@@ -133,7 +133,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                 )}
               >
                 <div className="relative shrink-0">
-                  <div className="h-12 w-12 overflow-hidden rounded-full border border-border bg-surface shadow-sm dark:border-white/10 dark:bg-card">
+                  <div className="h-12 w-12 overflow-hidden rounded-full border border-border bg-surface shadow-elevation-1 dark:border-white/10 dark:bg-card">
                     <Image
                       src="/chat-avatar.webp"
                       alt="chat"
@@ -184,7 +184,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
                     </div>
 
                     {(conv.unreadCount ?? 0) > 0 && (
-                      <div className="ms-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-success px-1.5 text-xs font-medium text-on-success shadow-sm">
+                      <div className="ms-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-success px-1.5 text-xs font-medium text-on-success shadow-elevation-1">
                         {conv.unreadCount}
                       </div>
                     )}

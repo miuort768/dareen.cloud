@@ -36,7 +36,7 @@ export const ChatWindowHeader = ({
   const [showSearchBar, setShowSearchBar] = useState(false)
 
   return (
-    <header className="sticky top-0 z-[50] flex h-[60px] shrink-0 items-center justify-between bg-surface px-4 shadow-sm dark:bg-card">
+    <header className="sticky top-0 z-[50] flex h-[60px] shrink-0 items-center justify-between bg-surface px-4 shadow-elevation-1 dark:bg-card">
       <div className="flex items-center gap-3">
         <button
           onClick={onBack}
@@ -144,7 +144,7 @@ export const ChatWindowHeader = ({
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="absolute end-0 top-full z-[100] mt-2 w-48 rounded-md bg-card py-2 shadow-sm"
+                  className="absolute end-0 top-full z-[100] mt-2 w-48 rounded-md bg-card py-2 shadow-elevation-1"
                 >
                   {selectedConv.isGroup && (
                     <button

@@ -245,7 +245,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         {/* Live Session Quick Start */}
         <button
           onClick={() => setShowLiveDialog(true)}
-          className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-micro font-bold uppercase tracking-widest text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-micro font-bold uppercase tracking-widest text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
         >
           <Radio size={14} className="animate-pulse" />
           <span>بدء الحصة مع {student.name.split(' ')[0]}</span>
@@ -281,13 +281,13 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
                   student.curriculum,
                 )
               }
-              className="w-full rounded-2xl bg-error px-1 py-2 text-micro font-bold text-on-error shadow-sm transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="w-full rounded-2xl bg-error px-1 py-2 text-micro font-bold text-on-error shadow-elevation-1 transition-all hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               السجل
             </button>
             <button
               onClick={() => onLogAttendance(student, en)}
-              className="w-full rounded-2xl bg-success px-2 py-2 text-micro font-bold text-on-success shadow-sm transition-all hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="w-full rounded-2xl bg-success px-2 py-2 text-micro font-bold text-on-success shadow-elevation-1 transition-all hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               تسجيل
             </button>

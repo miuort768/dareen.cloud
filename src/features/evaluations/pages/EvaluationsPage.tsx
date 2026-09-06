@@ -332,7 +332,7 @@ export const Evaluations = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold text-main shadow-sm">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold text-main shadow-elevation-1">
                   {action.label}
                 </span>
                 <button
@@ -341,7 +341,7 @@ export const Evaluations = () => {
                     setFabOpen(false)
                   }}
                   aria-label={action.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary/90 hover:shadow-elevation-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <action.icon size={18} />
                 </button>
@@ -355,7 +355,7 @@ export const Evaluations = () => {
           aria-label={fabOpen ? 'إغلاق الإجراءات السريعة' : 'إجراءات سريعة'}
           aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-xl shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+            'flex h-12 w-12 items-center justify-center rounded-xl shadow-elevation-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
             fabOpen
               ? 'rotate-45 border border-border bg-card text-main'
               : 'bg-primary text-on-primary',

@@ -63,7 +63,7 @@ const TransactionRow = ({
     <motion.div
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
+      className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-all hover:border-primary/40 hover:shadow-elevation-2"
     >
       {/* Main row */}
       <div
@@ -224,11 +224,11 @@ export const TransactionsLog = ({
   }, [filtered, reportCurrency])
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1">
       {/* Header */}
       <div className="flex flex-col justify-between gap-3 border-b border-divider p-4 md:flex-row md:items-center">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-sm">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-elevation-1">
             <Receipt size={18} />
           </div>
           <div>
@@ -242,7 +242,7 @@ export const TransactionsLog = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onAddTransaction}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={14} /> إضافة معاملة
           </button>

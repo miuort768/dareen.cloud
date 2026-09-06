@@ -61,7 +61,7 @@ export const EvaluationCard = ({
       <div className="flex items-center gap-3 border-b border-border p-4 pb-3">
         <div
           className={cn(
-            'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-base font-bold shadow-md ring-2 ring-primary/10 transition-transform duration-slow group-hover:scale-105',
+            'flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-base font-bold shadow-elevation-2 ring-2 ring-primary/10 transition-transform duration-slow group-hover:scale-105',
             gradient.g,
             gradient.on,
           )}
@@ -175,7 +175,7 @@ export const EvaluationCard = ({
           <button
             onClick={() => onAddEvaluation(student.id)}
             aria-label={`إضافة تقييم لـ ${student.name}`}
-            className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={12} /> تقييم
           </button>

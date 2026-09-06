@@ -48,7 +48,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
       className="fixed inset-0 z-[100] flex items-end justify-center bg-black/50 backdrop-blur-sm md:items-center md:p-4"
       dir="rtl"
     >
-      <div className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-xl md:max-h-none md:max-w-lg md:overflow-hidden md:rounded-2xl md:border-x md:border-b">
+      <div className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl border-x-0 border-t border-border bg-card shadow-elevation-4 md:max-h-none md:max-w-lg md:overflow-hidden md:rounded-2xl md:border-x md:border-b">
         {/* Header */}
         <div className="flex items-center justify-between bg-primary p-5 text-on-primary">
           <div className="flex items-center gap-3">
@@ -172,7 +172,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
             </button>
             <button
               type="submit"
-              className="flex flex-[2] items-center justify-center gap-3 rounded-xl bg-primary py-3 font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              className="flex flex-[2] items-center justify-center gap-3 rounded-xl bg-primary py-3 font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <Save size={18} />
               تأكيد وحفظ العملية

@@ -66,7 +66,7 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
               className={cn(
                 'flex h-full w-full flex-col items-center gap-3 rounded-2xl p-4 text-center',
                 'border border-border bg-card dark:border-border dark:bg-card',
-                'hover:border-primary/30 hover:shadow-sm dark:hover:border-border',
+                'hover:border-primary/30 hover:shadow-elevation-1 dark:hover:border-border',
                 'active:scale-[0.97]',
                 'group transition-all duration-normal',
               )}

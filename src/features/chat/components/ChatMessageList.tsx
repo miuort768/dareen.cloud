@@ -99,7 +99,7 @@ export const ChatMessageList = ({
             >
               <div
                 className={cn(
-                  'relative max-w-[90%] px-3 py-2 shadow-sm md:max-w-[75%]',
+                  'relative max-w-[90%] px-3 py-2 shadow-elevation-1 md:max-w-[75%]',
                   isMe
                     ? 'ms-2 rounded-lg rounded-tr-none bg-primary text-on-primary'
                     : 'me-2 rounded-lg rounded-tl-none border border-border bg-surface text-main',
@@ -147,7 +147,7 @@ export const ChatMessageList = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             onClick={scrollToBottom}
-            className="absolute bottom-20 end-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-card text-muted shadow-sm hover:bg-hover"
+            className="absolute bottom-20 end-6 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-card text-muted shadow-elevation-1 hover:bg-hover"
           >
             <ArrowDown size={20} />
           </motion.button>

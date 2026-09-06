@@ -83,7 +83,7 @@ const TintedStatCard = ({ item, index }: { item: StatCardData; index: number }) 
         aria-hidden="true"
       />
       <div
-        className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-card ring-1 ${c.ring} shadow-sm transition-transform duration-slow group-hover:rotate-3 group-hover:scale-110`}
+        className={`mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-card ring-1 ${c.ring} shadow-elevation-1 transition-transform duration-slow group-hover:rotate-3 group-hover:scale-110`}
       >
         <Icon size={18} className={c.text} />
       </div>
@@ -105,7 +105,7 @@ const SolidStatCard = ({ item, index }: { item: StatCardData; index: number }) =
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, delay: index * 0.05, ease: [0.25, 0.1, 0.25, 1] }}
-      className="group relative overflow-hidden rounded-2xl bg-primary p-5 shadow-lg shadow-primary/25 transition-all duration-slow hover:-translate-y-1"
+      className="group relative overflow-hidden rounded-2xl bg-primary p-5 shadow-elevation-3 shadow-primary/25 transition-all duration-slow hover:-translate-y-1"
     >
       <div
         className="pointer-events-none absolute -bottom-4 -end-4 h-24 w-24 rounded-full bg-white/10 blur-xl"

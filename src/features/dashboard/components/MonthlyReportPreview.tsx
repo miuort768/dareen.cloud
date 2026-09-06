@@ -109,7 +109,7 @@ export const MonthlyReportPreview = ({
               ].map((item, idx) => (
                 <div
                   key={idx}
-                  className="rounded-2xl border-2 border-border bg-card p-5 text-center shadow-md transition-transform hover:translate-y-[-2px] dark:border-primary/20 dark:bg-card"
+                  className="rounded-2xl border-2 border-border bg-card p-5 text-center shadow-elevation-2 transition-transform hover:translate-y-[-2px] dark:border-primary/20 dark:bg-card"
                 >
                   <div
                     className={cn(

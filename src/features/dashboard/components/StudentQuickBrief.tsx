@@ -58,7 +58,7 @@ export const StudentQuickBrief = ({
         <div className="border-b-2 border-border bg-background p-6 dark:border-primary/20 dark:bg-card">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-5">
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border-2 border-border bg-background text-main shadow-md dark:border-primary/20 dark:bg-surface dark:text-main">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border-2 border-border bg-background text-main shadow-elevation-2 dark:border-primary/20 dark:bg-surface dark:text-main">
                 <User size={32} />
               </div>
               <div>

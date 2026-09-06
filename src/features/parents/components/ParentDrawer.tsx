@@ -353,7 +353,7 @@ const ParentHeader = ({
       <X size={18} />
     </button>
     <div className="relative z-10 flex items-center gap-4 pe-12">
-      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-xl font-bold text-on-primary shadow-lg ring-2 ring-white/30 backdrop-blur-sm">
+      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-xl font-bold text-on-primary shadow-elevation-3 ring-2 ring-white/30 backdrop-blur-sm">
         {(parent.name || '?').charAt(0)}
       </div>
       <div className="min-w-0">

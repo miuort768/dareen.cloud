@@ -105,7 +105,7 @@ export const EvaluationDrawer = ({
               <div className="flex items-center gap-3 pe-8">
                 <div
                   className={cn(
-                    'flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-sm font-bold shadow-md ring-2 ring-primary/10',
+                    'flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br text-sm font-bold shadow-elevation-2 ring-2 ring-primary/10',
                     gradient.g,
                     gradient.on,
                   )}

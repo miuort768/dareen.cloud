@@ -124,7 +124,7 @@ export const ScheduleEditorModal = ({
                     }`}
                   >
                     <div className="flex min-w-0 items-center gap-2">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-card text-micro font-black tabular-nums text-primary shadow-sm">
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-card text-micro font-black tabular-nums text-primary shadow-elevation-1">
                         {i + 1}
                       </span>
                       <div className="min-w-0">

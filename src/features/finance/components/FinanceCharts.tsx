@@ -77,7 +77,7 @@ export const FinanceCharts = ({
       dir="rtl"
     >
       {/* Area chart â€” spans 3 cols */}
-      <div className="rounded-2xl border border-border bg-card p-3.5 shadow-sm lg:col-span-3">
+      <div className="rounded-2xl border border-border bg-card p-3.5 shadow-elevation-1 lg:col-span-3">
         <div className="mb-3 flex items-center justify-between">
           <div>
             <h3 className="text-xs font-bold text-main">تحليل التدفق النقدي</h3>
@@ -205,7 +205,7 @@ export const FinanceCharts = ({
       </div>
 
       {/* Donut chart â€” spans 2 cols */}
-      <div className="rounded-2xl border border-border bg-card p-3.5 shadow-sm lg:col-span-2">
+      <div className="rounded-2xl border border-border bg-card p-3.5 shadow-elevation-1 lg:col-span-2">
         <h3 className="mb-3 text-xs font-bold text-main">تصنيف المصروفات</h3>
         <div className="flex h-[calc(100%-2rem)] flex-col items-center justify-center">
           <div className="relative h-36 w-full" dir="ltr">

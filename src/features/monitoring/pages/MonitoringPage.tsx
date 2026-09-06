@@ -64,7 +64,7 @@ const StatTile = ({
   value: number
   tone: string
 }) => (
-  <div className="rounded-2xl border border-border bg-surface p-3.5 shadow-sm transition-colors duration-slow">
+  <div className="rounded-2xl border border-border bg-surface p-3.5 shadow-elevation-1 transition-colors duration-slow">
     <div className={cn('mb-2 flex h-8 w-8 items-center justify-center rounded-xl', tone)}>
       <Icon size={14} />
     </div>
@@ -90,7 +90,7 @@ const SectionCard = ({
 }) => (
   <section
     className={cn(
-      'overflow-hidden rounded-3xl border bg-surface shadow-sm transition-colors duration-slow',
+      'overflow-hidden rounded-3xl border bg-surface shadow-elevation-1 transition-colors duration-slow',
       accent || 'border-border',
     )}
   >
@@ -180,7 +180,7 @@ export const MonitoringPage = () => {
       {/* Header — family greeting strip */}
       <section
         aria-label="مراقبة النظام"
-        className="relative overflow-hidden rounded-3xl border border-border bg-surface p-5 shadow-sm transition-colors duration-slow"
+        className="relative overflow-hidden rounded-3xl border border-border bg-surface p-5 shadow-elevation-1 transition-colors duration-slow"
       >
         <div
           className="pointer-events-none absolute inset-y-0 start-0 w-1.5 bg-primary"
@@ -217,7 +217,7 @@ export const MonitoringPage = () => {
             )}
             <button
               onClick={load}
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:bg-primary-active"
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 active:bg-primary-active"
               aria-label="تحديث البيانات الآن"
             >
               <RefreshCw size={15} className={refreshing ? 'animate-spin' : ''} />

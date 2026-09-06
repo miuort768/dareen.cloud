@@ -249,7 +249,7 @@ export const LiveSessions = () => {
           {sessions.map((session) => (
             <div
               key={session.id}
-              className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-md hover:shadow-primary/5 dark:border-primary/15 dark:hover:border-primary/25"
+              className="group overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-elevation-2 hover:shadow-primary/5 dark:border-primary/15 dark:hover:border-primary/25"
             >
               {/* Live indicator bar */}
               <div className="h-0.5 bg-gradient-to-l from-success via-success to-transparent" />

@@ -55,7 +55,7 @@ const KPICard = ({
 }) => (
   <motion.div
     whileHover={{ scale: 1.01, y: -1 }}
-    className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:shadow-md"
+    className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-all hover:shadow-elevation-2"
   >
     <div className="relative p-3.5">
       <div className="mb-2 flex items-start justify-between">

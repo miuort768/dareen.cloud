@@ -1,4 +1,4 @@
-﻿import { Award, Plus, X, Search, Users, Star, TrendingUp, UserCheck, UserX } from 'lucide-react'
+import { Award, Plus, X, Search, Users, Star, TrendingUp, UserCheck, UserX } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
 
@@ -58,7 +58,7 @@ export const EvaluationsHeader = ({
         {/* Title Row */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/25 md:h-11 md:w-11">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary shadow-elevation-3 shadow-primary/25 md:h-11 md:w-11">
               <Award size={19} className="text-on-primary" />
             </div>
             <div>
@@ -188,7 +188,7 @@ export const EvaluationsHeader = ({
                 className={cn(
                   'shrink-0 whitespace-nowrap rounded-lg px-2.5 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                   filterStatus === f.value
-                    ? 'bg-primary text-on-primary shadow-sm'
+                    ? 'bg-primary text-on-primary shadow-elevation-1'
                     : 'border border-border bg-surface font-medium text-muted hover:bg-hover hover:text-main',
                 )}
               >

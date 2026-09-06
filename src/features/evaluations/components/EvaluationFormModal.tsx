@@ -130,7 +130,7 @@ export const EvaluationFormModal = ({
                           className={cn(
                             'relative flex flex-col items-center justify-center gap-2 rounded-xl border-2 px-2 py-3.5 transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                             isSelected
-                              ? cn(opt.bg, opt.border, opt.color, 'shadow-sm')
+                              ? cn(opt.bg, opt.border, opt.color, 'shadow-elevation-1')
                               : 'border-border bg-surface text-muted hover:border-primary/40 hover:bg-hover hover:text-main',
                           )}
                         >
@@ -172,7 +172,7 @@ export const EvaluationFormModal = ({
                           className={cn(
                             'rounded-lg border px-3 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                             isSelected
-                              ? 'border-primary bg-primary-soft font-black text-primary shadow-sm dark:bg-primary/10'
+                              ? 'border-primary bg-primary-soft font-black text-primary shadow-elevation-1 dark:bg-primary/10'
                               : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-primary',
                           )}
                         >
@@ -235,7 +235,7 @@ export const EvaluationFormModal = ({
                 type="submit"
                 form="evaluation-form"
                 disabled={isSubmitting}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-sm transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95] disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <CheckCircle2 size={14} /> {isSubmitting ? 'جاري الإرسال...' : 'إرسال التقييم'}
               </button>

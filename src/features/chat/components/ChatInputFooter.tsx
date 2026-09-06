@@ -70,13 +70,13 @@ export const ChatInputFooter = ({
             }
           }}
           placeholder="اكتب رسالة"
-          className="custom-scrollbar relative z-10 max-h-[120px] w-full resize-none overflow-y-auto scroll-smooth rounded-xl border-none bg-card px-4 py-3 text-start text-sm text-main shadow-sm focus:ring-1 focus:ring-success md:text-base"
+          className="custom-scrollbar relative z-10 max-h-[120px] w-full resize-none overflow-y-auto scroll-smooth rounded-xl border-none bg-card px-4 py-3 text-start text-sm text-main shadow-elevation-1 focus:ring-1 focus:ring-success md:text-base"
         />
       </div>
       <div className="flex shrink-0 items-center justify-center">
         <button
           onClick={onSend}
-          className="flex h-[48px] w-[48px] items-center justify-center rounded-xl bg-success p-3.5 text-on-success shadow-sm outline-none transition-all hover:brightness-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className="flex h-[48px] w-[48px] items-center justify-center rounded-xl bg-success p-3.5 text-on-success shadow-elevation-1 outline-none transition-all hover:brightness-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           title="إرسال"
         >
           <Send size={20} className={cn('transition-transform', isSending && 'animate-pulse')} />

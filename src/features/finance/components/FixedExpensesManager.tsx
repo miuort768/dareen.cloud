@@ -153,12 +153,12 @@ const ExpenseCard = ({
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.02, y: -2 }}
-      className={`relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm transition-all hover:shadow-md ${cfg.accentBorder}`}
+      className={`relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-elevation-1 transition-all hover:shadow-elevation-2 ${cfg.accentBorder}`}
     >
       <div className="mb-3 flex items-center justify-between gap-2.5">
         <div className="flex items-center gap-2.5">
           <div
-            className={`h-9 w-9 rounded-xl ${cfg.gradient} flex items-center justify-center ${cfg.on} shrink-0 shadow-sm`}
+            className={`h-9 w-9 rounded-xl ${cfg.gradient} flex items-center justify-center ${cfg.on} shrink-0 shadow-elevation-1`}
           >
             <Icon size={16} />
           </div>
@@ -208,10 +208,10 @@ export const FixedExpensesManager = ({
   const total = expenses.reduce((s, e) => s + (Number(e.amount) || 0), 0)
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1">
       <div className="flex flex-col justify-between gap-3 border-b border-divider p-4 md:flex-row md:items-center">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-sm">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-elevation-1">
             <Building2 size={18} />
           </div>
           <div>
@@ -226,7 +226,7 @@ export const FixedExpensesManager = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onConvertAll}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <RotateCcw size={13} /> ترحيل للمعاملات
           </button>

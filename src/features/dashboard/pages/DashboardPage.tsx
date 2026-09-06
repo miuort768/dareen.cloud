@@ -76,7 +76,7 @@ export const Dashboard = () => {
               {Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={`skel-kpi-${i}`}
-                  className="rounded-2xl border border-border bg-card p-5 shadow-sm"
+                  className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1"
                 >
                   <Skeleton className="mb-3 h-10 w-10 rounded-xl" />
                   <Skeleton className="mb-1 h-8 w-24" />

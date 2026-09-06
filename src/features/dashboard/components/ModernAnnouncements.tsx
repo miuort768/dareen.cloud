@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, AlertTriangle, X, Check, RefreshCw } from 'lucide-react'
 import { api } from '@/lib/api'
@@ -217,7 +217,7 @@ export const ModernAnnouncements = () => {
             onClick={() => setAckTarget(null)}
           >
             <div
-              className="w-full max-w-lg rounded-2xl border border-border bg-card p-5 shadow-xl"
+              className="w-full max-w-lg rounded-2xl border border-border bg-card p-5 shadow-elevation-4"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="mb-5 flex items-center gap-3">

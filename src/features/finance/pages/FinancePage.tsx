@@ -104,14 +104,14 @@ export const Finance = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
+          className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 md:p-6"
         >
           <div className="bg-success/10 pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
 
           <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
             <div className="flex items-center gap-4">
-              <div className="shadow-success/30 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-success shadow-lg">
+              <div className="shadow-success/30 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-success shadow-elevation-3">
                 <TrendingUp size={22} className="text-on-success" />
               </div>
               <div>
@@ -173,7 +173,7 @@ export const Finance = () => {
               </button>
               <button
                 onClick={() => navigate('/monthly-closing')}
-                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-10 md:flex-none"
+                className="flex h-11 flex-1 items-center justify-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-10 md:flex-none"
               >
                 <CalendarCheck size={13} /> تسوية
               </button>
@@ -259,12 +259,12 @@ export const Finance = () => {
                 transition={{ delay: 0.05 * i }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
                   {item.label}
                 </span>
                 <button
                   onClick={() => handleFabAction(item.action)}
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg outline-none transition-all hover:bg-primary-hover hover:shadow-xl focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                 >
                   <item.icon size={18} />
                 </button>
@@ -276,7 +276,7 @@ export const Finance = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-xl transition-all',
+            'flex h-14 w-14 items-center justify-center rounded-2xl text-on-primary shadow-elevation-4 transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >
