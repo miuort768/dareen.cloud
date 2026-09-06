@@ -94,7 +94,7 @@ const SlotPreview = ({ url, tall }: { url: string; tall?: boolean }) => {
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-xl border border-border bg-card shadow-sm',
+        'overflow-hidden rounded-xl border border-border bg-card shadow-elevation-1',
         tall ? 'aspect-[16/10] w-full max-w-[280px]' : 'h-24 w-full',
       )}
     >
@@ -171,12 +171,12 @@ export const Advertisers = () => {
               onClick={handleSave}
               disabled={saveState === 'saving'}
               className={cn(
-                'inline-flex h-10 items-center gap-2 rounded-lg px-5 text-sm font-semibold shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97]',
+                'inline-flex h-10 items-center gap-2 rounded-lg px-5 text-sm font-semibold shadow-elevation-1 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97]',
                 saveState === 'saved'
                   ? 'bg-success text-on-success'
                   : saveState === 'error'
                     ? 'bg-error text-on-error'
-                    : 'bg-primary text-on-primary hover:bg-primary-hover hover:shadow-md',
+                    : 'bg-primary text-on-primary hover:bg-primary-hover hover:shadow-elevation-2',
               )}
             >
               {saveState === 'saved' ? (

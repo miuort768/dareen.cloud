@@ -63,7 +63,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
   return (
     <section
       aria-label={`لوحة متابعة ${child.name}`}
-      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition-colors duration-slow"
+      className="overflow-hidden rounded-2xl border border-border bg-surface shadow-elevation-1 transition-colors duration-slow"
     >
       {/* Header — identity + attendance ring + key numbers */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border p-5">
@@ -186,7 +186,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
               {notes.map((note, i) => (
                 <div
                   key={`note-${i}`}
-                  className="rounded-2xl border border-s-[3px] border-border border-s-primary bg-card p-3 shadow-sm"
+                  className="rounded-2xl border border-s-[3px] border-border border-s-primary bg-card p-3 shadow-elevation-1"
                 >
                   <div className="mb-1 flex items-center justify-between">
                     <span className="text-[11px] font-black text-main">{note.subject}</span>

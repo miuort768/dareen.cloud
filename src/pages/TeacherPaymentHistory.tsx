@@ -341,7 +341,7 @@ export const TeacherPaymentHistory = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="rounded-2xl border border-border bg-card p-4 shadow-sm"
+                  className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div
@@ -490,7 +490,7 @@ export const TeacherPaymentHistory = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
                   {action.label}
                 </span>
                 <button
@@ -498,7 +498,7 @@ export const TeacherPaymentHistory = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover hover:shadow-elevation-4"
                 >
                   <action.icon size={18} />
                 </button>
@@ -512,7 +512,7 @@ export const TeacherPaymentHistory = () => {
           aria-label={fabOpen ? 'إغلاق' : 'إجراءات سريعة'}
           aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-lg text-on-primary shadow-xl transition-all',
+            'flex h-12 w-12 items-center justify-center rounded-lg text-on-primary shadow-elevation-4 transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >

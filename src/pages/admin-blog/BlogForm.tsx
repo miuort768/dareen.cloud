@@ -287,7 +287,7 @@ export const BlogForm = ({
                   className={`relative h-6 w-12 shrink-0 rounded-full transition-colors duration-normal focus-visible:ring-2 focus-visible:ring-focus ${currentPost.showButtons ? 'bg-success' : 'bg-dim'}`}
                 >
                   <span
-                    className={`absolute top-0.5 h-5 w-5 rounded-full bg-background shadow-sm transition-all duration-normal ${currentPost.showButtons ? 'start-0.5' : 'end-0.5'}`}
+                    className={`absolute top-0.5 h-5 w-5 rounded-full bg-background shadow-elevation-1 transition-all duration-normal ${currentPost.showButtons ? 'start-0.5' : 'end-0.5'}`}
                   />
                 </button>
               </div>

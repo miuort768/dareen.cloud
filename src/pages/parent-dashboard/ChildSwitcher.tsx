@@ -36,7 +36,7 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
             className={cn(
               'inline-flex shrink-0 items-center gap-2 rounded-2xl border px-3 py-2 transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
               active
-                ? 'border-primary bg-primary shadow-sm'
+                ? 'border-primary bg-primary shadow-elevation-1'
                 : 'border-border bg-surface hover:bg-hover',
             )}
           >

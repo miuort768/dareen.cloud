@@ -240,7 +240,7 @@ export const Chat = () => {
             />
 
             <div className="z-10 text-center">
-              <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-xl border border-border bg-surface shadow-sm">
+              <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-xl border border-border bg-surface shadow-elevation-1">
                 <Image
                   src="/logo.png"
                   alt={academyName}

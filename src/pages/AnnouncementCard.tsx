@@ -21,7 +21,7 @@ export const AnnouncementCard = ({
   return (
     <div
       className={cn(
-        'relative flex flex-col rounded-card border border-border bg-card p-4 shadow-sm transition-all duration-slow dark:bg-surface md:p-5',
+        'relative flex flex-col rounded-card border border-border bg-card p-4 shadow-elevation-1 transition-all duration-slow dark:bg-surface md:p-5',
         !ann.isActive && 'border-dashed opacity-60 grayscale',
       )}
     >

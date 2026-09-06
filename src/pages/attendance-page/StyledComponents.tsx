@@ -7,7 +7,12 @@ export const SectionCard = ({
   children: React.ReactNode
   className?: string
 }) => (
-  <div className={cn('rounded-2xl border border-border bg-card p-4 shadow-sm md:p-5', className)}>
+  <div
+    className={cn(
+      'rounded-2xl border border-border bg-card p-4 shadow-elevation-1 md:p-5',
+      className,
+    )}
+  >
     {children}
   </div>
 )

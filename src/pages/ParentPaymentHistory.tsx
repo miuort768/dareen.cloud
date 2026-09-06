@@ -73,7 +73,7 @@ const HeroSkeleton = () => (
 const ListSkeleton = () => (
   <div className="space-y-2.5">
     {[1, 2, 3].map((i) => (
-      <div key={i} className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+      <div key={i} className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1">
         <div className="mb-3 flex items-center justify-between">
           <Skeleton className="h-3 w-28 rounded-lg" />
           <Skeleton className="h-5 w-14 rounded-lg" />
@@ -398,7 +398,7 @@ export const ParentPaymentHistory = () => {
                   className={cn(
                     'rounded-xl px-3.5 py-1.5 text-[11px] font-bold transition-all',
                     active
-                      ? 'bg-primary text-on-primary shadow-sm'
+                      ? 'bg-primary text-on-primary shadow-elevation-1'
                       : 'border border-border bg-card text-muted hover:bg-hover',
                   )}
                 >
@@ -416,7 +416,7 @@ export const ParentPaymentHistory = () => {
                   className={cn(
                     'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-bold transition-all',
                     filterChild === 'all'
-                      ? 'bg-primary text-on-primary shadow-sm'
+                      ? 'bg-primary text-on-primary shadow-elevation-1'
                       : 'border border-border bg-card text-muted hover:bg-hover',
                   )}
                 >
@@ -429,7 +429,7 @@ export const ParentPaymentHistory = () => {
                     className={cn(
                       'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-bold transition-all',
                       filterChild === c.id
-                        ? 'bg-primary text-on-primary shadow-sm'
+                        ? 'bg-primary text-on-primary shadow-elevation-1'
                         : 'border border-border bg-card text-muted hover:bg-hover',
                     )}
                   >

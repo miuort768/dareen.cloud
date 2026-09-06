@@ -160,7 +160,7 @@ export const Tasks = () => {
               action={
                 <button
                   onClick={() => setShowAddForm(true)}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-sm transition-all duration-normal hover:bg-primary-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <Plus size={16} /> مهمة جديدة
                 </button>
@@ -195,7 +195,7 @@ export const Tasks = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.12 + i * 0.06 }}
                     whileHover={{ scale: 1.02, y: -2 }}
-                    className="rounded-2xl border border-border bg-card p-4 shadow-sm"
+                    className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1"
                   >
                     <div className="mb-3 flex items-center justify-between">
                       <div
@@ -233,7 +233,7 @@ export const Tasks = () => {
                   placeholder="ابحث عن مهمة..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full rounded-2xl border border-border bg-card px-4 py-3 ps-10 text-xs font-bold text-main shadow-sm transition-all placeholder:text-muted focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full rounded-2xl border border-border bg-card px-4 py-3 ps-10 text-xs font-bold text-main shadow-elevation-1 transition-all placeholder:text-muted focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 />
               </div>
 
@@ -326,7 +326,7 @@ export const Tasks = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="إنشاء مهمة جديدة"
-          className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-4 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-xl transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:bottom-6 md:end-6"
+          className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-4 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-4 transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:bottom-6 md:end-6"
         >
           <Plus size={24} />
         </motion.button>

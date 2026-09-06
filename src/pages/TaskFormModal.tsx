@@ -136,7 +136,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
           <button
             type="submit"
             disabled={!data.title.trim()}
-            className="w-full rounded-2xl bg-primary py-3 text-xs font-bold uppercase tracking-wider text-on-primary shadow-sm transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+            className="w-full rounded-2xl bg-primary py-3 text-xs font-bold uppercase tracking-wider text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
           >
             إنشاء مهمة جديدة
           </button>

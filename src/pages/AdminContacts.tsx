@@ -252,14 +252,14 @@ export const AdminContacts = () => {
               <>
                 <button
                   onClick={() => exportToCsv(filtered)}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-sm transition-all duration-normal hover:bg-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <Download size={14} />
                   <span className="hidden sm:inline">تصدير</span>
                 </button>
                 <button
                   onClick={handleDeleteAll}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-error px-4 text-sm font-semibold text-on-error shadow-sm transition-all duration-normal hover:bg-error-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-error px-4 text-sm font-semibold text-on-error shadow-elevation-1 transition-all duration-normal hover:bg-error-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <Trash2 size={14} />
                   <span className="hidden sm:inline">حذف الكل</span>
@@ -314,7 +314,7 @@ export const AdminContacts = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 + i * 0.04 }}
                   whileHover={{ y: -2 }}
-                  className="rounded-2xl border border-border bg-card p-4 shadow-sm"
+                  className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div

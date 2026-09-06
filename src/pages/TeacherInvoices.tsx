@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { GraduationCap, Plus, RefreshCw, FileText, AlertCircle } from 'lucide-react'
@@ -405,14 +405,14 @@ export const TeacherInvoices = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
+          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 md:p-6"
         >
           <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
           <div className="bg-success/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
 
           <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
             <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-elevation-3 shadow-primary/30">
                 <GraduationCap size={22} className="text-on-primary" />
               </div>
               <div>
@@ -533,7 +533,7 @@ export const TeacherInvoices = () => {
                   transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                   className="flex items-center gap-2"
                 >
-                  <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                  <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
                     {action.label}
                   </span>
                   <button
@@ -541,7 +541,7 @@ export const TeacherInvoices = () => {
                       action.onClick()
                       setFabOpen(false)
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover hover:shadow-elevation-4"
                   >
                     <action.icon size={18} />
                   </button>
@@ -553,7 +553,7 @@ export const TeacherInvoices = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-xl transition-all',
+            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-elevation-4 transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >

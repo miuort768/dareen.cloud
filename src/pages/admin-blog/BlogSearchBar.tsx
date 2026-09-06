@@ -43,7 +43,7 @@ export const BlogSearchBar = ({
           className={cn(
             'flex h-10 items-center justify-center whitespace-nowrap rounded-lg px-3.5 text-xs font-bold transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:h-9',
             filterType === btn.key
-              ? 'bg-primary text-on-primary shadow-sm'
+              ? 'bg-primary text-on-primary shadow-elevation-1'
               : 'border border-border bg-card text-muted hover:bg-hover',
           )}
         >

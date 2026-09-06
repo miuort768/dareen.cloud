@@ -231,10 +231,10 @@ export const Announcements = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="rounded-2xl border border-border bg-card p-4 shadow-sm transition-shadow hover:shadow-elevation-2"
+                  className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1 transition-shadow hover:shadow-elevation-2"
                 >
                   <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('rounded-lg p-2 shadow-sm', kpi.iconBg)}>
+                    <div className={cn('rounded-lg p-2 shadow-elevation-1', kpi.iconBg)}>
                       <Icon size={16} />
                     </div>
                   </div>
@@ -322,7 +322,7 @@ export const Announcements = () => {
                 transition={{ delay: 0.05 * (fabActions.length - 1 - i) }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
                   {action.label}
                 </span>
                 <button

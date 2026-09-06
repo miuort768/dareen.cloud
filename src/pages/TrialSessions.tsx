@@ -487,7 +487,7 @@ export const TrialSessions = () => {
             {/* Mobile layout */}
             <div className="md:hidden">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-md shadow-primary/20">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-elevation-2 shadow-primary/20">
                   <CalendarDays size={20} className="text-on-primary" />
                 </div>
                 <div>
@@ -501,7 +501,7 @@ export const TrialSessions = () => {
                   resetForm()
                   setShowModal(true)
                 }}
-                className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-4 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all hover:shadow-lg hover:shadow-primary/30 active:scale-95"
+                className="mt-4 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-4 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 transition-all hover:shadow-elevation-3 hover:shadow-primary/30 active:scale-95"
               >
                 <Plus size={16} /> جدولة جديدة
               </button>
@@ -517,7 +517,7 @@ export const TrialSessions = () => {
                     setConfirmDeleteAll(true)
                     setDeleteAllTyped('')
                   }}
-                  className="flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
+                  className="flex h-11 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-elevation-1 transition-all hover:bg-error-hover active:scale-95"
                 >
                   <Trash2 size={16} /> حذف الكل
                 </button>
@@ -527,7 +527,7 @@ export const TrialSessions = () => {
             {/* Desktop layout */}
             <div className="hidden items-center justify-between gap-4 md:flex">
               <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-md shadow-primary/25">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary-deep shadow-elevation-2 shadow-primary/25">
                   <CalendarDays size={22} className="text-on-primary" />
                 </div>
                 <div>
@@ -547,7 +547,7 @@ export const TrialSessions = () => {
                     setConfirmDeleteAll(true)
                     setDeleteAllTyped('')
                   }}
-                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-95"
+                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-xs font-extrabold text-on-error shadow-elevation-1 transition-all hover:bg-error-hover active:scale-95"
                 >
                   <Trash2 size={15} /> حذف الكل
                 </button>
@@ -557,7 +557,7 @@ export const TrialSessions = () => {
                     resetForm()
                     setShowModal(true)
                   }}
-                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-5 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all hover:shadow-lg hover:shadow-primary/30 active:scale-95"
+                  className="flex h-10 items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-primary to-primary-deep px-5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 transition-all hover:shadow-elevation-3 hover:shadow-primary/30 active:scale-95"
                 >
                   <Plus size={15} /> جدولة جديدة
                 </button>
@@ -612,7 +612,7 @@ export const TrialSessions = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
               className={cn(
-                'shadow-elevation-0 rounded-2xl border p-4 transition-all duration-slow hover:shadow-elevation-1',
+                'rounded-2xl border p-4 shadow-elevation-0 transition-all duration-slow hover:shadow-elevation-1',
                 stat.card,
               )}
             >
@@ -690,7 +690,7 @@ export const TrialSessions = () => {
                       className={cn(
                         'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all active:scale-95',
                         isActive
-                          ? 'border-primary bg-primary text-on-primary shadow-sm'
+                          ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                           : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
                       )}
                     >
@@ -710,7 +710,7 @@ export const TrialSessions = () => {
                     className={cn(
                       'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all active:scale-95',
                       filterSubject === ''
-                        ? 'border-primary bg-primary text-on-primary shadow-sm'
+                        ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                         : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
                     )}
                   >
@@ -727,7 +727,7 @@ export const TrialSessions = () => {
                         className={cn(
                           'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all active:scale-95',
                           isActive
-                            ? 'border-primary bg-primary text-on-primary shadow-sm'
+                            ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                             : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
                         )}
                       >
@@ -921,7 +921,7 @@ export const TrialSessions = () => {
                     className={cn(
                       'flex h-11 w-11 items-center justify-center rounded-xl text-xs font-bold transition-all md:h-9 md:w-9',
                       page === currentPage
-                        ? 'bg-primary text-on-primary shadow-sm shadow-primary/10'
+                        ? 'bg-primary text-on-primary shadow-elevation-1 shadow-primary/10'
                         : 'border border-border bg-surface text-muted hover:bg-hover',
                     )}
                   >
@@ -948,7 +948,7 @@ export const TrialSessions = () => {
             resetForm()
             setShowModal(true)
           }}
-          className="fixed bottom-8 end-8 z-40 hidden h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20 transition-all duration-normal hover:bg-primary-hover active:scale-95 md:flex"
+          className="fixed bottom-8 end-8 z-40 hidden h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 shadow-primary/20 transition-all duration-normal hover:bg-primary-hover active:scale-95 md:flex"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة حصة جديدة"
@@ -1137,7 +1137,7 @@ export const TrialSessions = () => {
                       deleteAllMutation.isPending ||
                       deleteAllTyped.trim().toLowerCase() !== 'dareen'
                     }
-                    className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 transition-all hover:bg-error-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {deleteAllMutation.isPending ? 'جاري الحذف...' : 'حذف الكل'}
                   </button>

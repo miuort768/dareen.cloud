@@ -335,14 +335,14 @@ export const MonthlyClosing = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6"
+          className="relative mb-4 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-elevation-1 md:p-6"
         >
           <div className="pointer-events-none absolute -end-16 -top-20 h-56 w-56 rounded-full bg-primary/10 blur-3xl" />
           <div className="bg-success/10 pointer-events-none absolute -bottom-20 -start-16 h-48 w-48 rounded-full blur-3xl" />
 
           <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
             <div className="flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-elevation-3 shadow-primary/30">
                 <CalendarCheck size={22} className="text-on-primary" />
               </div>
               <div>
@@ -453,7 +453,7 @@ export const MonthlyClosing = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
         >
-          <div className="no-scrollbar mb-4 flex gap-1 overflow-x-auto rounded-2xl border border-divider bg-card p-1 shadow-sm">
+          <div className="no-scrollbar mb-4 flex gap-1 overflow-x-auto rounded-2xl border border-divider bg-card p-1 shadow-elevation-1">
             {TABS.map((tab) => (
               <button
                 key={tab.id}
@@ -466,7 +466,7 @@ export const MonthlyClosing = () => {
                 {activeTab === tab.id && (
                   <motion.div
                     layoutId="closing-tab-pill"
-                    className="absolute inset-0 rounded-xl bg-primary shadow-sm"
+                    className="absolute inset-0 rounded-xl bg-primary shadow-elevation-1"
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
                 )}
@@ -550,12 +550,12 @@ export const MonthlyClosing = () => {
                 transition={{ delay: 0.05 * i }}
                 className="flex items-center gap-2"
               >
-                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                <span className="whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
                   {item.label}
                 </span>
                 <button
                   onClick={() => handleFabAction(item.action)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover hover:shadow-elevation-4"
                 >
                   <item.icon size={18} />
                 </button>
@@ -567,7 +567,7 @@ export const MonthlyClosing = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-xl transition-all',
+            'flex h-12 w-12 items-center justify-center rounded-full text-on-primary shadow-elevation-4 transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >

@@ -105,7 +105,7 @@ const ConfirmDeleteModal = ({
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-[0.98]"
+            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 transition-all hover:bg-error-hover active:scale-[0.98]"
           >
             تأكيد الحذف
           </button>
@@ -202,7 +202,7 @@ const ConfirmDeleteAllModal = ({
           <button
             onClick={onConfirm}
             disabled={isLoading || !verified}
-            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-sm transition-all hover:bg-error-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 transition-all hover:bg-error-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? 'جاري الحذف...' : 'حذف الكل'}
           </button>
@@ -322,7 +322,7 @@ const AddLeadModalInline = ({
           <button
             type="submit"
             disabled={addMutation.isPending}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-bold text-on-primary shadow-sm transition-all duration-normal hover:bg-primary-hover active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-bold text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {addMutation.isPending ? 'جاري الحفظ...' : 'إضافة العميل'}
           </button>
@@ -494,7 +494,7 @@ export const Leads = () => {
   const lostBanner = (
     <div
       className={cn(
-        'flex flex-1 items-center gap-2 rounded-2xl p-2.5 shadow-sm transition-colors duration-normal',
+        'flex flex-1 items-center gap-2 rounded-2xl p-2.5 shadow-elevation-1 transition-colors duration-normal',
         showLost ? 'bg-error-soft text-error' : 'bg-error text-on-error',
       )}
     >
@@ -558,7 +558,7 @@ export const Leads = () => {
               <button
                 onClick={() => setIsAddModalOpen(true)}
                 aria-label="عميل جديد"
-                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-md shadow-primary/25 transition-all active:scale-95"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 transition-all active:scale-95"
               >
                 <Plus size={16} /> جديد
               </button>
@@ -581,7 +581,7 @@ export const Leads = () => {
               action={
                 <button
                   onClick={() => setIsAddModalOpen(true)}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-sm transition-all duration-normal hover:bg-primary-hover hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <Plus size={16} /> عميل جديد
                 </button>
@@ -713,7 +713,7 @@ export const Leads = () => {
                   className={cn(
                     'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all active:scale-95',
                     isActive
-                      ? 'border-primary bg-primary text-on-primary shadow-sm'
+                      ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                       : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
                   )}
                 >
@@ -770,7 +770,7 @@ export const Leads = () => {
         {/* FAB */}
         <motion.button
           onClick={() => setIsAddModalOpen(true)}
-          className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-6 z-50 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20 transition-all duration-normal hover:bg-primary-hover active:scale-95 md:bottom-8 md:end-8 md:h-14 md:w-14"
+          className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-6 z-50 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-3 shadow-primary/20 transition-all duration-normal hover:bg-primary-hover active:scale-95 md:bottom-8 md:end-8 md:h-14 md:w-14"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة عميل"

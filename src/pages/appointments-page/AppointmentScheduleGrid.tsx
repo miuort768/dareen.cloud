@@ -71,7 +71,7 @@ export const AppointmentScheduleGrid = ({
             transition={{ duration: 0.25 }}
             className={cn(
               'overflow-hidden rounded-2xl border bg-card',
-              isToday ? 'border-primary shadow-md shadow-primary/10' : 'border-border',
+              isToday ? 'border-primary shadow-elevation-2 shadow-primary/10' : 'border-border',
             )}
           >
             {/* Day header */}

@@ -58,7 +58,7 @@ export const AdminTeacherGroupList = ({
             {/* Teacher Header */}
             <div className="flex items-center justify-between bg-primary px-5 py-3">
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15 text-xs font-bold text-on-primary shadow-sm">
+                <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-white/15 text-xs font-bold text-on-primary shadow-elevation-1">
                   {teacher.teacherName.charAt(0)}
                 </div>
                 <div>

@@ -82,7 +82,7 @@ export const TrialSessionCard = ({
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ y: -2 }}
       className={cn(
-        'shadow-elevation-0 group overflow-hidden rounded-2xl border border-border bg-card text-start font-dash transition-all duration-slow hover:shadow-elevation-1 md:rounded-2xl',
+        'group overflow-hidden rounded-2xl border border-border bg-card text-start font-dash shadow-elevation-0 transition-all duration-slow hover:shadow-elevation-1 md:rounded-2xl',
         onCardClick && 'cursor-pointer',
       )}
       dir="rtl"
@@ -93,7 +93,7 @@ export const TrialSessionCard = ({
           <div className="flex items-center gap-3">
             <div
               className={cn(
-                'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br shadow-md',
+                'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br shadow-elevation-2',
                 gradient.g,
               )}
             >
@@ -262,7 +262,7 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md hover:shadow-lg',
+                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-elevation-2 hover:shadow-elevation-3',
               )}
               aria-label="مدفوعة"
             >
@@ -277,7 +277,7 @@ export const TrialSessionCard = ({
           }}
           className={cn(
             actionBtnBase,
-            'mt-2 w-full border-error bg-error text-on-error shadow-sm hover:bg-error-hover',
+            'mt-2 w-full border-error bg-error text-on-error shadow-elevation-1 hover:bg-error-hover',
           )}
           aria-label="حذف"
         >
@@ -340,7 +340,7 @@ export const TrialSessionCard = ({
                 actionBtnBase,
                 isPaid
                   ? 'cursor-default bg-success-soft text-success'
-                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-md hover:shadow-lg',
+                  : 'border-transparent bg-gradient-to-br from-success to-success-dark text-on-success shadow-elevation-2 hover:shadow-elevation-3',
               )}
               aria-label="مدفوعة"
             >
@@ -354,7 +354,7 @@ export const TrialSessionCard = ({
             }}
             className={cn(
               actionBtnBase,
-              'border-error bg-error text-on-error shadow-sm hover:bg-error-hover',
+              'border-error bg-error text-on-error shadow-elevation-1 hover:bg-error-hover',
             )}
             aria-label="حذف"
           >

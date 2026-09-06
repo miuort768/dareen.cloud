@@ -42,7 +42,8 @@ export const AAbdullah = () => {
     { icon: VTargetArrow, title: 'التميز', desc: 'نسعى للأفضل دايماً', bgClass: 'bg-primary' },
   ]
 
-  const cardClass = 'bg-card rounded-3xl p-6 md:p-8 shadow-sm border border-border space-y-4'
+  const cardClass =
+    'bg-card rounded-3xl p-6 md:p-8 shadow-elevation-1 border border-border space-y-4'
   const sectionDelay = (i: number) => ({
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -62,7 +63,7 @@ export const AAbdullah = () => {
           className="flex flex-col gap-3 md:flex-row md:items-center"
         >
           <div className="flex flex-row items-center justify-center gap-2.5 md:justify-start md:gap-3">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-xl shadow-primary/40 md:h-16 md:w-16">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-elevation-4 shadow-primary/40 md:h-16 md:w-16">
               <VCodeBracket size={22} className="text-on-primary" />
             </div>
             <div className="text-start">
@@ -79,7 +80,7 @@ export const AAbdullah = () => {
               href={`https://wa.me/${adminPhone?.replace(/\D/g, '') || '965000000000'}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-success px-5 py-2.5 text-sm font-bold text-on-success shadow-lg outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
+              className="flex items-center gap-2 rounded-full bg-success px-5 py-2.5 text-sm font-bold text-on-success shadow-elevation-3 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
             >
               <VChatBubble size={16} />
               واتساب
@@ -88,7 +89,7 @@ export const AAbdullah = () => {
               href={tgHandle.startsWith('http') ? tgHandle : `https://t.me/${tgHandle}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-on-primary shadow-lg outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
+              className="flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-on-primary shadow-elevation-3 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:gap-3 md:px-8 md:py-3.5 md:text-lg"
             >
               <VTelegram size={16} />
               تيليجرام
@@ -99,12 +100,12 @@ export const AAbdullah = () => {
         {/* ═══════════════ نبدة تعريفية ═══════════════ */}
         <motion.div
           {...sectionDelay(1)}
-          className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm md:p-8"
+          className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-elevation-1 md:p-8"
         >
           <div className="pointer-events-none absolute -end-12 -top-12 h-32 w-32 rounded-full bg-primary-soft blur-2xl" />
           <div className="relative">
             <div className="mb-3 flex items-center gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/30">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary shadow-elevation-3 shadow-primary/30">
                 <VRocket size={20} className="text-on-primary" />
               </div>
               <h2 className="text-lg font-bold text-main">نبدة تعريفية</h2>
@@ -131,7 +132,7 @@ export const AAbdullah = () => {
         {/* ═══════════════ الرؤية ═══════════════ */}
         <motion.div
           {...sectionDelay(2)}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-primary-active p-6 text-main shadow-xl md:p-8"
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-primary-active p-6 text-main shadow-elevation-4 md:p-8"
         >
           <div className="absolute left-[-30px] top-[-30px] h-32 w-32 rounded-full bg-white/10" />
           <div className="absolute bottom-[-20px] right-[30%] h-24 w-24 rounded-full bg-white/10" />
@@ -158,7 +159,7 @@ export const AAbdullah = () => {
               return (
                 <div
                   key={`item-${i}`}
-                  className="space-y-2 rounded-2xl border border-divider bg-card p-4 text-center shadow-sm"
+                  className="space-y-2 rounded-2xl border border-divider bg-card p-4 text-center shadow-elevation-1"
                 >
                   <div
                     className={`mx-auto flex h-10 w-10 items-center justify-center rounded-xl ${v.bgClass}`}
@@ -176,7 +177,7 @@ export const AAbdullah = () => {
         {/* ═══════════════ رسالة إلى أولياء الأمور والمعلمين ═══════════════ */}
         <motion.div
           {...sectionDelay(4)}
-          className="space-y-4 rounded-none border-s-4 border-accent bg-card p-6 shadow-sm md:p-8"
+          className="space-y-4 rounded-none border-s-4 border-accent bg-card p-6 shadow-elevation-1 md:p-8"
         >
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft">
@@ -235,7 +236,7 @@ export const AAbdullah = () => {
         {/* ═══════════════ رسالتي لكم ═══════════════ */}
         <motion.div
           {...sectionDelay(5)}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-primary-active p-6 text-main shadow-xl md:p-8"
+          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-primary-active p-6 text-main shadow-elevation-4 md:p-8"
         >
           <div className="absolute right-[-40px] top-[-40px] h-48 w-48 rounded-full bg-white/10" />
           <div className="absolute bottom-[-30px] left-[20%] h-36 w-36 rounded-full bg-white/10" />

@@ -152,7 +152,7 @@ export const TrialSessionDrawer = ({
             <div className="flex items-center gap-4">
               <div
                 className={cn(
-                  'flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br shadow-md',
+                  'flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br shadow-elevation-2',
                   gradient.g,
                 )}
               >

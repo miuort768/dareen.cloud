@@ -69,7 +69,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
             <article
               key={sub.id}
               className={cn(
-                'rounded-2xl border p-4 shadow-sm transition-all duration-normal hover:shadow-elevation-1',
+                'rounded-2xl border p-4 shadow-elevation-1 transition-all duration-normal hover:shadow-elevation-1',
                 sub.isFrozen ? 'bg-divider/20 border-border' : 'border-border bg-surface',
               )}
             >

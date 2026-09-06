@@ -534,7 +534,7 @@ export const Attendance = () => {
                     }}
                     className="flex items-center gap-2"
                   >
-                    <span className="whitespace-nowrap rounded-2xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-sm">
+                    <span className="whitespace-nowrap rounded-2xl border border-border bg-card px-3 py-1.5 text-xs font-bold shadow-elevation-1">
                       {action.label}
                     </span>
                     <button
@@ -543,7 +543,7 @@ export const Attendance = () => {
                         setFabOpen(false)
                       }}
                       aria-label={action.label}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-lg transition-all hover:bg-primary-hover hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                      className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     >
                       <action.icon size={18} />
                     </button>
@@ -557,7 +557,7 @@ export const Attendance = () => {
               aria-label={fabOpen ? 'إغلاق الإجراءات السريعة' : 'إجراءات سريعة'}
               aria-expanded={fabOpen}
               className={cn(
-                'flex h-12 w-12 items-center justify-center rounded-full shadow-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                'flex h-12 w-12 items-center justify-center rounded-full shadow-elevation-4 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                 fabOpen ? 'rotate-45 bg-error text-on-error' : 'bg-primary text-on-primary',
               )}
             >

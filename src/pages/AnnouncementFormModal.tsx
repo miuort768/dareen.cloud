@@ -202,7 +202,7 @@ export const AnnouncementFormModal = ({
                 </button>
                 <button
                   type="submit"
-                  className="flex h-12 flex-[1.6] items-center justify-center gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+                  className="flex h-12 flex-[1.6] items-center justify-center gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary shadow-elevation-1 transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
                 >
                   <CheckCircle2 size={16} />
                   {editingAnnouncement ? 'حفظ التعديلات' : 'نشر الإعلان'}

@@ -50,7 +50,7 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
         return (
           <div
             key={tile.label}
-            className="rounded-2xl border border-border bg-surface p-4 shadow-sm transition-all duration-slow hover:shadow-elevation-1"
+            className="rounded-2xl border border-border bg-surface p-4 shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-1"
           >
             <div
               className={`mb-2.5 flex h-9 w-9 items-center justify-center rounded-2xl ${tile.bg}`}

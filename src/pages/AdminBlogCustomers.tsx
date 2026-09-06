@@ -246,7 +246,7 @@ export const AdminBlogCustomers = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="rounded-2xl border border-border bg-card p-4 shadow-sm"
+                  className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-lg p-2', kpi.iconBg)}>
@@ -286,7 +286,7 @@ export const AdminBlogCustomers = () => {
                 className={cn(
                   FILTER_CHIP_CLASS,
                   countryFilter === ''
-                    ? 'bg-primary text-on-primary shadow-sm'
+                    ? 'bg-primary text-on-primary shadow-elevation-1'
                     : 'border border-border bg-card text-muted hover:bg-hover',
                 )}
               >
@@ -301,7 +301,7 @@ export const AdminBlogCustomers = () => {
                   className={cn(
                     FILTER_CHIP_CLASS,
                     countryFilter === c
-                      ? 'bg-primary text-on-primary shadow-sm'
+                      ? 'bg-primary text-on-primary shadow-elevation-1'
                       : 'border border-border bg-card text-muted hover:bg-hover',
                   )}
                 >
@@ -382,7 +382,7 @@ export const AdminBlogCustomers = () => {
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.2, delay: index * 0.03 }}
-                      className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-normal hover:border-primary/50 hover:shadow-md"
+                      className="group overflow-hidden rounded-xl border border-border bg-card shadow-elevation-1 transition-all duration-normal hover:border-primary/50 hover:shadow-elevation-2"
                     >
                       <div className="h-0.5 w-full bg-gradient-to-r from-primary to-primary-light" />
                       <div className="relative z-10 p-4 md:p-5">

@@ -34,7 +34,7 @@ export const LiveSessionBanner = ({ session }: LiveSessionBannerProps) => {
 
   return (
     <div
-      className="border-error/40 relative overflow-hidden rounded-2xl border bg-error-soft shadow-sm transition-colors duration-slow"
+      className="border-error/40 relative overflow-hidden rounded-2xl border bg-error-soft shadow-elevation-1 transition-colors duration-slow"
       role="status"
       aria-label="حصة جارية الآن"
     >
@@ -44,7 +44,7 @@ export const LiveSessionBanner = ({ session }: LiveSessionBannerProps) => {
       />
       <div className="relative flex items-center justify-between gap-3 p-4">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-card shadow-sm">
+          <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-card shadow-elevation-1">
             <Radio size={18} className="text-error" />
             <span
               className="border-error/40 absolute inset-0 animate-ping rounded-2xl border-2"
@@ -64,7 +64,7 @@ export const LiveSessionBanner = ({ session }: LiveSessionBannerProps) => {
           </div>
         </div>
         <div
-          className="shrink-0 rounded-2xl bg-card px-3 py-2 text-center shadow-sm"
+          className="shrink-0 rounded-2xl bg-card px-3 py-2 text-center shadow-elevation-1"
           aria-live="off"
         >
           <p className="font-mono text-xl font-black tabular-nums leading-none tracking-widest text-error">

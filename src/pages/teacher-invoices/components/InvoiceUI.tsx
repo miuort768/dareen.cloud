@@ -11,7 +11,7 @@ export const SectionCard = ({
 }) => (
   <div
     className={cn(
-      'rounded-2xl border border-divider bg-card shadow-sm transition-all hover:shadow-md',
+      'rounded-2xl border border-divider bg-card shadow-elevation-1 transition-all hover:shadow-elevation-2',
       className,
     )}
   >
@@ -63,7 +63,7 @@ export const PrimaryBtn = ({
     disabled={disabled || loading}
     onClick={onClick}
     className={cn(
-      'flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-sm outline-none transition-all hover:bg-primary-hover hover:shadow-md focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100',
+      'flex items-center justify-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100',
       className,
     )}
   >

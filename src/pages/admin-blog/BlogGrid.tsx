@@ -76,7 +76,7 @@ export const BlogGrid = ({
               </div>
             )}
             <div className="absolute start-2 top-2">
-              <span className="rounded-lg bg-primary px-2 py-1 text-micro font-bold text-on-primary shadow-sm">
+              <span className="rounded-lg bg-primary px-2 py-1 text-micro font-bold text-on-primary shadow-elevation-1">
                 {post.category || 'عام'}
               </span>
             </div>

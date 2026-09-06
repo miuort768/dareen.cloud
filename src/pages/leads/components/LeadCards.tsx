@@ -122,7 +122,7 @@ export const LeadCards = ({
                       window.open(`tel:${lead.phone}`)
                     }}
                     aria-label="اتصال مباشر"
-                    className="flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-main text-xs font-black text-background shadow-sm outline-none transition-all hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+                    className="flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-main text-xs font-black text-background shadow-elevation-1 outline-none transition-all hover:opacity-90 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                   >
                     <Phone size={14} />
                     اتصال مباشر

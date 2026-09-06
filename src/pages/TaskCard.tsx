@@ -25,7 +25,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
   return (
     <div
       className={cn(
-        'relative rounded-2xl border-2 border-border bg-card p-5 shadow-sm transition-all hover:shadow-md',
+        'relative rounded-2xl border-2 border-border bg-card p-5 shadow-elevation-1 transition-all hover:shadow-elevation-2',
         isCompleted && 'opacity-60',
         !isCompleted &&
           (task.priority === 'high'
@@ -89,7 +89,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
                 onUpdateStatus(task.id, task.status === 'pending' ? 'in-progress' : 'completed')
               }
               className={cn(
-                'inline-flex items-center gap-1.5 rounded-2xl border px-3 py-1.5 text-micro font-bold uppercase tracking-wider shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                'inline-flex items-center gap-1.5 rounded-2xl border px-3 py-1.5 text-micro font-bold uppercase tracking-wider shadow-elevation-1 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                 task.status === 'pending'
                   ? 'border-primary bg-primary-soft text-primary hover:bg-primary-soft'
                   : 'border-success bg-success-soft text-success-dark hover:bg-success-soft dark:text-success',
@@ -121,7 +121,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
 }
 
 export const EmptyTaskState = () => (
-  <div className="col-span-full rounded-2xl border border-border bg-card p-8 py-14 text-center shadow-sm">
+  <div className="col-span-full rounded-2xl border border-border bg-card p-8 py-14 text-center shadow-elevation-1">
     <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary shadow-soft">
       <ClipboardList size={24} className="text-on-primary" />
     </div>

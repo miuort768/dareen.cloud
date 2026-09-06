@@ -44,7 +44,7 @@ export const WeekStrip = ({ counts }: WeekStripProps) => {
             className={cn(
               'flex cursor-default flex-col items-center justify-center gap-1.5 rounded-2xl px-0.5 py-3 transition-all duration-slow hover:-translate-y-0.5 sm:py-4',
               day.isToday
-                ? 'bg-primary text-on-primary shadow-md shadow-primary/25'
+                ? 'bg-primary text-on-primary shadow-elevation-2 shadow-primary/25'
                 : day.count > 0
                   ? 'bg-primary-soft dark:bg-primary/10'
                   : 'bg-surface dark:bg-hover',

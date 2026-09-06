@@ -131,14 +131,14 @@ export const ForumPostCard = ({
     <div
       id={`post-${post.id}`}
       className={cn(
-        'rounded-card border border-border bg-card shadow-sm transition-shadow duration-normal dark:bg-surface',
+        'rounded-card border border-border bg-card shadow-elevation-1 transition-shadow duration-normal dark:bg-surface',
         isHighlighted && 'ring-2 ring-primary',
       )}
     >
       {/* Post Header */}
       <div className="flex items-start justify-between rounded-t-card p-4 md:p-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-card bg-primary text-sm font-bold text-on-primary shadow-sm">
+          <div className="flex h-11 w-11 items-center justify-center rounded-card bg-primary text-sm font-bold text-on-primary shadow-elevation-1">
             {(displayAuthorName[0] || '').toUpperCase()}
           </div>
           <div>

@@ -327,7 +327,7 @@ export const Forum = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ y: -2 }}
-                  className="relative overflow-hidden rounded-card border border-border bg-card p-4 shadow-sm dark:bg-surface"
+                  className="relative overflow-hidden rounded-card border border-border bg-card p-4 shadow-elevation-1 dark:bg-surface"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div className={cn('rounded-lg p-2', kpi.iconBg)}>
