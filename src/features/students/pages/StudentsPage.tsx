@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useStudents } from '../hooks/useStudents'
 import { useTeachers } from '../../teachers/hooks/useTeachers'
 import { useShowNotification } from '../../../context/AppContext'
@@ -490,7 +490,7 @@ export const Students = () => {
                   }}
                   placeholder="أدخل كلمة المرور التحذيرية"
                   aria-label="كلمة المرور التحذيرية لحذف جميع الطلاب"
-                  className="w-full rounded-xl border border-error-soft bg-surface px-3 py-2 text-xs font-normal text-main transition-all placeholder:text-muted focus:border-error focus:outline-none focus:ring-2 focus:ring-error-soft sm:max-w-xs"
+                  className="w-full rounded-xl border border-error-soft bg-surface px-3 py-2 text-xs font-normal text-main outline-none transition-all placeholder:text-muted focus:border-error focus:ring-2 focus:ring-error-soft sm:max-w-xs"
                 />
                 <button
                   onClick={handleDeleteAll}

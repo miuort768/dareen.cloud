@@ -45,7 +45,7 @@ export const TeacherInvoicesHeader = ({
             placeholder="بحث باسم المعلمة..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="h-11 w-full rounded-xl border border-border bg-card pe-3 ps-8 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus:ring-2 focus:ring-focus md:h-10"
+            className="h-11 w-full rounded-xl border border-border bg-card pe-3 ps-8 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus md:h-10"
           />
         </div>
         <div className="flex h-11 items-center gap-2 rounded-xl border border-border bg-card px-3 md:h-10">
@@ -72,7 +72,7 @@ export const TeacherInvoicesHeader = ({
           value={filterStatus}
           onChange={(e) => onFilterChange(e.target.value)}
           aria-label="تصفية حسب الحالة"
-          className="h-11 w-auto min-w-[120px] rounded-xl border border-border bg-card px-3 text-xs font-bold text-main outline-none transition-all focus:ring-2 focus:ring-focus md:h-10"
+          className="h-11 w-auto min-w-[120px] rounded-xl border border-border bg-card px-3 text-xs font-bold text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus md:h-10"
         >
           <option value="all">جميع الحالات</option>
           {Object.values(INVOICE_STATUS).map((status) => (

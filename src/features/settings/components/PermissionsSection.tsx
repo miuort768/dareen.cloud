@@ -127,7 +127,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
               value={roleName}
               onChange={(e) => setRoleName(e.target.value)}
               placeholder="مثال: مشرف مالي"
-              className="flex-1 rounded-xl border border-divider bg-background px-4 py-3 text-sm font-bold transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+              className="flex-1 rounded-xl border border-divider bg-background px-4 py-3 text-sm font-bold outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
             />
             <PrimaryBtn onClick={handleCreateRole} loading={creating}>
               إنشاء الدور

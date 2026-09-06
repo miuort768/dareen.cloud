@@ -250,7 +250,7 @@ export const ForumPostCard = ({
               rows={3}
               value={editPostContent}
               onChange={(e) => setEditPostContent(e.target.value)}
-              className="w-full resize-none rounded-xl border border-border bg-card p-3 text-sm font-medium text-main outline-none focus:ring-2 focus:ring-focus"
+              className="w-full resize-none rounded-xl border border-border bg-card p-3 text-sm font-medium text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
             <div className="flex justify-end gap-2">
               <button
@@ -580,7 +580,7 @@ export const ForumPostCard = ({
                   setCommentTexts((prev) => ({ ...prev, [post.id]: e.target.value }))
                 }
                 placeholder="اكتب تعليقاً..."
-                className="w-full rounded-xl border border-border bg-card py-2.5 pe-11 ps-4 text-xs font-medium text-dim text-main transition-colors duration-fast focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/10"
+                className="w-full rounded-xl border border-border bg-card py-2.5 pe-11 ps-4 text-xs font-medium text-dim text-main outline-none transition-colors duration-fast focus:border-primary/40 focus:ring-2 focus:ring-primary/10"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') onAddComment(post.id)
                 }}

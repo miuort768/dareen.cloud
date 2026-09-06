@@ -21,7 +21,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.seoTitle || ''}
           onChange={(e) => onSet('seoTitle', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="عنوان SEO مخصص..."
         />
       </div>
@@ -34,7 +34,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.seoDescription || ''}
           onChange={(e) => onSet('seoDescription', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="وصف مخصص لظهور في Google..."
         />
       </div>
@@ -47,7 +47,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="url"
           value={currentPost.ogImage || ''}
           onChange={(e) => onSet('ogImage', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="https://..."
           dir="ltr"
         />
@@ -61,7 +61,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.focusKeyword || ''}
           onChange={(e) => onSet('focusKeyword', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="مثال: مدرس خصوصي الكويت"
         />
       </div>
@@ -74,7 +74,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="text"
           value={currentPost.tags || ''}
           onChange={(e) => onSet('tags', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="رياضيات, قدرات, تأسيس"
         />
       </div>
@@ -87,7 +87,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="url"
           value={currentPost.canonicalUrl || ''}
           onChange={(e) => onSet('canonicalUrl', e.target.value)}
-          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+          className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
           placeholder="https://..."
           dir="ltr"
         />
@@ -99,7 +99,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="checkbox"
           checked={currentPost.robotsIndex !== false}
           onChange={(e) => onSet('robotsIndex', e.target.checked)}
-          className="h-4 w-4 rounded border-border text-primary focus:ring-focus"
+          className="h-4 w-4 rounded border-border text-primary focus-visible:ring-focus"
         />
         <span className="text-micro font-bold text-muted">السماح بفهرسة المقال</span>
       </label>
@@ -108,7 +108,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
           type="checkbox"
           checked={currentPost.isFeatured || false}
           onChange={(e) => onSet('isFeatured', e.target.checked)}
-          className="h-4 w-4 rounded border-border text-primary focus:ring-focus"
+          className="h-4 w-4 rounded border-border text-primary focus-visible:ring-focus"
         />
         <span className="flex items-center gap-1 text-micro font-bold text-muted">
           <Star size={12} className="text-warning" /> مقال مميز

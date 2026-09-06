@@ -106,21 +106,21 @@ export const RolesPage = () => {
               placeholder="الاسم (مثل: manager)"
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
-              className="w-full rounded-card border border-border bg-card px-3 py-2.5 text-sm text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus md:min-w-[140px] md:flex-1 md:py-2"
+              className="w-full rounded-card border border-border bg-card px-3 py-2.5 text-sm text-main outline-none placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus md:min-w-[140px] md:flex-1 md:py-2"
             />
             <input
               aria-label="التسمية"
               placeholder="التسمية (مثل: مدير)"
               value={newLabel}
               onChange={(e) => setNewLabel(e.target.value)}
-              className="w-full rounded-card border border-border bg-card px-3 py-2.5 text-sm text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus md:min-w-[140px] md:flex-1 md:py-2"
+              className="w-full rounded-card border border-border bg-card px-3 py-2.5 text-sm text-main outline-none placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus md:min-w-[140px] md:flex-1 md:py-2"
             />
             <input
               aria-label="الوصف"
               placeholder="وصف"
               value={newDesc}
               onChange={(e) => setNewDesc(e.target.value)}
-              className="w-full rounded-card border border-border bg-card px-3 py-2.5 text-sm text-main placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus md:min-w-[140px] md:flex-1 md:py-2"
+              className="w-full rounded-card border border-border bg-card px-3 py-2.5 text-sm text-main outline-none placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus md:min-w-[140px] md:flex-1 md:py-2"
             />
             <button
               onClick={createRole}
@@ -203,13 +203,13 @@ export const RolesPage = () => {
                   aria-label="التسمية"
                   value={newLabel}
                   onChange={(e) => setNewLabel(e.target.value)}
-                  className="w-full rounded-card border border-border bg-surface px-3 py-2 text-sm text-main focus:outline-none focus:ring-2 focus:ring-focus"
+                  className="w-full rounded-card border border-border bg-surface px-3 py-2 text-sm text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 />
                 <input
                   aria-label="الوصف"
                   value={newDesc}
                   onChange={(e) => setNewDesc(e.target.value)}
-                  className="w-full rounded-card border border-border bg-surface px-3 py-2 text-sm text-main focus:outline-none focus:ring-2 focus:ring-focus"
+                  className="w-full rounded-card border border-border bg-surface px-3 py-2 text-sm text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 />
               </div>
 

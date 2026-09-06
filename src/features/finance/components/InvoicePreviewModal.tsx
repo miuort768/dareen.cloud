@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { X, Printer, CheckCircle2, Clock, AlertCircle } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { useSettingsStore } from '../../../store/settingsStore'
@@ -53,7 +53,7 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
                 type="checkbox"
                 checked={hidePricing}
                 onChange={(e) => setHidePricing(e.target.checked)}
-                className="h-4 w-4 rounded border-border text-primary focus:ring-focus"
+                className="h-4 w-4 rounded border-border text-primary focus-visible:ring-focus"
               />
               <span className="text-xs font-normal text-muted">إخفاء المبالغ</span>
             </label>

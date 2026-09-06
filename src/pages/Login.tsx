@@ -136,7 +136,7 @@ export const Login = () => {
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="أدخل اسم المستخدم"
                   required
-                  className="h-12 w-full rounded-xl border border-border bg-card pe-4 ps-12 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-focus dark:border-border dark:bg-card dark:text-main dark:placeholder:text-muted lg:h-14 lg:text-base"
+                  className="h-12 w-full rounded-xl border border-border bg-card pe-4 ps-12 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-card dark:text-main dark:placeholder:text-muted lg:h-14 lg:text-base"
                 />
               </div>
             </div>
@@ -160,13 +160,13 @@ export const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="أدخل كلمة المرور"
                   required
-                  className="h-12 w-full rounded-xl border border-border bg-card pe-12 ps-12 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-focus dark:border-border dark:bg-card dark:text-main dark:placeholder:text-muted lg:h-14 lg:text-base"
+                  className="h-12 w-full rounded-xl border border-border bg-card pe-12 ps-12 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-card dark:text-main dark:placeholder:text-muted lg:h-14 lg:text-base"
                   style={{ fontVariantNumeric: showPassword ? 'normal' : 'tabular-nums' }}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute end-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-muted transition-colors hover:text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="absolute end-3 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label={showPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}

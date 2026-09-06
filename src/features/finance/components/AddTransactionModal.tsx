@@ -81,7 +81,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 value={newTransaction.type}
                 onChange={(e) => setNewTransaction({ ...newTransaction, type: e.target.value })}
                 aria-label="نوع المعاملة"
-                className="w-full appearance-none rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                className="w-full appearance-none rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <option value="income">إيراد مالي (+)</option>
                 <option value="expense">مصروفات (-)</option>
@@ -97,7 +97,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 step="any"
                 value={newTransaction.amount}
                 onChange={(e) => setNewTransaction({ ...newTransaction, amount: e.target.value })}
-                className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
                 placeholder="0.00"
               />
             </div>
@@ -109,7 +109,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 value={newTransaction.currency}
                 onChange={(e) => setNewTransaction({ ...newTransaction, currency: e.target.value })}
                 aria-label="عملة المعاملة"
-                className="w-full appearance-none rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                className="w-full appearance-none rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <option value="EGP">جنيه مصري (ج.م)</option>
               </select>
@@ -126,7 +126,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 required
                 value={newTransaction.category}
                 onChange={(e) => setNewTransaction({ ...newTransaction, category: e.target.value })}
-                className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
                 placeholder="مثال: إيجار، مكافأة..."
               />
             </div>
@@ -139,7 +139,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 required
                 value={newTransaction.date}
                 onChange={(e) => setNewTransaction({ ...newTransaction, date: e.target.value })}
-                className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+                className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
               />
             </div>
           </div>
@@ -153,7 +153,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
               onChange={(e) =>
                 setNewTransaction({ ...newTransaction, description: e.target.value })
               }
-              className="h-24 w-full resize-none rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+              className="h-24 w-full resize-none rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
               placeholder="وصف تفصيلي للعملية المالية..."
             />
           </div>

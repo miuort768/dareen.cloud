@@ -197,7 +197,7 @@ export const JobsFormStep = ({
               value={form.curriculums}
               onChange={onChange}
               onKeyDown={onKeyDown}
-              className="min-h-[90px] w-full touch-manipulation resize-none rounded-xl border border-border bg-card p-4 text-sm text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus md:min-h-[120px] md:text-base"
+              className="min-h-[90px] w-full touch-manipulation resize-none rounded-xl border border-border bg-card p-4 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus-visible:ring-2 focus-visible:ring-focus md:min-h-[120px] md:text-base"
               placeholder="منهج كويتي - سعودي - قطري - عماني ..."
             />
           </div>

@@ -140,7 +140,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, 
               <button
                 onClick={handleClose}
                 className={cn(
-                  'ms-auto rounded-card text-muted transition-colors hover:bg-hover hover:text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                  'ms-auto rounded-card text-muted outline-none transition-colors hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus',
                   isDesktop ? 'p-1.5' : 'flex h-11 w-11 items-center justify-center',
                 )}
                 aria-label="إغلاق"

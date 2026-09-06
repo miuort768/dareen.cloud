@@ -112,7 +112,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
             placeholder="البحث أو بدء دردشة جديدة"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 border-0 bg-transparent px-4 py-1 text-start text-sm font-medium text-main ring-0 placeholder:text-muted focus:outline-none focus:ring-0"
+            className="flex-1 border-0 bg-transparent px-4 py-1 text-start text-sm font-medium text-main outline-none ring-0 placeholder:text-muted focus:ring-0"
           />
         </div>
       </div>

@@ -52,7 +52,7 @@ export const BlogFormEducationalSection = ({
               }))
             }}
             aria-label="نوع المحتوى"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <option value="notes">مذكرات</option>
             <option value="solutions">حل كتب</option>
@@ -70,7 +70,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => onSet('curriculum', e.target.value)}
             disabled={isDisabled}
             aria-label="المنهج الدراسي"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
             <option value="kuwait">الكويت</option>
@@ -89,7 +89,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => onSet('level', e.target.value)}
             disabled={isDisabled}
             aria-label="المرحلة الدراسية"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
             <option value="primary">ابتدائي</option>
@@ -109,7 +109,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => onSet('grade', e.target.value)}
             disabled={isDisabled}
             aria-label="الصف الدراسي"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
             {grades.map((g) => (
@@ -129,7 +129,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => onSet('term', e.target.value)}
             disabled={isDisabled}
             aria-label="الفصل الدراسي"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون</option>
             <option value="1">الفصل الأول</option>
@@ -146,7 +146,7 @@ export const BlogFormEducationalSection = ({
             onChange={(e) => onSet('subject', e.target.value)}
             disabled={isDisabled}
             aria-label="المادة الدراسية"
-            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50"
+            className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
             {subjects.map((s) => (

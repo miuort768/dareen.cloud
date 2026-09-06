@@ -262,7 +262,7 @@ export const TransactionsLog = ({
               setSearchQuery(e.target.value)
               setPage(1)
             }}
-            className="w-full rounded-xl border border-border bg-card py-2 pe-3 ps-8 text-xs font-bold text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-focus"
+            className="w-full rounded-xl border border-border bg-card py-2 pe-3 ps-8 text-xs font-bold text-main outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
           />
         </div>
 

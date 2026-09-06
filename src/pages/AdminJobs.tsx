@@ -398,7 +398,7 @@ export const AdminJobs = () => {
               placeholder="ابحث بالاسم أو الهاتف أو المنصب..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main transition-colors duration-fast focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+              className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
             />
             {search && (
               <button

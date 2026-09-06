@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   Mail,
@@ -283,7 +283,7 @@ export const AdminContacts = () => {
                   placeholder="بحث بالاسم أو الهاتف أو الموضوع..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="h-11 w-full rounded-xl border border-border bg-surface pe-4 ps-10 text-xs font-bold text-main transition-colors duration-fast focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
                 />
                 {search && (
                   <button
@@ -345,7 +345,7 @@ export const AdminContacts = () => {
               placeholder="بحث بالاسم أو الهاتف أو الموضوع..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main transition-colors duration-fast focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+              className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
             />
             {search && (
               <button

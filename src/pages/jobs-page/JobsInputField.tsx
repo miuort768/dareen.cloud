@@ -1,4 +1,4 @@
-﻿import { forwardRef } from 'react'
+import { forwardRef } from 'react'
 import type { LucideIcon } from 'lucide-react'
 
 interface InputFieldProps {
@@ -47,7 +47,7 @@ export const JobsInputField = forwardRef<HTMLInputElement, InputFieldProps>(
         required={required}
         inputMode={inputMode}
         autoComplete={autoComplete}
-        className="w-full touch-manipulation rounded-xl border border-border bg-card px-4 py-3 text-sm text-main transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus"
+        className="w-full touch-manipulation rounded-xl border border-border bg-card px-4 py-3 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
       />
     </div>
   ),

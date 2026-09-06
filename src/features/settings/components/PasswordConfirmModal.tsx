@@ -71,7 +71,7 @@ export const PasswordConfirmModal = ({
                   if (e.key === 'Enter') handleConfirm()
                 }}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-divider bg-background px-4 py-3 pe-11 text-sm font-bold text-dim text-main transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                className="w-full rounded-xl border border-divider bg-background px-4 py-3 pe-11 text-sm font-bold text-dim text-main outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
                 autoFocus
               />
               <button

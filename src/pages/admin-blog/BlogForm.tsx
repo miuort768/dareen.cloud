@@ -84,7 +84,7 @@ export const BlogForm = ({
               type="text"
               value={currentPost.title}
               onChange={(e) => set('title', e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
               placeholder="مثال: أفضل نصائح الدراسة..."
             />
           </div>
@@ -100,7 +100,7 @@ export const BlogForm = ({
                 type="text"
                 value={currentPost.slug}
                 onChange={(e) => set('slug', e.target.value.replace(/\s+/g, '-').toLowerCase())}
-                className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 dir="ltr"
                 placeholder="أفضل-نصائح-الدراسة"
               />
@@ -117,7 +117,7 @@ export const BlogForm = ({
                 type="text"
                 value={currentPost.category}
                 onChange={(e) => set('category', e.target.value)}
-                className="w-full rounded-xl border border-border bg-surface py-3 ps-10 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                className="w-full rounded-xl border border-border bg-surface py-3 ps-10 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 placeholder="مثل: نصائح دراسية"
               />
             </div>
@@ -131,7 +131,7 @@ export const BlogForm = ({
               type="text"
               value={currentPost.author}
               onChange={(e) => set('author', e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
           <div>
@@ -143,7 +143,7 @@ export const BlogForm = ({
               type="date"
               value={currentPost.date?.split('T')[0]}
               onChange={(e) => set('date', e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
         </div>
@@ -167,7 +167,7 @@ export const BlogForm = ({
                   type="url"
                   value={currentPost.source || ''}
                   onChange={(e) => set('source', e.target.value)}
-                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   dir="ltr"
                   placeholder="https://..."
                 />
@@ -179,7 +179,7 @@ export const BlogForm = ({
                 type="text"
                 value={currentPost.fileSize || ''}
                 onChange={(e) => set('fileSize', e.target.value)}
-                className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 placeholder="2.5 MB"
               />
             </div>
@@ -197,7 +197,7 @@ export const BlogForm = ({
               type="url"
               value={currentPost.coverImage}
               onChange={(e) => set('coverImage', e.target.value)}
-              className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+              className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
               dir="ltr"
               placeholder="https://..."
             />
@@ -215,7 +215,7 @@ export const BlogForm = ({
               type="checkbox"
               checked={currentPost.isNew || false}
               onChange={(e) => set('isNew', e.target.checked)}
-              className="h-4 w-4 rounded border-border text-primary focus:ring-focus"
+              className="h-4 w-4 rounded border-border text-primary focus-visible:ring-focus"
             />
             <span className="flex items-center gap-1 text-micro font-bold text-muted">
               <Star size={12} className="text-warning" /> جديد
@@ -232,7 +232,7 @@ export const BlogForm = ({
             type="text"
             value={currentPost.keywords}
             onChange={(e) => set('keywords', e.target.value)}
-            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+            className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
             placeholder="دراسة, نصائح, تفوق"
           />
         </div>
@@ -246,7 +246,7 @@ export const BlogForm = ({
             rows={2}
             value={currentPost.excerpt}
             onChange={(e) => set('excerpt', e.target.value)}
-            className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+            className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
             placeholder="وصف قصير يظهر في نتائج البحث..."
           />
         </div>
@@ -266,7 +266,7 @@ export const BlogForm = ({
                 required
                 value={contentPart1}
                 onChange={(e) => setContentPart1(e.target.value)}
-                className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 font-mono text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 font-mono text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 placeholder="الجزء الأول من المحتوى..."
               />
             </div>
@@ -305,7 +305,7 @@ export const BlogForm = ({
                     type="url"
                     value={currentPost.downloadLink || ''}
                     onChange={(e) => set('downloadLink', e.target.value)}
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     dir="ltr"
                     placeholder="https://..."
                   />
@@ -321,7 +321,7 @@ export const BlogForm = ({
                   type="text"
                   value={currentPost.downloadButtonText || ''}
                   onChange={(e) => set('downloadButtonText', e.target.value)}
-                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-start text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-start text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   placeholder="تحميل الملف"
                 />
               </div>
@@ -342,7 +342,7 @@ export const BlogForm = ({
                     type="url"
                     value={currentPost.watchLink || ''}
                     onChange={(e) => set('watchLink', e.target.value)}
-                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                    className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     dir="ltr"
                     placeholder="https://..."
                   />
@@ -358,7 +358,7 @@ export const BlogForm = ({
                   type="text"
                   value={currentPost.watchButtonText || ''}
                   onChange={(e) => set('watchButtonText', e.target.value)}
-                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-start text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                  className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-start text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   placeholder="مشاهدة الملف"
                 />
               </div>
@@ -371,7 +371,7 @@ export const BlogForm = ({
                   rows={6}
                   value={contentPart2}
                   onChange={(e) => setContentPart2(e.target.value)}
-                  className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 font-mono text-sm font-bold outline-none focus:outline-none focus:ring-2 focus:ring-focus"
+                  className="w-full resize-none rounded-xl border border-border bg-surface px-4 py-3 font-mono text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   placeholder="الجزء الثاني من المحتوى..."
                 />
               </div>

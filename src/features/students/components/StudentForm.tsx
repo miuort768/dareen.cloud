@@ -219,7 +219,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                   id="student-username"
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                  className="w-full rounded-xl border border-border bg-surface py-2 pe-4 ps-10 font-mono text-xs font-normal text-main transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                  className="w-full rounded-xl border border-border bg-surface py-2 pe-4 ps-10 font-mono text-xs font-normal text-main outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/10"
                   placeholder="اسم مستخدم فريد"
                 />
               </div>
@@ -238,7 +238,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
                   type="password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full rounded-xl border border-border bg-surface py-2 pe-4 ps-10 font-mono text-xs font-normal tracking-widest text-main transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                  className="w-full rounded-xl border border-border bg-surface py-2 pe-4 ps-10 font-mono text-xs font-normal tracking-widest text-main outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/10"
                   placeholder={initialData ? '••••••••' : 'كلمة مرور قوية'}
                 />
               </div>
@@ -258,7 +258,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
             id="student-notes"
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-            className="min-h-[120px] w-full rounded-xl border border-border bg-surface px-6 py-4 text-xs font-normal text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+            className="min-h-[120px] w-full rounded-xl border border-border bg-surface px-6 py-4 text-xs font-normal text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
             placeholder="أضف أي تفاصيل أو ملاحظات حول مستوى الطالب..."
           />
         </div>
@@ -317,7 +317,7 @@ const SelectField = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={cn(
-            'w-full appearance-none rounded-xl border border-border bg-surface px-4 py-2 text-xs font-normal text-main transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10',
+            'w-full appearance-none rounded-xl border border-border bg-surface px-4 py-2 text-xs font-normal text-main outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/10',
             Icon && 'ps-10',
             !value && 'text-muted',
           )}
@@ -376,7 +376,7 @@ const FormInput = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={cn(
-            'w-full rounded-xl border border-border bg-surface px-4 py-2 text-xs font-normal text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10',
+            'w-full rounded-xl border border-border bg-surface px-4 py-2 text-xs font-normal text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10',
             Icon && 'ps-10',
             dir === 'ltr' && 'font-mono',
           )}

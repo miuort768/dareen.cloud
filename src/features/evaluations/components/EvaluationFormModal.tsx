@@ -102,7 +102,7 @@ export const EvaluationFormModal = ({
                       onChange={(e) => onChange({ ...formData, studentId: e.target.value })}
                       required
                       aria-label="اختر الطالب"
-                      className="w-full rounded-xl border border-border bg-surface px-3 py-3 text-sm text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 dark:bg-card dark:text-main dark:focus:border-primary"
+                      className="w-full rounded-xl border border-border bg-surface px-3 py-3 text-sm text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card dark:text-main dark:focus:border-primary"
                     >
                       <option value="">-- اختر من قائمة طلابك --</option>
                       {teacherStudents.map((s) => (
@@ -198,7 +198,7 @@ export const EvaluationFormModal = ({
                       min="0"
                       max="50"
                       aria-label="عدد النقاط من 0 إلى 50"
-                      className="flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-bold tabular-nums text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-focus"
+                      className="flex-1 rounded-xl border border-border bg-surface px-3 py-2.5 text-center text-sm font-bold tabular-nums text-main outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
                     />
                     <span className="text-micro text-muted">/ 50</span>
                   </div>
@@ -215,7 +215,7 @@ export const EvaluationFormModal = ({
                     value={formData.notes}
                     onChange={(e) => onChange({ ...formData, notes: e.target.value })}
                     rows={3}
-                    className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-sm transition-all placeholder:text-muted focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10 dark:bg-card dark:text-main"
+                    className="w-full resize-none rounded-xl border border-border bg-surface px-3 py-2.5 text-sm outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10 dark:bg-card dark:text-main"
                     placeholder="مثال: أداء ممتاز اليوم..."
                   />
                 </div>

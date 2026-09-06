@@ -1,5 +1,5 @@
 const INPUT_CLASS =
-  'w-full rounded-md border bg-card text-main px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary'
+  'w-full rounded-md border bg-card text-main px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary'
 const LABEL_CLASS = 'block text-sm font-medium text-main mb-1'
 
 export function FormSection() {

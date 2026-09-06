@@ -170,7 +170,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                       'w-full rounded-2xl border bg-surface py-2.5 pe-3 ps-9 text-xs font-bold text-main outline-none transition-all focus:ring-2',
                       passwordError
                         ? 'border-error focus:border-error focus:ring-error-soft'
-                        : 'border-border focus:border-primary focus:ring-focus',
+                        : 'border-border focus:border-primary focus-visible:ring-focus',
                     )}
                   />
                 </div>

@@ -17,7 +17,7 @@ export const ForumCreatePost = ({
         aria-label="اكتب منشورك"
         value={newPostContent}
         onChange={(e) => setNewPostContent(e.target.value)}
-        className="min-h-[100px] w-full resize-none rounded-card border border-border bg-background p-4 text-sm font-medium leading-relaxed text-main transition-all placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus"
+        className="min-h-[100px] w-full resize-none rounded-card border border-border bg-background p-4 text-sm font-medium leading-relaxed text-main outline-none transition-all placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus"
         placeholder="شارك فكرة أو سؤال…"
       />
       <div className="flex items-center justify-between">

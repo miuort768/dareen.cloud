@@ -55,7 +55,7 @@ export const AppointmentsFilters = ({
           placeholder="ابحث باسم الطالب أو المادة..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full rounded-2xl border border-border bg-surface py-2 pe-8 ps-8 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-focus"
+          className="w-full rounded-2xl border border-border bg-surface py-2 pe-8 ps-8 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus"
         />
         {searchTerm && (
           <button
@@ -73,7 +73,7 @@ export const AppointmentsFilters = ({
           value={filterDay}
           onChange={(e) => onDayChange(e.target.value)}
           aria-label="تصفية حسب اليوم"
-          className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all focus:outline-none focus:ring-2 focus:ring-focus dark:[color-scheme:dark]"
+          className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus dark:[color-scheme:dark]"
         >
           <option value="all">كل الأيام</option>
           {DAYS_OF_WEEK.map((day) => (
@@ -89,7 +89,7 @@ export const AppointmentsFilters = ({
           value={filterTeacher}
           onChange={(e) => onTeacherChange(e.target.value)}
           aria-label="تصفية حسب المعلمة"
-          className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all focus:outline-none focus:ring-2 focus:ring-focus dark:[color-scheme:dark]"
+          className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-surface py-2 pe-3 ps-8 text-micro font-bold text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus dark:[color-scheme:dark]"
         >
           <option value="all">كل المعلمات</option>
           {uniqueTeachers.map((teacher) => (

@@ -102,7 +102,7 @@ export const InputField = (props: React.InputHTMLAttributes<HTMLInputElement>) =
     className={cn(
       'w-full border border-divider bg-background',
       'px-4 py-3 text-sm font-bold text-main',
-      'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10',
+      'outline-none focus:border-primary focus:ring-2 focus:ring-primary/10',
       'rounded-xl transition-all duration-200',
       'text-dim',
       props.className,
@@ -116,7 +116,7 @@ export const TextAreaField = (props: React.TextareaHTMLAttributes<HTMLTextAreaEl
     className={cn(
       'w-full border border-divider bg-background',
       'resize-none px-4 py-3 text-sm font-bold text-main',
-      'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10',
+      'outline-none focus:border-primary focus:ring-2 focus:ring-primary/10',
       'rounded-xl transition-all duration-200',
       'text-dim',
       props.className,

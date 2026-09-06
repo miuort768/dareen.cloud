@@ -97,7 +97,7 @@ export const MaintenanceModal = ({
               onChange={(e) => setInput(e.target.value)}
               placeholder="اكتب dareen..."
               dir="ltr"
-              className="w-full rounded-xl border border-divider bg-background px-4 py-3 text-center font-mono text-sm font-bold text-dim text-main transition-all duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+              className="w-full rounded-xl border border-divider bg-background px-4 py-3 text-center font-mono text-sm font-bold text-dim text-main outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10"
             />
           </div>
 

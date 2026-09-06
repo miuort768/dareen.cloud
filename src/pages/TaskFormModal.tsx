@@ -66,7 +66,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                 id="task-title"
                 required
                 type="text"
-                className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus"
                 value={data.title}
                 onChange={(e) => onChange({ ...data, title: e.target.value })}
               />
@@ -87,7 +87,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                   />
                   <select
                     id="task-priority"
-                    className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-background py-2.5 pe-4 ps-8 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                    className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-background py-2.5 pe-4 ps-8 text-xs font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     aria-label="درجة الأولوية"
                     value={data.priority}
                     onChange={(e) =>
@@ -110,7 +110,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                 <input
                   id="task-due"
                   type="date"
-                  className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   value={data.dueDate}
                   onChange={(e) => onChange({ ...data, dueDate: e.target.value })}
                 />
@@ -126,7 +126,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
               </label>
               <textarea
                 id="task-desc"
-                className="h-24 w-full resize-none rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="h-24 w-full resize-none rounded-2xl border border-border bg-background px-4 py-2.5 text-xs font-bold text-main outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 value={data.description}
                 onChange={(e) => onChange({ ...data, description: e.target.value })}
               ></textarea>

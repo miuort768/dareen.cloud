@@ -182,7 +182,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                   required
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full cursor-pointer appearance-none border border-border bg-surface px-4 py-2.5 ps-10 text-xs text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                  className="w-full cursor-pointer appearance-none border border-border bg-surface px-4 py-2.5 ps-10 text-xs text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
                 >
                   <option value="" disabled>
                     اختر التخصص...
@@ -239,7 +239,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                   id="teacher-currency"
                   value={formData.currency}
                   onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
-                  className="w-full appearance-none rounded-xl border border-border bg-surface px-4 py-2.5 ps-10 text-xs text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                  className="w-full appearance-none rounded-xl border border-border bg-surface px-4 py-2.5 ps-10 text-xs text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
                 >
                   {CURRENCY_OPTIONS.map((c) => (
                     <option key={c.code} value={c.code}>
@@ -293,7 +293,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                     id="teacher-username"
                     value={formData.username}
                     onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                    className="w-full rounded-xl border border-border bg-surface py-2.5 pe-4 ps-10 font-mono text-xs text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                    className="w-full rounded-xl border border-border bg-surface py-2.5 pe-4 ps-10 font-mono text-xs text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
                     placeholder="اسم المستخدم"
                   />
                 </div>
@@ -318,7 +318,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                     type="text"
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className="w-full rounded-xl border border-border bg-surface py-2.5 pe-4 ps-10 font-mono text-xs tracking-widest text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                    className="w-full rounded-xl border border-border bg-surface py-2.5 pe-4 ps-10 font-mono text-xs tracking-widest text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10"
                     placeholder="كلمة المرور"
                   />
                 </div>
@@ -378,7 +378,7 @@ const FormInput = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={cn(
-            'w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-xs text-main transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10',
+            'w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-xs text-main outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/10',
             Icon && 'ps-10',
             dir === 'ltr' && 'font-mono',
           )}
