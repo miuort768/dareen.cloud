@@ -82,7 +82,7 @@ export const AnnouncementFormModal = ({
                   <h3 className="text-sm font-bold text-on-primary">
                     {editingAnnouncement ? 'تعديل الإعلان الحالي' : 'إضافة إعلان جديد'}
                   </h3>
-                  <p className="text-micro font-bold text-white/70">
+                  <p className="text-micro font-bold text-white/90">
                     {editingAnnouncement
                       ? 'حدّث بيانات الإعلان ثم احفظ'
                       : 'سيظهر الإعلان لجميع المستخدمين'}

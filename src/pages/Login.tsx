@@ -214,7 +214,7 @@ export const Login = () => {
                 <Headphones size={18} />
                 <span>الدعم الفني</span>
               </a>
-              <p className="mt-3 text-center text-xs font-medium text-white/70 dark:text-muted lg:text-sm lg:text-main">
+              <p className="mt-3 text-center text-xs font-medium text-white/90 dark:text-muted lg:text-sm lg:text-main">
                 لديك مشكلة؟ تواصل مع الدعم
               </p>
             </div>

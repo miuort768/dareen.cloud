@@ -246,7 +246,7 @@ export const Attendance = () => {
                     <p className="text-lg font-black tabular-nums leading-none text-on-primary">
                       {s.value.toLocaleString('ar-EG')}
                     </p>
-                    <p className="mt-1 text-[10px] font-bold text-white/70">{s.label}</p>
+                    <p className="mt-1 text-[10px] font-bold text-white/90">{s.label}</p>
                   </div>
                 ))}
               </div>

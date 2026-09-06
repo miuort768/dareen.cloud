@@ -38,7 +38,7 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
             </div>
             <div>
               <h3 className="text-sm font-bold text-on-primary">إنشاء مهمة جديدة</h3>
-              <p className="text-micro font-bold uppercase tracking-wider text-white/70">
+              <p className="text-micro font-bold uppercase tracking-wider text-white/90">
                 إضافة مهمة إلى القائمة
               </p>
             </div>

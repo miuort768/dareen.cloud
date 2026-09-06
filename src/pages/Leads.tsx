@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import {
   Search,
@@ -73,7 +73,7 @@ const ConfirmDeleteModal = ({
             </div>
             <div>
               <h3 className="text-sm font-bold text-on-error">تأكيد الحذف</h3>
-              <p className="mt-0.5 text-[10px] text-white/70">لا يمكن التراجع عن هذا الإجراء</p>
+              <p className="mt-0.5 text-[10px] text-white/90">لا يمكن التراجع عن هذا الإجراء</p>
             </div>
           </div>
           <button
@@ -150,7 +150,7 @@ const ConfirmDeleteAllModal = ({
             </div>
             <div>
               <h3 className="text-sm font-bold text-on-error">حذف جميع العملاء</h3>
-              <p className="mt-0.5 text-[10px] text-white/70">لا يمكن التراجع عن هذا الإجراء</p>
+              <p className="mt-0.5 text-[10px] text-white/90">لا يمكن التراجع عن هذا الإجراء</p>
             </div>
           </div>
           <button

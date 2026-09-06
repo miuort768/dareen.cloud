@@ -358,7 +358,7 @@ const ParentHeader = ({
       </div>
       <div className="min-w-0">
         <h2 className="truncate text-base font-bold text-on-primary">{parent.name}</h2>
-        <p className="mt-0.5 flex items-center gap-1.5 text-[10px] font-medium text-white/70">
+        <p className="mt-0.5 flex items-center gap-1.5 text-[10px] font-medium text-white/90">
           <Users size={9} />
           {childrenCount} {childrenCount === 1 ? 'ابن' : 'أبناء'} مسجلين
         </p>

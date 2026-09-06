@@ -61,7 +61,7 @@ export const ParentForm: React.FC<ParentFormProps> = ({
               <h3 className="text-sm font-bold uppercase tracking-widest text-on-primary">
                 {isEdit ? 'تحديث ملف ولي الأمر' : 'تسجيل ولي أمر جديد بالنظام'}
               </h3>
-              <p className="mt-0.5 text-micro font-normal uppercase tracking-widest text-white/70">
+              <p className="mt-0.5 text-micro font-normal uppercase tracking-widest text-white/90">
                 تأكد من صحة البيانات لضمان وصول الإشعارات
               </p>
             </div>

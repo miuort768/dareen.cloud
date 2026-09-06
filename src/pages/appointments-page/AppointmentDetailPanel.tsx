@@ -23,7 +23,7 @@ export const AppointmentDetailPanel = ({
       >
         <div className="flex items-center justify-between rounded-2xl bg-primary px-4 py-3 text-on-primary">
           <div>
-            <p className="text-micro font-bold text-white/60">تفاصيل الموعد</p>
+            <p className="text-micro font-bold text-white/80">تفاصيل الموعد</p>
             <h3 className="text-base font-bold">{appointment.day}</h3>
           </div>
           <div className="flex items-center gap-2">
@@ -34,7 +34,7 @@ export const AppointmentDetailPanel = ({
             </div>
             <button
               onClick={onClose}
-              className="flex h-8 w-8 items-center justify-center rounded-2xl text-white/60 transition-all hover:bg-white/15 hover:text-on-primary"
+              className="flex h-8 w-8 items-center justify-center rounded-2xl text-white/80 transition-all hover:bg-white/15 hover:text-on-primary"
               aria-label="إغلاق"
             >
               <X size={14} />

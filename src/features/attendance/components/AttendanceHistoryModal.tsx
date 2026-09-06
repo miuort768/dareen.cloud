@@ -163,7 +163,7 @@ export const AttendanceHistoryModal = ({
             <Clock size={14} className="text-on-primary" />
             <div className="min-w-0">
               <h3 className="truncate text-xs font-bold text-on-primary">سجل الحضور</h3>
-              <p className="truncate text-[10px] text-white/70">{studentName}</p>
+              <p className="truncate text-[10px] text-white/90">{studentName}</p>
             </div>
           </div>
           <button

@@ -28,7 +28,7 @@ export const JobsHeroBanner = () => (
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mb-4 max-w-lg text-xs leading-relaxed text-white/70 md:mb-0 md:text-lg"
+            className="mb-4 max-w-lg text-xs leading-relaxed text-white/90 md:mb-0 md:text-lg"
           >
             نبحث عن{' '}
             <span className="inline-block rounded-card bg-white/15 px-3 py-1 text-on-primary backdrop-blur-sm">
@@ -47,7 +47,7 @@ export const JobsHeroBanner = () => (
           <div className="flex h-40 w-40 items-center justify-center rounded-card bg-white/15 md:h-52 md:w-52">
             <div className="text-center">
               <GraduationCap size={56} className="mx-auto mb-2 text-on-primary" />
-              <span className="block text-xs font-bold text-white/70">نحن ننتظرك</span>
+              <span className="block text-xs font-bold text-white/90">نحن ننتظرك</span>
             </div>
           </div>
         </motion.div>

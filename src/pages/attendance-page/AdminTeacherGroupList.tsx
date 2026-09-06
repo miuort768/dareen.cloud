@@ -63,7 +63,7 @@ export const AdminTeacherGroupList = ({
                 </div>
                 <div>
                   <h3 className="text-xs font-bold text-on-primary">{teacher.teacherName}</h3>
-                  <p className="text-[10px] font-bold text-white/70">
+                  <p className="text-[10px] font-bold text-white/90">
                     {filteredStudents.length} طالب
                   </p>
                 </div>
@@ -87,7 +87,7 @@ export const AdminTeacherGroupList = ({
                   {teacher.rate}%
                 </div>
                 {/* Session counts */}
-                <div className="flex items-center gap-2 text-[10px] font-bold text-white/70">
+                <div className="flex items-center gap-2 text-[10px] font-bold text-white/90">
                   <span className="flex items-center gap-1">
                     <span className="h-1.5 w-1.5 rounded-full bg-success" />
                     {teacher.completed}

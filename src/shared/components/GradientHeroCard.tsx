@@ -49,7 +49,7 @@ export const GradientHeroCard = ({
         )}
         <div>
           <h1 className="text-xl font-black leading-tight text-on-primary">{title}</h1>
-          {subtitle && <p className="text-xs text-white/70">{subtitle}</p>}
+          {subtitle && <p className="text-xs text-white/90">{subtitle}</p>}
         </div>
       </div>
 

@@ -98,7 +98,7 @@ export const AppointmentsHero = ({
               <span className="text-base font-black tabular-nums leading-none text-on-primary">
                 {rate}%
               </span>
-              <span className="mt-0.5 text-micro font-bold text-white/70">اليوم</span>
+              <span className="mt-0.5 text-micro font-bold text-white/90">اليوم</span>
             </div>
           </div>
 
@@ -107,7 +107,7 @@ export const AppointmentsHero = ({
               <CalendarClock size={12} strokeWidth={1.7} />
               <p className="text-xs font-bold">{todayName}</p>
             </div>
-            <p className="mt-0.5 text-micro font-bold text-white/65">
+            <p className="mt-0.5 text-micro font-bold text-white/90">
               بقي {remainingToday} من {todayTotal} حصة
             </p>
             <div className="mt-2 grid grid-cols-3 gap-1.5">
@@ -124,7 +124,7 @@ export const AppointmentsHero = ({
                     />
                     {chip.value}
                   </p>
-                  <p className="mt-1 text-micro font-bold text-white/70">{chip.label}</p>
+                  <p className="mt-1 text-micro font-bold text-white/90">{chip.label}</p>
                 </div>
               ))}
             </div>

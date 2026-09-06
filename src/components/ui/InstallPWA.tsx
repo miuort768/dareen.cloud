@@ -237,7 +237,7 @@ export const InstallPWA = () => {
           <h2 className="text-micro font-medium uppercase leading-tight text-on-success">
             ثبتي التطبيق
           </h2>
-          <p className="mt-0.5 truncate text-micro font-medium text-white/70">
+          <p className="mt-0.5 truncate text-micro font-medium text-white/90">
             {isIOS ? 'اضغطي Share ← Add to Home Screen' : 'أسرع وأسهل — يعمل بدون إنترنت'}
           </p>
         </div>

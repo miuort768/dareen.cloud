@@ -129,7 +129,7 @@ export const SessionsModal = ({
                 value={sessionsStartDate}
                 onChange={(e) => onStartDateChange(e.target.value)}
               />
-              <span className="text-micro text-white/60">←</span>
+              <span className="text-micro text-white/80">←</span>
               <input
                 type="date"
                 aria-label="تاريخ النهاية"

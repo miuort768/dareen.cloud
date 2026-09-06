@@ -107,7 +107,7 @@ export const StudentForm = ({ onSubmit, initialData, onCancel }: StudentFormProp
           <button
             type="button"
             onClick={onCancel}
-            className="flex h-10 w-10 items-center justify-center text-white/70 transition-all hover:bg-white/15"
+            className="flex h-10 w-10 items-center justify-center text-white/90 transition-all hover:bg-white/15"
           >
             <X size={20} />
           </button>

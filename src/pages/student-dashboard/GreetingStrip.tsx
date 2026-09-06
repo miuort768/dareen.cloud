@@ -34,7 +34,7 @@ export const GreetingStrip = ({ name, grade, points, rank, rankProgress }: Greet
                 value={points}
                 className="block text-sm font-black tabular-nums leading-none text-on-primary"
               />
-              <p className="mt-0.5 truncate text-[10px] font-bold text-white/70">{rank.name}</p>
+              <p className="mt-0.5 truncate text-[10px] font-bold text-white/90">{rank.name}</p>
             </div>
           </div>
           {showProgress && (

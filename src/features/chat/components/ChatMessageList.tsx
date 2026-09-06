@@ -129,7 +129,7 @@ export const ChatMessageList = ({
                       {msg.readAt ? (
                         <CheckCheck size={14} className="text-on-primary" />
                       ) : (
-                        <CheckCheck size={14} className="text-white/60" />
+                        <CheckCheck size={14} className="text-white/80" />
                       )}
                     </div>
                   )}

@@ -236,7 +236,7 @@ export const MobileTasks = () => {
 
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-bold text-white/85">إنجاز المهام</p>
-                <p className="mt-0.5 text-micro font-bold text-white/65">
+                <p className="mt-0.5 text-micro font-bold text-white/90">
                   أكملت {stats.completed} من {stats.total} مهمة
                 </p>
                 <div className="mt-2.5 grid grid-cols-3 gap-1.5">
@@ -255,7 +255,7 @@ export const MobileTasks = () => {
                       <p className="text-sm font-bold tabular-nums leading-none text-on-primary">
                         {t.count}
                       </p>
-                      <p className="mt-1 text-micro font-bold text-white/70">{t.label}</p>
+                      <p className="mt-1 text-micro font-bold text-white/90">{t.label}</p>
                     </button>
                   ))}
                 </div>

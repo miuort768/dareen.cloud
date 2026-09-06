@@ -158,19 +158,19 @@ export const Appointments = () => {
           end={
             <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur-sm lg:ms-auto">
               <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">اليوم</p>
+                <p className="mb-1 text-xs text-white/80">اليوم</p>
                 <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.today}</p>
               </div>
               <div className="h-10 w-px bg-white/10" />
               <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">المتبقي</p>
+                <p className="mb-1 text-xs text-white/80">المتبقي</p>
                 <p className="text-2xl font-bold tabular-nums text-on-primary">
                   {stats.remainingToday}
                 </p>
               </div>
               <div className="h-10 w-px bg-white/10" />
               <div className="text-center">
-                <p className="mb-1 text-xs text-white/60">الإجمالي</p>
+                <p className="mb-1 text-xs text-white/80">الإجمالي</p>
                 <p className="text-2xl font-bold tabular-nums text-on-primary">{stats.total}</p>
               </div>
             </div>

@@ -61,7 +61,7 @@ export const SalarySlipModal = ({
             </div>
             <div>
               <h2 className="text-sm font-bold">قسيمة راتب المعلمة</h2>
-              <p className="text-micro font-medium tracking-wider text-white/70">
+              <p className="text-micro font-medium tracking-wider text-white/90">
                 سجل مالي معتمد • {month}
               </p>
             </div>

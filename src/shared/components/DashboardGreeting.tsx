@@ -87,7 +87,7 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
       <div className="relative z-10 p-5 sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="mb-1 flex items-center gap-1.5 text-xs font-bold text-white/70">
+            <p className="mb-1 flex items-center gap-1.5 text-xs font-bold text-white/90">
               <CalendarDays size={12} />
               {format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })}
             </p>
@@ -114,7 +114,7 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
                       format={stat.formatter}
                       className="block text-2xl font-black tabular-nums leading-none text-on-primary"
                     />
-                    <p className="mt-1.5 text-[11px] font-bold text-white/70">{stat.label}</p>
+                    <p className="mt-1.5 text-[11px] font-bold text-white/90">{stat.label}</p>
                   </div>
                 ))}
               </div>

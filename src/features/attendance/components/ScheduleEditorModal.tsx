@@ -95,7 +95,7 @@ export const ScheduleEditorModal = ({
             </div>
             <div>
               <h3 className="text-sm font-bold text-on-primary">إدارة الجدول الأسبوعي</h3>
-              <p className="text-micro font-bold text-white/70">
+              <p className="text-micro font-bold text-white/90">
                 {schedule.length} {schedule.length === 1 ? 'موعد' : 'مواعيد'} مسجلة
               </p>
             </div>

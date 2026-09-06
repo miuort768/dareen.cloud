@@ -1077,7 +1077,7 @@ export const TrialSessions = () => {
                     </div>
                     <div>
                       <h3 className="text-sm font-bold text-on-error">حذف جميع الحصص</h3>
-                      <p className="mt-0.5 text-[10px] text-white/70">
+                      <p className="mt-0.5 text-[10px] text-white/90">
                         لا يمكن التراجع عن هذا الإجراء
                       </p>
                     </div>

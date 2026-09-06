@@ -55,7 +55,7 @@ export const BlogForm = ({
             <h2 className="text-sm font-bold text-on-error">
               {currentPost.id ? 'تعديل المقال' : 'إضافة مقال جديد'}
             </h2>
-            <p className="text-[10px] text-white/70">
+            <p className="text-[10px] text-white/90">
               {currentPost.id ? 'حدّث بيانات المقال ثم احفظ' : 'املأ الحقول الأساسية ثم انشر'}
             </p>
           </div>

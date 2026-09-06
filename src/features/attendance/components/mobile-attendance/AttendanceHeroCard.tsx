@@ -113,7 +113,7 @@ export const AttendanceHeroCard = ({
                     <s.icon size={11} strokeWidth={2} />
                     {s.value}
                   </p>
-                  <p className="mt-1 text-micro font-bold text-white/70">{s.label}</p>
+                  <p className="mt-1 text-micro font-bold text-white/90">{s.label}</p>
                 </div>
               ))}
             </div>

@@ -57,7 +57,7 @@ export const RescheduleModal = ({
           </div>
           <button
             onClick={onClose}
-            className="flex h-10 w-10 items-center justify-center rounded-2xl text-white/60 transition-colors hover:bg-white/15 hover:text-on-primary md:h-8 md:w-8"
+            className="flex h-10 w-10 items-center justify-center rounded-2xl text-white/80 transition-colors hover:bg-white/15 hover:text-on-primary md:h-8 md:w-8"
             aria-label="إغلاق"
           >
             <X size={18} />

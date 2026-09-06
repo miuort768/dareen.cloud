@@ -41,7 +41,7 @@ export const palette = {
   textOnPrimary: '#ffffff',
 
   // Status — ثابتة في جميع الثيمات
-  success: emerald[500],
+  success: emerald[600],
   successSoft: emerald[50],
   successLight: emerald[100],
   successDark: emerald[700],

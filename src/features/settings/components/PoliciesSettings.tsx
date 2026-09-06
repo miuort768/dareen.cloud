@@ -85,13 +85,13 @@ export const PoliciesSettings = ({
                 <p
                   className={cn(
                     'mt-0.5 text-[11px]',
-                    teacherCommissionType === opt.id ? 'text-white/60' : 'text-muted',
+                    teacherCommissionType === opt.id ? 'text-white/80' : 'text-muted',
                   )}
                 >
                   {opt.sub}
                 </p>
                 {teacherCommissionType === opt.id && (
-                  <CheckCircle2 size={12} className="mt-1.5 text-white/70" />
+                  <CheckCircle2 size={12} className="mt-1.5 text-white/90" />
                 )}
               </button>
             ))}
