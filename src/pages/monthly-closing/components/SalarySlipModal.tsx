@@ -68,7 +68,7 @@ export const SalarySlipModal = ({
           </div>
           <button
             onClick={onClose}
-            className="flex h-11 w-11 items-center justify-center rounded-xl text-error transition-colors hover:bg-error md:h-8 md:w-8"
+            className="flex h-11 w-11 items-center justify-center rounded-xl text-error outline-none transition-colors hover:bg-error focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-8"
             aria-label="إغلاق"
           >
             <X size={18} />

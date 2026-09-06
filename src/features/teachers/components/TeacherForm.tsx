@@ -127,7 +127,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
         <button
           type="button"
           onClick={onCancel}
-          className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 text-on-primary transition-all hover:bg-white/25"
+          className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 text-on-primary outline-none transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
           aria-label="إغلاق"
         >
           <X size={18} />
@@ -279,7 +279,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                   <button
                     type="button"
                     onClick={generateUsername}
-                    className="text-xs text-primary hover:underline"
+                    className="text-xs text-primary outline-none hover:underline focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     توليد تلقائي
                   </button>
@@ -306,7 +306,7 @@ export const TeacherForm = ({ onSubmit, initialData, onCancel, editId }: Teacher
                   <button
                     type="button"
                     onClick={generatePassword}
-                    className="text-xs text-primary hover:underline"
+                    className="text-xs text-primary outline-none hover:underline focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     توليد تلقائي
                   </button>

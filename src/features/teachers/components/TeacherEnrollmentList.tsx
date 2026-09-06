@@ -68,7 +68,7 @@ export const TeacherEnrollmentList = ({
               <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
                 <button
                   onClick={() => onLogAttendance(student, enrollment as Enrollment)}
-                  className="flex h-7 w-7 items-center justify-center rounded-lg text-success transition-all hover:bg-success hover:text-on-success"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg text-success outline-none transition-all hover:bg-success hover:text-on-success focus-visible:ring-2 focus-visible:ring-focus"
                   title="تسجيل حضور"
                   aria-label="تسجيل حضور"
                 >
@@ -77,7 +77,7 @@ export const TeacherEnrollmentList = ({
                 {!isTeacherView && (
                   <button
                     onClick={() => onUnenroll(student, teacherName)}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg text-error transition-all hover:bg-error hover:text-on-error"
+                    className="flex h-7 w-7 items-center justify-center rounded-lg text-error outline-none transition-all hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus"
                     title="إلغاء التسجيل"
                     aria-label="إلغاء التسجيل"
                   >

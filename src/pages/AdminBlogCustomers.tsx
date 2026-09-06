@@ -355,7 +355,7 @@ export const AdminBlogCustomers = () => {
                 <button
                   type="button"
                   onClick={() => void refetch()}
-                  className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-[10px] font-semibold text-on-primary transition-colors hover:bg-primary-hover active:scale-[0.97]"
+                  className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-[10px] font-semibold text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   إعادة المحاولة
                 </button>

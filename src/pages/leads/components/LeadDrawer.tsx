@@ -207,7 +207,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
           <button
             ref={closeRef}
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 transition-all hover:bg-white/25"
+            className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 outline-none transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="إغلاق"
           >
             <X size={14} className="text-on-primary" />

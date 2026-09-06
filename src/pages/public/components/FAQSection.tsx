@@ -164,7 +164,7 @@ export const FAQSection = () => {
                   <button
                     type="button"
                     onClick={() => setOpenIdx(isOpen ? null : idx)}
-                    className="flex w-full cursor-pointer items-center justify-between p-4 text-start"
+                    className="flex w-full cursor-pointer items-center justify-between p-4 text-start outline-none focus-visible:ring-2 focus-visible:ring-focus"
                     aria-expanded={isOpen}
                   >
                     <h3 className="text-xs font-black text-main transition-colors group-hover:text-primary dark:text-main dark:group-hover:text-accent md:text-sm">

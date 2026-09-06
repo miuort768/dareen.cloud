@@ -372,7 +372,7 @@ export const AdminJobs = () => {
                 onClick={() => setSubjectFilter(pill.key)}
                 aria-pressed={subjectFilter === pill.key}
                 className={cn(
-                  'shrink-0 rounded-full border px-3.5 py-2.5 text-micro font-bold transition-colors duration-fast active:scale-[0.97] sm:py-2',
+                  'shrink-0 rounded-full border px-3.5 py-2.5 text-micro font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:py-2',
                   subjectFilter === pill.key
                     ? 'border-primary bg-primary text-on-primary'
                     : pill.color + ' hover:border-primary/30',
@@ -403,7 +403,7 @@ export const AdminJobs = () => {
             {search && (
               <button
                 onClick={() => setSearch('')}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors duration-fast hover:text-main"
+                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                 aria-label="مسح البحث"
               >
                 <X size={14} />
@@ -451,7 +451,7 @@ export const AdminJobs = () => {
                 <button
                   type="button"
                   onClick={retryFetch}
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.97]"
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   إعادة تحميل
                 </button>
@@ -538,7 +538,7 @@ export const AdminJobs = () => {
                           {!app.contacted && (
                             <button
                               onClick={() => handleContacted(app.id)}
-                              className="flex h-9 items-center gap-1.5 rounded-lg bg-success px-3 text-micro font-bold text-on-success transition-colors duration-fast hover:bg-success-hover active:scale-95 sm:h-auto sm:py-1.5"
+                              className="flex h-9 items-center gap-1.5 rounded-lg bg-success px-3 text-micro font-bold text-on-success outline-none transition-colors duration-fast hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-auto sm:py-1.5"
                               title="تم التواصل"
                               aria-label="تم التواصل"
                             >
@@ -548,7 +548,7 @@ export const AdminJobs = () => {
                           )}
                           <button
                             onClick={() => handleDelete(app.id)}
-                            className="flex h-9 w-9 items-center justify-center rounded-lg bg-error text-on-error transition-colors duration-fast hover:bg-error-hover active:scale-95 sm:h-auto sm:w-auto sm:px-3 sm:py-1.5"
+                            className="flex h-9 w-9 items-center justify-center rounded-lg bg-error text-on-error outline-none transition-colors duration-fast hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-auto sm:w-auto sm:px-3 sm:py-1.5"
                             aria-label="حذف الطلب"
                           >
                             <Trash2 size={13} />

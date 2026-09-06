@@ -354,7 +354,7 @@ export const Forum = () => {
               onClick={() => setSortMode(opt.value)}
               aria-pressed={sortMode === opt.value}
               className={cn(
-                'flex-1 rounded-card border px-2 py-1.5 text-micro font-bold transition-colors duration-fast',
+                'flex-1 rounded-card border px-2 py-1.5 text-micro font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus',
                 sortMode === opt.value
                   ? 'border-primary bg-primary text-on-primary'
                   : 'border-border bg-card text-muted hover:border-hover hover:text-main',
@@ -378,7 +378,7 @@ export const Forum = () => {
             </span>
             <button
               onClick={() => setSortMode('latest')}
-              className="rounded-lg bg-primary px-2.5 py-1 text-micro text-on-primary transition-colors duration-fast hover:bg-primary-hover"
+              className="rounded-lg bg-primary px-2.5 py-1 text-micro text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
             >
               إعادة تعيين الفرز
             </button>

@@ -541,7 +541,7 @@ export const TeacherInvoices = () => {
                       action.onClick()
                       setFabOpen(false)
                     }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover hover:shadow-elevation-4"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     <action.icon size={18} />
                   </button>

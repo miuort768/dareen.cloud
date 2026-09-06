@@ -352,7 +352,7 @@ export const Students = () => {
                   setShowAddForm(true)
                 }}
                 aria-label="إضافة طالب"
-                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 transition-colors active:scale-95"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
                 <Plus size={16} /> طالب
               </button>
@@ -496,7 +496,7 @@ export const Students = () => {
                 <button
                   onClick={handleDeleteAll}
                   disabled={isDeletingAllBusy}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-micro font-bold text-on-error transition-all hover:bg-error-hover disabled:opacity-50 md:h-9"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-error px-4 text-micro font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50 md:h-9"
                 >
                   {isDeletingAllBusy && <Loader2 className="animate-spin" size={14} />}
                   تأكيد الحذف
@@ -507,7 +507,7 @@ export const Students = () => {
                     setDeleteAllPassword('')
                     setDeleteAllError('')
                   }}
-                  className="h-10 rounded-xl border border-border bg-surface px-4 text-micro font-bold text-main transition-all md:h-9"
+                  className="h-10 rounded-xl border border-border bg-surface px-4 text-micro font-bold text-main outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus md:h-9"
                 >
                   إلغاء
                 </button>

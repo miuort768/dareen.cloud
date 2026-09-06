@@ -107,7 +107,7 @@ export const TeacherDetails = ({
               <>
                 <button
                   onClick={() => onSendNotification(teacher)}
-                  className="flex h-9 w-9 items-center justify-center bg-white/15 text-on-primary transition-all hover:bg-white/25"
+                  className="flex h-9 w-9 items-center justify-center bg-white/15 text-on-primary outline-none transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
                   title="إرسال إشعار"
                   aria-label="إرسال إشعار"
                 >
@@ -115,7 +115,7 @@ export const TeacherDetails = ({
                 </button>
                 <button
                   onClick={() => navigate('/chat', { state: { startChatWith: teacher.id } })}
-                  className="flex h-9 w-9 items-center justify-center bg-white/15 text-on-primary transition-all hover:bg-white/25"
+                  className="flex h-9 w-9 items-center justify-center bg-white/15 text-on-primary outline-none transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
                   title="مراسلة"
                   aria-label="مراسلة"
                 >
@@ -125,7 +125,7 @@ export const TeacherDetails = ({
             )}
             <button
               onClick={onClose}
-              className="flex h-9 w-9 items-center justify-center bg-white/15 text-on-primary transition-all hover:bg-white/25"
+              className="flex h-9 w-9 items-center justify-center bg-white/15 text-on-primary outline-none transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
               title="إغلاق"
               aria-label="إغلاق"
             >
@@ -159,7 +159,7 @@ export const TeacherDetails = ({
             aria-expanded={showActivity}
             aria-label="سجل النشاطات المفصل"
             className={cn(
-              'group flex w-full items-center justify-between border px-6 py-4 transition-all',
+              'group flex w-full items-center justify-between border px-6 py-4 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
               showActivity
                 ? 'border-primary bg-primary text-on-primary'
                 : 'border-primary/20 bg-primary-soft hover:border-primary',

@@ -60,7 +60,7 @@ export const AppointmentsFilters = ({
         {searchTerm && (
           <button
             onClick={() => onSearchChange('')}
-            className="absolute end-2.5 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-error"
+            className="absolute end-2.5 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="مسح البحث"
           >
             <X size={11} />

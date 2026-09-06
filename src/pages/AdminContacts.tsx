@@ -288,7 +288,7 @@ export const AdminContacts = () => {
                 {search && (
                   <button
                     onClick={() => setSearch('')}
-                    className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors duration-fast hover:text-main"
+                    className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                     aria-label="مسح البحث"
                   >
                     <X size={14} />
@@ -350,7 +350,7 @@ export const AdminContacts = () => {
             {search && (
               <button
                 onClick={() => setSearch('')}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors duration-fast hover:text-main"
+                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                 aria-label="مسح البحث"
               >
                 <X size={14} />
@@ -365,7 +365,7 @@ export const AdminContacts = () => {
                 onClick={() => setFilterRead(pill.key)}
                 aria-pressed={filterRead === pill.key}
                 className={cn(
-                  'inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold transition-colors duration-fast active:scale-[0.97] sm:min-h-0',
+                  'inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:min-h-0',
                   filterRead === pill.key
                     ? 'bg-primary text-on-primary'
                     : 'border border-border bg-card text-muted hover:border-primary/30 hover:text-main',
@@ -425,7 +425,7 @@ export const AdminContacts = () => {
                 <button
                   type="button"
                   onClick={retryFetch}
-                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover active:scale-[0.97]"
+                  className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   إعادة تحميل
                 </button>
@@ -524,7 +524,7 @@ export const AdminContacts = () => {
                               type="button"
                               onClick={() => markAsRead(msg.id)}
                               className={cn(
-                                'flex h-10 w-10 items-center justify-center rounded-lg transition-colors duration-fast active:scale-95 sm:h-8 sm:w-8',
+                                'flex h-10 w-10 items-center justify-center rounded-lg outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-8 sm:w-8',
                                 isMsgRead
                                   ? 'bg-success-soft text-success hover:bg-success hover:text-on-success'
                                   : 'bg-surface text-muted hover:bg-hover',
@@ -536,7 +536,7 @@ export const AdminContacts = () => {
                             <button
                               type="button"
                               onClick={() => handleDelete(msg.id)}
-                              className="flex h-10 w-10 items-center justify-center rounded-lg bg-error-soft text-error transition-colors duration-fast hover:bg-error hover:text-on-error active:scale-95 sm:h-8 sm:w-8"
+                              className="flex h-10 w-10 items-center justify-center rounded-lg bg-error-soft text-error outline-none transition-colors duration-fast hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-8 sm:w-8"
                               aria-label="حذف الرسالة"
                             >
                               <Trash2 size={14} />

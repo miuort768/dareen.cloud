@@ -33,7 +33,7 @@ export const ForumHeader = ({ searchTerm = '', onSearchChange }: ForumHeaderProp
               <button
                 onClick={() => onSearchChange?.('')}
                 aria-label="مسح البحث"
-                className="absolute end-3 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-white/90 transition-colors hover:text-white"
+                className="absolute end-3 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-white/90 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <X size={12} />
               </button>

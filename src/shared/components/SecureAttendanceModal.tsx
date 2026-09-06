@@ -99,7 +99,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-surface text-muted transition-all hover:bg-hover hover:text-main md:h-8 md:w-8"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl bg-surface text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-8"
               aria-label="إغلاق"
             >
               <X size={16} />
@@ -120,7 +120,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             <button
               onClick={() => setStatus('completed')}
               className={cn(
-                'flex flex-col items-center gap-2 rounded-2xl border-2 p-3.5 transition-all',
+                'flex flex-col items-center gap-2 rounded-2xl border-2 p-3.5 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                 status === 'completed'
                   ? 'border-success bg-success-soft text-success'
                   : 'border-border bg-surface text-muted hover:border-success',
@@ -135,7 +135,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
             <button
               onClick={() => setStatus('cancelled')}
               className={cn(
-                'flex flex-col items-center gap-2 rounded-2xl border-2 p-3.5 transition-all',
+                'flex flex-col items-center gap-2 rounded-2xl border-2 p-3.5 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                 status === 'cancelled'
                   ? 'border-error bg-error-soft text-error'
                   : 'border-border bg-surface text-muted hover:border-error',

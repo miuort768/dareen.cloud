@@ -318,7 +318,7 @@ export const StudentInvoices = () => {
                   {searchTerm && (
                     <button
                       onClick={() => setSearchTerm('')}
-                      className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-main"
+                      className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                       aria-label="مسح البحث"
                     >
                       <X size={14} />
@@ -415,7 +415,7 @@ export const StudentInvoices = () => {
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
-                  className="absolute end-3 top-1/2 -translate-y-1/2 text-muted transition-colors hover:text-main"
+                  className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label="مسح البحث"
                 >
                   <X size={14} />

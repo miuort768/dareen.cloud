@@ -329,7 +329,7 @@ export const ParentPaymentHistory = () => {
             action={
               <button
                 onClick={() => navigate(-1)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-card text-muted transition-all hover:bg-hover hover:text-main"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-card text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
                 aria-label="رجوع"
               >
                 <ArrowLeft size={15} />
@@ -396,7 +396,7 @@ export const ParentPaymentHistory = () => {
                   key={pill.key}
                   onClick={() => setFilterStatus(pill.key)}
                   className={cn(
-                    'rounded-xl px-3.5 py-1.5 text-[11px] font-bold transition-all',
+                    'rounded-xl px-3.5 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                     active
                       ? 'bg-primary text-on-primary shadow-elevation-1'
                       : 'border border-border bg-card text-muted hover:bg-hover',
@@ -414,7 +414,7 @@ export const ParentPaymentHistory = () => {
                 <button
                   onClick={() => setFilterChild('all')}
                   className={cn(
-                    'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-bold transition-all',
+                    'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                     filterChild === 'all'
                       ? 'bg-primary text-on-primary shadow-elevation-1'
                       : 'border border-border bg-card text-muted hover:bg-hover',
@@ -427,7 +427,7 @@ export const ParentPaymentHistory = () => {
                     key={c.id}
                     onClick={() => setFilterChild(c.id)}
                     className={cn(
-                      'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-bold transition-all',
+                      'whitespace-nowrap rounded-xl px-3 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                       filterChild === c.id
                         ? 'bg-primary text-on-primary shadow-elevation-1'
                         : 'border border-border bg-card text-muted hover:bg-hover',

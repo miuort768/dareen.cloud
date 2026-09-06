@@ -63,7 +63,7 @@ export const SendNotificationModal: React.FC<SendNotificationModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="flex h-10 w-10 items-center justify-center rounded-2xl text-muted transition-all hover:bg-hover hover:text-main md:h-8 md:w-8"
+              className="flex h-10 w-10 items-center justify-center rounded-2xl text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-8"
               aria-label="إغلاق"
             >
               <X size={16} />

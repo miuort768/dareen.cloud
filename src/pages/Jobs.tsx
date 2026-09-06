@@ -235,7 +235,7 @@ export const Jobs = () => {
                     onClick={prevStep}
                     disabled={step === 1}
                     aria-label="الخطوة السابقة"
-                    className="flex items-center gap-2 rounded-card border border-border bg-card px-5 py-3 text-xs font-bold text-muted transition-all hover:bg-surface disabled:opacity-20 md:px-6 md:py-4"
+                    className="flex items-center gap-2 rounded-card border border-border bg-card px-5 py-3 text-xs font-bold text-muted outline-none transition-all hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-20 md:px-6 md:py-4"
                   >
                     <ChevronRight size={14} /> السابق
                   </button>
@@ -245,7 +245,7 @@ export const Jobs = () => {
                       onClick={nextStep}
                       disabled={!canProceed()}
                       aria-label="الخطوة التالية"
-                      className="flex flex-1 items-center justify-center gap-2 rounded-card bg-primary px-8 py-3 text-xs font-bold text-on-primary shadow-soft transition-all hover:bg-primary-hover disabled:opacity-30 md:flex-none md:px-10 md:py-4"
+                      className="flex flex-1 items-center justify-center gap-2 rounded-card bg-primary px-8 py-3 text-xs font-bold text-on-primary shadow-soft outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-30 md:flex-none md:px-10 md:py-4"
                     >
                       التالي <ChevronLeft size={14} />
                     </button>
@@ -260,7 +260,7 @@ export const Jobs = () => {
                         !form.position ||
                         !form.qualification
                       }
-                      className="flex flex-1 items-center justify-center gap-2 rounded-card bg-success px-8 py-3 text-xs font-bold text-on-success shadow-soft transition-all hover:bg-success-hover disabled:opacity-30 md:flex-none md:px-10 md:py-4"
+                      className="flex flex-1 items-center justify-center gap-2 rounded-card bg-success px-8 py-3 text-xs font-bold text-on-success shadow-soft outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-30 md:flex-none md:px-10 md:py-4"
                     >
                       {loading ? (
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-on-primary" />

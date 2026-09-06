@@ -180,7 +180,7 @@ export const Contact = () => {
                   </p>
                   <button
                     onClick={() => setFormState('idle')}
-                    className="rounded-none bg-primary px-8 py-3 text-sm font-bold text-on-primary transition-all hover:bg-primary-hover"
+                    className="rounded-none bg-primary px-8 py-3 text-sm font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     إرسال رسالة أخرى
                   </button>
@@ -335,7 +335,7 @@ export const Contact = () => {
                         type="submit"
                         disabled={formState === 'submitting'}
                         className={cn(
-                          'flex items-center justify-center gap-2 rounded-none py-3.5 text-sm font-black transition-all',
+                          'flex items-center justify-center gap-2 rounded-none py-3.5 text-sm font-black outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
                           formState === 'submitting'
                             ? 'cursor-not-allowed bg-card text-muted'
                             : 'bg-primary text-on-primary shadow-elevation-3 shadow-primary/20 hover:bg-primary-hover',

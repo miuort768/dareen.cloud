@@ -136,7 +136,7 @@ export const ForumHelpBanner = () => {
                   onClick={() => setShowModal(false)}
                   autoFocus
                   aria-label="إغلاق النافذة"
-                  className="flex h-7 w-7 items-center justify-center rounded-card bg-white/10 transition-colors duration-fast hover:bg-error"
+                  className="flex h-7 w-7 items-center justify-center rounded-card bg-white/10 outline-none transition-colors duration-fast hover:bg-error focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <X size={16} />
                 </button>

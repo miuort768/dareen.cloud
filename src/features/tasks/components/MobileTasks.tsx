@@ -248,7 +248,7 @@ export const MobileTasks = () => {
                         setFilter(filter === t.key ? 'all' : t.key)
                       }}
                       className={cn(
-                        'rounded-2xl px-2 py-1.5 text-center backdrop-blur-sm transition-colors',
+                        'rounded-2xl px-2 py-1.5 text-center outline-none backdrop-blur-sm transition-colors focus-visible:ring-2 focus-visible:ring-focus',
                         filter === t.key ? 'bg-white/25 ring-1 ring-white/40' : 'bg-white/10',
                       )}
                     >

@@ -28,7 +28,7 @@ export const JobsErrorModal = ({ errorMsg, onClose }: JobsErrorModalProps) => (
             type="button"
             onClick={onClose}
             aria-label="إغلاق"
-            className="absolute end-3 top-3 flex h-8 w-8 items-center justify-center rounded-card text-muted transition-colors hover:text-error"
+            className="absolute end-3 top-3 flex h-8 w-8 items-center justify-center rounded-card text-muted outline-none transition-colors hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
           >
             <X size={16} />
           </button>
@@ -40,7 +40,7 @@ export const JobsErrorModal = ({ errorMsg, onClose }: JobsErrorModalProps) => (
           <button
             type="button"
             onClick={onClose}
-            className="mt-6 w-full rounded-card bg-error py-3 text-xs font-bold text-on-error transition-all hover:bg-error-hover"
+            className="mt-6 w-full rounded-card bg-error py-3 text-xs font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus"
           >
             حسناً
           </button>

@@ -178,7 +178,7 @@ export const Login = () => {
               type="submit"
               disabled={loading}
               className={cn(
-                'flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition-all duration-slow lg:h-14 lg:text-base',
+                'flex h-12 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold outline-none transition-all duration-slow focus-visible:ring-2 focus-visible:ring-focus lg:h-14 lg:text-base',
                 'bg-primary text-on-primary hover:bg-primary-hover active:scale-[0.98]',
                 'disabled:cursor-not-allowed disabled:opacity-50',
                 'shadow-elevation-3 shadow-primary/20 hover:shadow-elevation-4 hover:shadow-primary/30',

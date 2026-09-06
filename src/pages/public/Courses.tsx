@@ -180,7 +180,7 @@ export const Courses = () => {
                   key={cat.value}
                   type="button"
                   onClick={() => setActiveCategory(cat.value)}
-                  className={`flex cursor-pointer items-center gap-2 rounded-card px-4 py-2.5 text-xs font-black transition-all duration-300 ${
+                  className={`flex cursor-pointer items-center gap-2 rounded-card px-4 py-2.5 text-xs font-black outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-focus ${
                     activeCategory === cat.value
                       ? 'bg-primary-active text-on-primary shadow-elevation-3 dark:bg-primary dark:text-on-primary dark:shadow-primary/20'
                       : 'border border-border bg-surface text-muted hover:border-primary/30 hover:text-main hover:shadow-elevation-2 dark:border-primary/20 dark:bg-card dark:text-muted dark:hover:border-primary/40 dark:hover:text-main'

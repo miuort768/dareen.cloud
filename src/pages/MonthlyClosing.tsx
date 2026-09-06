@@ -459,7 +459,7 @@ export const MonthlyClosing = () => {
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as TabType)}
                 className={cn(
-                  'relative flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all md:min-h-[38px]',
+                  'relative flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 py-2.5 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus md:min-h-[38px]',
                   activeTab === tab.id ? 'text-on-primary' : 'text-muted hover:text-main',
                 )}
               >
@@ -555,7 +555,7 @@ export const MonthlyClosing = () => {
                 </span>
                 <button
                   onClick={() => handleFabAction(item.action)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 transition-all hover:bg-primary-hover hover:shadow-elevation-4"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary shadow-elevation-3 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <item.icon size={18} />
                 </button>

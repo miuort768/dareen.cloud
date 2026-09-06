@@ -36,7 +36,7 @@ export const Dropdown = ({ trigger, items, onSelect, align = 'end', className }:
     <div ref={ref} className={cn('relative inline-block', className)}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex min-h-11 items-center gap-1 text-sm font-medium text-main md:min-h-0"
+        className="flex min-h-11 items-center gap-1 text-sm font-medium text-main outline-none focus-visible:ring-2 focus-visible:ring-focus md:min-h-0"
         aria-expanded={open}
         aria-haspopup="true"
       >
@@ -66,7 +66,7 @@ export const Dropdown = ({ trigger, items, onSelect, align = 'end', className }:
               disabled={item.disabled}
               role="menuitem"
               className={cn(
-                'flex min-h-11 w-full items-center gap-2 px-4 py-2.5 text-start text-sm transition-colors duration-fast md:min-h-9',
+                'flex min-h-11 w-full items-center gap-2 px-4 py-2.5 text-start text-sm outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus md:min-h-9',
                 item.disabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer hover:bg-hover',
                 item.danger ? 'text-error' : 'text-main',
               )}

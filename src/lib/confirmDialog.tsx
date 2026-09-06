@@ -129,7 +129,7 @@ export function alert(opts: ConfirmProps | string): Promise<void> {
           >
             <button
               onClick={handleClose}
-              className="absolute end-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-surface text-muted transition-colors hover:text-main"
+              className="absolute end-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-surface text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="إغلاق"
             >
               <X size={15} />
@@ -264,7 +264,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
           >
             <button
               onClick={handleClose}
-              className="absolute end-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-surface text-muted transition-colors"
+              className="absolute end-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-surface text-muted outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="إغلاق"
             >
               <X size={15} />
@@ -302,7 +302,7 @@ export function confirm(opts: ConfirmProps | string): Promise<boolean> {
                 </button>
                 <button
                   onClick={handleClose}
-                  className="h-11 w-full rounded-xl bg-surface text-sm font-bold text-muted transition-all hover:bg-surface"
+                  className="h-11 w-full rounded-xl bg-surface text-sm font-bold text-muted outline-none transition-all hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   {options.cancelText || 'إلغاء'}
                 </button>

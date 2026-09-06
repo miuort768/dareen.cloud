@@ -104,7 +104,7 @@ export const Reports = () => {
               <button
                 key={tab.id}
                 onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                className={`flex min-h-11 items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs font-bold transition-all sm:min-h-0 ${isActive ? 'shadow-xs bg-primary text-on-primary' : 'text-muted hover:text-main'}`}
+                className={`flex min-h-11 items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus sm:min-h-0 ${isActive ? 'shadow-xs bg-primary text-on-primary' : 'text-muted hover:text-main'}`}
               >
                 <Icon size={15} /> {tab.label}
               </button>
@@ -161,7 +161,7 @@ export const Reports = () => {
                       <button
                         key={tab.id}
                         onClick={() => actions.setActiveReport(tab.id as ReportType)}
-                        className={`group rounded-2xl border-0 p-4 transition-all hover:shadow-elevation-2 active:scale-95 ${v.bg}`}
+                        className={`group rounded-2xl border-0 p-4 outline-none transition-all hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 ${v.bg}`}
                       >
                         <div className="flex flex-col items-center text-center">
                           <div

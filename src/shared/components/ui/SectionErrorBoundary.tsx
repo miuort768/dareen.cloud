@@ -51,7 +51,7 @@ export class SectionErrorBoundary extends Component<Props, State> {
               <p className="text-sm font-bold text-muted">حدث خطأ في هذا القسم</p>
               <button
                 onClick={this.handleReset}
-                className="mt-3 inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold text-error transition-colors hover:bg-error-soft hover:text-error"
+                className="mt-3 inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold text-error outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <RotateCcw size={12} /> إعادة المحاولة
               </button>

@@ -196,7 +196,7 @@ export const Home = () => {
                         key={d}
                         onClick={() => setHeroIndex(d)}
                         aria-label={`الانتقال إلى الشريحة ${d + 1}`}
-                        className={`h-1.5 w-1.5 rounded-full transition-all ${heroIndex === d ? 'w-3 bg-primary dark:bg-primary' : 'bg-muted dark:bg-surface'}`}
+                        className={`h-1.5 w-1.5 rounded-full outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${heroIndex === d ? 'w-3 bg-primary dark:bg-primary' : 'bg-muted dark:bg-surface'}`}
                       />
                     ))}
                   </div>
@@ -258,7 +258,7 @@ export const Home = () => {
               <button
                 key={cat.value}
                 onClick={() => setActiveCategory(cat.value)}
-                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-bold transition-all ${activeCategory === cat.value ? 'bg-primary text-on-primary shadow-elevation-2 shadow-black/20 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary' : 'dark:text-soft border border-border bg-surface text-muted dark:border-primary/30 dark:bg-surface'}`}
+                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus ${activeCategory === cat.value ? 'bg-primary text-on-primary shadow-elevation-2 shadow-black/20 dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary' : 'dark:text-soft border border-border bg-surface text-muted dark:border-primary/30 dark:bg-surface'}`}
               >
                 <cat.icon
                   size={12}

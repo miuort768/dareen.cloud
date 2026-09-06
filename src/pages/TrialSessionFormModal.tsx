@@ -60,7 +60,7 @@ export const TrialSessionFormModal = ({
         </div>
         <button
           onClick={onClose}
-          className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-primary transition-all hover:bg-white/25"
+          className="relative z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-primary outline-none transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
           aria-label="إغلاق"
         >
           <X size={14} className="text-on-primary" />
@@ -177,7 +177,7 @@ export const TrialSessionFormModal = ({
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 rounded-xl bg-surface py-3 text-[11px] font-bold text-muted transition-colors hover:bg-hover"
+            className="flex-1 rounded-xl bg-surface py-3 text-[11px] font-bold text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
           >
             إلغاء
           </button>

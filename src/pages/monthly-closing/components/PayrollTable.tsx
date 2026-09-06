@@ -101,7 +101,7 @@ export const PayrollTable: React.FC<PayrollTableProps> = ({
                 e.stopPropagation()
                 setSelectedTeacherForSlip(item)
               }}
-              className="flex items-center gap-1 text-micro font-bold text-primary hover:underline"
+              className="flex items-center gap-1 text-micro font-bold text-primary outline-none hover:underline focus-visible:ring-2 focus-visible:ring-focus"
             >
               <Receipt size={10} /> القسيمة
             </button>

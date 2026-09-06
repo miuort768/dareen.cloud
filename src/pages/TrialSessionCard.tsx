@@ -192,7 +192,7 @@ export const TrialSessionCard = ({
                       e.stopPropagation()
                       setShowNotes(false)
                     }}
-                    className="mt-1 inline-flex items-center gap-1 text-[10px] font-black text-warning"
+                    className="mt-1 inline-flex items-center gap-1 text-[10px] font-black text-warning outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     <ChevronUp size={10} />
                     أقل

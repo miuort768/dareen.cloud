@@ -229,7 +229,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onNotify(student)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted transition-all hover:bg-warning-soft hover:text-warning"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none transition-all hover:bg-warning-soft hover:text-warning focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label="إشعار"
                 >
                   <Bell size={13} />
@@ -241,7 +241,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onDelete(student.id)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted transition-all hover:bg-error-soft hover:text-error"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none transition-all hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label="حذف"
                 >
                   <Trash size={13} />
@@ -328,7 +328,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onNotify(student)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted hover:bg-warning-soft hover:text-warning"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none hover:bg-warning-soft hover:text-warning focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label="إشعار"
                 >
                   <Bell size={13} />
@@ -340,7 +340,7 @@ export const StudentTable = memo(
                     e.stopPropagation()
                     onDelete(student.id)
                   }}
-                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted hover:bg-error-soft hover:text-error"
+                  className="flex min-h-9 min-w-9 items-center justify-center rounded-xl text-muted outline-none hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
                   aria-label="حذف"
                 >
                   <Trash size={13} />

@@ -34,7 +34,7 @@ export const AppointmentDetailPanel = ({
             </div>
             <button
               onClick={onClose}
-              className="flex h-8 w-8 items-center justify-center rounded-2xl text-white/80 transition-all hover:bg-white/15 hover:text-on-primary"
+              className="flex h-8 w-8 items-center justify-center rounded-2xl text-white/80 outline-none transition-all hover:bg-white/15 hover:text-on-primary focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="إغلاق"
             >
               <X size={14} />

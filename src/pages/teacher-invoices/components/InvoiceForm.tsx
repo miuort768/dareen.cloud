@@ -52,7 +52,7 @@ export const InvoiceForm = ({
           type="button"
           onClick={handleCancel}
           aria-label="إغلاق"
-          className="flex h-8 w-8 items-center justify-center rounded-xl text-muted transition-all hover:bg-surface hover:text-muted"
+          className="flex h-8 w-8 items-center justify-center rounded-xl text-muted outline-none transition-all hover:bg-surface hover:text-muted focus-visible:ring-2 focus-visible:ring-focus"
         >
           <X size={16} />
         </button>

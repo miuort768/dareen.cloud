@@ -189,7 +189,7 @@ export const ForumPostCard = ({
                 setIsEditingPost(!isEditingPost)
                 setEditPostContent(post.content)
               }}
-              className="rounded-xl p-2 text-muted transition-colors duration-fast hover:bg-primary-soft hover:text-primary"
+              className="rounded-xl p-2 text-muted outline-none transition-colors duration-fast hover:bg-primary-soft hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="تعديل المنشور"
               title="تعديل المنشور (خاص بالمدير)"
             >
@@ -201,7 +201,7 @@ export const ForumPostCard = ({
           {isAdmin && (
             <button
               onClick={() => onDelete(post.id)}
-              className="rounded-xl p-2 text-muted transition-colors duration-fast hover:bg-error-light hover:text-error"
+              className="rounded-xl p-2 text-muted outline-none transition-colors duration-fast hover:bg-error-light hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="حذف المنشور"
             >
               <Trash2 size={15} />
@@ -211,7 +211,7 @@ export const ForumPostCard = ({
           <div className="relative" ref={menuRef}>
             <button
               onClick={() => setShowMenuPostId(isMenuOpen ? null : post.id)}
-              className="rounded-xl p-2 text-muted transition-colors duration-fast hover:bg-surface hover:text-muted"
+              className="rounded-xl p-2 text-muted outline-none transition-colors duration-fast hover:bg-surface hover:text-muted focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="خيارات المنشور"
               aria-haspopup="menu"
               aria-expanded={isMenuOpen}
@@ -229,7 +229,7 @@ export const ForumPostCard = ({
                     onReport(post.id)
                     setShowMenuPostId(null)
                   }}
-                  className="flex w-full items-center gap-2 px-4 py-2 text-start text-micro font-bold text-muted transition-colors duration-fast hover:bg-surface"
+                  className="flex w-full items-center gap-2 px-4 py-2 text-start text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <AlertTriangle size={12} className="text-error" /> الإبلاغ عن المنشور
                 </button>
@@ -256,13 +256,13 @@ export const ForumPostCard = ({
             <div className="flex justify-end gap-2">
               <button
                 onClick={() => setIsEditingPost(false)}
-                className="rounded-lg border border-border px-3 py-1.5 text-xs font-bold text-muted transition-colors duration-fast hover:bg-card"
+                className="rounded-lg border border-border px-3 py-1.5 text-xs font-bold text-muted outline-none transition-colors duration-fast hover:bg-card focus-visible:ring-2 focus-visible:ring-focus"
               >
                 إلغاء
               </button>
               <button
                 onClick={handleSavePostEdit}
-                className="flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover"
+                className="flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <Check size={13} /> حفظ التعديل
               </button>
@@ -370,13 +370,13 @@ export const ForumPostCard = ({
                             <div className="flex justify-end gap-1.5">
                               <button
                                 onClick={() => setEditingCommentId(null)}
-                                className="rounded px-2 py-1 text-micro text-muted transition-colors duration-fast hover:bg-surface"
+                                className="rounded px-2 py-1 text-micro text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
                               >
                                 إلغاء
                               </button>
                               <button
                                 onClick={() => handleSaveCommentEdit(node.comment.id)}
-                                className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover"
+                                className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
                               >
                                 حفظ
                               </button>
@@ -398,7 +398,7 @@ export const ForumPostCard = ({
                               }))
                               document.getElementById(`comment-input-${post.id}`)?.focus()
                             }}
-                            className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted transition-colors duration-fast hover:bg-primary/5 hover:text-primary"
+                            className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                           >
                             <CornerDownLeft size={11} />
                             رد
@@ -411,7 +411,7 @@ export const ForumPostCard = ({
                                 setEditingCommentId(node.comment.id)
                                 setEditCommentText(node.comment.content)
                               }}
-                              className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted transition-colors duration-fast hover:bg-primary/5 hover:text-primary"
+                              className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                               aria-label="تعديل التعليق"
                               title="تعديل التعليق (خاص بالمدير)"
                             >
@@ -423,7 +423,7 @@ export const ForumPostCard = ({
                           {(isAdmin || currentUserId === node.comment.authorId) && (
                             <button
                               onClick={() => onDeleteComment(post.id, node.comment.id)}
-                              className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted transition-colors duration-fast hover:bg-error-soft hover:text-error"
+                              className="flex items-center gap-1 rounded-lg px-2 py-1 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
                             >
                               <Trash2 size={10} />
                               حذف
@@ -497,13 +497,13 @@ export const ForumPostCard = ({
                                     <div className="flex justify-end gap-1.5">
                                       <button
                                         onClick={() => setEditingCommentId(null)}
-                                        className="rounded px-2 py-1 text-micro text-muted transition-colors duration-fast hover:bg-surface"
+                                        className="rounded px-2 py-1 text-micro text-muted outline-none transition-colors duration-fast hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
                                       >
                                         إلغاء
                                       </button>
                                       <button
                                         onClick={() => handleSaveCommentEdit(replyNode.comment.id)}
-                                        className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary transition-colors duration-fast hover:bg-primary-hover"
+                                        className="rounded bg-primary px-2.5 py-1 text-micro font-bold text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
                                       >
                                         حفظ
                                       </button>
@@ -525,7 +525,7 @@ export const ForumPostCard = ({
                                       }))
                                       document.getElementById(`comment-input-${post.id}`)?.focus()
                                     }}
-                                    className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted transition-colors duration-fast hover:bg-primary/5 hover:text-primary"
+                                    className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                                   >
                                     <CornerDownLeft size={9} />
                                     رد
@@ -538,7 +538,7 @@ export const ForumPostCard = ({
                                         setEditingCommentId(replyNode.comment.id)
                                         setEditCommentText(replyNode.comment.content)
                                       }}
-                                      className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted transition-colors duration-fast hover:bg-primary/5 hover:text-primary"
+                                      className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-primary/5 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
                                       aria-label="تعديل الرد"
                                       title="تعديل التعليق (خاص بالمدير)"
                                     >
@@ -550,7 +550,7 @@ export const ForumPostCard = ({
                                   {(isAdmin || currentUserId === replyNode.comment.authorId) && (
                                     <button
                                       onClick={() => onDeleteComment(post.id, replyNode.comment.id)}
-                                      className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted transition-colors duration-fast hover:bg-error-soft hover:text-error"
+                                      className="flex items-center gap-1 rounded-lg px-2 py-0.5 text-micro font-bold text-muted outline-none transition-colors duration-fast hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
                                     >
                                       <Trash2 size={9} />
                                       حذف

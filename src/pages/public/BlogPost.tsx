@@ -195,7 +195,7 @@ export const BlogPost = () => {
                   <button
                     onClick={(e) => handleButtonClick('download', downloadLink, e)}
                     disabled={buttonState !== null && buttonState.type !== 'download'}
-                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-black shadow-elevation-3 transition-all hover:bg-error hover:text-on-error disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card text-on-primary'}`}
+                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-black shadow-elevation-3 outline-none transition-all hover:bg-error hover:text-on-error focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'download' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'download' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-card text-on-primary'}`}
                   >
                     <Download size={16} />
                     <span>
@@ -211,7 +211,7 @@ export const BlogPost = () => {
                   <button
                     onClick={(e) => handleButtonClick('watch', watchLink, e)}
                     disabled={buttonState !== null && buttonState.type !== 'watch'}
-                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-black shadow-elevation-3 transition-all hover:bg-error-active disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}
+                    className={`inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-card px-6 py-3 text-xs font-black shadow-elevation-3 outline-none transition-all hover:bg-error-active focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm md:px-16 md:py-4 ${buttonState?.type === 'watch' && buttonState.phase === 'counting' ? 'bg-success text-on-success' : buttonState?.type === 'watch' && buttonState.phase === 'ready' ? 'bg-success text-on-success ring-2 ring-success ring-offset-2' : 'bg-error text-on-error'}`}
                   >
                     <Eye size={16} />
                     <span>

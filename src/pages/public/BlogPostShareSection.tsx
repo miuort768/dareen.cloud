@@ -101,7 +101,7 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
               setTimeout(() => setCopied(false), 1500)
             })
           }}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary via-primary to-warning text-on-primary transition-all hover:opacity-80"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary via-primary to-warning text-on-primary outline-none transition-all hover:opacity-80 focus-visible:ring-2 focus-visible:ring-focus"
           title="انسخ الرابط"
         >
           {copied ? (
@@ -133,7 +133,7 @@ export const BlogPostShareSection = ({ post, whatsappNumber }: BlogPostShareSect
                 if (navigator.share) navigator.share({ title: post.title, url })
               })
           }}
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-surface text-on-primary transition-all hover:opacity-80"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-surface text-on-primary outline-none transition-all hover:opacity-80 focus-visible:ring-2 focus-visible:ring-focus"
           title="نسخ الرابط"
         >
           {copied ? (

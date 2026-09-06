@@ -54,7 +54,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
             ) : item.onClick ? (
               <button
                 onClick={item.onClick}
-                className="inline-flex max-w-[160px] items-center gap-1 truncate text-sm text-muted transition-colors hover:text-main"
+                className="inline-flex max-w-[160px] items-center gap-1 truncate text-sm text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
               >
                 {item.icon && <span className="shrink-0">{item.icon}</span>}
                 {item.label}

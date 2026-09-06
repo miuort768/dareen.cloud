@@ -78,7 +78,7 @@ const ConfirmDeleteModal = ({
           </div>
           <button
             onClick={onCancel}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-error transition-all hover:bg-white/25"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-error outline-none transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="إغلاق"
           >
             <X size={14} />
@@ -99,13 +99,13 @@ const ConfirmDeleteModal = ({
             ref={cancelRef}
             type="button"
             onClick={onCancel}
-            className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-[0.98]"
+            className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-bold text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             إلغاء
           </button>
           <button
             onClick={onConfirm}
-            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 transition-all hover:bg-error-hover active:scale-[0.98]"
+            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             تأكيد الحذف
           </button>
@@ -155,7 +155,7 @@ const ConfirmDeleteAllModal = ({
           </div>
           <button
             onClick={onCancel}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-error transition-all hover:bg-white/25"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-error outline-none transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
             aria-label="إغلاق"
           >
             <X size={14} />
@@ -195,14 +195,14 @@ const ConfirmDeleteAllModal = ({
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-bold text-muted transition-all hover:bg-hover active:scale-[0.98]"
+            className="flex-1 rounded-xl bg-surface py-3.5 text-xs font-bold text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             إلغاء
           </button>
           <button
             onClick={onConfirm}
             disabled={isLoading || !verified}
-            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 transition-all hover:bg-error-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 rounded-xl bg-error py-3.5 text-xs font-bold text-on-error shadow-elevation-1 outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoading ? 'جاري الحذف...' : 'حذف الكل'}
           </button>
@@ -250,7 +250,7 @@ const AddLeadModalInline = ({
         </div>
         <button
           onClick={onClose}
-          className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-primary transition-all hover:bg-white/25"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-on-primary outline-none transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
           aria-label="إغلاق"
         >
           <X size={14} />
@@ -322,14 +322,14 @@ const AddLeadModalInline = ({
           <button
             type="submit"
             disabled={addMutation.isPending}
-            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-bold text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-all duration-normal hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {addMutation.isPending ? 'جاري الحفظ...' : 'إضافة العميل'}
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 rounded-xl bg-surface py-3 text-[11px] font-bold text-muted transition-colors hover:bg-hover"
+            className="flex-1 rounded-xl bg-surface py-3 text-[11px] font-bold text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus"
           >
             إلغاء
           </button>
@@ -516,7 +516,7 @@ export const Leads = () => {
         onClick={() => setShowLost(!showLost)}
         aria-pressed={showLost}
         className={cn(
-          'flex h-9 shrink-0 items-center gap-1.5 rounded-xl px-3 text-[11px] font-bold transition-all active:scale-95',
+          'flex h-9 shrink-0 items-center gap-1.5 rounded-xl px-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
           showLost
             ? 'bg-error text-on-error hover:bg-error-hover'
             : 'bg-white/20 hover:bg-white/30',
@@ -529,7 +529,7 @@ export const Leads = () => {
         onClick={() => setConfirmDeleteAll(true)}
         aria-label="حذف جميع العملاء"
         className={cn(
-          'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all active:scale-95',
+          'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
           showLost ? 'bg-error-soft hover:bg-error' : 'bg-white/15 hover:bg-white/25',
         )}
       >
@@ -558,7 +558,7 @@ export const Leads = () => {
               <button
                 onClick={() => setIsAddModalOpen(true)}
                 aria-label="عميل جديد"
-                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 transition-all active:scale-95"
+                className="flex h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-primary/25 outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
               >
                 <Plus size={16} /> جديد
               </button>
@@ -693,7 +693,7 @@ export const Leads = () => {
               <button
                 aria-label="مسح البحث"
                 onClick={() => setSearchTerm('')}
-                className="absolute end-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-lg text-muted transition-all hover:text-main"
+                className="absolute end-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-lg text-muted outline-none transition-all hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <X size={13} />
               </button>
@@ -711,7 +711,7 @@ export const Leads = () => {
                   onClick={() => setFilterStatus(item.key as LeadStatus | 'all')}
                   aria-pressed={isActive}
                   className={cn(
-                    'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold transition-all active:scale-95',
+                    'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                     isActive
                       ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
                       : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
