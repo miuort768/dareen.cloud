@@ -62,6 +62,7 @@ export const PasswordConfirmModal = ({
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
+                aria-label="كلمة المرور"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value)

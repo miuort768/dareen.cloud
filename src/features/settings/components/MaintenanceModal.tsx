@@ -93,6 +93,7 @@ export const MaintenanceModal = ({
               للتأكيد
             </p>
             <input
+              aria-label="كلمة التأكيد"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="اكتب dareen..."

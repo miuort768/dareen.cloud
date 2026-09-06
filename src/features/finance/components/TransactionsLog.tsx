@@ -256,6 +256,7 @@ export const TransactionsLog = ({
           <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
           <input
             type="text"
+            aria-label="بحث"
             placeholder="بحث بالوصف، التصنيف، الطالب..."
             value={searchQuery}
             onChange={(e) => {

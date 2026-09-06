@@ -96,6 +96,7 @@ export const InvoiceForm = ({
             <FieldLabel>اسم المعلمة (يدوي) *</FieldLabel>
             <input
               required
+              aria-label="اسم المعلمة"
               value={formData.teacher}
               onChange={(e) => setFormData({ ...formData, teacher: e.target.value })}
               placeholder="اسم المعلمة"
@@ -107,6 +108,7 @@ export const InvoiceForm = ({
           <FieldLabel>التخصص *</FieldLabel>
           <input
             required
+            aria-label="التخصص"
             value={formData.specialization}
             onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
             placeholder="التخصص"
@@ -118,6 +120,7 @@ export const InvoiceForm = ({
           <input
             type="number"
             required
+            aria-label="المبلغ"
             value={formData.amount}
             onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
             placeholder="0"
@@ -138,6 +141,7 @@ export const InvoiceForm = ({
         <div>
           <FieldLabel>وسيلة الدفع</FieldLabel>
           <input
+            aria-label="وسيلة الدفع"
             value={formData.paymentMethod}
             onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
             placeholder="نقدي / تحويل"
@@ -148,6 +152,7 @@ export const InvoiceForm = ({
           <FieldLabel>المصاريف الشخصية</FieldLabel>
           <input
             type="number"
+            aria-label="المصاريف الشخصية"
             value={formData.personalExpenses}
             onChange={(e) => setFormData({ ...formData, personalExpenses: e.target.value })}
             placeholder="0"

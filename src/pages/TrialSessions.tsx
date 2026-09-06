@@ -1109,6 +1109,7 @@ export const TrialSessions = () => {
                     </label>
                     <input
                       dir="ltr"
+                      aria-label="كلمة التأكيد للحذف"
                       value={deleteAllTyped}
                       onChange={(e) => setDeleteAllTyped(e.target.value)}
                       placeholder="dareen"

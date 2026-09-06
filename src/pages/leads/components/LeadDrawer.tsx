@@ -222,6 +222,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                 <div className="mb-1 text-[10px] font-bold text-primary">الهاتف</div>
                 {isEditing ? (
                   <input
+                    aria-label="الهاتف"
                     value={editData.phone}
                     onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
                     className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
@@ -238,6 +239,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                 <div className="mb-1 text-[10px] font-bold text-success">المادة</div>
                 {isEditing ? (
                   <input
+                    aria-label="المادة"
                     value={editData.subject}
                     onChange={(e) => setEditData({ ...editData, subject: e.target.value })}
                     className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"
@@ -250,6 +252,7 @@ export const LeadDrawer = ({ lead, onClose, updateMutation }: LeadDrawerProps) =
                 <div className="mb-1 text-[10px] font-bold text-info">المنهج</div>
                 {isEditing ? (
                   <input
+                    aria-label="المنهج"
                     value={editData.curriculum}
                     onChange={(e) => setEditData({ ...editData, curriculum: e.target.value })}
                     className="w-full rounded-lg border border-border bg-card px-2 py-1 text-sm font-bold text-main outline-none focus:border-primary"

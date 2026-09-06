@@ -156,6 +156,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                   <input
                     type="password"
                     autoComplete="off"
+                    aria-label="كلمة المرور للتأكيد"
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value)

@@ -124,6 +124,7 @@ export const PermissionsSection = ({ showNotify }: { showNotify: (msg: string) =
           <FieldLabel>اسم الدور</FieldLabel>
           <div className="flex gap-2">
             <input
+              aria-label="اسم الدور"
               value={roleName}
               onChange={(e) => setRoleName(e.target.value)}
               placeholder="مثال: مشرف مالي"

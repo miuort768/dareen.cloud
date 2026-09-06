@@ -480,6 +480,7 @@ export const Students = () => {
               <div className="flex flex-col gap-2 sm:flex-row">
                 <input
                   type="password"
+                  aria-label="كلمة المرور لتأكيد حذف جميع الطلاب"
                   value={deleteAllPassword}
                   onChange={(e) => {
                     setDeleteAllPassword(e.target.value)

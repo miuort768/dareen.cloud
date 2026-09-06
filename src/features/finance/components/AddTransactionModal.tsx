@@ -95,6 +95,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
                 type="number"
                 required
                 step="any"
+                aria-label="المبلغ المستحق"
                 value={newTransaction.amount}
                 onChange={(e) => setNewTransaction({ ...newTransaction, amount: e.target.value })}
                 className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
@@ -124,6 +125,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
               <input
                 type="text"
                 required
+                aria-label="التصنيف الحسابي"
                 value={newTransaction.category}
                 onChange={(e) => setNewTransaction({ ...newTransaction, category: e.target.value })}
                 className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"
@@ -137,6 +139,7 @@ export const AddTransactionModal = ({ isOpen, onClose, onAdd }: AddTransactionMo
               <input
                 type="date"
                 required
+                aria-label="تاريخ المعاملة"
                 value={newTransaction.date}
                 onChange={(e) => setNewTransaction({ ...newTransaction, date: e.target.value })}
                 className="w-full rounded-xl border-border bg-card px-4 py-3 text-sm font-medium outline-none transition-all focus:border-primary focus-visible:ring-2 focus-visible:ring-focus"

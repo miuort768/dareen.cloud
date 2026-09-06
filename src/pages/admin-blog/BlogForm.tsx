@@ -115,6 +115,7 @@ export const BlogForm = ({
               <Tag className="absolute start-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
               <input
                 type="text"
+                aria-label="التصنيف"
                 value={currentPost.category}
                 onChange={(e) => set('category', e.target.value)}
                 className="w-full rounded-xl border border-border bg-surface py-3 ps-10 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
@@ -165,6 +166,7 @@ export const BlogForm = ({
                 />
                 <input
                   type="url"
+                  aria-label="رابط المصدر"
                   value={currentPost.source || ''}
                   onChange={(e) => set('source', e.target.value)}
                   className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
@@ -177,6 +179,7 @@ export const BlogForm = ({
               <label className="mb-1 block text-micro font-bold text-muted">حجم الملف</label>
               <input
                 type="text"
+                aria-label="حجم الملف"
                 value={currentPost.fileSize || ''}
                 onChange={(e) => set('fileSize', e.target.value)}
                 className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"

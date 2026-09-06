@@ -73,6 +73,7 @@ export const TrialSessionFormModal = ({
             <label className={labelClass}>اسم الطالب</label>
             <input
               required
+              aria-label="اسم الطالب"
               value={form.studentName}
               onChange={(e) => onChange({ ...form, studentName: e.target.value })}
               className={inputClass}
@@ -83,6 +84,7 @@ export const TrialSessionFormModal = ({
             <label className={labelClass}>رقم ولي الأمر</label>
             <input
               required
+              aria-label="رقم ولي الأمر"
               value={form.parentPhone}
               onChange={(e) => onChange({ ...form, parentPhone: e.target.value })}
               className={inputClass}
@@ -96,6 +98,7 @@ export const TrialSessionFormModal = ({
           <div className="space-y-1">
             <label className={labelClass}>المادة</label>
             <input
+              aria-label="المادة"
               value={form.subject}
               onChange={(e) => onChange({ ...form, subject: e.target.value })}
               className={inputClass}
@@ -135,6 +138,7 @@ export const TrialSessionFormModal = ({
             <input
               type="date"
               required
+              aria-label="التاريخ"
               value={form.date}
               onChange={(e) => onChange({ ...form, date: e.target.value })}
               className={inputClass}
@@ -144,6 +148,7 @@ export const TrialSessionFormModal = ({
             <label className={labelClass}>الوقت</label>
             <input
               type="time"
+              aria-label="الوقت"
               value={form.time}
               onChange={(e) => onChange({ ...form, time: e.target.value })}
               className={inputClass}

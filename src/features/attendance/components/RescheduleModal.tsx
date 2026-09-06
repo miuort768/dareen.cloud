@@ -83,12 +83,14 @@ export const RescheduleModal = ({
               <div className="grid grid-cols-2 gap-3">
                 <input
                   type="date"
+                  aria-label="الموعد الجديد المقترح"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
                   className="w-full rounded-2xl border border-border bg-surface p-3 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                 />
                 <input
                   type="text"
+                  aria-label="الساعة"
                   placeholder="الساعة (مثلا 4 عصراً)"
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
