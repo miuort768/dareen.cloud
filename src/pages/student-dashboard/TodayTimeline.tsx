@@ -56,11 +56,11 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                     <div className="flex items-center justify-between gap-3">
                       <div className="min-w-0">
                         <p className="truncate text-xs font-black text-main">{item.subject}</p>
-                        <p className="truncate text-[10px] font-bold text-muted">{item.teacher}</p>
+                        <p className="truncate text-[11px] font-bold text-muted">{item.teacher}</p>
                       </div>
                       <span
                         className={cn(
-                          'inline-flex shrink-0 items-center gap-1 rounded-2xl px-2 py-1 text-[10px] font-black',
+                          'inline-flex shrink-0 items-center gap-1 rounded-2xl px-2 py-1 text-[11px] font-black',
                           item.status === 'live' ? 'bg-surface' : 'bg-divider/50',
                           meta.text,
                         )}
@@ -70,7 +70,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                       </span>
                     </div>
                     {item.notes && (
-                      <p className="mt-2 flex items-start gap-1.5 rounded-2xl border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
+                      <p className="mt-2 flex items-start gap-1.5 rounded-2xl border border-primary/20 bg-primary-soft p-2 text-[11px] font-bold leading-relaxed text-main">
                         <FileText size={10} className="mt-0.5 shrink-0 text-primary" />
                         {item.notes}
                       </p>
@@ -79,7 +79,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                 </div>
                 <div className="z-10 flex w-14 shrink-0 flex-col items-center">
                   <span className="text-xs font-black tabular-nums text-main">{item.hour}</span>
-                  <span className="text-[9px] font-bold text-muted">
+                  <span className="text-[10px] font-bold text-muted">
                     {periodLabel(item.period)}
                   </span>
                   <span

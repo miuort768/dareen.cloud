@@ -44,7 +44,7 @@ const ProgressRing = ({ value, tone }: { value: number; tone: string }) => {
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-[10px] font-black tabular-nums text-main">{value}%</span>
+        <span className="text-[11px] font-black tabular-nums text-main">{value}%</span>
       </div>
     </div>
   )
@@ -82,7 +82,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
                   </p>
                 </div>
                 {sub.isFrozen ? (
-                  <span className="inline-flex shrink-0 items-center gap-1 rounded-2xl bg-divider px-2 py-1 text-[9px] font-black text-muted">
+                  <span className="inline-flex shrink-0 items-center gap-1 rounded-2xl bg-divider px-2 py-1 text-[10px] font-black text-muted">
                     <Snowflake size={10} /> مجمّدة
                   </span>
                 ) : (
@@ -92,10 +92,10 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
 
               {!sub.isFrozen && (
                 <div className="bg-divider/40 mt-3 flex items-center justify-between rounded-2xl px-3 py-2">
-                  <span className="text-[10px] font-black text-muted">المنهج</span>
+                  <span className="text-[11px] font-black text-muted">المنهج</span>
                   <span className={cn('text-xs font-black tabular-nums', tone)}>
                     {sub.used}
-                    <span className="text-[10px] font-bold text-muted"> / {sub.total} حصة</span>
+                    <span className="text-[11px] font-bold text-muted"> / {sub.total} حصة</span>
                   </span>
                 </div>
               )}
@@ -105,7 +105,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
                   {sub.weekDays.map((d, i) => (
                     <span
                       key={`${sub.id}-day-${i}`}
-                      className="inline-flex items-center gap-1 rounded-2xl bg-primary-soft px-1.5 py-0.5 text-[9px] font-black text-primary"
+                      className="inline-flex items-center gap-1 rounded-2xl bg-primary-soft px-1.5 py-0.5 text-[10px] font-black text-primary"
                     >
                       <CalendarDays size={8} />
                       {d}
@@ -115,7 +115,7 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
               )}
 
               {sub.notes && (
-                <p className="mt-3 flex items-start gap-1.5 rounded-2xl border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
+                <p className="mt-3 flex items-start gap-1.5 rounded-2xl border border-primary/20 bg-primary-soft p-2 text-[11px] font-bold leading-relaxed text-main">
                   <FileText size={10} className="mt-0.5 shrink-0 text-primary" />
                   {sub.notes}
                 </p>

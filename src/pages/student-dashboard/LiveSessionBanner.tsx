@@ -70,7 +70,7 @@ export const LiveSessionBanner = ({ session }: LiveSessionBannerProps) => {
           <p className="font-mono text-xl font-black tabular-nums leading-none tracking-widest text-error">
             {time}
           </p>
-          <p className="mt-1 text-[9px] font-bold uppercase text-muted">مدة الحصة</p>
+          <p className="mt-1 text-[10px] font-bold uppercase text-muted">مدة الحصة</p>
         </div>
       </div>
     </div>

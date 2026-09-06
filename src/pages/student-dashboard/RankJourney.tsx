@@ -44,7 +44,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           </div>
           <div className="min-w-0 text-end">
             <p className="truncate text-sm font-black text-main">{rank.name}</p>
-            <p className="text-[10px] font-bold text-muted">رتبتك الحالية</p>
+            <p className="text-[11px] font-bold text-muted">رتبتك الحالية</p>
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           value={points}
           className="block text-xl font-black tabular-nums leading-none text-primary"
         />
-        <p className="mt-1 text-[9px] font-bold text-muted">نقطة</p>
+        <p className="mt-1 text-[10px] font-bold text-muted">نقطة</p>
       </div>
 
       {nextRankName ? (
@@ -66,7 +66,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
               transition={{ duration: 0.9, ease: 'easeOut' }}
             />
           </div>
-          <p className="mt-2 flex items-center justify-between text-[10px] font-bold">
+          <p className="mt-2 flex items-center justify-between text-[11px] font-bold">
             <span className="text-muted">
               التالي: <span className="font-black text-main">{nextRankName}</span>
             </span>
@@ -98,7 +98,7 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
                 className={`mx-auto ${unlocked ? 'text-warning dark:text-primary' : 'text-muted'}`}
               />
               <p
-                className={`mt-1 text-[8px] font-black leading-tight ${
+                className={`mt-1 text-[9px] font-black leading-tight ${
                   unlocked ? 'text-warning dark:text-primary' : 'text-muted'
                 }`}
               >

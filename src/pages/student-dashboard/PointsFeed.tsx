@@ -69,13 +69,13 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[11px] font-black text-main">{item.title}</p>
                 {item.meta && (
-                  <p className="flex items-center gap-1 text-[10px] font-bold text-muted">
+                  <p className="flex items-center gap-1 text-[11px] font-bold text-muted">
                     <Clock size={8} />
                     {item.meta}
                   </p>
                 )}
                 {item.detail && (
-                  <p className="mt-1 rounded-2xl border border-primary/20 bg-primary-soft p-1.5 text-[10px] font-bold leading-relaxed text-main">
+                  <p className="mt-1 rounded-2xl border border-primary/20 bg-primary-soft p-1.5 text-[11px] font-bold leading-relaxed text-main">
                     {item.detail}
                   </p>
                 )}
