@@ -18,8 +18,8 @@ export const NotFound = () => {
 
       <main className="relative flex flex-grow items-center justify-center pb-4 pt-4 md:pt-[72px]">
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute right-[-10%] top-[-15%] h-[60%] w-[60%] rounded-full bg-gradient-to-br from-primary/5 to-primary/5 blur-[140px]" />
-          <div className="to-primary/3 absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr from-info-soft blur-[120px]" />
+          <div className="absolute start-[-10%] top-[-15%] h-[60%] w-[60%] rounded-full bg-gradient-to-br from-primary/5 to-primary/5 blur-[140px]" />
+          <div className="to-primary/3 absolute bottom-[-10%] end-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr from-info-soft blur-[120px]" />
           <div
             className="pointer-events-none absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 opacity-[0.02] dark:opacity-[0.03]"
             style={{

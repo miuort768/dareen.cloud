@@ -17,8 +17,8 @@ export const PublicFooter = () => {
     <footer className="relative min-h-[300px] overflow-hidden border-t border-border bg-surface pb-6 pt-4 text-main transition-colors duration-500 dark:border-primary/20 dark:bg-card md:pb-6 md:pt-6">
       {/* Decorative blurs — dark: gold glow */}
       <div className="pointer-events-none absolute inset-0 opacity-10 dark:opacity-[0.04]">
-        <div className="absolute -right-[20%] -top-[50%] h-[80%] w-[80%] rounded-full bg-primary-soft blur-[120px] dark:bg-primary"></div>
-        <div className="absolute -bottom-[50%] -left-[20%] h-[80%] w-[80%] rounded-full bg-primary-soft blur-[120px] dark:bg-primary"></div>
+        <div className="absolute -start-[20%] -top-[50%] h-[80%] w-[80%] rounded-full bg-primary-soft blur-[120px] dark:bg-primary"></div>
+        <div className="absolute -bottom-[50%] -end-[20%] h-[80%] w-[80%] rounded-full bg-primary-soft blur-[120px] dark:bg-primary"></div>
         <div className="absolute end-10 top-10 h-20 w-20 rotate-45 border border-divider dark:border-primary/10"></div>
         <div className="absolute bottom-20 start-10 h-32 w-32 -rotate-12 border border-divider dark:border-primary/10"></div>
       </div>

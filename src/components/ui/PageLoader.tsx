@@ -4,8 +4,8 @@ import { Image } from '../../shared/components/ui'
 export const PageLoader = () => {
   return (
     <div className="fixed inset-0 z-[9999] flex flex-col overflow-hidden bg-surface dark:bg-background">
-      <div className="absolute right-[-10%] top-[-10%] h-[50%] w-[50%] animate-pulse rounded-full bg-primary/10 blur-[120px] dark:bg-primary/20" />
-      <div className="absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] animate-pulse rounded-full bg-primary/10 blur-[120px] dark:bg-primary/20" />
+      <div className="absolute start-[-10%] top-[-10%] h-[50%] w-[50%] animate-pulse rounded-full bg-primary/10 blur-[120px] dark:bg-primary/20" />
+      <div className="absolute bottom-[-10%] end-[-10%] h-[50%] w-[50%] animate-pulse rounded-full bg-primary/10 blur-[120px] dark:bg-primary/20" />
 
       {/* Center - Logo */}
       <div className="flex flex-1 items-center justify-center">

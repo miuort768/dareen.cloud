@@ -13,8 +13,8 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
       className="relative scroll-mt-32 overflow-hidden bg-surface py-4 transition-colors duration-500 dark:bg-background"
     >
       <div className="absolute inset-0 z-0">
-        <div className="absolute right-[-10%] top-0 h-[500px] w-[500px] animate-pulse rounded-full bg-primary/[0.05] blur-[100px] dark:bg-primary/[0.08]"></div>
-        <div className="bg-success/[0.03] absolute bottom-0 left-[-10%] h-[500px] w-[500px] rounded-full blur-[100px] dark:bg-primary/[0.05]"></div>
+        <div className="absolute start-[-10%] top-0 h-[500px] w-[500px] animate-pulse rounded-full bg-primary/[0.05] blur-[100px] dark:bg-primary/[0.08]"></div>
+        <div className="bg-success/[0.03] absolute bottom-0 end-[-10%] h-[500px] w-[500px] rounded-full blur-[100px] dark:bg-primary/[0.05]"></div>
       </div>
 
       <div className="container relative z-10 mx-auto px-4">
@@ -31,7 +31,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
         <div className="relative mx-auto max-w-4xl pt-4">
           <div className="pointer-events-none absolute inset-0 hidden overflow-visible md:block">
             <svg
-              className="absolute left-[25%] top-[30px] h-[60px] w-[25%]"
+              className="absolute end-[25%] top-[30px] h-[60px] w-[25%]"
               viewBox="0 0 200 60"
               fill="none"
             >
@@ -50,7 +50,7 @@ export const HowItWorks = ({ whatsappNumber }: HowItWorksProps) => {
               />
             </svg>
             <svg
-              className="absolute right-[25%] top-[30px] h-[60px] w-[25%]"
+              className="absolute start-[25%] top-[30px] h-[60px] w-[25%]"
               viewBox="0 0 200 60"
               fill="none"
             >

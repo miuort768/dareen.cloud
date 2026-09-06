@@ -428,8 +428,8 @@ export const Blog = () => {
           className="relative hidden overflow-hidden bg-surface pb-0 pt-24 md:block md:pt-32"
         >
           <div className="pointer-events-none absolute inset-0 z-0">
-            <div className="absolute right-[-10%] top-[-15%] h-[60%] w-[60%] rounded-full bg-gradient-to-br from-primary/5 to-transparent blur-[140px]" />
-            <div className="absolute bottom-[-10%] left-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr from-info-soft to-transparent blur-[120px]" />
+            <div className="absolute start-[-10%] top-[-15%] h-[60%] w-[60%] rounded-full bg-gradient-to-br from-primary/5 to-transparent blur-[140px]" />
+            <div className="absolute bottom-[-10%] end-[-10%] h-[50%] w-[50%] rounded-full bg-gradient-to-tr from-info-soft to-transparent blur-[120px]" />
           </div>
           {view === 'types' ? (
             <DesktopLibraryLanding

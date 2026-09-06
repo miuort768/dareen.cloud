@@ -298,10 +298,7 @@ const CurrentTimeLine = () => {
     hour12: true,
   })
   return (
-    <div
-      className="pointer-events-none absolute left-0 right-0 z-20"
-      style={{ top: `${pct * 100}%` }}
-    >
+    <div className="pointer-events-none absolute inset-x-0 z-20" style={{ top: `${pct * 100}%` }}>
       <div className="flex items-center gap-1.5">
         <div className="h-2 w-2 shrink-0 rounded-full bg-error" />
         <div className="h-px flex-1 bg-error" />

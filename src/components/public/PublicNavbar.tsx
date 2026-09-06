@@ -70,7 +70,7 @@ export const PublicNavbar = () => {
               </div>
               <Sparkles
                 size={12}
-                className="absolute -right-[2px] -top-[2px] z-20 animate-pulse fill-warning text-warning transition-transform group-hover:scale-110"
+                className="absolute -start-[2px] -top-[2px] z-20 animate-pulse fill-warning text-warning transition-transform group-hover:scale-110"
               />
             </div>
             <div
