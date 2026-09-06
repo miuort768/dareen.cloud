@@ -125,7 +125,7 @@ export const ToastContainer = ({
   onClose: (id: string) => void
 }) => {
   return (
-    <div className="pointer-events-none fixed bottom-4 left-4 z-[900] flex flex-col items-start gap-3 md:bottom-6 md:left-6">
+    <div className="pointer-events-none fixed bottom-4 start-4 z-[900] flex flex-col items-start gap-3 md:bottom-6 md:start-6">
       <div className="pointer-events-auto flex w-full max-w-[380px] flex-col gap-2.5">
         {toasts.map((toast) => (
           <Toast key={toast.id} {...toast} onClose={onClose} />

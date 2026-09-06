@@ -948,7 +948,7 @@ export const TrialSessions = () => {
             resetForm()
             setShowModal(true)
           }}
-          className="fixed bottom-8 left-8 z-40 hidden h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-hover active:scale-95 md:flex"
+          className="fixed bottom-8 end-8 z-40 hidden h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-lg shadow-primary/20 transition-all duration-200 hover:bg-primary-hover active:scale-95 md:flex"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.9 }}
           aria-label="إضافة حصة جديدة"

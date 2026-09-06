@@ -493,8 +493,8 @@ export const AdminJobs = () => {
                     className={cn(
                       'overflow-hidden rounded-2xl border border-border bg-card transition-shadow duration-normal hover:shadow-elevation-1',
                       app.contacted
-                        ? 'border-r-4 border-r-success'
-                        : 'border-r-4 border-r-primary/40',
+                        ? 'border-s-4 border-s-success'
+                        : 'border-s-4 border-s-primary/40',
                     )}
                   >
                     <div className="p-4 sm:p-5">
