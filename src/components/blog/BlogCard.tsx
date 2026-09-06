@@ -125,7 +125,7 @@ export const FoundationCard = ({
                     (foundationBtnState.postId !== post.id ||
                       foundationBtnState.type !== 'download')
                   }
-                  className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-warning py-2.5 text-[11px] font-extrabold text-on-warning transition-all duration-200 hover:bg-warning-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-warning py-2.5 text-[11px] font-extrabold text-on-warning outline-none transition-all duration-200 hover:bg-warning-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Download size={13} />
                   <span>
@@ -149,7 +149,7 @@ export const FoundationCard = ({
                     foundationBtnState !== null &&
                     (foundationBtnState.postId !== post.id || foundationBtnState.type !== 'watch')
                   }
-                  className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary py-2.5 text-[11px] font-extrabold text-on-primary transition-all duration-200 hover:bg-primary-hover active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+                  className="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary py-2.5 text-[11px] font-extrabold text-on-primary outline-none transition-all duration-200 hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Eye size={13} />
                   <span>

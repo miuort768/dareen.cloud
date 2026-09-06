@@ -77,7 +77,7 @@ export const SelectionGrid = ({
                 type="button"
                 key={cls}
                 onClick={() => onSelectGrade(cls)}
-                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-primary/15 bg-primary-soft p-4 text-main transition-all duration-200 hover:border-primary/30 hover:shadow-elevation-1 active:scale-[0.97]"
+                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-primary/15 bg-primary-soft p-4 text-main outline-none transition-all duration-200 hover:border-primary/30 hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
                   <GraduationCap size={18} className="text-primary" />
@@ -93,7 +93,7 @@ export const SelectionGrid = ({
               <button
                 type="button"
                 onClick={() => onSelectTerm('1')}
-                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-success-soft bg-success-soft p-4 text-main transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 active:scale-[0.97]"
+                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-success-soft bg-success-soft p-4 text-main outline-none transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft">
                   <BookOpen size={18} className="text-success" />
@@ -103,7 +103,7 @@ export const SelectionGrid = ({
               <button
                 type="button"
                 onClick={() => onSelectTerm('2')}
-                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-success-soft bg-success-soft p-4 text-main transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 active:scale-[0.97]"
+                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-success-soft bg-success-soft p-4 text-main outline-none transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-success-soft">
                   <BookOpen size={18} className="text-success" />
@@ -122,7 +122,7 @@ export const SelectionGrid = ({
                   onSelectSubject(subj.id)
                   window.scrollTo(0, 0)
                 }}
-                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-info-soft bg-info-soft p-4 text-main transition-all duration-200 hover:border-info-soft hover:shadow-elevation-1 active:scale-[0.97]"
+                className="flex cursor-pointer flex-col items-center justify-center gap-2.5 rounded-2xl border border-info-soft bg-info-soft p-4 text-main outline-none transition-all duration-200 hover:border-info-soft hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-info-soft">
                   <BookOpen size={18} className="text-info" />
@@ -134,7 +134,7 @@ export const SelectionGrid = ({
           <button
             type="button"
             onClick={goBack}
-            className="flex cursor-pointer flex-row items-center justify-center gap-2 rounded-2xl border border-border bg-surface p-3 text-muted transition-all duration-200 hover:border-primary/20 hover:text-main active:scale-[0.97]"
+            className="flex cursor-pointer flex-row items-center justify-center gap-2 rounded-2xl border border-border bg-surface p-3 text-muted outline-none transition-all duration-200 hover:border-primary/20 hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             <ArrowLeft size={14} />
             <span className="text-xs font-extrabold">العودة</span>
@@ -171,7 +171,7 @@ export const SelectionGrid = ({
                   type="button"
                   key={cls}
                   onClick={() => onSelectGrade(cls)}
-                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-primary/15 bg-primary-soft px-3 py-6 text-main transition-all duration-200 hover:border-primary/30 hover:shadow-elevation-1 active:scale-[0.97]"
+                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-primary/15 bg-primary-soft px-3 py-6 text-main outline-none transition-all duration-200 hover:border-primary/30 hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
                     <GraduationCap size={22} className="text-primary" />
@@ -187,7 +187,7 @@ export const SelectionGrid = ({
                 <button
                   type="button"
                   onClick={() => onSelectTerm('1')}
-                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-success-soft bg-success-soft px-3 py-6 text-main transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 active:scale-[0.97]"
+                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-success-soft bg-success-soft px-3 py-6 text-main outline-none transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-success-soft">
                     <BookOpen size={22} className="text-success" />
@@ -197,7 +197,7 @@ export const SelectionGrid = ({
                 <button
                   type="button"
                   onClick={() => onSelectTerm('2')}
-                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-success-soft bg-success-soft px-3 py-6 text-main transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 active:scale-[0.97]"
+                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-success-soft bg-success-soft px-3 py-6 text-main outline-none transition-all duration-200 hover:border-success-soft hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-success-soft">
                     <BookOpen size={22} className="text-success" />
@@ -216,7 +216,7 @@ export const SelectionGrid = ({
                     onSelectSubject(subj.id)
                     window.scrollTo(0, 0)
                   }}
-                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-info-soft bg-info-soft px-3 py-6 text-main transition-all duration-200 hover:border-info-soft hover:shadow-elevation-1 active:scale-[0.97]"
+                  className="flex w-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-info-soft bg-info-soft px-3 py-6 text-main outline-none transition-all duration-200 hover:border-info-soft hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
                 >
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-info-soft">
                     <BookOpen size={22} className="text-info" />
@@ -228,7 +228,7 @@ export const SelectionGrid = ({
             <button
               type="button"
               onClick={goBack}
-              className="flex w-full cursor-pointer flex-row items-center justify-center gap-3 rounded-2xl border border-border bg-surface px-3 py-5 text-muted transition-all duration-200 hover:border-primary/20 hover:text-main active:scale-[0.97]"
+              className="flex w-full cursor-pointer flex-row items-center justify-center gap-3 rounded-2xl border border-border bg-surface px-3 py-5 text-muted outline-none transition-all duration-200 hover:border-primary/20 hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
             >
               <ArrowLeft size={16} />
               <span className="text-sm font-extrabold">العودة</span>

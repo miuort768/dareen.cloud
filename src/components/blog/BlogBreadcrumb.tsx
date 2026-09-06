@@ -32,7 +32,7 @@ export const BlogBreadcrumb = ({
           <button
             type="button"
             onClick={onBack}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-4 py-2 text-xs font-extrabold text-main transition-all duration-200 hover:border-primary/40 hover:text-primary"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-4 py-2 text-xs font-extrabold text-main outline-none transition-all duration-200 hover:border-primary/40 hover:text-primary focus-visible:ring-2 focus-visible:ring-focus"
           >
             <ArrowLeft size={14} />
             <span>تغيير المادة</span>
@@ -41,7 +41,7 @@ export const BlogBreadcrumb = ({
         <button
           type="button"
           onClick={onHome}
-          className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-extrabold text-on-primary transition-all duration-200 hover:bg-primary-hover sm:w-auto sm:justify-start"
+          className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary px-4 py-2 text-xs font-extrabold text-on-primary outline-none transition-all duration-200 hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus sm:w-auto sm:justify-start"
         >
           <Library size={14} />
           <span>الرئيسية</span>
