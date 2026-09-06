@@ -158,7 +158,7 @@ export const MobileQuickAccess = ({
                         aria-label={navItem.name}
                         className={({ isActive }) =>
                           cn(
-                            'group flex touch-manipulation flex-col items-center gap-1 rounded-2xl border p-1.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.95]',
+                            'group flex touch-manipulation flex-col items-center gap-1 rounded-2xl border p-1.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                             isActive
                               ? 'border-primary/40 bg-primary-soft dark:bg-primary/15'
                               : 'border-border bg-surface hover:bg-hover dark:bg-card',

@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useChatStore } from '../../../store/chatStore'
 import { useChatUIStore } from '../../../store/chatUIStore'
 import type { Conversation, ChatMessage } from '../../../types/chat.types'
@@ -60,7 +60,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   return (
     <div className="relative flex h-full flex-1 flex-col overflow-hidden bg-background dark:bg-card">
       <div
-        className="absolute inset-0 z-0 opacity-[0.5] dark:opacity-[0.08]"
+        className="absolute inset-0 z-0 opacity-50 dark:opacity-[0.08]"
         style={{
           backgroundImage: 'radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0)',
           backgroundRepeat: 'repeat',

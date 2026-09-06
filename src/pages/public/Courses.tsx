@@ -222,7 +222,7 @@ export const Courses = () => {
                       src={course.image}
                       alt={course.title}
                       className="h-full w-full"
-                      imgClassName="object-contain scale-[1.15] group-hover:scale-[1.25] transition-transform duration-700 ease-out"
+                      imgClassName="object-contain scale-[1.15] group-hover:scale-125 transition-transform duration-700 ease-out"
                     />
 
                     <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-card to-transparent dark:from-card" />
