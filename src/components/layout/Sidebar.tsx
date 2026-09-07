@@ -25,7 +25,6 @@ import {
   Mail,
   BookUser,
   ShieldCheck,
-  Activity,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Image } from '../../shared/components/ui'
@@ -153,7 +152,6 @@ export const Sidebar = memo(
       },
       { name: 'المهام والطلبات', href: '/tasks', id: 'tasks', icon: ListTodo },
       { name: 'الأدوار والصلاحيات', href: '/roles', id: 'roles', icon: ShieldCheck },
-      { name: 'المراقبة', href: '/monitoring', id: 'monitoring', icon: Activity },
       { name: 'رسائل الاتصال', href: '/admin-contacts', id: 'admin_contacts', icon: Mail },
       { name: 'طلبات التوظيف', href: '/admin-jobs', id: 'admin_jobs', icon: Briefcase },
     ]
@@ -163,7 +161,6 @@ export const Sidebar = memo(
       // Admin-only pages — must match ProtectedRoute permission="admin"
       if (
         item.id === 'roles' ||
-        item.id === 'monitoring' ||
         item.id === 'advertisers' ||
         item.id === 'admin-blog' ||
         item.id === 'admin-blog-customers'
@@ -282,7 +279,7 @@ export const Sidebar = memo(
             'admin_jobs',
           ),
         },
-        { label: 'النظام', items: pick('roles', 'monitoring', 'settings') },
+        { label: 'النظام', items: pick('roles', 'settings') },
       ].filter((section) => section.items.length > 0)
     }, [filteredNavigation])
 

@@ -100,9 +100,6 @@ const AdminBlog = lazy(() => import('./pages/AdminBlog').then((m) => ({ default:
 const RolesPage = lazy(() =>
   import('./features/roles/pages/RolesPage').then((m) => ({ default: m.RolesPage })),
 )
-const MonitoringPage = lazy(() =>
-  import('./features/monitoring/pages/MonitoringPage').then((m) => ({ default: m.MonitoringPage })),
-)
 import ScrollToTop from './components/ScrollToTop'
 const MaintenanceScreen = lazy(() =>
   import('./components/MaintenanceScreen').then((m) => ({ default: m.MaintenanceScreen })),
@@ -618,14 +615,6 @@ function App() {
                   element={
                     <ProtectedRoute permission="admin">
                       <RolesPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="monitoring"
-                  element={
-                    <ProtectedRoute permission="admin">
-                      <MonitoringPage />
                     </ProtectedRoute>
                   }
                 />

@@ -71,7 +71,6 @@ const SEARCH_ROUTES: [string, string][] = [
   ['أولياء', '/parents'],
   ['الأدوار', '/roles'],
   ['الصلاحيات', '/roles'],
-  ['المراقبة', '/monitoring'],
 ]
 
 export const Header = memo(() => {

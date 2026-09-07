@@ -127,22 +127,6 @@ export const settingsService = {
     return api.delete<{ success: boolean }>(`/system/whatsapp-templates/${id}`)
   },
 
-  // Monitoring
-  async getMonitoring() {
-    return api.get<{
-      total: number
-      errors: number
-      slow: { method: string; path: string; duration: number }[]
-      uptime: number
-      memory: { rss: number; heapUsed: number; heapTotal: number }
-      database: string
-      counts: { users: number; sessions: number; backups: number }
-      timestamp: string
-      byMethod: Record<string, number>
-      byPath: Record<string, number>
-    }>('/system/monitoring')
-  },
-
   // Backup
   async createBackup() {
     return api.post<{ id: number; type: string; status: string; size: number; createdAt: string }>(
