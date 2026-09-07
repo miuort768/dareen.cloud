@@ -109,22 +109,40 @@ export const AdminTeacherGroupList = ({
               <table className="w-full text-xs">
                 <thead>
                   <tr className="border-b border-border bg-surface">
-                    <th className="px-4 py-2.5 text-start text-[10px] font-bold text-muted">
+                    <th
+                      scope="col"
+                      className="px-4 py-2.5 text-start text-[10px] font-bold text-muted"
+                    >
                       الطالب
                     </th>
-                    <th className="px-4 py-2.5 text-start text-[10px] font-bold text-muted">
+                    <th
+                      scope="col"
+                      className="px-4 py-2.5 text-start text-[10px] font-bold text-muted"
+                    >
                       المادة
                     </th>
-                    <th className="px-4 py-2.5 text-center text-[10px] font-bold text-muted">
+                    <th
+                      scope="col"
+                      className="px-4 py-2.5 text-center text-[10px] font-bold text-muted"
+                    >
                       الحصص
                     </th>
-                    <th className="px-4 py-2.5 text-center text-[10px] font-bold text-muted">
+                    <th
+                      scope="col"
+                      className="px-4 py-2.5 text-center text-[10px] font-bold text-muted"
+                    >
                       النسبة
                     </th>
-                    <th className="px-4 py-2.5 text-center text-[10px] font-bold text-muted">
+                    <th
+                      scope="col"
+                      className="px-4 py-2.5 text-center text-[10px] font-bold text-muted"
+                    >
                       التغطية
                     </th>
-                    <th className="px-4 py-2.5 text-center text-[10px] font-bold text-muted">
+                    <th
+                      scope="col"
+                      className="px-4 py-2.5 text-center text-[10px] font-bold text-muted"
+                    >
                       سجل
                     </th>
                   </tr>

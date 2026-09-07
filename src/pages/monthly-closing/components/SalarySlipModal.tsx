@@ -99,9 +99,15 @@ export const SalarySlipModal = ({
               <table className="w-full text-start text-xs">
                 <thead className="bg-surface">
                   <tr>
-                    <th className="p-2.5 font-bold text-muted">التاريخ</th>
-                    <th className="p-2.5 font-bold text-muted">الطالب</th>
-                    <th className="p-2.5 text-center font-bold text-muted">القيمة</th>
+                    <th scope="col" className="p-2.5 font-bold text-muted">
+                      التاريخ
+                    </th>
+                    <th scope="col" className="p-2.5 font-bold text-muted">
+                      الطالب
+                    </th>
+                    <th scope="col" className="p-2.5 text-center font-bold text-muted">
+                      القيمة
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">

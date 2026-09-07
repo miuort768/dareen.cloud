@@ -130,16 +130,29 @@ function TableInner<T>({
         {columns.map((col) => (
           <th
             key={col.key}
+            scope="col"
             className={cn(
               'select-none px-5 py-3 text-start text-xs font-bold',
               col.align === 'center' && 'text-center',
               col.align === 'right' && 'text-end',
               thClass,
               col.hideOnMobile && 'hidden lg:table-cell',
-              col.sortable && 'cursor-pointer transition-colors hover:text-main',
+              col.sortable &&
+                'cursor-pointer outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus',
               col.headerClassName,
             )}
             onClick={() => col.sortable && handleSort(col.key)}
+            onKeyDown={
+              col.sortable
+                ? (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      handleSort(col.key)
+                    }
+                  }
+                : undefined
+            }
+            tabIndex={col.sortable ? 0 : undefined}
             aria-sort={
               col.sortable && activeSortKey === col.key
                 ? activeSortDir === 'asc'

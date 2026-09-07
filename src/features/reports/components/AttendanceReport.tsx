@@ -267,20 +267,40 @@ export const AttendanceReport = React.memo(
             <table className="w-full text-start">
               <thead>
                 <tr className="bg-chart-4 text-on-primary">
-                  <th className="px-5 py-3 text-micro font-bold text-on-primary opacity-70">#</th>
-                  <th className="px-5 py-3 text-start text-micro font-bold text-on-primary opacity-70">
+                  <th
+                    scope="col"
+                    className="px-5 py-3 text-micro font-bold text-on-primary opacity-70"
+                  >
+                    #
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-3 text-start text-micro font-bold text-on-primary opacity-70"
+                  >
                     اسم المعلمة
                   </th>
-                  <th className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70">
+                  <th
+                    scope="col"
+                    className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                  >
                     المتوقعة
                   </th>
-                  <th className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70">
+                  <th
+                    scope="col"
+                    className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                  >
                     مكتملة
                   </th>
-                  <th className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70">
+                  <th
+                    scope="col"
+                    className="px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                  >
                     ملغية
                   </th>
-                  <th className="w-44 px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70">
+                  <th
+                    scope="col"
+                    className="w-44 px-5 py-3 text-center text-micro font-bold text-on-primary opacity-70"
+                  >
                     معدل الحضور
                   </th>
                 </tr>

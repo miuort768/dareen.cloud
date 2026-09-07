@@ -28,9 +28,15 @@ export const AuditLogSection = ({ auditLogs, fetchLogs }: AuditLogSectionProps) 
       <table className="w-full text-start text-sm">
         <thead>
           <tr className="bg-background">
-            <th className="px-4 py-3 text-[11px] font-bold text-muted">التوقيت</th>
-            <th className="px-4 py-3 text-[11px] font-bold text-muted">المسؤول</th>
-            <th className="px-4 py-3 text-[11px] font-bold text-muted">الإجراء</th>
+            <th scope="col" className="px-4 py-3 text-[11px] font-bold text-muted">
+              التوقيت
+            </th>
+            <th scope="col" className="px-4 py-3 text-[11px] font-bold text-muted">
+              المسؤول
+            </th>
+            <th scope="col" className="px-4 py-3 text-[11px] font-bold text-muted">
+              الإجراء
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-divider">

@@ -144,11 +144,19 @@ export const InvoicePreviewModal = ({ isOpen, onClose, invoice }: InvoicePreview
             <table className="w-full table-fixed border-collapse">
               <thead>
                 <tr className="border-b-2 border-border">
-                  <th className="w-1/4 py-2 text-start text-micro font-medium">التاريخ</th>
-                  <th className="w-1/4 py-2 text-start text-micro font-medium">المعلمة</th>
-                  <th className="w-1/4 py-2 text-start text-micro font-medium">المادة</th>
+                  <th scope="col" className="w-1/4 py-2 text-start text-micro font-medium">
+                    التاريخ
+                  </th>
+                  <th scope="col" className="w-1/4 py-2 text-start text-micro font-medium">
+                    المعلمة
+                  </th>
+                  <th scope="col" className="w-1/4 py-2 text-start text-micro font-medium">
+                    المادة
+                  </th>
                   {!hidePricing && (
-                    <th className="w-1/4 py-2 text-end text-micro font-medium">الحساب</th>
+                    <th scope="col" className="w-1/4 py-2 text-end text-micro font-medium">
+                      الحساب
+                    </th>
                   )}
                 </tr>
               </thead>

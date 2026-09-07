@@ -146,11 +146,21 @@ export const CurrenciesSection = ({
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-divider bg-background">
-                  <th className="px-4 py-3 text-start font-bold text-muted">الرمز</th>
-                  <th className="px-4 py-3 text-start font-bold text-muted">الاسم</th>
-                  <th className="px-4 py-3 text-start font-bold text-muted">العلامة</th>
-                  <th className="px-4 py-3 text-start font-bold text-muted">الحالة</th>
-                  <th className="px-4 py-3 text-end font-bold text-muted">الافتراضية</th>
+                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                    الرمز
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                    الاسم
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                    العلامة
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                    الحالة
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-end font-bold text-muted">
+                    الافتراضية
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -301,12 +311,22 @@ export const CurrenciesSection = ({
             <table className="w-full text-xs">
               <thead>
                 <tr className="border-b border-divider bg-background">
-                  <th className="px-4 py-3 text-start font-bold text-muted">من</th>
-                  <th className="px-4 py-3 text-start font-bold text-muted">إلى</th>
-                  <th className="px-4 py-3 text-start font-bold text-muted">الشراء</th>
-                  <th className="px-4 py-3 text-start font-bold text-muted">البيع</th>
-                  <th className="px-4 py-3 text-start font-bold text-muted">التاريخ</th>
-                  <th className="px-4 py-3 text-end font-bold text-muted"></th>
+                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                    من
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                    إلى
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                    الشراء
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                    البيع
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-start font-bold text-muted">
+                    التاريخ
+                  </th>
+                  <th scope="col" className="px-4 py-3 text-end font-bold text-muted"></th>
                 </tr>
               </thead>
               <tbody>
