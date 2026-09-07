@@ -45,18 +45,6 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
   const [step, setStep] = React.useState<'select' | 'info'>('select')
 
-  const { containerRef: newChatRef, handleKeyDown: newChatKeyDown } = useDialogFocus(
-    showNewChatModal,
-    handleClose,
-  )
-  const { containerRef: deleteRef, handleKeyDown: deleteKeyDown } = useDialogFocus(
-    showDeleteConfirm,
-    React.useCallback(() => {
-      setShowDeleteConfirm(false)
-      setItemToDelete(null)
-    }, [setShowDeleteConfirm, setItemToDelete]),
-  )
-
   const selectedUsersObjects = availableUsers.filter((u) => selectedUsers.includes(u.id))
 
   const handleNextStep = () => {
@@ -74,6 +62,18 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
     setSelectedUsers([])
     setGroupName('')
   }
+
+  const { containerRef: newChatRef, handleKeyDown: newChatKeyDown } = useDialogFocus(
+    showNewChatModal,
+    handleClose,
+  )
+  const { containerRef: deleteRef, handleKeyDown: deleteKeyDown } = useDialogFocus(
+    showDeleteConfirm,
+    React.useCallback(() => {
+      setShowDeleteConfirm(false)
+      setItemToDelete(null)
+    }, [setShowDeleteConfirm, setItemToDelete]),
+  )
 
   return (
     <>
