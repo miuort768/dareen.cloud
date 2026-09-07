@@ -134,7 +134,8 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
 
             <button
               onClick={handleMore}
-              aria-label="القائمة — الوصول السريع لكل الصفحات"
+              aria-label="المزيد — تصفح جميع أقسام المنصة"
+              aria-haspopup="menu"
               className="relative flex min-w-0 flex-1 items-center justify-center rounded-full text-muted outline-none transition-colors duration-slow hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
             >
               <span className="relative z-10 flex items-center gap-1 px-1">
