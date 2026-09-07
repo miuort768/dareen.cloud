@@ -1,5 +1,5 @@
 import { BookOpen, MessageCircle, Send, CheckCircle, Languages, ArrowLeft } from 'lucide-react'
-import { directTypes, languages } from './LibraryConfig'
+import { curriculums, directTypes, languages } from './LibraryConfig'
 import type { ViewType, GridItem } from './LibraryConfig'
 import { useAcademyName } from '../../context/AppContext'
 import { useSettingsStore } from '../../store/settingsStore'
@@ -245,13 +245,32 @@ export const MobileHero = ({
               </>
             )}
           </h2>
-          <p className="max-w-sm text-[11px] font-bold leading-relaxed text-white/70">
+          <p className="max-w-sm text-[11px] font-bold leading-relaxed text-white/80">
             {view === 'curriculums'
               ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
               : view === 'languages'
                 ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
                 : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`}
           </p>
+          {view === 'curriculums' && (
+            <div
+              aria-hidden="true"
+              className="mt-4 flex items-center gap-1.5 border-t border-white/10 pt-3.5"
+            >
+              {curriculums.map((c) => (
+                <span
+                  key={c.id}
+                  title={c.name}
+                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white/80"
+                >
+                  <c.icon size={14} />
+                </span>
+              ))}
+              <span className="bg-accent/20 ms-auto rounded-full px-2.5 py-0.5 text-[10px] font-black text-accent">
+                ٦ مناهج
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -526,60 +545,96 @@ export const DesktopHero = ({
   return (
     <div className="mx-auto w-full">
       {/* Banner */}
-      <section className="relative overflow-hidden rounded-2xl border border-divider bg-gradient-to-br from-primary-deep via-primary to-primary-deep px-8 py-9 shadow-elevation-2 lg:rounded-none lg:px-10 lg:py-10">
-        <div
-          className="pointer-events-none absolute -end-24 -top-28 h-72 w-72 rounded-full border border-white/10"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -end-8 -top-12 h-40 w-40 rounded-full border border-white/5"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -bottom-20 -start-16 h-52 w-52 rounded-full bg-white/5"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-transparent to-white/5"
-          aria-hidden="true"
-        />
-        <BookOpen
-          aria-hidden="true"
-          className="pointer-events-none absolute -bottom-10 -end-8 h-48 w-48 rotate-12 text-white/5"
-        />
+      <section className="relative overflow-hidden rounded-2xl border border-divider bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-2 lg:rounded-none">
+        {/* Decorative field: rings + hairline grid + glow */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute -end-24 -top-28 h-72 w-72 rounded-full border border-white/10" />
+          <div className="absolute -end-8 -top-12 h-40 w-40 rounded-full border border-white/5" />
+          <div className="absolute -bottom-20 -start-16 h-52 w-52 rounded-full bg-white/5" />
+          <div className="absolute inset-0 opacity-[0.04]">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+                backgroundSize: '60px 60px',
+              }}
+            />
+          </div>
+        </div>
+        {view !== 'curriculums' && (
+          <BookOpen
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-10 -end-8 h-48 w-48 rotate-12 text-white/5"
+          />
+        )}
 
-        <div className="relative">
-          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-extrabold text-on-primary backdrop-blur-sm">
-            <BookOpen size={12} />
-            {view === 'curriculums'
-              ? `تحميل ${currentTypeName}`
-              : view === 'languages'
-                ? 'تعلم اللغة'
-                : currentCurriculumName}
-          </span>
+        <div className="relative grid gap-6 px-8 py-9 lg:grid-cols-[1fr_320px] lg:items-center lg:gap-10 lg:px-10 lg:py-10">
+          {/* Copy */}
+          <div>
+            <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-extrabold text-on-primary backdrop-blur-sm">
+              <BookOpen size={12} />
+              {view === 'curriculums'
+                ? `تحميل ${currentTypeName}`
+                : view === 'languages'
+                  ? 'تعلم اللغة'
+                  : currentCurriculumName}
+            </span>
 
-          <h1 className="mb-2.5 font-heading text-3xl font-black leading-tight text-on-primary md:text-4xl">
-            {view === 'curriculums' ? (
-              <>
-                اختر <span className="text-accent">المنهج</span>
-              </>
-            ) : view === 'languages' ? (
-              <>
-                اختر <span className="text-accent">اللغة</span>
-              </>
-            ) : (
-              <>
-                اختر <span className="text-accent">المرحلة</span>
-              </>
-            )}
-          </h1>
-          <p className="max-w-xl text-sm font-bold leading-relaxed text-white/70 lg:text-base">
-            {view === 'curriculums'
-              ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-              : view === 'languages'
-                ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
-                : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-          </p>
+            <h1 className="mb-2.5 font-heading text-4xl font-black leading-tight text-on-primary md:text-5xl">
+              {view === 'curriculums' ? (
+                <>
+                  اختر <span className="text-accent">المنهج</span>
+                </>
+              ) : view === 'languages' ? (
+                <>
+                  اختر <span className="text-accent">اللغة</span>
+                </>
+              ) : (
+                <>
+                  اختر <span className="text-accent">المرحلة</span>
+                </>
+              )}
+            </h1>
+            <p className="max-w-xl text-sm font-bold leading-relaxed text-white/80 lg:text-base">
+              {view === 'curriculums'
+                ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+                : view === 'languages'
+                  ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
+                  : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
+            </p>
+          </div>
+
+          {/* Curriculum cluster — visual proof of "٦ مناهج خليجية" (decorative) */}
+          {view === 'curriculums' && (
+            <div aria-hidden="true" className="pointer-events-none relative hidden lg:block">
+              <div className="absolute end-[-8%] top-1/2 h-56 w-56 -translate-y-1/2 rounded-full bg-accent-soft blur-[70px]" />
+              <div className="absolute -start-6 top-1/2 h-64 w-64 -translate-y-1/2 animate-[spin_32s_linear_infinite] rounded-full border border-dashed border-white/[0.08]" />
+
+              <div className="relative rounded-3xl border border-white/10 bg-white/10 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.28)] backdrop-blur-md">
+                <div className="mb-3 flex items-center justify-between border-b border-white/10 pb-3">
+                  <span className="text-[11px] font-extrabold text-white/90">المناهج المتوفرة</span>
+                  <span className="bg-accent/20 rounded-full px-2.5 py-0.5 text-[10px] font-black text-accent">
+                    ٦ مناهج
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {curriculums.map((c, i) => (
+                    <div
+                      key={c.id}
+                      className="flex animate-float items-center gap-2 rounded-xl bg-white/5 px-2.5 py-2"
+                      style={{ animationDelay: `${i * 0.35}s` }}
+                    >
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10">
+                        <c.icon size={13} className="text-white/80" />
+                      </span>
+                      <span className="truncate text-[11px] font-bold text-white/85">{c.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
