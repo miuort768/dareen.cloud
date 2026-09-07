@@ -82,11 +82,11 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
           {post.category}
         </span>
         <div className="flex items-center gap-4 text-xs font-medium text-muted">
-          <div className="flex items-center gap-1.5">
+          <div className="hidden items-center gap-1.5 sm:flex">
             <Calendar size={14} /> <span>{post.date}</span>
           </div>
           {post.readingTime ? (
-            <div className="flex items-center gap-1.5">
+            <div className="hidden items-center gap-1.5 sm:flex">
               <Clock size={14} /> <span>{post.readingTime} دقيقة قراءة</span>
             </div>
           ) : null}
@@ -140,7 +140,7 @@ export const BlogPostHeader = ({ post }: BlogPostHeaderProps) => (
       </div>
       <Link
         to="/books"
-        className="order-1 inline-flex w-full items-center justify-center gap-2 rounded-card bg-hover px-4 py-3 text-sm font-bold text-main transition-all hover:bg-primary hover:text-on-primary md:order-2 md:w-auto md:justify-start"
+        className="order-1 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-card bg-primary px-5 py-2.5 text-xs font-black text-on-primary shadow-elevation-1 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] sm:text-sm md:order-2 md:w-auto md:justify-start md:px-6 md:py-3"
       >
         <ArrowRight size={16} />
         <span>العودة لجميع المقالات</span>

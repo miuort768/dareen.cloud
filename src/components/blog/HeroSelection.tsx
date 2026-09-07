@@ -255,20 +255,31 @@ export const MobileHero = ({
           {view === 'curriculums' && (
             <div
               aria-hidden="true"
-              className="mt-4 flex items-center gap-1.5 border-t border-white/10 pt-3.5"
+              className="mt-4 flex flex-wrap items-center gap-1.5 border-t border-white/10 pt-3.5"
             >
               {curriculums.map((c) => (
                 <span
                   key={c.id}
-                  title={c.name}
-                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white/80"
+                  className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.08] px-2.5 py-1 text-[10px] font-bold text-white/85"
                 >
-                  <c.icon size={14} />
+                  <c.icon size={11} className="text-accent" />
+                  {c.name}
                 </span>
               ))}
-              <span className="bg-accent/20 ms-auto rounded-full px-2.5 py-0.5 text-[10px] font-black text-accent">
-                ٦ مناهج
-              </span>
+            </div>
+          )}
+          {(view === 'grades' || view === 'languages') && (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none mx-auto mt-3 flex h-28 w-28 items-center justify-center"
+            >
+              <Image
+                src="/bbook.webp"
+                alt=""
+                className="h-full w-full"
+                imgClassName="object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)]"
+                withSkeleton
+              />
             </div>
           )}
         </div>
@@ -605,33 +616,44 @@ export const DesktopHero = ({
             </p>
           </div>
 
-          {/* Curriculum cluster — visual proof of "٦ مناهج خليجية" (decorative) */}
+          {/* End column - curriculum summary (curriculums) or platform art (grades/languages) */}
           {view === 'curriculums' && (
-            <div aria-hidden="true" className="pointer-events-none relative hidden lg:block">
-              <div className="absolute end-[-8%] top-1/2 h-56 w-56 -translate-y-1/2 rounded-full bg-accent-soft blur-[70px]" />
-              <div className="absolute -start-6 top-1/2 h-64 w-64 -translate-y-1/2 animate-[spin_32s_linear_infinite] rounded-full border border-dashed border-white/[0.08]" />
-
-              <div className="relative rounded-3xl border border-white/10 bg-white/10 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.28)] backdrop-blur-md">
-                <div className="mb-3 flex items-center justify-between border-b border-white/10 pb-3">
+            <div aria-hidden="true" className="pointer-events-none hidden lg:block">
+              <div className="rounded-2xl border border-white/15 bg-white/[0.06] p-4">
+                <div className="mb-3 flex items-center justify-between border-b border-white/10 pb-2.5">
                   <span className="text-[11px] font-extrabold text-white/90">المناهج المتوفرة</span>
                   <span className="bg-accent/20 rounded-full px-2.5 py-0.5 text-[10px] font-black text-accent">
-                    ٦ مناهج
+                    ٦
                   </span>
                 </div>
                 <div className="grid grid-cols-2 gap-2">
-                  {curriculums.map((c, i) => (
+                  {curriculums.map((c) => (
                     <div
                       key={c.id}
-                      className="flex animate-float items-center gap-2 rounded-xl bg-white/5 px-2.5 py-2"
-                      style={{ animationDelay: `${i * 0.35}s` }}
+                      className="flex items-center gap-2 rounded-lg bg-white/5 px-2.5 py-2"
                     >
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/10">
-                        <c.icon size={13} className="text-white/80" />
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/10">
+                        <c.icon size={12} className="text-white/80" />
                       </span>
                       <span className="truncate text-[11px] font-bold text-white/85">{c.name}</span>
                     </div>
                   ))}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {(view === 'grades' || view === 'languages') && (
+            <div aria-hidden="true" className="pointer-events-none relative hidden h-52 lg:block">
+              <div className="absolute end-0 top-1/2 h-44 w-44 -translate-y-1/2 rounded-full bg-accent-soft blur-[60px]" />
+              <div className="relative mx-auto flex h-full w-52 items-center justify-center">
+                <Image
+                  src="/bbook.webp"
+                  alt=""
+                  className="h-full w-full"
+                  imgClassName="object-contain drop-shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
+                  withSkeleton
+                />
               </div>
             </div>
           )}

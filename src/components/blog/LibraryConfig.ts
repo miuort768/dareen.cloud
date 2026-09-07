@@ -10,6 +10,17 @@ import {
   GraduationCap,
   Languages,
   Globe,
+  Moon,
+  PenLine,
+  Calculator,
+  FlaskConical,
+  Atom,
+  TestTube,
+  Dna,
+  Landmark,
+  Map,
+  Monitor,
+  BarChart3,
 } from 'lucide-react'
 
 export const gradeNames: Record<string, string> = {
@@ -160,6 +171,22 @@ export const classroomsMap: Record<string, Record<string, string[]>> = {
     middle: ['7', '8', '9'],
     secondary: ['10', '11', '12'],
   },
+}
+
+export const subjectIcons: Record<string, React.ElementType> = {
+  islamic: Moon,
+  arabic: PenLine,
+  math: Calculator,
+  science: FlaskConical,
+  english: Languages,
+  social: Globe,
+  physics: Atom,
+  chemistry: TestTube,
+  biology: Dna,
+  history: Landmark,
+  geography: Map,
+  computer: Monitor,
+  stats: BarChart3,
 }
 
 export const directTypes = ['foundation', 'more']

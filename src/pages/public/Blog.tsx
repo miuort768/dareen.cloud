@@ -26,6 +26,7 @@ import { LoadingState, EmptyState } from '../../components/blog/BlogStates'
 import { MobileHero, DesktopHero } from '../../components/blog/HeroSelection'
 import { AdBanner } from '../../components/blog/AdBanner'
 import { DesktopLibraryLanding } from '../../components/blog/DesktopLibraryLanding'
+import { LanguageToolsBar } from '../../components/blog/LanguageToolsBar'
 import { SelectionGrid } from '../../components/blog/SelectionGrid'
 import { PageLoader } from '../../components/ui/PageLoader'
 
@@ -387,6 +388,9 @@ export const Blog = () => {
                 showChangeButton={!isDirectType}
                 isMobile
               />
+              {view === 'language-sections' && (
+                <LanguageToolsBar languageName={currentLanguageName} />
+              )}
               {loading ? (
                 <LoadingState />
               ) : filteredPosts.length === 0 ? (
@@ -457,6 +461,9 @@ export const Blog = () => {
                 onHome={() => setView('types')}
                 showChangeButton={!isDirectType}
               />
+              {view === 'language-sections' && (
+                <LanguageToolsBar languageName={currentLanguageName} />
+              )}
               {loading ? (
                 <LoadingState />
               ) : filteredPosts.length === 0 ? (

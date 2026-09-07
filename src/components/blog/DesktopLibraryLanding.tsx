@@ -346,7 +346,7 @@ export const DesktopLibraryLanding = ({
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="ابحث عن مادة، كتاب، أو ملزمة..."
                 aria-label="البحث في المقالات"
-                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-focus dark:border-white/15 dark:bg-white/5"
+                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-focus dark:border-white/10 dark:placeholder:text-dim"
               />
             </div>
           </div>
