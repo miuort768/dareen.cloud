@@ -1,20 +1,22 @@
 import type { BlogPost } from './types'
+import { classroomsMap, gradesMap, subjectsMap } from '../../components/blog/LibraryConfig'
 
-const grades = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-const subjects = [
-  { value: 'arabic', label: 'عربي' },
-  { value: 'math', label: 'رياضيات' },
-  { value: 'islamic', label: 'إسلامية' },
-  { value: 'english', label: 'إنجليزي' },
-  { value: 'science', label: 'علوم' },
-  { value: 'physics', label: 'فيزياء' },
-  { value: 'chemistry', label: 'كيمياء' },
-  { value: 'biology', label: 'أحياء' },
-  { value: 'history', label: 'تاريخ' },
-  { value: 'geography', label: 'جغرافيا' },
-  { value: 'social', label: 'اجتماعيات' },
-  { value: 'computer', label: 'حاسب آلي' },
-  { value: 'stats', label: 'إحصاء' },
+const allGrades = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+
+const fallbackSubjects = [
+  { id: 'arabic', name: 'عربي' },
+  { id: 'math', name: 'رياضيات' },
+  { id: 'islamic', name: 'إسلامية' },
+  { id: 'english', name: 'إنجليزي' },
+  { id: 'science', name: 'علوم' },
+  { id: 'physics', name: 'فيزياء' },
+  { id: 'chemistry', name: 'كيمياء' },
+  { id: 'biology', name: 'أحياء' },
+  { id: 'history', name: 'تاريخ' },
+  { id: 'geography', name: 'جغرافيا' },
+  { id: 'social', name: 'اجتماعيات' },
+  { id: 'computer', name: 'حاسب آلي' },
+  { id: 'stats', name: 'إحصاء' },
 ]
 
 interface BlogFormEducationalSectionProps {
@@ -23,12 +25,77 @@ interface BlogFormEducationalSectionProps {
   onSetCurrentPost: React.Dispatch<React.SetStateAction<Partial<BlogPost> | null>>
 }
 
+const levelIds = Object.values(gradesMap).flatMap((levels) => levels.map((l) => l.id))
+const allLevelIds = Array.from(new Set(levelIds))
+
 export const BlogFormEducationalSection = ({
   currentPost,
   onSet,
   onSetCurrentPost,
 }: BlogFormEducationalSectionProps) => {
   const isDisabled = currentPost.contentType === 'foundation' || currentPost.contentType === 'more'
+  const curriculum = currentPost.curriculum || ''
+  const level = currentPost.level || ''
+  const grade = currentPost.grade || ''
+  const subject = currentPost.subject || ''
+
+  // خيارات الصف والمادة مقيدة بالمنهج/المرحلة — نفس خرائط المكتبة
+  // حتى يظهر المقال دائمًا تحت تصنيفه الصحيح في صفحة المكتبة
+  const gradeOptions =
+    (curriculum && level ? classroomsMap[curriculum]?.[level] : undefined) || allGrades
+  const subjectOptions = (level && subjectsMap[level]) || fallbackSubjects
+
+  const handleCurriculumChange = (nextCurriculum: string) => {
+    onSetCurrentPost((prev) => {
+      const validLevels = nextCurriculum
+        ? (gradesMap[nextCurriculum] || allLevelIds.map((id) => ({ id }))).map((l) => l.id)
+        : allLevelIds
+      const nextLevel = validLevels.includes(prev.level || '') ? prev.level || '' : ''
+      const validGrades =
+        nextCurriculum && nextLevel ? classroomsMap[nextCurriculum]?.[nextLevel] : undefined
+      const nextGrade = !validGrades || validGrades.includes(prev.grade || '') ? prev.grade : ''
+      const validSubjects = nextLevel ? subjectsMap[nextLevel] : undefined
+      const nextSubject =
+        !validSubjects || validSubjects.some((s) => s.id === (prev.subject || ''))
+          ? prev.subject
+          : ''
+      return {
+        ...prev,
+        curriculum: nextCurriculum,
+        level: nextLevel,
+        grade: nextGrade,
+        subject: nextSubject,
+      }
+    })
+  }
+
+  const handleLevelChange = (nextLevel: string) => {
+    onSetCurrentPost((prev) => {
+      const validGrades =
+        prev.curriculum && nextLevel ? classroomsMap[prev.curriculum]?.[nextLevel] : undefined
+      const nextGrade = !validGrades || validGrades.includes(prev.grade || '') ? prev.grade : ''
+      const validSubjects = nextLevel ? subjectsMap[nextLevel] : undefined
+      const nextSubject =
+        !validSubjects || validSubjects.some((s) => s.id === (prev.subject || ''))
+          ? prev.subject
+          : ''
+      return { ...prev, level: nextLevel, grade: nextGrade, subject: nextSubject }
+    })
+  }
+
+  const handleGradeChange = (nextGrade: string) => {
+    onSetCurrentPost((prev) => {
+      // اشتقاق المرحلة تلقائيًا من الصف داخل المنهج المختار
+      let nextLevel = prev.level || ''
+      if (nextGrade && prev.curriculum) {
+        const entry = Object.entries(classroomsMap[prev.curriculum] || {}).find(([, gs]) =>
+          gs.includes(nextGrade),
+        )
+        if (entry) nextLevel = entry[0]
+      }
+      return { ...prev, grade: nextGrade, level: nextLevel }
+    })
+  }
 
   return (
     <div className="rounded-2xl border border-primary-soft bg-primary-soft p-4">
@@ -66,8 +133,8 @@ export const BlogFormEducationalSection = ({
           </label>
           <select
             id="bf-cur"
-            value={currentPost.curriculum}
-            onChange={(e) => onSet('curriculum', e.target.value)}
+            value={curriculum}
+            onChange={(e) => handleCurriculumChange(e.target.value)}
             disabled={isDisabled}
             aria-label="المنهج الدراسي"
             className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
@@ -77,6 +144,8 @@ export const BlogFormEducationalSection = ({
             <option value="qatar">قطر</option>
             <option value="uae">الإمارات</option>
             <option value="saudi">السعودية</option>
+            <option value="oman">عمان</option>
+            <option value="jordan">الأردن</option>
           </select>
         </div>
         <div>
@@ -85,18 +154,18 @@ export const BlogFormEducationalSection = ({
           </label>
           <select
             id="bf-level"
-            value={currentPost.level}
-            onChange={(e) => onSet('level', e.target.value)}
+            value={level}
+            onChange={(e) => handleLevelChange(e.target.value)}
             disabled={isDisabled}
             aria-label="المرحلة الدراسية"
             className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
-            <option value="primary">ابتدائي</option>
-            <option value="middle">متوسط</option>
-            <option value="secondary">ثانوي</option>
-            <option value="basic">أساسي (عمان)</option>
-            <option value="preparatory">إعدادي (مصر)</option>
+            {(curriculum ? gradesMap[curriculum] || [] : []).map((l) => (
+              <option key={l.id} value={l.id}>
+                {l.name}
+              </option>
+            ))}
           </select>
         </div>
         <div>
@@ -105,14 +174,14 @@ export const BlogFormEducationalSection = ({
           </label>
           <select
             id="bf-grade"
-            value={currentPost.grade}
-            onChange={(e) => onSet('grade', e.target.value)}
+            value={grade}
+            onChange={(e) => handleGradeChange(e.target.value)}
             disabled={isDisabled}
             aria-label="الصف الدراسي"
             className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
-            {grades.map((g) => (
+            {gradeOptions.map((g) => (
               <option key={g} value={g}>
                 صف {g}
               </option>
@@ -142,16 +211,16 @@ export const BlogFormEducationalSection = ({
           </label>
           <select
             id="bf-subject"
-            value={currentPost.subject}
+            value={subject}
             onChange={(e) => onSet('subject', e.target.value)}
             disabled={isDisabled}
             aria-label="المادة الدراسية"
             className="w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
           >
             <option value="">بدون تحديد</option>
-            {subjects.map((s) => (
-              <option key={s.value} value={s.value}>
-                {s.label}
+            {subjectOptions.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name}
               </option>
             ))}
           </select>

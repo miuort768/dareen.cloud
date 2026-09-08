@@ -2,7 +2,6 @@ import {
   X,
   Link as LinkIcon,
   Image as ImageIcon,
-  Star,
   Download,
   Eye,
   Loader2,
@@ -90,7 +89,7 @@ export const BlogForm = ({
           </div>
           <div>
             <label htmlFor="bf-slug" className="mb-1.5 block text-micro font-bold text-muted">
-              الرابط المختصر (Slug)
+              الرابط المختصر (Slug) — حروف وأرقام وشرطات
             </label>
             <div className="relative">
               <LinkIcon className="absolute end-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
@@ -99,10 +98,11 @@ export const BlogForm = ({
                 id="bf-slug"
                 type="text"
                 value={currentPost.slug}
-                onChange={(e) => set('slug', e.target.value.replace(/\s+/g, '-').toLowerCase())}
+                onChange={(e) => set('slug', e.target.value.trim().replace(/\s+/g, '-'))}
                 className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 dir="ltr"
-                placeholder="أفضل-نصائح-الدراسة"
+                placeholder="article-slug أو رابط-المقال"
+                maxLength={100}
               />
             </div>
           </div>
@@ -165,7 +165,7 @@ export const BlogForm = ({
                   size={16}
                 />
                 <input
-                  type="url"
+                  type="text"
                   aria-label="رابط المصدر"
                   value={currentPost.source || ''}
                   onChange={(e) => set('source', e.target.value)}
@@ -191,18 +191,18 @@ export const BlogForm = ({
 
         <div>
           <label htmlFor="bf-cover" className="mb-1.5 block text-micro font-bold text-muted">
-            رابط الصورة الرئيسية
+            رابط الصورة الرئيسية (اختياري)
           </label>
           <div className="relative">
             <ImageIcon className="absolute end-4 top-1/2 -translate-y-1/2 text-muted" size={16} />
             <input
               id="bf-cover"
-              type="url"
+              type="text"
               value={currentPost.coverImage}
               onChange={(e) => set('coverImage', e.target.value)}
               className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
               dir="ltr"
-              placeholder="https://..."
+              placeholder="https://... (اختياري)"
             />
           </div>
           {currentPost.coverImage && (
@@ -210,20 +210,6 @@ export const BlogForm = ({
               <Image src={currentPost.coverImage} alt="معاينة" className="h-32 w-full" />
             </div>
           )}
-        </div>
-
-        <div className="flex flex-wrap items-center gap-4">
-          <label className="flex cursor-pointer items-center gap-2 hover:opacity-80">
-            <input
-              type="checkbox"
-              checked={currentPost.isNew || false}
-              onChange={(e) => set('isNew', e.target.checked)}
-              className="h-4 w-4 rounded border-border text-primary focus-visible:ring-focus"
-            />
-            <span className="flex items-center gap-1 text-micro font-bold text-muted">
-              <Star size={12} className="text-warning" /> جديد
-            </span>
-          </label>
         </div>
 
         <div>
@@ -305,7 +291,7 @@ export const BlogForm = ({
                   />
                   <input
                     id="bf-dl"
-                    type="url"
+                    type="text"
                     value={currentPost.downloadLink || ''}
                     onChange={(e) => set('downloadLink', e.target.value)}
                     className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
@@ -342,7 +328,7 @@ export const BlogForm = ({
                   />
                   <input
                     id="bf-wl"
-                    type="url"
+                    type="text"
                     value={currentPost.watchLink || ''}
                     onChange={(e) => set('watchLink', e.target.value)}
                     className="w-full rounded-xl border border-border bg-surface px-4 py-3 pe-10 text-end text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"

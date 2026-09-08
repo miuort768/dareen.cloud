@@ -175,17 +175,28 @@ export const BlogPost = () => {
 
         {/* Image + First Content Side by Side */}
         <div className="container mx-auto mb-12 max-w-5xl px-4">
-          <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 md:gap-10">
-            <div className="w-full overflow-hidden rounded-card bg-surface shadow-elevation-4">
-              <Image src={post.coverImage || ''} alt={post.title || ''} className="h-auto w-full" />
+          {post.coverImage ? (
+            <div className="grid grid-cols-1 items-start gap-6 md:grid-cols-2 md:gap-10">
+              <div className="w-full overflow-hidden rounded-card bg-surface shadow-elevation-4">
+                <Image src={post.coverImage} alt={post.title || ''} className="h-auto w-full" />
+              </div>
+              <div
+                className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify max-w-none text-main"
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeHTML(processContent(contentParts.first, post.title)),
+                }}
+              />
             </div>
-            <div
-              className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify max-w-none text-main"
-              dangerouslySetInnerHTML={{
-                __html: sanitizeHTML(processContent(contentParts.first, post.title)),
-              }}
-            />
-          </div>
+          ) : (
+            <div className="mx-auto max-w-3xl">
+              <div
+                className="prose sm:prose-lg prose-headings:font-heading prose-headings:font-black prose-a:text-error prose-img:shadow-elevation-4 prose-p:text-justify max-w-none text-main"
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeHTML(processContent(contentParts.first, post.title)),
+                }}
+              />
+            </div>
+          )}
         </div>
 
         <article className="container mx-auto max-w-3xl px-4">

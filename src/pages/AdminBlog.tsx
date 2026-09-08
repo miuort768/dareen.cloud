@@ -66,7 +66,7 @@ export const AdminBlog = () => {
   const handleOpenModal = (post: BlogPost | null = null) => {
     if (post) {
       setCurrentPost(post)
-      const parts = post.content.split('\n\n').filter(Boolean)
+      const parts = (post.content || '').split('\n\n').filter(Boolean)
       setContentPart1(parts[0] || '')
       setContentPart2(parts.slice(1).join('\n\n'))
     } else {
@@ -91,7 +91,6 @@ export const AdminBlog = () => {
         showButtons: true,
         downloadButtonText: '',
         watchButtonText: '',
-        isNew: false,
         views: 0,
         seoTitle: '',
         seoDescription: '',
@@ -147,9 +146,25 @@ export const AdminBlog = () => {
       showNotification('يرجى إكمال الحقول المطلوبة', 'warning')
       return
     }
-    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(currentPost.slug)) {
-      showNotification('الرابط المختصر يجب أن يحتوي أحرف إنجليزية وأرقام وشرطات فقط', 'warning')
+    if (!/^[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*$/u.test(currentPost.slug)) {
+      showNotification('الرابط المختصر يقبل الحروف (عربي/إنجليزي) والأرقام والشرطات فقط', 'warning')
       return
+    }
+    // مقالات المناهج (حل الكتب/المذكرات) تظهر في المكتبة عبر تصفح المنهج ← المرحلة ← الصف ← المادة
+    // لذا يجب اكتمال التصنيف حتى يظهر المقال في مكان الصحيح
+    if (currentPost.contentType === 'notes' || currentPost.contentType === 'solutions') {
+      if (
+        !currentPost.curriculum ||
+        !currentPost.level ||
+        !currentPost.grade ||
+        !currentPost.subject
+      ) {
+        showNotification(
+          'يرجى تحديد المنهج والمرحلة والصف والمادة حتى يظهر المقال في تصنيفه الصحيح بالمكتبة',
+          'warning',
+        )
+        return
+      }
     }
     const postData = {
       title: currentPost.title,

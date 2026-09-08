@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { Image } from '../../shared/components/ui'
 import { FileText, ExternalLink, Download, Eye, ArrowLeft, Calendar, Flame } from 'lucide-react'
 import { subjectNameMap } from './LibraryConfig'
+import { BlogCoverImage } from './BlogCoverImage'
 
 interface BlogPost {
   id: string
@@ -197,11 +197,11 @@ export const RegularCard = ({ post, isCoursesStyle, i }: RegularCardProps) => {
         <div
           className={`relative ${isCoursesStyle ? 'h-44' : 'aspect-video'} overflow-hidden bg-surface`}
         >
-          <Image
-            src={post.coverImage || 'https://via.placeholder.com/400x200'}
+          <BlogCoverImage
+            src={post.coverImage}
             alt={post.title}
             className="h-full w-full"
-            imgClassName={`transition-transform duration-500 ${isCoursesStyle ? 'object-contain scale-[1.15]' : 'group-hover:scale-105'}`}
+            imgClassName={`${isCoursesStyle ? 'object-contain scale-[1.15]' : 'group-hover:scale-105'} transition-transform duration-500`}
           />
           <div
             className={`absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t ${isCoursesStyle ? 'from-card' : 'from-black/30'} to-transparent`}

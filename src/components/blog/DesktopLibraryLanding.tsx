@@ -18,12 +18,14 @@ import {
   Languages,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { Image } from '../../shared/components/ui'
+import { BlogCoverImage } from './BlogCoverImage'
 import { cn } from '../../lib/utils'
 import { api } from '../../lib/api'
 import { useAcademyName } from '../../context/AppContext'
 import { types, directTypes, curriculums, languages } from './LibraryConfig'
 import { AdBanner } from './AdBanner'
+import { AdSenseUnit } from './AdSenseUnit'
+import { PlatformOffer } from './PlatformOffer'
 import { BLOG_COUNTRIES, normalizePhoneInput } from './blogCustomers'
 import type { BlogPost } from '../../data/blogPosts'
 
@@ -326,6 +328,8 @@ export const DesktopLibraryLanding = ({
             )
           })}
         </div>
+
+        <PlatformOffer className="mt-5" />
       </section>
 
       {/* ===== SEARCH BAR ===== */}
@@ -353,7 +357,8 @@ export const DesktopLibraryLanding = ({
         </div>
       </section>
 
-      <AdBanner slot="belowSearch" className="mb-6" />
+      <AdBanner slot="belowSearch" className="mb-4" />
+      <AdSenseUnit slot="belowSearch" className="mb-6" />
 
       {/* ===== ARTICLES + SIDEBAR ===== */}
       <section className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[320px_1fr]">
@@ -565,12 +570,12 @@ export const DesktopLibraryLanding = ({
                   >
                     <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-l from-transparent via-primary/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                     <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-xl bg-surface">
-                      <Image
+                      <BlogCoverImage
                         src={post.coverImage}
                         alt={post.title}
                         className="absolute inset-0"
                         imgClassName="object-cover transition-transform duration-500 group-hover:scale-105"
-                        withSkeleton
+                        iconSize={28}
                       />
                       <span
                         className={cn(

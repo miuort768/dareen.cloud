@@ -8,7 +8,7 @@ import { PublicFooter } from '../../components/public/PublicFooter'
 import { SEO } from '../../components/SEO'
 import { blogPosts as staticPosts, type BlogPost } from '../../data/blogPosts'
 import { Zap, FileText } from 'lucide-react'
-import { api } from '../../lib/api'
+import { api, safeArray } from '../../lib/api'
 import {
   types,
   curriculums,
@@ -21,10 +21,13 @@ import {
 import type { ViewType } from '../../components/blog/LibraryConfig'
 import { FoundationCard, RegularCard } from '../../components/blog/BlogCard'
 import { BlogBreadcrumb } from '../../components/blog/BlogBreadcrumb'
-import { LoadMore } from '../../components/blog/LoadMore'
 import { LoadingState, EmptyState } from '../../components/blog/BlogStates'
 import { MobileHero, DesktopHero } from '../../components/blog/HeroSelection'
 import { AdBanner } from '../../components/blog/AdBanner'
+import { AdSenseUnit } from '../../components/blog/AdSenseUnit'
+import { PlatformOffer } from '../../components/blog/PlatformOffer'
+import { parseLibraryAdsRoot } from '../../components/blog/adConfig'
+import { useSettingsStore } from '../../store/settingsStore'
 import { DesktopLibraryLanding } from '../../components/blog/DesktopLibraryLanding'
 import { LanguageToolsBar } from '../../components/blog/LanguageToolsBar'
 import { SelectionGrid } from '../../components/blog/SelectionGrid'
@@ -41,6 +44,11 @@ export const Blog = () => {
   const selectedTerm = searchParams.get('term') || ''
   const selectedSubject = searchParams.get('subject') || ''
   const selectedLanguage = searchParams.get('language') || ''
+  const libraryAdsRaw = useSettingsStore((s) => s.libraryAds)
+  const parsedAds = parseLibraryAdsRoot(libraryAdsRaw)
+  const hasPlatformOffer = !!parsedAds.offers && (view === 'terms' || view === 'subjects')
+  const hasMoreAdMobile = !!parsedAds.adsense?.belowMoreArticles?.mobile
+  const hasMoreAdDesktop = !!parsedAds.adsense?.belowMoreArticles?.desktop
   const [showSplash, setShowSplash] = useState(true)
   const [foundationBtnState, setFoundationBtnState] = useState<{
     type: 'download' | 'watch'
@@ -58,28 +66,19 @@ export const Blog = () => {
   const { data: postsData, isLoading: loading } = useQuery({
     queryKey: ['blog-posts'],
     queryFn: async () => {
-      const res = await api.get<
-        { posts?: BlogPost[]; data?: BlogPost[]; totalPages?: number } | BlogPost[]
-      >('/blog?page=1&limit=12')
-      const meta = Array.isArray(res) ? null : res
-      const posts = meta?.posts || meta?.data || []
-      return { posts, totalPages: meta?.totalPages || 1 }
+      try {
+        const res = await api.get<BlogPost[]>('/blog?all=true')
+        return safeArray<BlogPost>(res)
+      } catch (e) {
+        console.warn(e)
+        return []
+      }
     },
+    staleTime: 0,
+    refetchOnMount: 'always',
   })
 
-  const basePosts =
-    postsData && postsData.posts && postsData.posts.length > 0 ? postsData.posts : staticPosts
-  const totalPages = postsData?.totalPages || 1
-
-  const [allPosts, setAllPosts] = useState<typeof staticPosts>([])
-  const [page, setPage] = useState(1)
-  const [loadingMore, setLoadingMore] = useState(false)
-
-  useEffect(() => {
-    if (postsData) setAllPosts(basePosts)
-  }, [postsData, basePosts])
-
-  const posts = allPosts.length > 0 ? allPosts : basePosts
+  const posts = postsData && postsData.length > 0 ? postsData : staticPosts
 
   const handleFoundationButtonClick = (
     type: 'download' | 'watch',
@@ -239,25 +238,6 @@ export const Blog = () => {
           ? languages.map((l) => ({ ...l, icon: l.icon }))
           : currentGrades
 
-  const loadMore = async () => {
-    if (loadingMore || page >= totalPages) return
-    setLoadingMore(true)
-    try {
-      const nextPage = page + 1
-      const res = await api.get<{ posts?: BlogPost[]; data?: BlogPost[] } | BlogPost[]>(
-        `/blog?page=${nextPage}&limit=12`,
-      )
-      const meta = Array.isArray(res) ? null : res
-      const fetchedPosts = meta?.posts || meta?.data || []
-      setAllPosts((prev) => [...prev, ...fetchedPosts])
-      setPage(nextPage)
-    } catch (e) {
-      console.warn(e)
-    } finally {
-      setLoadingMore(false)
-    }
-  }
-
   const [libraryTheme] = useState(() => {
     try {
       return localStorage.getItem('library-theme') || 'light'
@@ -373,9 +353,18 @@ export const Blog = () => {
                 setSearchParams={setSearchParams}
               />
               {view === 'types' ? (
-                <AdBanner slot="belowTypesHero" className="mb-4" />
+                <>
+                  <AdBanner slot="belowTypesHero" className="mb-4" />
+                  <PlatformOffer className="mb-4" />
+                </>
               ) : (
-                <AdBanner slot="belowSelectionHero" className="mb-4" />
+                <>
+                  <AdBanner slot="belowSelectionHero" className="mb-4" />
+                  <AdSenseUnit
+                    slot={view === 'languages' ? 'belowLanguageHero' : 'belowSelectionHero'}
+                    className="mb-4"
+                  />
+                </>
               )}
             </div>
           ) : view === 'results' || view === 'language-sections' ? (
@@ -395,34 +384,41 @@ export const Blog = () => {
                 <LoadingState />
               ) : filteredPosts.length === 0 ? (
                 <EmptyState />
+              ) : selectedType === 'more' && hasMoreAdMobile ? (
+                <>
+                  <div className="space-y-3">
+                    {filteredPosts.slice(0, 3).map((post, i) => renderPostCard(post, i))}
+                  </div>
+                  <AdSenseUnit slot="belowMoreArticles" className="my-3" />
+                  <div className="space-y-3">
+                    {filteredPosts.slice(3).map((post, i) => renderPostCard(post, i + 3))}
+                  </div>
+                </>
               ) : (
                 <div className="space-y-3">
                   {filteredPosts.map((post, i) => renderPostCard(post, i))}
                 </div>
               )}
-              <LoadMore
-                page={page}
-                totalPages={totalPages}
-                loading={loadingMore}
-                onLoadMore={loadMore}
-              />
             </div>
           ) : (
-            <SelectionGrid
-              view={view}
-              currentClassrooms={currentClassrooms}
-              currentSubjects={currentSubjects}
-              selectedGrade={selectedGrade}
-              termLabel={termLabel}
-              currentCurriculumName={currentCurriculumName}
-              currentLevelName={currentLevelName}
-              filteredCount={filteredPosts.length}
-              goBack={goBack}
-              onSelectGrade={setSelectedGrade}
-              onSelectTerm={setSelectedTerm}
-              onSelectSubject={setSelectedSubject}
-              isMobile
-            />
+            <>
+              <SelectionGrid
+                view={view}
+                currentClassrooms={currentClassrooms}
+                currentSubjects={currentSubjects}
+                selectedGrade={selectedGrade}
+                termLabel={termLabel}
+                currentCurriculumName={currentCurriculumName}
+                currentLevelName={currentLevelName}
+                filteredCount={filteredPosts.length}
+                goBack={goBack}
+                onSelectGrade={setSelectedGrade}
+                onSelectTerm={setSelectedTerm}
+                onSelectSubject={setSelectedSubject}
+                isMobile
+              />
+              {hasPlatformOffer && <PlatformOffer className="mb-6" />}
+            </>
           )}
         </div>
 
@@ -451,6 +447,10 @@ export const Blog = () => {
                 setSearchParams={setSearchParams}
               />
               <AdBanner slot="belowSelectionHero" className="mt-8" />
+              <AdSenseUnit
+                slot={view === 'languages' ? 'belowLanguageHero' : 'belowSelectionHero'}
+                className="mt-4"
+              />
             </div>
           ) : view === 'results' || view === 'language-sections' ? (
             <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
@@ -468,35 +468,44 @@ export const Blog = () => {
                 <LoadingState />
               ) : filteredPosts.length === 0 ? (
                 <EmptyState />
-              ) : (
+              ) : selectedType === 'more' && hasMoreAdDesktop ? (
                 <>
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                    {filteredPosts.map((post, i) => renderPostCard(post, i))}
+                    {filteredPosts.slice(0, 3).map((post, i) => renderPostCard(post, i))}
                   </div>
-                  <LoadMore
-                    page={page}
-                    totalPages={totalPages}
-                    loading={loadingMore}
-                    onLoadMore={loadMore}
-                  />
+                  <AdSenseUnit slot="belowMoreArticles" className="my-6" />
+                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                    {filteredPosts.slice(3).map((post, i) => renderPostCard(post, i + 3))}
+                  </div>
                 </>
+              ) : (
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                  {filteredPosts.map((post, i) => renderPostCard(post, i))}
+                </div>
               )}
             </div>
           ) : (
-            <SelectionGrid
-              view={view}
-              currentClassrooms={currentClassrooms}
-              currentSubjects={currentSubjects}
-              selectedGrade={selectedGrade}
-              termLabel={termLabel}
-              currentCurriculumName={currentCurriculumName}
-              currentLevelName={currentLevelName}
-              filteredCount={filteredPosts.length}
-              goBack={goBack}
-              onSelectGrade={setSelectedGrade}
-              onSelectTerm={setSelectedTerm}
-              onSelectSubject={setSelectedSubject}
-            />
+            <>
+              <SelectionGrid
+                view={view}
+                currentClassrooms={currentClassrooms}
+                currentSubjects={currentSubjects}
+                selectedGrade={selectedGrade}
+                termLabel={termLabel}
+                currentCurriculumName={currentCurriculumName}
+                currentLevelName={currentLevelName}
+                filteredCount={filteredPosts.length}
+                goBack={goBack}
+                onSelectGrade={setSelectedGrade}
+                onSelectTerm={setSelectedTerm}
+                onSelectSubject={setSelectedSubject}
+              />
+              {hasPlatformOffer && (
+                <div className="mx-auto max-w-[1400px] px-6 pb-16 lg:px-10">
+                  <PlatformOffer />
+                </div>
+              )}
+            </>
           )}
         </main>
         <PublicFooter />

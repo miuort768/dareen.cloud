@@ -44,7 +44,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
         </label>
         <input
           id="bf-og"
-          type="url"
+          type="text"
           value={currentPost.ogImage || ''}
           onChange={(e) => onSet('ogImage', e.target.value)}
           className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"
@@ -84,7 +84,7 @@ export const BlogFormSeoSection = ({ currentPost, onSet }: BlogFormSeoSectionPro
         </label>
         <input
           id="bf-canonical"
-          type="url"
+          type="text"
           value={currentPost.canonicalUrl || ''}
           onChange={(e) => onSet('canonicalUrl', e.target.value)}
           className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-bold outline-none focus-visible:ring-2 focus-visible:ring-focus"

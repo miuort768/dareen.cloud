@@ -1,10 +1,11 @@
 const { z } = require('zod');
 
-const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+// يقبل العربية والإنجليزية والأرقام والشرطات (u flag لدعم \p{L})
+const slugRegex = /^[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*$/u;
 
 const blogPostSchema = z.object({
     title: z.string().min(1, 'العنوان مطلوب').max(200, 'العنوان طويل جداً'),
-    slug: z.string().min(1, 'الرابط المختصر مطلوب').regex(slugRegex, 'الرابط المختصر يجب أن يكون أحرف إنجليزية وأرقام وشرطات فقط'),
+    slug: z.string().min(1, 'الرابط المختصر مطلوب').regex(slugRegex, 'الرابط المختصر يقبل الحروف (عربي/إنجليزي) والأرقام والشرطات فقط'),
     excerpt: z.string().max(500, 'الملخص طويل جداً').optional().nullable().default(''),
     content: z.string().optional().nullable().default(''),
     coverImage: z.string().max(500, 'رابط الصورة طويل جداً').optional().nullable().default(''),

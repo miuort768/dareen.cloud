@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { BookMarked } from 'lucide-react'
 import { Image } from '../../shared/components/ui'
 
 interface RelatedPost {
@@ -26,11 +27,17 @@ export const BlogPostRelatedPosts = ({ posts }: BlogPostRelatedPostsProps) => {
             className="group block overflow-hidden rounded-card border border-border bg-card shadow-elevation-2 transition-all hover:shadow-elevation-4"
           >
             <div className="aspect-[16/9] overflow-hidden bg-surface">
-              <Image
-                src={rp.coverImage || ''}
-                alt={rp.title}
-                className="h-full w-full group-hover:scale-105"
-              />
+              {rp.coverImage ? (
+                <Image
+                  src={rp.coverImage}
+                  alt={rp.title}
+                  className="h-full w-full group-hover:scale-105"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary-soft to-background text-primary/40">
+                  <BookMarked size={32} strokeWidth={1.5} />
+                </div>
+              )}
             </div>
             <div className="p-4">
               <p className="mb-1 text-micro font-bold text-muted">{rp.date}</p>
