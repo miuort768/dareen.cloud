@@ -31,7 +31,9 @@ app.use(compression());
 const allowedOrigins = [
     process.env.FRONTEND_URL,
     'https://dareen.cloud',
-    'https://www.dareen.cloud'
+    'https://www.dareen.cloud',
+    'https://dareen7.online',
+    'https://www.dareen7.online'
 ].filter(Boolean);
 
 if (process.env.NODE_ENV !== 'production') {
