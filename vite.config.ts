@@ -42,10 +42,10 @@ export default defineConfig(async () => {
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
-          // v2: لازمة في أسماء كل الأصول تُبطل أي كاش مسموم (500) بعد نافذة النشر
-          assetFileNames: 'assets/[name]-v2-[hash][extname]',
-          chunkFileNames: 'assets/[name]-v2-[hash].js',
-          entryFileNames: 'assets/[name]-v2-[hash].js',
+          // v3: لازمة في أسماء كل الأصول تُبطل أي كاش مسموم (500) بعد نافذة النشر
+          assetFileNames: 'assets/[name]-v3-[hash][extname]',
+          chunkFileNames: 'assets/[name]-v3-[hash].js',
+          entryFileNames: 'assets/[name]-v3-[hash].js',
           manualChunks: {
             vendor: ['react', 'react-dom', 'react-router-dom'],
             socket: ['socket.io-client'],
