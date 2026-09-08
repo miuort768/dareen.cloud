@@ -6,8 +6,8 @@ import path from 'path'
 export default defineConfig(async () => {
   const plugins: PluginOption[] = [
     react({
-        include: /\.(ts|tsx)$/,
-        babel: { plugins: [] }
+      include: /\.(ts|tsx)$/,
+      babel: { plugins: [] },
     }),
     ViteImageOptimizer({
       jpg: { quality: 80, mozjpeg: true },
@@ -17,11 +17,11 @@ export default defineConfig(async () => {
       includePublic: true,
       logStats: true,
     }),
-  ];
+  ]
 
   if (process.env.VISUALIZE) {
-    const { visualizer } = await import('rollup-plugin-visualizer');
-    plugins.push(visualizer({ open: true, gzipSize: true, brotliSize: true }));
+    const { visualizer } = await import('rollup-plugin-visualizer')
+    plugins.push(visualizer({ open: true, gzipSize: true, brotliSize: true }))
   }
 
   return {
@@ -35,13 +35,17 @@ export default defineConfig(async () => {
     server: {
       proxy: {
         '/api': 'http://localhost:3001',
-      }
+      },
     },
     build: {
       sourcemap: false,
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
+          // v2: لازمة في أسماء كل الأصول تُبطل أي كاش مسموم (500) بعد نافذة النشر
+          assetFileNames: 'assets/[name]-v2-[hash][extname]',
+          chunkFileNames: 'assets/[name]-v2-[hash].js',
+          entryFileNames: 'assets/[name]-v2-[hash].js',
           manualChunks: {
             vendor: ['react', 'react-dom', 'react-router-dom'],
             socket: ['socket.io-client'],
@@ -50,9 +54,9 @@ export default defineConfig(async () => {
             date: ['date-fns'],
             query: ['@tanstack/react-query'],
             charts: ['recharts'],
-          }
-        }
-      }
-    }
-  };
+          },
+        },
+      },
+    },
+  }
 })
