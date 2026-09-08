@@ -5,6 +5,7 @@ import { useDashboardData } from '../hooks/useDashboardData'
 import { ExecutiveDashboard } from '../components/executive/ExecutiveDashboardLayout'
 import { MobileDashboardView } from '../components/MobileDashboardView'
 import { Skeleton } from '../../../shared/components/ui'
+import { useDeviceWidth } from '../../../shared/hooks/useDeviceWidth'
 import { AlertCircle } from 'lucide-react'
 import { useAcademicYear } from '../../../context/useApp'
 
@@ -19,6 +20,7 @@ export const Dashboard = () => {
   }, [])
   const currentUser = useAuthStore((s) => s.currentUser)
   const academicYear = useAcademicYear()
+  const device = useDeviceWidth()
 
   const {
     stats,
@@ -70,49 +72,51 @@ export const Dashboard = () => {
           className="min-h-full bg-background"
           dir="rtl"
         >
-          <div className="relative z-10 mx-auto hidden max-w-page space-y-6 px-6 md:block">
-            <Skeleton className="h-[180px] rounded-2xl" />
-            <div className="grid grid-cols-4 gap-3">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div
-                  key={`skel-kpi-${i}`}
-                  className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1"
-                >
-                  <Skeleton className="mb-3 h-10 w-10 rounded-xl" />
-                  <Skeleton className="mb-1 h-8 w-24" />
-                  <Skeleton className="h-3 w-20" />
+          {device === 'mobile' ? (
+            <div className="block space-y-4 px-4 pt-3 sm:px-4 md:hidden">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <Skeleton className="h-3 w-24" />
+                  <Skeleton className="h-6 w-40" />
                 </div>
-              ))}
-            </div>
-            <div className="grid grid-cols-2 gap-6">
-              <Skeleton className="h-[280px] rounded-2xl" />
-              <Skeleton className="h-[280px] rounded-2xl" />
-            </div>
-            <div className="grid grid-cols-2 gap-6">
-              <Skeleton className="h-60 rounded-2xl" />
-              <Skeleton className="h-60 rounded-2xl" />
-            </div>
-          </div>
-
-          <div className="block space-y-4 px-4 pt-3 sm:px-4 md:hidden">
-            <div className="flex items-center justify-between">
-              <div className="space-y-2">
-                <Skeleton className="h-3 w-24" />
-                <Skeleton className="h-6 w-40" />
+                <Skeleton className="h-[54px] w-[54px] rounded-full" />
               </div>
-              <Skeleton className="h-[54px] w-[54px] rounded-full" />
+              <div className="flex gap-2.5 overflow-hidden">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <Skeleton
+                    key={`skel-mob-${i}`}
+                    className="h-[88px] w-[108px] shrink-0 rounded-2xl"
+                  />
+                ))}
+              </div>
+              <Skeleton className="h-[120px] rounded-2xl" />
+              <Skeleton className="h-[180px] rounded-2xl" />
             </div>
-            <div className="flex gap-2.5 overflow-hidden">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <Skeleton
-                  key={`skel-mob-${i}`}
-                  className="h-[88px] w-[108px] shrink-0 rounded-2xl"
-                />
-              ))}
+          ) : (
+            <div className="relative z-10 mx-auto hidden max-w-page space-y-6 px-6 md:block">
+              <Skeleton className="h-[180px] rounded-2xl" />
+              <div className="grid grid-cols-4 gap-3">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div
+                    key={`skel-kpi-${i}`}
+                    className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1"
+                  >
+                    <Skeleton className="mb-3 h-10 w-10 rounded-xl" />
+                    <Skeleton className="mb-1 h-8 w-24" />
+                    <Skeleton className="h-3 w-20" />
+                  </div>
+                ))}
+              </div>
+              <div className="grid grid-cols-2 gap-6">
+                <Skeleton className="h-[280px] rounded-2xl" />
+                <Skeleton className="h-[280px] rounded-2xl" />
+              </div>
+              <div className="grid grid-cols-2 gap-6">
+                <Skeleton className="h-60 rounded-2xl" />
+                <Skeleton className="h-60 rounded-2xl" />
+              </div>
             </div>
-            <Skeleton className="h-[120px] rounded-2xl" />
-            <Skeleton className="h-[180px] rounded-2xl" />
-          </div>
+          )}
         </motion.div>
       ) : (
         <motion.div
@@ -123,29 +127,31 @@ export const Dashboard = () => {
           className="min-h-full bg-background"
           dir="rtl"
         >
-          {/* Desktop */}
-          <div className="relative z-10 mx-auto hidden max-w-page px-6 md:block">
-            <ExecutiveDashboard
-              academicYear={academicYear}
-              userName={currentUser?.name || currentUser?.username}
-            />
-          </div>
-
-          {/* Mobile */}
-          <div className="block md:hidden">
-            <MobileDashboardView
-              currentUser={currentUser}
-              stats={stats}
-              todaySessions={todaySessions}
-              monthlyData={monthlyData}
-              lowBalanceStudents={lowBalanceStudents}
-              tasks={tasks}
-              rawStudents={rawStudents}
-              rawSessions={rawSessions}
-              rawStudentInvoices={rawStudentInvoices}
-              onRefresh={fetchDashboardData}
-            />
-          </div>
+          {device === 'mobile' ? (
+            /* Mobile */
+            <div className="block md:hidden">
+              <MobileDashboardView
+                currentUser={currentUser}
+                stats={stats}
+                todaySessions={todaySessions}
+                monthlyData={monthlyData}
+                lowBalanceStudents={lowBalanceStudents}
+                tasks={tasks}
+                rawStudents={rawStudents}
+                rawSessions={rawSessions}
+                rawStudentInvoices={rawStudentInvoices}
+                onRefresh={fetchDashboardData}
+              />
+            </div>
+          ) : (
+            /* Desktop */
+            <div className="relative z-10 mx-auto hidden max-w-page px-6 md:block">
+              <ExecutiveDashboard
+                academicYear={academicYear}
+                userName={currentUser?.name || currentUser?.username}
+              />
+            </div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

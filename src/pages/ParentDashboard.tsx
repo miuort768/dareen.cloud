@@ -5,6 +5,7 @@ import { useCurrentUser, useAdminPhone, useAcademyName } from '../context/AppCon
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { Skeleton, ErrorState } from '../shared/components/ui'
+import { useDeviceWidth } from '../shared/hooks/useDeviceWidth'
 import { ParentDashboardDesktop } from './parent-dashboard/ParentDashboardDesktop'
 import { ParentDashboardMobile } from './parent-dashboard/ParentDashboardMobile'
 import type { Student, Enrollment, Session } from '../types'
@@ -105,6 +106,7 @@ export const ParentDashboard = () => {
   }, [academyName])
   const currentUser = useCurrentUser()
   const adminPhone = useAdminPhone()
+  const device = useDeviceWidth()
 
   const [partialError, setPartialError] = useState<string | null>(null)
   const [selectedChildId, setSelectedChildId] = useState<string | null>(null)
@@ -402,12 +404,11 @@ export const ParentDashboard = () => {
           <p className="text-xs font-medium text-warning dark:text-primary">{partialError}</p>
         </div>
       )}
-      <div className="hidden md:block">
-        <ParentDashboardDesktop {...sharedProps} />
-      </div>
-      <div className="block md:hidden">
+      {device === 'mobile' ? (
         <ParentDashboardMobile {...sharedProps} />
-      </div>
+      ) : (
+        <ParentDashboardDesktop {...sharedProps} />
+      )}
     </>
   )
 }

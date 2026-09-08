@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
 import { useCurrentUser, useAcademyName } from '../context/AppContext'
 import { Skeleton, ErrorState } from '../shared/components/ui'
+import { useDeviceWidth } from '../shared/hooks/useDeviceWidth'
 import { ARABIC_DAYS } from '../shared/constants/days'
 import {
   normalizeDayName,
@@ -40,6 +41,7 @@ export const StudentDashboard = () => {
   }, [academyName])
   const currentUser = useCurrentUser()
   const queryClient = useQueryClient()
+  const device = useDeviceWidth()
 
   const { data, isLoading, error } = useQuery<{
     studentData: StudentDashboardData
@@ -245,12 +247,11 @@ export const StudentDashboard = () => {
 
   return (
     <>
-      <div className="hidden md:block">
-        <StudentDashboardDesktop {...sharedProps} />
-      </div>
-      <div className="block md:hidden">
+      {device === 'mobile' ? (
         <StudentDashboardMobile {...sharedProps} />
-      </div>
+      ) : (
+        <StudentDashboardDesktop {...sharedProps} />
+      )}
     </>
   )
 }

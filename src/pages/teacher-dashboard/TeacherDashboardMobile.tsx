@@ -137,7 +137,7 @@ export const TeacherDashboardMobile = ({
               setActiveTab('home')
               setTimeout(() => {
                 document
-                  .getElementById('announcements-section')
+                  .getElementById('announcements-section-mobile')
                   ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
               }, 250)
             }}
@@ -221,7 +221,7 @@ export const TeacherDashboardMobile = ({
                   />
                 </SectionCard>
                 <SectionCard
-                  id="announcements-section"
+                  id="announcements-section-mobile"
                   title="الإعلانات"
                   tone="bg-info"
                   className="scroll-mt-24"
