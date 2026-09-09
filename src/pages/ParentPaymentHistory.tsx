@@ -6,6 +6,7 @@ import {
   Clock,
   AlertCircle,
   ArrowLeft,
+  ArrowUp,
   Wallet,
   Users,
   Eye,
@@ -463,9 +464,60 @@ export const ParentPaymentHistory = () => {
             headerVariant="surface"
             getId={(inv) => inv.id}
             emptyMessage={noResults ? 'لا توجد نتائج مطابقة' : 'لا توجد فواتير بعد'}
+            mobileCard={(inv) => {
+              const status = statusConfig[normalizeInvoiceStatus(inv.status)]
+              const StatusIcon = status.icon
+              const overdue = normalizeInvoiceStatus(inv.status) === INVOICE_STATUS.OVERDUE
+              return (
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
+                      <Users size={14} className="text-primary" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate text-xs font-black text-main">{inv.studentName}</p>
+                      <p className="truncate text-[10px] font-bold text-muted">{inv.description}</p>
+                      <p
+                        className={cn(
+                          'mt-0.5 text-[10px] font-bold',
+                          overdue ? 'text-error' : 'text-muted',
+                        )}
+                      >
+                        الاستحقاق: {inv.dueDate}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex shrink-0 flex-col items-end gap-1.5">
+                    <span className="font-mono text-sm font-black tabular-nums text-main">
+                      {(Number(inv.amount) || 0).toLocaleString()}{' '}
+                      <span className="text-[10px] font-bold text-muted">{CURRENCY_SYMBOL}</span>
+                    </span>
+                    <span
+                      className={cn(
+                        'inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-bold',
+                        status.bgCls,
+                        status.textCls,
+                      )}
+                    >
+                      <StatusIcon size={10} />
+                      {status.label}
+                    </span>
+                  </div>
+                </div>
+              )
+            }}
           />
         </motion.div>
       </div>
+
+      {/* FAB — العودة للأعلى (قوائم طويلة) — هاتف فقط */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        aria-label="العودة للأعلى"
+        className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-4 z-50 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-4 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:hidden"
+      >
+        <ArrowUp size={20} />
+      </button>
     </div>
   )
 }

@@ -453,31 +453,33 @@ export const TeacherPaymentHistory = () => {
                 const status = statusConfig(inv.status)
                 const StatusIcon = status.icon
                 return (
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft">
-                        <Wallet size={13} className="text-primary" />
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
+                        <Wallet size={14} className="text-primary" />
                       </div>
-                      <div>
-                        <p className="text-xs font-bold text-main">
+                      <div className="min-w-0">
+                        <p className="truncate text-xs font-black text-main">
                           {inv.specialization || 'بدون تخصص'}
                         </p>
-                        <p className="text-[10px] text-muted">
+                        <p className="mt-0.5 text-[10px] font-bold text-muted">
                           {inv.date
                             ? format(new Date(inv.date), 'dd MMM yyyy', { locale: ar })
                             : '—'}
                         </p>
                       </div>
                     </div>
-                    <span
-                      className={`inline-flex items-center gap-1 rounded-lg border px-2.5 py-1 text-[10px] font-bold ${status.cls}`}
-                    >
-                      <StatusIcon size={10} />
-                      {status.label}
-                    </span>
-                    <span className="font-mono text-sm font-bold tabular-nums text-main">
-                      {inv.amount.toFixed(3)}
-                    </span>
+                    <div className="flex shrink-0 flex-col items-end gap-1.5">
+                      <span className="font-mono text-sm font-black tabular-nums text-main">
+                        {inv.amount.toFixed(3)}
+                      </span>
+                      <span
+                        className={`inline-flex items-center gap-1 rounded-lg border px-2 py-0.5 text-[10px] font-bold ${status.cls}`}
+                      >
+                        <StatusIcon size={10} />
+                        {status.label}
+                      </span>
+                    </div>
                   </div>
                 )
               }}
@@ -511,7 +513,7 @@ export const TeacherPaymentHistory = () => {
                     action.onClick()
                     setFabOpen(false)
                   }}
-                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-on-primary shadow-elevation-3 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-on-primary shadow-elevation-3 outline-none transition-all hover:bg-primary-hover hover:shadow-elevation-4 focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <action.icon size={18} />
                 </button>
@@ -525,7 +527,7 @@ export const TeacherPaymentHistory = () => {
           aria-label={fabOpen ? 'إغلاق' : 'إجراءات سريعة'}
           aria-expanded={fabOpen}
           className={cn(
-            'flex h-12 w-12 items-center justify-center rounded-lg text-on-primary shadow-elevation-4 transition-all',
+            'flex h-12 w-12 items-center justify-center rounded-2xl text-on-primary shadow-elevation-4 transition-all',
             fabOpen ? 'rotate-45 bg-error' : 'bg-primary',
           )}
         >
