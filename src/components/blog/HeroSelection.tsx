@@ -1,5 +1,5 @@
 import { BookOpen, MessageCircle, Send, CheckCircle, Languages, ArrowLeft } from 'lucide-react'
-import { curriculums, directTypes, languages } from './LibraryConfig'
+import { directTypes, languages } from './LibraryConfig'
 import type { ViewType, GridItem } from './LibraryConfig'
 import { useAcademyName } from '../../context/AppContext'
 import { useSettingsStore } from '../../store/settingsStore'
@@ -19,6 +19,7 @@ interface HeroSelectionProps {
   currentTypeName: string
   currentCurriculumName: string
   setSearchParams: (fn: (prev: URLSearchParams) => URLSearchParams) => void
+  goBack?: () => void
   isMobile?: boolean
 }
 
@@ -28,6 +29,7 @@ export const MobileHero = ({
   currentTypeName,
   currentCurriculumName,
   setSearchParams,
+  goBack,
 }: HeroSelectionProps) => {
   const academyName = useAcademyName()
   const adminPhone = useSettingsStore((s) => s.adminPhone)
@@ -203,26 +205,14 @@ export const MobileHero = ({
   // For other views (curriculums, grades, languages), show selection grid
   return (
     <div className="pb-6">
-      <div className="relative mb-5 overflow-hidden rounded-[1.75rem] border border-divider bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-2">
+      <div className="relative mb-5 overflow-hidden rounded-2xl bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-1">
         <div
-          className="pointer-events-none absolute -end-20 -top-24 h-64 w-64 rounded-full border border-white/10"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -end-6 -top-10 h-36 w-36 rounded-full border border-white/5"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -bottom-16 -start-12 h-44 w-44 rounded-full bg-white/5"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-transparent to-white/5"
+          className="pointer-events-none absolute -end-16 -top-20 h-52 w-52 rounded-full border border-white/10"
           aria-hidden="true"
         />
 
         <div className="relative p-5">
-          <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-extrabold text-on-primary backdrop-blur-sm">
+          <span className="mb-2.5 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-extrabold text-on-primary backdrop-blur-sm">
             <BookOpen size={11} />
             {view === 'curriculums'
               ? currentTypeName
@@ -230,7 +220,7 @@ export const MobileHero = ({
                 ? 'تعلم اللغة'
                 : currentCurriculumName}
           </span>
-          <h2 className="mb-1.5 text-xl font-black leading-tight text-on-primary">
+          <h2 className="mb-1.5 text-2xl font-black leading-tight text-on-primary">
             {view === 'curriculums' ? (
               <>
                 اختر <span className="text-accent">المنهج</span>
@@ -245,43 +235,22 @@ export const MobileHero = ({
               </>
             )}
           </h2>
-          <p className="max-w-sm text-[11px] font-bold leading-relaxed text-white/80">
+          <p className="mb-4 max-w-sm text-xs font-bold leading-relaxed text-white/80">
             {view === 'curriculums'
               ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
               : view === 'languages'
                 ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
                 : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة`}
           </p>
-          {view === 'curriculums' && (
-            <div
-              aria-hidden="true"
-              className="mt-4 flex flex-wrap items-center gap-1.5 border-t border-white/10 pt-3.5"
-            >
-              {curriculums.map((c) => (
-                <span
-                  key={c.id}
-                  className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.08] px-2.5 py-1 text-[10px] font-bold text-white/85"
-                >
-                  <c.icon size={11} className="text-accent" />
-                  {c.name}
-                </span>
-              ))}
-            </div>
-          )}
-          {(view === 'grades' || view === 'languages') && (
-            <div
-              aria-hidden="true"
-              className="pointer-events-none mx-auto mt-3 flex h-28 w-28 items-center justify-center"
-            >
-              <Image
-                src="/bbook.webp"
-                alt=""
-                className="h-full w-full"
-                imgClassName="object-contain drop-shadow-[0_10px_24px_rgba(0,0,0,0.35)]"
-                withSkeleton
-              />
-            </div>
-          )}
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-xs font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
+          >
+            <MessageCircle size={14} />
+            طلب حصة مجانية
+          </a>
         </div>
       </div>
 
@@ -327,6 +296,19 @@ export const MobileHero = ({
           ),
         )}
       </div>
+
+      {goBack && (
+        <div className="flex justify-center">
+          <button
+            type="button"
+            onClick={goBack}
+            className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-error px-6 py-3 text-xs font-extrabold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:w-auto"
+          >
+            <ArrowLeft size={14} />
+            <span>العودة</span>
+          </button>
+        </div>
+      )}
     </div>
   )
 }
@@ -337,6 +319,7 @@ export const DesktopHero = ({
   currentTypeName,
   currentCurriculumName,
   setSearchParams,
+  goBack,
 }: HeroSelectionProps) => {
   const academyName = useAcademyName()
   const adminPhone = useSettingsStore((s) => s.adminPhone)
@@ -556,107 +539,54 @@ export const DesktopHero = ({
   return (
     <div className="mx-auto w-full">
       {/* Banner */}
-      <section className="relative overflow-hidden rounded-2xl border border-divider bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-2 lg:rounded-none">
-        {/* Decorative field: rings + hairline grid + glow */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-          <div className="absolute -end-24 -top-28 h-72 w-72 rounded-full border border-white/10" />
-          <div className="absolute -end-8 -top-12 h-40 w-40 rounded-full border border-white/5" />
-          <div className="absolute -bottom-20 -start-16 h-52 w-52 rounded-full bg-white/5" />
-          <div className="absolute inset-0 opacity-[0.04]">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage:
-                  'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-                backgroundSize: '60px 60px',
-              }}
-            />
-          </div>
-        </div>
-        {view !== 'curriculums' && (
-          <BookOpen
-            aria-hidden="true"
-            className="pointer-events-none absolute -bottom-10 -end-8 h-48 w-48 rotate-12 text-white/5"
-          />
-        )}
+      <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-deep via-primary to-primary-deep shadow-elevation-1 lg:rounded-none">
+        <div
+          className="pointer-events-none absolute -end-24 -top-28 h-72 w-72 rounded-full border border-white/10"
+          aria-hidden="true"
+        />
 
-        <div className="relative grid gap-6 px-8 py-9 lg:grid-cols-[1fr_320px] lg:items-center lg:gap-10 lg:px-10 lg:py-10">
-          {/* Copy */}
-          <div>
-            <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-extrabold text-on-primary backdrop-blur-sm">
-              <BookOpen size={12} />
-              {view === 'curriculums'
-                ? `تحميل ${currentTypeName}`
-                : view === 'languages'
-                  ? 'تعلم اللغة'
-                  : currentCurriculumName}
-            </span>
+        <div className="relative px-8 py-7 lg:px-10 lg:py-8">
+          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-extrabold text-on-primary backdrop-blur-sm">
+            <BookOpen size={12} />
+            {view === 'curriculums'
+              ? `تحميل ${currentTypeName}`
+              : view === 'languages'
+                ? 'تعلم اللغة'
+                : currentCurriculumName}
+          </span>
 
-            <h1 className="mb-2.5 font-heading text-4xl font-black leading-tight text-on-primary md:text-5xl">
-              {view === 'curriculums' ? (
-                <>
-                  اختر <span className="text-accent">المنهج</span>
-                </>
-              ) : view === 'languages' ? (
-                <>
-                  اختر <span className="text-accent">اللغة</span>
-                </>
-              ) : (
-                <>
-                  اختر <span className="text-accent">المرحلة</span>
-                </>
-              )}
-            </h1>
-            <p className="max-w-xl text-sm font-bold leading-relaxed text-white/80 lg:text-base">
-              {view === 'curriculums'
-                ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-                : view === 'languages'
-                  ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
-                  : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-            </p>
-          </div>
+          <h1 className="mb-2 font-heading text-3xl font-black leading-tight text-on-primary md:text-4xl">
+            {view === 'curriculums' ? (
+              <>
+                اختر <span className="text-accent">المنهج</span>
+              </>
+            ) : view === 'languages' ? (
+              <>
+                اختر <span className="text-accent">اللغة</span>
+              </>
+            ) : (
+              <>
+                اختر <span className="text-accent">المرحلة</span>
+              </>
+            )}
+          </h1>
+          <p className="mb-5 max-w-xl text-sm font-bold leading-relaxed text-white/80 lg:text-base">
+            {view === 'curriculums'
+              ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+              : view === 'languages'
+                ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
+                : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
+          </p>
 
-          {/* End column - curriculum summary (curriculums) or platform art (grades/languages) */}
-          {view === 'curriculums' && (
-            <div aria-hidden="true" className="pointer-events-none hidden lg:block">
-              <div className="rounded-2xl border border-white/15 bg-white/[0.06] p-4">
-                <div className="mb-3 flex items-center justify-between border-b border-white/10 pb-2.5">
-                  <span className="text-[11px] font-extrabold text-white/90">المناهج المتوفرة</span>
-                  <span className="bg-accent/20 rounded-full px-2.5 py-0.5 text-[10px] font-black text-accent">
-                    ٦
-                  </span>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  {curriculums.map((c) => (
-                    <div
-                      key={c.id}
-                      className="flex items-center gap-2 rounded-lg bg-white/5 px-2.5 py-2"
-                    >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/10">
-                        <c.icon size={12} className="text-white/80" />
-                      </span>
-                      <span className="truncate text-[11px] font-bold text-white/85">{c.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {(view === 'grades' || view === 'languages') && (
-            <div aria-hidden="true" className="pointer-events-none relative hidden h-52 lg:block">
-              <div className="absolute end-0 top-1/2 h-44 w-44 -translate-y-1/2 rounded-full bg-accent-soft blur-[60px]" />
-              <div className="relative mx-auto flex h-full w-52 items-center justify-center">
-                <Image
-                  src="/bbook.webp"
-                  alt=""
-                  className="h-full w-full"
-                  imgClassName="object-contain drop-shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
-                  withSkeleton
-                />
-              </div>
-            </div>
-          )}
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-6 py-2.5 text-sm font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
+          >
+            <MessageCircle size={15} />
+            طلب حصة مجانية
+          </a>
         </div>
       </section>
 
@@ -709,6 +639,19 @@ export const DesktopHero = ({
           ),
         )}
       </div>
+
+      {goBack && (
+        <div className="mt-6 flex justify-center pb-2">
+          <button
+            type="button"
+            onClick={goBack}
+            className="inline-flex min-h-11 w-full cursor-pointer items-center justify-center gap-2.5 rounded-2xl bg-error px-10 py-3 text-sm font-extrabold text-on-error shadow-elevation-1 outline-none transition-all duration-200 hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+          >
+            <ArrowLeft size={16} />
+            <span>العودة</span>
+          </button>
+        </div>
+      )}
     </div>
   )
 }

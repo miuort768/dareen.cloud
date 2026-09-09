@@ -351,6 +351,7 @@ export const Blog = () => {
                 currentTypeName={currentTypeName}
                 currentCurriculumName={currentCurriculumName}
                 setSearchParams={setSearchParams}
+                goBack={goBack}
               />
               {view === 'types' ? (
                 <>
@@ -445,6 +446,7 @@ export const Blog = () => {
                 currentTypeName={currentTypeName}
                 currentCurriculumName={currentCurriculumName}
                 setSearchParams={setSearchParams}
+                goBack={goBack}
               />
               <AdBanner slot="belowSelectionHero" className="mt-8" />
               <AdSenseUnit

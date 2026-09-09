@@ -350,7 +350,7 @@ export const DesktopLibraryLanding = ({
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="ابحث عن مادة، كتاب، أو ملزمة..."
                 aria-label="البحث في المقالات"
-                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-focus dark:border-white/10 dark:placeholder:text-dim"
+                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-focus dark:border-white/10 dark:placeholder:text-white"
               />
             </div>
           </div>
@@ -456,11 +456,11 @@ export const DesktopLibraryLanding = ({
                         onChange={(e) => setCountry(e.target.value)}
                         className="w-full appearance-none rounded-xl border border-white/10 bg-white/[0.07] py-2.5 pe-9 ps-8 text-sm text-white outline-none transition-all placeholder:text-white/30 focus:border-accent focus:ring-2 focus:ring-accent-soft"
                       >
-                        <option value="" disabled className="text-main">
+                        <option value="" disabled>
                           اختر الدولة
                         </option>
                         {BLOG_COUNTRIES.map((c) => (
-                          <option key={c} value={c} className="text-main">
+                          <option key={c} value={c}>
                             {c}
                           </option>
                         ))}
