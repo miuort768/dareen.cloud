@@ -1,4 +1,11 @@
-import { MessageCircle, CalendarDays, Megaphone, MessagesSquare, ChevronLeft } from 'lucide-react'
+import {
+  MessageCircle,
+  CalendarDays,
+  Megaphone,
+  MessagesSquare,
+  Wallet,
+  ChevronLeft,
+} from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
@@ -8,6 +15,14 @@ interface QuickActionsProps {
 }
 
 const actions = [
+  {
+    title: 'سجل الدفعات',
+    subtitle: 'متابعة مستحقاتك وفواتيرك',
+    icon: Wallet,
+    href: '/teacher-payment-history',
+    color: 'text-success',
+    iconBg: 'bg-success-soft',
+  },
   {
     title: 'الدردشة',
     subtitle: 'تواصل مع الطلاب وأولياء الأمور',

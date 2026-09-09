@@ -182,6 +182,8 @@ export const Sidebar = memo(
             'parent_announcements',
             'student_dashboard',
             'parent_payment_history',
+            // سجل دفعات المعلم صفحة بنطاق المعلم (تجلب فواتير هوية صاحبها) — المدير له /finance
+            'teacher_payment_history',
           ].includes(item.id)
         )
           return false

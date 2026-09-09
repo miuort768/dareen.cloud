@@ -266,7 +266,7 @@ export const StudentInvoices = () => {
         className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
         dir="rtl"
       >
-        <div className="mx-auto max-w-5xl space-y-4 px-2.5 pt-6 sm:px-6">
+        <div className="mx-auto max-w-page space-y-4 px-2.5 pt-6 sm:px-4">
           <Skeleton className="h-28 rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
             {[1, 2, 3].map((i) => (
@@ -285,7 +285,7 @@ export const StudentInvoices = () => {
       className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
       dir="rtl"
     >
-      <div className="mx-auto max-w-5xl px-2.5 sm:px-6">
+      <div className="mx-auto max-w-page px-2.5 sm:px-4">
         {/* Header — unified PageHeader pattern */}
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
           <PageHeader

@@ -51,6 +51,8 @@ const SEARCH_ROUTES: [string, string][] = [
   ['المعلمات', '/teachers'],
   ['المالية', '/finance'],
   ['الفواتير', '/student-invoices'],
+  ['سجل الدفعات', '/student-invoices'],
+  ['سجل الدفعات المعلمات', '/teacher-payment-history'],
   ['فواتير المعلمات', '/teacher-invoices'],
   ['الحضور', '/attendance'],
   ['الجداول', '/schedule'],

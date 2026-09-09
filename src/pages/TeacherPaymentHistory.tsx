@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Search,
@@ -12,6 +13,7 @@ import {
   Filter,
   DollarSign,
   Printer,
+  ArrowRight,
 } from 'lucide-react'
 import { api } from '../lib/api'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
@@ -57,6 +59,7 @@ export const TeacherPaymentHistory = () => {
   useEffect(() => {
     document.title = `سجل الدفعات | ${academyName}`
   }, [academyName])
+  const navigate = useNavigate()
   const currentUser = useCurrentUser()
   const showNotification = useShowNotification()
   const [invoices, setInvoices] = useState<TeacherInvoice[]>([])
@@ -286,7 +289,7 @@ export const TeacherPaymentHistory = () => {
         className="from-primary-soft/40 min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
         dir="rtl"
       >
-        <div className="mx-auto max-w-page space-y-4 px-2 pt-4">
+        <div className="mx-auto max-w-page space-y-4 px-2.5 pt-4 sm:px-4">
           <Skeleton className="h-36 rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
@@ -304,13 +307,23 @@ export const TeacherPaymentHistory = () => {
       className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
       dir="rtl"
     >
-      <div className="mx-auto max-w-page px-2">
+      <div className="mx-auto max-w-page px-2.5 sm:px-4">
         {/* Header — unified PageHeader pattern */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
           <PageHeader
             title="سجل الدفعات"
             subtitle="سجل المدفوعات والمستحقات المالية"
             icon={<Wallet size={22} />}
+            breadcrumbs={
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-border bg-card px-3 text-[11px] font-bold text-muted outline-none transition-all hover:border-primary/30 hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
+              >
+                <ArrowRight size={13} />
+                رجوع
+              </button>
+            }
             meta={
               <>
                 <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
