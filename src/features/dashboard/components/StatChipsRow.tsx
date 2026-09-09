@@ -70,7 +70,7 @@ export const StatChipsRow = ({ stats }: { stats: DashboardStats }) => {
 
   return (
     <div
-      className="scrollbar-none -mx-4 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-4 pb-1"
+      className="scrollbar-none -mx-2 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-2 pb-1"
       dir="rtl"
     >
       {chips.map((chip) => {

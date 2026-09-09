@@ -63,8 +63,8 @@ export const StudentDashboardDesktop = ({
 
         <LiveSessionBanner session={activeSession} />
 
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-          <div className="space-y-5 lg:col-span-8">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
+          <div className="space-y-5 md:col-span-1 lg:col-span-8">
             <motion.div {...fadeUp(0.05)}>
               <NextSessionRadar session={nextSession} />
             </motion.div>
@@ -80,7 +80,7 @@ export const StudentDashboardDesktop = ({
             )}
           </div>
 
-          <div className="space-y-5 lg:col-span-4">
+          <div className="space-y-5 md:col-span-1 lg:col-span-4">
             <motion.div {...fadeUp(0.08)}>
               <RankJourney
                 points={points}

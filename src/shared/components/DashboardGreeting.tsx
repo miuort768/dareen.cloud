@@ -106,9 +106,12 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
         {hasFooter && (
           <div className="mt-5 border-t border-white/10 pt-4">
             {stats && stats.length > 0 && (
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
                 {stats.map((stat) => (
-                  <div key={stat.label}>
+                  <div
+                    key={stat.label}
+                    className={cn(stats.length === 3 && 'max-sm:last:col-span-2')}
+                  >
                     <CountUp
                       value={stat.value}
                       format={stat.formatter}

@@ -59,8 +59,8 @@ export const ParentDashboardDesktop = ({
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-          <div className="space-y-5 lg:col-span-8">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
+          <div className="space-y-5 md:col-span-1 lg:col-span-8">
             {kids.length > 0 && (
               <>
                 <motion.div {...fadeUp(0.1)}>
@@ -97,7 +97,7 @@ export const ParentDashboardDesktop = ({
             </motion.div>
           </div>
 
-          <div className="space-y-5 lg:col-span-4">
+          <div className="space-y-5 md:col-span-1 lg:col-span-4">
             <motion.div {...fadeUp(0.12)}>
               <WeeklyPulse stats={weekly} />
             </motion.div>

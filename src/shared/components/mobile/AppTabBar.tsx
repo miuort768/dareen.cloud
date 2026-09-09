@@ -88,7 +88,10 @@ export const AppTabBar = ({ onMore }: AppTabBarProps) => {
     ) : null
 
   return createPortal(
-    <nav className="fixed inset-x-0 bottom-0 z-50 md:hidden" aria-label="التنقل الرئيسي للهاتف">
+    <nav
+      className="fixed inset-x-0 bottom-0 z-50 lg:hidden"
+      aria-label="التنقل الرئيسي للهاتف والتابلت"
+    >
       <div
         className="px-3 pt-1"
         style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}

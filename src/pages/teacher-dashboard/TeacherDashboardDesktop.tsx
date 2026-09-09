@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { Calendar } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { fadeUp } from '../../shared/animations/fadeUp'
@@ -90,7 +90,7 @@ export const TeacherDashboardDesktop = ({
       </motion.div>
 
       {/* الحصة القادمة + الأسبوع — نصفا الشاشة */}
-      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <motion.div {...fadeUp(0.04)}>
           {nextSession ? (
             <NextSessionHero timeline={timeline} />
@@ -114,12 +114,12 @@ export const TeacherDashboardDesktop = ({
         <DashboardStats stats={stats} isTeacher={true} />
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-        <SectionCard delay={0.1} className="lg:col-span-8">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
+        <SectionCard delay={0.1} className="md:col-span-1 lg:col-span-8">
           <LiveSessions />
         </SectionCard>
 
-        <SectionCard delay={0.12} className="p-4 lg:col-span-4">
+        <SectionCard delay={0.12} className="p-4 md:col-span-1 lg:col-span-4">
           <QuickActions showQuickLinks={true} />
         </SectionCard>
       </div>
@@ -146,7 +146,7 @@ export const TeacherDashboardDesktop = ({
         </SectionCard>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         <SectionCard delay={0.22} className="p-4">
           <TasksAndRequests tasks={tasks} />
         </SectionCard>
