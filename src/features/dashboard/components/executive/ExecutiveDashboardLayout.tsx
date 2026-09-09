@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { motion, type Variants } from 'framer-motion'
-import { CalendarDays, RefreshCw, AlertCircle, AlertTriangle } from 'lucide-react'
+import { Activity, RefreshCw, AlertCircle, AlertTriangle } from 'lucide-react'
 import { useExecutiveDashboard } from '../../hooks/useExecutiveDashboard'
 import { BusinessPulse } from './BusinessPulse'
 import { TodayMoney } from './TodayMoney'
@@ -14,6 +14,7 @@ import { ActivityFeed } from './ActivityFeed'
 import { InsightsPanel } from './InsightsPanel'
 import { QuickActionsGrid } from './QuickActionsGrid'
 import { SectionErrorBoundary, Skeleton, ErrorState } from '../../../../shared/components/ui'
+import { DashboardGreeting } from '../../../../shared/components/DashboardGreeting'
 import { cn } from '@/lib/utils'
 
 const containerVariants = {
@@ -33,27 +34,6 @@ const Section = ({ children, className }: { children: React.ReactNode; className
     </SectionErrorBoundary>
   </motion.div>
 )
-
-const formatToday = () => {
-  try {
-    return new Intl.DateTimeFormat('ar-EG-u-nu-latn', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }).format(new Date())
-  } catch {
-    return new Date().toLocaleDateString()
-  }
-}
-
-const getGreeting = (): string => {
-  const h = new Date().getHours()
-  if (h < 5) return 'تصبح على خير'
-  if (h < 12) return 'صباح الخير'
-  if (h < 17) return 'يوم سعيد'
-  return 'مساء الخير'
-}
 
 interface ExecutiveDashboardProps {
   academicYear?: string
@@ -146,45 +126,35 @@ export const ExecutiveDashboard = memo(function ExecutiveDashboard({
     >
       {/* Header strip */}
       <Section>
-        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 font-dash">
-          <div className="flex items-center gap-2">
-            <CalendarDays size={16} strokeWidth={1.9} className="text-primary" />
-            <div className="min-w-0">
-              <p className="mb-0.5 text-[11px] font-black text-muted">{formatToday()}</p>
-              <h1 className="truncate text-sm font-black tracking-tight text-main md:text-base">
-                {getGreeting()}، {firstName}
-              </h1>
-            </div>
-            {academicYear && (
-              <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-[10px] font-bold text-primary">
+        <DashboardGreeting
+          name={firstName}
+          fallbackName="المدير"
+          nightMessage="ليلة موفقة"
+          subtitle={
+            academicYear ? (
+              <span className="inline-flex items-center rounded-lg bg-white/10 px-2 py-0.5 text-[10px] font-bold text-on-primary">
                 {academicYear}
               </span>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="flex items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 py-1.5 text-[10px] font-bold tabular-nums text-muted">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-              </span>
-              مباشر
-            </span>
-            {criticalCount > 0 && (
-              <span className="rounded-lg border border-error-soft bg-error-soft px-2.5 py-1.5 text-[10px] font-black tabular-nums text-error">
-                {criticalCount} تنبيه حرج
-              </span>
-            )}
+            ) : undefined
+          }
+          chips={[
+            { icon: Activity, label: 'بيانات مباشرة' },
+            ...(criticalCount > 0
+              ? [{ icon: AlertTriangle, label: `${criticalCount} تنبيه حرج` }]
+              : []),
+          ]}
+          end={
             <button
               onClick={() => refetch()}
               disabled={isFetching}
               aria-label="تحديث البيانات"
               title="تحديث البيانات"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-card text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-on-primary outline-none transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
             >
-              <RefreshCw size={13} className={isFetching ? 'animate-spin' : ''} />
+              <RefreshCw size={15} className={isFetching ? 'animate-spin' : ''} />
             </button>
-          </div>
-        </div>
+          }
+        />
       </Section>
 
       {/* Degraded services strip — server reported partial failures */}

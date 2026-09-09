@@ -115,7 +115,7 @@ export const MobileDashboardView = ({
         </div>
       </motion.div>
 
-      <div className="space-y-4 px-4 pt-1">
+      <div className="mx-auto max-w-page space-y-4 px-2.5 pt-1 sm:px-4">
         <HeroSection currentUser={currentUser} stats={stats} />
 
         <StatChipsRow stats={stats} />
