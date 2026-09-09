@@ -22,6 +22,8 @@ export interface StatCardProps {
   unit?: string
   badge?: string
   subtitle?: string
+  /** أيقونة كبيرة شفافة كزخرفة في الزاوية السفلية */
+  watermark?: boolean
   loading?: boolean
   className?: string
 }
@@ -133,20 +135,40 @@ export const StatCard = ({
   unit,
   badge,
   subtitle,
+  watermark = false,
   loading = false,
   className,
 }: StatCardProps) => {
   const s = styles[variant]
   const soft = isSoftVariant(variant)
+  const wmColor = !soft
+    ? 'text-on-primary opacity-10'
+    : variant.endsWith('-success')
+      ? 'text-success-strong opacity-[0.08]'
+      : variant.endsWith('-error')
+        ? 'text-error-strong opacity-[0.08]'
+        : variant.endsWith('-warning')
+          ? 'text-warning-strong opacity-[0.08]'
+          : variant.endsWith('-info')
+            ? 'text-info-strong opacity-[0.08]'
+            : 'text-primary opacity-[0.08]'
 
   return (
     <div
       className={cn(
-        'relative rounded-2xl p-4 shadow-elevation-1 transition-colors duration-slow hover:-translate-y-0.5 hover:shadow-elevation-2',
+        'relative overflow-hidden rounded-2xl p-4 shadow-elevation-1 transition-colors duration-slow hover:-translate-y-0.5 hover:shadow-elevation-2',
         s.card,
         className,
       )}
     >
+      {watermark && Icon && (
+        <Icon
+          size={72}
+          strokeWidth={1}
+          className={cn('pointer-events-none absolute -bottom-3 -end-3', wmColor)}
+          aria-hidden="true"
+        />
+      )}
       {loading ? (
         <div className="animate-pulse space-y-3">
           <div className={cn('h-10 w-10 rounded-xl', s.skeleton)} />
