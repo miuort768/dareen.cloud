@@ -227,6 +227,36 @@
   --text-info-dark: #7dd3fc;
 }
 
+/* Light-form island: forces light token values inside a form card in dark mode.
+   Used by Login + Jobs forms whose fields must look identical to light mode. */
+.dark .form-light {
+  --bg-card: #ffffff;
+  --bg-hover: #e6ebf3;
+  --border: #d8dfeb;
+  --border-strong: #c5cfdd;
+  --divider: #d8dfeb;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-dim: #66778e;
+  --text-inverse: #ffffff;
+  --ring-focus: #6366f1;
+  --bg-primary: #6366f1;
+  --bg-primary-deep: #1e1b4b;
+  --bg-primary-hover: #4f46e5;
+  --bg-primary-active: #4338ca;
+  --bg-primary-soft: #eef2ff;
+  --bg-primary-light: #e0e7ff;
+  --text-primary: #6366f1;
+  --text-on-primary: #ffffff;
+  --border-primary: #6366f1;
+  --bg-error-soft: #fff1f2;
+  --bg-error-light: #ffe4e6;
+  --text-error: #e11d48;
+  --bg-success-soft: #ecfdf5;
+  --bg-success-light: #d1fae5;
+  --text-success: #059669;
+}
+
 @media (min-width: 768px) {
   .dark .desktop-light {
     --bg-card: #ffffff;

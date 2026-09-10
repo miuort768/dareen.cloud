@@ -161,7 +161,7 @@ export const Jobs = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="rounded-card border border-border bg-card shadow-soft"
+            className="form-light rounded-card border border-border bg-card shadow-soft"
           >
             <div className="border-b border-border p-4 md:p-10">
               <div className="mb-6 flex items-center justify-between">

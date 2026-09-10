@@ -95,24 +95,29 @@ export const Login = () => {
       {/* Desktop: Full Background Image */}
       <div className="fixed inset-0 hidden lg:block">
         <img src="/login1.png" alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-l from-white/95 via-white/80 to-white/20 dark:from-background dark:via-background dark:to-background" />
+        <div className="absolute inset-0 bg-gradient-to-l from-white/95 via-white/80 to-white/20" />
       </div>
 
       {/* Form — Centered on both, always light-themed */}
       <div className="relative z-10 flex min-h-[calc(100vh-60px)] flex-col items-center justify-center px-4 py-8 lg:min-h-screen lg:pt-24">
-        <div className="mt-32 w-full max-w-sm dark:rounded-2xl dark:bg-white dark:p-8 dark:shadow-2xl lg:mt-0 lg:max-w-md xl:max-w-lg">
+        <div className="form-light mt-32 w-full max-w-sm lg:mt-0 lg:max-w-md xl:max-w-lg">
           <div className="mb-8 text-center lg:mb-10">
             <h1 className="mb-2 hidden font-heading text-2xl font-black text-main lg:block lg:text-3xl">
               تسجيل الدخول
             </h1>
-            <p className="text-sm font-medium text-white/80 dark:text-muted lg:text-base lg:text-main">
+            {/* Mobile: sharp-cornered rectangle with lock — clear over the photo in both modes */}
+            <p className="inline-flex items-center gap-2 rounded-none border border-white/40 bg-white/10 px-4 py-2.5 text-sm font-bold text-white backdrop-blur-sm lg:hidden">
+              <Lock size={14} />
+              أدخل بياناتك للوصول إلى حسابك
+            </p>
+            <p className="hidden text-base font-medium text-main lg:block">
               أدخل بياناتك للوصول إلى حسابك
             </p>
           </div>
 
           {error && (
-            <div className="mb-4 rounded-xl border border-error-soft bg-error-soft p-4 dark:border-error-soft dark:bg-error-soft">
-              <p className="text-sm font-bold text-error dark:text-error">{error}</p>
+            <div className="mb-4 rounded-xl border border-error-soft bg-error-soft p-4">
+              <p className="text-sm font-bold text-error">{error}</p>
             </div>
           )}
 
@@ -120,7 +125,7 @@ export const Login = () => {
             <div>
               <label
                 htmlFor="login-username"
-                className="mb-1.5 block text-xs font-bold text-white/80 dark:text-main lg:text-sm lg:text-main"
+                className="mb-1.5 block text-xs font-bold text-white/80 lg:text-sm lg:text-main"
               >
                 اسم المستخدم
               </label>
@@ -136,7 +141,7 @@ export const Login = () => {
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="أدخل اسم المستخدم"
                   required
-                  className="h-12 w-full rounded-xl border border-border bg-card pe-4 ps-12 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-card dark:text-main dark:placeholder:text-muted lg:h-14 lg:text-base"
+                  className="h-12 w-full rounded-xl border border-border bg-card pe-4 ps-12 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus-visible:ring-2 focus-visible:ring-focus lg:h-14 lg:text-base"
                 />
               </div>
             </div>
@@ -144,7 +149,7 @@ export const Login = () => {
             <div>
               <label
                 htmlFor="login-password"
-                className="mb-1.5 block text-xs font-bold text-white/80 dark:text-main lg:text-sm lg:text-main"
+                className="mb-1.5 block text-xs font-bold text-white/80 lg:text-sm lg:text-main"
               >
                 كلمة المرور
               </label>
@@ -160,7 +165,7 @@ export const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="أدخل كلمة المرور"
                   required
-                  className="h-12 w-full rounded-xl border border-border bg-card pe-12 ps-12 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-card dark:text-main dark:placeholder:text-muted lg:h-14 lg:text-base"
+                  className="h-12 w-full rounded-xl border border-border bg-card pe-12 ps-12 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus-visible:ring-2 focus-visible:ring-focus lg:h-14 lg:text-base"
                   style={{ fontVariantNumeric: showPassword ? 'normal' : 'tabular-nums' }}
                 />
                 <button
@@ -198,13 +203,13 @@ export const Login = () => {
           <div className="mt-6 flex flex-col items-center gap-3 lg:mt-8">
             <Link
               to="/"
-              className="flex items-center gap-2 text-sm font-bold text-white transition-colors hover:text-white/80 dark:text-warning lg:text-base lg:text-warning lg:hover:text-warning-dark"
+              className="flex items-center gap-2 text-sm font-bold text-white transition-colors hover:text-white/80 lg:text-base lg:text-warning lg:hover:text-warning-dark"
             >
               <ArrowRight size={16} />
               <span>العودة للرئيسية</span>
             </Link>
 
-            <div className="w-full border-t border-border pt-4 dark:border-border">
+            <div className="w-full border-t border-border pt-4">
               <a
                 href={`https://wa.me/${adminPhone.replace(/\D/g, '')}?text=أحتاج مساعدة في تسجيل الدخول`}
                 target="_blank"
@@ -214,7 +219,7 @@ export const Login = () => {
                 <Headphones size={18} />
                 <span>الدعم الفني</span>
               </a>
-              <p className="mt-3 text-center text-xs font-medium text-white/90 dark:text-muted lg:text-sm lg:text-main">
+              <p className="mt-3 text-center text-xs font-medium text-white lg:text-sm lg:text-main">
                 لديك مشكلة؟ تواصل مع الدعم
               </p>
             </div>

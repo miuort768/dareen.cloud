@@ -2,9 +2,25 @@ import { Link } from 'react-router-dom'
 import { MobileHeader } from '../../components/public/MobileHeader'
 import { PublicFooter } from '../../components/public/PublicFooter'
 import { SEO } from '../../components/SEO'
-import { Home, ArrowLeft } from 'lucide-react'
+import { useSettingsStore } from '../../store/settingsStore'
+import { Home, Headphones } from 'lucide-react'
 
 export const NotFound = () => {
+  const adminPhone = useSettingsStore((s) => s.adminPhone)
+  const whatsappNumbers = useSettingsStore((s) => s.whatsappNumbers)
+
+  // Settings-driven support number (same recipe as FloatingActions/PrivacyPolicy)
+  const getNumber = (label: string): string => {
+    try {
+      const entries: { label: string; phone: string }[] = JSON.parse(whatsappNumbers)
+      const found = entries.find((e) => e.label === label)
+      return found ? found.phone.replace(/\D/g, '') : adminPhone.replace(/\D/g, '')
+    } catch (e) {
+      console.warn(e)
+      return adminPhone.replace(/\D/g, '')
+    }
+  }
+
   return (
     <div className="relative flex min-h-full flex-col bg-background font-sans text-main">
       <SEO
@@ -30,7 +46,7 @@ export const NotFound = () => {
           />
         </div>
 
-        <div className="container relative z-10 mx-auto max-w-lg px-4 text-center">
+        <div className="container relative z-10 mx-auto max-w-lg px-4 text-center md:max-w-7xl">
           <picture>
             <source srcSet="/404.webp" type="image/webp" />
             <source srcSet="/404.avif" type="image/avif" />
@@ -38,7 +54,7 @@ export const NotFound = () => {
               src="/404.png"
               alt="صفحة غير موجودة"
               loading="lazy"
-              className="mx-auto mb-0 block max-h-64 w-80 object-contain md:mb-4 md:max-h-96 md:w-[480px]"
+              className="mx-auto mb-0 block max-h-64 w-80 object-contain md:mb-4 md:max-h-[70vh] md:w-[1200px]"
             />
           </picture>
 
@@ -51,7 +67,7 @@ export const NotFound = () => {
             تصفح دوراتنا.
           </p>
 
-          <div className="flex flex-row items-center justify-center gap-2 md:gap-4">
+          <div className="flex flex-row flex-wrap items-center justify-center gap-2 md:gap-4">
             <Link
               to="/"
               className="flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-black text-on-primary shadow-elevation-2 transition-all hover:bg-primary-hover hover:shadow-elevation-3 active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
@@ -59,13 +75,15 @@ export const NotFound = () => {
               <Home size={16} />
               العودة للرئيسية
             </Link>
-            <Link
-              to="/courses"
-              className="flex items-center gap-2 rounded-xl bg-accent px-6 py-3 text-sm font-black text-on-accent shadow-elevation-2 transition-all hover:bg-accent-hover hover:shadow-elevation-3 active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
+            <a
+              href={`https://wa.me/${getNumber('تواصل مع الدعم الفني')}?text=${encodeURIComponent('السلام عليكم، وصلت لصفحة غير موجودة في الموقع وأحتاج مساعدة')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-xl bg-success px-6 py-3 text-sm font-black text-on-success shadow-elevation-2 transition-all hover:bg-success-hover hover:shadow-elevation-3 active:scale-[0.98] md:px-8 md:py-3.5 md:text-base"
             >
-              <ArrowLeft size={16} />
-              تصفح الدورات
-            </Link>
+              <Headphones size={16} />
+              تواصل مع الدعم
+            </a>
           </div>
         </div>
       </main>

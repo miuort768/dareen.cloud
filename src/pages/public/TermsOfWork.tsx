@@ -67,7 +67,7 @@ export const TermsOfWork = () => {
             <span className="text-xs font-semibold tracking-label md:text-xs">قوانين العمل</span>
           </div>
 
-          <h1 className="mb-1 font-heading text-base font-bold leading-tight text-primary dark:text-main md:mb-3 md:text-4xl md:text-main">
+          <h1 className="mb-1 font-heading text-sm font-bold leading-tight text-primary dark:text-main md:mb-3 md:text-4xl md:text-main">
             قوانين{' '}
             <span className="inline-block bg-gradient-to-r from-primary to-primary bg-clip-text py-1 text-transparent">
               العمل
@@ -108,8 +108,8 @@ export const TermsOfWork = () => {
                 <Award className="h-6 w-6 text-success" />
               </div>
               <div>
-                <h2 className="mb-3 text-xl font-bold text-main md:text-2xl">مؤهلات المعلمين</h2>
-                <div className="space-y-1 text-xs text-muted md:text-sm">
+                <h2 className="mb-3 text-lg font-bold text-main md:text-2xl">مؤهلات المعلمين</h2>
+                <div className="space-y-1 text-[11px] leading-relaxed text-muted md:text-sm">
                   <ul className="ms-4 list-inside list-disc space-y-1">
                     <li>حصول المعلم على مؤهل جامعي في التخصص المطلوب</li>
                     <li>خبرة لا تقل عن سنتين في التدريس أون لاين أو حضوري</li>

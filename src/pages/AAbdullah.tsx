@@ -111,7 +111,7 @@ export const AAbdullah = () => {
               <h2 className="text-lg font-bold text-main">نبدة تعريفية</h2>
               <VBolt size={16} className="text-accent" />
             </div>
-            <p className="text-sm leading-relaxed text-muted">
+            <p className="text-xs leading-relaxed text-muted md:text-sm">
               خريج كلية التربية — جامعة الأزهر. مدرس عشق البرمجة، ومؤمن إن التكنولوجيا هي المفتاح
               لتطوير التعليم العربي وتخليه أكثر متعة وفايدة.
             </p>
@@ -124,6 +124,9 @@ export const AAbdullah = () => {
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-[11px] font-bold text-accent">
                 <VStar size={12} /> خريج جامعة الأزهر
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-success px-3 py-1 text-[11px] font-bold text-on-success">
+                <VStar size={12} /> أزهري وأفتخر
               </span>
             </div>
           </div>
