@@ -314,7 +314,11 @@ export const Forum = () => {
       dir="rtl"
     >
       <div className="relative z-10 pt-2">
-        <ForumHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+        <ForumHeader
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          participants={totalParticipants}
+        />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

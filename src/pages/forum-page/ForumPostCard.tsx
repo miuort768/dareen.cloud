@@ -128,19 +128,33 @@ export const ForumPostCard = ({
   const displayAuthorName = formatDisplayName(post.authorName, post.authorRole)
   const typeMeta = POST_TYPE_META[resolvePostType(post.type)]
   const TypeIcon = typeMeta.icon
+  const typeAccent: Record<string, string> = {
+    question: 'via-info',
+    discussion: 'via-primary',
+    tip: 'via-success',
+    announcement: 'via-warning',
+  }
 
   return (
     <div
       id={`post-${post.id}`}
       className={cn(
-        'rounded-card border border-border bg-card shadow-elevation-1 transition-shadow duration-normal dark:bg-surface',
+        'group/card relative overflow-hidden rounded-card border border-border bg-card shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:shadow-elevation-2 dark:bg-surface',
         isHighlighted && 'ring-2 ring-primary',
       )}
     >
+      {/* شريط لون علوي حسب نوع المنشور — يشتد عند التحويم */}
+      <div
+        aria-hidden="true"
+        className={cn(
+          'absolute inset-x-0 top-0 h-0.5 bg-gradient-to-l from-transparent to-transparent opacity-50 transition-opacity duration-300 group-hover/card:opacity-100',
+          typeAccent[resolvePostType(post.type)] ?? 'via-primary',
+        )}
+      />
       {/* Post Header */}
       <div className="flex items-start justify-between rounded-t-card p-4 md:p-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-card bg-primary text-sm font-bold text-on-primary shadow-elevation-1">
+          <div className="flex h-11 w-11 items-center justify-center rounded-card bg-primary text-sm font-bold text-on-primary shadow-elevation-1 transition-transform duration-300 group-hover/card:scale-105">
             {(displayAuthorName[0] || '').toUpperCase()}
           </div>
           <div>
