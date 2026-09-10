@@ -1,50 +1,46 @@
-import { Search, Plus, MessagesSquare } from 'lucide-react'
-import { Heading, Text, Button, TextField, Flex } from '@radix-ui/themes'
+import { Search, X, MessageSquare } from 'lucide-react'
+import { useAcademyName } from '../../context/AppContext'
+import { GradientHeroCard } from '../../shared/components/GradientHeroCard'
 
 interface ForumHeaderProps {
-  searchTerm: string
-  onSearchChange: (v: string) => void
-  onCreateClick: () => void
+  searchTerm?: string
+  onSearchChange?: (v: string) => void
 }
 
-/** ترويسة المنتدى — عنوان + وصف + زر إنشاء + بحث */
-export const ForumHeader = ({ searchTerm, onSearchChange, onCreateClick }: ForumHeaderProps) => (
-  <Flex direction="column" gap="4" mb="4">
-    <Flex align="center" gap="3">
-      <Flex
-        align="center"
-        justify="center"
-        className="h-11 w-11 shrink-0 rounded-2xl bg-primary-soft"
-      >
-        <MessagesSquare size={20} className="text-primary" />
-      </Flex>
-      <Flex direction="column" gap="1">
-        <Heading size="5" className="!text-main">
-          منتدى دارين
-        </Heading>
-        <Text size="1" color="gray" weight="medium">
-          مجتمع تعليمي يجمع المعلمات والطلاب وأولياء الأمور لتبادل المعرفة والخبرات.
-        </Text>
-      </Flex>
-    </Flex>
-
-    <Flex gap="3" direction={{ initial: 'column', sm: 'row' }} align={{ sm: 'center' }}>
-      <Button size="2" onClick={onCreateClick} className="!font-bold">
-        <Plus size={15} /> إنشاء منشور
-      </Button>
-
-      <TextField.Root
-        size="2"
-        placeholder="البحث في المنتدى..."
-        value={searchTerm}
-        onChange={(e) => onSearchChange(e.target.value)}
-        aria-label="البحث في المنتدى"
-        className="flex-1"
-      >
-        <TextField.Slot>
-          <Search size={14} />
-        </TextField.Slot>
-      </TextField.Root>
-    </Flex>
-  </Flex>
-)
+export const ForumHeader = ({ searchTerm = '', onSearchChange }: ForumHeaderProps) => {
+  const academyName = useAcademyName()
+  return (
+    <div className="mx-4 mb-6 mt-4 md:mx-auto md:max-w-page">
+      <GradientHeroCard
+        icon={MessageSquare}
+        title={`منتدى ${academyName}`}
+        subtitle="مساحة للنقاش وتبادل الخبرات بين معلمات وأولياء الأمور والطلاب."
+        end={
+          <div className="relative w-full lg:max-w-md lg:flex-1">
+            <Search
+              size={14}
+              className="absolute start-3.5 top-1/2 -translate-y-1/2 text-white/90"
+            />
+            <input
+              type="text"
+              aria-label="بحث في المنتدى"
+              value={searchTerm}
+              onChange={(e) => onSearchChange?.(e.target.value)}
+              placeholder="ابحث في المنشورات..."
+              className="h-11 w-full rounded-xl border border-white/20 bg-white/10 pe-9 ps-10 text-xs font-bold text-on-primary outline-none backdrop-blur-sm transition-all placeholder:text-white/80 focus-visible:border-white/40 focus-visible:ring-2 focus-visible:ring-white/20"
+            />
+            {searchTerm && (
+              <button
+                onClick={() => onSearchChange?.('')}
+                aria-label="مسح البحث"
+                className="absolute end-3 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-full text-white/90 outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-focus"
+              >
+                <X size={12} />
+              </button>
+            )}
+          </div>
+        }
+      />
+    </div>
+  )
+}
