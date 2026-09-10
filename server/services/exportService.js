@@ -44,8 +44,8 @@ function reshape(text) {
         }
         return chars.join('');
     } catch (err) {
-        logger.warn('Arabic reshape/reorder failed, falling back to shaped text:', err.message);
-        return shaped;
+        logger.warn('Arabic reshape/reorder failed, falling back to reversed shaped text:', err.message);
+        return [...shaped].reverse().join('');
     }
 }
 
