@@ -15,7 +15,7 @@ import {
 import { formatDistanceToNow } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { cn } from '../../lib/utils'
-import { buildThreadedComments } from '../../features/forum/types'
+import { buildThreadedComments, POST_TYPE_META, resolvePostType } from '../../features/forum/types'
 import type { Post } from '../../features/forum/types'
 
 interface ForumPostCardProps {
@@ -126,6 +126,8 @@ export const ForumPostCard = ({
   }
 
   const displayAuthorName = formatDisplayName(post.authorName, post.authorRole)
+  const typeMeta = POST_TYPE_META[resolvePostType(post.type)]
+  const TypeIcon = typeMeta.icon
 
   return (
     <div
@@ -144,6 +146,10 @@ export const ForumPostCard = ({
           <div>
             <div className="mb-0.5 flex items-center gap-2">
               <h4 className="text-sm font-bold text-main">{displayAuthorName}</h4>
+              <span className="inline-flex items-center gap-1 rounded-card border border-border bg-surface px-2 py-0.5 text-micro font-bold text-muted">
+                <TypeIcon size={9} strokeWidth={2.2} />
+                {typeMeta.label}
+              </span>
               {post.authorRole === 'admin' && (
                 <span className="rounded-card border border-error bg-error-light px-2 py-0.5 text-micro font-bold text-error">
                   إدارة

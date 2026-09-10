@@ -8,7 +8,7 @@ import { useSearchParams } from 'react-router-dom'
 import { api, safeArray } from '../lib/api'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
 import { confirm } from '../lib/confirmDialog'
-import type { Comment, Post } from '../features/forum/types'
+import type { Comment, ForumPostType, Post } from '../features/forum/types'
 import { ForumHeader, ForumCreatePost, ForumPostCard, ForumHelpBanner } from './forum-page'
 import { cn } from '../lib/utils'
 
@@ -56,10 +56,13 @@ export const Forum = () => {
     }
   }, [highlightedPostId, loading])
 
-  const handleCreatePost = async () => {
+  const handleCreatePost = async (type: ForumPostType) => {
     if (!newPostContent.trim()) return
     try {
-      const data = await api.post<{ message?: string }>('/forum', { content: newPostContent })
+      const data = await api.post<{ message?: string }>('/forum', {
+        content: newPostContent,
+        type,
+      })
       showNotification(data.message || 'تم إنشاء المنشور', 'success')
       setNewPostContent('')
       queryClient.invalidateQueries({ queryKey: ['forum'] })
