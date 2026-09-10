@@ -447,7 +447,7 @@ function drawTable(doc, cols, rows, arabicFont) {
 
     rows.forEach((row, ri) => {
         const cellLines = cols.map((col, ci) =>
-            wrapLogical(doc, String(row[col.key] ?? ''), adjustedWidths[ci] - 4)
+            wrapLogical(doc, String(row[col.key] === true ? 'نعم' : row[col.key] === false ? 'لا' : (row[col.key] ?? '')), adjustedWidths[ci] - 4)
         );
         const rowH = Math.max(16, Math.max(...cellLines.map(l => l.length)) * lineHeight + 3);
 
