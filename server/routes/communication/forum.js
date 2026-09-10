@@ -63,6 +63,8 @@ router.get('/', async (req, res) => {
             created_at: p.createdAt,
             upvotes: JSON.parse(p.upvotes || '[]'),
             downvotes: JSON.parse(p.downvotes || '[]'),
+            savedBy: JSON.parse(p.savedBy || '[]'),
+            type: p.type || 'discussion',
             commentCount: p._count?.comments || 0,
             _count: undefined,
         })));
@@ -73,12 +75,15 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { content } = req.body;
+    const { content, type } = req.body;
     const user = req.user;
 
     if (!content || !content.trim()) {
         return res.status(400).json({ error: 'Content is required.' });
     }
+
+    const POST_TYPES = ['question', 'discussion', 'tip', 'announcement'];
+    const postType = POST_TYPES.includes(type) ? type : 'discussion';
 
     try {
         let realName = user.name;
@@ -99,8 +104,10 @@ router.post('/', async (req, res) => {
             authorRole: user.role,
             content: content.trim(),
             status: user.role === 'admin' ? 'approved' : 'pending',
+            type: postType,
             upvotes: '[]',
-            downvotes: '[]'
+            downvotes: '[]',
+            savedBy: '[]'
         };
 
         await prisma.forumPost.create({ data: newPost });
@@ -119,6 +126,7 @@ router.post('/', async (req, res) => {
             ...newPost,
             upvotes: [],
             downvotes: [],
+            savedBy: [],
             awardedPoints,
             message: newPost.status === 'pending' ? 'تم إرسال المنشور للمراجعة.' : 'تم النشر بنجاح.'
         });
@@ -145,6 +153,68 @@ router.delete('/:id', async (req, res) => {
         res.json({ message: 'Post deleted successfully.' });
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Delete forum post');
+    }
+});
+
+router.patch('/:id', async (req, res) => {
+    if (req.user.role !== 'admin') return res.status(403).json({ error: 'Unauthorized.' });
+    const { content } = req.body;
+    if (!content || !content.trim()) {
+        return res.status(400).json({ error: 'Content is required.' });
+    }
+    try {
+        const updated = await prisma.forumPost.update({
+            where: { id: req.params.id },
+            data: { content: content.trim() }
+        });
+        res.json({ message: 'Post updated.', post: updated });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Update forum post');
+    }
+});
+
+router.patch('/comments/:commentId', async (req, res) => {
+    if (req.user.role !== 'admin') return res.status(403).json({ error: 'Unauthorized.' });
+    const { content } = req.body;
+    if (!content || !content.trim()) {
+        return res.status(400).json({ error: 'Content is required.' });
+    }
+    try {
+        const updated = await prisma.forumComment.update({
+            where: { id: req.params.commentId },
+            data: { content: content.trim() }
+        });
+        res.json({ message: 'Comment updated.', comment: updated });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Update forum comment');
+    }
+});
+
+router.post('/:id/save', async (req, res) => {
+    const userId = req.user.id;
+
+    try {
+        const post = await prisma.forumPost.findUnique({
+            where: { id: req.params.id },
+            select: { savedBy: true }
+        });
+        if (!post) return res.status(404).json({ error: 'Post not found.' });
+
+        let savedBy = JSON.parse(post.savedBy || '[]');
+        if (savedBy.includes(userId)) {
+            savedBy = savedBy.filter(id => id !== userId);
+        } else {
+            savedBy.push(userId);
+        }
+
+        await prisma.forumPost.update({
+            where: { id: req.params.id },
+            data: { savedBy: JSON.stringify(savedBy) }
+        });
+
+        res.json({ savedBy });
+    } catch (err) {
+        ResponseHandler.serverError(res, err, 'Toggle save post');
     }
 });
 

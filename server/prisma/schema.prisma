@@ -540,14 +540,17 @@ model ForumPost {
   authorRole String
   content    String
   status     String   @default("pending")
+  type       String   @default("discussion")
   upvotes    String?  @default("[]")
   downvotes  String?  @default("[]")
+  savedBy    String?  @default("[]")
   createdAt  DateTime @default(now()) @map("created_at")
 
   comments ForumComment[]
 
   @@index([authorId])
   @@index([status])
+  @@index([type])
   @@map("forum_posts")
 }
 

@@ -1,0 +1,78 @@
+/*
+ * جسر Radix Themes ↔ نظام دارين — محصور بصفحة المنتدى (chunk مستقل)
+ * يُستورد داخل Forum.tsx فقط حتى لا يمس باقي التطبيق
+ */
+@import '@radix-ui/themes/styles.css';
+
+.radix-themes {
+  /* الخطوط: هوية دارين العربية */
+  --default-font-family: var(--font-family-sans);
+  --heading-font-family: var(--font-family-sans);
+  --code-font-family: var(--font-family-sans);
+
+  /* الحدود: سُلّم دارين (rounded-2xl = 16px للبطاقات) */
+  --radius-5: 0.75rem;
+  --radius-6: 1rem;
+
+  /* جسر اللون: أساس دارين (indigo فاتح / gold داكن) — يتبع متغيرات النظام تلقائيًا */
+  --accent-9: var(--bg-primary);
+  --accent-10: var(--bg-primary-hover);
+  --accent-11: var(--text-primary);
+  --accent-contrast: var(--text-on-primary);
+  --accent-a2: var(--bg-primary-soft);
+  --accent-a3: var(--bg-primary-soft);
+  --accent-a4: color-mix(in srgb, var(--bg-primary) 14%, transparent);
+  --accent-a5: color-mix(in srgb, var(--bg-primary) 22%, transparent);
+  --accent-a6: color-mix(in srgb, var(--bg-primary) 32%, transparent);
+}
+
+/* النصوص داخل المنتدى تحترم ألوان دارين */
+.radix-themes .rt-Card {
+  --card-background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--elevation-1);
+}
+
+.radix-themes .rt-Button.rt-variant-solid {
+  background: var(--accent-9);
+  color: var(--accent-contrast);
+  font-weight: 800;
+}
+
+.radix-themes .rt-Button.rt-variant-soft {
+  background: var(--accent-a3);
+  color: var(--accent-11);
+  font-weight: 700;
+}
+
+/* شارات هادئة */
+.radix-themes .rt-Badge.rt-variant-soft {
+  background: var(--gray-a3);
+  color: var(--gray-11);
+  font-weight: 700;
+}
+
+/* Tabs بأسلوب دارين */
+.radix-themes .rt-TabsList {
+  box-shadow: inset 0 -1px var(--border);
+}
+
+.radix-themes .rt-TabsTrigger {
+  font-weight: 700;
+}
+
+.radix-themes .rt-TabsTrigger[data-state='active'] {
+  color: var(--text-primary);
+}
+
+/* TextField بأسلوب مدخلات دارين */
+.radix-themes .rt-TextFieldInput {
+  font-weight: 500;
+}
+
+/* تحسين عرض التعليقات داخل البطاقة */
+.radix-themes .forum-comment-body {
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.7;
+}
