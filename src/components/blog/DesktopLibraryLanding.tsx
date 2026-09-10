@@ -436,7 +436,7 @@ export const DesktopLibraryLanding = ({
                   <span className="text-xs font-bold text-white">تم التسجيل بنجاح!</span>
                 </div>
               ) : (
-                <form onSubmit={handleSubscribe} className="space-y-2.5">
+                <form onSubmit={handleSubscribe} className="form-light space-y-2.5">
                   <div>
                     <label
                       className="mb-1 block text-[10px] font-bold text-white/40"
@@ -447,14 +447,14 @@ export const DesktopLibraryLanding = ({
                     <div className="relative">
                       <Globe
                         size={13}
-                        className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-white/30"
+                        className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted"
                       />
                       <select
                         id="newsletter-country-d"
                         required
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
-                        className="w-full appearance-none rounded-xl border border-white/10 bg-white/[0.07] py-2.5 pe-9 ps-8 text-sm text-white outline-none transition-all placeholder:text-white/30 focus:border-accent focus:ring-2 focus:ring-accent-soft"
+                        className="w-full cursor-pointer appearance-none rounded-xl border border-border bg-card py-2.5 pe-9 ps-8 text-sm text-main outline-none transition-all [color-scheme:light] focus:border-primary focus:ring-2 focus:ring-focus"
                       >
                         <option value="" disabled>
                           اختر الدولة
@@ -467,7 +467,7 @@ export const DesktopLibraryLanding = ({
                       </select>
                       <ChevronDown
                         size={13}
-                        className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-white/30"
+                        className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-muted"
                       />
                     </div>
                   </div>
@@ -481,7 +481,7 @@ export const DesktopLibraryLanding = ({
                     <div className="relative">
                       <Phone
                         size={13}
-                        className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-white/30"
+                        className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted"
                       />
                       <input
                         id="newsletter-phone-d"
@@ -492,7 +492,7 @@ export const DesktopLibraryLanding = ({
                         value={phone}
                         onChange={(e) => setPhone(normalizePhoneInput(e.target.value))}
                         placeholder="5xxxxxxxx"
-                        className="w-full rounded-xl border border-white/10 bg-white/[0.07] py-2.5 pe-4 ps-8 text-sm text-white outline-none transition-all placeholder:text-white/30 focus:border-accent focus:ring-2 focus:ring-accent-soft"
+                        className="w-full rounded-xl border border-border bg-card py-2.5 pe-4 ps-8 text-sm text-main outline-none transition-all placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-focus"
                       />
                     </div>
                   </div>

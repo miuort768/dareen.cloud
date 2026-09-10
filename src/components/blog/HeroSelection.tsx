@@ -545,48 +545,76 @@ export const DesktopHero = ({
           aria-hidden="true"
         />
 
-        <div className="relative px-8 py-7 lg:px-10 lg:py-8">
-          <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-extrabold text-on-primary backdrop-blur-sm">
-            <BookOpen size={12} />
-            {view === 'curriculums'
-              ? `تحميل ${currentTypeName}`
-              : view === 'languages'
-                ? 'تعلم اللغة'
-                : currentCurriculumName}
-          </span>
+        <div className="relative grid gap-6 px-8 py-7 lg:grid-cols-[1fr_280px] lg:items-center lg:gap-10 lg:px-10 lg:py-10">
+          {/* Copy */}
+          <div>
+            <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[11px] font-extrabold text-on-primary backdrop-blur-sm">
+              <BookOpen size={12} />
+              {view === 'curriculums'
+                ? `تحميل ${currentTypeName}`
+                : view === 'languages'
+                  ? 'تعلم اللغة'
+                  : currentCurriculumName}
+            </span>
 
-          <h1 className="mb-2 font-heading text-3xl font-black leading-tight text-on-primary md:text-4xl">
-            {view === 'curriculums' ? (
-              <>
-                اختر <span className="text-accent">المنهج</span>
-              </>
-            ) : view === 'languages' ? (
-              <>
-                اختر <span className="text-accent">اللغة</span>
-              </>
-            ) : (
-              <>
-                اختر <span className="text-accent">المرحلة</span>
-              </>
-            )}
-          </h1>
-          <p className="mb-5 max-w-xl text-sm font-bold leading-relaxed text-white/80 lg:text-base">
-            {view === 'curriculums'
-              ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
-              : view === 'languages'
-                ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
-                : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
-          </p>
+            <h1 className="mb-2 font-heading text-3xl font-black leading-tight text-on-primary md:text-4xl lg:text-5xl">
+              {view === 'curriculums' ? (
+                <>
+                  اختر <span className="text-accent">المنهج</span>
+                </>
+              ) : view === 'languages' ? (
+                <>
+                  اختر <span className="text-accent">اللغة</span>
+                </>
+              ) : (
+                <>
+                  اختر <span className="text-accent">المرحلة</span>
+                </>
+              )}
+            </h1>
+            <p className="max-w-xl text-sm font-bold leading-relaxed text-white/80 lg:text-base">
+              {view === 'curriculums'
+                ? `تصفح وتحميل ${currentTypeName} لأفضل المناهج التعليمية في الخليج`
+                : view === 'languages'
+                  ? 'اختر اللغة التي تريد تعلمها وتصفح المحتوى المتاح'
+                  : `جميع ملفات ${currentCurriculumName} مرتبة ومصنفة لتسهيل الوصول`}
+            </p>
 
-          <a
-            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-6 py-2.5 text-sm font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
-          >
-            <MessageCircle size={15} />
-            طلب حصة مجانية
-          </a>
+            {/* Mobile CTA: full-width inline */}
+            <a
+              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-xs font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97] lg:hidden"
+            >
+              <MessageCircle size={14} />
+              طلب حصة مجانية
+            </a>
+          </div>
+
+          {/* Desktop CTA: dedicated side unit */}
+          <div className="hidden flex-col gap-3 rounded-2xl border border-white/15 bg-white/[0.06] p-5 backdrop-blur-sm lg:flex">
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-soft">
+                <MessageCircle size={19} className="text-accent" />
+              </span>
+              <div>
+                <span className="block text-sm font-black text-white">حصة تجريبية مجانية</span>
+                <span className="block text-[11px] font-bold text-white/70">
+                  فردية عبر الإنترنت — احجز موعدك الآن
+                </span>
+              </div>
+            </div>
+            <a
+              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('السلام عليكم، أرغب في حجز حصة تجريبية مجانية')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-extrabold text-on-accent shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all hover:bg-accent-hover active:scale-[0.97]"
+            >
+              <MessageCircle size={15} />
+              طلب حصة مجانية
+            </a>
+          </div>
         </div>
       </section>
 
