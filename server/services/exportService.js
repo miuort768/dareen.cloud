@@ -272,6 +272,26 @@ async function fetchJobs({ q, from, to }) {
         orderBy: { createdAt: 'desc' },
     });
 }
+
+async function fetchContacts({ q, from, to }) {
+    const where = {};
+    if (q) where.OR = [{ name: { contains: q } }, { phone: { contains: q } },
+                       { subject: { contains: q } }, { message: { contains: q } },
+                       { curriculum: { contains: q } }];
+    if (from || to) where.createdAt = buildDateFilter(from, to);
+    const messages = await prisma.contactMessage.findMany({
+        where,
+        select: { id: true, name: true, phone: true, subject: true,
+                  curriculum: true, message: true, createdAt: true },
+        orderBy: { createdAt: 'desc' },
+    });
+    return messages.map(m => {
+        const d = m.createdAt instanceof Date ? m.createdAt : new Date(m.createdAt);
+        const pad = n => String(n).padStart(2, '0');
+        const createdAt = `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        return { ...m, createdAt };
+    });
+}
 // ── Column Definitions ─────────────────────────────────────
 
 const COLUMNS = {
@@ -339,6 +359,14 @@ const COLUMNS = {
         { header: 'خبرة أون لاين', key: 'onlineYears', width: 12 },
         { header: 'تم التواصل', key: 'contacted', width: 10 },
     ],
+    contacts: [
+        { header: 'الاسم', key: 'name', width: 20 },
+        { header: 'رقم الهاتف', key: 'phone', width: 18 },
+        { header: 'المنهج', key: 'curriculum', width: 15 },
+        { header: 'الموضوع', key: 'subject', width: 20 },
+        { header: 'الرسالة', key: 'message', width: 45 },
+        { header: 'التاريخ', key: 'createdAt', width: 15 },
+    ],
 };
 
 const LABELS = {
@@ -347,6 +375,7 @@ const LABELS = {
     studentInvoices: 'فواتير الطلاب', attendance: 'الحضور',
     finance: 'المالية',
     jobs: 'طلبات التوظيف',
+    contacts: 'رسائل التواصل',
 };
 
 const FETCHERS = {
@@ -359,6 +388,7 @@ const FETCHERS = {
     attendance: fetchAttendance,
     jobs: (f) => fetchJobs(f),
     finance: fetchFinance,
+    contacts: (f) => fetchContacts(f),
 };
 
 // ── Excel Generator ────────────────────────────────────────

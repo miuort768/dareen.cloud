@@ -17,9 +17,10 @@ import {
   AlertTriangle,
 } from 'lucide-react'
 import { api, safeArray } from '../lib/api'
+import { downloadExport } from '../lib/download'
 import { confirm } from '../lib/confirmDialog'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useIsLoading, useAcademyName } from '../context/AppContext'
+import { useIsLoading, useAcademyName, useShowNotification } from '../context/AppContext'
 import { cn } from '../lib/utils'
 import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
@@ -44,30 +45,6 @@ function formatDateNumeric(dateStr: string) {
   return `${d.getFullYear()}/${pad(d.getMonth() + 1)}/${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`
 }
 
-function exportToCsv(messages: ContactMsg[]) {
-  const headers = ['الاسم', 'رقم الهاتف', 'المادة', 'الموضوع', 'الرسالة', 'التاريخ']
-  const rows = messages.map((m) => [
-    m.name || 'بدون اسم',
-    m.phone || '',
-    m.curriculum || '-',
-    m.subject || 'بدون موضوع',
-    (m.message || '').replace(/\n/g, ' '),
-    formatDateNumeric(m.createdAt),
-  ])
-  const bom = '﻿'
-  const csv =
-    bom + [headers.join(','), ...rows.map((r) => r.map((c) => `"${c}"`).join(','))].join('\n')
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = 'contact-messages.csv'
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
-}
-
 export const AdminContacts = () => {
   const academyName = useAcademyName()
   useEffect(() => {
@@ -75,6 +52,7 @@ export const AdminContacts = () => {
   }, [academyName])
   const queryClient = useQueryClient()
   const authLoading = useIsLoading()
+  const showNotification = useShowNotification()
 
   const {
     data: messages = [],
@@ -151,6 +129,12 @@ export const AdminContacts = () => {
     }
   }
 
+  const handleExportPdf = () => {
+    downloadExport('contacts', 'pdf').catch((e: Error) => {
+      showNotification(e.message || 'فشل تصدير PDF', 'error')
+    })
+  }
+
   const retryFetch = useCallback(() => {
     queryClient.invalidateQueries({ queryKey: ['contacts'] })
   }, [queryClient])
@@ -203,25 +187,25 @@ export const AdminContacts = () => {
         label: 'إجمالي الرسائل',
         value: messages.length,
         icon: Mail,
-        bg: 'bg-primary-soft text-primary',
+        bg: 'bg-primary text-on-primary',
       },
       {
         label: 'رسائل اليوم',
         value: todayCount,
         icon: Calendar,
-        bg: 'bg-info-soft text-info-strong',
+        bg: 'bg-info text-on-info',
       },
       {
         label: 'بها هواتف',
         value: withPhoneCount,
         icon: Phone,
-        bg: 'bg-success-soft text-success-strong',
+        bg: 'bg-success text-on-success',
       },
       {
         label: 'المواضيع',
         value: uniqueSubjects,
         icon: BookOpen,
-        bg: 'bg-warning-soft text-warning-strong',
+        bg: 'bg-warning text-on-warning',
       },
     ],
     [messages, todayCount, withPhoneCount, uniqueSubjects],
@@ -251,7 +235,7 @@ export const AdminContacts = () => {
             actions={
               <>
                 <button
-                  onClick={() => exportToCsv(filtered)}
+                  onClick={handleExportPdf}
                   className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
                 >
                   <Download size={14} />
@@ -272,28 +256,58 @@ export const AdminContacts = () => {
               </span>
             }
             toolbar={
-              <div className="relative w-full lg:max-w-md">
-                <Search
-                  className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
-                  size={15}
-                />
-                <input
-                  type="text"
-                  aria-label="بحث في الرسائل"
-                  placeholder="بحث بالاسم أو الهاتف أو الموضوع..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="h-11 w-full rounded-xl border border-border bg-surface pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
-                />
-                {search && (
-                  <button
-                    onClick={() => setSearch('')}
-                    className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
-                    aria-label="مسح البحث"
-                  >
-                    <X size={14} />
-                  </button>
-                )}
+              <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+                <div className="relative w-full lg:max-w-md">
+                  <Search
+                    className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
+                    size={15}
+                  />
+                  <input
+                    type="text"
+                    aria-label="بحث في الرسائل"
+                    placeholder="بحث بالاسم أو الهاتف أو الموضوع..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="h-11 w-full rounded-xl border border-border bg-surface pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
+                  />
+                  {search && (
+                    <button
+                      onClick={() => setSearch('')}
+                      className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
+                      aria-label="مسح البحث"
+                    >
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  {readFilterPills.map((pill) => (
+                    <button
+                      key={pill.key}
+                      type="button"
+                      onClick={() => setFilterRead(pill.key)}
+                      aria-pressed={filterRead === pill.key}
+                      className={cn(
+                        'inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:min-h-0',
+                        filterRead === pill.key
+                          ? 'bg-primary text-on-primary'
+                          : 'border border-border bg-card text-muted hover:border-primary/30 hover:text-main',
+                      )}
+                    >
+                      {pill.label}
+                      <span
+                        className={cn(
+                          'inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full px-1 text-micro',
+                          filterRead === pill.key
+                            ? 'bg-white/20 text-on-primary'
+                            : 'bg-divider text-muted',
+                        )}
+                      >
+                        {pill.count}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
             }
           />
@@ -328,62 +342,6 @@ export const AdminContacts = () => {
                 </motion.div>
               )
             })}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-4"
-        >
-          <div className="relative mb-3">
-            <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" size={15} />
-            <input
-              type="text"
-              aria-label="بحث في الرسائل"
-              placeholder="بحث بالاسم أو الهاتف أو الموضوع..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
-            />
-            {search && (
-              <button
-                onClick={() => setSearch('')}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
-                aria-label="مسح البحث"
-              >
-                <X size={14} />
-              </button>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {readFilterPills.map((pill) => (
-              <button
-                key={pill.key}
-                type="button"
-                onClick={() => setFilterRead(pill.key)}
-                aria-pressed={filterRead === pill.key}
-                className={cn(
-                  'inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3.5 py-2 text-micro font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:min-h-0',
-                  filterRead === pill.key
-                    ? 'bg-primary text-on-primary'
-                    : 'border border-border bg-card text-muted hover:border-primary/30 hover:text-main',
-                )}
-              >
-                {pill.label}
-                <span
-                  className={cn(
-                    'inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-full px-1 text-micro',
-                    filterRead === pill.key
-                      ? 'bg-white/20 text-on-primary'
-                      : 'bg-divider text-muted',
-                  )}
-                >
-                  {pill.count}
-                </span>
-              </button>
-            ))}
           </div>
         </motion.div>
 
@@ -485,9 +443,6 @@ export const AdminContacts = () => {
                                 <h3 className="truncate text-sm font-bold text-main">
                                   {msg.name || 'بدون اسم'}
                                 </h3>
-                                {!isMsgRead && (
-                                  <span className="h-2 w-2 shrink-0 rounded-full bg-primary" />
-                                )}
                                 {isMsgRead && (
                                   <span className="rounded-lg bg-success-soft px-1.5 py-0.5 text-micro font-bold text-success">
                                     مقروءة
@@ -551,15 +506,15 @@ export const AdminContacts = () => {
                         </div>
 
                         <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="inline-flex items-center gap-1 rounded-lg bg-success-soft px-2 py-1 text-micro font-bold text-success">
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-success px-2 py-1 text-micro font-bold text-on-success">
                             <span className="max-w-[120px] truncate">{safePhone}</span>
                             <Phone size={10} />
                           </span>
-                          <span className="inline-flex items-center gap-1 rounded-lg bg-primary/10 px-2 py-1 text-micro font-bold text-primary">
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-primary px-2 py-1 text-micro font-bold text-on-primary">
                             <span className="max-w-[100px] truncate">{msg.curriculum || '-'}</span>
                             <BookOpen size={10} />
                           </span>
-                          <span className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1 text-micro font-bold text-muted">
+                          <span className="inline-flex items-center gap-1 rounded-lg bg-info px-2 py-1 text-micro font-bold text-on-info">
                             <span>{formatDateNumeric(msg.createdAt)}</span>
                             <Clock size={10} />
                           </span>
