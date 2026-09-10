@@ -11,12 +11,12 @@ export interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButton
 
 const colorMap = {
   success:
-    'bg-success-soft text-success hover:bg-success border-success-soft dark:bg-success-soft dark:text-success dark:border-success-soft',
+    'bg-success-soft text-success hover:bg-success hover:text-on-success hover:border-success border-success-soft dark:bg-success-soft dark:text-success dark:hover:bg-success dark:hover:text-on-success dark:hover:border-success dark:border-success-soft',
   error:
-    'bg-error-soft text-error hover:bg-error border-error-soft dark:bg-error-soft dark:text-error dark:border-error-soft',
-  info: 'bg-info-soft text-info hover:bg-info border-info-soft dark:bg-info-soft dark:text-info dark:border-info-soft',
+    'bg-error-soft text-error hover:bg-error hover:text-on-error hover:border-error border-error-soft dark:bg-error-soft dark:text-error dark:hover:bg-error dark:hover:text-on-error dark:hover:border-error dark:border-error-soft',
+  info: 'bg-info-soft text-info hover:bg-info hover:text-on-info hover:border-info border-info-soft dark:bg-info-soft dark:text-info dark:hover:bg-info dark:hover:text-on-info dark:hover:border-info dark:border-info-soft',
   warning:
-    'bg-warning-soft text-warning hover:bg-warning border-warning-soft dark:bg-warning-soft dark:text-warning dark:border-warning-soft',
+    'bg-warning-soft text-warning hover:bg-warning hover:text-on-warning hover:border-warning border-warning-soft dark:bg-warning-soft dark:text-warning dark:hover:bg-warning dark:hover:text-on-warning dark:hover:border-warning dark:border-warning-soft',
   primary:
     'bg-primary/10 text-primary hover:bg-primary/20 border-primary/20 dark:bg-primary/15 dark:text-primary dark:border-primary/15',
 }

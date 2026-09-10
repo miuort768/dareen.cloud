@@ -649,7 +649,7 @@ export const Leads = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: stat.delay }}
               className={cn(
-                'rounded-2xl border p-4 transition-all duration-slow hover:shadow-elevation-1',
+                'rounded-2xl border p-4 transition-all duration-slow hover:shadow-[0_0_24px_rgb(99_102_241/0.10)] hover:shadow-elevation-1',
                 stat.card,
               )}
             >
@@ -678,7 +678,7 @@ export const Leads = () => {
         </div>
 
         {/* ===== TOOLBAR ===== */}
-        <div className="rounded-2xl border border-border bg-card p-3 shadow-elevation-1 dark:shadow-none sm:p-4">
+        <div className="rounded-2xl border border-primary/15 bg-card p-3 shadow-[0_0_30px_rgb(99_102_241/0.06)] shadow-elevation-1 dark:shadow-none sm:p-4">
           <div className="relative">
             <Search size={15} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" />
             <input
@@ -727,9 +727,14 @@ export const Leads = () => {
 
         {/* ===== LIST ===== */}
         <div className="mt-4">
-          <div className="mb-2.5 flex items-center justify-between px-0.5">
-            <h2 className="text-sm font-black text-main">قائمة العملاء</h2>
-            <span className="rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-bold text-primary">
+          <div className="mb-3 flex items-center justify-between gap-2 px-0.5">
+            <h2 className="flex items-center gap-2 text-base font-black text-main">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-soft text-primary">
+                <Users size={13} />
+              </span>
+              قائمة العملاء
+            </h2>
+            <span className="inline-flex items-center gap-1.5 rounded-xl border border-primary/25 bg-primary-soft px-3 py-1.5 text-xs font-black tabular-nums text-primary">
               النتائج: {filteredLeads.length}
             </span>
           </div>

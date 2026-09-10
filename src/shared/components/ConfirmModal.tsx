@@ -166,7 +166,6 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
                       if (e.key === 'Enter') handleConfirm()
                     }}
                     placeholder={passwordPlaceholder}
-                    aria-label="كلمة المرور التحذيرية"
                     className={cn(
                       'w-full rounded-2xl border bg-surface py-2.5 pe-3 ps-9 text-xs font-bold text-main outline-none transition-all focus:ring-2',
                       passwordError

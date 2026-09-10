@@ -38,7 +38,7 @@ export const LeadTable = memo(
             return (
               <div
                 onClick={() => onLeadClick(lead)}
-                className="group flex cursor-pointer items-center border-b border-border px-5 py-3.5 transition-all duration-normal hover:bg-hover"
+                className="group flex cursor-pointer items-center border-b border-border px-5 py-3.5 transition-all duration-normal hover:bg-hover hover:shadow-[inset_0_0_0_1px_rgb(99_102_241/0.10)]"
               >
                 <div className="flex w-[22%] min-w-0 items-center gap-3 px-2">
                   <GradientAvatar name={lead.studentName || 'ع'} size="sm" />

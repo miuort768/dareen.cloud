@@ -54,7 +54,6 @@ const getAvatarGradient = (name: string) => {
 
 const formatPhone = (phone: string) => {
   if (!phone) return ''
-  if (phone.length > 8) return `${phone.slice(0, 4)}•••${phone.slice(-3)}`
   return phone
 }
 
@@ -161,8 +160,11 @@ export const TrialSessionCard = ({
               <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/60 dark:bg-white/10">
                 <Phone size={12} className="text-warning" />
               </div>
-              <span className="truncate font-mono text-[11px] font-extrabold text-main" dir="ltr">
-                {formatPhone(t.parentPhone)}
+              <span
+                className="whitespace-nowrap font-mono text-[11px] font-extrabold tracking-wide text-main"
+                dir="ltr"
+              >
+                {formatPhone(t.parentPhone) || '—'}
               </span>
             </div>
           </div>

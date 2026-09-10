@@ -13,7 +13,6 @@ import {
   Eye,
   EyeOff,
   Download,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Trash2,
@@ -101,11 +100,11 @@ const itemVariants: Variants = {
 }
 
 const statusFilterItems = [
-  { key: '', label: 'الكل' },
-  { key: 'pending', label: 'بانتظار', dot: 'bg-warning' },
-  { key: 'completed', label: 'تمت', dot: 'bg-success' },
-  { key: 'cancelled', label: 'ملغية', dot: 'bg-error' },
-  { key: 'converted', label: 'محولة', dot: 'bg-primary' },
+  { key: '', label: 'كل الحالات' },
+  { key: 'pending', label: 'بانتظار' },
+  { key: 'completed', label: 'تمت' },
+  { key: 'cancelled', label: 'ملغية' },
+  { key: 'converted', label: 'محولة' },
 ]
 
 const TrialSessionsSkeleton = () => (
@@ -344,7 +343,7 @@ export const TrialSessions = () => {
     showNotification('تم تحديد كمدفوع', 'success')
   }
 
-  const handleExportReport = () => {
+  const handleExportReport = async () => {
     const statusLabels: Record<string, string> = {
       pending: 'قيد الانتظار',
       completed: 'تمت بنجاح',
@@ -369,20 +368,38 @@ export const TrialSessions = () => {
       t.date,
       t.time || '',
       statusLabels[t.status] || t.status,
-      (t.notes || '').replace(/\r?\n/g, ' '),
+      t.notes || '',
     ])
-    const escapeCell = (v: string) => `"${String(v).replace(/"/g, '""')}"`
-    const csv = '\uFEFF' + [headers, ...rows].map((r) => r.map(escapeCell).join(',')).join('\r\n')
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `تقرير-جلسات-المراجعة-${new Date().toISOString().slice(0, 10)}.csv`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-    showNotification('تم تحميل التقرير بنجاح', 'success')
+
+    try {
+      // استيراد ديناميكي — مكتبة xlsx لا تدخل الحزمة الرئيسية
+      const XLSX = await import('xlsx')
+      const wsData = [headers, ...rows]
+      const ws = XLSX.utils.aoa_to_sheet(wsData)
+
+      // اتجاه الورقة من اليمين لليسار + عرض أعمدة مناسب للعربية
+      ws['!views'] = [{ RTL: true }]
+      ws['!cols'] = [
+        { wch: 22 },
+        { wch: 16 },
+        { wch: 16 },
+        { wch: 20 },
+        { wch: 13 },
+        { wch: 10 },
+        { wch: 14 },
+        { wch: 40 },
+      ]
+
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, 'جلسات المراجعة')
+
+      const fileName = `تقرير-جلسات-المراجعة-${new Date().toISOString().slice(0, 10)}.xlsx`
+      XLSX.writeFile(wb, fileName)
+      showNotification('تم تحميل التقرير بنجاح بصيغة Excel', 'success')
+    } catch (e) {
+      console.error(e)
+      showNotification('فشل تحميل التقرير', 'error')
+    }
   }
 
   const subjects = [
@@ -677,118 +694,90 @@ export const TrialSessions = () => {
               </button>
             </div>
 
-            {/* Filter chips: status + subject */}
-            <div className="mt-3 space-y-2">
-              <div className="no-scrollbar flex gap-1.5 overflow-x-auto">
-                {statusFilterItems.map((item) => {
-                  const isActive = filterStatus === item.key
-                  return (
-                    <button
-                      key={item.key || 'all'}
-                      onClick={() => setFilterStatus(item.key)}
-                      aria-pressed={isActive}
-                      className={cn(
-                        'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
-                        isActive
-                          ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
-                          : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
-                      )}
-                    >
-                      {item.dot && (
-                        <span className={cn('h-1.5 w-1.5 shrink-0 rounded-full', item.dot)} />
-                      )}
+            {/* كل الفلاتر قوائم منسدلة موحدة */}
+            <div className="mt-3 grid grid-cols-2 gap-2 lg:grid-cols-4">
+              {/* الحالة */}
+              <div className="relative">
+                <select
+                  value={filterStatus}
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  aria-label="تصفية حسب الحالة"
+                  className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                >
+                  {statusFilterItems.map((item) => (
+                    <option key={item.key || 'all'} value={item.key}>
                       {item.label}
-                    </button>
-                  )
-                })}
+                    </option>
+                  ))}
+                </select>
               </div>
-              {subjects.length > 0 && (
-                <div className="no-scrollbar flex gap-1.5 overflow-x-auto">
-                  <button
-                    onClick={() => setFilterSubject('')}
-                    aria-pressed={filterSubject === ''}
-                    className={cn(
-                      'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
-                      filterSubject === ''
-                        ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
-                        : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
-                    )}
-                  >
-                    <BookOpen size={12} />
-                    كل المواد
-                  </button>
-                  {subjects.map((s) => {
-                    const isActive = filterSubject === s
-                    return (
-                      <button
-                        key={s}
-                        onClick={() => setFilterSubject(s)}
-                        aria-pressed={isActive}
-                        className={cn(
-                          'flex h-9 shrink-0 items-center gap-1.5 rounded-xl border px-3 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
-                          isActive
-                            ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
-                            : 'border-border bg-surface text-muted hover:border-primary/20 hover:text-main',
-                        )}
-                      >
-                        {s}
-                      </button>
-                    )
-                  })}
-                </div>
-              )}
 
-              {/* Teacher filter + sort + results summary */}
-              <div className="mt-3 flex flex-wrap items-center gap-2">
+              {/* المادة */}
+              {subjects.length > 0 && (
                 <div className="relative">
                   <select
-                    value={filterTeacher}
-                    onChange={(e) => setFilterTeacher(e.target.value)}
-                    aria-label="فلترة حسب المعلمة"
-                    className="h-9 w-full appearance-none rounded-xl border border-border bg-surface pe-8 ps-3 text-[11px] font-bold text-main outline-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                    value={filterSubject}
+                    onChange={(e) => setFilterSubject(e.target.value)}
+                    aria-label="تصفية حسب المادة"
+                    className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
                   >
-                    <option value="">كل المعلمات</option>
-                    {teacherNames.map((n) => (
-                      <option key={n} value={n}>
-                        {n}
+                    <option value="">كل المواد</option>
+                    {subjects.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
                       </option>
                     ))}
                   </select>
-                  <ChevronDown
-                    size={12}
-                    className="pointer-events-none absolute end-2.5 top-1/2 -translate-y-1/2 text-muted"
-                  />
                 </div>
-                <div className="relative">
-                  <select
-                    value={sortBy}
-                    onChange={(e) =>
-                      setSortBy(e.target.value as 'date-desc' | 'date-asc' | 'created-desc')
-                    }
-                    aria-label="ترتيب النتائج"
-                    className="h-9 w-full appearance-none rounded-xl border border-border bg-surface pe-8 ps-3 text-[11px] font-bold text-main outline-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
-                  >
-                    <option value="date-desc">تاريخ الحصة (الأحدث)</option>
-                    <option value="date-asc">تاريخ الحصة (الأقدم)</option>
-                    <option value="created-desc">الأحدث إضافة</option>
-                  </select>
-                  <ChevronDown
-                    size={12}
-                    className="pointer-events-none absolute end-2.5 top-1/2 -translate-y-1/2 text-muted"
-                  />
-                </div>
-                <span className="ms-auto text-[11px] font-bold text-muted">
-                  {filtered.length} من {trials.length} حصة
-                </span>
-                {hasActiveFilters && (
-                  <button
-                    onClick={clearAllFilters}
-                    className="flex h-9 items-center gap-1 rounded-xl border border-error-soft bg-error-soft px-3 text-[11px] font-bold text-error outline-none transition-all hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
-                  >
-                    <X size={12} /> مسح الفلاتر
-                  </button>
-                )}
+              )}
+
+              {/* المعلمة */}
+              <div className="relative">
+                <select
+                  value={filterTeacher}
+                  onChange={(e) => setFilterTeacher(e.target.value)}
+                  aria-label="فلترة حسب المعلمة"
+                  className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                >
+                  <option value="">كل المعلمات</option>
+                  {teacherNames.map((n) => (
+                    <option key={n} value={n}>
+                      {n}
+                    </option>
+                  ))}
+                </select>
               </div>
+
+              {/* الترتيب */}
+              <div className="relative">
+                <select
+                  value={sortBy}
+                  onChange={(e) =>
+                    setSortBy(e.target.value as 'date-desc' | 'date-asc' | 'created-desc')
+                  }
+                  aria-label="ترتيب النتائج"
+                  className="h-10 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                >
+                  <option value="date-desc">تاريخ الحصة (الأحدث)</option>
+                  <option value="date-asc">تاريخ الحصة (الأقدم)</option>
+                  <option value="created-desc">الأحدث إضافة</option>
+                </select>
+              </div>
+            </div>
+
+            {/* ملخص النتائج + مسح الفلاتر */}
+            <div className="mt-3 flex items-center justify-between gap-2">
+              <span className="text-[11px] font-bold text-muted">
+                {filtered.length} من {trials.length} حصة
+              </span>
+              {hasActiveFilters && (
+                <button
+                  onClick={clearAllFilters}
+                  className="flex h-9 items-center gap-1 rounded-xl border border-error-soft bg-error-soft px-3 text-[11px] font-bold text-error outline-none transition-all hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                >
+                  <X size={12} /> مسح الفلاتر
+                </button>
+              )}
             </div>
           </div>
 
@@ -1109,7 +1098,6 @@ export const TrialSessions = () => {
                     </label>
                     <input
                       dir="ltr"
-                      aria-label="كلمة التأكيد للحذف"
                       value={deleteAllTyped}
                       onChange={(e) => setDeleteAllTyped(e.target.value)}
                       placeholder="dareen"

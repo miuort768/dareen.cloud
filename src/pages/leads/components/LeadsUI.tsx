@@ -33,7 +33,7 @@ export const GradientAvatar = ({
   return (
     <div
       className={cn(
-        'flex shrink-0 items-center justify-center rounded-full font-bold text-on-primary',
+        'flex shrink-0 items-center justify-center rounded-xl font-bold text-on-primary',
         bg,
         ring,
         sizes[size],
