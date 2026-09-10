@@ -30,7 +30,7 @@ import { cn } from '../lib/utils'
 import { socketService } from '../lib/socket'
 import { SOCKET_EVENTS } from '../lib/socket-events'
 import { Skeleton, SkeletonText } from '../shared/components/ui/Skeleton'
-import { PageHeader } from '../shared/components/ui'
+import { FilterDropdown, PageHeader } from '../shared/components/ui'
 
 interface JobApp {
   id: string
@@ -112,21 +112,6 @@ function exportToCsv(apps: JobApp[]) {
   a.click()
   document.body.removeChild(a)
   URL.revokeObjectURL(url)
-}
-
-const subjectColorMap: Record<string, string> = {
-  'القرآن الكريم': 'bg-success-soft text-success border-success-soft',
-  'المواد الشرعية': 'bg-success-soft text-success border-success-soft',
-  'اللغة العربية': 'bg-primary/10 text-primary border-primary/30',
-  'اللغة الإنجليزية': 'bg-info-soft text-info border-info-soft',
-  'اللغة الفرنسية': 'bg-info-soft text-info border-info-soft',
-  الرياضيات: 'bg-warning-soft text-warning border-warning-soft',
-  'الدراسات الاجتماعية': 'bg-accent-soft text-accent border-accent-soft',
-  'العلوم أو فروعها': 'bg-info-soft text-info border-info-soft',
-}
-
-function getSubjectColor(subject: string): string {
-  return subjectColorMap[subject] || 'bg-primary/10 text-primary border-primary/30'
 }
 
 export const AdminJobs = () => {
@@ -267,11 +252,8 @@ export const AdminJobs = () => {
     [apps, pendingCount, contactedCount, uniqueSubjects],
   )
 
-  const subjectPills = useMemo(
-    () => [
-      { key: '', label: 'الكل', color: 'bg-primary/10 text-primary border-primary/30' },
-      ...SUBJECTS.map((s) => ({ key: s, label: s, color: getSubjectColor(s) })),
-    ],
+  const subjectItems = useMemo(
+    () => [{ key: '', label: 'الكل' }, ...SUBJECTS.map((s) => ({ key: s, label: s }))],
     [],
   )
 
@@ -286,7 +268,7 @@ export const AdminJobs = () => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="border-b border-border pb-5 pt-6"
+          className="border-b border-border pb-3 pt-4"
         >
           <PageHeader
             title="طلبات التوظيف"
@@ -301,14 +283,14 @@ export const AdminJobs = () => {
               <>
                 <button
                   onClick={() => exportToCsv(filtered)}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-3 text-xs font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98] sm:h-10 sm:gap-2 sm:px-4 sm:text-sm"
                 >
                   <Download size={14} />
                   <span>تصدير CSV</span>
                 </button>
                 <button
                   onClick={handleExportPdf}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-sm font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-3 text-xs font-semibold text-main shadow-elevation-1 transition-all duration-normal hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98] sm:h-10 sm:gap-2 sm:px-4 sm:text-sm"
                 >
                   <FileText size={14} />
                   <span>تصدير PDF</span>
@@ -318,7 +300,7 @@ export const AdminJobs = () => {
             action={
               <button
                 onClick={handleDeleteAll}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-error px-4 text-sm font-semibold text-on-error shadow-elevation-1 transition-all duration-normal hover:bg-error-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98]"
+                className="inline-flex h-9 items-center justify-center gap-1.5 rounded-lg bg-error px-3 text-xs font-semibold text-on-error shadow-elevation-1 transition-all duration-normal hover:bg-error-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 active:scale-[0.98] sm:h-10 sm:gap-2 sm:px-4 sm:text-sm"
               >
                 <Trash2 size={14} />
                 <span>حذف الكل</span>
@@ -332,7 +314,7 @@ export const AdminJobs = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
         >
-          <div className="my-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <div className="my-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
             {kpiCards.map((kpi, i) => {
               const Icon = kpi.icon
               return (
@@ -363,24 +345,39 @@ export const AdminJobs = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-4"
+          className="mb-3"
         >
-          <div className="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-            {subjectPills.map((pill) => (
-              <button
-                key={pill.key}
-                onClick={() => setSubjectFilter(pill.key)}
-                aria-pressed={subjectFilter === pill.key}
-                className={cn(
-                  'shrink-0 rounded-full border px-3.5 py-2.5 text-micro font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:py-2',
-                  subjectFilter === pill.key
-                    ? 'border-primary bg-primary text-on-primary'
-                    : pill.color + ' hover:border-primary/30',
-                )}
-              >
-                {pill.label}
-              </button>
-            ))}
+          <div className="flex gap-2">
+            <div className="relative min-w-0 flex-1">
+              <Search
+                className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
+                size={15}
+              />
+              <input
+                type="text"
+                aria-label="بحث"
+                placeholder="ابحث بالاسم أو الهاتف أو المنصب..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
+              />
+              {search && (
+                <button
+                  onClick={() => setSearch('')}
+                  className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
+                  aria-label="مسح البحث"
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+            <FilterDropdown
+              value={subjectFilter}
+              items={subjectItems}
+              onChange={setSubjectFilter}
+              icon={BookMarked}
+              className="w-32 shrink-0 sm:w-40"
+            />
           </div>
         </motion.div>
 
@@ -388,36 +385,8 @@ export const AdminJobs = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="mb-5"
         >
-          <div className="relative">
-            <Search className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" size={15} />
-            <input
-              type="text"
-              aria-label="بحث"
-              placeholder="ابحث بالاسم أو الهاتف أو المنصب..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-border bg-card py-3 pe-4 ps-10 text-xs font-bold text-main outline-none transition-colors duration-fast focus:border-primary focus:ring-2 focus:ring-primary/10"
-            />
-            {search && (
-              <button
-                onClick={() => setSearch('')}
-                className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
-                aria-label="مسح البحث"
-              >
-                <X size={14} />
-              </button>
-            )}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="space-y-3">
+          <div className="space-y-2">
             {loading ? (
               <div className="space-y-3">
                 {[1, 2, 3].map((i) => (
@@ -491,14 +460,14 @@ export const AdminJobs = () => {
                     exit={{ opacity: 0, y: -10, transition: { duration: 0.15 } }}
                     transition={{ duration: 0.2, delay: index * 0.02 }}
                     className={cn(
-                      'overflow-hidden rounded-2xl border border-border bg-card transition-shadow duration-normal hover:shadow-elevation-1',
+                      'overflow-hidden rounded-none border border-border bg-card transition-shadow duration-normal hover:shadow-elevation-1',
                       app.contacted
                         ? 'border-s-4 border-s-success'
                         : 'border-s-4 border-s-primary/40',
                     )}
                   >
-                    <div className="p-4 sm:p-5">
-                      <div className="mb-4 flex items-start justify-between gap-3">
+                    <div className="p-3.5 sm:p-4">
+                      <div className="mb-3 flex items-start justify-between gap-3">
                         <div className="flex min-w-0 items-center gap-3">
                           <div
                             className={cn(
@@ -548,11 +517,12 @@ export const AdminJobs = () => {
                           )}
                           <button
                             onClick={() => handleDelete(app.id)}
-                            className="flex h-9 w-9 items-center justify-center rounded-lg bg-error text-on-error outline-none transition-colors duration-fast hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:h-auto sm:w-auto sm:px-3 sm:py-1.5"
+                            className="flex h-9 items-center gap-1.5 rounded-lg bg-error px-3 text-micro font-bold text-on-error outline-none transition-colors duration-fast hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:py-1.5"
+                            title="حذف الطلب"
                             aria-label="حذف الطلب"
                           >
                             <Trash2 size={13} />
-                            <span className="hidden sm:inline">حذف</span>
+                            <span>حذف</span>
                           </button>
                         </div>
                       </div>

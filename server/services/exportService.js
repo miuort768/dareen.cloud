@@ -1,4 +1,4 @@
-﻿const { prisma } = require('../utils/prisma');
+const { prisma } = require('../utils/prisma');
 const ExcelJS = require('exceljs');
 const PDFDocument = require('pdfkit');
 const arabicReshaper = require('arabic-reshaper');
@@ -51,6 +51,45 @@ function reshape(text) {
 
 function isArabic(text) {
     return /[\u0600-\u06FF]/.test(text);
+}
+
+// Wraps LOGICAL text into lines that fit `width` (measured on the shaped form).
+// PDFKit must never line-break a visually-reordered string itself: it wraps LTR,
+// which inverts the line order of RTL text (the reported "reversed Arabic" bug).
+function wrapLogical(doc, text, width) {
+    const raw = String(text ?? '');
+    if (!raw.trim()) return [];
+    const lines = [];
+    for (const paragraph of raw.split(/\r?\n/)) {
+        const words = paragraph.split(/\s+/).filter(Boolean);
+        if (words.length === 0) { lines.push(''); continue; }
+        let current = [];
+        for (const word of words) {
+            const candidate = current.concat(word);
+            const candidateText = candidate.join(' ');
+            const shaped = isArabic(candidateText) ? arabicReshaper.convertArabic(candidateText) : candidateText;
+            if (current.length > 0 && doc.widthOfString(shaped) > width) {
+                lines.push(current.join(' '));
+                current = [word];
+            } else {
+                current = candidate;
+            }
+        }
+        if (current.length > 0) lines.push(current.join(' '));
+    }
+    return lines;
+}
+
+// Draws pre-wrapped logical lines in correct RTL visual order — one doc.text per
+// line with lineBreak disabled so PDFKit cannot re-wrap the reordered string.
+function drawRtlLines(doc, logicalLines, x, y, width, align) {
+    let cy = y;
+    const lineHeight = doc.currentLineHeight();
+    for (const line of logicalLines) {
+        doc.text(reshape(line), x, cy, { width, align: align || 'right', lineBreak: false });
+        cy += lineHeight;
+    }
+    return cy - y;
 }
 
 let arabicFontPath = null;
@@ -390,38 +429,47 @@ function drawTable(doc, cols, rows, arabicFont) {
             logger.warn('Failed to load Arabic font for PDF table:', err.message);
         }
     }
+    const lineHeight = doc.currentLineHeight();
 
     const drawHeader = () => {
+        const headerLines = cols.map((col, i) => wrapLogical(doc, col.header, adjustedWidths[i] - 4));
+        const headerH = Math.max(18, Math.max(...headerLines.map(l => l.length)) * lineHeight + 4);
         cols.forEach((col, i) => {
             const x = startX - adjustedWidths.slice(0, i + 1).reduce((a, b) => a + b, 0);
-            doc.rect(x, y, adjustedWidths[i], 18).fill('#4472C4');
-            doc.fill('#FFFFFF').text(reshape(col.header), x + 2, y + 3, {
-                width: adjustedWidths[i] - 4, align: 'right',
-            });
+            doc.rect(x, y, adjustedWidths[i], headerH).fill('#4472C4');
+            doc.fill('#FFFFFF');
+            drawRtlLines(doc, headerLines[i], x + 2, y + 3, adjustedWidths[i] - 4);
         });
-        y += 18;
+        y += headerH;
     };
 
     drawHeader();
 
     rows.forEach((row, ri) => {
-        const isEven = ri % 2 === 0;
-        cols.forEach((col, ci) => {
-            const x = startX - adjustedWidths.slice(0, ci + 1).reduce((a, b) => a + b, 0);
-            doc.rect(x, y, adjustedWidths[ci], 16);
-            if (isEven) doc.fill('#F2F2F2'); else doc.fill('#FFFFFF');
-            doc.fill('#000000').text(
-                reshape(String(row[col.key] ?? '')),
-                x + 2, y + 2,
-                { width: adjustedWidths[ci] - 4, align: 'right' }
-            );
-        });
-        y += 16;
-        if (y > doc.page.height - 50) {
+        const cellLines = cols.map((col, ci) =>
+            wrapLogical(doc, String(row[col.key] ?? ''), adjustedWidths[ci] - 4)
+        );
+        const rowH = Math.max(16, Math.max(...cellLines.map(l => l.length)) * lineHeight + 3);
+
+        // break before the row so a row never splits across pages
+        if (y + rowH > doc.page.height - 50) {
             doc.addPage();
+            doc.fontSize(9);
+            if (arabicFont) {
+                try { doc.font(arabicFont); } catch (err) { /* already loaded */ }
+            }
             y = doc.y;
             drawHeader();
         }
+
+        cols.forEach((col, ci) => {
+            const x = startX - adjustedWidths.slice(0, ci + 1).reduce((a, b) => a + b, 0);
+            doc.rect(x, y, adjustedWidths[ci], rowH);
+            doc.fill(ri % 2 === 0 ? '#F2F2F2' : '#FFFFFF');
+            doc.fill('#000000');
+            drawRtlLines(doc, cellLines[ci], x + 2, y + 2, adjustedWidths[ci] - 4);
+        });
+        y += rowH;
     });
 
     doc.y = y + 20;
