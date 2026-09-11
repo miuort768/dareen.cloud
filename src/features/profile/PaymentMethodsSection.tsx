@@ -293,19 +293,19 @@ export const PaymentMethodsSection = () => {
             </div>
             <div className="relative flex items-center justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-on-primary/70 text-micro font-bold uppercase tracking-widest">
+                <p className="text-micro font-bold uppercase tracking-widest text-white/70">
                   طريقة استلام المستحقات
                 </p>
                 <p className="mt-1 truncate text-sm font-black text-on-primary">
                   {methodMeta?.label}
                   {setting.method === 'wallet' && setting.walletProvider && (
-                    <span className="text-on-primary/80 font-bold">
+                    <span className="font-bold text-white/80">
                       {' '}
                       — {WALLET_LABELS[setting.walletProvider] || setting.walletProvider}
                     </span>
                   )}
                 </p>
-                <p className="text-on-primary/90 mt-1 font-mono text-xs font-bold tabular-nums">
+                <p className="mt-1 font-mono text-xs font-bold tabular-nums text-white/90">
                   {setting.method === 'wallet'
                     ? setting.walletPhone
                     : setting.method === 'instapay'
