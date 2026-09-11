@@ -207,12 +207,11 @@ export const MobileTasks = () => {
               return (
                 <motion.article
                   key={task.id}
-                  layout
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: Math.min(i * 0.03, 0.24), duration: 0.3 }}
                   className={cn(
-                    'relative overflow-hidden rounded-2xl border border-s-2 border-border bg-card p-4 shadow-elevation-1',
+                    'relative overflow-hidden rounded-none border border-s-2 border-border bg-card p-4 shadow-elevation-1',
                     done ? 'opacity-70' : priority.bar,
                   )}
                 >
@@ -260,10 +259,10 @@ export const MobileTasks = () => {
                         </p>
                       )}
 
-                      <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                      <div className="mt-2 flex items-center gap-1 overflow-hidden whitespace-nowrap">
                         <span
                           className={cn(
-                            'rounded-full px-2 py-0.5 text-micro font-bold',
+                            'shrink-0 rounded-full px-1.5 py-0.5 text-[9px] font-bold',
                             priority.badge,
                           )}
                         >
@@ -272,7 +271,7 @@ export const MobileTasks = () => {
                         {!done && (
                           <span
                             className={cn(
-                              'rounded-full bg-surface px-2 py-0.5 text-micro font-bold',
+                              'shrink-0 rounded-full bg-surface px-1.5 py-0.5 text-[9px] font-bold',
                               statusMeta.color,
                             )}
                           >
@@ -282,7 +281,7 @@ export const MobileTasks = () => {
                         {task.dueDate && (
                           <span
                             className={cn(
-                              'flex items-center gap-1 rounded-full px-2 py-0.5 text-micro font-bold tabular-nums',
+                              'flex min-w-0 items-center gap-1 truncate rounded-full px-1.5 py-0.5 text-[9px] font-bold tabular-nums',
                               overdue
                                 ? 'bg-error-soft text-error'
                                 : isToday
@@ -290,7 +289,7 @@ export const MobileTasks = () => {
                                   : 'bg-surface text-muted',
                             )}
                           >
-                            <CalendarDays size={10} strokeWidth={1.7} />
+                            <CalendarDays size={9} strokeWidth={1.7} />
                             {new Date(`${task.dueDate}T00:00:00`).toLocaleDateString('ar-EG', {
                               month: 'short',
                               day: 'numeric',
@@ -306,7 +305,7 @@ export const MobileTasks = () => {
                       onClick={() => handleDelete(task)}
                       disabled={deleteTask.isPending}
                       aria-label={`حذف المهمة: ${task.title}`}
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-error text-on-error transition-colors hover:bg-error-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
                     >
                       <Trash2 size={14} strokeWidth={1.7} />
                     </button>
