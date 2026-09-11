@@ -118,7 +118,7 @@ export const MobileQuickAccess = ({
             </p>
           </div>
           {academicYear && (
-            <span className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg bg-primary-soft px-2 py-1 text-[10px] font-bold text-primary">
+            <span className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-bold text-primary">
               <CalendarDays size={11} />
               {academicYear}
             </span>
@@ -126,7 +126,7 @@ export const MobileQuickAccess = ({
           <button
             onClick={onCloseMenu}
             aria-label="إغلاق القائمة"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-error-soft bg-error-soft text-error shadow-elevation-1 outline-none transition-all duration-normal hover:bg-error hover:text-on-error hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-error-soft bg-error-soft text-error shadow-elevation-1 outline-none transition-all duration-normal hover:bg-error hover:text-on-error hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <X size={18} strokeWidth={2.2} />
           </button>
@@ -158,7 +158,7 @@ export const MobileQuickAccess = ({
                         aria-label={navItem.name}
                         className={({ isActive }) =>
                           cn(
-                            'group flex touch-manipulation flex-col items-center gap-1 rounded-2xl border p-1.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+                            'group flex touch-manipulation flex-col items-center gap-1 rounded-2xl border p-1.5 outline-none transition-all duration-normal hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
                             isActive
                               ? 'border-primary/40 bg-primary-soft dark:bg-primary/15'
                               : 'border-border bg-surface hover:bg-hover dark:bg-card',
@@ -209,14 +209,14 @@ export const MobileQuickAccess = ({
                         onClick={onCloseMenu}
                         className={({ isActive }) =>
                           cn(
-                            'flex items-center gap-2 rounded-xl px-2 py-1.5 outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus',
+                            'flex items-center gap-2 rounded-2xl px-2 py-1.5 outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus',
                             isActive
                               ? 'bg-primary-soft font-bold text-primary'
                               : 'text-muted hover:bg-hover hover:text-main',
                           )
                         }
                       >
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-border bg-card">
+                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl border border-border bg-card">
                           <Icon size={15} strokeWidth={1.8} />
                         </span>
                         <span className="min-w-0 flex-1 truncate text-sm font-medium">
@@ -247,7 +247,7 @@ export const MobileQuickAccess = ({
               to={getProfileLink(currentUser.role ?? '')}
               onClick={onCloseMenu}
               aria-label="الملف الشخصي"
-              className="mb-1.5 flex w-full items-center gap-2.5 rounded-xl border border-border bg-surface px-3 py-2 text-start outline-none transition-colors duration-fast hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus dark:bg-card"
+              className="mb-1.5 flex w-full items-center gap-2.5 rounded-2xl border border-border bg-surface px-3 py-2 text-start outline-none transition-all duration-fast hover:bg-hover hover:shadow-elevation-1 focus-visible:ring-2 focus-visible:ring-focus dark:bg-card"
             >
               <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary text-sm font-black text-on-primary">
                 {currentUser.avatar ? (
@@ -280,7 +280,7 @@ export const MobileQuickAccess = ({
               onLogout()
               onCloseMenu()
             }}
-            className="h-10 w-full gap-2 rounded-xl"
+            className="h-11 w-full gap-2 rounded-full"
           >
             <LogOut size={16} className="rtl:rotate-180" />
             <span>تسجيل الخروج</span>

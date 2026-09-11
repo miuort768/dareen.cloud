@@ -142,7 +142,7 @@ export const NotificationDropdown = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'relative flex h-11 w-11 items-center justify-center gap-1.5 rounded-lg px-2.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus md:h-8 md:w-auto',
+          'relative flex h-8 w-8 items-center justify-center gap-1.5 rounded-full px-2.5 outline-none transition-all duration-normal focus-visible:ring-2 focus-visible:ring-focus md:w-auto',
           'text-muted hover:bg-accent-soft hover:text-main',
         )}
         aria-label="إظهار الإشعارات"

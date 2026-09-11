@@ -199,21 +199,21 @@ export const Header = memo(() => {
           )}
 
           {/* Icon actions */}
-          <div className="flex items-center gap-0.5 rounded-full border border-border bg-card p-1 shadow-elevation-1 dark:border-white/5">
+          <div className="flex items-center gap-0.5 rounded-full border border-border bg-card p-0.5 shadow-elevation-1 dark:border-white/5 md:p-1">
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               aria-label={theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي'}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-muted outline-none transition-colors hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-8 md:w-8"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-muted outline-none transition-colors hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
             </button>
 
-            <div className="h-5 w-px bg-divider" />
+            <div className="h-4 w-px bg-divider md:h-5" />
 
             <Link
               to="/chat"
               aria-label="الدردشة"
-              className="relative flex h-10 w-10 items-center justify-center rounded-full text-muted transition-colors hover:bg-hover hover:text-main active:scale-95 md:h-8 md:w-8"
+              className="relative flex h-8 w-8 items-center justify-center rounded-full text-muted transition-colors hover:bg-hover hover:text-main active:scale-95"
             >
               <MessageSquare size={15} />
               {totalUnreadCount > 0 && (
@@ -225,14 +225,14 @@ export const Header = memo(() => {
 
             <NotificationDropdown />
 
-            <div className="h-5 w-px bg-divider" />
+            <div className="h-4 w-px bg-divider md:h-5" />
 
             <button
               onClick={async () => {
                 if (await confirm('هل أنت متأكد من تسجيل الخروج؟')) logout()
               }}
               aria-label="تسجيل الخروج"
-              className="flex h-10 w-10 items-center justify-center rounded-full text-error outline-none transition-colors hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-8 md:w-8"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-error outline-none transition-colors hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
             >
               <LogOut size={15} />
             </button>
