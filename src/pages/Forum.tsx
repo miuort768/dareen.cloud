@@ -313,7 +313,7 @@ export const Forum = () => {
       className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-8 font-sans md:pb-12"
       dir="rtl"
     >
-      <div className="relative z-10 pt-2">
+      <div className="relative z-10 pt-1">
         <ForumHeader
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}

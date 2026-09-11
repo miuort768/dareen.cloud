@@ -177,7 +177,7 @@ export const MobileTasks = () => {
         </motion.div>
 
         {/* بطاقة الإنجاز */}
-        <motion.div {...fadeUpStatic} className="px-4 pt-3">
+        <motion.div {...fadeUpStatic} className="px-4 pt-2">
           <div className="relative overflow-hidden rounded-card border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card p-4 shadow-elevation-1 transition-colors duration-slow dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
             <div className="pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true">
               <svg width="100%" height="100%">
