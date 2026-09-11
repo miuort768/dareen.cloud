@@ -1,15 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import {
-  CheckCircle2,
-  Plus,
-  Search,
-  RefreshCcw,
-  ListTodo,
-  Clock,
-  AlertTriangle,
-  Trash2,
-} from 'lucide-react'
+import { Plus, AlertTriangle, Trash2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '../lib/utils'
 import { api, safeArray } from '../lib/api'
@@ -20,7 +11,9 @@ import type { Task, TaskPriority } from '../features/tasks/types'
 import { TASK_PRIORITY_CONFIG } from '../features/tasks/types'
 import { useTaskMutations } from '../features/tasks/hooks/useTaskMutations'
 import { MobileTasks } from '../features/tasks/components/MobileTasks'
-import { PageHeader, ErrorState } from '../shared/components/ui'
+import { TasksHeader } from '../features/tasks/components/TasksHeader'
+import type { StatusFilter } from '../features/tasks/components/TasksHeader'
+import { ErrorState } from '../shared/components/ui'
 import { TaskCard, EmptyTaskState } from './TaskCard'
 import { TaskFormModal } from './TaskFormModal'
 
@@ -46,6 +39,7 @@ export const Tasks = () => {
   }, [academyName])
 
   const [filterPriority, setFilterPriority] = useState<'all' | TaskPriority>('all')
+  const [filterStatus, setFilterStatus] = useState<StatusFilter>('all')
   const [searchTerm, setSearchTerm] = useState('')
   const [showAddForm, setShowAddForm] = useState(false)
   const [newTask, setNewTask] = useState<NewTaskDraft>(EMPTY_DRAFT)
@@ -94,12 +88,13 @@ export const Tasks = () => {
   const filteredTasks = useMemo(() => {
     return tasks.filter((t) => {
       const matchesPriority = filterPriority === 'all' || t.priority === filterPriority
+      const matchesStatus = filterStatus === 'all' || t.status === filterStatus
       const q = searchTerm.toLowerCase()
       const matchesSearch =
         t.title.toLowerCase().includes(q) || (t.description || '').toLowerCase().includes(q)
-      return matchesPriority && matchesSearch
+      return matchesPriority && matchesStatus && matchesSearch
     })
-  }, [tasks, filterPriority, searchTerm])
+  }, [tasks, filterPriority, filterStatus, searchTerm])
 
   const stats = {
     total: tasks.length,
@@ -112,36 +107,6 @@ export const Tasks = () => {
         : 0,
   }
 
-  const kpiCards = useMemo(
-    () => [
-      {
-        label: 'إجمالي المهام',
-        value: stats.total,
-        icon: ListTodo,
-        iconBg: 'bg-primary-soft text-primary',
-      },
-      {
-        label: 'معلقة',
-        value: stats.pending,
-        icon: Clock,
-        iconBg: 'bg-warning-soft text-warning-strong',
-      },
-      {
-        label: 'قيد التنفيذ',
-        value: stats.inProgress,
-        icon: RefreshCcw,
-        iconBg: 'bg-info-soft text-info-strong',
-      },
-      {
-        label: 'تم الإنجاز',
-        value: stats.completed,
-        icon: CheckCircle2,
-        iconBg: 'bg-success-soft text-success-strong',
-      },
-    ],
-    [stats.total, stats.pending, stats.inProgress, stats.completed],
-  )
-
   if (loading && tasks.length === 0) return <PageLoader />
 
   return (
@@ -151,123 +116,49 @@ export const Tasks = () => {
       </div>
       <div className="relative hidden min-h-full bg-background md:block" dir="rtl">
         <div className="mx-auto max-w-page space-y-4 px-3">
-          {/* Header — unified PageHeader pattern */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <PageHeader
-              title="المهام والطلبات"
-              subtitle="إدارة وتكليف المهام للمعلمات"
-              icon={<ListTodo size={22} />}
-              action={
-                <button
-                  onClick={() => setShowAddForm(true)}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97]"
-                >
-                  <Plus size={16} /> مهمة جديدة
-                </button>
-              }
-              meta={
-                <>
-                  <span className="inline-flex items-center rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
-                    المهام: {stats.total}
-                  </span>
-                  <span className="inline-flex items-center rounded-full border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
-                    الإنجاز: {stats.score}%
-                  </span>
-                </>
-              }
-            />
-          </motion.div>
+          {/* Hero — بنفس لغة صفحة أبنائي */}
+          <TasksHeader
+            stats={stats}
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            filterStatus={filterStatus}
+            onFilterStatusChange={setFilterStatus}
+            onAdd={() => setShowAddForm(true)}
+          />
 
-          {/* KPI Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            data-stats
-          >
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              {kpiCards.map((kpi, i) => {
-                const Icon = kpi.icon
-                return (
-                  <motion.div
-                    key={kpi.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.12 + i * 0.06 }}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    className="rounded-2xl border border-border bg-surface p-4 shadow-elevation-1 transition-colors duration-slow dark:border-primary/20 dark:bg-card"
-                  >
-                    <div className="mb-3 flex items-center justify-between">
-                      <div
-                        className={cn(
-                          'flex h-10 w-10 items-center justify-center rounded-xl',
-                          kpi.iconBg,
-                        )}
-                      >
-                        <Icon size={16} />
-                      </div>
-                    </div>
-                    <p className="mb-1 text-xs font-bold text-muted">{kpi.label}</p>
-                    <p className="font-dash text-2xl font-black tabular-nums text-main">
-                      {kpi.value}
-                    </p>
-                  </motion.div>
-                )
-              })}
-            </div>
-          </motion.div>
-
-          {/* البحث + فلاتر الأولوية */}
+          {/* فلاتر الأولوية + حذف المكتملة */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
           >
-            <div className="flex flex-col items-center gap-3 lg:flex-row">
-              <div className="relative w-full flex-1">
-                <Search
-                  className="absolute start-4 top-1/2 -translate-y-1/2 text-primary"
-                  size={14}
-                />
-                <input
-                  type="text"
-                  aria-label="بحث عن مهمة"
-                  placeholder="ابحث عن مهمة..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full rounded-2xl border border-border bg-card px-4 py-3 ps-10 text-xs font-bold text-main shadow-elevation-1 transition-all placeholder:text-muted focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                />
-              </div>
-
-              {/* فلاتر الأولوية */}
-              <div className="no-scrollbar flex w-full shrink-0 gap-1.5 overflow-x-auto md:w-auto">
-                {(['all', 'high', 'medium', 'low'] as const).map((key) => (
-                  <button
-                    key={key}
-                    onClick={() => setFilterPriority(key)}
-                    aria-pressed={filterPriority === key}
-                    className={cn(
-                      'whitespace-nowrap rounded-full border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                      filterPriority === key
-                        ? key !== 'all'
-                          ? cn(TASK_PRIORITY_CONFIG[key].badge, 'border-current')
-                          : 'border-primary bg-primary-soft text-primary'
-                        : 'border-border bg-card text-muted hover:text-main',
-                    )}
-                  >
-                    {key === 'all' ? 'الكل' : TASK_PRIORITY_CONFIG[key].label}
-                  </button>
-                ))}
-                {stats.completed > 0 && (
-                  <button
-                    onClick={handleDeleteCompleted}
-                    disabled={deleteTask.isPending}
-                    className="ms-auto flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-micro font-bold text-error transition-colors hover:bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
-                  >
-                    <Trash2 size={12} /> حذف المكتملة ({stats.completed})
-                  </button>
-                )}
-              </div>
+            <div className="no-scrollbar flex w-full gap-1.5 overflow-x-auto">
+              {(['all', 'high', 'medium', 'low'] as const).map((key) => (
+                <button
+                  key={key}
+                  onClick={() => setFilterPriority(key)}
+                  aria-pressed={filterPriority === key}
+                  className={cn(
+                    'whitespace-nowrap rounded-full border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                    filterPriority === key
+                      ? key !== 'all'
+                        ? cn(TASK_PRIORITY_CONFIG[key].badge, 'border-current')
+                        : 'border-primary bg-primary-soft text-primary'
+                      : 'border-border bg-card text-muted hover:text-main',
+                  )}
+                >
+                  {key === 'all' ? 'الكل' : TASK_PRIORITY_CONFIG[key].label}
+                </button>
+              ))}
+              {stats.completed > 0 && (
+                <button
+                  onClick={handleDeleteCompleted}
+                  disabled={deleteTask.isPending}
+                  className="ms-auto flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-micro font-bold text-error transition-colors hover:bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                >
+                  <Trash2 size={12} /> حذف المكتملة ({stats.completed})
+                </button>
+              )}
             </div>
           </motion.div>
 

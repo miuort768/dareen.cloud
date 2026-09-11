@@ -9,31 +9,19 @@ import {
   CalendarDays,
   ListTodo,
   Plus,
-  Search,
-  X,
   AlertTriangle,
 } from 'lucide-react'
 import { api, safeArray } from '../../../lib/api'
 import { MobilePage, usePullToRefresh, BottomSheet } from '../../../shared/components/mobile'
 import { SkeletonCard, EmptyState } from '../../../shared/components/ui'
-import { fadeUpStatic } from '../../../shared/animations/fadeUp'
 import { cn } from '../../../lib/utils'
 import { triggerHaptic } from '../../../lib/haptics'
 import { confirm } from '../../../lib/confirmDialog'
 import { useShowNotification } from '../../../context/AppContext'
-import {
-  TASK_PRIORITY_CONFIG,
-  TASK_STATUS_CONFIG,
-  type Task,
-  type TaskPriority,
-  type TaskStatus,
-} from '../types'
+import { TASK_PRIORITY_CONFIG, TASK_STATUS_CONFIG, type Task, type TaskPriority } from '../types'
 import { useTaskMutations } from '../hooks/useTaskMutations'
-
-type StatusFilter = 'all' | TaskStatus
-
-const RING_RADIUS = 30
-const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS
+import { TasksHeader } from './TasksHeader'
+import type { StatusFilter } from './TasksHeader'
 
 interface TaskFilters {
   title: string
@@ -49,7 +37,7 @@ const EMPTY_FILTERS: TaskFilters = {
   dueDate: new Date().toLocaleDateString('en-CA'),
 }
 
-/** واجهة الهاتف — تصميم تطبيقي فاخر: بطاقة إنجاز بحلقة، تبويبات لاصقة، checkbox متحرك، إنشاء عبر BottomSheet */
+/** واجهة الهاتف — بنفس لغة صفحة «أبنائي»: هيدر ملون مع بطاقات إحصائية، checkbox متحرك، إنشاء عبر BottomSheet */
 export const MobileTasks = () => {
   const showNotification = useShowNotification()
   const [filter, setFilter] = useState<StatusFilter>('all')
@@ -78,19 +66,16 @@ export const MobileTasks = () => {
 
   const { createTask, updateTaskStatus, deleteTask } = useTaskMutations()
 
-  const stats = useMemo(
-    () => ({
+  const stats = useMemo(() => {
+    const completed = tasks.filter((t) => t.status === 'completed').length
+    return {
       total: tasks.length,
       pending: tasks.filter((t) => t.status === 'pending').length,
       inProgress: tasks.filter((t) => t.status === 'in-progress').length,
-      completed: tasks.filter((t) => t.status === 'completed').length,
-      rate:
-        tasks.length > 0
-          ? Math.round((tasks.filter((t) => t.status === 'completed').length / tasks.length) * 100)
-          : 0,
-    }),
-    [tasks],
-  )
+      completed,
+      score: tasks.length > 0 ? Math.round((completed / tasks.length) * 100) : 0,
+    }
+  }, [tasks])
 
   const filtered = useMemo(() => {
     let result = tasks
@@ -144,13 +129,6 @@ export const MobileTasks = () => {
   const quickDate = (offsetDays: number) =>
     new Date(Date.now() + offsetDays * 86400000).toLocaleDateString('en-CA')
 
-  const tabs: { key: StatusFilter; label: string; count: number }[] = [
-    { key: 'all', label: 'الكل', count: stats.total },
-    { key: 'pending', label: 'معلقة', count: stats.pending },
-    { key: 'in-progress', label: 'جارية', count: stats.inProgress },
-    { key: 'completed', label: 'مكتملة', count: stats.completed },
-  ]
-
   return (
     <MobilePage>
       <div {...handlers}>
@@ -176,148 +154,15 @@ export const MobileTasks = () => {
           </div>
         </motion.div>
 
-        {/* بطاقة الإنجاز */}
-        <motion.div {...fadeUpStatic} className="px-4 pt-2">
-          <div className="relative overflow-hidden rounded-card border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card p-4 shadow-elevation-1 transition-colors duration-slow dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
-            <div className="pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true">
-              <svg width="100%" height="100%">
-                <defs>
-                  <pattern
-                    id="tasks-hero-grid"
-                    x="0"
-                    y="0"
-                    width="22"
-                    height="22"
-                    patternUnits="userSpaceOnUse"
-                  >
-                    <circle cx="2" cy="2" r="1.2" className="fill-primary" />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#tasks-hero-grid)" />
-              </svg>
-            </div>
-
-            <div className="relative z-10 flex items-center gap-4">
-              {/* حلقة نسبة الإنجاز */}
-              <div
-                className="relative h-[76px] w-[76px] shrink-0"
-                role="img"
-                aria-label={`نسبة الإنجاز ${stats.rate} بالمئة`}
-              >
-                <svg viewBox="0 0 76 76" className="h-full w-full -rotate-90">
-                  <circle
-                    cx="38"
-                    cy="38"
-                    r={RING_RADIUS}
-                    fill="none"
-                    stroke="var(--bg-primary-soft)"
-                    strokeWidth="7"
-                  />
-                  <motion.circle
-                    cx="38"
-                    cy="38"
-                    r={RING_RADIUS}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="7"
-                    strokeLinecap="round"
-                    strokeDasharray={RING_CIRCUMFERENCE}
-                    initial={{ strokeDashoffset: RING_CIRCUMFERENCE }}
-                    animate={{ strokeDashoffset: RING_CIRCUMFERENCE * (1 - stats.rate / 100) }}
-                    transition={{ duration: 0.9, ease: 'easeOut' }}
-                  />
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-dash text-lg font-black tabular-nums text-primary">
-                    {stats.rate}%
-                  </span>
-                </div>
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-bold text-muted">إنجاز المهام</p>
-                <p className="mt-0.5 text-micro font-bold text-dim">
-                  أكملت {stats.completed} من {stats.total} مهمة
-                </p>
-                <div className="mt-2.5 grid grid-cols-3 gap-1.5">
-                  {tabs.slice(1).map((t) => (
-                    <button
-                      key={t.key}
-                      onClick={() => {
-                        triggerHaptic('light')
-                        setFilter(filter === t.key ? 'all' : t.key)
-                      }}
-                      className={cn(
-                        'rounded-full px-2 py-1.5 text-center outline-none backdrop-blur-sm transition-colors focus-visible:ring-2 focus-visible:ring-focus',
-                        filter === t.key
-                          ? 'bg-primary text-on-primary'
-                          : 'bg-primary-soft text-primary',
-                      )}
-                    >
-                      <p className="text-sm font-bold tabular-nums leading-none">{t.count}</p>
-                      <p className="mt-1 text-micro font-bold opacity-80">{t.label}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* التبويبات اللاصقة */}
-      <div className="bg-background/95 sticky top-14 z-30 mt-3 px-4 pb-2 pt-2 backdrop-blur-sm">
-        <div className="flex gap-1 rounded-full border border-border bg-card p-1">
-          {tabs.map((tab) => (
-            <motion.button
-              key={tab.key}
-              whileTap={{ scale: 0.96 }}
-              onClick={() => {
-                triggerHaptic('light')
-                setFilter(tab.key)
-              }}
-              aria-pressed={filter === tab.key}
-              className={cn(
-                'relative min-w-0 flex-1 rounded-full px-1 py-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                filter === tab.key
-                  ? 'bg-primary font-bold text-on-primary shadow-elevation-1'
-                  : 'font-bold text-muted hover:text-main',
-              )}
-            >
-              <span className="block truncate text-micro">{tab.label}</span>
-              <span
-                className={cn(
-                  'block text-micro tabular-nums leading-tight',
-                  filter === tab.key ? 'text-on-primary opacity-90' : 'text-muted opacity-70',
-                )}
-              >
-                {tab.count}
-              </span>
-            </motion.button>
-          ))}
-        </div>
-      </div>
-
-      {/* البحث */}
-      <div className="px-4 pb-3 pt-1">
-        <div className="relative">
-          <Search size={13} className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted" />
-          {search && (
-            <button
-              onClick={() => setSearch('')}
-              aria-label="مسح البحث"
-              className="absolute end-3 top-1/2 flex -translate-y-1/2 items-center justify-center rounded-full bg-surface p-1.5 text-muted transition-colors hover:text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-            >
-              <X size={11} strokeWidth={2} />
-            </button>
-          )}
-          <input
-            type="search"
-            aria-label="بحث في المهام"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="ابحث في المهام..."
-            className="w-full rounded-2xl border border-border bg-card py-2.5 pe-10 ps-9 text-xs font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary"
+        {/* Hero — بنفس لغة صفحة أبنائي */}
+        <div className="px-4 pt-2">
+          <TasksHeader
+            stats={stats}
+            searchTerm={search}
+            onSearchChange={setSearch}
+            filterStatus={filter}
+            onFilterStatusChange={setFilter}
+            onAdd={() => setSheetOpen(true)}
           />
         </div>
       </div>
