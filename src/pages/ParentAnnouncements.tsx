@@ -211,7 +211,7 @@ export const ParentAnnouncements = () => {
                     </span>
                     <span
                       className={cn(
-                        'flex items-center gap-1.5 rounded-lg border border-transparent px-3 py-1 text-micro font-bold',
+                        'flex items-center gap-1.5 rounded-full border border-transparent px-3 py-1 text-micro font-bold',
                         SOLID_TYPE_BADGE[ann.type] ?? config.badge,
                       )}
                     >
