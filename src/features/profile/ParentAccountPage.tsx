@@ -21,6 +21,7 @@ import {
   ProfileSkeleton,
   ErrorBlock,
   AccountActions,
+  StatusBadge,
   formatJoinDate,
 } from './shared'
 import { EditNameModal } from './EditNameModal'
@@ -153,16 +154,7 @@ export const ParentAccountPage = () => {
               </div>
               <div>
                 <InfoRow label="نوع الحساب" value="ولي أمر" />
-                <InfoRow
-                  label="حالة الحساب"
-                  value={
-                    <span className="inline-flex items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-success-strong">
-                      <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-current" />
-                      نشط
-                    </span>
-                  }
-                  icon={ShieldCheck}
-                />
+                <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={ShieldCheck} />
               </div>
             </div>
           </SectionCard>

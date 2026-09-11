@@ -214,7 +214,7 @@ export const PaymentMethodsSection = () => {
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className="flex items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-micro font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex min-h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-micro font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={13} /> إضافة طريقة دفع
           </button>
@@ -231,11 +231,11 @@ export const PaymentMethodsSection = () => {
 
       {/* خطأ الجلب */}
       {!loading && fetchError && (
-        <div className="bg-error-soft/50 rounded-xl border border-dashed border-error-soft py-8 text-center">
+        <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-8 text-center">
           <p className="text-xs font-bold text-main">تعذر تحميل طرق الدفع</p>
           <button
             onClick={() => window.location.reload()}
-            className="mx-auto mt-3 block rounded-lg bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="mx-auto mt-3 flex min-h-11 items-center rounded-lg bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             إعادة المحاولة
           </button>
@@ -244,17 +244,17 @@ export const PaymentMethodsSection = () => {
 
       {/* لا توجد طرق دفع */}
       {!loading && !fetchError && !setting && (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-10 text-center">
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft">
-            <CreditCard size={20} className="text-primary" />
+        <div className="bg-surface/40 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border py-12 text-center">
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft ring-1 ring-primary/10">
+            <CreditCard size={22} className="text-primary" />
           </div>
-          <p className="text-xs font-bold text-muted">لا توجد طرق دفع</p>
+          <p className="text-sm font-black text-main">لا توجد طرق دفع</p>
           <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted">
             أضف طريقة دفع حتى تتمكن من استلام مستحقاتك.
           </p>
           <button
             onClick={openAdd}
-            className="mt-4 flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="mt-5 flex min-h-11 items-center gap-1.5 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={14} /> إضافة طريقة دفع
           </button>
@@ -380,7 +380,7 @@ export const PaymentMethodsSection = () => {
             <div className="border-t border-border px-4 py-2.5">
               <button
                 onClick={openEdit}
-                className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-primary-soft py-2 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-lg bg-primary-soft py-2 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <PencilLine size={12} /> تعديل البيانات
               </button>

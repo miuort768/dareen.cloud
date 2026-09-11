@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
@@ -22,6 +22,7 @@ import {
   ProfileSkeleton,
   ErrorBlock,
   AccountActions,
+  StatusBadge,
   formatJoinDate,
 } from './shared'
 import { EditNameModal } from './EditNameModal'
@@ -142,16 +143,7 @@ export const TeacherAccountPage = () => {
               )}
               <InfoRow label="اسم المستخدم" value={teacher?.username} icon={KeyRound} mono />
               <InfoRow label="نوع الحساب" value="معلمة" />
-              <InfoRow
-                label="حالة الحساب"
-                value={
-                  <span className="inline-flex items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-success-strong">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-current" />
-                    نشط
-                  </span>
-                }
-                icon={ShieldCheck}
-              />
+              <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={ShieldCheck} />
               <InfoRow
                 label="تاريخ الانضمام"
                 value={formatJoinDate(teacher?.createdAt) || undefined}
@@ -172,34 +164,63 @@ export const TeacherAccountPage = () => {
                   <MiniTile
                     label="سعر الحصة"
                     value={
-                      teacher?.price != null
-                        ? `${teacher.price} ${getCurrencySymbol(teacher.currency || 'EGP')}`
-                        : '—'
+                      teacher?.price != null ? (
+                        <span className="font-dash tabular-nums">
+                          {teacher.price} {getCurrencySymbol(teacher.currency || 'EGP')}
+                        </span>
+                      ) : (
+                        '—'
+                      )
                     }
                     icon={Wallet}
                   />
-                  <MiniTile label="إجمالي النقاط" value={String(points)} icon={Award} />
+                  <MiniTile
+                    label="إجمالي النقاط"
+                    value={
+                      points > 0 ? (
+                        <span className="font-dash tabular-nums">{points}</span>
+                      ) : (
+                        String(points)
+                      )
+                    }
+                    icon={Award}
+                  />
                 </div>
 
                 {/* الرتبة والتقدم — من نظام الرتب الموحد */}
-                <div className="mt-4 rounded-xl border border-border bg-surface p-3.5">
-                  <div className="mb-2 flex items-center justify-between gap-2">
-                    <span className="flex items-center gap-2 text-xs font-bold text-main">
-                      <RankIcon size={14} className="text-primary" />
-                      الرتبة الحالية: <span className="text-primary">{rank.name}</span>
+                <div className="bg-surface/60 mt-4 rounded-2xl border border-border p-4 shadow-elevation-1">
+                  <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                    <span className="flex items-center gap-2.5">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft ring-1 ring-primary/10">
+                        <RankIcon size={16} className="text-primary" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-micro text-muted">الرتبة الحالية</span>
+                        <span className="block truncate text-sm font-black leading-tight text-main">
+                          {rank.name}
+                        </span>
+                      </span>
                     </span>
                     {nextRank && (
-                      <span className="flex items-center gap-1 text-micro font-bold text-muted">
+                      <span className="flex shrink-0 items-center gap-1.5 rounded-lg bg-primary-soft px-2.5 py-1.5 text-micro font-bold text-primary">
                         <TrendingUp size={11} />
                         التالية: {nextRank.name}
                       </span>
                     )}
                   </div>
-                  <ProgressBar value={rankProgress} variant="primary" />
-                  <p className="mt-1.5 text-micro text-muted">
-                    {nextRank
-                      ? `تحتاج ${pointsNeeded} نقطة للوصول إلى «${nextRank.name}»`
-                      : 'وصلتِ لأعلى رتبة — أحسنت!'}
+                  <ProgressBar value={rankProgress} variant="primary" size="lg" />
+                  <p className="mt-2 text-micro text-muted">
+                    {nextRank ? (
+                      <>
+                        تحتاج{' '}
+                        <span className="font-dash font-black tabular-nums text-primary">
+                          {pointsNeeded}
+                        </span>{' '}
+                        نقطة للوصول إلى «{nextRank.name}»
+                      </>
+                    ) : (
+                      'وصلتِ لأعلى رتبة — أحسنت!'
+                    )}
                   </p>
                 </div>
               </SectionCard>
@@ -230,7 +251,9 @@ export const TeacherAccountPage = () => {
 export function PageShell({ children }: { children: ReactNode }) {
   return (
     <div dir="rtl" className="min-h-full overflow-x-hidden bg-background pb-6 md:pb-10">
-      <div className="mx-auto max-w-page space-y-4 p-3 pt-4 md:p-5 md:pt-6">{children}</div>
+      <div className="mx-auto max-w-page space-y-4 p-3 pt-5 md:space-y-5 md:p-6 md:pt-8">
+        {children}
+      </div>
     </div>
   )
 }
@@ -247,10 +270,12 @@ export function MiniTile({
   icon: LucideIcon
 }) {
   return (
-    <div className="rounded-xl border border-border bg-surface p-3 text-center">
-      <Icon size={14} className="mx-auto mb-1 text-primary" />
-      <p className="truncate text-xs font-bold text-main">{value}</p>
-      <p className="mt-0.5 text-micro text-muted">{label}</p>
+    <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-elevation-1">
+      <div className="mx-auto mb-2.5 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft ring-1 ring-primary/10">
+        <Icon size={16} className="text-primary" />
+      </div>
+      <p className="truncate text-sm font-black leading-tight text-main">{value}</p>
+      <p className="mt-1 text-micro text-muted">{label}</p>
     </div>
   )
 }

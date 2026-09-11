@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import {
   User,
@@ -20,6 +20,7 @@ import {
   ProfileSkeleton,
   ErrorBlock,
   AccountActions,
+  StatusBadge,
 } from './shared'
 import { PageShell, MiniTile } from './TeacherAccountPage'
 import { ProgressBar } from '../../shared/components/ui'
@@ -132,16 +133,7 @@ export const StudentAccountPage = () => {
               <InfoRow label="الاسم" value={displayName} icon={User} />
               <InfoRow label="رقم الطالب" value={student?.studentPhone} icon={Phone} mono />
               <InfoRow label="نوع الحساب" value="طالب" />
-              <InfoRow
-                label="حالة الحساب"
-                value={
-                  <span className="inline-flex items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-success-strong">
-                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-current" />
-                    نشط
-                  </span>
-                }
-                icon={ShieldCheck}
-              />
+              <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={ShieldCheck} />
             </SectionCard>
 
             {/* البيانات الدراسية */}
