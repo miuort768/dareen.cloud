@@ -220,7 +220,7 @@ export const MobileTasks = () => {
                 {/* شريط الأولوية على الحافة */}
                 {!done && (
                   <span
-                    className={cn('absolute inset-y-0 start-0 w-1', priority.bar)}
+                    className={cn('absolute inset-y-2 start-0 w-1 rounded-full', priority.bar)}
                     aria-hidden="true"
                   />
                 )}

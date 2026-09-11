@@ -115,7 +115,7 @@ export const Tasks = () => {
         <MobileTasks />
       </div>
       <div className="relative hidden min-h-full bg-background md:block" dir="rtl">
-        <div className="mx-auto max-w-page space-y-4 px-3">
+        <div className="mx-auto max-w-page space-y-4 px-2 pb-16 md:pb-12">
           {/* Hero — بنفس لغة صفحة أبنائي */}
           <TasksHeader
             stats={stats}
