@@ -175,7 +175,7 @@ export const ParentAccountPage = () => {
               </div>
               <button
                 onClick={() => navigate('/parent-students')}
-                className="flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-jade-soft px-3 py-1.5 text-micro font-bold text-jade transition-colors hover:bg-jade-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-jade-deep px-3 py-1.5 text-micro font-bold text-jade-on transition-colors hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 متابعة التفاصيل <ArrowLeft size={11} />
               </button>

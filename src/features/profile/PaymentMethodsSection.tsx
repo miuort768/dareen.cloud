@@ -345,7 +345,7 @@ export const PaymentMethodsSection = () => {
                   onClick={handleDelete}
                   disabled={deleting}
                   aria-label="حذف طريقة الدفع"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-error hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-error hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
                 >
                   {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
                 </button>
@@ -381,7 +381,7 @@ export const PaymentMethodsSection = () => {
             <div className="border-t border-border px-4 py-2.5">
               <button
                 onClick={openEdit}
-                className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-jade-soft py-2 text-micro font-bold text-jade transition-colors hover:bg-jade-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-jade-deep py-2 text-micro font-bold text-jade-on transition-colors hover:bg-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <PencilLine size={12} /> تعديل البيانات
               </button>
@@ -492,7 +492,7 @@ const PaymentMethodForm = ({
                       className={cn(
                         'flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                         active
-                          ? 'border-jade bg-jade-soft text-jade shadow-elevation-1'
+                          ? 'border-jade bg-jade-deep text-jade-on shadow-elevation-1'
                           : 'border-border bg-surface text-muted hover:border-jade-light hover:text-main',
                       )}
                     >
@@ -523,7 +523,7 @@ const PaymentMethodForm = ({
                         className={cn(
                           'rounded-lg border py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                           form.walletProvider === w
-                            ? 'border-jade bg-jade-soft text-jade'
+                            ? 'border-jade bg-jade-deep text-jade-on'
                             : 'border-border bg-surface text-muted hover:text-main',
                         )}
                       >

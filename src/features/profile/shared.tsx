@@ -47,6 +47,15 @@ const TEXT_TONE: Record<Tone, string> = {
   error: 'text-error-strong',
 }
 
+/** تعبئة صلبة — البطاقات الإحصائية الصغيرة الكاملة اللون */
+const INFO_FILL: Record<Tone, string> = {
+  primary: 'bg-jade-deep',
+  success: 'bg-success',
+  warning: 'bg-warning',
+  info: 'bg-info',
+  error: 'bg-error',
+}
+
 export const TONE_ORDER: Tone[] = ['primary', 'info', 'success', 'warning']
 
 /** رقم واتساب الدعم الفني من إعدادات المنصة (مفتاح «تواصل مع الدعم الفني») */
@@ -282,17 +291,19 @@ interface InfoTileProps {
 }
 
 export const InfoTile = ({ label, value, icon: Icon, tone = 'primary' }: InfoTileProps) => (
-  <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-soft transition-colors duration-slow dark:border-white/[0.06] dark:bg-card">
-    <div
-      className={cn(
-        'mx-auto mb-2.5 flex h-10 w-10 items-center justify-center rounded-xl ring-1',
-        TILE_TONE[tone],
-      )}
-    >
+  <div
+    className={cn(
+      'relative overflow-hidden rounded-2xl p-4 text-center shadow-elevation-1 transition-colors duration-slow',
+      INFO_FILL[tone],
+    )}
+  >
+    <div className="mx-auto mb-2.5 flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 text-white ring-1 ring-inset ring-white/20 backdrop-blur-sm">
       <Icon size={16} />
     </div>
-    <p className="truncate text-sm font-black leading-tight text-main">{value}</p>
-    <p className="mt-1 text-micro text-muted">{label}</p>
+    <p className="truncate font-dash text-2xl font-black tabular-nums leading-none text-white drop-shadow-[0_1px_2px_rgb(0_0_0/0.15)]">
+      {value}
+    </p>
+    <p className="mt-1.5 text-micro font-bold text-white/80">{label}</p>
   </div>
 )
 
