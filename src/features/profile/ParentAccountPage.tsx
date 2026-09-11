@@ -148,7 +148,7 @@ export const ParentAccountPage = () => {
 
           {/* المعلومات الأساسية */}
           <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-            <div className="grid gap-x-10 md:grid-cols-2">
+            <div className="flex flex-col">
               <div>
                 <InfoRow label="الاسم" value={displayName} icon={User} />
                 <InfoRow label="اسم المستخدم" value={currentUser?.username} icon={KeyRound} mono />

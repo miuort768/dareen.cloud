@@ -123,7 +123,7 @@ export const TeacherAccountPage = () => {
           <div className="grid gap-4 lg:grid-cols-3">
             {/* المعلومات الأساسية */}
             <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-              <div className="grid gap-x-10 md:grid-cols-2">
+              <div className="flex flex-col">
                 <div>
                   <InfoRow label="الاسم" value={displayName} icon={User} />
                   <InfoRow label="رقم الجوال" value={teacher?.phone1} icon={Phone} mono />
