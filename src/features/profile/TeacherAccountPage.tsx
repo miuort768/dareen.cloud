@@ -1,7 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
-import type { ReactNode } from 'react'
-import type { LucideIcon } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
+import { useEffect, useMemo } from 'react'
 import {
   User,
   Phone,
@@ -12,21 +9,25 @@ import {
   KeyRound,
   Award,
   TrendingUp,
+  CalendarCheck,
 } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
 import { api } from '../../lib/api'
-import { useCurrentUser, useShowNotification, useLogout } from '../../context/AppContext'
+import { useCurrentUser, useLogout } from '../../context/AppContext'
 import {
   AccountHero,
   SectionCard,
-  InfoRow,
+  InfoCell,
+  InfoTile,
+  PageShell,
   ProfileSkeleton,
   ErrorBlock,
   AccountActions,
   StatusBadge,
   formatJoinDate,
 } from './shared'
-import { EditNameModal } from './EditNameModal'
 import { PaymentMethodsSection } from './PaymentMethodsSection'
+import { useTeacherStats } from './useTeacherStats'
 import {
   TEACHER_RANKS,
   getRankByPoints,
@@ -48,18 +49,15 @@ interface TeacherData {
   username?: string
   createdAt?: string
 }
+
 export const TeacherAccountPage = () => {
   const currentUser = useCurrentUser()
-  const showNotification = useShowNotification()
   const logout = useLogout()
-  const [editOpen, setEditOpen] = useState(false)
-  const [savingName, setSavingName] = useState(false)
 
   useEffect(() => {
     document.title = 'حسابي | دارين السابعة للتعليم والتدريب'
   }, [])
 
-  // نفس نداء النظام الحالي: GET /teachers/me
   const {
     data: teacher,
     isLoading,
@@ -79,8 +77,15 @@ export const TeacherAccountPage = () => {
   const rank = getRankByPoints(points, TEACHER_RANKS)
   const { next: nextRank, pointsNeeded } = getNextRank(points, TEACHER_RANKS)
   const RankIcon = RANK_ICON_MAP[rank.icon] ?? Award
+  const currency = teacher?.currency || 'EGP'
+  const symbol = getCurrencySymbol(currency)
 
-  // نسبة التقدم نحو الرتبة التالية من نظام الرتب المشترك
+  const {
+    completedCount,
+    profit,
+    loading: statsLoading,
+  } = useTeacherStats(currentUser?.id, teacher?.name || currentUser?.teacherName, currency)
+
   const rankProgress = useMemo(() => {
     if (!nextRank) return 100
     return Math.min(
@@ -88,25 +93,6 @@ export const TeacherAccountPage = () => {
       Math.round(((points - rank.minPoints) / (nextRank.minPoints - rank.minPoints)) * 100),
     )
   }, [points, rank, nextRank])
-
-  /* حفظ الاسم ورقم الجوال — PUT /teachers/me (مسار الخدمة الذاتية) */
-  const handleSaveProfile = async (values: { name: string; phone?: string }) => {
-    setSavingName(true)
-    try {
-      await api.put('/teachers/me', {
-        name: values.name,
-        ...(values.phone !== undefined ? { phone1: values.phone } : {}),
-      })
-      showNotification('تم تحديث بياناتك بنجاح', 'success')
-      setEditOpen(false)
-      await refetch()
-    } catch (err) {
-      console.error('Failed updating profile', err)
-      showNotification('تعذر تحديث البيانات، حاول مجددًا', 'error')
-    } finally {
-      setSavingName(false)
-    }
-  }
 
   if (isLoading)
     return (
@@ -124,31 +110,87 @@ export const TeacherAccountPage = () => {
           <AccountHero
             name={displayName}
             roleLabel="معلمة"
-            subtitle={teacher?.subject || undefined}
+            chipsBold
             metaChips={[
+              teacher?.subject || 'مادة غير محددة',
               teacher?.price != null
-                ? `سعر الحصة ${teacher.price} ${getCurrencySymbol(teacher.currency || 'EGP')}`
-                : '',
-            ].filter(Boolean)}
-            onEdit={() => setEditOpen(true)}
+                ? `سعر الحصة ${teacher.price} ${symbol}`
+                : 'سعر الحصة غير محدد',
+            ]}
           />
 
           <div className="grid gap-4 lg:grid-cols-3">
             {/* المعلومات الأساسية */}
             <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-              <InfoRow label="الاسم" value={displayName} icon={User} />
-              <InfoRow label="رقم الجوال" value={teacher?.phone1} icon={Phone} mono />
-              {teacher?.phone2 && (
-                <InfoRow label="رقم إضافي" value={teacher.phone2} icon={Phone} mono />
-              )}
-              <InfoRow label="اسم المستخدم" value={teacher?.username} icon={KeyRound} mono />
-              <InfoRow label="نوع الحساب" value="معلمة" />
-              <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={ShieldCheck} />
-              <InfoRow
-                label="تاريخ الانضمام"
-                value={formatJoinDate(teacher?.createdAt) || undefined}
-                icon={CalendarDays}
-              />
+              <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+                <InfoCell label="الاسم" value={displayName} icon={User} tone="primary" />
+                <InfoCell
+                  label="رقم الجوال"
+                  value={teacher?.phone1}
+                  icon={Phone}
+                  tone="success"
+                  mono
+                />
+                {teacher?.phone2 && (
+                  <InfoCell
+                    label="رقم إضافي"
+                    value={teacher.phone2}
+                    icon={Phone}
+                    tone="info"
+                    mono
+                  />
+                )}
+                <InfoCell
+                  label="اسم المستخدم"
+                  value={teacher?.username}
+                  icon={KeyRound}
+                  tone="warning"
+                  mono
+                />
+                <InfoCell label="نوع الحساب" value="معلمة" icon={ShieldCheck} tone="primary" />
+                <InfoCell
+                  label="حالة الحساب"
+                  value={<StatusBadge />}
+                  icon={ShieldCheck}
+                  tone="success"
+                />
+                <InfoCell
+                  label="تاريخ الانضمام"
+                  value={formatJoinDate(teacher?.createdAt) || undefined}
+                  icon={CalendarDays}
+                  tone="info"
+                />
+              </div>
+
+              {/* مؤشرات الحساب — الحصص والربح الحالي */}
+              <div className="mt-3 grid grid-cols-2 gap-2 border-t border-divider pt-3 md:grid-cols-3">
+                <InfoCell
+                  label="عدد الحصص المنفذة"
+                  value={
+                    statsLoading ? (
+                      '—'
+                    ) : (
+                      <span className="font-dash tabular-nums">{completedCount}</span>
+                    )
+                  }
+                  icon={CalendarCheck}
+                  tone="success"
+                />
+                <InfoCell
+                  label="الربح الحالي"
+                  value={
+                    statsLoading ? (
+                      '—'
+                    ) : (
+                      <span className="font-dash tabular-nums">
+                        {profit} {symbol}
+                      </span>
+                    )
+                  }
+                  icon={Wallet}
+                  tone="primary"
+                />
+              </div>
             </SectionCard>
 
             {/* بيانات التدريس */}
@@ -159,22 +201,28 @@ export const TeacherAccountPage = () => {
                 description="معلوماتك التعليمية في المنصة"
                 delay={0.15}
               >
-                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-                  <MiniTile label="المادة" value={teacher?.subject || '—'} icon={BookOpen} />
-                  <MiniTile
+                <div className="grid grid-cols-3 gap-2.5">
+                  <InfoTile
+                    label="المادة"
+                    value={teacher?.subject || '—'}
+                    icon={BookOpen}
+                    tone="primary"
+                  />
+                  <InfoTile
                     label="سعر الحصة"
                     value={
                       teacher?.price != null ? (
                         <span className="font-dash tabular-nums">
-                          {teacher.price} {getCurrencySymbol(teacher.currency || 'EGP')}
+                          {teacher.price} {symbol}
                         </span>
                       ) : (
                         '—'
                       )
                     }
                     icon={Wallet}
+                    tone="success"
                   />
-                  <MiniTile
+                  <InfoTile
                     label="إجمالي النقاط"
                     value={
                       points > 0 ? (
@@ -184,6 +232,7 @@ export const TeacherAccountPage = () => {
                       )
                     }
                     icon={Award}
+                    tone="warning"
                   />
                 </div>
 
@@ -233,49 +282,6 @@ export const TeacherAccountPage = () => {
           <AccountActions onLogoutStore={logout} />
         </div>
       )}
-
-      <EditNameModal
-        isOpen={editOpen}
-        initialName={displayName}
-        initialPhone={teacher?.phone1 || ''}
-        saving={savingName}
-        onClose={() => setEditOpen(false)}
-        onSubmit={handleSaveProfile}
-      />
     </PageShell>
-  )
-}
-
-/* ---------- غلاف الصفحة الموحد ---------- */
-
-export function PageShell({ children }: { children: ReactNode }) {
-  return (
-    <div dir="rtl" className="min-h-full overflow-x-hidden bg-background pb-6 md:pb-10">
-      <div className="mx-auto max-w-page space-y-4 p-3 pt-2 md:space-y-5 md:p-6 md:pt-4">
-        {children}
-      </div>
-    </div>
-  )
-}
-
-/* ---------- بطاقة معلومة صغيرة ---------- */
-
-export function MiniTile({
-  label,
-  value,
-  icon: Icon,
-}: {
-  label: string
-  value?: ReactNode
-  icon: LucideIcon
-}) {
-  return (
-    <div className="rounded-2xl border border-border bg-card p-4 text-center shadow-elevation-1 dark:border-primary/20 dark:bg-surface">
-      <div className="mx-auto mb-2.5 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-soft ring-1 ring-primary/10">
-        <Icon size={16} className="text-primary" />
-      </div>
-      <p className="truncate text-sm font-black leading-tight text-main">{value}</p>
-      <p className="mt-1 text-micro text-muted">{label}</p>
-    </div>
   )
 }

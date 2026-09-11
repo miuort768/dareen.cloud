@@ -209,12 +209,13 @@ export const PaymentMethodsSection = () => {
       title="طرق الدفع"
       icon={CreditCard}
       description="إدارة طرق استلام مستحقاتك المالية."
+      descClassName="text-[9px] sm:text-micro"
       delay={0.2}
       action={
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className="flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-micro font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+            className="flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-[9px] font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:text-micro"
           >
             <Plus size={13} /> إضافة طريقة دفع
           </button>

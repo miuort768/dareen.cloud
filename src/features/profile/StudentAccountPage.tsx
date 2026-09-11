@@ -16,13 +16,16 @@ import { useCurrentUser, useLogout } from '../../context/AppContext'
 import {
   AccountHero,
   SectionCard,
-  InfoRow,
+  InfoCell,
+  InfoTile,
+  PageShell,
   ProfileSkeleton,
   ErrorBlock,
   AccountActions,
   StatusBadge,
+  useSupportWhatsappNumber,
+  TONE_ORDER,
 } from './shared'
-import { PageShell, MiniTile } from './TeacherAccountPage'
 import { ProgressBar } from '../../shared/components/ui'
 import { STUDENT_RANKS, getRankByPoints, RANK_ICON_MAP } from '../../shared/utils/ranks'
 
@@ -63,12 +66,12 @@ const teacherNameOf = (en?: Enrollment): string => {
 export const StudentAccountPage = () => {
   const currentUser = useCurrentUser()
   const logout = useLogout()
+  const supportPhone = useSupportWhatsappNumber()
 
   useEffect(() => {
     document.title = 'حسابي | دارين السابعة للتعليم والتدريب'
   }, [])
 
-  // نفس نداء النظام الحالي: بوابة الطالب
   const { data, isLoading, isError, refetch } = useQuery<{
     student: StudentData
     sessions: StudentSession[]
@@ -124,26 +127,77 @@ export const StudentAccountPage = () => {
             subtitle={
               [student?.grade, student?.curriculum].filter(Boolean).join(' · ') || undefined
             }
-            metaChips={points > 0 ? [`${points} نقطة`, rank.name] : rank.name ? [rank.name] : []}
+            quickStats={[
+              {
+                label: 'نقاطي',
+                value: <span className="font-dash tabular-nums">{points}</span>,
+                tone: 'warning',
+                icon: Award,
+              },
+              { label: 'الرتبة', value: rank.name, tone: 'info', icon: RankIcon },
+              { label: 'المواد', value: enrollments.length, tone: 'success', icon: BookOpen },
+            ]}
           />
 
           <div className="grid gap-4 lg:grid-cols-3">
             {/* المعلومات الأساسية */}
             <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-              <InfoRow label="الاسم" value={displayName} icon={User} />
-              <InfoRow label="رقم الطالب" value={student?.studentPhone} icon={Phone} mono />
-              <InfoRow label="نوع الحساب" value="طالب" />
-              <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={ShieldCheck} />
+              <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+                <InfoCell label="الاسم" value={displayName} icon={User} tone="primary" />
+                <InfoCell
+                  label="رقم الطالب"
+                  value={student?.studentPhone}
+                  icon={Phone}
+                  tone="success"
+                  mono
+                />
+                {student?.parentPhone && (
+                  <InfoCell
+                    label="رقم ولي الأمر"
+                    value={student.parentPhone}
+                    icon={Users}
+                    tone="info"
+                    mono
+                  />
+                )}
+                <InfoCell label="نوع الحساب" value="طالب" icon={ShieldCheck} tone="primary" />
+                <InfoCell
+                  label="حالة الحساب"
+                  value={<StatusBadge />}
+                  icon={ShieldCheck}
+                  tone="success"
+                />
+              </div>
             </SectionCard>
 
             {/* البيانات الدراسية */}
             <div className="space-y-4 lg:col-span-2">
               <SectionCard title="البيانات الدراسية" icon={GraduationCap} delay={0.15}>
-                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-                  <MiniTile label="الصف" value={student?.grade || '—'} icon={GraduationCap} />
-                  <MiniTile label="عدد المواد" value={String(enrollments.length)} icon={BookOpen} />
-                  <MiniTile label="النقاط" value={String(points)} icon={Award} />
-                  <MiniTile label="الرتبة" value={rank.name} icon={RankIcon} />
+                <div className="grid grid-cols-3 gap-2.5">
+                  <InfoTile
+                    label="الصف"
+                    value={student?.grade || '—'}
+                    icon={GraduationCap}
+                    tone="info"
+                  />
+                  <InfoTile
+                    label="عدد المواد"
+                    value={String(enrollments.length)}
+                    icon={BookOpen}
+                    tone="primary"
+                  />
+                  <InfoTile
+                    label="النقاط"
+                    value={
+                      points > 0 ? (
+                        <span className="font-dash tabular-nums">{points}</span>
+                      ) : (
+                        String(points)
+                      )
+                    }
+                    icon={Award}
+                    tone="warning"
+                  />
                 </div>
               </SectionCard>
 
@@ -160,23 +214,50 @@ export const StudentAccountPage = () => {
                       const used = en.sessionsUsed || 0
                       const total = en.sessionsTotal || 1
                       const pct = Math.min(100, Math.round((used / total) * 100))
+                      const tone = TONE_ORDER[i % TONE_ORDER.length]
                       return (
                         <div
                           key={`${en.subject}-${i}`}
-                          className="rounded-xl border border-border bg-card p-3 dark:border-primary/20 dark:bg-surface"
+                          className="rounded-xl border border-border bg-surface p-3 shadow-elevation-1 dark:border-primary/20 dark:bg-card"
                         >
-                          <div className="mb-1.5 flex items-center justify-between gap-2">
-                            <p className="truncate text-xs font-bold text-main">{en.subject}</p>
-                            <span className="shrink-0 text-micro font-bold tabular-nums text-muted">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex min-w-0 items-center gap-2.5">
+                              <div
+                                className={
+                                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ring-1 ' +
+                                  {
+                                    primary: 'bg-primary-soft text-primary ring-primary/10',
+                                    success:
+                                      'bg-success-soft text-success-strong ring-success-soft',
+                                    warning:
+                                      'bg-warning-soft text-warning-strong ring-warning-soft',
+                                    info: 'bg-info-soft text-info-strong ring-info-soft',
+                                  }[tone]
+                                }
+                              >
+                                <BookOpen size={14} />
+                              </div>
+                              <div className="min-w-0">
+                                <p className="truncate text-xs font-bold text-main">{en.subject}</p>
+                                {teacherNameOf(en) && (
+                                  <p className="flex items-center gap-1 text-micro text-muted">
+                                    <Users size={9} /> {teacherNameOf(en)}
+                                  </p>
+                                )}
+                              </div>
+                            </div>
+                            <span className="shrink-0 rounded-full bg-primary-soft px-2 py-0.5 text-micro font-bold tabular-nums text-primary ring-1 ring-primary/10">
                               {used}/{total} حصة
                             </span>
                           </div>
-                          <ProgressBar value={pct} variant="attendance" />
-                          {teacherNameOf(en) && (
-                            <p className="mt-1 flex items-center gap-1 text-micro text-muted">
-                              <Users size={9} /> {teacherNameOf(en)}
-                            </p>
-                          )}
+                          <div className="mt-2.5 flex items-center gap-2">
+                            <div className="flex-1">
+                              <ProgressBar value={pct} variant="attendance" />
+                            </div>
+                            <span className="shrink-0 font-dash text-micro font-black tabular-nums text-primary">
+                              {pct}%
+                            </span>
+                          </div>
                         </div>
                       )
                     })}
@@ -195,10 +276,10 @@ export const StudentAccountPage = () => {
                     {upcoming.map((s) => (
                       <div
                         key={s.id}
-                        className="flex items-center justify-between gap-2 rounded-xl border border-border bg-card p-3 dark:border-primary/20 dark:bg-surface"
+                        className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface p-3 shadow-elevation-1 dark:border-primary/20 dark:bg-card"
                       >
                         <div className="flex min-w-0 items-center gap-2.5">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-info-soft text-info-strong ring-1 ring-info-soft">
                             <Clock size={13} />
                           </div>
                           <div className="min-w-0">
@@ -224,7 +305,7 @@ export const StudentAccountPage = () => {
             </div>
           </div>
 
-          <AccountActions onLogoutStore={logout} />
+          <AccountActions onLogoutStore={logout} supportPhone={supportPhone} />
         </div>
       )}
     </PageShell>

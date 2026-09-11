@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import {
   User,
@@ -13,19 +13,20 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { api } from '../../lib/api'
-import { useCurrentUser, useShowNotification, useLogout } from '../../context/AppContext'
+import { useCurrentUser, useLogout } from '../../context/AppContext'
 import {
   AccountHero,
   SectionCard,
-  InfoRow,
+  InfoCell,
+  PageShell,
   ProfileSkeleton,
   ErrorBlock,
   AccountActions,
   StatusBadge,
   formatJoinDate,
+  useSupportWhatsappNumber,
+  TONE_ORDER,
 } from './shared'
-import { EditNameModal } from './EditNameModal'
-import { PageShell } from './TeacherAccountPage'
 import { ProgressBar } from '../../shared/components/ui'
 
 interface ChildEnrollment {
@@ -61,21 +62,24 @@ const childProgress = (child: Child): number => {
   return Math.round((used / total) * 100)
 }
 
+const TONE_BG = {
+  primary: 'bg-primary-soft text-primary ring-primary/10',
+  success: 'bg-success-soft text-success-strong ring-success-soft',
+  warning: 'bg-warning-soft text-warning-strong ring-warning-soft',
+  info: 'bg-info-soft text-info-strong ring-info-soft',
+  error: 'bg-error-soft text-error-strong ring-error-soft',
+} as const
+
 export const ParentAccountPage = () => {
   const currentUser = useCurrentUser()
-  const showNotification = useShowNotification()
   const logout = useLogout()
   const navigate = useNavigate()
-  const [editOpen, setEditOpen] = useState(false)
-  const [savingName, setSavingName] = useState(false)
-  // الوضع الحالي في النظام: الاسم يُحدَّث محليًا عبر override لأن لا endpoint ذاتي يعمل
-  const [nameOverride, setNameOverride] = useState<string | null>(null)
+  const supportPhone = useSupportWhatsappNumber()
 
   useEffect(() => {
     document.title = 'حسابي | دارين السابعة للتعليم والتدريب'
   }, [])
 
-  // نفس نداءات النظام الحالي
   const { data, isLoading, isError, refetch } = useQuery<{
     children: Child[]
     activity: PointLogEntry[]
@@ -105,25 +109,12 @@ export const ParentAccountPage = () => {
     enabled: !!currentUser,
   })
 
-  const displayName = nameOverride || currentUser?.name || ''
+  const displayName = currentUser?.name || ''
   const children = useMemo(() => data?.children ?? [], [data])
   const activity = useMemo(() => data?.activity ?? [], [data])
 
-  /* حفظ الاسم — نفس endpoint النظام الحالي مع تحديث محلي للعرض */
-  const handleSaveName = async (values: { name: string; phone?: string }) => {
-    setSavingName(true)
-    try {
-      await api.put('/parents/me', { name: values.name })
-      setNameOverride(values.name)
-      showNotification('تم تحديث الاسم بنجاح', 'success')
-      setEditOpen(false)
-    } catch (err) {
-      console.error('Failed updating name', err)
-      showNotification('تعذر تحديث الاسم، حاول مجددًا', 'error')
-    } finally {
-      setSavingName(false)
-    }
-  }
+  const totalSubjects = children.reduce((s, c) => s + (c.enrollments || []).length, 0)
+  const totalPoints = children.reduce((s, c) => s + (c.totalPoints || 0), 0)
 
   if (isLoading)
     return (
@@ -141,80 +132,120 @@ export const ParentAccountPage = () => {
           <AccountHero
             name={displayName}
             roleLabel="ولي أمر"
-            subtitle={children.length > 0 ? `${children.length} أبناء مرتبطين بالحساب` : undefined}
-            onEdit={() => setEditOpen(true)}
+            subtitle={children.length > 0 ? `${children.length} أبناء مرتبطون بالحساب` : undefined}
+            quickStats={[
+              { label: 'الأبناء', value: children.length, tone: 'primary', icon: Users },
+              { label: 'المواد', value: totalSubjects, tone: 'info', icon: BookOpen },
+              {
+                label: 'إجمالي النقاط',
+                value: <span className="font-dash tabular-nums">{totalPoints}</span>,
+                tone: 'warning',
+                icon: GraduationCap,
+              },
+            ]}
           />
 
           {/* المعلومات الأساسية */}
           <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-            <div className="grid gap-x-6 md:grid-cols-2">
-              <div>
-                <InfoRow label="الاسم" value={displayName} icon={User} />
-                <InfoRow label="اسم المستخدم" value={currentUser?.username} icon={KeyRound} mono />
-              </div>
-              <div>
-                <InfoRow label="نوع الحساب" value="ولي أمر" />
-                <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={ShieldCheck} />
-              </div>
+            <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+              <InfoCell label="الاسم" value={displayName} icon={User} tone="primary" />
+              <InfoCell
+                label="اسم المستخدم"
+                value={currentUser?.username}
+                icon={KeyRound}
+                tone="warning"
+                mono
+              />
+              <InfoCell label="نوع الحساب" value="ولي أمر" icon={ShieldCheck} tone="primary" />
+              <InfoCell
+                label="حالة الحساب"
+                value={<StatusBadge />}
+                icon={ShieldCheck}
+                tone="success"
+              />
+              <InfoCell
+                label="عدد الأبناء"
+                value={String(children.length)}
+                icon={Users}
+                tone="info"
+              />
             </div>
           </SectionCard>
 
-          {/* أبنائي */}
-          <SectionCard
-            title="أبنائي"
-            icon={Users}
-            description="الطلاب المرتبطون بحسابك"
-            delay={0.15}
-            action={
+          {/* أبنائي — بدون غلاف خارجي */}
+          <section aria-label="أبنائي">
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft ring-1 ring-primary/10">
+                  <Users size={16} className="text-primary" />
+                </div>
+                <div>
+                  <h2 className="text-sm font-black leading-tight text-main">أبنائي</h2>
+                  <p className="mt-0.5 text-micro text-muted">الطلاب المرتبطون بحسابك</p>
+                </div>
+              </div>
               <button
                 onClick={() => navigate('/parent-students')}
-                className="flex shrink-0 items-center gap-1 rounded-lg bg-primary-soft px-3 py-1.5 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-primary-soft px-3 py-1.5 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 متابعة التفاصيل <ArrowLeft size={11} />
               </button>
-            }
-          >
+            </div>
+
             {children.length > 0 ? (
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {children.map((child, idx) => (
-                  <motion.button
-                    key={child.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 * idx }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => navigate('/parent-students')}
-                    className="rounded-xl border border-border bg-card p-3.5 text-start transition-colors hover:border-primary/40 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/20 dark:bg-surface"
-                    aria-label={`عرض تفاصيل ${child.name}`}
-                  >
-                    <div className="mb-2 flex items-center gap-2.5">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-sm font-bold text-primary">
-                        {(child.name || '?').charAt(0)}
+                {children.map((child, idx) => {
+                  const tone = TONE_ORDER[idx % TONE_ORDER.length]
+                  const pct = childProgress(child)
+                  return (
+                    <motion.button
+                      key={child.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.05 * idx }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => navigate('/parent-students')}
+                      className="rounded-xl border border-border bg-card p-3.5 text-start shadow-elevation-1 transition-colors hover:border-primary/40 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/20 dark:bg-surface"
+                      aria-label={`عرض تفاصيل ${child.name}`}
+                    >
+                      <div className="mb-2.5 flex items-center gap-2.5">
+                        <div
+                          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold ring-1 ${TONE_BG[tone]}`}
+                        >
+                          {(child.name || '?').charAt(0)}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="truncate text-xs font-bold text-main">{child.name}</p>
+                          <p className="text-micro text-muted">{child.grade || '—'}</p>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <p className="truncate text-xs font-bold text-main">{child.name}</p>
-                        <p className="text-micro text-muted">{child.grade || '—'}</p>
+                      <div className="flex items-center gap-2">
+                        <div className="flex-1">
+                          <ProgressBar value={pct} variant="attendance" />
+                        </div>
+                        <span className="shrink-0 font-dash text-micro font-black tabular-nums text-primary">
+                          {pct}%
+                        </span>
                       </div>
-                    </div>
-                    <ProgressBar value={childProgress(child)} variant="attendance" />
-                    <div className="mt-2 flex items-center justify-between text-micro font-bold text-muted">
-                      <span className="flex items-center gap-1">
-                        <BookOpen size={9} /> {(child.enrollments || []).length} مواد
-                      </span>
-                      <span className="flex items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-success-strong">
-                        <span className="h-1 w-1 animate-pulse rounded-full bg-current" /> نشط
-                      </span>
-                    </div>
-                    {(child.totalPoints || 0) > 0 && (
-                      <p className="mt-1.5 flex items-center gap-1 text-micro font-bold text-primary">
-                        <GraduationCap size={9} /> {child.totalPoints} نقطة
-                      </p>
-                    )}
-                  </motion.button>
-                ))}
+                      <div className="mt-2 flex items-center justify-between text-micro font-bold text-muted">
+                        <span className="flex items-center gap-1">
+                          <BookOpen size={9} /> {(child.enrollments || []).length} مواد
+                        </span>
+                        <span className="flex items-center gap-1 rounded-md bg-success-soft px-1.5 py-0.5 text-success-strong">
+                          <span className="h-1 w-1 animate-pulse rounded-full bg-current" /> نشط
+                        </span>
+                      </div>
+                      {(child.totalPoints || 0) > 0 && (
+                        <p className="mt-1.5 flex items-center gap-1 text-micro font-bold text-primary">
+                          <GraduationCap size={9} /> {child.totalPoints} نقطة
+                        </p>
+                      )}
+                    </motion.button>
+                  )
+                })}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-10 text-center">
+              <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-surface py-10 text-center">
                 <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft">
                   <Users size={20} className="text-primary" />
                 </div>
@@ -224,7 +255,7 @@ export const ParentAccountPage = () => {
                 </p>
               </div>
             )}
-          </SectionCard>
+          </section>
 
           {/* آخر النشاطات — بيانات حقيقية من سجل النقاط */}
           {activity.length > 0 && (
@@ -233,7 +264,7 @@ export const ParentAccountPage = () => {
                 {activity.slice(0, 8).map((log, i) => (
                   <div
                     key={`${log.studentId}-${log.timestamp}-${i}`}
-                    className="border-border/60 flex items-center justify-between gap-3 border-b py-2 last:border-b-0"
+                    className="flex items-center justify-between gap-3 border-b border-divider py-2 last:border-b-0"
                   >
                     <div className="min-w-0">
                       <p className="truncate text-xs font-bold text-main">{log.action || 'نشاط'}</p>
@@ -261,17 +292,9 @@ export const ParentAccountPage = () => {
             </SectionCard>
           )}
 
-          <AccountActions onLogoutStore={logout} />
+          <AccountActions onLogoutStore={logout} supportPhone={supportPhone} />
         </div>
       )}
-
-      <EditNameModal
-        isOpen={editOpen}
-        initialName={displayName}
-        saving={savingName}
-        onClose={() => setEditOpen(false)}
-        onSubmit={handleSaveName}
-      />
     </PageShell>
   )
 }
