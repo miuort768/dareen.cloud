@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   Bell,
   Search,
-  Clock,
   ShieldCheck,
   Grid,
   Zap,
@@ -22,7 +21,7 @@ import { ar } from 'date-fns/locale'
 import type { LucideIcon } from 'lucide-react'
 import { Skeleton, EmptyState } from '../shared/components/ui'
 import { announcementTypeOf } from '../features/announcements/types'
-import type { Announcement } from '../features/announcements/types'
+import type { Announcement, AnnouncementType } from '../features/announcements/types'
 
 export const ParentAnnouncements = () => {
   const academyName = useAcademyName()
@@ -71,7 +70,7 @@ export const ParentAnnouncements = () => {
   if (isLoading) {
     return (
       <div className="min-h-full space-y-4 bg-background pb-2 pt-3 md:space-y-5 md:pt-8" dir="rtl">
-        <Skeleton className="h-28 w-full rounded-2xl" />
+        <Skeleton className="h-40 w-full rounded-2xl" />
         <Skeleton className="h-12 w-full rounded-xl" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -84,27 +83,47 @@ export const ParentAnnouncements = () => {
 
   return (
     <div className="min-h-full space-y-4 bg-background pb-2 pt-3 md:space-y-5 md:pt-8" dir="rtl">
-      {/* الترويسة */}
-      <div className="rounded-2xl border border-border bg-card px-4 py-6 md:px-6 md:py-8">
-        <div className="mb-3 flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-            <Bell size={20} className="text-primary" />
-          </div>
-          <div>
-            <span className="rounded-lg bg-primary-soft px-2 py-0.5 text-micro font-bold text-primary">
-              آخر إعلانات المؤسسة
-            </span>
+      {/* الترويسة — هيرو متدرج */}
+      <section
+        aria-label="الإعلانات"
+        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover shadow-elevation-2"
+      >
+        <div
+          className="pointer-events-none absolute -end-20 -top-24 h-64 w-64 rounded-full border border-white/10"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -end-6 -top-10 h-36 w-36 rounded-full border border-white/5"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-16 -start-12 h-44 w-44 rounded-full bg-white/5"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-tl from-transparent to-white/5"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 flex flex-col gap-4 p-5 md:p-6 lg:flex-row lg:items-center lg:gap-6">
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-elevation-3 backdrop-blur-sm">
+              <Bell size={22} className="text-on-primary" />
+            </div>
+            <div>
+              <span className="mb-1.5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold text-on-primary backdrop-blur-sm">
+                آخر إعلانات المؤسسة
+              </span>
+              <h1 className="text-lg font-black leading-tight text-on-primary md:text-2xl">
+                آخر إعلانات {academyName}
+              </h1>
+              <p className="mt-1 text-xs font-bold text-white/90">
+                تابع كل أخبار المؤسسة والفعاليات والإعلانات هنا
+              </p>
+            </div>
           </div>
         </div>
-        <div className="space-y-1">
-          <h1 className="text-xl font-bold leading-tight text-main md:text-2xl">
-            آخر إعلانات {academyName}
-          </h1>
-          <p className="text-xs font-bold text-muted">
-            تابع كل أخبار المؤسسة والفعاليات والإعلانات هنا
-          </p>
-        </div>
-      </div>
+      </section>
 
       {/* البحث والفلاتر */}
       <div className="space-y-3">
@@ -159,7 +178,7 @@ export const ParentAnnouncements = () => {
       {/* البطاقات */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
         {isError ? (
-          <div className="bg-error-soft/50 col-span-full rounded-2xl border border-dashed border-error-soft py-16 text-center">
+          <div className="col-span-full rounded-2xl border border-dashed border-error-soft bg-error-soft py-16 text-center">
             <AlertTriangle size={30} className="mx-auto mb-3 text-error" strokeWidth={1.5} />
             <p className="text-sm font-bold text-main">تعذر تحميل الإعلانات</p>
             <button
@@ -186,14 +205,14 @@ export const ParentAnnouncements = () => {
                   className="relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card p-5 md:p-6"
                 >
                   <div className="mb-4 flex items-start justify-between">
-                    <div className="flex items-center gap-2 text-micro font-bold text-muted">
-                      <Clock size={12} />
+                    <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-3 py-1 text-micro font-bold text-on-primary">
+                      <Calendar size={11} />
                       {format(new Date(ann.date), 'dd MMM yyyy', { locale: ar })}
-                    </div>
+                    </span>
                     <span
                       className={cn(
                         'flex items-center gap-1.5 rounded-lg border border-transparent px-3 py-1 text-micro font-bold',
-                        config.badge,
+                        SOLID_TYPE_BADGE[ann.type] ?? config.badge,
                       )}
                     >
                       {ann.type === 'urgent' && (
@@ -239,8 +258,8 @@ export const ParentAnnouncements = () => {
 
                   <div className="mt-auto flex items-center justify-between border-t border-border pt-4">
                     <div className="flex items-center gap-2">
-                      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary-soft">
-                        <ShieldCheck size={14} className="text-primary" />
+                      <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-on-primary">
+                        <ShieldCheck size={14} />
                       </div>
                       <span className="text-micro font-bold text-muted">إدارة المؤسسة</span>
                     </div>
@@ -250,7 +269,7 @@ export const ParentAnnouncements = () => {
                         href={`https://wa.me/${waPhone}?text=${encodeURIComponent(`مرحباً ${academyName}،\nلدي استفسار بخصوص الإعلان: «${ann.title}» المنشور بتاريخ ${format(new Date(ann.date), 'dd/MM/yyyy')}.\nشكراً لكم.`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 rounded-xl border border-primary px-4 py-1.5 text-micro font-bold text-primary transition-all hover:bg-primary-hover hover:text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                        className="flex items-center gap-2 rounded-xl bg-primary px-4 py-1.5 text-micro font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
                       >
                         <MessageCircle size={14} />
                         استفسار
@@ -279,6 +298,13 @@ export const ParentAnnouncements = () => {
       </div>
     </div>
   )
+}
+
+/** شارات أنواع الإعلانات بألوان solid (مطمثة) لصفحة القراءة فقط */
+const SOLID_TYPE_BADGE: Partial<Record<AnnouncementType, string>> = {
+  urgent: 'bg-error text-on-error',
+  holiday: 'bg-warning text-on-warning',
+  event: 'bg-info text-on-info',
 }
 
 const FilterButton = ({
