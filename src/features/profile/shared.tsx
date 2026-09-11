@@ -21,7 +21,7 @@ export function PageShell({ children }: { children: ReactNode }) {
   )
 }
 
-/* ---------- ألوان العناصر (تلوين الأيقونات والكبسولات لا الخلفيات) ---------- */
+/* ---------- ألوان العناصر ---------- */
 
 type Tone = 'primary' | 'success' | 'warning' | 'info' | 'error'
 
@@ -31,6 +31,15 @@ const TILE_TONE: Record<Tone, string> = {
   warning: 'bg-warning-soft text-warning-strong ring-warning-soft',
   info: 'bg-info-soft text-info-strong ring-info-soft',
   error: 'bg-error-soft text-error-strong ring-error-soft',
+}
+
+/** لون رقم فقط (لا خلفية) لمؤشرات شريط الهيرو — التلوين المحدث بدون فوضى */
+const TEXT_TONE: Record<Tone, string> = {
+  primary: 'text-primary',
+  success: 'text-success-strong',
+  warning: 'text-warning-strong',
+  info: 'text-info-strong',
+  error: 'text-error-strong',
 }
 
 export const TONE_ORDER: Tone[] = ['primary', 'info', 'success', 'warning']
@@ -47,7 +56,7 @@ export const useSupportWhatsappNumber = (): string => {
   }
 }
 
-/* ---------- بطاقة الهيرو الموحدة — ألوان على العناصر وليس خلفية المستطيل ---------- */
+/* ---------- بطاقة الهيرو — مسطّحة وهادئة مع شريط مؤشرات بريميوم ---------- */
 
 interface AccountHeroProps {
   name: string
@@ -73,52 +82,33 @@ export const AccountHero = ({
   <motion.section
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    className="relative overflow-hidden rounded-card border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card p-5 shadow-elevation-1 transition-colors duration-slow dark:border-primary/30 dark:from-card dark:via-surface dark:to-card md:p-8"
+    className="rounded-2xl border border-border bg-surface p-5 shadow-elevation-1 transition-colors duration-slow dark:border-primary/20 dark:bg-card md:p-8"
   >
-    <div className="pointer-events-none absolute inset-0 opacity-[0.08]" aria-hidden="true">
-      <svg width="100%" height="100%">
-        <defs>
-          <pattern
-            id="account-hero-grid"
-            x="0"
-            y="0"
-            width="26"
-            height="26"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="2" cy="2" r="1" className="fill-primary" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#account-hero-grid)" />
-      </svg>
-    </div>
-
-    <div className="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex min-w-0 items-center gap-4">
-        {/* حرف الاسم الأول — خلية ملونة متدرجة */}
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-xl font-black text-on-primary shadow-elevation-2 ring-1 ring-primary/20 md:h-16 md:w-16 md:text-2xl">
+        {/* الحرف الأول — خلية متدرجة هادئة */}
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-deep text-2xl font-black text-on-primary shadow-elevation-2 ring-1 ring-primary/20 md:h-20 md:w-20 md:text-3xl">
           {(name || '?').charAt(0)}
         </div>
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="min-w-0 break-words text-2xl font-black leading-snug text-main md:text-3xl">
+            <h1 className="min-w-0 break-words text-lg font-black leading-snug text-main md:text-2xl">
               {name}
             </h1>
-            <span className="flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-1 text-micro font-bold text-success-strong ring-1 ring-success-soft">
+            <span className="flex items-center gap-1 rounded-full bg-primary-soft px-2.5 py-1 text-micro font-bold text-primary ring-1 ring-primary/10">
               <BadgeCheck size={11} />
               {roleLabel}
             </span>
           </div>
-          {subtitle && <p className="mt-1 truncate text-xs font-bold text-muted">{subtitle}</p>}
+          {subtitle && <p className="mt-1 text-xs font-bold text-muted">{subtitle}</p>}
           {metaChips && metaChips.length > 0 && (
             <div className="mt-2.5 flex flex-wrap gap-2">
-              {metaChips.map((chip, i) => (
+              {metaChips.map((chip) => (
                 <span
                   key={chip}
                   className={cn(
-                    'inline-flex items-center rounded-full font-black ring-1',
-                    TILE_TONE[TONE_ORDER[i % TONE_ORDER.length]],
-                    chipsBold ? 'px-3.5 py-1.5 text-sm md:text-base' : 'px-2.5 py-0.5 text-micro',
+                    'inline-flex items-center rounded-full border border-border bg-card font-bold text-main dark:border-primary/20 dark:bg-surface',
+                    chipsBold ? 'px-3.5 py-1.5 text-sm md:text-base' : 'px-3 py-1 text-xs',
                   )}
                 >
                   {chip}
@@ -139,23 +129,23 @@ export const AccountHero = ({
       )}
     </div>
 
-    {/* إحصائيات سريعة — خلايا ملونة على العناصر */}
+    {/* شريط المؤشرات — خلايا نظيفة بفواصل رفيعة ورموز/أرقام ملوّنة فقط */}
     {quickStats && quickStats.length > 0 && (
-      <div className="relative z-10 mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
+      <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border dark:border-primary/20 dark:bg-border sm:grid-cols-3">
         {quickStats.map((q) => {
           const Icon = q.icon
           return (
-            <div
-              key={q.label}
-              className={cn('rounded-xl px-3 py-2.5 ring-1', TILE_TONE[q.tone ?? 'primary'])}
-            >
-              <div className="flex items-center gap-1.5">
-                {Icon && <Icon size={13} className="shrink-0" />}
-                <span className="min-w-0 truncate text-sm font-black tabular-nums leading-none">
-                  {q.value}
-                </span>
-              </div>
-              <span className="mt-1 block text-micro font-bold opacity-70">{q.label}</span>
+            <div key={q.label} className="bg-card px-4 py-3 dark:bg-surface sm:px-5 sm:py-4">
+              <p
+                className={cn(
+                  'flex items-center gap-1.5 leading-none',
+                  TEXT_TONE[q.tone ?? 'primary'],
+                )}
+              >
+                {Icon && <Icon size={15} className="shrink-0" />}
+                <span className="min-w-0 truncate text-lg font-black tabular-nums">{q.value}</span>
+              </p>
+              <p className="mt-1.5 text-micro font-bold text-muted">{q.label}</p>
             </div>
           )
         })}
@@ -217,7 +207,7 @@ export const SectionCard = ({
   </motion.section>
 )
 
-/* ---------- صف معلومة أنيق (يُستخدم داخليًا في طرق الدفع) ---------- */
+/* ---------- صف معلومة — قائمة تعريفات هادئة ---------- */
 
 interface InfoRowProps {
   label: string
@@ -231,68 +221,23 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
   const tooltip = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
   return (
     <div className="flex items-center justify-between gap-3 border-b border-divider py-2.5 last:border-b-0">
-      <span className="flex shrink-0 items-center gap-2 text-xs font-semibold text-muted">
-        {Icon && <Icon size={13} className="text-primary/70" />}
+      <span className="flex shrink-0 items-center gap-2 text-micro font-bold text-muted">
+        {Icon && <Icon size={14} className="text-primary/70" />}
         {label}
       </span>
       {empty ? (
-        <span className="text-muted/70 text-xs">—</span>
+        <span className="text-xs text-muted">—</span>
       ) : (
         <span
           title={tooltip}
           className={cn(
-            'min-w-0 truncate text-start text-xs font-bold text-main',
+            'min-w-0 break-words text-start text-xs font-bold text-main sm:text-sm',
             mono && 'font-mono tabular-nums',
           )}
         >
           {value}
         </span>
       )}
-    </div>
-  )
-}
-
-/* ---------- خلية بيانات ملونة — شبكة بديلة للصفوف ---------- */
-
-interface InfoCellProps {
-  label: string
-  value?: ReactNode
-  icon?: LucideIcon
-  tone?: Tone
-  mono?: boolean
-}
-
-export const InfoCell = ({ label, value, icon: Icon, tone = 'primary', mono }: InfoCellProps) => {
-  const empty = value === undefined || value === null || value === ''
-  return (
-    <div className="rounded-xl border border-border bg-card p-3 shadow-elevation-1 dark:border-primary/20 dark:bg-surface">
-      <div className="flex items-center gap-2.5">
-        {Icon && (
-          <div
-            className={cn(
-              'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ring-1',
-              TILE_TONE[tone],
-            )}
-          >
-            <Icon size={15} />
-          </div>
-        )}
-        <div className="min-w-0">
-          <p className="text-micro font-bold text-muted">{label}</p>
-          {empty ? (
-            <p className="text-muted/70 text-xs font-bold">—</p>
-          ) : (
-            <p
-              className={cn(
-                'truncate text-xs font-black leading-snug text-main sm:text-sm',
-                mono && 'font-mono tabular-nums',
-              )}
-            >
-              {value}
-            </p>
-          )}
-        </div>
-      </div>
     </div>
   )
 }

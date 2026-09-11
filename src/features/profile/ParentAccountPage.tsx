@@ -4,6 +4,7 @@ import {
   User,
   KeyRound,
   ShieldCheck,
+  BadgeCheck,
   Users,
   BookOpen,
   GraduationCap,
@@ -17,7 +18,7 @@ import { useCurrentUser, useLogout } from '../../context/AppContext'
 import {
   AccountHero,
   SectionCard,
-  InfoCell,
+  InfoRow,
   PageShell,
   ProfileSkeleton,
   ErrorBlock,
@@ -147,28 +148,16 @@ export const ParentAccountPage = () => {
 
           {/* المعلومات الأساسية */}
           <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-            <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
-              <InfoCell label="الاسم" value={displayName} icon={User} tone="primary" />
-              <InfoCell
-                label="اسم المستخدم"
-                value={currentUser?.username}
-                icon={KeyRound}
-                tone="warning"
-                mono
-              />
-              <InfoCell label="نوع الحساب" value="ولي أمر" icon={ShieldCheck} tone="primary" />
-              <InfoCell
-                label="حالة الحساب"
-                value={<StatusBadge />}
-                icon={ShieldCheck}
-                tone="success"
-              />
-              <InfoCell
-                label="عدد الأبناء"
-                value={String(children.length)}
-                icon={Users}
-                tone="info"
-              />
+            <div className="grid gap-x-10 md:grid-cols-2">
+              <div>
+                <InfoRow label="الاسم" value={displayName} icon={User} />
+                <InfoRow label="اسم المستخدم" value={currentUser?.username} icon={KeyRound} mono />
+              </div>
+              <div>
+                <InfoRow label="نوع الحساب" value="ولي أمر" icon={ShieldCheck} />
+                <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
+                <InfoRow label="عدد الأبناء" value={String(children.length)} icon={Users} />
+              </div>
             </div>
           </SectionCard>
 

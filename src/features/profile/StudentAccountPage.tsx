@@ -4,6 +4,7 @@ import {
   User,
   Phone,
   ShieldCheck,
+  BadgeCheck,
   BookOpen,
   GraduationCap,
   Award,
@@ -16,7 +17,7 @@ import { useCurrentUser, useLogout } from '../../context/AppContext'
 import {
   AccountHero,
   SectionCard,
-  InfoCell,
+  InfoRow,
   InfoTile,
   PageShell,
   ProfileSkeleton,
@@ -142,31 +143,18 @@ export const StudentAccountPage = () => {
           <div className="grid gap-4 lg:grid-cols-3">
             {/* المعلومات الأساسية */}
             <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-              <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
-                <InfoCell label="الاسم" value={displayName} icon={User} tone="primary" />
-                <InfoCell
-                  label="رقم الطالب"
-                  value={student?.studentPhone}
-                  icon={Phone}
-                  tone="success"
-                  mono
-                />
-                {student?.parentPhone && (
-                  <InfoCell
-                    label="رقم ولي الأمر"
-                    value={student.parentPhone}
-                    icon={Users}
-                    tone="info"
-                    mono
-                  />
-                )}
-                <InfoCell label="نوع الحساب" value="طالب" icon={ShieldCheck} tone="primary" />
-                <InfoCell
-                  label="حالة الحساب"
-                  value={<StatusBadge />}
-                  icon={ShieldCheck}
-                  tone="success"
-                />
+              <div className="grid gap-x-10 md:grid-cols-2">
+                <div>
+                  <InfoRow label="الاسم" value={displayName} icon={User} />
+                  <InfoRow label="رقم الطالب" value={student?.studentPhone} icon={Phone} mono />
+                  {student?.parentPhone && (
+                    <InfoRow label="رقم ولي الأمر" value={student.parentPhone} icon={Users} mono />
+                  )}
+                </div>
+                <div>
+                  <InfoRow label="نوع الحساب" value="طالب" icon={ShieldCheck} />
+                  <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
+                </div>
               </div>
             </SectionCard>
 

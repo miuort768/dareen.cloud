@@ -4,6 +4,7 @@ import {
   Phone,
   CalendarDays,
   ShieldCheck,
+  BadgeCheck,
   BookOpen,
   Wallet,
   KeyRound,
@@ -17,7 +18,7 @@ import { useCurrentUser, useLogout } from '../../context/AppContext'
 import {
   AccountHero,
   SectionCard,
-  InfoCell,
+  InfoRow,
   InfoTile,
   PageShell,
   ProfileSkeleton,
@@ -122,74 +123,52 @@ export const TeacherAccountPage = () => {
           <div className="grid gap-4 lg:grid-cols-3">
             {/* المعلومات الأساسية */}
             <SectionCard title="المعلومات الأساسية" icon={User} delay={0.1}>
-              <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
-                <InfoCell label="الاسم" value={displayName} icon={User} tone="primary" />
-                <InfoCell
-                  label="رقم الجوال"
-                  value={teacher?.phone1}
-                  icon={Phone}
-                  tone="success"
-                  mono
-                />
-                {teacher?.phone2 && (
-                  <InfoCell
-                    label="رقم إضافي"
-                    value={teacher.phone2}
-                    icon={Phone}
-                    tone="info"
-                    mono
+              <div className="grid gap-x-10 md:grid-cols-2">
+                <div>
+                  <InfoRow label="الاسم" value={displayName} icon={User} />
+                  <InfoRow label="رقم الجوال" value={teacher?.phone1} icon={Phone} mono />
+                  {teacher?.phone2 && (
+                    <InfoRow label="رقم إضافي" value={teacher.phone2} icon={Phone} mono />
+                  )}
+                  <InfoRow label="اسم المستخدم" value={teacher?.username} icon={KeyRound} mono />
+                </div>
+                <div>
+                  <InfoRow label="نوع الحساب" value="معلمة" icon={ShieldCheck} />
+                  <InfoRow label="حالة الحساب" value={<StatusBadge />} icon={BadgeCheck} />
+                  <InfoRow
+                    label="تاريخ الانضمام"
+                    value={formatJoinDate(teacher?.createdAt) || undefined}
+                    icon={CalendarDays}
                   />
-                )}
-                <InfoCell
-                  label="اسم المستخدم"
-                  value={teacher?.username}
-                  icon={KeyRound}
-                  tone="warning"
-                  mono
-                />
-                <InfoCell label="نوع الحساب" value="معلمة" icon={ShieldCheck} tone="primary" />
-                <InfoCell
-                  label="حالة الحساب"
-                  value={<StatusBadge />}
-                  icon={ShieldCheck}
-                  tone="success"
-                />
-                <InfoCell
-                  label="تاريخ الانضمام"
-                  value={formatJoinDate(teacher?.createdAt) || undefined}
-                  icon={CalendarDays}
-                  tone="info"
-                />
+                </div>
               </div>
 
               {/* مؤشرات الحساب — الحصص والربح الحالي */}
-              <div className="mt-3 grid grid-cols-2 gap-2 border-t border-divider pt-3 md:grid-cols-3">
-                <InfoCell
-                  label="عدد الحصص المنفذة"
-                  value={
-                    statsLoading ? (
+              <div className="mt-4 grid grid-cols-2 gap-2 border-t border-divider pt-4">
+                <div className="rounded-xl border border-border bg-card p-4 dark:border-primary/20 dark:bg-surface">
+                  <p className="flex items-center gap-1.5 text-lg font-black leading-none text-success-strong">
+                    <CalendarCheck size={15} className="shrink-0" />
+                    {statsLoading ? (
                       '—'
                     ) : (
                       <span className="font-dash tabular-nums">{completedCount}</span>
-                    )
-                  }
-                  icon={CalendarCheck}
-                  tone="success"
-                />
-                <InfoCell
-                  label="الربح الحالي"
-                  value={
-                    statsLoading ? (
+                    )}
+                  </p>
+                  <p className="mt-1.5 text-micro font-bold text-muted">عدد الحصص المنفذة</p>
+                </div>
+                <div className="rounded-xl border border-border bg-card p-4 dark:border-primary/20 dark:bg-surface">
+                  <p className="flex items-center gap-1.5 text-lg font-black leading-none text-primary">
+                    <Wallet size={15} className="shrink-0" />
+                    {statsLoading ? (
                       '—'
                     ) : (
                       <span className="font-dash tabular-nums">
                         {profit} {symbol}
                       </span>
-                    )
-                  }
-                  icon={Wallet}
-                  tone="primary"
-                />
+                    )}
+                  </p>
+                  <p className="mt-1.5 text-micro font-bold text-muted">الربح الحالي</p>
+                </div>
               </div>
             </SectionCard>
 
