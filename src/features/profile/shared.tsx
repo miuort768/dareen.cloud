@@ -17,7 +17,7 @@ export function PageShell({ children }: { children: ReactNode }) {
       dir="rtl"
       className="profile-scope min-h-full overflow-x-hidden bg-background pb-6 md:pb-10"
     >
-      <div className="mx-auto max-w-page space-y-4 p-3 pt-2 md:space-y-5 md:p-6 md:pt-4">
+      <div className="mx-auto max-w-page space-y-4 px-2 pt-2 md:space-y-5 md:p-6 md:pt-4">
         {children}
       </div>
     </div>
