@@ -11,6 +11,7 @@ import {
   CalendarDays,
   Clock,
   Users,
+  Activity,
 } from 'lucide-react'
 import { api } from '../../lib/api'
 import { useCurrentUser, useLogout } from '../../context/AppContext'
@@ -96,6 +97,7 @@ export const StudentAccountPage = () => {
   const points = student?.totalPoints || 0
   const rank = getRankByPoints(points, STUDENT_RANKS)
   const RankIcon = RANK_ICON_MAP[rank.icon] ?? Award
+  const totalSessions = enrollments.reduce((s, e) => s + (e.sessionsTotal || 0), 0)
 
   // الجلسات القادمة — من بيانات الجلسات الفعلية (مجدولة فقط)
   const upcoming = useMemo(
@@ -137,6 +139,12 @@ export const StudentAccountPage = () => {
               },
               { label: 'الرتبة', value: rank.name, tone: 'info', icon: RankIcon },
               { label: 'المواد', value: enrollments.length, tone: 'success', icon: BookOpen },
+              {
+                label: 'عدد الحصص',
+                value: <span className="font-dash tabular-nums">{totalSessions}</span>,
+                tone: 'primary',
+                icon: Activity,
+              },
             ]}
           />
 

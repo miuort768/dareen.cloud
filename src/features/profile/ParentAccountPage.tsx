@@ -116,6 +116,10 @@ export const ParentAccountPage = () => {
 
   const totalSubjects = children.reduce((s, c) => s + (c.enrollments || []).length, 0)
   const totalPoints = children.reduce((s, c) => s + (c.totalPoints || 0), 0)
+  const totalSessions = children.reduce(
+    (s, c) => s + (c.enrollments || []).reduce((x, e) => x + (e.sessionsTotal || 0), 0),
+    0,
+  )
 
   if (isLoading)
     return (
@@ -142,6 +146,12 @@ export const ParentAccountPage = () => {
                 value: <span className="font-dash tabular-nums">{totalPoints}</span>,
                 tone: 'warning',
                 icon: GraduationCap,
+              },
+              {
+                label: 'إجمالي الحصص',
+                value: <span className="font-dash tabular-nums">{totalSessions}</span>,
+                tone: 'success',
+                icon: Activity,
               },
             ]}
           />

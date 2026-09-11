@@ -150,7 +150,7 @@ export const AccountHero = ({
 
     {/* بطاقات المؤشرات — عائمة بظلال ناعمة + رقاقات ملوّنة + أرقام كبيرة */}
     {quickStats && quickStats.length > 0 && (
-      <div className="relative mt-4 grid grid-cols-2 gap-2 sm:mt-6 sm:grid-cols-3 sm:gap-3">
+      <div className="relative mt-4 grid grid-cols-2 gap-2 sm:mt-6 sm:grid-cols-4 sm:gap-3">
         {quickStats.map((q) => {
           const Icon = q.icon
           return (
