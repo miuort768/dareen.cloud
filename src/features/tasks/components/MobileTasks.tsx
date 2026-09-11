@@ -178,7 +178,7 @@ export const MobileTasks = () => {
 
         {/* بطاقة الإنجاز */}
         <motion.div {...fadeUpStatic} className="px-4 pt-3">
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary p-4">
+          <div className="relative overflow-hidden rounded-card border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card p-4 shadow-elevation-1 transition-colors duration-slow dark:border-primary/30 dark:from-card dark:via-surface dark:to-card">
             <div className="pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true">
               <svg width="100%" height="100%">
                 <defs>
@@ -190,7 +190,7 @@ export const MobileTasks = () => {
                     height="22"
                     patternUnits="userSpaceOnUse"
                   >
-                    <circle cx="2" cy="2" r="1.2" fill="white" />
+                    <circle cx="2" cy="2" r="1.2" className="fill-primary" />
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#tasks-hero-grid)" />
@@ -210,7 +210,7 @@ export const MobileTasks = () => {
                     cy="38"
                     r={RING_RADIUS}
                     fill="none"
-                    stroke="rgba(255,255,255,0.18)"
+                    stroke="var(--bg-primary-soft)"
                     strokeWidth="7"
                   />
                   <motion.circle
@@ -218,7 +218,7 @@ export const MobileTasks = () => {
                     cy="38"
                     r={RING_RADIUS}
                     fill="none"
-                    stroke="white"
+                    stroke="currentColor"
                     strokeWidth="7"
                     strokeLinecap="round"
                     strokeDasharray={RING_CIRCUMFERENCE}
@@ -228,15 +228,15 @@ export const MobileTasks = () => {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-lg font-black tabular-nums text-on-primary">
+                  <span className="font-dash text-lg font-black tabular-nums text-primary">
                     {stats.rate}%
                   </span>
                 </div>
               </div>
 
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-bold text-white/85">إنجاز المهام</p>
-                <p className="mt-0.5 text-micro font-bold text-white/90">
+                <p className="text-xs font-bold text-muted">إنجاز المهام</p>
+                <p className="mt-0.5 text-micro font-bold text-dim">
                   أكملت {stats.completed} من {stats.total} مهمة
                 </p>
                 <div className="mt-2.5 grid grid-cols-3 gap-1.5">
@@ -248,14 +248,14 @@ export const MobileTasks = () => {
                         setFilter(filter === t.key ? 'all' : t.key)
                       }}
                       className={cn(
-                        'rounded-2xl px-2 py-1.5 text-center outline-none backdrop-blur-sm transition-colors focus-visible:ring-2 focus-visible:ring-focus',
-                        filter === t.key ? 'bg-white/25 ring-1 ring-white/40' : 'bg-white/10',
+                        'rounded-full px-2 py-1.5 text-center outline-none backdrop-blur-sm transition-colors focus-visible:ring-2 focus-visible:ring-focus',
+                        filter === t.key
+                          ? 'bg-primary text-on-primary'
+                          : 'bg-primary-soft text-primary',
                       )}
                     >
-                      <p className="text-sm font-bold tabular-nums leading-none text-on-primary">
-                        {t.count}
-                      </p>
-                      <p className="mt-1 text-micro font-bold text-white/90">{t.label}</p>
+                      <p className="text-sm font-bold tabular-nums leading-none">{t.count}</p>
+                      <p className="mt-1 text-micro font-bold opacity-80">{t.label}</p>
                     </button>
                   ))}
                 </div>
@@ -267,7 +267,7 @@ export const MobileTasks = () => {
 
       {/* التبويبات اللاصقة */}
       <div className="bg-background/95 sticky top-14 z-30 mt-3 px-4 pb-2 pt-2 backdrop-blur-sm">
-        <div className="flex gap-1 rounded-2xl border border-border bg-card p-1">
+        <div className="flex gap-1 rounded-full border border-border bg-card p-1">
           {tabs.map((tab) => (
             <motion.button
               key={tab.key}
@@ -278,7 +278,7 @@ export const MobileTasks = () => {
               }}
               aria-pressed={filter === tab.key}
               className={cn(
-                'relative min-w-0 flex-1 rounded-2xl px-1 py-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                'relative min-w-0 flex-1 rounded-full px-1 py-2 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                 filter === tab.key
                   ? 'bg-primary font-bold text-on-primary shadow-elevation-1'
                   : 'font-bold text-muted hover:text-main',
@@ -288,7 +288,7 @@ export const MobileTasks = () => {
               <span
                 className={cn(
                   'block text-micro tabular-nums leading-tight',
-                  filter === tab.key ? 'text-on-primary/80' : 'text-muted/70',
+                  filter === tab.key ? 'text-on-primary opacity-90' : 'text-muted opacity-70',
                 )}
               >
                 {tab.count}
@@ -331,7 +331,7 @@ export const MobileTasks = () => {
             <SkeletonCard />
           </div>
         ) : isError ? (
-          <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-10 text-center">
+          <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-10 text-center">
             <AlertTriangle size={26} className="mx-auto mb-2 text-error" strokeWidth={1.5} />
             <p className="text-xs font-bold text-main">تعذر تحميل المهام</p>
             <button
@@ -427,7 +427,7 @@ export const MobileTasks = () => {
                     <div className="mt-2 flex flex-wrap items-center gap-1.5">
                       <span
                         className={cn(
-                          'rounded-2xl px-2 py-0.5 text-micro font-bold',
+                          'rounded-full px-2 py-0.5 text-micro font-bold',
                           priority.badge,
                         )}
                       >
@@ -436,7 +436,7 @@ export const MobileTasks = () => {
                       {!done && (
                         <span
                           className={cn(
-                            'rounded-2xl bg-surface px-2 py-0.5 text-micro font-bold',
+                            'rounded-full bg-surface px-2 py-0.5 text-micro font-bold',
                             statusMeta.color,
                           )}
                         >
@@ -446,7 +446,7 @@ export const MobileTasks = () => {
                       {task.dueDate && (
                         <span
                           className={cn(
-                            'flex items-center gap-1 rounded-2xl px-2 py-0.5 text-micro font-bold tabular-nums',
+                            'flex items-center gap-1 rounded-full px-2 py-0.5 text-micro font-bold tabular-nums',
                             overdue
                               ? 'bg-error-soft text-error'
                               : isToday
@@ -508,7 +508,7 @@ export const MobileTasks = () => {
             type="submit"
             form="mobile-task-form"
             disabled={createTask.isPending || !form.title.trim()}
-            className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3.5 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:opacity-50"
           >
             {createTask.isPending ? (
               <>

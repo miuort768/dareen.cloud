@@ -160,17 +160,17 @@ export const Tasks = () => {
               action={
                 <button
                   onClick={() => setShowAddForm(true)}
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.97]"
                 >
                   <Plus size={16} /> مهمة جديدة
                 </button>
               }
               meta={
                 <>
-                  <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+                  <span className="inline-flex items-center rounded-full border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
                     المهام: {stats.total}
                   </span>
-                  <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
+                  <span className="inline-flex items-center rounded-full border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
                     الإنجاز: {stats.score}%
                   </span>
                 </>
@@ -195,7 +195,7 @@ export const Tasks = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.12 + i * 0.06 }}
                     whileHover={{ scale: 1.02, y: -2 }}
-                    className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1"
+                    className="rounded-2xl border border-border bg-surface p-4 shadow-elevation-1 transition-colors duration-slow dark:border-primary/20 dark:bg-card"
                   >
                     <div className="mb-3 flex items-center justify-between">
                       <div
@@ -207,8 +207,10 @@ export const Tasks = () => {
                         <Icon size={16} />
                       </div>
                     </div>
-                    <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                    <p className="text-2xl font-bold tabular-nums text-main">{kpi.value}</p>
+                    <p className="mb-1 text-xs font-bold text-muted">{kpi.label}</p>
+                    <p className="font-dash text-2xl font-black tabular-nums text-main">
+                      {kpi.value}
+                    </p>
                   </motion.div>
                 )
               })}
@@ -245,7 +247,7 @@ export const Tasks = () => {
                     onClick={() => setFilterPriority(key)}
                     aria-pressed={filterPriority === key}
                     className={cn(
-                      'whitespace-nowrap rounded-2xl border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                      'whitespace-nowrap rounded-full border px-3 py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                       filterPriority === key
                         ? key !== 'all'
                           ? cn(TASK_PRIORITY_CONFIG[key].badge, 'border-current')
@@ -260,7 +262,7 @@ export const Tasks = () => {
                   <button
                     onClick={handleDeleteCompleted}
                     disabled={deleteTask.isPending}
-                    className="ms-auto flex shrink-0 items-center gap-1 whitespace-nowrap rounded-2xl px-3 py-2 text-micro font-bold text-error transition-colors hover:bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                    className="ms-auto flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-micro font-bold text-error transition-colors hover:bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
                   >
                     <Trash2 size={12} /> حذف المكتملة ({stats.completed})
                   </button>
