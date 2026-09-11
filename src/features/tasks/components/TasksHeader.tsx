@@ -1,7 +1,7 @@
 import { Plus, Search, ListTodo, Clock, RefreshCcw, CheckCircle2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
-import { PageHeader, FilterDropdown, StatCard } from '../../../shared/components/ui'
+import { PageHeader, StatCard } from '../../../shared/components/ui'
 import type { StatCardProps } from '../../../shared/components/ui'
 import { MobilePageHeader } from '../../../shared/components/mobile/MobilePageHeader'
 import type { TaskStatus } from '../types'
@@ -86,12 +86,18 @@ export const TasksHeader = ({
               className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-10 text-xs font-bold text-main outline-none transition-colors placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
             />
           </div>
-          <FilterDropdown
+          <select
             value={filterStatus}
-            items={statusFilters.map((f) => ({ key: f.value, label: f.label }))}
-            onChange={(v) => onFilterStatusChange(v as StatusFilter)}
-            className="w-full"
-          />
+            onChange={(e) => onFilterStatusChange(e.target.value as StatusFilter)}
+            aria-label="تصفية المهام حسب الحالة"
+            className="h-11 w-full cursor-pointer rounded-xl border border-border bg-surface ps-3.5 text-xs font-bold text-main outline-none transition-all duration-normal hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+          >
+            {statusFilters.map((f) => (
+              <option key={f.value} value={f.value}>
+                {f.label}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

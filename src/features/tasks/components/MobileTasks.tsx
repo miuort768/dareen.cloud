@@ -168,7 +168,7 @@ export const MobileTasks = () => {
       </div>
 
       {/* المحتوى */}
-      <div className="space-y-2 px-4 pb-28">
+      <div className="space-y-2 px-4 pb-28 pt-4">
         {isLoading ? (
           <div className="space-y-3">
             <SkeletonCard />
@@ -213,18 +213,10 @@ export const MobileTasks = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(i * 0.03, 0.24), duration: 0.3 }}
                 className={cn(
-                  'relative overflow-hidden rounded-2xl border bg-card p-3.5 ps-4',
-                  done ? 'border-border opacity-70' : 'border-border',
+                  'relative overflow-hidden rounded-2xl border border-s-2 border-border bg-card p-4 shadow-elevation-1',
+                  done ? 'opacity-70' : priority.bar,
                 )}
               >
-                {/* شريط الأولوية على الحافة */}
-                {!done && (
-                  <span
-                    className={cn('absolute inset-y-2 start-0 w-1 rounded-full', priority.bar)}
-                    aria-hidden="true"
-                  />
-                )}
-
                 <div className="flex items-start gap-3">
                   {/* Checkbox متحرك */}
                   <motion.button
@@ -233,7 +225,7 @@ export const MobileTasks = () => {
                     aria-label={done ? `إعادة فتح: ${task.title}` : `إكمال: ${task.title}`}
                     aria-pressed={done}
                     className={cn(
-                      'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                      'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                       done
                         ? 'border-success bg-success text-on-success'
                         : 'border-border-strong bg-transparent text-transparent hover:border-primary',
@@ -247,7 +239,7 @@ export const MobileTasks = () => {
                           exit={{ scale: 0 }}
                           transition={{ type: 'spring', stiffness: 500, damping: 22 }}
                         >
-                          <Check size={13} strokeWidth={3} />
+                          <Check size={14} strokeWidth={3} />
                         </motion.span>
                       )}
                     </AnimatePresence>
@@ -264,7 +256,7 @@ export const MobileTasks = () => {
                       {task.title}
                     </p>
                     {task.description && (
-                      <p className="mt-1 line-clamp-2 text-micro font-medium leading-relaxed text-muted">
+                      <p className="mt-1 line-clamp-2 text-xs font-medium leading-relaxed text-muted">
                         {task.description}
                       </p>
                     )}
@@ -296,7 +288,7 @@ export const MobileTasks = () => {
                               ? 'bg-error-soft text-error'
                               : isToday
                                 ? 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary'
-                                : 'text-muted',
+                                : 'bg-surface text-muted',
                           )}
                         >
                           <CalendarDays size={10} strokeWidth={1.7} />
@@ -315,7 +307,7 @@ export const MobileTasks = () => {
                     onClick={() => handleDelete(task)}
                     disabled={deleteTask.isPending}
                     aria-label={`حذف المهمة: ${task.title}`}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl text-muted transition-colors hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
                   >
                     <Trash2 size={14} strokeWidth={1.7} />
                   </button>
