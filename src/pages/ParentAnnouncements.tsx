@@ -114,7 +114,7 @@ export const ParentAnnouncements = () => {
               <span className="mb-1.5 inline-flex items-center rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold text-on-primary backdrop-blur-sm">
                 آخر إعلانات المؤسسة
               </span>
-              <h1 className="text-base font-black leading-tight text-on-primary md:text-2xl">
+              <h1 className="text-sm font-black leading-tight text-on-primary md:text-2xl">
                 آخر إعلانات {academyName}
               </h1>
               <p className="mt-1 text-xs font-bold text-white/90">
