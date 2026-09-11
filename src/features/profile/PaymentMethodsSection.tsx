@@ -209,13 +209,13 @@ export const PaymentMethodsSection = () => {
       title="طرق الدفع"
       icon={CreditCard}
       description="إدارة طرق استلام مستحقاتك المالية."
-      descClassName="text-[9px] sm:text-micro"
+      descClassName="text-[8px] sm:text-micro"
       delay={0.2}
       action={
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className="flex min-h-11 items-center gap-1.5 rounded-full bg-jade-deep px-3.5 py-2 text-[9px] font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)] sm:text-micro"
+            className="flex min-h-11 items-center gap-1.5 rounded-full bg-jade-deep px-3.5 py-2 text-[8px] font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)] sm:text-micro"
           >
             <Plus size={13} /> إضافة طريقة دفع
           </button>
@@ -255,7 +255,7 @@ export const PaymentMethodsSection = () => {
           </p>
           <button
             onClick={openAdd}
-            className="mt-5 flex min-h-11 items-center gap-1.5 rounded-full bg-jade-deep px-5 py-2.5 text-xs font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)]"
+            className="mt-5 flex min-h-11 items-center gap-1.5 rounded-full bg-jade-deep px-5 py-2.5 text-micro font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)] sm:text-xs"
           >
             <Plus size={14} /> إضافة طريقة دفع
           </button>
@@ -453,24 +453,25 @@ const PaymentMethodForm = ({
           className="relative flex max-h-[92dvh] w-full max-w-md flex-col overflow-hidden rounded-t-3xl border border-border bg-card shadow-elevation-3 sm:rounded-2xl"
           dir="rtl"
         >
-          <div className="flex justify-center pt-3 sm:hidden">
-            <div className="h-1.5 w-10 rounded-full bg-border" />
-          </div>
-
-          <div className="flex items-start justify-between gap-3 px-5 pb-3 pt-4">
-            <div>
-              <h3 className="text-sm font-bold text-main">
-                {isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
-              </h3>
-              <p className="mt-0.5 text-micro text-muted">اختر النوع ثم أكمل البيانات</p>
+          <div className="bg-jade-deep">
+            <div className="flex justify-center pt-3 sm:hidden">
+              <div className="h-1.5 w-10 rounded-full bg-white/40" />
             </div>
-            <button
-              onClick={onClose}
-              aria-label="إغلاق"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface text-muted transition-colors hover:bg-hover hover:text-main focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-            >
-              ✕<span className="sr-only">إغلاق</span>
-            </button>
+            <div className="flex items-start justify-between gap-3 px-5 pb-4 pt-3">
+              <div>
+                <h3 className="text-sm font-black text-jade-on">
+                  {isEdit ? 'تعديل طريقة الدفع' : 'إضافة طريقة دفع'}
+                </h3>
+                <p className="mt-0.5 text-micro text-white/80">اختر النوع ثم أكمل البيانات</p>
+              </div>
+              <button
+                onClick={onClose}
+                aria-label="إغلاق"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-error bg-error text-lg leading-none text-on-error shadow-elevation-1 outline-none transition-all duration-normal hover:border-error-hover hover:bg-error-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+              >
+                ✕<span className="sr-only">إغلاق</span>
+              </button>
+            </div>
           </div>
 
           <form
