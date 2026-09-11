@@ -1,5 +1,5 @@
 import { useDialogFocus } from '../shared/hooks/useDialogFocus'
-import { Plus, X, Sparkles, ShieldCheck, ChevronDown } from 'lucide-react'
+import { Plus, X, Sparkles, ShieldCheck } from 'lucide-react'
 import type { NewTaskDraft } from './Tasks'
 
 interface TaskFormModalProps {
@@ -72,25 +72,19 @@ export const TaskFormModal = ({ data, onChange, onSubmit, onClose }: TaskFormMod
                 >
                   درجة الأولوية
                 </label>
-                <div className="relative">
-                  <ChevronDown
-                    size={14}
-                    className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted"
-                  />
-                  <select
-                    id="task-priority"
-                    className="w-full cursor-pointer appearance-none rounded-2xl border border-border bg-background py-2.5 pe-4 ps-8 text-xs font-bold text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
-                    aria-label="درجة الأولوية"
-                    value={data.priority}
-                    onChange={(e) =>
-                      onChange({ ...data, priority: e.target.value as NewTaskDraft['priority'] })
-                    }
-                  >
-                    <option value="low">منخفضة</option>
-                    <option value="medium">متوسطة</option>
-                    <option value="high">عالية</option>
-                  </select>
-                </div>
+                <select
+                  id="task-priority"
+                  className="w-full cursor-pointer rounded-2xl border border-border bg-background py-2.5 ps-3.5 text-xs font-bold text-main outline-none hover:border-primary focus-visible:ring-2 focus-visible:ring-focus"
+                  aria-label="درجة الأولوية"
+                  value={data.priority}
+                  onChange={(e) =>
+                    onChange({ ...data, priority: e.target.value as NewTaskDraft['priority'] })
+                  }
+                >
+                  <option value="low">منخفضة</option>
+                  <option value="medium">متوسطة</option>
+                  <option value="high">عالية</option>
+                </select>
               </div>
               <div className="space-y-1.5">
                 <label

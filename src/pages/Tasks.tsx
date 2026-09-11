@@ -219,7 +219,7 @@ export const Tasks = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           aria-label="إنشاء مهمة جديدة"
-          className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-4 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-4 transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus md:bottom-6 md:end-6"
+          className="fixed bottom-6 end-6 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-4 transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
         >
           <Plus size={24} />
         </motion.button>

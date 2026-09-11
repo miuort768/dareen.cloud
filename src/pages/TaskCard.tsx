@@ -91,8 +91,8 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
               className={cn(
                 'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-micro font-bold uppercase tracking-wider shadow-elevation-1 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                 task.status === 'pending'
-                  ? 'border-primary bg-primary-soft text-primary hover:bg-primary-soft'
-                  : 'border-success bg-success-soft text-success-dark hover:bg-success-soft dark:text-success',
+                  ? 'border-primary bg-primary-soft text-primary hover:bg-primary hover:text-on-primary'
+                  : 'border-success bg-success-soft text-success-dark hover:bg-success hover:text-on-success dark:text-success dark:hover:bg-success dark:hover:text-on-success',
               )}
             >
               {task.status === 'pending' ? <Rocket size={12} /> : <CheckCircle2 size={12} />}
@@ -111,7 +111,7 @@ export const TaskCard = ({ task, onUpdateStatus, onDelete }: TaskCardProps) => {
         <button
           onClick={() => onDelete(task.id)}
           aria-label={`حذف المهمة: ${task.title}`}
-          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-error-soft text-error transition-all hover:bg-error-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="flex h-10 w-10 items-center justify-center rounded-2xl bg-error-soft text-error transition-all hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
         >
           <Trash2 size={18} />
         </button>

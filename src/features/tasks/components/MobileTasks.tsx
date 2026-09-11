@@ -155,7 +155,7 @@ export const MobileTasks = () => {
         </motion.div>
 
         {/* Hero — بنفس لغة صفحة أبنائي */}
-        <div className="px-4 pt-2">
+        <div className="px-2 pt-2">
           <TasksHeader
             stats={stats}
             searchTerm={search}
@@ -165,157 +165,157 @@ export const MobileTasks = () => {
             onAdd={() => setSheetOpen(true)}
           />
         </div>
-      </div>
 
-      {/* المحتوى */}
-      <div className="space-y-2 px-4 pb-28 pt-4">
-        {isLoading ? (
-          <div className="space-y-3">
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-          </div>
-        ) : isError ? (
-          <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-10 text-center">
-            <AlertTriangle size={26} className="mx-auto mb-2 text-error" strokeWidth={1.5} />
-            <p className="text-xs font-bold text-main">تعذر تحميل المهام</p>
-            <button
-              onClick={() => refetch()}
-              className="mx-auto mt-3 rounded-2xl bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-            >
-              إعادة المحاولة
-            </button>
-          </div>
-        ) : filtered.length === 0 ? (
-          <EmptyState
-            icon={ListTodo}
-            compact
-            title={search ? 'لا نتائج مطابقة للبحث' : 'لا توجد مهام هنا'}
-            subtitle={
-              search ? `جرّب كلمة أخرى بدل "${search}"` : 'أضف مهمتك الأولى من زر (+) بالأسفل'
-            }
-            className="rounded-2xl border border-dashed border-border bg-card"
-          />
-        ) : (
-          filtered.map((task, i) => {
-            const priority = TASK_PRIORITY_CONFIG[task.priority]
-            const statusMeta = TASK_STATUS_CONFIG[task.status]
-            const done = task.status === 'completed'
-            const todayStr = new Date().toLocaleDateString('en-CA')
-            const overdue = !done && !!task.dueDate && task.dueDate < todayStr
-            const isToday = task.dueDate === todayStr
-
-            return (
-              <motion.article
-                key={task.id}
-                layout
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Math.min(i * 0.03, 0.24), duration: 0.3 }}
-                className={cn(
-                  'relative overflow-hidden rounded-2xl border border-s-2 border-border bg-card p-4 shadow-elevation-1',
-                  done ? 'opacity-70' : priority.bar,
-                )}
+        {/* المحتوى */}
+        <div className="space-y-2 px-2 pb-28 pt-4">
+          {isLoading ? (
+            <div className="space-y-3">
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          ) : isError ? (
+            <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-10 text-center">
+              <AlertTriangle size={26} className="mx-auto mb-2 text-error" strokeWidth={1.5} />
+              <p className="text-xs font-bold text-main">تعذر تحميل المهام</p>
+              <button
+                onClick={() => refetch()}
+                className="mx-auto mt-3 rounded-2xl bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
-                <div className="flex items-start gap-3">
-                  {/* Checkbox متحرك */}
-                  <motion.button
-                    whileTap={{ scale: 0.85 }}
-                    onClick={() => toggleComplete(task)}
-                    aria-label={done ? `إعادة فتح: ${task.title}` : `إكمال: ${task.title}`}
-                    aria-pressed={done}
-                    className={cn(
-                      'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                      done
-                        ? 'border-success bg-success text-on-success'
-                        : 'border-border-strong bg-transparent text-transparent hover:border-primary',
-                    )}
-                  >
-                    <AnimatePresence>
-                      {done && (
-                        <motion.span
-                          initial={{ scale: 0, rotate: -45 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          exit={{ scale: 0 }}
-                          transition={{ type: 'spring', stiffness: 500, damping: 22 }}
-                        >
-                          <Check size={14} strokeWidth={3} />
-                        </motion.span>
-                      )}
-                    </AnimatePresence>
-                  </motion.button>
+                إعادة المحاولة
+              </button>
+            </div>
+          ) : filtered.length === 0 ? (
+            <EmptyState
+              icon={ListTodo}
+              compact
+              title={search ? 'لا نتائج مطابقة للبحث' : 'لا توجد مهام هنا'}
+              subtitle={
+                search ? `جرّب كلمة أخرى بدل "${search}"` : 'أضف مهمتك الأولى من زر (+) بالأسفل'
+              }
+              className="rounded-2xl border border-dashed border-border bg-card"
+            />
+          ) : (
+            filtered.map((task, i) => {
+              const priority = TASK_PRIORITY_CONFIG[task.priority]
+              const statusMeta = TASK_STATUS_CONFIG[task.status]
+              const done = task.status === 'completed'
+              const todayStr = new Date().toLocaleDateString('en-CA')
+              const overdue = !done && !!task.dueDate && task.dueDate < todayStr
+              const isToday = task.dueDate === todayStr
 
-                  {/* النص */}
-                  <div className="min-w-0 flex-1">
-                    <p
+              return (
+                <motion.article
+                  key={task.id}
+                  layout
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: Math.min(i * 0.03, 0.24), duration: 0.3 }}
+                  className={cn(
+                    'relative overflow-hidden rounded-2xl border border-s-2 border-border bg-card p-4 shadow-elevation-1',
+                    done ? 'opacity-70' : priority.bar,
+                  )}
+                >
+                  <div className="flex items-start gap-3">
+                    {/* Checkbox متحرك */}
+                    <motion.button
+                      whileTap={{ scale: 0.85 }}
+                      onClick={() => toggleComplete(task)}
+                      aria-label={done ? `إعادة فتح: ${task.title}` : `إكمال: ${task.title}`}
+                      aria-pressed={done}
                       className={cn(
-                        'text-sm font-bold leading-snug text-main',
-                        done && 'line-through decoration-2 opacity-60',
+                        'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                        done
+                          ? 'border-success bg-success text-on-success'
+                          : 'border-border-strong bg-transparent text-transparent hover:border-primary',
                       )}
                     >
-                      {task.title}
-                    </p>
-                    {task.description && (
-                      <p className="mt-1 line-clamp-2 text-xs font-medium leading-relaxed text-muted">
-                        {task.description}
-                      </p>
-                    )}
+                      <AnimatePresence>
+                        {done && (
+                          <motion.span
+                            initial={{ scale: 0, rotate: -45 }}
+                            animate={{ scale: 1, rotate: 0 }}
+                            exit={{ scale: 0 }}
+                            transition={{ type: 'spring', stiffness: 500, damping: 22 }}
+                          >
+                            <Check size={14} strokeWidth={3} />
+                          </motion.span>
+                        )}
+                      </AnimatePresence>
+                    </motion.button>
 
-                    <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                      <span
+                    {/* النص */}
+                    <div className="min-w-0 flex-1">
+                      <p
                         className={cn(
-                          'rounded-full px-2 py-0.5 text-micro font-bold',
-                          priority.badge,
+                          'text-sm font-bold leading-snug text-main',
+                          done && 'line-through decoration-2 opacity-60',
                         )}
                       >
-                        {priority.label}
-                      </span>
-                      {!done && (
-                        <span
-                          className={cn(
-                            'rounded-full bg-surface px-2 py-0.5 text-micro font-bold',
-                            statusMeta.color,
-                          )}
-                        >
-                          {statusMeta.label}
-                        </span>
+                        {task.title}
+                      </p>
+                      {task.description && (
+                        <p className="mt-1 line-clamp-2 text-xs font-medium leading-relaxed text-muted">
+                          {task.description}
+                        </p>
                       )}
-                      {task.dueDate && (
-                        <span
-                          className={cn(
-                            'flex items-center gap-1 rounded-full px-2 py-0.5 text-micro font-bold tabular-nums',
-                            overdue
-                              ? 'bg-error-soft text-error'
-                              : isToday
-                                ? 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary'
-                                : 'bg-surface text-muted',
-                          )}
-                        >
-                          <CalendarDays size={10} strokeWidth={1.7} />
-                          {new Date(`${task.dueDate}T00:00:00`).toLocaleDateString('ar-EG', {
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                          {overdue && ' · متأخرة'}
-                        </span>
-                      )}
-                    </div>
-                  </div>
 
-                  {/* حذف */}
-                  <button
-                    onClick={() => handleDelete(task)}
-                    disabled={deleteTask.isPending}
-                    aria-label={`حذف المهمة: ${task.title}`}
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
-                  >
-                    <Trash2 size={14} strokeWidth={1.7} />
-                  </button>
-                </div>
-              </motion.article>
-            )
-          })
-        )}
+                      <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                        <span
+                          className={cn(
+                            'rounded-full px-2 py-0.5 text-micro font-bold',
+                            priority.badge,
+                          )}
+                        >
+                          {priority.label}
+                        </span>
+                        {!done && (
+                          <span
+                            className={cn(
+                              'rounded-full bg-surface px-2 py-0.5 text-micro font-bold',
+                              statusMeta.color,
+                            )}
+                          >
+                            {statusMeta.label}
+                          </span>
+                        )}
+                        {task.dueDate && (
+                          <span
+                            className={cn(
+                              'flex items-center gap-1 rounded-full px-2 py-0.5 text-micro font-bold tabular-nums',
+                              overdue
+                                ? 'bg-error-soft text-error'
+                                : isToday
+                                  ? 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary'
+                                  : 'bg-surface text-muted',
+                            )}
+                          >
+                            <CalendarDays size={10} strokeWidth={1.7} />
+                            {new Date(`${task.dueDate}T00:00:00`).toLocaleDateString('ar-EG', {
+                              month: 'short',
+                              day: 'numeric',
+                            })}
+                            {overdue && ' · متأخرة'}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* حذف */}
+                    <button
+                      onClick={() => handleDelete(task)}
+                      disabled={deleteTask.isPending}
+                      aria-label={`حذف المهمة: ${task.title}`}
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:bg-error-soft hover:text-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                    >
+                      <Trash2 size={14} strokeWidth={1.7} />
+                    </button>
+                  </div>
+                </motion.article>
+              )
+            })
+          )}
+        </div>
       </div>
 
       {/* FAB — إنشاء مهمة */}
