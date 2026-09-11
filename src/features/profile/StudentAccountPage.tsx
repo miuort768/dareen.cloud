@@ -139,7 +139,7 @@ export const StudentAccountPage = () => {
             {/* البيانات الدراسية */}
             <div className="space-y-4 lg:col-span-2">
               <SectionCard title="البيانات الدراسية" icon={GraduationCap} delay={0.15}>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
                   <MiniTile label="الصف" value={student?.grade || '—'} icon={GraduationCap} />
                   <MiniTile label="عدد المواد" value={String(enrollments.length)} icon={BookOpen} />
                   <MiniTile label="النقاط" value={String(points)} icon={Award} />
@@ -163,7 +163,7 @@ export const StudentAccountPage = () => {
                       return (
                         <div
                           key={`${en.subject}-${i}`}
-                          className="rounded-xl border border-border bg-surface p-3"
+                          className="rounded-xl border border-border bg-card p-3 dark:border-primary/20 dark:bg-surface"
                         >
                           <div className="mb-1.5 flex items-center justify-between gap-2">
                             <p className="truncate text-xs font-bold text-main">{en.subject}</p>
@@ -195,7 +195,7 @@ export const StudentAccountPage = () => {
                     {upcoming.map((s) => (
                       <div
                         key={s.id}
-                        className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface p-3"
+                        className="flex items-center justify-between gap-2 rounded-xl border border-border bg-card p-3 dark:border-primary/20 dark:bg-surface"
                       >
                         <div className="flex min-w-0 items-center gap-2.5">
                           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">

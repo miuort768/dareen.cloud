@@ -184,7 +184,7 @@ export const ParentAccountPage = () => {
                     transition={{ delay: 0.05 * idx }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => navigate('/parent-students')}
-                    className="rounded-xl border border-border bg-surface p-3.5 text-start transition-colors hover:border-primary/40 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                    className="rounded-xl border border-border bg-card p-3.5 text-start transition-colors hover:border-primary/40 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/20 dark:bg-surface"
                     aria-label={`عرض تفاصيل ${child.name}`}
                   >
                     <div className="mb-2 flex items-center gap-2.5">

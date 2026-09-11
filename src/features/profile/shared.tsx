@@ -23,9 +23,9 @@ export const AccountHero = ({ name, roleLabel, subtitle, metaChips, onEdit }: Ac
   <motion.section
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-5 shadow-elevation-2 md:p-7"
+    className="relative overflow-hidden rounded-card border border-border bg-gradient-to-br from-primary-light via-primary-soft to-card p-5 shadow-elevation-1 transition-colors duration-slow dark:border-primary/30 dark:from-card dark:via-surface dark:to-card md:p-8"
   >
-    <div className="pointer-events-none absolute inset-0 opacity-[0.06]" aria-hidden="true">
+    <div className="pointer-events-none absolute inset-0 opacity-[0.08]" aria-hidden="true">
       <svg width="100%" height="100%">
         <defs>
           <pattern
@@ -36,38 +36,36 @@ export const AccountHero = ({ name, roleLabel, subtitle, metaChips, onEdit }: Ac
             height="26"
             patternUnits="userSpaceOnUse"
           >
-            <circle cx="2" cy="2" r="1" fill="white" />
+            <circle cx="2" cy="2" r="1" className="fill-primary" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#account-hero-grid)" />
       </svg>
     </div>
 
-    <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="relative z-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex min-w-0 items-center gap-4">
         {/* حرف الاسم الأول فقط — لا صورة شخصية في النظام */}
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20 text-xl font-black text-on-primary ring-2 ring-white/40 md:h-16 md:w-16 md:text-2xl">
+        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-surface text-xl font-black text-primary shadow-elevation-1 ring-1 ring-primary/10 md:h-16 md:w-16 md:text-2xl">
           {(name || '?').charAt(0)}
         </div>
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="min-w-0 break-words text-xl font-extrabold leading-snug text-on-primary md:text-3xl">
+            <h1 className="min-w-0 break-words text-2xl font-black leading-snug text-main md:text-3xl">
               {name}
             </h1>
-            <span className="flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-micro font-bold text-on-primary ring-1 ring-white/30">
+            <span className="flex items-center gap-1 rounded-full bg-primary-soft px-2.5 py-1 text-micro font-bold text-primary ring-1 ring-primary/10">
               <BadgeCheck size={11} />
               {roleLabel}
             </span>
           </div>
-          {subtitle && (
-            <p className="mt-1 truncate text-xs font-medium text-white/80">{subtitle}</p>
-          )}
+          {subtitle && <p className="mt-1 truncate text-xs font-bold text-muted">{subtitle}</p>}
           {metaChips && metaChips.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1.5">
               {metaChips.map((chip) => (
                 <span
                   key={chip}
-                  className="rounded-lg bg-white/15 px-2 py-0.5 text-micro font-bold text-on-primary"
+                  className="rounded-full bg-primary-soft px-2.5 py-0.5 text-micro font-bold text-primary"
                 >
                   {chip}
                 </span>
@@ -80,7 +78,7 @@ export const AccountHero = ({ name, roleLabel, subtitle, metaChips, onEdit }: Ac
       {onEdit && (
         <button
           onClick={onEdit}
-          className="flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-xl bg-card px-4 py-2.5 text-xs font-bold text-main shadow-elevation-1 transition-all hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className="flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-elevation-3 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:bg-gradient-to-r dark:from-primary dark:to-warning dark:text-on-primary"
         >
           <PencilLine size={13} /> تعديل البيانات
         </button>
@@ -115,7 +113,7 @@ export const SectionCard = ({
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay, duration: 0.35 }}
     className={cn(
-      'rounded-2xl border border-border bg-card p-4 shadow-elevation-1 md:p-5',
+      'rounded-2xl border border-border bg-surface p-4 shadow-elevation-1 transition-colors duration-slow dark:border-primary/20 dark:bg-card md:p-5',
       className,
     )}
   >
@@ -150,7 +148,7 @@ export const InfoRow = ({ label, value, icon: Icon, mono }: InfoRowProps) => {
   const empty = value === undefined || value === null || value === ''
   const tooltip = typeof value === 'string' || typeof value === 'number' ? String(value) : undefined
   return (
-    <div className="border-border/60 flex items-center justify-between gap-3 border-b py-2.5 last:border-b-0">
+    <div className="flex items-center justify-between gap-3 border-b border-divider py-2.5 last:border-b-0">
       <span className="flex shrink-0 items-center gap-2 text-xs font-semibold text-muted">
         {Icon && <Icon size={13} className="text-primary/70" />}
         {label}
@@ -212,7 +210,7 @@ export const AccountActions = ({ onLogoutStore }: AccountActionsProps) => {
     <SectionCard title="الحساب" icon={LogOut} delay={0.25}>
       <button
         onClick={handleLogout}
-        className="bg-error-soft/50 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-error-soft py-3 text-xs font-bold text-error transition-colors hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+        className="flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-error-soft bg-error-soft py-3 text-xs font-bold text-error transition-colors hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
       >
         <LogOut size={14} /> تسجيل الخروج
       </button>
@@ -240,13 +238,13 @@ interface ErrorBlockProps {
 }
 
 export const ErrorBlock = ({ onRetry }: ErrorBlockProps) => (
-  <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-16 text-center">
+  <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-16 text-center">
     <AlertTriangle size={30} className="mx-auto mb-3 text-error" strokeWidth={1.5} />
     <p className="text-sm font-bold text-main">تعذر تحميل بيانات الحساب</p>
     <p className="mt-1 text-xs text-muted">تحقق من الاتصال ثم أعد المحاولة</p>
     <button
       onClick={onRetry}
-      className="mx-auto mt-4 flex min-h-11 items-center rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+      className="mx-auto mt-4 flex min-h-11 items-center rounded-full bg-primary px-6 py-2.5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
     >
       إعادة المحاولة
     </button>

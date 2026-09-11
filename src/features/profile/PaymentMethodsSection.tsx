@@ -214,7 +214,7 @@ export const PaymentMethodsSection = () => {
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className="flex min-h-11 items-center gap-1.5 rounded-xl bg-primary px-3.5 py-2 text-micro font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-micro font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             <Plus size={13} /> إضافة طريقة دفع
           </button>
@@ -231,11 +231,11 @@ export const PaymentMethodsSection = () => {
 
       {/* خطأ الجلب */}
       {!loading && fetchError && (
-        <div className="bg-error-soft/50 rounded-2xl border border-dashed border-error-soft py-8 text-center">
+        <div className="rounded-2xl border border-dashed border-error-soft bg-error-soft py-8 text-center">
           <p className="text-xs font-bold text-main">تعذر تحميل طرق الدفع</p>
           <button
             onClick={() => window.location.reload()}
-            className="mx-auto mt-3 flex min-h-11 items-center rounded-lg bg-primary px-4 py-2 text-micro font-bold text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="mx-auto mt-3 flex min-h-11 items-center rounded-full bg-primary px-4 py-2 text-micro font-bold text-on-primary shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             إعادة المحاولة
           </button>
@@ -244,7 +244,7 @@ export const PaymentMethodsSection = () => {
 
       {/* لا توجد طرق دفع */}
       {!loading && !fetchError && !setting && (
-        <div className="bg-surface/40 flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border py-12 text-center">
+        <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-surface py-12 text-center">
           <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft ring-1 ring-primary/10">
             <CreditCard size={22} className="text-primary" />
           </div>
@@ -254,7 +254,7 @@ export const PaymentMethodsSection = () => {
           </p>
           <button
             onClick={openAdd}
-            className="mt-5 flex min-h-11 items-center gap-1.5 rounded-xl bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="mt-5 flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           >
             <Plus size={14} /> إضافة طريقة دفع
           </button>
@@ -318,8 +318,8 @@ export const PaymentMethodsSection = () => {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-border bg-surface">
-            <div className="flex items-center justify-between gap-2 border-b border-border bg-card px-4 py-3">
+          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-elevation-1 dark:border-primary/20 dark:bg-surface">
+            <div className="flex items-center justify-between gap-2 border-b border-border bg-surface px-4 py-3 dark:bg-card">
               <div className="flex min-w-0 items-center gap-2.5">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
                   {methodMeta && <methodMeta.icon size={15} className="text-primary" />}
@@ -380,7 +380,7 @@ export const PaymentMethodsSection = () => {
             <div className="border-t border-border px-4 py-2.5">
               <button
                 onClick={openEdit}
-                className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-lg bg-primary-soft py-2 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-primary-soft py-2 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <PencilLine size={12} /> تعديل البيانات
               </button>
@@ -613,7 +613,7 @@ const PaymentMethodForm = ({
               type="submit"
               onClick={(e) => onSubmit(e)}
               disabled={submitting}
-              className="flex items-center justify-center gap-2 rounded-xl bg-primary py-3 text-xs font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex items-center justify-center gap-2 rounded-full bg-primary py-3 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {submitting && <Loader2 size={13} className="animate-spin" />}
               {submitting ? 'جاري الحفظ...' : isEdit ? 'حفظ التغييرات' : 'إضافة طريقة الدفع'}
