@@ -106,7 +106,7 @@ export const ParentAnnouncements = () => {
         />
 
         <div className="relative z-10 flex flex-col gap-4 p-5 md:p-6 lg:flex-row lg:items-center lg:gap-6">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-start gap-3 lg:flex-row lg:items-center lg:gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 shadow-elevation-3 backdrop-blur-sm">
               <Bell size={22} className="text-on-primary" />
             </div>
