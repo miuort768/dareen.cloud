@@ -125,6 +125,7 @@ export const StudentAccountPage = () => {
           <AccountHero
             name={displayName}
             roleLabel="طالب"
+            accent="info"
             subtitle={
               [student?.grade, student?.curriculum].filter(Boolean).join(' · ') || undefined
             }
@@ -160,7 +161,12 @@ export const StudentAccountPage = () => {
 
             {/* البيانات الدراسية */}
             <div className="space-y-4 lg:col-span-2">
-              <SectionCard title="البيانات الدراسية" icon={GraduationCap} delay={0.15}>
+              <SectionCard
+                title="البيانات الدراسية"
+                icon={GraduationCap}
+                delay={0.15}
+                tone="success"
+              >
                 <div className="grid grid-cols-3 gap-2.5">
                   <InfoTile
                     label="الصف"
@@ -258,7 +264,7 @@ export const StudentAccountPage = () => {
               </SectionCard>
 
               {/* الجلسات القادمة */}
-              <SectionCard title="الجلسات القادمة" icon={CalendarDays} delay={0.22}>
+              <SectionCard title="الجلسات القادمة" icon={CalendarDays} delay={0.22} tone="warning">
                 {upcoming.length > 0 ? (
                   <div className="space-y-2">
                     {upcoming.map((s) => (

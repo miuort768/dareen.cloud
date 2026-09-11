@@ -24,6 +24,7 @@ export function PageShell({ children }: { children: ReactNode }) {
 /* ---------- ألوان العناصر ---------- */
 
 type Tone = 'primary' | 'success' | 'warning' | 'info' | 'error'
+export type { Tone }
 
 const TILE_TONE: Record<Tone, string> = {
   primary: 'bg-primary-soft text-primary ring-primary/10',
@@ -40,6 +41,18 @@ const TEXT_TONE: Record<Tone, string> = {
   warning: 'text-warning-strong',
   info: 'text-info-strong',
   error: 'text-error-strong',
+}
+
+/** خلفية الهيرو — تدرّج ناعم بلون الدور (فاتح) بدل البطاقة أحادية اللون */
+const HERO_TONE: Record<Tone, string> = {
+  primary:
+    'from-primary-light via-primary-soft to-card dark:from-primary-soft dark:via-card dark:to-card',
+  success:
+    'from-success-light via-success-soft to-card dark:from-success-soft dark:via-card dark:to-card',
+  warning:
+    'from-warning-light via-warning-soft to-card dark:from-warning-soft dark:via-card dark:to-card',
+  info: 'from-info-light via-info-soft to-card dark:from-info-soft dark:via-card dark:to-card',
+  error: 'from-error-light via-error-soft to-card dark:from-error-soft dark:via-card dark:to-card',
 }
 
 export const TONE_ORDER: Tone[] = ['primary', 'info', 'success', 'warning']
@@ -66,6 +79,8 @@ interface AccountHeroProps {
   /** تكبير خط الكبسولات (المادة/سعر الحصة في صفحة المعلمة) */
   chipsBold?: boolean
   quickStats?: { label: string; value?: ReactNode; tone?: Tone; icon?: LucideIcon }[]
+  /** هوية لونية خفيفة للهيرو حسب الدور (افتراضي primary) */
+  accent?: Tone
   /** متاح فقط للأدوار التي تدعم التعديل فعليًا في النظام */
   onEdit?: () => void
 }
@@ -77,12 +92,16 @@ export const AccountHero = ({
   metaChips,
   chipsBold,
   quickStats,
+  accent = 'primary',
   onEdit,
 }: AccountHeroProps) => (
   <motion.section
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
-    className="rounded-2xl border border-border bg-surface p-5 shadow-elevation-1 transition-colors duration-slow dark:border-primary/20 dark:bg-card md:p-8"
+    className={cn(
+      'rounded-2xl border border-border bg-gradient-to-br p-5 shadow-elevation-1 transition-colors duration-slow dark:border-primary/20 md:p-8',
+      HERO_TONE[accent],
+    )}
   >
     <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex min-w-0 items-center gap-4">
@@ -166,6 +185,8 @@ interface SectionCardProps {
   children: ReactNode
   className?: string
   delay?: number
+  /** لون أيقونة القسم (افتراضي primary) */
+  tone?: Tone
 }
 
 export const SectionCard = ({
@@ -177,6 +198,7 @@ export const SectionCard = ({
   children,
   className,
   delay = 0,
+  tone = 'primary',
 }: SectionCardProps) => (
   <motion.section
     initial={{ opacity: 0, y: 14 }}
@@ -190,8 +212,13 @@ export const SectionCard = ({
     <div className="mb-4 flex items-start justify-between gap-3">
       <div className="flex items-center gap-2.5">
         {Icon && (
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft ring-1 ring-primary/10">
-            <Icon size={16} className="text-primary" />
+          <div
+            className={cn(
+              'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ring-1',
+              TILE_TONE[tone],
+            )}
+          >
+            <Icon size={16} />
           </div>
         )}
         <div>
@@ -305,7 +332,7 @@ export const AccountActions = ({ onLogoutStore, supportPhone }: AccountActionsPr
     navigate('/login')
   }
   return (
-    <SectionCard title="الحساب" icon={LogOut} delay={0.25}>
+    <SectionCard title="الحساب" icon={LogOut} tone="error" delay={0.25}>
       <div className="space-y-2.5">
         {supportPhone && (
           <a

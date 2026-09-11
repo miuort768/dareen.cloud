@@ -133,6 +133,7 @@ export const ParentAccountPage = () => {
           <AccountHero
             name={displayName}
             roleLabel="ولي أمر"
+            accent="success"
             subtitle={children.length > 0 ? `${children.length} أبناء مرتبطون بالحساب` : undefined}
             quickStats={[
               { label: 'الأبناء', value: children.length, tone: 'primary', icon: Users },
@@ -248,7 +249,7 @@ export const ParentAccountPage = () => {
 
           {/* آخر النشاطات — بيانات حقيقية من سجل النقاط */}
           {activity.length > 0 && (
-            <SectionCard title="آخر نشاطات الأبناء" icon={Activity} delay={0.2}>
+            <SectionCard title="آخر نشاطات الأبناء" icon={Activity} tone="info" delay={0.2}>
               <div className="space-y-1">
                 {activity.slice(0, 8).map((log, i) => (
                   <div

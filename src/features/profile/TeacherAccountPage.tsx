@@ -179,6 +179,7 @@ export const TeacherAccountPage = () => {
                 icon={BookOpen}
                 description="معلوماتك التعليمية في المنصة"
                 delay={0.15}
+                tone="info"
               >
                 <div className="grid grid-cols-3 gap-2.5">
                   <InfoTile
