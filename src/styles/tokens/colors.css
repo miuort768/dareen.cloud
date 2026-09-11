@@ -273,3 +273,26 @@
     --bg-primary-light: #e0e7ff;
   }
 }
+
+/* ============================================================
+   Profile pages premium identity (صفحات الحسابات فقط).
+   أسرة «jade» الزمردية تُطبَّق داخل نطاق .profile-scope حصرًا
+   حتى تبقى بقية التطبيق على هوية الماركة (بنفسجي/ذهبي).
+   ============================================================ */
+.profile-scope {
+  --jade: #0f9d8f;
+  --jade-deep: #0a7b70;
+  --jade-hover: #0c8c80;
+  --jade-soft: #e6f5f2;
+  --jade-light: #c9ebe4;
+  --jade-on: #ffffff;
+}
+
+.dark .profile-scope {
+  --jade: #2fc0b0;
+  --jade-deep: #17a090;
+  --jade-hover: #3bccbb;
+  --jade-soft: #12332e;
+  --jade-light: #1b4841;
+  --jade-on: #032b26;
+}

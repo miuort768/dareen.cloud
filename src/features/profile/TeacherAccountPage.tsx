@@ -145,7 +145,7 @@ export const TeacherAccountPage = () => {
 
               {/* مؤشرات الحساب — الحصص والربح الحالي */}
               <div className="mt-4 grid grid-cols-2 gap-2 border-t border-divider pt-4">
-                <div className="rounded-xl border border-border bg-card p-4 dark:border-primary/20 dark:bg-surface">
+                <div className="rounded-xl border border-border bg-surface p-4 dark:border-white/[0.06]">
                   <p className="flex items-center gap-1.5 text-lg font-black leading-none text-success-strong">
                     <CalendarCheck size={15} className="shrink-0" />
                     {statsLoading ? (
@@ -156,8 +156,8 @@ export const TeacherAccountPage = () => {
                   </p>
                   <p className="mt-1.5 text-micro font-bold text-muted">عدد الحصص المنفذة</p>
                 </div>
-                <div className="rounded-xl border border-border bg-card p-4 dark:border-primary/20 dark:bg-surface">
-                  <p className="flex items-center gap-1.5 text-lg font-black leading-none text-primary">
+                <div className="rounded-xl border border-border bg-surface p-4 dark:border-white/[0.06]">
+                  <p className="flex items-center gap-1.5 text-lg font-black leading-none text-jade">
                     <Wallet size={15} className="shrink-0" />
                     {statsLoading ? (
                       '—'
@@ -217,11 +217,11 @@ export const TeacherAccountPage = () => {
                 </div>
 
                 {/* الرتبة والتقدم — من نظام الرتب الموحد */}
-                <div className="mt-4 rounded-2xl border border-border bg-card p-4 shadow-elevation-1 dark:border-primary/20 dark:bg-surface">
+                <div className="mt-4 rounded-2xl border border-border bg-surface p-4 dark:border-white/[0.06]">
                   <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                     <span className="flex items-center gap-2.5">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft ring-1 ring-primary/10">
-                        <RankIcon size={16} className="text-primary" />
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-jade-soft ring-1 ring-jade-soft">
+                        <RankIcon size={16} className="text-jade" />
                       </span>
                       <span className="min-w-0">
                         <span className="block text-micro text-muted">الرتبة الحالية</span>
@@ -231,18 +231,18 @@ export const TeacherAccountPage = () => {
                       </span>
                     </span>
                     {nextRank && (
-                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1.5 text-micro font-bold text-primary">
+                      <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-jade-soft px-2.5 py-1.5 text-micro font-bold text-jade">
                         <TrendingUp size={11} />
                         التالية: {nextRank.name}
                       </span>
                     )}
                   </div>
-                  <ProgressBar value={rankProgress} variant="primary" size="lg" />
+                  <ProgressBar value={rankProgress} variant="jade" size="lg" />
                   <p className="mt-2 text-micro text-muted">
                     {nextRank ? (
                       <>
                         تحتاج{' '}
-                        <span className="font-dash font-black tabular-nums text-primary">
+                        <span className="font-dash font-black tabular-nums text-jade">
                           {pointsNeeded}
                         </span>{' '}
                         نقطة للوصول إلى «{nextRank.name}»

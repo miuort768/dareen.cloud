@@ -109,7 +109,7 @@ export const EditNameModal = ({
                   htmlFor="account-name"
                   className="flex items-center gap-1.5 text-xs font-bold text-muted"
                 >
-                  <User size={12} className="text-primary" />
+                  <User size={12} className="text-jade" />
                   الاسم
                 </label>
                 <input
@@ -121,7 +121,7 @@ export const EditNameModal = ({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   disabled={saving}
-                  className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60"
+                  className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm font-bold text-main outline-none transition-all placeholder:text-muted focus-visible:border-jade focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60"
                   placeholder="الاسم الكامل"
                 />
               </div>
@@ -131,7 +131,7 @@ export const EditNameModal = ({
                   htmlFor="account-phone"
                   className="flex items-center gap-1.5 text-xs font-bold text-muted"
                 >
-                  <Phone size={12} className="text-primary" />
+                  <Phone size={12} className="text-jade" />
                   رقم الجوال
                 </label>
                 <input
@@ -142,7 +142,7 @@ export const EditNameModal = ({
                   value={phone}
                   onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 11))}
                   disabled={saving}
-                  className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold tabular-nums text-main outline-none transition-all placeholder:font-sans placeholder:font-medium placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60"
+                  className="w-full rounded-xl border border-border bg-background px-4 py-3 font-mono text-sm font-bold tabular-nums text-main outline-none transition-all placeholder:font-sans placeholder:font-medium placeholder:text-muted focus-visible:border-jade focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60"
                   placeholder="01XXXXXXXXX"
                 />
                 {phone && !/^01[0-9]{9}$/.test(phone) && (
@@ -169,7 +169,7 @@ export const EditNameModal = ({
                     (name.trim() === initialName && phone.trim() === initialPhone.trim())
                   }
                   className={cn(
-                    'flex items-center justify-center gap-2 rounded-full bg-primary py-3 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50',
+                    'flex items-center justify-center gap-2 rounded-full bg-jade-deep py-3 text-xs font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)]',
                   )}
                 >
                   {saving && <Loader2 size={13} className="animate-spin" />}

@@ -215,7 +215,7 @@ export const PaymentMethodsSection = () => {
         !loading && !setting && !fetchError ? (
           <button
             onClick={openAdd}
-            className="flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-3.5 py-2 text-[9px] font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] sm:text-micro"
+            className="flex min-h-11 items-center gap-1.5 rounded-full bg-jade-deep px-3.5 py-2 text-[9px] font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)] sm:text-micro"
           >
             <Plus size={13} /> إضافة طريقة دفع
           </button>
@@ -236,7 +236,7 @@ export const PaymentMethodsSection = () => {
           <p className="text-xs font-bold text-main">تعذر تحميل طرق الدفع</p>
           <button
             onClick={() => window.location.reload()}
-            className="mx-auto mt-3 flex min-h-11 items-center rounded-full bg-primary px-4 py-2 text-micro font-bold text-on-primary shadow-elevation-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="mx-auto mt-3 flex min-h-11 items-center rounded-full bg-jade-deep px-4 py-2 text-micro font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             إعادة المحاولة
           </button>
@@ -246,8 +246,8 @@ export const PaymentMethodsSection = () => {
       {/* لا توجد طرق دفع */}
       {!loading && !fetchError && !setting && (
         <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border bg-surface py-12 text-center">
-          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft ring-1 ring-primary/10">
-            <CreditCard size={22} className="text-primary" />
+          <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-jade-soft ring-1 ring-jade-soft">
+            <CreditCard size={22} className="text-jade" />
           </div>
           <p className="text-sm font-black text-main">لا توجد طرق دفع</p>
           <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted">
@@ -255,7 +255,7 @@ export const PaymentMethodsSection = () => {
           </p>
           <button
             onClick={openAdd}
-            className="mt-5 flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-5 py-2.5 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+            className="mt-5 flex min-h-11 items-center gap-1.5 rounded-full bg-jade-deep px-5 py-2.5 text-xs font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)]"
           >
             <Plus size={14} /> إضافة طريقة دفع
           </button>
@@ -271,7 +271,7 @@ export const PaymentMethodsSection = () => {
         >
           {/* بطاقة الاستلام — لمسة بصرية شبيهة ببطاقة الدفع */}
           <div
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-elevation-2"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-jade via-jade-deep to-jade-hover p-4 shadow-elevation-2"
             dir="rtl"
           >
             <div className="pointer-events-none absolute inset-0 opacity-[0.08]" aria-hidden="true">
@@ -319,11 +319,11 @@ export const PaymentMethodsSection = () => {
             </div>
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-elevation-1 dark:border-primary/20 dark:bg-surface">
+          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-elevation-1 dark:border-white/[0.06] dark:bg-surface">
             <div className="flex items-center justify-between gap-2 border-b border-border bg-surface px-4 py-3 dark:bg-card">
               <div className="flex min-w-0 items-center gap-2.5">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-soft">
-                  {methodMeta && <methodMeta.icon size={15} className="text-primary" />}
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-jade-soft">
+                  {methodMeta && <methodMeta.icon size={15} className="text-jade" />}
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-xs font-bold text-main">{methodMeta?.label}</p>
@@ -337,7 +337,7 @@ export const PaymentMethodsSection = () => {
                 <button
                   onClick={openEdit}
                   aria-label="تعديل طريقة الدفع"
-                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted transition-colors hover:border-jade hover:text-jade focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <PencilLine size={14} />
                 </button>
@@ -381,7 +381,7 @@ export const PaymentMethodsSection = () => {
             <div className="border-t border-border px-4 py-2.5">
               <button
                 onClick={openEdit}
-                className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-primary-soft py-2 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-jade-soft py-2 text-micro font-bold text-jade transition-colors hover:bg-jade-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <PencilLine size={12} /> تعديل البيانات
               </button>
@@ -492,8 +492,8 @@ const PaymentMethodForm = ({
                       className={cn(
                         'flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                         active
-                          ? 'border-primary bg-primary-soft text-primary shadow-elevation-1'
-                          : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-main',
+                          ? 'border-jade bg-jade-soft text-jade shadow-elevation-1'
+                          : 'border-border bg-surface text-muted hover:border-jade-light hover:text-main',
                       )}
                     >
                       <m.icon size={17} strokeWidth={active ? 2.3 : 1.8} />
@@ -523,7 +523,7 @@ const PaymentMethodForm = ({
                         className={cn(
                           'rounded-lg border py-2 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                           form.walletProvider === w
-                            ? 'border-primary bg-primary-soft text-primary'
+                            ? 'border-jade bg-jade-soft text-jade'
                             : 'border-border bg-surface text-muted hover:text-main',
                         )}
                       >
@@ -614,7 +614,7 @@ const PaymentMethodForm = ({
               type="submit"
               onClick={(e) => onSubmit(e)}
               disabled={submitting}
-              className="flex items-center justify-center gap-2 rounded-full bg-primary py-3 text-xs font-bold text-on-primary shadow-elevation-2 shadow-black/20 transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex items-center justify-center gap-2 rounded-full bg-jade-deep py-3 text-xs font-bold text-jade-on shadow-[0_8px_22px_rgb(10_123_112/0.35)] transition-all hover:bg-jade hover:shadow-[0_8px_22px_rgb(15_157_143/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-50 dark:shadow-[0_8px_22px_rgb(23_160_144/0.3)]"
             >
               {submitting && <Loader2 size={13} className="animate-spin" />}
               {submitting ? 'جاري الحفظ...' : isEdit ? 'حفظ التغييرات' : 'إضافة طريقة الدفع'}
@@ -651,7 +651,7 @@ const Field = ({ id, label, value, onChange, placeholder, inputMode, mono }: Fie
       placeholder={placeholder}
       autoComplete="off"
       className={cn(
-        'w-full rounded-xl border border-border bg-background px-4 py-3 text-sm font-bold text-main outline-none transition-all placeholder:font-medium placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-focus',
+        'w-full rounded-xl border border-border bg-background px-4 py-3 text-sm font-bold text-main outline-none transition-all placeholder:font-medium placeholder:text-muted focus-visible:border-jade focus-visible:ring-2 focus-visible:ring-focus',
         mono && 'font-mono tabular-nums',
       )}
     />

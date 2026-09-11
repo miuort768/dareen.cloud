@@ -52,6 +52,14 @@ module.exports = {
           hover: '#B8860B',
           glow: 'rgba(212, 175, 55, 0.4)',
         },
+        jade: {
+          DEFAULT: 'var(--jade)',
+          deep: 'var(--jade-deep)',
+          hover: 'var(--jade-hover)',
+          soft: 'var(--jade-soft)',
+          light: 'var(--jade-light)',
+        },
+        'jade-on': 'var(--jade-on)',
         avatar: {
           1: '#10b981',
           2: '#059669',

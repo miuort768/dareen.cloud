@@ -64,7 +64,7 @@ const childProgress = (child: Child): number => {
 }
 
 const TONE_BG = {
-  primary: 'bg-primary-soft text-primary ring-primary/10',
+  primary: 'bg-jade-soft text-jade ring-jade-soft',
   success: 'bg-success-soft text-success-strong ring-success-soft',
   warning: 'bg-warning-soft text-warning-strong ring-warning-soft',
   info: 'bg-info-soft text-info-strong ring-info-soft',
@@ -133,7 +133,6 @@ export const ParentAccountPage = () => {
           <AccountHero
             name={displayName}
             roleLabel="ولي أمر"
-            accent="success"
             subtitle={children.length > 0 ? `${children.length} أبناء مرتبطون بالحساب` : undefined}
             quickStats={[
               { label: 'الأبناء', value: children.length, tone: 'primary', icon: Users },
@@ -166,8 +165,8 @@ export const ParentAccountPage = () => {
           <section aria-label="أبنائي">
             <div className="mb-3 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft ring-1 ring-primary/10">
-                  <Users size={16} className="text-primary" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-jade-soft ring-1 ring-jade-soft">
+                  <Users size={16} className="text-jade" />
                 </div>
                 <div>
                   <h2 className="text-sm font-black leading-tight text-main">أبنائي</h2>
@@ -176,7 +175,7 @@ export const ParentAccountPage = () => {
               </div>
               <button
                 onClick={() => navigate('/parent-students')}
-                className="flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-primary-soft px-3 py-1.5 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                className="flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-jade-soft px-3 py-1.5 text-micro font-bold text-jade transition-colors hover:bg-jade-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
                 متابعة التفاصيل <ArrowLeft size={11} />
               </button>
@@ -195,7 +194,7 @@ export const ParentAccountPage = () => {
                       transition={{ delay: 0.05 * idx }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => navigate('/parent-students')}
-                      className="rounded-xl border border-border bg-card p-3.5 text-start shadow-elevation-1 transition-colors hover:border-primary/40 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-primary/20 dark:bg-surface"
+                      className="rounded-xl border border-border bg-card p-3.5 text-start shadow-elevation-1 transition-colors hover:border-jade hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-white/[0.06] dark:bg-surface"
                       aria-label={`عرض تفاصيل ${child.name}`}
                     >
                       <div className="mb-2.5 flex items-center gap-2.5">
@@ -213,7 +212,7 @@ export const ParentAccountPage = () => {
                         <div className="flex-1">
                           <ProgressBar value={pct} variant="attendance" />
                         </div>
-                        <span className="shrink-0 font-dash text-micro font-black tabular-nums text-primary">
+                        <span className="shrink-0 font-dash text-micro font-black tabular-nums text-jade">
                           {pct}%
                         </span>
                       </div>
@@ -226,7 +225,7 @@ export const ParentAccountPage = () => {
                         </span>
                       </div>
                       {(child.totalPoints || 0) > 0 && (
-                        <p className="mt-1.5 flex items-center gap-1 text-micro font-bold text-primary">
+                        <p className="mt-1.5 flex items-center gap-1 text-micro font-bold text-jade">
                           <GraduationCap size={9} /> {child.totalPoints} نقطة
                         </p>
                       )}
@@ -236,8 +235,8 @@ export const ParentAccountPage = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-surface py-10 text-center">
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft">
-                  <Users size={20} className="text-primary" />
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-jade-soft">
+                  <Users size={20} className="text-jade" />
                 </div>
                 <p className="text-xs font-bold text-muted">لا يوجد أبناء مرتبطون بالحساب</p>
                 <p className="mt-1 max-w-xs text-xs leading-relaxed text-muted">

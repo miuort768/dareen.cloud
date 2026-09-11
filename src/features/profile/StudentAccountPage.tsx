@@ -125,7 +125,6 @@ export const StudentAccountPage = () => {
           <AccountHero
             name={displayName}
             roleLabel="طالب"
-            accent="info"
             subtitle={
               [student?.grade, student?.curriculum].filter(Boolean).join(' · ') || undefined
             }
@@ -212,7 +211,7 @@ export const StudentAccountPage = () => {
                       return (
                         <div
                           key={`${en.subject}-${i}`}
-                          className="rounded-xl border border-border bg-surface p-3 shadow-elevation-1 dark:border-primary/20 dark:bg-card"
+                          className="rounded-xl border border-border bg-surface p-3 dark:border-white/[0.06]"
                         >
                           <div className="flex items-center justify-between gap-2">
                             <div className="flex min-w-0 items-center gap-2.5">
@@ -220,7 +219,7 @@ export const StudentAccountPage = () => {
                                 className={
                                   'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ring-1 ' +
                                   {
-                                    primary: 'bg-primary-soft text-primary ring-primary/10',
+                                    primary: 'bg-jade-soft text-jade ring-jade-soft',
                                     success:
                                       'bg-success-soft text-success-strong ring-success-soft',
                                     warning:
@@ -240,7 +239,7 @@ export const StudentAccountPage = () => {
                                 )}
                               </div>
                             </div>
-                            <span className="shrink-0 rounded-full bg-primary-soft px-2 py-0.5 text-micro font-bold tabular-nums text-primary ring-1 ring-primary/10">
+                            <span className="shrink-0 rounded-full bg-jade-soft px-2 py-0.5 text-micro font-bold tabular-nums text-jade ring-1 ring-jade-soft">
                               {used}/{total} حصة
                             </span>
                           </div>
@@ -248,7 +247,7 @@ export const StudentAccountPage = () => {
                             <div className="flex-1">
                               <ProgressBar value={pct} variant="attendance" />
                             </div>
-                            <span className="shrink-0 font-dash text-micro font-black tabular-nums text-primary">
+                            <span className="shrink-0 font-dash text-micro font-black tabular-nums text-jade">
                               {pct}%
                             </span>
                           </div>
@@ -270,7 +269,7 @@ export const StudentAccountPage = () => {
                     {upcoming.map((s) => (
                       <div
                         key={s.id}
-                        className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface p-3 shadow-elevation-1 dark:border-primary/20 dark:bg-card"
+                        className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface p-3 dark:border-white/[0.06]"
                       >
                         <div className="flex min-w-0 items-center gap-2.5">
                           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-info-soft text-info-strong ring-1 ring-info-soft">
