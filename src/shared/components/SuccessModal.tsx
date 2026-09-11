@@ -73,21 +73,21 @@ export const SuccessModal = ({
     >
       <div
         className={cn(
-          'p-4.5 relative overflow-hidden rounded-2xl border border-success-soft bg-card shadow-2xl dark:border-success-soft',
+          'p-4.5 relative overflow-hidden rounded-2xl border border-success-soft bg-card shadow-[0_0_24px_rgb(5_150_105/0.16)]',
           'pointer-events-auto transition-all duration-slow ease-out',
           isExiting
             ? 'translate-y-6 scale-90 opacity-0 blur-sm'
             : 'duration-slow animate-in fade-in slide-in-from-bottom-6',
         )}
       >
-        {/* â”€â”€ Glowing Ambient Background â”€â”€ */}
+        {/* Glowing ambient background */}
         <div className="pointer-events-none absolute -end-12 -top-12 h-24 w-24 rounded-2xl bg-success-soft blur-2xl" />
         <div className="pointer-events-none absolute -bottom-12 -start-12 h-24 w-24 rounded-2xl bg-info-soft blur-2xl" />
 
         <div className="relative z-10 flex items-start gap-3.5">
-          {/* â”€â”€ Glowing Success Icon â”€â”€ */}
+          {/* Glowing success icon */}
           <div className="relative flex-shrink-0">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-success text-on-success">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-success text-on-success ring-4 ring-success-soft">
               <CheckCircle2 size={20} className="stroke-[2.5]" />
             </div>
             <div className="absolute -start-1.5 -top-1.5 flex h-4 w-4 animate-bounce items-center justify-center rounded-2xl bg-warning-soft text-warning">
@@ -95,19 +95,19 @@ export const SuccessModal = ({
             </div>
           </div>
 
-          {/* â”€â”€ Text Content â”€â”€ */}
+          {/* Text content */}
           <div className="min-w-0 flex-1 pt-0.5">
-            <h3 className="font-sans text-xs font-semibold leading-none tracking-tight text-main dark:text-dim">
+            <h3 className="font-sans text-xs font-black leading-none tracking-tight text-main">
               {title}
             </h3>
             <p className="mt-1.5 text-xs font-medium leading-relaxed text-muted">{message}</p>
           </div>
 
-          {/* â”€â”€ Close Button â”€â”€ */}
+          {/* Close button */}
           <button
             onClick={handleClose}
             className={cn(
-              'flex-shrink-0 text-muted hover:text-main dark:hover:text-dim',
+              'flex-shrink-0 text-muted hover:text-main',
               'rounded-2xl bg-background p-1.5 hover:bg-surface dark:bg-surface dark:hover:bg-hover',
               'border border-border outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
             )}
@@ -116,7 +116,7 @@ export const SuccessModal = ({
           </button>
         </div>
 
-        {/* â”€â”€ Smooth Progress Count Down Bar â”€â”€ */}
+        {/* Smooth progress countdown bar */}
         {autoClose && (
           <div className="absolute bottom-0 end-0 start-0 h-[3px] overflow-hidden bg-surface">
             <div

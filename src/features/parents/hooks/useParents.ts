@@ -1,4 +1,4 @@
-﻿import { formatLocalDate } from '../../../lib/utils'
+import { formatLocalDate } from '../../../lib/utils'
 import { useState, useMemo } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { parentsService } from '../services/parentsService'
@@ -291,9 +291,25 @@ export const useParents = () => {
     const linkedStudents = students.filter((s) =>
       parents.some((p) => samePhone(p.phone, s.parentPhone) || (p.id && s.parent?.id === p.id)),
     )
+    let activeParents = 0
+    let overdueParents = 0
+    for (const p of parents) {
+      const linked = students.filter(
+        (s) => samePhone(p.phone, s.parentPhone) || s.parent?.id === p.id,
+      )
+      if (linked.some((s) => (s.enrollments?.length || 0) > 0)) activeParents += 1
+      if (
+        linked.some((s) =>
+          (s.enrollments || []).some((en) => en.sessionsTotal - en.sessionsUsed <= 2),
+        )
+      )
+        overdueParents += 1
+    }
     return {
       totalParents: parents.length,
       totalLinkedStudents: linkedStudents.length,
+      activeParents,
+      overdueParents,
     }
   }, [parents, students])
 

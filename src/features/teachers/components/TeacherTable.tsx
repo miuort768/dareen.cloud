@@ -265,7 +265,7 @@ export const TeacherTable = memo(
         <Table<Teacher>
           data={teachers}
           columns={columns}
-          headerVariant="surface"
+          headerVariant="gradient"
           onRowClick={onSelect}
           selectedId={selectedId}
           getId={(t) => t.id}

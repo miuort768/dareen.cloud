@@ -357,7 +357,7 @@ export const Teachers = () => {
         className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background"
         dir="rtl"
       >
-        <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+        <div className="relative z-10 mx-auto max-w-page space-y-4 pt-0 md:space-y-5 md:pt-2">
           <Skeleton className="h-[104px] rounded-2xl" />
           <Skeleton className="h-[150px] rounded-2xl" />
           <Skeleton className="h-80 rounded-2xl" />
@@ -373,7 +373,7 @@ export const Teachers = () => {
       className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-2"
       dir="rtl"
     >
-      <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+      <div className="relative z-10 mx-auto max-w-page space-y-4 pt-0 md:space-y-5 md:pt-2">
         <TeachersPageHeader
           totalTeachers={teachers.length}
           uniqueSubjects={subjectsList.length}
@@ -481,8 +481,6 @@ export const Teachers = () => {
           successData={successModalData}
           onSuccessClose={() => setSuccessModalData({ ...successModalData, isOpen: false })}
         />
-
-        {/* Teacher Details inline — no overlay drawer */}
       </div>
     </motion.div>
   )

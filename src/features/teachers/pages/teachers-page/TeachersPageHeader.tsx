@@ -86,7 +86,7 @@ export const TeachersPageHeader = ({
                     </span>
                     <span
                       className={cn(
-                        'flex h-7 w-7 items-center justify-center rounded-lg',
+                        'flex h-7 w-7 items-center justify-center rounded-lg ring-1 ring-border',
                         item.tone,
                         item.text,
                       )}
@@ -139,7 +139,7 @@ export const TeachersPageHeader = ({
               >
                 <span
                   className={cn(
-                    'mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-card',
+                    'mb-2 flex h-8 w-8 items-center justify-center rounded-full bg-card ring-1 ring-border',
                     item.text,
                   )}
                 >

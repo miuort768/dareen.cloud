@@ -1,13 +1,4 @@
-import {
-  Search,
-  Plus,
-  X,
-  Upload,
-  Trash2,
-  FileSpreadsheet,
-  FileText,
-  ChevronDown,
-} from 'lucide-react'
+import { Search, Plus, X, Upload, Trash2, FileSpreadsheet, FileText } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 
 interface TeacherToolbarProps {
@@ -28,7 +19,7 @@ interface TeacherToolbarProps {
 }
 
 const selectClass =
-  'h-11 w-full appearance-none rounded-xl border border-border bg-surface ps-3.5 pe-9 text-xs font-bold text-main outline-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10'
+  'h-11 w-full appearance-none border border-border bg-surface ps-3.5 pe-9 text-xs font-bold text-main outline-none transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10'
 
 export const TeacherToolbar = ({
   searchTerm,
@@ -120,10 +111,6 @@ export const TeacherToolbar = ({
               </option>
             ))}
           </select>
-          <ChevronDown
-            size={14}
-            className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-muted"
-          />
         </div>
         <div className="relative">
           <select
@@ -136,10 +123,6 @@ export const TeacherToolbar = ({
             <option value="active">نشطة</option>
             <option value="inactive">متوقفة</option>
           </select>
-          <ChevronDown
-            size={14}
-            className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 text-muted"
-          />
         </div>
       </div>
     </div>

@@ -318,7 +318,7 @@ export const Students = () => {
         className="from-primary-soft/40 relative min-h-full bg-gradient-to-b via-background to-background"
         dir="rtl"
       >
-        <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+        <div className="relative z-10 mx-auto max-w-page space-y-4 pt-0 md:space-y-5 md:pt-2">
           <Skeleton className="h-14 w-full rounded-2xl" />
           <Skeleton className="h-12 w-full rounded-xl" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -338,7 +338,7 @@ export const Students = () => {
       className="from-primary-soft/40 relative min-h-full bg-gradient-to-b via-background to-background pb-2"
       dir="rtl"
     >
-      <div className="relative z-10 mx-auto max-w-page space-y-4 pt-3 md:space-y-5 md:pt-8">
+      <div className="relative z-10 mx-auto max-w-page space-y-4 pt-0 md:space-y-5 md:pt-2">
         {/* Mobile compact header */}
         <div className="md:hidden">
           <MobilePageHeader
@@ -467,7 +467,7 @@ export const Students = () => {
           {isDeletingAll && (
             <div className="flex flex-col gap-4 rounded-2xl border border-error-soft bg-error-soft p-4 md:p-5">
               <div className="flex items-center gap-3">
-                <div className="rounded-xl bg-error-soft p-2 text-error">
+                <div className="rounded-xl bg-error p-2 text-on-error shadow-elevation-1">
                   <ShieldAlert size={18} />
                 </div>
                 <div>
@@ -490,7 +490,7 @@ export const Students = () => {
                     if (e.key === 'Enter') handleDeleteAll()
                   }}
                   placeholder="أدخل كلمة المرور التحذيرية"
-                  className="w-full rounded-xl border border-error-soft bg-surface px-3 py-2 text-xs font-normal text-main outline-none transition-all placeholder:text-muted focus:border-error focus:ring-2 focus:ring-error-soft sm:max-w-xs"
+                  className="w-full rounded-xl border border-error-soft bg-card px-3 py-2 text-xs font-normal text-main outline-none transition-all placeholder:text-muted focus:border-error focus:ring-2 focus:ring-error-soft sm:max-w-xs"
                 />
                 <button
                   onClick={handleDeleteAll}
@@ -565,8 +565,6 @@ export const Students = () => {
           )}
         </motion.div>
       </div>
-
-      {/* Student details now render inline above */}
 
       <SendNotificationModal
         isOpen={!!notifyingStudent}

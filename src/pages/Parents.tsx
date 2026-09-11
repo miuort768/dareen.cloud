@@ -124,6 +124,8 @@ export const Parents = () => {
         <ParentsHeader
           totalParents={state.totalParents}
           totalLinkedStudents={state.totalLinkedStudents}
+          activeParents={state.activeParents}
+          overdueParents={state.overdueParents}
           showAddForm={state.showAddForm}
           searchTerm={state.searchTerm}
           onSearchChange={actions.setSearchTerm}
@@ -211,8 +213,6 @@ export const Parents = () => {
             )}
           </motion.div>
         </div>
-
-        {/* Parent details now render inline above */}
       </div>
 
       <ConfirmModal
