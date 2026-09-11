@@ -41,32 +41,31 @@ interface ForumPostCardProps {
   viewingComments: Record<string, boolean>
 }
 
-const formatDisplayName = (rawName?: string, role?: string) => {
-  if (!rawName)
-    return role === 'parent'
-      ? 'ولي الأمر'
-      : role === 'teacher'
-        ? 'معلمة'
-        : role === 'admin'
-          ? 'إدارة الأكاديمية'
-          : 'طالب'
+const roleLabel = (role?: string) =>
+  role === 'parent'
+    ? 'شريك النجاح'
+    : role === 'teacher'
+      ? 'معلمة'
+      : role === 'admin'
+        ? 'إدارة الأكاديمية'
+        : role === 'student'
+          ? 'طالب'
+          : null
 
-  const trimmed = rawName.trim()
+const formatDisplayName = (rawName?: string, role?: string) => {
+  // الأدمن يظهر بلقب الإدارة دائمًا — إخفاء أي اسم مستخدم مثل "superadmin"
+  if (role === 'admin') return 'إدارة الأكاديمية'
+
+  const trimmed = (rawName ?? '').trim()
+
   if (trimmed.toLowerCase() === 'a.abdullah' || trimmed.toLowerCase() === 'abdullah')
     return 'أ. عبد الله'
 
+  // الأسماء العربية الحقيقية تظهر كما هي
   if (/[\u0600-\u06FF]/.test(trimmed)) return trimmed
 
-  if (role === 'admin') return 'إدارة الأكاديمية'
-
-  if (/^[a-z0-9_\-.]+$/i.test(trimmed)) {
-    if (role === 'parent') return 'ولي الأمر'
-    if (role === 'teacher') return 'معلمة'
-    if (role === 'admin') return 'إدارة الأكاديمية'
-    if (role === 'student') return 'طالب'
-  }
-
-  return trimmed
+  // أي اسم لاتيني (username) أو غائب يُستبدل بلقب الدور
+  return roleLabel(role) ?? (trimmed || 'عضو المنتدى')
 }
 
 export const ForumPostCard = ({

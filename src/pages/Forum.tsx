@@ -20,8 +20,6 @@ const SORT_OPTIONS: { value: SortMode; label: string }[] = [
   { value: 'most_commented', label: 'الأكثر تعليقاً' },
 ]
 
-const COLUMN = 'mx-auto max-w-[700px] px-2.5 sm:px-4'
-
 export const Forum = () => {
   const academyName = useAcademyName()
   useEffect(() => {
@@ -310,17 +308,22 @@ export const Forum = () => {
 
   return (
     <div
-      className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background pb-8 font-sans md:pb-12"
+      className="relative min-h-full overflow-x-hidden bg-background pb-8 font-sans md:pb-12"
       dir="rtl"
     >
-      <div className="relative z-10 pt-1">
+      {/* هيرو عريض — خارج العمود */}
+      <div className="px-3 pt-3 md:px-4 md:pt-4">
         <ForumHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-[700px] space-y-4 px-2.5 pt-4 sm:px-4 md:space-y-5 md:pt-6">
+        {/* بطاقات KPI */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className={cn(COLUMN, 'mb-4 grid grid-cols-2 gap-3 md:grid-cols-4')}>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             {kpiCards.map((kpi, i) => {
               const Icon = kpi.icon
               return (
@@ -347,7 +350,7 @@ export const Forum = () => {
 
         {/* Mobile sort control — the FAB is desktop-only */}
         <div
-          className={cn(COLUMN, 'mb-3 flex items-center gap-2 md:hidden')}
+          className="mb-3 flex items-center gap-2 md:hidden"
           role="group"
           aria-label="ترتيب المنشورات"
         >
@@ -371,10 +374,9 @@ export const Forum = () => {
         {/* Sort indicator banner */}
         {sortMode !== 'latest' && (
           <div
-            className={cn(
-              COLUMN,
-              'mb-3 flex items-center justify-between rounded-xl border border-primary bg-primary p-2.5 text-xs font-bold text-on-primary',
-            )}
+            className={
+              'mb-3 flex items-center justify-between rounded-xl border border-primary bg-primary p-2.5 text-xs font-bold text-on-primary'
+            }
           >
             <span>
               يتم الآن عرض المنشورات بحسب: {SORT_OPTIONS.find((o) => o.value === sortMode)?.label}
@@ -388,7 +390,7 @@ export const Forum = () => {
           </div>
         )}
 
-        <div className={cn(COLUMN, 'space-y-6')} data-create-post>
+        <div className="space-y-6" data-create-post>
           <ForumCreatePost
             newPostContent={newPostContent}
             setNewPostContent={setNewPostContent}

@@ -52,7 +52,15 @@ export const ForumCreatePost = ({
   return (
     <div className="rounded-card bg-card p-5">
       <div className="space-y-3">
-        {/* اختيار نوع المنشور — أيقونات فيكتور */}
+        <textarea
+          aria-label="اكتب منشورك"
+          value={newPostContent}
+          onChange={(e) => setNewPostContent(e.target.value)}
+          className="min-h-[100px] w-full resize-none rounded-card border border-border bg-background p-4 text-sm font-medium leading-relaxed text-main outline-none transition-all placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus"
+          placeholder="شارك فكرة أو سؤال…"
+        />
+
+        {/* اختيار نوع المنشور — تحت حقل الكتابة */}
         <div className="grid grid-cols-4 gap-2">
           {TYPE_OPTIONS.map((opt) => {
             const Icon = opt.icon
@@ -77,13 +85,6 @@ export const ForumCreatePost = ({
           })}
         </div>
 
-        <textarea
-          aria-label="اكتب منشورك"
-          value={newPostContent}
-          onChange={(e) => setNewPostContent(e.target.value)}
-          className="min-h-[100px] w-full resize-none rounded-card border border-border bg-background p-4 text-sm font-medium leading-relaxed text-main outline-none transition-all placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus"
-          placeholder="شارك فكرة أو سؤال…"
-        />
         <div className="flex items-center justify-between">
           <p className="flex items-center gap-1.5 text-micro font-medium text-muted">
             <ShieldCheck size={11} className="text-primary" /> نشر متوافق مع سياسات المنصة
