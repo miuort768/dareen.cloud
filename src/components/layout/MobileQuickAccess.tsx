@@ -1,6 +1,6 @@
 import { NavLink, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { LogOut, CalendarDays, ChevronLeft, Sparkles, X, User } from 'lucide-react'
+import { LogOut, CalendarDays, ChevronLeft, X, User } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { Image } from '../../shared/components/ui'
 import { Button } from '../ui/button'
@@ -29,7 +29,7 @@ interface MobileQuickAccessProps {
 /** Priority page-ids per role — matched against permission-filtered navigation */
 const FEATURED_BY_ROLE: Record<string, string[]> = {
   admin: ['students', 'teachers', 'parents', 'finance'],
-  teacher: ['attendance', 'evaluations', 'schedule'],
+  teacher: ['attendance', 'chat', 'forum', 'teacher_payment_history'],
   parent: ['parent_students', 'parent_announcements', 'chat', 'parent_payment_history'],
   student: ['student_dashboard', 'forum', 'schedule', 'chat'],
 }
@@ -112,10 +112,9 @@ export const MobileQuickAccess = ({
           />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-black text-main">{academyName}</p>
-            <p className="mt-0.5 flex items-center gap-1 text-micro font-bold text-primary">
-              <Sparkles size={11} />
+            <span className="mt-1 inline-flex w-fit items-center rounded-none bg-primary-soft px-2 py-0.5 text-micro font-bold text-primary">
               الوصول السريع
-            </p>
+            </span>
           </div>
           {academicYear && (
             <span className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-bold text-primary">
@@ -126,7 +125,7 @@ export const MobileQuickAccess = ({
           <button
             onClick={onCloseMenu}
             aria-label="إغلاق القائمة"
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-error-soft bg-error-soft text-error shadow-elevation-1 outline-none transition-all duration-normal hover:bg-error hover:text-on-error hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-error bg-error text-on-error shadow-elevation-1 outline-none transition-all duration-normal hover:border-error-hover hover:bg-error-hover hover:shadow-elevation-2 focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <X size={18} strokeWidth={2.2} />
           </button>
