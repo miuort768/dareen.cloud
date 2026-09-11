@@ -255,25 +255,25 @@ export const Forum = () => {
         label: 'إجمالي المنشورات',
         value: posts.length,
         icon: MessageSquare,
-        iconBg: 'bg-primary/10 text-primary',
+        iconBg: 'bg-primary text-on-primary',
       },
       {
         label: 'إجمالي الإعجابات',
         value: totalUpvotes,
         icon: ThumbsUp,
-        iconBg: 'bg-success-soft text-success',
+        iconBg: 'bg-success text-on-success',
       },
       {
         label: 'التعليقات',
         value: totalComments,
         icon: MessageCircle,
-        iconBg: 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary',
+        iconBg: 'bg-warning text-on-warning',
       },
       {
         label: 'المشاركون',
         value: totalParticipants,
         icon: Users,
-        iconBg: 'bg-info-soft text-info',
+        iconBg: 'bg-info text-on-info',
       },
     ],
     [posts, totalUpvotes, totalComments, totalParticipants],
@@ -314,11 +314,7 @@ export const Forum = () => {
       dir="rtl"
     >
       <div className="relative z-10 pt-1">
-        <ForumHeader
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          participants={totalParticipants}
-        />
+        <ForumHeader searchTerm={searchTerm} onSearchChange={setSearchTerm} />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -377,7 +373,7 @@ export const Forum = () => {
           <div
             className={cn(
               COLUMN,
-              'mb-3 flex items-center justify-between rounded-xl border border-primary/30 bg-primary/10 p-2.5 text-xs font-bold text-primary',
+              'mb-3 flex items-center justify-between rounded-xl border border-primary bg-primary p-2.5 text-xs font-bold text-on-primary',
             )}
           >
             <span>
@@ -385,7 +381,7 @@ export const Forum = () => {
             </span>
             <button
               onClick={() => setSortMode('latest')}
-              className="rounded-lg bg-primary px-2.5 py-1 text-micro text-on-primary outline-none transition-colors duration-fast hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
+              className="rounded-lg bg-primary-active px-2.5 py-1 text-micro text-on-primary outline-none transition-colors duration-fast hover:brightness-110 focus-visible:ring-2 focus-visible:ring-focus"
             >
               إعادة تعيين الفرز
             </button>
@@ -444,7 +440,7 @@ export const Forum = () => {
                         : currentUser?.role === 'teacher'
                           ? 'معلمة'
                           : currentUser?.role === 'admin'
-                            ? 'إدارة المنصة'
+                            ? 'إدارة الأكاديمية'
                             : currentUser?.username || 'عضو المنتدى')
                     }
                     showMenuPostId={showMenuPostId}

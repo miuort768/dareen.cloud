@@ -48,7 +48,7 @@ const formatDisplayName = (rawName?: string, role?: string) => {
       : role === 'teacher'
         ? 'معلمة'
         : role === 'admin'
-          ? 'إدارة المنصة'
+          ? 'إدارة الأكاديمية'
           : 'طالب'
 
   const trimmed = rawName.trim()
@@ -57,10 +57,12 @@ const formatDisplayName = (rawName?: string, role?: string) => {
 
   if (/[\u0600-\u06FF]/.test(trimmed)) return trimmed
 
+  if (role === 'admin') return 'إدارة الأكاديمية'
+
   if (/^[a-z0-9_\-.]+$/i.test(trimmed)) {
     if (role === 'parent') return 'ولي الأمر'
     if (role === 'teacher') return 'معلمة'
-    if (role === 'admin') return 'إدارة المنصة'
+    if (role === 'admin') return 'إدارة الأكاديمية'
     if (role === 'student') return 'طالب'
   }
 
@@ -165,22 +167,22 @@ export const ForumPostCard = ({
                 {typeMeta.label}
               </span>
               {post.authorRole === 'admin' && (
-                <span className="rounded-card border border-error bg-error-light px-2 py-0.5 text-micro font-bold text-error">
+                <span className="rounded-card border border-error bg-error px-2 py-0.5 text-micro font-bold text-on-error">
                   إدارة
                 </span>
               )}
               {post.authorRole === 'teacher' && (
-                <span className="rounded-card border border-success bg-success-light px-2 py-0.5 text-micro font-bold text-success">
+                <span className="rounded-card border border-success bg-success px-2 py-0.5 text-micro font-bold text-on-success">
                   معلمة
                 </span>
               )}
               {post.authorRole === 'student' && (
-                <span className="rounded-card border border-info bg-info-light px-2 py-0.5 text-micro font-bold text-info">
+                <span className="rounded-card border border-info bg-info px-2 py-0.5 text-micro font-bold text-on-info">
                   طالب
                 </span>
               )}
               {(post.authorRole === 'parent' || (post.authorRole as string) === 'ولي أمر') && (
-                <span className="rounded-card border border-primary bg-primary-soft px-2 py-0.5 text-micro font-bold text-primary">
+                <span className="rounded-card border border-primary bg-primary px-2 py-0.5 text-micro font-bold text-on-primary">
                   شريك النجاح
                 </span>
               )}
@@ -301,9 +303,7 @@ export const ForumPostCard = ({
           onClick={() => onVote(post.id, 'upvote')}
           className={cn(
             'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold outline-none transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
-            isLiked
-              ? 'bg-primary-soft text-primary'
-              : 'text-muted hover:bg-surface hover:text-muted',
+            isLiked ? 'bg-primary text-on-primary' : 'text-muted hover:bg-surface hover:text-muted',
           )}
         >
           <ThumbsUp size={15} className={cn(isLiked && 'fill-current')} />
@@ -345,23 +345,23 @@ export const ForumPostCard = ({
                         <div className="mb-1 flex items-center gap-2">
                           <h5 className="text-xs font-bold text-main">{commentAuthorName}</h5>
                           {node.comment.authorRole === 'admin' && (
-                            <span className="rounded-card bg-error-light px-1.5 py-0.5 text-micro font-bold text-error">
+                            <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-bold text-on-error">
                               إدارة
                             </span>
                           )}
                           {node.comment.authorRole === 'teacher' && (
-                            <span className="rounded-card bg-success-light px-1.5 py-0.5 text-micro font-bold text-success">
+                            <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-bold text-on-success">
                               معلمة
                             </span>
                           )}
                           {node.comment.authorRole === 'student' && (
-                            <span className="rounded-card bg-info-light px-1.5 py-0.5 text-micro font-bold text-info">
+                            <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-bold text-on-info">
                               طالب
                             </span>
                           )}
                           {(node.comment.authorRole === 'parent' ||
                             (node.comment.authorRole as string) === 'ولي أمر') && (
-                            <span className="rounded-card bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
+                            <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-bold text-on-primary">
                               شريك النجاح
                             </span>
                           )}
@@ -473,23 +473,23 @@ export const ForumPostCard = ({
                                 <div className="mb-0.5 flex items-center gap-2">
                                   <h5 className="text-xs font-bold text-main">{replyAuthorName}</h5>
                                   {replyNode.comment.authorRole === 'admin' && (
-                                    <span className="rounded-card bg-error-light px-1.5 py-0.5 text-micro font-bold text-error">
+                                    <span className="rounded-card bg-error px-1.5 py-0.5 text-micro font-bold text-on-error">
                                       إدارة
                                     </span>
                                   )}
                                   {replyNode.comment.authorRole === 'teacher' && (
-                                    <span className="rounded-card bg-success-light px-1.5 py-0.5 text-micro font-bold text-success">
+                                    <span className="rounded-card bg-success px-1.5 py-0.5 text-micro font-bold text-on-success">
                                       معلمة
                                     </span>
                                   )}
                                   {replyNode.comment.authorRole === 'student' && (
-                                    <span className="rounded-card bg-info-light px-1.5 py-0.5 text-micro font-bold text-info">
+                                    <span className="rounded-card bg-info px-1.5 py-0.5 text-micro font-bold text-on-info">
                                       طالب
                                     </span>
                                   )}
                                   {(replyNode.comment.authorRole === 'parent' ||
                                     (replyNode.comment.authorRole as string) === 'ولي أمر') && (
-                                    <span className="rounded-card bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
+                                    <span className="rounded-card bg-primary px-1.5 py-0.5 text-micro font-bold text-on-primary">
                                       شريك النجاح
                                     </span>
                                   )}
@@ -622,8 +622,8 @@ export const ForumPostCard = ({
       )}
 
       {isAdmin && post.status === 'pending' && (
-        <div className="flex items-center justify-between rounded-card border-t border-warning bg-warning-light p-3.5">
-          <div className="flex items-center gap-2 text-warning">
+        <div className="flex items-center justify-between rounded-card border-t border-warning bg-warning p-3.5">
+          <div className="flex items-center gap-2 text-on-warning">
             <AlertTriangle size={13} />
             <span className="text-micro font-bold">هذا المنشور ينتظر الموافقة</span>
           </div>

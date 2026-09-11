@@ -16,7 +16,7 @@ export const ForumHelpBanner = () => {
       case 'parent':
         return {
           roleTitle: 'شريك النجاح (ولي الأمر)',
-          badgeClass: 'bg-primary/10 text-primary border-primary/30',
+          badgeClass: 'bg-primary text-on-primary border-primary',
           icon: Heart,
           rules: [
             'متابعة الاستفسارات الخاصة بالتحصيل الأكاديمي للأبناء بأسلوب راقٍ ومباشر.',
@@ -28,7 +28,7 @@ export const ForumHelpBanner = () => {
       case 'teacher':
         return {
           roleTitle: 'المعلمة',
-          badgeClass: 'bg-success-soft text-success border-success-soft',
+          badgeClass: 'bg-success text-on-success border-success',
           icon: ShieldCheck,
           rules: [
             'توجيه ونصح الطلاب برفق وإيجابية وتحفيزهم على التفاعل والمشاركة.',
@@ -40,7 +40,7 @@ export const ForumHelpBanner = () => {
       case 'admin':
         return {
           roleTitle: 'مدير النظام',
-          badgeClass: 'bg-error-soft text-error border-error-soft',
+          badgeClass: 'bg-error text-on-error border-error',
           icon: Sparkles,
           rules: [
             'الإشراف العام على جودة المحتوى والمناقشات في المنتدى.',
@@ -52,7 +52,7 @@ export const ForumHelpBanner = () => {
       default: // student
         return {
           roleTitle: 'الطالب / الطالبة',
-          badgeClass: 'bg-info-soft text-info border-info-soft',
+          badgeClass: 'bg-info text-on-info border-info',
           icon: GraduationCap,
           rules: [
             'الالتزام بالأدب والاحترام في التعامل مع المعلمات والزملاء.',
@@ -71,7 +71,7 @@ export const ForumHelpBanner = () => {
     <div className="mx-auto mb-6 mt-6 max-w-[700px] px-4">
       <div className="flex flex-col items-center justify-between gap-4 rounded-card border border-border bg-card p-4 sm:flex-row sm:p-5">
         <div className="flex w-full items-start gap-3.5 text-start sm:w-auto sm:items-center">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-card bg-primary-soft text-primary sm:h-11 sm:w-11">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-card bg-primary text-on-primary sm:h-11 sm:w-11">
             <Scale size={20} />
           </div>
           <div className="min-w-0 flex-1">
@@ -144,7 +144,7 @@ export const ForumHelpBanner = () => {
                       key={index}
                       className="flex items-start gap-3 rounded-card border border-border bg-surface p-3"
                     >
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-card bg-primary-soft text-xs font-bold text-primary">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-card bg-primary text-xs font-bold text-on-primary">
                         {index + 1}
                       </span>
                       <span className="text-xs font-semibold leading-relaxed text-main">

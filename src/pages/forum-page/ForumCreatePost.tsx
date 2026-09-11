@@ -20,25 +20,25 @@ const TYPE_OPTIONS: {
     value: 'question',
     label: 'سؤال',
     icon: HelpCircle,
-    tone: 'text-info border-info-soft bg-info-soft',
+    tone: 'bg-info text-on-info border-info',
   },
   {
     value: 'discussion',
     label: 'مناقشة',
     icon: MessageSquare,
-    tone: 'text-primary border-primary/30 bg-primary-soft',
+    tone: 'bg-primary text-on-primary border-primary',
   },
   {
     value: 'tip',
     label: 'نصيحة',
     icon: Lightbulb,
-    tone: 'text-success border-success-soft bg-success-soft',
+    tone: 'bg-success text-on-success border-success',
   },
   {
     value: 'announcement',
     label: 'إعلان',
     icon: Megaphone,
-    tone: 'text-warning border-warning-soft bg-warning-soft',
+    tone: 'bg-warning text-on-warning border-warning',
   },
 ]
 
@@ -65,7 +65,9 @@ export const ForumCreatePost = ({
                 aria-pressed={active}
                 className={cn(
                   'flex min-h-11 flex-col items-center justify-center gap-1 rounded-xl border px-1 py-2 text-[10px] font-bold outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
-                  active ? opt.tone : 'border-border bg-surface text-muted hover:bg-hover',
+                  active
+                    ? cn(opt.tone, 'shadow-elevation-1 hover:brightness-110')
+                    : 'border-border bg-surface text-muted hover:bg-hover',
                 )}
               >
                 <Icon size={15} strokeWidth={2} />
