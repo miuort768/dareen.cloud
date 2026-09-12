@@ -1,5 +1,6 @@
-import { X, ArrowRight, User, ShieldCheck, BookOpen } from 'lucide-react'
+import { X, ArrowRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { AppointmentDetailBody } from '../../features/appointments/components/AppointmentDetailBody'
 import type { AppointmentEvent } from '../../features/appointments/types'
 
 interface AppointmentDetailPanelProps {
@@ -27,11 +28,6 @@ export const AppointmentDetailPanel = ({
             <h3 className="text-base font-bold">{appointment.day}</h3>
           </div>
           <div className="flex items-center gap-2">
-            <div className="rounded-2xl bg-white/15 px-3 py-1 text-center">
-              <p className="text-lg font-bold tabular-nums leading-none text-on-error">
-                {appointment.time}
-              </p>
-            </div>
             <button
               onClick={onClose}
               aria-label="إغلاق"
@@ -42,31 +38,7 @@ export const AppointmentDetailPanel = ({
           </div>
         </div>
         <div className="space-y-3 p-4">
-          <div className="flex items-center justify-between rounded-none border-e-[3px] border-e-primary bg-primary-soft p-3">
-            <div>
-              <label className="mb-0.5 block text-micro font-bold text-muted">الطالب</label>
-              <h4 className="text-sm font-bold text-main">{appointment.studentName}</h4>
-              <span className="text-micro font-bold text-primary">{appointment.studentGrade}</span>
-            </div>
-            <User size={18} className="text-muted" />
-          </div>
-          <div className="flex items-center justify-between rounded-none border-e-[3px] border-e-success bg-success-soft p-3">
-            <div>
-              <label className="mb-0.5 block text-micro font-bold text-muted">المعلمة</label>
-              <h4 className="text-sm font-bold text-main">{appointment.teacherName}</h4>
-            </div>
-            <ShieldCheck size={18} className="text-muted" />
-          </div>
-          <div className="flex items-center justify-between rounded-none border-e-[3px] border-e-warning bg-warning-soft p-3 dark:border-e-primary dark:bg-primary-soft">
-            <div>
-              <label className="mb-0.5 block text-micro font-bold text-muted">المادة</label>
-              <h4 className="text-sm font-bold text-main">{appointment.subject}</h4>
-              <span className="mt-1 inline-block rounded-2xl bg-surface px-1.5 py-0.5 text-micro font-bold text-warning dark:text-primary">
-                {appointment.curriculum}
-              </span>
-            </div>
-            <BookOpen size={18} className="text-muted" />
-          </div>
+          <AppointmentDetailBody appointment={appointment} />
           <button
             onClick={onClose}
             className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3 text-xs font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
