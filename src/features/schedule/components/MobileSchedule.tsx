@@ -17,6 +17,7 @@ import { api } from '../../../lib/api'
 import { triggerHaptic } from '../../../lib/haptics'
 import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile'
 import { normalizeDayName, to24Minutes } from '../../attendance/utils/slotUtils'
+import { appointmentTeacherKeyOf } from '../../appointments/types'
 
 interface TeacherRef {
   id?: string | number
@@ -138,7 +139,7 @@ export const MobileSchedule = () => {
             const hourMatch = /(\d{1,2})/.exec(String(slot.hour ?? ''))
             const hourNum = hourMatch?.[1] ?? ''
             return {
-              id: `${student.id}-${teacherNameOf(enrollment)}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
+              id: `${student.id}-${appointmentTeacherKeyOf(enrollment)}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
               studentId: student.id,
               studentName: student.name,
               studentGrade: student.grade,

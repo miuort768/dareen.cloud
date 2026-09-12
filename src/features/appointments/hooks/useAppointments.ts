@@ -3,7 +3,12 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCurrentUser, useShowNotification } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { normalizeDayName } from '../../attendance/utils/slotUtils'
-import { appointmentTeacherNameOf, type AppointmentEvent, type Student } from '../types'
+import {
+  appointmentTeacherNameOf,
+  appointmentTeacherKeyOf,
+  type AppointmentEvent,
+  type Student,
+} from '../types'
 
 /**
  * جلب الطلاب حسب الدور:
@@ -105,7 +110,7 @@ export const buildAppointmentEvents = (
           const normHour = String(parseInt(String(slot.hour).trim(), 10) || 0)
           const tName = appointmentTeacherNameOf(enrollment)
           return {
-            id: `${student.id}-${tName}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
+            id: `${student.id}-${appointmentTeacherKeyOf(enrollment)}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
             studentName: student.name,
             studentGrade: student.grade,
             teacherName: tName,

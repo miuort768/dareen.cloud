@@ -18,6 +18,7 @@ import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page'
 import { cn } from '../../../lib/utils'
 import { to24Minutes, normalizeDayName } from '../../attendance/utils/slotUtils'
 import { useCompletedSessions } from '../../appointments/hooks/useAppointments'
+import { appointmentTeacherKeyOf } from '../../appointments/types'
 
 interface Student {
   id: string
@@ -163,7 +164,7 @@ export const Schedule = () => {
             const hourMatch = /(\d{1,2})/.exec(String(slot.hour ?? ''))
             const hourNum = hourMatch?.[1] ?? ''
             return {
-              id: `${sId}-${tName}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
+              id: `${sId}-${appointmentTeacherKeyOf(enrollment)}-${normalizeDayName(slot.day)}-${slot.hour}-${slot.period}`,
               studentId: sId,
               studentName: student.name,
               studentGrade: student.grade,

@@ -40,6 +40,21 @@ export const appointmentTeacherNameOf = (enrollment: {
   return ''
 }
 
+/**
+ * مفتاح معرّف ثابت للمعلمة في معرّف الحدث — يعتمد على teacherId (الثابت عبر كل
+ * النقاط: المعلمة/المشرف/الطالب/ولي الأمر) بدل الاسم النصي الذي يُحلّ بشكل
+ * مختلف في /students و/student-portal/me (العمود الخام) مقابل /parents/my-children
+ * (relation.name). التابع للاسم فقط عند غياب teacherId.
+ */
+export const appointmentTeacherKeyOf = (enrollment: {
+  teacher: unknown
+  teacherId?: string | number
+}): string => {
+  const id = enrollment.teacherId
+  if (id !== undefined && id !== null && String(id).trim() !== '') return String(id)
+  return appointmentTeacherNameOf(enrollment)
+}
+
 /** فرز زمني: الساعة + إزاحة مساءً (12h → ترتيب صحيح) */
 export const appointmentTimeSort = (a: AppointmentEvent, b: AppointmentEvent): number => {
   const toMinutes = (e: AppointmentEvent) => {
