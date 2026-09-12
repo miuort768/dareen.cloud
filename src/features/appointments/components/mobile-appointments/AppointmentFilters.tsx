@@ -1,6 +1,6 @@
 import { Search, X } from 'lucide-react'
 import { cn } from '../../../../lib/utils'
-import { WeekDayStrip } from './WeekDayStrip'
+import { DayDropdown } from './DayDropdown'
 
 interface AppointmentFiltersProps {
   searchTerm: string
@@ -50,8 +50,8 @@ export const AppointmentFilters = ({
       />
     </div>
 
-    {/* شريط الأيام */}
-    <WeekDayStrip
+    {/* قائمة الأيام المنسدلة */}
+    <DayDropdown
       selectedDay={filterDay}
       onSelectDay={onDayChange}
       todayName={todayName}
