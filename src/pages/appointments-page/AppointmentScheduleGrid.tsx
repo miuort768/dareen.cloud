@@ -91,12 +91,14 @@ export const AppointmentScheduleGrid = ({
                 'flex items-center justify-between border-b px-4 py-2.5',
                 isToday
                   ? 'border-primary bg-gradient-to-l from-primary to-primary-deep'
-                  : 'border-info-soft bg-info-soft',
+                  : 'border-info bg-info',
               )}
             >
               <div className="flex items-center gap-2">
-                <Calendar size={13} className={isToday ? 'text-on-primary' : 'text-info'} />
-                <h3 className={cn('text-xs font-bold', isToday ? 'text-on-primary' : 'text-info')}>
+                <Calendar size={13} className={isToday ? 'text-on-primary' : 'text-on-info'} />
+                <h3
+                  className={cn('text-xs font-bold', isToday ? 'text-on-primary' : 'text-on-info')}
+                >
                   {day}
                 </h3>
                 {isToday && (
@@ -111,7 +113,7 @@ export const AppointmentScheduleGrid = ({
                   isToday
                     ? 'bg-white/15 text-on-primary'
                     : appointments.length > 0
-                      ? 'bg-info text-on-info'
+                      ? 'bg-white/25 text-on-info'
                       : 'bg-border text-muted',
                 )}
               >

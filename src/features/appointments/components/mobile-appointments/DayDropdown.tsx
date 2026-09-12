@@ -93,7 +93,7 @@ export const DayDropdown = ({
                   <span
                     className={cn(
                       'rounded-full px-1.5 py-0.5 text-micro font-black tabular-nums leading-none',
-                      count > 0 ? 'bg-info-soft text-info' : 'bg-surface text-muted',
+                      count > 0 ? 'bg-info text-on-info' : 'bg-surface text-muted',
                     )}
                   >
                     {count}
