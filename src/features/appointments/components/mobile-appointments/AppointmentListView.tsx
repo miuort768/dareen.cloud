@@ -61,7 +61,7 @@ export const AppointmentListView = ({
                       'rounded-2xl px-2 py-1 text-micro font-bold',
                       isToday
                         ? 'bg-primary text-on-primary shadow-elevation-1'
-                        : 'bg-surface text-main',
+                        : 'bg-info text-on-info',
                     )}
                   >
                     {day}
@@ -132,7 +132,7 @@ export const AppointmentListView = ({
 
                         {/* المحتوى */}
                         <div className="min-w-0 flex-1 py-0.5">
-                          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
+                          <div className="flex items-center gap-1.5">
                             <p
                               className={cn(
                                 'truncate text-base font-black text-main',
@@ -146,6 +146,8 @@ export const AppointmentListView = ({
                                 {app.studentGrade}
                               </span>
                             )}
+                          </div>
+                          <div className="mt-1 flex flex-wrap items-center gap-1.5">
                             <span className="inline-flex max-w-full items-center gap-1 rounded-md bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
                               <BookOpen size={10} className="shrink-0" strokeWidth={1.7} />
                               <span className="truncate">{app.subject}</span>
