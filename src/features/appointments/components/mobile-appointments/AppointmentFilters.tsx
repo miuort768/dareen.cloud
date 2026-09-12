@@ -1,6 +1,6 @@
 import { Search, X } from 'lucide-react'
 import { cn } from '../../../../lib/utils'
-import { DayDropdown } from './DayDropdown'
+import { DayDropdown } from '../../../../shared/components/mobile'
 
 interface AppointmentFiltersProps {
   searchTerm: string

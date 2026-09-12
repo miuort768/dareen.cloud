@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { CalendarDays, Check, ChevronDown } from 'lucide-react'
-import { cn } from '../../../../lib/utils'
-import { DAYS_OF_WEEK } from '../../types'
+import { cn } from '../../../lib/utils'
+
+const DAYS_OF_WEEK = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
 
 interface DayDropdownProps {
   selectedDay: string
@@ -10,7 +11,7 @@ interface DayDropdownProps {
   dayCounts: Record<string, number>
 }
 
-/** قائمة منسدلة مخصصة لأيام الأسبوع — مطابقة للثيم وتتجنب مشكلة صندوقُة المتصفح بالأبيض/الأسود */
+/** قائمة منسدلة مخصصة لأيام الأسبوع — مطابقة للثيم وتتجنب مشكلة صندوق المتصفح بالأبيض/الأسود */
 export const DayDropdown = ({
   selectedDay,
   onSelectDay,

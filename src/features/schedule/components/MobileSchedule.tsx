@@ -15,7 +15,12 @@ import {
 import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { triggerHaptic } from '../../../lib/haptics'
-import { MobilePage, usePullToRefresh, MobileSkeleton } from '../../../shared/components/mobile'
+import {
+  MobilePage,
+  usePullToRefresh,
+  MobileSkeleton,
+  DayDropdown,
+} from '../../../shared/components/mobile'
 import { normalizeDayName, to24Minutes } from '../../attendance/utils/slotUtils'
 import { appointmentTeacherKeyOf } from '../../appointments/types'
 
@@ -54,8 +59,6 @@ interface ScheduleEvent {
   period: string
   time: string
 }
-
-const DAYS = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
 
 const TEACHER_PALETTE = [
   { text: 'text-primary', soft: 'bg-primary-soft', bar: 'border-e-primary', chip: 'bg-primary' },
@@ -175,7 +178,7 @@ export const MobileSchedule = () => {
   const dayEvents = useMemo(() => {
     const q = searchTerm.trim().toLowerCase()
     return allEvents
-      .filter((e) => e.day === selectedDay)
+      .filter((e) => selectedDay === 'all' || e.day === selectedDay)
       .filter(
         (e) =>
           !q ||
@@ -231,50 +234,60 @@ export const MobileSchedule = () => {
 
         {/* ===== HEADER ===== */}
         <div className="px-3 pt-2">
-          <div className="rounded-2xl border border-border bg-card p-4">
-            <div className="flex items-start justify-between gap-3">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-elevation-2">
+            <div className="pointer-events-none absolute -end-16 -top-20 h-52 w-52 rounded-full bg-white/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-20 -start-16 h-44 w-44 rounded-full bg-black/10 blur-3xl" />
+
+            <div className="relative flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="flex items-center gap-1.5 text-micro font-bold text-muted">
+                <p className="flex items-center gap-1.5 text-micro font-bold text-white/80">
                   <CalendarDays size={12} />
                   اليوم · {todayName}
                 </p>
-                <h1 className="mt-1 text-2xl font-black tracking-tight text-main">جدول الحصص</h1>
+                <h1 className="mt-1 text-2xl font-black tracking-tight text-on-primary">
+                  جدول الحصص
+                </h1>
               </div>
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15 text-on-primary shadow-elevation-3 backdrop-blur-sm">
                 <CalendarDays size={20} />
               </div>
             </div>
 
             {/* Stats strip */}
-            <div className="mt-3 grid grid-cols-3 divide-x divide-x-reverse divide-divider rounded-xl bg-surface py-2.5">
+            <div className="relative mt-3 grid grid-cols-3 divide-x divide-x-reverse divide-white/20 rounded-xl bg-white/10 py-2.5 backdrop-blur-sm">
               {[
                 { value: countsByDay[todayName] || 0, label: 'حصة اليوم' },
                 { value: allEvents.length, label: 'هذا الأسبوع' },
                 { value: uniqueTeachers.length, label: 'معلمة' },
               ].map((s) => (
                 <div key={s.label} className="flex flex-col items-center px-1 text-center">
-                  <span className="text-base font-black tabular-nums text-main">{s.value}</span>
-                  <span className="mt-0.5 text-micro font-medium text-muted">{s.label}</span>
+                  <span className="text-base font-black tabular-nums text-on-primary">
+                    {s.value}
+                  </span>
+                  <span className="mt-0.5 text-micro font-medium text-white/90">{s.label}</span>
                 </div>
               ))}
             </div>
 
             {/* Search */}
             <div className="relative mt-3">
-              <Search size={14} className="absolute start-3 top-1/2 -translate-y-1/2 text-muted" />
+              <Search
+                size={14}
+                className="absolute start-3 top-1/2 -translate-y-1/2 text-white/60"
+              />
               <input
                 type="text"
                 aria-label="بحث في الجدول"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="ابحث عن طالب أو معلمة أو مادة..."
-                className="w-full rounded-xl border border-border bg-background py-2.5 pe-9 ps-9 text-xs font-bold text-main outline-none transition-colors duration-fast placeholder:font-medium placeholder:text-muted focus:border-primary focus:ring-2 focus:ring-primary/10"
+                className="w-full rounded-xl border border-white/20 bg-white/15 py-2.5 pe-9 ps-9 text-xs font-bold text-on-primary shadow-elevation-1 outline-none transition-colors duration-fast placeholder:font-medium placeholder:text-white/70 focus:border-white/60 focus:bg-white/20 focus:ring-2 focus:ring-white/25"
               />
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
                   aria-label="مسح البحث"
-                  className="absolute end-2.5 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-md text-muted outline-none transition-colors duration-fast hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
+                  className="absolute end-2.5 top-1/2 flex h-5 w-5 -translate-y-1/2 items-center justify-center rounded-md text-white/70 outline-none transition-colors duration-fast hover:text-on-primary focus-visible:ring-2 focus-visible:ring-white/50"
                 >
                   <X size={13} />
                 </button>
@@ -283,53 +296,14 @@ export const MobileSchedule = () => {
           </div>
         </div>
 
-        {/* ===== DAY CHIPS ===== */}
-        <div className="custom-scrollbar overflow-x-auto px-3 pb-1 pt-3" dir="ltr">
-          <div className="flex min-w-max gap-1.5" dir="rtl">
-            {DAYS.map((day) => {
-              const isActive = day === selectedDay
-              const isToday = day === todayName
-              const count = countsByDay[day] || 0
-              return (
-                <motion.button
-                  key={day}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    triggerHaptic('light')
-                    setSelectedDay(day)
-                  }}
-                  aria-pressed={isActive}
-                  className={`flex min-w-[68px] flex-col items-center gap-0.5 rounded-xl border px-3 py-1.5 transition-colors duration-fast ${
-                    isActive
-                      ? 'border-primary bg-primary'
-                      : 'border-border bg-card hover:border-primary/30'
-                  }`}
-                >
-                  <span
-                    className={`flex items-center gap-1 text-xs font-bold ${
-                      isActive ? 'text-on-primary' : 'text-main'
-                    }`}
-                  >
-                    {day}
-                    {isToday && (
-                      <span
-                        className={`inline-block h-1.5 w-1.5 rounded-full ${
-                          isActive ? 'bg-white' : 'bg-primary'
-                        }`}
-                      />
-                    )}
-                  </span>
-                  <span
-                    className={`text-micro font-bold tabular-nums ${
-                      isActive ? 'text-on-primary/75' : 'text-muted'
-                    }`}
-                  >
-                    {count} حصة
-                  </span>
-                </motion.button>
-              )
-            })}
-          </div>
+        {/* ===== DAY FILTER ===== */}
+        <div className="px-3 pb-1 pt-3">
+          <DayDropdown
+            selectedDay={selectedDay}
+            onSelectDay={setSelectedDay}
+            todayName={todayName}
+            dayCounts={countsByDay}
+          />
         </div>
 
         {/* ===== NEXT SESSION BANNER ===== */}
@@ -364,7 +338,9 @@ export const MobileSchedule = () => {
           ) : dayEvents.length > 0 ? (
             <div className="space-y-2">
               <div className="mb-2 flex items-center justify-between px-1">
-                <span className="text-micro font-bold text-muted">حصص {selectedDay}</span>
+                <span className="text-micro font-bold text-muted">
+                  {selectedDay === 'all' ? 'كل الحصص' : `حصص ${selectedDay}`}
+                </span>
                 <span className="rounded-lg bg-surface px-2 py-0.5 text-micro font-bold tabular-nums text-muted">
                   {dayEvents.length}
                 </span>
@@ -379,7 +355,7 @@ export const MobileSchedule = () => {
                     transition={{ delay: Math.min(idx * 0.04, 0.4), duration: 0.25 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={openInAppointments}
-                    className={`cursor-pointer overflow-hidden rounded-xl border border-e-[3px] border-border bg-card transition-colors duration-fast hover:border-border ${ts.bar}`}
+                    className={`cursor-pointer overflow-hidden rounded-none border border-e-[3px] border-border bg-card transition-colors duration-fast hover:border-border ${ts.bar}`}
                   >
                     <div className="flex items-center gap-3 p-3">
                       {/* Time gutter */}
@@ -445,7 +421,7 @@ export const MobileSchedule = () => {
                 {searchTerm ? 'لا توجد نتائج مطابقة' : 'لا توجد حصص في هذا اليوم'}
               </p>
               <p className="mt-1 text-xs font-medium text-muted">
-                {searchTerm ? 'جرّب كلمة بحث أخرى' : 'اختر يوماً آخر من الأيام أعلاه'}
+                {searchTerm ? 'جرّب كلمة بحث أخرى' : 'اختر يوماً آخر من القائمة'}
               </p>
             </motion.div>
           )}
