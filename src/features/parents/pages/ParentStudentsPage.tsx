@@ -1,4 +1,4 @@
-﻿import { formatLocalDate } from '../../../lib/utils'
+import { formatLocalDate } from '../../../lib/utils'
 import { useState, useEffect } from 'react'
 import { Users } from 'lucide-react'
 import { motion } from 'framer-motion'
@@ -11,6 +11,7 @@ import { AttendanceModal } from '../components/AttendanceModal'
 
 interface ParentEnrollment {
   teacherName?: string
+  teacherFallback?: string
   sessionsTotal?: number
   sessionsUsed?: number
   subject?: string
@@ -185,7 +186,10 @@ export const ParentStudents = () => {
         viewingStudent={viewingStudent}
         onClose={() => setViewingStudent(null)}
         viewingSubject={viewingSubject}
-        onSelectSubject={setViewingSubject}
+        onSelectSubject={(en) => {
+          setViewingSubject(en)
+          setSessionsPage(1)
+        }}
         sessionsPage={sessionsPage}
         onPageChange={setSessionsPage}
         childSessions={childSessions}

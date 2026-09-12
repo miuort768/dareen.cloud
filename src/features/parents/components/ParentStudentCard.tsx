@@ -3,9 +3,11 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
 import { GamificationCard } from '../../students/components/GamificationCard'
 import { ProgressBar } from '../../../shared/components/ui'
+import { parentEnrollmentTeacherName } from '../utils/parentEnrollments'
 
 interface ParentEnrollment {
   teacherName?: string
+  teacherFallback?: string
   sessionsTotal?: number
   sessionsUsed?: number
   subject?: string
@@ -51,6 +53,7 @@ export const ParentStudentCard = ({
 }: ParentStudentCardProps) => {
   const enrollments = (student.enrollments || []) as {
     teacherName: string
+    teacherFallback?: string
     sessionsTotal?: number
     sessionsUsed?: number
     subject?: string
@@ -136,6 +139,7 @@ export const ParentStudentCard = ({
           {enrollments.map((en, idx: number) => {
             const sessionsTotal = Number(en.sessionsTotal || 0)
             const sessionsUsed = Number(en.sessionsUsed || 0)
+            const enTeacher = parentEnrollmentTeacherName(en)
             return (
               <div
                 key={idx}
@@ -144,7 +148,11 @@ export const ParentStudentCard = ({
                 <div className="mb-2 flex items-start justify-between">
                   <div>
                     <h4 className="text-sm font-medium text-main">{en.subject}</h4>
-                    <p className="text-micro font-normal italic text-muted">المعلم: {en.teacher}</p>
+                    {enTeacher && (
+                      <p className="text-micro font-normal italic text-muted">
+                        المعلم: {enTeacher}
+                      </p>
+                    )}
                   </div>
                   <div className="text-end">
                     <span className="text-micro font-medium text-primary">

@@ -2,6 +2,9 @@ import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { TrendingUp, X, CheckCircle2, XCircle, AlertCircle } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { ProgressBar } from '../../../shared/components/ui'
+import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
+import { parentEnrollmentTeacherName } from '../utils/parentEnrollments'
 
 interface ParentStudent {
   id: string
@@ -9,6 +12,7 @@ interface ParentStudent {
   grade?: string
   enrollments?: {
     teacherName?: string
+    teacherFallback?: string
     sessionsTotal?: number
     sessionsUsed?: number
     subject?: string
@@ -40,18 +44,28 @@ export const AttendanceModal = ({
 }: AttendanceModalProps) => {
   const { containerRef, handleKeyDown } = useDialogFocus(!!viewingAttendanceStudent, onClose)
 
+  useEffect(() => {
+    if (!viewingAttendanceStudent) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [viewingAttendanceStudent])
+
   if (!viewingAttendanceStudent) return null
 
   const name = viewingAttendanceStudent.name || ''
   const enrollments = (viewingAttendanceStudent.enrollments || []) as {
     teacherName: string
+    teacherFallback?: string
     sessionsTotal?: number
     sessionsUsed?: number
     subject?: string
     teacher?: string
   }[]
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
       className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-8"
@@ -98,7 +112,12 @@ export const AttendanceModal = ({
           ) : (
             <>
               {enrollments.map((en, idx: number) => {
-                const subjectSessions = childSessions.filter((s) => s.subject === en.subject)
+                const subjectSessions = childSessions.filter(
+                  (s) =>
+                    s.subject === en.subject &&
+                    (s.status === 'completed' || s.status === 'absent' || s.status === 'cancelled'),
+                )
+                const enTeacher = parentEnrollmentTeacherName(en)
                 const attended = subjectSessions.filter((s) => s.status === 'completed').length
                 const totalRecorded = subjectSessions.length
                 const absent = subjectSessions.filter(
@@ -114,9 +133,11 @@ export const AttendanceModal = ({
                     <div className="mb-4 flex items-start justify-between">
                       <div>
                         <h4 className="mb-1 text-sm font-medium text-main">{en.subject}</h4>
-                        <p className="text-micro font-normal uppercase tracking-tight text-muted">
-                          المعلم: {en.teacher}
-                        </p>
+                        {enTeacher && (
+                          <p className="text-micro font-normal uppercase tracking-tight text-muted">
+                            المعلم: {enTeacher}
+                          </p>
+                        )}
                       </div>
                       <div className="text-end">
                         <span
@@ -185,6 +206,7 @@ export const AttendanceModal = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

@@ -3,9 +3,13 @@ import { BookOpen, ChevronLeft, ChevronRight, X, Calendar } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
+import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
+import { parentEnrollmentTeacherName } from '../utils/parentEnrollments'
 
 interface ParentEnrollment {
   teacherName?: string
+  teacherFallback?: string
   sessionsTotal?: number
   sessionsUsed?: number
   subject?: string
@@ -65,10 +69,20 @@ export const SessionsModal = ({
 }: SessionsModalProps) => {
   const { containerRef, handleKeyDown } = useDialogFocus(!!viewingStudent, onClose)
 
+  useEffect(() => {
+    if (!viewingStudent) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [viewingStudent])
+
   if (!viewingStudent) return null
 
   const enrollments = (viewingStudent.enrollments || []) as {
     teacherName: string
+    teacherFallback?: string
     date?: string
     sessionsTotal?: number
     sessionsUsed?: number
@@ -76,7 +90,7 @@ export const SessionsModal = ({
     teacher?: string
   }[]
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
       className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-12"
@@ -134,29 +148,32 @@ export const SessionsModal = ({
         <div className="no-scrollbar flex-1 space-y-4 overflow-y-auto p-4">
           {!viewingSubject ? (
             <div className="grid grid-cols-1 gap-3">
-              {enrollments.map((en, idx: number) => (
-                <button
-                  key={idx}
-                  onClick={() => onSelectSubject(en)}
-                  className="group flex items-center justify-between rounded-xl border border-border bg-surface p-4 text-start outline-none transition-all hover:border-primary/30 hover:bg-card focus-visible:ring-2 focus-visible:ring-focus"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft text-primary transition-all group-hover:bg-primary group-hover:text-on-primary">
-                      <BookOpen size={16} />
+              {enrollments.map((en, idx: number) => {
+                const enTeacher = parentEnrollmentTeacherName(en)
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => onSelectSubject(en)}
+                    className="group flex items-center justify-between rounded-xl border border-border bg-surface p-4 text-start outline-none transition-all hover:border-primary/30 hover:bg-card focus-visible:ring-2 focus-visible:ring-focus"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft text-primary transition-all group-hover:bg-primary group-hover:text-on-primary">
+                        <BookOpen size={16} />
+                      </div>
+                      <div>
+                        <h4 className="mb-0.5 text-xs font-medium text-main">{en.subject}</h4>
+                        <p className="text-micro font-normal uppercase tracking-tight text-muted">
+                          {enTeacher ? `المعلمة: ${enTeacher}` : ''}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="mb-0.5 text-xs font-medium text-main">{en.subject}</h4>
-                      <p className="text-micro font-normal uppercase tracking-tight text-muted">
-                        المعلمة: {en.teacher}
-                      </p>
-                    </div>
-                  </div>
-                  <ChevronLeft
-                    size={16}
-                    className="transform text-muted transition-all group-hover:-translate-x-1 group-hover:text-primary"
-                  />
-                </button>
-              ))}
+                    <ChevronLeft
+                      size={16}
+                      className="transform text-muted transition-all group-hover:-translate-x-1 group-hover:text-primary"
+                    />
+                  </button>
+                )
+              })}
             </div>
           ) : (
             <div className="space-y-4">
@@ -295,6 +312,7 @@ export const SessionsModal = ({
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
