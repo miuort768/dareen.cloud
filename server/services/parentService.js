@@ -288,7 +288,14 @@ async function getMyChildren(parentPhone) {
   const canonical = canonicalPhone(parentPhone);
   const students = await prisma.student.findMany({
     where: { deletedAt: null },
-    include: { enrollments: true },
+    include: {
+      // ناتج my-children يعرض الاشتراكات خام (لا يُسلسِل علاقات teacher افتراضيًا) —
+      // اجلبها هنا حتى يظهر اسم معلم كل مادة في بطاقات ولي الأمر،
+      // مع تحويلها إلى نص في الحقل teacher (الصيغة التي تستهلكها الواجهة دائمًا).
+      enrollments: {
+        include: { teacher: { select: { id: true, name: true } } },
+      },
+    },
   });
 
   return students
@@ -299,6 +306,10 @@ async function getMyChildren(parentPhone) {
         ...safe,
         enrollments: (child.enrollments || []).map(en => ({
           ...en,
+          teacher:
+            (en.teacher && en.teacher.name) ||
+            en.teacherFallback ||
+            null,
           schedule: typeof en.schedule === 'string' ? JSON.parse(en.schedule) : (en.schedule || []),
         })),
       };
