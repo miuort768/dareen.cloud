@@ -186,37 +186,36 @@ export const AppointmentScheduleGrid = ({
 
                       {/* Info */}
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-bold text-main">{app.studentName}</p>
-                        <p className="mt-0.5 flex items-center gap-1 truncate text-xs font-medium text-muted">
-                          <BookOpen size={9} className="shrink-0" />
-                          {app.subject}
-                          {app.curriculum ? ` · ${app.curriculum}` : ''}
-                        </p>
-                        <p className="mt-0.5 flex items-center gap-1 truncate text-micro font-bold text-info">
-                          <ShieldCheck size={9} className="shrink-0" />
-                          {app.teacherName || 'غير محددة'}
-                        </p>
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                          <p className="truncate text-base font-black text-main">
+                            {app.studentName}
+                          </p>
+                          <span className="inline-flex max-w-full items-center gap-1 rounded-md bg-primary-soft px-2 py-0.5 text-sm font-bold text-primary">
+                            <BookOpen size={12} className="shrink-0" strokeWidth={1.7} />
+                            <span className="truncate">{app.subject}</span>
+                          </span>
+                          <span className="inline-flex max-w-full items-center gap-1 rounded-md bg-surface px-2 py-0.5 text-sm font-bold text-info">
+                            <ShieldCheck size={12} className="shrink-0" strokeWidth={1.7} />
+                            <span className="truncate">{app.teacherName || 'غير محددة'}</span>
+                          </span>
+                          {app.studentGrade && (
+                            <span className="text-sm font-bold text-muted">{app.studentGrade}</span>
+                          )}
+                        </div>
                       </div>
 
-                      {/* Grade + complete */}
-                      <div className="flex shrink-0 items-center gap-2">
-                        {app.studentGrade && (
-                          <span className="hidden rounded-2xl bg-surface px-2 py-0.5 text-micro font-bold text-muted md:inline-block">
-                            {app.studentGrade}
-                          </span>
-                        )}
-                        {canComplete && (
-                          <button
-                            onClick={(e) => onCompleteSession(app.id, e)}
-                            disabled={isPending}
-                            aria-label={`إتمام موعد ${app.studentName}`}
-                            className="flex items-center gap-1 rounded-2xl bg-success px-2.5 py-1.5 text-micro font-bold text-on-success transition-all hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
-                          >
-                            <CheckCircle2 size={12} />
-                            إتمام
-                          </button>
-                        )}
-                      </div>
+                      {/* Complete */}
+                      {canComplete && (
+                        <button
+                          onClick={(e) => onCompleteSession(app.id, e)}
+                          disabled={isPending}
+                          aria-label={`إتمام موعد ${app.studentName}`}
+                          className="flex shrink-0 items-center gap-1 rounded-2xl bg-success px-2.5 py-1.5 text-micro font-bold text-on-success transition-all hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                        >
+                          <CheckCircle2 size={12} />
+                          إتمام
+                        </button>
+                      )}
                     </div>
                   ))}
                 </div>

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { CalendarX2, CheckCircle2, BookOpen } from 'lucide-react'
+import { CalendarX2, CheckCircle2, BookOpen, ShieldCheck } from 'lucide-react'
 import { cn } from '../../../../lib/utils'
 import { EmptyState } from '../../../../shared/components/ui'
 import type { AppointmentEvent } from '../../types'
@@ -132,33 +132,31 @@ export const AppointmentListView = ({
 
                         {/* المحتوى */}
                         <div className="min-w-0 flex-1 py-0.5">
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
                             <p
                               className={cn(
-                                'truncate text-xs font-bold text-main',
+                                'truncate text-base font-black text-main',
                                 done && 'line-through decoration-2 opacity-60',
                               )}
                             >
                               {app.studentName}
                             </p>
                             {app.studentGrade && (
-                              <span className="shrink-0 rounded-2xl bg-surface px-1.5 py-0.5 text-micro font-bold text-muted">
+                              <span className="shrink-0 rounded-md bg-surface px-1.5 py-0.5 text-micro font-bold text-muted">
                                 {app.studentGrade}
                               </span>
                             )}
-                          </div>
-                          <p className="mt-1 flex min-w-0 items-center gap-1 text-micro font-bold text-muted">
-                            <BookOpen size={9} className="shrink-0" />
-                            <span className="truncate">
-                              {app.subject}
-                              {app.curriculum ? ` · ${app.curriculum}` : ''}
+                            <span className="inline-flex max-w-full items-center gap-1 rounded-md bg-primary-soft px-1.5 py-0.5 text-micro font-bold text-primary">
+                              <BookOpen size={10} className="shrink-0" strokeWidth={1.7} />
+                              <span className="truncate">{app.subject}</span>
                             </span>
-                          </p>
-                          {app.teacherName && (
-                            <p className="mt-0.5 truncate text-micro font-bold text-info">
-                              {app.teacherName}
-                            </p>
-                          )}
+                            {app.teacherName && (
+                              <span className="inline-flex max-w-full items-center gap-1 rounded-md bg-surface px-1.5 py-0.5 text-micro font-bold text-info">
+                                <ShieldCheck size={10} className="shrink-0" strokeWidth={1.7} />
+                                <span className="truncate">{app.teacherName}</span>
+                              </span>
+                            )}
+                          </div>
                         </div>
 
                         {/* الإجراء */}

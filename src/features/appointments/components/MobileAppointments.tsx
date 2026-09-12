@@ -181,7 +181,7 @@ export const MobileAppointments = () => {
       />
 
       {/* المحتوى */}
-      <div className="px-4 pb-28">
+      <div className="px-4 pb-6">
         {loading && allAppointments.length === 0 ? (
           <MobileSkeleton rows={6} />
         ) : isError ? (
