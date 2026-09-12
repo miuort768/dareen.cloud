@@ -61,9 +61,24 @@ interface ScheduleEvent {
 }
 
 const TEACHER_PALETTE = [
-  { text: 'text-primary', soft: 'bg-primary-soft', bar: 'border-e-primary', chip: 'bg-primary' },
-  { text: 'text-success', soft: 'bg-success-soft', bar: 'border-e-success', chip: 'bg-success' },
-  { text: 'text-info', soft: 'bg-info-soft', bar: 'border-e-info', chip: 'bg-info' },
+  {
+    text: 'text-primary',
+    soft: 'bg-primary-soft',
+    bar: 'border-e-primary',
+    solid: 'bg-primary text-on-primary',
+  },
+  {
+    text: 'text-success',
+    soft: 'bg-success-soft',
+    bar: 'border-e-success',
+    solid: 'bg-success text-on-success',
+  },
+  {
+    text: 'text-info',
+    soft: 'bg-info-soft',
+    bar: 'border-e-info',
+    solid: 'bg-info text-on-info',
+  },
 ]
 
 const teacherNameOf = (enrollment: Enrollment): string => {
@@ -329,19 +344,25 @@ export const MobileSchedule = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-1.5">
                   <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-card px-2 py-1.5">
-                    <CalendarDays size={12} className="shrink-0 text-success" />
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-primary-soft text-primary">
+                      <CalendarDays size={11} />
+                    </span>
                     <span className="min-w-0 flex-1 truncate text-xs font-black text-main">
                       {nextSession.day}
                     </span>
                   </div>
                   <div className="flex items-center gap-1.5 rounded-lg bg-card px-2 py-1.5">
-                    <Clock size={12} className="shrink-0 text-success" />
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-info-soft text-info">
+                      <Clock size={11} />
+                    </span>
                     <span className="text-xs font-black tabular-nums text-main">
                       {nextSession.time}
                     </span>
                   </div>
                   <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-card px-2 py-1.5">
-                    <GraduationCap size={12} className="shrink-0 text-success" />
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-success-soft text-success">
+                      <GraduationCap size={11} />
+                    </span>
                     <span className="min-w-0 flex-1 truncate text-xs font-black text-main">
                       {nextSession.teacherName || 'غير محددة'}
                     </span>
@@ -391,11 +412,9 @@ export const MobileSchedule = () => {
 
                       {/* Avatar */}
                       <div
-                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${ts.soft}`}
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-elevation-1 ${ts.solid}`}
                       >
-                        <span className={`text-sm font-black ${ts.text}`}>
-                          {event.studentName.charAt(0)}
-                        </span>
+                        <span className="text-sm font-black">{event.studentName.charAt(0)}</span>
                       </div>
 
                       {/* Info */}
@@ -410,7 +429,7 @@ export const MobileSchedule = () => {
                         </p>
                         <div className="mt-1.5 flex items-center gap-1.5">
                           <span
-                            className={`inline-flex max-w-full items-center gap-1 truncate rounded-lg px-1.5 py-0.5 text-micro font-bold ${ts.soft} ${ts.text}`}
+                            className={`inline-flex max-w-full items-center gap-1 truncate rounded-lg px-1.5 py-0.5 text-micro font-bold ${ts.solid}`}
                           >
                             <GraduationCap size={10} className="shrink-0" />
                             <span className="truncate">{event.teacherName || 'غير محددة'}</span>
