@@ -9,7 +9,7 @@ interface MobileSkeletonProps {
  * Native-style list skeleton: a card with shimmering placeholder rows.
  */
 export const MobileSkeleton = ({ rows = 4, className }: MobileSkeletonProps) => (
-  <div className={cn('space-y-3 px-3 pt-3', className)}>
+  <div className={cn('space-y-3 pt-3', className)}>
     {Array.from({ length: rows }).map((_, i) => (
       <div
         key={`skel-mobile-${i}`}

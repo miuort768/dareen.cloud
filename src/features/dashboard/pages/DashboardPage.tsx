@@ -73,7 +73,7 @@ export const Dashboard = () => {
           dir="rtl"
         >
           {device === 'mobile' ? (
-            <div className="mx-auto block max-w-page space-y-4 px-2.5 pt-3 sm:px-4 md:hidden">
+            <div className="mx-auto block max-w-page space-y-4 pt-3 sm:px-4 md:hidden">
               <div className="flex items-center justify-between">
                 <div className="space-y-2">
                   <Skeleton className="h-3 w-24" />

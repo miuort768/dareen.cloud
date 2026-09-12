@@ -342,7 +342,7 @@ export const ParentDashboard = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background" dir="rtl">
-        <div className="mx-auto max-w-page space-y-5 px-2.5 pt-6 sm:px-4 md:px-6">
+        <div className="mx-auto max-w-page space-y-5 pt-6 sm:px-4 md:px-6">
           <Skeleton className="h-32 rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             <Skeleton className="h-28 rounded-2xl" />

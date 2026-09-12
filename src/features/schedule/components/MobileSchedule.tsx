@@ -249,7 +249,7 @@ export const MobileSchedule = () => {
         </motion.div>
 
         {/* ===== HEADER ===== */}
-        <div className="px-3 pt-2">
+        <div className="pt-2">
           <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover p-4 shadow-elevation-2">
             <div className="pointer-events-none absolute -end-16 -top-20 h-52 w-52 rounded-full bg-white/10 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-20 -start-16 h-44 w-44 rounded-full bg-black/10 blur-3xl" />
@@ -313,7 +313,7 @@ export const MobileSchedule = () => {
         </div>
 
         {/* ===== DAY FILTER ===== */}
-        <div className="px-3 pb-1 pt-3">
+        <div className="pb-1 pt-3">
           <DayDropdown
             selectedDay={selectedDay}
             onSelectDay={setSelectedDay}
@@ -375,7 +375,7 @@ export const MobileSchedule = () => {
         </AnimatePresence>
 
         {/* ===== SESSIONS TIMELINE ===== */}
-        <div className="px-3 pb-4 pt-3">
+        <div className="pb-4 pt-3">
           {loading && students.length === 0 ? (
             <MobileSkeleton rows={6} />
           ) : dayEvents.length > 0 ? (

@@ -82,7 +82,7 @@ export const StudentDashboardMobile = ({
         </div>
       </motion.div>
 
-      <div className="mx-auto max-w-page space-y-4 px-2.5 pb-6 pt-4 sm:px-4">
+      <div className="mx-auto max-w-page space-y-4 pb-6 pt-4 sm:px-4">
         <motion.div {...fadeUp(0)}>
           <GreetingStrip
             name={studentData?.name || 'الطالب'}

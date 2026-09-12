@@ -200,7 +200,7 @@ export const StudentDashboard = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background" dir="rtl">
-        <div className="mx-auto max-w-page space-y-5 px-2.5 pt-6 sm:px-4 md:px-6">
+        <div className="mx-auto max-w-page space-y-5 pt-6 sm:px-4 md:px-6">
           <Skeleton className="h-32 rounded-2xl" />
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
             <div className="space-y-5 lg:col-span-8">

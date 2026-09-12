@@ -117,7 +117,7 @@ export const TeacherDashboardMobile = ({
         </div>
       </motion.div>
 
-      <div className="mx-auto max-w-page space-y-5 px-2.5 pt-4 sm:px-4">
+      <div className="mx-auto max-w-page space-y-5 pt-4 sm:px-4">
         <div className="flex items-center justify-between">
           <button
             onClick={() => navigate('/teacher-profile')}
