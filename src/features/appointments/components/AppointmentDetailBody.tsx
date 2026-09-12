@@ -96,13 +96,7 @@ export const AppointmentDetailBody = ({ appointment }: AppointmentDetailBodyProp
           label="المادة"
           value={appointment.subject}
           toneClassName="text-warning"
-        >
-          {appointment.curriculum && (
-            <span className="mt-1 inline-block rounded-md bg-surface px-1.5 py-0.5 text-micro font-bold text-muted">
-              {appointment.curriculum}
-            </span>
-          )}
-        </InfoCell>
+        />
       </div>
     </div>
   )
