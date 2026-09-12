@@ -6,7 +6,7 @@ const { prisma } = require('../../utils/prisma');
 
 router.use(authMiddleware);
 
-router.get('/completed-sessions', checkRole(['admin', 'teacher']), async (req, res) => {
+router.get('/completed-sessions', checkRole(['admin', 'teacher', 'parent', 'student']), async (req, res) => {
     try {
         const sessions = await prisma.completedSession.findMany({ select: { id: true } });
         res.json(sessions.map(s => s.id));

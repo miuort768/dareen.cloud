@@ -56,7 +56,7 @@ export const useCompletedSessions = () => {
       return sessions || []
     },
     refetchInterval: 15000,
-    enabled: canComplete,
+    enabled: ['admin', 'teacher', 'parent', 'student'].includes(currentUser?.role || ''),
   })
 
   const completeMutation = useMutation({
