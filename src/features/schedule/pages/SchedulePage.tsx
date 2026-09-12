@@ -15,7 +15,7 @@ import { useCurrentUser } from '../../../context/AppContext'
 import { api } from '../../../lib/api'
 import { MobileSchedule } from '../components/MobileSchedule'
 import { ScheduleHeader, ScheduleGrid, SchedulePopover } from './schedule-page'
-import { cn } from '../../../lib/utils'
+import { StatCard } from '../../../shared/components/ui/StatCard'
 import { to24Minutes, normalizeDayName } from '../../attendance/utils/slotUtils'
 import { useCompletedSessions } from '../../appointments/hooks/useAppointments'
 import { appointmentTeacherKeyOf } from '../../appointments/types'
@@ -281,32 +281,33 @@ export const Schedule = () => {
   }
 
   const kpiCards = useMemo(
-    () => [
-      {
-        label: 'إجمالي الحصص',
-        value: weekStats.sessions,
-        icon: BookOpen,
-        iconBg: 'bg-primary/10 text-primary',
-      },
-      {
-        label: 'المعلمات',
-        value: weekStats.teachers,
-        icon: GraduationCap,
-        iconBg: 'bg-success-soft text-success',
-      },
-      {
-        label: 'الطلاب',
-        value: weekStats.students,
-        icon: Users,
-        iconBg: 'bg-warning-soft text-warning dark:bg-primary-soft dark:text-primary',
-      },
-      {
-        label: 'الأيام',
-        value: DAYS.length,
-        icon: CalendarDays,
-        iconBg: 'bg-info-soft text-info',
-      },
-    ],
+    () =>
+      [
+        {
+          label: 'إجمالي الحصص',
+          value: weekStats.sessions,
+          icon: BookOpen,
+          variant: 'primary',
+        },
+        {
+          label: 'المعلمات',
+          value: weekStats.teachers,
+          icon: GraduationCap,
+          variant: 'success',
+        },
+        {
+          label: 'الطلاب',
+          value: weekStats.students,
+          icon: Users,
+          variant: 'warning',
+        },
+        {
+          label: 'الأيام',
+          value: DAYS.length,
+          icon: CalendarDays,
+          variant: 'info',
+        },
+      ] as const,
     [weekStats],
   )
 
@@ -349,7 +350,6 @@ export const Schedule = () => {
         >
           <div className="mb-3 grid grid-cols-2 gap-3 md:grid-cols-4">
             {kpiCards.map((kpi, i) => {
-              const Icon = kpi.icon
               return (
                 <motion.div
                   key={kpi.label}
@@ -357,15 +357,15 @@ export const Schedule = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.12 + i * 0.06 }}
                   whileHover={{ scale: 1.02, y: -2 }}
-                  className="relative overflow-hidden rounded-xl border border-border bg-card p-4"
+                  className="relative"
                 >
-                  <div className="mb-3 flex items-center justify-between">
-                    <div className={cn('rounded-lg p-2', kpi.iconBg)}>
-                      <Icon size={16} />
-                    </div>
-                  </div>
-                  <p className="mb-1 text-xs text-muted">{kpi.label}</p>
-                  <p className="text-2xl font-bold text-main">{kpi.value}</p>
+                  <StatCard
+                    title={kpi.label}
+                    value={kpi.value}
+                    icon={kpi.icon}
+                    variant={kpi.variant}
+                    className="h-full"
+                  />
                 </motion.div>
               )
             })}
