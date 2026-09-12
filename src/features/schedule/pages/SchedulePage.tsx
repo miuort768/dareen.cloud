@@ -36,6 +36,7 @@ interface Enrollment {
   sessionsUsed: number
   schedule: ScheduleSlot[]
   teacherId?: string | number
+  teacherFallback?: unknown
 }
 interface ScheduleSlot {
   day: string
@@ -66,8 +67,7 @@ const teacherNameOf = (enrollment: Enrollment): string => {
     const n = String((t as { name?: unknown }).name ?? '').trim()
     if (n) return n
   }
-  const fallback = (enrollment as unknown as { teacherName?: unknown }).teacherName
-  if (typeof fallback === 'string' && fallback.trim()) return fallback.trim()
+  if (typeof enrollment.teacherFallback === 'string') return enrollment.teacherFallback.trim()
   return ''
 }
 

@@ -15,11 +15,16 @@ router.get('/me', authMiddleware, async (req, res) => {
         if (!student) return res.status(404).json({ error: 'Student not found' });
 
         const enrollments = await prisma.enrollment.findMany({
-            where: { studentId }
+            where: { studentId },
+            include: { teacher: { select: { id: true, name: true, subject: true } } },
         });
 
         const enrollmentsWithParsedData = enrollments.map(en => ({
             ...en,
+            teacher:
+                (en.teacher && en.teacher.name) ||
+                en.teacherFallback ||
+                null,
             schedule: en.schedule ? (typeof en.schedule === 'string' ? JSON.parse(en.schedule) : en.schedule) : []
         }));
 

@@ -8,13 +8,21 @@ const cache = require('./cacheService');
 const { normalizeUsername, findIdentityByUsername, syncAccount, deactivateAccount, deactivateBulkAccounts } = require('./authAccounts');
 
 const studentInclude = {
-  enrollments: true,
+  enrollments: {
+    include: { teacher: { select: { id: true, name: true, subject: true } } },
+  },
   parent: { select: { id: true, name: true, phone: true } },
 };
 
 function mapEnrollment(e) {
+  const t = e.teacher;
+  const teacherName =
+    (t && typeof t === 'object' && t.name) ||
+    e.teacherFallback ||
+    null;
   return {
     ...e,
+    teacher: teacherName,
     schedule: typeof e.schedule === 'string' ? JSON.parse(e.schedule) : (e.schedule || []),
   };
 }
