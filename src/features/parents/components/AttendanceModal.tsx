@@ -1,10 +1,11 @@
 import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
-import { TrendingUp, X, CheckCircle2, XCircle, AlertCircle } from 'lucide-react'
+import { TrendingUp, X, CheckCircle2, XCircle, AlertCircle, MessageCircle } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { ProgressBar } from '../../../shared/components/ui'
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { parentEnrollmentTeacherName } from '../utils/parentEnrollments'
+import { useSupportWhatsappNumber } from '../../profile/shared'
 
 interface ParentStudent {
   id: string
@@ -43,6 +44,7 @@ export const AttendanceModal = ({
   isSessionsLoading,
 }: AttendanceModalProps) => {
   const { containerRef, handleKeyDown } = useDialogFocus(!!viewingAttendanceStudent, onClose)
+  const supportPhone = useSupportWhatsappNumber()
 
   useEffect(() => {
     if (!viewingAttendanceStudent) return
@@ -197,10 +199,19 @@ export const AttendanceModal = ({
           )}
         </div>
 
-        <div className="flex shrink-0 justify-end border-t border-border bg-surface p-5">
+        <div className="grid shrink-0 grid-cols-2 gap-3 border-t border-border bg-surface p-5">
+          <a
+            href={`https://wa.me/${supportPhone}?text=${encodeURIComponent(`السلام عليكم، أود الاستفسار عن تقرير الحضور الخاص ${name}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-success px-4 text-micro font-medium text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+          >
+            <MessageCircle size={16} />
+            تواصل مع الدعم
+          </a>
           <button
             onClick={onClose}
-            className="rounded-xl bg-success px-6 py-2 text-micro font-medium text-on-success outline-none transition-all hover:bg-success-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+            className="min-h-11 rounded-xl border border-border bg-card text-micro font-medium text-main outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
           >
             إغلاق
           </button>
