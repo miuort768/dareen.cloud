@@ -93,7 +93,7 @@ export const SessionsModal = ({
   return createPortal(
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex items-end justify-center md:items-center md:p-12"
+      className="fixed inset-0 z-[100] flex items-end justify-center p-3 md:items-center md:p-12"
       role="dialog"
       aria-modal="true"
       aria-label={viewingSubject ? `مواعيد حصص: ${viewingSubject.subject}` : 'سجل المواعيد'}
@@ -101,48 +101,50 @@ export const SessionsModal = ({
     >
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <div className="relative flex max-h-[80vh] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 md:duration-slow md:animate-in md:slide-in-from-bottom-8">
-        <div className="relative flex shrink-0 items-center justify-between overflow-hidden bg-primary p-4 text-on-primary">
+        <div className="relative shrink-0 overflow-hidden bg-primary text-on-primary">
           <div className="absolute start-0 top-0 -ms-12 -mt-12 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
-          <div className="absolute bottom-0 end-0 h-16 w-16 -translate-x-8 translate-y-8 rounded-full bg-white/5 blur-lg"></div>
-          <div className="relative z-10 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/20 backdrop-blur-sm">
-              <Calendar size={20} className="text-on-primary" />
+          <div className="absolute bottom-0 end-0 h-16 w-16 -translate-x-8 translate-y-8 rounded-full bg-white/5 blur-lg" />
+          <div className="relative z-10 flex items-center justify-between gap-2 px-4 py-3">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/20 backdrop-blur-sm">
+                <Calendar size={20} className="text-on-primary" />
+              </div>
+              <div className="min-w-0 text-start">
+                <h2 className="truncate text-base font-medium leading-tight tracking-tight">
+                  {viewingStudent.name}
+                </h2>
+                <p className="mt-0.5 truncate text-micro font-normal uppercase tracking-widest text-white/80">
+                  {viewingSubject ? `مواعيد حصص: ${viewingSubject.subject}` : 'سجل مواعيد الحصص'}
+                </p>
+              </div>
             </div>
-            <div className="text-start">
-              <h2 className="text-base font-medium leading-tight tracking-tight">
-                {viewingStudent.name}
-              </h2>
-              <p className="mt-0.5 text-micro font-normal uppercase tracking-widest text-primary opacity-80">
-                {viewingSubject ? `مواعيد حصص: ${viewingSubject.subject}` : 'سجل مواعيد الحصص'}
-              </p>
-            </div>
+            <button
+              onClick={onClose}
+              className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-white/10 outline-none backdrop-blur-sm transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus"
+              aria-label="إغلاق"
+            >
+              <X size={14} />
+            </button>
           </div>
-          <div className="relative z-10 ms-4 flex items-center gap-2">
-            <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/10 px-2 py-1 backdrop-blur-sm">
+          <div className="relative z-10 flex items-center gap-2 border-t border-white/10 bg-primary/90 px-4 py-2">
+            <div className="flex w-full items-center gap-1 rounded-xl border border-white/10 bg-white/10 px-2 py-1 backdrop-blur-sm">
               <input
                 type="date"
                 aria-label="تاريخ البداية"
-                className="cursor-pointer border-none bg-transparent p-0 text-micro font-normal text-on-primary outline-none hover:text-primary dark:[color-scheme:dark]"
+                className="w-full cursor-pointer border-none bg-transparent p-0 text-micro font-normal text-on-primary outline-none hover:text-white dark:[color-scheme:dark]"
                 value={sessionsStartDate}
                 onChange={(e) => onStartDateChange(e.target.value)}
               />
-              <span className="text-micro text-white/80">←</span>
+              <span className="shrink-0 text-micro text-white/80">←</span>
               <input
                 type="date"
                 aria-label="تاريخ النهاية"
-                className="cursor-pointer border-none bg-transparent p-0 text-micro font-normal text-on-primary outline-none hover:text-primary dark:[color-scheme:dark]"
+                className="w-full cursor-pointer border-none bg-transparent p-0 text-micro font-normal text-on-primary outline-none hover:text-white dark:[color-scheme:dark]"
                 value={sessionsEndDate}
                 onChange={(e) => onEndDateChange(e.target.value)}
               />
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="relative z-10 flex h-7 w-7 items-center justify-center rounded-xl bg-white/10 outline-none backdrop-blur-sm transition-all hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-focus"
-            aria-label="إغلاق"
-          >
-            <X size={14} />
-          </button>
         </div>
 
         <div className="no-scrollbar flex-1 space-y-4 overflow-y-auto p-4">
