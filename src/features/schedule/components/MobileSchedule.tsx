@@ -87,6 +87,7 @@ const teacherNameOf = (enrollment: Enrollment): string => {
   if (t && typeof t === 'object' && 'name' in (t as Record<string, unknown>)) {
     return String((t as TeacherRef).name ?? '').trim()
   }
+  if (typeof enrollment.teacherFallback === 'string') return enrollment.teacherFallback.trim()
   return ''
 }
 

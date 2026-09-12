@@ -24,10 +24,13 @@ export const DAYS_OF_WEEK = [
   'الجمعة',
 ]
 
-/** استخراج اسم المعلمة بأمان سواء كان teacher نصًا أو كائنًا أو null */
+/** استخراج اسم المعلمة بأمان سواء كان teacher نصًا أو كائنًا أو null — مع fallback لعمود teacherFallback
+ * (الاسم النصي المخزَّن في column "teacher") لأن /students و /student-portal/me يردّان الاشتراكات خام
+ * (العلاقة teacher غير مُضمَّنة) بينما /parents/my-children يعيد كتابة teacher إلى نص. */
 export const appointmentTeacherNameOf = (enrollment: {
-  teacher: unknown
+  teacher?: unknown
   teacherId?: string | number
+  teacherFallback?: unknown
 }): string => {
   if (typeof enrollment.teacher === 'string') return enrollment.teacher.trim()
   if (
@@ -37,6 +40,7 @@ export const appointmentTeacherNameOf = (enrollment: {
   ) {
     return String((enrollment.teacher as { name?: unknown }).name ?? '').trim()
   }
+  if (typeof enrollment.teacherFallback === 'string') return enrollment.teacherFallback.trim()
   return ''
 }
 
