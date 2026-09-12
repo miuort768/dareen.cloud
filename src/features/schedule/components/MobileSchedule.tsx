@@ -315,17 +315,38 @@ export const MobileSchedule = () => {
               exit={{ opacity: 0, y: -8 }}
               className="mx-3 mt-2"
             >
-              <div className="border-success/20 flex items-center gap-2.5 rounded-xl border bg-success-soft p-2.5">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-card text-success">
-                  <Sparkles size={14} />
+              <div className="flex flex-col gap-2 rounded-xl border border-success-soft bg-success-soft p-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-card text-success">
+                    <Sparkles size={14} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-micro font-bold text-success">الحصة القادمة</p>
+                    <p className="truncate text-sm font-black text-main">
+                      {nextSession.studentName}
+                    </p>
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-micro font-bold text-success">الحصة القادمة اليوم</p>
-                  <p className="truncate text-xs font-bold text-main">
-                    {nextSession.studentName} · {nextSession.time}
-                  </p>
+                <div className="grid grid-cols-3 gap-1.5">
+                  <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-card px-2 py-1.5">
+                    <CalendarDays size={12} className="shrink-0 text-success" />
+                    <span className="min-w-0 flex-1 truncate text-xs font-black text-main">
+                      {nextSession.day}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 rounded-lg bg-card px-2 py-1.5">
+                    <Clock size={12} className="shrink-0 text-success" />
+                    <span className="text-xs font-black tabular-nums text-main">
+                      {nextSession.time}
+                    </span>
+                  </div>
+                  <div className="flex min-w-0 items-center gap-1.5 rounded-lg bg-card px-2 py-1.5">
+                    <GraduationCap size={12} className="shrink-0 text-success" />
+                    <span className="min-w-0 flex-1 truncate text-xs font-black text-main">
+                      {nextSession.teacherName || 'غير محددة'}
+                    </span>
+                  </div>
                 </div>
-                <Clock size={14} className="shrink-0 text-success" />
               </div>
             </motion.div>
           )}

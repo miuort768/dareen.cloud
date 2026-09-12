@@ -503,6 +503,10 @@ export const Schedule = () => {
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1.5 text-muted">
+                  <CalendarDays size={10} />
+                  <span className="text-[10px] font-bold">{nextSession.day}</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-muted">
                   <Clock size={10} />
                   <span className="text-[10px] font-bold">{nextSession.time}</span>
                 </div>
