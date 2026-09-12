@@ -1,5 +1,6 @@
-import { Search, CalendarDays, GraduationCap, X } from 'lucide-react'
-import { DAYS_OF_WEEK } from '../../types'
+import { Search, X } from 'lucide-react'
+import { cn } from '../../../../lib/utils'
+import { WeekDayStrip } from './WeekDayStrip'
 
 interface AppointmentFiltersProps {
   searchTerm: string
@@ -9,9 +10,12 @@ interface AppointmentFiltersProps {
   filterTeacher: string
   onTeacherChange: (v: string) => void
   uniqueTeachers: string[]
+  todayName: string
+  /** عدد حصص كل يوم في التبويب الحالي */
+  dayCounts: Record<string, number>
 }
 
-/** البحث والفلاتر المدمجة لواجهة الهاتف */
+/** البحث والفلاتر المدمجة لواجهة الهاتف — شرائح بدل القوائم المنسدلة */
 export const AppointmentFilters = ({
   searchTerm,
   onSearchChange,
@@ -20,6 +24,8 @@ export const AppointmentFilters = ({
   filterTeacher,
   onTeacherChange,
   uniqueTeachers,
+  todayName,
+  dayCounts,
 }: AppointmentFiltersProps) => (
   <div className="space-y-2 px-4 pb-2">
     {/* البحث */}
@@ -44,42 +50,40 @@ export const AppointmentFilters = ({
       />
     </div>
 
-    {/* الفلاتر */}
-    <div className="flex gap-2">
-      <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-1.5 rounded-2xl border border-border bg-card px-2.5 py-2 transition-colors focus-within:border-primary hover:border-primary">
-        <CalendarDays size={13} className="shrink-0 text-primary" />
-        <select
-          value={filterDay}
-          onChange={(e) => onDayChange(e.target.value)}
-          aria-label="تصفية حسب اليوم"
-          className="min-w-0 flex-1 cursor-pointer appearance-none truncate bg-transparent text-micro font-bold text-main outline-none"
-        >
-          <option value="all">كل الأيام</option>
-          {DAYS_OF_WEEK.map((day) => (
-            <option key={day} value={day}>
-              {day}
-            </option>
-          ))}
-        </select>
-      </label>
-      {uniqueTeachers.length > 0 && (
-        <label className="flex min-w-0 flex-1 cursor-pointer items-center gap-1.5 rounded-2xl border border-border bg-card px-2.5 py-2 transition-colors focus-within:border-primary hover:border-primary">
-          <GraduationCap size={13} className="shrink-0 text-primary" />
-          <select
-            value={filterTeacher}
-            onChange={(e) => onTeacherChange(e.target.value)}
-            aria-label="تصفية حسب المعلمة"
-            className="min-w-0 flex-1 cursor-pointer appearance-none truncate bg-transparent text-micro font-bold text-main outline-none"
-          >
-            <option value="all">كل المعلمات</option>
-            {uniqueTeachers.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-        </label>
-      )}
-    </div>
+    {/* شريط الأيام */}
+    <WeekDayStrip
+      selectedDay={filterDay}
+      onSelectDay={onDayChange}
+      todayName={todayName}
+      dayCounts={dayCounts}
+    />
+
+    {/* شرائح المعلمات */}
+    {uniqueTeachers.length > 1 && (
+      <div className="no-scrollbar -mx-4 flex gap-1.5 overflow-x-auto px-4">
+        {[
+          { label: 'كل المعلمات', value: 'all' } as const,
+          ...uniqueTeachers.map((t) => ({ label: t, value: t })),
+        ].map(({ label, value }) => {
+          const selected = filterTeacher === value
+          return (
+            <button
+              key={value}
+              type="button"
+              onClick={() => onTeacherChange(value)}
+              aria-pressed={selected}
+              className={cn(
+                'inline-flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+                selected
+                  ? 'border-transparent bg-info text-on-info shadow-elevation-1'
+                  : 'border-border bg-card text-main hover:border-info-soft hover:bg-info-soft hover:text-info',
+              )}
+            >
+              {label}
+            </button>
+          )
+        })}
+      </div>
+    )}
   </div>
 )

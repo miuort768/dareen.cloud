@@ -39,8 +39,9 @@ export const MobileAppointments = () => {
 
   const { isRefreshing, pullDistance, handlers } = usePullToRefresh({ onRefresh: refetch })
 
-  // القادمة = غير مكتملة (مخفية من السجل)، المكتملة معكوس
-  const filtered = useMemo(() => {
+  // القادمة = غير مكتملة (مخفية من السجل)، المكتملة معكوس.
+  // searched: بحث + معلمة فقط (بلا فلترة يوم) — مصدر عدّادات شريط الأيام
+  const searched = useMemo(() => {
     const source =
       activeTab === 'upcoming'
         ? allAppointments.filter((a) => !completedSessionIds.includes(a.id))
@@ -52,11 +53,21 @@ export const MobileAppointments = () => {
         a.studentName.toLowerCase().includes(q) ||
         a.teacherName.toLowerCase().includes(q) ||
         a.subject.toLowerCase().includes(q)
-      const matchesDay = filterDay === 'all' || a.day === filterDay
       const matchesTeacher = filterTeacher === 'all' || a.teacherName === filterTeacher
-      return matchesSearch && matchesDay && matchesTeacher
+      return matchesSearch && matchesTeacher
     })
-  }, [activeTab, allAppointments, completedSessionIds, searchTerm, filterDay, filterTeacher])
+  }, [activeTab, allAppointments, completedSessionIds, searchTerm, filterTeacher])
+
+  const filtered = useMemo(
+    () => searched.filter((a) => filterDay === 'all' || a.day === filterDay),
+    [searched, filterDay],
+  )
+
+  const dayCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const a of searched) counts[a.day] = (counts[a.day] || 0) + 1
+    return counts
+  }, [searched])
 
   const appointmentsByDay = useMemo(
     () =>
@@ -130,9 +141,6 @@ export const MobileAppointments = () => {
               onClick={() => {
                 triggerHaptic('light')
                 setActiveTab(tab.key)
-                setSearchTerm('')
-                setFilterDay('all')
-                setFilterTeacher('all')
               }}
               aria-pressed={activeTab === tab.key}
               className={cn(
@@ -146,8 +154,10 @@ export const MobileAppointments = () => {
               <span className="text-micro">{tab.label}</span>
               <span
                 className={cn(
-                  'rounded-full px-1.5 py-0.5 text-micro font-bold tabular-nums leading-none',
-                  activeTab === tab.key ? 'bg-white/20 text-on-primary' : 'bg-surface text-muted',
+                  'inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs font-black tabular-nums leading-none',
+                  activeTab === tab.key
+                    ? 'bg-white/25 text-on-primary ring-1 ring-white/20'
+                    : 'bg-border text-main',
                 )}
               >
                 {tab.count}
@@ -166,6 +176,8 @@ export const MobileAppointments = () => {
         filterTeacher={filterTeacher}
         onTeacherChange={setFilterTeacher}
         uniqueTeachers={uniqueTeachers}
+        todayName={todayName}
+        dayCounts={dayCounts}
       />
 
       {/* المحتوى */}

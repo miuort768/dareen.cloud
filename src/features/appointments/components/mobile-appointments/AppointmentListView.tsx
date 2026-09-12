@@ -74,7 +74,8 @@ export const AppointmentListView = ({
                 </div>
 
                 {appointments.length === 0 ? (
-                  <div className="bg-card/60 flex items-center justify-center gap-2 rounded-2xl border border-dashed border-border py-3 text-micro font-bold text-muted">
+                  <div className="bg-card/60 flex items-center justify-center gap-2 rounded-2xl border border-dashed border-error-soft py-3 text-micro font-bold text-error">
+                    <span className="h-1.5 w-1.5 rounded-full bg-error" />
                     لا توجد مواعيد في هذا اليوم
                   </div>
                 ) : (

@@ -11,6 +11,7 @@ interface AppointmentScheduleGridProps {
   isPending?: boolean
   canComplete?: boolean
   hasActiveFilters?: boolean
+  onShowWeek?: () => void
 }
 
 export const AppointmentScheduleGrid = ({
@@ -21,6 +22,7 @@ export const AppointmentScheduleGrid = ({
   isPending = false,
   canComplete = true,
   hasActiveFilters = false,
+  onShowWeek,
 }: AppointmentScheduleGridProps) => {
   const total = appointmentsByDay.reduce((s, d) => s + d.appointments.length, 0)
 
@@ -53,13 +55,22 @@ export const AppointmentScheduleGrid = ({
 
   return (
     <div className="space-y-4">
-      {/* Summary bar */}
-      <div className="flex items-center justify-between px-1">
-        <span className="text-xs font-bold text-muted">جدول الأسبوع الكامل</span>
-        <span className="rounded-2xl bg-primary-soft px-2.5 py-0.5 text-xs font-bold tabular-nums text-primary">
-          {total} موعد
+      {/* Summary bar → زر واضح يعرض الأسبوع الكامل بعداد الحصص */}
+      <button
+        type="button"
+        onClick={onShowWeek}
+        className="flex w-full items-center justify-between gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-start outline-none transition-all hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus"
+      >
+        <span className="flex items-center gap-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-soft text-primary">
+            <Calendar size={15} />
+          </span>
+          <span className="text-sm font-black text-main">جدول الأسبوع الكامل</span>
         </span>
-      </div>
+        <span className="flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-micro font-black tabular-nums text-on-primary">
+          {total} حصة
+        </span>
+      </button>
 
       {appointmentsByDay.map(({ day, appointments }) => {
         const isToday = day === todayName
@@ -80,12 +91,12 @@ export const AppointmentScheduleGrid = ({
                 'flex items-center justify-between border-b px-4 py-2.5',
                 isToday
                   ? 'border-primary bg-gradient-to-l from-primary to-primary-deep'
-                  : 'border-border bg-surface',
+                  : 'border-info-soft bg-info-soft',
               )}
             >
               <div className="flex items-center gap-2">
-                <Calendar size={13} className={isToday ? 'text-on-primary' : 'text-muted'} />
-                <h3 className={cn('text-xs font-bold', isToday ? 'text-on-primary' : 'text-main')}>
+                <Calendar size={13} className={isToday ? 'text-on-primary' : 'text-info'} />
+                <h3 className={cn('text-xs font-bold', isToday ? 'text-on-primary' : 'text-info')}>
                   {day}
                 </h3>
                 {isToday && (
@@ -100,7 +111,7 @@ export const AppointmentScheduleGrid = ({
                   isToday
                     ? 'bg-white/15 text-on-primary'
                     : appointments.length > 0
-                      ? 'bg-primary-soft text-primary'
+                      ? 'bg-info text-on-info'
                       : 'bg-border text-muted',
                 )}
               >
@@ -160,7 +171,7 @@ export const AppointmentScheduleGrid = ({
                           onClick={(e) => onCompleteSession(app.id, e)}
                           disabled={isPending}
                           aria-label={`إتمام موعد ${app.studentName}`}
-                          className="flex items-center gap-1 rounded-2xl bg-success px-2.5 py-1.5 text-micro font-bold text-on-success transition-all hover:brightness-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
+                          className="flex items-center gap-1 rounded-2xl bg-success px-2.5 py-1.5 text-micro font-bold text-on-success transition-all hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 disabled:opacity-50"
                         >
                           <CheckCircle2 size={12} />
                           إتمام
@@ -171,8 +182,8 @@ export const AppointmentScheduleGrid = ({
                 ))}
               </div>
             ) : (
-              <div className="flex items-center justify-center gap-2 py-5 text-micro font-bold text-muted">
-                <User size={12} className="opacity-40" />
+              <div className="flex items-center justify-center gap-2 py-5 text-micro font-bold text-error">
+                <User size={12} className="opacity-50" />
                 لا توجد مواعيد في هذا اليوم
               </div>
             )}

@@ -196,6 +196,7 @@ export const Appointments = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
+              className="mt-6"
             >
               <AppointmentsFilters
                 searchTerm={searchTerm}
@@ -228,6 +229,7 @@ export const Appointments = () => {
                   isPending={completeMutation.isPending}
                   canComplete={canComplete}
                   hasActiveFilters={hasActiveFilters}
+                  onShowWeek={() => setFilterDay('all')}
                 />
               </motion.div>
               <AppointmentDetailPanel

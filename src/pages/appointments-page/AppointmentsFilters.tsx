@@ -40,7 +40,7 @@ export const AppointmentsFilters = ({
       {hasActiveFilters && (
         <button
           onClick={onReset}
-          className="flex items-center gap-1 rounded-2xl bg-error-soft px-2 py-1 text-micro font-bold text-error outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+          className="flex min-h-8 items-center gap-1 rounded-2xl bg-error px-2 text-micro font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
         >
           <X size={12} /> إعادة تعيين
         </button>
