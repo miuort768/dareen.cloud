@@ -21,28 +21,28 @@ export const AppointmentDetailPanel = ({
         exit={{ opacity: 0, x: 30 }}
         className="sticky top-4 h-fit overflow-hidden rounded-2xl border border-border bg-card"
       >
-        <div className="flex items-center justify-between rounded-2xl bg-primary px-4 py-3 text-on-primary">
+        <div className="flex items-center justify-between rounded-2xl bg-error px-4 py-3 text-on-error">
           <div>
             <p className="text-micro font-bold text-white/80">تفاصيل الموعد</p>
             <h3 className="text-base font-bold">{appointment.day}</h3>
           </div>
           <div className="flex items-center gap-2">
             <div className="rounded-2xl bg-white/15 px-3 py-1 text-center">
-              <p className="text-lg font-bold tabular-nums leading-none text-on-primary">
+              <p className="text-lg font-bold tabular-nums leading-none text-on-error">
                 {appointment.time}
               </p>
             </div>
             <button
               onClick={onClose}
-              className="flex h-8 w-8 items-center justify-center rounded-2xl text-white/80 outline-none transition-all hover:bg-white/15 hover:text-on-primary focus-visible:ring-2 focus-visible:ring-focus"
               aria-label="إغلاق"
+              className="flex h-8 w-8 items-center justify-center rounded-xl bg-error text-on-error outline-none ring-1 ring-white/30 transition-all hover:bg-error-hover hover:ring-white/50 focus-visible:ring-2 focus-visible:ring-focus"
             >
               <X size={14} />
             </button>
           </div>
         </div>
         <div className="space-y-3 p-4">
-          <div className="flex items-center justify-between rounded-2xl border-e-[3px] border-e-primary bg-primary-soft p-3">
+          <div className="flex items-center justify-between rounded-none border-e-[3px] border-e-primary bg-primary-soft p-3">
             <div>
               <label className="mb-0.5 block text-micro font-bold text-muted">الطالب</label>
               <h4 className="text-sm font-bold text-main">{appointment.studentName}</h4>
@@ -50,14 +50,14 @@ export const AppointmentDetailPanel = ({
             </div>
             <User size={18} className="text-muted" />
           </div>
-          <div className="flex items-center justify-between rounded-2xl border-e-[3px] border-e-success bg-success-soft p-3">
+          <div className="flex items-center justify-between rounded-none border-e-[3px] border-e-success bg-success-soft p-3">
             <div>
               <label className="mb-0.5 block text-micro font-bold text-muted">المعلمة</label>
               <h4 className="text-sm font-bold text-main">{appointment.teacherName}</h4>
             </div>
             <ShieldCheck size={18} className="text-muted" />
           </div>
-          <div className="flex items-center justify-between rounded-2xl border-e-[3px] border-e-warning bg-warning-soft p-3 dark:border-e-primary dark:bg-primary-soft">
+          <div className="flex items-center justify-between rounded-none border-e-[3px] border-e-warning bg-warning-soft p-3 dark:border-e-primary dark:bg-primary-soft">
             <div>
               <label className="mb-0.5 block text-micro font-bold text-muted">المادة</label>
               <h4 className="text-sm font-bold text-main">{appointment.subject}</h4>

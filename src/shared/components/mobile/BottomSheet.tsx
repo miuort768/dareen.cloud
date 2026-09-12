@@ -12,6 +12,10 @@ interface BottomSheetProps {
   footer?: ReactNode
   className?: string
   contentClassName?: string
+  /** Classes for the header band (title/subtitle row). Default neutral. */
+  headerClassName?: string
+  /** Classes for the close button. Default neutral square with border. */
+  closeClassName?: string
   /** Prevent closing on backdrop tap. Default false. */
   dismissible?: boolean
 }
@@ -30,6 +34,8 @@ export const BottomSheet = ({
   footer,
   className,
   contentClassName,
+  headerClassName,
+  closeClassName,
   dismissible = true,
 }: BottomSheetProps) => (
   <SheetPrimitive.Root open={open} onOpenChange={(v) => dismissible && onOpenChange(v)}>
@@ -56,13 +62,24 @@ export const BottomSheet = ({
 
         {/* Header */}
         {(title || subtitle) && (
-          <div className="flex shrink-0 items-center justify-between gap-3 border-b border-border px-4 pb-3 pt-2">
+          <div
+            className={cn(
+              'flex shrink-0 items-center justify-between gap-3 border-b border-border px-4 pb-3 pt-2',
+              headerClassName,
+            )}
+          >
             <div className="min-w-0">
-              <SheetPrimitive.Title className="truncate text-base font-bold text-main">
+              <SheetPrimitive.Title
+                data-slot="bst-title"
+                className="truncate text-base font-bold text-main"
+              >
                 {title}
               </SheetPrimitive.Title>
               {subtitle && (
-                <SheetPrimitive.Description className="truncate text-[11px] font-medium text-muted">
+                <SheetPrimitive.Description
+                  data-slot="bst-desc"
+                  className="truncate text-[11px] font-medium text-muted"
+                >
                   {subtitle}
                 </SheetPrimitive.Description>
               )}
@@ -71,7 +88,11 @@ export const BottomSheet = ({
               <button
                 onClick={() => onOpenChange(false)}
                 aria-label="إغلاق"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface text-muted outline-none transition-colors hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+                data-slot="bst-close"
+                className={cn(
+                  'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border bg-surface text-muted outline-none transition-all hover:bg-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+                  closeClassName,
+                )}
               >
                 <X size={16} strokeWidth={2} />
               </button>

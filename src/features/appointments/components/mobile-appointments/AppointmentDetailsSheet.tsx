@@ -30,6 +30,8 @@ export const AppointmentDetailsSheet = ({
     }}
     title="تفاصيل الموعد"
     subtitle={appointment?.day}
+    headerClassName="bg-error border-b-white/10 [&_[data-slot=bst-title]]:text-on-error [&_[data-slot=bst-desc]]:text-white/80"
+    closeClassName="border-transparent bg-error text-on-error hover:bg-error-hover"
     footer={
       activeTab === 'upcoming' && canComplete && appointment ? (
         <button
@@ -54,7 +56,7 @@ export const AppointmentDetailsSheet = ({
           </div>
         </div>
 
-        <div className="flex items-center justify-between rounded-2xl border-e-[3px] border-e-primary bg-primary-soft p-3.5">
+        <div className="flex items-center justify-between rounded-none border-e-[3px] border-e-primary bg-primary-soft p-3.5">
           <div>
             <span className="text-micro font-bold text-muted">الطالب</span>
             <p className="text-sm font-bold text-main">{appointment.studentName}</p>
@@ -62,14 +64,14 @@ export const AppointmentDetailsSheet = ({
           </div>
           <User size={18} className="text-muted" strokeWidth={1.5} />
         </div>
-        <div className="flex items-center justify-between rounded-2xl border-e-[3px] border-e-success bg-success-soft p-3.5">
+        <div className="flex items-center justify-between rounded-none border-e-[3px] border-e-success bg-success-soft p-3.5">
           <div>
             <span className="text-micro font-bold text-muted">المعلمة</span>
             <p className="text-sm font-bold text-main">{appointment.teacherName}</p>
           </div>
           <ShieldCheck size={18} className="text-muted" strokeWidth={1.5} />
         </div>
-        <div className="flex items-center justify-between rounded-2xl border-e-[3px] border-e-warning bg-warning-soft p-3.5 dark:border-e-primary dark:bg-primary-soft">
+        <div className="flex items-center justify-between rounded-none border-e-[3px] border-e-warning bg-warning-soft p-3.5 dark:border-e-primary dark:bg-primary-soft">
           <div>
             <span className="text-micro font-bold text-muted">المادة</span>
             <p className="text-sm font-bold text-main">{appointment.subject}</p>
