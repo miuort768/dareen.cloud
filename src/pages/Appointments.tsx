@@ -130,7 +130,7 @@ export const Appointments = () => {
       className="from-info-soft/40 relative min-h-full bg-gradient-to-b via-background to-background"
       dir="rtl"
     >
-      <div className="mx-auto hidden max-w-page px-2 md:block">
+      <div className="hidden px-2 md:block">
         {/* Hero */}
         <GradientHeroCard
           icon={Calendar}
