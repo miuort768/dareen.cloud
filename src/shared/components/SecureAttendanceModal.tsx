@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { useDialogFocus } from '../hooks/useDialogFocus'
 import { ShieldCheck, X, CheckCircle2, XCircle, Lock, BookOpen, Star } from 'lucide-react'
 import { cn } from '../../lib/utils'
@@ -70,7 +71,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
     }
   }
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
       onKeyDown={handleKeyDown}
@@ -240,6 +241,7 @@ export const SecureAttendanceModal: React.FC<SecureAttendanceModalProps> = ({
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

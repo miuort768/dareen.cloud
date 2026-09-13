@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { X, Plus, Trash2, CalendarDays, Loader2 } from 'lucide-react'
 import type { ScheduleSlot } from '../types'
@@ -71,7 +72,7 @@ export const ScheduleEditorModal = ({
     }
   }
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
       onKeyDown={handleKeyDown}
@@ -239,6 +240,7 @@ export const ScheduleEditorModal = ({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
@@ -133,7 +134,7 @@ export const AttendanceHistoryModal = ({
 
   if (!isOpen) return null
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
       className="fixed inset-0 z-[150] flex items-end justify-center md:items-center md:p-3"
@@ -336,6 +337,7 @@ export const AttendanceHistoryModal = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

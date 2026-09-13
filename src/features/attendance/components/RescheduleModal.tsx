@@ -1,5 +1,7 @@
 import { Calendar, Clock, AlertCircle, Save, X } from 'lucide-react'
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 
 interface RescheduleModalProps {
   isOpen: boolean
@@ -23,7 +25,7 @@ export const RescheduleModal = ({
 
   if (!isOpen) return null
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
       className="fixed inset-0 z-[110] flex items-end justify-center bg-black/50 backdrop-blur-sm animate-in fade-in md:items-center md:p-4"
@@ -119,6 +121,7 @@ export const RescheduleModal = ({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

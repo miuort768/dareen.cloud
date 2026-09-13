@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { X, Loader2, LinkIcon, Copy, CheckCircle2, Radio, ExternalLink, Users } from 'lucide-react'
@@ -118,7 +119,7 @@ export const StartLiveSessionDialog = ({
 
   if (!open) return null
 
-  return (
+  return createPortal(
     <div
       ref={containerRef}
       onKeyDown={handleKeyDown}
@@ -351,6 +352,7 @@ export const StartLiveSessionDialog = ({
           </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }
