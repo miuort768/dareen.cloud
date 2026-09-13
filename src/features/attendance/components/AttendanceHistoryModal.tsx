@@ -38,7 +38,6 @@ export const AttendanceHistoryModal = ({
   onClose,
   studentName,
   studentId,
-  teacherName,
   studentGrade,
   studentSubject,
   studentCurriculum,
@@ -51,17 +50,14 @@ export const AttendanceHistoryModal = ({
   const queryClient = useQueryClient()
 
   const { data: history = [], isLoading: loading } = useQuery({
-    queryKey: ['attendance-history', studentId, teacherName, studentSubject],
+    queryKey: ['attendance-history', studentId, studentSubject],
     queryFn: async () => {
-      const data = await api.get<Session[]>(
-        `/sessions?studentId=${studentId}&q=${encodeURIComponent(teacherName)}`,
-      )
+      const data = await api.get<Session[]>(`/sessions?studentId=${studentId}`)
       const sessions = Array.isArray(data) ? data : []
       return sessions
         .filter(
           (s) =>
             s.studentId === studentId &&
-            s.teacherName === teacherName &&
             (studentSubject ? s.subject === studentSubject : true) &&
             (s.status === 'completed' || s.status === 'cancelled'),
         )

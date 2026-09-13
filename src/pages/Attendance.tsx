@@ -30,12 +30,7 @@ import { useAttendanceLogger } from '../features/attendance/hooks/useAttendanceL
 import { getPeriodRange, getPeriodLabel } from '../features/attendance/utils/periodRange'
 import { MobileAttendance } from '../features/attendance/components/MobileAttendance'
 import type { Student, Enrollment } from '../features/attendance/types'
-import {
-  SectionCard,
-  SectionTitle,
-  BulkAttendanceButton,
-  AdminTeacherGroupList,
-} from './attendance-page'
+import { SectionCard, SectionTitle, AdminTeacherGroupList } from './attendance-page'
 import { cn } from '../lib/utils'
 
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
@@ -160,28 +155,32 @@ export const Attendance = () => {
         label: 'إجمالي الحضور',
         value: periodStats?.completed || stats.totalCompleted,
         icon: CheckCircle,
-        color: 'text-success bg-success-soft',
+        card: 'bg-success-soft border-success-soft',
+        color: 'text-success bg-card',
         accent: 'bg-success',
       },
       {
         label: 'إجمالي الغياب',
         value: periodStats?.cancelled || stats.totalCancelled,
         icon: XCircle,
-        color: 'text-error bg-error-soft',
+        card: 'bg-error-soft border-error-soft',
+        color: 'text-error bg-card',
         accent: 'bg-error',
       },
       {
         label: 'الجدول الكلي',
         value: periodStats?.scheduled || stats.todayTotal,
         icon: Clock,
-        color: 'text-warning bg-warning-soft dark:text-primary dark:bg-primary-soft',
+        card: 'bg-warning-soft border-warning-soft dark:bg-primary-soft dark:border-primary-soft',
+        color: 'text-warning bg-card dark:text-primary dark:bg-card',
         accent: 'bg-warning dark:bg-primary',
       },
       {
         label: 'المعلمات',
         value: uniqueTeachers.length,
         icon: Users,
-        color: 'text-primary bg-primary-soft',
+        card: 'bg-primary-soft border-primary-soft',
+        color: 'text-primary bg-card',
         accent: 'bg-primary',
       },
     ],
@@ -272,7 +271,7 @@ export const Attendance = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.12 + i * 0.06 }}
                     whileHover={{ scale: 1.02, y: -2 }}
-                    className="relative overflow-hidden rounded-2xl border border-border bg-card p-4"
+                    className={cn('relative overflow-hidden rounded-2xl border p-4', kpi.card)}
                   >
                     <div className="mb-3 flex items-center justify-between">
                       <div className={cn('flex rounded-2xl p-2', kpi.color)}>
@@ -336,15 +335,6 @@ export const Attendance = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            {isTeacher && (
-              <BulkAttendanceButton
-                matchedEnrollments={matchedEnrollments}
-                allSessions={allSessions}
-                logDate={logDate}
-                logAttendance={logAttendance}
-              />
-            )}
-
             {!isTeacher && (
               <AttendanceFilters
                 searchTerm={searchTerm}

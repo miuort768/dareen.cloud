@@ -30,16 +30,6 @@ export const StudentScheduleEditor = ({
         <h5 className="flex items-center gap-1.5 text-micro font-normal uppercase text-muted">
           <Clock size={10} className="text-primary" /> الجدول الإسبوعي
         </h5>
-        <button
-          onClick={onToggleEdit}
-          className={`rounded-2xl px-2 py-0.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
-            isEditing
-              ? 'bg-error-soft text-error'
-              : 'bg-primary-soft text-primary hover:bg-primary hover:text-on-primary'
-          }`}
-        >
-          {isEditing ? 'إغلاق' : 'تعديل'}
-        </button>
       </div>
 
       <div className="flex flex-wrap gap-1.5">

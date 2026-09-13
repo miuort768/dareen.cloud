@@ -1,5 +1,14 @@
 import React, { useState, useRef } from 'react'
-import { BookOpen, TrendingUp, Activity, MessageSquare, Radio, Play } from 'lucide-react'
+import {
+  BookOpen,
+  TrendingUp,
+  Activity,
+  MessageSquare,
+  Radio,
+  Play,
+  PenLine,
+  X,
+} from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { api } from '../../../lib/api'
 import type { Student, Enrollment, ScheduleSlot } from '../types'
@@ -221,7 +230,7 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
         />
 
         {/* Notes */}
-        <div className="rounded-2xl border border-e-[3px] border-border border-e-primary bg-primary-soft p-3">
+        <div className="rounded-none border border-e-[3px] border-border border-e-primary bg-primary-soft p-3">
           <div className="mb-2 flex items-center justify-between">
             <h5 className="flex items-center gap-1.5 text-micro font-bold uppercase text-primary">
               <MessageSquare size={12} /> ملاحظات الحصة القادمة
@@ -253,6 +262,20 @@ export const TeacherStudentCard: React.FC<TeacherStudentCardProps> = ({
             size={10}
             className="fill-current opacity-50 transition-transform group-hover:-translate-x-0.5"
           />
+        </button>
+
+        {/* تعديل الجدول أسفل زر بدء الحصة */}
+        <button
+          onClick={() => setIsEditing(!isEditing)}
+          aria-expanded={isEditing}
+          className={`flex w-full items-center justify-center gap-2 rounded-2xl py-3 text-micro font-bold uppercase tracking-widest transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 ${
+            isEditing
+              ? 'bg-error text-on-error shadow-elevation-1 hover:bg-error-hover'
+              : 'bg-info text-on-info shadow-elevation-1 hover:bg-info-hover'
+          }`}
+        >
+          {isEditing ? <X size={14} /> : <PenLine size={14} />}
+          <span>{isEditing ? 'إغلاق التعديل' : 'تعديل الجدول'}</span>
         </button>
 
         {/* Attendance Footer */}
