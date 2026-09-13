@@ -1,26 +1,42 @@
+import { useState } from 'react'
 import { Award, Plus, History, Star, TrendingUp, User, GraduationCap, BookOpen } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
 import { cn } from '../../../lib/utils'
 import { format } from 'date-fns'
 import { RATING_OPTIONS, averageRatingOf, getAvatarGradient } from '../types/constants'
+import { EvaluationFormFields } from './EvaluationFormFields'
+import { EvaluationHistoryPanel } from './EvaluationHistoryPanel'
+import { EvaluationProfilePanel } from './EvaluationProfilePanel'
 import type { Student, Evaluation } from '../../../types'
+
+type Panel = 'evaluate' | 'history' | 'profile'
+
+const DEFAULT_INLINE_FORM = { rating: 'ممتاز', points: 0, notes: '' }
 
 interface EvaluationCardProps {
   student: Student
   evaluations: Evaluation[]
   isParent: boolean
-  onAddEvaluation: (studentId: string) => void
-  onViewHistory: (student: Student) => void
-  onViewProfile: (student: Student) => void
+  isSubmitting: boolean
+  canDelete: (ev: Evaluation) => boolean
+  onInlineSubmit: (
+    studentId: string,
+    data: { rating: string; points: number; notes: string },
+  ) => Promise<boolean> | boolean
+  onDelete: (id: string) => void
 }
 
 export const EvaluationCard = ({
   student,
   evaluations,
   isParent,
-  onAddEvaluation,
-  onViewHistory,
-  onViewProfile,
+  isSubmitting,
+  canDelete,
+  onInlineSubmit,
+  onDelete,
 }: EvaluationCardProps) => {
+  const [expanded, setExpanded] = useState<Panel | null>(null)
+  const [inlineForm, setInlineForm] = useState(DEFAULT_INLINE_FORM)
   const studentEvals = evaluations
     .filter((ev) => ev.studentId === student.id)
     .sort(
@@ -54,6 +70,21 @@ export const EvaluationCard = ({
       bg: 'bg-info-soft',
     },
   ]
+
+  const togglePanel = (panel: Panel) => {
+    if (expanded === panel) {
+      setExpanded(null)
+      return
+    }
+    if (panel === 'evaluate') setInlineForm(DEFAULT_INLINE_FORM)
+    setExpanded(panel)
+  }
+
+  const handleInlineSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const ok = await onInlineSubmit(student.id, inlineForm)
+    if (ok) setExpanded(null)
+  }
 
   return (
     <div className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-1 transition-all duration-slow hover:-translate-y-1 hover:border-primary/30 hover:shadow-elevation-2">
@@ -89,7 +120,6 @@ export const EvaluationCard = ({
       <div className="flex flex-1 flex-col gap-2.5 p-4">
         {lastEval ? (
           <>
-            {/* Last evaluation summary + note — صندوق واحد مريح */}
             <div className="rounded-xl border border-border bg-surface p-2.5">
               <div className="flex items-center justify-between gap-2">
                 <span className="flex shrink-0 items-center gap-1 text-[10px] font-bold text-muted">
@@ -117,7 +147,6 @@ export const EvaluationCard = ({
               </p>
             </div>
 
-            {/* Stats — خلايا ملونة ناعمة تكسر البياض */}
             <div className="grid grid-cols-3 gap-1.5">
               {statCells.map((cell) => (
                 <div key={cell.label} className={cn('rounded-xl p-2 text-center', cell.bg)}>
@@ -127,7 +156,6 @@ export const EvaluationCard = ({
               ))}
             </div>
 
-            {/* Progress bar */}
             {progress > 0 && (
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-hover">
                 <div
@@ -141,7 +169,6 @@ export const EvaluationCard = ({
             )}
           </>
         ) : (
-          /* Empty state */
           <div className="flex flex-1 flex-col items-center justify-center gap-2.5 py-5 text-center">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-dashed border-primary/30 bg-primary-soft dark:bg-primary/10">
               <Award size={18} className="text-primary" />
@@ -173,20 +200,24 @@ export const EvaluationCard = ({
       >
         {!isParent && (
           <button
-            onClick={() => onAddEvaluation(student.id)}
+            onClick={() => togglePanel('evaluate')}
             aria-label={`إضافة تقييم لـ ${student.name}`}
+            aria-expanded={expanded === 'evaluate'}
             className="flex items-center justify-center gap-1 rounded-xl bg-primary py-2.5 text-[11px] font-bold text-on-primary shadow-elevation-1 transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
           >
             <Plus size={12} /> تقييم
           </button>
         )}
         <button
-          onClick={() => onViewHistory(student)}
+          onClick={() => togglePanel('history')}
+          aria-expanded={expanded === 'history'}
           className={cn(
             'flex items-center justify-center gap-1 rounded-xl py-2.5 text-[11px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
             isParent
               ? 'bg-primary text-on-primary hover:bg-primary/90'
-              : 'border border-border bg-card text-main hover:border-primary/30 hover:bg-hover',
+              : expanded === 'history'
+                ? 'border border-primary bg-primary-soft text-primary'
+                : 'border border-border bg-card text-main hover:border-primary/30 hover:bg-hover',
           )}
         >
           <History size={12} /> السجل
@@ -196,14 +227,58 @@ export const EvaluationCard = ({
         </button>
         {!isParent && (
           <button
-            onClick={() => onViewProfile(student)}
+            onClick={() => togglePanel('profile')}
             aria-label={`عرض ملف ${student.name}`}
-            className="flex items-center justify-center gap-1 rounded-xl border border-border bg-card py-2.5 text-[11px] font-bold text-main transition-all hover:border-primary/30 hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+            aria-expanded={expanded === 'profile'}
+            className={cn(
+              'flex items-center justify-center gap-1 rounded-xl py-2.5 text-[11px] font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95',
+              expanded === 'profile'
+                ? 'border border-primary bg-primary-soft text-primary'
+                : 'border border-border bg-card text-main hover:border-primary/30 hover:bg-hover',
+            )}
           >
             <User size={12} /> الملف
           </button>
         )}
       </div>
+
+      {/* Inline panel */}
+      <AnimatePresence initial={false}>
+        {expanded && (
+          <motion.div
+            key="inline-panel"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="border-t border-border bg-surface p-3">
+              {expanded === 'evaluate' && (
+                <EvaluationFormFields
+                  formData={inlineForm}
+                  onChange={setInlineForm}
+                  onSubmit={handleInlineSubmit}
+                  onCancel={() => setExpanded(null)}
+                  isSubmitting={isSubmitting}
+                  formId={`inline-eval-form-${student.id}`}
+                />
+              )}
+              {expanded === 'history' && (
+                <EvaluationHistoryPanel
+                  student={student}
+                  evaluations={evaluations}
+                  canDelete={canDelete}
+                  onDelete={onDelete}
+                />
+              )}
+              {expanded === 'profile' && (
+                <EvaluationProfilePanel student={student} evaluations={evaluations} />
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

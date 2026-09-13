@@ -7,7 +7,6 @@ import { useCurrentUser, useShowNotification } from '../../../context/AppContext
 import { confirm } from '../../../lib/confirmDialog'
 import { EvaluationsHeader } from '../components/EvaluationsHeader'
 import { EvaluationCard } from '../components/EvaluationCard'
-import { EvaluationDrawer } from '../components/EvaluationDrawer'
 import { EvaluationFormModal } from '../components/EvaluationFormModal'
 import type { Student, Evaluation } from '../../../types'
 import { cn } from '../../../lib/utils'
@@ -22,7 +21,6 @@ export const Evaluations = () => {
   const showNotification = useShowNotification()
   const queryClient = useQueryClient()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [profileStudent, setProfileStudent] = useState<Student | null>(null)
   const [formData, setFormData] = useState({ studentId: '', rating: 'ممتاز', points: 0, notes: '' })
   const [searchTerm, setSearchTerm] = useState('')
   const [filterStatus, setFilterStatus] = useState('')
@@ -113,6 +111,24 @@ export const Evaluations = () => {
     )
       return
     deleteMutation.mutate(id)
+  }
+
+  const handleInlineSubmit = async (
+    studentId: string,
+    data: { rating: string; points: number; notes: string },
+  ): Promise<boolean> => {
+    if (createMutation.isPending) return false
+    try {
+      await createMutation.mutateAsync({
+        ...data,
+        studentId,
+        teacherId: currentUser?.id,
+        teacherName: currentUser?.teacherName || currentUser?.name,
+      })
+      return true
+    } catch {
+      return false
+    }
   }
 
   const sortedStudents = useMemo(() => {
@@ -271,12 +287,12 @@ export const Evaluations = () => {
                       student={student}
                       evaluations={evaluations}
                       isParent={currentUser?.role === 'parent'}
-                      onAddEvaluation={(studentId) => {
-                        setFormData({ ...formData, studentId })
-                        setIsModalOpen(true)
-                      }}
-                      onViewHistory={setProfileStudent}
-                      onViewProfile={setProfileStudent}
+                      isSubmitting={createMutation.isPending}
+                      canDelete={(ev: Evaluation) =>
+                        currentUser?.role === 'admin' || currentUser?.id === ev.teacherId
+                      }
+                      onInlineSubmit={handleInlineSubmit}
+                      onDelete={handleDelete}
                     />
                   </motion.div>
                 ))}
@@ -306,16 +322,6 @@ export const Evaluations = () => {
           }}
           onChange={setFormData}
           onSubmit={onSubmit}
-        />
-
-        <EvaluationDrawer
-          student={profileStudent}
-          evaluations={evaluations}
-          canDelete={(ev: Evaluation) =>
-            currentUser?.role === 'admin' || currentUser?.id === ev.teacherId
-          }
-          onDelete={handleDelete}
-          onClose={() => setProfileStudent(null)}
         />
       </div>
 
