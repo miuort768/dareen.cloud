@@ -41,7 +41,7 @@ export const AttendanceHistoryModal = ({
       onKeyDown={handleKeyDown}
     >
       <div className="absolute inset-0 bg-black/30" onClick={onClose} />
-      <div className="relative flex max-h-[75vh] w-full max-w-xs flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2">
+      <div className="relative flex max-h-[75vh] w-full max-w-xs flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-2 md:max-w-3xl">
         {/* Compact Header */}
         <div className="flex items-center justify-between bg-primary px-4 py-3">
           <div className="flex items-center gap-2.5">

@@ -155,7 +155,7 @@ export const AttendanceHistoryList = ({
             ))}
           </div>
         ) : history.length > 0 ? (
-          <div className="space-y-2">
+          <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
             {history.map((session) => (
               <div
                 key={session.id}
@@ -165,7 +165,7 @@ export const AttendanceHistoryList = ({
                 )}
               >
                 {editingSession?.id === session.id ? (
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <input
                       type="date"
                       aria-label="تاريخ الجلسة"
@@ -176,7 +176,7 @@ export const AttendanceHistoryList = ({
                           date: e.target.value,
                         })
                       }
-                      className="rounded-2xl border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                      className="min-w-0 flex-1 rounded-2xl border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                     />
                     <select
                       value={editingSession.status}
@@ -187,7 +187,7 @@ export const AttendanceHistoryList = ({
                         })
                       }
                       aria-label="حالة الحضور"
-                      className="rounded-2xl border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
+                      className="min-w-0 flex-1 rounded-2xl border border-border bg-card px-2 py-1 text-[10px] font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
                     >
                       <option value="completed">حضور</option>
                       <option value="cancelled">غياب</option>
@@ -210,7 +210,7 @@ export const AttendanceHistoryList = ({
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <div
                         className={cn(
