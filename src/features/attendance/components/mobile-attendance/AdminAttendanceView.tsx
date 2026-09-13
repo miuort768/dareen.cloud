@@ -12,6 +12,7 @@ import {
 import { cn } from '../../../../lib/utils'
 import { triggerHaptic } from '../../../../lib/haptics'
 import { EmptyState } from '../../../../shared/components/ui'
+import { AttendanceHistoryList } from '../AttendanceHistoryList'
 import { getRateColor, getRateBg, getRateBarColor } from '../../utils/rateStyles'
 import type { TeacherAttendanceRate } from '../../types'
 
@@ -19,7 +20,7 @@ interface AdminAttendanceViewProps {
   teacherAttendanceRates: TeacherAttendanceRate[]
   filterTeacher: string
   filterSubject?: string
-  onViewHistory: (studentId: string, studentName: string, grade?: string, subject?: string) => void
+  onSessionChange?: () => void
 }
 
 const RateTrendIcon = ({ rate }: { rate: number }) => {
@@ -33,7 +34,7 @@ export const AdminAttendanceView = ({
   teacherAttendanceRates,
   filterTeacher,
   filterSubject,
-  onViewHistory,
+  onSessionChange,
 }: AdminAttendanceViewProps) => {
   const visibleTeachers = teacherAttendanceRates.filter(
     (t) =>
@@ -43,6 +44,7 @@ export const AdminAttendanceView = ({
         t.students.some((s) => s.subject === filterSubject)),
   )
   const [expanded, setExpanded] = useState<string | null>(visibleTeachers[0]?.teacherName ?? null)
+  const [expandedHistory, setExpandedHistory] = useState<string | null>(null)
 
   if (visibleTeachers.length === 0) {
     return (
@@ -168,19 +170,38 @@ export const AdminAttendanceView = ({
                           <button
                             onClick={() => {
                               triggerHaptic('light')
-                              onViewHistory(
-                                student.studentId,
-                                student.studentName,
-                                undefined,
-                                student.subject,
-                              )
+                              const key = `${student.studentId}-${student.subject}`
+                              setExpandedHistory((v) => (v === key ? null : key))
                             }}
                             aria-label={`سجل ${student.studentName} في ${student.subject}`}
+                            aria-expanded={
+                              expandedHistory === `${student.studentId}-${student.subject}`
+                            }
                             className="flex items-center gap-1 rounded-2xl bg-primary-soft px-2 py-1 text-micro font-bold text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                           >
                             <History size={10} /> السجل
                           </button>
                         </div>
+                        <AnimatePresence initial={false}>
+                          {expandedHistory === `${student.studentId}-${student.subject}` && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.25, ease: 'easeInOut' }}
+                              className="overflow-hidden"
+                            >
+                              <div className="mt-2 border-t border-border pt-2">
+                                <AttendanceHistoryList
+                                  studentId={student.studentId}
+                                  studentSubject={student.subject}
+                                  onSessionChange={onSessionChange}
+                                  className="max-h-[50vh]"
+                                />
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </motion.div>
                     ))}
                   </div>

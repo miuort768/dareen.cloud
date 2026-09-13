@@ -30,7 +30,7 @@ import { useAttendanceLogger } from '../features/attendance/hooks/useAttendanceL
 import { getPeriodRange, getPeriodLabel } from '../features/attendance/utils/periodRange'
 import { MobileAttendance } from '../features/attendance/components/MobileAttendance'
 import type { Student, Enrollment } from '../features/attendance/types'
-import { SectionCard, SectionTitle, AdminTeacherGroupList } from './attendance-page'
+import { SectionCard, AdminTeacherGroupList } from './attendance-page'
 import { cn } from '../lib/utils'
 
 function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: string }) {
@@ -364,24 +364,30 @@ export const Attendance = () => {
           >
             {isTeacher ? (
               <SectionCard className="overflow-hidden p-0">
-                <div className="flex flex-col items-center justify-between gap-4 border-b border-border px-4 py-2 md:flex-row">
-                  <SectionTitle
-                    icon={Activity as React.ComponentType<{ size?: number }>}
-                    label="حصص الطلاب المقررة"
-                  />
-                  <div className="relative w-full md:w-[400px]">
-                    <Search
-                      size={14}
-                      className="absolute start-4 top-1/2 -translate-y-1/2 text-muted"
-                    />
-                    <input
-                      type="text"
-                      aria-label="بحث"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      placeholder="ابحث باسم الطالب أو المادة..."
-                      className="w-full rounded-2xl border border-border bg-surface py-2 pe-4 ps-10 text-xs font-bold transition-all focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/10"
-                    />
+                <div className="bg-primary px-4 py-3">
+                  <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-on-primary">
+                        <Activity size={16} />
+                      </div>
+                      <p className="text-sm font-black leading-none text-on-primary">
+                        حصص الطلاب المقررة
+                      </p>
+                    </div>
+                    <div className="relative w-full md:w-[400px]">
+                      <Search
+                        size={14}
+                        className="absolute start-4 top-1/2 -translate-y-1/2 text-white/60"
+                      />
+                      <input
+                        type="text"
+                        aria-label="بحث"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="ابحث باسم الطالب أو المادة..."
+                        className="w-full rounded-2xl border border-white/20 bg-white/15 py-2 pe-4 ps-10 text-xs font-bold text-on-primary outline-none transition-all placeholder:font-medium placeholder:text-white/70 focus:border-white/60 focus:bg-white/20 focus:ring-2 focus:ring-white/25"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">

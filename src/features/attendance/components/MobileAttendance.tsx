@@ -26,7 +26,6 @@ import type { PeriodFilter } from './AttendanceFilters'
 import type { Student } from '../types'
 import { SecureAttendanceModal } from '../../../shared/components/SecureAttendanceModal'
 import { ConfirmModal } from '../../../shared/components/ConfirmModal'
-import { AttendanceHistoryModal } from './AttendanceHistoryModal'
 import { RescheduleModal } from './RescheduleModal'
 import { normalizeDayName } from '../utils/slotUtils'
 import {
@@ -52,7 +51,6 @@ export const MobileAttendance = () => {
   const periodLabel = useMemo(() => getPeriodLabel(periodFilter), [periodFilter])
 
   const {
-    students,
     allSessions,
     loading,
     logAttendance,
@@ -125,14 +123,6 @@ export const MobileAttendance = () => {
     }).length
   }, [isTeacher, matchedEnrollments, allSessions, logDate])
 
-  const [historyStudent, setHistoryStudent] = useState<{
-    id: string
-    name: string
-    grade?: string
-    subject?: string
-    curriculum?: string
-  } | null>(null)
-
   const [deletingSlot, setDeletingSlot] = useState<{
     student: Student
     subject: string
@@ -143,23 +133,6 @@ export const MobileAttendance = () => {
     student: Student
     subject: string
   } | null>(null)
-
-  const handleViewHistory = (
-    studentId: string,
-    studentName: string,
-    grade?: string,
-    subject?: string,
-  ) => {
-    const foundStudent = students.find((s) => s.id === studentId)
-    const enrollment = foundStudent?.enrollments?.find((e) => e.subject === subject)
-    setHistoryStudent({
-      id: studentId,
-      name: studentName,
-      grade,
-      subject,
-      curriculum: (enrollment as { curriculum?: string } | undefined)?.curriculum,
-    })
-  }
 
   const handleBulkAttendance = async () => {
     if (!(await confirm(`سيتم تسجيل (${pendingTodayCount}) طالب كحضور تلقائي`))) return
@@ -396,14 +369,6 @@ export const MobileAttendance = () => {
                                 setLogDate(date)
                                 openSecureLog(student, enrollment)
                               }}
-                              onHistory={() =>
-                                handleViewHistory(
-                                  student.id,
-                                  student.name,
-                                  student.grade,
-                                  enrollment.subject,
-                                )
-                              }
                               onDeleteSlot={(i) =>
                                 setDeletingSlot({
                                   student,
@@ -414,6 +379,7 @@ export const MobileAttendance = () => {
                               onReschedule={() =>
                                 setRescheduleTarget({ student, subject: enrollment.subject })
                               }
+                              onSessionChange={refresh}
                             />
                           ))}
                         </div>
@@ -430,9 +396,7 @@ export const MobileAttendance = () => {
                         teacherAttendanceRates={teacherAttendanceRates}
                         filterTeacher={filterTeacher}
                         filterSubject={filterSubject}
-                        onViewHistory={(id, name, grade, subject) =>
-                          handleViewHistory(id, name, grade, subject)
-                        }
+                        onSessionChange={refresh}
                       />
                     )}
                   </>
@@ -447,9 +411,8 @@ export const MobileAttendance = () => {
                   setPeriodFilter={setPeriodFilter}
                   filteredSessions={filteredSessions}
                   periodLabel={periodLabel}
-                  onViewHistory={(id, name, subject) =>
-                    handleViewHistory(id, name, undefined, subject)
-                  }
+                  canDelete={currentUser?.role !== 'teacher'}
+                  onSessionChange={refresh}
                 />
               </div>
             )}
@@ -463,18 +426,6 @@ export const MobileAttendance = () => {
           onConfirm={handleConfirmLog}
           studentName={secureModalData?.student.name || ''}
           date={logDate}
-        />
-        <AttendanceHistoryModal
-          isOpen={!!historyStudent}
-          onClose={() => setHistoryStudent(null)}
-          studentId={historyStudent?.id || ''}
-          studentName={historyStudent?.name || ''}
-          teacherName={currentUser?.teacherName || currentUser?.name || ''}
-          studentGrade={historyStudent?.grade}
-          studentSubject={historyStudent?.subject}
-          studentCurriculum={historyStudent?.curriculum}
-          onSessionChange={refresh}
-          canDelete={currentUser?.role !== 'teacher'}
         />
         <ConfirmModal
           isOpen={!!deletingSlot}

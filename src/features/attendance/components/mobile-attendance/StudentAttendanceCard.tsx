@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { BookOpen, CheckCircle2, History, CalendarClock, Trash2, MoreVertical } from 'lucide-react'
 import { ProgressBar } from '../../../../shared/components/ui'
 import { triggerHaptic } from '../../../../lib/haptics'
+import { AttendanceHistoryList } from '../AttendanceHistoryList'
 import type { Student, Enrollment } from '../../types'
 import { periodLabel, normalizeDayName } from '../../utils/slotUtils'
 
@@ -10,9 +11,9 @@ interface StudentAttendanceCardProps {
   student: Student
   enrollment: Enrollment
   onAttend: () => void
-  onHistory: () => void
   onDeleteSlot: (slotIndex: number) => void
   onReschedule: () => void
+  onSessionChange?: () => void
 }
 
 /** بطاقة طالب لواجهة الهاتف (فرع المعلم) — موعد اليوم + التقدم + إجراءات سريعة */
@@ -20,11 +21,12 @@ export const StudentAttendanceCard = ({
   student,
   enrollment,
   onAttend,
-  onHistory,
   onDeleteSlot,
   onReschedule,
+  onSessionChange,
 }: StudentAttendanceCardProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [historyOpen, setHistoryOpen] = useState(false)
   const todayName = new Date().toLocaleDateString('ar-EG', { weekday: 'long' })
   const todaySlotIndex = enrollment.schedule?.findIndex(
     (s) => normalizeDayName(s.day) === todayName,
@@ -90,8 +92,12 @@ export const StudentAttendanceCard = ({
         </motion.button>
         <motion.button
           whileTap={{ scale: 0.95 }}
-          onClick={onHistory}
+          onClick={() => {
+            triggerHaptic('light')
+            setHistoryOpen((v) => !v)
+          }}
           aria-label={`سجل حضور ${student.name}`}
+          aria-expanded={historyOpen}
           className="flex items-center justify-center gap-1 rounded-2xl bg-primary-soft px-3 py-2.5 text-micro font-bold text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
         >
           <History size={12} strokeWidth={1.5} /> السجل
@@ -109,39 +115,67 @@ export const StudentAttendanceCard = ({
         </button>
       </div>
 
-      {/* القائمة الإضافية */}
-      <AnimatePresence>
+      {/* الإجراءات الإضافية المضمّنة */}
+      <AnimatePresence initial={false}>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -6, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.97 }}
-            transition={{ duration: 0.15 }}
-            className="absolute end-3 top-12 z-20 w-40 overflow-hidden rounded-2xl border border-border bg-card shadow-elevation-3"
-            role="menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="overflow-hidden"
           >
-            <button
-              onClick={() => {
-                setMenuOpen(false)
-                onReschedule()
-              }}
-              role="menuitem"
-              className="flex w-full items-center gap-2 px-3 py-2.5 text-start text-micro font-bold text-main transition-colors hover:bg-surface focus-visible:bg-surface focus-visible:outline-none"
-            >
-              <CalendarClock size={13} className="text-primary" /> طلب تأجيل الحصة
-            </button>
-            {todaySlot && todaySlotIndex >= 0 && (
-              <button
+            <div className="mt-2 grid gap-1.5 border-t border-border pt-2">
+              <motion.button
+                whileTap={{ scale: 0.97 }}
                 onClick={() => {
+                  triggerHaptic('light')
                   setMenuOpen(false)
-                  onDeleteSlot(todaySlotIndex)
+                  onReschedule()
                 }}
-                role="menuitem"
-                className="flex w-full items-center gap-2 border-t border-border px-3 py-2.5 text-start text-micro font-bold text-error transition-colors hover:bg-error-soft focus-visible:bg-error-soft focus-visible:outline-none"
+                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-primary-soft py-2.5 text-micro font-bold text-primary transition-colors hover:bg-primary hover:text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               >
-                <Trash2 size={13} /> حذف موعد اليوم
-              </button>
-            )}
+                <CalendarClock size={13} /> طلب تأجيل الحصة
+              </motion.button>
+              {todaySlot && todaySlotIndex >= 0 && (
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => {
+                    triggerHaptic('light')
+                    setMenuOpen(false)
+                    onDeleteSlot(todaySlotIndex)
+                  }}
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-error-soft py-2.5 text-micro font-bold text-error transition-colors hover:bg-error hover:text-on-error focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+                >
+                  <Trash2 size={13} /> حذف موعد اليوم
+                </motion.button>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* سجل الحضور المضمّن */}
+      <AnimatePresence initial={false}>
+        {historyOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="mt-2 border-t border-border pt-2">
+              <AttendanceHistoryList
+                studentId={student.id}
+                studentGrade={student.grade}
+                studentSubject={enrollment.subject}
+                studentCurriculum={(enrollment as { curriculum?: string }).curriculum}
+                canDelete={false}
+                onSessionChange={onSessionChange}
+                className="max-h-[55vh]"
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
