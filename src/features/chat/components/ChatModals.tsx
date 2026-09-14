@@ -18,6 +18,7 @@ interface ChatModalsProps {
   handleCreateDirectChat: (userId: string) => void
   handleDeleteAction: () => void
   isSubmitting?: boolean
+  canCreateGroup?: boolean
 }
 
 export const ChatModals: React.FC<ChatModalsProps> = ({
@@ -26,6 +27,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
   handleCreateDirectChat,
   handleDeleteAction,
   isSubmitting = false,
+  canCreateGroup = true,
 }) => {
   const showNewChatModal = useChatUIStore((s) => s.showNewChatModal)
   const setShowNewChatModal = useChatUIStore((s) => s.setShowNewChatModal)
@@ -171,7 +173,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
 
                 {/* Contact List */}
                 <div className="custom-scrollbar flex-1 overflow-y-auto">
-                  {!isCreatingGroup && (
+                  {!isCreatingGroup && canCreateGroup && (
                     <button
                       onClick={() => setIsCreatingGroup(true)}
                       className="flex w-full items-center gap-4 border-b border-border p-4 outline-none transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-hover"

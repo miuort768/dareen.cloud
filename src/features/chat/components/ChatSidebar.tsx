@@ -18,6 +18,9 @@ interface ChatSidebarProps {
   currentUser: User | null
   onDeleteAll: () => void
   typingUsers: { conversationId: string; userName: string }[]
+  isLoading?: boolean
+  hasError?: boolean
+  onRetry?: () => void
 }
 
 export const ChatSidebar: React.FC<ChatSidebarProps> = ({
@@ -26,6 +29,9 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
   currentUser,
   onDeleteAll,
   typingUsers,
+  isLoading = false,
+  hasError = false,
+  onRetry,
 }) => {
   const setSelectedConv = useChatUIStore((s) => s.setSelectedConv)
   const setShowNewChatModal = useChatUIStore((s) => s.setShowNewChatModal)
@@ -78,30 +84,29 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         </div>
 
         <div className="flex items-center gap-2 text-muted">
+          <button
+            onClick={() => {
+              setIsEditingGroup(false)
+              setShowNewChatModal(true)
+            }}
+            className="relative rounded-full p-2 outline-none transition-colors hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-white/5"
+            title="دردشة جديدة"
+            aria-label="دردشة جديدة"
+          >
+            <MessageSquarePlus size={22} />
+          </button>
           {currentUser?.role === 'admin' && (
-            <>
-              <button
-                onClick={() => {
-                  setIsEditingGroup(false)
-                  setShowNewChatModal(true)
-                }}
-                className="relative rounded-full p-2 outline-none transition-colors hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-white/5"
-                title="دردشة جديدة"
-              >
-                <MessageSquarePlus size={22} />
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onDeleteAll()
-                }}
-                className="relative flex cursor-pointer items-center justify-center rounded-full p-2 text-error outline-none transition-colors hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-error-soft"
-                title="حذف جميع المحادثات"
-              >
-                <Trash2 size={22} strokeWidth={2.5} />
-              </button>
-            </>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                onDeleteAll()
+              }}
+              className="relative flex cursor-pointer items-center justify-center rounded-full p-2 text-error outline-none transition-colors hover:bg-error-light focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-error-soft"
+              title="حذف جميع المحادثات"
+            >
+              <Trash2 size={22} strokeWidth={2.5} />
+            </button>
           )}
         </div>
       </div>
@@ -121,7 +126,29 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
       </div>
 
       <div className="no-scrollbar flex-1 overflow-y-auto">
-        {filteredConversations.length > 0 ? (
+        {isLoading ? (
+          <div className="space-y-2 p-3" aria-label="جاري تحميل المحادثات">
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className="flex items-center gap-3 px-1 py-2">
+                <div className="h-12 w-12 shrink-0 animate-pulse rounded-full bg-hover"></div>
+                <div className="flex-1 space-y-2">
+                  <div className="h-3 w-1/2 animate-pulse rounded bg-hover"></div>
+                  <div className="h-3 w-2/3 animate-pulse rounded bg-hover"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : hasError ? (
+          <div className="flex flex-col items-center justify-center gap-4 p-6 text-center lg:p-12">
+            <p className="text-sm font-bold text-error">تعذر تحميل المحادثات</p>
+            <button
+              onClick={onRetry}
+              className="flex min-h-11 items-center gap-2 rounded-xl bg-error px-5 py-2.5 text-sm font-bold text-on-error outline-none transition-all hover:bg-error-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
+            >
+              إعادة محاولة
+            </button>
+          </div>
+        ) : filteredConversations.length > 0 ? (
           filteredConversations.map((conv) => {
             const isSelected = selectedConv?.id === conv.id
             const isTyping = typingUsers.filter((u) => u.conversationId === conv.id).length > 0

@@ -51,7 +51,7 @@ router.delete('/profiles/:id', async (req, res) => {
 
 router.get('/users', async (req, res) => {
     try {
-        const users = await chatService.getAvailableUsers();
+        const users = await chatService.getAvailableUsers({ requestingUserId: req.user.id, role: req.user.role });
         ResponseHandler.success(res, users);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Chat route error');
@@ -71,6 +71,11 @@ router.get('/conversations', async (req, res) => {
 router.post('/conversations', async (req, res) => {
     try {
         const body = req.body;
+
+        if (body.isGroup && req.user.role !== 'admin') {
+            return ResponseHandler.error(res, 'Only admins can create groups', 403);
+        }
+
         if (!body.members) body.members = [];
         if (!body.members.includes(req.user.id)) {
             body.members.push(req.user.id);
@@ -94,11 +99,17 @@ router.post('/conversations', async (req, res) => {
 router.put('/conversations/:id', async (req, res) => {
     try {
         const userId = req.user.id;
+        const conversation = await prisma.conversation.findUnique({
+            where: { id: req.params.id },
+            select: { isGroup: true }
+        });
+        if (!conversation) return ResponseHandler.error(res, 'Conversation not found', 404);
+
         const membership = await prisma.conversationMember.findUnique({
             where: { conversationId_userId: { conversationId: req.params.id, userId } }
         });
 
-        if (!membership && req.user.role !== 'admin') {
+        if ((!membership || conversation.isGroup) && req.user.role !== 'admin') {
             return ResponseHandler.error(res, 'Unauthorized to update this conversation', 403);
         }
 

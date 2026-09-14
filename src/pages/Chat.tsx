@@ -31,6 +31,8 @@ export const Chat = () => {
     setTyping,
     markAsRead,
     deleteAllConversations,
+    isLoadingConversations,
+    isErrorConversations,
   } = useChat(String(currentUser?.id))
 
   const selectedConv = useChatUIStore((s) => s.selectedConv)
@@ -223,6 +225,9 @@ export const Chat = () => {
           currentUser={currentUser}
           onDeleteAll={handleDeleteAllClick}
           typingUsers={typingUsers}
+          isLoading={isLoadingConversations}
+          hasError={isErrorConversations}
+          onRetry={() => refetchConversations()}
         />
 
         {selectedConv ? (
@@ -295,6 +300,7 @@ export const Chat = () => {
         handleCreateDirectChat={handleCreateDirectChat}
         handleDeleteAction={handleDeleteAction}
         isSubmitting={isSubmitting}
+        canCreateGroup={currentUser?.role === 'admin'}
       />
     </div>
   )

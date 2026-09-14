@@ -1,193 +1,225 @@
-import { useEffect, useRef } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../lib/api';
-import { socketService } from '../lib/socket';
-import { useChatStore } from '../store/chatStore';
-import { useUnreadStore } from '../store/unreadStore';
-import type { ChatMessage, Conversation, ChatUser } from '../types/chat.types';
+import { useEffect, useRef } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { api } from '../lib/api'
+import { socketService } from '../lib/socket'
+import { useChatStore } from '../store/chatStore'
+import { useUnreadStore } from '../store/unreadStore'
+import type { ChatMessage, Conversation, ChatUser } from '../types/chat.types'
 
 // Standalone hook for messages to follow React Rules of Hooks
 export const useMessages = (conversationId?: string) => {
-    useEffect(() => {
-        if (conversationId) {
-            socketService.joinConversation(conversationId);
-        }
-        return () => {
-            if (conversationId) socketService.leaveConversation(conversationId);
-        };
-    }, [conversationId]);
+  useEffect(() => {
+    if (conversationId) {
+      socketService.joinConversation(conversationId)
+    }
+    return () => {
+      if (conversationId) socketService.leaveConversation(conversationId)
+    }
+  }, [conversationId])
 
-    return useQuery<ChatMessage[]>({
-        queryKey: ['messages', conversationId],
-        queryFn: async () => {
-            if (!conversationId) return [];
-            return api.get<ChatMessage[]>(`/chat/conversations/${conversationId}/messages`);
-        },
-        enabled: !!conversationId,
-        staleTime: 10000,
-    });
-};
+  return useQuery<ChatMessage[]>({
+    queryKey: ['messages', conversationId],
+    queryFn: async () => {
+      if (!conversationId) return []
+      return api.get<ChatMessage[]>(`/chat/conversations/${conversationId}/messages`)
+    },
+    enabled: !!conversationId,
+    staleTime: 10000,
+  })
+}
 
 export const useChat = (userId?: string) => {
-    const queryClient = useQueryClient();
-    const typingUsers = useChatStore(s => s.typingUsers);
-    const setTyping = useChatStore(s => s.setTyping);
+  const queryClient = useQueryClient()
+  const typingUsers = useChatStore((s) => s.typingUsers)
+  const setTyping = useChatStore((s) => s.setTyping)
 
-    // Fetch conversations
-    const { data: conversations = [], isLoading: isLoadingConversations, refetch: refetchConversations } = useQuery<Conversation[]>({
-        queryKey: ['conversations', userId],
-        queryFn: async () => {
-            if (!userId) return [];
-            return api.get<Conversation[]>(`/chat/conversations?userId=${userId}`);
-        },
-        enabled: !!userId,
-        staleTime: 60000,
-    });
+  // Fetch conversations
+  const {
+    data: conversations = [],
+    isLoading: isLoadingConversations,
+    isError: isErrorConversations,
+    refetch: refetchConversations,
+  } = useQuery<Conversation[]>({
+    queryKey: ['conversations', userId],
+    queryFn: async () => {
+      if (!userId) return []
+      return api.get<Conversation[]>(`/chat/conversations?userId=${userId}`)
+    },
+    enabled: !!userId,
+    staleTime: 60000,
+  })
 
-    const totalUnreadCount = conversations.reduce((sum, conv) => sum + (conv.unreadCount || 0), 0);
-    const prevCount = useRef(totalUnreadCount);
-    useEffect(() => {
-        if (totalUnreadCount !== prevCount.current) {
-            prevCount.current = totalUnreadCount;
-            useUnreadStore.getState().setTotalUnreadCount(totalUnreadCount);
-        }
-    }, [totalUnreadCount]);
+  const totalUnreadCount = conversations.reduce((sum, conv) => sum + (conv.unreadCount || 0), 0)
+  const prevCount = useRef(totalUnreadCount)
+  useEffect(() => {
+    if (totalUnreadCount !== prevCount.current) {
+      prevCount.current = totalUnreadCount
+      useUnreadStore.getState().setTotalUnreadCount(totalUnreadCount)
+    }
+  }, [totalUnreadCount])
 
-    // Fetch available users
-    const { data: availableUsers = [] } = useQuery<ChatUser[]>({
-        queryKey: ['chat-users'],
-        queryFn: async () => {
-            return api.get<ChatUser[]>('/chat/users');
-        },
-    });
+  // Fetch available users
+  const { data: availableUsers = [] } = useQuery<ChatUser[]>({
+    queryKey: ['chat-users'],
+    queryFn: async () => {
+      return api.get<ChatUser[]>('/chat/users')
+    },
+  })
 
-    // Fetch management profiles
-    const { data: profiles = [] } = useQuery<ChatUser[]>({
-        queryKey: ['chat-profiles'],
-        queryFn: async () => {
-            return api.get<ChatUser[]>('/chat/profiles');
-        },
-    });
+  // Send Message Mutation with Optimistic Updates
+  const sendMessageMutation = useMutation({
+    mutationFn: async ({
+      conversationId,
+      content,
+      senderId,
+      senderName,
+    }: {
+      conversationId: string
+      content: string
+      senderId: string
+      senderName: string
+    }) => {
+      return api.post<ChatMessage>(`/chat/conversations/${conversationId}/messages`, {
+        senderId,
+        senderName,
+        content,
+      })
+    },
+    onMutate: async (newMessage) => {
+      await queryClient.cancelQueries({ queryKey: ['messages', newMessage.conversationId] })
+      const previousMessages = queryClient.getQueryData<ChatMessage[]>([
+        'messages',
+        newMessage.conversationId,
+      ])
+      const tempId = `temp-${Date.now()}`
 
-    // Send Message Mutation with Optimistic Updates
-    const sendMessageMutation = useMutation({
-        mutationFn: async ({ conversationId, content, senderId, senderName }: { conversationId: string, content: string, senderId: string, senderName: string }) => {
-            return api.post<ChatMessage>(`/chat/conversations/${conversationId}/messages`, { senderId, senderName, content });
-        },
-        onMutate: async (newMessage) => {
-            await queryClient.cancelQueries({ queryKey: ['messages', newMessage.conversationId] });
-            const previousMessages = queryClient.getQueryData<ChatMessage[]>(['messages', newMessage.conversationId]);
-            const tempId = `temp-${Date.now()}`;
+      if (previousMessages) {
+        queryClient.setQueryData(
+          ['messages', newMessage.conversationId],
+          [
+            ...previousMessages,
+            {
+              id: tempId,
+              ...newMessage,
+              timestamp: new Date().toISOString(),
+            },
+          ],
+        )
+      }
+      return { previousMessages, tempId }
+    },
+    onSuccess: (data: ChatMessage, _variables, context) => {
+      // Check if the real message already exists (from socket)
+      // If it does, we just need to remove the temp message
+      // If not, we replace the temp message with the real one
+      if (context?.tempId) {
+        queryClient.setQueryData(['messages', data.conversationId], (old: ChatMessage[] = []) => {
+          const realExists = old.find((m) => m.id === data.id)
+          if (realExists) {
+            // Real message arrived via socket already -> Remove temp
+            return old.filter((m) => m.id !== context.tempId)
+          } else {
+            // Real message not here yet -> Swap temp with real
+            return old.map((msg) => (msg.id === context.tempId ? data : msg))
+          }
+        })
+      }
+    },
+    onError: (_err, newMessage, context) => {
+      if (context?.previousMessages) {
+        queryClient.setQueryData(['messages', newMessage.conversationId], context.previousMessages)
+      }
+    },
+  })
 
-            if (previousMessages) {
-                queryClient.setQueryData(['messages', newMessage.conversationId], [
-                    ...previousMessages,
-                    {
-                        id: tempId,
-                        ...newMessage,
-                        timestamp: new Date().toISOString()
-                    }
-                ]);
-            }
-            return { previousMessages, tempId };
-        },
-        onSuccess: (data: ChatMessage, _variables, context) => {
-            // Check if the real message already exists (from socket)
-            // If it does, we just need to remove the temp message
-            // If not, we replace the temp message with the real one
-            if (context?.tempId) {
-                queryClient.setQueryData(['messages', data.conversationId], (old: ChatMessage[] = []) => {
-                    const realExists = old.find(m => m.id === data.id);
-                    if (realExists) {
-                        // Real message arrived via socket already -> Remove temp
-                        return old.filter(m => m.id !== context.tempId);
-                    } else {
-                        // Real message not here yet -> Swap temp with real
-                        return old.map(msg => msg.id === context.tempId ? data : msg);
-                    }
-                });
-            }
-        },
-        onError: (_err, newMessage, context) => {
-            if (context?.previousMessages) {
-                queryClient.setQueryData(['messages', newMessage.conversationId], context.previousMessages);
-            }
-        }
-    });
+  // Create Direct Chat
+  const createDirectChatMutation = useMutation({
+    mutationFn: async (targetUserId: string) => {
+      return api.post<Conversation>('/chat/conversations', {
+        members: [userId, targetUserId],
+        isGroup: false,
+        createdBy: userId,
+      })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['conversations', userId] })
+    },
+  })
 
-    // Create Direct Chat
-    const createDirectChatMutation = useMutation({
-        mutationFn: async (targetUserId: string) => {
-            return api.post<Conversation>('/chat/conversations', {
-                members: [userId, targetUserId],
-                isGroup: false,
-                createdBy: userId
-            });
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['conversations', userId] });
-        }
-    });
+  // Create/Edit Group
+  const saveGroupMutation = useMutation({
+    mutationFn: async ({
+      id,
+      name,
+      members,
+      isGroup,
+    }: {
+      id?: string
+      name: string
+      members: string[]
+      isGroup: boolean
+    }) => {
+      const endpoint = id ? `/chat/conversations/${id}` : '/chat/conversations'
+      const method = id ? 'put' : 'post'
+      return api[method](endpoint, {
+        name,
+        members: [...new Set([userId, ...members])].filter(Boolean),
+        isGroup,
+        createdBy: userId,
+      })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['conversations', userId] })
+    },
+  })
 
-    // Create/Edit Group
-    const saveGroupMutation = useMutation({
-        mutationFn: async ({ id, name, members, isGroup }: { id?: string, name: string, members: string[], isGroup: boolean }) => {
-            const endpoint = id ? `/chat/conversations/${id}` : '/chat/conversations';
-            const method = id ? 'put' : 'post';
-            return api[method](endpoint, { name, members: [...new Set([userId, ...members])].filter(Boolean), isGroup, createdBy: userId });
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['conversations', userId] });
-        }
-    });
+  // Delete Conversation
+  const deleteConversationMutation = useMutation({
+    mutationFn: async (id: string) => {
+      return api.delete(`/chat/conversations/${id}`)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['conversations', userId] })
+    },
+  })
 
-    // Delete Conversation
-    const deleteConversationMutation = useMutation({
-        mutationFn: async (id: string) => {
-            return api.delete(`/chat/conversations/${id}`);
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['conversations', userId] });
-        }
-    });
+  // Delete All Conversations
+  const deleteAllConversationsMutation = useMutation({
+    mutationFn: async () => {
+      return api.delete('/chat/conversations/all')
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['conversations', userId] })
+    },
+  })
 
-    // Delete All Conversations
-    const deleteAllConversationsMutation = useMutation({
-        mutationFn: async () => {
-            return api.delete('/chat/conversations/all');
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['conversations', userId] });
-        }
-    });
+  // Mark as Read
+  const markAsReadMutation = useMutation({
+    mutationFn: async (id: string) => {
+      return api.post(`/chat/conversations/${id}/read`)
+    },
+    onSuccess: (_data, id) => {
+      queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
+        return (old || []).map((conv) => (conv.id === id ? { ...conv, unreadCount: 0 } : conv))
+      })
+    },
+  })
 
-    // Mark as Read
-    const markAsReadMutation = useMutation({
-        mutationFn: async (id: string) => {
-            return api.post(`/chat/conversations/${id}/read`);
-        },
-        onSuccess: (_data, id) => {
-            queryClient.setQueryData(['conversations', userId], (old: Conversation[] = []) => {
-                return (old || []).map(conv => conv.id === id ? { ...conv, unreadCount: 0 } : conv);
-            });
-        }
-    });
-
-    return {
-        conversations,
-        isLoadingConversations,
-        availableUsers,
-        profiles,
-        sendMessage: sendMessageMutation.mutate,
-        isSending: sendMessageMutation.isPending,
-        createDirectChat: createDirectChatMutation.mutateAsync,
-        saveGroup: saveGroupMutation.mutateAsync,
-        deleteConversation: deleteConversationMutation.mutateAsync,
-        deleteAllConversations: deleteAllConversationsMutation.mutateAsync,
-        refetchConversations,
-        typingUsers,
-        setTyping,
-        markAsRead: markAsReadMutation.mutate,
-        totalUnreadCount
-    };
-};
+  return {
+    conversations,
+    isLoadingConversations,
+    isErrorConversations,
+    availableUsers,
+    sendMessage: sendMessageMutation.mutate,
+    isSending: sendMessageMutation.isPending,
+    createDirectChat: createDirectChatMutation.mutateAsync,
+    saveGroup: saveGroupMutation.mutateAsync,
+    deleteConversation: deleteConversationMutation.mutateAsync,
+    deleteAllConversations: deleteAllConversationsMutation.mutateAsync,
+    refetchConversations,
+    typingUsers,
+    setTyping,
+    markAsRead: markAsReadMutation.mutate,
+    totalUnreadCount,
+  }
+}

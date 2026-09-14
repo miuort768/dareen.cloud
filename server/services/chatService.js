@@ -18,10 +18,20 @@ class ChatService {
         });
     }
 
-    async getAvailableUsers() {
+    async getAvailableUsers({ requestingUserId, role }) {
+        // Non-admin users may only contact the academy (admins) — teachers,
+        // parents and students never see each other in the starter list.
+        if (role !== 'admin') {
+            const admins = await prisma.user.findMany({
+                where: { role: 'admin', id: { not: requestingUserId } },
+                select: { id: true, name: true, username: true }
+            });
+            return admins.map(a => ({ ...a, type: 'admin' }));
+        }
+
         const [teachers, admins, parents, students, chatProfiles] = await Promise.all([
             prisma.teacher.findMany({ where: { username: { not: null } }, select: { id: true, name: true, username: true } }),
-            prisma.user.findMany({ select: { id: true, name: true, username: true } }),
+            prisma.user.findMany({ where: { id: { not: requestingUserId } }, select: { id: true, name: true, username: true } }),
             prisma.parent.findMany({ where: { username: { not: null } }, select: { id: true, name: true, username: true } }),
             prisma.student.findMany({ where: { username: { not: null } }, select: { id: true, name: true, username: true } }),
             prisma.chatProfile.findMany({ select: { id: true, name: true, username: true } }),
@@ -61,9 +71,16 @@ class ChatService {
         const unreadCounts = {};
         const notifs = await prisma.notification.findMany({
             where: { conversationId: { in: convIds }, receiverId: userId, read: 0 },
-            select: { conversationId: true }
+            select: { conversationId: true, message: true }
         });
-        notifs.forEach(n => { unreadCounts[n.conversationId] = (unreadCounts[n.conversationId] || 0) + 1; });
+        // sendNotification keeps ONE unread row per conversation whose message
+        // carries the exact per-message counter («لديك X رسائل»). Reconstruct
+        // the real unread number from it so it matches the client socket's +1.
+        notifs.forEach(n => {
+            const match = (n.message || '').match(/لديك\s+(\d+)\s+(?:رسالة|رسائل)/i);
+            const count = match ? parseInt(match[1], 10) : 1;
+            unreadCounts[n.conversationId] = (unreadCounts[n.conversationId] || 0) + count;
+        });
 
         // Batch-resolve names for non-group conversations
         const otherUserIds = [...new Set(
@@ -240,9 +257,9 @@ class ChatService {
                 });
 
                 if (existingNotif) {
-                    let match = existingNotif.message.match(/(\d+)/);
-                    let count = match ? parseInt(match[1]) + 1 : 2;
-                    let newMsg = `لديك ${count} رسائل جديدة في هذه المحادثة`;
+                    let match = (existingNotif.message || '').match(/لديك\s+(\d+)\s+(?:رسالة|رسائل)/i);
+                    let count = match ? parseInt(match[1], 10) + 1 : 2;
+                    let newMsg = `لديك ${count} ${count === 1 ? 'رسالة جديدة' : 'رسائل جديدة'} في هذه المحادثة`;
                     await prisma.notification.update({
                         where: { id: existingNotif.id },
                         data: { message: newMsg, time: new Date().toISOString(), senderName }
@@ -252,7 +269,7 @@ class ChatService {
                         data: {
                             id: uuidv4(), senderId, receiverId: member.userId, senderName,
                             title: conv.isGroup ? `رسالة جديدة في ${conv.name}` : `رسالة جديدة من ${senderName}`,
-                            message: content.length > 50 ? content.substring(0, 50) + '...' : content,
+                            message: 'لديك 1 رسالة جديدة في هذه المحادثة',
                             type: 'info', time: new Date().toISOString(), read: 0, conversationId
                         }
                     });
