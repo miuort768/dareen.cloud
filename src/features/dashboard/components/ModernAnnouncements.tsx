@@ -122,7 +122,7 @@ export const ModernAnnouncements = () => {
 
   return (
     <div
-      className="overflow-hidden rounded-xl border border-border bg-card font-dash dark:border-primary/20 dark:bg-card"
+      className="overflow-hidden rounded-t-xl border border-border bg-card font-dash dark:border-primary/20 dark:bg-card"
       dir="rtl"
     >
       {/* الرأس: النوع + العداد + التنقل */}
@@ -140,9 +140,6 @@ export const ModernAnnouncements = () => {
         <div className="flex items-center gap-1.5">
           {announcements.length > 1 && (
             <>
-              <span className="flex h-7 min-w-7 items-center justify-center rounded-lg bg-surface px-1 text-micro font-semibold tabular-nums text-muted">
-                {currentIndex + 1} / {announcements.length}
-              </span>
               <Button
                 variant="outline"
                 size="icon"

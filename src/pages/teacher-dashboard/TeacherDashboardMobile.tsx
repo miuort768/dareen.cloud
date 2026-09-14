@@ -223,12 +223,12 @@ export const TeacherDashboardMobile = ({
                     isTeacher={true}
                   />
                 </SectionCard>
-                <WeekStrip counts={weekCounts} />
                 <QuickActions showQuickLinks={true} />
                 <SmartNotifications
                   lowBalanceStudents={lowBalanceStudents}
                   focusStudents={focusStudents || []}
                 />
+                <WeekStrip counts={weekCounts} />
               </>
             )}
 
