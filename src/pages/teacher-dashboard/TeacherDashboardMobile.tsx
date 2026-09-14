@@ -17,7 +17,6 @@ import { MonthlyReportPreview } from '../../features/dashboard/components/Monthl
 import { NextSessionHero } from '../../features/dashboard/components/NextSessionHero'
 import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
-import { FinancialSnapshot } from '../../features/dashboard/components/FinancialSnapshot'
 import { AttendanceChart } from '../../features/dashboard/components/AttendanceChart'
 import { GreetingStrip } from './GreetingStrip'
 import { WeekStrip } from './WeekStrip'
@@ -212,22 +211,22 @@ export const TeacherDashboardMobile = ({
                     />
                   </SectionCard>
                 )}
-                <WeekStrip counts={weekCounts} />
-                <QuickActions showQuickLinks={true} />
                 <SectionCard>
-                  <SmartNotifications
+                  <TeacherAchievements
+                    stats={stats}
                     lowBalanceStudents={lowBalanceStudents}
-                    focusStudents={focusStudents || []}
+                    isTeacher={true}
                   />
                 </SectionCard>
-                <SectionCard
-                  id="announcements-section-mobile"
-                  title="الإعلانات"
-                  tone="bg-info"
-                  className="scroll-mt-24"
-                >
+                <WeekStrip counts={weekCounts} />
+                <QuickActions showQuickLinks={true} />
+                <SmartNotifications
+                  lowBalanceStudents={lowBalanceStudents}
+                  focusStudents={focusStudents || []}
+                />
+                <div id="announcements-section-mobile" className="scroll-mt-24">
                   <ModernAnnouncements />
-                </SectionCard>
+                </div>
               </>
             )}
 
@@ -257,27 +256,12 @@ export const TeacherDashboardMobile = ({
             {activeTab === 'reports' && (
               <>
                 <SectionCard>
-                  <FinancialSnapshot
-                    monthNetProfit={stats.monthNetProfit}
-                    monthRevenue={stats.monthRevenue}
-                    expectedCollection={stats.expectedCollection}
-                    currency={stats.currency}
-                  />
-                </SectionCard>
-                <SectionCard>
                   <AttendanceChart rate={stats.attendanceRate} />
                 </SectionCard>
                 <SectionCard>
                   <TopAttendanceStudents
                     sessions={rawSessions}
                     onStudentClick={setBriefingStudent}
-                  />
-                </SectionCard>
-                <SectionCard>
-                  <TeacherAchievements
-                    stats={stats}
-                    lowBalanceStudents={lowBalanceStudents}
-                    isTeacher={true}
                   />
                 </SectionCard>
                 <SectionCard>

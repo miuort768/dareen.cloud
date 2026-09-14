@@ -1,4 +1,4 @@
-﻿import { Sparkles } from 'lucide-react'
+import { Sparkles, Users, CalendarDays, CheckCircle2 } from 'lucide-react'
 import { DashboardGreeting } from '../../shared/components/DashboardGreeting'
 import { CountUp } from '../../shared/components/CountUp'
 
@@ -21,6 +21,7 @@ export const GreetingStrip = ({
     name={name}
     fallbackName="المعلمة"
     nightMessage="ليلة طيبة"
+    hideTimeBadge
     end={
       typeof points === 'number' && points > 0 ? (
         <div
@@ -36,9 +37,9 @@ export const GreetingStrip = ({
       ) : null
     }
     stats={[
-      { label: studentsCount === 1 ? 'طالب' : 'طلاب', value: studentsCount },
-      { label: 'حصص اليوم', value: todayCount },
-      { label: 'منجزة هذا الشهر', value: monthCompleted },
+      { icon: Users, label: studentsCount === 1 ? 'طالب' : 'طلاب', value: studentsCount },
+      { icon: CalendarDays, label: 'حصص اليوم', value: todayCount },
+      { icon: CheckCircle2, label: 'مكتملة', value: monthCompleted },
     ]}
   />
 )

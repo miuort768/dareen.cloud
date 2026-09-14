@@ -10,6 +10,7 @@ export interface DashboardGreetingStat {
   label: string
   value: number
   formatter?: (value: number) => string
+  icon?: LucideIcon
 }
 
 export interface DashboardGreetingChip {
@@ -31,6 +32,8 @@ export interface DashboardGreetingProps {
   stats?: DashboardGreetingStat[]
   /** شرائح شارة صغيرة في أسفل البطاقة */
   chips?: DashboardGreetingChip[]
+  /** إخفاء شارة الوقت الدائرية النابضة (تُستخدم لتصميم هيرو المعلمة) */
+  hideTimeBadge?: boolean
   className?: string
 }
 
@@ -54,6 +57,7 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
   end,
   stats,
   chips,
+  hideTimeBadge = false,
   className,
 }) => {
   const firstName = (name || fallbackName).split(' ')[0] || fallbackName
@@ -98,7 +102,7 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
           </div>
 
           <div className="flex shrink-0 items-center gap-2.5">
-            <TimeOfDayBadge variant="glass" />
+            {!hideTimeBadge && <TimeOfDayBadge variant="glass" />}
             {end}
           </div>
         </div>
@@ -106,20 +110,30 @@ export const DashboardGreeting: React.FC<DashboardGreetingProps> = ({
         {hasFooter && (
           <div className="mt-5 border-t border-white/10 pt-4">
             {stats && stats.length > 0 && (
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-                {stats.map((stat) => (
-                  <div
-                    key={stat.label}
-                    className={cn(stats.length === 3 && 'max-sm:last:col-span-2')}
-                  >
-                    <CountUp
-                      value={stat.value}
-                      format={stat.formatter}
-                      className="block text-2xl font-black tabular-nums leading-none text-on-primary"
-                    />
-                    <p className="mt-1.5 text-[11px] font-bold text-white/90">{stat.label}</p>
-                  </div>
-                ))}
+              <div className="grid grid-cols-3 gap-2">
+                {stats.map((stat) => {
+                  const StatIcon = stat.icon
+                  return (
+                    <div
+                      key={stat.label}
+                      className="rounded-xl border border-white/20 bg-white/10 px-2 py-2.5 backdrop-blur-sm sm:px-3 sm:py-3"
+                    >
+                      {StatIcon && (
+                        <span className="mb-1.5 flex h-6 w-6 items-center justify-center rounded-md bg-white/15 sm:h-7 sm:w-7">
+                          <StatIcon size={13} className="text-on-primary" />
+                        </span>
+                      )}
+                      <CountUp
+                        value={stat.value}
+                        format={stat.formatter}
+                        className="block text-lg font-black tabular-nums leading-none text-on-primary sm:text-xl"
+                      />
+                      <p className="mt-1 truncate text-[10px] font-bold text-white/80 sm:text-[11px]">
+                        {stat.label}
+                      </p>
+                    </div>
+                  )
+                })}
               </div>
             )}
 

@@ -1,11 +1,4 @@
-import {
-  MessageCircle,
-  CalendarDays,
-  Megaphone,
-  MessagesSquare,
-  Wallet,
-  ChevronLeft,
-} from 'lucide-react'
+import { MessageCircle, CalendarDays, MessagesSquare, Wallet, ChevronLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
@@ -46,14 +39,6 @@ const actions = [
     href: '/schedule',
     color: 'text-info',
     iconBg: 'bg-info-soft',
-  },
-  {
-    title: 'الإعلانات',
-    subtitle: 'اطلع على آخر الأخبار',
-    icon: Megaphone,
-    href: '/announcements',
-    color: 'text-warning',
-    iconBg: 'bg-warning-soft',
   },
 ]
 

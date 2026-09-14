@@ -15,7 +15,6 @@ import { MonthlyReportPreview } from '../../features/dashboard/components/Monthl
 import { NextSessionHero } from '../../features/dashboard/components/NextSessionHero'
 import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
-import { FinancialSnapshot } from '../../features/dashboard/components/FinancialSnapshot'
 import { AttendanceChart } from '../../features/dashboard/components/AttendanceChart'
 import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
 import { GreetingStrip } from './GreetingStrip'
@@ -130,12 +129,12 @@ export const TeacherDashboardDesktop = ({
         </SectionCard>
       )}
 
-      <SectionCard delay={0.16}>
+      <motion.div {...fadeUp(0.16)}>
         <SmartNotifications
           lowBalanceStudents={lowBalanceStudents}
           focusStudents={focusStudents || []}
         />
-      </SectionCard>
+      </motion.div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <SectionCard delay={0.18}>
@@ -146,21 +145,12 @@ export const TeacherDashboardDesktop = ({
         </SectionCard>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <SectionCard delay={0.22} className="p-4">
           <TasksAndRequests tasks={tasks} />
         </SectionCard>
 
         <SectionCard delay={0.24} className="p-4">
-          <FinancialSnapshot
-            monthNetProfit={stats.monthNetProfit}
-            monthRevenue={stats.monthRevenue}
-            expectedCollection={stats.expectedCollection}
-            currency={stats.currency}
-          />
-        </SectionCard>
-
-        <SectionCard delay={0.26} className="p-4">
           <TeacherAchievements
             stats={stats}
             lowBalanceStudents={lowBalanceStudents}
@@ -169,9 +159,9 @@ export const TeacherDashboardDesktop = ({
         </SectionCard>
       </div>
 
-      <SectionCard delay={0.28} id="announcements-section" className="scroll-mt-32">
+      <motion.div {...fadeUp(0.26)} id="announcements-section" className="scroll-mt-32">
         <ModernAnnouncements />
-      </SectionCard>
+      </motion.div>
 
       {briefingStudent && briefingStudent.id && briefingStudent.name && briefingStudent.grade && (
         <StudentQuickBrief
