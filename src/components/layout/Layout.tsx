@@ -1,5 +1,5 @@
-import React, { useRef, Suspense } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import React, { Suspense } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Sidebar } from './Sidebar'
 import { Header } from './Header'
@@ -7,39 +7,17 @@ import { useCurrentUser, useSidebarCollapsed } from '../../context/AppContext'
 import { cn } from '../../lib/utils'
 import { PageLoader } from '../ui/PageLoader'
 import { ErrorBoundary } from '../ErrorBoundary'
-import { triggerHaptic } from '../../lib/haptics'
 import { AppTabBar } from '../../shared/components/mobile'
 
 export const Layout = () => {
   const location = useLocation()
-  const navigate = useNavigate()
   const currentUser = useCurrentUser()
   const sidebarCollapsed = useSidebarCollapsed()
   const isChatOnly = currentUser?.role === 'chat_user'
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
-  // Swipe-back gesture
-  const touchStartX = useRef(0)
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (location.pathname !== '/') {
-      touchStartX.current = e.touches[0]?.clientX ?? 0
-    }
-  }
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const endTouch = e.changedTouches[0]
-    if (!endTouch) return
-    const diff = endTouch.clientX - touchStartX.current
-    if (diff > 80 && location.pathname !== '/') {
-      triggerHaptic('light')
-      navigate(-1)
-    }
-    touchStartX.current = 0
-  }
-
   return (
     <div
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
       className="relative flex min-h-screen bg-background font-sans text-main transition-colors duration-slow"
       dir="rtl"
     >

@@ -79,7 +79,7 @@ export const EvaluationsHeader = ({
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="relative overflow-hidden rounded-2xl border border-border bg-card p-3 shadow-elevation-1 md:p-4"
+        className="relative rounded-2xl border border-border bg-card p-3 shadow-elevation-1 md:p-4"
       >
         <div className="flex flex-col gap-2 md:flex-row md:items-center">
           <div className="relative flex-1">
