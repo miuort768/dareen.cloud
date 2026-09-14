@@ -10,10 +10,10 @@ import { useChatUIStore } from '../store/chatUIStore'
 import { useChat, useMessages } from '../hooks/useChat'
 import { Image } from '../shared/components/ui'
 import { cn } from '../lib/utils'
-import { useAcademyName } from '../context/AppContext'
+import { useShortAcademyName } from '../context/AppContext'
 
 export const Chat = () => {
-  const academyName = useAcademyName()
+  const academyName = useShortAcademyName()
   React.useEffect(() => {
     document.title = `المحادثات | ${academyName} للتعليم والتدريب`
   }, [academyName])

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Search, ShieldCheck, MessageSquarePlus, Sun, Trash2 } from 'lucide-react'
 import { NotificationDropdown } from '../../../components/ui/NotificationDropdown'
 import { useDarkMode } from '../../../shared/hooks/useDarkMode'
-import { useAcademyName } from '../../../context/AppContext'
+import { useShortAcademyName } from '../../../context/AppContext'
 import { useChatUIStore } from '../../../store/chatUIStore'
 
 import { format } from 'date-fns'
@@ -40,7 +40,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
   const [theme, setTheme] = useDarkMode()
 
-  const academyName = useAcademyName()
+  const academyName = useShortAcademyName()
 
   const filteredConversations = conversations.filter((c) =>
     (c.displayName || '').toLowerCase().includes((searchQuery || '').toLowerCase()),
