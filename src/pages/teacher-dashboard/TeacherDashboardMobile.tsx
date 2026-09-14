@@ -156,6 +156,11 @@ export const TeacherDashboardMobile = ({
           points={stats.teacherPoints}
         />
 
+        {/* الإعلانات — بين الهيرو وشريط التبويبات */}
+        <div id="announcements-section-mobile" className="scroll-mt-24">
+          <ModernAnnouncements />
+        </div>
+
         <div
           role="tablist"
           aria-label="أقسام لوحة التحكم"
@@ -224,9 +229,6 @@ export const TeacherDashboardMobile = ({
                   lowBalanceStudents={lowBalanceStudents}
                   focusStudents={focusStudents || []}
                 />
-                <div id="announcements-section-mobile" className="scroll-mt-24">
-                  <ModernAnnouncements />
-                </div>
               </>
             )}
 

@@ -23,11 +23,8 @@ export const SmartNotifications = ({
 
   const alerts: {
     icon: LucideIcon
-    border: string
     bg: string
-    text: string
-    iconColor: string
-    accent: string
+    on: string
     title: string
     desc: string
   }[] = []
@@ -35,11 +32,8 @@ export const SmartNotifications = ({
   if (expired.length > 0) {
     alerts.push({
       icon: AlertCircle,
-      border: 'border-error dark:border-error',
-      bg: 'bg-error-soft dark:bg-error-soft',
-      text: 'text-error dark:text-error',
-      iconColor: 'text-error dark:text-error',
-      accent: 'bg-error dark:bg-error',
+      bg: 'bg-error',
+      on: 'text-on-error',
       title: `${expired.length} طالب منتهي اشتراكهم`,
       desc:
         expired
@@ -52,11 +46,8 @@ export const SmartNotifications = ({
   if (low.length > 0) {
     alerts.push({
       icon: Clock,
-      border: 'border-warning dark:border-warning',
-      bg: 'bg-warning-soft dark:bg-warning-soft',
-      text: 'text-warning dark:text-warning',
-      iconColor: 'text-warning dark:text-warning',
-      accent: 'bg-warning dark:bg-warning',
+      bg: 'bg-warning',
+      on: 'text-on-warning',
       title: `${low.length} طالب رصيدهم على وشك النفاد`,
       desc:
         low
@@ -69,11 +60,8 @@ export const SmartNotifications = ({
   focusStudents.slice(0, 3).forEach((f) => {
     alerts.push({
       icon: AlertTriangle,
-      border: 'border-warning dark:border-warning',
-      bg: 'bg-warning-soft dark:bg-warning-soft',
-      text: 'text-warning dark:text-warning',
-      iconColor: 'text-warning dark:text-warning',
-      accent: 'bg-warning dark:bg-warning',
+      bg: 'bg-warning',
+      on: 'text-on-warning',
       title: f.name,
       desc: f.reason,
     })
@@ -82,11 +70,8 @@ export const SmartNotifications = ({
   if (alerts.length === 0) {
     alerts.push({
       icon: Info,
-      border: 'border-success dark:border-success',
-      bg: 'bg-success-soft dark:bg-success-soft',
-      text: 'text-success dark:text-success',
-      iconColor: 'text-success dark:text-success',
-      accent: 'bg-success dark:bg-success',
+      bg: 'bg-success',
+      on: 'text-on-success',
       title: 'كل شيء على ما يرام',
       desc: 'لا توجد تنبيهات حالياً',
     })
@@ -125,22 +110,16 @@ export const SmartNotifications = ({
           <div
             key={`alert-${i}`}
             className={cn(
-              'relative flex items-start gap-3 overflow-hidden rounded-2xl border p-4 transition-colors duration-normal',
+              'flex items-start gap-3 rounded-none p-4 transition-colors duration-normal hover:brightness-110',
               alert.bg,
-              alert.border,
             )}
           >
-            <div className={cn('absolute bottom-0 start-0 top-0 w-1', alert.accent)} />
-            <div
-              className={cn(
-                'flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-card dark:border-border dark:bg-hover',
-              )}
-            >
-              <alert.icon size={17} className={alert.iconColor} />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/15">
+              <alert.icon size={17} className="text-white" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className={cn('mb-1 text-sm font-bold', alert.text)}>{alert.title}</p>
-              <p className="line-clamp-2 text-[11px] font-medium leading-relaxed text-muted">
+              <p className={cn('mb-1 text-sm font-black', alert.on)}>{alert.title}</p>
+              <p className="line-clamp-2 text-[11px] font-medium leading-relaxed text-white/80">
                 {alert.desc}
               </p>
             </div>

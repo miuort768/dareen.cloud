@@ -140,7 +140,7 @@ export const ModernAnnouncements = () => {
         <div className="flex items-center gap-1.5">
           {announcements.length > 1 && (
             <>
-              <span className="rounded-lg bg-surface px-2 py-0.5 text-micro font-semibold tabular-nums text-muted">
+              <span className="flex h-7 min-w-7 items-center justify-center rounded-lg bg-surface px-1 text-micro font-semibold tabular-nums text-muted">
                 {currentIndex + 1} / {announcements.length}
               </span>
               <Button
@@ -190,9 +190,9 @@ export const ModernAnnouncements = () => {
       </button>
 
       {/* شريط التقدم */}
-      <div className="relative h-1 w-full bg-surface">
+      <div className="relative h-1.5 w-full rounded-full bg-surface dark:bg-hover">
         <div
-          className="absolute start-0 top-0 h-full rounded-full bg-primary transition-all duration-500"
+          className="absolute start-0 top-0 h-full rounded-full bg-gradient-to-r from-primary via-primary-deep to-primary-hover transition-all duration-500"
           style={{ width: `${((currentIndex + 1) / announcements.length) * 100}%` }}
         />
       </div>

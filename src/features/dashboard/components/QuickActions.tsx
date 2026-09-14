@@ -1,4 +1,4 @@
-import { MessageCircle, CalendarDays, MessagesSquare, Wallet, ChevronLeft } from 'lucide-react'
+import { MessageCircle, CalendarDays, MessagesSquare, Wallet } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
@@ -9,12 +9,13 @@ interface QuickActionsProps {
 
 const actions = [
   {
-    title: 'سجل الدفعات',
+    title: 'الدفعات',
     subtitle: 'متابعة مستحقاتك وفواتيرك',
     icon: Wallet,
     href: '/teacher-payment-history',
     color: 'text-success',
     iconBg: 'bg-success-soft',
+    mobileFill: 'bg-success text-on-success',
   },
   {
     title: 'الدردشة',
@@ -23,6 +24,7 @@ const actions = [
     href: '/chat',
     color: 'text-primary',
     iconBg: 'bg-primary-soft',
+    mobileFill: 'bg-primary text-on-primary',
   },
   {
     title: 'المنتدى',
@@ -31,14 +33,16 @@ const actions = [
     href: '/forum',
     color: 'text-success',
     iconBg: 'bg-success-soft',
+    mobileFill: 'bg-warning text-on-warning',
   },
   {
-    title: 'الجدول الأسبوعي',
+    title: 'الجدول',
     subtitle: 'عرض الحصص القادمة',
     icon: CalendarDays,
     href: '/schedule',
     color: 'text-info',
     iconBg: 'bg-info-soft',
+    mobileFill: 'bg-info text-on-info',
   },
 ]
 
@@ -115,25 +119,22 @@ export const QuickActions = ({ showQuickLinks = true }: QuickActionsProps) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05, duration: 0.3 }}
                     className={cn(
-                      'flex w-full items-center gap-3 rounded-2xl p-3.5',
-                      'border border-border bg-card shadow-elevation-1',
-                      'group transition-colors duration-normal hover:border-primary/30 active:scale-[0.97]',
+                      'flex w-full items-center gap-3 rounded-2xl p-3.5 shadow-elevation-1',
+                      action.mobileFill,
+                      'group transition-all duration-normal hover:brightness-110 active:scale-[0.97]',
                     )}
                   >
                     <div
                       className={cn(
-                        'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl',
-                        action.iconBg,
+                        'flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15',
                         'transition-transform duration-normal group-hover:scale-105',
                       )}
                     >
-                      <Icon size={19} className={action.color} />
+                      <Icon size={19} className="text-white" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-sm font-bold leading-tight text-main">{action.title}</h3>
-                      <p className="mt-0.5 text-[10px] font-medium text-muted">{action.subtitle}</p>
+                      <h3 className="truncate text-sm font-black leading-tight">{action.title}</h3>
                     </div>
-                    <ChevronLeft size={14} className="shrink-0 text-muted opacity-50" />
                   </motion.div>
                 </button>
               )

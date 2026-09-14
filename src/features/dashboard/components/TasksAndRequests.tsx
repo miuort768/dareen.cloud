@@ -7,9 +7,10 @@ import { Badge } from '../../../shared/components/ui'
 
 interface TasksAndRequestsProps {
   tasks: Task[]
+  limit?: number
 }
 
-export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
+export const TasksAndRequests = ({ tasks, limit = 5 }: TasksAndRequestsProps) => {
   const urgentCount = tasks.filter((t) => t.priority === 'high').length
 
   return (
@@ -40,7 +41,7 @@ export const TasksAndRequests = ({ tasks }: TasksAndRequestsProps) => {
 
       <div className="custom-scrollbar flex-1 space-y-2 overflow-y-auto">
         {tasks.length > 0 ? (
-          tasks.slice(0, 5).map((task) => (
+          tasks.slice(0, limit).map((task) => (
             <div
               key={task.id}
               className={cn(

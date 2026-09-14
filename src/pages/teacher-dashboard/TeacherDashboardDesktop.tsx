@@ -15,7 +15,6 @@ import { MonthlyReportPreview } from '../../features/dashboard/components/Monthl
 import { NextSessionHero } from '../../features/dashboard/components/NextSessionHero'
 import { QuickActions } from '../../features/dashboard/components/QuickActions'
 import { SmartNotifications } from '../../features/dashboard/components/SmartNotifications'
-import { AttendanceChart } from '../../features/dashboard/components/AttendanceChart'
 import { LiveSessions } from '../../features/dashboard/components/LiveSessions'
 import { GreetingStrip } from './GreetingStrip'
 import { WeekStrip } from './WeekStrip'
@@ -88,6 +87,11 @@ export const TeacherDashboardDesktop = ({
         />
       </motion.div>
 
+      {/* الإعلانات — مباشرة تحت الهيرو */}
+      <motion.div {...fadeUp(0.02)} id="announcements-section" className="scroll-mt-32">
+        <ModernAnnouncements />
+      </motion.div>
+
       {/* الحصة القادمة + الأسبوع — نصفا الشاشة */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <motion.div {...fadeUp(0.04)}>
@@ -136,18 +140,13 @@ export const TeacherDashboardDesktop = ({
         />
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-        <SectionCard delay={0.18}>
-          <AttendanceChart rate={stats.attendanceRate} />
-        </SectionCard>
-        <SectionCard delay={0.2}>
-          <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
-        </SectionCard>
-      </div>
+      <SectionCard delay={0.18}>
+        <TopAttendanceStudents sessions={rawSessions} onStudentClick={setBriefingStudent} />
+      </SectionCard>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <SectionCard delay={0.22} className="p-4">
-          <TasksAndRequests tasks={tasks} />
+          <TasksAndRequests tasks={tasks} limit={3} />
         </SectionCard>
 
         <SectionCard delay={0.24} className="p-4">
@@ -158,10 +157,6 @@ export const TeacherDashboardDesktop = ({
           />
         </SectionCard>
       </div>
-
-      <motion.div {...fadeUp(0.26)} id="announcements-section" className="scroll-mt-32">
-        <ModernAnnouncements />
-      </motion.div>
 
       {briefingStudent && briefingStudent.id && briefingStudent.name && briefingStudent.grade && (
         <StudentQuickBrief

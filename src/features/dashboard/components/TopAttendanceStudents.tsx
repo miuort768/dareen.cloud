@@ -1,4 +1,4 @@
-import { TrendingUp, User, Medal } from 'lucide-react'
+import { TrendingUp, User, Medal, Trophy } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useMemo } from 'react'
 
@@ -82,33 +82,32 @@ export const TopAttendanceStudents = ({
               key={`att-${i}`}
               type="button"
               onClick={() => onStudentClick?.({ id: stu.id, name: stu.name })}
-              className="hover:border-warning/40 w-full cursor-pointer rounded-2xl border border-border bg-surface p-2.5 text-start transition-colors duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-hover dark:hover:border-border"
+              className="hover:border-warning/40 w-full cursor-pointer rounded-2xl border border-border bg-surface p-3 text-start transition-colors duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:border-border dark:bg-hover dark:hover:border-border"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-2.5">
                   <div
                     className={cn(
-                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-black tabular-nums',
+                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl',
                       i === 0
-                        ? 'bg-warning-soft text-warning dark:bg-primary/10 dark:text-primary'
+                        ? 'bg-warning text-on-warning'
                         : 'bg-hover text-muted dark:bg-surface dark:text-muted',
                     )}
                   >
-                    {i + 1}
+                    {i === 0 ? <Trophy size={14} /> : <Medal size={14} />}
                   </div>
-                  <p className="truncate text-sm font-bold text-main">{stu.name}</p>
+                  <p className="truncate text-sm font-black text-main">{stu.name}</p>
                 </div>
                 <div className="flex shrink-0 items-baseline gap-1">
-                  <span className="text-base font-black tabular-nums text-main">{stu.count}</span>
+                  <span className="font-dash text-base font-black tabular-nums text-main">
+                    {stu.count}
+                  </span>
                   <span className="text-[10px] font-bold text-muted">حصة</span>
                 </div>
               </div>
-              <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-hover dark:bg-surface">
+              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-hover dark:bg-surface">
                 <div
-                  className={cn(
-                    'h-full rounded-full transition-all duration-700',
-                    i === 0 ? 'bg-warning dark:bg-primary' : 'bg-warning/60 dark:bg-primary/60',
-                  )}
+                  className="h-full rounded-full bg-gradient-to-r from-warning to-warning-hover transition-all duration-700 dark:from-primary dark:to-primary-hover"
                   style={{ width: `${Math.max((stu.count / leaderCount) * 100, 8)}%` }}
                   aria-hidden="true"
                 />
@@ -125,7 +124,7 @@ export const TopAttendanceStudents = ({
         )}
       </div>
 
-      <div className="mt-3 flex items-center justify-between rounded-2xl bg-warning p-3 dark:bg-primary">
+      <div className="mt-3 flex items-center justify-between rounded-2xl bg-gradient-to-l from-warning to-warning-hover p-3 dark:from-primary dark:to-primary-hover">
         <div>
           <p className="text-[11px] font-bold text-on-warning dark:text-main">إجمالي حصص الشهر</p>
           <p className="text-base font-black tabular-nums text-on-warning dark:text-on-primary">
