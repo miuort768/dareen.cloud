@@ -19,14 +19,11 @@ class ChatService {
     }
 
     async getAvailableUsers({ requestingUserId, role }) {
-        // Non-admin users may only contact the academy (admins) — teachers,
-        // parents and students never see each other in the starter list.
+        // Only the admin sees all users. Students, teachers and parents never
+        // see a users list — they only participate in the groups the admin
+        // created for them.
         if (role !== 'admin') {
-            const admins = await prisma.user.findMany({
-                where: { role: 'admin', id: { not: requestingUserId } },
-                select: { id: true, name: true, username: true }
-            });
-            return admins.map(a => ({ ...a, type: 'admin' }));
+            return [];
         }
 
         const [teachers, admins, parents, students, chatProfiles] = await Promise.all([
@@ -45,7 +42,7 @@ class ChatService {
         ];
     }
 
-    async getConversations(userId) {
+    async getConversations(userId, role) {
         const memberships = await prisma.conversationMember.findMany({
             where: { userId },
             select: { conversationId: true }
@@ -58,11 +55,19 @@ class ChatService {
             include: { members: { select: { userId: true } } }
         });
 
+        // Non-admin users only see the groups the admin added them to — any
+        // direct conversation is hidden from their list.
+        const visibleConversations = role === 'admin'
+            ? conversations
+            : conversations.filter(c => c.isGroup);
+        if (visibleConversations.length === 0) return [];
+
+        const visibleConvIds = visibleConversations.map(c => c.id);
         const lastMessages = await prisma.message.findMany({
-            where: { conversationId: { in: convIds } },
+            where: { conversationId: { in: visibleConvIds } },
             orderBy: { timestamp: 'desc' },
             distinct: ['conversationId'],
-            take: convIds.length,
+            take: visibleConvIds.length,
             select: { conversationId: true, content: true, timestamp: true }
         });
         const lastMsgMap = {};
@@ -70,7 +75,7 @@ class ChatService {
 
         const unreadCounts = {};
         const notifs = await prisma.notification.findMany({
-            where: { conversationId: { in: convIds }, receiverId: userId, read: 0 },
+            where: { conversationId: { in: visibleConvIds }, receiverId: userId, read: 0 },
             select: { conversationId: true, message: true }
         });
         // sendNotification keeps ONE unread row per conversation whose message
@@ -84,7 +89,7 @@ class ChatService {
 
         // Batch-resolve names for non-group conversations
         const otherUserIds = [...new Set(
-            conversations
+            visibleConversations
                 .filter(c => !c.isGroup)
                 .map(c => c.members.find(m => m.userId !== userId)?.userId)
                 .filter(Boolean)
@@ -100,7 +105,7 @@ class ChatService {
             nameMap[id] = profile?.name || id;
         }
 
-        return conversations.map(c => {
+        return visibleConversations.map(c => {
             const otherMember = c.members.find(m => m.userId !== userId);
             let displayName = c.name;
             if (!c.isGroup && otherMember) {

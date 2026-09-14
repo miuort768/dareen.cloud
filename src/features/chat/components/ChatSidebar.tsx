@@ -84,17 +84,19 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
         </div>
 
         <div className="flex items-center gap-2 text-muted">
-          <button
-            onClick={() => {
-              setIsEditingGroup(false)
-              setShowNewChatModal(true)
-            }}
-            className="relative rounded-full p-2 outline-none transition-colors hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-white/5"
-            title="دردشة جديدة"
-            aria-label="دردشة جديدة"
-          >
-            <MessageSquarePlus size={22} />
-          </button>
+          {currentUser?.role === 'admin' && (
+            <button
+              onClick={() => {
+                setIsEditingGroup(false)
+                setShowNewChatModal(true)
+              }}
+              className="relative rounded-full p-2 outline-none transition-colors hover:bg-black/5 focus-visible:ring-2 focus-visible:ring-focus dark:hover:bg-white/5"
+              title="دردشة جديدة"
+              aria-label="دردشة جديدة"
+            >
+              <MessageSquarePlus size={22} />
+            </button>
+          )}
           {currentUser?.role === 'admin' && (
             <button
               type="button"
@@ -116,8 +118,10 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
           <Search className="me-3 shrink-0 text-muted" size={18} />
           <input
             type="text"
-            aria-label="البحث أو بدء دردشة"
-            placeholder="البحث أو بدء دردشة جديدة"
+            aria-label={currentUser?.role === 'admin' ? 'البحث أو بدء دردشة' : 'البحث في المحادثات'}
+            placeholder={
+              currentUser?.role === 'admin' ? 'البحث أو بدء دردشة جديدة' : 'البحث في المحادثات'
+            }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="flex-1 border-0 bg-transparent px-4 py-1 text-start text-sm font-medium text-main outline-none ring-0 placeholder:text-muted focus:ring-0"

@@ -153,6 +153,9 @@ export const useChatSocketInit = () => {
     }
 
     const handleNewConversation = (conv: ChatConversation) => {
+      // Non-admins only see the groups the admin added them to — ignore any
+      // direct-conversation event so a hidden chat never flashes into the list.
+      if (currentUser?.role !== 'admin' && !conv.isGroup) return
       queryClient.setQueryData(['conversations', currentUserId], (old: unknown) => {
         const conversations = (Array.isArray(old) ? old : []) as ChatConversation[]
         if (conversations.find((c: ChatConversation) => c.id === conv.id)) return conversations

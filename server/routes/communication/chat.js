@@ -61,7 +61,7 @@ router.get('/users', async (req, res) => {
 router.get('/conversations', async (req, res) => {
     const userId = req.user.id;
     try {
-        const convs = await chatService.getConversations(userId);
+        const convs = await chatService.getConversations(userId, req.user.role);
         ResponseHandler.success(res, convs);
     } catch (err) {
         ResponseHandler.serverError(res, err, 'Chat route error');
@@ -72,8 +72,8 @@ router.post('/conversations', async (req, res) => {
     try {
         const body = req.body;
 
-        if (body.isGroup && req.user.role !== 'admin') {
-            return ResponseHandler.error(res, 'Only admins can create groups', 403);
+        if (req.user.role !== 'admin') {
+            return ResponseHandler.error(res, 'Only admins can create conversations', 403);
         }
 
         if (!body.members) body.members = [];
@@ -189,17 +189,38 @@ router.post('/conversations/:id/messages', async (req, res) => {
 
         const io = req.app.get('socketio');
         if (io) {
-            const members = await prisma.conversationMember.findMany({
-                where: { conversationId },
-                select: { userId: true }
-            });
+            const [conv, members] = await Promise.all([
+                prisma.conversation.findUnique({
+                    where: { id: conversationId },
+                    select: { isGroup: true }
+                }),
+                prisma.conversationMember.findMany({
+                    where: { conversationId },
+                    select: { userId: true }
+                })
+            ]);
 
             logger.info(`Broadcasting message to conversation ${conversationId} (${members.length} members)`);
 
             io.to(conversationId).emit('new_message', newMessage);
 
+            // For direct conversations, only admin members receive the per-user
+            // real-time ping — non-admins see groups only and must not get
+            // notified about direct chats hidden from their list.
+            let adminIds = new Set();
+            if (!conv || !conv.isGroup) {
+                const admins = await prisma.user.findMany({
+                    where: { role: 'admin' },
+                    select: { id: true }
+                });
+                adminIds = new Set(admins.map(a => a.id));
+            }
+
             for (const member of members) {
                 if (member.userId !== senderId) {
+                    if (!conv || !conv.isGroup) {
+                        if (!adminIds.has(member.userId)) continue;
+                    }
                     io.to(`user_${member.userId}`).emit('new_message', newMessage);
                 }
             }
