@@ -1,7 +1,7 @@
-import { Award, Plus, X, Search, Users, Star, UserCheck } from 'lucide-react'
+import { Award, Plus, X, Search, Users, Star, UserCheck, Filter } from 'lucide-react'
 import { motion } from 'framer-motion'
-import { cn } from '../../../lib/utils'
 import { GradientHeroCard } from '../../../shared/components/GradientHeroCard'
+import { FilterDropdown } from '../../../shared/components/ui/FilterDropdown'
 
 interface Stats {
   totalStudents: number
@@ -21,12 +21,12 @@ interface EvaluationsHeaderProps {
   onAddClick: () => void
 }
 
-const filters = [
-  { value: '', label: 'الكل' },
-  { value: 'evaluated', label: 'تم تقييمهم' },
-  { value: 'not-evaluated', label: 'غير مقيمين' },
-  { value: 'highest-xp', label: 'الأعلى XP' },
-  { value: 'lowest-xp', label: 'الأقل XP' },
+const filterItems = [
+  { key: '', label: 'الكل' },
+  { key: 'evaluated', label: 'تم تقييمهم' },
+  { key: 'not-evaluated', label: 'غير مقيمين' },
+  { key: 'highest-xp', label: 'الأعلى XP' },
+  { key: 'lowest-xp', label: 'الأقل XP' },
 ]
 
 export const EvaluationsHeader = ({
@@ -74,7 +74,7 @@ export const EvaluationsHeader = ({
         }
       />
 
-      {/* Toolbar — بحث + فلاتر + زر الإضافة */}
+      {/* Toolbar — بحث + فلترة + زر الإضافة */}
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -102,40 +102,32 @@ export const EvaluationsHeader = ({
               </button>
             )}
           </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <div className="flex h-10 items-center gap-1 rounded-lg border border-primary/20 bg-primary-soft px-2.5 dark:bg-primary/10">
-              <Award size={11} className="text-primary" />
-              <span className="text-xs font-bold tabular-nums text-primary">
-                {stats.totalXP.toLocaleString()}
-              </span>
-              <span className="text-micro font-black text-primary">XP</span>
-            </div>
-            {showAddButton && (
-              <button
-                onClick={onAddClick}
-                className="flex h-10 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-10"
-              >
-                <Plus size={11} /> تقييم
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="no-scrollbar mt-2.5 flex items-center gap-1.5 overflow-x-auto md:mt-3">
-          {filters.map((f) => (
-            <button
-              key={f.value}
-              onClick={() => onFilterStatusChange(f.value)}
-              aria-pressed={filterStatus === f.value}
-              className={cn(
-                'shrink-0 whitespace-nowrap rounded-lg px-2.5 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
-                filterStatus === f.value
-                  ? 'bg-primary text-on-primary shadow-elevation-1'
-                  : 'border border-border bg-surface font-medium text-muted hover:bg-hover hover:text-main',
+          <div className="grid grid-cols-1 gap-2 sm:flex sm:items-center sm:gap-2">
+            <FilterDropdown
+              icon={Filter}
+              className="w-full sm:w-64"
+              value={filterStatus}
+              items={filterItems}
+              onChange={onFilterStatusChange}
+            />
+            <div className="flex items-center justify-between gap-2 sm:justify-start">
+              <div className="flex h-10 items-center gap-1 rounded-lg border border-primary/20 bg-primary-soft px-2.5 dark:bg-primary/10">
+                <Award size={11} className="text-primary" />
+                <span className="text-xs font-bold tabular-nums text-primary">
+                  {stats.totalXP.toLocaleString()}
+                </span>
+                <span className="text-micro font-black text-primary">XP</span>
+              </div>
+              {showAddButton && (
+                <button
+                  onClick={onAddClick}
+                  className="flex h-10 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-bold text-on-primary transition-all hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:h-10"
+                >
+                  <Plus size={11} /> تقييم
+                </button>
               )}
-            >
-              {f.label}
-            </button>
-          ))}
+            </div>
+          </div>
         </div>
       </motion.div>
     </div>

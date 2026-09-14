@@ -68,8 +68,8 @@ export const EvaluationFormFields = ({
       <div className="mb-2.5 flex items-center justify-between">
         <label className="text-xs font-bold text-muted">نقاط المكافأة (XP)</label>
       </div>
-      <div className="mb-3 flex flex-wrap gap-1.5">
-        {[5, 10, 15, 20, 25, 30, 50].map((p) => {
+      <div className="mb-3 flex flex-nowrap gap-1.5">
+        {[5, 15, 25, 40, 50].map((p) => {
           const isSelected = formData.points === p
           return (
             <button
@@ -78,7 +78,7 @@ export const EvaluationFormFields = ({
               onClick={() => onChange({ ...formData, points: p })}
               aria-pressed={isSelected}
               className={cn(
-                'rounded-lg border px-3 py-1.5 text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
+                'min-w-0 flex-1 rounded-lg border px-0 py-1.5 text-center text-micro font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus',
                 isSelected
                   ? 'border-primary bg-primary-soft font-black text-primary shadow-elevation-1 dark:bg-primary/10'
                   : 'border-border bg-surface text-muted hover:border-primary/40 hover:text-primary',
