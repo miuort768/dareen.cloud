@@ -87,7 +87,10 @@ class ChatService {
             const otherMember = c.members.find(m => m.userId !== userId);
             let displayName = c.name;
             if (!c.isGroup && otherMember) {
-                displayName = nameMap[otherMember.userId] || otherMember.userId;
+                // Guests (public chat) live only in conversation.name — never
+                // fall through to the raw guest_xxx id when the member's
+                // profile cannot be resolved.
+                displayName = nameMap[otherMember.userId] || c.name || otherMember.userId;
             }
             const lm = lastMsgMap[c.id];
             return {
@@ -208,10 +211,15 @@ class ChatService {
     }
 
     async getMessages(conversationId) {
-        return await prisma.message.findMany({
+        // Bounded read — same amplification guard as the public endpoint:
+        // an unbounded findMany turns a busy conversation into a multi-MB
+        // response (bandwidth + memory). Keep the latest 500, oldest-first.
+        const messages = await prisma.message.findMany({
             where: { conversationId },
-            orderBy: { timestamp: 'asc' }
+            orderBy: { timestamp: 'desc' },
+            take: 500,
         });
+        return messages.reverse();
     }
 
     async sendNotification({ conversationId, senderId, senderName, content }) {

@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import { ChatSidebar } from '../features/chat/components/ChatSidebar'
 import { ChatWindow } from '../features/chat/components/ChatWindow'
 import { ChatModals } from '../features/chat/components/ChatModals'
@@ -58,6 +58,7 @@ export const Chat = () => {
   const isConnected = useChatStore((s) => s.isConnected)
   const menuRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
+  const [searchParams, setSearchParams] = useSearchParams()
 
   React.useEffect(() => {
     const id = selectedConv?.id || null
@@ -131,6 +132,16 @@ export const Chat = () => {
       window.history.replaceState({}, document.title)
     }
   }, [location.state, availableUsers, handleCreateDirectChat])
+
+  // Deep-link: clicking a notification navigates to /chat?conversationId=X
+  React.useEffect(() => {
+    const convId = searchParams.get('conversationId')
+    if (!convId) return
+    if (conversations.length === 0) return
+    const conv = conversations.find((c) => c.id === convId)
+    if (conv) setSelectedConv(conv)
+    setSearchParams({}, { replace: true })
+  }, [searchParams, conversations, setSelectedConv, setSearchParams])
 
   const handleDeleteAllClick = () => {
     setDeleteType('all_conversations')

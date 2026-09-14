@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Search, ShieldCheck, MessageSquarePlus, Sun, Trash2 } from 'lucide-react'
 import { NotificationDropdown } from '../../../components/ui/NotificationDropdown'
 import { useDarkMode } from '../../../shared/hooks/useDarkMode'
+import { useAcademyName } from '../../../context/AppContext'
 import { useChatUIStore } from '../../../store/chatUIStore'
 
 import { format } from 'date-fns'
@@ -33,6 +34,8 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
 
   const [theme, setTheme] = useDarkMode()
 
+  const academyName = useAcademyName()
+
   const filteredConversations = conversations.filter((c) =>
     (c.displayName || '').toLowerCase().includes((searchQuery || '').toLowerCase()),
   )
@@ -58,7 +61,7 @@ export const ChatSidebar: React.FC<ChatSidebarProps> = ({
           </div>
           <div className="flex flex-col text-start">
             <span className="text-xs font-semibold leading-tight text-main">
-              واتساب دارين السابعة
+              واتساب {academyName}
             </span>
             <span className="text-[10px] font-thin text-muted">تواصل أسهل وأسرع</span>
           </div>

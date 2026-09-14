@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const authAccounts = require('../services/authAccounts');
+const { prisma } = require('../utils/prisma');
 const { updatePresence, removePresence } = require('../services/executive/presence');
 
 const socketRateLimiter = (maxPerWindow = 60, windowMs = 10000) => {
@@ -91,9 +92,18 @@ module.exports = (io) => {
             io.to('admin_room').emit('presence_update', { userId, name: user.name, role: user.role, status: 'online' });
         }
 
-        socket.on('join_conversation', (conversationId) => {
+        socket.on('join_conversation', async (conversationId) => {
             if (!conversationId || !userId) return;
             if (!rateLimit(socket, 'join_conversation')) return;
+            // Real-time rooms mirror the REST membership rule — a guessed
+            // conversationId must not subscribe a socket to its broadcast.
+            const isAdmin = user?.role === 'admin' || user?.permissions?.includes('*');
+            if (!isAdmin) {
+                const membership = await prisma.conversationMember.findUnique({
+                    where: { conversationId_userId: { conversationId, userId } }
+                });
+                if (!membership) return;
+            }
             socket.join(conversationId);
         });
 
@@ -108,9 +118,18 @@ module.exports = (io) => {
         });
 
         const typingThrottle = new Map();
-        socket.on('typing', (data) => {
+        socket.on('typing', async (data) => {
             if (!data?.conversationId || !userId) return;
             if (!rateLimit(socket, 'typing')) return;
+            // Same membership gate — typing must never leak outside a
+            // conversation the sender can actually participate in.
+            const isAdmin = user?.role === 'admin' || user?.permissions?.includes('*');
+            if (!isAdmin) {
+                const membership = await prisma.conversationMember.findUnique({
+                    where: { conversationId_userId: { conversationId: data.conversationId, userId } }
+                });
+                if (!membership) return;
+            }
             const key = `${userId}:${data.conversationId}`;
             const now = Date.now();
             const last = typingThrottle.get(key);

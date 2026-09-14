@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom'
 import { useDialogFocus } from '../../../shared/hooks/useDialogFocus'
 import React from 'react'
 import { X, Users as UsersIcon, ChevronLeft, Search, Check } from 'lucide-react'
@@ -75,7 +76,13 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
     }, [setShowDeleteConfirm, setItemToDelete]),
   )
 
-  return (
+  // The page root is a fixed z-10 element (its own stacking context) while
+  // AppTabBar is a root-level fixed z-50 sibling — fixed modals rendered
+  // inside here can never paint above the bar on phone. Portal out (same
+  // contract as EvaluationFormModal/EditNameModal).
+  if (typeof document === 'undefined') return null
+
+  return createPortal(
     <>
       {/* New Chat / Group Flow Modal */}
       {showNewChatModal && (
@@ -358,6 +365,7 @@ export const ChatModals: React.FC<ChatModalsProps> = ({
           </div>
         </div>
       )}
-    </>
+    </>,
+    document.body,
   )
 }

@@ -126,11 +126,10 @@ export const ChatMessageList = ({
                   </span>
                   {isMe && (
                     <div>
-                      {msg.readAt ? (
-                        <CheckCheck size={14} className="text-on-primary" />
-                      ) : (
-                        <CheckCheck size={14} className="text-white/80" />
-                      )}
+                      {/* readAt is never populated server-side (per-recipient
+                          read state needs a Message migration) — show a single
+                          delivered check instead of a dead read/unread branch. */}
+                      <CheckCheck size={14} className="text-white/80" />
                     </div>
                   )}
                 </div>
