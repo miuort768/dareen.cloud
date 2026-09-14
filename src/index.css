@@ -93,6 +93,7 @@ html, body {
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
     overflow-x: hidden !important;
+    overscroll-behavior-x: none;
     width: 100vw;
     max-width: 100%;
     margin: 0;
@@ -117,6 +118,7 @@ html, body {
     padding: 0;
     transition: background 0.5s ease, color 0.5s ease;
     overflow-x: hidden !important;
+    overscroll-behavior-x: none;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
   }
