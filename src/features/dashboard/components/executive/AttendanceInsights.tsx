@@ -4,6 +4,7 @@ import { CalendarCheck, UserCheck, UserMinus, Users, BookOpen, Clock } from 'luc
 import { api } from '../../../../lib/api'
 import type { Session } from '../../../../types'
 import { getSafeArray } from '../../utils/dashboardHelpers'
+import { parseTimeTo24 } from '../../../attendance/utils/slotUtils'
 import { cn } from '@/lib/utils'
 
 const COMPLETED = ['completed', 'مكتملة', 'تم الإنجاز']
@@ -123,8 +124,8 @@ export const AttendanceInsights = memo(function AttendanceInsights() {
       if (st) studentCounts[st] = (studentCounts[st] || 0) + 1
       const sub = (s.subject || '').trim()
       if (sub) subjectCounts[sub] = (subjectCounts[sub] || 0) + 1
-      const h = parseInt(String(s.time || '').split(':')[0] ?? '', 10)
-      if (!Number.isNaN(h) && h >= 0 && h <= 23) hourCounts[h] = (hourCounts[h] || 0) + 1
+      const { h } = parseTimeTo24(s.time)
+      if (h >= 0 && h <= 23) hourCounts[h] = (hourCounts[h] || 0) + 1
     })
 
     const teachers = rankFromCounts(teacherCounts)

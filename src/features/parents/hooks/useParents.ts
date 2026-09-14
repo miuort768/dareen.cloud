@@ -2,6 +2,7 @@ import { formatLocalDate } from '../../../lib/utils'
 import { useState, useMemo } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { parentsService } from '../services/parentsService'
+import { to24Minutes } from '../../attendance/utils/slotUtils'
 import type { Parent, Enrollment } from '../../../types'
 import type { FamilyScheduleItem } from '../types'
 import { useShowNotification } from '../../../context/AppContext'
@@ -321,11 +322,6 @@ export const useParents = () => {
     )
 
     const DAY_ORDER = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
-    const toMinutes = (h: string) => {
-      const [hh, mm = '0'] = String(h || '').split(':')
-      const mins = parseInt(hh ?? '0', 10) * 60 + parseInt(mm ?? '0', 10)
-      return Number.isNaN(mins) ? 0 : mins
-    }
     const teacherNameOf = (en: Enrollment) => {
       const t = en.teacher
       if (typeof t === 'string') return t
@@ -347,7 +343,7 @@ export const useParents = () => {
       .sort((a, b) => {
         const dayDiff = DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day)
         if (dayDiff !== 0) return dayDiff
-        return toMinutes(a.hour) - toMinutes(b.hour)
+        return to24Minutes(a.hour, a.period) - to24Minutes(b.hour, b.period)
       })
 
     const totalEnrollments = children.reduce(

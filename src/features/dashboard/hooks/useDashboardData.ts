@@ -23,7 +23,12 @@ import {
   getPaidInv,
   getManualExp,
 } from '../utils/dashboardHelpers'
-import { normalizeDayName } from '../../attendance/utils/slotUtils'
+import {
+  normalizeDayName,
+  to24Minutes,
+  periodLabel,
+  normalizePeriod,
+} from '../../attendance/utils/slotUtils'
 import { INVOICE_STATUS, normalizeInvoiceStatus } from '../../../types/invoice'
 
 export const useDashboardData = (currentUser: User | null) => {
@@ -490,15 +495,14 @@ export const useDashboardData = (currentUser: User | null) => {
                   if (normalizeDayName(slot.day) !== currentDayName) return
                   // Skip if this student already has a scheduled/in-progress Session record
                   if (existingStudentIds.has(s.id)) return
-                  // Parse slot hour to check if it's still upcoming
-                  const [h, m] = (slot.hour || '0:0').split(':').map(Number)
-                  const slotMinutes = (h || 0) * 60 + (m || 0)
+                  // Parse slot hour + period (12h) to check if it's still upcoming
+                  const slotMinutes = to24Minutes(slot.hour, slot.period)
                   if (slotMinutes <= nowMinutes) return // Already passed
                   scheduleTimeline.push({
-                    id: `schedule-${s.id}-${slot.hour}`,
+                    id: `schedule-${s.id}-${slot.hour}-${normalizePeriod(slot.period)}`,
                     studentId: s.id,
                     studentName: s.name,
-                    time: slot.hour || '',
+                    time: `${slot.hour} ${periodLabel(slot.period, true)}`,
                     subject: en.subject || 'دورة',
                     status: 'scheduled',
                   })

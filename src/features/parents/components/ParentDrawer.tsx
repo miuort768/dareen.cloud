@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import { cn } from '../../../lib/utils'
 import { ProgressBar } from '../../../shared/components/ui'
+import { to24Minutes } from '../../attendance/utils/slotUtils'
 import type { Parent, Student } from '../../../types'
 import type { FamilyScheduleItem } from '../types'
 
@@ -264,12 +265,6 @@ const OverviewTab = ({
 
 const DAY_ORDER = ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة']
 
-const toMinutes = (h: string) => {
-  const [hh = '', mm = '0'] = String(h || '').split(':')
-  const mins = parseInt(hh, 10) * 60 + parseInt(mm, 10)
-  return Number.isNaN(mins) ? 0 : mins
-}
-
 const ScheduleTab = ({ familySchedule }: { familySchedule: FamilyScheduleItem[] }) => (
   <div className="space-y-3">
     <h5 className="flex items-center gap-1.5 text-[9px] font-bold text-muted">
@@ -280,7 +275,7 @@ const ScheduleTab = ({ familySchedule }: { familySchedule: FamilyScheduleItem[] 
       DAY_ORDER.map((day) => {
         const dayItems = familySchedule
           .filter((s) => s.day === day)
-          .sort((a, b) => toMinutes(a.hour) - toMinutes(b.hour))
+          .sort((a, b) => to24Minutes(a.hour, a.period) - to24Minutes(b.hour, b.period))
         if (dayItems.length === 0) return null
         return (
           <div key={day} className="overflow-hidden rounded-xl border border-border bg-card">

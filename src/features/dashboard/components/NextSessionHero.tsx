@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Clock, GraduationCap } from 'lucide-react'
+import { parseTimeTo24 } from '../../attendance/utils/slotUtils'
 
 interface TimelineSession {
   id: string
@@ -16,19 +17,7 @@ interface NextSessionHeroProps {
   timeline?: TimelineSession[]
 }
 
-const parseTime = (t?: string) => {
-  const raw = String(t || '')
-    .replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
-    .trim()
-  const match = raw.match(/(\d{1,2})\s*[:.]?\s*(\d{0,2})/)
-  if (!match) return { h: 0, m: 0 }
-  let h = (match[1] ? parseInt(match[1], 10) : 0) || 0
-  const m = match[2] ? parseInt(match[2], 10) || 0 : 0
-  const lower = raw.toLowerCase()
-  if (lower.includes('pm') && h < 12) h += 12
-  if (lower.includes('am') && h === 12) h = 0
-  return { h: h % 24, m: m % 60 }
-}
+const parseTime = parseTimeTo24
 
 export const NextSessionHero = ({ timeline }: NextSessionHeroProps) => {
   const nextSession = timeline?.find((s) => s.status === 'scheduled' || s.status === 'in-progress')
