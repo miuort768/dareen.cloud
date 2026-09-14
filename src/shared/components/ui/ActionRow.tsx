@@ -63,12 +63,3 @@ export const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProp
 )
 
 ActionButton.displayName = 'ActionButton'
-
-export interface ActionRowProps {
-  children: React.ReactNode
-  className?: string
-}
-
-export const ActionRow = ({ children, className }: ActionRowProps) => (
-  <div className={cn('flex items-center justify-end gap-1.5', className)}>{children}</div>
-)

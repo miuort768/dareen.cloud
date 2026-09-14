@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import ReactDOM from 'react-dom/client'
-import { AlertCircle, X, Trash2, Info } from 'lucide-react'
+import { AlertCircle, X, Trash2 } from 'lucide-react'
 import { cn } from './utils'
 
 const FOCUSABLE_SELECTOR =
@@ -36,130 +36,6 @@ function destroyDialogRoot(dialogRoot: { container: HTMLDivElement; root: ReactD
   } catch {
     /* already removed */
   }
-}
-
-export function alert(opts: ConfirmProps | string): Promise<void> {
-  const options: ConfirmProps = typeof opts === 'string' ? { message: opts } : opts
-
-  return new Promise((resolve) => {
-    const { container, root } = createDialogRoot()
-
-    const Dialog = () => {
-      const [isOpen, setIsOpen] = useState(false)
-      const containerRef = useRef<HTMLDivElement>(null)
-      const previousFocus = useRef<HTMLElement | null>(null)
-      const isClosing = useRef(false)
-
-      useEffect(() => {
-        previousFocus.current = document.activeElement as HTMLElement
-        requestAnimationFrame(() => {
-          setIsOpen(true)
-          setTimeout(() => {
-            const first = containerRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)
-            first?.focus()
-          }, 50)
-        })
-      }, [])
-
-      useEffect(() => {
-        if (!isOpen) previousFocus.current?.focus()
-      }, [isOpen])
-
-      const handleClose = useCallback(() => {
-        if (isClosing.current) return
-        isClosing.current = true
-        setIsOpen(false)
-        setTimeout(() => {
-          destroyDialogRoot({ container, root })
-          resolve()
-        }, 200)
-      }, [])
-
-      const handleKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
-          if (e.key === 'Escape') {
-            e.stopPropagation()
-            handleClose()
-            return
-          }
-          if (e.key === 'Tab' && containerRef.current) {
-            const focusable = containerRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
-            if (focusable.length === 0) return
-            const first = focusable[0]!
-            const last = focusable[focusable.length - 1]!
-            if (e.shiftKey && document.activeElement === first) {
-              e.preventDefault()
-              last.focus()
-            } else if (!e.shiftKey && document.activeElement === last) {
-              e.preventDefault()
-              first.focus()
-            }
-          }
-        },
-        [handleClose],
-      )
-
-      const title = options.title || 'إرشادات المنتدى'
-
-      return (
-        <div
-          ref={containerRef}
-          className={cn(
-            'fixed inset-0 z-[100] flex items-center justify-center p-6',
-            isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
-          )}
-          dir="rtl"
-          onKeyDown={handleKeyDown}
-          role="dialog"
-          aria-modal="true"
-          aria-label={title}
-        >
-          <div
-            className={cn(
-              'fixed inset-0 bg-black/50 backdrop-blur-sm transition-all duration-normal',
-              isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
-            )}
-            onClick={handleClose}
-          />
-          <div
-            className={cn(
-              'relative w-full max-w-sm rounded-card bg-card shadow-2xl transition-all duration-normal',
-              isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
-            )}
-          >
-            <button
-              onClick={handleClose}
-              className="absolute end-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-surface text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
-              aria-label="إغلاق"
-            >
-              <X size={15} />
-            </button>
-
-            <div className="flex flex-col items-center p-6 pt-8 text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft text-primary dark:bg-primary/10">
-                <Info size={28} />
-              </div>
-
-              <h3 className="mb-2 text-lg font-bold text-main">{title}</h3>
-
-              <p className="mb-6 max-w-[280px] text-start text-sm leading-relaxed text-muted">
-                {options.message}
-              </p>
-
-              <button
-                onClick={handleClose}
-                className="h-12 w-full rounded-xl bg-primary text-sm font-bold text-on-primary shadow-elevation-3 shadow-primary/20 outline-none transition-all hover:bg-primary focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
-              >
-                {options.confirmText || 'حسناً'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )
-    }
-
-    root.render(<Dialog />)
-  })
 }
 
 export function confirm(opts: ConfirmProps | string): Promise<boolean> {

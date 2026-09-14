@@ -39,18 +39,6 @@ export const normalizeInvoiceStatus = (raw?: string | null): InvoiceStatus => {
   return 'unpaid'
 }
 
-export interface Teacher {
-  id: string
-  name: string
-  subject?: string
-  phone?: string
-  phone1?: string
-  phone2?: string
-  price?: number
-  email?: string
-  username?: string
-}
-
 export interface TeacherInvoice {
   id: string
   teacherId?: string
