@@ -49,12 +49,6 @@ export const StudentDashboardMobile = ({
   const points = studentData?.totalPoints || 0
   const rank = getRankByPoints(points, STUDENT_RANKS)
   const nextRank = getNextRank(points, STUDENT_RANKS)
-  const nextRankProgress = nextRank.next
-    ? Math.min(
-        Math.round(((points - rank.minPoints) / (nextRank.next.minPoints - rank.minPoints)) * 100),
-        100,
-      )
-    : 100
   const recentSessions = sessions.slice(0, 3)
 
   return (
@@ -86,13 +80,7 @@ export const StudentDashboardMobile = ({
 
       <div className="mx-auto max-w-page space-y-4 pb-6 pt-4 sm:px-4">
         <motion.div {...fadeUp(0)}>
-          <GreetingStrip
-            name={studentData?.name || 'الطالب'}
-            grade={studentData?.grade || ''}
-            points={points}
-            rank={rank}
-            rankProgress={nextRankProgress}
-          />
+          <GreetingStrip name={studentData?.name || 'الطالب'} grade={studentData?.grade || ''} />
         </motion.div>
 
         <motion.div {...fadeUp(0.03)}>
