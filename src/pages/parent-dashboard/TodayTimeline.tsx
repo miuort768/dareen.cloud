@@ -9,29 +9,29 @@ interface TodayTimelineProps {
 
 const STATUS_META: Record<
   TodayTimelineItem['status'],
-  { dot: string; text: string; label: string; icon: typeof CircleDashed }
+  { dot: string; chip: string; label: string; icon: typeof CircleDashed }
 > = {
   live: {
     dot: 'bg-error animate-pulse',
-    text: 'text-error',
+    chip: 'bg-error text-on-error',
     label: 'جارية الآن',
     icon: Radio,
   },
   done: {
     dot: 'bg-success',
-    text: 'text-success',
+    chip: 'bg-success text-on-success',
     label: 'منجزة',
     icon: CalendarCheck,
   },
   cancelled: {
-    dot: 'bg-error',
-    text: 'text-error',
+    dot: 'bg-divider',
+    chip: 'bg-divider text-main',
     label: 'ملغاة',
     icon: XCircle,
   },
   upcoming: {
-    dot: 'bg-muted',
-    text: 'text-muted',
+    dot: 'bg-info',
+    chip: 'bg-info text-on-info',
     label: 'قادمة',
     icon: CircleDashed,
   },
@@ -81,9 +81,8 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                     </div>
                     <span
                       className={cn(
-                        'inline-flex shrink-0 items-center gap-1 rounded-2xl px-2 py-1 text-[10px] font-black',
-                        item.status === 'live' ? 'bg-surface' : 'bg-divider/50',
-                        meta.text,
+                        'inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-black',
+                        meta.chip,
                       )}
                     >
                       <Icon size={10} />
@@ -92,7 +91,9 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                   </div>
                 </div>
                 <div className="z-10 flex w-14 shrink-0 flex-col items-center">
-                  <span className="text-xs font-black tabular-nums text-main">{item.hour}</span>
+                  <span className="font-dash text-xs font-black tabular-nums text-main">
+                    {item.hour}
+                  </span>
                   <span className="text-[9px] font-bold text-muted">
                     {periodLabel(item.period)}
                   </span>

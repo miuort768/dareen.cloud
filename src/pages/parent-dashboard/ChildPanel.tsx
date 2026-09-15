@@ -1,16 +1,19 @@
 import { useNavigate } from 'react-router-dom'
 import {
-  CheckCircle2,
   BookMarked,
+  CalendarClock,
   Clock,
-  ChevronLeft,
+  ArrowLeft,
   FileText,
   Snowflake,
-  CalendarDays,
+  GraduationCap,
+  User,
 } from 'lucide-react'
 import type { Student } from '../../types'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import { CountUp } from '../../shared/components/CountUp'
+import { ProgressBar } from '../../shared/components/ui'
+import { cn } from '../../lib/utils'
 import type { ChildStats } from './types'
 
 interface ChildPanelProps {
@@ -49,33 +52,53 @@ const Ring = ({ value, size = 64 }: { value: number; size?: number }) => {
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className={`text-sm font-black tabular-nums ${tone}`}>{value}%</span>
+        <span className={cn('font-dash text-sm font-black tabular-nums', tone)}>{value}%</span>
       </div>
     </div>
   )
 }
 
+const ACCENT_TONES: {
+  tile: string
+  text: string
+  bar: 'primary' | 'success' | 'info' | 'warning' | 'error'
+}[] = [
+  { tile: 'bg-primary-soft', text: 'text-primary', bar: 'primary' },
+  { tile: 'bg-success-soft', text: 'text-success-strong', bar: 'success' },
+  { tile: 'bg-info-soft', text: 'text-info-strong', bar: 'info' },
+  { tile: 'bg-warning-soft', text: 'text-warning-strong', bar: 'warning' },
+  { tile: 'bg-error-soft', text: 'text-error-strong', bar: 'error' },
+]
+
 export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
   const navigate = useNavigate()
   const enrollments = child.enrollments || []
   const { nextSession, notes } = stats
+  const when = nextSession
+    ? nextSession.isToday
+      ? `اليوم ${nextSession.hour} ${periodLabel(nextSession.period, true)}`
+      : `${nextSession.day} ${nextSession.hour} ${periodLabel(nextSession.period, true)}`
+    : null
 
   return (
     <section
       aria-label={`لوحة متابعة ${child.name}`}
       className="overflow-hidden rounded-2xl border border-border bg-surface shadow-elevation-1 transition-colors duration-slow"
     >
-      {/* Header — identity + attendance ring + key numbers */}
+      {/* Header — هوية الابن + حلقة الحضور + أرقام */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border p-5">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-on-primary">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary via-primary-deep to-primary-hover text-on-primary shadow-elevation-2">
             <span className="text-base font-black" aria-hidden="true">
               {(child.name || 'ط').charAt(0)}
             </span>
           </div>
           <div className="min-w-0">
             <h2 className="truncate text-base font-black text-main">{child.name}</h2>
-            <p className="text-[11px] font-bold text-muted">{child.grade}</p>
+            <p className="flex items-center gap-1.5 text-[11px] font-bold text-muted">
+              <GraduationCap size={11} className="text-primary" />
+              {child.grade}
+            </p>
           </div>
         </div>
 
@@ -93,31 +116,35 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
         </div>
       </div>
 
-      {/* Next session strip */}
-      <div className="border-b border-border bg-primary-soft px-5 py-3">
-        {nextSession ? (
+      {/* شريط الحصة القادمة */}
+      <div className="border-b border-border bg-primary-soft px-5 py-3.5">
+        {nextSession && when ? (
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="flex items-center gap-2 text-xs font-bold text-main">
-              <CalendarDays size={13} className="text-primary" />
-              الحصة القادمة:
-              <span className="text-primary">{nextSession.subject}</span>
-              <span className="text-muted">مع {nextSession.teacher}</span>
-            </p>
-            <span className="rounded-2xl bg-surface px-2.5 py-1 text-[11px] font-black tabular-nums text-main">
-              {nextSession.isToday
-                ? `اليوم ${nextSession.hour} ${periodLabel(nextSession.period, true)}`
-                : `${nextSession.day} ${nextSession.hour} ${periodLabel(nextSession.period, true)}`}
+            <div className="min-w-0">
+              <p className="flex items-center gap-2 text-xs font-black text-main">
+                <CalendarClock size={13} className="text-primary" />
+                الحصة القادمة:
+                <span className="truncate text-primary">{nextSession.subject}</span>
+              </p>
+              <p className="mt-0.5 flex items-center gap-1.5 text-[11px] font-bold text-muted">
+                <User size={10} className="text-primary" />
+                مع {nextSession.teacher}
+              </p>
+            </div>
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[11px] font-black tabular-nums text-on-primary">
+              <Clock size={11} />
+              {when}
             </span>
           </div>
         ) : (
           <p className="flex items-center gap-2 text-xs font-bold text-muted">
-            <CalendarDays size={13} className="text-primary" />
+            <CalendarClock size={13} className="text-primary" />
             لا توجد حصص مجدولة — راجع الجدول الأسبوعي
           </p>
         )}
       </div>
 
-      {/* Subject progress grid */}
+      {/* تقدم المواد */}
       <div className="p-5">
         <h3 className="mb-3 text-xs font-black text-muted">تقدم المواد</h3>
         {enrollments.length === 0 ? (
@@ -131,51 +158,67 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
               const used = Number(en.sessionsUsed || 0)
               const pct = total > 0 ? Math.min(Math.round((used / total) * 100), 100) : 0
               const frozen = en.isFrozen
+              const accent = ACCENT_TONES[idx % ACCENT_TONES.length]!
+              const teacherName =
+                typeof en.teacher === 'string' ? en.teacher : en.teacher?.name || en.teacherName
               return (
                 <div
                   key={en.id || `en-${idx}`}
-                  className={`rounded-2xl border p-3 transition-colors duration-slow ${
-                    frozen ? 'bg-divider/30 border-border' : 'border-border bg-surface'
-                  }`}
+                  className="rounded-2xl border border-border bg-card p-3.5 shadow-elevation-1 transition-colors duration-slow"
                 >
-                  <div className="mb-2 flex items-center justify-between gap-2">
-                    <p className="flex min-w-0 items-center gap-1.5 text-xs font-black text-main">
-                      <BookMarked
-                        size={12}
-                        className={frozen ? 'shrink-0 text-muted' : 'shrink-0 text-primary'}
-                      />
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="flex min-w-0 items-center gap-2 text-xs font-black text-main">
+                      <span
+                        className={cn(
+                          'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
+                          accent.tile,
+                          accent.text,
+                        )}
+                      >
+                        <BookMarked size={14} />
+                      </span>
                       <span className="truncate">{en.subject}</span>
                     </p>
                     {frozen ? (
-                      <span className="inline-flex shrink-0 items-center gap-1 rounded-2xl bg-divider px-1.5 py-0.5 text-[9px] font-bold text-muted">
+                      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-divider px-2 py-1 text-[9px] font-bold text-muted">
                         <Snowflake size={9} /> مجمّدة
                       </span>
                     ) : (
-                      <span className="shrink-0 text-[10px] font-black tabular-nums text-primary">
-                        {used}/{total}
+                      <span
+                        className={cn(
+                          'shrink-0 font-dash text-lg font-black tabular-nums leading-none',
+                          accent.text,
+                        )}
+                      >
+                        {pct}%
                       </span>
                     )}
                   </div>
-                  <div className="relative h-1.5 overflow-hidden rounded-full bg-divider">
-                    <div
-                      className={`absolute inset-y-0 start-0 rounded-full transition-all duration-700 ${
-                        frozen ? 'bg-muted' : 'bg-primary'
-                      }`}
-                      style={{ width: `${pct}%` }}
-                    />
+
+                  <div className="mt-3 flex items-center justify-between gap-2">
+                    <span className="text-[10px] font-black text-muted">المنهج</span>
+                    <span className="flex items-baseline gap-1 text-[11px] font-black tabular-nums text-main">
+                      {used}
+                      <span className="text-[10px] font-bold text-muted">/ {total} حصة</span>
+                    </span>
                   </div>
-                  <p className="mt-1.5 truncate text-[10px] font-bold text-muted">
-                    {typeof en.teacher === 'string'
-                      ? en.teacher
-                      : en.teacher?.name || en.teacherName}
-                  </p>
+                  <div className="mt-1.5">
+                    {frozen ? (
+                      <div className="h-1.5 rounded-full bg-divider" />
+                    ) : (
+                      <ProgressBar value={pct} variant={accent.bar} size="sm" animate />
+                    )}
+                  </div>
+                  {teacherName && (
+                    <p className="mt-2 truncate text-[10px] font-bold text-muted">{teacherName}</p>
+                  )}
                 </div>
               )
             })}
           </div>
         )}
 
-        {/* Teacher notes */}
+        {/* ملاحظات المعلمات */}
         {notes.length > 0 && (
           <div className="mt-4">
             <h3 className="mb-2 flex items-center gap-1.5 text-xs font-black text-muted">
@@ -201,24 +244,12 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
 
         <button
           onClick={() => navigate('/parent-students')}
-          className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-2xl border border-border py-2.5 text-xs font-bold text-primary transition-all hover:bg-primary-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+          className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-full bg-primary px-5 py-3 text-xs font-black text-on-primary shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
         >
           عرض السجل الكامل في صفحة الأبناء
-          <ChevronLeft size={14} />
+          <ArrowLeft size={14} />
         </button>
       </div>
     </section>
   )
 }
-
-export const ChildPanelSkeletonHint = () => (
-  <div className="flex items-center gap-2 text-[10px] font-bold text-muted">
-    <Clock size={10} /> يُحدّث تلقائيًا
-  </div>
-)
-
-export const ChildPanelCompletedBadge = () => (
-  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-success">
-    <CheckCircle2 size={10} /> مكتمل
-  </span>
-)

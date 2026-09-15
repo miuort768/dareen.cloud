@@ -11,16 +11,16 @@ export const SupportStrip = ({ adminPhone }: SupportStripProps) => {
   const whatsappHref = phone ? `https://wa.me/${phone}` : null
 
   return (
-    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       <button
         onClick={() => navigate('/parent-payment-history')}
-        className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3.5 text-start transition-all duration-normal hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+        className="flex min-h-11 items-center gap-3 rounded-full bg-primary px-5 py-3.5 text-start text-on-primary shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
         aria-label="فتح سجل الدفعات"
       >
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-success-soft">
-          <Wallet size={16} className="text-success" />
-        </div>
-        <span className="min-w-0 flex-1 text-xs font-black text-main">سجل الدفعات</span>
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-on-primary">
+          <Wallet size={16} />
+        </span>
+        <span className="min-w-0 flex-1 text-xs font-black text-on-primary">سجل الدفعات</span>
       </button>
 
       {whatsappHref ? (
@@ -28,17 +28,19 @@ export const SupportStrip = ({ adminPhone }: SupportStripProps) => {
           href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-3.5 text-start transition-all duration-normal hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+          className="flex min-h-11 items-center gap-3 rounded-full bg-success px-5 py-3.5 text-start text-on-success shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           aria-label="تواصل مع الدعم عبر واتساب"
         >
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-info-soft">
-            <LifeBuoy size={16} className="text-info" />
-          </div>
-          <span className="min-w-0 flex-1 text-xs font-black text-main">الدعم والاستفسار</span>
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-on-success">
+            <LifeBuoy size={16} />
+          </span>
+          <span className="min-w-0 flex-1 text-xs font-black text-on-success">
+            الدعم والاستفسار
+          </span>
         </a>
       ) : (
-        <div className="flex items-center gap-3 rounded-2xl border border-dashed border-border p-3.5 opacity-60">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-divider">
+        <div className="flex min-h-11 items-center gap-3 rounded-2xl border border-dashed border-border p-3.5 opacity-60">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-divider">
             <LifeBuoy size={16} className="text-muted" />
           </div>
           <span className="min-w-0 flex-1 text-xs font-black text-muted">الدعم غير متاح</span>

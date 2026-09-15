@@ -338,3 +338,45 @@
   --border-primary: #D4AF37;
   --ring-focus: #D4AF37;
 }
+
+/* ============================================================
+   Parent dashboard premium identity (لوحة ولي الأمر فقط).
+   هوية برتقالية دافئة تُطبَّق داخل نطاق .parent-scope حصرًا —
+   بقية التطبيق يبقى على هوية الماركة (بنفسجي/ذهبي).
+   برتقالي نهارًا فقط: الوضع الليلي يعيد تأكيد الجولد/الأسود.
+   ============================================================ */
+.parent-scope {
+  --color-primary: 194 65 12;
+  --color-primary-deep: 154 52 18;
+  --color-primary-mid: 249 115 22;
+  --color-primary-light: 255 237 213;
+  --color-primary-h: 254 215 170;
+  --bg-primary: #c2410c;
+  --bg-primary-deep: #9a3412;
+  --bg-primary-hover: #9a3412;
+  --bg-primary-active: #7c2d12;
+  --bg-primary-soft: #fff7ed;
+  --bg-primary-light: #ffedd5;
+  --text-primary: #c2410c;
+  --text-on-primary: #ffffff;
+  --border-primary: #c2410c;
+  --ring-focus: #c2410c;
+}
+
+.dark .parent-scope {
+  --color-primary: 212 175 55;
+  --color-primary-deep: 184 150 46;
+  --color-primary-mid: 232 196 71;
+  --color-primary-light: 61 49 16;
+  --color-primary-h: 88 68 18;
+  --bg-primary: #D4AF37;
+  --bg-primary-deep: #b8962e;
+  --bg-primary-hover: #e8c447;
+  --bg-primary-active: #f5d060;
+  --bg-primary-soft: #2a2208;
+  --bg-primary-light: #3d3110;
+  --text-primary: #D4AF37;
+  --text-on-primary: #000000;
+  --border-primary: #D4AF37;
+  --ring-focus: #D4AF37;
+}

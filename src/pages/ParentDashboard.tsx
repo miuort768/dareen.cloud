@@ -398,7 +398,7 @@ export const ParentDashboard = () => {
   }
 
   return (
-    <>
+    <div className="parent-scope">
       {partialError && (
         <div className="border-b border-warning-soft bg-warning-soft px-4 py-2 text-center dark:border-primary-soft dark:bg-primary-soft">
           <p className="text-xs font-medium text-warning dark:text-primary">{partialError}</p>
@@ -409,7 +409,7 @@ export const ParentDashboard = () => {
       ) : (
         <ParentDashboardDesktop {...sharedProps} />
       )}
-    </>
+    </div>
   )
 }
 
