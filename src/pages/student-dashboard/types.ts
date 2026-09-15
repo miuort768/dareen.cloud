@@ -74,6 +74,8 @@ export interface TodayTimelineItem {
   period: 'am' | 'pm'
   minutes: number
   notes?: string
+  topics?: string
+  homework?: string
   status: 'done' | 'cancelled' | 'upcoming' | 'live'
 }
 

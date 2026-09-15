@@ -164,6 +164,8 @@ export const StudentDashboard = () => {
           period: normalizePeriod(slot.period),
           minutes: to24Minutes(slot.hour, slot.period),
           notes: en.nextSessionNotes || undefined,
+          topics: matched?.status === 'completed' ? matched.topics || undefined : undefined,
+          homework: matched?.status === 'completed' ? matched.homework || undefined : undefined,
           status: matched
             ? (matched.status as 'done' | 'cancelled')
             : activeSession?.subject === subject

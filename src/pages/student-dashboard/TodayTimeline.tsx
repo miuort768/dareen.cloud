@@ -1,4 +1,4 @@
-import { CalendarCheck, CircleDashed, XCircle, FileText, Radio } from 'lucide-react'
+import { CalendarCheck, CircleDashed, XCircle, FileText, Radio, BookOpen, Star } from 'lucide-react'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import type { TodayTimelineItem } from './types'
 import { cn } from '../../lib/utils'
@@ -92,6 +92,21 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                       <p className="mt-2 flex items-start gap-1.5 rounded-2xl border border-primary/20 bg-primary-soft p-2 text-[11px] font-bold leading-relaxed text-main">
                         <FileText size={10} className="mt-0.5 shrink-0 text-primary" />
                         {item.notes}
+                      </p>
+                    )}
+                    {item.status === 'done' && item.topics && (
+                      <p className="mt-2 flex items-start gap-1.5 rounded-2xl border border-success-soft bg-success-soft p-2 text-[11px] font-bold leading-relaxed text-main">
+                        <BookOpen size={10} className="mt-0.5 shrink-0 text-success" />
+                        ما تم إنجازه: {item.topics}
+                      </p>
+                    )}
+                    {item.status === 'done' && item.homework && (
+                      <p className="mt-2 flex items-start gap-1.5 rounded-2xl border border-warning-soft bg-warning-soft p-2 text-[11px] font-bold leading-relaxed text-main dark:border-primary-soft dark:bg-primary-soft">
+                        <Star
+                          size={10}
+                          className="mt-0.5 shrink-0 text-warning dark:text-primary"
+                        />
+                        الواجب المطلوب: {item.homework}
                       </p>
                     )}
                   </div>
