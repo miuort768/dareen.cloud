@@ -57,6 +57,7 @@ export const Layout = () => {
           tabIndex={-1}
           className={cn(
             'custom-scrollbar relative w-full min-w-0 max-w-full flex-1 overflow-y-auto overflow-x-hidden',
+            currentUser?.role === 'student' && 'student-scope',
             isChatOnly || location.pathname.includes('/chat')
               ? 'p-0'
               : 'z-10 px-2 pb-24 pt-2 md:px-5 md:pb-24 md:pt-4 lg:px-8 lg:pb-8',

@@ -2,8 +2,7 @@ import { Star, Clock, CheckCircle2, XCircle, Activity } from 'lucide-react'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import { cn } from '../../lib/utils'
-import type { PointLog } from './types'
-import type { Session } from './types'
+import type { PointLog, Session } from './types'
 
 interface PointsFeedProps {
   pointLogs: PointLog[]
@@ -47,64 +46,69 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
   const items = [...pointItems, ...sessionItems].slice(0, 6)
   if (items.length === 0) return null
 
+  const toneStyle = (tone: FeedItem['tone']) => {
+    if (tone === 'positive') return { tile: 'bg-success-soft text-success-strong', Icon: Star }
+    if (tone === 'negative') return { tile: 'bg-error-soft text-error-strong', Icon: XCircle }
+    return { tile: 'bg-primary-soft text-primary', Icon: CheckCircle2 }
+  }
+
   return (
     <section
       aria-label="آخر النشاطات"
-      className="rounded-2xl border border-border bg-surface p-5 shadow-elevation-1 transition-colors duration-slow"
+      className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1 transition-colors duration-slow sm:p-5"
     >
       <div className="mb-4 flex items-center gap-2">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft">
-          <Activity size={14} className="text-primary" />
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
+          <Activity size={14} />
         </div>
         <h3 className="text-sm font-black text-main">آخر النشاطات</h3>
       </div>
 
-      <ol className="relative space-y-3" role="list">
-        <div className="absolute bottom-1 end-[9px] top-1 w-px bg-divider" aria-hidden="true" />
+      <ol className="relative space-y-0.5" role="list">
+        <div className="absolute bottom-1 end-[15px] top-1 w-px bg-divider" aria-hidden="true" />
         {items.map((item) => {
-          const isPositive = item.tone === 'positive'
-          const isNegative = item.tone === 'negative'
-          const Icon = isPositive ? Star : isNegative ? XCircle : CheckCircle2
+          const { tile, Icon } = toneStyle(item.tone)
           return (
-            <li key={item.id} className="relative flex items-center gap-2.5">
+            <li
+              key={item.id}
+              className="relative flex items-start gap-3 rounded-xl px-1 py-2 transition-colors hover:bg-surface"
+            >
+              <span
+                className={cn(
+                  'ring-3 z-10 mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ring-card',
+                  tile,
+                )}
+                aria-hidden="true"
+              >
+                <Icon size={13} />
+              </span>
+
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[11px] font-black text-main">{item.title}</p>
                 {item.meta && (
-                  <p className="flex items-center gap-1 text-[11px] font-bold text-muted">
+                  <p className="flex items-center gap-1 text-[10px] font-bold text-muted">
                     <Clock size={8} />
                     {item.meta}
                   </p>
                 )}
                 {item.detail && (
-                  <p className="mt-1 rounded-2xl border border-primary/20 bg-primary-soft p-1.5 text-[11px] font-bold leading-relaxed text-main">
+                  <p className="mt-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
                     {item.detail}
                   </p>
                 )}
               </div>
+
               {item.amount !== undefined && (
                 <span
                   className={cn(
-                    'shrink-0 rounded-2xl px-2 py-0.5 text-[11px] font-black tabular-nums',
-                    isPositive ? 'bg-success text-on-success' : 'bg-error text-on-error',
+                    'shrink-0 self-center rounded-full px-2 py-0.5 font-dash text-[11px] font-black tabular-nums',
+                    item.amount >= 0 ? 'bg-success text-on-success' : 'bg-error text-on-error',
                   )}
                 >
-                  {isPositive ? '+' : ''}
+                  {item.amount >= 0 ? '+' : ''}
                   {item.amount}
                 </span>
               )}
-              <span
-                className={`z-10 flex h-5 w-5 shrink-0 items-center justify-center rounded-full ring-4 ring-surface ${
-                  isPositive ? 'bg-success-soft' : isNegative ? 'bg-error-soft' : 'bg-primary-soft'
-                }`}
-                aria-hidden="true"
-              >
-                <Icon
-                  size={10}
-                  className={
-                    isPositive ? 'text-success' : isNegative ? 'text-error' : 'text-primary'
-                  }
-                />
-              </span>
             </li>
           )
         })}

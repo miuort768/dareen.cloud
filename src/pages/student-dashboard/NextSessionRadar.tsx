@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { CalendarClock, ArrowLeft, FileText } from 'lucide-react'
+import { CalendarClock, ArrowLeft, FileText, CalendarDays, Clock } from 'lucide-react'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import type { NextSessionInfo } from './types'
 
@@ -14,7 +14,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
     return (
       <section
         aria-label="الحصة القادمة"
-        className="rounded-2xl border border-border bg-surface p-5 shadow-elevation-1 transition-colors duration-slow"
+        className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow"
       >
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
@@ -36,38 +36,48 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
   return (
     <section
       aria-label="الحصة القادمة"
-      className="overflow-hidden rounded-2xl border border-primary/30 bg-surface shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-2"
+      className="relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-primary/20 bg-card p-5 shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-2 sm:flex-row sm:items-center sm:justify-between"
     >
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-primary/10 bg-primary-soft px-5 py-3">
-        <p className="flex items-center gap-2 text-xs font-black text-main">
-          <CalendarClock size={14} className="text-primary" />
-          الحصة القادمة
-        </p>
-        <span className="rounded-2xl bg-primary px-2.5 py-1 text-[11px] font-black tabular-nums text-on-primary">
-          {when}
-        </span>
+      {/* شريط جانبي ملون */}
+      <div className="absolute inset-y-0 start-0 w-1 bg-primary" aria-hidden="true" />
+
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="flex items-center gap-2 text-xs font-black text-main">
+            <CalendarClock size={14} className="text-primary" />
+            الحصة القادمة
+          </p>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[11px] font-black tabular-nums text-on-primary">
+            <Clock size={11} />
+            {when}
+          </span>
+        </div>
+
+        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <p className="truncate text-lg font-black leading-tight text-main">{session.subject}</p>
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted">
+            <CalendarDays size={11} className="text-primary" />
+            {session.isToday ? session.day : session.day}
+          </span>
+          <span className="truncate text-[11px] font-bold text-muted">مع {session.teacher}</span>
+        </div>
+
+        {session.notes && (
+          <p className="mt-3 flex items-start gap-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2.5 text-[11px] font-bold leading-relaxed text-main">
+            <FileText size={12} className="mt-0.5 shrink-0 text-primary" />
+            {session.notes}
+          </p>
+        )}
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 p-5">
-        <div className="min-w-0">
-          <p className="truncate text-base font-black text-main">{session.subject}</p>
-          <p className="truncate text-[11px] font-bold text-muted">مع {session.teacher}</p>
-          {session.notes && (
-            <p className="mt-2 flex items-start gap-1.5 rounded-2xl border border-primary/20 bg-primary-soft p-2.5 text-[11px] font-bold leading-relaxed text-main">
-              <FileText size={12} className="mt-0.5 shrink-0 text-primary" />
-              {session.notes}
-            </p>
-          )}
-        </div>
-        <button
-          onClick={() => navigate('/schedule')}
-          className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-2xl bg-primary px-4 py-2.5 text-xs font-black text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
-          aria-label="فتح الجدول الأسبوعي"
-        >
-          الجدول
-          <ArrowLeft size={13} />
-        </button>
-      </div>
+      <button
+        onClick={() => navigate('/schedule')}
+        className="inline-flex shrink-0 items-center justify-center gap-1.5 self-start rounded-xl bg-primary px-5 py-3 text-xs font-black text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:self-center"
+        aria-label="عرض تفاصيل الحصة القادمة في الجدول"
+      >
+        عرض التفاصيل
+        <ArrowLeft size={14} />
+      </button>
     </section>
   )
 }
