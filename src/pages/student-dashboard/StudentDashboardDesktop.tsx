@@ -17,6 +17,7 @@ import { RankJourney } from './RankJourney'
 import { PointsFeed } from './PointsFeed'
 import { InvoicesStrip } from './InvoicesStrip'
 import { LiveSessionBanner, type StudentActiveSession } from './LiveSessionBanner'
+import { KpiStrip } from './KpiStrip'
 
 interface ShellProps {
   studentData: StudentDashboardData | null
@@ -59,6 +60,10 @@ export const StudentDashboardDesktop = ({
             rank={rank}
             rankProgress={nextRankProgress}
           />
+        </motion.div>
+
+        <motion.div {...fadeUp(0.03)}>
+          <KpiStrip stats={stats} />
         </motion.div>
 
         <LiveSessionBanner session={activeSession} />

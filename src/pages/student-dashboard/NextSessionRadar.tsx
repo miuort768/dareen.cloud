@@ -36,14 +36,14 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
   return (
     <section
       aria-label="الحصة القادمة"
-      className="overflow-hidden rounded-2xl border border-primary/30 bg-surface shadow-elevation-1 transition-colors duration-slow"
+      className="overflow-hidden rounded-2xl border border-primary/30 bg-surface shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-2"
     >
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-primary/10 bg-primary-soft px-5 py-3">
         <p className="flex items-center gap-2 text-xs font-black text-main">
           <CalendarClock size={14} className="text-primary" />
           الحصة القادمة
         </p>
-        <span className="rounded-2xl bg-surface px-2.5 py-1 text-[11px] font-black tabular-nums text-main">
+        <span className="rounded-2xl bg-primary px-2.5 py-1 text-[11px] font-black tabular-nums text-on-primary">
           {when}
         </span>
       </div>

@@ -9,12 +9,32 @@ interface TodayTimelineProps {
 
 const STATUS_META: Record<
   TodayTimelineItem['status'],
-  { dot: string; text: string; label: string; icon: typeof CircleDashed }
+  { dot: string; label: string; icon: typeof CircleDashed; chip: string }
 > = {
-  live: { dot: 'bg-error animate-pulse', text: 'text-error', label: 'جارية الآن', icon: Radio },
-  done: { dot: 'bg-success', text: 'text-success', label: 'منجزة', icon: CalendarCheck },
-  cancelled: { dot: 'bg-error', text: 'text-error', label: 'ملغاة', icon: XCircle },
-  upcoming: { dot: 'bg-primary', text: 'text-primary', label: 'قادمة', icon: CircleDashed },
+  live: {
+    dot: 'bg-error animate-pulse',
+    label: 'جارية الآن',
+    icon: Radio,
+    chip: 'bg-error text-on-error',
+  },
+  done: {
+    dot: 'bg-success',
+    label: 'منجزة',
+    icon: CalendarCheck,
+    chip: 'bg-success text-on-success',
+  },
+  cancelled: {
+    dot: 'bg-error',
+    label: 'ملغاة',
+    icon: XCircle,
+    chip: 'bg-error text-on-error',
+  },
+  upcoming: {
+    dot: 'bg-primary',
+    label: 'قادمة',
+    icon: CircleDashed,
+    chip: 'bg-primary text-on-primary',
+  },
 }
 
 export const TodayTimeline = ({ items }: TodayTimelineProps) => {
@@ -61,8 +81,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
                       <span
                         className={cn(
                           'inline-flex shrink-0 items-center gap-1 rounded-2xl px-2 py-1 text-[11px] font-black',
-                          item.status === 'live' ? 'bg-surface' : 'bg-divider/50',
-                          meta.text,
+                          meta.chip,
                         )}
                       >
                         <Icon size={10} />

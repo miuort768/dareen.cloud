@@ -1,6 +1,7 @@
 import { Star, Clock, CheckCircle2, XCircle, Activity } from 'lucide-react'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
+import { cn } from '../../lib/utils'
 import type { PointLog } from './types'
 import type { Session } from './types'
 
@@ -82,9 +83,10 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
               </div>
               {item.amount !== undefined && (
                 <span
-                  className={`shrink-0 rounded-2xl px-2 py-0.5 text-[11px] font-black tabular-nums ${
-                    isPositive ? 'bg-success-soft text-success' : 'bg-error-soft text-error'
-                  }`}
+                  className={cn(
+                    'shrink-0 rounded-2xl px-2 py-0.5 text-[11px] font-black tabular-nums',
+                    isPositive ? 'bg-success text-on-success' : 'bg-error text-on-error',
+                  )}
                 >
                   {isPositive ? '+' : ''}
                   {item.amount}

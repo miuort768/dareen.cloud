@@ -91,11 +91,16 @@ export const SubjectsBoard = ({ subjects }: SubjectsBoardProps) => {
               </div>
 
               {!sub.isFrozen && (
-                <div className="bg-divider/40 mt-3 flex items-center justify-between rounded-2xl px-3 py-2">
+                <div className="mt-3 flex items-center justify-between rounded-2xl border border-border bg-card px-3 py-2">
                   <span className="text-[11px] font-black text-muted">المنهج</span>
-                  <span className={cn('text-xs font-black tabular-nums', tone)}>
+                  <span
+                    className={cn(
+                      'flex items-baseline gap-1 text-base font-black tabular-nums',
+                      tone,
+                    )}
+                  >
                     {sub.used}
-                    <span className="text-[11px] font-bold text-muted"> / {sub.total} حصة</span>
+                    <span className="text-[11px] font-bold text-muted">/ {sub.total} حصة</span>
                   </span>
                 </div>
               )}

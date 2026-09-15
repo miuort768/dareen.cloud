@@ -48,10 +48,10 @@ export const RankJourney = ({ points, rank, nextRankName, pointsNeeded }: RankJo
           </div>
         </div>
       </div>
-      <div className="mb-4 rounded-2xl bg-primary-soft px-4 py-2.5 text-center">
+      <div className="mb-4 rounded-2xl border border-border bg-surface px-4 py-2.5 text-center">
         <CountUp
           value={points}
-          className="block text-xl font-black tabular-nums leading-none text-primary"
+          className="block font-dash text-2xl font-black tabular-nums leading-none text-primary"
         />
         <p className="mt-1 text-[10px] font-bold text-muted">نقطة</p>
       </div>
