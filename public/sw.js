@@ -5,7 +5,7 @@ const STATIC_ASSETS = [
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
   '/icons/maskable-icon-512x512.png',
-  '/notification.ogg',
+  '/notification.wav',
 ];
 
 self.addEventListener('install', (event) => {
