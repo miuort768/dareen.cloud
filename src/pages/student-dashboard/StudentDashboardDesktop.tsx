@@ -5,6 +5,7 @@ import type {
   StudentDashboardData,
   Session,
   PointLog,
+  StudentStats,
   TodayTimelineItem,
   NextSessionInfo,
   SubjectProgress,
@@ -23,6 +24,7 @@ interface ShellProps {
   studentData: StudentDashboardData | null
   sessions: Session[]
   pointLogs: PointLog[]
+  stats: StudentStats
   todayItems: TodayTimelineItem[]
   nextSession: NextSessionInfo | null
   subjects: SubjectProgress[]
@@ -33,6 +35,7 @@ export const StudentDashboardDesktop = ({
   studentData,
   sessions,
   pointLogs,
+  stats,
   todayItems,
   nextSession,
   subjects,

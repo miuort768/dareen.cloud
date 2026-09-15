@@ -38,6 +38,7 @@ export const StudentDashboardMobile = ({
   studentData,
   sessions,
   pointLogs,
+  stats,
   todayItems,
   nextSession,
   subjects,
