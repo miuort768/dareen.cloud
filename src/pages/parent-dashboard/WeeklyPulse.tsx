@@ -17,6 +17,13 @@ const CARD_FILL: Record<Tone, string> = {
   primary: 'bg-primary text-on-primary',
 }
 
+const ICON_FG: Record<Tone, string> = {
+  success: 'text-on-success',
+  error: 'text-on-error',
+  info: 'text-on-info',
+  primary: 'text-on-primary',
+}
+
 interface TileSpec {
   key: Tone
   icon: LucideIcon
@@ -74,7 +81,9 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
             )}
           >
             <div className="flex items-start justify-between gap-2">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 text-on-success">
+              <span
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 ${ICON_FG[tile.key]}`}
+              >
                 <Icon size={18} />
               </span>
               {tile.bar !== undefined && (

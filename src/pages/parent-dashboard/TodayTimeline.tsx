@@ -53,7 +53,7 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
       {items.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-border py-10 text-center">
           <CalendarCheck size={28} className="mx-auto mb-2 text-muted" />
-          <p className="text-xs font-bold text-muted">يوم مريح — لا توجد حصص مجدولة</p>
+          <p className="text-xs font-bold text-muted">يوم مريح — لا توجد حصص مجدولة لأبنائك</p>
         </div>
       ) : (
         <ol className="relative space-y-3 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0" role="list">

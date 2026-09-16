@@ -21,6 +21,8 @@ import { PointsFeed } from './PointsFeed'
 import { InvoicesStrip } from './InvoicesStrip'
 import { LiveSessionBanner, type StudentActiveSession } from './LiveSessionBanner'
 import { KpiStrip } from './KpiStrip'
+import { StudentSupportStrip } from './StudentSupportStrip'
+import { AnnouncementsBanner } from '../../shared/components/AnnouncementsBanner'
 
 interface StudentDashboardMobileProps {
   studentData: StudentDashboardData | null
@@ -118,6 +120,18 @@ export const StudentDashboardMobile = ({
 
         <motion.div {...fadeUp(0.3)}>
           <InvoicesStrip />
+        </motion.div>
+
+        <motion.div {...fadeUp(0.35)}>
+          <AnnouncementsBanner
+            href="/announcements"
+            label="الإعلانات"
+            description="اطلع على آخر التنبيهات والإعلانات العامة"
+          />
+        </motion.div>
+
+        <motion.div {...fadeUp(0.4)}>
+          <StudentSupportStrip />
         </motion.div>
       </div>
     </div>

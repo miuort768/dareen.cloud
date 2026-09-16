@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { CalendarClock, ArrowLeft, FileText, CalendarDays, Clock } from 'lucide-react'
+import { CalendarClock, ArrowLeft, FileText, Clock } from 'lucide-react'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import type { NextSessionInfo } from './types'
 
@@ -55,10 +55,6 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
 
         <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
           <p className="truncate text-lg font-black leading-tight text-main">{session.subject}</p>
-          <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-muted">
-            <CalendarDays size={11} className="text-primary" />
-            {session.isToday ? session.day : session.day}
-          </span>
           <span className="truncate text-[11px] font-bold text-muted">مع {session.teacher}</span>
         </div>
 

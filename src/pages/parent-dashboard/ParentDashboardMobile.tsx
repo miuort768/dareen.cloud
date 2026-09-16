@@ -11,6 +11,7 @@ import { TodayTimeline } from './TodayTimeline'
 import { WeeklyPulse } from './WeeklyPulse'
 import { PointsActivityCard } from './PointsActivityCard'
 import { SupportStrip } from './SupportStrip'
+import { AnnouncementsBanner } from '../../shared/components/AnnouncementsBanner'
 import type { ParentDashboardProps } from './types'
 import type { Student } from '../../types'
 
@@ -139,6 +140,14 @@ export const ParentDashboardMobile = ({
 
         <motion.div {...fadeUp(0.35)}>
           <SupportStrip adminPhone={adminPhone} />
+        </motion.div>
+
+        <motion.div {...fadeUp(0.4)}>
+          <AnnouncementsBanner
+            href="/parent-announcements"
+            label="إعلانات الأكاديمية"
+            description="آخر الإعلانات والتنبيهات الموجهة لأولياء الأمور"
+          />
         </motion.div>
       </div>
     </div>

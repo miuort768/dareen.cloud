@@ -8,6 +8,7 @@ import {
   Snowflake,
   GraduationCap,
   User,
+  CalendarDays,
 } from 'lucide-react'
 import type { Student } from '../../types'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
@@ -139,9 +140,18 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
         ) : (
           <p className="flex items-center gap-2 text-xs font-bold text-muted">
             <CalendarClock size={13} className="text-primary" />
-            لا توجد حصص مجدولة — راجع الجدول الأسبوعي
+            لا توجد حصص مجدولة
           </p>
         )}
+        <button
+          onClick={() => navigate('/schedule')}
+          className="mt-2.5 inline-flex items-center gap-1.5 text-[11px] font-bold text-primary transition-colors hover:text-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          aria-label="فتح الجدول الأسبوعي"
+        >
+          <CalendarDays size={11} />
+          عرض الجدول الأسبوعي
+          <ArrowLeft size={11} />
+        </button>
       </div>
 
       {/* تقدم المواد */}
