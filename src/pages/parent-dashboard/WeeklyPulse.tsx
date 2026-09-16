@@ -89,7 +89,7 @@ export const WeeklyPulse = ({ stats }: WeeklyPulseProps) => {
                 value={tile.value}
                 format={tile.key === 'primary' ? (n) => `${n}%` : undefined}
                 className={cn(
-                  'font-dash text-2xl font-black tabular-nums leading-none tracking-tight',
+                  'font-dash text-2xl font-black tabular-nums leading-none tracking-tight lg:text-3xl',
                   tile.key === 'success' && 'text-on-success',
                   tile.key === 'error' && 'text-on-error',
                   tile.key === 'info' && 'text-on-info',

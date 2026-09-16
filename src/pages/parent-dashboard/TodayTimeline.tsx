@@ -56,8 +56,11 @@ export const TodayTimeline = ({ items }: TodayTimelineProps) => {
           <p className="text-xs font-bold text-muted">يوم مريح — لا توجد حصص مجدولة</p>
         </div>
       ) : (
-        <ol className="relative space-y-3" role="list">
-          <div className="absolute bottom-3 end-[19px] top-3 w-px bg-divider" aria-hidden="true" />
+        <ol className="relative space-y-3 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0" role="list">
+          <div
+            className="absolute bottom-3 end-[19px] top-3 w-px bg-divider lg:hidden"
+            aria-hidden="true"
+          />
           {items.map((item) => {
             const meta = STATUS_META[item.status]
             const Icon = meta.icon

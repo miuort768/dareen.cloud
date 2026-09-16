@@ -57,11 +57,11 @@ export const GreetingStrip = ({
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -end-14 -top-20 h-56 w-56 rounded-full border border-primary/10"
+        className="pointer-events-none absolute -end-14 -top-20 h-56 w-56 rounded-full border border-primary/10 lg:-end-20 lg:h-80 lg:w-80"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute -end-4 -top-8 h-28 w-28 rounded-full border border-primary/10 bg-primary/5"
+        className="pointer-events-none absolute -end-4 -top-8 h-28 w-28 rounded-full border border-primary/10 bg-primary/5 lg:-end-10 lg:h-40 lg:w-40"
         aria-hidden="true"
       />
 
@@ -73,78 +73,90 @@ export const GreetingStrip = ({
               <span className="font-dash">{today}</span>
             </p>
 
-            <h1 className="mt-3 text-xl font-black leading-tight text-main md:text-2xl">
+            <h1 className="mt-3 text-xl font-black leading-tight text-main md:text-2xl xl:text-3xl">
               {getGreeting()}، {firstName}
             </h1>
 
             {eldestChildName ? (
-              <p className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px] font-bold text-muted">
+              <p className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px] font-bold text-muted xl:text-xs">
                 <GraduationCap size={12} className="text-primary" />
                 متابعة رحلة {eldestChildName.split(' ')[0]}
                 {eldestChildGrade ? ` — ${eldestChildGrade}` : ''}
               </p>
             ) : (
-              <p className="mt-1 text-[11px] font-bold text-muted">نبض يومي لمتابعة أبنائك</p>
+              <p className="mt-1 text-[11px] font-bold text-muted xl:text-xs">
+                نبض يومي لمتابعة أبنائك
+              </p>
             )}
           </div>
 
           {/* حلقة الحضور الإجمالية */}
           <div
-            className="relative flex shrink-0 items-center justify-center"
+            className="flex shrink-0 flex-col items-center gap-1.5"
             aria-label={`نسبة الحضور الإجمالية ${attendanceRate} بالمئة`}
           >
-            <svg width={RING_SIZE} height={RING_SIZE} viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}>
-              <circle
-                cx={RING_SIZE / 2}
-                cy={RING_SIZE / 2}
-                r={RING_RADIUS}
-                fill="none"
-                stroke="currentColor"
-                className="text-primary/15"
-                strokeWidth={5}
-              />
-              <motion.circle
-                cx={RING_SIZE / 2}
-                cy={RING_SIZE / 2}
-                r={RING_RADIUS}
-                fill="none"
-                stroke="currentColor"
-                className="text-primary"
-                strokeWidth={5}
-                strokeLinecap="round"
-                strokeDasharray={RING_CIRCUMFERENCE}
-                initial={{ strokeDashoffset: RING_CIRCUMFERENCE }}
-                animate={{ strokeDashoffset: RING_CIRCUMFERENCE * (1 - clampedRate / 100) }}
-                transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
-                transform={`rotate(-90 ${RING_SIZE / 2} ${RING_SIZE / 2})`}
-              />
-            </svg>
-            <span className="absolute flex items-baseline gap-0.5">
-              <CountUp
-                value={attendanceRate}
-                format={(n) => `${n}`}
-                className="text-sm font-black tabular-nums text-primary"
-              />
-              <span className="text-[9px] font-black text-primary">%</span>
+            <div className="relative flex items-center justify-center">
+              <svg
+                width={RING_SIZE}
+                height={RING_SIZE}
+                viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}
+                className="lg:h-20 lg:w-20"
+              >
+                <circle
+                  cx={RING_SIZE / 2}
+                  cy={RING_SIZE / 2}
+                  r={RING_RADIUS}
+                  fill="none"
+                  stroke="currentColor"
+                  className="text-primary/15"
+                  strokeWidth={5}
+                />
+                <motion.circle
+                  cx={RING_SIZE / 2}
+                  cy={RING_SIZE / 2}
+                  r={RING_RADIUS}
+                  fill="none"
+                  stroke="currentColor"
+                  className="text-primary"
+                  strokeWidth={5}
+                  strokeLinecap="round"
+                  strokeDasharray={RING_CIRCUMFERENCE}
+                  initial={{ strokeDashoffset: RING_CIRCUMFERENCE }}
+                  animate={{ strokeDashoffset: RING_CIRCUMFERENCE * (1 - clampedRate / 100) }}
+                  transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
+                  transform={`rotate(-90 ${RING_SIZE / 2} ${RING_SIZE / 2})`}
+                />
+              </svg>
+              <span className="absolute flex items-baseline gap-0.5">
+                <CountUp
+                  value={attendanceRate}
+                  format={(n) => `${n}`}
+                  className="text-sm font-black tabular-nums text-primary lg:text-xl"
+                />
+                <span className="text-[9px] font-black text-primary">%</span>
+              </span>
+            </div>
+            <span className="hidden whitespace-nowrap text-[10px] font-bold text-muted lg:inline-block">
+              الحضور الإجمالي
             </span>
           </div>
         </div>
 
-        <p className="mt-2 max-w-xl text-xs font-bold leading-relaxed text-muted sm:text-sm">
+        <p className="mt-2 max-w-xl text-xs font-bold leading-relaxed text-muted sm:text-sm xl:text-base">
           متابعتك اليومية تصنع الفرق .. وأبناؤك في أيدٍ أمينة
         </p>
 
         {/* رقائق البيانات */}
         <div className="mt-4 flex flex-wrap gap-1.5">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[10px] font-black text-on-primary shadow-elevation-1">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[10px] font-black text-on-primary shadow-elevation-1 lg:px-3 lg:py-1.5 lg:text-xs">
             <Users size={11} />
             {childCount === 1 ? 'ابن واحد' : `${childCount} أبناء`}
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
             <BookOpen size={11} />
             {subjectCount} {subjectCount === 1 ? 'مادة' : 'مواد'}
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
             <ClipboardList size={11} />
             {todayCount > 0 ? `${todayCount} حصص اليوم` : 'لا حصص اليوم'}
           </span>

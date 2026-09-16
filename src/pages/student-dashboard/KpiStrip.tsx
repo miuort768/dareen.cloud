@@ -105,7 +105,7 @@ export const KpiStrip = ({ stats }: KpiStripProps) => {
             </div>
 
             <p className="mt-3 flex items-baseline gap-1">
-              <span className="font-dash text-2xl font-black tabular-nums leading-none text-main">
+              <span className="font-dash text-2xl font-black tabular-nums leading-none text-main lg:text-3xl">
                 {card.value}
               </span>
               {card.unit && (

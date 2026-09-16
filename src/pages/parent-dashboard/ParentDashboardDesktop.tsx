@@ -59,6 +59,10 @@ export const ParentDashboardDesktop = ({
           />
         </motion.div>
 
+        <motion.div {...fadeUp(0.08)}>
+          <WeeklyPulse stats={weekly} />
+        </motion.div>
+
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-12">
           <div className="space-y-5 md:col-span-1 lg:col-span-8">
             {kids.length > 0 && (
@@ -99,9 +103,6 @@ export const ParentDashboardDesktop = ({
 
           <div className="space-y-5 md:col-span-1 lg:col-span-4">
             <motion.div {...fadeUp(0.12)}>
-              <WeeklyPulse stats={weekly} />
-            </motion.div>
-            <motion.div {...fadeUp(0.18)}>
               <PointsActivityCard
                 points={points}
                 rankName={rank.name}

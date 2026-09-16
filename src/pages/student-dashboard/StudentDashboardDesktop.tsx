@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { getRankByPoints, getNextRank, STUDENT_RANKS } from '../../shared/utils/ranks'
 import { fadeUp } from '../../shared/animations/fadeUp'
+import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import type {
   StudentDashboardData,
   Session,
@@ -45,12 +46,24 @@ export const StudentDashboardDesktop = ({
   const rank = getRankByPoints(points, STUDENT_RANKS)
   const nextRank = getNextRank(points, STUDENT_RANKS)
   const recentSessions = sessions.slice(0, 3)
+  const nextSessionLabel = nextSession
+    ? nextSession.isToday
+      ? `اليوم ${nextSession.hour} ${periodLabel(nextSession.period, true)}`
+      : `${nextSession.day} ${nextSession.hour} ${periodLabel(nextSession.period, true)}`
+    : null
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-slow" dir="rtl">
       <div className="mx-auto max-w-page space-y-5 px-2.5 pb-12 pt-5 sm:px-4 md:px-6">
         <motion.div {...fadeUp(0)}>
-          <GreetingStrip name={studentData?.name || 'الطالب'} grade={studentData?.grade || ''} />
+          <GreetingStrip
+            name={studentData?.name || 'الطالب'}
+            grade={studentData?.grade || ''}
+            attendanceRate={stats.attendanceRate}
+            sessionsUsed={stats.sessionsUsed}
+            sessionsTotal={stats.sessionsTotal}
+            nextSessionLabel={nextSessionLabel}
+          />
         </motion.div>
 
         <motion.div {...fadeUp(0.03)}>

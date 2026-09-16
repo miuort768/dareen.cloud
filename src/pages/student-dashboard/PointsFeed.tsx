@@ -75,7 +75,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
             >
               <span
                 className={cn(
-                  'ring-3 z-10 mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ring-card',
+                  'z-10 mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ring-2 ring-card',
                   tile,
                 )}
                 aria-hidden="true"
