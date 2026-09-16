@@ -153,7 +153,7 @@ export const StudentDashboard = () => {
           (s) =>
             s.subject === subject &&
             s.teacherName === teacherLabel(en) &&
-            (s.date === todayStr || s.date === format(new Date(), 'en-CA')) &&
+            (s.date === todayStr || s.date === new Date().toLocaleDateString('en-CA')) &&
             s.status !== 'scheduled',
         )
         items.push({

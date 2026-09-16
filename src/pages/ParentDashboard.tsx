@@ -248,7 +248,7 @@ export const ParentDashboard = () => {
               (s.teacherId
                 ? en.teacherId && s.teacherId === en.teacherId
                 : s.teacherName === teacher) &&
-              (s.date === todayStr || s.date === format(new Date(), 'en-CA')) &&
+              (s.date === todayStr || s.date === new Date().toLocaleDateString('en-CA')) &&
               s.status !== 'scheduled',
           )
           const isLive = activeTimers.some((t) => t.studentId === child.id && t.subject === subject)
