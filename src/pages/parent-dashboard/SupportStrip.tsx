@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Wallet, LifeBuoy } from 'lucide-react'
+import { Wallet, MessageCircle, ArrowLeft } from 'lucide-react'
 
 interface SupportStripProps {
   adminPhone: string | undefined
@@ -14,13 +14,24 @@ export const SupportStrip = ({ adminPhone }: SupportStripProps) => {
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       <button
         onClick={() => navigate('/parent-payment-history')}
-        className="flex min-h-11 items-center gap-3 rounded-full bg-primary px-5 py-3.5 text-start text-on-primary shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+        className="group flex min-h-14 items-center gap-3 rounded-full bg-primary pe-2.5 ps-3 text-start text-on-primary shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
         aria-label="فتح سجل الدفعات"
       >
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-on-primary">
-          <Wallet size={16} />
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-primary">
+          <Wallet size={18} />
         </span>
-        <span className="min-w-0 flex-1 text-xs font-black text-on-primary">سجل الدفعات</span>
+        <span className="min-w-0 flex-1 leading-tight">
+          <span className="block truncate text-xs font-black text-on-primary">سجل الدفعات</span>
+          <span className="block truncate text-micro font-bold text-on-primary opacity-80">
+            تتبّع مدفوعاتك
+          </span>
+        </span>
+        <span
+          aria-hidden
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-on-primary transition-transform duration-normal group-hover:-translate-x-1"
+        >
+          <ArrowLeft size={16} />
+        </span>
       </button>
 
       {whatsappHref ? (
@@ -28,22 +39,36 @@ export const SupportStrip = ({ adminPhone }: SupportStripProps) => {
           href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex min-h-11 items-center gap-3 rounded-full bg-success px-5 py-3.5 text-start text-on-success shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
+          className="group flex min-h-14 items-center gap-3 rounded-full bg-success pe-2.5 ps-3 text-start text-on-success shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-success-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
           aria-label="تواصل مع الدعم عبر واتساب"
         >
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-on-success">
-            <LifeBuoy size={16} />
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-success">
+            <MessageCircle size={18} />
           </span>
-          <span className="min-w-0 flex-1 text-xs font-black text-on-success">
-            الدعم والاستفسار
+          <span className="min-w-0 flex-1 leading-tight">
+            <span className="block truncate text-xs font-black text-on-success">
+              الدعم والاستفسار
+            </span>
+            <span className="block truncate text-micro font-bold text-on-success opacity-80">
+              متاح عبر واتساب
+            </span>
+          </span>
+          <span
+            aria-hidden
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-on-success transition-transform duration-normal group-hover:-translate-x-1"
+          >
+            <ArrowLeft size={16} />
           </span>
         </a>
       ) : (
-        <div className="flex min-h-11 items-center gap-3 rounded-2xl border border-dashed border-border p-3.5 opacity-60">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-divider">
-            <LifeBuoy size={16} className="text-muted" />
+        <div className="flex min-h-14 items-center gap-3 rounded-full border border-dashed border-border px-4 opacity-70">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-divider">
+            <MessageCircle size={18} className="text-muted" />
           </div>
-          <span className="min-w-0 flex-1 text-xs font-black text-muted">الدعم غير متاح</span>
+          <div className="min-w-0 flex-1 leading-tight">
+            <span className="block truncate text-xs font-black text-muted">الدعم غير متاح</span>
+            <span className="block truncate text-micro font-bold text-muted">لم تتم إضافة رقم</span>
+          </div>
         </div>
       )}
     </div>
