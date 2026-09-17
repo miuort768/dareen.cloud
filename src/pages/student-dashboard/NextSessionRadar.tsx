@@ -14,7 +14,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
     return (
       <section
         aria-label="الحصة القادمة"
-        className="rounded-2xl border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow"
+        className="rounded-none border border-border bg-card p-5 shadow-elevation-1 transition-colors duration-slow"
       >
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
@@ -36,7 +36,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
   return (
     <section
       aria-label="الحصة القادمة"
-      className="relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-primary/20 bg-card p-5 shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-2 sm:flex-row sm:items-center sm:justify-between"
+      className="relative flex flex-col gap-4 overflow-hidden rounded-none border border-primary/20 bg-card p-5 shadow-elevation-1 transition-all duration-slow hover:shadow-elevation-2"
     >
       {/* شريط جانبي ملون */}
       <div className="absolute inset-y-0 start-0 w-1 bg-primary" aria-hidden="true" />
@@ -74,7 +74,7 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
 
       <button
         onClick={() => navigate('/schedule')}
-        className="inline-flex shrink-0 items-center justify-center gap-1.5 self-start rounded-xl bg-primary px-5 py-3 text-xs font-black text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95 sm:self-center"
+        className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary px-5 py-3 text-xs font-black text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
         aria-label="عرض تفاصيل الحصة القادمة في الجدول"
       >
         عرض التفاصيل

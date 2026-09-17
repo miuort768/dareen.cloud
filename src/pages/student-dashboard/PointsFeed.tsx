@@ -57,11 +57,16 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
       aria-label="آخر النشاطات"
       className="rounded-2xl border border-border bg-card p-4 shadow-elevation-1 transition-colors duration-slow sm:p-5"
     >
-      <div className="mb-4 flex items-center gap-2">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
-          <Activity size={14} />
+      <div className="mb-4 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary text-on-primary">
+            <Activity size={14} />
+          </div>
+          <h3 className="text-sm font-black text-main">آخر النشاطات</h3>
         </div>
-        <h3 className="text-sm font-black text-main">آخر النشاطات</h3>
+        <span className="shrink-0 rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-black tabular-nums text-primary">
+          {items.length}
+        </span>
       </div>
 
       <ol className="relative space-y-0.5" role="list">
@@ -71,11 +76,11 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
           return (
             <li
               key={item.id}
-              className="relative flex items-start gap-3 rounded-xl px-1 py-2 transition-colors hover:bg-surface"
+              className="relative flex items-start gap-3 rounded-xl px-1 py-2.5 transition-colors hover:bg-surface"
             >
               <span
                 className={cn(
-                  'z-10 mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ring-2 ring-card',
+                  'z-10 mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-xl ring-2 ring-card',
                   tile,
                 )}
                 aria-hidden="true"
@@ -84,7 +89,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
               </span>
 
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[11px] font-black text-main">{item.title}</p>
+                <p className="truncate text-xs font-black text-main">{item.title}</p>
                 {item.meta && (
                   <p className="flex items-center gap-1 text-[10px] font-bold text-muted">
                     <Clock size={8} />
@@ -92,7 +97,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
                   </p>
                 )}
                 {item.detail && (
-                  <p className="mt-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2 text-[10px] font-bold leading-relaxed text-main">
+                  <p className="mt-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2 text-[11px] font-bold leading-relaxed text-main">
                     {item.detail}
                   </p>
                 )}
