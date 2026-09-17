@@ -74,11 +74,19 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
 
       <button
         onClick={() => navigate('/schedule')}
-        className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary px-5 py-3 text-xs font-black text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-95"
+        className="group inline-flex min-h-12 w-full items-center gap-3 rounded-full bg-primary pe-2.5 ps-4 text-start text-on-primary shadow-elevation-1 shadow-black/20 transition-all duration-normal hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]"
         aria-label="عرض تفاصيل الحصة القادمة في الجدول"
       >
-        عرض التفاصيل
-        <ArrowLeft size={14} />
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 text-on-primary">
+          <CalendarClock size={18} />
+        </span>
+        <span className="min-w-0 flex-1 text-xs font-black text-on-primary">عرض التفاصيل</span>
+        <span
+          aria-hidden
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/15 text-on-primary transition-transform duration-normal group-hover:-translate-x-1"
+        >
+          <ArrowLeft size={16} />
+        </span>
       </button>
     </section>
   )

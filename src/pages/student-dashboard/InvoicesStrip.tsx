@@ -53,20 +53,25 @@ export const InvoicesStrip = () => {
   return (
     <button
       onClick={() => navigate('/student-invoices')}
-      className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface p-4 text-start shadow-elevation-1 transition-all duration-normal hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
+      className="group flex w-full items-center gap-3 rounded-2xl border border-border bg-surface p-4 text-start shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.99]"
       aria-label={`الفواتير: ${pending.length} فاتورة معلقة، الإجمالي ${totalPending.toFixed(3)} ${CURRENCY_SYMBOL}`}
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary-soft">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-soft">
         <Receipt size={17} className="text-primary" />
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-xs font-black text-main">الفواتير</p>
         <p className="text-[11px] font-bold text-muted">{pending.length} فاتورة معلقة</p>
       </div>
-      <div className="shrink-0 rounded-2xl bg-primary-soft px-3 py-1.5 text-[11px] font-black tabular-nums text-primary">
+      <div className="shrink-0 rounded-full bg-primary-soft px-3 py-1.5 text-[11px] font-black tabular-nums text-primary">
         {totalPending.toFixed(3)} {CURRENCY_SYMBOL}
       </div>
-      <ArrowLeft size={14} className="shrink-0 text-muted" />
+      <span
+        aria-hidden
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary transition-transform duration-normal group-hover:-translate-x-1"
+      >
+        <ArrowLeft size={16} />
+      </span>
     </button>
   )
 }

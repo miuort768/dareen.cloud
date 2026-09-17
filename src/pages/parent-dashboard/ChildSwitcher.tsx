@@ -37,7 +37,7 @@ export const ChildSwitcher = ({ children: kids, selectedId, onSelect }: ChildSwi
               'inline-flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.97]',
               active
                 ? 'border-primary bg-primary text-on-primary shadow-elevation-1'
-                : 'border-border bg-card text-main hover:bg-hover',
+                : 'border-border bg-card text-main hover:border-primary/30 hover:bg-primary-soft',
             )}
           >
             <span

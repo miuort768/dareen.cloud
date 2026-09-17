@@ -14,7 +14,7 @@ export const AnnouncementsBanner = ({ href, label, description }: AnnouncementsB
   return (
     <button
       onClick={() => navigate(href)}
-      className="flex w-full items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3.5 text-start shadow-elevation-1 transition-colors duration-normal hover:bg-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+      className="group flex w-full items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3.5 text-start shadow-elevation-1 transition-all duration-normal hover:-translate-y-0.5 hover:bg-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
       aria-label={`فتح ${label}`}
     >
       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning-soft text-warning-strong">
@@ -26,7 +26,12 @@ export const AnnouncementsBanner = ({ href, label, description }: AnnouncementsB
           {description}
         </span>
       </span>
-      <ArrowLeft size={14} className="shrink-0 text-muted" />
+      <span
+        aria-hidden
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-warning-soft text-warning-strong transition-transform duration-normal group-hover:-translate-x-1"
+      >
+        <ArrowLeft size={16} />
+      </span>
     </button>
   )
 }
