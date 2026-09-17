@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { CalendarClock, ArrowLeft, FileText, Clock } from 'lucide-react'
+import { CalendarClock, ArrowLeft, FileText, Clock, User } from 'lucide-react'
 import { periodLabel } from '../../features/attendance/utils/slotUtils'
 import type { NextSessionInfo } from './types'
 
@@ -44,7 +44,9 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="flex items-center gap-2 text-xs font-black text-main">
-            <CalendarClock size={14} className="text-primary" />
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
+              <CalendarClock size={14} />
+            </span>
             الحصة القادمة
           </p>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-2.5 py-1 text-[11px] font-black tabular-nums text-on-primary">
@@ -53,10 +55,14 @@ export const NextSessionRadar = ({ session }: NextSessionRadarProps) => {
           </span>
         </div>
 
-        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <p className="truncate text-lg font-black leading-tight text-main">{session.subject}</p>
-          <span className="truncate text-[11px] font-bold text-muted">مع {session.teacher}</span>
-        </div>
+        <p className="mt-3 truncate text-lg font-black leading-tight text-main md:text-xl">
+          {session.subject}
+        </p>
+
+        <p className="mt-1.5 flex items-center gap-1.5 text-[11px] font-bold text-muted">
+          <User size={12} className="shrink-0 text-primary" />
+          <span className="truncate">مع {session.teacher}</span>
+        </p>
 
         {session.notes && (
           <p className="mt-3 flex items-start gap-1.5 rounded-xl border border-primary/20 bg-primary-soft p-2.5 text-[11px] font-bold leading-relaxed text-main">

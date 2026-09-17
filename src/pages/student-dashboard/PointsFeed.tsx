@@ -43,7 +43,7 @@ export const PointsFeed = ({ pointLogs, recentSessions }: PointsFeedProps) => {
     tone: s.status === 'completed' ? 'neutral' : 'negative',
   }))
 
-  const items = [...pointItems, ...sessionItems].slice(0, 6)
+  const items = [...pointItems, ...sessionItems].slice(0, 5)
   if (items.length === 0) return null
 
   const toneStyle = (tone: FeedItem['tone']) => {

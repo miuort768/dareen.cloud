@@ -1,14 +1,7 @@
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
-import {
-  GraduationCap,
-  BookOpen,
-  ClipboardList,
-  UserRound,
-  Users,
-  HeartHandshake,
-} from 'lucide-react'
+import { GraduationCap, BookOpen, ClipboardList, UserRound, Users } from 'lucide-react'
 import { CountUp } from '../../shared/components/CountUp'
 
 export interface GreetingStripProps {
@@ -159,28 +152,6 @@ export const GreetingStrip = ({
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[10px] font-black text-primary lg:px-3 lg:py-1.5 lg:text-xs">
             <ClipboardList size={11} />
             {todayCount > 0 ? `${todayCount} حصص اليوم` : 'لا حصص اليوم'}
-          </span>
-        </div>
-
-        {/* أيقونة تعريفية بمقومات المرافقة */}
-        <div className="mt-4 flex items-end justify-between gap-3" aria-hidden="true">
-          <div className="flex items-center">
-            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-2">
-              <HeartHandshake size={20} />
-            </span>
-            <div className="-ms-2 space-y-1.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-info shadow-elevation-1">
-                <UserRound size={13} />
-              </span>
-              <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-success-strong shadow-elevation-1">
-                <GraduationCap size={13} />
-              </span>
-            </div>
-          </div>
-
-          <span className="mb-1 hidden items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-1 text-[10px] font-bold text-muted shadow-elevation-1 sm:inline-flex">
-            <BookOpen size={10} className="text-primary" />
-            شراكة مدرسية لمستقبل أبنائك
           </span>
         </div>
       </div>

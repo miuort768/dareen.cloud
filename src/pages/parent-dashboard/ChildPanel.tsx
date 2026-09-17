@@ -239,7 +239,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
               {notes.map((note, i) => (
                 <div
                   key={`note-${i}`}
-                  className="rounded-2xl border border-s-[3px] border-border border-s-primary bg-card p-3 shadow-elevation-1"
+                  className="rounded-none border border-s-[3px] border-border border-s-primary bg-card p-3 shadow-elevation-1"
                 >
                   <div className="mb-1 flex items-center justify-between">
                     <span className="text-[11px] font-black text-main">{note.subject}</span>

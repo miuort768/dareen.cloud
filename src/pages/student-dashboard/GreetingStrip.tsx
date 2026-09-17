@@ -1,13 +1,11 @@
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
 import {
-  BookOpen,
   CalendarClock,
   CalendarDays,
   CheckCircle2,
   CalendarCheck,
   GraduationCap,
-  PenLine,
 } from 'lucide-react'
 import { cn } from '../../lib/utils'
 
@@ -80,28 +78,6 @@ export const GreetingStrip = ({
           <p className="mt-1 text-xs font-bold leading-relaxed text-muted sm:text-sm xl:text-base">
             مستقبلك يبدأ بخطوة .. وأنتِ على الطريق الصحيح
           </p>
-
-          {/* توضيح تعليمي بأيقونات كتب/قلم/تقويم */}
-          <div className="mt-4 flex items-end justify-between gap-3" aria-hidden="true">
-            <div className="flex items-center">
-              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-2">
-                <BookOpen size={20} />
-              </span>
-              <div className="-ms-2 space-y-1.5">
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-info shadow-elevation-1">
-                  <PenLine size={13} />
-                </span>
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-card text-success-strong shadow-elevation-1">
-                  <CalendarDays size={13} />
-                </span>
-              </div>
-            </div>
-
-            <span className="mb-1 hidden items-center gap-1.5 rounded-full border border-border bg-card px-2.5 py-1 text-[10px] font-bold text-muted shadow-elevation-1 sm:inline-flex lg:mb-0">
-              <PenLine size={10} className="text-primary" />
-              رحلتك التعليمية تبدأ اليوم
-            </span>
-          </div>
         </div>
 
         {/* لقطة أرقام سطح المكتب — تملأ الفراغ في نهاية الهيرو */}
