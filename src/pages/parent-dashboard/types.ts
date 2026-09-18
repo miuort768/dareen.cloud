@@ -60,6 +60,9 @@ export interface TodayTimelineItem {
   hour: string
   period: string
   minutes: number
+  notes?: string
+  topics?: string
+  homework?: string
   status: 'live' | 'done' | 'cancelled' | 'upcoming'
 }
 

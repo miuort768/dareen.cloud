@@ -12,6 +12,7 @@ import type { Student, Enrollment, Session } from '../types'
 import {
   normalizeDayName,
   normalizePeriod,
+  parseTimeTo24,
   to24Minutes,
 } from '../features/attendance/utils/slotUtils'
 import { ARABIC_DAYS } from '../shared/constants/days'
@@ -26,6 +27,17 @@ import type {
 
 const teacherLabel = (en: Enrollment): string =>
   typeof en.teacher === 'string' ? en.teacher : en.teacher?.name || en.teacherName || ''
+
+const COMPLETED_STATUSES = ['completed', 'مكتملة', 'تم الإنجاز', 'تمت']
+const CANCELLED_STATUSES = ['cancelled', 'ملغاة', 'ملغي', 'ملغى']
+
+/** يوحّد حالات الجلسة (بالإنجليزية أو العربية القديمة) إلى مفتاح واجهة واحد */
+const sessionOutcome = (status?: string | null): 'done' | 'cancelled' | null => {
+  const s = (status || '').trim().toLowerCase()
+  if (COMPLETED_STATUSES.includes(s)) return 'done'
+  if (CANCELLED_STATUSES.includes(s)) return 'cancelled'
+  return null
+}
 
 /** Next upcoming slot for a child: today's remaining slots first, then the week ahead. */
 const findNextSession = (child: Student): ChildNextSession | null => {
@@ -234,6 +246,10 @@ export const ParentDashboard = () => {
   const timeline = useMemo<TodayTimelineItem[]>(() => {
     const todayStr = format(new Date(), 'yyyy-MM-dd')
     const items: TodayTimelineItem[] = []
+    const matchedSessionIds = new Set<string>()
+    const todaySession = (s: Session) =>
+      s.date === todayStr || s.date === new Date().toLocaleDateString('en-CA')
+
     children.forEach((child) => {
       ;(child.enrollments || []).forEach((en) => {
         ;(en.schedule || []).forEach((slot) => {
@@ -247,10 +263,12 @@ export const ParentDashboard = () => {
               s.subject === subject &&
               (s.teacherId
                 ? en.teacherId && s.teacherId === en.teacherId
-                : s.teacherName === teacher) &&
-              (s.date === todayStr || s.date === new Date().toLocaleDateString('en-CA')) &&
+                : (s.teacherName || '').trim().toLowerCase() === teacher.trim().toLowerCase()) &&
+              todaySession(s) &&
               s.status !== 'scheduled',
           )
+          if (matched?.id) matchedSessionIds.add(matched.id)
+          const outcome = matched ? sessionOutcome(matched.status) : null
           const isLive = activeTimers.some((t) => t.studentId === child.id && t.subject === subject)
           items.push({
             id: `${child.id}-${en.id || en.subject}-${slot.hour}-${slot.period}`,
@@ -261,15 +279,49 @@ export const ParentDashboard = () => {
             hour: String(parseInt(String(slot.hour), 10) || ''),
             period: normalizePeriod(slot.period),
             minutes,
-            status: isLive
-              ? 'live'
-              : matched
-                ? (matched.status as 'done' | 'cancelled')
-                : 'upcoming',
+            notes: en.nextSessionNotes || undefined,
+            topics: outcome === 'done' ? matched?.topics || undefined : undefined,
+            homework: outcome === 'done' ? matched?.homework || undefined : undefined,
+            status: isLive ? 'live' : (outcome ?? 'upcoming'),
           })
         })
       })
     })
+
+    // أي حصة مسجّلة اليوم لم تُطابَق بموعد في الجدول الأسبوعي (حصة استدراكية مثلاً)
+    sessions.forEach((s) => {
+      if (!s.id || matchedSessionIds.has(s.id)) return
+      if (!todaySession(s)) return
+      const outcome = sessionOutcome(s.status)
+      if (!outcome) return
+      const child = children.find((c) => c.id === s.studentId)
+      const { h, m } = parseTimeTo24(s.time)
+      const hour12 = h % 12 === 0 ? 12 : h % 12
+      const isLive = activeTimers.some(
+        (t) => t.studentId === s.studentId && t.subject === s.subject,
+      )
+      if (
+        isLive &&
+        items.some(
+          (i) => i.studentId === s.studentId && i.subject === s.subject && i.status === 'live',
+        )
+      )
+        return
+      items.push({
+        id: `session-${s.id}`,
+        studentId: s.studentId,
+        studentName: child?.name || s.studentName || '',
+        subject: s.subject || 'دورة',
+        teacher: s.teacherName || '',
+        hour: String(hour12),
+        period: h >= 12 ? 'pm' : 'am',
+        minutes: h * 60 + m,
+        topics: outcome === 'done' ? s.topics || undefined : undefined,
+        homework: outcome === 'done' ? s.homework || undefined : undefined,
+        status: isLive ? 'live' : outcome,
+      })
+    })
+
     return items.sort((a, b) => a.minutes - b.minutes)
   }, [children, todayArabic, sessions, activeTimers])
 

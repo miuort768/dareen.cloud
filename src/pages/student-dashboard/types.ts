@@ -3,6 +3,7 @@ export interface Enrollment {
   subject?: string
   teacher?: string
   teacherName?: string
+  teacherId?: string
   sessionsUsed?: number
   sessionsTotal?: number
   schedule?: { day: string; hour: string; period: string }[]
@@ -27,9 +28,11 @@ export interface StudentDashboardData {
 
 export interface Session {
   id?: string
+  studentId?: string
   status: string
   subject?: string
   teacherName?: string
+  teacherId?: string
   date?: string
   day?: string
   time?: string

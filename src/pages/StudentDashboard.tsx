@@ -8,6 +8,7 @@ import { ARABIC_DAYS } from '../shared/constants/days'
 import {
   normalizeDayName,
   normalizePeriod,
+  parseTimeTo24,
   to24Minutes,
 } from '../features/attendance/utils/slotUtils'
 import type {
@@ -26,6 +27,28 @@ import { format } from 'date-fns'
 
 const teacherLabel = (en: { teacher?: string; teacherName?: string }): string =>
   en.teacherName || en.teacher || ''
+
+const COMPLETED_STATUSES = ['completed', 'مكتملة', 'تم الإنجاز', 'تمت']
+const CANCELLED_STATUSES = ['cancelled', 'ملغاة', 'ملغي', 'ملغى']
+
+/** يوحّد حالات الجلسة (بالإنجليزية أو العربية القديمة) إلى مفتاح واجهة واحد */
+const sessionOutcome = (status?: string | null): 'done' | 'cancelled' | null => {
+  const s = (status || '').trim().toLowerCase()
+  if (COMPLETED_STATUSES.includes(s)) return 'done'
+  if (CANCELLED_STATUSES.includes(s)) return 'cancelled'
+  return null
+}
+
+/** يطابق الجلسة بالاشتراك عبر teacherId أولاً (الأدق) ثم بالاسم كخطة بديلة */
+const teacherMatches = (
+  en: { teacher?: string; teacherName?: string; teacherId?: string },
+  s: { teacherName?: string; teacherId?: string },
+): boolean => {
+  if (s.teacherId && en.teacherId) return s.teacherId === en.teacherId
+  const a = teacherLabel(en).trim().toLowerCase()
+  const b = (s.teacherName || '').trim().toLowerCase()
+  return Boolean(a) && a === b
+}
 
 const DAY_CHIPS = ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس', 'جمعة', 'سبت']
 
@@ -145,6 +168,11 @@ export const StudentDashboard = () => {
     const todayName = ARABIC_DAYS[new Date().getDay()] || ''
     const todayStr = format(new Date(), 'yyyy-MM-dd')
     const items: TodayTimelineItem[] = []
+    const matchedSessionIds = new Set<string>()
+
+    const todaySession = (s: Session) =>
+      s.date === todayStr || s.date === new Date().toLocaleDateString('en-CA')
+
     enrollments.forEach((en) => {
       ;(en.schedule || []).forEach((slot) => {
         if (normalizeDayName(slot.day) !== todayName) return
@@ -152,10 +180,12 @@ export const StudentDashboard = () => {
         const matched = sessions.find(
           (s) =>
             s.subject === subject &&
-            s.teacherName === teacherLabel(en) &&
-            (s.date === todayStr || s.date === new Date().toLocaleDateString('en-CA')) &&
+            teacherMatches(en, s) &&
+            todaySession(s) &&
             s.status !== 'scheduled',
         )
+        if (matched?.id) matchedSessionIds.add(matched.id)
+        const outcome = matched ? sessionOutcome(matched.status) : null
         items.push({
           id: `${en.id || en.subject}-${slot.hour}-${slot.period}`,
           subject,
@@ -164,16 +194,34 @@ export const StudentDashboard = () => {
           period: normalizePeriod(slot.period),
           minutes: to24Minutes(slot.hour, slot.period),
           notes: en.nextSessionNotes || undefined,
-          topics: matched?.status === 'completed' ? matched.topics || undefined : undefined,
-          homework: matched?.status === 'completed' ? matched.homework || undefined : undefined,
-          status: matched
-            ? (matched.status as 'done' | 'cancelled')
-            : activeSession?.subject === subject
-              ? 'live'
-              : 'upcoming',
+          topics: outcome === 'done' ? matched?.topics || undefined : undefined,
+          homework: outcome === 'done' ? matched?.homework || undefined : undefined,
+          status: outcome ?? (activeSession?.subject === subject ? 'live' : 'upcoming'),
         })
       })
     })
+
+    // أي حصة مسجّلة اليوم لم تُطابَق بموعد في الجدول الأسبوعي (حصة استدراكية مثلاً)
+    sessions.forEach((s) => {
+      if (!s.id || matchedSessionIds.has(s.id)) return
+      if (!todaySession(s)) return
+      const outcome = sessionOutcome(s.status)
+      if (!outcome) return
+      const { h, m } = parseTimeTo24(s.time)
+      const hour12 = h % 12 === 0 ? 12 : h % 12
+      items.push({
+        id: `session-${s.id}`,
+        subject: s.subject || 'دورة',
+        teacher: s.teacherName || '',
+        hour: String(hour12),
+        period: h >= 12 ? 'pm' : 'am',
+        minutes: h * 60 + m,
+        topics: outcome === 'done' ? s.topics || undefined : undefined,
+        homework: outcome === 'done' ? s.homework || undefined : undefined,
+        status: outcome,
+      })
+    })
+
     return items.sort((a, b) => a.minutes - b.minutes)
   }, [enrollments, sessions, activeSession])
 
