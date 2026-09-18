@@ -6,7 +6,6 @@ import {
   Clock,
   AlertCircle,
   ArrowLeft,
-  ArrowUp,
   Wallet,
   Users,
   Eye,
@@ -16,7 +15,8 @@ import { ar } from 'date-fns/locale'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
 import { useShowNotification, useIsLoading, useAcademyName } from '../context/AppContext'
-import { Skeleton, PageHeader, Table, StatCard } from '../shared/components/ui'
+import { Skeleton, Table, StatCard } from '../shared/components/ui'
+import { GradientHeroCard } from '../shared/components/GradientHeroCard'
 import type { Column } from '../shared/components/ui'
 import { cn } from '../lib/utils'
 import { CURRENCY_SYMBOL } from '../config/constants'
@@ -81,7 +81,7 @@ const STATUS_PILL_LABEL: Record<FilterStatus, string> = {
 }
 
 const HeroSkeleton = () => (
-  <div className="mx-auto max-w-page px-2.5 pt-4 sm:px-4">
+  <div className="mx-auto max-w-page pt-1 sm:px-4">
     <Skeleton className="h-[150px] rounded-2xl" />
   </div>
 )
@@ -352,7 +352,7 @@ export const ParentPaymentHistory = () => {
         dir="rtl"
       >
         <HeroSkeleton />
-        <div className="mx-auto max-w-page space-y-4 px-2.5 pt-4 sm:px-4">
+        <div className="mx-auto max-w-page space-y-4 pt-1 sm:px-4">
           <ListSkeleton />
         </div>
       </div>
@@ -364,20 +364,21 @@ export const ParentPaymentHistory = () => {
       className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background font-sans"
       dir="rtl"
     >
-      <div className="mx-auto max-w-page space-y-4 px-2.5 pt-4 sm:px-4">
-        {/* Header — unified PageHeader pattern */}
+      <div className="mx-auto max-w-page space-y-4 pt-1 sm:px-4">
+        {/* Hero — gradient hero like the schedule/attendance pages */}
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
-          <PageHeader
+          <GradientHeroCard
+            icon={Wallet}
             title="سجل الدفعات"
             subtitle="متابعة فواتير ومستحقات أبنائك"
-            icon={<Wallet size={22} />}
-            action={
+            end={
               <button
                 onClick={() => navigate(-1)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-card text-muted outline-none transition-all hover:bg-hover hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
+                className="inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-white/20 bg-white/15 px-3 text-xs font-bold text-on-primary shadow-elevation-1 outline-none backdrop-blur-sm transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
                 aria-label="رجوع"
               >
-                <ArrowLeft size={15} />
+                <ArrowLeft size={14} />
+                رجوع
               </button>
             }
           />
@@ -425,27 +426,48 @@ export const ParentPaymentHistory = () => {
           transition={{ delay: 0.1 }}
           className="space-y-2.5"
         >
-          <div className="no-scrollbar flex gap-1.5 overflow-x-auto pb-0.5">
-            {([['all', STATUS_PILL_LABEL.all]] as [FilterStatus, string][])
-              .concat(
-                INVOICE_STATUS_ORDER.map(
-                  (s) => [s, STATUS_PILL_LABEL[s]] as [FilterStatus, string],
-                ),
-              )
-              .map(([key, label]) => (
-                <button
-                  key={key}
-                  onClick={() => setFilterStatus(key)}
-                  className={cn(
-                    'shrink-0 whitespace-nowrap rounded-xl px-3.5 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
-                    filterStatus === key
-                      ? 'bg-primary text-on-primary shadow-elevation-1'
-                      : 'border border-border bg-card text-muted hover:bg-hover',
-                  )}
-                >
-                  {label}
-                </button>
-              ))}
+          {/* Status filter — native select on phone, pills on desktop */}
+          <div className="space-y-2">
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value as FilterStatus)}
+              aria-label="تصفية حسب الحالة"
+              className="h-11 w-full cursor-pointer appearance-none rounded-xl border border-border bg-card px-3.5 text-xs font-bold text-main outline-none transition-all hover:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10 md:hidden"
+            >
+              {([['all', STATUS_PILL_LABEL.all]] as [FilterStatus, string][])
+                .concat(
+                  INVOICE_STATUS_ORDER.map(
+                    (s) => [s, STATUS_PILL_LABEL[s]] as [FilterStatus, string],
+                  ),
+                )
+                .map(([key, label]) => (
+                  <option key={key} value={key}>
+                    {label}
+                  </option>
+                ))}
+            </select>
+            <div className="no-scrollbar hidden gap-1.5 overflow-x-auto pb-0.5 md:flex">
+              {([['all', STATUS_PILL_LABEL.all]] as [FilterStatus, string][])
+                .concat(
+                  INVOICE_STATUS_ORDER.map(
+                    (s) => [s, STATUS_PILL_LABEL[s]] as [FilterStatus, string],
+                  ),
+                )
+                .map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setFilterStatus(key)}
+                    className={cn(
+                      'shrink-0 whitespace-nowrap rounded-xl px-3.5 py-1.5 text-[11px] font-bold outline-none transition-all focus-visible:ring-2 focus-visible:ring-focus',
+                      filterStatus === key
+                        ? 'bg-primary text-on-primary shadow-elevation-1'
+                        : 'border border-border bg-card text-muted hover:bg-hover',
+                    )}
+                  >
+                    {label}
+                  </button>
+                ))}
+            </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -561,15 +583,6 @@ export const ParentPaymentHistory = () => {
           />
         </motion.div>
       </div>
-
-      {/* FAB — العودة للأعلى (قوائم طويلة) — هاتف فقط */}
-      <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        aria-label="العودة للأعلى"
-        className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] end-4 z-50 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-on-primary shadow-elevation-4 outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-95 md:hidden"
-      >
-        <ArrowUp size={20} />
-      </button>
     </div>
   )
 }

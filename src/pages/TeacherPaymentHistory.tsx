@@ -25,7 +25,8 @@ import {
   normalizeInvoiceStatus,
   type InvoiceStatus,
 } from '../types/invoice'
-import { Skeleton, PageHeader, Table, EmptyState, StatCard } from '../shared/components/ui'
+import { Skeleton, Table, EmptyState, StatCard } from '../shared/components/ui'
+import { GradientHeroCard } from '../shared/components/GradientHeroCard'
 import type { Column } from '../shared/components/ui'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
@@ -322,8 +323,8 @@ export const TeacherPaymentHistory = () => {
         className="from-primary-soft/40 min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
         dir="rtl"
       >
-        <div className="mx-auto max-w-page space-y-4 px-2.5 pt-4 sm:px-4">
-          <Skeleton className="h-36 rounded-2xl" />
+        <div className="mx-auto max-w-page space-y-4 pt-1 sm:px-4">
+          <Skeleton className="h-[150px] rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
               <Skeleton key={i} className="h-20 rounded-xl" />
@@ -340,32 +341,30 @@ export const TeacherPaymentHistory = () => {
       className="from-primary-soft/40 relative min-h-full overflow-x-hidden bg-gradient-to-b via-background to-background"
       dir="rtl"
     >
-      <div className="mx-auto max-w-page px-2.5 sm:px-4">
-        {/* Header — unified PageHeader pattern */}
+      <div className="mx-auto max-w-page pt-1 sm:px-4">
+        {/* Hero — gradient hero like the schedule/attendance pages */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-4">
-          <PageHeader
+          <GradientHeroCard
+            icon={Wallet}
             title="سجل الدفعات"
             subtitle="سجل المدفوعات والمستحقات المالية"
-            icon={<Wallet size={22} />}
-            breadcrumbs={
-              <button
-                type="button"
-                onClick={() => navigate(-1)}
-                className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-border bg-card px-3 text-[11px] font-bold text-muted outline-none transition-all hover:border-primary/30 hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
-              >
-                <ArrowRight size={13} />
-                رجوع
-              </button>
-            }
-            meta={
-              <>
-                <span className="inline-flex items-center rounded-lg border border-border bg-surface px-2.5 py-1 text-[11px] font-bold tabular-nums text-muted">
+            end={
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => navigate(-1)}
+                  className="inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-white/20 bg-white/15 px-3 text-[11px] font-bold text-on-primary shadow-elevation-1 outline-none backdrop-blur-sm transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
+                >
+                  <ArrowRight size={13} />
+                  رجوع
+                </button>
+                <span className="inline-flex items-center rounded-xl border border-white/20 bg-white/15 px-2.5 py-1.5 text-[11px] font-bold tabular-nums text-on-primary backdrop-blur-sm">
                   الإجمالي: {stats.total.toLocaleString()} {primaryCurrency}
                 </span>
-                <span className="inline-flex items-center rounded-lg border border-success-soft bg-success-soft px-2.5 py-1 text-[11px] font-bold tabular-nums text-success-strong">
+                <span className="inline-flex items-center rounded-xl border border-white/20 bg-white/15 px-2.5 py-1.5 text-[11px] font-bold tabular-nums text-on-primary backdrop-blur-sm">
                   مدفوعة: {scopedStats.paidCount}
                 </span>
-              </>
+              </div>
             }
           />
         </motion.div>

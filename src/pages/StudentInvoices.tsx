@@ -16,7 +16,8 @@ import {
 } from 'lucide-react'
 import { api } from '../lib/api'
 import { useCurrentUser, useAcademyName } from '../context/AppContext'
-import { Skeleton, Table, PageHeader, StatCard } from '../shared/components/ui'
+import { Skeleton, Table, StatCard } from '../shared/components/ui'
+import { GradientHeroCard } from '../shared/components/GradientHeroCard'
 import type { Column } from '../shared/components/ui'
 import { CURRENCY_SYMBOL } from '../config/constants'
 import { cn } from '../lib/utils'
@@ -284,8 +285,8 @@ export const StudentInvoices = () => {
         className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
         dir="rtl"
       >
-        <div className="mx-auto max-w-page space-y-4 px-2.5 pt-6 sm:px-4">
-          <Skeleton className="h-28 rounded-2xl" />
+        <div className="mx-auto max-w-page pt-1 sm:px-4">
+          <Skeleton className="h-[150px] rounded-2xl" />
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
               <Skeleton key={i} className="h-24 rounded-xl" />
@@ -303,74 +304,82 @@ export const StudentInvoices = () => {
       className="from-primary-soft/40 min-h-full bg-gradient-to-b via-background to-background pb-8"
       dir="rtl"
     >
-      <div className="mx-auto max-w-page px-2.5 sm:px-4">
-        {/* Header — unified PageHeader pattern with one toolbar */}
+      <div className="mx-auto max-w-page pt-1 sm:px-4">
+        {/* Hero — gradient hero like the schedule/attendance pages */}
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-          <PageHeader
+          <GradientHeroCard
+            icon={Receipt}
             title={isAdmin ? 'فواتير الطلاب' : 'فواتيري'}
             subtitle="متابعة الرسوم والمدفوعات الدراسية"
-            icon={<Receipt size={22} />}
-            action={
+            end={
               <button
                 onClick={() => window.print()}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-on-primary shadow-elevation-1 transition-all duration-normal hover:bg-primary-hover hover:shadow-elevation-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 active:scale-[0.98]"
+                className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-white/20 bg-white/15 px-3.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none backdrop-blur-sm transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
               >
                 <Printer size={14} />
                 <span className="hidden sm:inline">طباعة</span>
               </button>
             }
-            toolbar={
-              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-                <div className="relative flex-1 sm:min-w-[180px]">
-                  <Search
-                    className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
-                    size={15}
-                  />
-                  <input
-                    aria-label="بحث في الفواتير"
-                    placeholder={isAdmin ? 'بحث بالبيان أو اسم الطالب...' : 'بحث بالبيان...'}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
-                  />
-                  {searchTerm && (
-                    <button
-                      onClick={() => setSearchTerm('')}
-                      className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
-                      aria-label="مسح البحث"
-                    >
-                      <X size={14} />
-                    </button>
-                  )}
-                </div>
-                <select
-                  value={filterStatus}
-                  onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
-                  aria-label="تصفية حسب الحالة"
-                  className={selectCls}
-                >
-                  <option value="all">الكل</option>
-                  {INVOICE_STATUS_ORDER.map((s) => (
-                    <option key={s} value={s}>
-                      {INVOICE_STATUS_META[s].label}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  value={period}
-                  onChange={(e) => setPeriod(e.target.value as Period)}
-                  aria-label="تصفية حسب الفترة"
-                  className={selectCls}
-                >
-                  {periodOptions.map((p) => (
-                    <option key={p.value} value={p.value}>
-                      {p.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            }
           />
+        </motion.div>
+
+        {/* Controls toolbar — search + filters in a neutral card below the hero */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+        >
+          <div className="my-4 rounded-xl border border-border bg-card p-3 shadow-elevation-1 md:my-5">
+            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+              <div className="relative flex-1 sm:min-w-[180px]">
+                <Search
+                  className="absolute start-3.5 top-1/2 -translate-y-1/2 text-muted"
+                  size={15}
+                />
+                <input
+                  aria-label="بحث في الفواتير"
+                  placeholder={isAdmin ? 'بحث بالبيان أو اسم الطالب...' : 'بحث بالبيان...'}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="h-11 w-full rounded-xl border border-border bg-surface pe-10 ps-10 text-xs font-bold text-main outline-none transition-all duration-normal focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="absolute end-3 top-1/2 -translate-y-1/2 text-muted outline-none transition-colors hover:text-main focus-visible:ring-2 focus-visible:ring-focus"
+                    aria-label="مسح البحث"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value as typeof filterStatus)}
+                aria-label="تصفية حسب الحالة"
+                className={selectCls}
+              >
+                <option value="all">الكل</option>
+                {INVOICE_STATUS_ORDER.map((s) => (
+                  <option key={s} value={s}>
+                    {INVOICE_STATUS_META[s].label}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={period}
+                onChange={(e) => setPeriod(e.target.value as Period)}
+                aria-label="تصفية حسب الفترة"
+                className={selectCls}
+              >
+                {periodOptions.map((p) => (
+                  <option key={p.value} value={p.value}>
+                    {p.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </motion.div>
 
         {mixedCount > 0 && (
