@@ -22,6 +22,7 @@ import { LiveSessionBanner, type StudentActiveSession } from './LiveSessionBanne
 import { KpiStrip } from './KpiStrip'
 import { StudentSupportStrip } from './StudentSupportStrip'
 import { AnnouncementsBanner } from '../../shared/components/AnnouncementsBanner'
+import { SessionCallAlert } from '../../components/ui/SessionCallAlert'
 
 interface ShellProps {
   studentData: StudentDashboardData | null
@@ -107,6 +108,10 @@ export const StudentDashboardDesktop = ({
 
             <motion.div {...fadeUp(0.2)}>
               <InvoicesStrip />
+            </motion.div>
+
+            <motion.div {...fadeUp(0.22)}>
+              <SessionCallAlert />
             </motion.div>
 
             <motion.div {...fadeUp(0.24)}>

@@ -23,6 +23,7 @@ import { LiveSessionBanner, type StudentActiveSession } from './LiveSessionBanne
 import { KpiStrip } from './KpiStrip'
 import { StudentSupportStrip } from './StudentSupportStrip'
 import { AnnouncementsBanner } from '../../shared/components/AnnouncementsBanner'
+import { SessionCallAlert } from '../../components/ui/SessionCallAlert'
 
 interface StudentDashboardMobileProps {
   studentData: StudentDashboardData | null
@@ -116,6 +117,10 @@ export const StudentDashboardMobile = ({
 
         <motion.div {...fadeUp(0.25)}>
           <InvoicesStrip />
+        </motion.div>
+
+        <motion.div {...fadeUp(0.28)}>
+          <SessionCallAlert />
         </motion.div>
 
         <motion.div {...fadeUp(0.3)}>

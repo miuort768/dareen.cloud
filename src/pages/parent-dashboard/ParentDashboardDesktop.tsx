@@ -10,6 +10,7 @@ import { WeeklyPulse } from './WeeklyPulse'
 import { PointsActivityCard } from './PointsActivityCard'
 import { SupportStrip } from './SupportStrip'
 import { AnnouncementsBanner } from '../../shared/components/AnnouncementsBanner'
+import { SessionCallAlert } from '../../components/ui/SessionCallAlert'
 import type { ParentDashboardProps } from './types'
 import type { Student } from '../../types'
 
@@ -108,6 +109,9 @@ export const ParentDashboardDesktop = ({
             </motion.div>
             <motion.div {...fadeUp(0.24)}>
               <SupportStrip adminPhone={adminPhone} />
+            </motion.div>
+            <motion.div {...fadeUp(0.26)}>
+              <SessionCallAlert />
             </motion.div>
             <motion.div {...fadeUp(0.28)}>
               <AnnouncementsBanner

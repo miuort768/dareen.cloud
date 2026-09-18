@@ -12,6 +12,7 @@ import { WeeklyPulse } from './WeeklyPulse'
 import { PointsActivityCard } from './PointsActivityCard'
 import { SupportStrip } from './SupportStrip'
 import { AnnouncementsBanner } from '../../shared/components/AnnouncementsBanner'
+import { SessionCallAlert } from '../../components/ui/SessionCallAlert'
 import type { ParentDashboardProps } from './types'
 import type { Student } from '../../types'
 
@@ -74,6 +75,10 @@ export const ParentDashboardMobile = ({
             todayCount={weekly.todayCount}
             attendanceRate={weekly.attendanceRate}
           />
+        </motion.div>
+
+        <motion.div {...fadeUp(0.04)}>
+          <SessionCallAlert />
         </motion.div>
 
         <motion.div {...fadeUp(0.05)}>
