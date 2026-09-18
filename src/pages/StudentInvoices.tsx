@@ -3,17 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
-import {
-  Search,
-  Receipt,
-  CheckCircle,
-  Clock,
-  AlertCircle,
-  Printer,
-  Eye,
-  X,
-  Wallet,
-} from 'lucide-react'
+import { Search, Receipt, CheckCircle, Clock, AlertCircle, Eye, X, Wallet } from 'lucide-react'
 import { api } from '../lib/api'
 import { useCurrentUser, useAcademyName } from '../context/AppContext'
 import { Skeleton, Table, StatCard } from '../shared/components/ui'
@@ -311,16 +301,35 @@ export const StudentInvoices = () => {
             icon={Receipt}
             title={isAdmin ? 'فواتير الطلاب' : 'فواتيري'}
             subtitle="متابعة الرسوم والمدفوعات الدراسية"
-            end={
-              <button
-                onClick={() => window.print()}
-                className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-white/20 bg-white/15 px-3.5 text-xs font-bold text-on-primary shadow-elevation-1 outline-none backdrop-blur-sm transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98]"
-              >
-                <Printer size={14} />
-                <span className="hidden sm:inline">طباعة</span>
-              </button>
-            }
           />
+        </motion.div>
+
+        {/* KPI cards — colored StatCard strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+        >
+          <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {kpiCards.map((card, i) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.08 + i * 0.04 }}
+              >
+                <StatCard
+                  title={card.title}
+                  value={card.value}
+                  unit={card.unit}
+                  badge={card.badge}
+                  icon={card.icon}
+                  variant={card.variant}
+                  watermark
+                />
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Controls toolbar — search + filters in a neutral card below the hero */}
@@ -388,34 +397,6 @@ export const StudentInvoices = () => {
             {mixedCount} فاتورة بعملة مختلفة غير مضممة في الإجماليات
           </p>
         )}
-
-        {/* KPI cards — colored StatCard strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.05 }}
-        >
-          <div className="mb-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
-            {kpiCards.map((card, i) => (
-              <motion.div
-                key={card.title}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 + i * 0.04 }}
-              >
-                <StatCard
-                  title={card.title}
-                  value={card.value}
-                  unit={card.unit}
-                  badge={card.badge}
-                  icon={card.icon}
-                  variant={card.variant}
-                  watermark
-                />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
 
         {/* Data table — shared DataTable (desktop table + mobile cards) */}
         <motion.div

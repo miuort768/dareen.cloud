@@ -1,18 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import {
-  Search,
-  CheckCircle,
-  Clock,
-  AlertCircle,
-  ArrowLeft,
-  Wallet,
-  Users,
-  Eye,
-} from 'lucide-react'
+import { Search, CheckCircle, Clock, AlertCircle, Wallet, Users, Eye } from 'lucide-react'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
-import { useNavigate } from 'react-router-dom'
 import { api } from '../lib/api'
 import { useShowNotification, useIsLoading, useAcademyName } from '../context/AppContext'
 import { Skeleton, Table, StatCard } from '../shared/components/ui'
@@ -108,7 +98,6 @@ export const ParentPaymentHistory = () => {
   useEffect(() => {
     document.title = `سجل الدفعات | ${academyName}`
   }, [academyName])
-  const navigate = useNavigate()
   const showNotification = useShowNotification()
   const authLoading = useIsLoading()
   const [invoices, setInvoices] = useState<StudentInvoiceData[]>([])
@@ -371,16 +360,6 @@ export const ParentPaymentHistory = () => {
             icon={Wallet}
             title="سجل الدفعات"
             subtitle="متابعة فواتير ومستحقات أبنائك"
-            end={
-              <button
-                onClick={() => navigate(-1)}
-                className="inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-white/20 bg-white/15 px-3 text-xs font-bold text-on-primary shadow-elevation-1 outline-none backdrop-blur-sm transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
-                aria-label="رجوع"
-              >
-                <ArrowLeft size={14} />
-                رجوع
-              </button>
-            }
           />
         </motion.div>
 

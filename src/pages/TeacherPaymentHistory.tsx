@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Search,
@@ -12,8 +11,6 @@ import {
   BarChart3,
   Filter,
   DollarSign,
-  Printer,
-  ArrowRight,
 } from 'lucide-react'
 import { api } from '../lib/api'
 import { useCurrentUser, useShowNotification, useAcademyName } from '../context/AppContext'
@@ -51,7 +48,6 @@ export const TeacherPaymentHistory = () => {
   useEffect(() => {
     document.title = `سجل الدفعات | ${academyName}`
   }, [academyName])
-  const navigate = useNavigate()
   const currentUser = useCurrentUser()
   const showNotification = useShowNotification()
   const [invoices, setInvoices] = useState<TeacherInvoice[]>([])
@@ -350,14 +346,6 @@ export const TeacherPaymentHistory = () => {
             subtitle="سجل المدفوعات والمستحقات المالية"
             end={
               <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => navigate(-1)}
-                  className="inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-white/20 bg-white/15 px-3 text-[11px] font-bold text-on-primary shadow-elevation-1 outline-none backdrop-blur-sm transition-all hover:bg-white/25 focus-visible:ring-2 focus-visible:ring-focus"
-                >
-                  <ArrowRight size={13} />
-                  رجوع
-                </button>
                 <span className="inline-flex items-center rounded-xl border border-white/20 bg-white/15 px-2.5 py-1.5 text-[11px] font-bold tabular-nums text-on-primary backdrop-blur-sm">
                   الإجمالي: {stats.total.toLocaleString()} {primaryCurrency}
                 </span>
@@ -424,7 +412,7 @@ export const TeacherPaymentHistory = () => {
                 className="h-11 w-full rounded-xl border border-border bg-surface pe-3 ps-9 text-xs font-bold text-main transition-all placeholder:text-muted focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/10"
               />
             </div>
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="relative">
                 <Filter
                   className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted"
@@ -457,12 +445,6 @@ export const TeacherPaymentHistory = () => {
                   ))}
                 </select>
               </div>
-              <button
-                onClick={() => window.print()}
-                className="col-span-2 flex h-11 items-center justify-center gap-2 rounded-xl bg-primary text-xs font-bold text-on-primary outline-none transition-all hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus active:scale-[0.98] lg:col-span-1"
-              >
-                <Printer size={14} /> طباعة
-              </button>
             </div>
           </div>
         </motion.div>
