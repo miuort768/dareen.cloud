@@ -21,7 +21,6 @@ export const ParentDashboardDesktop = ({
   currentUser,
   adminPhone,
   children: kids,
-  eldestChild,
   allPointLogs,
   activeTimers,
   childStats,
@@ -42,13 +41,11 @@ export const ParentDashboardDesktop = ({
       <div className="mx-auto max-w-page space-y-5 px-2.5 pb-12 pt-5 sm:px-4 md:px-6">
         <motion.div {...fadeUp(0)}>
           <GreetingStrip
-            name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
+            name={currentUser?.name || currentUser?.username || 'شريك النجاح'}
             childCount={kids.length}
             subjectCount={subjectCount}
             todayCount={weekly.todayCount}
             attendanceRate={weekly.attendanceRate}
-            eldestChildName={eldestChild?.name}
-            eldestChildGrade={eldestChild?.grade}
           />
         </motion.div>
 

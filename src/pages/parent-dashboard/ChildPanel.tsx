@@ -145,7 +145,7 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
         )}
         <button
           onClick={() => navigate('/schedule')}
-          className="mt-2.5 inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary-soft px-3 py-1.5 text-[11px] font-black text-primary transition-colors duration-normal hover:bg-primary hover:text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+          className="mt-3 flex min-h-10 w-full items-center justify-center gap-1.5 rounded-full border border-primary/25 bg-primary-soft text-[11px] font-black text-primary transition-colors duration-normal hover:bg-primary hover:text-on-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           aria-label="فتح الجدول الأسبوعي"
         >
           <CalendarDays size={12} />
@@ -156,7 +156,15 @@ export const ChildPanel = ({ child, stats }: ChildPanelProps) => {
 
       {/* تقدم المواد */}
       <div className="p-5">
-        <h3 className="mb-3 text-xs font-black text-muted">تقدم المواد</h3>
+        <div className="mb-3 flex items-center gap-2">
+          <h3 className="shrink-0 rounded-lg bg-primary px-3 py-1.5 text-xs font-black text-on-primary shadow-elevation-1">
+            تقدم المواد
+          </h3>
+          <span
+            className="min-w-0 flex-1 border-t-2 border-dashed border-divider"
+            aria-hidden="true"
+          />
+        </div>
         {enrollments.length === 0 ? (
           <p className="rounded-2xl border border-dashed border-border py-6 text-center text-xs font-bold text-muted">
             لا توجد مواد مسجلة

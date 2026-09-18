@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 import { ar } from 'date-fns/locale'
-import { GraduationCap, BookOpen, ClipboardList, UserRound, Users } from 'lucide-react'
+import { BookOpen, ClipboardList, UserRound, Users } from 'lucide-react'
 import { CountUp } from '../../shared/components/CountUp'
 
 export interface GreetingStripProps {
@@ -10,8 +10,6 @@ export interface GreetingStripProps {
   subjectCount: number
   todayCount: number
   attendanceRate: number
-  eldestChildName?: string | null
-  eldestChildGrade?: string | null
 }
 
 const getGreeting = (): string => {
@@ -29,10 +27,8 @@ export const GreetingStrip = ({
   subjectCount,
   todayCount,
   attendanceRate,
-  eldestChildName,
-  eldestChildGrade,
 }: GreetingStripProps) => {
-  const firstName = (name || 'ولي الأمر').split(' ')[0] || 'ولي الأمر'
+  const firstName = (name || 'شريك النجاح').split(' ')[0] || 'شريك النجاح'
   const today = format(new Date(), 'eeee، d MMMM yyyy', { locale: ar })
   const RING_SIZE = 56
   const RING_RADIUS = 24
@@ -70,17 +66,9 @@ export const GreetingStrip = ({
               {getGreeting()}، {firstName}
             </h1>
 
-            {eldestChildName ? (
-              <p className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px] font-bold text-muted xl:text-xs">
-                <GraduationCap size={12} className="text-primary" />
-                متابعة رحلة {eldestChildName.split(' ')[0]}
-                {eldestChildGrade ? ` — ${eldestChildGrade}` : ''}
-              </p>
-            ) : (
-              <p className="mt-1 text-[11px] font-bold text-muted xl:text-xs">
-                نبض يومي لمتابعة أبنائك
-              </p>
-            )}
+            <p className="mt-1 text-[11px] font-bold text-muted xl:text-xs">
+              نبض يومي لمتابعة أبنائك
+            </p>
           </div>
 
           {/* حلقة الحضور الإجمالية */}

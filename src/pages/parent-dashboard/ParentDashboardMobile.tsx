@@ -23,7 +23,6 @@ export const ParentDashboardMobile = ({
   currentUser,
   adminPhone,
   children: kids,
-  eldestChild,
   allPointLogs,
   activeTimers,
   childStats,
@@ -71,17 +70,24 @@ export const ParentDashboardMobile = ({
       <div className="mx-auto max-w-page space-y-4 pb-6 pt-4 sm:px-4">
         <motion.div {...fadeUp(0)}>
           <GreetingStrip
-            name={currentUser?.name || currentUser?.username || 'ولي الأمر'}
+            name={currentUser?.name || currentUser?.username || 'شريك النجاح'}
             childCount={kids.length}
             subjectCount={subjectCount}
             todayCount={weekly.todayCount}
             attendanceRate={weekly.attendanceRate}
-            eldestChildName={eldestChild?.name}
-            eldestChildGrade={eldestChild?.grade}
           />
         </motion.div>
 
         <motion.div {...fadeUp(0.05)}>
+          <AnnouncementsBanner
+            href="/parent-announcements"
+            label="إعلانات الأكاديمية"
+            description="آخر الإعلانات والتنبيهات الموجهة لأولياء الأمور"
+            variant="classic"
+          />
+        </motion.div>
+
+        <motion.div {...fadeUp(0.1)}>
           <LiveNowBanner
             activeTimers={activeTimers}
             childNames={childNames}
@@ -89,20 +95,20 @@ export const ParentDashboardMobile = ({
           />
         </motion.div>
 
-        <motion.div {...fadeUp(0.1)}>
+        <motion.div {...fadeUp(0.15)}>
           <WeeklyPulse stats={weekly} />
         </motion.div>
 
         {kids.length > 0 && (
           <>
-            <motion.div {...fadeUp(0.15)}>
+            <motion.div {...fadeUp(0.2)}>
               <ChildSwitcher
                 children={kids}
                 selectedId={selectedChildId}
                 onSelect={onSelectChild}
               />
             </motion.div>
-            <motion.div {...fadeUp(0.2)}>
+            <motion.div {...fadeUp(0.25)}>
               {selectedChild && (
                 <ChildPanel
                   key={selectedChild.id}
@@ -125,11 +131,11 @@ export const ParentDashboardMobile = ({
           </>
         )}
 
-        <motion.div {...fadeUp(0.25)}>
+        <motion.div {...fadeUp(0.3)}>
           <TodayTimeline items={timeline} />
         </motion.div>
 
-        <motion.div {...fadeUp(0.3)}>
+        <motion.div {...fadeUp(0.35)}>
           <PointsActivityCard
             points={points}
             rankName={rank.name}
@@ -138,17 +144,8 @@ export const ParentDashboardMobile = ({
           />
         </motion.div>
 
-        <motion.div {...fadeUp(0.35)}>
-          <SupportStrip adminPhone={adminPhone} />
-        </motion.div>
-
         <motion.div {...fadeUp(0.4)}>
-          <AnnouncementsBanner
-            href="/parent-announcements"
-            label="إعلانات الأكاديمية"
-            description="آخر الإعلانات والتنبيهات الموجهة لأولياء الأمور"
-            variant="classic"
-          />
+          <SupportStrip adminPhone={adminPhone} />
         </motion.div>
       </div>
     </div>

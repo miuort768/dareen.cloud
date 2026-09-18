@@ -170,6 +170,7 @@ export const ParentDashboard = () => {
               date: string
               status: string
               timestamp?: string
+              amount?: number
               points?: number
             }[]
           ).map((l) => ({ ...l, studentName: students[idx]?.name || '' })),
@@ -362,9 +363,10 @@ export const ParentDashboard = () => {
     }
   }, [sessions, children, timeline])
 
+  /** إجمالي نقاط الأبناء — من totalPoints الرسمي لكل ابن (نفس مصدر لوحة الطالب) */
   const points = useMemo(
-    () => allPointLogs.reduce((sum, log) => sum + (log.points || 0), 0),
-    [allPointLogs],
+    () => children.reduce((sum, child) => sum + (child.totalPoints || 0), 0),
+    [children],
   )
 
   const childNames = useMemo(() => {
@@ -373,22 +375,6 @@ export const ParentDashboard = () => {
       map[c.id] = c.name
     })
     return map
-  }, [children])
-
-  /** الابن الأكبر: أعلى صف دراسي (نظام 12 صف) — وإن تعذّر المقارنة فالأول في القائمة */
-  const eldestChild = useMemo<Student | null>(() => {
-    if (children.length === 0) return null
-    const gradeValue = (grade?: string | null): number => {
-      if (!grade) return -1
-      const normalized = grade.replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
-      const m = normalized.match(/(\d{1,2})/)
-      return m && m[1] ? parseInt(m[1], 10) : -1
-    }
-    const sorted = [...children].sort((a, b) => {
-      const diff = gradeValue(b.grade) - gradeValue(a.grade)
-      return diff !== 0 ? diff : 0
-    })
-    return sorted[0] ?? null
   }, [children])
 
   if (isLoading) {
@@ -435,7 +421,6 @@ export const ParentDashboard = () => {
     currentUser,
     adminPhone,
     children,
-    eldestChild,
     allPointLogs,
     activeTimers,
     childStats,
