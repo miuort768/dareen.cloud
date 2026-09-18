@@ -143,7 +143,9 @@ router.post('/start', authMiddleware, async (req, res) => {
     if (io) {
       if (targetStudentId) {
         const studentNotifId = genId();
-        const msg = `بدأت المعلمة ${teacherName} حصة ${subject || ''} الآن. انضمي عبر الرابط: ${meetingUrl}`;
+        const subjectPart = cleanSubject ? ` في مادة ${cleanSubject}` : '';
+        const studentTitle = cleanSubject ? `حصة ${cleanSubject} مباشرة الآن` : 'حصة مباشرة الآن';
+        const msg = `المعلمة ${teacherName} بدأت الحصة${subjectPart} — انضم الآن عبر الرابط: ${meetingUrl}`;
         try {
           await prisma.notification.create({
             data: {
@@ -151,7 +153,7 @@ router.post('/start', authMiddleware, async (req, res) => {
               senderId: teacherId,
               receiverId: targetStudentId,
               senderName: teacherName,
-              title: 'حصة مباشرة بدأت!',
+              title: studentTitle,
               message: msg,
               type: 'live',
               time: new Date().toISOString(),
@@ -159,7 +161,7 @@ router.post('/start', authMiddleware, async (req, res) => {
             }
           });
           io.to(`user_${targetStudentId}`).emit('notification', {
-            id: studentNotifId, title: 'حصة مباشرة بدأت!', message: msg, type: 'live', link: meetingUrl
+            id: studentNotifId, title: studentTitle, message: msg, type: 'live', link: meetingUrl
           });
           io.to(`user_${targetStudentId}`).emit('session_invite', {
             teacherName, subject, sessionId: id, meetingUrl, meetingProvider: provider
@@ -171,14 +173,15 @@ router.post('/start', authMiddleware, async (req, res) => {
           });
           if (student?.parentId) {
             const parentNotifId = genId();
-            const parentMsg = `بدأت الحصة المباشرة لابنكم/ابنتكم في مادة ${subject || ''} مع المعلمة ${teacherName}.`;
+            const parentTitle = cleanSubject ? `حصة ${cleanSubject} مباشرة لابنكم` : 'حصة مباشرة لابنكم';
+            const parentMsg = `المعلمة ${teacherName} بدأت الحصة${subjectPart} — تابعوها الآن مباشرة: ${meetingUrl}`;
             await prisma.notification.create({
               data: {
                 id: parentNotifId,
                 senderId: teacherId,
                 receiverId: student.parentId,
                 senderName: teacherName,
-                title: 'تنبيه حصة مباشرة لابنكم',
+                title: parentTitle,
                 message: parentMsg,
                 type: 'live',
                 time: new Date().toISOString(),
@@ -186,7 +189,7 @@ router.post('/start', authMiddleware, async (req, res) => {
               }
             });
             io.to(`user_${student.parentId}`).emit('notification', {
-              id: parentNotifId, title: 'تنبيه حصة مباشرة لابنكم', message: parentMsg, type: 'live', link: meetingUrl
+              id: parentNotifId, title: parentTitle, message: parentMsg, type: 'live', link: meetingUrl
             });
             io.to(`user_${student.parentId}`).emit('session_invite', {
               teacherName, subject, sessionId: id, meetingUrl, meetingProvider: provider

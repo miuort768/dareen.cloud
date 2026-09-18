@@ -296,7 +296,11 @@ export const StudentInvoices = () => {
     >
       <div className="mx-auto max-w-page pt-1 sm:px-4">
         {/* Hero — gradient hero like the schedule/attendance pages */}
-        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-4"
+        >
           <GradientHeroCard
             icon={Receipt}
             title={isAdmin ? 'فواتير الطلاب' : 'فواتيري'}

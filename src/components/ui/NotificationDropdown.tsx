@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   useNotificationsEnabled,
@@ -32,7 +32,11 @@ interface Notification {
   link?: string
 }
 
-const pushCapable = typeof Notification !== 'undefined'
+interface NotificationGroup {
+  id: string
+  key: string
+  items: Notification[]
+}
 
 export const NotificationDropdown = ({
   showLabel = false,
@@ -95,23 +99,30 @@ export const NotificationDropdown = ({
 
   const unreadCount = Array.isArray(notifications) ? notifications.filter((n) => !n.read).length : 0
 
-  const markAsReadMutation = useMutation({
-    mutationFn: (id: string) => api.put(`/notifications/${id}`, { read: true }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
-  })
+  // Merge consecutive identical notifications (same type+title+message) into one row
+  const groups = useMemo<NotificationGroup[]>(() => {
+    const result: NotificationGroup[] = []
+    for (const n of notifications) {
+      const key = `${n.type}||${n.title}||${n.message}`
+      const last = result[result.length - 1]
+      if (last && last.key === key) {
+        last.items.push(n)
+      } else {
+        result.push({ id: n.id, key, items: [n] })
+      }
+    }
+    return result
+  }, [notifications])
 
-  const markAllReadMutation = useMutation({
-    mutationFn: () =>
-      Promise.allSettled(
-        notifications
-          .filter((n) => !n.read)
-          .map((n) => api.put(`/notifications/${n.id}`, { read: true })),
-      ),
+  const markReadMutation = useMutation({
+    mutationFn: (ids: string[]) =>
+      Promise.allSettled(ids.map((id) => api.put(`/notifications/${id}`, { read: true }))),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
   })
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => api.delete(`/notifications/${id}`),
+    mutationFn: (ids: string[]) =>
+      Promise.allSettled(ids.map((id) => api.delete(`/notifications/${id}`))),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
   })
 
@@ -120,17 +131,19 @@ export const NotificationDropdown = ({
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
   })
 
-  const markAsRead = (id: string) => {
-    markAsReadMutation.mutate(id)
+  const markAsRead = (ids: string[]) => {
+    if (ids.length === 0 || markReadMutation.isPending) return
+    markReadMutation.mutate(ids)
   }
 
   const markAllAsRead = () => {
-    if (unreadCount === 0 || markAllReadMutation.isPending) return
-    markAllReadMutation.mutate()
+    const ids = notifications.filter((n) => !n.read).map((n) => n.id)
+    if (ids.length === 0 || markReadMutation.isPending) return
+    markReadMutation.mutate(ids)
   }
 
-  const deleteNotification = (id: string) => {
-    deleteMutation.mutate(id)
+  const deleteNotification = (ids: string | string[]) => {
+    deleteMutation.mutate(Array.isArray(ids) ? ids : [ids])
   }
 
   const clearAll = () => {
@@ -233,7 +246,7 @@ export const NotificationDropdown = ({
               {unreadCount > 0 && (
                 <button
                   onClick={markAllAsRead}
-                  disabled={markAllReadMutation.isPending}
+                  disabled={markReadMutation.isPending}
                   className="flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-1.5 text-micro font-bold text-primary outline-none transition-colors hover:bg-primary-soft focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-60 sm:text-xs"
                 >
                   <CheckCheck size={12} />
@@ -253,33 +266,6 @@ export const NotificationDropdown = ({
             </div>
           </div>
 
-          {/* Push Notification Activation Prompt */}
-          {pushCapable && Notification.permission === 'default' && notificationsEnabled && (
-            <div className="flex items-center justify-between gap-3 border-b border-border bg-primary-soft p-3">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-on-primary">
-                  <Smartphone size={14} />
-                </div>
-                <p className="text-micro font-bold text-primary sm:text-xs">
-                  هل تريد تفعيل الإشعارات الفورية؟
-                </p>
-              </div>
-              <button
-                onClick={async () => {
-                  const { pushService } = await import('../../services/pushService')
-                  const permission = await Notification.requestPermission()
-                  if (permission === 'granted' && currentUser) {
-                    await pushService.subscribeUser()
-                    showNotification('تم تفعيل التنبيهات الفورية بنجاح', 'success')
-                  }
-                }}
-                className="rounded-full bg-primary px-3 py-1.5 text-micro font-bold text-on-primary outline-none transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-focus"
-              >
-                تفعيل الآن
-              </button>
-            </div>
-          )}
-
           {/* Notifications List */}
           <div
             className={cn(
@@ -297,66 +283,83 @@ export const NotificationDropdown = ({
                   <p className="mt-1 text-xs text-muted">يمكنك تفعيلها من صفحة الإعدادات</p>
                 </div>
               </div>
-            ) : Array.isArray(notifications) && notifications.length > 0 ? (
-              notifications.map((notification) => (
-                <div
-                  key={notification.id}
-                  className={cn(
-                    'cursor-pointer border-b border-border transition-colors last:border-b-0 hover:bg-surface',
-                    !notification.read ? 'bg-info-light dark:bg-info-soft' : '',
-                  )}
-                  onClick={() => {
-                    markAsRead(notification.id)
-                    if (notification.link) {
-                      navigate(notification.link)
-                      setIsOpen(false)
-                    } else if (notification.conversationId) {
-                      navigate(`/chat?conversationId=${notification.conversationId}`)
-                      setIsOpen(false)
-                    }
-                  }}
-                >
-                  <div className="flex items-start gap-3 p-3.5 sm:p-4">
-                    {getIcon(notification.type)}
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-start justify-between gap-2">
-                        <h4
-                          className={cn(
-                            'text-sm leading-snug',
-                            !notification.read ? 'font-bold text-main' : 'font-medium text-main',
-                          )}
-                        >
-                          {notification.title}
-                        </h4>
-                        {!notification.read && (
-                          <span className="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-info" />
-                        )}
-                      </div>
-                      <p className="mt-0.5 line-clamp-2 text-micro text-muted sm:text-xs">
-                        {notification.message}
-                      </p>
-                      <div className="mt-2 flex items-center justify-between">
-                        <span className="text-[10px] text-muted sm:text-micro">
-                          {formatDistanceToNow(new Date(notification.time), {
-                            addSuffix: true,
-                            locale: ar,
-                          })}
-                        </span>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            deleteNotification(notification.id)
-                          }}
-                          className="flex h-7 w-7 items-center justify-center rounded-lg text-muted outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
-                          aria-label="حذف الإشعار"
-                        >
-                          <Trash2 size={13} />
-                        </button>
+            ) : groups.length > 0 ? (
+              groups.map((group) => {
+                const n = group.items[0]
+                const count = group.items.length
+                const isUnread = group.items.some((item) => !item.read)
+                const groupIds = group.items.map((item) => item.id)
+                return (
+                  <div
+                    key={group.id}
+                    className={cn(
+                      'cursor-pointer border-b border-border transition-colors last:border-b-0 hover:bg-surface',
+                      isUnread ? 'bg-info-light dark:bg-info-soft' : '',
+                    )}
+                    onClick={() => {
+                      markAsRead(groupIds)
+                      const target =
+                        n.link ||
+                        (n.conversationId ? `/chat?conversationId=${n.conversationId}` : '')
+                      if (target) {
+                        if (/^https?:\/\//i.test(target)) {
+                          window.open(target, '_blank', 'noopener,noreferrer')
+                        } else {
+                          navigate(target)
+                        }
+                        setIsOpen(false)
+                      }
+                    }}
+                  >
+                    <div className="flex items-start gap-3 p-3.5 sm:p-4">
+                      {getIcon(n.type)}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-start justify-between gap-2">
+                          <h4
+                            className={cn(
+                              'text-sm leading-snug',
+                              isUnread ? 'font-bold text-main' : 'font-medium text-main',
+                            )}
+                          >
+                            {n.title}
+                          </h4>
+                          <div className="flex flex-shrink-0 items-center gap-1.5 pt-0.5">
+                            {count > 1 && (
+                              <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary-soft px-1.5 text-[10px] font-black leading-none text-primary">
+                                ×{count}
+                              </span>
+                            )}
+                            {isUnread && (
+                              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-info" />
+                            )}
+                          </div>
+                        </div>
+                        <p className="mt-0.5 line-clamp-2 text-micro text-muted sm:text-xs">
+                          {n.message}
+                        </p>
+                        <div className="mt-2 flex items-center justify-between">
+                          <span className="text-[10px] text-muted sm:text-micro">
+                            {formatDistanceToNow(new Date(n.time), {
+                              addSuffix: true,
+                              locale: ar,
+                            })}
+                          </span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              deleteNotification(groupIds)
+                            }}
+                            className="flex h-7 w-7 items-center justify-center rounded-lg text-muted outline-none transition-colors hover:bg-error-soft hover:text-error focus-visible:ring-2 focus-visible:ring-focus"
+                            aria-label={count > 1 ? `حذف ${count} إشعارات متطابقة` : 'حذف الإشعار'}
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))
+                )
+              })
             ) : (
               <div className="flex flex-col items-center gap-3 py-10 text-center">
                 <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-surface text-muted">
